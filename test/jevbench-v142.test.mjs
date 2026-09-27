@@ -24,7 +24,7 @@ test('CR-152 v1.4.2 is the exact aggregate-only release with the approved top fi
   assert.doesNotMatch(JSON.stringify(artifact), /"(?:item_id|item_text|question_text|gold|expected|prediction|predicted|per_item|item_results)"\s*:/i);
 });
 
-test('CR-152 serves v1.4.2 as the live board with a pinned page, API and fairness note', async () => {
+test('CR-179 serves v1.4.2.1 live and preserves pinned v1.4.2 with its API and fairness note', async () => {
   const [route, page, livePage, board, sitemap] = await Promise.all([
     read('../app/api/jevbench/v1.4.2/route.ts'),
     read('../app/jev-models/v1.4.2/page.tsx'),
@@ -35,8 +35,14 @@ test('CR-152 serves v1.4.2 as the live board with a pinned page, API and fairnes
   assert.match(route, /readJevbenchV142\(\)/);
   assert.match(route, /'X-Content-SHA256': sha256/);
   assert.match(page, /canonical = '\/jev-models\/v1\.4\.2'/);
-  assert.match(livePage, /readJevbenchV142(WithFamilies)?\(\)/); // CR-153: the pinned artifact plus its family supplement
-  assert.match(livePage, /href="\/jev-models\/v1\.4\.2" data-bh-jev-version-share/);
+  assert.match(page, /async function pinnedView\(\) \{\s*const result = await readJevbenchV142WithFamilies\(\);\s*return \{ \.\.\.jevbenchV142View\(result\), sealedFamilyN: result\.sealedFamilyN \};\s*\}/);
+  assert.match(page, /export default async function JevModelsV142Page\(\) \{\s*const view = await pinnedView\(\);[\s\S]*<JevModelsV14Board artifact=\{view\.artifact\} sha256=\{view\.sha256\}/);
+  assert.match(livePage, /const v14Result = await readJevbenchV1421WithFamilies\(\);\s*const v14 = jevbenchV1421View\(v14Result\);/);
+  assert.match(livePage, /const previousRelease = \(await readJevbenchV142\(\)\)\.artifact;/);
+  assert.match(livePage, /readJevbenchV1421WithFamilies\(\)/);
+  assert.match(livePage, /readJevbenchV142\(\)/); // The frozen v1.4.2 keys remain the comparison base.
+  assert.match(livePage, /<JevModelsV14Board artifact=\{v14\.artifact\} sha256=\{v14\.sha256\} previous=\{previous\}/);
+  assert.match(livePage, /href="\/jev-models\/v1\.4\.2\.1" data-bh-jev-version-share/);
   // F-189 (Fable pass 35, decision 2): CR-152's "visible Intelligence ordering" is a control, not a second table of the
   // numbers the chart already draws. CR-151 (Florian 25 Sep): that control is the "View by" switch (it supersedes the
   // two-button rank-by); the approved sentence sits beside it with a one-click Intelligence ordering.
@@ -49,6 +55,7 @@ test('CR-152 serves v1.4.2 as the live board with a pinned page, API and fairnes
   assert.doesNotMatch(board, /Sort by Intelligence ↓/);
   assert.doesNotMatch(board, /<details[^>]*data-bh-jev14-sort-intelligence/);
   assert.match(sitemap, /"\/jev-models\/v1\.4\.2"/);
+  assert.match(sitemap, /"\/jev-models\/v1\.4\.2\.1"/);
   assert.match(sitemap, /"\/jev-models\/v1\.4\.1"/);
   // The temporary upload notice and its preview images (main 7c8d0212/811f0dd9) are gone with the release.
   assert.doesNotMatch(livePage, /data-bh-release-notice|v142-preview/);
