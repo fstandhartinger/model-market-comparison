@@ -14696,3 +14696,38 @@ D231, D232, E1, F-207(b), F-208 and F-209, and D227's page half.
 4. **D223** is unchanged and still needs primary-source evidence that VulcanBench v3.15 preserves the
    v3.4–v3.7 protocol, or its own versioned entry. The fence around it is verified live; the fence is
    not an acceptance.
+
+## Fable pass 39 — 2026-09-27 ~13:30 UTC (claude-fable, design authority)
+
+Scope (Florian: Fable sparingly): what changed since pass 38 — the hub after F-207(b)/F-208 (iteration 245), the hidden v1.5 preview after
+F-206 (iteration 246) and PR #53 (CR-185), the quick views on the D226–D233 data. Live revision `66f0d6cb`, dataset 13:07 UTC. Evidence:
+`/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass39/` (`canonical/` ~170 shots + `metrics-<ctx>.json`, four contexts, **0 page
+errors**, min text 10 px on every page, no sideways page scroll; `live-F-206/` pass 37's `ONLY=F-206` at `66f0d6cb`; `live-before/` the
+pass-39 verifier at the pre-fix revision; `local-F-206/` and `local-pass39/` the shipped fixes on a dev server; `npm-test.log`, `tsc.log`).
+Verdict, decisions and directives: `DESIGN-DIRECTIVES.md` "pass 39". Verifier for non-Fable engines: `bin/verify-fable-pass39-design.mjs`
+(groups `F-206d`, `F-211`, `F-210`).
+
+**What the pass found.** Pass 38's two directed fixes hold on the live site (F-207(b): five 24–25 px halo rings, one per labelled sphere, in
+all four contexts; F-208: the context chart at scale 1.000 with 11–12 px tick boxes beside the bubble charts' 12 px). The quick views are
+unchanged apart from today's data. **PR #53 (CR-185, merged 12:02 UTC) carried three presentation regressions into the hidden v1.5 preview**:
+the leader line reads the artifact's bare "joint leaders (statistical tie)" with no names — the exact wording F-206(d) retired one day earlier
+(pass 37's `ONLY=F-206`: **48/52**, the four misses all that check); the honorable-mention row's pill prints the key `honorable_mention` and every
+addendum row wears "v1.5 roster addendum A1" *and* "addendum"; and the six-row roster addendum is six paragraphs that each state the placement
+twice, the score at two precisions, and the frozen-order caveat per row and again in the intro (10 lines per newcomer at 390).
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-207(b) | live-checked → **verified** (gate 20260927T111003Z, codex-luna; re-seen in pass 39) | `canonical/metrics-*.json` `hub-3d.halos` (5 ×4, 2 px class colour, 1 px panel shadow), `labelToHalo`; `*-hub-3d-box.png` | Done-log row updated. The labels' D216 column stands (pass 38 decision 1). |
+| F-208 | live-checked → **verified** (same gate; re-seen in pass 39) | `hub-context-scale` (viewBox 1326 = rendered 1326 at 1440, scale 1.000; 740 in a 332 px scroller at 390; tick boxes 11–12 px; minFs 10) | Done-log row updated. |
+| F-206 (a)(b)(c)(e) | implemented (iteration 246) → **seen at the bar** (Fable) | `v15` probe ×4: 0 "~$"/"≈", 89 whiskers, 186 cost cells, tariff pill left, one legend per table, Penalty `th` | Non-implementer receipt exists on disk (gate 20260927T072004Z `f206-canonical`, report lost). |
+| F-206(d) | **regressed by PR #53 → re-implemented** (Fable, surgical: one expression in `components/JevBenchV15Preview.tsx`; `test/fable-pass39.test.mjs` pins the component) | `live-F-206/` 48/52; `live-before/` (F-206d red ×4); `local-F-206/verification.json` **52/52**; `local-pass39/` F-206d green ×4 | Needs a non-Fable engine: `verify-fable-pass39-design.mjs` `ONLY=F-206d` on the canonical host after the deploy. Decision 1: the pin sits at the element that prints the sentence, not only at the lib. |
+| F-211 (new) | **implemented** (Fable, surgical: `LISTING_LABEL` + one condition in `Tags`; pinned) | `live-before/` (F-211 red ×4: `honorable_mention`, two pills per addendum row); `local-pass39/` F-211 green ×4 | Needs a non-Fable engine: `ONLY=F-211`. |
+| F-210 (new) | **open** `[mechanical]` | `desktop_light-v15-addendum-vp.png`, `mobile_light-v15-addendum-vp.png`; `live-before/` group F-210 red (24 checks, 6 per context) | The roster addendum as a table: system · would place (A) · A score + interval · would place (B) · B score + interval; the caveat once, in the intro. Spec in `DESIGN-DIRECTIVES.md`. |
+| CR-185 / PR #53 | seen (Fable) | `v15` probe: board A, "Official (A)", eyebrow "headline option A", option labels "A · equal (headline) / B · 40/20/20/20 / C · equal, I floor 60", 75 of 88 ties | The headline change itself is Florian's (DECISIONS.md); only its presentation was judged. The page stays noindex and unlinked (CR-172). |
+| Quick views | at the bar | `*-simple.png`, `*-advanced.png`, `*-wizard.png`, `*-bmx.png`, `*-model.png`, `*-bench.png`; `*-geom` (minFont 10, plural1 [], overflow only inside scrollers) | Unchanged since pass 38 apart from today's data. |
+| R3.1 | unchanged | `desktop_light-simple.png` | Florian's own hero copy since 2026-09-15; no re-decision. |
+
+Gates: `npx tsc --noEmit -p .` exit 0 (`tsc.log`); `CI=true npm test` **1,504 tests, 1,503 pass, 0 fail, 1 skip** (`npm-test.log`, exit 0, unpiped);
+`node scripts/build-dataset.mjs` was not run: no data, registry or lib file changed in this pass (two component edits, one test, two scripts,
+two ledgers). The dev server on port 3879 was stopped at the end of the pass.
+**Needs a non-Fable engine to set `verified` on F-206(d) and F-211; F-210 is the next `[mechanical]` directive for a work iteration.**

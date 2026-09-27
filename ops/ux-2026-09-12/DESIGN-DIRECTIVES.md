@@ -1,5 +1,18 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
+**Pass 39: 2026-09-27 ~13:30 UTC**, the "what changed since pass 38" pass (Florian: Fable sparingly). Since pass 38 the changed surface is the
+**JevBench hub after F-207(b) and F-208** (iteration 245: halo rings on the five labelled spheres with a leader when the plate was pushed; the
+input-length chart at its wrapper's pixel width), the **hidden v1.5 preview after F-206 (iteration 246) and PR #53** (CR-185: option A as the
+headline, a six-row roster addendum with placements and intervals, the What-If Lab), and the data after D226–D233 (registry metric text; a
+`normalized score` unit in `lib/benchmark-matrix.mjs` / `lib/radar.mjs`) — no other UI file changed. Judged on the canonical host (revision
+`66f0d6cb`, dataset 13:07 UTC) at 1440/390 × light/dark: ~170 shots + `metrics-<ctx>.json` (pass 38's probes plus a halo/leader probe, a
+context-scale probe and a v1.5 headline probe) in `/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass39/canonical/`. The quick views
+(Simple, Advanced, Guided, Benchmaxxing, a model page, Benchmarks) were shot on today's data, 0 page errors in all four contexts, min text 10 px
+on every page, no sideways page scroll, and are at the bar. Scripts: `bin/shoot-fable-pass39.mjs`; source pin: `test/fable-pass39.test.mjs`;
+live verifier for non-Fable engines: `bin/verify-fable-pass39-design.mjs <base> <outDir>` (groups `F-206d` and `F-211` for the parts Fable
+shipped, `F-210` for the directed part; it launches its own Chromium). Before-receipt at the pre-fix revision: `…/fable-20260927-pass39/live-before/verification.json`;
+the shipped fixes on a dev server: `…/local-pass39/verification.json` and `…/local-F-206/verification.json` (pass 37's `ONLY=F-206`).
+
 **Pass 38: 2026-09-27 ~04:20 UTC**, the "what changed since pass 37" pass (Florian: Fable sparingly). Since pass 37 the changed surface is the
 **JevBench hub after F-203/F-204/F-205 and D216** (iteration 239: 10 px bucket ticks, one name per axis, the phone's bubble labels in a
 non-crossing column, the 3D top-five labels de-clumped), the **privacy page after CR-178** (Umami visitor counts), and the data after
@@ -80,6 +93,51 @@ Luna. Every delegated diff is reviewed before it lands. Record from passes 8, 11
 the reviewing engine directly.
 
 ---
+
+## Verdict on the live site — pass 39 (2026-09-27), the hub after F-207(b)/F-208, the v1.5 preview after F-206 and PR #53
+
+**Pass 38's directives hold on the live site.** F-207(b): five `[data-bh-jev14-3d-halo]` rings of 24–25 px, 2 px in the class colour with a
+1 px panel-colour shadow, one per labelled sphere in all four contexts, 0 label overlaps (`hub-3d.halos`, `labelToHalo`: every plate within
+−12 … 32 px of its ring, a leader where it was pushed; `desktop_{light,dark}-hub-3d-box.png`, `mobile_light-hub-3d-box.png`). The labels
+still stand in the D216 column across the cluster — that was the decision (pass 38, 1): the ring on the datum is the tie, and it reads.
+F-208: the input-length chart's `viewBox` is `0 0 1326 305` at 1440 and its rendered width 1326 (scale **1.000**), tick boxes 11–12 px tall
+against the bubble charts' 12 px, min text 10 px; at 390 the SVG keeps 740 px inside a 332 px scroller (`hub-context-scale`). F-206 (a)–(c)
+and (e) hold on the preview: 0 bars with "~$" or "≈", 89 whiskers, "$/1k decisions", 186 cost cells with the tariff pill left of the number,
+one legend sentence per table, a Penalty column. The quick views are unchanged since pass 38 apart from today's data.
+
+**Three things are not at the bar on the hidden v1.5 preview; two fixed in this pass, one directed. All three arrived with PR #53.**
+
+1. **The leader line lost its subject again.** PR #53 made the component print `a.board[headline].leader_wording ?? leader`, so the page
+   reads **"joint leaders (statistical tie)"** and no names, in all four contexts (`v15.leader`; pass 37's verifier `ONLY=F-206`: **48/52**,
+   the four misses all this check) — the exact wording F-206(d) retired one day earlier. The lib's sentence ("Cygnet and Winnow-12B Q8 are
+   joint leaders (statistical tie).") was still right and still unit-tested; the component stopped using it. → **F-206(d)**, re-fixed by Fable
+   (one expression) and pinned at the component this time (`test/fable-pass39.test.mjs`), not only at the lib.
+2. **Two pills print keys, and an addendum row wears two pills for one fact.** The honorable-mention row's listing pill reads
+   `honorable_mention` (the underscore probe's only hit on the page, twice), and each of the six addendum rows carries "v1.5 roster addendum
+   A1" *and* "addendum" side by side (`v15.tags`, `desktop_light-v15-addendum-vp.png`). → **F-211**, fixed by Fable (a label map entry and one
+   condition).
+3. **The roster addendum is six paragraphs that each say the same thing three times.** Every newcomer is a 4-line paragraph at 1440 and a
+   10-line one at 390 (`mobile_light-v15-addendum-vp.png`): the data's own note ("Headline A score 71.90 would place about #4; secondary B …
+   would place about #5. Roster addendum rows stay outside the v1.5.0 order and tie markers.") followed by the component's restatement
+   ("Official A would place #4 against the frozen base; A score 71.9 (95% CI 69.4–72.9). Secondary B would place #5 …") — the placement twice,
+   the score at two precisions (71.90 / 71.9), and the frozen-order sentence once per row *and* in the intro above. The message that matters —
+   four newcomers would land at #4–#6 of 89 — is buried in 180 words per row. → **F-210**.
+
+Not defects: the phone's "I 71 · C 87 · S 91 · K 65 · B#2 · C#1" axis line under each bar (pass 37 saw it; the header letters are the
+figure's own legend at 1440 and the phone has no room for words); the whiskers on rows 1–5 being a few pixels wide (the intervals are that
+narrow — it is the data); the red preview banner and the noindex route (CR-172, until Florian releases); the 3D top-five labels in a column
+(pass 38, decision 1).
+
+## Decisions in pass 39
+
+1. **A directive's pin sits where the regression can happen (F-206(d)):** F-206 pinned the *sentence builder* and PR #53 regressed the
+   *component* that chooses whether to call it. A wording rule is pinned at the element that prints it; the verifier reads the rendered text.
+2. **A pill is a word, never a key, and one fact wears one pill (F-211):** `honorable_mention` is a listing value, not a label; when a row
+   already carries the addendum label, a second pill saying "addendum" is ink.
+3. **Six rows with the same five facts are a table (F-210):** system · would place (A) · A score with its 95% interval · would place (B) · B
+   score with its interval. The caveat that binds all six ("outside the v1.5.0 order, point estimates only, no ties established") is said once,
+   in the section intro; the data's per-row note is the row's `title`, not its text. Pass 37 decision 3 ("a fact is stated once per figure")
+   applied to prose.
 
 ## Verdict on the live site — pass 38 (2026-09-27), the hub after F-203–F-205 and D216, the privacy page after CR-178
 
@@ -519,9 +577,47 @@ and the counts line under it keeps the page honest (P4).
 
 ---
 
+## Directives (pass 39)
+
+### F-206(d) — The v1.5 leader line names its systems `[mechanical]` — **re-shipped by Fable (pass 39)**
+
+*Where:* `components/JevBenchV15Preview.tsx` (`HeadlineBars`, the `[data-bh-jev15-leader]` paragraph); `test/fable-pass39.test.mjs`.
+*What:* the element prints `leader` — the sentence `jevV15LeaderSentence` builds, which names the tied systems and appends the artifact's
+`leader_wording` only when it adds words — never `a.board[headline].leader_wording` on its own. PR #53 had put the bare wording first.
+*Accept:* `/wip-oiifi41ouv1f/jevbench-v15` at 1440/390 × light/dark: the leader line does not start with "joint leaders", contains the names
+of ≥ 2 of the first three ranked bars, and says "tie"; group **F-206d** in `verify-fable-pass39-design.mjs`; pass 37's `ONLY=F-206` 52/52.
+
+### F-211 — A pill is a word, never a key; an addendum row wears one pill `[mechanical]` — **shipped by Fable (pass 39)**
+
+*Where:* `components/JevBenchV15Preview.tsx` (`LISTING_LABEL`, `Tags`); `test/fable-pass39.test.mjs`.
+*What:* `LISTING_LABEL` gains `honorable_mention: 'honorable mention'` and `addendum: 'addendum'`, the fallback replaces underscores; the
+listing pill is not rendered on a row that already carries its addendum label pill (`row.addendum.label`).
+*Accept:* no `.bh-thin-tag` text contains "_"; the honorable-mention row's pill reads "honorable mention"; every addendum row has exactly one
+pill matching /addendum/; group **F-211**.
+
+### F-210 — The roster addendum is a table, and its caveat is said once `[mechanical]`
+
+*Where:* `components/JevBenchV15Preview.tsx` (`Addendum`; the `interval` helper stays), `test/jevbench-v15-preview.test.mjs` (extend, do not
+weaken), `test/fable-pass39.test.mjs` (add the source pin beside F-211's).
+*What:* replace the `<ul>` with a table `[data-bh-jev15-addendum-table]` inside the same `overflow-x-auto rounded-xl border border-line`
+wrapper the options table uses, `min-w-[640px]`, `text-sm`. Columns, in this order: **System** (left; `NameCell`-style name with the addendum
+label pill via `Tags` — F-211 already removes the second pill — and `API` if flagged; the data's `not_ranked_because` becomes the name cell's
+`title`, not visible text) · **Would place (A)** (right, `tabular-nums`, "#4") · **A score** (right, `one(r.scores.A)`, with the interval in
+`bh-muted` after it: "71.9 <span class=bh-muted>69.4–72.9</span>") · **Would place (B)** · **B score** (same treatment). A row with no
+`would_place_A` prints "—" in both A cells. `thead` `th` titles carry the long form ("Placement against the frozen v1.5.0 base under the official
+A weights"; "95% paired-bootstrap interval"). Rows sorted by `would_place_A` as today. The intro paragraph keeps its four sentences and is the
+only place the frozen-order caveat appears; no cell contains "would place", "stay outside" or "frozen base". One legend line under the table in
+`bh-muted text-xs`: "Score followed by its 95% interval. Placements compare point estimates with the frozen base only." Nothing about the
+numbers, the sort, the data file or the section's position changes; the honorable-mention section is unchanged.
+*Accept:* `/wip-oiifi41ouv1f/jevbench-v15` at 1440/390 × light/dark: `[data-bh-jev15-addendum-table]` present with ≥ 6 `tbody tr`; `thead`
+names System, two placement columns and two columns with the interval; no cell text matches /would place|stay outside/i; the intro `p` still
+says "outside the v1.5.0 order"; every row ≤ 48 px tall at 1440 and ≤ 96 px at 390; the page never scrolls sideways (the wrapper does on a
+phone); every row carries exactly one addendum pill (F-211's check); `test/jevbench-v15-preview.test.mjs` green; group **F-210** in
+`verify-fable-pass39-design.mjs` (its before-receipt, all F-210 checks red at `66f0d6cb`: `…/fable-20260927-pass39/live-before/`).
+
 ## Directives (pass 38)
 
-### F-207 — The 3D top-five label is a plate with a bar; the sphere it names wears a halo `[mechanical]` — **(a) shipped by Fable (pass 38); (b) open**
+### F-207 — The 3D top-five label is a plate with a bar; the sphere it names wears a halo `[mechanical]` — **(a) shipped by Fable (pass 38), verified (iteration 245); (b) shipped (iteration 245), verified (gate 20260927T111003Z); re-seen in pass 39**
 
 *Where:* (a) `app/globals.css` (`.bh-jev-3d-labels .bh-jev-3d-model-label`, `.bh-jev-3d-model-dot`) — done. (b) `components/JevCapability3D.tsx`:
 the DOM label layer (`layoutLabels`, `updateLabelsRef`, `modelRefs`) and the SVG fallback's `bh-jev-3d-model-labels` group; `test/fable-pass38.test.mjs`.
@@ -539,7 +635,7 @@ with a background alpha 0.7–0.95 and a marker ≤ 4 px wide and ≥ 10 px tall
 across inside the 3D box, and each label within 24 px of its own halo or joined to it by a `[data-bh-jev14-3d-leader-line]` (group **F-207b**);
 the fallback path (WebGL off) shows the same five halos as SVG circles. `verify-cr-176-6-live.mjs` and pass 37's `ONLY=F-201` still green.
 
-### F-208 — The context chart draws at its pixel width `[mechanical]`
+### F-208 — The context chart draws at its pixel width `[mechanical]` — **shipped (iteration 245), verified (gate 20260927T111003Z); re-seen in pass 39 (scale 1.000)**
 
 *Where:* `components/JevContextLength.tsx` (the `<svg className="block h-auto min-w-[740px] w-full" viewBox=…>` at the accuracy-by-input-length
 chart, `const width = 740` and the `x()` / `plotRight` / `tickGap` maths that read it); `test/fable-pass37.test.mjs` (F-203's pin; extend, do not weaken).
@@ -632,7 +728,7 @@ overlaps at 1440 are leader lines passing under a neighbour's text, acceptable; 
 *Accept:* hub at 390 × light/dark, both charts: five `[data-bh-jev-bubble-label]` (or three with the fallback), zero text-box overlaps,
 zero leader-line intersections (segment test on the label groups' `line`s); at 1440 zero text-box overlaps; group F-205.
 
-### F-206 — The v1.5 preview drops "~", ≈-on-every-row and "$/1k" before it is linked `[mechanical + data]` — for the CR-172 job
+### F-206 — The v1.5 preview drops "~", ≈-on-every-row and "$/1k" before it is linked `[mechanical + data]` — **shipped (iteration 246, `a49a731c`); (d) regressed by PR #53 and re-shipped in pass 39 (F-206(d))**
 
 *Where:* `components/JevBenchV15Preview.tsx` (`costCell`, `HeadlineBars`, `AxesTable`, `Tags`), `lib/jevbench-v15-preview.mjs` (nothing
 numeric changes), its tests.
@@ -1220,6 +1316,11 @@ The label half is live and verified (`135a3098`, `4a9dd523`). Open: the identity
 
 | Directive | Commit | Evidence | Verified by |
 |---|---|---|---|
+| F-206(d) the v1.5 leader line prints the built sentence (names + "joint leaders (statistical tie)"), never the artifact's bare wording | pass-39 commit (Fable, surgical: `components/JevBenchV15Preview.tsx`) + `test/fable-pass39.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass39/` (`canonical/` the regression live in all four contexts; `live-F-206/` pass 37's `ONLY=F-206` 48/52 at `66f0d6cb`; `local-F-206/` and `local-pass39/` the fix on a dev server) | implemented by Fable; needs a non-Fable engine to run `verify-fable-pass39-design.mjs` `ONLY=F-206d` (and pass 37's `ONLY=F-206`) on the canonical host after the deploy before `verified`. |
+| F-211 listing pills are words (`honorable mention`), an addendum row wears one pill | same commit + test | same (`v15.tags` before: `honorable_mention`, `addendum` beside the label pill; `local-pass39/` after) | implemented by Fable; needs a non-Fable engine: `ONLY=F-211`. |
+| F-207(b) the labelled sphere wears a halo (2 px class-colour ring, 1 px panel shadow) and a leader when the plate was pushed | `88f33e8c` + `198c1c54` (claude-opus, iteration 245) | gate 20260927T111003Z `pass38-*-fixed` 58/58 per host; iteration 250 66/66 per host; pass 39 `hub-3d.halos` ×4 | **verified** — gate 20260927T111003Z (codex-luna, non-implementer); re-seen by Fable in pass 39 |
+| F-208 the input-length chart draws at its wrapper's pixel width | `5161979f` (claude-opus, iteration 245) | same; pass 39 `hub-context-scale` (scale 1.000 at 1440, tick boxes 11–12 px, 740 px inside a 332 px scroller at 390) | **verified** — gate 20260927T111003Z (codex-luna); re-seen by Fable in pass 39 |
+| F-206 (a)(b)(c)(e) the v1.5 preview's cost cells, whiskers, "$/1k decisions", Penalty column | `a49a731c` (claude-opus, iteration 246) | pass 39 `v15` (0 "~$"/"≈", 89 whiskers, 186 cost cells, tariff pill left, one legend per table) | seen by Fable (pass 39); non-implementer receipt: gate 20260927T072004Z `f206-canonical` (report lost, receipt on disk). (d) regressed by PR #53 → re-shipped as F-206(d). |
 | F-194 the custom-evaluation toast stacks above the fast-lane banner (`body.bh-fastlane-visible .bh-custom-evaluation-toast { bottom: calc(var(--bh-fastlane-height) + 1rem …) }`) | pass 36 (Fable, surgical: `app/globals.css`) + `test/fable-pass36.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260926-pass36/{before,after}/` (group F-194) | **implemented** — needs a non-Fable engine |
 | F-195 the bubble charts' latency sub-ticks at 10 px (were 9.5) | pass 36 (Fable, surgical: `components/JevBubbleChart.tsx`) | same (group F-195) | **implemented** — needs a non-Fable engine |
 | F-196 the weight-slider status pill only in the custom state; one "Official" per figure | pass 36 (Fable, surgical: `components/JevBoardInteractive.tsx`) | same (group F-196) | **implemented** — needs a non-Fable engine |

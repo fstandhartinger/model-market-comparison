@@ -24,13 +24,14 @@ const typeVar = (cls: string) => ({ '--jev-t': `var(${jevTypeVarName(cls)})` }) 
 const TYPE_LABEL: Record<string, string> = { choice: 'Choice', noul: 'Noul', score: 'Score' };
 const OPTION_LABEL: Record<JevV15Option, string> = { A: 'A · equal (headline)', B: 'B · 40/20/20/20', C: 'C · equal, I floor 60' };
 const API_NOTE = "API — the operator's endpoint received sealed item text, without answers.";
-const LISTING_LABEL: Record<string, string> = { partial: 'partial run', unpriced: 'unpriced', unranked: 'not ranked' };
+// Pass 39: a pill is a word, never a key — `honorable_mention` printed as-is, and an addendum row wore two pills for one fact.
+const LISTING_LABEL: Record<string, string> = { partial: 'partial run', unpriced: 'unpriced', unranked: 'not ranked', honorable_mention: 'honorable mention', addendum: 'addendum' };
 
 function Tags({ row }: { row: JevV15System }) {
   return <>
     {row.addendum && <span className="bh-thin-tag ml-1.5 align-middle !border-solid !text-[rgb(var(--accent2))]" title="Added by a separately hashed roster addendum; same frozen sample, method and pricing rules." data-bh-jev15-addendum={row.addendum.id}>{row.addendum.label}</span>}
     {row.api_flag && <span className="bh-thin-tag ml-1.5 align-middle" title={row.api_exposure_note ?? API_NOTE}>API</span>}
-    {row.listing !== 'ranked' && <span className="bh-thin-tag ml-1.5 align-middle" title={row.not_ranked_because ?? undefined}>{LISTING_LABEL[row.listing] ?? row.listing}</span>}
+    {row.listing !== 'ranked' && !(row.listing === 'addendum' && row.addendum) && <span className="bh-thin-tag ml-1.5 align-middle" title={row.not_ranked_because ?? undefined}>{LISTING_LABEL[row.listing] ?? row.listing.replace(/_/g, ' ')}</span>}
   </>;
 }
 
@@ -77,7 +78,9 @@ function HeadlineBars({ a, ranked }: { a: JevV15Artifact; ranked: JevV15System[]
     <p className="bh-eyebrow">JevBench {a.revision} · headline option {headline}</p>
     <h2 id="jev15-board-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">JevBench Score: {ranked.length} ranked systems</h2>
     <p className="bh-muted mt-1 text-sm"><span className="bh-jevc-official mr-2">Official ({headline})</span>weighted harmonic mean of four 0–100 axes, Intelligence · Calibration · Speed · Cost = {weightText}, with the low-axis gates · <a href="#jev15-method" className="text-accent underline">Method ↓</a></p>
-    {leader && <p className="mt-2 text-sm font-semibold" data-bh-jev15-leader>{a.board[headline].leader_wording ?? leader}</p>}
+    {/* F-206(d): the sentence names the systems; `jevV15LeaderSentence` already appends the artifact's `leader_wording` when it adds
+        words, so the raw wording ("joint leaders (statistical tie)") is never printed on its own (pass 39: PR #53 had put it first). */}
+    {leader && <p className="mt-2 text-sm font-semibold" data-bh-jev15-leader>{leader}</p>}
     {a.headline_hold && <p className="mt-2 rounded border border-amber-500/60 bg-amber-500/10 p-2 text-sm" data-bh-jev15-headline-hold>{a.headline_hold}</p>}
     <p className="bh-muted mt-1 text-xs" data-bh-jev15-ties>{pairs ? `Whiskers are 95% bootstrap intervals. ${ties} of the ${pairs} adjacent pairs are statistical ties — read the order as a ranking, not the gaps as significant.` : 'Bootstrap intervals and tie markers are not in this data file yet; they come with the official scorer output.'}</p>
     <div className="mt-4 hidden grid-cols-[1.8rem_15rem_minmax(0,1fr)_3.4rem_24rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
