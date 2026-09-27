@@ -23,16 +23,32 @@ if sys.argv[1] == 'text':
     # next-rsc: the page renders from its own RSC payload, so the protocol text lives inside the
     # inline <script> chunks; include them verbatim (only where a review names this recipe).
     rsc = len(sys.argv) > 3 and sys.argv[3] == 'next-rsc'
+    # D233: an inline formatting element must not start a new line. Two adjacent text nodes were
+    # always joined with a newline, so `<a><span>Vending-Bench</span> <span>Deprecated</span></a>`
+    # read as two lines and the badge looked like a heading over the next nav group. Only these
+    # elements' boundaries become a single space; every other tag boundary stays the newline it is
+    # today. Exactly one separator character per boundary either way, so the extracted text keeps
+    # its byte length and its `\s+`-normalised form character for character: no excerpt match and
+    # no 60,000-byte review bound can move. Line structure is the only thing that changes.
+    INLINE = {'a11y-hidden','abbr','acronym','b','bdi','bdo','big','cite','code','data','dfn','em',
+              'font','i','ins','del','kbd','mark','nobr','q','rp','rt','ruby','s','samp','small',
+              'span','strike','strong','sub','sup','time','tt','u','var','wbr'}
     class Visible(HTMLParser):
-        def __init__(self): super().__init__(); self.skip=0; self.parts=[]
+        def __init__(self): super().__init__(); self.skip=0; self.parts=[]; self.hard=True
+        def boundary(self,tag):
+            if tag not in INLINE: self.hard=True
         def handle_starttag(self,tag,attrs):
             if tag in ['script','style'] and not rsc: self.skip+=1
+            else: self.boundary(tag)
         def handle_endtag(self,tag):
             if tag in ['script','style'] and self.skip:self.skip-=1
+            else: self.boundary(tag)
         def handle_data(self,data):
-            if not self.skip:self.parts.append(data)
+            if self.skip: return
+            if self.parts: self.parts.append('\n' if self.hard else ' ')
+            self.parts.append(data); self.hard=False
     if '<html' in raw.lower() or '<!doctype' in raw.lower():
-        parser=Visible(); parser.feed(raw); raw='\n'.join(parser.parts)
+        parser=Visible(); parser.feed(raw); raw=''.join(parser.parts)
     print(raw)
 else:
     spec=importlib.util.spec_from_file_location('collector','scripts/collect-public-benchmarks.py')
