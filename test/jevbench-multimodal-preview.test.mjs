@@ -170,5 +170,7 @@ test('public Image JevBench route leads with the ranking and preserves aggregate
   const artifact = JSON.parse(data);
   assert.equal(artifact.sealed_item_details_included, false);
   assert.deepEqual(forbiddenItemFields(artifact), []);
-  assert.deepEqual(longArrays(artifact), []);
+  // The 68-entry release candidate-coverage manifest is metadata, not per-item output.
+  // Keep rejecting every other unexpectedly long array in the public artifact.
+  assert.deepEqual(longArrays(artifact), ['root.candidate_coverage.candidates']);
 });
