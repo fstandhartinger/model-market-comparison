@@ -14425,6 +14425,9 @@ Preflighted against the pre-deploy site: **17/27**, with exactly the ten checks 
 state failing and every count and value already passing
 (`…/iter249-d232/preflight/verification.json`).
 
+Re-run after the iteration's last commit deployed: **27/27 per host again at `ad7175e2`**
+(`…/iter249-d232/live-final/`), which is the revision the tree closed on.
+
 **The blast radius of the new rule, proved rather than argued.** The whole marker block fails soft:
 any exception in it — a robots rule, an oversized script, a decode error, zero or two matches —
 records a `follow_error` on the page receipt and leaves the page itself a successful capture, which
