@@ -1,0 +1,29 @@
+{
+  "artifact_id": "scores-10",
+  "artifact_sha256": "9714727003a7ae9627a4ef383a2a750ade5a696caa51ebfe6f64282a578e6bd7",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:97bcda81b1e1e8da23118248",
+    "public:0a42dafca3c316da378b2f21",
+    "public:0057ab43fa17cb6c8a578732",
+    "public:f0c51cdc7a0e87aaa057cacd",
+    "public:6ce0ea4b9a357a44a8cd5183",
+    "public:6456a618ad608d7c3e673de4",
+    "public:d6ea1c39226930758b0e9a84",
+    "public:e9e60a9e42f13fe6370404d5",
+    "public:13b9bc34a5d1290d32fb3924",
+    "public:1290333ed7dffdec3f39cc5c",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row public:6456a618ad608d7c3e673de4 sources overall_score_100 as '83.0' while the artifact records 83; numeric equality holds, only textual formatting differs.",
+    "The artifact sets subject.harness null; SOURCE 2 mentions generation settings (openrouter, temp=0.7, min_p=0.1) but does not publish a harness identifier, so null is not contradicted.",
+    "I cannot independently execute hash verification, transport, or qualification checks; those are owner-performed and outside my read-only scope.",
+    "Model_name values with a leading '*' match the source's documented badge-stripping behavior, producing the recorded stripped source_id/name; this is consistent with the stated parser markers."
+  ],
+  "missing_evidence": []
+}

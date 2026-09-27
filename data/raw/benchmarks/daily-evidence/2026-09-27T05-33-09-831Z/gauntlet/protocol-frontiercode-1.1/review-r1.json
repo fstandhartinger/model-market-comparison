@@ -1,0 +1,59 @@
+{
+  "artifact_id": "protocol-frontiercode-1.1",
+  "artifact_sha256": "0eb13d720b36c8591661bcc76d98e60f7cb37afb034fe9b10fa1defe2af8364b",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["frontiercode::1.1","c1","c2"],
+  "errors_found": 5,
+  "findings": [
+    {
+      "id": "missing-metric",
+      "severity": "blocker",
+      "location": "scoring.metric",
+      "evidence": "Protocol excerpt does not define the scoring metric as a weighted aggregate of rubric items; it only mentions an ensemble of grading techniques (unit tests, rubrics, verifiers) and zeroing flagged runs, with no explicit scoring formula or 'weighted aggregate' language.",
+      "repair": "Provide the protocol or methodology text that defines the exact scoring metric, or remove the unsupported metric description from the row."
+    },
+    {
+      "id": "missing-unit",
+      "severity": "blocker",
+      "location": "scoring.unit",
+      "evidence": "Protocol excerpt contains no mention of 'percent' or any scoring unit; the row claims unit is percent.",
+      "repair": "Provide evidence of the score unit (e.g., from the leaderboard display or data.json) or correct the unit field to match the source."
+    },
+    {
+      "id": "missing-range",
+      "severity": "major",
+      "location": "scoring.range",
+      "evidence": "Protocol excerpt does not indicate a 0-100 scale; the row claims range [0,100].",
+      "repair": "Provide source evidence for the score range or remove the range claim unless it is directly supported by the protocol."
+    },
+    {
+      "id": "missing-task-count",
+      "severity": "major",
+      "location": "scoring.notes",
+      "evidence": "Protocol excerpt does not state that the main subset has 100 tasks; it mentions '20+ world-class developers' but no task count.",
+      "repair": "Provide source evidence for the task count or remove the '100 tasks' claim."
+    },
+    {
+      "id": "missing-fraction",
+      "severity": "major",
+      "location": "scoring.notes",
+      "evidence": "Row claims 'Source publishes a fraction; stored ×100' but the protocol excerpt shows no score values—only a 'Loading leaderboard…' placeholder—and thus no evidence of fractional scoring.",
+      "repair": "Provide the actual source data showing fractional scores or remove the claim about source publishing a fraction."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "This review cannot execute hash verification or transport/qualification checks; owner-supplied hashes are taken at face value.",
+    "The provided protocol excerpt is truncated and may omit the leaderboard scores and detailed metric definitions; the full page is not available for review.",
+    "The version_guard references a data.json file that is not included in the packet; continuity of that guard could not be verified.",
+    "The classification 'Secondary benchmark, not a Composite input' is not derivable from the protocol excerpt and was not verified."
+  ],
+  "missing_evidence": [
+    "Scoring metric definition (weighted aggregate of rubric items)",
+    "Scoring unit (percent)",
+    "Scoring range (0-100)",
+    "Main subset task count (100)",
+    "Source publishing a fraction as score basis"
+  ]
+}

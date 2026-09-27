@@ -1,0 +1,26 @@
+{
+  "artifact_id": "protocol-blueprint-bench-2",
+  "artifact_sha256": "7c89f810f8d3532571f1a67d93dbfe1a72a8a75e189f9f5ead8c3b87865f70da",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["blueprint-bench::2", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "unit-not-supported",
+      "severity": "major",
+      "location": "blueprint-bench::2 scoring.unit",
+      "evidence": "The primary source excerpt for https://andonlabs.com/evals/blueprint-bench-2 does not specify a unit for the Connectivity similarity score. The candidate row claims \"unit\":\"points\", but the source calls the value a normalized connectivity similarity score (random baseline 0, perfect 1) and the row's own notes describe it as 'a normalised index, not a share of apartments solved'. No occurrence of 'points' or any explicit unit appears in the source.",
+      "repair": "Change scoring.unit to a value directly supported by the source (e.g., 'normalized index' or 'normalized score') or remove the unit field; ensure consistency with the notes. Do not invent a unit not present in the protocol."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The owner's hash verification and transport/qualification checks were not independently executable in this review; row and source hashes are taken as supplied.",
+    "The source text uses '~20' and the row's description says 'about twenty'; minor paraphrasing is not treated as a substantive mismatch.",
+    "The source does not explicitly define 'version_status' or 'unit'; lifecycle fields other than unit are interpreted from the page being a live, non-deprecated eval."
+  ],
+  "missing_evidence": [
+    "unit of the Connectivity similarity score"
+  ]
+}

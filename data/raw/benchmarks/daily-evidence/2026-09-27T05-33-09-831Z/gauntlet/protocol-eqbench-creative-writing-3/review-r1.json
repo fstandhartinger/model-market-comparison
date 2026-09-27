@@ -1,0 +1,17 @@
+{
+  "artifact_id": "protocol-eqbench-creative-writing-3",
+  "artifact_sha256": "80ef38506fe66e59005afe37521f7ac7be211cf056c6ab37452f547799bcc445",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["eqbench-creative-writing::3", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Metric unit 'Elo' is inferred from the 'Elo Score' column header; the excerpt has no separate units line.",
+    "'higher_better: true' is inferred from standard Elo leaderboard convention and is not stated verbatim in the excerpt.",
+    "'version_status: published' is inferred from Creative Writing v3 being displayed as the current leaderboard and not under Legacy Leaderboards; the excerpt has no literal 'published' field.",
+    "The maintainer surname 'Sam Paech' is not present in the excerpt; only EQ-bench branding appears. This is not required by c1/c2."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,34 @@
+{
+  "artifact_id": "scores-5",
+  "artifact_sha256": "1de31f461e627f1a5c8bef177dd4db27f741469817375efdecceb312758722b7",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:c3491d938488c2c079ff2bd0",
+    "public:786338758a97a21f86f2678d",
+    "public:d21a4143f4d49e7d5cc91e24",
+    "public:b333c6d67e79274ecc984033",
+    "public:27837f3bf1d6f1f45dedc690",
+    "public:696e47f5d512e17ff5f49be0",
+    "public:3475d439d23f550b49b893bb",
+    "public:a23c5e3bf02b693ed9906797",
+    "public:e8abb432083ff4fbfefc385b",
+    "public:2a29f11589dea897f8e857a3",
+    "public:e94cd52fa3388e2ad22b6a93",
+    "public:3cec760bf9001897b5b0d6a6",
+    "public:0011edf7699c2a5109ab8fb9",
+    "public:c5d55055832067f71a875f19",
+    "public:a5f238004486707c071192ae",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Per-row SHA-256 values and transport/qualification checks are owner-executed and cannot be independently recomputed in this read-only review.",
+    "model_id values and join_notes for rows with a non-null model_id derive from retained catalog metadata not reproduced in this packet; treated as accepted prior identity, not independently re-verifiable here.",
+    "basis 'measured' is not explicitly labeled in the source excerpt; it is inferred from the leaderboard protocol and registry scoring notes.",
+    "published_at is set to null in the artifact; the source excerpts do not include a published_at field, so the null value is consistent but not independently confirmed."
+  ],
+  "missing_evidence": []
+}

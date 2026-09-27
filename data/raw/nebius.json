@@ -1,7 +1,7 @@
 {
   "source": "Nebius Token Factory — tokenfactory.nebius.com/api/public/models_info (first-party, public catalog)",
   "region": "mixed (eu-north1 / eu-west2 / us-central1 / uk-south1)",
-  "collected_at": "2026-09-26",
+  "collected_at": "2026-09-27",
   "listing_url": "https://tokenfactory.nebius.com/models",
   "method": "scripts/fetch-nebius-catalog.mjs: one GET of the public catalog (allowed by robots.txt); prices are flavors[].input/output_price_per_million_tokens in native USD; region from flavors[].regions[].country_code (EU member state → eu, US → us, UK → uk); non-chat types and zero-output-price rows (embeddings) omitted; curated model_name/provider_org carried over by exact model_id; new ids marked mapping=derived; catalog status kept per row. See nebius.method.md.",
   "models": [
@@ -223,8 +223,7 @@
       "model_id": "Qwen/Qwen3.8-27B",
       "context_length": 262144,
       "status": "active",
-      "notes": "flavor: cheap; served region: us-central1 (US); id Qwen/Qwen3.8-27B",
-      "mapping": "derived"
+      "notes": "flavor: cheap; served region: us-central1 (US); id Qwen/Qwen3.8-27B"
     },
     {
       "model_name": "GLM 5.1",
@@ -276,9 +275,7 @@
     "Qwen/Qwen3-Embedding-8B"
   ],
   "diff": {
-    "added": [
-      "Qwen/Qwen3.8-27B"
-    ],
+    "added": [],
     "removed": [],
     "price_changed": [],
     "region_changed": []

@@ -1,0 +1,105 @@
+{
+  "type": "object",
+  "properties": {
+    "rows": {
+      "type": "object",
+      "properties": {
+        "public:88e365ce1ad0cf2d8baabe32": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "match",
+                "mismatch",
+                "missing_evidence"
+              ]
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "note"
+          ],
+          "additionalProperties": false
+        },
+        "public:97de292f6b9eb7e55d596a2e": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "match",
+                "mismatch",
+                "missing_evidence"
+              ]
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "note"
+          ],
+          "additionalProperties": false
+        },
+        "public:f2e2cc1a4668ea0becaca834": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "match",
+                "mismatch",
+                "missing_evidence"
+              ]
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "note"
+          ],
+          "additionalProperties": false
+        },
+        "public:dbfce030051339389af1f925": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "match",
+                "mismatch",
+                "missing_evidence"
+              ]
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "note"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "public:88e365ce1ad0cf2d8baabe32",
+        "public:97de292f6b9eb7e55d596a2e",
+        "public:f2e2cc1a4668ea0becaca834",
+        "public:dbfce030051339389af1f925"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "rows"
+  ],
+  "additionalProperties": false
+}

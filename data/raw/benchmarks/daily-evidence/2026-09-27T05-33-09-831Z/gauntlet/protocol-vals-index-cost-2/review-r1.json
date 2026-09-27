@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-vals-index-cost-2",
+  "artifact_sha256": "8ff8e1ec96f89212be5927e21c2b5867299df744bc3834dc1a34b5062fbeffb1",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index-cost::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Read-only review: I cannot independently recompute SHA-256 hashes or execute transport/qualification checks; those are owner-side checks.",
+    "The packet did not include the run-generated added/changed model-row summary, so c2 was judged from the protocol text alone; no added/changed evidence was needed because the protocol text supports active status.",
+    "The exact metric label 'Cost per test' is inferred from the protocol's '$0.77 per test' and Cost column; no contradiction was found."
+  ],
+  "missing_evidence": []
+}

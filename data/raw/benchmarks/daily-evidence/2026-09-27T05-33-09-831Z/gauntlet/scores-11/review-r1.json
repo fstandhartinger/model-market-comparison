@@ -1,0 +1,44 @@
+```json
+{
+  "artifact_id": "scores-11",
+  "artifact_sha256": "6ce841cc9ee8dad38803426d1770c1abc2f2b6f2e08127b930b6fb3a6428e535",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "public:0d912c2de93e8c3b1cb5cbfd",
+    "public:32882e4c1f6f8698e3af2134",
+    "public:777cce50d0dd5a799f6a9d3e",
+    "c1"
+  ],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "public:0d912c2de93e8c3b1cb5cbfd",
+      "severity": "major",
+      "location": "source.published_at",
+      "evidence": "Artifact sets source.published_at to null, but primary SOURCE 1 native_source_row.source_row.dateAdded is '2026-09-24'. Criterion c1 requires the source date, and no source date is otherwise recorded in the row.",
+      "repair": "Set source.published_at to '2026-09-24' (or otherwise record the date from dateAdded)."
+    },
+    {
+      "id": "public:32882e4c1f6f8698e3af2134",
+      "severity": "major",
+      "location": "source.published_at",
+      "evidence": "Artifact sets source.published_at to null, but primary SOURCE 3 native_source_row.source_row.dateAdded is '2026-09-24'. Criterion c1 requires the source date, and no source date is otherwise recorded in the row.",
+      "repair": "Set source.published_at to '2026-09-24' (or otherwise record the date from dateAdded)."
+    },
+    {
+      "id": "public:777cce50d0dd5a799f6a9d3e",
+      "severity": "major",
+      "location": "source.published_at",
+      "evidence": "Artifact sets source.published_at to null, but primary SOURCE 4 native_source_row.source_row.dateAdded is '2026-09-12'. Criterion c1 requires the source date, and no source date is otherwise recorded in the row.",
+      "repair": "Set source.published_at to '2026-09-12' (or otherwise record the date from dateAdded)."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The owner separately performs hash verification and transport/qualification checks; I cannot independently recompute the row hashes or the artifact sha256, so those are taken as binding from the packet.",
+    "The exact mapping between the source's dateAdded field and the artifact's published_at field is not spelled out in the primary evidence, but since the artifact exposes published_at and leaves it null while a date is present, the omission is treated as a c1 failure."
+  ],
+  "missing_evidence": []
+}
+```

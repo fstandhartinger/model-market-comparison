@@ -1,0 +1,83 @@
+{
+  "type": "object",
+  "properties": {
+    "rows": {
+      "type": "object",
+      "properties": {
+        "public:cdcfde63a59cad83d419c696": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "match",
+                "mismatch",
+                "missing_evidence"
+              ]
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "note"
+          ],
+          "additionalProperties": false
+        },
+        "public:e48aff94b2215bb69bdec4d8": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "match",
+                "mismatch",
+                "missing_evidence"
+              ]
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "note"
+          ],
+          "additionalProperties": false
+        },
+        "public:2c19c66764d7db71599e25b1": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "match",
+                "mismatch",
+                "missing_evidence"
+              ]
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "note"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "public:cdcfde63a59cad83d419c696",
+        "public:e48aff94b2215bb69bdec4d8",
+        "public:2c19c66764d7db71599e25b1"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "rows"
+  ],
+  "additionalProperties": false
+}

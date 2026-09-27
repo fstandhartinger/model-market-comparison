@@ -1,0 +1,34 @@
+{
+  "artifact_id": "scores-6",
+  "artifact_sha256": "6a520c4d4a6290b7a137a465587511fdc100d92027f981392552b22d11f0a79d",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:ab8d2b261b5365385429c127",
+    "public:4c039eab879add9501304915",
+    "public:d722b2d84e29756c1b351c1a",
+    "public:e7408c4af01de7e59ba0c503",
+    "public:fc26ee65f2a5ef6b79133d73",
+    "public:d4c2edd39974a7aaa76b8892",
+    "public:0e9c3c0e89fe2ed2cc334ebc",
+    "public:40d0ddd6d98727cf7b1fc1ec",
+    "public:f5e062722bfe06274487ded3",
+    "public:39d18c9517f2176ed7be7121",
+    "public:f68a7a20b4788452ed8f7adc",
+    "public:88bf136458aeea0fc56842ff",
+    "public:025066bd1f4fccf0217d0d85",
+    "public:be6737a64d11ea1bbbaa6e0b",
+    "public:bd51a7cd79123f7ba6d87559",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently recompute row hashes or verify transport/qualification; those are owner-side checks per instructions.",
+    "model_id values for rows with join_notes (public:e7408c4af01de7e59ba0c503, public:d4c2edd39974a7aaa76b8892, public:0e9c3c0e89fe2ed2cc334ebc, public:40d0ddd6d98727cf7b1fc1ec, public:f5e062722bfe06274487ded3, public:39d18c9517f2176ed7be7121, public:f68a7a20b4788452ed8f7adc, public:025066bd1f4fccf0217d0d85, public:bd51a7cd79123f7ba6d87559) rest on retained catalog metadata/identity map not included in the packet; I treated these as accepted prior context per instructions rather than fresh evidence.",
+    "Source elo values with trailing .0 (1313.0, 1258.0, 1147.0) are transcribed as integers (1313, 1258, 1147); this is a scale-1 numeric-equivalent transcription, not an error.",
+    "Source protocol text (creative_writing.html) does not enumerate per-model effort/harness settings; the board itself states no setting, which is consistent with the rows' published-effort basis and no harness field."
+  ],
+  "missing_evidence": []
+}

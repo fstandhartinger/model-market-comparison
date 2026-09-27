@@ -1,0 +1,17 @@
+{
+  "artifact_id": "protocol-vals-index-vibe-code-bench-2",
+  "artifact_sha256": "6454cf99059ad8414187061c54540eb9222e52e13ff65e8243d3448821b424b1",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index-vibe-code-bench::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "The metric name 'accuracy' and unit 'percent' for Vibe Code Bench are inferred from the Vals Index protocol context (accuracy column and percentage results, component scores being each benchmark's own published standalone score) rather than stated verbatim for this component.",
+    "The note that Vals AI publishes accuracy with a standard error per model is not explicitly evidenced in the provided excerpt of the Vals Index protocol text.",
+    "The registry classifications 'secondary benchmark' and 'not a Composite input' are not explicitly stated in the provided source excerpt; they appear consistent with the protocol's description of the Vals Index as a single aggregate measure, but are not directly asserted.",
+    "I cannot recompute row or source hashes or execute transport/qualification checks; these are owner-performed."
+  ],
+  "missing_evidence": []
+}

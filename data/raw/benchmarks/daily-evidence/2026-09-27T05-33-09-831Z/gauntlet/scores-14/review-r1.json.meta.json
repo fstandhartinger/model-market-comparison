@@ -1,0 +1,80 @@
+{
+  "started_at": "2026-09-27T06:13:48.815Z",
+  "mode": "critic",
+  "requested_model": "deepseek/deepseek-v4-flash-0731",
+  "producers": [
+    "z-ai/glm-5.3-flash"
+  ],
+  "qualification": {
+    "id": "deepseek/deepseek-v4-flash-0731",
+    "family": "deepseek",
+    "free": false,
+    "input_per_1m": 0.020999999999999998,
+    "output_per_1m": 0.32,
+    "context": 1310720,
+    "aa_intelligence_index": 34.3,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "deepseek-v4-flash-0731::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4-flash-0731::max",
+        "index": 34.3
+      }
+    ]
+  },
+  "input_sha256": "adacd351f08bcab4d39e4be71d532bc4aa122876052eb0f2019aefd38023cff7",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [
+    "chutes/moonshotai/Kimi-K3-TEE",
+    "deepseek/deepseek-v4-flash-0731"
+  ],
+  "hard_excluded_models": [],
+  "catalog": {
+    "source": "run-cache",
+    "fetched_at": "2026-09-27T05:20:08.490Z"
+  },
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "response_format_mode": null,
+  "response_schema_sha256": null,
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4-flash-0731",
+  "usage": {
+    "prompt_tokens": 9964,
+    "completion_tokens": 5442,
+    "total_tokens": 15406,
+    "cost": 0.00193117716,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.001950684,
+      "upstream_inference_prompt_cost": 0.000209244,
+      "upstream_inference_completions_cost": 0.00174144
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 4996,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "Relace",
+  "session_id": null,
+  "finished_at": "2026-09-27T06:16:56.971Z",
+  "output_sha256": "610500e83aef7b321de5b799373f7de085a8121cfc7173b3b73da09d78910c2e"
+}

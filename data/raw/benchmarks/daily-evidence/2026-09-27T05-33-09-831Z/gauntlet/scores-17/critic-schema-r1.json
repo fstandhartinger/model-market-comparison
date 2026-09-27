@@ -1,0 +1,114 @@
+{
+  "type": "object",
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "enum": [
+        "scores-17"
+      ]
+    },
+    "artifact_sha256": {
+      "type": "string",
+      "enum": [
+        "7f72ea06b13301e32fdcad8ee0712ce991a97a073288257e124a3c6c1d9b71ae"
+      ]
+    },
+    "round": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "revise",
+        "blocked"
+      ]
+    },
+    "coverage_checked": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "public:88e365ce1ad0cf2d8baabe32",
+          "public:97de292f6b9eb7e55d596a2e",
+          "public:f2e2cc1a4668ea0becaca834",
+          "public:dbfce030051339389af1f925",
+          "c1"
+        ]
+      }
+    },
+    "errors_found": {
+      "type": "integer"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "blocker",
+              "major",
+              "minor"
+            ]
+          },
+          "location": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          },
+          "repair": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "severity",
+          "location",
+          "evidence",
+          "repair"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "fixed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "uncertainties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "missing_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "artifact_id",
+    "artifact_sha256",
+    "round",
+    "verdict",
+    "coverage_checked",
+    "errors_found",
+    "findings",
+    "fixed",
+    "uncertainties",
+    "missing_evidence"
+  ],
+  "additionalProperties": false
+}

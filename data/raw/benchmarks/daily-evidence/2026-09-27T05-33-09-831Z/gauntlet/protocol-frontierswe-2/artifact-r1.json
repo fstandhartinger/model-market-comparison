@@ -1,0 +1,22 @@
+[
+  {
+    "id": "frontierswe::2",
+    "version": "2",
+    "version_guard": "V2 page identity phrases (34 tasks; 5 trials per task with a 20-hour budget); exactly one entries payload; the abs view carries best/mean/worst with identical row sets and uniform harness proximus; best>=mean>=worst per row; the relay CSV header is exact, every relayed Name is on the board and restates its mean byte-exactly. A renamed suite, a different task count, a second harness, a changed relay or a silent row drop is a different identity and fails closed.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "mean@5 across all 34 tasks in percent (headline; Implementation/Performance/Research sub-scores, best@5/worst@5, average cost and duration per trial are published alongside)",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Published by the Proximal team (San Francisco) on frontierswe.com with open task repos (github.com/Proximal-Labs/frontier-swe-v2) and a methodology blog. Rows embed in the app’s Next.js flight payload (entries.abs.{best,mean,worst}); each model runs under its own harness selection and the site additionally shows an Other Harnesses view for per-model harness coverage; proximus is uniform across the main board’s 14 rows. The site states no reasoning effort per row; Epoch AI’s FrontierSWE relay CSV (Benchmarking Hub, frontierswe_external.csv; every row’s Source is the site’s leaderboard) restates 12 overlapping rows byte-exactly and states the per-model effort, which is the reviewed effort evidence for the joins. The blog states the suite is “far from saturated”. Community benchmark (single operator); not a Composite input."
+    },
+    "description": "34 hand-written real-world software tasks: each model attempts every task in its own CLI agent harness for 5 trials per task under a 20-hour budget, scored by the site’s own review protocol; the headline value is mean@5 in percent with best@5/worst@5 bounds.",
+    "maintainer": "Proximal team (Proximal Labs, San Francisco)"
+  }
+]

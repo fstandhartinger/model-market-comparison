@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-eqbench-longform-writing-v1.11",
+  "artifact_sha256": "6699de06f61ea6504caf6f2ecccdf99309febc6f76778e6c276e9aeac0143363",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["eqbench-longform-writing::v1.11", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not independently execute SHA-256, network, or transport checks; the supplied owner canonical hashes and excerpt locator were accepted as binding.",
+    "The maintainer field contains the parenthetical \"(Sam Paech)\", which is not visible in the supplied protocol excerpt; only \"EQ-Bench\" is present. This is treated as wording/scope uncertainty rather than missing relevant evidence because it is outside the explicit c1/c2 checks.",
+    "No run-generated count of added/changed model rows was present, so the c2 determination of status \"active\" rests on the live protocol text rather than a freshness summary."
+  ],
+  "missing_evidence": []
+}

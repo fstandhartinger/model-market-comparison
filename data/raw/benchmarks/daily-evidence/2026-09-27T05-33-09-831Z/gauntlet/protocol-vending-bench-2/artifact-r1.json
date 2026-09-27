@@ -1,0 +1,22 @@
+[
+  {
+    "id": "vending-bench::2",
+    "version": "2",
+    "version_guard": "Verify the published version 2 before reading results.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Final bank account balance in USD after one simulated year of operation (average across 5 runs)",
+      "unit": "USD",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "description": "Long-horizon agentic benchmark where models run a simulated vending machine business for a year and are scored on their final bank account balance.",
+    "maintainer": "Andon Labs"
+  }
+]

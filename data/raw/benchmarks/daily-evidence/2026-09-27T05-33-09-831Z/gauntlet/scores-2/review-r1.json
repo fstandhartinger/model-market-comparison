@@ -1,0 +1,35 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "519a4cce95d7e8eec7d525038b19a0554b1a1a2360001ad3c5892b105230a802",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:ff42373b7c7ce7ae8ca191a4",
+    "public:77cd7b3a765625ad97c0c321",
+    "public:1ddb67680fd8019c0dcb75e0",
+    "public:5420554743b8cae7e7a5721f",
+    "public:5d0c559dbf1d8e446e59c1a2",
+    "public:479d56e7c833f25bf2a27946",
+    "public:59f7dac8fa6208f84a93db87",
+    "public:d322b2bed860e93fc93cbead",
+    "public:e2f30d699ee777cd6725827f",
+    "public:3aece25800c11ff57193c34a",
+    "public:89336cdb803a5134e75c7cf5",
+    "public:38cc47b5a5093029533e6bc4",
+    "public:3a1c920aed3defe0a0f01e09",
+    "public:6a201144cc1619810818b70b",
+    "public:ea80737d28de3c97a1dd5e40",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute SHA-256 hashes or execute transport/qualification checks; hash values are owner-provided and trusted as binding.",
+    "The 'basis' field is set to 'measured'; the source does not explicitly label the basis, but the value is an Elo leaderboard score, so 'measured' is the reasonable classification and no derivation logic is involved.",
+    "For rows with model_id values (o3, Kimi-K2-Instruct, Kimi-K2-Thinking), the identity comes from retained catalog context documented in join_notes, not from the current source rows; these are prior accepted identities, not fresh alias inference.",
+    "The candidate source.file field is internal provenance not present in the current primary evidence excerpt; it is extra metadata outside the fields required by the acceptance criteria.",
+    "The source does not publish an effort/harness field; candidate rows set harness/variant to null, so no unsupported effort/harness claim is made."
+  ],
+  "missing_evidence": []
+}

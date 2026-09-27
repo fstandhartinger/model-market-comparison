@@ -1,0 +1,39 @@
+{
+  "artifact_id": "protocol-frontierswe-2",
+  "artifact_sha256": "7cdaa67acaa750ff474a35f2b4cebe20d9b679963175aea41ae0b259ebda2403",
+  "round": 2,
+  "verdict": "revise",
+  "coverage_checked": ["frontierswe::2", "c1", "c2"],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "frontierswe::2-description-harness",
+      "severity": "major",
+      "location": "frontierswe::2 / description and scoring.notes",
+      "evidence": "The row describes each model as running 'in its own CLI agent harness' and notes 'each model runs under its own harness selection', but the published protocol states a single uniform harness: SOURCE 2 blog: 'We evaluate each model at its maximum reasoning effort, with Proximus as the default harness and a 20-hour budget per task'; SOURCE 5 README: 'We evaluated all models using our harness Proximus'. The row's own version_guard says 'uniform harness proximus', making the description internally contradictory.",
+      "repair": "Change the description to say models are evaluated with the Proximus harness (e.g. 'using the Proximus harness'), and remove or correct the 'its own harness selection' / 'other harnesses' statements in scoring.notes."
+    },
+    {
+      "id": "frontierswe::2-overlap-count",
+      "severity": "minor",
+      "location": "frontierswe::2 / scoring.notes",
+      "evidence": "The notes claim the Epoch relay CSV 'restates 12 overlapping rows', but SOURCE 6 (the supplied relay CSV) contains 13 data rows after the header, each with Source https://www.frontierswe.com/ (claude-fable-5-1, gpt-5.6-sol, glm-5.3, kimi-k3, grok-4.6, gemini-3.7-flash, qwen3.8-max, muse-spark-1.2, Inkling, gpt-6-astra, claude-opus-5, claude-fable-5, gemini-3.8-flash).",
+      "repair": "Correct the count to 13 overlapping rows or remove the unspecified count."
+    },
+    {
+      "id": "frontierswe::2-row-count-and-other-harnesses",
+      "severity": "minor",
+      "location": "frontierswe::2 / scoring.notes",
+      "evidence": "The notes state 'proximus is uniform across the main board’s 14 rows' and that 'the site additionally shows an Other Harnesses view', but the captured main page (SOURCE 1) shows a leaderboard numbered 1 through 10 (GPT-6 Astra … Inkling) and contains no 'Other Harnesses' view. The bounded excerpt does not support a 14-row count or the existence of that additional view.",
+      "repair": "Remove the unverifiable '14 rows' count and the 'Other Harnesses view' claim, or provide a primary source excerpt supporting them."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The captured main page is a bounded excerpt; the full leaderboard may contain rows beyond the 10 visible, so the '14 rows' claim cannot be definitively disproven, only unsupported by the supplied evidence.",
+    "The exact 'byte-exactly' restatement between the site and the relay CSV, and the existence of the 'Other Harnesses view', cannot be verified from the provided excerpts.",
+    "The owner separately executes hash and transport/qualification checks; I cannot independently reproduce those hashes or network checks in this read-only review.",
+    "Internal implementation details in version_guard (e.g. 'exactly one entries payload', Next.js flight payload entries.abs) are not independently verifiable from the supplied rendered excerpts."
+  ],
+  "missing_evidence": []
+}

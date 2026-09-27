@@ -1,0 +1,49 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "e19866cae58aa0b4f4038ed882de021bb8c0022ace3f7f5a1704e42322db703e",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "public:d8b505954a7f00fde41ed759",
+    "public:ff454281975fb38458e25820",
+    "public:b8dd7231e98739259117d289",
+    "public:25f76ad62749047ba6dc9e75",
+    "public:4f519751500bd71997553025",
+    "public:996c9a94e13f48ef15583c56",
+    "public:33373f2f698998e460c53917",
+    "public:104216916fc50ef0094d71b2",
+    "public:267a17e79b99421b279b4bca",
+    "public:d66417b916a5142caf595b41",
+    "public:e6ea6ce64cca9aa431af4e70",
+    "public:8817bf4e64726f3c8da8f0a6",
+    "public:267fb28dba204c798d776623",
+    "public:4fc3ac4f2c01de911a66a13f",
+    "public:9feff427ec64f8352e089f75",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "public:ff454281975fb38458e25820",
+      "severity": "major",
+      "location": "subject.model_id in row public:ff454281975fb38458e25820",
+      "evidence": "Primary evidence SOURCE 3 for source row 46 contains only model_name 'thinkingmachines/Inkling' and elo_score '1610.8'; no model_id 'inkling::xhigh' appears. The join_note refers to retained catalog metadata not present in the packet, so the claimed model/checkpoint cannot be verified against primary evidence.",
+      "repair": "Remove the unverified model_id or include the catalog evidence backing 'inkling::xhigh'."
+    },
+    {
+      "id": "public:e6ea6ce64cca9aa431af4e70",
+      "severity": "major",
+      "location": "subject.model_id in row public:e6ea6ce64cca9aa431af4e70",
+      "evidence": "Primary evidence SOURCE 12 for source row 55 contains only model_name 'gemini-3.5-flash-lite' and elo_score '1559.1'; no model_id 'gemini-3.5-flash-lite::default' appears. The join_note cites an identity map review dated 2026-09-26 that is not included in the packet, so the claimed checkpoint cannot be verified.",
+      "repair": "Remove the unverified model_id or include the identity map evidence."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Model_id for rows public:ff454281975fb38458e25820 and public:e6ea6ce64cca9aa431af4e70 is claimed but not present in primary evidence; the referenced catalog metadata is not included in the packet, so its correctness could not be verified.",
+    "Row public:e6ea6ce64cca9aa431af4e70's join_note cites an identity map review dated 2026-09-26 that is not provided; cannot confirm.",
+    "Cannot independently recompute row SHA-256 hashes or the artifact hash; relying on owner-provided values.",
+    "Basis 'measured' is inferred from the leaderboard nature, not explicitly stated in the source JSON."
+  ],
+  "missing_evidence": []
+}

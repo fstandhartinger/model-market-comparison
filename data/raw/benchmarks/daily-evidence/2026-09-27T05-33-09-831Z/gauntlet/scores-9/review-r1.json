@@ -1,0 +1,21 @@
+{
+  "artifact_id": "scores-9",
+  "artifact_sha256": "5e512ab66c0be76de286b53ad495c9a08455332a36c8e029f2285c932d7419c4",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:cdcfde63a59cad83d419c696",
+    "public:e48aff94b2215bb69bdec4d8",
+    "public:2c19c66764d7db71599e25b1",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute the owner's hash verification, transport, or qualification checks; row SHA-256 values and producer receipt are taken as binding supplied evidence.",
+    "The sources do not publish an explicit effort/harness configuration; the rows set harness to null and protocol to the leaderboard Elo Score column, which is consistent with the available primary evidence.",
+    "Retrieval timestamps are used as the source date since no explicit published_at field is present; this matches the supplied source records."
+  ],
+  "missing_evidence": []
+}

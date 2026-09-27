@@ -1,0 +1,29 @@
+{
+  "artifact_id": "scores-22",
+  "artifact_sha256": "1522a81215920b764b3a0b42605926c2c4ca432c3bbce7f5dc7156fbf00903be",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:longbench::2",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "scores-22-f1",
+      "severity": "major",
+      "location": "vendor:DeepSeek-V3:longbench::2 source.published_at / subject.source_id",
+      "evidence": "Criterion c1 requires verifying the source date for every observation. The primary evidence (arXiv 2412.19437v2 PDF pages 30-31) contains no publication/version date in the captured text, while the row sets source.published_at=null and asserts in subject.source_id 'December 2024 update per arXiv 2412.19437v2'. The date assertion is not verifiable from the supplied primary evidence.",
+      "repair": "Populate source.published_at (or an explicit source_date) from authoritative arXiv metadata for 2412.19437v2, or otherwise satisfy c1's source-date verification; if the 'December 2024 update' phrasing cannot be evidenced, remove or qualify it in subject.source_id and name."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute SHA-256 hashes or verify transport/retrieval; I rely on the supplied owner hash values for the artifact, row, and source.",
+    "PDF text extraction may alter whitespace in the locator; the locator appears to match the source line for LongBench v2 (Acc.).",
+    "The arXiv version/publication date is not present in the captured PDF text; I cannot confirm the 'December 2024 update' assertion from primary evidence."
+  ],
+  "missing_evidence": [
+    "Publication/version date for arXiv 2412.19437v2 (source.published_at)"
+  ]
+}

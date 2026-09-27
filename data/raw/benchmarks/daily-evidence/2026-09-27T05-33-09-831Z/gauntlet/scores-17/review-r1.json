@@ -1,0 +1,22 @@
+{
+  "artifact_id": "scores-17",
+  "artifact_sha256": "7f72ea06b13301e32fdcad8ee0712ce991a97a073288257e124a3c6c1d9b71ae",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:88e365ce1ad0cf2d8baabe32",
+    "public:97de292f6b9eb7e55d596a2e",
+    "public:f2e2cc1a4668ea0becaca834",
+    "public:dbfce030051339389af1f925",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-computed canonical SHA-256 values and source-file hashes were supplied as binding; I cannot recompute hashes in this read-only review.",
+    "Source JSON has no explicit published_at date; retrieved_at timestamp is used as the source date, matching the candidate rows.",
+    "Protocol/registry text includes editorial assertions that I could not independently verify against non-supplied pages, but nothing contradicts the supplied SPEC.md excerpt or leaderboard numbers."
+  ],
+  "missing_evidence": []
+}

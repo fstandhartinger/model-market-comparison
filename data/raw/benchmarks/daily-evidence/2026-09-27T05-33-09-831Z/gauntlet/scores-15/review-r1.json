@@ -1,0 +1,29 @@
+{
+  "artifact_id": "scores-15",
+  "artifact_sha256": "a1f8d8e468147c42cb44f7d8ae51b86e520c52b3fcbe047ea286868ad82486e1",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:a1e347c697ecbf9cbe1cdd3f",
+    "public:a594d429d2d8b9ed7cccb731",
+    "public:138b4b98eed11d05a988ca90",
+    "public:6c86080f9cd09963355bc6b5",
+    "public:fa6556a769df5d1cc5863886",
+    "public:efe195ebf1cf6366655459ad",
+    "public:e8e87cc10333ff1238065dc1",
+    "public:d3bbb815362b998459940c41",
+    "public:2ffc018ad92f782b3b1ba356",
+    "public:6e8e935d3674a15c04c46591",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner executes hash verification, transport and qualification checks separately; as a read-only critic I cannot recompute row/artifact SHA-256 hashes or re-fetch the source. No value-level discrepancies were found in the supplied evidence.",
+    "The page's visible 'Updated 9/23/2026' differs from the protocol text 'updated 2026-09-10'; the benchmark registry metadata date is not included in the packet, so the protocol date cannot be independently confirmed. The benchmark version (2) and all numeric fields match the source.",
+    "The model_id values for rows d3bbb815362b998459940c41 and 2ffc018ad92f782b3b1ba356 rely on the join_note's reviewed identity map; they are consistent with each source row's reasoning_effort='max', but the external catalog configuration document is not in the packet and cannot be independently checked.",
+    "The source.file path cannot be verified from the packet; only the source.sha256, url, retrieved_at, and locator were available and matched."
+  ],
+  "missing_evidence": []
+}

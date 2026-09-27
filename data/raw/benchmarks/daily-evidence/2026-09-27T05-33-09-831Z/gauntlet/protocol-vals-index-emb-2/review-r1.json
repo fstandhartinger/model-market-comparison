@@ -1,0 +1,17 @@
+{
+  "artifact_id": "protocol-vals-index-emb-2",
+  "artifact_sha256": "d8060eb505c1b9df61e48ef020a4ef65afe38eec002238d7be40246489b94280",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index-emb::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "The scoring.notes include 'standard error per model', 'independent evaluator', 'secondary benchmark', and 'not a Composite input', which are not directly stated in the supplied page excerpt. I treated these as registry context outside the c1/c2 acceptance criteria rather than as required protocol facts.",
+    "The metric is inferred as 'accuracy' from the page's ACCURACY column and the statement that each benchmark column is that benchmark's own published standalone score.",
+    "The unit 'percent' and range [0,100] are inferred from percentage-form scores (e.g., 69.69%) and accuracy convention; they are not explicitly declared in the excerpt.",
+    "I could not execute the owner's hash, transport, or qualification checks; this is a limitation of a read-only review, not missing numeric source evidence."
+  ],
+  "missing_evidence": []
+}

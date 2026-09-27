@@ -1,0 +1,33 @@
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "2d4857ab8e574d74821e4a956fee178757eb7c53afcebc6ae52f9a2a85469cf8",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:d8b505954a7f00fde41ed759",
+    "public:b8dd7231e98739259117d289",
+    "public:25f76ad62749047ba6dc9e75",
+    "public:4f519751500bd71997553025",
+    "public:996c9a94e13f48ef15583c56",
+    "public:33373f2f698998e460c53917",
+    "public:104216916fc50ef0094d71b2",
+    "public:267a17e79b99421b279b4bca",
+    "public:d66417b916a5142caf595b41",
+    "public:8817bf4e64726f3c8da8f0a6",
+    "public:267fb28dba204c798d776623",
+    "public:4fc3ac4f2c01de911a66a13f",
+    "public:9feff427ec64f8352e089f75",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not independently recompute the artifact SHA-256, per-row canonical SHA-256 values, or the producer output_sha256; these were bound as supplied and verified by the owner outside this review scope.",
+    "Cannot execute transport/qualification checks (HTTP retrieval integrity, network capture); this is a limitation of my read-only role, not a gap in numeric source evidence.",
+    "Row public:267fb28dba204c798d776623: source model_name is '*deepseek-v4.1-flash' with a leading '*' new-model badge marker; the row records the stripped identity 'deepseek-v4.1-flash', which matches the source's documented renderer behavior, and embeds the display_badges_stripped note inside the protocol field. This is a cosmetic/formatting quirk rather than a factual or locator error.",
+    "Row public:9feff427ec64f8352e089f75: source elo_score is '1515.0'; the row stores value 1515. Numerically identical; no tolerance issue.",
+    "Rows declare source published_at=null because the captured leaderboard asset does not expose a publication date; retrieved_at is present and sufficient per the source format."
+  ],
+  "missing_evidence": []
+}

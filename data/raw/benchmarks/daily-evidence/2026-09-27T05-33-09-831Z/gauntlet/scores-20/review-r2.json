@@ -1,0 +1,36 @@
+{
+  "artifact_id": "scores-20",
+  "artifact_sha256": "fd3c32aade7ffb7068162272225407cdb46c46dea02e856fb04a5b42b31436e7",
+  "round": 2,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "FIND-1",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10 field benchmark_id",
+      "evidence": "Primary source (arXiv 2412.19437v2) only names 'SWE-Bench Verified' without any snapshot or version; 'snapshot-2026-09-10' does not appear in the evidence snippet.",
+      "repair": "Replace benchmark_id with the exact version published in the source, or set the version to null/unknown. Do not invent a snapshot date."
+    },
+    {
+      "id": "FIND-2",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10 field subject.model_id / subject.name",
+      "evidence": "Primary source table and evaluation text only refer to 'DeepSeek-V3'; no 'December 2024 update' or 'dec-24' designation is present. The claimed model_id 'deepseek-v3-dec-24::default' is unsupported and constitutes alias inference.",
+      "repair": "Use the exact model/checkpoint identifier as published in the source (e.g., 'DeepSeek-V3'), or leave model_id/variant null if not specified. Do not add version or date suffixes without evidence."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Read-only review: owner-computed row SHA-256 and transport/qualification checks were not independently re-executed.",
+    "The self_reported basis is inferred from the paper being authored by DeepSeek-AI; the snippet does not explicitly label the values as self-reported."
+  ],
+  "missing_evidence": [
+    "benchmark version/snapshot for SWE-Bench Verified in arXiv 2412.19437v2 (the source only says 'SWE-Bench Verified')",
+    "explicit model checkpoint/version in arXiv 2412.19437v2 supporting 'deepseek-v3-dec-24' (source only says 'DeepSeek-V3')"
+  ]
+}

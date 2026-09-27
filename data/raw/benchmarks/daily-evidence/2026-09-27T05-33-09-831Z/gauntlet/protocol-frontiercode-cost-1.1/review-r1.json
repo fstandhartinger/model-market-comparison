@@ -1,0 +1,37 @@
+{
+  "artifact_id": "protocol-frontiercode-cost-1.1",
+  "artifact_sha256": "1d17536c0712b0c1ae020d2dc47839d2e49f477da03f3197c3a299e399dcc298",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["frontiercode-cost::1.1", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "location": "frontiercode-cost::1.1 scoring.metric / scoring.unit / scoring.notes / description",
+      "evidence": "SOURCE 1 excerpt for https://cognition.com/frontiercode contains no mention of \"Cost per rollout\", \"USD\", \"mean\", \"per rollout\", \"Main model\", or \"reasoning effort\"; it only shows changelog pricing corrections (e.g. Sep 10 2026) and a flag rate column, and the changelog never states the metric name or units. The row's metric, units, notes, and description therefore cannot be verified against the actual current primary protocol.",
+      "repair": "Supply a source excerpt/locator that explicitly states the cost metric name and unit (e.g. the full leaderboard table or a methodology cost section), or amend the row to claim only what the excerpt supports. Otherwise c1 cannot be satisfied for metric, units, and description."
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "location": "frontiercode-cost::1.1 version_guard",
+      "evidence": "ROW version_guard asserts \"data.json key v1_1 with subsets.main == 100\" and that the \"Extended subset\" is a different identity. SOURCE 1 mentions \"FrontierCode 1.0\", unfair-internet-use zeroing, and deprecation of the \"Diamond subset\", but contains no \"data.json\", \"subsets.main\", or \"Extended subset\" text.",
+      "repair": "Align version_guard with the protocol excerpt (use the page text \"FrontierCode 1.1\" and supported subset facts), or provide evidence for the data.json/subset assertions."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot recompute hashes or execute transport/qualification checks; relied on supplied row/page hashes and owner receipt.",
+    "SOURCE 1 is an exact excerpt bounded by the full page; omitted portions may contain the cost table/metric/units that would resolve F1.",
+    "\"version_status: published\" is inferred from the public page and \"Current revision\"; the protocol excerpt has no explicit lifecycle field.",
+    "\"status: active\" is inferred from \"Current revision\" and recent changelog additions; the protocol excerpt has no explicit status field."
+  ],
+  "missing_evidence": [
+    "Source text establishing the scoring metric name \"Cost per rollout\" for FrontierCode 1.1",
+    "Source text establishing the unit \"USD\" for the cost metric",
+    "Source text establishing the description \"Cognition's published mean USD spend per rollout for each FrontierCode 1.1 Main model and reasoning effort\"",
+    "Source text establishing the version_guard's \"data.json key v1_1 with subsets.main == 100\" and \"Extended subset\" distinctions"
+  ]
+}

@@ -1,0 +1,76 @@
+[
+  {
+    "id": "public:cdcfde63a59cad83d419c696",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "openai/gpt-oss-20b",
+      "name": "openai/gpt-oss-20b",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 665.6,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 136; openai/gpt-oss-20b; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:e48aff94b2215bb69bdec4d8",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "meta-llama/llama-3.2-3b-instruct",
+      "name": "meta-llama/llama-3.2-3b-instruct",
+      "model_id": "llama-3.2-3b-instruct::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 595.3,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 137; meta-llama/llama-3.2-3b-instruct; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-26: label names llama-3.2-3b-instruct and the board states no setting; the catalog has exactly one configuration, the default (llama-3.2-3b-instruct::default)"
+  },
+  {
+    "id": "public:2c19c66764d7db71599e25b1",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "openai/gpt-3.5-turbo-0613",
+      "name": "openai/gpt-3.5-turbo-0613",
+      "model_id": "gpt-3.5-turbo-0613::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 450.9,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 138; openai/gpt-3.5-turbo-0613; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-26: label names gpt-3.5-turbo-0613 and the board states no setting; the catalog has exactly one configuration, the default (gpt-3.5-turbo-0613::default)"
+  }
+]

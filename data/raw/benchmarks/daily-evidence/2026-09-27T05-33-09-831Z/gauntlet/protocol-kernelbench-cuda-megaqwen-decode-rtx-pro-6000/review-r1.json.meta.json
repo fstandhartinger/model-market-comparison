@@ -1,0 +1,79 @@
+{
+  "started_at": "2026-09-27T05:53:44.185Z",
+  "mode": "critic",
+  "requested_model": "deepseek/deepseek-v4-flash-0731",
+  "producers": [
+    "z-ai/glm-5.3-flash"
+  ],
+  "qualification": {
+    "id": "deepseek/deepseek-v4-flash-0731",
+    "family": "deepseek",
+    "free": false,
+    "input_per_1m": 0.020999999999999998,
+    "output_per_1m": 0.32,
+    "context": 1310720,
+    "aa_intelligence_index": 34.3,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "deepseek-v4-flash-0731::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4-flash-0731::max",
+        "index": 34.3
+      }
+    ]
+  },
+  "input_sha256": "2c39218f5cc3861f55ad04bb719c21588e680fa5390055eb8a4130663568b21a",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "hard_excluded_models": [],
+  "catalog": {
+    "source": "run-cache",
+    "fetched_at": "2026-09-27T05:20:08.490Z"
+  },
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "response_format_mode": null,
+  "response_schema_sha256": null,
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4-flash-0731",
+  "usage": {
+    "prompt_tokens": 20186,
+    "completion_tokens": 2143,
+    "total_tokens": 22329,
+    "cost": 0.00109856934,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.001109666,
+      "upstream_inference_prompt_cost": 0.000423906,
+      "upstream_inference_completions_cost": 0.00068576
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1908,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "Relace",
+  "session_id": null,
+  "finished_at": "2026-09-27T05:54:38.683Z",
+  "output_sha256": "82952811a09cf267d672b7602cd77841c1ebf880f920c99fffb2962829040218"
+}

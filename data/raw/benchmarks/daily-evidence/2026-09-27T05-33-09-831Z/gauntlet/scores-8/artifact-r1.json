@@ -1,0 +1,370 @@
+[
+  {
+    "id": "public:1ebf35580659c8394ebf442f",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "gpt-4o-mini",
+      "name": "gpt-4o-mini",
+      "model_id": "gpt-4o-mini::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 872.8,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 121; gpt-4o-mini; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-26: label names gpt-4o-mini and the board states no setting; the catalog has exactly one configuration, the default (gpt-4o-mini::default)"
+  },
+  {
+    "id": "public:062dd2b49cea0eb31494b26e",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "meta-llama/llama-3.1-405b-instruct",
+      "name": "meta-llama/llama-3.1-405b-instruct",
+      "model_id": "llama-3.1-405b-instruct::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 870.1,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 122; meta-llama/llama-3.1-405b-instruct; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-26: label names llama-3.1-405b-instruct and the board states no setting; the catalog has exactly one configuration, the default (llama-3.1-405b-instruct::default)"
+  },
+  {
+    "id": "public:57c9044b24f0aa088bf4b992",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "meta-llama/Llama-4-Maverick-17B-128E-Instruct",
+      "name": "meta-llama/Llama-4-Maverick-17B-128E-Instruct",
+      "model_id": "llama-4-maverick::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 860.1,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 123; meta-llama/Llama-4-Maverick-17B-128E-Instruct; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Unique exact Hugging Face checkpoint URL in retained catalog metadata; source effort remains as published."
+  },
+  {
+    "id": "public:fab7a3535e310b0f953f62d8",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "google/gemma-2-9b-it",
+      "name": "google/gemma-2-9b-it",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 841.4,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 124; google/gemma-2-9b-it; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:46282c0b32f7d399ca98cc87",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "Nanbeige/Nanbeige4-3B-Thinking-2511",
+      "name": "Nanbeige/Nanbeige4-3B-Thinking-2511",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 841.2,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 125; Nanbeige/Nanbeige4-3B-Thinking-2511; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:c70b7f4933b9f05692b08571",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "meta-llama/llama-3.1-70b-instruct",
+      "name": "meta-llama/llama-3.1-70b-instruct",
+      "model_id": "llama-3.1-70b-instruct::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 783.6,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 126; meta-llama/llama-3.1-70b-instruct; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-26: label names llama-3.1-70b-instruct and the board states no setting; the catalog has exactly one configuration, the default (llama-3.1-70b-instruct::default)"
+  },
+  {
+    "id": "public:659c53be425d45a016b6fb4c",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "meta-llama/Llama-4-Scout-17B-16E-Instruct",
+      "name": "meta-llama/Llama-4-Scout-17B-16E-Instruct",
+      "model_id": "llama-4-scout::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 783.1,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 127; meta-llama/Llama-4-Scout-17B-16E-Instruct; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Unique exact Hugging Face checkpoint URL in retained catalog metadata; source effort remains as published."
+  },
+  {
+    "id": "public:d21c23406ad8ecb550a8f352",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "openrouter/cypher-alpha",
+      "name": "openrouter/cypher-alpha",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 776.9,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 128; openrouter/cypher-alpha; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:b85f8dbbef85f38d5fc07611",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "mistralai/mistral-small-3.1-24b-instruct-2503",
+      "name": "mistralai/mistral-small-3.1-24b-instruct-2503",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 760.9,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 129; mistralai/mistral-small-3.1-24b-instruct-2503; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:700611e8f14e140f80322692",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "openai/gpt-4-0314",
+      "name": "openai/gpt-4-0314",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 752.2,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 130; openai/gpt-4-0314; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:476f576ebe61d4b6546c876f",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "liquid/lfm-7b",
+      "name": "liquid/lfm-7b",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 751.7,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 131; liquid/lfm-7b; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:c13ca5ea586bd477f2d76773",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "anthropic/claude-3-haiku",
+      "name": "anthropic/claude-3-haiku",
+      "model_id": "claude-3-haiku::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 717.3,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 132; anthropic/claude-3-haiku; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-26: label names claude-3-haiku and the board states no setting; the catalog has exactly one configuration, the default (claude-3-haiku::default)"
+  },
+  {
+    "id": "public:c60c66046637a1f2a387c2bd",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "meta-llama/llama-3.1-8b-instruct",
+      "name": "meta-llama/llama-3.1-8b-instruct",
+      "model_id": "llama-3.1-8b-instruct::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 713,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 133; meta-llama/llama-3.1-8b-instruct; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-26: label names llama-3.1-8b-instruct and the board states no setting; the catalog has exactly one configuration, the default (llama-3.1-8b-instruct::default)"
+  },
+  {
+    "id": "public:53a40b6bcf4b0e34b3191d98",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "mistralai/Mistral-Small-24B-Instruct-2501",
+      "name": "mistralai/Mistral-Small-24B-Instruct-2501",
+      "model_id": "mistral-small-24b-instruct-2501::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 706.5,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 134; mistralai/Mistral-Small-24B-Instruct-2501; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Unique exact Hugging Face checkpoint URL in retained catalog metadata; source effort remains as published."
+  },
+  {
+    "id": "public:d9199adc077aa0f695d78104",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "gpt-5-nano-2025-08-07",
+      "name": "gpt-5-nano-2025-08-07",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 704.9,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 135; gpt-5-nano-2025-08-07; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  }
+]

@@ -1,0 +1,125 @@
+{
+  "type": "object",
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "enum": [
+        "scores-4"
+      ]
+    },
+    "artifact_sha256": {
+      "type": "string",
+      "enum": [
+        "3249611b1c7602f79b94002406dbae5caab356668bcaca1b73423a65c91a358a"
+      ]
+    },
+    "round": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "revise",
+        "blocked"
+      ]
+    },
+    "coverage_checked": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "public:f167fd5ede590c1e2600d170",
+          "public:d460e1376bf2068fa2dc5983",
+          "public:6e7c229af28361a3e60049b6",
+          "public:b45e72e7523bb6a808082d83",
+          "public:acdee1eb85eb22bacb79ccf6",
+          "public:9edc50497c0f4783fb4b11cf",
+          "public:cd960b756952119d5885a30c",
+          "public:1d230716e6f194d8a80e9177",
+          "public:34555ad7625ce9466b183e4b",
+          "public:72b8fb0a2efdf9cfb113936b",
+          "public:8cd6da39d32572b1c7abd009",
+          "public:9dacd03742dc6ba38e2b867e",
+          "public:102ef6ac03c745b000097615",
+          "public:2fed4d9d79bfc9fe0f6f0dd8",
+          "public:5bb2e576679b427c2f9a4032",
+          "c1"
+        ]
+      }
+    },
+    "errors_found": {
+      "type": "integer"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "blocker",
+              "major",
+              "minor"
+            ]
+          },
+          "location": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          },
+          "repair": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "severity",
+          "location",
+          "evidence",
+          "repair"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "fixed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "uncertainties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "missing_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "artifact_id",
+    "artifact_sha256",
+    "round",
+    "verdict",
+    "coverage_checked",
+    "errors_found",
+    "findings",
+    "fixed",
+    "uncertainties",
+    "missing_evidence"
+  ],
+  "additionalProperties": false
+}

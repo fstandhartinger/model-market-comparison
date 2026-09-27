@@ -1,0 +1,101 @@
+{
+  "artifact_id": "scores-12",
+  "artifact_sha256": "8dee5a4bc47aa88a84184025e63692a3ee4b70d1e52537c74ff44fa21c4cc602",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "public:1d0dfbc2c6d265ffdde4df01",
+    "public:defbb81c50face9fdf12f71a",
+    "public:b4d6a9006eddf510ae3622f5",
+    "public:320879fe0916ea2fb8f9cd48",
+    "public:db533a9ed9003f6a4307f114",
+    "public:3e9a1283906e76da9774c6b5",
+    "public:9b7c3b43619608e665be2af7",
+    "public:79ee139387973ed74d4d2019",
+    "public:a436e9c2b8a5a0d3dd7a0332",
+    "c1"
+  ],
+  "errors_found": 9,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "public:1d0dfbc2c6d265ffdde4df01 basis",
+      "evidence": "Primary source SOURCE 1 (locator terminalbench; source row 4; 9e1c5e11-748f-4f2e-911a-070a396d5bf8) provides value=57.88, harness=Claude Code, effort=xhigh, trials=330, context date=2026-09-01, name=Fable 5.1, protocol and registry, but contains no explicit basis field (measured/self_reported/derived). Candidate claims basis=\"self_reported\" without primary evidence support.",
+      "repair": "Add explicit basis evidence from the source or mark basis as unsupported/unknown; do not claim self_reported without a source-provided indicator."
+    },
+    {
+      "id": "f2",
+      "severity": "blocker",
+      "location": "public:defbb81c50face9fdf12f71a basis",
+      "evidence": "Primary source SOURCE 5 (locator terminalbench; source row 5; 4643b23c-53e8-47ae-a3bd-9abc900e9588) provides value=54.55, harness=Claude Code, effort=high, trials=330, context date=2026-09-01, name=Fable 5.1, protocol and registry, but contains no explicit basis field. Candidate claims basis=\"self_reported\" without primary evidence support.",
+      "repair": "Add explicit basis evidence from the source or mark basis as unsupported/unknown; do not claim self_reported without a source-provided indicator."
+    },
+    {
+      "id": "f3",
+      "severity": "blocker",
+      "location": "public:b4d6a9006eddf510ae3622f5 basis",
+      "evidence": "Primary source SOURCE 6 (locator terminalbench; source row 7; 83e6bf7e-aeb4-4116-9f30-ca8de96603fb) provides value=53.94, harness=Claude Code, effort=medium, trials=330, context date=2026-09-01, name=Fable 5.1, protocol and registry, but contains no explicit basis field. Candidate claims basis=\"self_reported\" without primary evidence support.",
+      "repair": "Add explicit basis evidence from the source or mark basis as unsupported/unknown; do not claim self_reported without a source-provided indicator."
+    },
+    {
+      "id": "f4",
+      "severity": "blocker",
+      "location": "public:320879fe0916ea2fb8f9cd48 basis",
+      "evidence": "Primary source SOURCE 7 (locator terminalbench; source row 8; f7844abc-3109-4d5f-91ad-481df7b9fac2) provides value=53.94, harness=Claude Code, effort=xhigh, trials=330, context date=2026-07-24, name=Opus 5, protocol and registry, but contains no explicit basis field. Candidate claims basis=\"self_reported\" without primary evidence support.",
+      "repair": "Add explicit basis evidence from the source or mark basis as unsupported/unknown; do not claim self_reported without a source-provided indicator."
+    },
+    {
+      "id": "f5",
+      "severity": "blocker",
+      "location": "public:db533a9ed9003f6a4307f114 basis",
+      "evidence": "Primary source SOURCE 8 (locator terminalbench; source row 11; 0b2908ee-3035-447c-9876-e68fecb3f413) provides value=50.3, harness=Claude Code, effort=high, trials=330, context date=2026-07-24, name=Opus 5, protocol and registry, but contains no explicit basis field. Candidate claims basis=\"self_reported\" without primary evidence support.",
+      "repair": "Add explicit basis evidence from the source or mark basis as unsupported/unknown; do not claim self_reported without a source-provided indicator."
+    },
+    {
+      "id": "f6",
+      "severity": "blocker",
+      "location": "public:3e9a1283906e76da9774c6b5 basis",
+      "evidence": "Primary source SOURCE 9 (locator terminalbench; source row 12; 8c102a88-0789-4ce7-b503-bd39e84e157b) provides value=44.85, harness=Claude Code, effort=medium, trials=330, context date=2026-07-24, name=Opus 5, protocol and registry, but contains no explicit basis field. Candidate claims basis=\"self_reported\" without primary evidence support.",
+      "repair": "Add explicit basis evidence from the source or mark basis as unsupported/unknown; do not claim self_reported without a source-provided indicator."
+    },
+    {
+      "id": "f7",
+      "severity": "blocker",
+      "location": "public:9b7c3b43619608e665be2af7 basis",
+      "evidence": "Primary source SOURCE 10 (locator terminalbench; source row 14; e18d02ab-0973-4d86-872f-a353c8a7f344) provides value=43.33, harness=Claude Code, effort=low, trials=330, context date=2026-09-01, name=Fable 5.1, protocol and registry, but contains no explicit basis field. Candidate claims basis=\"self_reported\" without primary evidence support.",
+      "repair": "Add explicit basis evidence from the source or mark basis as unsupported/unknown; do not claim self_reported without a source-provided indicator."
+    },
+    {
+      "id": "f8",
+      "severity": "blocker",
+      "location": "public:79ee139387973ed74d4d2019 basis",
+      "evidence": "Primary source SOURCE 11 (locator terminalbench; source row 16; 84b39f56-fe3c-46c3-919f-3b67b73f9b49) provides value=37.58, harness=Grok Build, effort=xhigh, trials=330, context date=2026-09-21, name=Grok 4.7, protocol and registry, but contains no explicit basis field. Candidate claims basis=\"self_reported\" without primary evidence support.",
+      "repair": "Add explicit basis evidence from the source or mark basis as unsupported/unknown; do not claim self_reported without a source-provided indicator."
+    },
+    {
+      "id": "f9",
+      "severity": "blocker",
+      "location": "public:a436e9c2b8a5a0d3dd7a0332 basis",
+      "evidence": "Primary source SOURCE 12 (locator terminalbench; source row 18; 03fe4f10-b683-427b-a820-61e38145d28b) provides value=34.85, harness=Claude Code, effort=low, trials=330, context date=2026-07-24, name=Opus 5, protocol and registry, but contains no explicit basis field. Candidate claims basis=\"self_reported\" without primary evidence support.",
+      "repair": "Add explicit basis evidence from the source or mark basis as unsupported/unknown; do not claim self_reported without a source-provided indicator."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute row SHA-256 values or independently verify transport/hash/qualification checks; those are outside my read-only scope.",
+    "The source date is encoded inside the protocol's embedded source-row JSON rather than as a dedicated artifact field; I treated that as present and matching.",
+    "The basis classification self_reported might be inferable from the vendor leaderboard context, but no explicit primary evidence exists; per instructions I treated it as missing rather than filling from memory."
+  ],
+  "missing_evidence": [
+    "Explicit basis (measured/self_reported/derived) evidence in primary source for row public:1d0dfbc2c6d265ffdde4df01",
+    "Explicit basis (measured/self_reported/derived) evidence in primary source for row public:defbb81c50face9fdf12f71a",
+    "Explicit basis (measured/self_reported/derived) evidence in primary source for row public:b4d6a9006eddf510ae3622f5",
+    "Explicit basis (measured/self_reported/derived) evidence in primary source for row public:320879fe0916ea2fb8f9cd48",
+    "Explicit basis (measured/self_reported/derived) evidence in primary source for row public:db533a9ed9003f6a4307f114",
+    "Explicit basis (measured/self_reported/derived) evidence in primary source for row public:3e9a1283906e76da9774c6b5",
+    "Explicit basis (measured/self_reported/derived) evidence in primary source for row public:9b7c3b43619608e665be2af7",
+    "Explicit basis (measured/self_reported/derived) evidence in primary source for row public:79ee139387973ed74d4d2019",
+    "Explicit basis (measured/self_reported/derived) evidence in primary source for row public:a436e9c2b8a5a0d3dd7a0332"
+  ]
+}

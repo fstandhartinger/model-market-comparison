@@ -1,0 +1,49 @@
+{
+  "artifact_id": "protocol-arc-agi-2",
+  "artifact_sha256": "a6113549f6eb3d1d6a238a6fe0f3d783e477854e09142d35328b3f6ec41062bd",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["arc-agi::2", "c1", "c2"],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "arc-agi::2.scoring",
+      "evidence": "SOURCE 1 contains the ARC-AGI-2 leaderboard page text but does not state the metric 'Semi-private exact grid task solution rate', the unit 'percent', or the range [0,100]. It only refers to 'score', 'performance', 'solutions', and 'full test outputs'.",
+      "repair": "Provide a primary-source excerpt that explicitly states the ARC-AGI-2 scoring metric, unit, and range, or align the row's scoring fields to what the source actually says."
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "location": "arc-agi::2.description",
+      "evidence": "The row describes ARC-AGI-2 as 'second-generation ARC-AGI benchmark', but SOURCE 1 says 'ARC-AGI has evolved from its first versions (ARC-AGI-1 and 2)' grouping ARC-AGI-1 and ARC-AGI-2 as first versions.",
+      "repair": "Revise the description to match the source, e.g., 'ARC-AGI-2, one of the first passive-fluid-intelligence ARC-AGI versions, with leaderboard score plotted against cost-per-task'."
+    },
+    {
+      "id": "F3",
+      "severity": "major",
+      "location": "arc-agi::2.version_status",
+      "evidence": "The row claims version_status 'published', but SOURCE 1 does not state a version_status for ARC-AGI-2; it only has 'ARC-AGI-2 Competition'/'ARC-AGI-2 Leaderboard' and a note that results marked 'preview' are unofficial.",
+      "repair": "Add source evidence explicitly showing that ARC-AGI-2 is in a 'published' version status, or change version_status to a value supported by the source excerpt."
+    },
+    {
+      "id": "F4",
+      "severity": "major",
+      "location": "arc-agi::2.superseded_by",
+      "evidence": "Row sets superseded_by to null, but SOURCE 1 names ARC-AGI-3 as the evolved successor: 'ARC-AGI has evolved from its first versions (ARC-AGI-1 and 2) ... to ARC-AGI-3'.",
+      "repair": "Set superseded_by to our registry id for the ARC-AGI-3 successor board (e.g., arc-agi::3) if such a row exists, or provide clear evidence that ARC-AGI-3 is not a successor. Status may remain 'active' if SOURCE 1 still shows ARC-AGI-2 results being reported."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute SHA-256 hash, transport, or qualification checks; the owner runs those separately.",
+    "SOURCE 1 is an excerpt, so the full leaderboard page may contain metric, unit, range, or version_status details not present in the excerpt.",
+    "The superseded_by finding depends on interpreting 'evolved ... to ARC-AGI-3' as naming an official successor; a more complete protocol excerpt could settle this more firmly."
+  ],
+  "missing_evidence": [
+    "ARC-AGI-2 scoring metric name/definition 'Semi-private exact grid task solution rate' in primary source excerpt",
+    "ARC-AGI-2 scoring unit (percent) and range [0,100] in primary source excerpt",
+    "Explicit version_status 'published' for ARC-AGI-2 in primary source excerpt"
+  ]
+}

@@ -1,0 +1,364 @@
+[
+  {
+    "id": "public:1df49f556b54c1299286fb8d",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "muse-spark-1.3",
+      "name": "muse-spark-1.3",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1905.9,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 15; muse-spark-1.3; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard; source row: {\"display_badges_stripped\":[\"eqbench's own renderer treats a leading * as the 'new model' badge, strips it and prefixes the display name with 🆕 (creative_writing.js / creative_writing_longform.js: startsWith('*') then replace(/^\\\\*/,'')); the stripped name is the identity the board builds its HuggingFace and per-model report links from.\"]}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:948f4336bbc6611e1777cf80",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "gpt-5.6-terra",
+      "name": "gpt-5.6-terra",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1854.9,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 16; gpt-5.6-terra; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:08418aadde85c99a1995d770",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "gpt-5.5",
+      "name": "gpt-5.5",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1843.9,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 17; gpt-5.5; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:7dab88ea40b3dbbea976859c",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "Qwen/Qwen3.8-2.4T-A95B",
+      "name": "Qwen/Qwen3.8-2.4T-A95B",
+      "model_id": "qwen3.8-2.4t-a95b::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 1842.5,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 18; Qwen/Qwen3.8-2.4T-A95B; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Unique exact Hugging Face checkpoint URL in retained catalog metadata; source effort remains as published."
+  },
+  {
+    "id": "public:e8dd6067fcb7bed89201a02d",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "muse-spark-1.2",
+      "name": "muse-spark-1.2",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1840.4,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 19; muse-spark-1.2; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:eb470d1292bda8b0c92a5f13",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "claude-opus-4-8",
+      "name": "claude-opus-4-8",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1839.8,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 20; claude-opus-4-8; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:af9b7b645eca44a676194848",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "gpt-5.4",
+      "name": "gpt-5.4",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1839.7,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 21; gpt-5.4; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:5ba599850c203057e678c6c9",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "gpt-5.6-luna",
+      "name": "gpt-5.6-luna",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1828.7,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 22; gpt-5.6-luna; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:cc54e38104d21f3e8126ed6f",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "claude-sonnet-4-6",
+      "name": "claude-sonnet-4-6",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1810.4,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 23; claude-sonnet-4-6; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:7e02fa90846866433c38ccc8",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "claude-opus-4-6",
+      "name": "claude-opus-4-6",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1809.1,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 24; claude-opus-4-6; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:e3baa17353cbe1f14d97a895",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "meta-models/Muse-Glimmer-30B",
+      "name": "meta-models/Muse-Glimmer-30B",
+      "model_id": "muse-glimmer::high",
+      "variant": null,
+      "harness": null
+    },
+    "value": 1798.3,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 25; meta-models/Muse-Glimmer-30B; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null,
+    "join_note": "Unique exact Hugging Face checkpoint URL in retained catalog metadata; source effort remains as published."
+  },
+  {
+    "id": "public:25253905ec547ce69e407531",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "claude-sonnet-5",
+      "name": "claude-sonnet-5",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1794,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 26; claude-sonnet-5; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:9d2db6d93c659bede2d68441",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "space-bunny-alpha",
+      "name": "space-bunny-alpha",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1784.3,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 27; space-bunny-alpha; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard; source row: {\"display_badges_stripped\":[\"eqbench's own renderer treats a leading * as the 'new model' badge, strips it and prefixes the display name with 🆕 (creative_writing.js / creative_writing_longform.js: startsWith('*') then replace(/^\\\\*/,'')); the stripped name is the identity the board builds its HuggingFace and per-model report links from.\"]}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:1a1595703bd847fbfc5cd6b1",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "zai-org/GLM-5.2",
+      "name": "zai-org/GLM-5.2",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1756.5,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 28; zai-org/GLM-5.2; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard",
+    "comparison_key": null
+  },
+  {
+    "id": "public:8aaaddd1a6113618197f6176",
+    "benchmark_id": "eqbench-creative-writing::3",
+    "subject": {
+      "source_id": "gemini-3.8-flash",
+      "name": "gemini-3.8-flash",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1747.9,
+    "unit": "Elo",
+    "basis": "measured",
+    "source": {
+      "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+      "retrieved_at": "2026-09-27T05:40:02.640168+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/722ddb132e8d3a5e5c39.gz",
+      "sha256": "722ddb132e8d3a5e5c39b8d445f8475f3f7e24893a007260c6f3e3cce5c1ee18",
+      "locator": "template_csv; source row 29; gemini-3.8-flash; field elo_score"
+    },
+    "protocol": "Elo Score column in the leaderboard; source row: {\"display_badges_stripped\":[\"eqbench's own renderer treats a leading * as the 'new model' badge, strips it and prefixes the display name with 🆕 (creative_writing.js / creative_writing_longform.js: startsWith('*') then replace(/^\\\\*/,'')); the stripped name is the identity the board builds its HuggingFace and per-model report links from.\"]}",
+    "comparison_key": null
+  }
+]

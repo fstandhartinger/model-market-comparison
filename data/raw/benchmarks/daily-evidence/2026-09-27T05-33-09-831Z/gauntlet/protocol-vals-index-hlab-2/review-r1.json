@@ -1,0 +1,42 @@
+{
+  "artifact_id": "protocol-vals-index-hlab-2",
+  "artifact_sha256": "1062e782aea7d50b407782bb3b1fde3df6957718635744c563a8a8bcfa20a893",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["vals-index-hlab::2", "c1", "c2"],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "vals-index-hlab::2",
+      "severity": "major",
+      "location": "scoring.metric, scoring.unit",
+      "evidence": "Primary source 1 (vals.ai/benchmarks/vals_index) lists HLAB as 'Harvey’s Legal Agent Benchmark, long-horizon legal work product creation' and shows an 'ACCURACY' column with percentage example values, but it does not explicitly state that the HLAB component's metric is 'HLAB accuracy' with unit 'percent'. The row asserts metric/unit/range/higher_better without an explicit protocol statement for the HLAB component.",
+      "repair": "Add an exact protocol excerpt stating that the HLAB component is scored as accuracy in percent, or amend the row's scoring fields to exactly what the source supports."
+    },
+    {
+      "id": "vals-index-hlab::2",
+      "severity": "major",
+      "location": "scoring.notes",
+      "evidence": "Primary source 1 does not mention a standard error per model, 'independent evaluator', 'secondary benchmark', or 'not a Composite input'. These are affirmative claims in scoring.notes that are not present in the supplied protocol excerpt.",
+      "repair": "Remove unsupported claims from scoring.notes or supply a primary source excerpt that substantiates each claim."
+    },
+    {
+      "id": "vals-index-hlab::2",
+      "severity": "minor",
+      "location": "description",
+      "evidence": "Primary source 1 mentions HLAB as Harvey's Legal Agent Benchmark for long-horizon legal work product creation, but it does not mention Artificial Analysis' Harvey LAB-AA row or any non-comparability between the two. The description's comparability clause is unsupported by the cited protocol text.",
+      "repair": "Remove the unsupported 'not comparable with Artificial Analysis' Harvey LAB-AA row' clause from the description, or support it with an authoritative protocol statement."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-executed SHA-256 and transport/qualification checks are outside the read-only reviewer's execution scope; I rely on the supplied canonical hashes and producer receipt.",
+    "The Vals Index page's percentage examples suggest a general accuracy-percent convention, but that is inference, not an explicit HLAB-specific statement, so I did not use it to fill the missing HLAB metric/unit evidence."
+  ],
+  "missing_evidence": [
+    "Explicit primary-protocol statement that the HLAB component's metric is 'HLAB accuracy' with unit 'percent'",
+    "Explicit primary-protocol statement that Vals AI publishes HLAB accuracy with a standard error per model",
+    "Explicit primary-protocol statement that HLAB is an independent evaluator, secondary benchmark, and not a Composite input",
+    "Explicit primary-protocol statement that this row is not comparable with Artificial Analysis' Harvey LAB-AA row"
+  ]
+}

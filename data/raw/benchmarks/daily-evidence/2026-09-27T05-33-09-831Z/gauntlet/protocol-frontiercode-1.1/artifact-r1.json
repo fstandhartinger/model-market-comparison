@@ -1,0 +1,22 @@
+[
+  {
+    "id": "frontiercode::1.1",
+    "version": "1.1",
+    "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Score: weighted aggregate of the rubric items; solutions failing blocking criteria receive 0",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Source publishes a fraction; stored ×100 as a derived value (source basis self_reported). Main subset, 100 tasks. Runs flagged for unfair internet use are zeroed in 1.1. Secondary benchmark, not a Composite input."
+    },
+    "description": "Whether a maintainer would merge the agent's pull request, on tasks crafted by open-source maintainers and graded with tests, rubrics and verifiers.",
+    "maintainer": "Cognition"
+  }
+]
