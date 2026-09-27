@@ -5,11 +5,11 @@ import { JEV_COMPARISONS, isOpenWeightJevRow, readJevbenchSeoData } from '../lib
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 
-test('open-weight inventory is every public Jev-style row of v1.4.2.1, never a proprietary one', async () => {
+test('open-weight inventory is every public Jev-style row of v1.4.2.2, never a proprietary one', async () => {
   const data = await readJevbenchSeoData();
   const rows = data.openWeightAlternatives;
-  assert.equal(rows.length, 61);
-  assert.equal(rows[0].key, 'plumb-4b');
+  assert.equal(rows.length, 62);
+  assert.equal(rows[0].key, 'imajev_4b');
   assert.ok(rows.some((row) => row.key === 'jevk5-v02'), 'JevK5 is Apache-2.0 although its open field is empty');
   for (const key of ['jev-1.13.0', 'instinct', 'jevact']) assert.ok(!rows.some((row) => row.key === key), key);
   assert.ok(rows.every((row) => ['jev-rebuild', 'system-one-open'].includes(row.class) && /^https:\/\//.test(row.repo) && row.licence.trim()));

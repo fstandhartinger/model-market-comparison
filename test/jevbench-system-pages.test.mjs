@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { readJevbenchV12, jevbenchV12View } from '../lib/jevbench-v12.mjs';
-import { readJevbenchV1421 } from '../lib/jevbench-v1421.mjs';
+import { readJevbenchV1422 } from '../lib/jevbench-v1422.mjs';
 
 const page = await readFile(new URL('../app/jev-models/[system]/page.tsx', import.meta.url), 'utf8');
 const hub = await readFile(new URL('../app/jev-models/page.tsx', import.meta.url), 'utf8');
@@ -72,9 +72,9 @@ test('CR-129 the hub HTML actually contains links for semif-qwen3.5-4b and laya 
   assert.doesNotMatch(board, /jev-models\/\[system\]/); // sanity: no literal dynamic-segment text leaked into the board
 });
 
-test('F-171 current per-system pages resolve v1.4.2.1 first and draw its score evidence', () => {
+test('F-171 current per-system pages resolve v1.4.2.2 first and draw its score evidence', () => {
   assert.match(page, /const current = await findV142Row\(key\);\n  if \(current\) return <JevV141SystemDetail/);
-  assert.match(page, /jevbenchV1421View\(await readJevbenchV1421\(\)\)\.systems\.map\(\(r\) => \(\{ system: jevSystemSlug\(r\.key\) \}\)\)/);
+  assert.match(page, /jevbenchV1422View\(await readJevbenchV1422\(\)\)\.systems\.map\(\(r\) => \(\{ system: jevSystemSlug\(r\.key\) \}\)\)/);
   assert.match(v141Detail, /data-bh-jev-system-score/);
   assert.match(v141Detail, /data-bh-jev-system-strip/);
   assert.match(v141Detail, /data-bh-jev-system-radar/);
@@ -87,7 +87,7 @@ test('CR-170 a renamed system keeps its artifact key, gets a clean public slug, 
   assert.equal(jevSystemKeyFromSlug('autoloops-gemma-4-31b-it'), 'kushal-gemma4-31b-it-autoloops');
   assert.equal(jevSystemPath('laya'), '/jev-models/laya');
   assert.deepEqual(JEV_SYSTEM_SLUG_REDIRECTS, [{ source: '/jev-models/kushal-gemma4-31b-it-autoloops', destination: '/jev-models/autoloops-gemma-4-31b-it', permanent: true }]);
-  const { artifact } = await readJevbenchV1421();
+  const { artifact } = await readJevbenchV1422();
   const row = artifact.systems.find((s) => s.key === 'kushal-gemma4-31b-it-autoloops');
   assert.equal(row.display, 'Autoloops – Gemma 4 31B IT');
   assert.equal(row.author, 'Autoloops');

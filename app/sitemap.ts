@@ -2,10 +2,10 @@ import type { MetadataRoute } from "next";
 import { getDataset } from "../lib/data";
 import { SITE_URL } from "../lib/seo";
 import { readJevbenchV12, jevbenchV12View } from "../lib/jevbench-v12.mjs";
-import { readJevbenchV1421, jevbenchV1421View } from "../lib/jevbench-v1421.mjs";
+import { readJevbenchV1422, jevbenchV1422View } from "../lib/jevbench-v1422.mjs";
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 
-const PAGES = ["/", "/benchmarks", "/compare", "/benchmaxxing", "/charts", "/scatter", "/eu", "/jev-models", "/image-jev-bench", "/jev-models/alternatives", "/jev-models/how-to-choose", "/jev-models/open-source-jev", "/jev-models/jev-vs-plumb", "/jev-models/jev-vs-decider-4b-v2", "/jev-models/jev-vs-jevk5", "/jev-models/jev-vs-cygnet", "/jev-models/jev-vs-hopper", "/jev-models/jev-vs-winnow-12b-q8", "/jev-models/jev-vs-reflex-4b", "/jev-models/jev-vs-laya", "/jev-models/v1", "/jev-models/v1.4", "/jev-models/v1.4.1", "/jev-models/v1.4.2", "/jev-models/v1.4.2.1", "/providers", "/provider-explorer", "/gateways", "/about", "/privacy", "/terms", "/impressum"];
+const PAGES = ["/", "/benchmarks", "/compare", "/benchmaxxing", "/charts", "/scatter", "/eu", "/jev-models", "/image-jev-bench", "/jev-models/alternatives", "/jev-models/how-to-choose", "/jev-models/open-source-jev", "/jev-models/jev-vs-imajev", "/jev-models/jev-vs-plumb", "/jev-models/jev-vs-decider-4b-v2", "/jev-models/jev-vs-jevk5", "/jev-models/jev-vs-cygnet", "/jev-models/jev-vs-hopper", "/jev-models/jev-vs-winnow-12b-q8", "/jev-models/jev-vs-reflex-4b", "/jev-models/jev-vs-laya", "/jev-models/v1", "/jev-models/v1.4", "/jev-models/v1.4.1", "/jev-models/v1.4.2", "/jev-models/v1.4.2.1", "/jev-models/v1.4.2.2", "/providers", "/provider-explorer", "/gateways", "/about", "/privacy", "/terms", "/impressum"];
 
 // CR-62.2: the public pages plus one page per model family (the family URL resolves to its model page).
 // CR-129 (2026-09-23): one entry per JevBench system, the same way. The multimodal preview track is not
@@ -16,13 +16,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const families = [...new Set(ds.models.map((m) => m.family_key))].sort();
   const jevView = jevbenchV12View(await readJevbenchV12());
   const jevSystems = [...jevView.ranked, ...jevView.honorable, ...jevView.partial];
-  const jevV1421 = jevbenchV1421View(await readJevbenchV1421());
+  const jevV1422 = jevbenchV1422View(await readJevbenchV1422());
   const v12Keys = new Set(jevSystems.map((row) => row.key));
-  const v1421TopFiveNotYetListed = jevV1421.ranked.slice(0, 5).filter((row) => !v12Keys.has(row.key));
+  const v1422TopFiveNotYetListed = jevV1422.ranked.slice(0, 5).filter((row) => !v12Keys.has(row.key));
   return [
     ...PAGES.map((path) => ({ url: `${SITE_URL}${path === "/" ? "" : path}`, lastModified })),
     ...families.map((key) => ({ url: `${SITE_URL}/models/${encodeURIComponent(key)}`, lastModified })),
     ...jevSystems.map((r) => ({ url: `${SITE_URL}${jevSystemPath(r.key)}`, lastModified: new Date(jevView.generated) })),
-    ...v1421TopFiveNotYetListed.map((r) => ({ url: `${SITE_URL}${jevSystemPath(r.key)}`, lastModified: new Date(jevV1421.generated) })),
+    ...v1422TopFiveNotYetListed.map((r) => ({ url: `${SITE_URL}${jevSystemPath(r.key)}`, lastModified: new Date(jevV1422.generated) })),
   ];
 }
