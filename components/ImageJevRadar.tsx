@@ -75,7 +75,7 @@ export function ImageJevRadar({ systems }: { systems: ImageSystem[] }) {
       <ul className="mt-3 space-y-1 text-sm" aria-label="Legend">{pair.map((system, index) => <li key={system.key}><Swatch s={series[index]} />{index ? "B" : "A"}: <b>{system.name}</b> · composite {system.tracks.all.composite.score.toFixed(2)}</li>)}</ul>
       <figure className="mx-auto mt-2 max-w-xl">
         <Radar spokes={spokes} series={series} size={{ w: 420, h: 320, r: 96 }} id="image-jev-radar" title="Image JevBench four-axis comparison" desc={desc} />
-        <figcaption className="bh-muted text-xs">Scores are from the frozen Image JevBench v0.1 aggregate; no item-level results are shown.</figcaption>
+        <figcaption className="bh-muted text-xs">Scores are from the frozen Image JevBench aggregate; no item-level results are shown.</figcaption>
       </figure>
       <details className="mt-3 text-sm"><summary className="cursor-pointer text-accent">Values as a table</summary>
         <div className="overflow-x-auto"><table className="bh-table mt-2"><thead><tr><th scope="col">Axis</th><th scope="col">{pair[0].name}</th><th scope="col">{pair[1].name}</th></tr></thead>
