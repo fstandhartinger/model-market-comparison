@@ -5,9 +5,9 @@ import { JEVBENCH_REPO } from '../../lib/jevbench.mjs';
 import { CostUnitNote } from '../../components/JevModelsV12';
 import { JevCostsDisclosure } from '../../components/JevCostsDisclosure';
 import { CustomEvaluationOffer } from '../../components/CustomEvaluationOffer';
-import { jevbenchV142View } from '../../lib/jevbench-v142.mjs';
-import { readJevbenchV142WithFamilies } from '../../lib/jevbench-v142-families.mjs';
-import { readJevbenchV141 } from '../../lib/jevbench-v141.mjs';
+import { jevbenchV1421View } from '../../lib/jevbench-v1421.mjs';
+import { readJevbenchV1421WithFamilies } from '../../lib/jevbench-v1421-families.mjs';
+import { readJevbenchV142 } from '../../lib/jevbench-v142.mjs';
 import { JevModelsV14Board } from '../../components/JevModelsV14';
 import { JevCapabilityLazy } from '../../components/JevCapabilityLazy';
 import { JevCapabilityRanking, jevClassView } from '../../components/JevCapabilityRanking';
@@ -19,7 +19,7 @@ import { JevHistoryLazy } from '../../components/JevHistoryLazy';
 
 const OG_ART_REVISION = 'og4'; // The live board URL changes; its share card stays evergreen.
 
-// CR-152: v1.4.2 is the default board (CR-135 introduced the v1.4.x default). The previous public-only v1.3.0 view stays below in a
+// CR-179: v1.4.2.1 is the default board. Earlier versions remain available on their frozen, version-pinned routes; the previous public-only v1.3.0 view stays below in a
 // labeled historical disclosure; frozen releases remain at their version-pinned URLs.
 export async function generateMetadata(): Promise<Metadata> {
   const title = 'JevBench by Benchmark Heaven — Jev-class model benchmark';
@@ -82,10 +82,10 @@ const currentNotMeasured = [
 ];
 
 export default async function JevModelsPage() {
-  const v14Result = await readJevbenchV142WithFamilies();
-  const v14 = jevbenchV142View(v14Result);
-  // CR-151: the previous release's systems, so the board can mark and filter what is new in this one.
-  const previousRelease = (await readJevbenchV141()).artifact;
+  const v14Result = await readJevbenchV1421WithFamilies();
+  const v14 = jevbenchV1421View(v14Result);
+  // CR-179: compare against v1.4.2 so the board marks Plumb-4B as new in this revision.
+  const previousRelease = (await readJevbenchV142()).artifact;
   const previous = { revision: previousRelease.revision, keys: previousRelease.systems.map((row) => row.key) };
   const v12 = await readJevbenchV12();
   const costUnit = v12.artifact.cost_unit;
@@ -176,7 +176,7 @@ export default async function JevModelsPage() {
         <a className="text-accent underline" href="/jev-models/v1" data-bh-jev-v1-link>v1.0 results</a>
       </p>
       <p className="mt-3 max-w-3xl text-sm" data-bh-jev-version-share-row>
-        <a className="text-accent underline" href="/jev-models/v1.4.2" data-bh-jev-version-share>Share this version</a>
+        <a className="text-accent underline" href="/jev-models/v1.4.2.1" data-bh-jev-version-share>Share this version</a>
       </p>
     </header>
 
