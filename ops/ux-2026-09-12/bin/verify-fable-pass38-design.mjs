@@ -34,9 +34,12 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
 
   await go('/jev-models'); await scrollThrough(p);
   if (want('F-207') || want('F-207b')) {
-    await p.evaluate(() => { const b = document.querySelector('[data-bh-jev14-capability-3d]'); if (b) window.scrollTo(0, b.getBoundingClientRect().top + scrollY - 20); });
+    await p.evaluate(() => { const b = document.querySelector('[data-bh-jev14-capability-3d]'); if (b) window.scrollTo({ top: b.getBoundingClientRect().top + scrollY - 20, behavior: 'instant' }); });
     await p.waitForSelector('[data-bh-jev14-3d-model-label]', { timeout: 45000, state: 'attached' }).catch(() => {});
-    await p.waitForTimeout(2500);
+    // The section is below the lazy 3D fallback. A smooth scroll could still be travelling when
+    // the old 2.5 s capture ran, which read the page top as an empty chart. Jump to the target and
+    // leave the canvas time to render before sampling the labels and halos.
+    await p.waitForTimeout(5500);
     const m = await p.evaluate(new Function(`${bxFn}
       const view = document.querySelector('[data-bh-jev14-capability-3d-view]'); const B = bx(view);
       const canvas = !!(view && view.querySelector('canvas'));

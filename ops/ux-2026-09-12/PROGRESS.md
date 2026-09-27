@@ -14470,3 +14470,27 @@ every report — they pay F-206's and D221's non-implementer verification.
    `verify-e1-eci-score-panel.mjs` (54/54 per host). If another gate's ad-hoc verifier turns up in an
    evidence folder with no script behind it, it is worth the same treatment — an uncommitted check
    cannot be re-run, so its red is unfalsifiable.
+
+
+## Independent review gate — 2026-09-27 11:10 UTC (codex-luna)
+
+Review report: ops/ux-2026-09-12/REVIEW-20260927T111003Z.md. Evidence: /opt/benchmarkheaven/state/ux-evidence/review-20260927T111003Z/. Reviewed the 29 commits after c3019dd0 through d2934216; all three live hosts now report d29342167fa96093236db82b0c46f40e5b1859bd.
+
+| Item | Gate result |
+|---|---|
+| D188 / D223 / D224 | verified — 105/105 on canonical, www, and legacy; source and live board rows agree. |
+| D221 | verified — 84/84 per host. |
+| D225 / F-209 | verified — independent quarantine replay 13/13 and D188 live receipt 105/105 per host. |
+| D226 | verified — both ARC-AGI protocol replays accepted; 74/74 live checks per host; source and regression tests pass. |
+| D227 | open — protocol replay and 74/74 live checks pass, but the latest ordinary daily still retained aa-benchmark-fields and predates this fix. |
+| D228 / D229 | verified — both protocol replays accepted; 75/75 live checks per host; tests pass. |
+| D231 | verified — both protocol replays accepted; 51/51 live checks per host. |
+| D232 | verified — protocol replay accepted; fresh 27/27 live checks per host at d293; fail-closed tests pass. |
+| E1 | verified — 54/54 per host. |
+| F-207(a), F-207(b), F-208 | verified — 58/58 per host. The first canonical desktop-light red was a smooth-scroll verifier timing artifact; the corrected run passed and the checked-in verifier now uses instant scroll plus a render wait. |
+| CR-177.2 | verified — daily digest line is present and the zero-pageview simulation test passes. |
+| F-206 | verified → open — the current four-context visual run could not acquire the shared Chrome lock within its 180-second wait. The current HTTP response proves noindex and the preview marker only, not the requested rendering details. |
+| R9.1 / D192 | remain open — the last daily had nine stale sources and 34 quarantined score rows; its source-health snapshot predates later one-row fixes, so the remaining-arm count is not inferred from it. |
+| X6 | remains open — complete line-by-line requirements/CR audit not completed. |
+
+The open list also includes CR-156.4, CR-148.1/.2, CR-152.1/.2/.5, CR-153.4, CR-158.4, and CR-67.5 section 8. No ALL-ACCEPTED line is added.
