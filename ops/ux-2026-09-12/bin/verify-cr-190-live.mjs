@@ -55,7 +55,12 @@ for (const host of HOSTS) {
   check(host, 'the two models the chart omits carry none', served.filter((o) => !o.confidence_interval).map((o) => o.subject.name).sort().join(' | ') === 'GPT-5 Thinking | Gemini 2.5 Flash',
     served.filter((o) => !o.confidence_interval).map((o) => o.subject.name).join(', '));
   check(host, 'every row names the retained paper capture', served.every((o) => o.source.sha256 === PAPER_SHA && o.source.published_at === '2026-09-23'), `${served.filter((o) => o.source.sha256 === PAPER_SHA).length}/17`);
-  check(host, 'no value entered the Composite', served.every((o) => o.basis === 'self_reported') && !JSON.stringify(scores.divergences ?? []).includes('composite'), 'self-reported rows are outside the Composite by construction');
+  // "Outside the Composite" is checkable rather than asserted: the board's coverage counts 17
+  // observations and 17 unmatched, so no catalog configuration holds one of these values at all.
+  const cov = scores.coverage?.benchmark ?? {};
+  check(host, 'the board reaches no catalog configuration, so no Composite can read it',
+    cov.observations === 17 && cov.unmatched_observations === 17 && cov.available === 0 && cov.self_reported === 0,
+    `observations ${cov.observations}, unmatched ${cov.unmatched_observations}, available ${cov.available}, self_reported ${cov.self_reported}`);
   check(host, 'the collection plan records the board as collected', scores.collection?.status === 'collected', scores.collection?.status);
   // CR-190.1's "appears in the benchmarks list": the "One benchmark" ranking view renders an unjoined
   // row under its printed source label, so the whole board is on the page and not only in the API.
