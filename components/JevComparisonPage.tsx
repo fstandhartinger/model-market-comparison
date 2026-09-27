@@ -3,6 +3,7 @@ import { JevCompareV14, type JevCompareRow } from './JevCompareV14';
 import { readJevbenchSeoData } from '../lib/jevbench-seo.mjs';
 import { costBasisLabel, DatasetFaqJsonLd, JevFaq, one, opennessLabel, percent, usdPerThousand, type SeoRow } from './JevBenchSeoBlocks';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
+import { sealedFamilyShares } from '../lib/jevbench-v14.mjs';
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 
 function higherName(jev: SeoRow, rival: SeoRow): string {
@@ -13,7 +14,7 @@ function higherName(jev: SeoRow, rival: SeoRow): string {
 function radarRow(row: SeoRow): JevCompareRow {
   const system = row as unknown as JevV14System;
   const hard = (system.hard as { by_family?: Record<string, { accuracy: number | null; n: number }> } | null)?.by_family ?? null;
-  const sealed = (system.sealed_aggregate as { by_family?: Record<string, number | null> } | null)?.by_family ?? null;
+  const sealed = sealedFamilyShares(system); // F-213: numbers whatever shape the artifact wrote
   const tiers = (system.tiers ?? {}) as Record<string, number | null>;
   return {
     key: system.key,
@@ -72,8 +73,11 @@ export async function JevComparisonPage({ rivalKey, path, label }: { rivalKey: s
       answer: `The published row lists ${rival.display} with license note “${rival.licence || 'not stated'}”. Jev 1.13.0 is listed as “${jev.licence || 'not stated'}”: TypeSafe AI serves it through its own API and has not published its weights. Check each linked source for the exact terms.`,
     },
   ];
-  // Florian's approved v1.4.2 sentence, shown wherever the new #1 is compared with Jev.
-  const topFiveNote = rival.rank === 1 ? (data.artifact as { top_five_note?: string }).top_five_note ?? null : null;
+  // Florian's approved release sentence, shown where the new #1 is compared with Jev — and only when it is about this
+  // pair (F-214, Fable pass 40): v1.4.2.2's note compares Imajev-4B with Plumb-4B, which is the board's story, not this page's.
+  const shortRival = rival.display.split(' (')[0].split(', formerly')[0];
+  const aboutThisPair = (note: string | null) => note && /\bJev\b/.test(note) && note.includes(shortRival) ? note : null;
+  const topFiveNote = rival.rank === 1 ? aboutThisPair((data.artifact as { top_five_note?: string }).top_five_note ?? null) : null;
 
   const values: Array<[string, string, string]> = [
     ['Published rank', `#${jev.rank}`, `#${rival.rank}`],

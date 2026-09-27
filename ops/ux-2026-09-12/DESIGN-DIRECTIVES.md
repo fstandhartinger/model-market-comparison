@@ -1,5 +1,19 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
+**Pass 40: 2026-09-27 ~23:10 UTC**, the "what changed since pass 39" pass (Florian: Fable sparingly). Since pass 39 the changed surface is the
+**JevBench release v1.4.2.2** (CR-191, PR #57: Imajev-4B #1, Plumb-4B #2, Jev #4 of 91) on the hub, its two new pinned pages (`/jev-models/v1.4.2.1`,
+`/jev-models/v1.4.2.2`), the two new comparison pages (`jev-vs-imajev`, `jev-vs-plumb`), the two newcomers' leaf pages, **Image JevBench v0.1.2**
+(CR-189, PRs #56/#58) and the **MentalHealthBench board on the ranking view** (CR-190.1) — no other UI file changed. Judged on the canonical host
+(revision `2be76c2a`, dataset 22:58 UTC) at 1440/390 × light/dark: 182 shots + `metrics-<ctx>.json` (pass 39's hub probes plus a release probe —
+eyebrow, "new" tags, the release note, every version word on the page, the JSON-LD record — a pair-page probe, a leaf probe and a ranking-view
+probe) in `/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass40/canonical/`. The quick views (Simple, Advanced, Guided, Benchmaxxing, a model page, Benchmarks) were shot on today's data, min text
+10 px on every page, no sideways page scroll, and are at the bar. Scripts: `bin/shoot-fable-pass40.mjs`; source pin: `test/fable-pass40.test.mjs`;
+live verifier for non-Fable engines: `bin/verify-fable-pass40-design.mjs <base> <outDir>` (groups `F-212`, `F-213`, `F-214`, `F-215`; it launches its
+own Chromium). Before-receipt at the pre-fix revision: `/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass40/live-before/verification.json` (**64/136**); the shipped fixes on a dev server:
+`/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass40/local-after/verification.json` (**136/136**). Regression receipts on the live site: pass 39 56/56, pass 35 `ONLY=F-191` 64/64 and `ONLY=F-192`
+20/20 (`/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass40/regress/`); pass 35 `ONLY=F-189` was **50/62** with the page correct — its guide count was the literal 10 and the release added two
+comparison pages; re-pinned to the data (see decision 5).
+
 **Pass 39: 2026-09-27 ~13:30 UTC**, the "what changed since pass 38" pass (Florian: Fable sparingly). Since pass 38 the changed surface is the
 **JevBench hub after F-207(b) and F-208** (iteration 245: halo rings on the five labelled spheres with a leader when the plate was pushed; the
 input-length chart at its wrapper's pixel width), the **hidden v1.5 preview after F-206 (iteration 246) and PR #53** (CR-185: option A as the
@@ -93,6 +107,56 @@ Luna. Every delegated diff is reviewed before it lands. Record from passes 8, 11
 the reviewing engine directly.
 
 ---
+
+## Verdict on the live site — pass 40 (2026-09-27), the JevBench v1.4.2.2 release surface, Image JevBench v0.1.2, the MentalHealthBench board
+
+**The release reads right where it is the board's own copy.** The hub's eyebrow and share link say v1.4.2.2, the Capability headline names Imajev-4B
+with 66.3, the score chart and table wear a single "new" pill on Imajev-4B with a "New in v1.4.2.2" filter, and the pinned pages are the frozen
+board with the frozen note (v1.4.2.1's still speaks of Plumb-4B and decider-4b v2, as it should). Image JevBench prints v0.1.2 in eyebrow, h1 and
+the hub's link; its bars, table and radar are pass 37's. MentalHealthBench renders as a 17-row ranked table headed "17 results", every row "As named
+by the source", the unjoined state said once above the table — the existing component, unchanged, says the true thing (iteration 256). Pass 39's
+three directives hold (56/56), the leaf reference (F-191) and the open class (F-192) hold with the new #1.
+
+**Five things are not at the bar, all on the pages the release added or re-pointed; four fixed in this pass, one directed to the release job.**
+
+1. **"NaN%" on ten spokes, three pages, and 24 SVG console errors per page.** The v1.4.2.2 artifact writes Imajev-4B's `sealed_aggregate.by_family`
+   as `{{ correct, n, accuracy }}` objects while the other 92 rows with a breakdown carry the bare share. Every reader cast the value to a number,
+   so the hub's own compare (which defaults to Jev vs the #1), the Imajev-4B leaf and the Jev-vs-Imajev pair page printed "NaN%" beside all ten
+   sealed families, drew a NaN polygon and a stray marker at the figure's origin, and logged `<polygon> points … NaN` — in all four contexts
+   (`desktop_light-leaf-imajev_4b-full.png`, `desktop_light-pair-jev-vs-imajev-full.png`; `metrics-*.json` errors). → **F-213**, fixed by Fable
+   (one helper in the lib, three readers use it; the artifact's bytes are untouched).
+2. **The #1's own page called it "a partial run".** With every pooled family spoke empty (hard breakdown unpublished, sealed shares unreadable) the
+   leaf's family radar said "Imajev-4B was not run on the full v1.4 question set (a partial run)" — of a ranked #1 with a full run. → **F-215**,
+   fixed by Fable (the sentence separates an unpublished breakdown from a partial run).
+3. **The Jev-vs-Imajev page opened with a sentence about Plumb-4B.** The pair page prints the release's `top_five_note` whenever the rival is #1;
+   v1.4.2 wrote that note about Jev and decider-4b v2, v1.4.2.2 writes it about Imajev-4B and Plumb-4B at two decimals ("67.37 … 65.84") on a page
+   whose every other number is one-decimal and whose subject is Jev and Imajev-4B. → **F-214**, fixed by Fable (the note prints only when it names
+   the pair).
+4. **The dataset record described the wrong release.** Every SEO page's JSON-LD said `version: v1.4.2.2` and pointed `contentUrl` at
+   `/api/jevbench/v1.4.2` and the citation at the `v1.4.2` tag; the leaf's class `<code>` title said "named in the v1.4.2 artifact" on a v1.4.2.2
+   page. → **F-212**, fixed by Fable (both follow `artifact.revision`; the upstream tag `v1.4.2.2` exists).
+5. **A spoke whose A value is unpublished printed "· 74%".** The tier radar's separator is drawn by the second value, so with A missing the label
+   began with the dot (`mobile_light-leaf-imajev_4b-radar-vp.png`, "Hard · 74%"). → **F-216**, fixed by Fable (one condition).
+
+Not defects: the Capability ranking placing Jev #2 while the JevBench Score table places it #4 (CR-158's headline is Capability); "47 percent"
+beside one-decimal neighbours on the MentalHealthBench board (the paper prints 47); the per-row unit and date on that board (F-27's "value, unit,
+date" order); the Image JevBench row for Imajev-4B showing "—" where others show their v0.1.1 rank (it is new in v0.1.2); the two overlays at the
+foot of the hub (F-194's stack).
+
+## Decisions in pass 40
+
+1. **A reader normalises, an artifact is never edited (F-213).** The frozen, hash-checked artifact stays byte-identical; the shape difference is
+   absorbed in one lib helper that every consumer uses, and a value without a finite share stays a gap (null), never a zero.
+2. **A ranked row is a full run by definition (F-215).** "Partial run" is a listing state; an empty family spoke on a ranked row means the breakdown
+   was not published, and the sentence says that.
+3. **A page prints the notes that are about its subject (F-214).** The release note belongs to the board and the pinned page; a pair page carries it
+   only when it names both systems of the pair. Pass 37 decision 3 (a fact once per figure) applied to which figure.
+4. **Structured data follows the same variable as the visible page (F-212).** A record with `version: X` and `contentUrl: …/Y` is a contradiction a
+   crawler will read; both come from `artifact.revision`.
+5. **A verifier pins the rule, not the count (F-189 re-pin).** "The guides appear once" was pinned as "10 links"; the release added two comparison
+   pages and the check went red with the page correct. The count is now derived from `JEV_COMPARISONS` in the lib the page itself reads.
+6. **The next release writes one shape (F-217, for the release job).** Mixed value shapes inside one artifact field are the writer's defect; the
+   validator for releases after v1.4.2.2 refuses them so the reader's normaliser never has to hide a second one.
 
 ## Verdict on the live site — pass 39 (2026-09-27), the hub after F-207(b)/F-208, the v1.5 preview after F-206 and PR #53
 
@@ -576,6 +640,57 @@ held through pass 16) after rejecting Florian's 2026-09-12 draft ("All … every
 and the counts line under it keeps the page honest (P4).
 
 ---
+
+## Directives (pass 40)
+
+### F-213 — Sealed family shares are numbers whatever shape the artifact wrote `[mechanical]` — **shipped by Fable (pass 40)**
+
+*Where:* `lib/jevbench-v14.mjs` (`sealedFamilyShares`), `lib/jevbench-v14.d.mts`; `components/JevModelsV14.tsx`, `components/JevV141SystemDetail.tsx`,
+`components/JevComparisonPage.tsx` (each `compareRow`/`radarRow` reads `sealedFamilyShares(row)`); `test/fable-pass40.test.mjs`.
+*What:* the helper maps `sealed_aggregate.by_family` to `{ family: share | null }` — a bare number stays, an object contributes its `accuracy`,
+anything else is null — and returns null without a breakdown. No reader casts the field to numbers itself.
+*Accept:* `/jev-models`, `/jev-models/imajev_4b`, `/jev-models/jev-vs-imajev` at 1440/390 × light/dark: no "NaN" in the page text, no SVG
+console error containing NaN, the sealed radar draws two series (or names who has none); group **F-213** in `verify-fable-pass40-design.mjs`.
+
+### F-215 — A ranked row with no published breakdown is "unpublished", never "a partial run" `[mechanical]` — **shipped by Fable (pass 40)**
+
+*Where:* `components/JevCompareV14.tsx` (`missingSentence`, the pooled `hard` branch).
+*What:* names with `rank === null` keep the partial-run sentence; ranked names get "X has no published hard-tier family breakdown; families that
+need it are left out (—)." Both sentences may appear, each once.
+*Accept:* the #1 leaf's pooled family radar never says "<#1> was not run" or "partial run" of a ranked system; group **F-215**.
+
+### F-214 — The pair page prints the release note only when it is about the pair `[mechanical]` — **shipped by Fable (pass 40)**
+
+*Where:* `components/JevComparisonPage.tsx` (`aboutThisPair`, `topFiveNote`).
+*What:* `topFiveNote` is the artifact's `top_five_note` only when the rival is #1 **and** the note names Jev and the rival's short display name;
+otherwise null. The board and the pinned pages keep printing the note as before.
+*Accept:* on every `/jev-models/jev-vs-*` page `[data-bh-jev-top-five-note]` is absent unless the note names both systems; the head never names a
+system outside the pair through the note; group **F-214**.
+
+### F-212 — The dataset record and the leaf's class title name the rendered release `[mechanical]` — **shipped by Fable (pass 40)**
+
+*Where:* `components/JevBenchSeoBlocks.tsx` (`DatasetFaqJsonLd`: `contentUrl`, `citation`), `components/JevV141SystemDetail.tsx` (the class `<code>` title).
+*What:* `contentUrl` is `${SITE_URL}/api/jevbench/${artifact.revision}`, `citation` is `…/jevbench/blob/${artifact.revision}/docs/METHOD-v1.4.md`
+(the upstream tag exists for every published release), the title reads "Class named in the ${revision} artifact; description pending".
+*Accept:* on the three pair pages the JSON-LD `contentUrl` and `citation` carry the same revision as its `version`; on a `system-one-open` leaf the
+class code's title names the page's revision; group **F-212**.
+
+### F-216 — A spoke's separator sits between two printed values `[mechanical]` — **shipped by Fable (pass 40)**
+
+*Where:* `components/JevRadars.tsx` (the value `tspan`).
+*What:* the " · " is drawn only when the previous series printed a value (`k > 0 && s.values[k - 1] !== null`).
+*Accept:* the Imajev-4B leaf's tier radar prints "74%" alone on the Hard spoke, not "· 74%" (`local-after/shots/*-leaf-imajev_4b-radar-vp.png`);
+pinned in `test/fable-pass40.test.mjs`.
+
+### F-217 — The next JevBench artifact writes one shape per field `[data]` — for the release job (`jobs/*`), not Kimi
+
+*Where:* the JevBench release writer (upstream `fstandhartinger/jevbench`, whichever script writes `sealed_aggregate.by_family`), and the validator
+of the next release's reader (`lib/jevbench-v1423.mjs` or whatever CR-19x names it).
+*What:* every row's `sealed_aggregate.by_family` value is the bare share (a number in 0–1), as 92 of the 93 v1.4.2.2 rows already are; the new
+reader's validator fails on a mixed shape ("by_family value shape differs between rows") the way it fails on a rank gap. v1.4.2.2 itself stays
+as published — the frozen artifact is not rewritten — and its one object-shaped row is absorbed by F-213.
+*Accept:* the next release's artifact has `typeof value === 'number'` for every `by_family` entry; its validator's test pins the refusal with a
+one-row object-shaped fixture.
 
 ## Directives (pass 39)
 
@@ -1316,6 +1431,11 @@ The label half is live and verified (`135a3098`, `4a9dd523`). Open: the identity
 
 | Directive | Commit | Evidence | Verified by |
 |---|---|---|---|
+| F-213 sealed family shares read as numbers whatever shape the artifact wrote (v1.4.2.2 writes Imajev-4B's as objects) | pass-40 commit (Fable, surgical: `lib/jevbench-v14.mjs` `sealedFamilyShares`, three readers) + `test/fable-pass40.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass40/` (`canonical/` the NaN spokes and errors in all four contexts; `live-before/` 64/136; `local-after/` 136/136 on a dev server; `verify-fable-pass40-design.mjs`) | implemented by Fable; needs a non-Fable engine to run `ONLY=F-213` on the deployed revision |
+| F-215 a ranked row's empty pooled family spoke is "no published hard-tier family breakdown", never "a partial run" | same commit (`components/JevCompareV14.tsx`) + test | same (group F-215: red ×8 before, green after) | implemented by Fable; needs a non-Fable engine (`ONLY=F-215`) |
+| F-214 the pair page prints the release note only when it names Jev and the page's rival | same commit (`components/JevComparisonPage.tsx`) + test | same (group F-214: `jev-vs-imajev` printed the Imajev/Plumb note before) | implemented by Fable; needs a non-Fable engine (`ONLY=F-214`) |
+| F-212 JSON-LD `contentUrl`/`citation` and the leaf class title follow `artifact.revision` | same commit (`components/JevBenchSeoBlocks.tsx`, `components/JevV141SystemDetail.tsx`) + test | same (group F-212: `/api/jevbench/v1.4.2` and `blob/v1.4.2/` beside `version: v1.4.2.2` before) | implemented by Fable; needs a non-Fable engine (`ONLY=F-212`) |
+| F-216 a radar spoke's separator only between two printed values | same commit (`components/JevRadars.tsx`) + test | `local-after/shots/*-leaf-imajev_4b-radar-vp.png` | implemented by Fable; a non-Fable engine reads the Hard spoke on `/jev-models/imajev_4b` |
 | F-210 the roster addendum is a table (System · Would place (A) · A score with its 95% interval · Would place (B) · B score); the frozen-order caveat is said once, in the intro | `096d79db` (claude-opus, iteration 251); `components/JevBenchV15Preview.tsx` (`Addendum`), `test/fable-pass39.test.mjs` +2, `test/jevbench-v15-preview.test.mjs` re-pointed at the columns | `/opt/benchmarkheaven/state/ux-evidence/iter251-f210/` (`local-F-210/` 32/32 on a dev server; `pass39-{canonical,www,legacy}/` **56/56 per host** live; rows 36.5–37 px in all four contexts) | **implemented and live-checked** (claude-opus) — needs a non-claude engine to set `verified`. The verifier's own F-210 group was unsatisfiable until this commit: `/outside the v1\\.5\\.0 order/i` is a template-literal escape in plain code. Fixed to the intended regex, which is stricter. |
 | F-206(d) the v1.5 leader line prints the built sentence (names + "joint leaders (statistical tie)"), never the artifact's bare wording | pass-39 commit (Fable, surgical: `components/JevBenchV15Preview.tsx`) + `test/fable-pass39.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass39/` (`canonical/` the regression live in all four contexts; `live-F-206/` pass 37's `ONLY=F-206` 48/52 at `66f0d6cb`; `local-F-206/` and `local-pass39/` the fix on a dev server) | **verified** — claude-opus (iteration 251, not the implementer and not Fable): `ONLY=F-206d` **16/16** on canonical at `cf4fe69c`, and inside the full pass-39 sweep **56/56 per host** at `096d79db`. Pass 37's `ONLY=F-206` is back to **52/52** on canonical (it read 48/52 while the regression was live). `/opt/benchmarkheaven/state/ux-evidence/iter251-f210/{f206d-canonical,pass37-F-206-canonical,pass39-canonical,pass39-www,pass39-legacy}/`. |
 | F-211 listing pills are words (`honorable mention`), an addendum row wears one pill | same commit + test | same (`v15.tags` before: `honorable_mention`, `addendum` beside the label pill; `local-pass39/` after) | **verified** — claude-opus (iteration 251): `ONLY=F-211` **16/16** on canonical at `cf4fe69c`, and inside the 56/56 sweep at `096d79db`. With F-210 the group reads the addendum table's rows and still finds exactly one addendum pill on each. |

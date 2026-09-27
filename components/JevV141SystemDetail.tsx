@@ -5,6 +5,7 @@ import { jevSourceUrl } from './jevSystemLinks';
 import { JevAxisBand, typeColour } from './JevSystemCharts';
 import { JEV_TYPE_LABEL } from './jevTypes';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
+import { sealedFamilyShares } from '../lib/jevbench-v14.mjs';
 import { costBasisLabel, one, percent, usdPerThousand } from './JevBenchSeoBlocks';
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 
@@ -37,7 +38,7 @@ function compareRow(row: JevV14System): JevCompareRow {
   const tiers = (row.tiers ?? {}) as Record<string, number | null>;
   const axes = row.axes ?? { intelligence: null, calibration: null, speed: null, cost: null };
   const hard = (row.hard as { by_family?: Record<string, { accuracy: number | null; n: number }> } | null)?.by_family ?? null;
-  const sealed = (row.sealed_aggregate as { by_family?: Record<string, number | null> } | null)?.by_family ?? null;
+  const sealed = sealedFamilyShares(row); // F-213: numbers whatever shape the artifact wrote
   return { key: row.key, name: short(row.display), source: jevSourceUrl(row.key, row.repo), cls: row.class, rank: row.rank, listing: row.listing, score: row.jevbench_score, axes, tiers: { easy: tiers.easy ?? null, standard: tiers.standard ?? null, judge: tiers.judge ?? null, hard: tiers.hard ?? null, sealed: row.sealed_accuracy }, hard, sealed };
 }
 
@@ -75,7 +76,7 @@ export function JevV141SystemDetail({ row, revision, generated, ranked, note = n
     <header className="bh-page-head mt-3">
       <div className="bh-eyebrow">JevBench by Benchmark Heaven · {revision} · individual system</div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">{row.display}</h1>
-      <p className="bh-muted mt-2 max-w-3xl" data-bh-jev-system-subline>{classLabel ? `${classLabel} · ` : null}{classKey && <><code title="Class named in the v1.4.2 artifact; description pending">{classKey}</code>{' · '}</>}{subLineTail}{row.api_flag && <> · <span title={row.api_exposure_note ?? "The operator's endpoint received sealed item text, without answers."}>API endpoint saw sealed item text</span></>}</p>
+      <p className="bh-muted mt-2 max-w-3xl" data-bh-jev-system-subline>{classLabel ? `${classLabel} · ` : null}{classKey && <><code title={`Class named in the ${revision} artifact; description pending`}>{classKey}</code>{' · '}</>}{subLineTail}{row.api_flag && <> · <span title={row.api_exposure_note ?? "The operator's endpoint received sealed item text, without answers."}>API endpoint saw sealed item text</span></>}</p>
       <JevBenchRelatedLinks systemKey={row.key} />
     </header>
 

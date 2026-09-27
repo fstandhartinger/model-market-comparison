@@ -182,9 +182,17 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
   const partlyMissingFor = (spokes: Spoke[]) => pair.filter((_, k) => spokes.some((sp) => sp.values[k] === null)).map((r) => r.name);
   const missingSentence = (key: string, names: string[]) => {
     if (key === "sealed") return `${names.join(" and ")} has no sealed family breakdown.`;
-    if (key === "hard") return pooled
-      ? `${names.join(" and ")} ${names.length === 1 ? "was" : "were"} not run on the full v1.4 question set (a partial run); families without both hard-tier and sealed results are left out (—).`
-      : `${names.join(" and ")} ${names.length === 1 ? "has" : "have"} no published v1.2 hard-tier family breakdown.`;
+    if (key === "hard") {
+      if (!pooled) return `${names.join(" and ")} ${names.length === 1 ? "has" : "have"} no published v1.2 hard-tier family breakdown.`;
+      // F-215 (Fable pass 40): a ranked row is a full run by definition — an empty pooled spoke there means the hard-tier
+      // family breakdown was not published for it (Imajev-4B in v1.4.2.2), not that the run was partial.
+      const partial = names.filter((name) => pair.find((r) => r.name === name)?.rank === null);
+      const unpublished = names.filter((name) => !partial.includes(name));
+      return [
+        partial.length ? `${partial.join(" and ")} ${partial.length === 1 ? "was" : "were"} not run on the full v1.4 question set (a partial run); families without both hard-tier and sealed results are left out (—).` : null,
+        unpublished.length ? `${unpublished.join(" and ")} ${unpublished.length === 1 ? "has" : "have"} no published hard-tier family breakdown; families that need it are left out (—).` : null,
+      ].filter(Boolean).join(" ");
+    }
     return `${names.join(" and ")} has no published accuracy-tier results.`;
   };
   const status = (r: JevCompareRow) => r.rank !== null ? `#${r.rank}` : r.listing === "honorable_mention" ? "honorable mention, not ranked" : "partial run, not ranked";

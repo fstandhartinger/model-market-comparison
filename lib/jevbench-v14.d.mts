@@ -52,3 +52,5 @@ export function jevbenchV14View(input: { artifact: JevV14Artifact; sha256: strin
   rankedCount: number; publicDecisions: number; sealedDecisions: number; totalDecisions: number;
 };
 export function jevV14RowNote(footnote: string | null | undefined): string | null;
+/** F-213 (Fable pass 40): a row's sealed family shares as numbers whatever shape the artifact wrote them in; null without a breakdown. */
+export function sealedFamilyShares(row: object | null | undefined): Record<string, number | null> | null;

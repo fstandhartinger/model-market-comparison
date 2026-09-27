@@ -15884,9 +15884,20 @@ by it: `vulcanbench-frontier::4`, `blueprint-bench::2`, `ugi-natint::snapshot-20
 `ugi-writing::snapshot-2026-09-10`, `vals-index-hlab::2`, `vals-index-legal-research::2` and
 `vals-index-vibe-code-bench::2`. Checked before filing: these are **not** the "policy sentence" class iteration
 252 fixed — every one of those five registry entries already carries its `Benchmark Heaven policy:` marking.
-Their findings are different ones (a missing protocol excerpt for a metric or unit, a disputed row). That is a
-separate repair and is filed as **D244** rather than started here, because it needs the offline replay loop and
-several rounds per arm.
+Their findings are different ones (a missing protocol excerpt for a metric or unit, a disputed row). And six of
+the seven carry `consecutive_failed_runs: 1` with `last_ok` at 00:54 the same day — they went red for the first
+time at 05:33, which is the shape critic variance has; only `vulcanbench-frontier::4` has failed twice. That is
+filed as **D244** and deliberately not started here: the right first move is the offline replay, not a repair,
+and iteration 252 already measured that four of six arms passed unchanged on replay.
+
+**That one twice-failing arm is also what D224 has been waiting for, and the "four cells" finally have an
+explanation.** `vulcanbench-frontier::4`'s committed capture of today carries **five** Claude Opus 5.5 rows,
+all under `code-quality-maintenance-v3.15`: medium 90.8635, extra-high 90.6788, max 90.2197 and low 86.3631 at
+**n=23**, and high 91.1081 at **n=22** — which the entry's own denominator rule withholds by design, because
+every row we compare states n=23. Four publishable cells, which is exactly the number the ledger has been
+carrying as "absent". They are absent from `/api/benchmark-scores` (28 rows for this board, none of them Opus
+5.5) only because the arm is retained-after-failure. **D224's live half is not a data gap and needs no
+back-fill: it unblocks when that protocol review passes**, and no cell may be forced to make it green.
 
 ### Verified live, 63/63 on every host, at `73b82a3a`
 
@@ -15939,7 +15950,8 @@ Nothing needed correcting, so nothing was edited. Record:
 |---|---|---|---|
 | CR-190.1 | open (registry half done) → **implemented: 17 rows published, join half open (D243)** | `data/raw/benchmarks/scores.json`; `data/raw/benchmarks/daily-evidence/2026-09-27-cr190/gauntlet/{packet,artifact,review}-r1.json` + `review-r1.json.meta.json`; `data/raw/benchmarks/score-approvals.json` (17 rows); `ops/ux-2026-09-12/bin/build-mentalhealthbench-rows.mjs`; `test/cr-190-mentalhealthbench.test.mjs`; gates, live receipt (**63/63**) and screenshots in `/opt/benchmarkheaven/state/ux-evidence/iter256-cr190/` | All 17 of Figure 5(a)'s printed values, each `self_reported`, each with its own critic approval bound to `observationDigest`; 15 carry OpenAI's own 95% interval from the announcement's machine-readable chart payload, cross-checked against the paper's printed value. The board renders in the "One benchmark" view. **Still open:** no row joins a model configuration (D243), and no cost is published (Table 2 prints prices, not a cost per run; Figure 6 is a log-scale scatter with no printed values). Live at `73b82a3a`, **63/63 on all three hosts** (36/63 pre-deploy). Implemented by claude-opus; **needs a non-implementer verification.** |
 | D243 (new) | **open — decision needed** | this entry; `lib/board-identity.mjs`; iteration 242's D219.1 tally | A MentalHealthBench value reaches a model page only via a captured vendor statement of each API's default effort, a setting-less catalog configuration, or OpenAI publishing the settings. Same open question as EQ-Bench's 107 rows. Not an implementer's call. |
-| D244 (new) | **open** | `/opt/mmc-daily/runs/2026-09-27T05-17-01-898Z-781906/reports/source-health.md` | Seven arms failing the protocol review are newer than iteration 254's replay table and are *not* the policy-sentence class (all five registry entries already carry the `Benchmark Heaven policy:` marking). Needs the offline replay loop, several rounds per arm. |
+| D224 (live half) | open → **open, and the blocker is now named** | today's committed board capture `data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/`; `/api/benchmark-scores?benchmark_id=vulcanbench-frontier::4` (28 rows, **0** Opus 5.5) | The four missing Claude Opus 5.5 cells are **not** a data gap: the board publishes **five** Opus 5.5 rows today, all under `code-quality-maintenance-v3.15` — medium 90.8635, extra-high 90.6788, max 90.2197 and low 86.3631 at **n=23**, plus high 91.1081 at **n=22**, which the entry's own denominator rule withholds by design. That is exactly "four cells". They are absent live because `vulcanbench-frontier::4` is retained-after-failure, which is D244's one twice-failing arm. **D224's live half unblocks the moment that arm's protocol review passes**; nothing else is needed, and no cell should be forced. |
+| D244 (new) | **open — replay before repairing** | `/opt/mmc-daily/runs/2026-09-27T05-17-01-898Z-781906/reports/source-health.{md,json}` | Seven arms failing the protocol review are newer than iteration 254's replay table and are *not* the policy-sentence class (all five registry entries already carry the `Benchmark Heaven policy:` marking). **Six of the seven have `consecutive_failed_runs: 1` and `last_ok` at 00:54 today** — they failed for the first time at 05:33, so some are critic variance rather than a defect; only `vulcanbench-frontier::4` has two. Replay offline first (`replay-protocol-review.mjs`), repair only what fails twice. Two shapes: a missing primary excerpt for a metric or unit (`blueprint-bench::2` unit, `vals-index-hlab::2` metric/unit) and "every row disputed, nothing accept-eligible" (both UGI arms, `vals-index-vibe-code-bench::2`). `vals-index-legal-research::2`'s finding reads our "input to our Composite score" sentence as a claim about the *Vals* index, whose component it really is — that one is a wording question, not a data one. |
 | CR-190.2 / CR-190.3 | verified (review gate 20260927T194003Z) | unchanged | Untouched here. The one correction: iteration 255's note that the announcement page "carries no printed values" was true of the rendered shell and false of the bytes — its RSC payload held the whole board. The `source_unreachable` + `desktop_chrome_cdp` receipt pair and `data/SCRAPING.md` recipe are unchanged and still correct. |
 | X5 | implemented; pending non-implementer verification → **verified** | `/opt/benchmarkheaven/state/ux-evidence/iter256-x5/VERIFICATION.md`; `API.md`; `CHANGELOG.md`; `MSG-UPSTREAM-SYNC-PROMPT.md` | Implementer codex-luna, verifier claude-opus. 5/5 digests, 12/12 routes with a correct `X-Content-SHA256`, every count and rank re-derived, every page version and the 404s checked on all three hosts. |
 
@@ -15949,8 +15961,56 @@ Nothing needed correcting, so nothing was edited. Record:
    against the deployed revision; clear the out directory first.
 2. **Tomorrow's ordinary daily run** is the receipt for iteration 254's D242 repair of the 16 retained arms.
 3. **D244's seven newer arms**, offline replay first (`replay-protocol-review.mjs`), several rounds per arm.
+   Start with `vulcanbench-frontier::4`, the only one that has failed twice — it is also the single thing
+   standing between D224's four Claude Opus 5.5 cells and the live API, and those cells need no other work.
 4. **D243** needs an owner decision, not an implementation.
 5. D236–D239 still ride the next JevBench release; D240 is deliberately not back-filled; a review gate still
    owes CR-148.1 a ruling on the non-claude measurement iteration 255 produced.
 
 **`ALL-ACCEPTED` is not appended.**
+
+## Fable pass 40 — 2026-09-27 ~23:10 UTC (claude-fable, design authority)
+
+Scope (Florian: Fable sparingly): what changed since pass 39 — the JevBench v1.4.2.2 release surface (CR-191, PR #57: the hub, the pinned
+`v1.4.2.1`/`v1.4.2.2` pages, the new `jev-vs-imajev` and `jev-vs-plumb` pages, the two newcomers' leaf pages), Image JevBench v0.1.2 (CR-189),
+the MentalHealthBench board on the ranking view (CR-190.1), and the quick views on today's data. Live revision `2be76c2a`, dataset 22:58 UTC.
+Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass40/` (`canonical/` 182 shots + `metrics-<ctx>.json`, four contexts, min text 10 px on every page, no sideways page scroll;
+`regress/` pass 39 **56/56**, pass 35 `ONLY=F-191` **64/64**, `ONLY=F-192` **20/20**, `ONLY=F-189` 50/62 — see below; `live-before/` the pass-40
+verifier at the pre-fix revision **64/136**; `local-after/` the shipped fixes on a dev server **136/136** and their shots; `gates/`
+`build-dataset.log`, `npm-test.log`). Verdict, decisions and directives: `DESIGN-DIRECTIVES.md` "pass 40". Verifier for non-Fable engines:
+`bin/verify-fable-pass40-design.mjs <base> <outDir>` (groups `F-212`, `F-213`, `F-214`, `F-215`).
+
+**What the pass found.** The release reads right where it is the board's own copy (eyebrow, share link, Capability headline, the single "new"
+pill, the frozen pages with their frozen notes, Image JevBench at v0.1.2, the MentalHealthBench board as iteration 256 described it). **The pages
+the release added or re-pointed were not at the bar, and the cause is one data-shape difference nobody read:** the v1.4.2.2 artifact writes
+Imajev-4B's `sealed_aggregate.by_family` as `{ correct, n, accuracy }` objects while the other 92 rows with a breakdown carry the bare share.
+Every reader cast it to a number, so the hub's own compare (Jev vs the #1 by default), the #1's leaf page and the Jev-vs-Imajev pair page printed
+**"NaN%" on all ten sealed families**, drew a NaN polygon and a stray marker, and logged 24 SVG errors per page in all four contexts — the page
+errors the pass-39 matrix had at 0. The same leaf called the ranked #1 "a partial run"; the pair page opened with the release note about
+Plumb-4B at two decimals; every SEO page's JSON-LD said `version: v1.4.2.2` beside `contentUrl …/api/jevbench/v1.4.2`; and a spoke whose A
+value is unpublished printed "· 74%". All five are fixed surgically here (a lib helper, three readers, three sentences, one condition, one
+template literal); the artifact's bytes are untouched (decision 1). What the release job owes is F-217: the next artifact writes one shape.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-213 (new) | **implemented** (Fable, surgical: `lib/jevbench-v14.mjs` `sealedFamilyShares` + `.d.mts`; `JevModelsV14`, `JevV141SystemDetail`, `JevComparisonPage` read through it; `test/fable-pass40.test.mjs`) | `canonical/` (NaN spokes on `/jev-models`, `/jev-models/imajev_4b`, `/jev-models/jev-vs-imajev` ×4; `metrics-*.json` errors); `live-before/` group F-213 red ×24; `local-after/` green | Needs a non-Fable engine: `ONLY=F-213` on the deployed revision, clear the out dir first. |
+| F-215 (new) | **implemented** (Fable: `components/JevCompareV14.tsx` `missingSentence`) | `live-before/` F-215 red ×8 ("Imajev-4B was not run on the full v1.4 question set (a partial run)"); `local-after/shots/desktop_light-leaf-imajev_4b-full.png` ("has no published hard-tier family breakdown") | `ONLY=F-215`. |
+| F-214 (new) | **implemented** (Fable: `components/JevComparisonPage.tsx` `aboutThisPair`) | `live-before/` F-214 red ×8; `local-after/` green; `test/jevbench-seo-routes.test.mjs`'s pin still holds | The note prints only when it names Jev and the page's rival; v1.4.2.2's names neither. `ONLY=F-214`. |
+| F-212 (new) | **implemented** (Fable: `components/JevBenchSeoBlocks.tsx`, `components/JevV141SystemDetail.tsx`) | `live-before/` F-212 red ×32 (`/api/jevbench/v1.4.2`, `blob/v1.4.2/`, "named in the v1.4.2 artifact"); `local-after/` green | `ONLY=F-212`. The upstream tag `v1.4.2.2` exists (`git ls-remote`). |
+| F-216 (new) | **implemented** (Fable: `components/JevRadars.tsx`) | `canonical/mobile_light-leaf-imajev_4b-radar-vp.png` ("Hard · 74%") → `local-after/shots/…` ("Hard 74%") | Pinned in `test/fable-pass40.test.mjs`; a non-Fable engine reads the spoke. |
+| F-217 (new) | **open** `[data]` — for the JevBench release job | this entry; `data/raw/benchmarks/jevbench/v1.4.2.2/jevbench-v1.4.2.2-results.json` (`imajev_4b`) | The next artifact writes `by_family` shares as numbers; its reader's validator refuses a mixed shape. v1.4.2.2 stays as published. |
+| F-189 (verifier) | re-pinned (Fable: `bin/verify-fable-pass35-design.mjs`) | `regress/p35-F189/` 50/62 with the page correct — the guide count was the literal 10 | The count now derives from `JEV_COMPARISONS` (12 since v1.4.2.2). Not a page change. |
+| F-191 / F-192 / pass 39 | hold on the live site with the new #1 | `regress/p35-F191/` 64/64, `regress/p35-F192/` 20/20, `regress/p39/` 56/56 | The leaf's reference logic is dynamic (Jev's page measures against the #1, every other page against Jev). |
+| CR-191 / CR-189 / CR-190.1 (presentation) | seen at the bar (Fable) apart from the rows above | `canonical/*-hub*.png`, `*-pin-v1.4.2.*`, `*-img*.png`, `*-mhb*.png`; `*-rel`, `*-img-rel`, `*-mhb-geom` probes | The release decisions themselves are Florian's (GO #15668); only their presentation was judged. |
+| Quick views | at the bar | `*-simple.png`, `*-advanced.png`, `*-wizard.png`, `*-bmx.png`, `*-model.png`, `*-bench.png`; `*-geom` (minFont ≥ 10, plural1 [], overflow only inside scrollers) | Unchanged since pass 39 apart from today's data. |
+| R3.1 | unchanged | `desktop_light-simple.png` | Florian's own hero copy since 2026-09-15; no re-decision. |
+
+Gates: `node scripts/build-dataset.mjs` exit 0, 870 / 673 / 94 / 3,134, only `generated_at`/`collected_at` moved and the file was restored
+(`gates/build-dataset.log`); `CI=true npm test` **1,531 tests, 1,530 pass, 0 fail, 1 skip**, exit 0 (`gates/npm-test.log`, unpiped);
+`npx tsc --noEmit -p .` exit 0. The dev server on port 3457 was stopped at the end of the pass. The stale pass-35 watcher shell from 25 Sep
+(a `while pgrep -f` loop matching itself, pid 2919569) was ended. The uncommitted D224/D244 ledger text iteration 256 left in the tree is
+committed with this pass unchanged.
+Seen while verifying, not this pass's: the dev server logs a React hydration *attribute* mismatch inside `JevCompareV14` on every leaf page
+(`/jev-models/plumb-4b` shows it with this pass's edits stashed, so it predates them); production logs nothing there. Filed as **D245** for a
+work iteration: find the attribute (`git stash` proves the baseline), no page change in this pass.
+**Needs a non-Fable engine to set `verified` on F-212–F-216; F-217 is for the next JevBench release job.**

@@ -11,6 +11,11 @@ const BASE = (process.argv[2] || 'https://benchmarkheaven.com').replace(/\/$/, '
 const OUT = process.argv[3] || '/tmp/verify-fable-pass35';
 await fs.mkdir(OUT, { recursive: true });
 const ONLY = process.env.ONLY || null;
+// Pass 40 (Fable): the guide count follows the data — three guide pages plus one link per comparison page in
+// lib/jevbench-seo.mjs (10 at v1.4.2, 12 since v1.4.2.2 added Jev vs Imajev-4B and Jev vs Plumb-4B). The old literal
+// 10 made a correct page fail after a release (red-verifier-pinned-to-old-release).
+const { JEV_COMPARISONS } = await import(new URL('../../../lib/jevbench-seo.mjs', import.meta.url));
+const GUIDE_LINKS = 3 + JEV_COMPARISONS.length;
 const checks = [];
 const check = (group, ctx, name, ok, detail) => { checks.push({ group, ctx, name, ok: !!ok, detail }); };
 const want = (g) => !ONLY || g === ONLY;
@@ -129,7 +134,7 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       check('F-189', ctx, 'View by has five metric buttons, Overall pressed, and a Capability return link', m.viewBy.length === 5 && m.viewBy.filter((b) => b.pressed === 'true').length === 1 && m.viewBy.find((b) => b.view === 'overall')?.pressed === 'true' && m.capabilityJump, JSON.stringify(m.viewBy));
       check('F-189', ctx, 'approved fairness sentence appears once without a box', m.notes === 1 && m.noteBox && m.noteBox.every((b) => b.w === 0 && !b.shadow && !b.bg), JSON.stringify(m.noteBox));
       check('F-189', ctx, 'the capability ranking leads the live board', m.firstHeadlineY != null && m.firstHeadlineY < m.firstBarY, `${m.firstHeadlineY} vs ${m.firstBarY}`);
-      check('F-189', ctx, 'decision guides appear only once', m.guideLinks === 10, String(m.guideLinks));
+      check('F-189', ctx, 'decision guides appear only once', m.guideLinks === GUIDE_LINKS, `${m.guideLinks} (expected ${GUIDE_LINKS})`);
       check('F-189', ctx, 'short class summary precedes the bars and full method follows them', m.summaryBefore && m.methodAfter && m.methodComplete, JSON.stringify({summaryBefore:m.summaryBefore,methodAfter:m.methodAfter,methodComplete:m.methodComplete}));
       check('F-189', ctx, 'no horizontal page overflow', !m.overflow, String(m.overflow));
       if (kind === 'mobile') check('F-189', ctx, 'first headline row at y ≤ 720 on a phone', m.firstHeadlineY <= 720, String(m.firstHeadlineY));
@@ -142,13 +147,13 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
         // toggle that reveals all ten links by tap and by keyboard.
         check('F-189', ctx, 'guides start collapsed behind a 44 px tap target', m.guideToggle?.expanded === 'false' && m.guideToggle.height >= 44, JSON.stringify(m.guideToggle));
         await p.locator('[data-bh-jev-board-guides-toggle]').click();
-        check('F-189', ctx, 'guides expand by tap with all ten links visible', await p.locator('[data-bh-jev-board-guides-toggle]').getAttribute('aria-expanded') === 'true' && await p.locator('[data-bh-jev-board-guides] a:visible').count() === 10, '');
+        check('F-189', ctx, 'guides expand by tap with all ten links visible', await p.locator('[data-bh-jev-board-guides-toggle]').getAttribute('aria-expanded') === 'true' && await p.locator('[data-bh-jev-board-guides] a:visible').count() === GUIDE_LINKS, '');
         await p.locator('[data-bh-jev-board-guides-toggle]').click();
         await p.locator('[data-bh-jev-board-guides-toggle]').focus(); await p.keyboard.press('Enter');
         check('F-189', ctx, 'guides open by keyboard', await p.locator('[data-bh-jev-board-guides-toggle]').getAttribute('aria-expanded') === 'true', '');
         await p.keyboard.press('Space');
         check('F-189', ctx, 'guides close by keyboard', await p.locator('[data-bh-jev-board-guides-toggle]').getAttribute('aria-expanded') === 'false', '');
-        check('F-189', ctx, 'the guides links stay in the HTML while collapsed (F-197)', m.guideLinks === 10 && m.guideVisible === 0, JSON.stringify({ links: m.guideLinks, visible: m.guideVisible }));
+        check('F-189', ctx, 'the guides links stay in the HTML while collapsed (F-197)', m.guideLinks === GUIDE_LINKS && m.guideVisible === 0, JSON.stringify({ links: m.guideLinks, visible: m.guideVisible }));
       }
       await p.locator('button[data-bh-jev-view="intelligence"]').click();
       const intel = await p.evaluate(() => ({ pressed: document.querySelector('button[data-bh-jev-view="intelligence"]')?.getAttribute('aria-pressed'),

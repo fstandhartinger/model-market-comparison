@@ -1,4 +1,4 @@
-import { jevV14RowNote, type JevV14Artifact, type JevV14System } from '../lib/jevbench-v14.mjs';
+import { jevV14RowNote, type JevV14Artifact, type JevV14System, sealedFamilyShares } from '../lib/jevbench-v14.mjs';
 import { withFieldNames } from './jevFieldNames';
 import { JevCompareV14, type JevCompareRow } from './JevCompareV14';
 import { shortName, type JevBoardViewRow } from './JevBoardShared';
@@ -58,7 +58,7 @@ function presetsOf(artifact: JevV14Artifact): JevPreset[] {
 
 function compareRow(row: JevV14System): JevCompareRow {
   const hard = (row.hard as { by_family?: Record<string, { accuracy: number | null; n: number }> } | null)?.by_family ?? null;
-  const sealed = (row.sealed_aggregate as { by_family?: Record<string, number | null> } | null)?.by_family ?? null;
+  const sealed = sealedFamilyShares(row); // F-213: numbers whatever shape the artifact wrote
   const tiers = (row.tiers ?? {}) as Record<string, number | null>;
   return {
     key: row.key, name: shortName(row.display), cls: row.class, rank: row.rank, listing: row.listing, score: row.jevbench_score, source: jevSourceUrl(row.key, row.repo),

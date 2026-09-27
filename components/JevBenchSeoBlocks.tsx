@@ -84,9 +84,10 @@ export function DatasetFaqJsonLd({ path, artifact, faq, items, itemListName, var
         distribution: {
           '@type': 'DataDownload',
           encodingFormat: 'application/json',
-          contentUrl: `${SITE_URL}/api/jevbench/v1.4.2`,
+          contentUrl: `${SITE_URL}/api/jevbench/${artifact.revision}`,
         },
-        citation: 'https://github.com/fstandhartinger/jevbench/blob/v1.4.2/docs/METHOD-v1.4.md',
+        // F-212 (pass 40): the dataset record names the release it describes; the method doc is tagged with every release.
+        citation: `https://github.com/fstandhartinger/jevbench/blob/${artifact.revision}/docs/METHOD-v1.4.md`,
       },
       // Only for a list the page shows in full, in the same order.
       ...(items?.length ? [{
