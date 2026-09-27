@@ -32,7 +32,13 @@ import { protocolSourceContent } from '../ops/daily/refresh-benchmarks.mjs';
 const repo = new URL('..', import.meta.url);
 const read = (p) => JSON.parse(readFileSync(new URL(p, repo), 'utf8'));
 const registry = read('data/raw/benchmarks/registry.json');
-const captures = read('data/raw/benchmarks/daily-evidence/2026-09-24-d193/manifest.json');
+// D230 (2026-09-27) added a third reviewed reference to both `frontiercode*` entries — the
+// FrontierCode 1.1 release post, the only captured source that states the Main/Extended subset sizes
+// their version guard asserts. Its retained capture lives in its own dated folder, so the guarantee
+// below reads both: every reviewed reference of these six entries, wherever its capture was kept.
+const captures = [...read('data/raw/benchmarks/daily-evidence/2026-09-24-d193/manifest.json'),
+  ...read('data/raw/benchmarks/daily-evidence/2026-09-27-d230/manifest.json')
+    .filter((c) => c.url === 'https://cognition.com/blog/frontier-code-1.1')];
 
 const ENTRIES = ['ugi::snapshot-2026-09-10', 'ugi-natint::snapshot-2026-09-10',
   'ugi-willingness::snapshot-2026-09-10', 'ugi-writing::snapshot-2026-09-10',

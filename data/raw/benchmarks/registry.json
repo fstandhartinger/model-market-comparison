@@ -2576,13 +2576,13 @@
       "one_sentence_description": "An agent looks at about twenty interior photos of each of 50 apartments and draws the floor plan: which rooms exist and which rooms connect to which.",
       "scoring": {
         "metric": "Connectivity similarity score of the generated floor plans against ground truth, normalised so the random baseline is 0 and a perfect plan is 1",
-        "unit": "points",
+        "unit": "normalized score",
         "range": [
           0,
           1
         ],
         "higher_better": true,
-        "notes": "Each plan's room-connection graph is compared with the true plan under rotation and reflection: Jaccard similarity of room-to-room connections 50 %, degree similarity 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %. The composite is normalised so that the random baseline maps to 0 and a perfect score to 1, and the board prints any score at or below the random baseline as 0.000 (marked ** on the page; the row's protocol keeps that marker). The number is shown the way the source publishes it — a normalised index, not a share of apartments solved. The page's human baseline (0.586, run on 12 of the 50 apartments) is not a model and is not collected. Secondary benchmark, never a Composite input."
+        "notes": "Each plan's room-connection graph is compared with the true plan under rotation and reflection: Jaccard similarity of room-to-room connections 50 %, degree similarity 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %. The composite is normalised so that the random baseline maps to 0 and a perfect score to 1, and the board prints any score at or below the random baseline as 0.000 (marked ** on the page; the row's protocol keeps that marker). The number is shown the way the source publishes it — a normalised score on the board’s own 0–1 scale (the page: “All scores are normalized so that the random baseline maps to 0 and a perfect score maps to 1”), not a share of apartments solved. The page's human baseline (0.586, run on 12 of the 50 apartments) is not a model and is not collected. Secondary benchmark, never a Composite input."
       },
       "maintainer": "Andon Labs",
       "source_type": "official_leaderboard",
@@ -5024,6 +5024,11 @@
           "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
           "type": "official_leaderboard",
           "role": "The page's own leaderboard data file"
+        },
+        {
+          "url": "https://cognition.com/blog/frontier-code-1.1",
+          "type": "official_leaderboard",
+          "role": "FrontierCode 1.1 release post: the 1.1 methodology, and the Main (100 hardest) / Extended (150) / deprecated Diamond subsets"
         }
       ],
       "update_cadence": {
@@ -5074,6 +5079,20 @@
           "excerpt": "Refines the methodology to distinguish legitimate internet use from unfair use: runs flagged for consulting solution-bearing sources are zeroed. Also audits blocker criteria and deprecates the Diamond subset."
         },
         {
+          "url": "https://cognition.com/blog/frontier-code-1.1",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-d230/682d85c8c66ccf067290.gz",
+          "sha256": "ac9003873a1d60566e9f3094caf4758d0f589db57b4c59d6458e29b286ef234f",
+          "fetched_at": "2026-09-27T09:36:32.268327+00:00",
+          "excerpt": "Going forward, we'll be reporting scores on the Main and Extended subsets of FrontierCode, evaluated with the 1.1 methodology. We are no longer reporting the Diamond subset; we elaborate on this below."
+        },
+        {
+          "url": "https://cognition.com/blog/frontier-code-1.1",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-d230/682d85c8c66ccf067290.gz",
+          "sha256": "ac9003873a1d60566e9f3094caf4758d0f589db57b4c59d6458e29b286ef234f",
+          "fetched_at": "2026-09-27T09:36:32.268327+00:00",
+          "excerpt": "Diamond consists of the 50 hardest tasks in our full 150-task Extended set, while Main consists of the 100 hardest."
+        },
+        {
           "url": "https://cognition.com/robots.txt",
           "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/cognition.com-robots.txt",
           "sha256": "43b41314c0a79121c3a73cec88c56035754f8de4a5cc717a8c9ace3351c744e4",
@@ -5101,6 +5120,11 @@
           "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
           "type": "official_leaderboard",
           "role": "The page's own leaderboard data file"
+        },
+        {
+          "url": "https://cognition.com/blog/frontier-code-1.1",
+          "type": "official_leaderboard",
+          "role": "FrontierCode 1.1 release post: the 1.1 methodology, and the Main (100 hardest) / Extended (150) / deprecated Diamond subsets"
         }
       ],
       "update_cadence": {
@@ -5149,6 +5173,20 @@
           "sha256": "9dd5aaa60f252934d5b4aa14e1aa9d3e448d09c9d971ab03848035e2e36f24b2",
           "fetched_at": "2026-09-13T20:31:40.605644+00:00",
           "excerpt": "FrontierCode is the first benchmark to measure mergeability: would the maintainer actually merge this PR? Our criteria assess end-to-end code quality (correctness, test quality, scope discipline, style, and adherence to codebase standards) using an ensemble of grading techniques including unit tests, rubrics, and new types of verifiers."
+        },
+        {
+          "url": "https://cognition.com/blog/frontier-code-1.1",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-d230/682d85c8c66ccf067290.gz",
+          "sha256": "ac9003873a1d60566e9f3094caf4758d0f589db57b4c59d6458e29b286ef234f",
+          "fetched_at": "2026-09-27T09:36:32.268327+00:00",
+          "excerpt": "Going forward, we'll be reporting scores on the Main and Extended subsets of FrontierCode, evaluated with the 1.1 methodology. We are no longer reporting the Diamond subset; we elaborate on this below."
+        },
+        {
+          "url": "https://cognition.com/blog/frontier-code-1.1",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-d230/682d85c8c66ccf067290.gz",
+          "sha256": "ac9003873a1d60566e9f3094caf4758d0f589db57b4c59d6458e29b286ef234f",
+          "fetched_at": "2026-09-27T09:36:32.268327+00:00",
+          "excerpt": "Diamond consists of the 50 hardest tasks in our full 150-task Extended set, while Main consists of the 100 hardest."
         },
         {
           "url": "https://cognition.com/robots.txt",
@@ -5306,7 +5344,7 @@
       "version_status": "published",
       "family": "frontierswe",
       "category": "Coding",
-      "one_sentence_description": "34 hand-written real-world software tasks: each model attempts every task in its own CLI agent harness for 5 trials per task under a 20-hour budget, scored by the site’s own review protocol; the headline value is mean@5 in percent with best@5/worst@5 bounds.",
+      "one_sentence_description": "34 hand-written real-world software tasks: every model is evaluated with the site’s own Proximus harness at its maximum reasoning effort, 5 trials per task under a 20-hour budget, scored by the site’s own review protocol; the headline value is mean@5 in percent with best@5/worst@5 bounds.",
       "scoring": {
         "metric": "mean@5 across all 34 tasks in percent (headline; Implementation/Performance/Research sub-scores, best@5/worst@5, average cost and duration per trial are published alongside)",
         "unit": "percent",
@@ -5315,7 +5353,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Published by the Proximal team (San Francisco) on frontierswe.com with open task repos (github.com/Proximal-Labs/frontier-swe-v2) and a methodology blog. Rows embed in the app’s Next.js flight payload (entries.abs.{best,mean,worst}); each model runs under its own harness selection and the site additionally shows an Other Harnesses view for per-model harness coverage; proximus is uniform across the main board’s 14 rows. The site states no reasoning effort per row; Epoch AI’s FrontierSWE relay CSV (Benchmarking Hub, frontierswe_external.csv; every row’s Source is the site’s leaderboard) restates 12 overlapping rows byte-exactly and states the per-model effort, which is the reviewed effort evidence for the joins. The blog states the suite is “far from saturated”. Community benchmark (single operator); not a Composite input."
+        "notes": "Published by the Proximal team (San Francisco) on frontierswe.com with open task repos (github.com/Proximal-Labs/frontier-swe-v2) and a methodology blog. Rows embed in the app’s Next.js flight payload (entries.abs.{best,mean,worst}); every row of that payload names the same harness, proximus — the blog states “We evaluate each model at its maximum reasoning effort, with Proximus as the default harness and a 20-hour budget per task” and the task repo’s README states “We evaluated all models using our harness Proximus”. The board itself prints no reasoning effort beside a row; Epoch AI’s FrontierSWE relay CSV (Benchmarking Hub, frontierswe_external.csv; every row’s Harness column reads proximus and every row’s Source is the site’s leaderboard) names the effort each model was run at, which is the reviewed effort evidence for the joins. The board prints its means rounded to one decimal. The blog states the suite is “far from saturated”. Community benchmark (single operator); not a Composite input."
       },
       "maintainer": "Proximal team (Proximal Labs, San Francisco)",
       "source_type": "official_leaderboard",
