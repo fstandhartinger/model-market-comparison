@@ -13284,3 +13284,33 @@ can show the effect is the one after that.
 |---|---|---|---|
 | D222 (new) | **implemented** | `d222-replays/` (before: c1 mismatch in one round; after: all four accepted in one pass; `--lie` still blocked) | The four KernelBench entries shared one copied metric while SPEC sets the ceiling per problem, misattributed SPEC's ms rule to 03, never said that 02's published number is SPEC's context column, and asserted a page rendering no reviewed source shows. Corrected from SPEC.md and leaderboard.json only. |
 | D221 | **open** (cause fixed, effect unproven) | `d221-megaqwen-frozen-arm.json` | The four missing megaqwen cells should publish on the next refresh now that D222 is fixed. Verify against the next run's `refresh-benchmarks.log`; if the arm is still retained, the cause is not D222. |
+
+### Live verification for both units
+
+`ops/ux-2026-09-12/bin/verify-d220-live.mjs <outDir> [host …]` derives its whole expectation from the
+committed repository — the 49 joins are the identity-map entries dated 2026-09-27, the 5 withheld rows are
+the entries a withdrawal record explains — so it runs from a clean checkout and cannot drift from the commit
+it checks. It asserts four things per host: every reviewed join is a measured cell at the board's own value;
+the named defect is gone (Vals code-migration Opus 5.5 reads **68.901**, and **54.997** is absent); each
+retracted row is still withheld *and* its retracted value has not resurfaced anywhere in the cell — the half
+a "more joins" check cannot see; and Union Alpha keeps CR-60.2's shape, with the LiveBench row measured, both
+announced rows preliminary, and the LiveBench value rendered inside its own row on the model page.
+
+Pre-deploy baseline, taken before the push: **9 / 61 on each host** at revision `0f86be00` — the five
+withheld rows, the two preliminary boards, the ‡ marking and the meta read already pass, and the 49 joins,
+the defect check and Union Alpha's LiveBench row all fail because they are not deployed yet
+(`live-preflight/verification.json`). That is the expected shape of a pre-deploy run; the same script is what
+proves the deployed revision.
+
+**The push is not mine to time.** A full Benchmark Heaven transaction has held `run.lock` since 00:41 UTC, so
+the pre-push hook correctly refuses main; both commits are made and a rebase-safe watcher pushes them when the
+lock clears, aborting rather than guessing if the daily's own data commit conflicts (`push.log`). **Until that
+log says `PUSH OK` and a later run of `verify-d220-live.mjs` is green, D220 and D222 are implemented but not
+verified live.**
+
+**That running transaction independently reproduced D222's cause.** Its own `refresh-benchmarks.log`, from a
+clone taken before this work, retains `kernelbench-cuda-megaqwen-decode` for the third time with: "Restate
+this row's scoring.metric/unit to match the SPEC's problem-03 definition (decode-only tok/s over the frozen
+ctx sweep …)". So the diagnosis is not an artefact of the offline replay — the production pipeline says the
+same thing. Its source-health line also shows the backlog moving on its own: 29 failing sources on 2026-09-25,
+**13** today.
