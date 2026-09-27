@@ -11,7 +11,9 @@
 // The convention: a sentence beginning with POLICY_NOTE_MARKER is ours. It is stripped from the
 // reviewed row (like the older "AA source field:" plumbing note) and kept in the published notes,
 // where it is how a reader tells a Composite input from a secondary board. Two ways it can rot, both
-// pinned below: a protocol claim hidden behind the marker, and sourced text written after it.
+// pinned below: a protocol claim hidden behind the marker, and notes that are policy only, with nothing
+// left for the reviewer to check. Everything after the marker is ours by definition — a join rule may
+// follow the Composite rule — so "nothing follows" is not the invariant; "no protocol word follows" is.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -25,37 +27,20 @@ const marked = registry.entries.filter((e) => (e.scoring?.notes ?? '').includes(
 // they may not appear there — the marker is for our handling of a row, never for its protocol.
 const PROTOCOL_WORDS = /\b(metric|unit|units|range|task set|tasks|harness|judge|judges|rubric|version|saturat\w*|pass@|denominator|subset)\b/i;
 
-// The registry entries that still state the Composite policy without the marker. The list may
-// shrink; a name cannot join it without a reason in the same commit. Every one of them is a latent
-// finding of the shape that retained the Vals arms, and several sit under arms that are failing for
-// other reasons today (blueprint-bench::2, frontiercode::1.1, frontierswe::2, vulcanbench-frontier::4,
-// the four kernelbench-cuda boards).
+// The registry entries that still state the Composite policy without the marker. 47 whose last
+// sentence was *entirely* our handling of the row were converted by prefixing the marker and nothing
+// else; these 14 are the ones where the policy clause is welded onto something a source has to settle
+// — what the maintainer publishes per row (cursorbench), who runs the board (programbench), that an
+// LLM judge grades it (react-native-evals, researchclawbench, vulcanbench-frontier::4) — and splitting
+// those needs the captured page in hand, one family at a time. The list may shrink; a name cannot join
+// it without a reason in the same commit.
 const UNMARKED_POLICY = [
   'apprenticebench-api-cost::snapshot-2026-09-14', 'apprenticebench-api::snapshot-2026-09-14',
   'apprenticebench-cua-cost::snapshot-2026-09-14', 'apprenticebench-cua::snapshot-2026-09-14',
-  'blueprint-bench::2', 'bu-bench-v1::snapshot-2026-09-09',
-  'bullshitbench-v1::snapshot-2026-09-10', 'bullshitbench-v2::snapshot-2026-09-10',
-  'charxiv-reasoning::val-v1.0', 'chess-puzzles::snapshot-2026-09-18',
-  'context-arena-mrcr-v2::8-needle', 'cursorbench-cost::4.0', 'cursorbench::4.0',
-  'deepswe::snapshot-2026-09-15', 'ebr-bench::snapshot-2026-09-18',
-  'epoch-gpqa-diamond::snapshot-2026-09-18', 'epoch-swe-bench-verified::snapshot-2026-09-18',
-  'frontiercode-cost::1.1', 'frontiercode::1.1', 'frontiermath-tier-4::v2',
-  'frontiermath-tiers-1-3::v2', 'frontierswe::2', 'gso::opt1-102', 'hyper-tau-bench::release-v1',
-  'kernelbench-cuda-deepseek-nsa::rtx-pro-6000', 'kernelbench-cuda-glm52-fused-moe::rtx-pro-6000',
-  'kernelbench-cuda-grid-mingru-sps::rtx-pro-6000',
-  'kernelbench-cuda-megaqwen-decode::rtx-pro-6000', 'lisanbench::0.2.0',
-  'long-horizon-terminal-bench::1.0', 'matharena-aime::2026', 'matharena-apex-shortlist::2025',
-  'matharena-apex::2025', 'matharena-arxivmath::2026-06', 'matharena-arxivmath::2026-08',
-  'matharena-brokenarxiv::2026-06', 'matharena-brokenarxiv::2026-08', 'matharena-hmmt::2025-11',
-  'matharena-hmmt::2026-02', 'matharena-usamo::2026', 'mcp-atlas::snapshot-2026-09-21',
-  'mcpmark::verified', 'mirrorcode::snapshot-2026-09-18',
-  'mystery-game-puzzles::snapshot-2026-09-18', 'openai-automationbench-cost::1.0.6',
-  'osworld-2::v2026.06.24', 'osworld-2::v2026.08.08', 'posttrainbench::1.1', 'programbench::1',
-  'react-native-evals::91-evals', 'researchclawbench::40-tasks', 'rsi-exam::0.1',
-  'simpleqa-verified::snapshot-2026-09-16', 'swe-atlas-qna::snapshot-2026-09-15',
-  'swe-atlas-refactoring::snapshot-2026-09-15', 'swe-atlas-test-writing::snapshot-2026-09-15',
-  'swe-rebench::2026-05-15..2026-07-01', 'toolathlon-verified::2026-06-30',
-  'toolathlon::pre-verified', 'vulcanbench-frontier::4', 'weirdml::3'
+  'cursorbench-cost::4.0', 'cursorbench::4.0', 'frontiercode-cost::1.1',
+  'matharena-brokenarxiv::2026-06', 'matharena-brokenarxiv::2026-08',
+  'openai-automationbench-cost::1.0.6', 'programbench::1', 'react-native-evals::91-evals',
+  'researchclawbench::40-tasks', 'vulcanbench-frontier::4',
 ];
 const POLICY_CLAIM = /Composite input|enters the Composite|into the Composite/;
 const unmarked = () => registry.entries.filter((e) => {
@@ -64,7 +49,7 @@ const unmarked = () => registry.entries.filter((e) => {
 }).map((e) => e.id);
 
 test('the policy note is stripped from the reviewed row and kept in the published notes', () => {
-  assert.ok(marked.length >= 9, 'the nine Vals entries carry the marker');
+  assert.ok(marked.length >= 56, 'the nine Vals entries and the 47 converted boards carry the marker');
   for (const entry of marked) {
     const reviewed = protocolReviewRow(entry).scoring.notes ?? '';
     assert.ok(!reviewed.includes(POLICY_NOTE_MARKER), `${entry.id}: the marker reached the reviewer`);
@@ -75,6 +60,7 @@ test('the policy note is stripped from the reviewed row and kept in the publishe
 });
 
 test('nothing hides behind the marker that a protocol page would have to settle', () => {
+  assert.ok(marked.length >= 56, 'the marker is in use');
   for (const entry of marked) {
     const clause = entry.scoring.notes.slice(entry.scoring.notes.indexOf(POLICY_NOTE_MARKER));
     assert.equal(clause.split(POLICY_NOTE_MARKER).length, 2, `${entry.id}: the marker appears twice`);

@@ -2582,7 +2582,7 @@
           1
         ],
         "higher_better": true,
-        "notes": "Each plan's room-connection graph is compared with the true plan under rotation and reflection: Jaccard similarity of room-to-room connections 50 %, degree similarity 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %. The composite is normalised so that the random baseline maps to 0 and a perfect score to 1, and the board prints any score at or below the random baseline as 0.000 (marked ** on the page; the row's protocol keeps that marker). The number is shown the way the source publishes it — a normalised score on the board’s own 0–1 scale (the page: “All scores are normalized so that the random baseline maps to 0 and a perfect score maps to 1”), not a share of apartments solved. The page's human baseline (0.586, run on 12 of the 50 apartments) is not a model and is not collected. Secondary benchmark, never a Composite input."
+        "notes": "Each plan's room-connection graph is compared with the true plan under rotation and reflection: Jaccard similarity of room-to-room connections 50 %, degree similarity 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %. The composite is normalised so that the random baseline maps to 0 and a perfect score to 1, and the board prints any score at or below the random baseline as 0.000 (marked ** on the page; the row's protocol keeps that marker). The number is shown the way the source publishes it — a normalised score on the board’s own 0–1 scale (the page: “All scores are normalized so that the random baseline maps to 0 and a perfect score maps to 1”), not a share of apartments solved. The page's human baseline (0.586, run on 12 of the 50 apartments) is not a model and is not collected. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "Andon Labs",
       "source_type": "official_leaderboard",
@@ -2652,7 +2652,7 @@
           1
         ],
         "higher_better": true,
-        "notes": "Value = tasks_successful / tasks_completed from the official_results run files in Browser Use's benchmark repository (100 tasks, graded by the repository's LLM judge). Each row is one framework version x browser x model run as named in the file name. Browser Use publishes these runs about its own agent framework, cloud browser and bu models, so every row is self_reported and critic-reviewed. The files' total_cost is not ingested (most runs record 0.0, which is not a measured cost). BU Bench V2 results exist only as a plot image and are not ingested. Not a Composite input."
+        "notes": "Value = tasks_successful / tasks_completed from the official_results run files in Browser Use's benchmark repository (100 tasks, graded by the repository's LLM judge). Each row is one framework version x browser x model run as named in the file name. Browser Use publishes these runs about its own agent framework, cloud browser and bu models, so every row is self_reported and critic-reviewed. The files' total_cost is not ingested (most runs record 0.0, which is not a measured cost). BU Bench V2 results exist only as a plot image and are not ingested. Benchmark Heaven policy: not a Composite input."
       },
       "maintainer": "Browser Use (vendor)",
       "source_type": "github",
@@ -2722,7 +2722,7 @@
           1
         ],
         "higher_better": true,
-        "notes": "Clear-pushback rate as published in the canonical leaderboard CSV: score_2 / nonsense_count, all attempts in the denominator (errors and refusals count as not clear). Graded by a three-judge panel (Claude Sonnet 4.6, GPT-5.2, Gemini 3.1 Pro Preview). Each row is one model x reasoning-effort label. Not a Composite input; V1 and V2 are never ranked against each other."
+        "notes": "Clear-pushback rate as published in the canonical leaderboard CSV: score_2 / nonsense_count, all attempts in the denominator (errors and refusals count as not clear). Graded by a three-judge panel (Claude Sonnet 4.6, GPT-5.2, Gemini 3.1 Pro Preview). Each row is one model x reasoning-effort label. Benchmark Heaven policy: not a Composite input; V1 and V2 are never ranked against each other."
       },
       "maintainer": "Peter Gostev (independent)",
       "source_type": "official_leaderboard",
@@ -2797,7 +2797,7 @@
           1
         ],
         "higher_better": true,
-        "notes": "Clear-pushback rate as published in the canonical leaderboard CSV: score_2 / nonsense_count, all attempts in the denominator (errors and refusals count as not clear). Graded by a three-judge panel (Claude Sonnet 4.6, GPT-5.2, Gemini 3.1 Pro Preview). Each row is one model x reasoning-effort label. Not a Composite input; V1 and V2 are never ranked against each other."
+        "notes": "Clear-pushback rate as published in the canonical leaderboard CSV: score_2 / nonsense_count, all attempts in the denominator (errors and refusals count as not clear). Graded by a three-judge panel (Claude Sonnet 4.6, GPT-5.2, Gemini 3.1 Pro Preview). Each row is one model x reasoning-effort label. Benchmark Heaven policy: not a Composite input; V1 and V2 are never ranked against each other."
       },
       "maintainer": "Peter Gostev (independent)",
       "source_type": "official_leaderboard",
@@ -2936,7 +2936,7 @@
           1
         ],
         "higher_better": true,
-        "notes": "Epoch AI ran this board itself with its inspect-ai harness and publishes the rows under CC BY 4.0; these are Epoch-run results, not a lab's or a republisher's numbers. Positions were generated programmatically by Epoch and “do not appear in any other source” (epoch.ai/benchmarks/chess-puzzles). The archive states no board version, so the identity is dated by capture (snapshot). Value is Epoch's “Best score (across scorers)”; the mean score and standard error stay in the protocol. Secondary information, never a Composite input: attribution “Epoch AI” is shown with the board."
+        "notes": "Epoch AI ran this board itself with its inspect-ai harness and publishes the rows under CC BY 4.0; these are Epoch-run results, not a lab's or a republisher's numbers. Positions were generated programmatically by Epoch and “do not appear in any other source” (epoch.ai/benchmarks/chess-puzzles). The archive states no board version, so the identity is dated by capture (snapshot). Value is Epoch's “Best score (across scorers)”; the mean score and standard error stay in the protocol. Benchmark Heaven policy: secondary information, never a Composite input: attribution “Epoch AI” is shown with the board."
       },
       "maintainer": "Epoch AI",
       "source_type": "official_leaderboard",
@@ -3007,7 +3007,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "8-needle MRCR v2, Context Arena's default \"full\" test set; each response is scored 0–1 by string similarity after a hash check, and a bin's score is the mean over its tests. The 128k cumulative average is the figure GDM's README says it reports; Context Arena's AUC variants and the 1M figures are kept per row but never used as the value. Secondary benchmark, never a Composite input."
+        "notes": "8-needle MRCR v2, Context Arena's default \"full\" test set; each response is scored 0–1 by string similarity after a hash check, and a bin's score is the mean over its tests. The 128k cumulative average is the figure GDM's README says it reports; Context Arena's AUC variants and the 1M figures are kept per row but never used as the value. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "Context Arena (Dillon Uzar); dataset by Google DeepMind (eval_hub MRCR v2)",
       "source_type": "official_leaderboard",
@@ -4474,7 +4474,7 @@
           1
         ],
         "higher_better": true,
-        "notes": "Independently run by Datacurve and republished by Epoch AI; Pass@4, run count and 95% CI half-width stay in the protocol. Epoch’s cost column is not used. An input to the AA Coding Agent Index v1.5, which runs its own copy; these are the maintainer’s results. Secondary benchmark, never a Composite input."
+        "notes": "Independently run by Datacurve and republished by Epoch AI; Pass@4, run count and 95% CI half-width stay in the protocol. Epoch’s cost column is not used. An input to the AA Coding Agent Index v1.5, which runs its own copy; these are the maintainer’s results. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "how_to_collect": {
         "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip deepswe_external.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-coding/epoch-deepswe_external.csv.gz; python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
@@ -4523,7 +4523,7 @@
           1
         ],
         "higher_better": true,
-        "notes": "Epoch AI ran this board itself with its inspect-ai harness and publishes the rows under CC BY 4.0; these are Epoch-run results, not a lab's or a republisher's numbers. “We chose this game because it is relatively obscure, so models are unlikely to have memorized it during training” (epoch.ai/benchmarks/ebr-bench). The archive states no board version, so the identity is dated by capture (snapshot). Value is Epoch's “Best score (across scorers)”; the mean score and standard error stay in the protocol. Secondary information, never a Composite input: attribution “Epoch AI” is shown with the board."
+        "notes": "Epoch AI ran this board itself with its inspect-ai harness and publishes the rows under CC BY 4.0; these are Epoch-run results, not a lab's or a republisher's numbers. “We chose this game because it is relatively obscure, so models are unlikely to have memorized it during training” (epoch.ai/benchmarks/ebr-bench). The archive states no board version, so the identity is dated by capture (snapshot). Value is Epoch's “Best score (across scorers)”; the mean score and standard error stay in the protocol. Benchmark Heaven policy: secondary information, never a Composite input: attribution “Epoch AI” is shown with the board."
       },
       "maintainer": "Epoch AI",
       "source_type": "official_leaderboard",
@@ -4594,7 +4594,7 @@
           1
         ],
         "higher_better": true,
-        "notes": "Epoch AI ran this board itself with its inspect-ai harness and publishes the rows under CC BY 4.0; these are Epoch-run results, not a lab's or a republisher's numbers. Separate identity from the AA and OpenRouter runs of the same public question set; never merged or averaged. The archive states no board version, so the identity is dated by capture (snapshot). Value is Epoch's “Best score (across scorers)”; the mean score and standard error stay in the protocol. Secondary information, never a Composite input: attribution “Epoch AI” is shown with the board."
+        "notes": "Epoch AI ran this board itself with its inspect-ai harness and publishes the rows under CC BY 4.0; these are Epoch-run results, not a lab's or a republisher's numbers. Separate identity from the AA and OpenRouter runs of the same public question set; never merged or averaged. The archive states no board version, so the identity is dated by capture (snapshot). Value is Epoch's “Best score (across scorers)”; the mean score and standard error stay in the protocol. Benchmark Heaven policy: secondary information, never a Composite input: attribution “Epoch AI” is shown with the board."
       },
       "maintainer": "GPQA authors (benchmark); Epoch AI (runs)",
       "source_type": "official_leaderboard",
@@ -4665,7 +4665,7 @@
           1
         ],
         "higher_better": true,
-        "notes": "Epoch AI ran this board itself with its inspect-ai harness and publishes the rows under CC BY 4.0; these are Epoch-run results, not a lab's or a republisher's numbers. Separate identity from the existing SWE-bench Verified board; never merged or averaged. The archive states no board version, so the identity is dated by capture (snapshot). Value is Epoch's “Best score (across scorers)”; the mean score and standard error stay in the protocol. Secondary information, never a Composite input: attribution “Epoch AI” is shown with the board."
+        "notes": "Epoch AI ran this board itself with its inspect-ai harness and publishes the rows under CC BY 4.0; these are Epoch-run results, not a lab's or a republisher's numbers. Separate identity from the existing SWE-bench Verified board; never merged or averaged. The archive states no board version, so the identity is dated by capture (snapshot). Value is Epoch's “Best score (across scorers)”; the mean score and standard error stay in the protocol. Benchmark Heaven policy: secondary information, never a Composite input: attribution “Epoch AI” is shown with the board."
       },
       "maintainer": "SWE-bench Team (benchmark); Epoch AI (runs)",
       "source_type": "official_leaderboard",
@@ -5163,7 +5163,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Main subset, 100 tasks — the 100 hardest of the 150-task Extended set. Runs flagged for unfair internet use are zeroed in 1.1. Secondary benchmark, not a Composite input."
+        "notes": "Main subset, 100 tasks — the 100 hardest of the 150-task Extended set. Runs flagged for unfair internet use are zeroed in 1.1. Benchmark Heaven policy: secondary benchmark, not a Composite input."
       },
       "how_to_collect": {
         "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/frontiercode-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
@@ -5234,7 +5234,7 @@
           1
         ],
         "higher_better": true,
-        "notes": "Epoch AI writes and runs FrontierMath Tier 4 on a private problem set; version 2 (released 2026-06-12) supersedes the 2025-07-01 set, which is a different identity. Value is Epoch's \"Best score (across scorers)\"; mean score and standard error stay in the protocol. CC BY 4.0: attribute Epoch AI. Secondary benchmark, never a Composite input."
+        "notes": "Epoch AI writes and runs FrontierMath Tier 4 on a private problem set; version 2 (released 2026-06-12) supersedes the 2025-07-01 set, which is a different identity. Value is Epoch's \"Best score (across scorers)\"; mean score and standard error stay in the protocol. CC BY 4.0: attribute Epoch AI. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "Epoch AI",
       "source_type": "official_leaderboard",
@@ -5304,7 +5304,7 @@
           1
         ],
         "higher_better": true,
-        "notes": "Epoch AI writes and runs FrontierMath on a private problem set; version 2 (released 2026-06-12) supersedes the 2025-02-28 set, which is a different identity. Value is Epoch's \"Best score (across scorers)\", its declared score column; mean score and standard error stay in the protocol. Epoch's robots.txt keeps the sample problems out of crawlers and we never collect them. CC BY 4.0: attribute Epoch AI. Secondary benchmark, never a Composite input."
+        "notes": "Epoch AI writes and runs FrontierMath on a private problem set; version 2 (released 2026-06-12) supersedes the 2025-02-28 set, which is a different identity. Value is Epoch's \"Best score (across scorers)\", its declared score column; mean score and standard error stay in the protocol. Epoch's robots.txt keeps the sample problems out of crawlers and we never collect them. CC BY 4.0: attribute Epoch AI. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "Epoch AI",
       "source_type": "official_leaderboard",
@@ -5374,7 +5374,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Published by the Proximal team (San Francisco) on frontierswe.com with open task repos (github.com/Proximal-Labs/frontier-swe-v2) and a methodology blog. Rows embed in the app’s Next.js flight payload (entries.abs.{best,mean,worst}); every row of that payload names the same harness, proximus — the blog states “We evaluate each model at its maximum reasoning effort, with Proximus as the default harness and a 20-hour budget per task” and the task repo’s README states “We evaluated all models using our harness Proximus”. The board itself prints no reasoning effort beside a row; Epoch AI’s FrontierSWE relay CSV (Benchmarking Hub, frontierswe_external.csv; every row’s Harness column reads proximus and every row’s Source is the site’s leaderboard) names the effort each model was run at, which is the reviewed effort evidence for the joins. The board prints its means rounded to one decimal. The blog states the suite is “far from saturated”. Community benchmark (single operator); not a Composite input."
+        "notes": "Published by the Proximal team (San Francisco) on frontierswe.com with open task repos (github.com/Proximal-Labs/frontier-swe-v2) and a methodology blog. Rows embed in the app’s Next.js flight payload (entries.abs.{best,mean,worst}); every row of that payload names the same harness, proximus — the blog states “We evaluate each model at its maximum reasoning effort, with Proximus as the default harness and a 20-hour budget per task” and the task repo’s README states “We evaluated all models using our harness Proximus”. The board itself prints no reasoning effort beside a row; Epoch AI’s FrontierSWE relay CSV (Benchmarking Hub, frontierswe_external.csv; every row’s Harness column reads proximus and every row’s Source is the site’s leaderboard) names the effort each model was run at, which is the reviewed effort evidence for the joins. The board prints its means rounded to one decimal. The blog states the suite is “far from saturated”. Benchmark Heaven policy: community benchmark (single operator); not a Composite input."
       },
       "maintainer": "Proximal team (Proximal Labs, San Francisco)",
       "source_type": "official_leaderboard",
@@ -5488,7 +5488,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run by the GSO maintainers with the OpenHands scaffold unless a row names another. The Hack-Adjusted score (after the maintainers' hack detector) and the run date stay in each observation's protocol; runs from 2026-04-27 use a larger iteration budget and runs from 2026-07-12 network-isolated tasks, as the page's changelog states. Secondary benchmark, never a Composite input."
+        "notes": "Run by the GSO maintainers with the OpenHands scaffold unless a row names another. The Hack-Adjusted score (after the maintainers' hack detector) and the run date stay in each observation's protocol; runs from 2026-04-27 use a larger iteration budget and runs from 2026-07-12 network-isolated tasks, as the page's changelog states. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "GSO team (UC Berkeley)",
       "source_type": "official_leaderboard",
@@ -5684,7 +5684,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run under the maintainers' sealed runner; the six current rows are the τ-bench team's own baseline runs. One row per coding harness x Developer model x reasoning effort, as published. Banking knowledge is 35 of the 53 tasks, so it dominates the overall score; the domain scores stay in each observation's protocol. The inner loop uses simulated customers and judge models for natural-language assertions. Secondary benchmark, never a Composite input."
+        "notes": "Run under the maintainers' sealed runner; the six current rows are the τ-bench team's own baseline runs. One row per coding harness x Developer model x reasoning effort, as published. Banking knowledge is 35 of the 53 tasks, so it dominates the overall score; the domain scores stay in each observation's protocol. The inner loop uses simulated customers and judge models for natural-language assertions. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "Sierra (τ-bench team)",
       "source_type": "github",
@@ -6078,7 +6078,7 @@
           null
         ],
         "higher_better": true,
-        "notes": "Published by Elliot Arledge’s kernelbench.com (independent site, not the Stanford KernelBench); values are baked from the maintainer’s benchmarks/cuda/results/leaderboard.json (schema_version 1, environment v2_containerized, hardware RTX PRO 6000 Blackwell Workstation, sm_120a, 96 GB VRAM). A cell is scored only under the site’s own validity rule: correct and audited (“clean” or “interesting”); flagged, suspect, “bug” (published by the maintainer as unreliable) and unaudited cells are never scored, and the published per_problem ranked list is the cross-check — it still holds the two audited-but-excluded cells the rule rejects, the `suspect` kinetic-claude/kinetic-0715[1m] cell on 03 (peak_fraction 0.0622) and the `bug` muse/muse-spark-1.3 [ultra] cell on 04 (0.2056), so where the ranked list and the validity rule disagree the validity rule wins (cells the maintainer marks `correct: false` are absent from the ranked list anyway, and the `reward_hack` deepseek-claude/deepseek-v4-pro cell on 04 is excluded by both). Published values are `peak_fraction` × 100: the fraction of problem 02’s own ceiling as SPEC.md defines it per problem (dense-equivalent FLOP roofline for 01 and 02, decode-only tok/s for 03, SPS against the 150M `peak_sps` anchor for 04), not latencies (SPEC.md’s latency-anchored standing rule of 2026-07-15 names problem 02 as its example — “dense-equivalent FLOPs that a correct sparse kernel never executes, e.g. 02” — and for such a problem the rule makes milliseconds the maintainer’s headline and the persisted score a geomean speedup against the frozen eager reference, while `peak_fraction` “stays as a context column”; that context column is the number published here for 02. elapsed_seconds stays in each observation’s protocol), and values above 100% mean the measured kernel beat the conservative roofline (Opus 5 reaches 196.10% on 04). One unlimited agent session per cell; the agent harness (codex, claude, grok, kinetic-claude, deepseek-claude, muse, or-fable, or-opus, zai-claude, agy) stays in each observation’s protocol. Community benchmark, never a Composite input."
+        "notes": "Published by Elliot Arledge’s kernelbench.com (independent site, not the Stanford KernelBench); values are baked from the maintainer’s benchmarks/cuda/results/leaderboard.json (schema_version 1, environment v2_containerized, hardware RTX PRO 6000 Blackwell Workstation, sm_120a, 96 GB VRAM). A cell is scored only under the site’s own validity rule: correct and audited (“clean” or “interesting”); flagged, suspect, “bug” (published by the maintainer as unreliable) and unaudited cells are never scored, and the published per_problem ranked list is the cross-check — it still holds the two audited-but-excluded cells the rule rejects, the `suspect` kinetic-claude/kinetic-0715[1m] cell on 03 (peak_fraction 0.0622) and the `bug` muse/muse-spark-1.3 [ultra] cell on 04 (0.2056), so where the ranked list and the validity rule disagree the validity rule wins (cells the maintainer marks `correct: false` are absent from the ranked list anyway, and the `reward_hack` deepseek-claude/deepseek-v4-pro cell on 04 is excluded by both). Published values are `peak_fraction` × 100: the fraction of problem 02’s own ceiling as SPEC.md defines it per problem (dense-equivalent FLOP roofline for 01 and 02, decode-only tok/s for 03, SPS against the 150M `peak_sps` anchor for 04), not latencies (SPEC.md’s latency-anchored standing rule of 2026-07-15 names problem 02 as its example — “dense-equivalent FLOPs that a correct sparse kernel never executes, e.g. 02” — and for such a problem the rule makes milliseconds the maintainer’s headline and the persisted score a geomean speedup against the frozen eager reference, while `peak_fraction` “stays as a context column”; that context column is the number published here for 02. elapsed_seconds stays in each observation’s protocol), and values above 100% mean the measured kernel beat the conservative roofline (Opus 5 reaches 196.10% on 04). One unlimited agent session per cell; the agent harness (codex, claude, grok, kinetic-claude, deepseek-claude, muse, or-fable, or-opus, zai-claude, agy) stays in each observation’s protocol. Benchmark Heaven policy: community benchmark, never a Composite input."
       },
       "maintainer": "Elliot Arledge (kernelbench.com)",
       "source_type": "official_leaderboard",
@@ -6179,7 +6179,7 @@
           null
         ],
         "higher_better": true,
-        "notes": "Published by Elliot Arledge’s kernelbench.com (independent site, not the Stanford KernelBench); values are baked from the maintainer’s benchmarks/cuda/results/leaderboard.json (schema_version 1, environment v2_containerized, hardware RTX PRO 6000 Blackwell Workstation, sm_120a, 96 GB VRAM). A cell is scored only under the site’s own validity rule: correct and audited (“clean” or “interesting”); flagged, suspect, “bug” (published by the maintainer as unreliable) and unaudited cells are never scored, and the published per_problem ranked list is the cross-check — it still holds the two audited-but-excluded cells the rule rejects, the `suspect` kinetic-claude/kinetic-0715[1m] cell on 03 (peak_fraction 0.0622) and the `bug` muse/muse-spark-1.3 [ultra] cell on 04 (0.2056), so where the ranked list and the validity rule disagree the validity rule wins (cells the maintainer marks `correct: false` are absent from the ranked list anyway, and the `reward_hack` deepseek-claude/deepseek-v4-pro cell on 04 is excluded by both). Published values are `peak_fraction` × 100: the fraction of problem 01’s own ceiling as SPEC.md defines it per problem (dense-equivalent FLOP roofline for 01 and 02, decode-only tok/s for 03, SPS against the 150M `peak_sps` anchor for 04), not latencies (SPEC.md’s latency-anchored standing rule of 2026-07-15 names problem 02 as its example — “dense-equivalent FLOPs that a correct sparse kernel never executes, e.g. 02” — and for such a problem the rule makes milliseconds the maintainer’s headline and the persisted score a geomean speedup against the frozen eager reference, while `peak_fraction` “stays as a context column”; that context column is the number published here for 02. elapsed_seconds stays in each observation’s protocol), and values above 100% mean the measured kernel beat the conservative roofline (Opus 5 reaches 196.10% on 04). One unlimited agent session per cell; the agent harness (codex, claude, grok, kinetic-claude, deepseek-claude, muse, or-fable, or-opus, zai-claude, agy) stays in each observation’s protocol. Community benchmark, never a Composite input."
+        "notes": "Published by Elliot Arledge’s kernelbench.com (independent site, not the Stanford KernelBench); values are baked from the maintainer’s benchmarks/cuda/results/leaderboard.json (schema_version 1, environment v2_containerized, hardware RTX PRO 6000 Blackwell Workstation, sm_120a, 96 GB VRAM). A cell is scored only under the site’s own validity rule: correct and audited (“clean” or “interesting”); flagged, suspect, “bug” (published by the maintainer as unreliable) and unaudited cells are never scored, and the published per_problem ranked list is the cross-check — it still holds the two audited-but-excluded cells the rule rejects, the `suspect` kinetic-claude/kinetic-0715[1m] cell on 03 (peak_fraction 0.0622) and the `bug` muse/muse-spark-1.3 [ultra] cell on 04 (0.2056), so where the ranked list and the validity rule disagree the validity rule wins (cells the maintainer marks `correct: false` are absent from the ranked list anyway, and the `reward_hack` deepseek-claude/deepseek-v4-pro cell on 04 is excluded by both). Published values are `peak_fraction` × 100: the fraction of problem 01’s own ceiling as SPEC.md defines it per problem (dense-equivalent FLOP roofline for 01 and 02, decode-only tok/s for 03, SPS against the 150M `peak_sps` anchor for 04), not latencies (SPEC.md’s latency-anchored standing rule of 2026-07-15 names problem 02 as its example — “dense-equivalent FLOPs that a correct sparse kernel never executes, e.g. 02” — and for such a problem the rule makes milliseconds the maintainer’s headline and the persisted score a geomean speedup against the frozen eager reference, while `peak_fraction` “stays as a context column”; that context column is the number published here for 02. elapsed_seconds stays in each observation’s protocol), and values above 100% mean the measured kernel beat the conservative roofline (Opus 5 reaches 196.10% on 04). One unlimited agent session per cell; the agent harness (codex, claude, grok, kinetic-claude, deepseek-claude, muse, or-fable, or-opus, zai-claude, agy) stays in each observation’s protocol. Benchmark Heaven policy: community benchmark, never a Composite input."
       },
       "maintainer": "Elliot Arledge (kernelbench.com)",
       "source_type": "official_leaderboard",
@@ -6280,7 +6280,7 @@
           null
         ],
         "higher_better": true,
-        "notes": "Published by Elliot Arledge’s kernelbench.com (independent site, not the Stanford KernelBench); values are baked from the maintainer’s benchmarks/cuda/results/leaderboard.json (schema_version 1, environment v2_containerized, hardware RTX PRO 6000 Blackwell Workstation, sm_120a, 96 GB VRAM). A cell is scored only under the site’s own validity rule: correct and audited (“clean” or “interesting”); flagged, suspect, “bug” (published by the maintainer as unreliable) and unaudited cells are never scored, and the published per_problem ranked list is the cross-check — it still holds the two audited-but-excluded cells the rule rejects, the `suspect` kinetic-claude/kinetic-0715[1m] cell on 03 (peak_fraction 0.0622) and the `bug` muse/muse-spark-1.3 [ultra] cell on 04 (0.2056), so where the ranked list and the validity rule disagree the validity rule wins (cells the maintainer marks `correct: false` are absent from the ranked list anyway, and the `reward_hack` deepseek-claude/deepseek-v4-pro cell on 04 is excluded by both). Published values are `peak_fraction` × 100: the fraction of problem 04’s own ceiling as SPEC.md defines it per problem (dense-equivalent FLOP roofline for 01 and 02, decode-only tok/s for 03, SPS against the 150M `peak_sps` anchor for 04), not latencies (SPEC.md’s latency-anchored standing rule of 2026-07-15 names problem 02 as its example — “dense-equivalent FLOPs that a correct sparse kernel never executes, e.g. 02” — and for such a problem the rule makes milliseconds the maintainer’s headline and the persisted score a geomean speedup against the frozen eager reference, while `peak_fraction` “stays as a context column”; that context column is the number published here for 02. elapsed_seconds stays in each observation’s protocol), and values above 100% mean the measured kernel beat the conservative roofline (Opus 5 reaches 196.10% on 04). One unlimited agent session per cell; the agent harness (codex, claude, grok, kinetic-claude, deepseek-claude, muse, or-fable, or-opus, zai-claude, agy) stays in each observation’s protocol. Community benchmark, never a Composite input."
+        "notes": "Published by Elliot Arledge’s kernelbench.com (independent site, not the Stanford KernelBench); values are baked from the maintainer’s benchmarks/cuda/results/leaderboard.json (schema_version 1, environment v2_containerized, hardware RTX PRO 6000 Blackwell Workstation, sm_120a, 96 GB VRAM). A cell is scored only under the site’s own validity rule: correct and audited (“clean” or “interesting”); flagged, suspect, “bug” (published by the maintainer as unreliable) and unaudited cells are never scored, and the published per_problem ranked list is the cross-check — it still holds the two audited-but-excluded cells the rule rejects, the `suspect` kinetic-claude/kinetic-0715[1m] cell on 03 (peak_fraction 0.0622) and the `bug` muse/muse-spark-1.3 [ultra] cell on 04 (0.2056), so where the ranked list and the validity rule disagree the validity rule wins (cells the maintainer marks `correct: false` are absent from the ranked list anyway, and the `reward_hack` deepseek-claude/deepseek-v4-pro cell on 04 is excluded by both). Published values are `peak_fraction` × 100: the fraction of problem 04’s own ceiling as SPEC.md defines it per problem (dense-equivalent FLOP roofline for 01 and 02, decode-only tok/s for 03, SPS against the 150M `peak_sps` anchor for 04), not latencies (SPEC.md’s latency-anchored standing rule of 2026-07-15 names problem 02 as its example — “dense-equivalent FLOPs that a correct sparse kernel never executes, e.g. 02” — and for such a problem the rule makes milliseconds the maintainer’s headline and the persisted score a geomean speedup against the frozen eager reference, while `peak_fraction` “stays as a context column”; that context column is the number published here for 02. elapsed_seconds stays in each observation’s protocol), and values above 100% mean the measured kernel beat the conservative roofline (Opus 5 reaches 196.10% on 04). One unlimited agent session per cell; the agent harness (codex, claude, grok, kinetic-claude, deepseek-claude, muse, or-fable, or-opus, zai-claude, agy) stays in each observation’s protocol. Benchmark Heaven policy: community benchmark, never a Composite input."
       },
       "maintainer": "Elliot Arledge (kernelbench.com)",
       "source_type": "official_leaderboard",
@@ -6381,7 +6381,7 @@
           null
         ],
         "higher_better": true,
-        "notes": "Published by Elliot Arledge’s kernelbench.com (independent site, not the Stanford KernelBench); values are baked from the maintainer’s benchmarks/cuda/results/leaderboard.json (schema_version 1, environment v2_containerized, hardware RTX PRO 6000 Blackwell Workstation, sm_120a, 96 GB VRAM). A cell is scored only under the site’s own validity rule: correct and audited (“clean” or “interesting”); flagged, suspect, “bug” (published by the maintainer as unreliable) and unaudited cells are never scored, and the published per_problem ranked list is the cross-check — it still holds the two audited-but-excluded cells the rule rejects, the `suspect` kinetic-claude/kinetic-0715[1m] cell on 03 (peak_fraction 0.0622) and the `bug` muse/muse-spark-1.3 [ultra] cell on 04 (0.2056), so where the ranked list and the validity rule disagree the validity rule wins (cells the maintainer marks `correct: false` are absent from the ranked list anyway, and the `reward_hack` deepseek-claude/deepseek-v4-pro cell on 04 is excluded by both). Published values are `peak_fraction` × 100: the fraction of problem 03’s own ceiling as SPEC.md defines it per problem (dense-equivalent FLOP roofline for 01 and 02, decode-only tok/s for 03, SPS against the 150M `peak_sps` anchor for 04), not latencies (SPEC.md’s latency-anchored standing rule of 2026-07-15 names problem 02 as its example — “dense-equivalent FLOPs that a correct sparse kernel never executes, e.g. 02” — and for such a problem the rule makes milliseconds the maintainer’s headline and the persisted score a geomean speedup against the frozen eager reference, while `peak_fraction` “stays as a context column”; that context column is the number published here for 02. elapsed_seconds stays in each observation’s protocol), and values above 100% mean the measured kernel beat the conservative roofline (Opus 5 reaches 196.10% on 04). One unlimited agent session per cell; the agent harness (codex, claude, grok, kinetic-claude, deepseek-claude, muse, or-fable, or-opus, zai-claude, agy) stays in each observation’s protocol. Community benchmark, never a Composite input."
+        "notes": "Published by Elliot Arledge’s kernelbench.com (independent site, not the Stanford KernelBench); values are baked from the maintainer’s benchmarks/cuda/results/leaderboard.json (schema_version 1, environment v2_containerized, hardware RTX PRO 6000 Blackwell Workstation, sm_120a, 96 GB VRAM). A cell is scored only under the site’s own validity rule: correct and audited (“clean” or “interesting”); flagged, suspect, “bug” (published by the maintainer as unreliable) and unaudited cells are never scored, and the published per_problem ranked list is the cross-check — it still holds the two audited-but-excluded cells the rule rejects, the `suspect` kinetic-claude/kinetic-0715[1m] cell on 03 (peak_fraction 0.0622) and the `bug` muse/muse-spark-1.3 [ultra] cell on 04 (0.2056), so where the ranked list and the validity rule disagree the validity rule wins (cells the maintainer marks `correct: false` are absent from the ranked list anyway, and the `reward_hack` deepseek-claude/deepseek-v4-pro cell on 04 is excluded by both). Published values are `peak_fraction` × 100: the fraction of problem 03’s own ceiling as SPEC.md defines it per problem (dense-equivalent FLOP roofline for 01 and 02, decode-only tok/s for 03, SPS against the 150M `peak_sps` anchor for 04), not latencies (SPEC.md’s latency-anchored standing rule of 2026-07-15 names problem 02 as its example — “dense-equivalent FLOPs that a correct sparse kernel never executes, e.g. 02” — and for such a problem the rule makes milliseconds the maintainer’s headline and the persisted score a geomean speedup against the frozen eager reference, while `peak_fraction` “stays as a context column”; that context column is the number published here for 02. elapsed_seconds stays in each observation’s protocol), and values above 100% mean the measured kernel beat the conservative roofline (Opus 5 reaches 196.10% on 04). One unlimited agent session per cell; the agent harness (codex, claude, grok, kinetic-claude, deepseek-claude, muse, or-fable, or-opus, zai-claude, agy) stays in each observation’s protocol. Benchmark Heaven policy: community benchmark, never a Composite input."
       },
       "maintainer": "Elliot Arledge (kernelbench.com)",
       "source_type": "official_leaderboard",
@@ -6482,7 +6482,7 @@
           null
         ],
         "higher_better": true,
-        "notes": "Run by the maintainer through each model's API (routes named per row); validation is programmatic (pinned SCOWL dictionary, Levenshtein distance 1, no repeats), no judge model. The scale has no ceiling: longer chains keep adding points. The difficulty-weighted score, best-trial sum, validity rate, output tokens, run cost and trial count stay in each observation's protocol. Secondary benchmark, never a Composite input."
+        "notes": "Run by the maintainer through each model's API (routes named per row); validation is programmatic (pinned SCOWL dictionary, Levenshtein distance 1, no repeats), no judge model. The scale has no ceiling: longer chains keep adding points. The difficulty-weighted score, best-trial sum, validity rate, output tokens, run cost and trial count stay in each observation's protocol. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "Lisan al Gaib (@scaling01)",
       "source_type": "official_leaderboard",
@@ -6671,7 +6671,7 @@
           1
         ],
         "higher_better": true,
-        "notes": "The number is shown the way the board publishes it — a mean partial-credit reward on a 0–1 scale, not a share of tasks solved (the board also counts a task solved at reward ≥ 0.95; that count stays in each row's protocol). Every run uses the same Terminus-2 harness, one attempt per task and a uniform 90-minute budget. The seed rows are the maintainers' paper baselines (July 2026); later runs are added after the maintainers replay and verify them. Per-task cost estimates from the paper stay in the protocol. Secondary benchmark, never a Composite input."
+        "notes": "The number is shown the way the board publishes it — a mean partial-credit reward on a 0–1 scale, not a share of tasks solved (the board also counts a task solved at reward ≥ 0.95; that count stays in each row's protocol). Every run uses the same Terminus-2 harness, one attempt per task and a uniform 90-minute budget. The seed rows are the maintainers' paper baselines (July 2026); later runs are added after the maintainers replay and verify them. Per-task cost estimates from the paper stay in the protocol. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "Long-Horizon Terminal-Bench authors (Tencent HY LLM Frontier)",
       "source_type": "official_leaderboard",
@@ -6810,7 +6810,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on the June 2026 edition (48 problems). The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol. A model released after the problems were published may have seen them; the flag says so, it is not a correction. Monthly editions are separate identities. Secondary benchmark, never a Composite input."
+        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on the June 2026 edition (48 problems). The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol. A model released after the problems were published may have seen them; the flag says so, it is not a correction. Monthly editions are separate identities. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)",
       "source_type": "official_leaderboard",
@@ -6939,7 +6939,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on the August 2026 edition (57 problems). The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol. A model released after the problems were published may have seen them; the flag says so, it is not a correction. Monthly editions are separate identities and editions are never averaged. Secondary benchmark, never a Composite input."
+        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on the August 2026 edition (57 problems). The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol. A model released after the problems were published may have seen them; the flag says so, it is not a correction. Monthly editions are separate identities and editions are never averaged. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)",
       "source_type": "official_leaderboard",
@@ -7449,7 +7449,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Scale AI runs every listed configuration itself (measured): \"We evaluate the model's response against a ground-truth answer that is split into a list of claims for easier verification via an LLM judge.\" Each claim scores 1 / 0.5 / 0, coverage is the mean of the per-claim scores for a task, and a task passes when coverage is \"75% or higher\" — the ground truth decides, the judge only checks the answer against it. The dataset is 1,000 human-authored tasks over 36 real MCP servers and 220 tools, 3–6 tool calls per task; the 500-task public subset is on Hugging Face and the other 500 are held out. The board value is the pass rate over all 1,000 tasks: for every one of the 20 models the page's own coverage table also lists, its \"Pass Rate % (All 1000)\" column equals this board value exactly, and the separate \"Pass Rate % (Public 500)\" column is never ingested. April 2026 methodology update, in the page's own words: an upgraded scoring judge, retry handling for transient tool errors, the 20-turn limit replaced by \"a tool call budget of 100 max tool calls per task\", and \"We re-scored all leaderboard models.\" The effort setting is part of each model label. The page's \"Key Metrics at a Glance\" card says \"83.6% Top Pass Rate\" while the board's own top row is 88.1 % — the stat card is stale and is never ingested. A footnote \"*Evaluations for these models were run using Fireworks AI for inference\" sits under the coverage table but marks no row in this snapshot. Secondary benchmark, never a Composite input."
+        "notes": "Scale AI runs every listed configuration itself (measured): \"We evaluate the model's response against a ground-truth answer that is split into a list of claims for easier verification via an LLM judge.\" Each claim scores 1 / 0.5 / 0, coverage is the mean of the per-claim scores for a task, and a task passes when coverage is \"75% or higher\" — the ground truth decides, the judge only checks the answer against it. The dataset is 1,000 human-authored tasks over 36 real MCP servers and 220 tools, 3–6 tool calls per task; the 500-task public subset is on Hugging Face and the other 500 are held out. The board value is the pass rate over all 1,000 tasks: for every one of the 20 models the page's own coverage table also lists, its \"Pass Rate % (All 1000)\" column equals this board value exactly, and the separate \"Pass Rate % (Public 500)\" column is never ingested. April 2026 methodology update, in the page's own words: an upgraded scoring judge, retry handling for transient tool errors, the 20-turn limit replaced by \"a tool call budget of 100 max tool calls per task\", and \"We re-scored all leaderboard models.\" The effort setting is part of each model label. The page's \"Key Metrics at a Glance\" card says \"83.6% Top Pass Rate\" while the board's own top row is 88.1 % — the stat card is stale and is never ingested. A footnote \"*Evaluations for these models were run using Fireworks AI for inference\" sits under the coverage table but marks no row in this snapshot. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "Scale AI",
       "source_type": "official_leaderboard",
@@ -7518,7 +7518,7 @@
           1
         ],
         "higher_better": true,
-        "notes": "Epoch AI ran this board itself with its inspect-ai harness and publishes the rows under CC BY 4.0; these are Epoch-run results, not a lab's or a republisher's numbers. The leaderboard configuration “MirrorCode (ML, +Private, 2L)” covers 15 target programs in two implementation languages (30 tasks) (epoch.ai/benchmarks/mirrorcode). The archive states no board version, so the identity is dated by capture (snapshot). Value is Epoch's “Best score (across scorers)”; the mean score and standard error stay in the protocol. Secondary information, never a Composite input: attribution “Epoch AI” is shown with the board."
+        "notes": "Epoch AI ran this board itself with its inspect-ai harness and publishes the rows under CC BY 4.0; these are Epoch-run results, not a lab's or a republisher's numbers. The leaderboard configuration “MirrorCode (ML, +Private, 2L)” covers 15 target programs in two implementation languages (30 tasks) (epoch.ai/benchmarks/mirrorcode). The archive states no board version, so the identity is dated by capture (snapshot). Value is Epoch's “Best score (across scorers)”; the mean score and standard error stay in the protocol. Benchmark Heaven policy: secondary information, never a Composite input: attribution “Epoch AI” is shown with the board."
       },
       "maintainer": "Epoch AI (with METR)",
       "source_type": "official_leaderboard",
@@ -7646,7 +7646,7 @@
           1
         ],
         "higher_better": true,
-        "notes": "Epoch AI ran this board itself with its inspect-ai harness and publishes the rows under CC BY 4.0; these are Epoch-run results, not a lab's or a republisher's numbers. “We keep the game’s identity secret to reduce the risk of benchmark-specific preparation” (epoch.ai/benchmarks/mystery-game-puzzles). The archive states no board version, so the identity is dated by capture (snapshot). Value is Epoch's “Best score (across scorers)”; the mean score and standard error stay in the protocol. Secondary information, never a Composite input: attribution “Epoch AI” is shown with the board."
+        "notes": "Epoch AI ran this board itself with its inspect-ai harness and publishes the rows under CC BY 4.0; these are Epoch-run results, not a lab's or a republisher's numbers. “We keep the game’s identity secret to reduce the risk of benchmark-specific preparation” (epoch.ai/benchmarks/mystery-game-puzzles). The archive states no board version, so the identity is dated by capture (snapshot). Value is Epoch's “Best score (across scorers)”; the mean score and standard error stay in the protocol. Benchmark Heaven policy: secondary information, never a Composite input: attribution “Epoch AI” is shown with the board."
       },
       "maintainer": "Epoch AI",
       "source_type": "official_leaderboard",
@@ -8473,7 +8473,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run by the benchmark maintainers (XLANG Lab, University of Hong Kong) and published as one official results file. Each row is one model x reasoning setting x tool setting, kept as the source spells it (\"batch tool\", \"batched tool\", \"standard\"); the tool setting is the harness cohort. The partial score, the offline subset and the 150/300-step budgets stay in the source and are not ingested. The August 2026 task release (v2026.08.08) changed the task files and is the separate identity osworld-2::v2026.08.08. Secondary benchmark, never a Composite input."
+        "notes": "Run by the benchmark maintainers (XLANG Lab, University of Hong Kong) and published as one official results file. Each row is one model x reasoning setting x tool setting, kept as the source spells it (\"batch tool\", \"batched tool\", \"standard\"); the tool setting is the harness cohort. The partial score, the offline subset and the 150/300-step budgets stay in the source and are not ingested. The August 2026 task release (v2026.08.08) changed the task files and is the separate identity osworld-2::v2026.08.08. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "XLANG Lab (The University of Hong Kong)",
       "source_type": "official_leaderboard",
@@ -8555,7 +8555,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run by the benchmark maintainers (XLANG Lab, University of Hong Kong) and published as one official results file. Each row is one model x reasoning setting x tool setting, kept as the source spells it (\"batch tool\", \"batched tool\", \"standard\"); the tool setting is the harness cohort. The partial score, the offline subset and the 150/300-step budgets stay in the source and are not ingested. The task files differ from the June 2026 release (osworld-2::v2026.06.24), so the two are never compared directly. Secondary benchmark, never a Composite input."
+        "notes": "Run by the benchmark maintainers (XLANG Lab, University of Hong Kong) and published as one official results file. Each row is one model x reasoning setting x tool setting, kept as the source spells it (\"batch tool\", \"batched tool\", \"standard\"); the tool setting is the harness cohort. The partial score, the offline subset and the 150/300-step budgets stay in the source and are not ingested. The task files differ from the June 2026 release (osworld-2::v2026.06.24), so the two are never compared directly. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "XLANG Lab (The University of Hong Kong)",
       "source_type": "official_leaderboard",
@@ -8758,7 +8758,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Published by aisa-group (Ben Rank et al.) on posttrainbench.com; the arXiv paper (2603.08640) documents the protocol and states the site is “Verified by Epoch AI”. scores.js (window.SCORES_DATA) carries per-cell values, the published weights and the per-agent aggregated averages with run counts; config.js states each agent’s display name, CLI scaffold and reasoning effort. Baseline rows (official instruct models, base models, human) are references, never observation rows. Fable 5’s GPQA cells use an Opus 4.8 Max fallback after refusals (site footnote ‡); every cell’s fallbackType is visible in the data. Not a Composite input."
+        "notes": "Published by aisa-group (Ben Rank et al.) on posttrainbench.com; the arXiv paper (2603.08640) documents the protocol and states the site is “Verified by Epoch AI”. scores.js (window.SCORES_DATA) carries per-cell values, the published weights and the per-agent aggregated averages with run counts; config.js states each agent’s display name, CLI scaffold and reasoning effort. Baseline rows (official instruct models, base models, human) are references, never observation rows. Fable 5’s GPQA cells use an Opus 4.8 Max fallback after refusals (site footnote ‡); every cell’s fallbackType is visible in the data. Benchmark Heaven policy: not a Composite input."
       },
       "maintainer": "aisa-group (Ben Rank et al.)",
       "source_type": "official_leaderboard",
@@ -9344,7 +9344,7 @@
           1
         ],
         "higher_better": true,
-        "notes": "Each task's native metric is mapped onto a common 0-1 scale by anchors frozen before the release: the inherited starter method is 0.00, a finite mathematical, theoretical or oracle upper bound is 1.00, and where the task author provides a verified strong frontier solution it is placed at 0.60 as the frontier-calibrated reference; without a finite upper bound an exponential tail approaches but never reaches 1.00. The board averages those per-task scores with equal weight. The number is a normalised index on the benchmark’s own 0–1 scale, not a share of tasks solved, and is shown the way the source publishes it — never as a percentage and never averaged into a category composite. One rollout per model x agent-harness pair per task, so the numbers carry no run-to-run variance estimate; a score of 0.00 means the submitted artifact did not improve on the inherited method, including after an early termination. The Public 35 / Private 53 panels restrict the same runs to the two splits and stay in each observation's protocol. Secondary benchmark, never a Composite input."
+        "notes": "Each task's native metric is mapped onto a common 0-1 scale by anchors frozen before the release: the inherited starter method is 0.00, a finite mathematical, theoretical or oracle upper bound is 1.00, and where the task author provides a verified strong frontier solution it is placed at 0.60 as the frontier-calibrated reference; without a finite upper bound an exponential tail approaches but never reaches 1.00. The board averages those per-task scores with equal weight. The number is a normalised index on the benchmark’s own 0–1 scale, not a share of tasks solved, and is shown the way the source publishes it — never as a percentage and never averaged into a category composite. One rollout per model x agent-harness pair per task, so the numbers carry no run-to-run variance estimate; a score of 0.00 means the submitted artifact did not improve on the inherited method, including after an early termination. The Public 35 / Private 53 panels restrict the same runs to the two splits and stay in each observation's protocol. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "RSI-Exam Team (aiming-lab, UNC Chapel Hill)",
       "source_type": "official_leaderboard",
@@ -9602,7 +9602,7 @@
           1
         ],
         "higher_better": true,
-        "notes": "Google DeepMind published SimpleQA Verified (2025-09-09); these results are Epoch AI's own runs from its Benchmarking Hub, not the maintainer's or a lab's numbers. The archive states no version, so the identity is dated by capture. Value is Epoch's \"Best score (across scorers)\"; mean score and standard error stay in the protocol. CC BY 4.0: attribute Epoch AI. Secondary benchmark, never a Composite input."
+        "notes": "Google DeepMind published SimpleQA Verified (2025-09-09); these results are Epoch AI's own runs from its Benchmarking Hub, not the maintainer's or a lab's numbers. The archive states no version, so the identity is dated by capture. Value is Epoch's \"Best score (across scorers)\"; mean score and standard error stay in the protocol. CC BY 4.0: attribute Epoch AI. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "Google DeepMind (benchmark); Epoch AI (runs)",
       "source_type": "official_leaderboard",
@@ -12152,7 +12152,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run by Scale AI with the harness named in each label (Claude Code, Codex, Mini-SWE-Agent, Gemini CLI). An input to the AA Coding Agent Index v1.5, which runs its own copy with a different harness and judge; these are Scale’s results. Secondary benchmark, never a Composite input."
+        "notes": "Run by Scale AI with the harness named in each label (Claude Code, Codex, Mini-SWE-Agent, Gemini CLI). An input to the AA Coding Agent Index v1.5, which runs its own copy with a different harness and judge; these are Scale’s results. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "how_to_collect": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
@@ -12216,7 +12216,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run by Scale AI with the harness named in each label (Claude Code, Codex, Mini-SWE-Agent, Gemini CLI). Secondary benchmark, never a Composite input."
+        "notes": "Run by Scale AI with the harness named in each label (Claude Code, Codex, Mini-SWE-Agent, Gemini CLI). Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "how_to_collect": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
@@ -12280,7 +12280,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run by Scale AI with the harness named in each label (Claude Code, Codex, Mini-SWE-Agent, Gemini CLI). Secondary benchmark, never a Composite input."
+        "notes": "Run by Scale AI with the harness named in each label (Claude Code, Codex, Mini-SWE-Agent, Gemini CLI). Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "how_to_collect": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
@@ -12550,7 +12550,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run by the maintainers (Nebius) with the same scaffold, prompts and default generation settings for every model, tool-based mode. SEM, Pass@5, cost and tokens per problem stay in each observation's protocol. The source marks a row 'potential contamination' when the model was released after the window's first task; that flag is kept per row. Secondary benchmark, never a Composite input."
+        "notes": "Run by the maintainers (Nebius) with the same scaffold, prompts and default generation settings for every model, tool-based mode. SEM, Pass@5, cost and tokens per problem stay in each observation's protocol. The source marks a row 'potential contamination' when the model was released after the window's first task; that flag is kept per row. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "Nebius (SWE-rebench team)",
       "source_type": "official_leaderboard",
@@ -12898,7 +12898,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run by the maintainers in the board's Default agent configuration; the board's ± figure is the standard deviation across the three runs, not a confidence interval, and Pass@3, Pass^3, the mean turns and tool calls, the model type and the evaluation date stay in each observation's protocol. Only rows carrying the board's green check (\"independently evaluated by us\") are ingested — a row submitted by someone else is not published here as a measurement. The pre-June-2026 Toolathlon board is a different score series that the site itself calls not comparable; it is archived on the same page and collected separately as toolathlon::pre-verified, never into this identity. Secondary benchmark, never a Composite input."
+        "notes": "Run by the maintainers in the board's Default agent configuration; the board's ± figure is the standard deviation across the three runs, not a confidence interval, and Pass@3, Pass^3, the mean turns and tool calls, the model type and the evaluation date stay in each observation's protocol. Only rows carrying the board's green check (\"independently evaluated by us\") are ingested — a row submitted by someone else is not published here as a measurement. The pre-June-2026 Toolathlon board is a different score series that the site itself calls not comparable; it is archived on the same page and collected separately as toolathlon::pre-verified, never into this identity. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "HKUST NLP (Toolathlon team)",
       "source_type": "official_leaderboard",
@@ -12980,7 +12980,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "The maintainers' own archived snapshot of the leaderboard immediately before Toolathlon-Verified. The site says these scores use earlier task definitions and evaluation infrastructure and are not directly comparable with the Verified results, so this is its own identity and never ranked against toolathlon-verified::2026-06-30. Only rows carrying the board's green check (independently evaluated by the maintainers) are ingested; rows sourced from vendor announcements are not. The ± figure is the across-run standard deviation; rows the page marks † (Claude Opus) were evaluated once, and rows marked ‡ (OpenAI) were re-run through the Responses API — both footnotes stay in the row's protocol. The one row run in a vendor SDK scaffold (Claude Agent SDK) is a different measured system and is left out. Secondary benchmark, never a Composite input."
+        "notes": "The maintainers' own archived snapshot of the leaderboard immediately before Toolathlon-Verified. The site says these scores use earlier task definitions and evaluation infrastructure and are not directly comparable with the Verified results, so this is its own identity and never ranked against toolathlon-verified::2026-06-30. Only rows carrying the board's green check (independently evaluated by the maintainers) are ingested; rows sourced from vendor announcements are not. The ± figure is the across-run standard deviation; rows the page marks † (Claude Opus) were evaluated once, and rows marked ‡ (OpenAI) were re-run through the Responses API — both footnotes stay in the row's protocol. The one row run in a vendor SDK scaffold (Claude Agent SDK) is a different measured system and is left out. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "HKUST NLP (Toolathlon team)",
       "source_type": "official_leaderboard",
@@ -14269,7 +14269,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Published and maintained by Håvard Tveit Ihle (Norwegian Defence Research Establishment) on htihle.github.io; the site's own model-summary table renders the same value under \"Average Score Across 11 Tasks\". Effective scores include normalization and hint penalties; they are not raw accuracy and are not comparable with WeirdML v2's \"Average Max Accuracy\" convention. Configurations the author excluded for incomplete task coverage stay excluded, never estimated from covered tasks (excluded_models). One configuration per row; the agent harness (codex_cli, claude_code, gemini_cli, opencode), runs, cost and the 95% interval stay in each observation's protocol. Community benchmark, never a Composite input."
+        "notes": "Published and maintained by Håvard Tveit Ihle (Norwegian Defence Research Establishment) on htihle.github.io; the site's own model-summary table renders the same value under \"Average Score Across 11 Tasks\". Effective scores include normalization and hint penalties; they are not raw accuracy and are not comparable with WeirdML v2's \"Average Max Accuracy\" convention. Configurations the author excluded for incomplete task coverage stay excluded, never estimated from covered tasks (excluded_models). One configuration per row; the agent harness (codex_cli, claude_code, gemini_cli, opencode), runs, cost and the 95% interval stay in each observation's protocol. Benchmark Heaven policy: community benchmark, never a Composite input."
       },
       "maintainer": "Håvard Tveit Ihle (Norwegian Defence Research Establishment)",
       "source_type": "official_leaderboard",
@@ -15573,7 +15573,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on 33 problems. MathArena marks this competition Deprecated: it is kept for the record and no longer gains models, so the board is tagged retired. The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol; a flagged model may have seen the problems. Rows scored partly by item-response-theory estimates are not ingested. Editions are separate identities and never averaged. Secondary benchmark, never a Composite input."
+        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on 33 problems. MathArena marks this competition Deprecated: it is kept for the record and no longer gains models, so the board is tagged retired. The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol; a flagged model may have seen the problems. Rows scored partly by item-response-theory estimates are not ingested. Editions are separate identities and never averaged. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)",
       "source_type": "official_leaderboard",
@@ -15665,7 +15665,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on 30 problems. MathArena marks this competition Deprecated: it is kept for the record and no longer gains models, so the board is tagged retired. The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol; a flagged model may have seen the problems. Rows scored partly by item-response-theory estimates are not ingested. Editions are separate identities and never averaged. Secondary benchmark, never a Composite input."
+        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on 30 problems. MathArena marks this competition Deprecated: it is kept for the record and no longer gains models, so the board is tagged retired. The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol; a flagged model may have seen the problems. Rows scored partly by item-response-theory estimates are not ingested. Editions are separate identities and never averaged. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)",
       "source_type": "official_leaderboard",
@@ -15757,7 +15757,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on 12 problems. MathArena marks this competition Deprecated: it is kept for the record and no longer gains models, so the board is tagged retired. The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol; a flagged model may have seen the problems. Rows scored partly by item-response-theory estimates are not ingested. Editions are separate identities and never averaged. Secondary benchmark, never a Composite input."
+        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on 12 problems. MathArena marks this competition Deprecated: it is kept for the record and no longer gains models, so the board is tagged retired. The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol; a flagged model may have seen the problems. Rows scored partly by item-response-theory estimates are not ingested. Editions are separate identities and never averaged. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)",
       "source_type": "official_leaderboard",
@@ -15849,7 +15849,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on 47 problems. MathArena marks this competition Deprecated: it is kept for the record and no longer gains models, so the board is tagged retired. The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol; a flagged model may have seen the problems. Rows scored partly by item-response-theory estimates are not ingested. Editions are separate identities and never averaged. Secondary benchmark, never a Composite input."
+        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on 47 problems. MathArena marks this competition Deprecated: it is kept for the record and no longer gains models, so the board is tagged retired. The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol; a flagged model may have seen the problems. Rows scored partly by item-response-theory estimates are not ingested. Editions are separate identities and never averaged. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)",
       "source_type": "official_leaderboard",
@@ -15941,7 +15941,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on 30 problems. MathArena marks this competition Deprecated: it is kept for the record and no longer gains models, so the board is tagged retired. The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol; a flagged model may have seen the problems. Rows scored partly by item-response-theory estimates are not ingested. Editions are separate identities and never averaged. Secondary benchmark, never a Composite input."
+        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on 30 problems. MathArena marks this competition Deprecated: it is kept for the record and no longer gains models, so the board is tagged retired. The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol; a flagged model may have seen the problems. Rows scored partly by item-response-theory estimates are not ingested. Editions are separate identities and never averaged. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)",
       "source_type": "official_leaderboard",
@@ -16033,7 +16033,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on 6 proof problems. Grading, from MathArena's own configuration (github.com/eth-sri/matharena, configs/competitions/usamo/usamo_2026.yaml and configs/judges/): a grading scheme creator (Gemini 3.1 Pro) writes a 0–7 rubric per problem from the official solution; in the main judge, Gemini 3.1 Pro (low) first rewrites each proof in a normalised style, then Gemini 3.1 Pro, Claude Opus 4.6 and GPT-5.4 grade it and the lowest of their grades counts for that proof (aggregate_points_by: min; confirmed against the judge code, src/matharena/solvers/judges/norm_judge.py, by the codex review of iteration 162). Three of those judge models are also graded on this board. Judged benchmark: a judge model's reading of the proof, not a checkable answer, sets the score. MathArena marks this competition Deprecated: it is kept for the record and no longer gains models, so the board is tagged retired. The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol. Editions are separate identities and never averaged. Secondary benchmark, never a Composite input."
+        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on 6 proof problems. Grading, from MathArena's own configuration (github.com/eth-sri/matharena, configs/competitions/usamo/usamo_2026.yaml and configs/judges/): a grading scheme creator (Gemini 3.1 Pro) writes a 0–7 rubric per problem from the official solution; in the main judge, Gemini 3.1 Pro (low) first rewrites each proof in a normalised style, then Gemini 3.1 Pro, Claude Opus 4.6 and GPT-5.4 grade it and the lowest of their grades counts for that proof (aggregate_points_by: min; confirmed against the judge code, src/matharena/solvers/judges/norm_judge.py, by the codex review of iteration 162). Three of those judge models are also graded on this board. Judged benchmark: a judge model's reading of the proof, not a checkable answer, sets the score. MathArena marks this competition Deprecated: it is kept for the record and no longer gains models, so the board is tagged retired. The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol. Editions are separate identities and never averaged. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)",
       "source_type": "official_leaderboard",
@@ -16615,7 +16615,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Single run per model (the page: \"Single-run evaluation (run-1) only; Pass@4 and Pass^4 are not applicable.\"). The 127 tasks split 30 filesystem, 23 GitHub, 28 Notion, 25 Playwright and 21 Postgres (the repository's tasks/<service>/standard tree holds exactly 127 verify.py files on 2026-09-22; the board's Playwright column covers tasks/playwright (4) and tasks/playwright_webarena (21)); the board's per-service success rates weighted by these counts reproduce every row's Pass@1 (checked on collection), and they are kept in each row's protocol. MCP server versions are pinned (GitHub MCP Server v0.15.0, Notion MCP Server 1.9.1, README 21 Jan). The page states that kimi-k2-7-code's filesystem scores come from its second recorded run; the README's \"kimi-k2.7 reaches 81.1%\" equals 103/127, one task fewer than the board's 81.89 % (104/127) — consistent with the first run's filesystem score, though the README does not say so. The board value is ingested. Results on the pre-Verified task versions (the legacy board) are deprecated by the maintainers and are not comparable. Secondary benchmark, never a Composite input."
+        "notes": "Single run per model (the page: \"Single-run evaluation (run-1) only; Pass@4 and Pass^4 are not applicable.\"). The 127 tasks split 30 filesystem, 23 GitHub, 28 Notion, 25 Playwright and 21 Postgres (the repository's tasks/<service>/standard tree holds exactly 127 verify.py files on 2026-09-22; the board's Playwright column covers tasks/playwright (4) and tasks/playwright_webarena (21)); the board's per-service success rates weighted by these counts reproduce every row's Pass@1 (checked on collection), and they are kept in each row's protocol. MCP server versions are pinned (GitHub MCP Server v0.15.0, Notion MCP Server 1.9.1, README 21 Jan). The page states that kimi-k2-7-code's filesystem scores come from its second recorded run; the README's \"kimi-k2.7 reaches 81.1%\" equals 103/127, one task fewer than the board's 81.89 % (104/127) — consistent with the first run's filesystem score, though the README does not say so. The board value is ingested. Results on the pre-Verified task versions (the legacy board) are deprecated by the maintainers and are not comparable. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "EVAL SYS (eval-sys/mcpmark)",
       "source_type": "official_leaderboard",
@@ -16685,7 +16685,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "The CSV the leaderboard renders prints the reasoning Overall and its four question types (text-in-chart 440, text-in-general 99, number-in-chart 232, number-in-general 229 questions — counts recovered from the board and checked on collection: the weighted types reproduce every fully printed row within 0.006 points, Pixtral 12B within 0.12, a source inconsistency kept in its protocol), then the descriptive Overall (4,000 questions) and its five types; only the reasoning Overall is ingested, descriptive accuracy stays in each row's protocol. Human 80.5, random baseline 10.8 (both skipped). The leaderboard stops at o3 (high), o4 mini (high) and Claude 3.7 Sonnet (spring 2025); newer CharXiv figures come from lab cards (CharXiv with or without tools) and third-party boards, not from this board. Secondary benchmark, never a Composite input."
+        "notes": "The CSV the leaderboard renders prints the reasoning Overall and its four question types (text-in-chart 440, text-in-general 99, number-in-chart 232, number-in-general 229 questions — counts recovered from the board and checked on collection: the weighted types reproduce every fully printed row within 0.006 points, Pixtral 12B within 0.12, a source inconsistency kept in its protocol), then the descriptive Overall (4,000 questions) and its five types; only the reasoning Overall is ingested, descriptive accuracy stays in each row's protocol. Human 80.5, random baseline 10.8 (both skipped). The leaderboard stops at o3 (high), o4 mini (high) and Claude 3.7 Sonnet (spring 2025); newer CharXiv figures come from lab cards (CharXiv with or without tools) and third-party boards, not from this board. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "Princeton Language and Intelligence (princeton-nlp/CharXiv)",
       "source_type": "official_leaderboard",
