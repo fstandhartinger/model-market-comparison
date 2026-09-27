@@ -20,7 +20,7 @@ export type JevV15System = {
   calibration: { score: number | null; parts: Partial<Record<JevV15Type, Record<string, number | null>>> };
   speed: { p50_s_raw: number | null; p95_s_raw: number | null; p50_s_adjusted: number | null; p95_s_adjusted: number | null; n?: number; adjustment: string | null };
   cost: { kind: string; usd_per_1000: number | null; basis: string };
-  rank: number | null; ranked: boolean; listing: 'ranked' | 'partial' | 'unranked' | 'unpriced' | 'addendum' | 'honorable_mention'; would_place_B?: number; not_ranked_because: string | null;
+  rank: number | null; ranked: boolean; listing: 'ranked' | 'partial' | 'unranked' | 'unpriced' | 'addendum' | 'honorable_mention'; would_place_A?: number; would_place_B?: number; not_ranked_because: string | null;
   ranks: Record<JevV15Option, number | null>;
   not_scored_reason?: string;
 };
@@ -29,6 +29,8 @@ export type JevV15Marker = { upper: string; lower: string; tie: boolean; diff_ci
 export type JevV15Artifact = {
   benchmark: 'JevBench'; revision: string; protocol: string; status: string; run_kind: 'diagnostic' | 'official';
   source_sha256: string; method_sha256: string; pricing_addendum_sha256: string;
+  base_results_sha256?: string; addenda_sources_sha256?: Record<string, string>;
+  headline_method_addendum_sha256: string;
   sample: { open: number; sealed: number; total: number; published_open: number };
   types: Record<JevV15Type, number>; tier_weights: Record<string, number>; sealed_share_of_intelligence: number;
   G_med: number | null; G_med_flag_gt10: boolean; headline: JevV15Option;
@@ -44,6 +46,7 @@ export const JEVBENCH_V15_OPTIONS: JevV15Option[];
 export const JEVBENCH_V15_AXES: (keyof JevV15Axes)[];
 export const JEVBENCH_V15_TYPES: JevV15Type[];
 export const JEVBENCH_V15_METHOD_URL: string;
+export const JEVBENCH_V15_HEADLINE_METHOD_URL: string;
 export const JEVBENCH_V15_PRICING_URL: string;
 export function jevV15Composite(axes: JevV15Axes, weights: Record<keyof JevV15Axes, number>, floor: number): number | null;
 export type JevV15Board = JevV15Artifact['board'][JevV15Option];
