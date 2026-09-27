@@ -17,7 +17,7 @@ test('v1.5 preview artifact validates: aggregate-only, composites reproduce, boa
   const { artifact } = await readJevbenchV15Preview(root);
   assert.equal(artifact.status, 'preview-not-published');
   assert.ok(['diagnostic', 'official'].includes(artifact.run_kind));
-  assert.equal(artifact.headline, 'B');
+  assert.equal(artifact.headline, 'A');
   assert.equal(artifact.systems.filter((s) => s.listing === 'ranked').length, artifact.n_ranked);
   for (const s of artifact.systems.filter((r) => r.listing === 'unpriced')) {
     assert.equal(s.cost.usd_per_1000, null, `${s.key} unpriced must not carry a price`);
@@ -36,11 +36,11 @@ test('validator rejects item-level fields, a changed score and a published statu
   assert.throws(() => validateJevbenchV15Preview(published), /status/);
 });
 
-test('addendum rows carry the "v1.5.1 addendum A1" label and nothing else', async () => {
+test('addendum rows carry a generic v1.5 roster label, including A2 without implying a release number', async () => {
   const { artifact } = await readJevbenchV15Preview(root);
-  const ok = clone(artifact); ok.systems[0].addendum = { id: 'A1', release: 'v1.5.1', label: 'v1.5.1 addendum A1' };
+  const ok = clone(artifact); ok.systems[0].addendum = { id: 'A2', release: 'v1.5', label: 'v1.5 roster addendum A2' };
   assert.doesNotThrow(() => validateJevbenchV15Preview(ok));
-  const bad = clone(artifact); bad.systems[0].addendum = { id: 'A1', release: 'v1.5.1', label: 'new!' };
+  const bad = clone(artifact); bad.systems[0].addendum = { id: 'A2', release: 'v1.5', label: 'v1.5.1 addendum A2' };
   assert.throws(() => validateJevbenchV15Preview(bad), /addendum/);
   assert.match(read('components/JevBenchV15Preview.tsx'), /row\.addendum\.label/);
 });
@@ -59,6 +59,7 @@ test('hidden route: noindex, banner, diagnostic label, not in sitemap, nav, robo
   assert.equal(JEVBENCH_V15_PREVIEW_ROUTE, '/wip-oiifi41ouv1f/jevbench-v15');
   const page = read('app/wip-oiifi41ouv1f/jevbench-v15/page.tsx');
   assert.match(page, /robots:\s*\{\s*index:\s*false,\s*follow:\s*false/);
+  assert.match(page, /canonical: 'https:\/\/benchmarkheaven\.com\/wip-oiifi41ouv1f\/jevbench-v15'/);
   assert.match(page, /Unpublished preview — not released/);
   assert.match(page, /DIAGNOSTIC numbers/);
   assert.match(read('next.config.mjs'), /source: "\/wip-oiifi41ouv1f\/:path\*", headers: \[\{ key: "X-Robots-Tag", value: "noindex, nofollow/);
@@ -81,9 +82,17 @@ test('hidden What-If Lab: noindex, unlinked, aggregate-only; addendum rows liste
   const add = art.systems.filter((s) => s.listing === 'addendum');
   for (const s of add) {
     assert.equal(s.ranked, false);
-    assert.ok(s.addendum && Number.isInteger(s.would_place_B));
-    assert.ok(!art.board.B.order.includes(s.key));
+    assert.ok(s.addendum && Number.isInteger(s.would_place_A) && Number.isInteger(s.would_place_B));
+    assert.ok(Array.isArray(s.composite_ci95?.A) && Array.isArray(s.composite_ci95?.B));
+    assert.ok(!art.board.A.order.includes(s.key));
   }
+  assert.match(html, /<th>What-If #<\/th>/);
+  assert.match(html, /What-If # can include measured addendum rows/);
+  assert.match(html, /Before every release we review the leaderboard for anomalies and close loopholes with general, documented rules\./);
+  const component = read('components/JevBenchV15Preview.tsx');
+  assert.match(component, /Official A would place/);
+  assert.match(component, /Secondary B would place/);
+  assert.match(component, /does not establish a tie/);
 });
 
 // F-206 — the v1.5 preview drops "~", the per-row ≈ and a bare "joint leaders" before the page is linked.
@@ -131,23 +140,35 @@ test("F-206: the artifact's leader_wording is appended only when it adds a word 
     'Cygnet and Winnow-12B Q8 are joint leaders (statistical tie). Joint leaders after a paired bootstrap over 4,000 resamples.');
 });
 
-test('F-206: on the real artifact every ranked bar has a B interval to draw and the top pair is a tie today', async () => {
+test('F-206: on the real artifact every ranked bar has an A interval to draw and the top pair is a tie today', async () => {
   const { artifact } = await readJevbenchV15Preview(root);
+  assert.equal(artifact.headline, 'A');
   const ranked = artifact.systems.filter((s) => s.listing === 'ranked');
   for (const s of ranked) {
-    const ci = s.composite_ci95?.B;
-    assert.ok(Array.isArray(ci) && ci.length === 2 && ci.every((v) => Number.isFinite(v)), `${s.key} has no B 95% interval for its whisker`);
+    const ci = s.composite_ci95?.[artifact.headline];
+    assert.ok(Array.isArray(ci) && ci.length === 2 && ci.every((v) => Number.isFinite(v)), `${s.key} has no ${artifact.headline} 95% interval for its whisker`);
     assert.ok(ci[0] <= ci[1], `${s.key} interval is inverted`);
   }
-  const { ties, pairs } = jevV15TieSummary(artifact.board.B);
+  const { ties, pairs } = jevV15TieSummary(artifact.board[artifact.headline]);
   assert.equal(pairs, ranked.length - 1, 'one marker per adjacent ranked pair');
   assert.ok(ties > 0 && ties <= pairs);
   const named = new Map(artifact.systems.map((s) => [s.key, s.display]));
-  const sentence = jevV15LeaderSentence(artifact.board.B, (k) => named.get(k) ?? k);
+  const sentence = jevV15LeaderSentence(artifact.board[artifact.headline], (k) => named.get(k) ?? k);
   assert.ok(sentence, 'the live board must produce a leader sentence');
   assert.doesNotMatch(sentence, /^joint leaders/i);
   assert.match(sentence, /tie/i);
-  for (const key of jevV15LeaderKeys(artifact.board.B).keys) assert.ok(sentence.includes(named.get(key)), `${key} is not named in the leader line`);
+  for (const key of jevV15LeaderKeys(artifact.board[artifact.headline]).keys) assert.ok(sentence.includes(named.get(key)), `${key} is not named in the leader line`);
+});
+
+test('v1.5 headline disclosure: A is equal-axis/equal-type, B is secondary, and owner method note is present', () => {
+  const src = read('components/JevBenchV15Preview.tsx');
+  assert.match(src, /const headline = a\.headline/);
+  assert.match(src, /A is the official headline: equal 25\/25\/25\/25 axis weights/);
+  assert.match(src, /B remains the secondary 40\/20\/20\/20 axis-weight view/);
+  assert.match(src, /Choice, Noul and Score each receive one third/);
+  assert.match(src, /Before every release we review the leaderboard for anomalies and close loopholes with general, documented rules\./);
+  assert.match(src, /Benchmark Heaven owns its rules/);
+  assert.doesNotMatch(src, /weights stay stable|What-If Lab will be public|special review of (our|own|affiliated)/i);
 });
 
 test('F-206: the preview component says the majority once and marks only the tariff exception', () => {
