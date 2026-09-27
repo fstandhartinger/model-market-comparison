@@ -50,6 +50,22 @@ collection recipe and provenance files with the data sync.
 
 Do this:
 
+### JevBench and Image JevBench release data (2026-09-27)
+
+The current JevBench board at `/jev-models` uses v1.4.2.2. Preserve both version-pinned
+result artifacts and their family supplements under
+`data/raw/benchmarks/jevbench/v1.4.2.1/` and `v1.4.2.2/`; v1.4.2.1 is a frozen
+90-ranked-system release and v1.4.2.2 is the current 91-ranked-system release. Their
+read-only APIs are documented in `API.md`: each results route has a `/families` companion
+and an `X-Content-SHA256` response header. Keep the separate frozen pages at
+`/jev-models/v1.4.2.1` and `/jev-models/v1.4.2.2`.
+
+Image JevBench's current page is `/image-jev-bench` (v0.1.2). Preserve its aggregate
+artifact at `data/raw/benchmarks/jevbench/multimodal-preview/preview.json` and the previous
+v0.1.1 artifact at `preview-v0.1.1.json`. There is no separate public JSON API for this
+benchmark. These artifacts and pages contain system-level aggregates only; do not copy or
+publish sealed images, tasks, answer keys or per-item predictions.
+
 1. **Add upstream + fetch.**
    ```bash
    git remote add upstream https://github.com/fstandhartinger/model-market-comparison.git 2>/dev/null || true
