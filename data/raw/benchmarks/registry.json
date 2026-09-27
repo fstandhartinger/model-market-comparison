@@ -14001,14 +14001,14 @@
       "category": "Agentic",
       "one_sentence_description": "Long-horizon agentic benchmark where models run a simulated vending machine business for a year and are scored on their final bank account balance.",
       "scoring": {
-        "metric": "Final bank account balance in USD after one simulated year of operation (average across 5 runs)",
+        "metric": "Final bank account balance in USD after one simulated year of operation, averaged across runs",
         "unit": "USD",
         "range": [
           null,
           null
         ],
         "higher_better": true,
-        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. The source labels the leaderboard column 'Average across runs' and publishes no run count in its page text, so none is claimed here: the earlier '(average across 5 runs)' wording was not stated by the source (D233)."
       },
       "maintainer": "Andon Labs",
       "source_type": "official_leaderboard",
@@ -14023,9 +14023,9 @@
       "how_to_collect": {
         "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://andonlabs.com/evals/vending-bench-2 --output /tmp/benchmark-source.txt",
         "format": "HTML/embedded data",
-        "locator": "'Current leaderboard' table on the Vending-Bench 2 page: extract the 'Money Balance' column (average across 5 runs)",
+        "locator": "'Current leaderboard' table on the Vending-Bench 2 page: extract the 'Money Balance' column, which the table's own subheading labels 'Average across runs'",
         "version_guard": "Verify the published version 2 before reading results.",
-        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05. The page states each row's run count only in the standard-error span's `title` attribute (\"Standard error of the mean across N runs\"), and N is not constant: the 2026-09-27 capture carries 6 for most rows, 5 for one and 4 for another. Attributes are outside the reviewed visible text, so no run count is asserted in `scoring` (D233)."
       },
       "update_cadence": {
         "source_schedule": "Not stated in the verified source; no promised publication schedule.",
