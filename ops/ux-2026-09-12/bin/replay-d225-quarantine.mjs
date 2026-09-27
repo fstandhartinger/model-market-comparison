@@ -36,7 +36,7 @@ import { quarantineHumanTodo } from '../../daily/policy.mjs';
 const exec = promisify(execFile);
 const args = process.argv.slice(2);
 const flag = (name, fallback) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : fallback; };
-const OUT = args.find((a) => !a.startsWith('--') && args[args.indexOf(a) - 1]?.startsWith('--') !== true) ?? args[0];
+const OUT = args[0];
 if (!OUT || OUT.startsWith('--')) { console.error('usage: replay-d225-quarantine.mjs <outDir> [--capture DIR] [--board ID]'); process.exit(2); }
 const CAPTURE = flag('--capture', '/opt/benchmarkheaven-daily/runs/2026-09-27T00-41-02-535Z-3199320/work/data/raw/benchmarks/daily-evidence/2026-09-27T00-54-53-549Z');
 const BOARD = flag('--board', 'vulcanbench-frontier::4');
@@ -59,8 +59,9 @@ const manifest = await json(join(CAPTURE, 'manifest.json'));
 const receipt = manifest.find((r) => r.status === 200 && r.url === spec.source.url);
 if (!receipt) throw new Error(`the replayed capture has no 200 receipt for ${spec.source.url}`);
 const boardBytes = gunzipSync(await readFile(join(CAPTURE, receipt.file.split('/').pop())));
-check('capture', 'the replayed board capture is the one the failed run took', sha(boardBytes.length ? gzipSync(boardBytes) : boardBytes) !== null && receipt.sha256 === sha(boardBytes),
-  { url: receipt.url, sha256: receipt.sha256, retrieved_at: receipt.retrieved_at, bytes: boardBytes.length });
+check('capture', 'the replayed board capture is the bytes the failed run recorded',
+  receipt.sha256 === sha(boardBytes) && boardBytes.length > 0,
+  { url: receipt.url, sha256: receipt.sha256, computed: sha(boardBytes), retrieved_at: receipt.retrieved_at, bytes: boardBytes.length });
 
 /** Run the real collector over one plan entry against given bytes, with the registry on disk. */
 async function collect(bytes, label) {
