@@ -10392,6 +10392,48 @@
       "reviewed_at": "2026-09-16"
     },
     {
+      "benchmark_id": "vals-index-cost::2",
+      "source_id": "anthropic/claude-opus-5-5",
+      "model_id": "claude-opus-5.5::max",
+      "rule": "label states model claude-opus-5.5 and setting max; exact catalog configuration claude-opus-5.5::max",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-cost::2",
+      "source_id": "openai/gpt-6-sol",
+      "model_id": "gpt-6-sol::max",
+      "rule": "label states model gpt-6-sol and setting max; exact catalog configuration gpt-6-sol::max",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-cost::2",
+      "source_id": "grok/grok-4.7",
+      "model_id": "grok-4.7::xhigh",
+      "rule": "label states model grok-4.7 and setting xhigh; exact catalog configuration grok-4.7::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-cost::2",
+      "source_id": "xiaomi/mimo-v2.6-flash",
+      "model_id": "mimo-v2.6-flash::default",
+      "rule": "label names mimo-v2.6-flash without a setting; the catalog has exactly one configuration, the default (mimo-v2.6-flash::default)",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-cost::2",
+      "source_id": "xiaomi/mimo-v2.6-pro",
+      "model_id": "mimo-v2.6-pro::default",
+      "rule": "label names mimo-v2.6-pro without a setting; the catalog has exactly one configuration, the default (mimo-v2.6-pro::default)",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-cost::2",
+      "source_id": "openai/gpt-6-luna",
+      "model_id": "gpt-6-luna::max",
+      "rule": "label states model gpt-6-luna and setting max; exact catalog configuration gpt-6-luna::max",
+      "reviewed_at": "2026-09-27"
+    },
+    {
       "benchmark_id": "osworld-2::v2026.06.24",
       "source_id": "Claude Sonnet 4.6|medium|standard|v2026.06.24",
       "model_id": "claude-sonnet-4.6::medium",
@@ -11855,6 +11897,34 @@
       "reviewed_at": "2026-09-18"
     },
     {
+      "benchmark_id": "vulcanbench-frontier::4",
+      "source_id": "GPT-5.6 Sol [extra-high]",
+      "model_id": "gpt-5.6-sol::xhigh",
+      "rule": "label states model gpt-5.6-sol and setting xhigh; exact catalog configuration gpt-5.6-sol::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vulcanbench-frontier::4",
+      "source_id": "GPT-5.6 Sol [high]",
+      "model_id": "gpt-5.6-sol::high",
+      "rule": "label states model gpt-5.6-sol and setting high; exact catalog configuration gpt-5.6-sol::high",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vulcanbench-frontier::4",
+      "source_id": "GPT-5.6 Sol [medium]",
+      "model_id": "gpt-5.6-sol::medium",
+      "rule": "label states model gpt-5.6-sol and setting medium; exact catalog configuration gpt-5.6-sol::medium",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vulcanbench-frontier::4",
+      "source_id": "GPT-5.6 Sol [low]",
+      "model_id": "gpt-5.6-sol::low",
+      "rule": "label states model gpt-5.6-sol and setting low; exact catalog configuration gpt-5.6-sol::low",
+      "reviewed_at": "2026-09-27"
+    },
+    {
       "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
       "source_id": "claude/claude-opus-4-8 [max]",
       "model_id": "claude-opus-4.8::max",
@@ -12021,6 +12091,34 @@
       "model_id": "glm-5.3-flash::default",
       "rule": "label names glm-5.3-flash without a setting; the catalog has exactly one configuration, the default (glm-5.3-flash::default)",
       "reviewed_at": "2026-09-18"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "source_id": "claude/claude-opus-5-5 [xhigh]",
+      "model_id": "claude-opus-5.5::xhigh",
+      "rule": "label states model claude-opus-5.5 and setting xhigh; exact catalog configuration claude-opus-5.5::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "source_id": "codex/gpt-6-luna [xhigh]",
+      "model_id": "gpt-6-luna::xhigh",
+      "rule": "label states model gpt-6-luna and setting xhigh; exact catalog configuration gpt-6-luna::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "source_id": "codex/gpt-6-sol [xhigh]",
+      "model_id": "gpt-6-sol::xhigh",
+      "rule": "label states model gpt-6-sol and setting xhigh; exact catalog configuration gpt-6-sol::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "source_id": "grok/grok-4.7 [xhigh]",
+      "model_id": "grok-4.7::xhigh",
+      "rule": "label states model grok-4.7 and setting xhigh; exact catalog configuration grok-4.7::xhigh",
+      "reviewed_at": "2026-09-27"
     },
     {
       "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
@@ -14256,6 +14354,20 @@
       "reviewed_at": "2026-09-26"
     },
     {
+      "benchmark_id": "eqbench-creative-writing::3",
+      "source_id": "aion-3.5",
+      "model_id": "aion-3.5::default",
+      "rule": "label names aion-3.5 and the board states no setting; the catalog has exactly one configuration, the default (aion-3.5::default)",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "eqbench-creative-writing::3",
+      "source_id": "space-bunny-alpha",
+      "model_id": "space-bunny-alpha::default",
+      "rule": "label names space-bunny-alpha and the board states no setting; the catalog has exactly one configuration, the default (space-bunny-alpha::default)",
+      "reviewed_at": "2026-09-27"
+    },
+    {
       "benchmark_id": "eqbench-longform-writing::v1.11",
       "source_id": "minimax/minimax-m2.5",
       "model_id": "minimax-m2.5::default",
@@ -14352,6 +14464,13 @@
       "model_id": "mimo-v2-pro::default",
       "rule": "label names mimo-v2-pro and the board states no setting; the catalog has exactly one configuration, the default (mimo-v2-pro::default)",
       "reviewed_at": "2026-09-26"
+    },
+    {
+      "benchmark_id": "eqbench-longform-writing::v1.11",
+      "source_id": "aion-3.5",
+      "model_id": "aion-3.5::default",
+      "rule": "label names aion-3.5 and the board states no setting; the catalog has exactly one configuration, the default (aion-3.5::default)",
+      "reviewed_at": "2026-09-27"
     }
   ]
 }

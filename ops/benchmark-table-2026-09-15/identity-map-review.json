@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-27T00:43:31.111Z",
-  "joined": 1709,
+  "generated_at": "2026-09-27T07:01:57.573Z",
+  "joined": 1726,
   "unmatched": [
     {
       "benchmark_id": "deepswe::snapshot-2026-09-15",
@@ -4109,6 +4109,11 @@
     },
     {
       "benchmark_id": "cursorbench-cost::4.0",
+      "source_id": "Grok 4.7 Low",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "cursorbench-cost::4.0",
       "source_id": "Muse Spark 1.3 Medium",
       "reason": "no catalog configuration muse-spark-1.3::medium"
     },
@@ -6053,126 +6058,6 @@
       "reason": "slug nemotron-lightning-3p5-30b-a3b is not a catalog family"
     },
     {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "zai/glm-5.2",
-      "reason": "setting not stated and glm-5.2 has 2 catalog configurations"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "alibaba/qwen3.8-max",
-      "reason": "slug qwen3.8 is not a catalog family"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "kimi/kimi-k2.6",
-      "reason": "setting not stated and kimi-k2.6 has 2 catalog configurations"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "deepseek/deepseek-v4.1-flash",
-      "reason": "no catalog configuration for deepseek-v4.1-flash with setting high"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "alibaba/qwen3.7-max",
-      "reason": "slug qwen3.7 is not a catalog family"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "deepseek/deepseek-v4-flash-0731",
-      "reason": "no catalog configuration for deepseek-v4-flash-0731 with setting high"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "zai/glm-5.3-flash",
-      "reason": "no catalog configuration for glm-5.3-flash with setting max"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "xiaomi/mimo-v2.5-pro",
-      "reason": "setting not stated and mimo-v2.5-pro has 2 catalog configurations"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "google/gemini-3.1-pro-preview",
-      "reason": "no catalog configuration for gemini-3.1-pro-preview with setting high"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "alibaba/qwen3.7-plus",
-      "reason": "setting not stated and qwen3.7-plus has 2 catalog configurations"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "openai/gpt-5.4-mini-2026-03-17",
-      "reason": "slug gpt-5.4-mini-2026-03-17 is not a catalog family"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "openai/gpt-5.4-nano-2026-03-17",
-      "reason": "slug gpt-5.4-nano-2026-03-17 is not a catalog family"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "google/gemini-3.5-flash-lite",
-      "reason": "no catalog configuration for gemini-3.5-flash-lite with setting high"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "thinkingmachines/inkling",
-      "reason": "setting not stated and inkling has 1 catalog configurations"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "nvidia/nemotron-3-ultra-550b-a55b",
-      "reason": "setting not stated and nemotron-3-ultra-550b-a55b has 1 catalog configurations"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "kimi/kimi-k2.5-thinking",
-      "reason": "slug kimi-k2.5-thinking is not a catalog family"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "google/gemini-3-flash-preview",
-      "reason": "no catalog configuration for gemini-3-flash-preview with setting high"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "ant/ling-3.0-flash-2607",
-      "reason": "slug ling-3.0-flash-2607 is not a catalog family"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "anthropic/claude-haiku-4-5-20251001-thinking",
-      "reason": "slug claude-haiku-4-5-20251001-thinking is not a catalog family"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "fireworks/nemotron-lightning-3p5-30b-a3b",
-      "reason": "slug nemotron-lightning-3p5-30b-a3b is not a catalog family"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "grok/grok-4.20-0309-reasoning",
-      "reason": "slug grok-4.20-0309-reasoning is not a catalog family"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "mistralai/mistral-medium-3.5",
-      "reason": "no catalog configuration for mistral-medium-3.5 with setting high"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "inception/mercury-2.5",
-      "reason": "no catalog configuration for mercury-2.5 with setting high"
-    },
-    {
-      "benchmark_id": "vals-index-emb::2",
-      "source_id": "google/gemini-3.1-flash-lite-preview",
-      "reason": "slug gemini-3.1-flash-lite-preview is not a catalog family"
-    },
-    {
       "benchmark_id": "vals-index-terminal-bench-2.1::2",
       "source_id": "kimi/kimi-k3",
       "reason": "setting not stated and kimi-k3 has 3 catalog configurations"
@@ -6673,6 +6558,126 @@
       "reason": "slug nemotron-lightning-3p5-30b-a3b is not a catalog family"
     },
     {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "zai/glm-5.2",
+      "reason": "setting not stated and glm-5.2 has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "alibaba/qwen3.8-max",
+      "reason": "slug qwen3.8 is not a catalog family"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "kimi/kimi-k2.6",
+      "reason": "setting not stated and kimi-k2.6 has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "deepseek/deepseek-v4.1-flash",
+      "reason": "no catalog configuration for deepseek-v4.1-flash with setting high"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "alibaba/qwen3.7-max",
+      "reason": "slug qwen3.7 is not a catalog family"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "deepseek/deepseek-v4-flash-0731",
+      "reason": "no catalog configuration for deepseek-v4-flash-0731 with setting high"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "zai/glm-5.3-flash",
+      "reason": "no catalog configuration for glm-5.3-flash with setting max"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "xiaomi/mimo-v2.5-pro",
+      "reason": "setting not stated and mimo-v2.5-pro has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "google/gemini-3.1-pro-preview",
+      "reason": "no catalog configuration for gemini-3.1-pro-preview with setting high"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "alibaba/qwen3.7-plus",
+      "reason": "setting not stated and qwen3.7-plus has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "openai/gpt-5.4-mini-2026-03-17",
+      "reason": "slug gpt-5.4-mini-2026-03-17 is not a catalog family"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "openai/gpt-5.4-nano-2026-03-17",
+      "reason": "slug gpt-5.4-nano-2026-03-17 is not a catalog family"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "google/gemini-3.5-flash-lite",
+      "reason": "no catalog configuration for gemini-3.5-flash-lite with setting high"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "thinkingmachines/inkling",
+      "reason": "setting not stated and inkling has 1 catalog configurations"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "nvidia/nemotron-3-ultra-550b-a55b",
+      "reason": "setting not stated and nemotron-3-ultra-550b-a55b has 1 catalog configurations"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "kimi/kimi-k2.5-thinking",
+      "reason": "slug kimi-k2.5-thinking is not a catalog family"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "google/gemini-3-flash-preview",
+      "reason": "no catalog configuration for gemini-3-flash-preview with setting high"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "ant/ling-3.0-flash-2607",
+      "reason": "slug ling-3.0-flash-2607 is not a catalog family"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "anthropic/claude-haiku-4-5-20251001-thinking",
+      "reason": "slug claude-haiku-4-5-20251001-thinking is not a catalog family"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "fireworks/nemotron-lightning-3p5-30b-a3b",
+      "reason": "slug nemotron-lightning-3p5-30b-a3b is not a catalog family"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "grok/grok-4.20-0309-reasoning",
+      "reason": "slug grok-4.20-0309-reasoning is not a catalog family"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "mistralai/mistral-medium-3.5",
+      "reason": "no catalog configuration for mistral-medium-3.5 with setting high"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "inception/mercury-2.5",
+      "reason": "no catalog configuration for mercury-2.5 with setting high"
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "source_id": "google/gemini-3.1-flash-lite-preview",
+      "reason": "slug gemini-3.1-flash-lite-preview is not a catalog family"
+    },
+    {
       "benchmark_id": "vals-index-cost::2",
       "source_id": "deepseek/deepseek-v4.1-flash",
       "reason": "no catalog configuration for deepseek-v4.1-flash with setting high"
@@ -6751,6 +6756,11 @@
       "benchmark_id": "vals-index-cost::2",
       "source_id": "openai/gpt-5.4-nano-2026-03-17",
       "reason": "slug gpt-5.4-nano-2026-03-17 is not a catalog family"
+    },
+    {
+      "benchmark_id": "vals-index-cost::2",
+      "source_id": "ant/ling-3.0-flash-af-rc3",
+      "reason": "slug ling-3.0-flash-af-rc3 is not a catalog family"
     },
     {
       "benchmark_id": "vals-index-cost::2",
@@ -7644,6 +7654,36 @@
     },
     {
       "benchmark_id": "weirdml::3",
+      "source_id": "opus-5.5",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "weirdml::3",
+      "source_id": "gpt-6-sol-xhigh-openrouter",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "weirdml::3",
+      "source_id": "opus-5",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "weirdml::3",
+      "source_id": "fable-5",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "weirdml::3",
+      "source_id": "gpt-6-luna-xhigh-openrouter",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "weirdml::3",
+      "source_id": "kimi-k3-fireworks-high-kimi-code",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "weirdml::3",
       "source_id": "opus-4.5",
       "reason": "label is not a catalog model slug"
     },
@@ -8293,66 +8333,6 @@
       "reason": "configuration kimi-k3::max appears 2 times on this board; neither row is joined"
     },
     {
-      "benchmark_id": "vulcanbench-frontier::4",
-      "source_id": "GPT-5.6 Sol [extra-high]",
-      "reason": "label is not a catalog model slug"
-    },
-    {
-      "benchmark_id": "vulcanbench-frontier::4",
-      "source_id": "GPT-5.6 Sol [high]",
-      "reason": "label is not a catalog model slug"
-    },
-    {
-      "benchmark_id": "vulcanbench-frontier::4",
-      "source_id": "GPT-5.6 Sol [medium]",
-      "reason": "label is not a catalog model slug"
-    },
-    {
-      "benchmark_id": "vulcanbench-frontier::4",
-      "source_id": "GPT-5.6 Sol [low]",
-      "reason": "label is not a catalog model slug"
-    },
-    {
-      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
-      "source_id": "codex/openai/gpt-6-astra-pro [xhigh]",
-      "reason": "no catalog configuration for gpt-6-astra-pro with setting xhigh"
-    },
-    {
-      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
-      "source_id": "deepseek-claude/deepseek-flash",
-      "reason": "setting not stated and deepseek-v4.1-flash has 2 catalog configurations"
-    },
-    {
-      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
-      "source_id": "grok/grok-4.5",
-      "reason": "setting not stated and grok-4.5 has 1 catalog configurations"
-    },
-    {
-      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
-      "source_id": "muse/muse-spark-1.3 [ultra]",
-      "reason": "setting ultra is not a reviewed setting"
-    },
-    {
-      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
-      "source_id": "or-fable/anthropic/claude-fable-5",
-      "reason": "setting not stated and claude-fable-5 has 5 catalog configurations"
-    },
-    {
-      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
-      "source_id": "or-fable/deepseek/deepseek-v4-flash-0731",
-      "reason": "setting not stated and deepseek-v4-flash-0731 has 1 catalog configurations"
-    },
-    {
-      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
-      "source_id": "deepseek-claude/deepseek-v4-pro",
-      "reason": "setting not stated and deepseek-v4-pro has 3 catalog configurations"
-    },
-    {
-      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
-      "source_id": "kinetic-claude/kinetic-0715",
-      "reason": "slug kinetic-0715 is not a catalog family"
-    },
-    {
       "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
       "source_id": "deepseek-claude/deepseek-flash",
       "reason": "setting not stated and deepseek-v4.1-flash has 2 catalog configurations"
@@ -8471,6 +8451,46 @@
       "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
       "source_id": "or-fable/qwen/qwen3.8-max [xhigh]",
       "reason": "no catalog configuration for qwen3.8-max with setting xhigh"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "source_id": "deepseek-claude/deepseek-flash",
+      "reason": "setting not stated and deepseek-v4.1-flash has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "source_id": "muse/muse-spark-1.3 [ultra]",
+      "reason": "setting ultra is not a reviewed setting"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "source_id": "or-fable/anthropic/claude-fable-5",
+      "reason": "setting not stated and claude-fable-5 has 5 catalog configurations"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "source_id": "codex/openai/gpt-6-astra-pro [xhigh]",
+      "reason": "no catalog configuration for gpt-6-astra-pro with setting xhigh"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "source_id": "deepseek-claude/deepseek-v4-pro",
+      "reason": "setting not stated and deepseek-v4-pro has 3 catalog configurations"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "source_id": "grok/grok-4.5",
+      "reason": "setting not stated and grok-4.5 has 1 catalog configurations"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "source_id": "kinetic-claude/kinetic-0715",
+      "reason": "slug kinetic-0715 is not a catalog family"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "source_id": "or-fable/deepseek/deepseek-v4-flash-0731",
+      "reason": "setting not stated and deepseek-v4-flash-0731 has 1 catalog configurations"
     },
     {
       "benchmark_id": "frontierswe::2",
@@ -11164,6 +11184,11 @@
     },
     {
       "benchmark_id": "eqbench-creative-writing::3",
+      "source_id": "gpt-6-sol",
+      "reason": "setting not stated and gpt-6-sol has 6 catalog configurations"
+    },
+    {
+      "benchmark_id": "eqbench-creative-writing::3",
       "source_id": "kimi-k3",
       "reason": "setting not stated and kimi-k3 has 3 catalog configurations"
     },
@@ -11174,13 +11199,23 @@
     },
     {
       "benchmark_id": "eqbench-creative-writing::3",
-      "source_id": "gpt-5.6-sol",
-      "reason": "setting not stated and gpt-5.6-sol has 6 catalog configurations"
+      "source_id": "claude-opus-5-5",
+      "reason": "setting not stated and claude-opus-5.5 has 5 catalog configurations"
+    },
+    {
+      "benchmark_id": "eqbench-creative-writing::3",
+      "source_id": "grok-4.7",
+      "reason": "setting not stated and grok-4.7 has 2 catalog configurations"
     },
     {
       "benchmark_id": "eqbench-creative-writing::3",
       "source_id": "ox-alpha",
       "reason": "slug ox-alpha is not a catalog family"
+    },
+    {
+      "benchmark_id": "eqbench-creative-writing::3",
+      "source_id": "gpt-5.6-sol",
+      "reason": "setting not stated and gpt-5.6-sol has 6 catalog configurations"
     },
     {
       "benchmark_id": "eqbench-creative-writing::3",
@@ -11196,6 +11231,11 @@
       "benchmark_id": "eqbench-creative-writing::3",
       "source_id": "claude-opus-4-7",
       "reason": "setting not stated and claude-opus-4.7 has 3 catalog configurations"
+    },
+    {
+      "benchmark_id": "eqbench-creative-writing::3",
+      "source_id": "Altworld/Hemmingway-1",
+      "reason": "slug hemmingway-1 is not a catalog family"
     },
     {
       "benchmark_id": "eqbench-creative-writing::3",
@@ -11219,8 +11259,8 @@
     },
     {
       "benchmark_id": "eqbench-creative-writing::3",
-      "source_id": "gpt-5.4",
-      "reason": "setting not stated and gpt-5.4 has 3 catalog configurations"
+      "source_id": "muse-spark-1.2",
+      "reason": "setting not stated and the only catalog configuration is muse-spark-1.2::xhigh, not a default"
     },
     {
       "benchmark_id": "eqbench-creative-writing::3",
@@ -11229,8 +11269,8 @@
     },
     {
       "benchmark_id": "eqbench-creative-writing::3",
-      "source_id": "muse-spark-1.2",
-      "reason": "setting not stated and the only catalog configuration is muse-spark-1.2::xhigh, not a default"
+      "source_id": "gpt-5.4",
+      "reason": "setting not stated and gpt-5.4 has 3 catalog configurations"
     },
     {
       "benchmark_id": "eqbench-creative-writing::3",
@@ -11249,13 +11289,13 @@
     },
     {
       "benchmark_id": "eqbench-creative-writing::3",
-      "source_id": "claude-sonnet-5",
-      "reason": "setting not stated and claude-sonnet-5 has 6 catalog configurations"
+      "source_id": "meta-models/Muse-Glimmer-30B",
+      "reason": "label names Hugging Face repository meta-models/Muse-Glimmer-30B, which exactly one catalog configuration retains; that identity belongs to the exact-checkpoint route, not to a slug rule"
     },
     {
       "benchmark_id": "eqbench-creative-writing::3",
-      "source_id": "meta-models/Muse-Glimmer-30B",
-      "reason": "label names Hugging Face repository meta-models/Muse-Glimmer-30B, which exactly one catalog configuration retains; that identity belongs to the exact-checkpoint route, not to a slug rule"
+      "source_id": "claude-sonnet-5",
+      "reason": "setting not stated and claude-sonnet-5 has 6 catalog configurations"
     },
     {
       "benchmark_id": "eqbench-creative-writing::3",
@@ -11269,13 +11309,13 @@
     },
     {
       "benchmark_id": "eqbench-creative-writing::3",
-      "source_id": "gemini-3.7-flash",
-      "reason": "setting not stated and gemini-3.7-flash has 3 catalog configurations"
+      "source_id": "moonshotai/Kimi-K2.6",
+      "reason": "setting not stated and the catalog retains repository moonshotai/Kimi-K2.6 under 2 configurations"
     },
     {
       "benchmark_id": "eqbench-creative-writing::3",
-      "source_id": "moonshotai/Kimi-K2.6",
-      "reason": "setting not stated and the catalog retains repository moonshotai/Kimi-K2.6 under 2 configurations"
+      "source_id": "gemini-3.7-flash",
+      "reason": "setting not stated and gemini-3.7-flash has 3 catalog configurations"
     },
     {
       "benchmark_id": "eqbench-creative-writing::3",
@@ -11391,6 +11431,11 @@
       "benchmark_id": "eqbench-creative-writing::3",
       "source_id": "deepseek-ai/DeepSeek-V4-Pro",
       "reason": "setting not stated and the catalog retains repository deepseek-ai/DeepSeek-V4-Pro under 3 configurations"
+    },
+    {
+      "benchmark_id": "eqbench-creative-writing::3",
+      "source_id": "deepseek-v4.1-flash",
+      "reason": "setting not stated and deepseek-v4.1-flash has 2 catalog configurations"
     },
     {
       "benchmark_id": "eqbench-creative-writing::3",
@@ -11699,13 +11744,13 @@
     },
     {
       "benchmark_id": "eqbench-creative-writing::3",
-      "source_id": "liquid/lfm-7b",
-      "reason": "slug lfm-7b is not a catalog family"
+      "source_id": "openai/gpt-4-0314",
+      "reason": "slug gpt-4-0314 is not a catalog family"
     },
     {
       "benchmark_id": "eqbench-creative-writing::3",
-      "source_id": "openai/gpt-4-0314",
-      "reason": "slug gpt-4-0314 is not a catalog family"
+      "source_id": "liquid/lfm-7b",
+      "reason": "slug lfm-7b is not a catalog family"
     },
     {
       "benchmark_id": "eqbench-creative-writing::3",
@@ -12321,6 +12366,31 @@
       "benchmark_id": "eqbench-longform-writing::v1.11",
       "source_id": "claude-fable-5-1",
       "reason": "setting not stated and claude-fable-5.1 has 5 catalog configurations"
+    },
+    {
+      "benchmark_id": "eqbench-longform-writing::v1.11",
+      "source_id": "Altworld/Hemmingway-1",
+      "reason": "slug hemmingway-1 is not a catalog family"
+    },
+    {
+      "benchmark_id": "eqbench-longform-writing::v1.11",
+      "source_id": "grok-4.7",
+      "reason": "setting not stated and grok-4.7 has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "eqbench-longform-writing::v1.11",
+      "source_id": "deepseek-v4.1-flash",
+      "reason": "setting not stated and deepseek-v4.1-flash has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "eqbench-longform-writing::v1.11",
+      "source_id": "claude-opus-5-5",
+      "reason": "setting not stated and claude-opus-5.5 has 5 catalog configurations"
+    },
+    {
+      "benchmark_id": "eqbench-longform-writing::v1.11",
+      "source_id": "gpt-6-sol",
+      "reason": "setting not stated and gpt-6-sol has 6 catalog configurations"
     }
   ],
   "carried_withdrawn": [
