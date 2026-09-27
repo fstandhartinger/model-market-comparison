@@ -14932,3 +14932,124 @@ diff is the registry text and the build timestamps; no value moved), `CI=true np
 3. **F-210 needs a non-claude engine** to set `verified`: `verify-fable-pass39-design.mjs` `ONLY=F-210`
    on the canonical host. D234 needs one too.
 4. **D221** is unchanged: the four KernelBench-CUDA cells stay unproven until a refresh publishes them.
+
+---
+
+## Iteration 252 (claude-opus, 2026-09-27 14:40–15:30 UTC) — the Vals arms, and a sentence no source can carry
+
+The 05:17 run published (`e55fe6d3`, rc=0) and its `reports/source-health.md` lists **16 failing sources**.
+Ten of them already have a repair that landed *after* that run — D226 (both ARC-AGI boards, 08:49),
+D227 (`aa-benchmark-fields`, 09:04), D228/D229/D230 (`frontierswe::2`, `blueprint-bench::2`, FrontierCode,
+09:49), D231 (`frontiercode::1.1`, `mls-bench-lite::30-tasks`, 10:23), D232 (`frontiercode-cost::1.1`,
+10:48), D233 (`vending-bench::2`, 12:59) and D234 (`vulcanbench-frontier::4`, 14:17) — so their entries in
+today's digest describe the pre-fix state and tomorrow's 05:17 is their receipt. `fetch-lumina-ledger` is
+the deliberate pause. That left **six arms with no repair at all**, and they are this iteration's work:
+the four Vals Index boards and the two UGI boards.
+
+### What the six were actually failing on
+
+Read the way D234 says to read a one-line `reason` — by replaying each arm offline against the failing
+run's own capture (`BH_REPLAY_MANIFEST=data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/manifest.json`).
+Six replays, unchanged registry, same bytes, same producer/critic pair:
+
+| Arm | Daily's one-line reason | Replay, unchanged registry |
+|---|---|---|
+| `vals-index-vibe-code-bench::2` | "1 disputed rows quarantined; producer uncertainty…" | **refused**: `[major] scoring.notes` → remove "with a standard error per model" |
+| `vals-index-legal-research::2` | `[major]` "not a Composite input" | **refused**: `[minor] scoring.notes` → the same tail, unsupported |
+| `vals-index-hlab::2` | `[major] scoring.metric, scoring.unit` | **accepted**, 1 fingerprint |
+| `vals-index::2` | `[minor] scoring.notes` | **accepted**, 1 fingerprint |
+| `ugi-natint::snapshot-2026-09-10` | "producer uncertainty cannot be overruled" | **accepted**, 1 fingerprint |
+| `ugi-writing::snapshot-2026-09-10` | same | **accepted**, 1 fingerprint |
+
+Receipts: `/opt/benchmarkheaven/state/ux-evidence/iter252-vals-ugi/{vcb,legal-research,hlab,index,ugi-natint,ugi-writing}-r1/`.
+
+Two things follow, and they point in opposite directions from the digest.
+
+**The UGI pair has no defect.** Both notes attribute their two substantive claims to the board, and the
+board says them verbatim in the captured `app.py`: *"To ensure a fair evaluation, all test questions are
+kept private"* and *"Models that are not able to consistently produce writing responses due to irreparable
+repetition issues, broken outputs, or constant refusals are not given a writing score."* Nothing was
+changed for these two rows. Their retention on 2026-09-27 was a producer's uncertainty on bytes that pass
+today — worth writing down so nobody spends an iteration hunting a phantom.
+
+**The four Vals arms share one weak spot, and the variance is the tell.** Two reproduce, four pass the same
+bytes; every reproduced finding lands on the same copied tail sentence, which all nine Vals entries carried:
+*"Vals AI publishes accuracy with a standard error per model; independent evaluator, secondary benchmark,
+not a Composite input."* A shared weak spot read through a free critic pair is exactly this pattern — some
+days it is seen, some days it is not, and which arm gets caught is luck. And a **minor** finding has no
+row-level repair, so the gauntlet cannot revise anything and the round budget ends with the whole arm
+retained ("only minor findings, no row-level revision to apply"). The remedy is never a retry; it is
+deleting the claim the source cannot carry.
+
+### D235 — three kinds of registry text that no protocol page can settle
+
+`refresh-benchmarks.mjs` already documented two of them (the `AA source field:` plumbing note and a
+cross-source clause that only a pair of registry entries settles). This iteration found a third and a
+missing half of the first.
+
+1. **Our own Composite and join policy.** "never a Composite input", "never join this with X",
+   "secondary benchmark": no maintainer's page can support a sentence about *Benchmark Heaven's* Composite,
+   so a reviewer that reads one is right to call it unsupported. **66 registry entries carried such a
+   sentence** on 2026-09-27. A sentence beginning `Benchmark Heaven policy:` is now stripped from the
+   reviewed row and **kept on the site**, where it is how a reader tells a Composite input from a secondary
+   board.
+2. **The Vals half of the Harvey LAB-AA / HLAB clause.** `test/benchmark-source-conflicts.test.mjs` has
+   pinned *both* descriptions since CR-65.15, but only `aa-harvey-lab::snapshot-2026-09-10` was registered
+   in `CROSS_SOURCE_CLAUSES`; `vals-index-hlab::2` carried "not comparable with Artificial Analysis' Harvey
+   LAB-AA row" into every review, where the Vals page cannot settle it either. D233's shape again: the
+   mechanism existed, one of the two copies was never wired in.
+3. **"standard error per model"** is a field of the captured island props (`stderr`), not a statement the
+   page makes — and the props are not in the review packet. It is out of the reviewed prose.
+
+**And two dated claims that go stale on every refresh.** The 2026-09-27 capture's props say
+`metadata.updated` = **2026-09-23**; the registry said the page shows "Updated 9/10/2026" in all nine
+entries. Each board holds **65** model rows; every excerpt said 56. `vals-index-cost::2`'s excerpt quoted
+the page verbatim at *"$0.62 per test"* where the page now prints $0.77. The repair does not just re-date
+them: the plan's `protocol` string — which freezes into every published observation — **no longer carries
+the board's last-updated date at all**, because the observation's own capture receipt already dates the
+board state, and a date in prose is guaranteed to be wrong by the next refresh.
+
+The nine entries now say only what their page says: sector membership, the GDP formula from the Methodology
+section, the Component Scores note ("each benchmark column is that benchmark's own published standalone
+score … Code Migration as the stated exception"), the ACCURACY view, and — for EMB, Code Migration and
+Legal Research Bench only — the page's own *"A private benchmark"* wording. **Vibe Code Bench and HLAB no
+longer claim to be private benchmarks: the page does not say so** (it says the index "aggregates five
+private and two public benchmarks" and never enumerates them), and the note now records that difference so
+a later copy-paste from a sibling cannot silently re-add it.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D235 (new) | **fixed, pending non-implementer verification** | `2eff16a8`; replays **accepted** post-fix for both arms that reproduced — `…/iter252-vals-ugi/vcb-r3/` and `…/vcb-r2/` (the same critic returned `verdict: pass`, 0 findings, twice) and `…/legal-research-r2/`, plus `…/hlab-r2/`; **`--lie` fails closed** in `…/vcb-lie/` (`accepted: false`, 0 fingerprints, row quarantined, `[major]` on the flipped `status`); `test/d235-policy-note.test.mjs` **5/5** | Reproduce offline: `BH_REPLAY_MANIFEST=data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/manifest.json node ops/ux-2026-09-12/bin/replay-protocol-review.mjs 'vals-index-vibe-code-bench::2' <outDir>`. No value moved: the dataset diff is 29 lines of registry prose. |
+| D235 live | **50/51 per host** on canonical, `www` and legacy at `2eff16a8` | `…/iter252-vals-ugi/live-{canonical,www,legacy}/verification.json`; preflight at `115b251f` was **29/51** | The one red check is the published observations' frozen copy of the plan protocol, which only a run that republishes these arms can clear — D233's known shape. It must **not** be cleared by editing `public-observations.json` or `scores.json`: the plan is the input and is already corrected. |
+| UGI pair | **no defect; retained on variance** | `…/iter252-vals-ugi/ugi-{natint,writing}-r1/` accepted on the unchanged registry; the two quoted sentences are verbatim in the captured `app.py` | Nothing changed for these rows. If they retain again, read the producer, not the registry. |
+| 61 entries | **inventory, may shrink** | `test/d235-policy-note.test.mjs` `UNMARKED_POLICY` | Still state the Composite policy without the marker — each a latent finding of the shape that retained the Vals arms. Several sit under arms that are failing for other reasons today (`blueprint-bench::2`, `frontiercode::1.1`, `frontierswe::2`, `vulcanbench-frontier::4`, the four `kernelbench-cuda` boards). A name may leave the list; adding one needs a reason in the same commit. |
+
+The guard test also fails closed on the two ways the convention can rot: a protocol word (metric, unit,
+range, task set, harness, judges, rubric, version, saturation, denominator, subset) hidden **behind** the
+marker, and sourced text written **after** it. The marker is for our handling of a row, never for what a
+value means.
+
+One note on process: `vcb-r2` was stopped at about eight minutes into its critic round on the assumption
+that it had hung. It had not — its `review-r1.json` landed at 15:11:31 with `verdict: pass`, 0 findings, and
+only the summary line was lost. `vcb-r3` re-ran it cleanly to the same verdict. A protocol round on this
+packet takes minutes; give it time before killing it.
+
+Gates: `node scripts/build-dataset.mjs` 870 models / 673 families / 94 providers / 3,134 offers;
+`CI=true npm test` **1,515 tests, 1,514 pass, 0 fail, 1 skip** (exit 0, unpiped);
+`npx tsc --noEmit -p .` exit 0.
+
+**For the next iteration, in order:**
+
+1. **Tomorrow's 05:17 is the receipt for eleven things**: the eight one-row arms of iterations 246–249,
+   `vending-bench::2`, `aa-benchmark-fields` (D227's behavioural half), `vulcanbench-frontier::4` (which
+   settles **D224's live half** — four Claude Opus 5.5 cells) and now the **nine Vals boards** (D235's one
+   red live check clears when they republish). Read `reports/source-health.md` first; if a Vals arm retains
+   again, replay it before touching prose.
+2. **D235 and F-210 need a non-claude engine** to set `verified`: `node ops/ux-2026-09-12/bin/verify-d235-live.mjs
+   https://benchmarkheaven.com <outDir>` (50/51 is the pass mark until a run republishes these arms), the
+   two offline replays above, and `verify-fable-pass39-design.mjs` `ONLY=F-210` on canonical. D234 needs one too.
+3. **The 61-entry inventory is the next systemic lever.** Converting a family at a time to the
+   `Benchmark Heaven policy:` marker removes a latent refusal from each arm before a critic finds it. Do it
+   per family with its own captured page in hand, never by pattern-replacing the sentence: in several
+   entries the policy clause is welded onto a sourced one.
+4. **D221** is unchanged: the four KernelBench-CUDA cells stay unproven until a refresh publishes them.
