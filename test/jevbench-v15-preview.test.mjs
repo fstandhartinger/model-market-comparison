@@ -5,6 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   JEVBENCH_V15_PREVIEW_ARTIFACT, JEVBENCH_V15_PREVIEW_ROUTE, jevV15Composite, readJevbenchV15Preview, validateJevbenchV15Preview,
+  jevV15LeaderKeys, jevV15LeaderSentence, jevV15TieSummary,
 } from '../lib/jevbench-v15-preview.mjs';
 import { readJevbenchV142, JEVBENCH_V142_SHA256 } from '../lib/jevbench-v142.mjs';
 
@@ -83,4 +84,84 @@ test('hidden What-If Lab: noindex, unlinked, aggregate-only; addendum rows liste
     assert.ok(s.addendum && Number.isInteger(s.would_place_B));
     assert.ok(!art.board.B.order.includes(s.key));
   }
+});
+
+// F-206 — the v1.5 preview drops "~", the per-row ≈ and a bare "joint leaders" before the page is linked.
+// These pin the derivation, not a rendered pixel: the component reads them and the live verifier reads the page.
+
+const board = (order, markers, leader_wording = null) => ({ order, markers, leader_wording });
+const tieM = (upper, lower, tie) => ({ upper, lower, tie, diff_ci95: tie ? [-1, 1] : [0.5, 2], p_upper_wins: tie ? 0.7 : 0.98 });
+
+test('F-206: the tie count comes from the markers, and an empty marker list is not "0 of 0 ties"', () => {
+  assert.deepEqual(jevV15TieSummary(board(['a', 'b', 'c'], [tieM('a', 'b', true), tieM('b', 'c', false)])), { ties: 1, pairs: 2 });
+  assert.deepEqual(jevV15TieSummary(board(['a'], [])), { ties: 0, pairs: 0 });
+  assert.deepEqual(jevV15TieSummary(null), { ties: 0, pairs: 0 });
+});
+
+test('F-206: the leader set is the rank 1/2 tie, extended to rank 3 only when rank 3 ties rank 2', () => {
+  const two = jevV15LeaderKeys(board(['a', 'b', 'c'], [tieM('a', 'b', true), tieM('b', 'c', false)]));
+  assert.deepEqual(two, { tie: true, keys: ['a', 'b'], runnerUp: null });
+  const three = jevV15LeaderKeys(board(['a', 'b', 'c', 'd'], [tieM('a', 'b', true), tieM('b', 'c', true), tieM('c', 'd', true)]));
+  assert.deepEqual(three, { tie: true, keys: ['a', 'b', 'c'], runnerUp: null }, 'a rank 3/4 tie does not reach the leader line');
+  const alone = jevV15LeaderKeys(board(['a', 'b'], [tieM('a', 'b', false)]));
+  assert.deepEqual(alone, { tie: false, keys: ['a'], runnerUp: 'b' });
+  assert.equal(jevV15LeaderKeys(board(['a'], [])), null, 'a one-row board has no adjacent pair to report');
+  assert.equal(jevV15LeaderKeys(board(['a', 'b'], [])), null, 'no marker for the top pair means nothing is claimed');
+});
+
+test('F-206: the leader sentence names its systems and never opens with a subjectless "joint leaders"', () => {
+  const name = (k) => ({ a: 'Cygnet', b: 'Winnow-12B Q8', c: 'Jev 1.13.0' })[k] ?? k;
+  const tied = jevV15LeaderSentence(board(['a', 'b', 'c'], [tieM('a', 'b', true), tieM('b', 'c', false)], 'joint leaders (statistical tie)'), name);
+  assert.equal(tied, 'Cygnet and Winnow-12B Q8 are joint leaders (statistical tie).');
+  assert.doesNotMatch(tied, /^joint leaders/i);
+  assert.match(tied, /tie/i);
+  const three = jevV15LeaderSentence(board(['a', 'b', 'c'], [tieM('a', 'b', true), tieM('b', 'c', true)], 'joint leaders (statistical tie)'), name);
+  assert.equal(three, 'Cygnet, Winnow-12B Q8 and Jev 1.13.0 are joint leaders (statistical tie).');
+  const alone = jevV15LeaderSentence(board(['a', 'b'], [tieM('a', 'b', false)]), name);
+  assert.match(alone, /^Cygnet leads: .*not a statistical tie\.$/);
+  assert.equal(jevV15LeaderSentence(board(['a'], []), name), null);
+});
+
+test("F-206: the artifact's leader_wording is appended only when it adds a word the sentence lacks", () => {
+  const name = (k) => ({ a: 'Cygnet', b: 'Winnow-12B Q8' })[k] ?? k;
+  const b = (wording) => board(['a', 'b'], [tieM('a', 'b', true)], wording);
+  assert.equal(jevV15LeaderSentence(b('joint leaders (statistical tie)'), name),
+    'Cygnet and Winnow-12B Q8 are joint leaders (statistical tie).', 'nothing new to say, so nothing is appended');
+  assert.equal(jevV15LeaderSentence(b('Joint leaders after a paired bootstrap over 4,000 resamples'), name),
+    'Cygnet and Winnow-12B Q8 are joint leaders (statistical tie). Joint leaders after a paired bootstrap over 4,000 resamples.');
+});
+
+test('F-206: on the real artifact every ranked bar has a B interval to draw and the top pair is a tie today', async () => {
+  const { artifact } = await readJevbenchV15Preview(root);
+  const ranked = artifact.systems.filter((s) => s.listing === 'ranked');
+  for (const s of ranked) {
+    const ci = s.composite_ci95?.B;
+    assert.ok(Array.isArray(ci) && ci.length === 2 && ci.every((v) => Number.isFinite(v)), `${s.key} has no B 95% interval for its whisker`);
+    assert.ok(ci[0] <= ci[1], `${s.key} interval is inverted`);
+  }
+  const { ties, pairs } = jevV15TieSummary(artifact.board.B);
+  assert.equal(pairs, ranked.length - 1, 'one marker per adjacent ranked pair');
+  assert.ok(ties > 0 && ties <= pairs);
+  const named = new Map(artifact.systems.map((s) => [s.key, s.display]));
+  const sentence = jevV15LeaderSentence(artifact.board.B, (k) => named.get(k) ?? k);
+  assert.ok(sentence, 'the live board must produce a leader sentence');
+  assert.doesNotMatch(sentence, /^joint leaders/i);
+  assert.match(sentence, /tie/i);
+  for (const key of jevV15LeaderKeys(artifact.board.B).keys) assert.ok(sentence.includes(named.get(key)), `${key} is not named in the leader line`);
+});
+
+test('F-206: the preview component says the majority once and marks only the tariff exception', () => {
+  const src = read('components/JevBenchV15Preview.tsx');
+  assert.doesNotMatch(src, /est \? '~' : ''/, 'the tilde is gone from the cost cell');
+  assert.match(src, /data-bh-jev15-cost-cell/);
+  assert.match(src, /const COST_LEGEND = 'Costs are estimates \(est\.\) unless marked tariff\.';/);
+  assert.equal(src.split('data-bh-jev15-cost-legend').length - 1, 2, 'the legend sits under the bars and under the axes table');
+  assert.match(src, /data-bh-jev15-ci/);
+  assert.doesNotMatch(src, /≈/, 'the per-row approximation marker is gone');
+  assert.match(src, /<Th title="Cost per 1,000 decisions">\$\/1k decisions<\/Th>/);
+  assert.match(src, /<Th title="Overfit multiplier on Intelligence">Penalty<\/Th>/, 'F-206(e): the Penalty column stays');
+  const css = read('app/globals.css');
+  assert.match(css, /\.bh-jevc-ci \{[^}]*background-color: var\(--muted\)/, 'the whisker takes --muted directly, not through rgb()');
+  assert.doesNotMatch(css, /\.bh-jevc-ci[^}]*rgb\(var\(--muted\)\)/);
+  assert.match(css, /\.bh-jevc-ci::before, \.bh-jevc-ci::after \{[^}]*height: 5px/, 'caps reach 2 px past the 1 px line on each side');
 });

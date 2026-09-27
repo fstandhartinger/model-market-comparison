@@ -103,17 +103,45 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       const bars = [...document.querySelectorAll('[data-bh-jev15-bar]')];
       const tilde = bars.filter((b) => /~\\$/.test(txt(b))).length;
       const approx = bars.filter((b) => /≈/.test(txt(b))).length;
-      const whiskers = document.querySelectorAll('[data-bh-jev15-ci]').length;
+      // The interval is read as paint, never as an element count: a 2026-09-27 probe found 16 of 89 whiskers at width 0 and
+      // the count-only version of this check could not tell that from a collapsed one (the F-207b halo shipped invisible
+      // exactly that way). So: computed position, painted line and cap geometry, cap colour alpha, and the invariant that
+      // matters — the bar's end (the score) lies inside its own interval.
+      const alpha = (c) => { const m = String(c).match(/^rgba?\\(([^)]*)\\)$/); if (!m) return 1; const p = m[1].split(/[\\s,/]+/).filter(Boolean); return p.length > 3 ? parseFloat(p[3]) : 1; };
+      const cis = [...document.querySelectorAll('[data-bh-jev15-ci]')].map((ci) => {
+        const cs = getComputedStyle(ci), before = getComputedStyle(ci, '::before'), after = getComputedStyle(ci, '::after');
+        const r = bx(ci), track = ci.parentElement, tr = bx(track);
+        const bar = track.querySelector('.bh-jevc-bar'), br = bar ? bx(bar) : null;
+        const scoreX = br ? br.x + br.w : tr.x;
+        return { key: ci.getAttribute('data-bh-jev15-ci'), abs: cs.position === 'absolute', h: r.h, w: r.w,
+          lineOk: r.h >= 0.5 && r.h <= 2 && alpha(cs.backgroundColor) > 0.5,
+          capOk: [before, after].every((c) => parseFloat(c.height) >= 3 && parseFloat(c.width) >= 1 && alpha(c.backgroundColor) > 0.5),
+          inTrack: r.x >= tr.x - 1 && r.x + r.w <= tr.x + tr.w + 1,
+          holdsScore: scoreX >= r.x - 1 && scoreX <= r.x + r.w + 1 };
+      });
+      const whiskers = cis.length;
       const ths = [...main.querySelectorAll('table th')].map(txt).filter((t) => /\\$\\/1k|USD/.test(t));
-      const costCells = [...main.querySelectorAll('[data-bh-jev15-cost-cell]')].map((c) => { const pill = c.querySelector('.bh-thin-tag'); const cb = bx(c), pb = pill ? bx(pill) : null; return { t: txt(c).slice(0, 30), pill: pill ? txt(pill) : null, pillLeft: pb ? pb.x + pb.w <= cb.x + cb.w - 20 : null }; });
+      const costCells = [...main.querySelectorAll('[data-bh-jev15-cost-cell]')].map((c) => { const pill = c.querySelector('.bh-thin-tag'); const cb = bx(c), pb = pill ? bx(pill) : null; return { kind: c.getAttribute('data-bh-jev15-cost-cell'), t: txt(c).slice(0, 30), pill: pill ? txt(pill) : null, pillLeft: pb ? pb.x + pb.w <= cb.x + cb.w - 20 : null }; });
       const leader = document.querySelector('[data-bh-jev15-leader]');
-      return { bars: bars.length, tilde, approx, whiskers, ths, costCells: costCells.length, pills: costCells.filter((c) => c.pill).length, pillsRight: costCells.filter((c) => c.pill && c.pillLeft === false).length, leader: leader ? txt(leader) : null, penalty: [...main.querySelectorAll('table th')].some((h) => /^Penalty/.test(txt(h))) };`));
+      const legends = [...document.querySelectorAll('[data-bh-jev15-cost-legend]')].map(txt);
+      return { bars: bars.length, tilde, approx, whiskers, ths, costCells: costCells.length, pills: costCells.filter((c) => c.pill).length, pillsRight: costCells.filter((c) => c.pill && c.pillLeft === false).length, leader: leader ? txt(leader) : null, penalty: [...main.querySelectorAll('table th')].some((h) => /^Penalty/.test(txt(h))),
+        ciBad: cis.filter((c) => !(c.abs && c.lineOk && c.capOk && c.inTrack)).map((c) => c.key + ':' + JSON.stringify(c)).slice(0, 4),
+        ciOffScale: cis.filter((c) => !c.holdsScore).map((c) => c.key).slice(0, 6),
+        ciDrawn: cis.filter((c) => c.w >= 1).length, ciFlat: cis.filter((c) => c.w < 1).map((c) => c.key).slice(0, 20),
+        legends, cellsTariffNoPill: costCells.filter((c) => c.kind === 'tariff' && !c.pill).length,
+        cellsEstimateWithPill: costCells.filter((c) => c.kind === 'estimate' && c.pill).length,
+        cellsWithEst: costCells.filter((c) => /\\best\\b|~/.test(c.t)).length };`));
     await p.screenshot({ path: `${OUT}/${ctx}-F-206.png` });
     check('F-206', ctx, 'headline bars present', m.bars >= 80, String(m.bars));
     check('F-206', ctx, 'no "~$" cost text in the bars (the estimate is a pill, not a tilde)', m.tilde === 0, `rows with ~$: ${m.tilde}`);
     check('F-206', ctx, 'the per-row ≈ marker is gone; the 95% interval is drawn as a whisker on every ranked bar', m.approx === 0 && m.whiskers >= m.bars, JSON.stringify({ approx: m.approx, whiskers: m.whiskers, bars: m.bars }));
+    check('F-206', ctx, 'every whisker is painted: absolute, a 1 px line and two caps with opaque colour, inside its track', m.ciBad.length === 0, JSON.stringify(m.ciBad));
+    check('F-206', ctx, 'every whisker holds its own bar end, so the interval is on the bar\'s scale', m.ciOffScale.length === 0, JSON.stringify(m.ciOffScale));
+    check('F-206', ctx, 'most whiskers are wider than a pixel (a global collapse to zero is not a tight interval)', m.ciDrawn >= Math.round(m.whiskers * 0.7), JSON.stringify({ drawn: m.ciDrawn, of: m.whiskers, flat: m.ciFlat }));
     check('F-206', ctx, 'cost headers say "$/1k decisions"', m.ths.length > 0 && m.ths.every((t) => /decisions/.test(t)), JSON.stringify(m.ths));
     check('F-206', ctx, 'cost cells carry their tag as a pill left of the number', m.costCells > 0 && m.pillsRight === 0, JSON.stringify({ cells: m.costCells, pills: m.pills, pillsRight: m.pillsRight }));
+    check('F-206', ctx, 'the pill marks the tariff exception only, and no cell repeats "est." or a tilde', m.cellsTariffNoPill === 0 && m.cellsEstimateWithPill === 0 && m.cellsWithEst === 0 && m.pills > 0, JSON.stringify({ tariffNoPill: m.cellsTariffNoPill, estimateWithPill: m.cellsEstimateWithPill, withEst: m.cellsWithEst, pills: m.pills }));
+    check('F-206', ctx, 'the legend says the majority once, under the bars and under the axes table', m.legends.length === 2 && m.legends.every((t) => /Costs are estimates \(est\.\) unless marked tariff\./.test(t)), JSON.stringify(m.legends));
     check('F-206', ctx, 'the leader sentence names the tied systems', !!m.leader && !/^joint leaders/i.test(m.leader) && /tie/i.test(m.leader), m.leader);
     check('F-206', ctx, 'the Penalty column stays (its values vary in v1.5)', m.penalty, '');
   }

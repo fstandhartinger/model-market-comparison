@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from 'react';
 import {
   JEVBENCH_V15_METHOD_URL, JEVBENCH_V15_PRICING_URL, JEVBENCH_V15_OPTIONS, JEVBENCH_V15_TYPES,
+  jevV15LeaderSentence, jevV15TieSummary,
   type JevV15Artifact, type JevV15Option, type JevV15System,
 } from '../lib/jevbench-v15-preview.mjs';
 import { jevTypeVarName, JEV_TYPE_LABEL } from './jevTypes';
@@ -33,10 +34,18 @@ function Tags({ row }: { row: JevV15System }) {
   </>;
 }
 
+// F-206(a): 94 of the 97 priced systems are estimates, so the majority is said once in the legend and the pill marks the
+// exception. The number is the cell's own text, right-aligned and tabular; the pill sits left of it so a column of figures
+// still lines up on its digits.
+const COST_LEGEND = 'Costs are estimates (est.) unless marked tariff.';
+const TARIFF_TITLE = 'A published tariff for this exact endpoint, not a base-model estimate.';
+
 function costCell(row: JevV15System) {
-  if (row.listing === 'unpriced') return <span className="bh-muted" title={row.cost.basis}>unpriced</span>;
-  const est = row.cost.kind === 'estimate';
-  return <span title={row.cost.basis}>{est ? '~' : ''}{usd(row.cost.usd_per_1000)}{est ? <span className="bh-muted"> est.</span> : null}</span>;
+  if (row.listing === 'unpriced') return <span className="bh-muted" title={row.cost.basis} data-bh-jev15-cost-cell="unpriced">unpriced</span>;
+  return <span className="tabular-nums" title={row.cost.basis} data-bh-jev15-cost-cell={row.cost.kind}>
+    {row.cost.kind === 'tariff' && <span className="bh-thin-tag mr-1 align-middle" title={TARIFF_TITLE}>tariff</span>}
+    {usd(row.cost.usd_per_1000)}
+  </span>;
 }
 
 function Th({ children, right = true, title }: { children: ReactNode; right?: boolean; title?: string }) {
@@ -57,25 +66,34 @@ function NameCell({ row, rank }: { row: JevV15System; rank: ReactNode }) {
 function HeadlineBars({ a, ranked }: { a: JevV15Artifact; ranked: JevV15System[] }) {
   const markers = a.board.B.markers ?? [];
   const tieBelow = new Map(markers.filter((m) => m.tie).map((m) => [m.upper, m.lower]));
+  const { ties, pairs } = jevV15TieSummary(a.board.B);
+  const named = new Map(a.systems.map((s) => [s.key, short(s.display)]));
+  const leader = jevV15LeaderSentence(a.board.B, (key) => named.get(key) ?? key);
   return <figure className="bh-panel mt-6 p-4 sm:p-5" data-bh-jev15-board="B" aria-labelledby="jev15-board-title">
     <p className="bh-eyebrow">JevBench {a.revision} · headline option B</p>
     <h2 id="jev15-board-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">JevBench Score: {ranked.length} ranked systems</h2>
     <p className="bh-muted mt-1 text-sm"><span className="bh-jevc-official mr-2">Official (B)</span>weighted harmonic mean of four 0–100 axes, Intelligence 40 · Calibration 20 · Speed 20 · Cost 20, with the low-axis gates · <a href="#jev15-method" className="text-accent underline">Method ↓</a></p>
-    {a.board.B.leader_wording && <p className="mt-2 text-sm font-semibold" data-bh-jev15-leader>{a.board.B.leader_wording}</p>}
+    {leader && <p className="mt-2 text-sm font-semibold" data-bh-jev15-leader>{leader}</p>}
     {a.headline_hold && <p className="mt-2 rounded border border-amber-500/60 bg-amber-500/10 p-2 text-sm" data-bh-jev15-headline-hold>{a.headline_hold}</p>}
-    <p className="bh-muted mt-1 text-xs" data-bh-jev15-ties>{markers.length ? `Adjacent pairs whose paired-bootstrap 95% interval includes zero are marked ≈ (statistical tie).` : 'Bootstrap intervals and tie markers are not in this data file yet; they come with the official scorer output.'}</p>
+    <p className="bh-muted mt-1 text-xs" data-bh-jev15-ties>{pairs ? `Whiskers are 95% bootstrap intervals. ${ties} of the ${pairs} adjacent pairs are statistical ties — read the order as a ranking, not the gaps as significant.` : 'Bootstrap intervals and tie markers are not in this data file yet; they come with the official scorer output.'}</p>
     <div className="mt-4 hidden grid-cols-[1.8rem_15rem_minmax(0,1fr)_3.4rem_24rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
       <span /><span /><span className="bh-muted font-mono">JevBench Score (B)</span><span className="bh-muted text-right font-mono">Score</span>
-      <span className="bh-muted grid grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_3fr] text-right font-mono"><span>Intel.</span><span>Calib.</span><span>Speed</span><span>Cost</span><span>A #</span><span>C #</span><span>$/1k dec.</span></span>
+      <span className="bh-muted grid grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_3fr] text-right font-mono"><span>Intel.</span><span>Calib.</span><span>Speed</span><span>Cost</span><span>A #</span><span>C #</span><span>$/1k decisions</span></span>
     </div>
     <ol className="mt-2 grid gap-1.5" data-bh-jev15-bars>{ranked.map((row) => {
       const s = row.scores.B;
+      // F-206(b): the interval is drawn on the bar's own 0–100 scale, so the reader sees the uncertainty instead of a marker
+      // that sat on 76 of 88 rows. The tie is still said, once in the note above and per row in the bar's accessible name.
+      const ci = row.composite_ci95?.B ?? null;
+      const clamp = (v: number) => Math.max(0, Math.min(100, v));
+      const lo = ci ? clamp(Math.min(ci[0], ci[1])) : null, hi = ci ? clamp(Math.max(ci[0], ci[1])) : null;
       return <li key={row.key} style={typeVar(row.class)} className="grid grid-cols-[1.5rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.8rem_15rem_minmax(0,1fr)_3.4rem_24rem]" data-bh-jev15-bar={row.key}
-        aria-label={`${row.display}: JevBench Score ${one(s)}, rank ${row.rank}. Intelligence ${one(row.axes.intelligence)}, calibration ${one(row.axes.calibration)}, speed ${one(row.axes.speed)}, cost ${one(row.axes.cost)}.`}>
+        aria-label={`${row.display}: JevBench Score ${one(s)}, rank ${row.rank}. Intelligence ${one(row.axes.intelligence)}, calibration ${one(row.axes.calibration)}, speed ${one(row.axes.speed)}, cost ${one(row.axes.cost)}.${ci ? ` 95% interval ${one(lo)} to ${one(hi)}.` : ''}${tieBelow.has(row.key) ? ' Statistical tie with the next row.' : ''}`}>
         <span className="bh-muted tabular-nums col-start-1 row-start-1 text-right text-xs">{row.rank}</span>
-        <span className="col-start-2 row-start-1 min-w-0 sm:truncate sm:text-right" title={row.display}>{short(row.display)}<Tags row={row} />{tieBelow.has(row.key) && <span className="bh-muted ml-1" title={`Statistical tie with the next row`}>≈</span>}</span>
-        <span className="bh-jevc-grid col-start-2 row-start-2 mt-1 flex h-4 sm:col-start-3 sm:row-start-1 sm:mt-0 sm:h-6" aria-hidden="true">
+        <span className="col-start-2 row-start-1 min-w-0 sm:truncate sm:text-right" title={row.display}>{short(row.display)}<Tags row={row} /></span>
+        <span className="bh-jevc-grid relative col-start-2 row-start-2 mt-1 flex h-4 sm:col-start-3 sm:row-start-1 sm:mt-0 sm:h-6" aria-hidden="true">
           {s != null && <span className="bh-jevc-bar" style={{ width: `${Math.max(0, Math.min(100, s)).toFixed(3)}%` }} />}
+          {lo != null && hi != null && <span className="bh-jevc-ci" data-bh-jev15-ci={row.key} style={{ left: `${lo.toFixed(3)}%`, width: `${(hi - lo).toFixed(3)}%` }} />}
         </span>
         <b className="tabular-nums col-start-3 row-span-2 row-start-1 self-center text-right text-base sm:col-start-4 sm:row-span-1 sm:text-lg">{one(s)}</b>
         <span className="bh-muted col-start-2 row-start-3 mt-0.5 min-w-0 font-mono text-[10.5px] sm:col-start-5 sm:row-start-1 sm:mt-0 sm:grid sm:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_3fr] sm:whitespace-nowrap sm:text-right sm:text-[12px]">
@@ -86,6 +104,7 @@ function HeadlineBars({ a, ranked }: { a: JevV15Artifact; ranked: JevV15System[]
         </span>
       </li>;
     })}</ol>
+    <p className="bh-muted mt-3 text-xs" data-bh-jev15-cost-legend>{COST_LEGEND}</p>
   </figure>;
 }
 
@@ -114,14 +133,14 @@ function AxesTable({ a, rows }: { a: JevV15Artifact; rows: JevV15System[] }) {
   const sup = (row: JevV15System, t: string) => row.support?.[t as 'choice'] ?? null;
   return <section className="mt-10" aria-labelledby="jev15-axes" data-bh-jev15-axes>
     <h2 id="jev15-axes" className="scroll-mt-6 text-xl font-semibold">Axes, request types, latency and cost</h2>
-    <p className="bh-muted mt-1 max-w-4xl text-sm">Every measured system. Intelligence is 50% open ({a.sample.open} decisions) and 50% sealed ({a.sample.sealed}); per-type columns are chance-corrected competence (CC, 0 = chance) for Choice, Noul and Score, open / sealed. Gap = I_open − I_sealed; the penalty applies only above the field median gap (G_med {one(a.G_med)}) plus 8. Latency is adjusted p50 / p95; cost is per 1,000 decisions ("est." = base-model estimate). On a phone the name column stays put while the table scrolls sideways.</p>
+    <p className="bh-muted mt-1 max-w-4xl text-sm">Every measured system. Intelligence is 50% open ({a.sample.open} decisions) and 50% sealed ({a.sample.sealed}); per-type columns are chance-corrected competence (CC, 0 = chance) for Choice, Noul and Score, open / sealed. Gap = I_open − I_sealed; the penalty applies only above the field median gap (G_med {one(a.G_med)}) plus 8. Latency is adjusted p50 / p95; cost is per 1,000 decisions. On a phone the name column stays put while the table scrolls sideways.</p>
     <div className="mt-3 overflow-x-auto rounded-xl border border-line">
       <table className="w-full min-w-[1480px] text-sm" aria-label="Per-system axes and details">
         <thead><tr className="bg-[var(--surface)]">
           <Th>#B</Th><Th right={false}>System</Th><Th>Score</Th><Th>Intel.</Th><Th>Calib.</Th><Th>Speed</Th><Th>Cost</Th>
           <Th title="Intelligence on the open set">I open</Th><Th title="Intelligence on the sealed set">I sealed</Th><Th>Gap</Th><Th title="Overfit multiplier on Intelligence">Penalty</Th>
           {JEVBENCH_V15_TYPES.map((t) => <Th key={t} title={`${TYPE_LABEL[t]} competence, open / sealed`}>{TYPE_LABEL[t]} o / s</Th>)}
-          <Th title="Latency p50 / p95, adjusted">p50 / p95</Th><Th>$/1k</Th><Th right={false}>Endpoint</Th>
+          <Th title="Latency p50 / p95, adjusted">p50 / p95</Th><Th title="Cost per 1,000 decisions">$/1k decisions</Th><Th right={false}>Endpoint</Th>
         </tr></thead>
         <tbody>{rows.map((row) => {
           const i = row.intelligence;
@@ -142,6 +161,7 @@ function AxesTable({ a, rows }: { a: JevV15Artifact; rows: JevV15System[] }) {
         })}</tbody>
       </table>
     </div>
+    <p className="bh-muted mt-2 text-xs" data-bh-jev15-cost-legend>{COST_LEGEND}</p>
     <p className="bh-muted mt-2 text-xs" data-bh-jev15-api-note>API = the operator's endpoint received sealed item text during evaluation, without answers. Sealed item text, answers and item-level results stay private; only system-level aggregates appear here. Hover a cost for its price basis and a latency for its raw values and adjustment.</p>
   </section>;
 }
