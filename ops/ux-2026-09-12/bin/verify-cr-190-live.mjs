@@ -1,7 +1,8 @@
 // CR-190 live verification: the registry entry is served and correctly described on every public host.
-import { createRequire } from 'node:module';
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs/promises';
-const require = createRequire('/home/flori/n8n-local/');
+const REPO = '/opt/model-market-comparison';
+const CR190_COMMIT = '31ba6ed75a7803881dd309b4c0eced3d14a3d675';
 const OUT = process.argv[2] || '/tmp/verify-cr190';
 await fs.mkdir(OUT, { recursive: true });
 const ID = 'openai-mentalhealthbench::snapshot-2026-09-23';
@@ -11,7 +12,14 @@ const check = (host, name, ok, detail) => checks.push({ host, name, ok: !!ok, de
 
 for (const host of HOSTS) {
   const meta = await (await fetch(`${host}/api/meta`)).json();
-  check(host, 'deployed revision is the CR-190 commit', meta.revision?.startsWith('31ba6ed7'), meta.revision);
+  // Ancestry, not equality: every later push moves the deployed revision, and a check that pins one
+  // commit would go red for a reason that has nothing to do with CR-190.
+  let carries = false;
+  try {
+    execFileSync('git', ['merge-base', '--is-ancestor', CR190_COMMIT, meta.revision ?? ''], { cwd: REPO, stdio: 'ignore' });
+    carries = true;
+  } catch { carries = false; }
+  check(host, 'the deployed revision carries the CR-190 commit', carries, `${meta.revision} vs ${CR190_COMMIT}`);
   const list = await (await fetch(`${host}/api/benchmarks`)).json();
   const rows = Array.isArray(list) ? list : (list.benchmarks ?? list.entries ?? []);
   const row = rows.find((r) => r.id === ID);
