@@ -203,6 +203,7 @@ def main() -> int:
         webhook = signed_webhook(request_id, model, webhook_url, webhook_secret)
         receipt["stripe_test_event_id"] = webhook["event"]["id"]
         receipt["webhook_response"] = webhook["webhook_response"]
+        receipt["pickup_detection"] = "worker claim_paid_requests test-only request scope"
         write_receipt(receipt_path, receipt)
         if webhook["webhook_response"].get("result") != "recorded":
             raise RuntimeError("synthetic webhook did not record a new payment")

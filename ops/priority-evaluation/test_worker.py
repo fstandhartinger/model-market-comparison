@@ -62,9 +62,41 @@ class PriorityWorkerTests(unittest.TestCase):
         self.assertEqual(run.call_count, 6)
 
     def test_synthetic_pickup_is_limited_to_test_mode_flagged_row(self):
-        with patch.object(worker, "sql_json", return_value=None):
+        with patch.object(worker, "sql_json", return_value=None) as query:
             with self.assertRaisesRegex(worker.WorkerError, "synthetic Stripe test-mode"):
                 worker.pickup_synthetic_request("bc9a47b2-9304-4bdc-9254-c86f75f7a23b")
+        statement = query.call_args.args[0]
+        self.assertIn("stripe_mode='test' AND synthetic_test=true", statement)
+        self.assertIn("pickup_status IN ('pending','failed')", statement)
+
+    def test_normal_pickup_claim_only_selects_live_non_synthetic_payments(self):
+        with patch.object(worker, "sql_json", return_value=None) as query:
+            self.assertEqual(worker.claim_paid_requests(limit=1), [])
+        statement = query.call_args.args[0]
+        self.assertIn("stripe_mode='live' AND synthetic_test=false", statement)
+
+    def test_synthetic_pickup_claim_is_scoped_to_one_valid_test_request(self):
+        request_id = "bc9a47b2-9304-4bdc-9254-c86f75f7a23b"
+        with patch.object(worker, "sql_json", return_value=None) as query:
+            self.assertEqual(worker.claim_paid_requests(limit=1, synthetic_test_request_id=request_id), [])
+        statement = query.call_args.args[0]
+        self.assertIn(f"id='{request_id}'::uuid", statement)
+        self.assertIn("stripe_mode='test' AND synthetic_test=true", statement)
+
+    def test_synthetic_urgent_notice_keeps_dry_run_diagnostic_on_failure(self):
+        request_id = "bc9a47b2-9304-4bdc-9254-c86f75f7a23b"
+        with tempfile.TemporaryDirectory() as tmp:
+            job = Path(tmp)
+            row = {
+                "id": request_id, "email": "test@example.com", "model_name": "Synthetic",
+                "benchmarks": ["jevbench"], "amount_total": 4900,
+                "paid_at": "2026-09-25T21:46:28+00:00", "synthetic_test": True,
+            }
+            failure = subprocess.CompletedProcess([], 2, "preview output", "diagnostic error")
+            with patch.object(worker, "sql"), patch.object(worker.subprocess, "run", return_value=failure):
+                self.assertFalse(worker.send_urgent(row, job))
+            diagnostic = job / ".urgent-notice-dry-run.txt"
+            self.assertEqual(diagnostic.read_text(encoding="utf-8"), "preview outputdiagnostic error")
 
     def test_paid_codex_job_uses_the_quota_checked_paid_only_launcher(self):
         with tempfile.TemporaryDirectory() as tmp:

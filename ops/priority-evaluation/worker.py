@@ -149,7 +149,12 @@ def parse_systemd_state(output: str) -> dict[str, str]:
     }
 
 
-def claim_paid_requests(limit: int = 50) -> list[dict]:
+def claim_paid_requests(limit: int = 50, synthetic_test_request_id: str | None = None) -> list[dict]:
+    if synthetic_test_request_id is None:
+        eligibility = "status='paid' AND stripe_mode='live' AND synthetic_test=false"
+    else:
+        request_id = request_uuid(synthetic_test_request_id)
+        eligibility = f"id='{request_id}'::uuid AND status='paid' AND stripe_mode='test' AND synthetic_test=true"
     claimed: list[dict] = []
     for _ in range(limit):
         row = sql_json(f"""
@@ -159,7 +164,7 @@ def claim_paid_requests(limit: int = 50) -> list[dict]:
               last_pickup_attempt_at=now(), updated_at=now()
           WHERE r.id=(
             SELECT id FROM {TABLE}
-            WHERE status='paid' AND stripe_mode='live' AND synthetic_test=false AND (
+            WHERE {eligibility} AND (
               pickup_status IN ('pending','failed') OR
               (pickup_status='starting' AND last_pickup_attempt_at < now()-interval '10 minutes') OR
               notification_status IN ('pending','sending') OR
@@ -209,11 +214,12 @@ def send_urgent(row: dict, job_dir: Path) -> bool:
         f"UPDATE {TABLE} SET notification_status={text_literal(state)}, updated_at=now() "
         f"WHERE id='{request_id}'::uuid"
     )
+    if row.get("synthetic_test"):
+        diagnostic = job_dir / ".urgent-notice-dry-run.txt"
+        diagnostic.write_text((result.stdout or "") + (result.stderr or ""), encoding="utf-8")
+        os.chmod(diagnostic, 0o600)
     if not state == "sent":
         print("Urgent payment notice failed; it will be retried.", file=sys.stderr)
-    if row.get("synthetic_test") and state == "sent":
-        (job_dir / ".urgent-notice-dry-run.txt").write_text(result.stdout + result.stderr, encoding="utf-8")
-        os.chmod(job_dir / ".urgent-notice-dry-run.txt", 0o600)
     return state == "sent"
 
 
@@ -356,21 +362,10 @@ def process_paid_request(row: dict) -> None:
 
 def pickup_synthetic_request(request_id: str) -> None:
     request_id = request_uuid(request_id)
-    row = sql_json(f"""
-      SELECT json_build_object('id',id::text,'email',email,'model_name',model_name,'model_link',model_link,
-        'code_link',code_link,'access_type',access_type,'access_instructions',access_instructions,
-        'notes',notes,'benchmarks',benchmarks,'visibility',visibility,'amount_total',amount_total,
-        'base_amount',base_amount,'stripe_mode',stripe_mode,'payment_intent_id',payment_intent_id,
-        'paid_at',paid_at,'review_basis',review_basis,'pickup_status',pickup_status,
-        'notification_status',notification_status,'board_status',board_status,
-        'confirmation_status',confirmation_status,'pickup_job_dir',pickup_job_dir,'pickup_owner',pickup_owner,
-        'synthetic_test',synthetic_test)::text
-      FROM {TABLE} WHERE id='{request_id}'::uuid AND status='paid'
-        AND stripe_mode='test' AND synthetic_test=true
-    """)
-    if not row:
+    rows = claim_paid_requests(limit=1, synthetic_test_request_id=request_id)
+    if not rows:
         raise WorkerError("pickup test accepts only a paid, synthetic Stripe test-mode request")
-    process_paid_request(row)
+    process_paid_request(rows[0])
 
 
 def process_review_and_delivery_mail(limit: int = 50) -> int:
