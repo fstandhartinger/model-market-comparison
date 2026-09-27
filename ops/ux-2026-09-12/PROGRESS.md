@@ -14731,3 +14731,84 @@ Gates: `npx tsc --noEmit -p .` exit 0 (`tsc.log`); `CI=true npm test` **1,504 te
 `node scripts/build-dataset.mjs` was not run: no data, registry or lib file changed in this pass (two component edits, one test, two scripts,
 two ledgers). The dev server on port 3879 was stopped at the end of the pass.
 **Needs a non-Fable engine to set `verified` on F-206(d) and F-211; F-210 is the next `[mechanical]` directive for a work iteration.**
+
+## Iteration 251 (claude-opus, work) — 2026-09-27 ~14:00 UTC — F-210 shipped, pass 39 signed off by a non-Fable engine, and D223's ledger row was a stale copy of a fence that no longer exists
+
+`096d79db`. Three things: the `[mechanical]` directive Fable left for a work iteration is implemented and
+live; the two fixes Fable shipped in pass 39 have their non-Fable receipt; and the D223 row iteration 250
+carried forward describes the *02:20 gate's* state, not this repository's.
+
+### F-210 — the roster addendum is a table, and the caveat is said once
+
+Six newcomers were six paragraphs. Each one stated the placement twice (`not_ranked_because` and then the
+built sentence), the score at two precisions (`71.90` in the prose, `one()`'s `71.9` in the parenthesis) and
+the frozen-order caveat per row *and* again in the intro — ten lines per newcomer at 390 px for five numbers.
+
+The facts are a small matrix, so they are one now: **System · Would place (A) · A score with its 95% interval ·
+Would place (B) · B score**, inside the same `overflow-x-auto rounded-xl border border-line` wrapper the options
+table uses (`min-w-[640px]`, `text-sm`), rows still sorted by `would_place_A`. The intro keeps its four
+sentences and is the only place the caveat is said; `not_ranked_because` is the name cell's `title`, reachable
+but no longer repeating the columns; the long form of each heading ("Placement against the frozen v1.5.0 base
+under the official A weights", "95% paired-bootstrap interval") is the `th`'s title, so the head stays one line.
+The honorable-mention section, the numbers, the sort, the data file and the section's position are untouched.
+
+**The verifier's own F-210 group could not pass.** Its intro check carried a template-literal escape into plain
+code — `/outside the v1\\.5\\.0 order/i`, which matches nothing, because the same file's in-page checks *do* need
+`\\.` inside the `new Function` template. So the group was unsatisfiable: 28/32 with the page correct. Fixed to
+the intended regex, which is the stricter reading (the check now really asserts the intro says it), and flagged
+in the file's header. This is the pattern `fable-directive-check-can-be-unsatisfiable` warns about: fix the
+checker, never reshape the page to fit it.
+
+### The two fixes Fable shipped in pass 39 now have a non-Fable receipt
+
+Fable is the design authority and the implementer of F-206(d) and F-211, so it could not set `verified` on them.
+This iteration (claude-opus) ran the same verifier on the deployed page.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-210 | **implemented and verified live** (implementer claude-opus; needs a non-claude engine to set `verified`) | `…/iter251-f210/local-F-210/` 32/32 on a dev server, `…/pass39-{canonical,www,legacy}/verification.json` **56/56 per host** at `096d79db`; `test/fable-pass39.test.mjs` +2, `test/jevbench-v15-preview.test.mjs` re-pointed | Row heights 36.5–37 px in all four contexts (budget 48 at 1440, 96 at 390); the wrapper scrolls, the page does not. |
+| F-206(d) | live-checked (Fable) → **verified** | `…/iter251-f210/f206d-canonical/verification.json` **16/16** at `cf4fe69c`, inside the 56/56 sweep at `096d79db`, and pass 37's `ONLY=F-206` **52/52** on canonical (`…/iter251-f210/pass37-F-206-canonical/`) — the second half of the directive's accept line, and the count pass 39 measured at 48/52 while the regression was live | Verifier **claude-opus**, not the implementer and not Fable. |
+| F-211 | live-checked (Fable) → **verified** | `…/iter251-f210/f211-canonical/verification.json` **16/16** at `cf4fe69c`, and inside the 56/56 sweep at `096d79db` | Same. With F-210 the group now reads the table's rows rather than the list's, and still finds exactly one addendum pill per row. |
+
+### D223 — the row said "open"; the repository says otherwise, and a non-implementer had already proved it
+
+Iteration 250 transcribed the 11:10 gate's lost receipts and wrote D223 as "**open**, with a non-implementer
+receipt on the fence — the fence the 02:20 gate added is verified live." That sentence describes the fence the
+02:20 gate built (`version_guard` narrowed to exactly v3.4–v3.7, v3.15 refused). **That fence no longer exists.**
+Iteration 244 replaced it four hours later with the reviewed-set model, on the operator's own published evidence
+bundles, and today's registry admits `code-quality-maintenance-v3.15` by name.
+
+The receipt iteration 250 carried across is the proof of the *new* state, not of the old fence. Read out of
+`…/review-20260927T111003Z/d188-d223-d224/verification.json` (codex-luna, 11:46 UTC, three hosts, **105/105**):
+
+* `derived.vulcan_protocols` = `v3.15, v3.4, v3.5, v3.6, v3.7` — the served reviewed set **includes v3.15**;
+* "the reviewed set is exactly what the board publishes" — pass;
+* "the guard admits exactly the reviewed revisions" — pass;
+* "every reviewed revision keeps the rubric, gates, judges and weights of the oldest" — pass;
+* "each revision amends the oldest reviewed one", "a distinct protocol hash per revision is the family norm",
+  "the newest population ran the same 23 task ids as the reference" — pass.
+
+Those five checks *are* D223's question — same task set, same scoring formula, same judge protocol — re-derived
+live from the retained bundles by an engine that did not implement the repair. **D223 is verified.** No data,
+registry or code changed in this iteration to make that true; the row was simply wrong.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D223 | iteration 250's "open" **corrected → verified** | `…/review-20260927T111003Z/d188-d223-d224/verification.json` **105/105**, three hosts, 11:46 UTC, verifier codex-luna; registry `version_guard` and notes at `data/raw/benchmarks/registry.json` | The "open" row restated the 02:20 gate's fence, which iteration 244 (`261be5fd`) had already replaced. Worth a process note: a receipt recovered from a report-less gate has to be read against the code it ran on, not against the last prose anyone wrote about the item. |
+| D224 | code half verified, **live half still open** | same receipt: "every board column resolves to a reviewed catalog family" — pass | The eight cells (GPT-5.6 Sol ×4, Claude Opus 5.5 ×4) still need a *publishing* refresh, and that is blocked — see below. |
+
+### Why D224's live half is stuck: the VulcanBench arm's critic has blocked the artifact twice
+
+`vulcanbench-frontier::4` is `retained_after_failure`, failing since the 00:41 run of 2026-09-27, two
+consecutive runs, reason `protocol not approved: round 1: critic blocked the artifact`. Its published
+observations are still the **2026-09-18** capture — 28 rows, no GPT-5.6 Sol, no Opus 5.5 — so D224's eight cells
+and the board's five v3.15 rows cannot reach the site no matter how well the registry reviews them. `last_ok` is
+2026-09-26 05:26; the block is new.
+
+A `blocked` verdict is the critic's own judgment, not a transport failure, so the replay harness is the way to
+read it. Replayed offline against the failing run's own capture
+(`BH_REPLAY_MANIFEST=data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/manifest.json`), the **producer
+returns `match`** with a note that walks all three axes of the entry and states the protocol set as
+`{v3.4, v3.5, v3.6, v3.7, v3.15}` — i.e. the producer agrees with the repaired registry. Receipt and the critic's
+own words: `/opt/benchmarkheaven/state/ux-evidence/iter251-vulcan-replay/`.
+
