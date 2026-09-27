@@ -183,16 +183,41 @@ function Honorable({ a, rows }: { a: JevV15Artifact; rows: JevV15System[] }) {
   </section>;
 }
 
-function Addendum({ a, rows }: { a: JevV15Artifact; rows: JevV15System[] }) {
+function Addendum({ rows }: { rows: JevV15System[] }) {
   if (!rows.length) return null;
   const interval = (row: JevV15System, option: 'A' | 'B') => {
     const ci = row.composite_ci95?.[option];
     return ci ? `${one(ci[0])}–${one(ci[1])}` : 'CI unavailable';
   };
+  // F-210 (pass 39): six newcomers were six paragraphs that each repeated the placement, the score at two precisions and the
+  // frozen-order caveat. The facts are a small matrix, so they are a table: the caveat is said once, in the intro above.
+  const PLACE_TITLE = (o: 'A' | 'B') => `Placement against the frozen v1.5.0 base under the ${o === 'A' ? 'official A' : 'secondary B'} weights`;
+  const CI_TITLE = '95% paired-bootstrap interval';
+  const dash = <span className="bh-muted">—</span>;
+  const score = (row: JevV15System, o: 'A' | 'B') => <>{one(row.scores[o])} <span className="bh-muted">{interval(row, o)}</span></>;
   return <section className="bh-panel mt-10 max-w-5xl p-5" aria-labelledby="jev15-addendum" data-bh-jev15-addendum-section>
     <h2 id="jev15-addendum" className="text-lg font-semibold">Roster addendum: newcomers scored on the same frozen protocol ({rows.length})</h2>
     <p className="bh-muted mt-1 text-sm">Added by separately hashed roster addenda before they ran. Same frozen sample, method, price rules and v1.5.0 median gap. These rows stay outside the v1.5.0 order and its tie markers. A and secondary B placement compare each row with the frozen base point estimates only; each row's interval is shown separately and does not establish a tie with a base row or another addendum.</p>
-    <ul className="bh-muted mt-2 space-y-1 text-sm">{rows.map((r) => <li key={r.key} data-bh-jev15-addendum-row={r.key}><b>{r.display}</b><Tags row={r} />: {r.not_ranked_because}{r.would_place_A != null ? ` Official A would place #${r.would_place_A} against the frozen base; A score ${one(r.scores.A)} (95% CI ${interval(r, 'A')}).` : ''}{r.would_place_B != null ? ` Secondary B would place #${r.would_place_B} against the frozen base; B score ${one(r.scores.B)} (95% CI ${interval(r, 'B')}).` : ''}</li>)}</ul>
+    <div className="mt-3 overflow-x-auto rounded-xl border border-line">
+      <table className="w-full min-w-[640px] text-sm" data-bh-jev15-addendum-table aria-label="Roster addendum systems, their placement against the frozen base and their scores">
+        <thead><tr className="bg-[var(--surface)]">
+          <Th right={false}>System</Th>
+          <Th title={PLACE_TITLE('A')}>Would place (A)</Th><Th title={CI_TITLE}>A score · 95% CI</Th>
+          <Th title={PLACE_TITLE('B')}>Would place (B)</Th><Th title={CI_TITLE}>B score · 95% CI</Th>
+        </tr></thead>
+        <tbody>{rows.map((r) => <tr key={r.key} className="border-t border-line" data-bh-jev15-addendum-row={r.key}>
+          <th scope="row" className="whitespace-nowrap p-2 text-left font-semibold" style={typeVar(r.class)} title={r.not_ranked_because ?? undefined}>
+            <span className="mr-1.5 inline-block h-2.5 w-2.5 rounded-full bg-[rgb(var(--jev-t))] align-middle" aria-hidden="true" />
+            <span title={r.display}>{short(r.display)}</span><Tags row={r} />
+          </th>
+          <td className="whitespace-nowrap p-2 text-right tabular-nums">{r.would_place_A == null ? dash : `#${r.would_place_A}`}</td>
+          <td className="whitespace-nowrap p-2 text-right tabular-nums">{r.would_place_A == null ? dash : score(r, 'A')}</td>
+          <td className="whitespace-nowrap p-2 text-right tabular-nums">{r.would_place_B == null ? dash : `#${r.would_place_B}`}</td>
+          <td className="whitespace-nowrap p-2 text-right tabular-nums">{r.would_place_B == null ? dash : score(r, 'B')}</td>
+        </tr>)}</tbody>
+      </table>
+    </div>
+    <p className="bh-muted mt-2 text-xs" data-bh-jev15-addendum-legend>Score followed by its 95% interval. Placements compare point estimates with the frozen base only.</p>
   </section>;
 }
 
@@ -244,7 +269,7 @@ export function JevBenchV15Preview({ artifact: a, sha256 }: { artifact: JevV15Ar
     <OptionsTable a={a} ranked={ranked} />
     <AxesTable a={a} rows={[...ranked, ...honorable, ...addendum, ...partial, ...unpriced]} />
     <Honorable a={a} rows={honorable} />
-    <Addendum a={a} rows={addendum} />
+    <Addendum rows={addendum} />
     <NotRanked a={a} partial={partial} unpriced={unpriced} />
     <Method a={a} sha256={sha256} />
     <p className="bh-muted mt-4 text-xs">Earlier releases: <a className="text-accent underline" href="/jev-models/v1.4.2">JevBench v1.4.2 (current public release)</a>.</p>

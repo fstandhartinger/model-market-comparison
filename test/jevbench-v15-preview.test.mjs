@@ -90,8 +90,13 @@ test('hidden What-If Lab: noindex, unlinked, aggregate-only; addendum rows liste
   assert.match(html, /What-If # can include measured addendum rows/);
   assert.match(html, /Before every release we review the leaderboard for anomalies and close loopholes with general, documented rules\./);
   const component = read('components/JevBenchV15Preview.tsx');
-  assert.match(component, /Official A would place/);
-  assert.match(component, /Secondary B would place/);
+  // F-210 (pass 39): the two placements moved out of a sentence per row into a column per option. Both facts are still
+  // stated for every addendum row — pinned at the heading that names the column and at the cell that prints the number.
+  assert.match(component, /data-bh-jev15-addendum-table/);
+  assert.match(component, />Would place \(A\)</);
+  assert.match(component, />Would place \(B\)</);
+  assert.match(component, /r\.would_place_A == null \? dash : `#\$\{r\.would_place_A\}`/);
+  assert.match(component, /r\.would_place_B == null \? dash : `#\$\{r\.would_place_B\}`/);
   assert.match(component, /does not establish a tie/);
 });
 

@@ -4,6 +4,8 @@
 //   F-206d  the leader line names the tied systems (PR #53 had put the artifact's bare "joint leaders (statistical tie)" first) — shipped by Fable;
 //   F-211   a pill is a word, never a key, and an addendum row wears one pill — shipped by Fable;
 //   F-210   the roster addendum is a table (one row per newcomer, the placement and the score with its interval as columns), not six paragraphs — directed.
+// Fixed 2026-09-27 (iteration 251, claude-opus): F-210's intro check carried a template-literal escape (/v1\\.5\\.0/) into plain
+// code, where it matches nothing — the group was unsatisfiable. The regex is now the intended one; no check was weakened.
 // Launches its own Chromium. Writes <outDir>/verification.json, exits 1 on any failing check.
 import { createRequire } from 'node:module';
 import fs from 'node:fs/promises';
@@ -67,7 +69,7 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
     check('F-210', ctx, 'one row per newcomer (6 today)', m.trs.length >= 6, String(m.trs.length));
     check('F-210', ctx, 'columns: system, would place (A), A score with interval, would place (B), B score with interval', /system/i.test(m.ths.join(' ')) && m.ths.filter((t) => /would place|placement|#/i.test(t)).length >= 2 && m.ths.filter((t) => /95%|interval|CI/i.test(t)).length >= 2, m.ths.join(' | '));
     check('F-210', ctx, 'the placement is a cell, not a sentence — no "would place" prose in a row', m.trs.length > 0 && m.trs.every((r) => !r.cells.some((t) => /would place/i.test(t))), JSON.stringify(m.trs.slice(0, 2).map((r) => r.cells)));
-    check('F-210', ctx, 'the frozen-order sentence is said once, in the section intro, not per row', m.secP.some((t) => /outside the v1\\.5\\.0 order/i.test(t)) && m.trs.every((r) => !r.cells.some((t) => /stay outside/i.test(t))), m.secP.join(' // ').slice(0, 200));
+    check('F-210', ctx, 'the frozen-order sentence is said once, in the section intro, not per row', m.secP.some((t) => /outside the v1\.5\.0 order/i.test(t)) && m.trs.every((r) => !r.cells.some((t) => /stay outside/i.test(t))), m.secP.join(' // ').slice(0, 200));
     check('F-210', ctx, 'a row is one line at 1440 (≤ 48 px) and ≤ 96 px at 390', m.trs.length > 0 && m.trs.every((r) => r.h <= (mobile ? 96 : 48)), m.trs.map((r) => r.h).join(','));
     check('F-210', ctx, 'the table scrolls inside its own wrapper on a phone; the page never scrolls sideways', m.bodySw <= m.bodyCw + 1 && (!mobile || !m.tableWrap || m.tableWrap.sw <= m.tableWrap.cw + 1 || /auto|scroll/.test(m.tableWrap.ox)), JSON.stringify({ body: [m.bodySw, m.bodyCw], wrap: m.tableWrap }));
   }
