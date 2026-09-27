@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { buildBenchmarkView } from '../lib/benchmark-view.mjs';
 import { benchmaxxingSignals } from '../lib/benchmax.mjs';
+import { BENCHMAXX_TAG_MIN_COMPARISONS, benchmaxxingLevelFor, benchmaxxingUncertaintyNote } from '../lib/benchmaxxing-levels.mjs';
 
 const dataset = JSON.parse(await readFile(new URL('../data/dataset.json', import.meta.url), 'utf8'));
 const registry = JSON.parse(await readFile(new URL('../data/raw/benchmarks/registry.json', import.meta.url), 'utf8'));
@@ -50,11 +51,36 @@ test('CR-117: all 17 Xiaomi claims remain self-reported with reviewable provenan
   assert.equal(registry.entries.filter((row) => row.id.startsWith('xiaomi-')).length, 17);
 });
 
-test('CR-117: benchmaxxing correctly withholds a verdict when no qualifying comparisons exist', () => {
+test('CR-117: benchmaxxing rests on measured pairs, and discloses how thin they are', () => {
   const result = benchmaxxingSignals(buildBenchmarkView(dataset), [model.id]);
-  assert.deepEqual(result.reports, []);
-  assert.equal(result.levels.has(model.id), false);
-  assert.equal(result.tagged.has(model.id), false);
+  // Until AA's 2026-09-27 refresh this model had no qualifying headline/held-out pair at all, so the
+  // check read `reports === []`. AA then measured it on enough boards to form seven pairs. What CR-117
+  // asked for is the rule, not the emptiness: a verdict exists only where the pairs do, it is built
+  // from measured boards and never from Xiaomi's own 17 claims, and thin evidence is disclosed rather
+  // than used to hide the tag. Both states satisfy this.
+  if (!result.reports.length) {
+    assert.equal(result.levels.has(model.id), false);
+    assert.equal(result.tagged.has(model.id), false);
+    return;
+  }
+  assert.equal(result.reports.length, 1);
+  const [[id, report]] = result.reports;
+  assert.equal(id, model.id);
+  assert.ok(report.comparisons > 0, 'a verdict rests on real comparisons');
+  assert.equal(result.levels.get(model.id), benchmaxxingLevelFor(report.score));
+  // The 17 vendor boards do appear in the report's `profile` — that listing is every axis the model
+  // could have, self-reported ones included. What must never happen is one of them taking a *side*:
+  // the headline/held-out pairs the score is computed from, and the drivers it names.
+  const vendor = (id) => String(id).startsWith('xiaomi-');
+  const sided = report.profile.axes.filter((axis) => axis.side);
+  assert.ok(sided.length > 0, 'the profile marks which axes took a side');
+  for (const axis of sided) assert.ok(!vendor(axis.id), `${axis.id} took a side`);
+  for (const driver of [...report.drivers.positive, ...report.drivers.negative]) {
+    for (const side of [driver.headline, driver.heldout]) assert.ok(!vendor(side.id), `${side.id} drives the verdict`);
+  }
+  assert.equal(registry.entries.filter((row) => row.id.startsWith('xiaomi-')).length, 17);
+  assert.ok(report.comparisons >= BENCHMAXX_TAG_MIN_COMPARISONS || benchmaxxingUncertaintyNote(report),
+    `${report.comparisons} comparisons is thin evidence and must say so`);
 });
 
 test('CR-117.3: the visible MiMo Cyber Bench description discloses the 81.7-versus-80.2 source conflict', () => {

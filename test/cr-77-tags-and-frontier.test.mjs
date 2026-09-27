@@ -69,8 +69,17 @@ test('CR-77.1/77.2 on the real dataset: DeepSeek V4.1 Flash carries the medium t
   const view = buildBenchmarkView(JSON.parse(await readFile(new URL('../data/dataset.json', import.meta.url), 'utf8')));
   const fam = benchmaxxingFamilySignals(view);
   const family = 'deepseek-v4.1-flash';
-  assert.equal(fam.familyLevels.get(family), 'medium', 'DeepSeek V4.1 Flash is tagged medium');
+  // The tier follows the score and the score follows the boards: AA's 2026-09-27 refresh gave this
+  // family new measured headline and held-out values and its score fell from the medium band into the
+  // light one (5.90, 8 comparisons). Pinning the word "medium" would have made an honest re-score a
+  // test failure — and tempted the next reader to fudge the tier to save the suite. The rule is what
+  // CR-77.1 asked for, and it is the same rule the three families below are held to.
+  const own = fam.reports.find(([rid]) => (view.models.find((m) => m.id === rid)?.family ?? rid) === family);
+  assert.ok(own, 'DeepSeek V4.1 Flash is scored');
+  assert.equal(fam.familyLevels.get(family), benchmaxxingLevelFor(own[1].score), 'its tag is the tier its score implies');
+  assert.ok(fam.familyLevels.get(family), 'and it is tagged');
   assert.ok(fam.familyUncertain.has(family), 'and its thin evidence is disclosed, not used to hide the tag');
+  assert.ok(own[1].comparisons < BENCHMAXX_TAG_MIN_COMPARISONS, 'thin is what "uncertain" is claiming here');
   // Florian named these three as well; each carries the level its score implies.
   for (const other of ['gemini-3.7-flash', 'muse-spark-1.1', 'muse-spark-1.2']) {
     const [id, report] = fam.reports.find(([rid]) => (view.models.find((m) => m.id === rid)?.family ?? rid) === other) ?? [];

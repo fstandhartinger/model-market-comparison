@@ -52,6 +52,22 @@ test('CR-123: no Opus 5.5 claim reaches a composite or a measured cohort', () =>
   const view = dataset.benchmark_results;
   const rows = view.observations.filter((row) => row.id.startsWith('self-reported:claude-opus-55-'));
   assert.ok(rows.every((row) => row.basis !== 'measured'));
-  // A self-reported row is never an anchor, so the model gets no category score from these 16 claims.
-  assert.equal(model.category_scores, undefined);
+  // A self-reported row is never an anchor. Until AA's 2026-09-27 refresh this was checked by the
+  // proxy `category_scores === undefined` — Opus 5.5 simply had no measured anchor set yet. AA then
+  // published LCR, GDP.pdf and MLCR for it, so the model earns a real Long-context composite and the
+  // proxy would have read that honest score as a leak. So check the claim itself: every category the
+  // model scores in is carried by measured rows of its own, and no anchor is one of the 16 vendor
+  // boards. `category_scores` being absent still satisfies this, so the pin holds either way.
+  const vendorBoards = new Set(registry.entries.filter((e) => e.id.startsWith('anthropic-')).map((e) => e.id));
+  const measured = new Set(view.observations.filter((row) => row.subject?.model_id === model.id
+    && row.basis === 'measured').map((row) => row.benchmark_id));
+  for (const key of Object.keys(model.category_scores ?? {})) {
+    const category = dataset.category_scores.categories.find((c) => c.key === key);
+    assert.ok(category, `${key}: a declared category`);
+    for (const anchor of category.rows) {
+      const id = decodeURIComponent(anchor.id).split('@@')[0];
+      assert.ok(!vendorBoards.has(id), `${key}: ${id} is not one of the 16 vendor boards`);
+      assert.ok(measured.has(id), `${key}: ${id} is carried by a measured row of this model`);
+    }
+  }
 });

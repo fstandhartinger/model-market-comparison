@@ -110,7 +110,9 @@ test('the vendor claims raise V4.1 Flash coverage without entering the Composite
   // 2026-09-21 (iteration 154): 39 → 40, MathArena ArXivMath 2026-06 now joins DeepSeek-V4.1-Flash (Max).
   // 2026-09-27 (iteration 243, D220): 40 → 41, MathArena BrokenArXiv 2026-06 joins it too (39.35 in the
   // 2026-09-25 capture). Coverage may rise; the assertions below are what must not move.
-  assert.equal(rows.length, 41);
+  // 2026-09-27 (this iteration): AA's first refresh in 17 days added measured boards, 41 → 43. The
+  // comment above is the rule — coverage may rise — so this is a floor, not a snapshot.
+  assert.ok(rows.length >= 41, `coverage fell to ${rows.length}`);
   assert.equal(rows.filter((o) => o.basis === 'self_reported').length, 19);
   const model = dataset.models.find((m) => m.id === MODEL);
   assert.ok(model);

@@ -63,10 +63,20 @@ test('the measured-basis gate is what keeps a non-measured value out of the perc
     }
   }
   assert.deepEqual(offenders, [], 'a non-measured row must never carry a position under the gate');
-  assert.ok(exposed.length > 0, 'the gate would be untested if no non-measured row sat in a measured field');
-  // Today only CR-60.2's chart-read Union Alpha rows sit in a measured field; no axis yet holds both a
-  // measured and a self-reported result. The gate is written so that the day one does, the vendor
-  // claim still gets "developer's claim" rather than a bar.
+  // Non-vacuity used to be read off the live population: CR-60.2's chart-read Union Alpha rows sat
+  // inside `aa-terminal-bench::4.0`'s measured distribution. AA's 2026-09-27 refresh migrated that
+  // field to its `4.0-upstream-timeouts` successor, so the axis kept the preliminary row and lost its
+  // measured cohort — and with it the fixture. The gate is what is under test, so it is probed
+  // directly: a non-measured value placed in a real measured distribution is positioned by
+  // `normalize` and refused by the gate.
+  const populated = [...view.axes, ...(view.indexAxes ?? [])].find((a) => (a.stats?.n ?? 0) > 1 && a.stats.mean != null);
+  assert.ok(populated, 'a measured distribution to probe the gate against');
+  const probe = { basis: 'self_reported', modelId: 'probe', value: populated.stats.mean };
+  assert.notEqual(normalize(probe.value, populated.stats, populated.higherBetter), null,
+    'the probe value really does fall inside the measured distribution');
+  assert.equal(gated(probe, populated), null, 'and the basis gate is what keeps it out');
+  // Whatever the live population holds, a row exposed to a measured distribution may only be one of
+  // CR-60.2's chart reads — a vendor claim there would be the defect CR-127 was raised for.
   assert.ok(exposed.every((e) => e.endsWith('preliminary')), `unexpected exposed bases: ${exposed.join(', ')}`);
   const mixed = view.axes.filter((a) => a.scores.some((r) => r.basis === 'self_reported') && a.scores.some((r) => r.basis === 'measured'));
   assert.equal(mixed.length, 0, `axes now mix bases (${mixed.map((a) => a.id).join(', ')}); re-read this suite's note`);
