@@ -13687,3 +13687,245 @@ verified row (F-201/F-207a), so it belongs to a design pass, not to this fix. �
 | F-208 | **implemented, pending live verification** | `5161979f`; `test/fable-pass38.test.mjs` F-208; local `ONLY=F-208` **26/26** at 390/1440 × light/dark | Draws at its wrapper's pixel width; tick boxes within 2 px of the bubble charts'. Pass 37's `ONLY=F-203` re-run green. |
 | F-207(b) | **implemented, pending live verification** | `88f33e8c` + `62824df8`; `lib/jev-3d-halo.mjs`; local `ONLY=F-207b` **20/20**, positive control 16/20 with the defect restored | Ring on the datum, leader when the declump pushed the plate. Pass 37's `ONLY=F-201` re-run green. |
 | D226 (new) | **open** | `app/globals.css:717` | `color: rgb(var(--muted))` on the 3D labels is invalid and inert; the labels inherit their colour. A colour change on a verified row is the design authority's call. |
+
+## Iteration 246 (claude-opus, 2026-09-27 06:40–… UTC) — F-208 and F-207(b) are live; F-206 closes Fable pass 37
+
+Iteration 245 ended with two commits in the tree and nothing pushed (`198c1c54`, `90781701`).
+They were gated again on this checkout before anything else — `build-dataset` 870/673/94/3134,
+`CI=true npm test` **1,468 tests, 1,467 pass, 0 fail, 1 skip**, `tsc` exit 0 — and pushed at
+06:42 UTC. `main` was still by then: the 2026-09-27 catch-up daily had ended `rc=0` at 06:39:17 UTC
+and published `e55fe6d3`, so the "no pushes 05:17–07:45" window was over rather than waited out.
+That the daily published also answers the review gate's **R9.1** note, which was written at 02:20 UTC
+against the 00:41 run that stopped at D188: the 05:17 run collected, tested and published, and
+`/api/meta` reports every live source dated 2026-09-27.
+
+### F-208 and F-207(b): live, all three hosts
+
+Both of pass 38's `[mechanical]` directives were implemented in iteration 245 against a dev server.
+The deploy of `90781701` settled on all three hosts by 06:45:56 UTC and each group was run **in its
+own out directory with its own page load** — a full sweep shares one page between groups, and
+`ONLY=` gates the checks rather than the page work, so a shared load is not the same evidence.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-208 | implemented (claude-opus, iter 245) → **live-checked, pending non-implementer verification** | `ONLY=F-208` **26/26 per host** at `90781701`: `/opt/benchmarkheaven/state/ux-evidence/iter246-pass38-live/{canonical,www,legacy}/F-208/verification.json` | The context chart draws at its wrapper's pixel width; tick boxes within 2 px of the bubble charts'. |
+| F-207(b) | implemented (claude-opus, iter 245) → **live-checked, pending non-implementer verification** | `ONLY=F-207b` **20/20 per host** at `90781701`: `…/iter246-pass38-live/{canonical,www,legacy}/F-207b/verification.json` | The ring is painted (computed width, ring and fill alphas, layer opacity) and the leader reaches the ring's edge. |
+
+Both rows stay short of `verified`: iteration 245 implemented them with **this** engine, and ground
+rule 2 reserves that flip for a different engine. The live receipts are the half a reviewer would
+otherwise have to produce; what is left is the sign-off, not the run.
+
+### F-206 — the v1.5 preview draws the interval and names its leaders
+
+`a49a731c`. Fable pass 37's last open directive, on the hidden noindex route. Nothing numeric moved:
+every score, rank, interval and hash is the one `jevbench-v1.5.0-preview.json` already carries, and
+`lib/jevbench-v15-preview.mjs` gained only pure derivations.
+
+* **(a) Cost cells.** 94 of the 97 priced systems are estimates, so the majority is said once —
+  "Costs are estimates (est.) unless marked tariff." under the bars and under the axes table — and
+  the pill marks the exception: `tariff` on the three `cost.kind === 'tariff'` rows, left of the
+  number so a column of figures still lines up on its digits. The per-row `~` and ` est.` are gone.
+  *Recorded reading:* the directive's legend sentence keeps its "(est.)" gloss although no cell now
+  prints "est."; it is the only place the abbreviation is introduced, so the AxesTable intro's older
+  `("est." = base-model estimate)` gloss was dropped rather than duplicated.
+* **(b) The interval is drawn.** Each ranked bar carries `data-bh-jev15-ci` spanning
+  `composite_ci95.B` on the bar's own 0–100 scale — a 1 px `var(--muted)` line whose caps reach 2 px
+  past it on each side (*recorded reading* of "2 px end caps": the cap **extends** 2 px, so it is
+  5 px tall over a 1 px line; a literal 2 px cap on a 1 px line is not a cap a reader can see). The
+  ≈ is gone from every row and the note under the h2 now reads "Whiskers are 95% bootstrap
+  intervals. 76 of the 88 adjacent pairs are statistical ties — read the order as a ranking, not the
+  gaps as significant." **The tie is not lost to a screen reader:** each bar's accessible name gained
+  its interval and, where the marker says so, "Statistical tie with the next row."
+* **(c)** The axes table's cost head and the bars' column legend both read "$/1k decisions".
+* **(d) The leader line names its systems**: "Cygnet, Winnow-12B Q8 and Jev 1.13.0 are joint leaders
+  (statistical tie)." Three, not the directive's two, because the directive's own rule extends to
+  rank 3 when rank 3 is tied with rank 2 — and `markers[1].tie` is true today. The artifact's
+  `leader_wording` ("joint leaders (statistical tie)") adds no word the sentence lacks, so it is not
+  appended. When the top pair is *not* tied the sentence says so instead of inventing a tie.
+* **(e)** The Penalty column stays.
+
+#### What the check could not have seen
+
+`--muted` is a hex colour in this stylesheet, so the whisker rule takes `var(--muted)` directly: the
+pass-38 halo shipped invisible because `rgb(var(--muted))` is not a colour and an invalid colour in a
+shorthand takes the whole declaration down with it.
+
+More to the point, **the directive's own accept text counts elements** (`≥ 89
+[data-bh-jev15-ci]`) — the same mistake that passed the unpainted halo 16/16. Before trusting it, the
+rendered page was probed directly: **16 of the 89 whiskers paint at 0 px width.** That turned out to
+be honest — 10 are the gated-to-zero rows whose interval really is `[0.0, 0.0]`, and six more are
+intervals narrower than one track pixel — and faking a minimum width would have misrepresented them.
+But a count-only check could not have told that from a whisker collapsed by a bad rule, so the F-206
+group now reads computed position, line and cap geometry, colour alpha, whether the whisker sits
+inside its track, and the invariant that matters: **the bar's end lies inside its own interval**, so
+a wrong scale or a wrong axis fails. It also now requires the pill on exactly the tariff cells, no
+"est." or tilde anywhere in a cost cell, and the legend under both boards.
+
+**Positive control, recorded:** with `rgb(var(--muted))` restored in the whisker rule — the exact
+F-207b failure mode — the group reads **48/52** and names the unpainted line and caps in all four
+contexts, while the old element count still passed. With the fix, **52/52**. Strengthened, never
+weakened.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-206 | **implemented, pending live verification** | `a49a731c`; local `ONLY=F-206` **52/52** at 390/1440 × light/dark on a dev server, `/opt/benchmarkheaven/state/ux-evidence/iter246-f206/local-restored/`; positive control 48/52 in `…/iter246-f206/control-invisible/`; six new unit tests in `test/jevbench-v15-preview.test.mjs` | Cost cells, whiskers, "$/1k decisions", the named leader line, the Penalty column. The page stays noindex and unlinked; CR-172 still gates the linking. |
+
+### Iteration 246 (continued) — CR-177.2's daily line exists, and D221 was only half true
+
+#### CR-177.2 — the digest reached its health line
+
+The review gate reopened this on 2026-09-27 02:20 UTC with the right reason: the code and the unit
+test were there, but the 00:41 transaction stopped at D188 and never rendered a digest, so no daily
+run had actually printed the line. The 05:17 catch-up did. `gate.mjs` writes the exact text it hands
+to `notify digest` into the run's `reports/diff.txt`, and that file
+(`/opt/benchmarkheaven-daily/runs/2026-09-27T05-17-01-898Z-781906/reports/diff.txt`, line 7) reads:
+
+> Analytics: 7,658 page views, 1,017 visitors, 3,799 events over 24 h.
+
+with D218's `OpenRouter: $15.33 left, about 7 days …` on the line after it. That is the CR-177.2
+artefact, produced by the daily rather than asserted by us — the receipt is the run's own file.
+Re-running `scripts/check-analytics-health.mjs` here gives the same shape (7,700 / 1,047 / 3,773,
+exit 0).
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-177.2 | open (daily integration unproven) → **implemented, daily integration proven; pending non-implementer sign-off** | `/opt/benchmarkheaven/state/ux-evidence/iter246-cr177-2/{daily-digest-2026-09-27.txt,check-analytics-health.txt}` | The line is in the 2026-09-27 05:17 run's own digest text. Page views and events are both non-zero, so the check is reporting health, not an alert. |
+
+#### D221 — the cells published, and still nobody could see them
+
+The arm is free: D223 cleared the protocol blocker, `source-health.json` reports
+`kernelbench-cuda-megaqwen-decode::rtx-pro-6000` as `ok` with `last_ok` 2026-09-27T05:33:09Z, and
+`public-observations.json` carries all 18 of its rows — the four D221 named among them (7.39, 2.86,
+3.98, 4.55, from a capture whose body sha256 is `c3e22679…`, the same bytes the 2026-09-25 capture
+had).
+
+**The ledger would have closed there, and it would have been wrong.** A live read of
+`/benchmarks?benchmark=kernelbench-cuda-megaqwen-decode::rtx-pro-6000` showed **six** rows, every one
+observed 2026-09-18. The four new observations reached the dataset with `model_id: null`: the
+identity map still held only the six entries written on 2026-09-18 for that board, while its three
+sibling boards were re-reviewed on 2026-09-27 (`a74d35c7`, D220) — the megaqwen arm was frozen that
+night, so its labels were not in the observations the builder read. A row nobody can find on the page
+is not a published row, and "the observation exists" is not the acceptance test.
+
+`build-identity-map.mjs` re-run: **17 adds, 0 drops, 0 `model_id` changes**, `dropped_without_withdrawal`
+empty. Reviewed board by board against each label's own evidence, per the standing rule that a
+rebuild fills unrelated joins:
+
+* **megaqwen-decode (4)** — read out of the run's own capture: each cell `correct: true` with an
+  audited verdict (`interesting`/`clean`) and the peak_fraction the site publishes. Same rule text
+  and model ids as the three siblings, which already admit the same four labels.
+* **vals-index-cost (6)** — the effort is not in the label; it is each row's own published
+  `reasoning_effort`/`compute_effort`, checked one row at a time (claude-opus-5.5 `compute_effort:
+  max`, gpt-6-sol `max`, grok-4.7 `xhigh`, gpt-6-luna `max`). mimo-v2.6-flash and -pro state none and
+  join their single catalog configuration, the default — the honesty rule `fe6c5078` enforced after
+  a Vals row silently dropped its effort.
+* **vulcanbench-frontier (4)** — GPT-5.6 Sol at four efforts, each stated in the label.
+* **eqbench creative/longform (3)** — aion-3.5, space-bunny-alpha; one catalog configuration each.
+
+The map is an input to the **ingest**, not to `build-dataset` — a `build-dataset` run alone left the
+dataset byte-identical but for its timestamp, which is exactly how this could have been committed as
+"done" while changing nothing. `npm run data:benchmarks` then re-ran ingest and history:
+**17 of 18,769 score rows differ, in `model_id` only**, every value unchanged, no row added or
+removed, and the estimate count held at 1,371 — a re-attached observation spawned no history estimate.
+
+`test/vulcanbench-kernelbench.test.mjs`'s megaqwen pin was written on the premise that the arm was
+frozen and says so in its own comment. The premise is gone, so the list was **re-derived from the
+board** — `correct`, `annotation_verdict` and `peak_fraction` read out of the capture, not copied
+from the failing assertion — and the comment records why it moved.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D221 | open → **implemented, pending live verification** | `e089eb39`; identity-map diff 17/0/0; `ops/benchmark-table-2026-09-15/identity-map-review.json`; `npm test` 1,474/1,473/0/1 | The four cells publish **and** join. Live check of the board at the deployed revision is the acceptance; the pre-fix live read (6 rows, all 2026-09-18) is in `/opt/benchmarkheaven/state/ux-evidence/iter246-d221/`. |
+
+### Iteration 246 (continued) — D192's remainder, counted and sorted rather than estimated
+
+D192 has stood as "open (largely subsumed) — the honest remainder is whatever survives the next two
+runs" since iteration 238. Two runs have since survived it, so here is the remainder, read off the
+2026-09-27 05:17 run rather than estimated.
+
+**16 failing benchmark arms** (down from the 38 the row was opened on), plus **11 retained score
+batches** and 2 `attention` arms. None of the 16 is a fetch, parse or access failure: every one is a
+**protocol-approval** outcome — the producer/critic round would not accept the registry row, so the
+collector retained what was already published and added nothing. Sorted by the shape of the refusal:
+
+| Shape | n | Arms |
+|---|---|---|
+| the single row is disputed, so nothing is left to publish | 8 | `aa-benchmark-fields` (aa-aime::2025), `arc-agi::1`, `arc-agi::2`, `frontiercode-cost::1.1`, `frontierswe::2`, `blueprint-bench::2`, + 2 score batches |
+| every row flagged by the producer; a clean critic round cannot overrule it | 7 | `ugi-natint`, `ugi-writing`, `vending-bench::2`, `vals-index-vibe-code-bench::2`, + 3 score batches |
+| the critic blocked the artifact | 5 | `frontiercode::1.1`, `vulcanbench-frontier::4`, `mls-bench-lite::30-tasks`, + 2 score batches |
+| findings not bounded to a row | 3 | `vals-index-legal-research::2`, `vals-index-hlab::2`, + 1 score batch |
+| revise (row-level) | 2 | score batches |
+| **only MINOR findings, and no row-level revision to apply** | 1 | `vals-index::2` |
+
+Two things are worth naming rather than leaving in the count.
+
+1. **`vals-index::2` is retained on minor findings alone.** Its round says "only minor findings, no
+   row-level revision to apply" — one *minor* note about unsupported assertions in `scoring.notes`
+   holds a whole board's refresh. Whatever the right policy is, a minor finding with no revision path
+   stopping publication is a gate shape, not a data dispute.
+2. **A one-row registry entry cannot partially publish.** Eight of the sixteen are "all 1 row disputed,
+   nothing left to publish": with a single row there is no accept-eligible remainder, so the arm can
+   never recover from a refresh — only from a registry edit. That is why `aa-benchmark-fields` has
+   been failing for 15 runs and `arc-agi::1`/`::2` for 5 and 6.
+
+`fetch-lumina-ledger` also appears in the digest's stale list and is **not** in this count: its 404 is
+the deliberate pause of 2026-09-22, the previous snapshot is preserved, and the arm is failing by
+design.
+
+**Not fixed here, and deliberately so:** each repair is a registry edit that has to be replayed against
+the arm's own capture before the next daily, and the round has real variance — that is several rounds
+per arm, not a tail-end task. The remainder is now specific enough to work one arm at a time.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D192 | open (largely subsumed) → **open, remainder specified** | `/opt/benchmarkheaven/state/ux-evidence/iter246-d192/{source-health-2026-09-27.json,retained-arms-2026-09-27.txt}` | 16 failing arms, all protocol-approval, in six shapes. Two structural findings above. Next step: `replay-protocol-review.mjs` per arm, starting with the eight one-row entries that cannot recover from a refresh. |
+
+### Iteration 246 (continued) — F-206, F-208, F-207(b) and D221 are live; the Umami retention residual was reachable after all
+
+#### Live receipts at the deployed revisions
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-206 | implemented → **live-checked on all three hosts, pending non-implementer verification** | `ONLY=F-206` **52/52 per host** at `a49a731c`: `/opt/benchmarkheaven/state/ux-evidence/iter246-f206/live/{canonical,www,legacy}/verification.json` | 13 checks × 4 contexts. The public v1.4.2 board is untouched by the shared `.bh-jevc-*` namespace: 184 tracks, all `position: static`, 0 whiskers, 0 page errors, no overflow (`/jev-models` at 1440). |
+| D221 | implemented → **verified live on all three hosts** | `verify-d221-live.mjs` **42/42 per host** at `e089eb39`: `…/iter246-d221/verify/{canonical,www,legacy}/verification.json` | Ten ranked rows where there were six. Claude Opus 5.5 7.39 (rank 1), Grok 4.7 4.55, GPT-6 Sol 3.98, GPT-6 Luna 2.86 — each dated 2026-09-27 — and all six pre-D221 rows still published. |
+
+**A verifier that read `False` on a correct page, and why the first receipt is not the one to read.** The
+first live check looked for the board's own source labels (`claude/claude-opus-5-5 [xhigh]`). A *joined* row
+prints its **model** name, so all four read `rowSeen: false` while the page was right — the row count had
+already gone 6 → 10. `ops/ux-2026-09-12/bin/verify-d221-live.mjs` now carries, per row, the source label, the
+model id the reviewed map joins it to, the name the page prints and the value re-derived from the capture,
+and it also asserts the six pre-D221 rows are still there, so a "fix" that replaced rows instead of adding
+them would fail. The misleading first receipt is kept beside it in `…/iter246-d221/live/` rather than deleted.
+
+#### The Umami retention residual — reachable, and the earlier blocker was wrong
+
+CR-67.5 §7.4 residual 1 ("Umami's own retention on our instance is still not recorded anywhere") has been
+carried as open since 2026-09-26, and iteration 239 narrowed it to "the analytics service does not run on
+Sandy … its retention cannot be established from this checkout; whoever closes this needs access to the host
+that serves that domain."
+
+**Both halves of that were wrong.** `bh-analytics.app.mintapis.com` resolves to 65.109.49.103 — this machine —
+and it is Coolify resource `bh-analytics`, container `2p6whm14dxvrmwqvqhlbnlhk-205901765341`, found by its
+`caddy_0` label. A name search missed it because `docker ps` needs `sudo` here and Coolify names containers
+by hash. Measured, not read:
+
+* no `REMOVE_DATA_AFTER`/retention/purge variable of any kind in the container environment;
+* no host crontab, `/etc/cron.d`, `/etc/cron.daily` or systemd timer mentioning umami/analytics; only
+  `pgcrypto` and `plpgsql` in the database, so no `pg_cron`; `app_setting` empty;
+* the data window is the instance's own age, not a retention edge — oldest event 2026-09-25 18:34 +02, the
+  `website` row created 2026-09-24 20:04 +02 and never deleted, daily counts rising monotonically.
+
+So **Umami keeps our page views, sessions and events indefinitely** — which is what §8.2 already said from
+vendor documentation; this is the first-hand confirmation the record was missing. §8.4 records it, §7.4
+residual 1 is struck as superseded.
+
+**What is actually still open is not the retention question.** §8 (the CR-178 change that forwards the
+visitor's IP and User-Agent to Umami as headers so it can derive a daily-salted session) is marked
+"implementation assessment; independent review required before merge", and §3 expressly reopens the no-banner
+decision on a visitor-level keying change. That review has not happened. Nothing here touches the assessment;
+whether indefinite retention of this data is the right period is part of what that reviewer has to weigh.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| Umami retention residual (CR-67.5 §7.4 r1, §6.4 r2) | open → **closed** | `/opt/benchmarkheaven/state/ux-evidence/iter246-umami-retention/measurement.txt`; CR-67.5 §8.4 | Unbounded, measured on the instance. The "needs the host owner" blocker was false — it is this host. |
+| CR-67.5 §8 (CR-178 visitor keying) | **open — needs an independent, non-implementer review** | CR-67.5 §8, `efa0945f` | Named here because the retention row is no longer hiding it. §3 reopens the no-banner decision on a visitor-level keying change; the section says so itself and asks for the review. |
