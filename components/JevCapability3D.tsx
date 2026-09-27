@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import { isOfficialWeights, OFFICIAL_WEIGHTS, weightedJevScore, type JevWeights } from '../lib/jevbench-axis-weights.mjs';
+import { haloDiameter, leaderTo } from '../lib/jev-3d-halo.mjs';
 
 type Point = {
   key: string;
@@ -248,11 +249,22 @@ function Projected3D({ points, costBounds, jevClassOnly, tipRef, resetViewRef, r
             const at = coord(entry.point);
             const text = `#${index + 1} ${entry.point.name}`;
             return { entry, text, x: at.x + 8, y: at.y - 8, w: text.length * 11 * 0.6, h: 13 };
-          }), size.height).map(({ entry, text, x, y }) => (
-          <text key={entry.point.key} data-bh-jev14-3d-model-label={entry.point.key} className="bh-jev-3d-model-label" x={x} y={y} fill={`rgb(var(${entry.point.colorVariable}))`}>
-            {text}
-          </text>
-        ))}
+          }), size.height).map(({ entry, text, x, y, w, h }) => {
+          // F-207(b): the same ring and leader as the WebGL overlay. The sphere radius is the one this
+          // path draws below, so the ring always sits 4 px outside the mark a reader can see.
+          const at = coord(entry.point);
+          const diameter = haloDiameter(clamp((3 + (entry.point.jevbenchScore ?? 0) / 25) * at.perspective * view.zoom ** 0.25, 3, 9));
+          const leader = leaderTo({ x, y: y - h, w, h }, at.x, at.y, diameter);
+          return <g key={entry.point.key}>
+            <circle data-bh-jev14-3d-halo={entry.point.key} className="bh-jev-3d-halo" cx={at.x} cy={at.y} r={diameter / 2}
+              fill="none" stroke={`rgb(var(${entry.point.colorVariable}))`} strokeWidth="2" />
+            {leader && <line data-bh-jev14-3d-leader-line={entry.point.key} className="bh-jev-3d-leader-line"
+              x1={leader.x} y1={leader.y} x2={leader.to.x} y2={leader.to.y} stroke="rgb(var(--muted))" strokeWidth="1" />}
+            <text data-bh-jev14-3d-model-label={entry.point.key} className="bh-jev-3d-model-label" x={x} y={y} fill={`rgb(var(${entry.point.colorVariable}))`}>
+              {text}
+            </text>
+          </g>;
+        })}
       </g>
       {plotted.map(({ point, at }) => {
         const radius = clamp((3 + (point.jevbenchScore ?? 0) / 25) * at.perspective * view.zoom ** 0.25, 3, 9);
@@ -464,7 +476,9 @@ export function JevCapability3D({ points, costBounds }: { points: Point[]; costB
         labelLayer.className = 'bh-jev-3d-labels';
         box.appendChild(labelLayer);
         const fixedRefs: { world: any; el: HTMLElement }[] = [];
-        let modelRefs: { world: any; el: HTMLElement; w?: number; h?: number }[] = [];
+        // F-207(b): each labelled sphere also owns a halo ring and (when the declump pushed its plate
+        // away) a leader. They live in the same layer and are moved by the same pass as the labels.
+        let modelRefs: { world: any; el: HTMLElement; halo: HTMLElement; leader: HTMLElement; worldRadius: number; w?: number; h?: number }[] = [];
         const axisDefs: Array<{ name: 'cost' | 'capability' | 'speed'; text: string; anchor: [number, number, number] }> = [
           { name: 'cost', text: 'Cost · $/1k decisions · cheaper →', anchor: [half * 1.16, -half, half * 0.84] },
           { name: 'capability', text: 'Capability 0–100', anchor: [0, half * 1.26, 0] },
@@ -486,6 +500,20 @@ export function JevCapability3D({ points, costBounds }: { points: Point[]; costB
           const h = canvas.clientHeight || box.clientHeight;
           if (!w || !h) return;
           const inset = 6;
+          // F-207(b): the halo's size is the sphere's *projected* radius, which is what a reader sees at
+          // this zoom and perspective — measured by projecting one sphere radius along the camera's own
+          // right axis, unclamped (the label projection below clamps to the box, which would distort it).
+          const rawProject = (world: any) => {
+            const projected = world.clone().project(camera);
+            return { px: ((projected.x + 1) / 2) * w, py: (1 - (projected.y + 1) / 2) * h };
+          };
+          const cameraRight = new three.Vector3(), cameraUp = new three.Vector3(), cameraForward = new three.Vector3();
+          camera.matrixWorld.extractBasis(cameraRight, cameraUp, cameraForward);
+          const projectedRadius = (item: { world: any; worldRadius: number }) => {
+            const centre = rawProject(item.world);
+            const edge = rawProject(item.world.clone().addScaledVector(cameraRight, item.worldRadius));
+            return Math.hypot(edge.px - centre.px, edge.py - centre.py);
+          };
           const projectTo = (item: { world: any }) => {
             const projected = item.world.clone().project(camera);
             return {
@@ -505,9 +533,13 @@ export function JevCapability3D({ points, costBounds }: { points: Point[]; costB
           // out of room. Sizes are measured once per label, so a drag does not force a reflow.
           const taken: { x: number; y: number; w: number; h: number }[] = [];
           const sized = modelRefs.map((item) => ({ item, at: projectTo(item) }));
-          for (const entry of sized.filter((e) => e.at.behind)) put(entry.item.el, entry.at.px, entry.at.py, true);
+          const hide = (el: HTMLElement) => { el.style.opacity = '0'; };
+          for (const entry of sized.filter((e) => e.at.behind)) {
+            put(entry.item.el, entry.at.px, entry.at.py, true);
+            hide(entry.item.halo); hide(entry.item.leader);
+          }
           for (const entry of sized.filter((e) => !e.at.behind).sort((m, n) => m.at.py - n.at.py)) {
-            const item = entry.item as { world: any; el: HTMLElement; w?: number; h?: number };
+            const item = entry.item as { world: any; el: HTMLElement; halo: HTMLElement; leader: HTMLElement; worldRadius: number; w?: number; h?: number };
             if (!item.w || !item.h) { item.w = item.el.offsetWidth || 90; item.h = item.el.offsetHeight || 16; }
             const lw = item.w, lh = item.h;
             const left = entry.at.px - lw / 2;
@@ -521,10 +553,25 @@ export function JevCapability3D({ points, costBounds }: { points: Point[]; costB
             }
             taken.push({ x: left, y: top, w: lw, h: lh });
             put(item.el, entry.at.px, top + 1.15 * lh, false);
+            // F-207(b): the ring goes on the sphere itself, at its projected position — not at the
+            // plate's, which the declump may have moved a long way from it.
+            const centre = rawProject(item.world);
+            const diameter = haloDiameter(projectedRadius(item));
+            item.halo.style.width = `${diameter}px`;
+            item.halo.style.height = `${diameter}px`;
+            item.halo.style.transform = `translate(${(centre.px - diameter / 2).toFixed(1)}px, ${(centre.py - diameter / 2).toFixed(1)}px)`;
+            item.halo.style.opacity = '1';
+            const leader = leaderTo({ x: left, y: top, w: lw, h: lh }, centre.px, centre.py, diameter);
+            if (!leader) hide(item.leader);
+            else {
+              item.leader.style.width = `${leader.length.toFixed(1)}px`;
+              item.leader.style.transform = `translate(${leader.x.toFixed(1)}px, ${leader.y.toFixed(1)}px) rotate(${leader.angle.toFixed(2)}deg)`;
+              item.leader.style.opacity = '1';
+            }
           }
         };
         updateLabelsRef.current = (entries: { point: Point; score: number }[]) => {
-          for (const ref of modelRefs) ref.el.remove();
+          for (const ref of modelRefs) { ref.el.remove(); ref.halo.remove(); ref.leader.remove(); }
           modelRefs = [];
           entries
             .filter((entry) => entry.point.cost != null && entry.point.speed != null)
@@ -540,8 +587,21 @@ export function JevCapability3D({ points, costBounds }: { points: Point[]; costB
               dot.style.backgroundColor = `rgb(var(${entry.point.colorVariable}))`;
               el.appendChild(dot);
               el.appendChild(document.createTextNode(`#${index + 1} ${entry.point.name}`));
+              const halo = document.createElement('div');
+              halo.setAttribute('data-bh-jev14-3d-halo', entry.point.key);
+              halo.className = 'bh-jev-3d-halo';
+              halo.style.borderColor = `rgb(var(${entry.point.colorVariable}))`;
+              halo.style.opacity = '0';
+              const leader = document.createElement('div');
+              leader.setAttribute('data-bh-jev14-3d-leader-line', entry.point.key);
+              leader.className = 'bh-jev-3d-leader-line';
+              leader.style.opacity = '0';
+              // The ring and the leader are painted under the plate, so a plate that ends up on top of
+              // its own sphere still reads as text on a plate rather than text across a ring.
+              labelLayer.appendChild(halo);
+              labelLayer.appendChild(leader);
               labelLayer.appendChild(el);
-              modelRefs.push({ world: sphere.position.clone(), el, w: 0, h: 0 });
+              modelRefs.push({ world: sphere.position.clone(), el, halo, leader, worldRadius: sphere.scale.x, w: 0, h: 0 });
             });
           layoutLabels();
         };

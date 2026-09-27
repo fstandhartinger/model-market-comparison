@@ -722,4 +722,10 @@ body.bh-fastlane-visible .bh-custom-evaluation-toast { bottom: calc(var(--bh-fas
    the class and ignores the box properties. */
 .bh-jev-3d-labels .bh-jev-3d-model-label { background: rgb(var(--panel) / .85); padding: 1px 5px 1px 4px; border-radius: 4px; }
 .bh-jev-3d-model-dot { display: inline-block; width: 3px; height: 11px; border-radius: 1px; margin-right: 5px; vertical-align: -1px; }
+/* F-207(b): the tie between a label and the sphere it names is a ring drawn around the datum itself, never a second mark beside the
+   label. The ring is transparent inside and carries a 1 px panel-coloured outer shadow so it reads on either theme, whatever the
+   sphere colour behind it; its own colour is set inline from the point's class variable. When the declump pushed the plate more than
+   24 px from the ring's edge, a 1 px leader joins them. Both are placed by the same layout pass that moves the labels. */
+.bh-jev-3d-labels .bh-jev-3d-halo { border: 2px solid rgb(var(--muted)); border-radius: 9999px; background: transparent; box-shadow: 0 0 0 1px rgb(var(--panel) / .9); }
+.bh-jev-3d-labels .bh-jev-3d-leader-line { height: 1px; background: rgb(var(--muted)); transform-origin: 0 50%; }
 

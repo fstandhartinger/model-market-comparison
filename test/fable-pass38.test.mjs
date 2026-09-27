@@ -1,10 +1,11 @@
 // Fable pass 38 (2026-09-27): source pin for the one fix Fable shipped — F-207(a): a 3D top-five label sits on a translucent plate
 // and carries a 3 × 11 px colour bar instead of an 8 px disc that read as a sixth sphere. The halo on the labelled sphere (F-207(b))
 // and the context chart's pixel-scale rendering (F-208) were directed, not shipped there. F-208 is implemented by iteration 245
-// (claude-opus) and pinned below; F-207(b) is still open.
+// (claude-opus) and pinned below, together with F-207(b).
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { haloDiameter, leaderTo } from '../lib/jev-3d-halo.mjs';
 
 const css = readFileSync(new URL('../app/globals.css', import.meta.url), 'utf8');
 const three = readFileSync(new URL('../components/JevCapability3D.tsx', import.meta.url), 'utf8');
@@ -57,4 +58,46 @@ test('F-208: the input-length chart draws at its wrapper\'s pixel width, so one 
   assert.match(context, /fontSize="11"[^>]*className="hidden sm:block">Actual input tokens per decision/);
   const sizes = [...context.matchAll(/fontSize="(\d+(?:\.\d+)?)"/g)].map((m) => Number(m[1]));
   assert.ok(sizes.length && Math.min(...sizes) >= 10, `every literal font size is at least 10 px (got ${sizes.join(', ')})`);
+});
+
+test('F-207(b): each labelled sphere wears a halo, and a pushed plate is joined to it by a leader', () => {
+  // The geometry is one rule used by both render paths, so it is exercised directly rather than pinned
+  // as a string: a ring 4 px outside the projected sphere, clamped to a readable 14–32 px, and a leader
+  // only once the declump has pushed the plate more than 24 px clear of the ring's edge.
+  assert.equal(haloDiameter(3), 14, 'the smallest sphere still gets a 14 px ring');
+  assert.equal(haloDiameter(9), 26, '2 × (radius + 4)');
+  assert.equal(haloDiameter(40), 32, 'and it never grows past 32');
+  const plate = (x, y) => ({ x, y, w: 90, h: 16 });
+  // Plate sitting on its own sphere: no leader.
+  assert.equal(leaderTo(plate(100, 100), 145, 112, 20), null);
+  // Plate pushed far below: a leader from the plate's nearest edge midpoint to the ring's edge.
+  const pushed = leaderTo(plate(100, 300), 145, 100, 20);
+  assert.ok(pushed, 'a pushed plate is joined to its sphere');
+  assert.deepEqual({ x: pushed.x, y: pushed.y }, { x: 145, y: 300 }, 'the nearest edge midpoint is the plate top');
+  assert.ok(Math.abs(pushed.length - (200 - 10)) < 0.01, 'the leader stops at the ring, not at its centre');
+  assert.ok(Math.abs(pushed.angle + 90) < 0.01, 'it points at the sphere');
+  // Its end point is on the ring's edge, which is what the SVG path draws to.
+  assert.ok(Math.abs(Math.hypot(145 - pushed.to.x, 100 - pushed.to.y) - 10) < 0.01);
+  // Exactly at the threshold nothing is drawn — the leader is for plates the declump moved, not for all.
+  assert.equal(leaderTo(plate(100, 100), 145, 100 - 24 - 10, 20), null);
+  assert.ok(leaderTo(plate(100, 100), 145, 100 - 25 - 10, 20));
+
+  // Both render paths create the ring and the leader with the markers the verifier looks for, and the
+  // ring is painted under the plate so a plate over its own sphere still reads as text on a plate.
+  assert.match(three, /data-bh-jev14-3d-halo/);
+  assert.match(three, /data-bh-jev14-3d-leader-line/);
+  assert.match(three, /halo\.className = 'bh-jev-3d-halo'/);
+  assert.match(three, /halo\.style\.borderColor = `rgb\(var\(\$\{entry\.point\.colorVariable\}\)\)`/);
+  assert.match(three, /labelLayer\.appendChild\(halo\);\n\s*labelLayer\.appendChild\(leader\);\n\s*labelLayer\.appendChild\(el\);/);
+  assert.match(three, /<circle data-bh-jev14-3d-halo=\{entry\.point\.key\}[^>]*fill="none"[^>]*strokeWidth="2"/s);
+  // A rebuild of the top five (weights or the Jev-class toggle) must not leave orphan rings behind.
+  assert.match(three, /for \(const ref of modelRefs\) \{ ref\.el\.remove\(\); ref\.halo\.remove\(\); ref\.leader\.remove\(\); \}/);
+  // A sphere behind the camera hides its ring and leader with its label.
+  assert.match(three, /hide\(entry\.item\.halo\); hide\(entry\.item\.leader\);/);
+  const rule = css.match(/\.bh-jev-3d-labels \.bh-jev-3d-halo \{([^}]*)\}/);
+  assert.ok(rule, 'the ring rule exists');
+  assert.match(rule[1], /border: 2px solid/);
+  assert.match(rule[1], /background: transparent;/);
+  assert.match(rule[1], /box-shadow: 0 0 0 1px rgb\(var\(--panel\) \/ \.9\);/);
+  assert.match(css, /\.bh-jev-3d-labels \.bh-jev-3d-leader-line \{[^}]*height: 1px;[^}]*transform-origin: 0 50%;[^}]*\}/);
 });
