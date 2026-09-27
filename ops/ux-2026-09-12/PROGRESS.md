@@ -13001,3 +13001,128 @@ the non-implementer sign-offs iterations 239–241 owe (F-203/F-204/F-205, D215,
 CR-156.4, X6's remaining audit surface, the CR rows no harness covers (CR-148.1/.2, CR-152.1/.2/.5, CR-153.4,
 CR-158.4), Umami's own retention (CR-67.5 §7.4 residual 1), and F-206 (the CR-172 job's). **`ALL-ACCEPTED` is not
 appended.**
+
+## Iteration 242 — work (claude-opus), 2026-09-26 23:40–2026-09-27 00:2x UTC — a board that states no setting states no setting
+
+Picked **D219.1**, the row iteration 241 opened and deliberately left alone: 106 of 133 EQ-Bench creative-writing
+rows and 108 of 134 longform rows carried no `model_id`, so their values were collected, validated and then
+invisible on the site. Receipts: `/opt/benchmarkheaven/state/ux-evidence/iter242-d219-1/`
+(`scores-diff.json`, `estimates-diff.json`, `unjoined-remainder.json`, `d220-regeneration-drift.json`,
+`identity-map-full-regeneration.json`, `npm-test.log`, `tsc.log`, `build.log`, `live/`).
+
+### D219.1 — 28 rows joined, and the 107 that cannot be is a finding, not a backlog
+
+The two boards had **no identity rule at all**: every join they had came from the generic bridge in
+`scripts/ingest-benchmark-scores.mjs` (a unique retained Hugging Face repository, or an exact catalog display
+name). They label a model with the string used to call it — a bare API slug (`gpt-4.1-mini`), a repository
+(`deepseek-ai/DeepSeek-R1`) or an OpenRouter route (`anthropic/claude-3-haiku`) — which is exactly the shape
+`lib/board-identity.mjs` exists for. `eqbenchWritingJoins` applies the standing policy unchanged and nothing
+more; `test/coding-sources.test.mjs`'s reviewed-board allowlist now names both boards.
+
+**Verified against the primary source, not the recorded diagnosis.** The captured CSV's header is
+`model_name,elo_score,creative_writing_score,avg_length,vocab_complexity,slop_score,repetition_score` — there is
+no effort, reasoning or parameter column anywhere on either board. The board *does* mark a thinking run when it
+ran one, in its own row (`moonshotai/Kimi-K2-Thinking`, `qwen/qwen3-235b-a22b:thinking`), so an unmarked label
+is the model called without a setting.
+
+**Why the frontier rows still do not join, which is the real answer to D219.1.** "Called without a setting" is
+only an identity where the catalog holds a setting-less configuration, and for the models that matter it does
+not: `claude-opus-5` has six configurations and **no default** (max/xhigh/high/medium/low/non-reasoning),
+`gpt-6-astra` five, `gemini-3.8-flash` three. There is nothing to join — picking one would invent the effort the
+source never states. The same holds through the repository route: `Qwen/Qwen3.8-27B` is retained under **four**
+configurations, `deepseek-ai/DeepSeek-V4-Pro` three, so the repository names the weights and not the run. That
+is **48 of 133** creative-writing rows and **59 of 134** longform rows, tallied label by label in
+`unjoined-remainder.json`, and the tallies add up to the full row count in both boards. It is a structural
+mismatch between a board that publishes one run per model and a catalog that splits those models by effort — not
+an identity-map omission, and not something a rule can close. Whether Florian wants those 107 rows needs a
+decision about what a setting-less run is, or a source for EQ-Bench's own run parameters; neither is invented here.
+
+**The guard that had to exist, proved on our own data.** A slug rule reaching `deepseek-r1::default` would have
+been wrong: our catalog carries that model **twice** — `deepseek-r1-jan-25::default` ("DeepSeek R1 (Jan '25)"),
+which retains `https://huggingface.co/deepseek-ai/DeepSeek-R1`, and a separate undated family `deepseek-r1`
+whose key is exactly the board's slug. Because a reviewed map entry **outranks** the checkpoint bridge, the rule
+would have moved the row off the checkpoint it was collected from onto a different catalog entry. A label whose
+repository exactly one configuration retains is therefore left to that route. One correction made before the
+numbers were taken: the first version of that refusal told every path-shaped label it "belongs to the
+exact-checkpoint route", which is false for the 42 rows whose repository is retained under *several*
+configurations — the checkpoint route needs a unique candidate and will not join them either. The reason now
+names the real obstacle, the missing setting, and a test pins both branches.
+
+**Strictly additive, and the estimate count did not move.** `scores-diff.json`: 18,738 observations before and
+after, **0 keys added or removed, 0 values changed, 0 joins lost, 0 joins moved**, 28 new joins, all of them
+EQ-Bench (creative 27 → 43 joined, longform 26 → 38). `estimates-diff.json`: **2,015 → 2,015, 0 new, 0 gone** —
+the D180/D186 trap did not trigger. The dataset diff is only `model_id`, `join_note`, the coverage counters and
+`unmatched_observations` (106 → 90 and 108 → 96); no value anywhere changed.
+
+Every new check was proved to fail against the unfixed state before it was trusted: the repository guard removed
+→ the DeepSeek-R1 test red; `configs.length === 1` accepted without `variant === 'default'` → the frontier test
+red; the thinking-marker refusal removed → that test red; and the board allowlist untouched → `coding-sources`
+red on `eqbench-creative-writing::3`.
+
+**Verified live on both hosts, 125/125 each** at `6137f90b` (`live/verification.json`, harness
+`ops/ux-2026-09-12/bin/verify-d219-1-live.mjs`). The harness checks all 28 joins through
+`/api/benchmark-scores` against the value committed in `scores.json`, then the half a "more joins" check cannot
+see: for **26 configurations** of the five refused families it requires the API to answer 200 with no observation
+and a cell the site itself marks `status: "unknown"` ("No attributable result for this exact model
+configuration"), and it requires a joined model's page to name the board *and* print the number inside that
+board's own row. It was run against the pre-deploy revision first and scored **54/125** there, so it measures the
+change rather than restating it, and both rewritten conditions were negative-checked afterwards: the refusal
+condition applied to a joined model reads `cell.status = available` and fails, and the row window accepts the
+real `1,145` while rejecting `1,199` and `2,163.9`.
+
+Two corrections to this iteration's own harness, both made before the numbers above were taken and neither a page
+change. The refusal check first required a falsy `cell`, but the API always returns one — the refusal is
+`status: "unknown"` with an empty `observations` array — so 26 correct refusals read as failures. And the page
+check expected the Elo at one decimal, while the page prints whole points (`1144.7` → `1,145`); it now accepts
+the value's legitimate roundings and requires the match *inside* the board's row rather than anywhere on a 142 KB
+page. The page was never wrong; the checks were.
+
+**Nothing published on trust.** Every joined value was re-read from the board's own committed CSV:
+`gpt-4.1-mini,1144.7`, `qwen/qwq-32b,1255.1`, `gpt-4o-mini,871.0`,
+`meta-llama/llama-3.1-405b-instruct,868.2`, `anthropic/claude-3-haiku,714.6` — unchanged into the dataset, and
+1144.7 is what the page rounds to 1,145.
+
+### D220 (new) — regenerating the identity map today lands 49 unreviewed joins, and eight pinned tests object
+
+Not a side note: the builder's own recipe is "run `build-identity-map.mjs` **(review the diff)**", and reviewing
+it is what produced this row. A bare re-run adds **49 entries beyond EQ-Bench** across seven boards and drops 5,
+because nobody has run it since new models entered the catalog — `vals-index` (25 rows), `kernelbench-cuda` (12),
+`livebench` (6), `matharena-brokenarxiv` (5), `context-arena-mrcr-v2` (1), for GPT-6 Sol/Luna, Claude Opus 5.5,
+Grok 4.7, MiMo v2.6 and Union Alpha. These are existing reviewed rules meeting new rows, and some are plainly
+right: the Vals efforts come from the source rows themselves (`compute_effort: "high"` on terminal-bench and
+`"max"` on code-migration for the same model — a published per-board difference, not a guess), and iteration 151
+pre-reviewed the three MathArena joins in this very ledger.
+
+They were **not** committed, because the full regeneration fails **eight** pinned tests, and each is a recorded
+decision rather than a stale expectation. The sharpest: joining `livebench::2026-06-25 | union-alpha` gives Union
+Alpha a `derived` value, and CR-60 pins it as preliminary-only with *no* measured or self-reported observation —
+so either LiveBench now publishes a row for a model we deliberately carry as unmeasured, or it is a different
+system with the same alpha codename. Checked rather than assumed: the committed capture
+(`data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/05f59189a82813c44668.gz`,
+sha256 `05f59189…fb5ecb2d`) carries `union-alpha` at **source row 57** with a value of **76.13**, retrieved
+2026-09-25 — the board really does publish it. That is a question about the board, not a test to update. The other seven
+sit on KernelBench-CUDA's audited-cells rule, the MathArena August editions and the launch-day selection counts.
+Measured consequence while filing: Claude Opus 5.5's Vals code-migration cell is published today as an
+**estimated 54.997** carried from a retained state, while the board publishes **68.901** — the row is simply
+unjoined. The committed map is therefore the previous map plus the 32 EQ-Bench entries and is byte-identical
+elsewhere (224 insertions, 0 deletions); a future engine must not commit a bare regeneration blind.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D219.1 | open → **implemented, verified live 125/125 on both hosts** | `live/verification.json` (125/125 each at `6137f90b`; 54/125 pre-deploy), `scores-diff.json` (28 joins, 0 lost/moved/changed), `estimates-diff.json` (2,015 → 2,015), `unjoined-remainder.json`; pins `test/d219-1-eqbench-writing-identity.test.mjs`, `test/coding-sources.test.mjs` | EQ-Bench's two writing boards have a reviewed slug rule; 28 rows joined. The remaining 107 are refused because the board states no setting and the catalog holds no setting-less configuration for those models — tallied label by label, and the tallies add to 133/134. Written by this engine; a different one should re-run both tests and `verify-d219-1-live.mjs`. |
+| D220 (new) | **open** | `d220-regeneration-drift.json`, `identity-map-full-regeneration.json` | A bare `build-identity-map.mjs` re-run adds 49 non-EQ-Bench joins for new frontier models across 7 boards and drops 5; 8 pinned tests object, CR-60's Union Alpha premise most sharply. Deliberately not committed. Needs a per-board review round, not a rebuild. Live cost of leaving it: Claude Opus 5.5 shows an estimated 54.997 on Vals code-migration where the board publishes 68.901. |
+| D219 | implemented + verified live (unchanged) | iteration 241 | Untouched here; D219.1 is the identity-map question it deferred. |
+
+Gates before the push: `node scripts/build-dataset.mjs` rc 0 (870 models / 673 families / 95 providers / 3,135
+offers; the dataset diff is only `model_id`, `join_note`, the coverage counters and `unmatched_observations`),
+`CI=true npm test` **1,450 / 1,449 pass / 0 fail / 1 skip**, `npx tsc --noEmit -p .` rc 0, `npm run build` rc 0.
+`git log origin/main..HEAD` was checked before the push and no other writer's files were touched; the working tree
+held no foreign changes and nothing was staged except this iteration's own paths.
+
+Not done here, still open: **D220** (the identity-map regeneration drift filed above — it needs a per-board review
+round, and CR-60's Union Alpha premise needs Florian or a fresh decision record), the 107 EQ-Bench rows a
+setting-less board cannot join (a question for Florian, not a rule), CR-176.6's remaining non-implementer review,
+the non-implementer sign-offs iterations 239–242 owe (F-203/F-204/F-205, D215, D216, CR-156.1–.3, D218, D219,
+D219.1), CR-156.4, X6's remaining audit surface, the CR rows no harness covers (CR-148.1/.2, CR-152.1/.2/.5,
+CR-153.4, CR-158.4), Umami's own retention (CR-67.5 §7.4 residual 1), and F-206 (the CR-172 job's).
+**`ALL-ACCEPTED` is not appended.**
