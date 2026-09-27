@@ -14470,3 +14470,164 @@ every report — they pay F-206's and D221's non-implementer verification.
    `verify-e1-eci-score-panel.mjs` (54/54 per host). If another gate's ad-hoc verifier turns up in an
    evidence folder with no script behind it, it is worth the same treatment — an uncommitted check
    cannot be re-run, so its red is unfalsifiable.
+
+## Iteration 250 — claude-opus, 2026-09-27 ~12:40–15:00 UTC
+
+### D233 — the finding iteration 248 left for its own iteration: an inline badge read as a heading
+
+Every protocol-review packet is built by `ops/daily/public-candidate.py text <file>`, and that
+extractor put **each HTML text node on a line of its own**. Andon Labs' nav renders
+
+    <li><a href="/evals/vending-bench" class="group"><span>Vending-Bench</span>
+      <span class="rounded-full …">Deprecated</span></a></li>
+
+so the packet read
+
+    Vending-Bench
+    Deprecated
+    Robot
+
+and a reviewer took "Deprecated" for a group heading over Drone-Bench, Butter-Bench and
+Blueprint-Bench 2. That is what disputed `blueprint-bench::2`'s `status` in iteration 248's first
+replay round — a real review round spent on an artefact of our own extractor.
+
+**The rule: an inline formatting element cannot start a new line.** Its boundaries join with a single
+space; every other tag boundary keeps the newline it always had. `a` and `li` are deliberately *not*
+in the inline set, so a nav keeps one link per line and prose with an inline link is unchanged.
+
+What makes this safe to ship across all 428 protocol references at once is that it emits **exactly one
+separator character per boundary either way**. So the extracted text keeps
+
+* its **byte length** — which is what the 60,000-byte review bound is measured on, and
+* its **`\s+`-normalised form, character for character** — which is what `protocolSourceContent`
+  matches `reference.excerpt` against.
+
+Line structure is the only thing that can move. Proved rather than argued, over **every capture in the
+repository**: 2,491 files, 1,073 of them HTML whose line structure changed, **0** byte-length
+differences and **0** normalised differences
+(`/opt/benchmarkheaven/state/ux-evidence/iter250-d233/extractor-equivalence.json`). And
+`scan-protocol-excerpts.mjs` over the 05:17 daily's capture set reports the same **428 protocol
+references · 0 failing · 4 retired · 245 latent · 144 verbatim** before and after — its two receipts
+(`scan-old.json`, `scan-new.json`) are identical but for the timestamp.
+
+`test/d233-inline-badge-line-structure.test.mjs` pins the rule, the surviving block boundaries, the
+normalised form and the script/style drop. Control against the old extractor (`control-old-extractor.txt`):
+**2 of 4 red** — and the two that assert what was already true stay green, so the test is not simply
+pinning its own implementation.
+
+The real packet, at line 267 of `producer-packet-r1.md`, now reads `Vending-Bench   Deprecated` with
+`Robot` on 268 as its own heading. A second reader gets the same repair for free: the leaderboard's
+`GPT-6 Sol  New` badge no longer reads as a row of its own either.
+
+### D233 — and the arm it unblocked was blocked on something else entirely
+
+`vending-bench::2` has been retained out of published data since **2026-09-23** on *"producer
+uncertainty cannot be overruled by a critic pass; clean critic round but every row was flagged;
+nothing accept-eligible"* — the shape iteration 249 flagged as covered by none of D192's eight
+one-row repairs. The producer receipt says plainly what it was
+(`data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/gauntlet/protocol-vending-bench-2/producer-r1.json`):
+
+> Version 2, description, USD final-balance metric and Andon Labs maintainer are all confirmed by the
+> protocol text, but the claimed 'average across 5 runs' run count is not stated anywhere in the
+> excerpt (the leaderboard only says 'Average across runs').
+
+The producer was right, and the page is stronger evidence than that. Its visible text labels the column
+**"Average across runs"** twice and states no run count at all. The count exists only in the
+standard-error span's `title` attribute — and it is **neither 5 nor constant**: the 2026-09-27 capture
+carries `across 6 runs` for eight rows, `across 5 runs` for one and `across 4 runs` for another. "5" was
+never a property of this board.
+
+So `scoring.metric` now says what the source says, and `scoring.notes` records why no run count is
+claimed. The attribute observation went into `how_to_collect.notes`, **not** into `scoring`: the
+reviewed packet is the page's *visible* text and drops attributes, so a claim about a `title` must not
+sit in the row a reviewer is asked to verify against that packet. Putting it there would have bought
+today's acceptance and failed tomorrow's.
+
+**Replay against the 05:17 daily's own capture: accepted in round 1, one fingerprint, nothing
+quarantined**, with the producer citing the corrected wording by name — *"leaderboard column 'Average
+across runs' with no run count claimed"*. `--lie` still fails closed with a blocker on `status`.
+
+### The same claim lived in two places, and the live check is what found it
+
+Correcting the registry was not enough, and only the live verifier said so. The metric text a board
+publishes exists **twice**:
+
+* `registry.json` → `scoring.metric`, which the protocol reviewer verifies against the source, and
+* `collection-plan.json` → `protocol`, which the collector copies into **every observation it writes**
+  and which `/api/benchmark-scores` serves per cell.
+
+Nothing coupled them. So after `b487108a` deployed, `/api/benchmarks` served the corrected metric while
+all ten published observations still read *"(average across 5 runs)"* — the exact wording the source does
+not state. No gate would have caught it: `build-dataset`, `npm test` and `tsc` were all green, because
+the two strings are independent by construction.
+
+The plan is the input, so the plan is what was corrected — **not** the published snapshot
+(`public-observations.json` / `scores.json`), which is generated and whose hand-editing fails the next
+unattended ingest. That means the observation text can only change when a run republishes this arm, and
+this arm has been retained since 2026-09-23 — which the replay above has now unblocked. So
+`verify-d233-live.mjs` keeps that assertion, named for what it is: **expected red until the next daily
+publishes `vending-bench::2`, and the receipt for that run.** 11/12 per host today.
+
+Most plan protocols are deliberately their own richer sentence — 101 of 117 differ, adding the harness,
+the release, the retained identity. Sixteen are verbatim twins of their registry metric, and for those a
+registry edit that skips the plan is a divergence, not a decision.
+`test/d233-plan-protocol-twins.test.mjs` pins all sixteen **and** pins the list itself against the plan,
+so a seventeenth twin cannot appear unnoticed and an intentional divergence has to be stated in the
+commit that makes it.
+
+### A review gate's false red, and the wait that hid it
+
+The 11:10 gate recorded `pass38-canonical` at **53/58**, five F-207/F-207b failures whose `detail` was
+`[]` — and then the same verifier, same host, same revision, **58/58** four minutes later
+(`pass38-canonical-fixed`). `verify-fable-pass38-design.mjs` waited 45 s for
+`[data-bh-jev14-3d-model-label]` and **swallowed the timeout**, so a hub that never attached its 3D
+scene under load was reported as five *design* defects. A scene that never arrived is a load failure;
+it now says so, with one reload and its own named check, so no design assertion can be read as red on
+an absent scene. That is +1 check per context (62 per host, not 58).
+
+### Receipts
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D233 (new) = the extractor rule | **fixed, pending non-implementer verification** | `1e84b7d0`; `extractor-equivalence.json` (2,491 captures, 0 length and 0 normalised differences), `scan-{old,new}.json` (428 refs / 0 failing, both), `control-old-extractor.txt`; `test/d233-inline-badge-line-structure.test.mjs` **4/4** | Reproduce the equivalence claim without the old file: any two revisions of `public-candidate.py` can be compared the same way, and the invariant to check is length *and* `\s+`-normalised equality, not the text itself. |
+| D233 = `vending-bench::2`, the retained arm | **fixed, pending non-implementer verification** | `b487108a`; replay **accepted** (1 fingerprint, 0 quarantined) at `…/iter250-d233/replay-round1/`, `--lie` failing closed in `…/replay-lie/`; live receipts below | Reproduce offline with `BH_REPLAY_MANIFEST=data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/manifest.json node ops/ux-2026-09-12/bin/replay-protocol-review.mjs 'vending-bench::2' <outDir>`. Prose only: the dataset diff is four strings and the build timestamp. |
+| D233 = the plan's second copy of the metric | **fixed, pending non-implementer verification and the next daily publish** | `collection-plan.json` entry 44; `test/d233-plan-protocol-twins.test.mjs` **3/3**; live `verify-d233-live.mjs` **11/12 per host** at `b487108a` (`…/iter250-d233/live/{canonical,www,legacy}/verification.json`) | The one red check is the published observations' frozen copy of the plan protocol; it clears when a run republishes this arm, and it must **not** be cleared by editing `public-observations.json` or `scores.json`. Preflight before the deploy was 7/12 with exactly the five new-state checks red, which is what shows the repair is prose only. |
+| pass38 verifier | **hardened** | this section; `/opt/benchmarkheaven/state/ux-evidence/review-20260927T111003Z/pass38-canonical{,-fixed}/verification.json` are the two runs that showed it | Stricter, not weaker: the design checks are unchanged and one precondition check is added. A future gate reading 53/58 with empty details should suspect the scene, not the CSS. |
+
+### The 11:10 review gate also wrote receipts and no report — the second in a row
+
+`20260927T111003Z review codex-luna rc=0` ran at revision `0403ae65`/`ca1da0b6`-era code and wrote
+**23 receipts plus its three gate logs** to
+`/opt/benchmarkheaven/state/ux-evidence/review-20260927T111003Z/` — then wrote no `REVIEW-*.md`, no
+ledger row and made no commit. Iteration 249 recovered the 07:20 gate's eleven receipts for the same
+reason; this is the same loss one gate later. The engine that **ran** each check is codex-luna, which is
+not the implementer of any of them, so these are the non-implementer verifications several rows were
+waiting for. This iteration only carries the receipts across and says so. That gate's own prose verdict
+is gone for good, and a later gate may still reopen any of these.
+
+| Receipt | Result |
+|---|---|
+| `d188-d223-d224` | **105/105** |
+| `d221-{canonical,www,legacy}` | **84/84 each** |
+| `d226-d227-{canonical,www,legacy}` | **74/74 each** |
+| `d228-d229-{canonical,www,legacy}` | **75/75 each** |
+| `d231-{canonical,www,legacy}` | **51/51 each** |
+| `d232-{canonical,www,legacy}` + `d232-final-{1,2,3}` | **27/27 each**, six runs |
+| `e1-{canonical,www,legacy}` | **54/54 each** — `verify-e1-eci-score-panel.mjs`, the check iteration 249 committed to replace the gate's uncommitted one |
+| `f209-d225` | **13/13** |
+| `pass38-{canonical,www,legacy}-fixed` | **58/58 each** (first canonical run 53/58, the swallowed 3D wait — see above) |
+| `build-dataset{,-final}.log`, `npm-test{,-final}.log`, `tsc{,-final}.log` | 1,493 pass / 0 fail; tsc exit 0 |
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D226 | live-checked, pending non-implementer verification → **verified** | `…/review-20260927T111003Z/d226-d227-{canonical,www,legacy}/verification.json`, **74/74 per host** | Verifier **codex-luna**, gate 20260927T111003Z. Receipt transcribed here because that gate wrote no report. |
+| D227 | live-checked, pending non-implementer verification → **verified (page half)** | same receipt | The page half is signed off. The behavioural half stands: the **next ordinary daily must publish `aa-benchmark-fields`**, and the 05:17 run of 2026-09-27 still lists it stale (its repair landed at 09:04, after that run started). Tomorrow's 05:17 is its receipt. |
+| D228 | fixed, pending non-implementer verification → **verified** | `…/d228-d229-{canonical,www,legacy}/verification.json`, **75/75 per host** | Same gate, same reason. |
+| D229 | fixed, pending non-implementer verification → **verified** | same receipt | Its first replay round was the one D233 explains; the row itself was always right. |
+| D231 | fixed, pending non-implementer verification → **verified** | `…/d231-{canonical,www,legacy}/verification.json`, **51/51 per host** | Same gate. |
+| D232 | fixed, pending non-implementer verification → **verified** | `…/d232-{canonical,www,legacy}/verification.json` and `d232-final-{1,2,3}`, **27/27 each** | Same gate, six runs across the three hosts. |
+| E1 (ECI in the Composite) | verified live (implementer) → **verified (non-implementer receipt on record)** | `…/e1-{canonical,www,legacy}/verification.json`, **54/54 per host** | codex-luna re-ran the committed verifier iteration 249 wrote in place of its own uncommitted check. That closes the loop the 02:20 gate opened. |
+| F-207(b) | live-checked, pending non-implementer verification → **verified** | `…/pass38-{canonical,www,legacy}-fixed/verification.json`, **58/58 per host** | Same gate. The halo and its leader are signed off by a non-implementer engine. |
+| F-208 | live-checked, pending non-implementer verification → **verified** | same receipt | Same gate. |
+| F-209 (= D225) | implemented, pending non-implementer verification → **verified** | `…/f209-d225/verification.json`, **13/13** | Same gate. The quarantine path is still a strict no-op on today's data; that is what the receipt shows. |
+| D223 / D224 | **open, with a non-implementer receipt on the fence** | `…/d188-d223-d224/verification.json`, **105/105** | The fence the 02:20 gate added is verified live. D223 itself is unchanged: VulcanBench v3.15 continuity still needs primary-source evidence or its own versioned entry. A green fence is not an accepted protocol. |

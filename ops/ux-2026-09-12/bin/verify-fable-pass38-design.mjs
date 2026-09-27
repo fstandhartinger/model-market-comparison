@@ -35,7 +35,19 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   await go('/jev-models'); await scrollThrough(p);
   if (want('F-207') || want('F-207b')) {
     await p.evaluate(() => { const b = document.querySelector('[data-bh-jev14-capability-3d]'); if (b) window.scrollTo(0, b.getBoundingClientRect().top + scrollY - 20); });
-    await p.waitForSelector('[data-bh-jev14-3d-model-label]', { timeout: 45000, state: 'attached' }).catch(() => {});
+    // D233 (2026-09-27): this wait used to swallow its timeout, so a hub that never attached its 3D
+    // scene under load was reported as five *design* failures with empty details — which is what the
+    // 11:10 review gate recorded before the same verifier passed 58/58 on the same host and revision
+    // four minutes later. A scene that never arrived is a load failure, and it says so: one reload,
+    // and then its own named check, so no design assertion can be read as red on an absent scene.
+    const attach = async () => p.waitForSelector('[data-bh-jev14-3d-model-label]',
+      { timeout: 45000, state: 'attached' }).then(() => true).catch(() => false);
+    let scene = await attach();
+    if (!scene) { await go('/jev-models'); await scrollThrough(p);
+      await p.evaluate(() => { const b = document.querySelector('[data-bh-jev14-capability-3d]'); if (b) window.scrollTo(0, b.getBoundingClientRect().top + scrollY - 20); });
+      scene = await attach(); }
+    check('F-207', ctx, 'the 3D scene attached, so its design can be judged at all', scene,
+      scene ? 'attached' : 'no [data-bh-jev14-3d-model-label] after 45 s and one reload: a load failure, not a design one');
     await p.waitForTimeout(2500);
     const m = await p.evaluate(new Function(`${bxFn}
       const view = document.querySelector('[data-bh-jev14-capability-3d-view]'); const B = bx(view);

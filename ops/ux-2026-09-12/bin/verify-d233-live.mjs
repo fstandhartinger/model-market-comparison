@@ -41,8 +41,15 @@ check('unit, direction and range are untouched', vb?.scoring?.unit === 'USD'
 check('lifecycle is unchanged: active, published, no successor', vb?.status === 'active'
   && vb?.version_status === 'published' && (vb?.superseded_by ?? null) === null,
   `${vb?.status}/${vb?.version_status}/${String(vb?.superseded_by ?? null)}`);
-check('no public surface of this board still says "average across 5 runs"',
-  !JSON.stringify(vb ?? {}).includes('across 5 runs'));
+// The notes deliberately quote the wording they retire, so the claim is what must be gone: no field
+// of this board may still *state* a run count.
+// The notes deliberately quote the wording they retire, so the only run count allowed anywhere on
+// this board is that quotation. Strip it and nothing may be left.
+const notesBeyondQuote = notes.replace("'(average across 5 runs)'", '');
+check('no field of this board claims a run count outside the quotation that retires it',
+  !/across \d+ runs/.test(metric) && !/across \d+ runs/.test(notesBeyondQuote)
+  && !/across \d+ runs/.test(vb?.one_sentence_description ?? ''),
+  [metric, notesBeyondQuote.slice(-90), vb?.one_sentence_description?.slice(0, 60)].join(' | '));
 
 // The values behind the board: this repair is prose only, so every published score must still be
 // there, unmoved. Ten observations and GPT-6 Astra's $15,514.70 are the board's published state.
@@ -53,9 +60,14 @@ const values = cells.map((c) => c.value).filter((v) => typeof v === 'number');
 check('every published cell carries a numeric USD balance', values.length === cells.length
   && cells.every((c) => c.unit === 'USD'), `${values.length}/${cells.length}`);
 check('the leader is still GPT-6 Astra at 15514.7', Math.max(...values) === 15514.7, Math.max(...values));
-check("each observation's protocol line carries the corrected metric, and none the old run count",
+// Each observation carries the *collection plan's* copy of the metric, frozen when it was collected.
+// Correcting the registry cannot move it: only a run that republishes this arm can, and this arm has
+// been retained since 2026-09-23. So this check is the behavioural half of D233 — it is expected red
+// until the next daily publishes `vending-bench::2`, and it is the receipt for that run. Do not
+// satisfy it by editing a published snapshot: the plan is the input, and it is already corrected.
+check("each observation's protocol line carries the corrected metric (pending the next daily publish)",
   cells.length > 0 && cells.every((c) => /averaged across runs/.test(c.protocol ?? '')
-    && !/across 5 runs/.test(c.protocol ?? '')), cells[0]?.protocol?.slice(0, 120) ?? null);
+    && !/across \d+ runs/.test(c.protocol ?? '')), cells[0]?.protocol?.slice(0, 130) ?? null);
 
 const pass = checks.filter((c) => c.pass).length;
 await writeFile(`${outDir}/verification.json`, JSON.stringify({ base, at: new Date().toISOString(),

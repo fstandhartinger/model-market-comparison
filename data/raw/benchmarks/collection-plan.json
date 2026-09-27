@@ -1616,11 +1616,11 @@
         }
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. 'Current leaderboard' table on the Vending-Bench 2 page: extract the 'Money Balance' column (average across 5 runs)",
+      "reason": "No safely attributable current result parsed from captured evidence. 'Current leaderboard' table on the Vending-Bench 2 page: extract the 'Money Balance' column, which the table's own subheading labels 'Average across runs'",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "HTML/embedded data",
-        "locator": "'Current leaderboard' table on the Vending-Bench 2 page: extract the 'Money Balance' column (average across 5 runs)",
+        "locator": "'Current leaderboard' table on the Vending-Bench 2 page: extract the 'Money Balance' column, which the table's own subheading labels 'Average across runs'",
         "version_guard": "Verify the published version 2 before reading results.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -1632,7 +1632,7 @@
         "sha256": "258ecda4e5b8cc000fb6c05ce4aec68e67fc937ffab5decc461e9497c87f4eb3",
         "fetched_at": "2026-09-10T21:45:53.851000+00:00"
       },
-      "protocol": "Final bank account balance in USD after one simulated year of operation (average across 5 runs)",
+      "protocol": "Final bank account balance in USD after one simulated year of operation, averaged across runs",
       "basis": "measured",
       "minimum_rows": 1,
       "source_urls": [
