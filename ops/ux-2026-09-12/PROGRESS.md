@@ -15596,3 +15596,72 @@ Grok 4.7 41.3 · Gemini 3.8 Flash 35.5 · Gemini 2.5 Flash 33.5 · GPT-4o (March
 Gemini 3.1 Pro 32.1 · Gemini 2.5 Pro 29.5. **Re-derive them from the capture before ingesting** — this
 list is a convenience, not the source. Identity is the paper's printed label including its dated
 qualifier, and no row may be pinned to a named reasoning effort.
+
+### The two non-claude verifications iteration 254 asked for — both delivered, and one of them is green
+
+Items 4 and 5 of iteration 254's list both needed an engine that is **not** claude, because claude-opus
+implemented the work. Both were run by **OpenCode + Kimi K3 via Chutes** (`chutes/moonshotai/Kimi-K3-TEE`),
+which identified itself in its own answer. Receipts: `/opt/benchmarkheaven/state/ux-evidence/iter255-nonclaude/`.
+
+**Worth writing down, because it cost 30 minutes.** The first two delegations were ordinary packets — "run
+this command, read the receipt, write a report" — and both stalled: 29 minutes, 11 seconds of CPU, no tool
+call, no output directory. A `PONG` probe on the same route answered in seconds, so the route was fine and
+the packet was the problem. Rewritten as **one shell script and a packet whose only instruction is "run
+`bash <path>`"**, both finished within two minutes. A free worker driving a multi-step recipe is a different
+thing from a free worker running one command; give it the command.
+
+**F-206 — 52/52 on canonical, run by a non-claude engine (iteration 254, item 5).** `ONLY=F-206 node
+ops/ux-2026-09-12/bin/verify-fable-pass37-design.mjs https://benchmarkheaven.com <out>` at 19:23 UTC on the
+deployed revision, exit 0, four contexts (desktop/mobile × light/dark), 13 checks each. All five original
+findings are covered by name and all five are green: no `~$` cost text (0 rows), the `≈` marker gone with a
+drawn whisker on all 89 ranked bars, the header reading `$/1k decisions`, the cost tag as a pill left of the
+number, and the leader sentence naming its systems ("Cygnet and Winnow-12B Q8 are joint leaders (statistical
+tie)"). The verifier was not modified; a `rm -rf` on the out directory precedes the run so the receipt cannot
+be a stale one. **The wrapper script was written by claude and the measurement was made by Kimi** — said
+plainly so a review gate can weigh it rather than discover it.
+
+**CR-148/152/153/158 — 33/41, re-measured after PR #10 closed (iteration 254, item 4).** Exit 1, 19:23 UTC.
+Green in full: **CR-148.2 5/5** and **CR-158.4 5/5**. Six of the eight reds are defects already filed and
+owned: **D236** (`kushal-gemma4-31b-it-autoloops`, 1 release-evidence hash where its siblings have 3),
+**D237** (the HF Space's rank-42 name), **D238** (`jevact` 237/308 not in its footnote), **D239** (`djev`
+priced `kind=announced`), and **D240**'s two (`OUTPUT.md`'s four unfilled placeholders and its empty request
+table). None is new; none is repaired here.
+
+**The other two reds are CR-148.1's PR clauses, and they now fail for the opposite reason.** Iteration 254
+closed PR #10 as superseded, so `pr-reviewed-and-bh-merge-ready` reads `state=closed reviews=0 labels=[]`,
+and `pr10-payload-reached-main` reads 11/18. The seven "missing" lines were listed one by one rather than
+assumed: **every one of them is a line that carries the old numbering** — `## CR-20260924a … → CR-143`, the
+intake provenance line, the CR-143 checklist heading, `CR-143.1`, `CR-143.2`, and the two CR-143 brief table
+rows. Each exists on `main` today under the CR-190 number. So the payload did reach `main`; only the numbers
+changed, which is exactly what the supersession decided.
+
+**The harness was deliberately not touched.** Both clauses could be made green by teaching the check the
+documented `CR-143.x → CR-190.x` renumbering — but claude-opus made the supersession decision, and an engine
+editing a check so that its own decision passes is the failure mode this ledger has recorded before. The
+measurement is reported as it stands; whether "formally closed as superseded" satisfies CR-148.1 is a review
+gate's call, and it now has a non-claude number to make it on.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-206 (a)(b)(c)(d)(e) | implemented, no surviving non-implementer report → **verified** | `iter255-nonclaude/f206-canonical/{REPORT.txt,verification.json}` + four screenshots; Kimi K3 via Chutes, 19:23 UTC, exit 0 | **52/52** on canonical across desktop/mobile × light/dark. All five findings named and green. Only canonical was run; `www` and legacy serve the same revision but were not measured here. |
+| CR-148.2 | implemented, pending non-implementer verification → **verified** | `iter255-nonclaude/cr148-158/verification.json`, group `cr148-2` **5/5** | Restore limited to the three paths, nothing else changed, no build/test/merge/deploy run, record exists, the next queue pass saw a clean checkout. |
+| CR-158.4 | implemented, pending non-implementer verification → **verified** | same receipt, group `cr158-4` **5/5** | Addendum frozen read-only at its pinned sha256, states all three rules, `DECISIONS.md` agrees, board #1340 carries it before the first v1.5 result. |
+| CR-152.1 | implemented, pending non-implementer verification → **verified with two filed defects (D236, D238)** | same receipt, `cr152-1` **6/8** | The six substantive clauses hold. The two reds are D236 and D238, both already filed and both "fix forward in the next JevBench release". |
+| CR-152.5 | implemented, pending non-implementer verification → **verified with one filed defect (D237)** | same receipt, `cr152-5` **6/7** | API 200 with a truthful hash header on three hosts, one artifact everywhere, GitHub release and HF Space by the v1.4.1 procedure, Space numbers equal to the live board, method unchanged. The red is D237. |
+| CR-152.2 | open (defect D239) → **open, now non-claude measured** | same receipt, `cr152-2` **3/4** | Unchanged verdict from a different engine: the only red is `djev(kind=announced)`, D239. |
+| CR-153.4 | open (defect D240) → **open, now non-claude measured** | same receipt, `cr153-4` **1/3** | Unchanged: `__STATUS__`, `__TABLE__`, `__VERIFY__`, `__DELETIONS__` are still unfilled and the request table is still empty. Iteration 253 accounted for the substance in the ledger and declined to back-fill another agent's job receipt; that stands. |
+| CR-148.1 | closed (PR #10 superseded) → **closed, with its harness measuring the pre-decision clause** | same receipt, `cr148-1` **7/9**; the seven "missing" lines enumerated above | Both reds are consequences of closing rather than merging PR #10. All seven lines exist on `main` under CR-190. The harness was not edited to fit the decision that this engine's predecessor made. |
+
+**For the next iteration, in order:**
+
+1. **CR-190.1's 17 observations.** The registry identity is live; the values are not. Each is
+   `self_reported`, so each needs a `score-approvals.json` row bound to `observationDigest(unjoined(o))`
+   plus a critic receipt from a vendor family outside every producer (`lib/benchmark-score-evidence.mjs`
+   is the contract). Re-derive the values from
+   `data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz` — the ledger's list above
+   is a convenience, not the source. Model identity is the paper's printed label; no row may carry a named
+   reasoning effort, because the paper says every model ran at its API default.
+2. **Read the 00:41 and 05:17 receipts** against iteration 254's replay table, as that iteration asked.
+3. **D236–D239 still ride the next JevBench release**; D240 is deliberately not back-filled.
+4. **A review gate should decide CR-148.1**, now that a non-claude engine has measured both clauses and the
+   seven-line gap is known to be the renumbering and nothing else.
