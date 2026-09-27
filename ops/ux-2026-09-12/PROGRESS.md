@@ -13468,3 +13468,12 @@ re-reads the continuity invariants, the amendment chains, the distinct per-revis
 and the 23 shared task ids out of the retained bundles — and it still checks that not one row of
 VulcanBench, Terminal-Bench or LiveBench moved while the notes were repaired. Receipts:
 `/opt/benchmarkheaven/state/ux-evidence/iter244-d223/{verification.json,verify-d188.log,npm-test.log,build-dataset.log,tsc.log}`.
+
+Replayed offline against the failure itself, which the live receipt cannot prove: a clean worktree of
+the pushed `261be5fd` with the **failed run's own** capture directory
+(`/opt/benchmarkheaven-daily/runs/2026-09-27T00-41-02-535Z-3199320/work/…/2026-09-27T00-54-53-549Z`,
+board SHA-256 `39357de8…`) copied in runs **12/12** — the assertion that ended that transaction now
+passes on the very bytes that broke it. A synthetic probe in the same worktree (one extra row at an
+invented `code-quality-maintenance-v3.16`) still fails closed with the set it cannot cover, so the
+fence was widened to the evidence and not weakened. No `--dry-run` gated run was started: the 05:17
+UTC scheduled run is inside the hour and two runs would contend for `run.lock`.
