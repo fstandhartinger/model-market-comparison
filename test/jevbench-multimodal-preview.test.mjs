@@ -86,7 +86,9 @@ test('Image JevBench v0.1.1 retains the frozen split, approved top five and Jev-
   assert.match(a.preview_tracks.cross_track_rule, /shares a source row or screenshot with a sealed core item is sealed too/);
   assert.match(a.preview_tracks.kev_flag, /Mind2Web/);
   assert.deepEqual(forbiddenItemFields(a), []);
-  assert.deepEqual(longArrays(a), []);
+  // The release candidate-coverage roster is metadata, not per-item output.
+  // Reject every other unexpectedly long array in the validated artifact.
+  assert.deepEqual(longArrays(a), ['root.candidate_coverage.candidates']);
 });
 
 test('preview tracks validator rejects missing or changed counts', async () => {
