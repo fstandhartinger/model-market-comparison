@@ -15,6 +15,7 @@ import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { gunzipSync } from 'node:zlib';
 import { parseVulcanbenchFrontierLabel } from '../../../lib/board-identity.mjs';
+import { acceptedCaptures, newestAccepted } from '../../../lib/source-quarantine.mjs';
 
 const exec = promisify(execFile);
 const REPO = process.env.BH_REPO || '/opt/model-market-comparison';
@@ -35,20 +36,16 @@ const getJson = async (url) => {
   return response.json();
 };
 
-// ------------------------------------------------ what the retained primary captures say
-const captures = [];
-for (const dir of (await readdir(`${REPO}/data/raw/benchmarks/daily-evidence`)).sort()) {
-  let manifest;
-  try { manifest = JSON.parse(await readFile(`${REPO}/data/raw/benchmarks/daily-evidence/${dir}/manifest.json`, 'utf8')); } catch { continue; }
-  for (const receipt of Array.isArray(manifest) ? manifest : []) {
-    if (receipt.status === 200 && receipt.url && receipt.file) captures.push(receipt);
-  }
-}
-const newest = (url) => {
-  const hits = captures.filter((receipt) => receipt.url === url);
-  if (!hits.length) throw new Error(`no retained capture of ${url}`);
-  return hits[hits.length - 1];
-};
+// ------------------------------------------------ what the accepted primary captures say
+// F-209 / D225: the collector's own quarantine record decides which captures are evidence. A capture
+// of a board that published an unreviewed protocol revision is retained for that arm's repair and is
+// not read here — and a withheld newer capture is named in the error rather than silently skipped.
+const EVIDENCE_ROOT = `${REPO}/data/raw/benchmarks/daily-evidence`;
+const capturePool = await acceptedCaptures({
+  dirs: (await readdir(EVIDENCE_ROOT)).map((dir) => `${EVIDENCE_ROOT}/${dir}`),
+  readJson: async (path) => { try { return JSON.parse(await readFile(path, 'utf8')); } catch { return null; } },
+});
+const newest = (url) => newestAccepted(capturePool, url);
 const body = async (receipt) => gunzipSync(await readFile(`${REPO}/${receipt.file}`)).toString();
 const visible = async (receipt, recipe) => (await exec('python3',
   ['ops/daily/public-candidate.py', 'text', receipt.file, ...(recipe ? [recipe] : [])],
@@ -79,7 +76,7 @@ const tbenchText = tbenchRaw.replace(/\s+/g, ' ');
 const vulcanPage = (await visible(newest('https://vulcanbench.com/leaderboard.html'))).replace(/\s+/g, ' ');
 const liveHead = (await body(newest('https://livebench.ai/table_2026_06_25.csv'))).split('\n')[0].split(',');
 const liveCategories = JSON.parse(await body(newest('https://livebench.ai/categories_2026_06_25.json')));
-const liveBundle = captures.filter((receipt) => /livebench\.ai\/static\/js\/main\..*\.js$/.test(receipt.url));
+const liveBundle = capturePool.accepted.filter((receipt) => /livebench\.ai\/static\/js\/main\..*\.js$/.test(receipt.url));
 const liveJs = await body(liveBundle[liveBundle.length - 1]);
 const collector = await readFile(`${REPO}/scripts/collect-public-benchmarks.py`, 'utf8');
 const overrides = [...collector.matchAll(/'(grok-3[\w-]*)':\s*(\d+)/g)].map(([, model, value]) => [model, Number(value)]);

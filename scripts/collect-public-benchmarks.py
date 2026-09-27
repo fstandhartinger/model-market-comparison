@@ -71,7 +71,29 @@ def static_json(source,start):
     # Only strict JSON literals are decoded. Function calls/interpolation are rejected.
     value,_=json.JSONDecoder().raw_decode(source[start:].lstrip());return value
 
-def parse(source,spec,load_source):
+# F-209 / D225 (2026-09-27): a source change quarantines its own arm, never the day. The reviewed
+# protocol revisions are read out of the registry entry's own `how_to_collect.version_guard` — the
+# sentence the daily's protocol review puts in front of a critic — so a revision enters this fence
+# only by being reviewed into that text, never by editing a parser rule. `lib/source-quarantine.mjs`
+# parses the same sentence and recognises the marker below; test/d225-source-arm-quarantine.test.mjs
+# pins the two implementations to one another.
+QUARANTINE_MARK='SOURCE_PROTOCOL_UNREVIEWED'
+def reviewed_protocols(entry):
+    """The closed protocol allow-list the version guard states, or None when it states none."""
+    guard=((entry or {}).get('how_to_collect') or {}).get('version_guard') or ''
+    stated=re.search(r'protocol in exactly \{([^}]+)\}',guard)
+    if not stated:return None
+    listed=sorted({item.strip() for item in stated.group(1).split(',') if item.strip()})
+    return listed or None
+def quarantine(bid,unreviewed,reviewed,detail):
+    """The one error shape the daily maps to `source_changed_retained` instead of a failed arm."""
+    payload=json.dumps({'entry':bid,'unreviewed':sorted(set(unreviewed)),'reviewed':sorted(reviewed or [])},ensure_ascii=False,separators=(',',':'))
+    prose=(f"{bid}: the board publishes protocol revision(s) "+', '.join(sorted(set(unreviewed)))
+        +' outside the reviewed set {'+', '.join(sorted(reviewed or []))+'}'
+        +f'; {detail}. The arm is quarantined: its published rows are unchanged and every other source still publishes, until the revision is reviewed into the registry (version_guard and scoring.notes) or given its own version identity.')
+    return ValueError(f'{QUARANTINE_MARK} {payload} — {prose}')
+
+def parse(source,spec,load_source,entry=None):
     kind=spec['kind'];rows=[]
     if kind=='template_csv':
         match=re.search(r'\b'+re.escape(spec['variable'])+r'\s*=\s*`([^`]+)`',source,re.S)
@@ -528,6 +550,7 @@ def parse(source,spec,load_source):
         # on every row. A renamed/renumbered suite or another protocol family is a different identity and fails
         # closed.
         parsed=csvrows(source)
+        reviewed=reviewed_protocols(entry)
         header=['rank','model','lab','harness','effort','best_effort','n','combined_33','combined_33_se','code_quality','passed','mean_minutes','mean_usd','mean_raw_tokens','median_output_tokens','mean_output_tokens','report','protocol']
         if list(parsed[0].keys() if parsed else [])!=header:raise ValueError('VulcanBench Frontier CSV header changed')
         partial=[]
@@ -540,7 +563,17 @@ def parse(source,spec,load_source):
             # fails closed, as does an implausible count of partial rows.
             if r.get('harness') not in ('Codex','Claude Code'):raise ValueError(f"VulcanBench Frontier row {index}: harness {r.get('harness')!r} is not a stated harness")
             if r.get('effort') not in ('low','medium','high','extra-high','max'):raise ValueError(f"VulcanBench Frontier row {index}: effort {r.get('effort')!r} not stated")
-            if not r.get('protocol','').startswith('code-quality-maintenance-v3'):raise ValueError(f"VulcanBench Frontier row {index}: protocol family changed ({r.get('protocol')!r})")
+            # F-209: the reviewed revisions are the registry's own sentence, not a prefix test — the
+            # board's numbering counts amendments, so v3.15 follows v3.7. Any protocol the registry has
+            # not reviewed quarantines this arm (the whole board: one unreviewed revision means the
+            # published comparison is no longer the reviewed one); the rows already published stay, and
+            # every other source still collects and publishes. A caller with no registry entry — only a
+            # test parses without one — keeps the original family floor, so nothing is ever accepted
+            # with no guard at all.
+            if reviewed is None:
+                if not str(r.get('protocol','')).startswith('code-quality-maintenance-v3'):raise ValueError(f"VulcanBench Frontier row {index}: protocol family changed ({r.get('protocol')!r})")
+            elif r.get('protocol') not in reviewed:
+                raise quarantine(entry['id'],[r.get('protocol')],reviewed,f"row {index} ({r.get('model')} [{r.get('effort')}]) states it")
             # The identity guards above apply to every row on the board; only the denominator decides whether a
             # row may be published beside the full-suite ones.
             if r.get('n')!='23':
@@ -1237,7 +1270,7 @@ def collect(plan,registry,root=Path('.'),evidence=None):
         bid=spec['benchmark_id'];entry=entries[bid];source=spec.get('source')
         if not spec.get('parser'):
             collections.append({'benchmark_id':bid,'status':spec['status'],'reason':spec['reason'],'source_url':entry['primary_url']});continue
-        rule=spec['parser'];parsed=parse(load(source),rule,load);count=0
+        rule=spec['parser'];parsed=parse(load(source),rule,load,entry);count=0
         for index,row in enumerate(parsed):
             if rule.get('filter_field') and row.get(rule['filter_field'])!=rule['filter_value']:continue
             if rule.get('skip_field') and row.get(rule['skip_field']) in rule['skip_values']:continue

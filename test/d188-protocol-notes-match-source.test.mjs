@@ -13,6 +13,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { gunzipSync } from 'node:zlib';
+import { acceptedCaptures, newestAccepted } from '../lib/source-quarantine.mjs';
 
 const exec = promisify(execFile);
 const EVIDENCE = 'data/raw/benchmarks/daily-evidence';
@@ -23,20 +24,18 @@ const entry = (id) => {
   return found;
 };
 
-// The newest retained 200 capture of a URL, whatever run produced it.
-const captures = [];
-for (const dir of (await readdir(EVIDENCE)).sort()) {
-  let manifest;
-  try { manifest = JSON.parse(await readFile(`${EVIDENCE}/${dir}/manifest.json`, 'utf8')); } catch { continue; }
-  for (const receipt of Array.isArray(manifest) ? manifest : []) {
-    if (receipt.status === 200 && receipt.url && receipt.file) captures.push({ dir, ...receipt });
-  }
-}
-function newestCapture(url) {
-  const hits = captures.filter((receipt) => receipt.url === url);
-  assert.ok(hits.length, `no retained capture of ${url}`);
-  return hits[hits.length - 1];
-}
+// F-209 / D225 (2026-09-27): the newest capture of a URL that the collector *accepted* — published
+// from or confirmed unchanged. A capture the collector quarantined (a board publishing a protocol
+// revision outside the registry's reviewed set) is evidence for that arm's repair, not a gate for
+// this suite: before this, one such capture turned the shared `npm test` red and, because the publish
+// gate runs the whole suite, no source published at all. A quarantined newer capture is named in the
+// failure message rather than silently skipped, so nothing here can pass by ignoring evidence.
+const capturePool = await acceptedCaptures({
+  dirs: (await readdir(EVIDENCE)).map((dir) => `${EVIDENCE}/${dir}`),
+  readJson: async (path) => { try { return JSON.parse(await readFile(path, 'utf8')); } catch { return null; } },
+});
+const captures = capturePool.accepted;
+const newestCapture = (url) => newestAccepted(capturePool, url);
 const bytesOf = async (receipt) => {
   const raw = await readFile(receipt.file);
   const body = receipt.file.endsWith('.gz') ? gunzipSync(raw) : raw;

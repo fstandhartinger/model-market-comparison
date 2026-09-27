@@ -12,6 +12,7 @@ import { mapWithConcurrency, dailyConcurrency } from './concurrency.mjs';
 import { openReuseCache, unitFingerprint, reuseProvenance } from './reuse-cache.mjs';
 import { reconcilePublicIdentities } from './public-identities.mjs';
 import { aaMappingApplies } from '../../lib/benchmark-registry.mjs';
+import { parseQuarantine, quarantineCheck } from '../../lib/source-quarantine.mjs';
 const exec = promisify(execFile);
 const root = 'data/raw/benchmarks';
 const json = async (p) => JSON.parse(await readFile(p, 'utf8'));
@@ -451,6 +452,11 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   let publicRows = [...oldPublic.observations];
   const specChecks = plan.entries.map(() => []);
   const pending = [];
+  // F-209 / D225: an arm whose board published an unreviewed protocol revision is quarantined, not
+  // failed — every other arm still collects and publishes. `armCaptures` records which captures each
+  // arm owns, so the record written below can withhold exactly the captures no accepted arm used:
+  // that is what keeps the repo-level continuity test reading accepted evidence (lib/source-quarantine.mjs).
+  const quarantined = [], armCaptures = plan.entries.map(() => new Set()), acceptedCaptureKeys = new Set();
   // Same rule as captureTargets(): a reviewed manual snapshot is retained unchanged, never
   // refreshed by the daily. feea6470 (D191) moved this check into the split loop without the
   // set itself, which crashed every run on "manual is not defined" until the clone-level
@@ -461,6 +467,8 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     if (!spec.parser) { specChecks[index].push({ id: spec.benchmark_id, status: spec.status, reason: spec.reason }); continue; }
     if (manual.has(spec.benchmark_id)) { specChecks[index].push({ id: spec.benchmark_id, status: 'retained_manual_snapshot', rows: priorRows.length, reason: spec.reason }); continue; }
     try {
+      for (const source of [spec.source, ...['method_source', 'categories_source', 'frontend_source', 'detail_source', 'config_source']
+        .map((key) => spec.parser[key]), ...(spec.parser.runs ?? [])]) if (source) armCaptures[index].add(captureKey(source));
       const proposed = structuredClone(spec); proposed.source = current(spec.source);
       for (const key of ['method_source', 'categories_source', 'frontend_source', 'detail_source', 'config_source']) if (spec.parser[key]) proposed.parser[key] = current(spec.parser[key]);
       if (spec.parser.runs) proposed.parser.runs = spec.parser.runs.map(current);
@@ -481,6 +489,7 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       if (!changed.length) {
         if (gone.size) publicRows = publicRows.filter((r) => !gone.has(r.id));
         specChecks[index].push({ id: spec.benchmark_id, status: 'checked_unchanged', rows: candidate.observations.length, source: proposed.source, ...(gone.size ? { withdrawn_by_source: withdrawnBySource } : {}) });
+        for (const key of armCaptures[index]) acceptedCaptureKeys.add(key);
         continue;
       }
       const entry = registry.entries.find((e) => e.id === spec.benchmark_id);
@@ -488,7 +497,15 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       // the same retained-failure outcome with a reason a reader can act on.
       if (!entry) throw new Error(`${spec.benchmark_id}: changed rows but no registry entry to review the protocol against`);
       pending.push({ index, spec, entry, proposed, candidate, evidence, changed, old, gone, withdrawnBySource });
-    } catch (error) { fail(spec.benchmark_id, error, specChecks[index]); }
+    } catch (error) {
+      // F-209: exactly one failure shape is a quarantine — the collector saying the board publishes a
+      // protocol revision the registry has not reviewed. Everything else stays a retained failure.
+      const quarantine = parseQuarantine(error);
+      if (!quarantine) { fail(spec.benchmark_id, error, specChecks[index]); continue; }
+      specChecks[index].push(quarantineCheck(quarantine, { rows: priorRows.length }));
+      quarantined.push({ ...quarantine, captures: [...armCaptures[index]] });
+      console.error(`BENCHMARK QUARANTINED ${spec.benchmark_id}: ${quarantine.reason}`);
+    }
   }
   // One review per registry entry, at most `concurrency` in flight, results indexed by input
   // position. A rejection is isolated: it retains that benchmark and nothing else.
@@ -510,8 +527,19 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     }
     publicRows = publicRows.filter((r) => r.benchmark_id !== spec.benchmark_id).concat(candidate.observations.map((r) => changedIds.has(r.id) ? r : old.get(r.id)));
     specChecks[index].push({ id: spec.benchmark_id, status: 'candidate', rows: candidate.observations.length, changed_rows: changed.length, ...(gone.size ? { withdrawn_by_source: withdrawnBySource } : {}) });
+    for (const key of armCaptures[index]) acceptedCaptureKeys.add(key);
   }
   for (const slot of specChecks) checks.push(...slot);
+  // F-209: the quarantine record travels with the evidence directory it describes, so a reader — and
+  // the repo-level continuity test — can tell which captures beside this manifest the collector did
+  // not accept. A capture another arm published from is accepted evidence and is never withheld.
+  if (quarantined.length) {
+    const record = { schema_version: 1, generated_at: new Date().toISOString(), day,
+      arms: quarantined.map((arm) => ({ id: arm.entry, reason: arm.reason,
+        unreviewed_protocols: arm.unreviewed, reviewed_protocols: arm.reviewed,
+        captures: arm.captures.filter((key) => !acceptedCaptureKeys.has(key)) })) };
+    await put(join(evidenceDir, 'quarantine.json'), record);
+  }
   // Vendor collection uses a cheap completion to read current primary text.
   // The slots/checkpoint identities are locked; a new identity needs discovery
   // review. The different-family gauntlet below verifies every changed value.

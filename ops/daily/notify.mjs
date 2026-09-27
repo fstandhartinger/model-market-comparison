@@ -86,7 +86,7 @@ export async function sendNotify(text, { bin = notifyBinary(), execImpl = execFi
 
 // --- the one entry point ------------------------------------------------------
 // context: { status_ok, rc, top5: {previous, current}, datasets: {before, after},
-//            summary_excerpt } — exactly what daily.mjs writes into
+//            summary_excerpt, quarantined_arms } — exactly what daily.mjs writes into
 //            reports/notify-context.json (datasets inlined, not paths).
 export async function executeNotifications({
   context, stateDir, dryRun = false,
@@ -101,7 +101,9 @@ export async function executeNotifications({
     failure_streak: state.failure_streak,
     failure_alert_last_sent_at: state.failureAlertLastSentAt,
     notified: state.notified, escalation_request: state.escalation_request,
-    summary_excerpt: context.summary_excerpt ?? null, now,
+    summary_excerpt: context.summary_excerpt ?? null,
+    // F-209 / D225: source-health's quarantined arms, so a standing quarantine becomes a human todo.
+    quarantined_arms: context.quarantined_arms ?? [], now,
   });
   // Pending DATA events are replayed first. Failure alerts are replanned from
   // current status through the weekly gate; recovery drops stale unsent failures.

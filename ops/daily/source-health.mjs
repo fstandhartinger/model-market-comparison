@@ -14,6 +14,10 @@ export const STATUS_KIND = {
   checked_unchanged: 'ok', updated: 'ok', candidate: 'ok', vendor_candidate: 'ok', collected: 'ok', state_appended: 'ok', state_retained: 'ok',
   retained_after_failure: 'failing', retained_after_dispute: 'failing', source_unreachable_or_manual: 'failing',
   source_changed_retained: 'attention', contested: 'attention',
+  // F-209 / D225: `source_changed_retained` is also the status a *quarantined* arm writes (a board
+  // publishing a protocol revision outside the registry's reviewed set). The two are told apart by
+  // the structured `unreviewed_protocols` field the quarantine carries, never by the status alone —
+  // OpenRouter's dated snapshot board has used this status for a changed capture since CR-34.2.
   retained_manual_snapshot: 'manual', manual_required: 'manual', source_reachable_protocol_date_retained: 'no_adapter',
 };
 // Per-run bookkeeping rows, not sources. `score-batch-7` is a different set of rows in every run, so
@@ -62,6 +66,16 @@ const reasonLine = (reason) => {
   return pick.slice(0, 300);
 };
 
+// F-209 / D225: a quarantined arm — the collector refused to publish a board that changed its
+// reviewed protocol revision, and let every other source publish. It is recognised by the structured
+// field the quarantine writes (lib/source-quarantine.mjs), so it is never confused with the same
+// status used for an ordinary changed-capture retention.
+export const isQuarantine = (check) => check?.status === 'source_changed_retained'
+  && Array.isArray(check.unreviewed_protocols) && check.unreviewed_protocols.length > 0;
+
+/** How many consecutive runs a quarantine must survive before the digest asks a human to act. */
+export const QUARANTINE_ESCALATION_RUNS = 3;
+
 /** reports: [{ checked_at, checks: [{ id, status, reason? }] }] → per-source health, newest run first. */
 export function sourceHealth(reports, { plan = { entries: [] } } = {}) {
   // One run can be held twice (its run directory and its committed checks.json): merge by run time, first copy wins.
@@ -82,10 +96,19 @@ export function sourceHealth(reports, { plan = { entries: [] } } = {}) {
     const lastOk = history.find((h) => kindOf(h) === 'ok');
     let streak = 0;
     while (streak < history.length && kindOf(history[streak]) === 'failing') streak++;
+    // F-209: the quarantine streak is counted on its own — a quarantined arm is `attention`, not
+    // `failing`, so the streak above never sees it, and the directive asks for it to be named on
+    // every run it stays quarantined and escalated on the third.
+    let quarantineStreak = 0;
+    while (quarantineStreak < history.length && isQuarantine(history[quarantineStreak].check)) quarantineStreak++;
     return {
       id, kind: kindOf(latest), status: latest.check.status, latest_run: latest.at,
       last_ok: lastOk?.at ?? null,
       failing_since: streak ? history[streak - 1].at : null, consecutive_failed_runs: streak,
+      quarantined_since: quarantineStreak ? history[quarantineStreak - 1].at : null,
+      consecutive_quarantined_runs: quarantineStreak,
+      ...(isQuarantine(latest.check) ? { unreviewed_protocols: latest.check.unreviewed_protocols,
+        reviewed_protocols: latest.check.reviewed_protocols ?? null } : {}),
       reason: reasonLine(latest.check.reason),
       cadence: cadence.get(id) ?? null, runs_seen: history.length,
     };
@@ -94,7 +117,12 @@ export function sourceHealth(reports, { plan = { entries: [] } } = {}) {
   sources.sort((a, b) => order[a.kind] - order[b.kind] || (a.failing_since ?? '').localeCompare(b.failing_since ?? '') || a.id.localeCompare(b.id));
   const count = (k) => sources.filter((s) => s.kind === k).length;
   return { generated_from_runs: runs.length, newest_run: runs[0].checked_at, oldest_run: runs.at(-1).checked_at,
-    totals: Object.fromEntries(Object.keys(order).map((k) => [k, count(k)])), quarantine: quarantineTotals(runs[0]), sources };
+    totals: Object.fromEntries(Object.keys(order).map((k) => [k, count(k)])), quarantine: quarantineTotals(runs[0]),
+    quarantined_arms: sources.filter((s) => s.consecutive_quarantined_runs > 0)
+      .map((s) => ({ id: s.id, reason: s.reason, unreviewed_protocols: s.unreviewed_protocols,
+        reviewed_protocols: s.reviewed_protocols, quarantined_since: s.quarantined_since,
+        consecutive_quarantined_runs: s.consecutive_quarantined_runs,
+        escalate: s.consecutive_quarantined_runs >= QUARANTINE_ESCALATION_RUNS })), sources };
 }
 
 export function healthMarkdown(health) {
@@ -106,6 +134,11 @@ export function healthMarkdown(health) {
   if (q?.batches) {
     lines.push(`Newest run: **${q.rows} score row(s) quarantined** across ${q.batches} batch(es) — reviewed, not published, and not listed below: a batch is a per-run unit, not a source.`
       + (q.unknown_batches?.length ? ` Row count not recorded for ${q.unknown_batches.join(', ')}.` : ''), '');
+  }
+  for (const arm of health.quarantined_arms ?? []) {
+    lines.push(`Newest run: **${arm.id} quarantined** for ${arm.consecutive_quarantined_runs} consecutive run(s)`
+      + ` (since ${day(arm.quarantined_since)}) — unreviewed protocol revision(s) ${arm.unreviewed_protocols.join(', ')};`
+      + ` its published rows are unchanged and every other source published. ${arm.reason ?? ''}`.trimEnd(), '');
   }
   const failing = health.sources.filter((s) => s.kind === 'failing' || s.kind === 'attention' || s.kind === 'unknown');
   lines.push(failing.length ? '| Source | Status | Failing since | Runs | Last OK | Reason |' : 'No failing sources.');

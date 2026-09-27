@@ -112,6 +112,36 @@ export function findNotableDivergences(beforeResults, afterResults, { thresholdP
   return out.sort((a, b) => Math.abs(b.delta_pp) - Math.abs(a.delta_pp) || a.id.localeCompare(b.id));
 }
 
+// --- F-209 / D225: the quarantined arm nobody reads ------------------------
+// A quarantined arm is a soft failure by design: one board changed its reviewed protocol revision,
+// that arm published nothing and every other source published normally. The failure D188 and D204
+// were written against is a soft failure nobody reads, so on the third consecutive quarantined run
+// the digest stops being a line in a receipt and asks a human to act. The block is the `notify`
+// human-action format (label line, `🧑 Für dich`, a bullet with Warum/Steps:/numbered actions/Zeit)
+// — `~/bin/notify` refuses anything else, so the shape is pinned in test/daily-notification-*.
+export const QUARANTINE_ESCALATION_RUNS = 3;
+const STATUS_HUMAN = '🧑 DU BIST DRAN';
+
+/** `arms`: source-health's `quarantined_arms`. Returns the one human-action block, or null. */
+export function quarantineHumanTodo(arms, { escalateAfter = QUARANTINE_ESCALATION_RUNS } = {}) {
+  const due = (Array.isArray(arms) ? arms : []).filter((arm) => arm && typeof arm.id === 'string'
+    && Number.isSafeInteger(arm.consecutive_quarantined_runs) && arm.consecutive_quarantined_runs >= escalateAfter);
+  if (!due.length) return null;
+  const lines = [STATUS_HUMAN, '', '🧑 Für dich'];
+  for (const arm of due) {
+    const revisions = (arm.unreviewed_protocols ?? []).join(', ') || 'an unreviewed revision';
+    lines.push(`- ${arm.id}: quarantined for ${arm.consecutive_quarantined_runs} consecutive daily runs`,
+      `  Why: the board publishes ${revisions}, which the registry has not reviewed, so this arm publishes nothing while every other source does. Its rows on the site are the last reviewed ones.`,
+      '  Steps:',
+      `  1. Read the retained capture of the arm and the source's own evidence for ${revisions}.`,
+      `  2. Either review the revision into data/raw/benchmarks/registry.json (how_to_collect.version_guard and scoring.notes for ${arm.id}) or give it its own version identity.`,
+      '  3. Run the next daily refresh and check that the arm publishes again.',
+      '  Time: 45 min');
+  }
+  return { key: `quarantine:${due.map((arm) => `${arm.id}@${(arm.unreviewed_protocols ?? []).join('+')}`).sort().join('|')}`,
+    text: lines.join('\n'), arms: due.map((arm) => arm.id) };
+}
+
 // --- Failure streak / escalation -------------------------------------------
 export function nextFailureStreak(current, statusOk) {
   const streak = Number.isSafeInteger(current) && current >= 0 ? current : 0;
@@ -136,6 +166,7 @@ export function planNotifications({
   notified = {},
   escalation_request: escalationRequest = null,
   summary_excerpt: summaryExcerpt = null,
+  quarantined_arms: quarantinedArms = [],
   now = Date.now(),
 } = {}) {
   const at = Number.isFinite(now) ? now : Date.parse(now);
@@ -211,6 +242,15 @@ export function planNotifications({
             'https://benchmarkheaven.com/benchmarks'].join('\n') });
       }
     }
+  }
+  // F-209: independent of `statusOk` — a quarantined arm is a human action, not a data event, and a
+  // run that failed for another reason must not swallow it. Deduped on the arm and the exact
+  // revisions, so a new unreviewed revision asks again and a standing one does not repeat daily
+  // (`~/bin/notify` keeps unresolved human todos in its own feed).
+  const todo = quarantineHumanTodo(quarantinedArms);
+  if (todo) {
+    if (known[todo.key]) skips.push({ kind: 'quarantine', key: todo.key, reason: 'duplicate' });
+    else sends.push({ kind: 'quarantine', key: todo.key, text: todo.text, onSent: { notified_key: todo.key } });
   }
   return { sends, skips, baseline, seeded, evaluated_at: iso };
 }

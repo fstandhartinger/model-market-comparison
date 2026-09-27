@@ -447,6 +447,11 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     // D204: reviewed-but-unpublished score rows. They are not a stale *source* — no source is failing —
     // so nothing above counts them, and 72 of them passed unseen on 2026-09-25.
     report.quarantined_scores = benchmarks?.quarantine?.batches ? benchmarks.quarantine : null;
+    // F-209 / D225: an arm the collector quarantined — one board published a protocol revision the
+    // registry has not reviewed, so that arm published nothing and every other source published
+    // normally. It is named on every run it stays quarantined, and the notify pass below raises a
+    // human todo on the third consecutive one.
+    report.quarantined_arms = benchmarks?.quarantined_arms?.length ? benchmarks.quarantined_arms : null;
   } catch (error) { report.stale_sources = null; console.error(`SOURCE HEALTH FAILED: ${redact(error.message)}`); }
   const summary = [
     `STATUS: ${report.exit_code === 0 ? 'ok' : 'problem'}`,
@@ -474,6 +479,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     // as a name and a date while the state file held "Mistral pricing: no priced chat models" — the
     // sentence that names the cause and would have been acted on the first morning.
     ...(report.stale_sources?.length ? [`Veraltete Quellen (>= 3 Tage): ${report.stale_sources.length} — ${report.stale_sources.map((x) => `${x.id} (zuletzt gut: ${x.last_ok ?? 'nie'}${x.stale_days == null ? '' : `, seit ${x.stale_days} Tagen`}): ${x.reason ?? 'Grund nicht aufgezeichnet'}`).join('; ')}`] : []),
+    ...(report.quarantined_arms?.length ? [`Arm stillgelegt (Quellprotokoll ungeprueft, alter Stand bleibt, alle anderen Quellen veroeffentlicht): ${report.quarantined_arms.map((a) => `${a.id} (${a.consecutive_quarantined_runs}. Lauf in Folge, seit ${String(a.quarantined_since ?? '').slice(0, 10) || 'unbekannt'}): ungeprueft ${(a.unreviewed_protocols ?? []).join(', ')}; geprueft ${(a.reviewed_protocols ?? []).join(', ') || 'keine Liste'}${a.escalate ? '; ESKALATION: Aufgabe fuer Florian gemeldet' : ''}`).join('; ')}`] : []),
     ...(report.quarantined_scores ? [`Zurueckgehaltene Score-Zeilen (geprueft, nicht veroeffentlicht): ${report.quarantined_scores.rows} in ${report.quarantined_scores.batches} Batch(es)${report.quarantined_scores.unknown_batches?.length ? `; Anzahl unbekannt fuer ${report.quarantined_scores.unknown_batches.join(', ')}` : ''}`] : []),
     report.error ? `FEHLER: ${report.error.split('\n').filter(Boolean).at(-1).slice(0, 800)}` : 'Build, Tests, Typpruefung und Quellpruefung erfolgreich.',
   ].join('\n') + '\n';
@@ -500,7 +506,8 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       reused_units: units.map((u) => ({ kind: u.kind, id: u.id, fingerprint: u.fingerprint, accepted_run_id: u.accepted_run_id, accepted_at: u.accepted_at, captures: u.captures })) };
   } catch (error) { report.reuse = { error: redact(String(error.message)) }; }
   await writeJSONAtomic(join(reports, 'run-report.json'), report);
-  const context = { status_ok: report.exit_code === 0, rc: report.exit_code, top5: top5 ? { current: top5 } : null, datasets: { before: slim(before), after: slim(after) } };
+  const context = { status_ok: report.exit_code === 0, rc: report.exit_code, top5: top5 ? { current: top5 } : null, datasets: { before: slim(before), after: slim(after) },
+    quarantined_arms: report.quarantined_arms ?? [] };
   await writeJSONAtomic(join(reports, 'notify-context.json'), context);
   await executeNotifications({ context, stateDir: join(home, 'state'), dryRun }).catch((e) => console.error(`NOTIFICATION FAILED: ${redact(e.message)}`));
   console.log(summary);
