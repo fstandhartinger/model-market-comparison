@@ -717,5 +717,9 @@ body.bh-fastlane-visible .bh-custom-evaluation-toast { bottom: calc(var(--bh-fas
 .bh-jev-3d-axis-label, .bh-jev-3d-model-label { color: rgb(var(--muted)); }
 .bh-jev-3d-axis-label { font-size: 12px; font-weight: 600; }
 .bh-jev-3d-model-label { font-size: 11px; }
-.bh-jev-3d-model-dot { display: inline-block; width: 8px; height: 8px; border-radius: 9999px; margin-right: 4px; vertical-align: baseline; }
+/* F-207 (Fable pass 38): a top-five label is drawn across the sphere cluster, so it sits on a translucent plate in the panel colour;
+   its class colour is a 3 × 11 px bar — an 8 px disc read as a sixth sphere beside the one it named. The SVG fallback's <text> shares
+   the class and ignores the box properties. */
+.bh-jev-3d-labels .bh-jev-3d-model-label { background: rgb(var(--panel) / .85); padding: 1px 5px 1px 4px; border-radius: 4px; }
+.bh-jev-3d-model-dot { display: inline-block; width: 3px; height: 11px; border-radius: 1px; margin-right: 5px; vertical-align: -1px; }
 

@@ -13477,3 +13477,37 @@ passes on the very bytes that broke it. A synthetic probe in the same worktree (
 invented `code-quality-maintenance-v3.16`) still fails closed with the set it cannot cover, so the
 fence was widened to the evidence and not weakened. No `--dry-run` gated run was started: the 05:17
 UTC scheduled run is inside the hour and two runs would contend for `run.lock`.
+
+## Fable pass 38 — 2026-09-27 ~04:20 UTC (claude-fable, design authority)
+
+Scope (Florian: Fable sparingly): what changed since pass 37 — the hub after F-203/F-204/F-205 and D216 (iteration 239), the privacy page
+after CR-178, the quick views on the D219–D224 data. Live revision `5d4f202a`, dataset 04:03 UTC (sources still 2026-09-26: the 00:41 daily
+ended rc=1, R9.1 stays open). Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass38/` (`canonical/` 131 shots +
+`metrics-<ctx>.json`, four contexts, **0 page errors**, min text 10 px on every page; `probe-before.json` the rendered text boxes of the
+context chart against the bubble charts and the 3D label geometry; `live-before/` the pass-38 verifier at the pre-fix revision, 34/58 —
+every miss in F-207/F-207b/F-208; `local-F-207/` the shipped fix on a dev server; `npm-test.log`, `tsc.log`).
+Verdict, decisions and directives: `DESIGN-DIRECTIVES.md` "pass 38". Verifier for non-Fable engines: `bin/verify-fable-pass38-design.mjs`.
+
+**D225 is decided** (design authority, pass 38 decision 3 → directive **F-209**): a source change quarantines its own arm, never the day.
+The collector fails the arm closed with a named reason and the run publishes every other arm; the repo-level continuity test asserts
+against accepted captures; a quarantined arm is named every day and escalates to a human-todo on the third consecutive run; the publish
+gate itself is unchanged. `[judgment]`, claude-opus or codex-luna — the acceptance is a replay of the 2026-09-27T00-41 run's own capture.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-203 | implemented → **verified** (gate 20260927T022003Z, codex-luna; re-seen in pass 38) | `review-20260927T022003Z/pass37-{canonical,legacy}/verification.json`; `canonical/metrics-*.json` `hub-context` (minFs 10, `small` [] ×4) | Its desktop over-scale is a separate defect → F-208. |
+| F-204 | implemented → **verified** (same gate; re-seen in pass 38) | same; `hub-context.tasks` [] / `decisions` 26 ×4; `hub-bubbles.axis` (no arrow in the axis titles); no `[data-bh-jev14-3d-axes]` | |
+| F-205 | implemented → **verified** (same gate; re-seen in pass 38) | same; `mobile_{light,dark}-hub-scatter{,2}-vp.png` (five labels in a column, 0 crossings, 0 text overlaps) | |
+| F-201, F-202 | **verified** (iteration 239, claude-opus; re-confirmed by the gate and in pass 38) | `hub-3d` (five labels inside the box, distinct rows, 0 overlaps); `hub-bubbles.charts[].small` [] ×4 | Done-log rows updated. |
+| CR-176.1–.6 | **verified** (gate 20260927T022003Z: 60/60 and 77/77 per host; re-seen in pass 38) | `hub-bubbles.leftOfLine` 0 of 50 ×4; `hub-table` (one right edge at 1440, 0 heat cells, "$/1k decisions"); the 3D axis names | |
+| D216 | implemented → **verified in effect, not at the bar** (Fable) | `hub-3d.modelL` (x 605–629 at 1440, 100–122 at 390, one 17 px row each, 0 overlaps) | The declump works — and it puts every label across the sphere cluster with a disc that reads as a sixth sphere → F-207. |
+| F-207 (new) | **(a) implemented** (Fable, surgical: `app/globals.css`; `test/fable-pass38.test.mjs` 2/2); **(b) open** | `live-before/` (alpha 0, 8 px discs on the live site); `local-F-207/verification.json` on the dev server | (a) plate + bar marker — needs a non-Fable engine: `ONLY=F-207` on both hosts after the deploy. (b) halo on the labelled sphere + leader when pushed — `[mechanical]`, group `F-207b`. |
+| F-208 (new) | **open** | `probe-before.json` (`ctx.scale` 1.79 at 1440; tick boxes 20–22 px vs 12 px bubble ticks); `live-before/` group F-208 (18/22: the two scale checks fail at 1440 in light and dark) | The context chart draws at its pixel width like the bubble charts. `[mechanical]`. |
+| F-209 (new) = D225 | **decided → open for implementation** | this section; `DESIGN-DIRECTIVES.md` F-209 | Quarantine the arm, not the day; continuity test on accepted captures; daily visibility + human-todo on the third run. `[judgment]`. |
+| D225 | **decided** (design authority) → F-209 | as above | The policy question is answered; the row closes when F-209 is verified. |
+| CR-178 / privacy page | seen (Fable) | `*-privacy.png`, `privacy-geom` (14 px body, one column, 0 overflow) | Legal copy, not a design matter; the Umami retention residual stays with its owner. |
+| R3.1 | unchanged | `desktop_light-simple.png` | Florian's own hero copy since 2026-09-15; no re-decision. |
+
+Gates: `CI=true npm test` **1,457 tests, 1,456 pass, 0 fail, 1 skip** (`npm-test.log`, exit 0); `npx tsc --noEmit -p .` exit 0 (`tsc.log`) — run on
+this iteration's tree (one CSS rule pair, one test, two scripts, two ledgers). `local-F-207/verification.json`: **24/24** on the dev server. `node scripts/build-dataset.mjs` was not run: no data, registry or lib file changed in this pass.
+**Needs a non-Fable engine to set `verified` on F-207(a).** Local previews: the dev server on port 3877 was stopped at the end of the pass.

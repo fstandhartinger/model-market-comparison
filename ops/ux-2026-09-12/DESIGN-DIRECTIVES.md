@@ -1,5 +1,18 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
+**Pass 38: 2026-09-27 ~04:20 UTC**, the "what changed since pass 37" pass (Florian: Fable sparingly). Since pass 37 the changed surface is the
+**JevBench hub after F-203/F-204/F-205 and D216** (iteration 239: 10 px bucket ticks, one name per axis, the phone's bubble labels in a
+non-crossing column, the 3D top-five labels de-clumped), the **privacy page after CR-178** (Umami visitor counts), and the data after
+D219–D224 (identity joins, withdrawals, VulcanBench v3.15) — no other UI file changed. Judged on the canonical host (revision `5d4f202a`,
+dataset 04:03 UTC) at 1440/390 × light/dark: 131 shots + `metrics-<ctx>.json` (pass 37's probes plus a context-chart probe and the privacy
+page) in `/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass38/canonical/`, and `probe-before.json` (rendered text boxes of the
+context chart against the bubble charts; the 3D label plate/marker geometry). The quick views (Simple, Advanced, wizard, Benchmaxxing, a
+model page, Benchmarks) were shot on today's data, 0 page errors in all four contexts, min text 10 px on every page, and are at the bar.
+Scripts: `bin/shoot-fable-pass38.mjs`; source pin: `test/fable-pass38.test.mjs`; live verifier for non-Fable engines:
+`bin/verify-fable-pass38-design.mjs <base> <outDir>` (groups `F-207` for the part Fable shipped, `F-207b` and `F-208` for the directed
+parts; it launches its own Chromium). Before-receipt at the pre-fix revision: `…/fable-20260927-pass38/live-before/verification.json`; the
+shipped fix on a dev server: `…/local-F-207/verification.json`.
+
 **Pass 37: 2026-09-26 ~15:30 UTC**, the "what changed since pass 36" pass (Florian: Fable sparingly). Since pass 36 the changed surface is the
 **JevBench hub after F-197/F-199/F-200** (guides folded at every width, the phone's Composite controls folded, the Capability ⓘ as a list and a
 phone modal), **CR-176.1–.6** (the 2× label left of the dashed line with ← → hints on both bubble charts, median-latency speed, "$/1k decisions"
@@ -67,6 +80,54 @@ Luna. Every delegated diff is reviewed before it lands. Record from passes 8, 11
 the reviewing engine directly.
 
 ---
+
+## Verdict on the live site — pass 38 (2026-09-27), the hub after F-203–F-205 and D216, the privacy page after CR-178
+
+**Pass 37's directives hold on the live site.** F-203: every `svg text` in the input-length chart is ≥ 10 px CSS in all four contexts, six
+bucket ticks at 1440, three at 390 with the chart scrolling inside its wrapper. F-204: no `[data-bh-jev14-3d-axes]` box, no "Toward you"
+caption, "tasks" does not appear beside a JevBench price anywhere on the hub (`hub-context.tasks` = [] in all four contexts; 26 "decisions"
+elements), the flat charts' axis titles read "$ per 1,000 decisions (log)" and "Median-latency speed" with Florian's "← pricier · cheaper →"
+/ "← slower · faster →" hints as the only arrows. F-205: at 390 both charts label five bubbles in a right-aligned column, ordered like
+their points, **0 leader crossings and 0 text overlaps** (`mobile_light-hub-scatter-vp.png`, `mobile_dark-hub-scatter2-vp.png`; the review
+gate's pass-37 run agrees, 104/124 per host with every miss in F-206). F-201/F-202 hold (five labels at distinct positions inside the box,
+no bubble text under 10 px). CR-176.4/.5 hold (one right edge at 1440, 0 heat cells, "$/1k decisions"). The privacy page is a single
+text column at 14 px with the site's headings; its new Umami paragraph is legal copy (CR-178), not a design matter. Simple, Advanced,
+Guided, Benchmaxxing, the model page and the Benchmarks page are unchanged since pass 37 apart from today's data and stay at the bar.
+
+**Three things are not at the bar; one fixed in this pass, two directed, and one policy decision the ledger left to the design authority.**
+
+1. **The 3D labels read as six spheres.** D216 stopped the top-five labels printing on top of one another by pushing them into a column
+   (x 605–629 at 1440, 100–122 at 390, one 17 px row each, 0 overlaps — `metrics-*.json` `hub-3d.modelL`), which puts every label across
+   the sphere cluster it names: "#3 JevK5 v0.2.0" is drawn over three orange spheres, "#5 Hopper" over the big blue one
+   (`desktop_light-hub-3d-settled.png`, `mobile_dark-hub-3d-settled.png`). Each label carries an **8 px disc** in its class colour — the
+   same size and shape as the small spheres behind it — so a reader sees a sixth sphere beside the text, and nothing ties the text to the
+   sphere it names (`probe-before.json`: `bg rgba(0,0,0,0)`, `dot 8×8 radius 9999px`). → **F-207**: (a) a translucent plate and a bar
+   marker — fixed by Fable (two CSS rules); (b) a halo on the labelled sphere and a leader when the label was pushed away — directed.
+2. **The context chart is drawn in a different type scale from every other chart on the page.** `components/JevContextLength.tsx` renders a
+   `viewBox="0 0 740 305"` SVG at `w-full`, so at 1440 it is scaled **1.79×**: its "10 px" bucket ticks render 20 px tall (bubble-chart
+   ticks: 12 px), its "11 px" percent ticks 22 px, the axis title 20 px (`probe-before.json` `ctx.scale` 1.79, `texts[].h`). F-203 fixed the
+   CSS number and the phone (scale 1.0, the chart scrolls); the desktop still shows one chart with 18 px ticks between charts with 11 px
+   ticks. → **F-208**.
+3. **D225 — one board's new protocol revision stopped every source's publication.** Iteration 244 recorded the failure mode and a proposal
+   and left the policy to the design authority: the 2026-09-27 00:41 run collected 73 minutes of sources and published none of them because
+   VulcanBench's v3.15 rows tripped the repo-level continuity test inside the shared `npm test` publish gate. → **F-209**, decided below.
+
+Not defects: the `michael_chomsky`, `acc_sealed` and `jevbench_eval` underscores the probe lists on the hub (a GitHub handle in a row's
+author line, a formula in `<code>`, a module path quoted from a data owner's note — all three were there in pass 37); the phone hub's seven
+horizontally scrolling wrappers (the preset row and the tables, F-199/F-180); the custom-evaluation toast over the fast-lane teaser (F-194);
+the 3D intro sentence naming the axes in prose (it is the figure's accessible description, not a second legend).
+
+## Decisions in pass 38
+
+1. **A label's marker must not look like a datum (F-207):** on a chart whose marks are discs, a disc beside a label is a sixth mark. The
+   class colour becomes a bar; the tie to the datum is a ring drawn around the datum itself.
+2. **One type scale per page (F-208):** an SVG that scales with its container scales its text with it. Charts draw at their pixel width
+   (the bubble charts already do); a `viewBox` is for the phone's horizontal scroll, never for stretching the desktop.
+3. **A source change quarantines its own arm, never the day (F-209 / D225):** the fence built for D223 is right — an unreviewed protocol
+   revision must not be published — and its blast radius is wrong. The per-board fence lives in the collector, which already fails one arm
+   closed on a changed header, task count, harness or effort; the repo-level continuity test asserts against what the collector accepted,
+   so a quarantined capture is evidence for the arm, not a gate for the suite. A quarantined arm is named every day it stays quarantined,
+   and escalates to a human-todo on the third consecutive run — a soft failure nobody reads is the failure D188/D204 were written against.
 
 ## Verdict on the live site — pass 37 (2026-09-26), the hub after F-197–F-200 and CR-176, the image page after F-198, the v1.5 preview
 
@@ -458,7 +519,65 @@ and the counts line under it keeps the page honest (P4).
 
 ---
 
-## Directives (pass 37)
+## Directives (pass 38)
+
+### F-207 — The 3D top-five label is a plate with a bar; the sphere it names wears a halo `[mechanical]` — **(a) shipped by Fable (pass 38); (b) open**
+
+*Where:* (a) `app/globals.css` (`.bh-jev-3d-labels .bh-jev-3d-model-label`, `.bh-jev-3d-model-dot`) — done. (b) `components/JevCapability3D.tsx`:
+the DOM label layer (`layoutLabels`, `updateLabelsRef`, `modelRefs`) and the SVG fallback's `bh-jev-3d-model-labels` group; `test/fable-pass38.test.mjs`.
+*What:* (a) the label sits on a plate — `background: rgb(var(--panel) / .85)`, `padding: 1px 5px 1px 4px`, `border-radius: 4px` — and its class
+marker is a **3 × 11 px bar** (`border-radius: 1px`), not an 8 px disc. (b) Each labelled sphere gets a **halo**: in the DOM label layer an
+absolutely positioned `div[data-bh-jev14-3d-halo="<key>"]`, a ring of diameter `2 × (projected sphere radius + 4 px)` (clamped 14–32 px), `2px
+solid rgb(var(<class colour>))`, `box-shadow: 0 0 0 1px rgb(var(--panel) / .9)` for contrast on either theme, transparent inside, `pointer-events:
+none`, centred on the sphere's projection and re-placed in the same `layoutLabels` pass that moves the labels (measure once, no reflow per frame).
+When the label's plate ends up further than **24 px** from its halo's edge (the declump pushed it), draw a **leader**: a 1 px `div[data-bh-jev14-3d-leader-line="<key>"]`
+in `rgb(var(--muted))`, from the plate's nearest edge midpoint to the halo's edge, rotated with `transform`. The SVG fallback does the same with a
+`<circle data-bh-jev14-3d-halo>` (`fill="none"`, `stroke-width="2"`) and a `<line data-bh-jev14-3d-leader-line>`. Faded (outside Jev-class) spheres are
+never in the top five, so no halo needs an opacity rule. Nothing about sphere positions, sizes, colours, the class filter or the tooltip changes.
+*Accept:* hub at 1440/390 × light/dark, after the 3D view has loaded: five `[data-bh-jev14-3d-model-label]`, 0 label-box overlaps, each DOM label
+with a background alpha 0.7–0.95 and a marker ≤ 4 px wide and ≥ 10 px tall (group **F-207**, shipped); five `[data-bh-jev14-3d-halo]` rings 12–40 px
+across inside the 3D box, and each label within 24 px of its own halo or joined to it by a `[data-bh-jev14-3d-leader-line]` (group **F-207b**);
+the fallback path (WebGL off) shows the same five halos as SVG circles. `verify-cr-176-6-live.mjs` and pass 37's `ONLY=F-201` still green.
+
+### F-208 — The context chart draws at its pixel width `[mechanical]`
+
+*Where:* `components/JevContextLength.tsx` (the `<svg className="block h-auto min-w-[740px] w-full" viewBox=…>` at the accuracy-by-input-length
+chart, `const width = 740` and the `x()` / `plotRight` / `tickGap` maths that read it); `test/fable-pass37.test.mjs` (F-203's pin; extend, do not weaken).
+*What:* measure the chart's wrapper the way `JevBubbleChart.tsx` does (a `ResizeObserver` on the wrapper, `width = Math.max(740, clientWidth)`,
+`resize` fallback) and draw the SVG at that width: `viewBox="0 0 ${width} 305"` **and** `width={width} height={305}`, so one SVG unit is one CSS pixel at
+every viewport. The plot's horizontal maths already derives from `width`, so the buckets spread over the wider plot; the vertical geometry, colours,
+markers, the thin-sample rule (F-185) and the phone behaviour (`min-w-[740px]`, sideways scroll) are unchanged. Text stays at the CSS sizes it has
+(10 px bucket ticks, 11 px percent ticks); the axis title goes to 11 px to match the bubble charts' axis titles. Server render may use 740 and let the
+observer widen it after hydration — no layout shift is acceptable above the fold, and this chart is 17,000 px down the page.
+*Accept:* hub at 1440/390 × light/dark: the chart's rendered width equals its `viewBox` width (scale 0.98–1.02); bucket-tick boxes ≤ 14 px tall and
+within 2 px of the cost bubble chart's tick boxes; no chart text under 10 px CSS; ticks do not overlap; at 390 the SVG keeps ≥ 740 px inside a
+narrower scrolling wrapper; group **F-208**; pass 37's `ONLY=F-203` still green.
+
+### F-209 — A source change quarantines its own arm, never the day (D225) `[judgment]` — claude-opus or codex-luna, not Kimi
+
+*Where:* `ops/daily/refresh-benchmarks.mjs` (the per-arm protocol review that already raises on a changed header, task count, harness or effort),
+`ops/daily/source-health.mjs` + the run report / digest / human-todo path, `test/d188-protocol-notes-match-source.test.mjs` (and the D223 set
+comparison it now carries), `ops/ux-2026-09-12/bin/verify-d188.mjs`, the daily's `run-report.json` writer; `test/d225-*.test.mjs` new.
+*What:* (a) **The collector fails the arm closed, not the run.** When a board publishes a protocol revision outside the registry's reviewed set, the
+arm ends `source_changed_retained` with a reason that names the unreviewed revision(s) and the reviewed set (e.g. "code-quality-maintenance-v3.15
+outside the reviewed v3.4–v3.7"), the capture is retained under `daily-evidence/` with its manifest, the previously published rows stay untouched,
+and the run goes on to collect, test and publish every other arm. (b) **The repo-level continuity test asserts against accepted captures.**
+`d188-protocol-notes-match-source` (and any sibling that reads "the newest retained capture") reads the newest capture the collector *accepted* —
+published or confirmed unchanged (`checks.json` / the step report says so) — so a quarantined capture is evidence for that arm's repair and never
+turns the shared `npm test` red; the D223 set comparison (notes ⊇ guard ⊇ what the accepted board publishes) is unchanged in substance. A
+retained-but-quarantined capture must still be replayable: the replay tooling from iteration 244 (`replay-protocol-review.mjs`) takes it by path.
+(c) **A quarantined arm is visible every day.** `source-health.md`, the run receipt's stale-source line and the digest name the arm and its
+reason on every run it stays quarantined; on the third consecutive quarantined run the digest raises a human-todo (the existing `notify`
+human-todo format) naming the arm, the revision and the registry field to review. (d) **The publish gate is unchanged**: `npm test`, build and
+typecheck still gate the commit; what changes is only that one board's unreviewed revision is no longer a test failure of the suite.
+No score, note or guard value changes with this directive; D223's review of v3.15 stands.
+*Accept:* in a scratch worktree, replay the failed 2026-09-27T00-41 run's own capture directory (`…/runs/2026-09-27T00-41-02-535Z-3199320/work/…`)
+with the registry guard temporarily set back to v3.4–v3.7: the VulcanBench arm ends `source_changed_retained` naming v3.15, every other arm keeps
+its real status, `CI=true npm test` is green, `source-health.md` names the arm, and the synthetic probe (one invented `…-v3.16` row) still fails
+that arm closed; then restore the guard. A third consecutive quarantined run in a simulated run directory yields the human-todo line
+(`notify --dry-run`). Live: `verify-d188.mjs` 105/105 per host unchanged. Record the replay receipt under `/opt/benchmarkheaven/state/ux-evidence/`.
+
+## Directives (pass 37) — F-201–F-205 shipped and verified (see the Done log); F-206 open for the CR-172 job
 
 ### F-201 — The 3D top-five labels sit beside their spheres `[mechanical]` — **shipped by Fable (pass 37)**
 
@@ -477,7 +596,7 @@ the 3D box, at ≥ 3 distinct x positions; three `[data-bh-jev14-3d-axis-label]`
 *Accept:* hub at 390 × light/dark: no `svg text` under 10 px inside either `[data-bh-jev-bubble]`; the 2× label and both hints present in
 each chart; group F-202.
 
-### F-203 — The input-length chart's bucket ticks at 10 px `[mechanical]`
+### F-203 — The input-length chart's bucket ticks at 10 px `[mechanical]` — **shipped (iteration 239), verified (gate 20260927T022003Z, pass 38)**
 
 *Where:* `components/JevContextLength.tsx` (the `active.map` tick text, `fontSize="9.5"`), its test.
 *What:* the six bucket labels ("0–499" … "16,000–63,999") print at 10 px. If at 390 two neighbours would touch, the chart drops every second label on
@@ -485,7 +604,7 @@ narrow widths (the vertical gridline stays; the `<desc>` still lists all buckets
 *Accept:* hub at 1440/390 × light/dark: no `svg text` under 10 px in the chart titled "JevBench public accuracy across input-length buckets";
 no two tick labels overlap; ≥ 3 tick labels visible at 390, all 6 at 1440; group F-203.
 
-### F-204 — One name per axis, one word per unit, one arrow per direction `[mechanical]`
+### F-204 — One name per axis, one word per unit, one arrow per direction `[mechanical]` — **shipped (iteration 239), verified (gate 20260927T022003Z, pass 38)**
 
 *Where:* `components/JevCapability3D.tsx` (the `data-bh-jev14-3d-axes` legend box and the "Vertical: Capability · Right: cheaper · Toward
 you: faster" paragraph), `components/JevCapabilityRanking.tsx` (column head "$/1k tasks", the legend line "Thin red line = cost per 1,000
@@ -502,7 +621,7 @@ Florian's top hints "← pricier · cheaper →" / "← slower · faster →" ar
 `main`; the two bubble axis titles contain no "→"; the top hints still present (group F-202's check); `verify-cr-176-6-live.mjs`,
 `verify-cr-169*` and `verify-fable-pass36-design.mjs` still green; group F-204.
 
-### F-205 — Phone bubble labels whose leaders do not cross `[mechanical]`
+### F-205 — Phone bubble labels whose leaders do not cross `[mechanical]` — **shipped (iteration 239), verified (gate 20260927T022003Z, pass 38)**
 
 *Where:* `components/JevBubbleChart.tsx` (the `labels` layout for the top five, the `narrow` branch).
 *What:* under 640 px the five labels form a single column at the right edge of the plot's upper half (right-aligned text, one label per
@@ -1305,5 +1424,9 @@ The label half is live and verified (`135a3098`, `4a9dd523`). Open: the identity
 | F-198 the image benchmark page is its results; the review trail leaves the page | iteration 235, `verify-fable-pass36-design.mjs` F-198 | same; pass 37 `img-f198` | **Verified by Fable (pass 37):** order Composite → Full ranking → Compare → Examples → Split → Method, candidates in a closed `<details>`, 8 gated sub-lines (Cost / Calibration), no bare 0.00, no bold parenthetical, no Penalty column, "Earlier split" present, 11,036 px at 1440. |
 | F-199 on a phone the Composite figure folds its controls; one control per sort | iteration 235, `verify-fable-pass36-design.mjs` F-199 | same; pass 37 `hub-table.presetRow/weightsMore`, `mobile_*-hub-chart-vp.png`, `hubw-table` | **Verified by Fable (pass 37):** preset row 28 px scrolling (978 > 306), weights closed on load and open with `?w=40-20-20-20`, no "Sort by" button, first bar inside the figure's first viewport; 1440 unchanged (8 sliders visible). |
 | F-200 the Capability ⓘ is a list, and a modal on a phone | iteration 235, `verify-fable-pass36-design.mjs` F-200 | same; pass 37 `hub-rownote`, `*-hub-rownote-open.png` | **Verified by Fable (pass 37):** 1440 hover panel with 7 `dt`; 390 tap opens `[role=dialog]` with ✕ and 7 `dt`, no floating panel, `li` title empty. |
-| F-201 the 3D top-five labels sit beside their spheres (CR-176.6 drew them off the left edge) | pass-37 commit (Fable, 2026-09-26) + `test/fable-pass37.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260926-pass37/` (`canonical/` before: labels at x −10…−23, 1,324 px wide; `local-F-201/` 24/24 on the dev server; `verify-fable-pass37-design.mjs`) | implemented by Fable; needs a non-Fable engine to run `ONLY=F-201` on both hosts after the deploy before `verified` |
-| F-202 the bubble charts' 2× caption and direction hints are 10 px on phones (were 9) | same commit + test | same (`local-F-202/` 20/20) | implemented by Fable; needs a non-Fable engine to run `ONLY=F-202` on both hosts after the deploy before `verified` |
+| F-203 the input-length bucket ticks at 10 px CSS; the chart never renders below its own scale | `b5c8962c` (claude-opus, iteration 239) + `test/fable-pass37.test.mjs` | review gate 20260927T022003Z `pass37-{canonical,legacy}/verification.json`; pass 38 `hub-context` (minFs 10, small [] ×4) | **verified** — gate 20260927T022003Z (codex-luna, non-implementer) on both hosts; re-seen in pass 38. The desktop over-scale it left behind is F-208. |
+| F-204 one name per axis: the 3D legend box and caption gone, "decisions" everywhere on the hub, "* = est." legend, flat-chart axis titles without the arrow | `b5c8962c` (claude-opus, iteration 239) | same; pass 38 `hub-context.tasks` [] / `decisions` 26, `hub-bubbles.axis` | **verified** — gate 20260927T022003Z (codex-luna) on both hosts; re-seen in pass 38 |
+| F-205 phone bubble labels in a right-aligned column ordered like their points, leaders that do not cross | `b5c8962c` (claude-opus, iteration 239) | same; pass 38 `mobile_{light,dark}-hub-scatter{,2}-vp.png` (0 crossings, 0 text overlaps) | **verified** — gate 20260927T022003Z (codex-luna) on both hosts; re-seen in pass 38 |
+| F-207(a) the 3D top-five label sits on a translucent panel-colour plate and carries a 3 × 11 px bar, not an 8 px disc | pass-38 commit (Fable, surgical: `app/globals.css`) + `test/fable-pass38.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass38/` (`live-before/` the disc and no plate on the live site; `local-F-207/` the fix on a dev server; `verify-fable-pass38-design.mjs`) | implemented by Fable; needs a non-Fable engine to run `ONLY=F-207` on both hosts after the deploy before `verified`. F-207(b), the halo, is open. |
+| F-201 the 3D top-five labels sit beside their spheres (CR-176.6 drew them off the left edge) | pass-37 commit (Fable, 2026-09-26) + `test/fable-pass37.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260926-pass37/` (`canonical/` before: labels at x −10…−23, 1,324 px wide; `local-F-201/` 24/24 on the dev server; `verify-fable-pass37-design.mjs`) | **verified** — iteration 239 (claude-opus, non-Fable): `ONLY=F-201` on both hosts at the deploy; re-seen by the review gate 20260927T022003Z (codex-luna) in the pass-37 run (104/124 per host, every miss F-206) and in pass 38 (`hub-3d.modelL`: five labels inside the box at distinct rows, 0 overlaps) |
+| F-202 the bubble charts' 2× caption and direction hints are 10 px on phones (were 9) | same commit + test | same (`local-F-202/` 20/20) | **verified** — iteration 239 (claude-opus, non-Fable): `ONLY=F-202` on both hosts; re-seen by the gate 20260927T022003Z and in pass 38 (`hub-bubbles.charts[].small` = [] in all four contexts) |
