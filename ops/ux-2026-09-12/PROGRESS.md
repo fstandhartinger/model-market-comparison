@@ -13929,3 +13929,187 @@ whether indefinite retention of this data is the right period is part of what th
 |---|---|---|---|
 | Umami retention residual (CR-67.5 §7.4 r1, §6.4 r2) | open → **closed** | `/opt/benchmarkheaven/state/ux-evidence/iter246-umami-retention/measurement.txt`; CR-67.5 §8.4 | Unbounded, measured on the instance. The "needs the host owner" blocker was false — it is this host. |
 | CR-67.5 §8 (CR-178 visitor keying) | **open — needs an independent, non-implementer review** | CR-67.5 §8, `efa0945f` | Named here because the retention row is no longer hiding it. §3 reopens the no-banner decision on a visitor-level keying change; the section says so itself and asks for the review. |
+
+## Iteration 247 (claude-opus, work) — 2026-09-27 ~08:15–11:00 UTC — two of D192's one-row arms repaired, and the AA unfreeze paid for itself before it shipped
+
+Iteration 246 left D192's remainder specified rather than fixed: **16 failing benchmark arms, all
+protocol-approval refusals**, of which eight are "all 1 row disputed, nothing left to publish" — a
+one-row registry entry has no accept-eligible remainder, so those arms can never recover from a
+refresh, only from a registry edit. The named next step was `replay-protocol-review.mjs`, one arm at a
+time. This iteration did two of the eight.
+
+### D226 — both ARC-AGI boards were retained for a metric no ARC Prize page states
+
+`arc-agi::1` and `arc-agi::2` have been quarantined on every run since 2026-09-21. The refusal is the
+same in the 2026-09-22, -23, -25 and -27 rounds, so it is not round variance:
+
+> [blocker] scoring fields in row arc-agi::1; criterion c1 → Provide primary evidence … that states
+> the metric and units for ARC-AGI-1, or remove/adjust the unsupported scoring fields.
+
+The critic was right. The only reviewed reference was `https://arcprize.org/leaderboard`, whose whole
+visible text (4.2 KB — well under the 60,000-byte bound, so the reviewer saw all of it) names the
+boards, describes "passive fluid intelligence" and plots score against cost-per-task, and states **no
+metric, no unit and no range**. The row claimed `"Semi-private exact grid task solution rate"`.
+
+**The repair is evidence, not a weaker claim.** Two references join the leaderboard, captured through
+`scripts/capture-benchmark-sources.py` (robots checked, 2.5 s crawl delay) and retained with receipts:
+
+* `arcprize.org/policy` — the ARC Prize Verified Testing Policy — carries the Semi-Private Evaluation
+  Set's role on the Verified Leaderboard, the single-run rule ("A single run is used, we do not
+  average scores across runs") and the board's own reporting unit ("within ±10 percentage points").
+* `arcprize.org/arc-agi/1` and `/arc-agi/2` carry each version's dataset structure, its Semi-Private
+  split size (100 and 120 tasks) and the accuracy figures the series reports in percent.
+
+`scoring.metric` then loses "exact grid", which **no captured ARC Prize page states**, and reads
+*"Semi-Private Evaluation Set accuracy on the ARC Prize Verified Leaderboard"*. The retained
+`/leaderboard` capture is sha256 `4cd0f842…` — byte-identical to the one the failing 05:33Z daily read,
+so the repair is the evidence beside it, not a friendlier capture of the same page.
+
+**A second finding came out of the first replay, and it is a real one.** With the successor named in
+that same text, criterion c2 disputed `superseded_by: null`: the policy speaks of "the release of
+successive ARC-AGI benchmark versions on a roughly annual basis", `/arc-agi/1` says "The solving of
+ARC-AGI-1 triggered renewed interest in benchmarks like ARC-AGI-2", and `/arc-agi/2` calls itself "the
+next iteration of the benchmark". c2 expressly does **not** read a supersession note as a retirement,
+so `arc-agi::1 → arc-agi::2 → arc-agi::3` is recorded and both boards stay `active` — the Verified
+Leaderboard still reports them. The field feeds only `crossVersionEstimates`' AA collection-window
+migration, which arc-agi has none of, so no value moves.
+
+The contamination caveat quoted that same unsupported metric string (`field: scoring.metric`); it now
+quotes the policy's own sentence about semi-private exposure.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D226 (new) = D192 remainder, 2 of 8 one-row arms | **fixed, pending non-implementer verification** | `f9bf6ed8`; replay **accepted** for both entries (1 fingerprint, 0 quarantined) and both `--lie` probes still failing closed, at `/opt/benchmarkheaven/state/ux-evidence/iter247-d226/replay/`; captures + receipts at `data/raw/benchmarks/daily-evidence/2026-09-27-d226/`; `test/d226-arc-agi-protocol-evidence.test.mjs` **7/7** | No score or observation changed: the dataset diff is these two registry rows and the build timestamp. A non-implementer can reproduce the whole acceptance offline with `BH_REPLAY_MANIFEST=data/raw/benchmarks/daily-evidence/2026-09-27-d226/manifest.json node ops/ux-2026-09-12/bin/replay-protocol-review.mjs 'arc-agi::1' <outDir>`. |
+
+### D227 — AIME 2025's `version_status` held the whole AA fields arm
+
+`aa-benchmark-fields` is the widest AA source we hold, and today's digest reports it stale with **"last
+ok: never, 16 days"**. One row held it: `aa-aime::2025: protocol not approved … [major] field
+version_status`.
+
+Iteration 107 proved that same row **accepted** on 2026-09-18, so AA's text moved underneath it. The
+board's own note now reads *"Retired from our active reporting; no longer part of Artificial Analysis
+Intelligence Index v4.3.2"* (AA moved the index to v4.3.2 — the same move iteration 211 saw behind the
+AA trio's broken excerpts), while the registry still called the version `published`. `status` was
+already `retained`; `version_status` had not followed. **A retired version is not a published one.**
+
+One field. `aa-aime` has a single member, so `crossVersionEstimates` skips the family (it needs two
+members with observations) — and that filter is the only reader of `version_status` outside validation.
+
+### The unfreeze was simulated before pushing, and it was not a no-op
+
+Per `[[unfreezing-a-source-simulate-next-day]]`, the next day was simulated in a scratch worktree
+against today's own AA capture before this went anywhere near `main`:
+
+| | |
+|---|---|
+| rows | 646 → **673** |
+| changed rows | **561** |
+| changed fields | **29** (`aime25`, `gdpval`, `hle`, `lcr`, `terminalbenchV40`, …) |
+| continuity | **passed**, with one recorded retirement: `omniscienceBreakdown` → `omniscienceAccuracy` + `omniscienceHallucinationRate` |
+| ingest | 19,109 observations (from 18,769), 399 rows added, 59 removed |
+| `npm test` | **1485 tests, 1479 pass, 5 fail** |
+
+All five failures were pins written while the arm was frozen. Each is repaired by asserting the
+**rule** rather than the frozen state — and each was checked first for whether it was hiding a real
+defect, per `[[verify-link-targets-not-just-suites]]`:
+
+1. **CR-123** (`test/claude-opus-5-5.test.mjs`) read "no vendor claim reaches a composite" through the
+   proxy `model.category_scores === undefined`. AA now measures Opus 5.5 on AA-LCR, GDP.pdf and MLCR —
+   all three anchors of the Long-context category — so the model earns an honest `cat_long_context:
+   59.2` and the proxy would have called that a leak. Checked at the source: the three anchor rows are
+   `aa:2f3c4dc9-…` **measured** rows, not one of the 16 `self-reported:claude-opus-55-*` claims. The
+   assertion is now the claim itself — every category the model scores in is carried by measured rows
+   of its own, and no anchor is one of the 16 `anthropic-*` boards.
+2. **CR-127** (`test/cr-127-compare-basis.test.mjs`) proved its measured-basis gate non-vacuous from
+   the live population: CR-60.2's chart-read Union Alpha rows sat inside `aa-terminal-bench::4.0`'s
+   measured distribution. The refresh migrated `terminalbenchV40` to its `4.0-upstream-timeouts`
+   successor (151 rows → 1; the successor 22 → 209 — the designed collection-window migration, which
+   `superseded_by` already described), so the axis kept the preliminary row and lost its measured
+   cohort, and the fixture with it. The gate is now probed **directly**: a non-measured value placed at
+   a real measured distribution's mean is positioned by `normalize` and refused by the gate.
+3. **CR-77.1/77.2** (`test/cr-77-tags-and-frontier.test.mjs`) pinned the word `'medium'` for
+   DeepSeek V4.1 Flash. Its benchmaxxing score fell to 5.90 on the new measured boards, which is the
+   **light** band (the level edges are pinned separately in the same suite). Per
+   `[[new-headline-board-moves-cr78-pins]]` the tier was **not** fudged to save the test: the level now
+   follows `benchmaxxingLevelFor(own.score)` — the same rule the three sibling families in that very
+   test were already held to — and the thin-evidence disclosure (8 comparisons, below the 10 the note
+   names) is asserted rather than assumed.
+4. **DeepSeek V4.1 Flash coverage** (`test/deepseek-v41-flash-claims.test.mjs`) was pinned at exactly
+   41 rows directly under its own comment *"Coverage may rise; the assertions below are what must not
+   move."* It is a floor now; 43 today. Everything the comment called load-bearing is untouched.
+5. **CR-117** (`test/mimo-v26-pro.test.mjs`) asserted MiMo v2.6 Pro gets **no** benchmaxxing verdict —
+   true only while it had no qualifying headline/held-out pair. It has seven now (score 6.81, medium,
+   marked uncertain). The check is the rule: a verdict rests on real comparisons, its tier is the one
+   its score implies, thin evidence is disclosed, and **no vendor board takes a side**.
+
+That last one had to be written precisely, and the first attempt was wrong in an instructive way. A
+blanket `JSON.stringify(report).includes('xiaomi-…')` failed — which for a moment looked like CR-117's
+exact defect, a vendor claim driving a benchmaxxing verdict. It is not: all 17 xiaomi boards appear in
+the report's **`profile`**, which lists every axis the model *could* have, self-reported and missing
+ones included. **0 of the 67 axes that took a `side` is a vendor board**, and every driver's headline
+and held-out is an AA or Vals board. The assertion now names the sides and the drivers, which is what
+CR-117 actually asked for; a coarse string search would have failed forever on an honest report.
+
+With the five repaired, the simulated refresh passes **1485 tests, 1484 pass, 0 fail, 1 skip**. So the
+arm can unfreeze without taking the day down with it — which is the whole point of simulating first:
+shipping D227 alone would have unblocked `aa-benchmark-fields` and then killed tomorrow's publication
+at the `npm test` gate, exactly as D188 killed the 00:41 run.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D227 (new) = D192 remainder, 3 of 8 one-row arms | **fixed, pending non-implementer verification** | `02683992`; replay **accepted** (1 fingerprint) and the `--lie` probe failing closed at `/opt/benchmarkheaven/state/ux-evidence/iter247-d227/replay{,-lie}/`; `simulation.json` + both `npm test` logs in the same folder; `test/d227-aa-aime-2025-version-status.test.mjs` **4/4** | One registry field. The acceptance receipt is the **next ordinary daily run publishing `aa-benchmark-fields`**; nothing here asserts it in advance. |
+| D192 | open, remainder specified → **open, 3 of 16 arms repaired** | iteration 246's `iter246-d192/` count plus the two rows above | 16 → 13 failing arms if both hold at the next refresh. Of the eight one-row entries that cannot recover from a refresh, three are done (`arc-agi::1`, `arc-agi::2`, `aa-aime::2025`); the remaining five are `frontiercode-cost::1.1`, `frontierswe::2`, `blueprint-bench::2`, `frontiercode::1.1` and `mls-bench-lite::30-tasks`. Their findings are read and summarised below so the next iteration does not re-derive them. |
+
+### The next five, read rather than guessed
+
+Read out of the 05:33Z run's own `review-r1.json` files, so the next iteration starts from the finding
+and not from the digest's truncated line:
+
+* **`frontiercode-cost::1.1`** — a blocker plus a major. The `cognition.com/frontiercode` excerpt is a
+  changelog and states neither the metric name ("Cost per rollout") nor the unit ("USD"); and
+  `version_guard` asserts `data.json key v1_1 with subsets.main == 100` and an "Extended subset"
+  distinction that no page text carries. Note D193 already moved this entry's payload reference out of
+  the packet as a `literal field`, which is *why* those assertions now have no source in it — the fix
+  is a methodology reference that states the cost metric, exactly as D226 did for ARC-AGI.
+* **`blueprint-bench::2`** — `scoring.unit: "points"` where the source calls it a normalised
+  connectivity similarity score (random baseline 0, perfect 1), and the row's own `notes` say
+  "a normalised index, not a share of apartments solved". The row contradicts itself; the repair is a
+  unit the source supports. **Check the rendered values before changing `unit`** — it is what the page
+  prints beside the number.
+* **`frontierswe::2`** — round 1 timed out on the worker, round 2 asked for the description to name
+  the Proximus harness. A description edit, but confirm the harness claim against the page first.
+* **`frontiercode::1.1`** and **`mls-bench-lite::30-tasks`** — "critic blocked the artifact", i.e. no
+  row-level finding to work from. These need a replay to produce a reviewable refusal before anything
+  can be repaired, and may be gate shape rather than data (like iteration 246's `vals-index::2`).
+
+### Live receipts at the deployed revision `02683992`
+
+`ops/ux-2026-09-12/bin/verify-d226-d227-live.mjs` — **50/50 on each of the three public hosts**
+(`/opt/benchmarkheaven/state/ux-evidence/iter247-d226/live/{canonical,www,legacy}/verification.json`).
+25 API checks, 12 matrix checks, 13 browser checks at 1440×1000 and 390×844. It reads three surfaces,
+because the repair reaches three:
+
+* `/api/benchmarks` — the registry as the deploy serves it: both ARC-AGI rows state the new metric on a
+  percent 0–100 higher-better scale, name their successor, stay `active`/`published`, carry the policy's
+  single-run rule and record `last_verified: 2026-09-27`; **no board on the site claims an "exact grid"
+  metric any more**; and `aa-aime::2025` is `retained`/`retained` with no successor.
+* `/api/benchmark-matrix?models=…` — the reader's caveat, with the field and quote it rests on. This one
+  has to ask for two models that actually hold ARC-AGI results (`deepseek-r1::default`,
+  `grok-3::default`); with an arbitrary pair the board is simply not in the matrix and the check would
+  pass on an absent row.
+* `/benchmarks?benchmark=arc-agi::1` in a real browser — **no value moved**: the seven joined rows are
+  still Gemini 3 Pro 75, DeepSeek R1 15.8, o1-mini 14, GPT-4.1 5.5 …, no overflow, no page errors.
+
+**Two traps this verifier walked into first, recorded so the next one does not.** The board's default
+view lists the **joined** rows only — 7 of the 221 observations — so the 98.5 at the top of the raw
+observation list (a source label with no catalog model) never appears on the page, and a check pinned to
+it reads False against a correct board. And the contamination caveat renders inside an `InfoTip` panel in
+the home page's Simple-mode matrix, not on the board page at all, so the first draft's "caveat is on the
+board page" check failed against a live site that was right. Both are fixed by reading the surface the
+string actually reaches, not the one it seemed like it should.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D226 | fixed → **live-checked on all three hosts, pending non-implementer verification** | `verify-d226-d227-live.mjs` **50/50 per host** at `02683992` | Needs a **non-claude** engine to set `verified`: re-run the verifier, and reproduce the acceptance offline with `BH_REPLAY_MANIFEST=data/raw/benchmarks/daily-evidence/2026-09-27-d226/manifest.json node ops/ux-2026-09-12/bin/replay-protocol-review.mjs 'arc-agi::1' <outDir>` (and `--lie` for the fail-closed half). |
+| D227 | fixed → **live-checked on all three hosts, pending non-implementer verification** | same receipt (the `aa-aime::2025` lifecycle checks) | The remaining acceptance is behaviour, not a page: the **next ordinary daily run must publish `aa-benchmark-fields`**. Nothing here asserts that in advance; `/opt/benchmarkheaven/state/ux-evidence/iter247-d227/simulation.json` states what the refresh will move (673 rows, 561 changed, 19,109 observations) so tomorrow's run can be compared against a written expectation rather than a memory. |
