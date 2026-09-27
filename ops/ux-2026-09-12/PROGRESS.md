@@ -14318,3 +14318,141 @@ exit 0. Live: **55/55** (D228/D229) and **41/41** (D231) on canonical, `www` and
    spending an iteration on them.
 4. Tomorrow's ordinary daily is the acceptance receipt for D227's `aa-benchmark-fields` unfreeze and
    for all four arms repaired here.
+
+## Iteration 249 — claude-opus, 2026-09-27 ~10:30–13:00 UTC
+
+### D232 — the last of D192's eight one-row arms: a column definition that only a chunk states
+
+`frontiercode-cost::1.1` had been retained since 2026-09-21 on a single blocker, restated by
+iteration 248 as D230's F1: *"Supply a source excerpt/locator that explicitly states the cost metric
+name and unit."* The row says metric **"Cost per rollout"**, unit **"USD"**. Those are the
+leaderboard's own words — but the page is client-rendered and its column definitions ship inside one
+of the **19 hashed chunks** the page declares, so no reviewer had ever been shown them.
+
+**The rule gained a second, declared form.** `follow_module_script` (D188) requires *exactly one*
+module script matching a Vite `/assets/*.js` or CRA `static/js/main.*.js` name; a Next.js page ships
+19 chunks whose names rotate on every deploy, so neither a pinned chunk URL nor that rule can reach
+it. `scripts/capture-benchmark-sources.py` now also takes **`follow_script_marker`**: the page's own
+same-origin `<script src>` list is fetched under the same robots policy and crawl delay, and the one
+script containing the reviewed marker is kept — **exactly one, or nothing**. Zero matches and two
+matches are both recorded as a `follow_error`, which retains the arm; neither is guessed at. Only
+the winner is queued, so only the winner's body is ever written: the other 18 are read and dropped.
+
+Measured, not estimated: 19 declared scripts, **one** match, **53.9 s** and two files written
+(146,903-byte page + 137,972-byte chunk). That is the whole cost this adds to a daily run.
+
+The marker is the sentence the row rests on, so the rule selects on the same text a reviewer reads:
+
+    note:"Cost ($): the mean USD spend per rollout."
+
+and the quoted passage is the column's whole definition, contiguous and verbatim —
+`{id:"cost",field:"cost",label:"Cost ($)",title:"cost",axisLabel:"avg cost (USD) per rollout",…}`.
+It names the metric, the unit **and** `field:"cost"`, which is the field the entry's locator reads
+(`v1_1.data[model][effort].main.cost`). The chunk extracts to 137,972 bytes against the
+60,000-byte review bound, so the excerpt path in `protocolSourceContent` is the one in force and the
+excerpt has to stay verbatim in every future capture or the arm fails closed.
+
+**One live latent defect found on the way, and it was not hypothetical.** `captureTargets` keyed a
+follow request by the page URL and then let a plain `primary_url` for the same page overwrite it with
+a bare string. `frontiercode-cost::1.1` is registry index 77 and declares the follow;
+`frontiercode::1.1` is index 78 and names the same page as its `primary_url` — so in the real
+registry the follow request was cancelled before the run ever saw it. Proved by running the
+pre-change `captureTargets` against the committed registry: it queues the plain string
+`"https://cognition.com/frontiercode"`. A queued follow request is now never downgraded. The four
+`apprenticebench-*` entries have exactly the same shape and escaped only because their follow
+reference happens to be read last; they are covered by the same guard and by a test.
+
+**Result: accepted in round 1, one fingerprint, no quarantine** — with the producer citing the new
+source by name ("Source 4 shows cost metric 'mean USD spend per rollout' in USD, matching
+metric/unit/description"). Nothing was deleted to make a finding go away, `scoring.metric` and
+`scoring.unit` were **not** reshaped to fit the excerpt, and no value, join or observation moved:
+the whole dataset diff is registry prose, one evidence reference and the build timestamps.
+
+### The 07:20 review gate wrote receipts but no report
+
+`20260927T072004Z review codex-luna rc=0` (state/ux/history.log) ran eleven verifiers at revision
+`ca1da0b6` and wrote every receipt to
+`/opt/benchmarkheaven/state/ux-evidence/review-20260927T072004Z/` — and then wrote **no
+`REVIEW-*.md` and no ledger row**, so its conclusions were about to be lost. They are transcribed
+below. The engine that performed each check is codex-luna; this iteration only carries the receipt
+across, and says so, because the acceptance rule is about who *ran* the check. That gate's own
+prose verdict is gone for good: a later gate may still reopen any of these.
+
+| Receipt (all at revision `ca1da0b6`) | Result |
+|---|---|
+| `f206-{canonical,www,legacy}` | **52/52 each** — F-206's cost pills, interval whiskers, "$/1k decisions", named leader line and Penalty column, 13 checks × 4 contexts |
+| `d221-{canonical,www,legacy}` | **84/84 each** — the four KernelBench-CUDA megaqwen cells published and joined |
+| `pass38-{canonical,www,legacy}` | **58/58 each** (F-207/F-208) |
+| `pass37-{canonical,www,legacy}` | **16/16 each** |
+| `d223-d225-live` | **105/105** |
+| `e1-live-pointer-emulated` | **66/66** |
+| `e1-live` | 60/66 — six "Score explanation identifies ECI as a Composite input", see below |
+| `eci-cr18-{canonical,www,legacy}` | 0 checks recorded (the verifier wrote an empty receipt) |
+| `f209-replay` | receipts present (`suite-with-record.log`, `source-health-run{1,3}.md`, `notify-dry-run.log`) |
+
+The six `e1-live` failures are the pointer artefact this gate had already written up at 02:20
+("the nominal mobile contexts in `verify-live-review.mjs` report mouse input"): the same verifier
+with a real pointer emulated passes **66/66** on the same page and revision, and the failing
+check's own `detail` is the filter panel's text, not the score-explanation panel's — the panel the
+check wanted was never opened, so the assertion read the wrong element. Recorded as a harness
+artefact with its counter-receipt beside it, **not** as a live ECI defect and **not** as a clean
+pass: the next gate should re-point that check at the panel it means.
+
+### Receipts
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D232 (new) = D192 remainder, the last one-row arm | **fixed, pending non-implementer verification** | replay **accepted** (1 fingerprint, 0 quarantined) at `/opt/benchmarkheaven/state/ux-evidence/iter249-d232/round1/`, `--lie` failing closed in `…/lie/`; capture `data/raw/benchmarks/daily-evidence/2026-09-27-d232/`; `test/d232-declared-script-marker.test.mjs` **5/5** | Reproduce offline with `BH_REPLAY_MANIFEST=/opt/benchmarkheaven/state/ux-evidence/iter249-d232/replay-manifest.json node ops/ux-2026-09-12/bin/replay-protocol-review.mjs 'frontiercode-cost::1.1' <outDir>` (that manifest is iteration 248's plus the discovered chunk receipt). Registry prose and one evidence reference only: no observation, value or join changed. |
+| D230 | partly fixed, F1 open → **closed** | this section | F1 was the cost column's metric text. Option 1 of the two the last iteration specified was taken (declared content marker); option 2 (a browser-only capture) was not needed. |
+| D192 | open, 7 of 16 arms repaired → **open, 8 of 16 arms repaired** | this section | **All eight one-row entries are done**: `arc-agi::1`, `arc-agi::2`, `aa-aime::2025`, `frontierswe::2`, `blueprint-bench::2`, `mls-bench-lite::30-tasks`, `frontiercode::1.1`, `frontiercode-cost::1.1`. The remaining eight are multi-row arms that a refresh can recover; check tomorrow's `source-health.md` before spending an iteration on them. |
+| F-206 | live-checked, pending non-implementer verification → **verified** | `/opt/benchmarkheaven/state/ux-evidence/review-20260927T072004Z/f206-{canonical,www,legacy}/verification.json`, **52/52 per host** at `ca1da0b6` | Verifier: **codex-luna** (gate 20260927T072004Z), which is not the implementer. Receipt transcribed here because that gate wrote no report. The page stays noindex and unlinked; CR-172 still gates the linking. |
+| D221 | verified live by the implementer → **verified (non-implementer receipt on record)** | `…/review-20260927T072004Z/d221-{canonical,www,legacy}/verification.json`, **84/84 per host** at `ca1da0b6` | Same gate, same reason. |
+| E1 (ECI in the Composite, addendum §E1) | **the page is right; the failing check was never committed** | `/opt/benchmarkheaven/state/ux-evidence/iter249-e1-eci/` (`score-panel-probe.txt`, `eci-probe.mjs`) beside the gate's `e1-live/` (60/66) and `e1-live-pointer-emulated/` (66/66) | E1 asks that the Score (i) explanation show ECI is part of the Composite. Read live at 1440×1000 and at 390×844 with touch: the "About the Capability Score column" panel says *"Averages seven major benchmarks and indices, including Artificial Analysis and Epoch AI's ECI."* — as does the minimum-score panel, in both contexts. The gate's failing assertion read the filter panel's text instead, because the panel it wanted was never opened; **its verifier is not in the repo** (`grep "ECI as a Composite input" ops/` finds nothing but this ledger), so it cannot be re-run or repaired — only replaced. A gate that writes a check worth keeping should commit it. |
+
+### D232 live receipts at the deployed revision `713c601d`
+
+`ops/ux-2026-09-12/bin/verify-d232-live.mjs` — **27/27 on each of the three public hosts**
+(`/opt/benchmarkheaven/state/ux-evidence/iter249-d232/live/{canonical,www,legacy}/verification.json`).
+Two surfaces: `/api/benchmarks` serves the new reference with its marker, its page, the chunk URL
+under `/_next/static/chunks/`, and a quoted column definition that states the metric name, the unit
+and `field:"cost"` — with the five earlier references still cited and `frontiercode::1.1` untouched,
+which is what shows the repair did not spill into the neighbouring board. And
+`/api/benchmark-scores` still publishes **all 98** observations, every one a self-reported USD
+amount, with five pinned and unmoved (`SWE-2|medium` 0.3712, `SWE-2|high` 0.7813, `SWE-2|max`
+1.1761, `Claude Fable 5.1|low` 2.3849, `Claude Fable 5.1|max` 12.8257).
+
+Preflighted against the pre-deploy site: **17/27**, with exactly the ten checks that assert the new
+state failing and every count and value already passing
+(`…/iter249-d232/preflight/verification.json`).
+
+## Iteration 249 summary
+
+D192's **last one-row arm** is repaired. `frontiercode-cost::1.1` needed a source for two words
+("Cost per rollout", "USD") that only a Next.js chunk states, so the D188 follow rule gained a
+declared-marker form: the page's own script list, fetched under the same robots policy, and exactly
+the one script carrying the reviewed marker — or nothing. 19 declared scripts, one match, 53.9 s,
+two files written. On the way, a live latent defect: a plain `primary_url` for the same page had
+been cancelling the follow request in the real registry, which is why this arm could never have been
+repaired by a capture alone.
+
+Gates: `node scripts/build-dataset.mjs` 870 models / 673 families / 94 providers / 3,134 offers,
+`CI=true npm test` **1490 tests, 1489 pass, 0 fail, 1 skip** (exit 0, unpiped), `npx tsc --noEmit -p .`
+exit 0. Live **27/27** on canonical, `www` and legacy at `713c601d`.
+
+Also recovered: the 07:20 codex-luna gate's eleven receipts, which it wrote and then left out of
+every report — they pay F-206's and D221's non-implementer verification.
+
+**For the next iteration, in order:**
+
+1. **Tomorrow's 05:17 daily is the acceptance receipt** for every arm repaired in iterations 246–249
+   (`arc-agi::1`, `arc-agi::2`, `aa-aime::2025`, `frontierswe::2`, `blueprint-bench::2`,
+   `mls-bench-lite::30-tasks`, `frontiercode::1.1`, `frontiercode-cost::1.1`) and the first run to
+   exercise the declared-marker rule unattended. Read `reports/source-health.md` first: the eight
+   multi-row arms of D192 are whatever survives it, and `vending-bench::2` has been retained since
+   2026-09-23 on *"producer uncertainty cannot be overruled by a critic pass"*, which is a shape none
+   of the eight one-row repairs covers.
+2. **The text extractor flattens inline badges onto their own line** (iteration 248's finding): a
+   `Deprecated` badge on a nav link reads as a heading over the next group. It changes every packet's
+   text, so it wants its own iteration and a broad replay.
+3. **Replace the gate's uncommitted E1 check** with one in `ops/ux-2026-09-12/bin/`, pointed at the
+   Score (i) panel rather than at whatever text is on the page. The requirement itself is met live.
