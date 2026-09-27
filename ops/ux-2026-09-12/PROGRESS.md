@@ -14795,20 +14795,131 @@ registry or code changed in this iteration to make that true; the row was simply
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
 | D223 | iteration 250's "open" **corrected → verified** | `…/review-20260927T111003Z/d188-d223-d224/verification.json` **105/105**, three hosts, 11:46 UTC, verifier codex-luna; registry `version_guard` and notes at `data/raw/benchmarks/registry.json` | The "open" row restated the 02:20 gate's fence, which iteration 244 (`261be5fd`) had already replaced. Worth a process note: a receipt recovered from a report-less gate has to be read against the code it ran on, not against the last prose anyone wrote about the item. |
-| D224 | code half verified, **live half still open** | same receipt: "every board column resolves to a reviewed catalog family" — pass | The eight cells (GPT-5.6 Sol ×4, Claude Opus 5.5 ×4) still need a *publishing* refresh, and that is blocked — see below. |
+| D224 | code half verified, **live half: four cells, not eight** | same receipt: "every board column resolves to a reviewed catalog family" — pass; `data/raw/benchmarks/public-observations.json` | Counted, not assumed: the arm publishes **28** rows — 24 retrieved 2026-09-18 and **GPT-5.6 Sol at low/medium/high/extra-high retrieved 2026-09-25**. So half of iteration 244's "eight cells" was already live two days before that iteration described them as unjoined; what is outstanding is the four **Claude Opus 5.5** cells (its `max` and Sol's `max` are withheld by the n=22 denominator rule, correctly). Whether Sol joined through a path that does not consult the reviewed label map is worth one look before D224 is closed. |
 
 ### Why D224's live half is stuck: the VulcanBench arm's critic has blocked the artifact twice
 
 `vulcanbench-frontier::4` is `retained_after_failure`, failing since the 00:41 run of 2026-09-27, two
-consecutive runs, reason `protocol not approved: round 1: critic blocked the artifact`. Its published
-observations are still the **2026-09-18** capture — 28 rows, no GPT-5.6 Sol, no Opus 5.5 — so D224's eight cells
-and the board's five v3.15 rows cannot reach the site no matter how well the registry reviews them. `last_ok` is
-2026-09-26 05:26; the block is new.
+consecutive runs, reason `protocol not approved: round 1: critic blocked the artifact`. `last_ok` is
+2026-09-26 05:26; the block is new, and while it holds the board's five v3.15 rows cannot reach the site no
+matter how well the registry reviews them.
 
 A `blocked` verdict is the critic's own judgment, not a transport failure, so the replay harness is the way to
 read it. Replayed offline against the failing run's own capture
 (`BH_REPLAY_MANIFEST=data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/manifest.json`), the **producer
 returns `match`** with a note that walks all three axes of the entry and states the protocol set as
 `{v3.4, v3.5, v3.6, v3.7, v3.15}` — i.e. the producer agrees with the repaired registry. Receipt and the critic's
-own words: `/opt/benchmarkheaven/state/ux-evidence/iter251-vulcan-replay/`.
+own words: `/opt/benchmarkheaven/state/ux-evidence/iter251-vulcan-replay/`. **The block is removed in the same
+iteration — the next section is why it was there.**
 
+### D234 (new) — a board's version guard lives in three places, and D223 repaired only one of them
+
+The VulcanBench arm did not fail on its data. It failed on its **packet**, and the failure had been
+built into the registry two iterations earlier.
+
+**What the critic actually said.** Replayed offline against the failing run's own capture, round 1
+returned `revise` with three findings and four items of `missing_evidence` — not `blocked`, which is
+the variance a free critic pair gives you on the same bytes, and the reason the daily's one-line
+`reason` is never the diagnosis. The producer returned `match` both times. Receipt:
+`/opt/benchmarkheaven/state/ux-evidence/iter251-vulcan-replay/round1/`.
+
+* **[blocker]** `scoring.notes` (v3.15 continuity): "None of SOURCES 1–5 contains D223,
+  judge-protocols.json, or any text reporting those invariants." The notes iteration 244 wrote cite
+  the operator's evidence bundles by name; **the packet did not carry them.**
+* **[minor]** the same for four smaller disclosures (the retry from v3.7 on, the v3.4 Muse/v3.3 Grok
+  pair, the per-revision `protocol_sha256`, the Claude Code version confound).
+* **[major]** `version_guard`: "SOURCE 4 rows 2 and 16 have n=22 with non-null combined_33; SOURCE 2
+  lists these same rows ranked #2 and #16. This contradicts 'every published row must state n=23'."
+
+**Why the bundles were invisible.** `ops/daily/refresh-benchmarks.mjs` builds the packet from
+`entry.evidence.filter((s) => !s.source_sha256 && !/literal field/.test(s.excerpt))` — the convention
+that separates a *protocol reference* from a *result payload* (71 entries carry payload evidence, all
+of them AA Flight snapshots). Iteration 244 filed its two bundle captures with `source_sha256` **and** an
+excerpt that listed their literal field names, so each tripped both exclusions; the v3.15 report page it filed
+beside them tripped the first. Iteration 244 ran no protocol review — its receipts are build-dataset, npm test,
+tsc and `verify-d188` — so nothing said so; the next morning's run did.
+
+**The repair.** All five judge-protocol bundles are protocol references now — the v3.15 and v3.4 ones
+that were filed out of the packet, plus v3.5, v3.6 and v3.7, which the notes' remaining claims rest on
+and which nobody had filed at all. Each is ≤ 20 KB, well under the 60 KB review bound, and each
+excerpt is now a verbatim quote of its own `protocol_ids`/`protocol_sha256` block rather than a list of
+field names. The v3.15 report page lost its `source_sha256` for the same reason. The packet goes from
+5 sources / 58 KB to 11 sources / 158 KB, and the producer's round-2 note cites "Sources 7–11" for the
+continuity it could only assert before. `captureTargets` already queues every evidence URL, so the
+daily fetches all five from tomorrow without a further change.
+
+**The guard said something untrue.** "Every published row must state n=23" is not what the board does:
+it publishes and ranks two disclosed 22-of-23 rows. What is ours is the *comparison* rule — a different
+denominator is withheld. The guard now says that, in the three places it lives.
+
+**And it lived in three places.** `data/raw/benchmarks/collection-plan.json` holds this text twice
+(`version_guard` and `recipe.version_guard`), and both still read "a protocol **starting**
+code-quality-maintenance-v3" — the prefix rule D223 replaced with a reviewed set, and looser than it —
+with the board's update mis-dated 2026-09-21 instead of 2026-09-19. This is D233's shape exactly: a
+registry-only repair, all three gates green, the other copies live. Across the whole plan, **104 of 121**
+boards keep the three copies identical; `test/d234-version-guard-twins.test.mjs` pins those and names
+the 17 (cross) and 13 (inner) that differ today as an inventory of unreviewed drift — a list that may
+shrink, and that cannot grow without a reason in the same commit.
+
+**The result.** Replayed again with the enlarged packet — **same producer (`z-ai/glm-5.3-flash`), same
+critic (`deepseek/deepseek-v4-flash-0731`), same captured bytes** — the review comes back
+`verdict: pass`, **0 findings, 0 missing evidence, full coverage**, accepted in round 1 with one
+fingerprint and nothing quarantined. The only thing that changed is that the packet now carries the
+sources the notes cite. That is worth saying plainly: for two days this arm's daily failure was read as
+a data or protocol problem, and it was a packet problem the registry had been carrying since
+iteration 244.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D234 (new) | **fixed, pending non-implementer verification** | `8c57a894`; replay **accepted** (1 fingerprint, 0 quarantined, `verdict: pass`, 0 findings) at `…/iter251-vulcan-replay/round2/`, the refusal it replaces at `…/round1/`, `--lie` at `…/replay-lie/` (its **producer already refuses**: `status: mismatch`, quoting "VulcanBench Frontier v4 · current suite", the 2026-09-19 update and the 2026-09-26 v3.15 report against the flipped `retained`; its critic round was still running when this was written — the result is a one-line follow-up, not a condition of the row); `test/d234-version-guard-twins.test.mjs` **4/4** | Reproduce offline: `BH_REPLAY_MANIFEST=<merged 05-33 + 2026-09-27-d223 manifest> node ops/ux-2026-09-12/bin/replay-protocol-review.mjs 'vulcanbench-frontier::4' <outDir>`. The merge is only needed offline — `captureTargets` queues every evidence URL, so tomorrow's run fetches all five bundles itself. |
+| D188 / D223 / D224 fence | **still green after the repair** | `…/iter251-vulcan-replay/d188-live-3hosts/verification.json` **105/105** (35 per host) on canonical, `www` and legacy at `8c57a894`; `derived.vulcan_protocols` still lists all five reviewed revisions | The repaired guard keeps its closed `protocol in exactly {…}` list and its 2026-09-19 date, so the live checks that re-derive the reviewed set from the served notes read the same set they did before. |
+| D224 | code half verified, **live half: the block in front of it is removed** | as above; `public-observations.json` | The four Claude Opus 5.5 cells and the board's five v3.15 rows publish when the arm next collects — tomorrow's 05:17 is the receipt. GPT-5.6 Sol's four are already live from the 2026-09-25 capture (see the count above); only its `max` stays withheld. |
+
+## Iteration 251 summary
+
+The `[mechanical]` directive Fable left behind is shipped and live on all three hosts, and the two
+fixes Fable shipped in pass 39 have the non-Fable receipt they were waiting for (**56/56 per host**
+across F-206d, F-211 and F-210; pass 37's `ONLY=F-206` back to **52/52**). F-210's own verifier group
+could not have passed before this commit — a template-literal escape in plain code made its intro
+check unsatisfiable — so the checker was fixed, stricter, and the page was not reshaped to fit it.
+
+Two ledger rows were wrong, and both cost real work:
+
+* **D223 was not open.** Iteration 250 recovered the 11:10 gate's receipts and carried the 02:20
+  gate's prose along with them, describing a fence iteration 244 had already replaced. The receipt
+  itself is the proof of the current state. A receipt rescued from a report-less gate has to be read
+  against the code it ran on.
+* **The VulcanBench arm was not failing on its data.** Its critic could not see the evidence its own
+  notes cite, because iteration 244 filed those captures in the shape `refresh-benchmarks` excludes
+  from a review packet. Same producer, same critic, same bytes: **refused** before, **accepted with a
+  clean pass** after.
+
+One correction to this iteration's own earlier commit message (`75c506d6`): it said the arm's published
+rows are "still the 2026-09-18 capture" and that D224 owes eight cells. Counting them says otherwise — 24 of
+the 28 are from 2026-09-18 and **GPT-5.6 Sol's four are from 2026-09-25**, so D224's live half is the four
+Claude Opus 5.5 cells, not eight. Iteration 244 described Sol as unjoined two days after it had joined; why it
+joined without the reviewed label map is the one thing to check before D224 is closed.
+
+Gates: `node scripts/build-dataset.mjs` 870 models / 673 families / 94 providers / 3,134 offers (the
+diff is the registry text and the build timestamps; no value moved), `CI=true npm test` **1,510 tests,
+1,509 pass, 0 fail, 1 skip** (exit 0, unpiped), `npx tsc --noEmit -p .` exit 0.
+
+**For the next iteration, in order:**
+
+1. **Tomorrow's 05:17 is the receipt for four things now**, not three: the eight one-row arms of
+   iterations 246–249, `vending-bench::2`, D227's `aa-benchmark-fields` unfreeze, and
+   `vulcanbench-frontier::4` — whose publish settles **D224's live half** (four Claude Opus 5.5 cells;
+   GPT-5.6 Sol's four have been live since the 2026-09-25 capture) and puts the board's five v3.15 rows
+   on the site for the first time. Read `reports/source-health.md` first.
+2. **Fifteen other arms are `retained_after_failure`** on the 05:17 run, nine of them for three consecutive
+   runs or more (`aa-benchmark-fields` for fifteen). D234's shape — *the packet, not the data* — is worth
+   ruling out in the rest before reading any board. `frontiercode::1.1` and `mls-bench-lite::30-tasks` ended
+   with the same one-line `critic blocked the artifact` that turned out not to be the diagnosis here, and a
+   static look already separates them: `frontiercode::1.1` (and its `-cost` sibling) each hold **one evidence
+   entry the packet filter drops** — `cognition.com/data/frontiercode-leaderboard/data.json`, on the "literal
+   field" marker — while `mls-bench-lite::30-tasks` has **none**, so its block is something else. That is a
+   lead, not a finding: for a leaderboard `data.json` the exclusion may well be the right call. Replay each
+   against its own capture and read the critic, the way this one was read.
+3. **F-210 needs a non-claude engine** to set `verified`: `verify-fable-pass39-design.mjs` `ONLY=F-210`
+   on the canonical host. D234 needs one too.
+4. **D221** is unchanged: the four KernelBench-CUDA cells stay unproven until a refresh publishes them.
