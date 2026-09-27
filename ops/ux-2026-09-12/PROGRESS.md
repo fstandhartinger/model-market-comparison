@@ -15458,3 +15458,36 @@ table above as the driver wrote it), `replays/` (one verdict per arm, plus `arc-
 reviews), `merged-manifest.json` (the 677-receipt manifest the replays read), and the gates:
 `build-dataset-final.log` (870 models / 673 families / 94 providers / 3,134 offers), `npm-test-final.log`
 (**1,515 tests, 1,514 pass, 0 fail, 1 skip**) and `tsc-final.log` (empty, exit 0).
+
+### R9.1 — the two "stale source dates" are the AA hold working, not a collector failing
+
+Three review gates in a row have listed **R9.1** as open and cited the same two dates from live
+`/api/meta`: `aa_coding_agents=2026-09-09` and `openrouter_aa_relay=2026-09-18`. Every other one of the
+28 published source dates is **2026-09-27**. Both exceptions were read to the bottom this iteration, and
+neither is a collector that quietly stopped:
+
+- **`aa_coding_agents` (2026-09-09)** is the retained **v1.4 legacy snapshot**, and
+  `data/raw/aa-coding-agents.method.md` says so in terms: "the dated v1.4 input used by the existing
+  Composite path", kept deliberately separate from the v1.5 capture ("never combine values across
+  versions"). v1.5 *is* fresh — `aa_coding_agents_v1_5=2026-09-27`, 20 complete rows collected by the
+  05:17 run. The same note carries the reason the v1.4 file cannot simply be re-collected: "Do not
+  refresh, remove, or alter numeric AA rows until the written-permission question is resolved." It is
+  still consumed (`scripts/build-dataset.mjs:544`), so its date is still published.
+- **`openrouter_aa_relay` (2026-09-18)** is a **hash-locked, hand-rotated capture**, not a daily arm.
+  `data/raw/benchmarks/ingestion-lock.json` pins the decompressed response's sha256 and the ingestion
+  "refuses the AA agentic rows when the capture no longer matches"; `scripts/lock-openrouter-aa-relay.mjs`
+  states the rotation contract — "Rotating the capture is a reviewed change: re-run this script, review
+  the diff, commit" — and it runs by hand. Its payload is AA agentic rows relayed through OpenRouter, so
+  rotating it *is* refreshing AA numeric rows, which the same hold forbids.
+
+**So R9.1 is owner-blocked, not work-blocked.** Its text asks for "every live source dated today"; two
+live sources are under a standing instruction not to be refreshed, recorded as the open row **CR-139.3**
+(AA-derived values on hold pending written permission; normalised to `open` by gate 20260924T074002Z, and
+it "closes only when the hold is released (written AA permission) or Florian rules otherwise"). No work
+iteration can close R9.1 without either that permission or a ruling that a documented, hash-locked,
+deliberately frozen snapshot counts as a satisfied "live source". **This iteration did not rotate either
+capture** — doing so would have broken the hold to make a requirement look green.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| R9.1 | open → **open, reclassified: blocked by CR-139.3 (owner)** | live `/api/meta` (26 of 28 sources `2026-09-27`); `data/raw/aa-coding-agents.method.md`; `data/raw/benchmarks/ingestion-lock.json` `openrouter_aa_relay`; `scripts/lock-openrouter-aa-relay.mjs`; `scripts/build-dataset.mjs:544` | The two cited dates are a deliberate retained snapshot and a deliberate hash-locked capture, both held by the AA written-permission hold. Not a collector defect and not repairable by a work iteration. A future gate should cite CR-139.3 rather than re-listing the dates as staleness. |
