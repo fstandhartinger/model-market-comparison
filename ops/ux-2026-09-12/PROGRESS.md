@@ -15038,6 +15038,44 @@ Gates: `node scripts/build-dataset.mjs` 870 models / 673 families / 94 providers
 `CI=true npm test` **1,515 tests, 1,514 pass, 0 fail, 1 skip** (exit 0, unpiped);
 `npx tsc --noEmit -p .` exit 0.
 
+### D235 continued — the convention applied to the rest of the registry, and one correction
+
+Having a marker and leaving 61 entries without it would have been a half-applied convention, so the
+same iteration converted them. Two passes, both provably meaning-preserving:
+
+* **47 entries** whose last `scoring.notes` sentence was *entirely* our handling of the row
+  ("Secondary benchmark, never a Composite input.", "Community benchmark, never a Composite input.",
+  the Epoch attribution line) were converted by prefixing the marker and lowercasing the first
+  letter. Nothing else in the sentence changed.
+* **12 entries** had the policy clause welded onto a claim a source has to settle — what the
+  maintainer publishes per row (`cursorbench`, the four `apprenticebench` boards), who publishes the
+  board (`programbench`), that an LLM judge grades it (`react-native-evals`, `researchclawbench`, both
+  `matharena-brokenarxiv` editions), the cost boards' separate-metric sentence. Only the boundary
+  moved: every sourced clause stays in front of the reviewer, no word was deleted.
+
+**Two entries are left in the inventory on purpose:** `frontiercode-cost::1.1` and
+`vulcanbench-frontier::4`. Both are arms whose repair (D232, D234) is collected by tomorrow's 05:17
+run, and their review packet is not worth perturbing the night before its receipt. Convert them once
+those receipts are in.
+
+**One correction to this iteration's own commit messages** (`2eff16a8`, `040b8d86`): they say the
+policy sentence is "kept on the site". It is kept in the **published data** — `/api/benchmarks` and
+`data/dataset.json` — and no component renders a benchmark's `scoring.notes` today (checked:
+`/benchmarks` server HTML carries none of it, and no `.tsx` reads `scoring.notes`). So the sentence is
+still there for every API consumer and for our own gates, which is what matters for not deleting it,
+but it is not a sentence a reader sees on a page. If it should be one, that is a design question for
+Fable, not a data one — R1.6's methodology section is where it would belong.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D235 (registry-wide) | **fixed, pending non-implementer verification** | `040b8d86`, `196a3181`; `test/d235-policy-note.test.mjs` **5/5**; live `verify-d235-live.mjs` **53/54 per host** at `196a3181` (`…/iter252-vals-ugi/live-{canonical,www,legacy}/verification.json`), preflight **51/54** at `040b8d86` with exactly the two pending-deploy checks red | 68 entries carry the marker; the inventory is down to two, both held back for a day with a stated reason. No value moved: 49 + 12 lines of registry prose. |
+
+The live verifier's own invariant was corrected mid-iteration: "nothing is written after the marker"
+was wrong, because everything after the marker is ours by definition — `vals-index-terminal-bench-2.1::2`
+legitimately follows the Composite rule with a join rule. The guard that matters, offline and live, is
+that **no protocol word** (metric, unit, range, task set, harness, judges, rubric, version, saturation,
+denominator, subset) appears behind the marker.
+
 **For the next iteration, in order:**
 
 1. **Tomorrow's 05:17 is the receipt for eleven things**: the eight one-row arms of iterations 246–249,
@@ -15048,8 +15086,7 @@ Gates: `node scripts/build-dataset.mjs` 870 models / 673 families / 94 providers
 2. **D235 and F-210 need a non-claude engine** to set `verified`: `node ops/ux-2026-09-12/bin/verify-d235-live.mjs
    https://benchmarkheaven.com <outDir>` (50/51 is the pass mark until a run republishes these arms), the
    two offline replays above, and `verify-fable-pass39-design.mjs` `ONLY=F-210` on canonical. D234 needs one too.
-3. **The 61-entry inventory is the next systemic lever.** Converting a family at a time to the
-   `Benchmark Heaven policy:` marker removes a latent refusal from each arm before a critic finds it. Do it
-   per family with its own captured page in hand, never by pattern-replacing the sentence: in several
-   entries the policy clause is welded onto a sourced one.
+3. **The inventory is down to two**, both held back for a day on purpose: convert
+   `frontiercode-cost::1.1` and `vulcanbench-frontier::4` once tomorrow's run has collected their D232 and
+   D234 repairs, and remove them from `UNMARKED_POLICY` in the same commit.
 4. **D221** is unchanged: the four KernelBench-CUDA cells stay unproven until a refresh publishes them.
