@@ -2,7 +2,7 @@
 // width, in light and dark theme. BH_OUT=<dir> node verify-live-review.mjs <base-url>
 import { createRequire } from 'node:module';
 const require = createRequire('/home/flori/n8n-local/');
-const { chromium } = require('playwright');
+const { chromium, devices } = require('playwright');
 const fs = await import('node:fs/promises');
 const OUT = process.env.BH_OUT || '/opt/benchmarkheaven/state/ux-evidence/review-live';
 const BASE = process.argv[2] || 'https://benchmarkheaven.com';
@@ -15,8 +15,10 @@ const safe = async (key, fn) => { try { await fn(); } catch (e) { r.errors.push(
 async function page(kind, theme) {
   const mobile = kind === 'mobile';
   const c = await browser.newContext({
+    ...(mobile ? devices['Pixel 7'] : {}),
     viewport: mobile ? { width: 390, height: 844 } : { width: 1440, height: 1000 },
     hasTouch: mobile, isMobile: mobile, colorScheme: theme,
+    deviceScaleFactor: 1,
   });
   await c.addInitScript((t) => { try { localStorage.setItem('theme', t); localStorage.setItem('bh-theme', t); } catch {} }, theme);
   const p = await c.newPage();
@@ -51,7 +53,9 @@ for (const kind of ['desktop', 'mobile']) {
       const th = p.locator('th', { hasText: 'Score' }).first();
       o.adv_headers = (await p.locator('table.dtable thead th').allInnerTexts()).map((s) => s.replace(/\s+/g, ' ').trim());
       o.adv_score_aria_sort = await th.getAttribute('aria-sort');
-      const idx = o.adv_headers.findIndex((h) => /^SCORE/i.test(h));
+      // The live label is "Capability Score", not a header beginning with "Score".
+      // Match the actual score heading or this probe can read the wrong column (or none).
+      const idx = o.adv_headers.findIndex((h) => /\bscore\b/i.test(h) && !/signal/i.test(h));
       const nums = (await p.locator(`table.dtable tbody tr td:nth-child(${idx + 1})`).allInnerTexts()).map(parseFloat).filter(Number.isFinite).slice(0, 10);
       o.adv_first_scores = nums; o.adv_desc = nums.every((v, i) => !i || nums[i - 1] >= v);
       o.adv_has_channels_col = o.adv_headers.some((h) => /channel/i.test(h));
@@ -59,21 +63,43 @@ for (const kind of ['desktop', 'mobile']) {
       o.adv_badges = await p.locator('table.dtable .bh-alert').count();
       o.overflow_adv = await overflow(p);
       await p.screenshot({ path: `${OUT}/${k}-advanced.png` });
+      o.input_media = await p.evaluate(() => ({
+        hover: matchMedia('(hover: hover)').matches,
+        pointerFine: matchMedia('(pointer: fine)').matches,
+        pointerCoarse: matchMedia('(pointer: coarse)').matches,
+        maxTouchPoints: navigator.maxTouchPoints,
+      }));
+      o.touch_emulation_ok = kind !== 'mobile' || (!o.input_media.hover && !o.input_media.pointerFine && o.input_media.pointerCoarse && o.input_media.maxTouchPoints > 0);
       // (i) behaviour
       const info = p.getByRole('button', { name: 'About the Adjusted Cost column' }).first();
       if (kind === 'desktop') {
         await info.hover(); await p.waitForTimeout(300);
-        o.info_tooltip = await p.getByRole('tooltip').count(); o.info_dialog = await p.locator('dialog[open]').count();
+        const panel = p.locator('[data-bh-infotip-panel]').first();
+        o.info_hover_panel = await panel.count();
+        o.info_panel_role = await panel.getAttribute('role').catch(() => null);
+        o.info_panel_text = (await txt(panel)).slice(0, 500);
       } else {
-        await info.click(); await p.waitForTimeout(300);
+        await info.click(); await p.waitForTimeout(700);
+        const panel = p.locator('[data-bh-infotip-panel]').first();
+        o.info_panel_count = await panel.count();
+        o.info_panel_tag = await panel.evaluate((el) => el.tagName).catch(() => null);
+        o.info_panel_role = await panel.getAttribute('role').catch(() => null);
+        o.info_panel_text = (await txt(panel)).slice(0, 500);
         o.info_dialog = await p.locator('dialog[open]').count();
         await p.screenshot({ path: `${OUT}/${k}-infotip.png` });
-        await p.getByRole('button', { name: /close/i }).first().click().catch(() => {}); await p.waitForTimeout(300);
+        await p.getByRole('button', { name: 'Close' }).click().catch(() => {}); await p.waitForTimeout(400);
         o.info_dialog_after_close = await p.locator('dialog[open]').count();
+        o.info_panel_after_close = await p.locator('[data-bh-infotip-panel]').count();
+        o.info_trigger_expanded_after_close = await info.getAttribute('aria-expanded').catch(() => null);
       }
-      const scoreInfo = p.getByRole('button', { name: /About the Score/ }).first();
+      const scoreInfo = p.getByRole('button', { name: /About the Capability Score column/ }).first();
       o.score_info_present = await scoreInfo.count();
-      if (kind === 'desktop' && o.score_info_present) { await scoreInfo.hover(); await p.waitForTimeout(300); o.score_tip_text = (await txt(p.getByRole('tooltip').first())).slice(0, 700); }
+      if (kind === 'desktop' && o.score_info_present) {
+        await scoreInfo.hover(); await p.waitForTimeout(300);
+        const panel = p.locator('[data-bh-infotip-panel]').first();
+        o.score_panel_role = await panel.getAttribute('role').catch(() => null);
+        o.score_tip_text = (await txt(panel)).slice(0, 700);
+      }
       // filters
       const filterButton = p.locator('header button[aria-controls="global-filters"]').first();
       if (await filterButton.count()) { await filterButton.click(); await p.waitForTimeout(400); }

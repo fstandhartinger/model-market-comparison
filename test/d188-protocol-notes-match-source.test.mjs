@@ -5,8 +5,8 @@
 //
 // Nothing here is a typed expectation: every claim is re-derived from the newest retained
 // capture of the source the entry itself names, so the first refresh that rewrites the capture
-// does not turn this suite red — and the next real drift (a v3.8 protocol, a renamed host, an
-// overall column, an eighth category) does.
+// does not turn this suite red — and the next real drift (a protocol outside the reviewed
+// continuity range, a renamed host, an overall column, an eighth category) does.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
@@ -59,7 +59,7 @@ test('D188: VulcanBench notes name every protocol family the board actually publ
   assert.ok(published.length, 'the board CSV carries a protocol column');
 
   // The notes state the family as a range "code-quality-maintenance-vA–vB"; every protocol the
-  // board publishes has to fall inside it. An eighth revision on the board fails this row.
+  // board publishes has to fall inside it. Any unreviewed protocol revision fails this row.
   const notes = entry('vulcanbench-frontier::4').scoring.notes;
   const range = notes.match(/code-quality-maintenance-v(\d+\.\d+)–v(\d+\.\d+)/);
   assert.ok(range, `the notes must state the protocol family as a range, got: ${notes}`);
@@ -73,6 +73,15 @@ test('D188: VulcanBench notes name every protocol family the board actually publ
   // …and the range is not wider than the board: both ends are really published.
   assert.ok(published.includes(`code-quality-maintenance-v${range[1]}`), `no board row uses v${range[1]}`);
   assert.ok(published.includes(`code-quality-maintenance-v${range[2]}`), `no board row uses v${range[2]}`);
+});
+
+test('D223: VulcanBench guard admits only the four protocols its continuity note covers', () => {
+  const guard = entry('vulcanbench-frontier::4').how_to_collect.version_guard;
+  const allowList = guard.match(/protocol in exactly \{([^}]+)\}/);
+  assert.ok(allowList, `the guard must state a closed protocol list, got: ${guard}`);
+  const allowed = [...allowList[1].matchAll(/code-quality-maintenance-v(\d+\.\d+)/g)].map((match) => match[1]);
+  assert.deepEqual(allowed, ['3.4', '3.5', '3.6', '3.7']);
+  assert.match(guard, /any other protocol revision.*fails closed/i);
 });
 
 test('D188: every date the VulcanBench guard annotates is a date the board prints', async () => {
