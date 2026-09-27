@@ -16013,4 +16013,7 @@ committed with this pass unchanged.
 Seen while verifying, not this pass's: the dev server logs a React hydration *attribute* mismatch inside `JevCompareV14` on every leaf page
 (`/jev-models/plumb-4b` shows it with this pass's edits stashed, so it predates them); production logs nothing there. Filed as **D245** for a
 work iteration: find the attribute (`git stash` proves the baseline), no page change in this pass.
-**Needs a non-Fable engine to set `verified` on F-212–F-216; F-217 is for the next JevBench release job.**
+**Live at `3ff7aa92` (deployed 23:34 UTC):** `/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass40/live-after/verification.json` **136/136** on canonical (was 64/136 at `2be76c2a`);
+pass 39 `regress/p39-after/` **56/56**; the re-pinned F-189 group `regress/p35-F189-after/` **62/62** (was 50/62). Fable-checked, so
+F-212–F-216 stay *implemented*.
+**Needs a non-Fable engine to set `verified` on F-212–F-216 (`verify-fable-pass40-design.mjs`, clear the out dir first); F-217 is for the next JevBench release job.**

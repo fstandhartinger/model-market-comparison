@@ -10,9 +10,9 @@ probe) in `/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass40/canonica
 10 px on every page, no sideways page scroll, and are at the bar. Scripts: `bin/shoot-fable-pass40.mjs`; source pin: `test/fable-pass40.test.mjs`;
 live verifier for non-Fable engines: `bin/verify-fable-pass40-design.mjs <base> <outDir>` (groups `F-212`, `F-213`, `F-214`, `F-215`; it launches its
 own Chromium). Before-receipt at the pre-fix revision: `/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass40/live-before/verification.json` (**64/136**); the shipped fixes on a dev server:
-`/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass40/local-after/verification.json` (**136/136**). Regression receipts on the live site: pass 39 56/56, pass 35 `ONLY=F-191` 64/64 and `ONLY=F-192`
+`/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass40/local-after/verification.json` (**136/136**); live at `3ff7aa92`: `/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass40/live-after/verification.json` (**136/136**). Regression receipts on the live site: pass 39 56/56, pass 35 `ONLY=F-191` 64/64 and `ONLY=F-192`
 20/20 (`/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass40/regress/`); pass 35 `ONLY=F-189` was **50/62** with the page correct — its guide count was the literal 10 and the release added two
-comparison pages; re-pinned to the data (see decision 5).
+comparison pages; re-pinned to the data (see decision 5), **62/62** live at `3ff7aa92`.
 
 **Pass 39: 2026-09-27 ~13:30 UTC**, the "what changed since pass 38" pass (Florian: Fable sparingly). Since pass 38 the changed surface is the
 **JevBench hub after F-207(b) and F-208** (iteration 245: halo rings on the five labelled spheres with a leader when the plate was pushed; the
