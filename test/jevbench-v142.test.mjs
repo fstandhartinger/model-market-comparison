@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { JEVBENCH_V142_SHA256, JEVBENCH_V142_TOP5, readJevbenchV142 } from '../lib/jevbench-v142.mjs';
+import { JEVBENCH_V1422_SHA256, JEVBENCH_V1422_TOP5, readJevbenchV1422 } from '../lib/jevbench-v1422.mjs';
 
 const { artifact, sha256 } = await readJevbenchV142();
 const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
@@ -24,25 +25,46 @@ test('CR-152 v1.4.2 is the exact aggregate-only release with the approved top fi
   assert.doesNotMatch(JSON.stringify(artifact), /"(?:item_id|item_text|question_text|gold|expected|prediction|predicted|per_item|item_results)"\s*:/i);
 });
 
-test('CR-179 serves v1.4.2.1 live and preserves pinned v1.4.2 with its API and fairness note', async () => {
-  const [route, page, livePage, board, sitemap] = await Promise.all([
+test('CR-191 v1.4.2.2 is pinned to the approved aggregate artifact and top five', async () => {
+  const { artifact: current, sha256 } = await readJevbenchV1422();
+  const ranked = current.systems.filter((row) => row.ranked).sort((a, b) => a.rank - b.rank);
+  assert.equal(current.revision, 'v1.4.2.2');
+  assert.equal(sha256, JEVBENCH_V1422_SHA256);
+  assert.equal(sha256, 'f0dfdd8f1601cadb16864061413e6e43c8b2dfa07b10ffd0716c67fc3c4b9952');
+  assert.equal(current.systems.length, 95);
+  assert.equal(ranked.length, 91);
+  assert.deepEqual(ranked.slice(0, 5).map((row) => row.key), JEVBENCH_V1422_TOP5);
+  assert.equal(ranked[0].jevbench_score, 67.36821557095253);
+  assert.deepEqual(JEVBENCH_V1422_TOP5, ['imajev_4b', 'plumb-4b', 'decider-4b-v2', 'jev-1.13.0', 'jevk5-v02']);
+});
+
+test('CR-191 serves v1.4.2.2 live and preserves pinned v1.4.2 with its API and fairness note', async () => {
+  const [route, page, livePage, board, sitemap, version22Page, version22Route, version22FamiliesRoute] = await Promise.all([
     read('../app/api/jevbench/v1.4.2/route.ts'),
     read('../app/jev-models/v1.4.2/page.tsx'),
     read('../app/jev-models/page.tsx'),
     Promise.all(['JevModelsV14', 'JevBoardShared', 'JevBoardInteractive'].map((f) => read(`../components/${f}.tsx`))).then((files) => files.join('\n')), // CR-151 split the board
     read('../app/sitemap.ts'),
+    read('../app/jev-models/v1.4.2.2/page.tsx'),
+    read('../app/api/jevbench/v1.4.2.2/route.ts'),
+    read('../app/api/jevbench/v1.4.2.2/families/route.ts'),
   ]);
   assert.match(route, /readJevbenchV142\(\)/);
   assert.match(route, /'X-Content-SHA256': sha256/);
+  assert.match(version22Page, /canonical = '\/jev-models\/v1\.4\.2\.2'/);
+  assert.match(version22Page, /revision: 'v1\.4\.2\.1'.*readJevbenchV1421/s);
+  assert.match(version22Route, /readJevbenchV1422\(\)/);
+  assert.match(version22Route, /'X-Content-SHA256': sha256/);
+  assert.match(version22FamiliesRoute, /readJevbenchV1422Families\(\)/);
   assert.match(page, /canonical = '\/jev-models\/v1\.4\.2'/);
   assert.match(page, /async function pinnedView\(\) \{\s*const result = await readJevbenchV142WithFamilies\(\);\s*return \{ \.\.\.jevbenchV142View\(result\), sealedFamilyN: result\.sealedFamilyN \};\s*\}/);
   assert.match(page, /export default async function JevModelsV142Page\(\) \{\s*const view = await pinnedView\(\);[\s\S]*<JevModelsV14Board artifact=\{view\.artifact\} sha256=\{view\.sha256\}/);
-  assert.match(livePage, /const v14Result = await readJevbenchV1421WithFamilies\(\);\s*const v14 = jevbenchV1421View\(v14Result\);/);
-  assert.match(livePage, /const previousRelease = \(await readJevbenchV142\(\)\)\.artifact;/);
-  assert.match(livePage, /readJevbenchV1421WithFamilies\(\)/);
-  assert.match(livePage, /readJevbenchV142\(\)/); // The frozen v1.4.2 keys remain the comparison base.
+  assert.match(livePage, /const v14Result = await readJevbenchV1422WithFamilies\(\);\s*const v14 = jevbenchV1422View\(v14Result\);/);
+  assert.match(livePage, /const previousRelease = \(await readJevbenchV1421\(\)\)\.artifact;/);
+  assert.match(livePage, /readJevbenchV1422WithFamilies\(\)/);
+  assert.match(livePage, /readJevbenchV1421\(\)/); // The exact preceding v1.4.2.1 release is the comparison base.
   assert.match(livePage, /<JevModelsV14Board artifact=\{v14\.artifact\} sha256=\{v14\.sha256\} previous=\{previous\}/);
-  assert.match(livePage, /href="\/jev-models\/v1\.4\.2\.1" data-bh-jev-version-share/);
+  assert.match(livePage, /href="\/jev-models\/v1\.4\.2\.2" data-bh-jev-version-share/);
   // F-189 (Fable pass 35, decision 2): CR-152's "visible Intelligence ordering" is a control, not a second table of the
   // numbers the chart already draws. CR-151 (Florian 25 Sep): that control is the "View by" switch (it supersedes the
   // two-button rank-by); the approved sentence sits beside it with a one-click Intelligence ordering.
@@ -56,6 +78,7 @@ test('CR-179 serves v1.4.2.1 live and preserves pinned v1.4.2 with its API and f
   assert.doesNotMatch(board, /<details[^>]*data-bh-jev14-sort-intelligence/);
   assert.match(sitemap, /"\/jev-models\/v1\.4\.2"/);
   assert.match(sitemap, /"\/jev-models\/v1\.4\.2\.1"/);
+  assert.match(sitemap, /"\/jev-models\/v1\.4\.2\.2"/);
   assert.match(sitemap, /"\/jev-models\/v1\.4\.1"/);
   // The temporary upload notice and its preview images (main 7c8d0212/811f0dd9) are gone with the release.
   assert.doesNotMatch(livePage, /data-bh-release-notice|v142-preview/);

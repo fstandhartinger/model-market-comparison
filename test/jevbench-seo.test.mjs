@@ -8,13 +8,14 @@ import {
   readJevbenchSeoData,
 } from '../lib/jevbench-seo.mjs';
 
-test('JevBench intent routes use the hash-checked current v1.4.2.1 public release', async () => {
+test('JevBench intent routes use the hash-checked current v1.4.2.2 public release', async () => {
   const data = await readJevbenchSeoData();
-  assert.equal(data.artifact.revision, 'v1.4.2.1');
-  assert.equal(data.sha256, 'e4c5ec1b510212e29cba130a7a861096623c484dab9f5ecf9893360c1e993166');
-  assert.equal(data.ranked.length, 90);
-  // CR-179: Plumb-4B leads v1.4.2.1; Jev 1.13.0 is #3 and remains the comparison reference.
-  assert.equal(data.topFive[2].key, 'jev-1.13.0');
+  assert.equal(data.artifact.revision, 'v1.4.2.2');
+  assert.equal(data.sha256, 'f0dfdd8f1601cadb16864061413e6e43c8b2dfa07b10ffd0716c67fc3c4b9952');
+  assert.equal(data.ranked.length, 91);
+  // CR-191: Imajev-4B leads v1.4.2.2; Jev 1.13.0 is #4 and remains the comparison reference.
+  assert.equal(data.topFive[0].key, 'imajev_4b');
+  assert.equal(data.topFive[3].key, 'jev-1.13.0');
   assert.deepEqual(JEV_SEO_PATHS, {
     alternatives: '/jev-models/alternatives',
     chooser: '/jev-models/how-to-choose',
@@ -25,8 +26,8 @@ test('JevBench intent routes use the hash-checked current v1.4.2.1 public releas
 test('comparison pages keep their ranked rivals against Jev 1.13.0', async () => {
   const data = await readJevbenchSeoData();
   // Current top-five rivals minus Jev, plus established search comparisons.
-  assert.equal(data.comparisons.length, 8);
-  assert.deepEqual(JEV_TOP_FIVE_COMPARISONS.slice(0, 4).map((pair) => pair.key), ['plumb-4b', 'decider-4b-v2', 'jevk5-v02', 'cygnet']);
+  assert.equal(data.comparisons.length, 9);
+  assert.deepEqual(JEV_TOP_FIVE_COMPARISONS.map((pair) => pair.key), ['imajev_4b', 'plumb-4b', 'decider-4b-v2', 'jevk5-v02']);
   assert.deepEqual(data.comparisons.map((pair) => pair.rival.key), JEV_COMPARISONS.map((pair) => pair.key));
   assert.ok(data.comparisons.every((pair) => data.ranked.some((row) => row.key === pair.rival.key)));
   assert.deepEqual(data.comparisons.map((pair) => pair.slug), JEV_COMPARISONS.map((pair) => pair.slug));
@@ -100,7 +101,7 @@ test('chooser and comparison copy uses reader-facing metric labels', () => {
   assert.doesNotMatch(compare, /sealed_accuracy aggregate/);
 });
 
-test('dynamic chooser and open-row links target stable anchors in the live v1.4.2.1 board', () => {
+test('dynamic chooser and open-row links target stable anchors in the live v1.4.2.2 board', () => {
   const chooser = readFileSync(new URL('../app/jev-models/how-to-choose/page.tsx', import.meta.url), 'utf8');
   const alternatives = readFileSync(new URL('../app/jev-models/alternatives/page.tsx', import.meta.url), 'utf8');
   const links = readFileSync(new URL('../components/JevBenchSeoBlocks.tsx', import.meta.url), 'utf8');

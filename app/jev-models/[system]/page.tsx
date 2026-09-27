@@ -8,8 +8,8 @@ import { JevAxisBand, JevScoreStrip, typeColour } from '../../../components/JevS
 import { JevBenchRelatedLinks } from '../../../components/JevBenchRelatedLinks';
 import { JevV141SystemDetail } from '../../../components/JevV141SystemDetail';
 import type { JevV14System } from '../../../lib/jevbench-v14.mjs';
-import { readJevbenchV1421, jevbenchV1421View } from '../../../lib/jevbench-v1421.mjs';
-import { readJevbenchV1421WithFamilies } from '../../../lib/jevbench-v1421-families.mjs';
+import { readJevbenchV1422, jevbenchV1422View } from '../../../lib/jevbench-v1422.mjs';
+import { readJevbenchV1422WithFamilies } from '../../../lib/jevbench-v1422-families.mjs';
 import { jevV14RowNote } from '../../../lib/jevbench-v14.mjs';
 import { previewMetadata } from '../../../lib/seo';
 import { jevSystemKeyFromSlug, jevSystemPath, jevSystemSlug } from '../../../lib/jev-system-slug.mjs';
@@ -57,11 +57,11 @@ async function findRow(key: string): Promise<{ row: JevV12Row; view: JevV12View;
 }
 
 async function findV142Row(key: string): Promise<{ row: JevV14System; view: { revision: string; generated: string; ranked: JevV14System[] }; note: string | null; sealedFamilyN: Record<string, number>; hardFamilyN: Record<string, number> } | null> {
-  // CR-179: current system pages use v1.4.2.1 and its carried-forward family supplement.
-  const result = await readJevbenchV1421WithFamilies();
-  const view = jevbenchV1421View(result);
+  // CR-191: current system pages use v1.4.2.2 and its carried-forward family supplement.
+  const result = await readJevbenchV1422WithFamilies();
+  const view = jevbenchV1422View(result);
   const row = view.systems.find((candidate) => candidate.key === key);
-  // readJevbenchV1421 validates the ranked rows' numeric fields before this narrow is applied.
+  // readJevbenchV1422 validates the ranked rows' numeric fields before this narrow is applied.
   const hardFamilyN = (result.artifact.hard_dataset as { families?: Record<string, number> } | undefined)?.families ?? {};
   return row ? { row, view, note: jevV14RowNote((result.artifact as { footnotes?: Record<string, string> }).footnotes?.[key]), sealedFamilyN: result.sealedFamilyN, hardFamilyN } : null;
 }
@@ -91,7 +91,7 @@ export async function generateStaticParams() {
   const view = jevbenchV12View(await readJevbenchV12());
   const existing = [...view.ranked, ...view.honorable, ...view.partial].map((r) => ({ system: jevSystemSlug(r.key) }));
   const existingKeys = new Set(existing.map(({ system }) => system));
-  const current = jevbenchV1421View(await readJevbenchV1421()).systems.map((r) => ({ system: jevSystemSlug(r.key) }));
+  const current = jevbenchV1422View(await readJevbenchV1422()).systems.map((r) => ({ system: jevSystemSlug(r.key) }));
   const currentKeys = new Set(current.map(({ system }) => system));
   return [...current, ...existing.filter(({ system }) => !currentKeys.has(system))].filter(({ system }, index, rows) => rows.findIndex((r) => r.system === system) === index);
 }
