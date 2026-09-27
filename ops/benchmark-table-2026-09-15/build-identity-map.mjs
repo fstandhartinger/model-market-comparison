@@ -4,7 +4,7 @@
 // ops/benchmark-table-2026-09-15/identity-map-review.json. Review the diff of both files before committing.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { identityJoins, parseDeepSweId, parseScaleLabel, parseFrontierCodeId, parseCursorBenchLabel, parseSweBenchProLabel } from '../../lib/coding-identity.mjs';
-import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id, parseMathArenaLabel, parseWeirdmlV3Label, parseSweRebenchLabel, parseGsoId, parseHyperTauId, parseLisanBenchId, parseVulcanbenchFrontierLabel, parseKernelbenchCudaLabel, parseFrontiersweV2Label, parsePosttrainbenchLabel, parseRsiExamLabel, parseToolathlonVerifiedLabel, parseToolathlonArchiveLabel, parseProgrambenchLabel, parseMcpAtlasLabel, livebenchJoins, parseContextArenaId, parseBlueprintBenchLabel, parseLhtbLabel, parseRnEvalsLabel, parseResearchClawBenchLabel, parseMlsBenchLabel, parseSurgeLabel, parseInterfazeSobLabel, parseVitaBenchLabel, parseMcpmarkVerifiedLabel, parseCharxivLabel } from '../../lib/board-identity.mjs';
+import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id, parseMathArenaLabel, parseWeirdmlV3Label, parseSweRebenchLabel, parseGsoId, parseHyperTauId, parseLisanBenchId, parseVulcanbenchFrontierLabel, parseKernelbenchCudaLabel, parseFrontiersweV2Label, parsePosttrainbenchLabel, parseRsiExamLabel, parseToolathlonVerifiedLabel, parseToolathlonArchiveLabel, parseProgrambenchLabel, parseMcpAtlasLabel, livebenchJoins, parseContextArenaId, parseBlueprintBenchLabel, parseLhtbLabel, parseRnEvalsLabel, parseResearchClawBenchLabel, parseMlsBenchLabel, parseSurgeLabel, parseInterfazeSobLabel, parseVitaBenchLabel, parseMcpmarkVerifiedLabel, parseCharxivLabel, eqbenchWritingJoins } from '../../lib/board-identity.mjs';
 
 const BOARDS = [
   { prefix: 'deepswe::', parse: parseDeepSweId, basis: 'measured' },
@@ -127,9 +127,17 @@ const BOARDS = [
   // lib/board-identity.mjs, and a label naming no setting on a multi-configuration family, an
   // unreviewed setting (`thinking`) or an ambiguous product (`Nemotron 3 Ultra`) joins nothing.
   { prefix: 'mcp-atlas::', parse: parseMcpAtlasLabel, join: boardJoins, basis: 'measured' },
+  // 2026-09-26 (iteration 242, D219.1): EQ-Bench's two writing boards label a model with the string used to call
+  // it and publish no reasoning setting, so only single-default families join; a path-shaped label the catalog
+  // retains as a Hugging Face repository is left to the exact-checkpoint route (lib/board-identity.mjs).
+  { prefix: 'eqbench-creative-writing::', join: eqbenchWritingJoins, basis: 'measured' },
+  { prefix: 'eqbench-longform-writing::', join: eqbenchWritingJoins, basis: 'measured' },
 ];
 const observations = JSON.parse(readFileSync('data/raw/benchmarks/public-observations.json')).observations;
-const catalog = JSON.parse(readFileSync('data/dataset.json')).models.map(({ id, family_key, variant }) => ({ id, family_key, variant }));
+// `huggingface_url` is only read by eqbenchWritingJoins, which must not override the exact-checkpoint route
+// in scripts/ingest-benchmark-scores.mjs; every other rule ignores the extra field.
+const catalog = JSON.parse(readFileSync('data/dataset.json')).models
+  .map(({ id, family_key, variant, aa_metadata }) => ({ id, family_key, variant, huggingface_url: aa_metadata?.huggingface_url ?? null }));
 const previousMap = JSON.parse(readFileSync('data/raw/benchmarks/identity-map.json'));
 const previous = previousMap.entries;
 const previousByKey = new Map(previous.map((e) => [`${e.benchmark_id}\0${e.source_id}\0${e.model_id}`, e]));

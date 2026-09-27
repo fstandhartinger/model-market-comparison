@@ -65,6 +65,10 @@ const SLUG_BOARDS = ['osworld-2', 'swe-rebench', 'gso', 'hyper-tau-bench', 'lisa
   'mcpmark',
   // 2026-09-22 (iteration 170, CR-37.1): CharXiv reasoning, product labels (lib/board-identity.mjs parseCharxivLabel).
   'charxiv-reasoning',
+  // 2026-09-26 (iteration 242, D219.1): EQ-Bench's two writing boards label a model with the string used to call
+  // it and publish no reasoning setting, so only single-default families join and the frontier rows stay unjoined
+  // (lib/board-identity.mjs eqbenchWritingJoins; test/d219-1-eqbench-writing-identity.test.mjs).
+  'eqbench-creative-writing', 'eqbench-longform-writing',
   // 2026-09-19 (iteration 115, CR-54.2): six boards from Epoch AI's Benchmarking Hub ZIP, slug labels joined by
   // the same lib/coding-identity.mjs parseDeepSweId rule as DeepSWE/SimpleQA Verified. math_level_5 and
   // frontiermath_erdos stay excluded; recorded in data/raw/benchmarks/epoch-hub-decisions.json.
