@@ -13225,3 +13225,62 @@ the non-implementer sign-offs iterations 239–243 owe (F-203/F-204/F-205, D215,
 D219, D219.1, D220, D220.1), CR-156.4, X6's remaining audit surface, the CR rows no harness covers
 (CR-148.1/.2, CR-152.1/.2/.5, CR-153.4, CR-158.4), Umami's own retention (CR-67.5 §7.4 residual 1), and
 F-206 (the CR-172 job's). **`ALL-ACCEPTED` is not appended.**
+
+### Iteration 243, second unit — D222: the registry told four different boards they measure the same thing, and one of them refused to publish because of it
+
+D221 asked why one KernelBench board was frozen. The answer is D222, and it is a correctness defect in
+our own text, not in the source. All four `kernelbench-cuda-*` entries carried the **same** copied
+`scoring.metric` — "Peak fraction of the problem's hardware roofline … (dense-equivalent FLOPs where
+relevant)" — while the maintainer's `SPEC.md` (last updated 2026-07-16, captured at
+`dc8ee9fadbbdc5584821.gz` in the 2026-09-25 evidence) sets a different ceiling per problem:
+
+> - 01, 02: roofline peak_fraction (dense-eq FLOPs where relevant)
+> - 03: **decode-only** tok/s at ctx ∈ {2k,8k,32k,128k}; prefill untimed
+> - 04: SPS vs `peak_sps` (150M)
+
+Three more inaccuracies came out of the review rounds, each confirmed against the sources before it was
+changed. The shared notes claimed SPEC's latency-anchored rule "makes milliseconds the honest headline for
+the decode and NSA problems" — SPEC names **02** ("e.g. 02"), not 03. For 02 that rule also says the
+*persisted* score is a geomean speedup against the frozen eager reference and that `peak_fraction` "stays
+as a context column" — and the context column is exactly the number we publish, which the entry never
+said. And every entry asserted a page rendering — "rendered by the site as '% of roofline'" — that **no
+reviewed source contains**: the board writes its numbers into HTML `title` attributes and CSS variables, so
+the protocol text extraction a reviewer reads shows the cells as `0`. All three of those claims are now
+gone or corrected; nothing that survived is unsupported by SPEC.md or leaderboard.json.
+
+The `notes` also said the ranked list "still holds the two rejected cells the rule excludes" without naming
+them. Counted from the capture, that is true of exactly two: the `suspect` `kinetic-claude/kinetic-0715[1m]`
+cell on 03 (0.0622) and the `bug` `muse/muse-spark-1.3 [ultra]` cell on 04 (0.2056). Both are now named, and
+so is the fact that `correct: false` cells are absent from the ranked list anyway and that the
+`reward_hack` `deepseek-claude/deepseek-v4-pro` cell on 04 is excluded by both.
+
+**Reproduced before repairing, and re-reviewed after.** `replay-protocol-review.mjs` against the very
+capture the arm failed on gives the same objection offline in one round (`before-megaqwen/`). After the
+rewrite **all four boards are accepted in one clean pass**, and the `--lie` drill still fails closed:
+flipping the row to `retained` is caught as a blocker. Receipts in `d222-replays/`.
+
+**The rounds are not deterministic, and the ledger should say so.** It took five attempts, and two of them
+were reviewer variance rather than a real defect (a passing text failing the next round on a minor nit). But
+three of the five produced a finding that was *correct* and is now fixed, which is why the round budget was
+spent instead of shipping the first version that happened to pass. The final text passed all four boards
+together on a single run.
+
+Two decisions recorded. The `unit` stays `percent of roofline` on all four — `verify-cr-82-3-4.mjs` pins it
+for all four matrix rows, and the metric now names the actual ceiling per problem, the same shape the
+grid-mingru entry already passed its rounds with ("roofline anchored at 150M peak SPS"). And the *collection
+plan's* protocol strings were deliberately **not** touched: each already names its own measurement
+("decode-only tok/s at ctx 2k–128k", "steps-per-second") before stating the unit, so nothing there is
+contradicted, and rewriting them would restate ~60 observations' protocol text for no correction.
+
+The repair is text-only where it lands: re-running the ingest and the build after it changes **0
+observations, 0 values, 0 rows**. What it changes is what the next daily refresh does — the arm should be
+approved instead of retained, and the four cells `03_megaqwen_decode` publishes for Claude Opus 5.5 (7.39),
+GPT-6 Sol (3.98), Grok 4.7 (4.55) and GPT-6 Luna (2.86) should enter with it. That is a prediction about the
+next run, not a result: **D221 stays open until a refresh actually publishes them.** A full run was already
+in flight from 00:41 UTC when this landed, working from a clone taken before it, so the earliest run that
+can show the effect is the one after that.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D222 (new) | **implemented** | `d222-replays/` (before: c1 mismatch in one round; after: all four accepted in one pass; `--lie` still blocked) | The four KernelBench entries shared one copied metric while SPEC sets the ceiling per problem, misattributed SPEC's ms rule to 03, never said that 02's published number is SPEC's context column, and asserted a page rendering no reviewed source shows. Corrected from SPEC.md and leaderboard.json only. |
+| D221 | **open** (cause fixed, effect unproven) | `d221-megaqwen-frozen-arm.json` | The four missing megaqwen cells should publish on the next refresh now that D222 is fixed. Verify against the next run's `refresh-benchmarks.log`; if the arm is still retained, the cause is not D222. |
