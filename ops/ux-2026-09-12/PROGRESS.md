@@ -16751,3 +16751,95 @@ still has to go.
    R9.1 stays under the written-permission hold.
 
 **`ALL-ACCEPTED` is not appended.**
+
+### The refusal iteration 260 overturned was already on record
+
+Worth adding, because it changes what kind of mistake this was. CR-190.1's own ingest write-up, earlier in this
+ledger, had already reached the correct answer by hand and said so in as many words: *"`gemini-2.5-flash`
+exactly one and it is `non-reasoning`, **not a default**"*, listed under the same `board-identity` rule, with
+Gemini 2.5 Pro and GPT-4o (March 2025) each refused individually beside it. Iteration 260 did not find a new
+fact; its script quietly contradicted a decision that had already been taken and written down, and because the
+script was new and the prose was 900 lines up, the script won. That is the argument for
+`test/d243-setting-less-join-policy.test.mjs` asserting the *source line* in `lib/board-identity.mjs` and not
+only its own verdicts: prose does not fail a gate, a test does.
+
+### D248 (new) — three catalog families carry the same product twice, so its benchmarks and its price are on different rows
+
+Chasing "what is `gemini-2.5-pro::openrouter`?" found something larger than the D243 row it came from, and it
+is a product defect rather than a provenance one. Measured with
+`node ops/ux-2026-09-12/bin/measure-split-catalog-families.mjs <outDir>` (receipt
+`iter261-d248/split-catalog-families.json`, test `test/d248-split-catalog-families.test.mjs`, 4/4). Nothing is
+pinned — it reads `data/dataset.json`, so a repair empties the list instead of agreeing with this reading.
+
+**3 of 673 families** hold two configurations that are not two settings: an Artificial Analysis row
+(`::default`) and an OpenRouter row (`::openrouter`) that never merged.
+
+| family | row | benchmarks | offers | providers | |
+|---|---|---|---|---|---|
+| `command-a+` | `::default` | **14** | **0** | **0** | |
+| | `::openrouter` | 0 | 1 | 1 | |
+| `gemini-2.5-pro` | `::default` | 13 | 6 | 3 | deprecated |
+| | `::openrouter` | 1 | 6 | 3 | |
+| `gemini-3.1-flash-lite` | `::default` | **13** | 3 | 2 | deprecated |
+| | `::openrouter` | 3 | **6** | **3** | |
+
+Why they never merged, for the two Google families: the AA row retains the **`-preview`** OpenRouter slug
+(`google/gemini-2.5-pro-preview`, `google/gemini-3.1-flash-lite-preview`) while OpenRouter now serves the
+un-suffixed one (`google/gemini-2.5-pro`, `google/gemini-3.1-flash-lite`), so the join key differed and the
+OpenRouter catalog row landed as a second family member. `gemini-2.5-pro::default`'s
+`aa_metadata.retained_fields` shows the slug is itself a retained value — *"Field absent from current AA
+leaderboard; retained from last published metadata"* — so it is a stale retention, not a live disagreement.
+`command-a+` splits for a different reason: its AA row carries no OpenRouter slug at all.
+
+What it costs us, stated per row rather than in general:
+
+- **`Command A+` cannot show a cost at all.** The row with all 14 benchmarks has **zero offers and zero
+  providers**; the row with the Cohere offer has **no benchmarks**. That is R3.1's claim — "the only place that
+  shows realistically what a model will actually cost you" — failing on a model we do benchmark.
+- **`Gemini 3.1 Flash-Lite` undercounts #providers (R2.2)** on the row a user reads for scores: 2 providers on
+  the 13-benchmark row against 3 on the 3-benchmark one. The benchmarked row is also `deprecated: true`, so
+  "Hide deprecated" removes the scores and leaves the cheaper-looking, near-empty row behind.
+- **`Gemini 2.5 Pro` is double-listed.** Both rows carry the same three providers and the same six offers, so
+  one product is counted twice in the 870, once as deprecated.
+
+**Verified live at desktop (1440×900) and mobile (390×844)**, `iter261-d248/d248-live-model-pages.json`,
+`node ops/ux-2026-09-12/bin/check-d248-live-model-pages.mjs <outDir>`. Each of the three products serves **two
+model pages**, under two different headings — "Gemini 2.5 Pro" / "Google: Gemini 2.5 Pro", "Command A+" /
+"Cohere: Command A+", "Gemini 3.1 Flash-Lite" / "Google: Gemini 3.1 Flash Lite" — all six HTTP 200, no page
+errors. `/models/command-a+::default` renders the "no providers" state with **zero prices on the page** at both
+widths, while `/models/command-a+::openrouter` is the one carrying the Cohere offer. `gemini-3.1-flash-lite`
+shows 5 benchmark rows and one price on the `::default` page against 9 rows and four prices on `::openrouter`.
+`/api/models` serves all six ids and counts them all in its 870.
+
+Not yet checked: whether both rows appear together in the overview **table**. The default view is Simple and
+the advanced toolbar that carries the featured toggle is `hidden` there (`components/ModelExplorer.tsx:402`),
+so reaching the unfiltered table needs the mode switch; the two model pages above are the verified form of the
+claim and the table reading is left for the repair's own acceptance.
+
+**Not repaired this iteration, deliberately.** A merge moves catalog identities, and the standing warning in
+this workstream is that identity-map rebuilds fill unrelated joins — it needs the adds reviewed board by board,
+a dataset rebuild, gates, a deploy and a live check, which does not fit in front of the 05:17 freeze. It is
+filed with its measurement so the repair can be judged against a number instead of an impression, and so the
+list can be re-read after any catalog change.
+
+D248 also settles iteration 261's own next-step 2 above: `::openrouter` is **not** a routing duplicate that can
+simply be dropped — for `command-a+` and `gemini-3.1-flash-lite` it is the row that holds the live offers. The
+D243 join for Gemini 2.5 Pro therefore waits on the D248 merge rather than preceding it, and once merged the
+family holds a single `default` and joins under the standing policy with no new rule and no vendor statement.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D248 (new) | **open — measured and confirmed live, not repaired** | `ops/ux-2026-09-12/bin/measure-split-catalog-families.mjs`; `iter261-d248/split-catalog-families.json`; `test/d248-split-catalog-families.test.mjs` (4/4); `check-d248-live-model-pages.mjs` + `iter261-d248/d248-live-model-pages.json` (desktop + mobile, 6 pages, no page errors) | 3 families: `command-a+`, `gemini-2.5-pro`, `gemini-3.1-flash-lite`. Touches R2.2 (#providers), R3.1 (the cost claim) and R4.5 ("Hide deprecated"). |
+| D243 → Gemini 2.5 Pro | **blocked on D248**, not on a vendor statement | `split-catalog-families.json`; `d243-join-measurement.json` | Merging the family leaves one `default`; the join then needs no new rule. |
+
+**Revised order for the next iteration** (replaces the list above, which was written before D248 was found):
+
+1. `node ops/ux-2026-09-12/bin/check-ugi-arms.mjs latest` — D247's published half, after the 05:17 run.
+2. **D248's merge**, smallest first: `command-a+` is the clearest case (14 benchmarks with no price at all) and
+   has no slug conflict to resolve. Re-run `measure-split-catalog-families.mjs` afterwards; the family must
+   leave the list. Review the identity adds board by board before the rebuild.
+3. **Then** D243's Gemini 2.5 Pro join — two critic rounds, and mind the protocol-digest trap above.
+4. Only then the vendor-statement capture, scoped to the five rows that have a target.
+5. CR-148.1 still owes a review-gate ruling — six iterations.
+
+**`ALL-ACCEPTED` is not appended.**
