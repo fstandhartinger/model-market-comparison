@@ -18035,8 +18035,8 @@ questions returns nothing at all — budget for that instead of discovering it a
 The daily has retained `mls-bench-lite::30-tasks` every day since 25 September. Iteration 264 read the
 05:17 producer's verdict — "version_guard requires each chart key to have a harness parenthesis matching
 an allowed effort, but source 1 shows keys without parentheses … and one with 'max effort, with fallback'
-outside the allowed set" — and wrote it down as **a source change**. It is not one. The board is
-byte-for-byte the same shape it had on the day this entry was registered:
+outside the allowed set" — and wrote it down as **a source change**. It is not one. The board serves
+the same key shapes it served on the day this entry was registered:
 
 | | 2026-09-22 capture (the registered evidence) | 2026-09-28 capture |
 |---|---|---|
@@ -18077,15 +18077,10 @@ quote `"Claude Code (max effort, with fallback)"` verbatim, to name every effort
 capture states, and to be byte-identical in the registry and both plan fields. Falsifiability checked:
 restoring the old clause turns the second test red and leaves the first green.
 
-### D251.4 — Scale's route came back on its own; nothing to change
-
-Iteration 264's contingency was "wait a day; if it stays broken, move the source to the index page with a
-new version_guard and a critic round." It did not stay broken. Today `https://labs.scale.com/leaderboard/
-sweatlas-tw` answers **200** with `<title>SWE Atlas - Test Writing</title>` — its registered guard — and
-the registered `scale_swepro` parser, run unmodified against today's capture, reads **24 rows**
-(Fable-5.1 (Claude Code) xHigh* 67.04, Opus 5 (Claude Code) xHigh 62.22, …). So the 404 was a one-day
-transient on Scale's side, the source needs no move, no new guard and no critic round, and the right
-answer was to wait. Capture: `iter266-d251-4/sweatlas-tw-20260928.html`.
+**What the four retained days cost, concretely.** `/api/benchmark-scores?benchmark_id=mls-bench-lite::30-tasks`
+serves **15** rows, the 2026-09-22 set. Today's board has 16: `GPT-6 Astra|Codex (max)` at **50.0** would
+rank **3rd**, and it has been absent from a published Coding board since it appeared, because the arm
+could not clear its own guard. A guard that is wrong is not a safe default — it withholds real data.
 
 **Replayed against the daily's own 11:53 capture** (`BH_REPLAY_MANIFEST=data/raw/benchmarks/daily-evidence/
 2026-09-28T11-53-42-848Z/manifest.json`, `replay-protocol-review.mjs`), four rounds, because a free
@@ -18103,6 +18098,28 @@ that the repair landed: the producer now reads the **guard quote** as matching, 
 lifecycle field to find anything to complain about. `last_verified` is deliberately left at `2026-09-22`:
 `refresh-benchmarks.mjs:440` sets it only when the daily's own protocol review is accepted, so it moving
 off that date tomorrow is the unfaked acceptance.
+
+**Verified live, 26/26 on each of the three hosts** at revision `05643cc0`
+(`ops/ux-2026-09-12/bin/verify-d251-2-live.mjs <base> <outDir>`;
+`iter266-d251-2/live-{benchmarkheaven-com,www-benchmarkheaven-com,model-market-comparison-app-mintapis-com}/verification.json`).
+`/api/benchmarks` serves the registry entry whole, so the published guard is checkable: the withdrawn
+clause is gone, the served text states the no-effort case and quotes the qualified harness verbatim, it
+still carries the leaderboard method sentence, the chart title and the new-identity rule, and the unit,
+range and status are the reviewed ones. The verifier also re-reads the board's published rows through
+`/api/benchmark-scores?benchmark_id=…` and pins all three key shapes at their published values
+(50.1 no-effort, 49.9 qualified, 49.8 plain), so the guard is checked against the data it guards rather
+than against itself — and it re-checks Scale's `sweatlas-tw` route for D251.4 in the same pass. Empirical
+falsifiability: the same guard checks read red against the pre-deploy revision half an hour earlier.
+
+### D251.4 — Scale's route came back on its own; nothing to change
+
+Iteration 264's contingency was "wait a day; if it stays broken, move the source to the index page with a
+new version_guard and a critic round." It did not stay broken. Today `https://labs.scale.com/leaderboard/
+sweatlas-tw` answers **200** with `<title>SWE Atlas - Test Writing</title>` — its registered guard — and
+the registered `scale_swepro` parser, run unmodified against today's capture, reads **24 rows**
+(Fable-5.1 (Claude Code) xHigh* 67.04, Opus 5 (Claude Code) xHigh 62.22, …). So the 404 was a one-day
+transient on Scale's side, the source needs no move, no new guard and no critic round, and the right
+answer was to wait. Capture: `iter266-d251-4/sweatlas-tw-20260928.html`.
 
 ### What today's failed daily still needs — one arm, named
 
@@ -18154,8 +18171,8 @@ kept — `iter266-verify/kimi-verdict.md` and `kimi-d248-recheck.md`.
 
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
-| D251.2 | open → **implemented, accepted on 3/3 replays, control blocked** | `iter266-d251-2/replay-r{1,2,3}.log` (accepted), `replay-lie.log` (blocked); `test/d251-2-mls-bench-version-guard.test.mjs` (2/2) | The board never changed; the guard was wrong on the day it was written. Re-derived from the collector's own rule, pinned against the registered capture. The behavioural acceptance is tomorrow's 05:17 run: this arm stops being retained and `last_verified` moves off `2026-09-22`. |
-| D251.4 | open → **closed, no change needed** | `iter266-d251-4/sweatlas-tw-20260928.html`; parser run 24 rows | Scale's detail route 200s again and the registered guard and parser both hold. Confirm in tomorrow's `refresh-benchmarks.log`. |
+| D251.2 | open → **implemented, verified live 26/26 on each of the three hosts; accepted on 3/3 replays, control blocked** | `verify-d251-2-live.mjs`, `iter266-d251-2/live-*/verification.json` **26/26 × 3** at `05643cc0`; `replay-r{1,2,3}.log` (accepted), `replay-lie.log` (blocked); `test/d251-2-mls-bench-version-guard.test.mjs` (2/2) | The board never changed; the guard was wrong on the day it was written. Re-derived from the collector's own rule, pinned against the registered capture. The behavioural acceptance is tomorrow's 05:17 run: this arm stops being retained and `last_verified` moves off `2026-09-22`. |
+| D251.4 | open → **closed, no change needed; route re-checked live 3×** | `iter266-d251-4/sweatlas-tw-20260928.html`; parser run 24 rows; `iter266-d251-2/live-*/verification.json` (last two checks) | Scale's detail route 200s again and the registered guard and parser both hold. Confirm in tomorrow's `refresh-benchmarks.log`. |
 | D248 | implemented, pending non-implementer verification → **verified** | `iter266-verify/d248/*/verification.json` **31/31 × 3 hosts**; `kimi-verdict.md`, `kimi-d248-recheck.md` | Implementer claude-opus, verifier Kimi K3. |
 | D250 | implemented, live-checked by its implementer → **verified** | `iter266-verify/d250/*/verification.json` **36/36 × 3 hosts**; `kimi-verdict.md` | Same pair. |
 | D252 | implemented, live-checked by its implementer → **verified** | `iter266-verify/d252-d253/*/verification.json` **53/53 × 3 hosts**; `kimi-verdict.md` | Same pair. The 53 checks cover D252 and D253 together. |
@@ -18164,7 +18181,8 @@ kept — `iter266-verify/kimi-verdict.md` and `kimi-d248-recheck.md`.
 ### Handoff from iteration 266 (claude-opus, 2026-09-28 17:30–18:0x UTC)
 
 Everything is committed, gated and **pushed**; the tree is clean, `run.lock` was absent at every push and
-no daily process was running. Two commits: `94a61123` (D251.2) and this ledger.
+no daily process was running. Three commits: `94a61123` (D251.2), `05643cc0` (ledger) and the live receipt commit. Live revision
+`05643cc0` on all three hosts; the D251.2 live check ran against it.
 
 Gates: `node scripts/build-dataset.mjs` **868 / 673 / 94 / 3,118** (unchanged); `CI=true npm test`
 **1,605 tests, 1,604 pass, 0 fail, 1 skip**, exit 0, unpiped (`iter266-gates/npm-test.log`);
