@@ -17546,3 +17546,187 @@ Nothing in this iteration touched the registry, a published score or a protocol 
 replays wrote only to `/opt/benchmarkheaven/state/ux-evidence/`.
 
 **`ALL-ACCEPTED` is not appended.**
+
+## Iteration 264 (claude-opus, 2026-09-28 13:00 UTC)
+
+### D250 — the file that decides "this is a judge's opinion" had no coverage gate, and four boards fell through it
+
+`data/benchmark-caveats.json` is not documentation. `lib/benchmark-matrix.mjs` builds every category
+composite from the rows it does **not** list as judged
+(`const objective = qualifying.filter(({ row }) => !row.judged)`), `lib/category-scores.mjs` refuses a
+judged benchmark as a category anchor, and `rowTags` puts the visible **Judged** pill on the rest. The
+file was written in iteration 77 against 32 boards, reviewed by a second engine, and has never had a
+coverage gate. The registry has grown to **279 families**; 229 of them were in neither block, and
+nothing anywhere said so.
+
+`ops/ux-2026-09-12/bin/measure-judged-classification.mjs` screens each family's own registry text
+(`one_sentence_description`, `scoring.metric`, `scoring.notes`) for a judge, a panel, a rubric or an
+Elo, with the retention boilerplate — "different harnesses, subsets, judge revisions and versions must
+remain separate", which every entry carries and which is about identity, not scoring — removed first.
+Left in, that one sentence screens in 40 boards that say nothing about judging at all. It named
+**11** families. Receipt: `iter264-d250/screen-before.json`.
+
+**The expensive one had already been decided, in the wrong file.** `vulcanbench-frontier::4`'s own
+registry note said, in prose: "the judged 33% component makes the combined score a judged score for
+category composites." The file the code reads had never been told, so the board — whose published
+number is `0.50 × functional hidden-test score + 0.085 lint + 0.085 security + **0.33 × judged Code
+quality**` — averaged into the Coding composite beside five task-accuracy rows. Measured on this
+checkout with the site's own `categoryComposite`, comparing Fable 5.1 (max) with GPT-6 Astra (max):
+
+| | Coding composite | rows in it |
+|---|---|---|
+| before | 71.401 / 72.495 | 6 |
+| after | **69.131 / 70.627** | 5 |
+
+(`iter264-d250/composite-impact.json`, which also records that no other category moved, and that on a
+single model column the same board moved Coding 65.92 → 64.556.)
+
+**Three more were the same board classified two ways.** `anthropic-gdpval-aa-v2-1`,
+`anthropic-aa-briefcase-v1-1` and `xiaomi-gdpval-aa-2-1` are the vendors' own published copies of
+GDPval-AA and AA-Briefcase, whose Artificial Analysis identities `aa-gdpval` and `aa-briefcase` were
+already judged on "Bradley-Terry Elo from pairwise judge-panel comparisons". The same Elo cannot be a
+preference score on one row and task accuracy on the other. They are Elo, so `compatibleRow` kept them
+out of every composite already; what changes is that the row now says what it is.
+
+**Four are recorded as not judged**, each on a verifier its own text names: `ifbench` ("judged by the
+verification functions as satisfying the constraints"), `toolathlon` and `toolathlon-verified`
+("graded by executing the resulting state against the task's ground truth"), `jevbench` (242 fixed
+decisions). **Three stay unclassified on purpose**, with what would settle them written into the test:
+`bu-bench-v1` and both BullshitBench sets need their graders' own instructions, which no evidence file
+here carries — an LLM judge that rules a task succeeded is not judged under this file's own
+definition, and one that reads a trajectory and forms an opinion is.
+
+`test/d250-judged-coverage.test.mjs` runs the screen and fails closed: a family it names is either
+classified, or in `UNCLASSIFIED` with its missing evidence. It also pins that nothing is classified
+both ways, that every classification names a real family (the two DesignArena boards cite a
+`taxonomy.` field, which `quote_rule` already allows), and that the two AA boards the vendor rows copy
+stay judged — otherwise the pair can drift apart again silently.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D250 | **implemented, verified live 36/36 on each of the three hosts** | `ops/ux-2026-09-12/bin/verify-d250-live.mjs <base> <outDir>`; `iter264-d250/live-{benchmarkheaven.com,www.benchmarkheaven.com,model-market-comparison.app.mintapis.com}/verification.json` | Live at revision `7196cc13`: the VulcanBench row carries `judged` beside `saturated` and prints "Judged: A preference or judge score, not task accuracy."; the Coding header reads "22 benchmarks · **5** feed the group score (weighted)" and no longer names VulcanBench. Desktop 1280 and mobile 390, light and dark, no page error. A **non-implementer** must set `verified`. |
+| D250.1 (new) | open | `test/d250-judged-coverage.test.mjs` `UNCLASSIFIED` | `bu-bench-v1`, `bullshitbench-v1`, `bullshitbench-v2`. Each needs its grader's own instructions as registry evidence, not a guess from the metric name. |
+| D250.2 (new) | open | `iter264-d250/screen-before.json` | 229 of 279 families are unclassified and the screen only names the ones whose registry text gives them away. A board whose entry never mentions its grader is invisible to it; the durable fix is a required field on a new registry entry, not a wider regex. |
+
+**D235's inventory is empty.** `frontiercode-cost::1.1` and `vulcanbench-frontier::4` were the two
+entries still stating the Composite policy where a source reviewer has to read it; they were held back
+one day for the D232/D234 receipts, and both arms passed round 1 in the 2026-09-28 05:17 run. Both now
+carry the `Benchmark Heaven policy:` marker, `UNMARKED_POLICY` is `[]`, and the reviewed row keeps a
+non-empty sourced remainder in each case.
+
+Gates at `7196cc13`: `node scripts/build-dataset.mjs` 868 / 673 / 94 / 3,118; `CI=true npm test`
+**1,596 tests, 1,595 pass, 0 fail, 1 skip**, exit 0 (`iter264-d250/npm-test.log`, unpiped);
+`npx tsc --noEmit -p .` exit 0; `node scripts/validate-benchmark-registry.mjs` 293 entries.
+The dataset diff is `judged_benchmarks` 34 → 38, the two notes, and the timestamps — nothing else.
+
+**`ALL-ACCEPTED` is not appended.**
+
+### D250.3 (new, open) — the review's own finding, measured and deliberately not shipped
+
+The independent review of D250 (opencode-kimi K3 via `bin/delegate.sh`, transcript
+`iter264-d250/review-nex.json`, verdicts `review-kimi-k3-verdicts.json`) agreed with all eleven calls
+and every quote it re-checked verbatim, and then named two boards the screen had missed: **`aa-gdp-pdf`
+and `stepfun-gdp-pdf`**. Their sibling `surge-gdp-pdf` is judged on "satisfy every rubric criterion,
+judged by Gemini 3.5 Flash"; these two are the same board run by Artificial Analysis and reprinted by
+StepFun, and sit in neither block. The screen missed them because neither entry's own prose names a
+grader — the evidence is one level down, and it is decisive: `aa-gdp-pdf`'s registry evidence excerpt
+quotes AA's methodology, **"Judging: GPT-5.6 Luna Medium judges each criterion independently."**
+
+I registered both, and then took it back out. What it does, measured on this checkout
+(`iter264-d250/d250-3-measurement.json`, `d250-bmx-impact.mjs`):
+
+- `node scripts/build-dataset.mjs` **fails closed**: "category score anchors must not be
+  judged/preference scores (CR-38.3): Long context: GDP.pdf (AA)". That is the guard doing its job.
+- Removing that anchor leaves Long context with two (`aa-lcr`, `aa-mlcr`), which meets `min_anchors`,
+  and no other compatible board is near the 60 % bar today (AA-LCR 75 %, GDP.pdf (AA) 65 %, MLCR-AA
+  55 %, Context Arena MRCR v2 25 %). It would also **revive** the category: a model needs a result on
+  *every* anchor, and with three anchors exactly **one** model in the whole catalog has a Long context
+  score. With two, **83** do.
+- But a judged board is not a capability axis (`lib/benchmax.mjs`), so the Benchmaxxing signal moves:
+  **133 → 118** scored families, **48 → 44** tagged, twelve level changes, and seven families lose
+  their tag — including `deepseek-v4.1-flash`, whose comparisons fall 7 → 5 and whose tag **CR-77.1
+  names by hand**. Three tests pin numbers that would have to be re-derived.
+
+Shipping that at the end of an iteration, on the same commit as the classification it follows from,
+would be the wrong trade: it is a visible change to a published signal and to a requirement Florian
+wrote himself, and it deserves its own change, its own before/after receipts and its own review. The
+measurement is done; the decision is not mine to take in the last half hour. `test/d250-judged-coverage.test.mjs`
+carries the flag in `FLAGGED_BY_REVIEW` and pins that the three GDP.pdf identities can never end up
+split across both blocks — the test does **not** assert they stay unclassified, because classifying
+them is the point.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D250.3 | **open — measured, not shipped** | `iter264-d250/d250-3-measurement.json`; `review-kimi-k3-verdicts.json`; `test/d250-judged-coverage.test.mjs` `FLAGGED_BY_REVIEW` | Register `aa-gdp-pdf` + `stepfun-gdp-pdf`, drop GDP.pdf (AA) from the Long context anchors, re-derive the three pinned tests with the reason, and say in the ledger that seven families lose a Benchmaxxing tag. The Long-context revival (1 → 83 models) is the part that argues for doing it. |
+
+### D251 — three arms the daily retains, replayed offline; one repaired and green
+
+The 2026-09-28 **05:17** run was the healthy one: it retained only **four** arms, not the 28 the
+11:23 self-heal published (those were all `worker: No supported viable worker`, D249.5's subject). Its
+four, from `reports/refresh-benchmarks.log`:
+
+| arm | round-1 outcome |
+|---|---|
+| `aa-automationbench::1.0.6` | 1 disputed row quarantined; producer uncertainty cannot be overruled |
+| `mazur-creative-story-writing::snapshot-2026-09-10` | the same |
+| `mls-bench-lite::30-tasks` | the same |
+| `swe-atlas-test-writing::snapshot-2026-09-15` | Primary source unavailable: HTTP 404 |
+
+One retained arm fails the whole `refresh-benchmarks` step, so this run published nothing
+(`summary.txt`: "Publikation: keine") and the 11:23 self-heal published instead — the one that lost
+its critic pool. **Read the run's own `refresh-benchmarks.log`, not `daily-checks.json`:** the
+`work/` copy of that file is the one the run *cloned*, dated 2026-09-27, and the review gate's
+`daily-run-0517-checks-summary.json` quotes it. Every Vals arm and `vulcanbench-frontier::4` are
+listed there as failing and all of them **passed** round 1 in this run.
+
+Replayed offline against the run's own capture
+(`BH_REPLAY_MANIFEST=…/2026-09-28T05-43-32-483Z/manifest.json`, the daily's worker environment,
+`iter264-d251/replay.log`):
+
+- **`mazur-creative-story-writing`** reproduced, with one [major]: `scoring.metric` claimed
+  "pairwise **evaluator-v2/evaluator-v3** judgments", and lechmazur's README names no evaluator
+  version — it says only "Separate evaluator models read matched stories" and "The ranking combines
+  judgments from earlier and newer evaluator models". The critic's own repair text was the fix; the
+  metric now reads "pairwise **LLM evaluator** judgments", in the registry *and* in the collection
+  plan's `protocol` string, because the plan's string is what freezes into every observation. The
+  board's `judged` entry quoted the old wording, so `test/benchmark-caveats.test.mjs` caught it and
+  the quote moved with the metric — that is the quote rule earning its keep.
+  **Re-replayed after the fix: `accepted: true`** (`iter264-d251/mazur-after-fix/`).
+- **`mls-bench-lite::30-tasks`** is not a prose defect at all. The producer rejected the
+  **version_guard**: it requires every chart key to carry a harness parenthesis matching an allowed
+  effort, and the board now serves keys without one (`Qwen3.8-Max-0902|Claude Code`,
+  `Kimi K2.7 Code|Kimi-Code`) plus one reading "max effort, with fallback", outside the allowed set.
+  That is a source change, not wording: the guard has to be re-derived from the board as it is today.
+- **`aa-automationbench::1.0.6`**'s replay is *not* a faithful reproduction and must not be read as
+  one: the AA protocol arm's packet carries this run's own added/changed-value summary (CR-38.1) and
+  the replay was run without `--activity-from-run`, so its round-2 "c2 lifecycle fields absent" is an
+  artefact of the missing SOURCE 2. The daily's own finding stands instead: the row says "**Mean**
+  fraction of objectives completed", unit `fraction`, while AA's methodology says a task "receives the
+  **percentage** of objectives the model completed" and never says "mean". The served field
+  `automationBenchPartialScore` really is a 0–1 fraction (172 observations, 0.0019–0.6954), so the
+  *value* is right and only the sentence is wrong — but the fix needs the payload registered as the
+  evidence for the unit, and this board is an **Agentic category anchor**, so it is not a free edit.
+
+**`swe-atlas-test-writing` is not a withdrawn board.** `https://labs.scale.com/leaderboard/sweatlas-tw`
+404s, but `https://labs.scale.com/leaderboard` still lists "SWE Atlas - Test Writing" *and* still
+serves its full scores array inline — `"id":"sweatlas-tw","airtableTableName":"sweatlas-tw","scores":[
+{"model":"Fable-5.1 (Claude Code) xHigh*","rank":1,"score":67.04,…}]`, with the same field names the
+`scale_swepro` parser already reads. Both sibling boards (`sweatlas-qna`, `sweatlas-refactoring`) still
+200. So one route on Scale's site is broken, one day old (no earlier run mentions this arm), and the
+remedy is either to wait for Scale or to move the source to the index page — a source change with a
+new `version_guard`, which wants a critic round, not a quick edit. Capture:
+`iter264-d250/swe-atlas-index.html`.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D251 | **implemented, replayed green** | `iter264-d251/{replay.log,mazur-after-fix/}`; `data/raw/benchmarks/{registry,collection-plan}.json` | `mazur-creative-story-writing` accepted on replay. A **non-implementer** should confirm against the next 05:17 run's own receipt. |
+| D251.1 (new) | open | `iter264-d251/mazur-after-fix/gauntlet/…/producer-r{1,2}.json` | Rounds 1 and 2 both called `unit: 'points'` unsupported before round 3 accepted the row. The README gives no unit; its column header is "Comparison score". Changing the unit is not free — the axis id is `benchmarkId@@cohort@@unit` and the observations carry their own unit — so it wants its own change. |
+| D251.2 (new) | open | `iter264-d251/mls-bench-lite--30-tasks/` | The board's chart keys no longer match the version_guard's harness-parenthesis rule. Re-derive the guard from today's capture; do not widen it to whatever passes. |
+| D251.3 (new) | open | the 05:17 packet's SOURCE 1 (AA methodology) | `aa-automationbench::1.0.6` says "Mean fraction … fraction" where the source says "percentage of objectives". The value is a fraction and is correct; the sentence is not. It is an Agentic category anchor — repair the prose, never the number. |
+| D251.4 (new) | open | `iter264-d250/swe-atlas-index.html` | Scale's `sweatlas-tw` detail route 404s while the index still publishes the same scores. Wait a day; if it stays broken, move the source to the index page with a new version_guard and a critic round. |
+
+Gates: `node scripts/build-dataset.mjs` 868 / 673 / 94 / 3,118; `CI=true npm test` **1,598 tests,
+1,597 pass, 0 fail, 1 skip**, exit 0 (`iter264-d251/npm-test-final.log`, unpiped); `npx tsc --noEmit
+-p .` exit 0; `node scripts/validate-benchmark-registry.mjs` 293 entries.
+
+**`ALL-ACCEPTED` is not appended.**

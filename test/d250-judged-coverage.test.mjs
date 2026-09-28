@@ -65,14 +65,63 @@ test('D250: nothing is classified both ways, and every classification names a re
   assert.deepEqual(both, [], `classified as judged and not judged: ${both.join(', ')}`);
 });
 
-// The four boards D250 registered. Two of them are the vendors' own copies of boards whose
-// Artificial Analysis identity was already judged: the same Elo cannot be a preference score on one
-// row and task accuracy on the other.
+// The four boards D250 registered. Three are a vendor's own copy of a board whose Artificial Analysis
+// identity was already judged: the same Elo cannot be a preference score on one row and task accuracy
+// on the other.
 test('D250: the four boards registered on 2026-09-28 stay registered', () => {
   for (const key of ['vulcanbench-frontier', 'anthropic-gdpval-aa-v2-1', 'anthropic-aa-briefcase-v1-1', 'xiaomi-gdpval-aa-2-1']) {
     assert.ok(caveats.judged[key], `${key}: dropped from the judged classification`);
   }
-  for (const [vendor, aa] of [['anthropic-gdpval-aa-v2-1', 'aa-gdpval'], ['xiaomi-gdpval-aa-2-1', 'aa-gdpval'], ['anthropic-aa-briefcase-v1-1', 'aa-briefcase']]) {
-    assert.ok(caveats.judged[aa], `${aa}: the board this vendor row copies is no longer judged — recheck ${vendor}`);
+  // A copy is judged because the board it copies is. If the original is ever reclassified the copy has
+  // to be looked at in the same commit, so pin the pair rather than each row on its own.
+  for (const [copy, original] of [['anthropic-gdpval-aa-v2-1', 'aa-gdpval'], ['xiaomi-gdpval-aa-2-1', 'aa-gdpval'],
+    ['anthropic-aa-briefcase-v1-1', 'aa-briefcase']]) {
+    assert.ok(caveats.judged[original], `${original}: the board ${copy} copies is no longer judged — recheck ${copy}`);
+  }
+});
+
+// D250.3, open. The independent review of D250 (opencode-kimi K3, 2026-09-28) agreed with all eleven
+// calls and then named the GDP.pdf family: `surge-gdp-pdf` is judged on "satisfy every rubric
+// criterion, judged by Gemini 3.5 Flash" while AA's and StepFun's identities of the same board sit in
+// neither block. The call looks right — `aa-gdp-pdf`'s own registry evidence quotes AA's methodology,
+// "Judging: GPT-5.6 Luna Medium judges each criterion independently" — but registering it is not a
+// one-line change, and the measurement is in PROGRESS.md: it trips `assertNoJudgedAnchors` (GDP.pdf
+// (AA) is a Long context anchor), and removing that anchor moves the Benchmaxxing signal for twelve
+// families and drops seven tags, one of them a tag CR-77.1 names. It wants its own change and its own
+// review, not a tail-end commit.
+//
+// This block exists so the flag cannot be forgotten. It does not assert that they stay unclassified:
+// classifying them is the point, and a test that fails when someone does the work is a trap.
+const FLAGGED_BY_REVIEW = {
+  'aa-gdp-pdf': "Artificial Analysis' own run of GDP.pdf. Its registry evidence excerpt quotes AA's"
+    + ' methodology, "Judging: GPT-5.6 Luna Medium judges each criterion independently", which is the'
+    + ' same grader shape that made surge-gdp-pdf judged. Blocked on D250.3: it is a Long context anchor.',
+  'stepfun-gdp-pdf': "StepFun's reprint of the same GDP.pdf number. Judged or not, it has to follow"
+    + ' aa-gdp-pdf and surge-gdp-pdf; a vendor reprinting a judged board does not make it task accuracy.',
+};
+
+test('D250.3: the GDP.pdf boards the review flagged are still on the record', () => {
+  for (const [key, why] of Object.entries(FLAGGED_BY_REVIEW)) {
+    assert.ok(registry.entries.some((e) => e.family === key), `${key}: no such registry family`);
+    const classified = !!caveats.judged[key] || !!caveats.considered_not_judged[key];
+    assert.ok(classified || why.length > 80, `${key}: unclassified and without a reason that says why`);
+  }
+  // Whatever the call, the three identities of GDP.pdf may not end up split across both blocks.
+  const calls = ['surge-gdp-pdf', 'aa-gdp-pdf', 'stepfun-gdp-pdf']
+    .map((k) => (caveats.judged[k] ? 'judged' : caveats.considered_not_judged[k] ? 'not_judged' : 'unclassified'));
+  assert.ok(!(calls.includes('judged') && calls.includes('not_judged')),
+    `the three GDP.pdf identities are classified against each other: ${calls.join(', ')}`);
+});
+
+// CR-38.3 already refuses a judged benchmark as a category anchor and `assertNoJudgedAnchors` fails the
+// build rather than quietly changing a published score. Pin the invariant here too, so a classification
+// commit meets it in the suite rather than in a failed deploy.
+test('D250: no category anchor is a judged board, and every category keeps its minimum', () => {
+  const anchors = read('../data/category-score-anchors.json');
+  for (const category of anchors.categories) {
+    for (const anchor of category.anchors) {
+      assert.ok(!caveats.judged[anchor.key], `${category.label}: anchor ${anchor.key} is classified judged (CR-38.3)`);
+    }
+    assert.ok(category.anchors.length >= anchors.min_anchors, `${category.label}: ${category.anchors.length} anchors`);
   }
 });

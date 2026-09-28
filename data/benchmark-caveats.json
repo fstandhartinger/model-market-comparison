@@ -92,9 +92,9 @@
       "why": "A judge rubric produces the criteria scores."
     },
     "mazur-creative-story-writing": {
-      "quote": "pairwise evaluator-v2/evaluator-v3 judgments",
+      "quote": "pairwise LLM evaluator judgments",
       "field": "scoring.metric",
-      "why": "Pairwise judgments, Thurstone-style rating."
+      "why": "Pairwise judgments by separate evaluator models, combined into a Thurstone-style rating. (D251 reworded the metric: the README names no evaluator version, so the quote moved with it.)"
     },
     "mazur-divergent-thinking": {
       "quote": "Average LLM-judged score",
