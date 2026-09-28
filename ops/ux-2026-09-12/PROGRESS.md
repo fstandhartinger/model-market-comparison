@@ -17267,3 +17267,79 @@ committed; only this pass's paths were staged.
 F-220 wait for the preview's owner.**
 
 **`ALL-ACCEPTED` is not appended.**
+
+## Iteration 263 — claude-opus, 2026-09-28 12:30–13:00 UTC
+
+### F-218 holds on all three hosts
+
+Fable pass 41 left F-218 needing a non-Fable engine on the deployed revision. All three hosts serve
+`acafbfa9` (the pass's own deferred push landed at 12:27:51 UTC, `fable41-deferred-push.log`), and the
+pass-41 verifier passes **24/24 per host** with a cleared out dir on each.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-218 | **verified** (claude-opus, non-implementer) | `iter263-f218/{canonical,www,model-market-comparison}/verification.json`, 24/24 each; `ONLY=F-218` | The v1.5 preview's prose hashes print as a 12-character prefix with the full value in the title, and the pricing hash comes from `a.pricing_disclosure_correction_sha256` rather than a literal. |
+
+### D248: the two HuggingFace-caused splits are repaired — and the discriminator proposed for the other two is measurably false
+
+**Shipped.** Two of the five families that held one product on two rows are now one row each, with every
+price still reachable. Both split for HuggingFace reasons and neither needed a vendor statement:
+
+* **`command-a+`** — the AA row links `CohereLabs/command-a-plus-05-2026-bf16`; the route
+  `cohere/command-a-plus` publishes **no repository at all** (`hugging_face_id: null` in today's
+  OpenRouter catalog). A repository on the row was nonetheless counted as linkage, which blocked the
+  `unlinked` escape hatch and minted `command-a+::openrouter` — the row that held the family's *only*
+  price, while the row with all 14 benchmarks had none. A repository cannot be evidence against a route
+  that names none, in either of the two places that compared them: the route block and the per-row offer
+  selection. That second half is why iteration 261's naive patch lost the offer — suppressing the row
+  without fixing the offer rule leaves the price with nowhere to go.
+* **`nemotron-3-super-120b-a12b`** — AA links `nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-**BF16**`,
+  OpenRouter serves `…-**FP8**`. A serving-precision suffix says how the weights are stored, not which
+  model they are. `lib/huggingface-identity.mjs` now compares repositories with a **closed** list of
+  precision suffixes dropped. Measured over the whole catalog — 343 repository ids from
+  `dataset.json` and `data/raw/openrouter.json`, 11 of them carrying such a suffix — the rule collapses
+  **exactly one** pair, this one. That measurement is pinned as a test, so a looser future suffix never
+  merges two releases unnoticed.
+
+**Acceptance, measured** (`iter263-d248/repair-acceptance.json`, against the pre-patch
+`dataset-before.json`): models **870 → 868**, families unchanged at 673, observations unchanged at
+18,786 with **zero** changed subjects, **zero** rows with a changed benchmark, **zero** distinct offers
+lost (1,505 before and after) and **zero** families whose reachable price set changed. The only two
+field changes anywhere are both on `command-a+::default`: `has_pricing` `false → true`, which is the
+point, and its `token_efficiency` attempt list, which now names the real route
+(`no_exact_openrouter_model_id` → `incomplete_window`, same fallback ratio 22.24498964668285 from the
+same Chutes window).
+
+One number in iteration 261's written acceptance has to be corrected rather than met: *"the offer total
+must not fall at all"*. `counts.offers` is a sum of **row-offer attachments**, not of offers, so it
+necessarily falls when a duplicate row stops re-listing its family's direct offers — here by 2, the
+AWS Bedrock and Nebius entries the Nemotron routing row carried a second copy of. The test that
+distinguishes this repair from the rejected naive one is the **distinct** offer set and the per-family
+reachable price set, both unchanged above; `counts.offers` 3,120 → 3,118 is the duplicate leaving.
+
+**Not shipped, and the reason is a correction.** Iteration 261 proposed a discriminator for the two
+Google families: *"the retained slug no longer resolves to a live route while a route for that family
+does exist … true for exactly the three mismatched rows."* **That is false and is withdrawn.** Today's
+OpenRouter catalog carries `google/gemini-2.5-pro-preview` and `google/gemini-3.1-flash-lite-preview`
+as live SKUs with live offers, and `openai/gpt-5.2` likewise (`iter263-d248/remaining-three.json`).
+So the retained slugs *do* resolve. These are two live SKUs of one product, and OpenRouter's own
+canonical slugs say they are different snapshots — `google/gemini-2.5-pro-preview-06-05` against
+`google/gemini-2.5-pro`, and `…-preview-20260303` against `…-20260507`. Merging a March preview into a
+May GA release is a claim about the weights that needs a vendor statement, not a slug rule; and
+`openai/gpt-5.2` is a different OpenAI product from `openai/gpt-5.2-codex`, so aliasing them is wrong
+in the other direction. All three stay open with their evidence captured.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D248 | **implemented, pending non-implementer verification** — 5 split families → 3 | `lib/huggingface-identity.mjs`; `scripts/build-dataset.mjs`; `test/d248-routing-row-merge.test.mjs` (4/4); `iter263-d248/{repair-acceptance.json,split-after.txt,gates/}` | `command-a+` and `nemotron-3-super-120b-a12b` merged, no price lost. Needs a live check on the deployed revision. |
+| D248.1 (new) | **open** — needs a vendor statement, not a slug rule | `iter263-d248/remaining-three.json` | `gemini-2.5-pro`, `gemini-3.1-flash-lite`: the `-preview` SKU is live beside the stable one and OpenRouter's canonical slugs name different snapshots. |
+| D248.2 (new) | **open** — the AA row names the wrong product | `iter263-d248/remaining-three.json` | `gpt-5.2-codex::xhigh` retains `openai/gpt-5.2`. Correct the AA row; never alias it to `openai/gpt-5.2-codex`. |
+| D248 (iteration 261 acceptance line) | **corrected** | `iter263-d248/repair-acceptance.json` | "offers unchanged at 3,134" measured a sum of row attachments. The real test is the distinct offer set and each family's reachable price set. |
+| D248 (iteration 261 discriminator for cause (b)) | **withdrawn** | `iter263-d248/remaining-three.json`; `data/raw/openrouter.json` 2026-09-28 | Both `-preview` slugs resolve to live routes with live offers. |
+
+Gates on the edited tree: `node scripts/build-dataset.mjs` exit 0, **868 / 673 / 94 / 3,118**;
+`CI=true npm test` **1,588 tests, 1,587 pass, 0 fail, 1 skip**, exit 0 (`gates/npm-test.log`, unpiped);
+`npx tsc --noEmit -p .` exit 0 (`gates/tsc.log`); `node scripts/validate-benchmark-registry.mjs` exit 0,
+293 versioned entries (`gates/registry.log`).
+
+**`ALL-ACCEPTED` is not appended.**

@@ -12,6 +12,7 @@ import { aaSpeed } from "../lib/aa-speed.mjs";
 import { collapseDuplicateEndpoints, perMillion } from "../lib/openrouter-endpoints.mjs";
 import { normalizeOpenRouterPriceOverrides } from "../lib/openrouter-pricing.mjs";
 import { deterministicFamilyRepresentative } from "../lib/family-representative.mjs";
+import { stableHuggingFaceId, sameHuggingFaceModel } from "../lib/huggingface-identity.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const RAW = join(__dirname, "..", "data", "raw");
@@ -34,10 +35,6 @@ function stripVendor(s) {
 }
 
 const stableOpenRouterId = (id) => String(id || "").replace(/^~/, "").replace(/:free$/i, "");
-const stableHuggingFaceId = (id) => String(id || "")
-  .replace(/^https?:\/\/(?:www\.)?huggingface\.co\//i, "")
-  .replace(/\/$/, "")
-  .toLowerCase();
 
 const REASONING_CONFIG_RE = /\b(?:non[- ]?reasoning|reasoning|adaptive|thinking|x\s?high|xhigh|high|medium|low|minimal|max)(?:\s+effort)?\b/i;
 const SERVING_ANNOTATION_RE = /^(?:fireworks|azure direct|eu data zone|short context|long context|fast mode|none)$/i;
@@ -1110,14 +1107,19 @@ async function build() {
     const rows = [...models.values()].filter((row) => row.family_key === route.familyKey);
     const routeHf = stableHuggingFaceId(route.huggingFaceId);
     const exact = rows.some((row) => aliasesOverlap(aliases, sourceAliasesForRow(row))
-      || (routeHf && huggingFaceForRow(row) === routeHf));
+      || (routeHf && sameHuggingFaceModel(huggingFaceForRow(row), routeHf)));
     const generic = rows.some((row) => !row.aa_model_id && !row.openrouter_metadata);
     // When no row in the family carries any OpenRouter/HuggingFace linkage at
     // all (AA hasn't linked the model yet — common right after a release), the
     // route unambiguously belongs to this family; a separate "::openrouter" row
     // would only duplicate the family with empty benchmarks.
+    // A HuggingFace repository on a catalog row can only say that this route belongs
+    // somewhere else when the route names a repository too. `cohere/command-a-plus`
+    // publishes none, so the AA row's repository is not evidence against it; counting
+    // it as linkage minted a second row that carried the family's only price (D248).
     const unlinked = rows.length > 0
-      && rows.every((row) => sourceAliasesForRow(row).size === 0 && !huggingFaceForRow(row));
+      && rows.every((row) => sourceAliasesForRow(row).size === 0
+        && !(routeHf && huggingFaceForRow(row)));
     if (exact || generic || unlinked || rows.length === 0) continue;
     let suffix = "openrouter";
     let serial = 2;
@@ -1188,13 +1190,18 @@ async function build() {
         ].filter(Boolean))))
         : [];
       const exactHfOffers = exactHf
-        ? fam.offers.filter((offer) => offer.or_model_id && stableHuggingFaceId(offer.or_hugging_face_id) === exactHf)
+        ? fam.offers.filter((offer) => offer.or_model_id && sameHuggingFaceModel(offer.or_hugging_face_id, exactHf))
         : [];
+      // Same rule as the route block above: a repository on this row can only pick
+      // between the family's router offers when those offers name repositories at
+      // all. When none of them does, the row is unlinked for this decision and takes
+      // the family's routes rather than nothing (D248).
+      const hfDiscriminates = fam.offers.some((offer) => offer.or_model_id && offer.or_hugging_face_id);
       const selectedRouterOffers = exactOrOffers.length
         ? exactOrOffers
         : exactHfOffers.length
           ? exactHfOffers
-          : (exactOrAliases.size || exactHf) ? [] : fam.offers.filter((offer) => offer.or_model_id);
+          : (exactOrAliases.size || (exactHf && hfDiscriminates)) ? [] : fam.offers.filter((offer) => offer.or_model_id);
       row.offers = [...directOffers, ...selectedRouterOffers];
       row.copilot = fam.copilot;
     }
