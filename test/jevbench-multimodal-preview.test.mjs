@@ -150,9 +150,9 @@ test('public Image JevBench route leads with the ranking and preserves aggregate
     readFile(new URL('../scripts/build-jevbench-multimodal-preview.mjs', import.meta.url), 'utf8'),
   ]);
   assert.match(page, /robots: \{ index: false, follow: false/);
-  assert.match(page, /Image JevBench v0\.1\.2/);
+  assert.match(page, /Image JevBench v0\.1\.3/);
   assert.match(publicPage, /canonical: '\/image-jev-bench'/);
-  assert.match(publicPage, /Image JevBench v0\.1\.2/);
+  assert.match(publicPage, /Image JevBench v0\.1\.3/);
   assert.match(publicPage, /openGraph:/);
   // F-198 (pass 36, iter235): the page is its results. Order: head → Composite score → Full ranking →
   // Compare two systems → Examples → Results by track → Split → preview tracks → Method → closed candidates.
