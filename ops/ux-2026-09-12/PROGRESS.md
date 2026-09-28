@@ -16488,7 +16488,12 @@ is the correct behaviour rather than a gap.
    05:17 run mean something. If the arms fail again, the packet is in the run's
    `gauntlet/protocol-ugi-*/packet-r1.md`: check that the activity source reached it before touching
    anything else. Expect variance; one red round is not a wrong fix.
-2. **A non-implementer live check of D247's published half**, once the 05:17 run has published it.
+2. **A non-implementer live check of D247's published half**, once the 05:17 run has published it. An
+   attempt at the *offline* half was made here and did not land: with `delegate.sh` fixed, a one-line
+   packet (`node --test` on the three test files plus a re-read of the three replay receipts) ran for
+   over an hour without answering. That is the Kimi stall shape, not the wrapper bug — the wrapper is
+   what produced this iteration's 78/78 sign-off ten minutes after it was fixed. Try codex-luna for
+   this one; it is a read of files on disk and needs no network.
 3. **Retire board #11's D237 handoff** — it asks for a credential nobody needs any more. The reusable
    fact is in the memory note: the agent Chrome session commits to the org's Spaces through the commit
    API, and `/settings/tokens` is gated by a password prompt that should stay respected.
