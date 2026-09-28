@@ -17770,3 +17770,193 @@ faithfully from a `capture-benchmark-sources` manifest: the activity receipt it 
 page, which `fetch-aa` retrieves separately, so c2 always reports missing lifecycle evidence offline.
 
 **`ALL-ACCEPTED` is not appended.**
+
+### D252 — the category composites nobody re-measured, and the one that ranked a single model
+
+CR-25.6 fixes each category composite's anchor set in `data/category-score-anchors.json` and scores a
+model **only when it has a result on every anchor**. That design makes one thin anchor decide the whole
+category's coverage, which is exactly why the rule requires a category's benchmarks to be "measured for
+at least 60 % of the featured model families" — and why every anchor carried a recorded
+`coverage_2026_09_15` of **≥ 0.65** when the sets were written. Nothing re-measured it in the thirteen
+days since, and the file has no gate.
+
+Measured today with the rule's own denominator of 20 featured, non-deprecated families
+(`ops/ux-2026-09-12/bin/measure-category-anchor-coverage.mjs`, new; receipts
+`iter265-d252/anchor-coverage-before.txt` and `cr-25-6-coverage-2026-09-28.txt`):
+
+| anchor | recorded 2026-09-15 | measured 2026-09-28 |
+|---|---|---|
+| SciCode (AA subproblems) | 1.00 | 0.75 |
+| Terminal-Bench v4.0 (AA) | 1.00 | 0.65 |
+| **DeepSWE (Datacurve, via Epoch AI)** | 0.65 | **0.35** |
+| AutomationBench-AA | 1.00 | 0.75 |
+| τ³-Banking (AA) | 0.95 | 0.60 |
+| **EnterpriseOps-Gym-AA** | 0.65 | **0.35** |
+| CritPt (AA) | 1.00 | 0.75 |
+| GPQA Diamond (AA) | 0.95 | 0.60 |
+| AA-LCR v1.1 | 1.00 | 0.75 |
+| **GDP.pdf (AA)** | 1.00 | **0.15** |
+| **MLCR-AA** | 0.90 | **0.55** |
+
+The published effect, of 868 model rows: **cat_coding 50, cat_agentic 45, cat_science 513,
+cat_long_context 1** — and that one was `gpt-6-astra::max`. A selectable "Long-context composite" in
+every score picker that ranked a single model.
+
+**GDP.pdf (AA) is the instructive one.** Its coverage did not decay; the board *versioned*.
+`resolveAnchors` must take the newest version (CR-65.16, so a retired edition cannot win on width), and
+AA's current identity `snapshot-2026-09-21` — LiteParse 2.5.0, English OCR, a changed image pipeline —
+has 22 model rows where `snapshot-2026-09-10` has 152. The anchor resolved to the thin row, and because
+a model needs a result on *every* anchor, the intersection with AA-LCR (533) and MLCR-AA (84) was one.
+
+**The reading, stated so it can be challenged.** The note's original sentence is "A category is only
+offered when at least two benchmarks in it are on a 0-100-style, higher-is-better scale AND are measured
+for at least 60 % of the featured model families". Read literally, Coding qualifies today on SciCode and
+Terminal-Bench alone and may keep a 35 % third anchor. D252 reads the bar as a standing requirement on
+**every** anchor, because that is how the sets were actually chosen (each anchor's own recorded coverage
+was ≥ 0.65) and because the fixed-set-plus-every-anchor rule makes any other reading self-defeating. The
+reading is written into the file's `note` and onto `/about`, where a reviewer can disagree with it.
+
+**What shipped** (`62c04b73`):
+
+- Coding drops `deepswe`, Agentic drops `aa-enterpriseops-gym`. Both keep two anchors and now score
+  **148** model rows each, up from 50 and 45. Science is untouched at 513.
+- Long context is **withdrawn**: only AA-LCR v1.1 clears the bar, so it falls under the same rule that
+  already leaves Reasoning and Vision without a category score. Its boards and its benchmark-table group
+  are untouched — only the selectable score goes.
+- Every withdrawal is recorded in the file's new `withdrawn` block with the coverage it was measured at,
+  why, and what brings it back. `min_coverage` (0.6) and `min_anchors` (2) are unchanged; the bar was not
+  lowered. The anchor-set version is bumped 1.0 → 1.1, so `dataset.category_scores.version` says so.
+- `cat_long_context` leaves `SCORE_OPTIONS`, `SIMPLE_SCORE_CHOICES` and `CHART_SCORES`. That is also what
+  handles a stale bookmark: `lib/settings-state.ts` validates a stored or URL `score` against
+  `SCORE_OPTIONS`, so `?score=cat_long_context` now falls back to the default instead of rendering a
+  column of dashes. It stays in the `ScoreKey` union and the label records — inert, and there if the
+  category returns.
+- `/about`'s category paragraph no longer names the four categories by hand (the list under it is already
+  data-driven off `dataset.category_scores`), and it says the bar is re-measured on each build and that
+  Long context left on 28 September 2026.
+- **`test/d252-anchor-coverage.test.mjs`** is the gate that was missing: it re-measures every anchor's
+  featured-family coverage from the built dataset on every run and fails with the remedy in the message,
+  pins that each anchor records the coverage it was measured at and that every withdrawal carries a
+  reason and a return condition, pins that the score pickers offer **exactly** the categories the dataset
+  publishes, and pins that withdrawing a category keeps its boards and its table group. This drift cannot
+  return silently.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D252 | **implemented, verified live 53/53 on each of the three hosts** | `ops/ux-2026-09-12/bin/verify-d252-d253-live.mjs <base> <outDir>`; `iter265-d252/live-{benchmarkheaven-com,www-benchmarkheaven-com,model-market-comparison-app-mintapis-com}/verification.json` | A **non-implementer** must set `verified`. |
+| D252.1 (new) | open | `iter265-d252/anchor-coverage-before.txt` | Three of the four categories sat one anchor away from useful for up to thirteen days and nothing said so. The gate now catches the *state*; nothing yet reports the *trend*, so an anchor sliding 0.75 → 0.61 is invisible until it crosses. A line in the daily receipt naming each anchor's coverage would surface it a week early. |
+| D252.2 (new) | open | `iter265-d252/anchor-coverage-after.txt` | Long context returns the day a second long-context board reaches 60 %. Today: MLCR-AA 55 %, Context Arena MRCR v2 25 %, and GDP.pdf (AA) is disqualified as judged (D253). MLCR-AA is one featured family away — worth watching rather than forcing. |
+| D252.3 (new) | open | `iter265-d252/anchor-simulation.txt` | `cat_coding` and `cat_agentic` both land on exactly 148 rows, because AA runs one roster across its boards. Two anchors from one source is a thinner definition than three from two; if DeepSWE's coverage recovers it should come back rather than stay withdrawn. |
+
+Gates at `62c04b73`: `node scripts/build-dataset.mjs` 868 / 673 / 94 / 3,118; `CI=true npm test`
+**1,602 tests, 1,601 pass, 0 fail, 1 skip**, exit 0 (`iter265-d252/npm-test-a.log`, unpiped);
+`npx tsc --noEmit -p .` exit 0; `node scripts/validate-benchmark-registry.mjs` 293 entries. The dataset
+diff is the category scores, the `category_scores` block and the timestamps — nothing else.
+
+**`ALL-ACCEPTED` is not appended.**
+
+### D253 — GDP.pdf is judged on all three of its rows, and the tag that costs
+
+D250.3, carried over from iteration 264 with its measurement already done. The D250 review
+(opencode-kimi K3) named `aa-gdp-pdf` and `stepfun-gdp-pdf`, whose sibling `surge-gdp-pdf` has been
+classified judged since iteration 77. The call is decisive and comes from Artificial Analysis' own
+methodology, which that entry already carries as registry evidence: **"Judging: GPT-5.6 Luna Medium
+judges each criterion independently."** GDP.pdf has no answer key — a judge rules each of the 1,275
+rubric criteria, and the published all-pass rate is the share of attempts where every one of its rulings
+was a pass. That is `judged_definition` exactly.
+
+It was blocked on CR-38.3's build guard while GDP.pdf (AA) was a Long context anchor. **D252 removed that
+anchor for coverage, so the guard was already satisfied and the classification was free** — which is why
+the two changes are in this order and not the other.
+
+`stepfun-gdp-pdf` is registered on D250's own precedent for a vendor copy: it quotes its own
+`scoring.metric` ("Source-published score") and the `why` carries the reasoning, as
+`anthropic-gdpval-aa-v2-1`, `xiaomi-gdpval-aa-2-1` and `anthropic-aa-briefcase-v1-1` do. It changes no
+number — its board holds one vendor row, so it was never a capability axis for anyone else. Measured both
+ways in `iter265-d253/benchmaxxing-impact.json`: the `aa_only` and `both` columns are identical.
+
+**What it costs, measured** (`ops/ux-2026-09-12/bin/measure-d253-bmx-impact.mjs`): a judged board is not
+a capability axis (`lib/benchmax.mjs`), so the Benchmaxxing signal moves — **133 → 118** scored families,
+**48 → 44** tagged, twelve level changes, seven families lose a tag (`deepseek-v4-flash-vision`,
+`deepseek-v4.1-flash`, `hy3`, `ling-3.0-flash-vl`, `ling-3.0-tiny`, `muse-glimmer`, `nex-n2-pro`) and
+three gain one (`gpt-5-mini`, `grok-4.5`, `mercury-2`). Every one of those changes comes from
+`aa-gdp-pdf` alone.
+
+**The CR-77 conflict, and why it resolves this way.** One of the seven is `deepseek-v4.1-flash`, whose
+tag Florian named by hand: *"ich würde den benchmaxxing tag gerne bei DeepSeek V4.1 Flash sehen."* Its
+capability comparisons fall **7 → 5**, one below `BENCHMAXX_MIN_COMPARISONS`, so `scoreBenchmaxxing`
+returns `insufficient-coverage` and the family has no score. CR-77.1 as ratified says both halves: the
+tag follows the score alone, *and* "a model must still be **scored** (n ≥ 6 in ≥ 2 topics); nothing is
+tagged without a score." What CR-77 forbade was suppressing a tag whose score existed at +6.4; it never
+asked for a tag without one. The remedy is more measured capability boards for that family, never a lower
+bar — `BENCHMAXX_MIN_COMPARISONS` is unchanged. Florian was told, because he named the model himself.
+
+The three pinned tests are re-pinned against the published data, each now asserting the rule rather than
+the number:
+
+- `test/cr-77-tags-and-frontier.test.mjs` keeps every CR-77.1/77.2 assertion on the scored branch and, on
+  the unscored branch, proves the *cause* by counterfactual: counting the two GDP.pdf axes as capability
+  axes again scores the family. The row returns to the scored branch by itself the day it has another
+  measured board, and nobody is tempted to move the threshold.
+- `test/cr-78-jaggedness-blend.test.mjs` re-pins all four simulation rows with the reason: Muse Spark 1.1
+  17.22/19.79 (strong, unchanged), Qwen3.7 Max 4.72/5.92 (medium → light), Gemini 3.6 Flash 5.51/6.69
+  (light → medium, it had been 0.08 under the line), and Hy3, now unscored.
+- `test/deepseek-v41-flash-claims.test.mjs` asserts what it exists for — the card's rows change neither
+  the status, nor the comparison count, nor the parts — instead of requiring a score as a precondition.
+- `test/d250-judged-coverage.test.mjs` adds `D253: every identity of GDP.pdf is classified judged` and
+  keeps the pair rule, so a later edit cannot quietly take one of the three back out.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D253 (was D250.3) | **implemented, verified live 53/53 on each of the three hosts** | `bin/verify-d252-d253-live.mjs`; `iter265-d252/live-*/verification.json`; `iter265-d253/benchmaxxing-impact.json` | The live checks prove `judged === true` and the `Judged` tag for all three GDP.pdf identities in the matrix API and on the page at 1280 and 390, light and dark, and that `/api/benchmaxxing?report=deepseek-v4.1-flash::max` reports `insufficient-coverage` with 5 comparisons. A **non-implementer** must set `verified`. |
+| D253.1 (new) | open | `iter265-d253/benchmaxxing-impact.json` | Fifteen families lost their Benchmaxxing *score*, not just a tag, because a judged board had been one of their few capability axes. They were thin before and are honest now, but a family that disappears from the Benchmaxxing table with no explanation is worse UX than one shown as unscored. Consider a "too few capability comparisons" state on the model page rather than silence. |
+| D253.2 (new) | open | CR-77 verbatim, `04-CR-BRIEF.md` CR-77.1 | `BENCHMAXX_MIN_COMPARISONS` (6) and `BENCHMAXX_MIN_TOPICS` (2) are our own thresholds and are the last remaining suppression CR-77 did not address. Six is not derived from anything written down. Deriving it — or replacing it with an interval-width rule, which CR-77.2 already prefers for the other guards — is a real change and wants Florian. |
+
+Gates at `79dc11c5`: `node scripts/build-dataset.mjs` 868 / 673 / 94 / 3,118; `CI=true npm test`
+**1,603 tests, 1,602 pass, 0 fail, 1 skip**, exit 0 (`iter265-d253/npm-test.log`, unpiped);
+`npx tsc --noEmit -p .` exit 0; `node scripts/validate-benchmark-registry.mjs` 293 entries.
+`judged_benchmarks` 38 → 40.
+
+**`ALL-ACCEPTED` is not appended.**
+
+### INC-2026-09-28 — a second dockerd deleted `docker0`; no Coolify deploy on Sandy worked for ~50 min
+
+Not our change, and worth reading before the next iteration trusts a push to deploy itself. The push of
+`79dc11c5` at 16:22 UTC produced **no deployment at all** — no webhook entry, and a manual
+`/opt/mmc-daily/redeploy.sh` failed in ~20 seconds with an **empty build log**. That empty log is the
+same symptom as the prebuild benchmark guard, and it was not that: `node
+scripts/validate-benchmark-scores.mjs` passed locally (18,786 observations, 212 source files).
+
+The Coolify API told the real story: `is_reachable: false`, `is_usable: false`,
+`unreachable_count: 11`, `last_online_at 15:58:45`, and every one of the ~30 apps reporting
+`exited:unhealthy`. From inside the `coolify` container, `host.docker.internal` (172.30.0.1) timed out on
+both port 22 and port 80 while its own gateway 172.30.2.1:22 was open — and `ip addr show docker0` on the
+host said **"Device does not exist"**, while `docker network inspect bridge` still described
+172.30.0.0/24 with twelve attached containers. The docker daemon itself had not restarted (up 33 days).
+
+The journal names the cause at **15:55:12 UTC**: a job in `/home/flori/jobs/s1m-infra-20260927` started a
+second `dockerd` as root with `--bridge=none --iptables=false --ip-forward=false --ip-masq=false`. One
+second later the kernel logged every `docker0: port N(vethX) entered disabled state`, systemd-networkd
+logged `docker0: Link DOWN` / `Lost carrier`, and tailscaled recorded `if docker0: removed`. A second
+dockerd in the same network namespace tore down the first one's bridge. Twelve containers
+(`xbot-litellm-db`, `pdfmint-gauntlet-pg`, `n8n-xero-ui`, `coolify-sentinel`, `jev-router-final`,
+`bhbot`, `pdfmint-test-pg-36a6`, `jev-router-check`, `postial-verify-pg`, `docmint-gauntlet-pg`,
+`docmint-qa-pg-1789940968`, `pt-testdb`) were left with veths that had no master.
+
+Repaired without restarting the daemon or any container, because both would have disturbed workloads that
+were still serving: recreated the bridge (`ip link add docker0 type bridge`, `ip addr add 172.30.0.1/24`,
+`ip link set docker0 up`), then for each container found its host veth by matching `docker exec <c> cat
+/sys/class/net/eth0/iflink` to the host ifindex and re-enslaved it, then
+`POST /api/v1/servers/<uuid>/validate` because Coolify caches the unreachable verdict and will not deploy
+on a stale `false`. Verified: `curl https://api.github.com/` from `bhbot` returns 200, the coolify
+container reaches host:22, and the next deploy finished normally with all three hosts on `79dc11c5`.
+
+Posted as agent-board entry **#4411** (thread #15, Ops & security) with the exact journal lines and two
+asks for the owning job: isolate a test dockerd in its own namespace (`--bridge=none` is not isolation),
+and note that `docker0` is now a hand-made bridge that docker will recreate properly on its next restart.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| INC-2026-09-28 | **repaired and verified**; prevention is another job's | agent-board #4411; journal 2026-09-28 15:55:12 UTC | **For the next iteration:** a push no longer implies a deploy. After pushing, check that `/api/meta` `revision` actually moves, and if it does not, read the Coolify server's `is_reachable` before blaming the build. The empty-log failure mode has two causes now, not one. |
+
+**`ALL-ACCEPTED` is not appended.**
