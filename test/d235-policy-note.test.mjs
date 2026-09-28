@@ -34,10 +34,11 @@ const PROTOCOL_WORDS = /\b(metric|unit|units|range|task set|tasks|harness|judge|
 // LLM judge grades it (react-native-evals, researchclawbench, matharena-brokenarxiv) — and were split
 // so the sourced half stays in front of the reviewer.
 //
-// These two are held back on purpose for one day: both are arms whose repair (D232, D234) lands in
-// tomorrow's 05:17 run, and their packet is not worth perturbing the night before its receipt.
+// The last two were held back for one day, for the D232/D234 receipts that landed in the 2026-09-28
+// 05:17 run (both arms passed round 1 there). D250 converted them, so the inventory is empty: no
+// registry entry now states the Composite policy where a source reviewer has to read it.
 // The list may shrink; a name cannot join it without a reason in the same commit.
-const UNMARKED_POLICY = ['frontiercode-cost::1.1', 'vulcanbench-frontier::4'];
+const UNMARKED_POLICY = [];
 const POLICY_CLAIM = /Composite input|enters the Composite|into the Composite/;
 const unmarked = () => registry.entries.filter((e) => {
   const notes = e.scoring?.notes ?? '';

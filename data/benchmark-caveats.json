@@ -181,6 +181,30 @@
       "quote": "--evaluator-llm <model name> # The LLM to use for evaluation.",
       "field": "evidence.excerpt",
       "why": "No verifier or reference state decides: an LLM evaluator reads the agent's trajectory and rules each task rubric met or not (the README's --evaluator-llm; the page's rubric-based sliding-window evaluator), in conversations whose user side is also a model (--user-llm)."
+    },
+    "vulcanbench-frontier": {
+      "quote": "0.33 × judged Code quality",
+      "field": "scoring.metric",
+      "why": "A third of the combined score is two judge models' reading of code quality, so the published number is partly a quality rating and cannot be averaged as task accuracy. The registry entry already drew this conclusion in prose; this file, which the code reads, had never been told.",
+      "added_by": "claude-opus (Sandy UX workstream, iteration 264, 2026-09-28) — D250"
+    },
+    "anthropic-gdpval-aa-v2-1": {
+      "quote": "Source-published Elo rating",
+      "field": "scoring.metric",
+      "why": "Anthropic's published copy of GDPval-AA, the same board as aa-gdpval, whose own row is judged on 'Bradley-Terry Elo from pairwise judge-panel comparisons'. The same Elo cannot be a preference score on one row and task accuracy on the other.",
+      "added_by": "claude-opus (Sandy UX workstream, iteration 264, 2026-09-28) — D250"
+    },
+    "anthropic-aa-briefcase-v1-1": {
+      "quote": "Source-published Elo rating",
+      "field": "scoring.metric",
+      "why": "Anthropic's published copy of AA-Briefcase, the same board as aa-briefcase, whose own row is judged on 'Combined Elo from rubric task success, analytical quality and presentation comparisons'.",
+      "added_by": "claude-opus (Sandy UX workstream, iteration 264, 2026-09-28) — D250"
+    },
+    "xiaomi-gdpval-aa-2-1": {
+      "quote": "Source-published Elo rating",
+      "field": "scoring.metric",
+      "why": "Xiaomi's published copy of GDPval-AA 2.1, the same board as aa-gdpval, which is judged on its pairwise judge-panel Elo.",
+      "added_by": "claude-opus (Sandy UX workstream, iteration 264, 2026-09-28) — D250"
     }
   },
   "considered_not_judged": {
@@ -199,7 +223,11 @@
     "lisanbench": "Chains are validated programmatically against a pinned dictionary (edit distance 1, no repeats); no judge model.",
     "mcp-atlas": "An LLM judge scores the answer claim by claim against the published ground-truth answer (1 / 0.5 / 0) and a task passes at 75 % coverage — the ground truth still decides; nothing is ranked or rated by preference.",
     "surge-chartography": "Gemini 3.5 Flash only checks whether each answer falls inside the expert-set acceptable range of the golden answer — the ground truth still decides (added 2026-09-22, iteration 168).",
-    "charxiv-reasoning": "GPT-4o only extracts the final answer and scores it 0/1 against the ground-truth answer — an equality check, the ground truth decides (added 2026-09-22, iteration 170)."
+    "charxiv-reasoning": "GPT-4o only extracts the final answer and scores it 0/1 against the ground-truth answer — an equality check, the ground truth decides (added 2026-09-22, iteration 170).",
+    "ifbench": "Deterministic verification functions decide each constraint; no model or human rates the answer.",
+    "toolathlon": "The task's own ground-truth backend state decides; the grader executes it rather than rating the trajectory.",
+    "toolathlon-verified": "The task's own ground-truth backend state decides; the grader executes it rather than rating the trajectory.",
+    "jevbench": "The rubric is part of each decision’s input, not a grader: the typed answer is checked against 242 fixed decisions, and the other axes are measured properties of the response."
   },
   "freshness": {
     "openai-mentalhealthbench": {
