@@ -11,7 +11,8 @@ per-section shots, the pass-40 matrix re-run for the quick views and release pag
 `/tmp/probe-p42-bubble.mjs`, results quoted below) in `/opt/benchmarkheaven/state/ux-evidence/fable-20260928-pass42/canonical/`. 0 page errors in all four contexts, min text 10 px, no
 sideways page scroll on any page. Scripts: `bin/shoot-fable-pass42.mjs`; source pin: `test/fable-pass42.test.mjs`; live verifier for non-Fable engines:
 `bin/verify-fable-pass42-design.mjs <base> <outDir>` (groups `F-221`, `F-222`, `F-226`; it launches its own Chromium). Before-receipt at `4c15001e`:
-`…/live-before/verification.json`; the shipped fixes on a dev server: `…/local-after/verification.json` (numbers in the ledger).
+`…/live-before/verification.json` (**9/47**); the shipped fixes on a dev server: `…/local-after/verification.json` (**47/47**); live at `36d5383b`:
+`…/live-after/verification.json` (**47/47**, all three hosts on that revision).
 
 **Pass 41: 2026-09-28 ~11:50 UTC**, the "what changed since pass 40" pass (Florian: Fable sparingly). Since pass 40 the changed surface is small: the
 Imajev-4B **cost-basis wording** (CR-196, PR #62 — a text-only amendment of the v1.4.2.2 artifact, printed on the pair page's Conditions block and as the

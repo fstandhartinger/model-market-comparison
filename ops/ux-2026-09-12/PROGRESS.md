@@ -18736,8 +18736,7 @@ scrolling sideways at 1440 (F-220 gone public), and phone bubble labels on a tic
 
 **Gates at the pass-42 commit (run on the committed tree, sequentially, unpiped):** `node scripts/build-dataset.mjs` **868 / 673 / 94 / 3,118** (only `generated_at`/`collected_at` moved; restored); `CI=true npm test` **1,634 tests, 1,633 pass, 0 fail, 1 skip**, exit 0; `npx tsc --noEmit -p .` exit 0. Logs: `/tmp/p42-build.log`, `/tmp/p42-npmtest.log`.
 
-**Needs a non-Fable engine to set `verified` on F-221, F-222 and F-226 (`verify-fable-pass42-design.mjs`, clear the out dir first) once the deploy
-carries them; F-223, F-224 and F-225 are for the next work iteration.**
+**Live at `36d5383b` (pushed 22:57 UTC; the webhook created deployment `qotpmdbmfuxykvez36yw0ttu`, the revision flipped after ~160 s, all three hosts serve it): `live-after/verification.json` **47/47** (`ONLY` unset; 1440 light + 390 dark; `/jev-models` first Capability row inside the first viewport, no 64-hex in the header, "Unclassified" in the legend). F-221, F-222 and F-226 are `implemented` — still needs a non-Fable engine to set `verified` (`verify-fable-pass42-design.mjs`, clear the out dir first); F-223, F-224 and F-225 are for the next work iteration.**
 
 
 **`ALL-ACCEPTED` is not appended.**
