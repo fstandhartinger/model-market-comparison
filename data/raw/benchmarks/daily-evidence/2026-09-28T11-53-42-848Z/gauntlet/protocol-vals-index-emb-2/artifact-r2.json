@@ -1,0 +1,22 @@
+[
+  {
+    "id": "vals-index-emb::2",
+    "version": "2",
+    "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Excel Modeling Benchmark accuracy",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Finance sector component; the page's 2026-08-13 v2 update calls EMB \"A private benchmark for building complex financial models in Excel\". The page reports these columns under its \"ACCURACY\" view (heading \"Industry Average Accuracy Comparison\") and prints index values as percentages in its Key Takeaways."
+    },
+    "description": "Building and editing financial models in spreadsheets.",
+    "maintainer": "Vals AI"
+  }
+]

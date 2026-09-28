@@ -1,0 +1,22 @@
+[
+  {
+    "id": "vals-index::2",
+    "version": "2",
+    "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Vals Index accuracy",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Vals Index = (8.0 × Finance + 5.6 × Coding + 1.2 × Legal) / 14.8; each sector is the average of its component benchmarks, as the page's Methodology section states. The page reports these columns under its \"ACCURACY\" view (heading \"Industry Average Accuracy Comparison\") and prints index values as percentages in its Key Takeaways."
+    },
+    "description": "GDP-weighted average of agentic model performance across finance, coding and legal tasks.",
+    "maintainer": "Vals AI"
+  }
+]
