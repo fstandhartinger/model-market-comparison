@@ -7,7 +7,11 @@
 //     [--activity-from-run=<daily run work dir>]
 //
 // `--lie` flips the row's lifecycle status to the opposite of the registry's, so the run also shows
-// that the new criterion still fails closed on a false claim.
+// that the new criterion still fails closed on a false claim. `--lie=<field>` (D251.4) does the same
+// for the other two lifecycle fields, whose criterion clauses read absence in the source as evidence
+// and therefore have to stay falsifiable: `--lie=version_status` claims the maintainer publishes a
+// release identifier for a board that publishes none (and the reverse), and `--lie=superseded_by`
+// names a successor the protocol never mentions. Bare `--lie` stays `--lie=status`.
 // `--activity` (CR-38.1) attaches this run's AA added/changed-value summary exactly as the daily
 // arm's protocol(entry, { activity, receipt }) does; its counts must come from a real capture
 // comparison, never from memory.
@@ -35,8 +39,12 @@ import { gunzipSync } from 'node:zlib';
 
 const exec = promisify(execFile);
 const [id, outDir, ...flags] = process.argv.slice(2);
-if (!id || !outDir) { console.error('usage: replay-protocol-review.mjs <benchmark_id> <outDir> [--lie] [--activity=<json>] [--activity-from-run=<run work dir>]'); process.exit(2); }
-const lie = flags.includes('--lie');
+if (!id || !outDir) { console.error('usage: replay-protocol-review.mjs <benchmark_id> <outDir> [--lie[=status|version_status|superseded_by]] [--activity=<json>] [--activity-from-run=<run work dir>]'); process.exit(2); }
+const LIE_FIELDS = ['status', 'version_status', 'superseded_by'];
+const lieArg = flags.find((f) => f === '--lie' || f.startsWith('--lie='));
+const lieField = lieArg ? (lieArg === '--lie' ? 'status' : lieArg.slice('--lie='.length)) : null;
+if (lieField && !LIE_FIELDS.includes(lieField)) { console.error(`--lie=<field> is one of ${LIE_FIELDS.join(', ')}`); process.exit(2); }
+const lie = Boolean(lieField);
 const activityArg = flags.find((f) => f.startsWith('--activity='));
 const fromRunArg = flags.find((f) => f.startsWith('--activity-from-run='));
 const fromRun = fromRunArg ? fromRunArg.slice('--activity-from-run='.length) : null;
@@ -87,7 +95,17 @@ for (const reference of references) {
 }
 
 const row = protocolReviewRow(entry);
-if (lie) row.status = row.status === 'active' ? 'retained' : 'active';
+// Every lie has to be a claim the protocol text can actually refute, or the control proves nothing:
+// a `snapshot` board becomes one that publishes a release identifier, and a board that names no
+// successor gains one — a real registry id, so `protocolReviewRow`'s own shape stays intact.
+if (lieField === 'status') row.status = row.status === 'active' ? 'retained' : 'active';
+if (lieField === 'version_status') row.version_status = row.version_status === 'published' ? 'snapshot' : 'published';
+if (lieField === 'superseded_by') {
+  row.superseded_by = row.superseded_by === null
+    ? (registry.entries.find((e) => e.family !== entry.family)?.id ?? null)
+    : null;
+  if (row.superseded_by === null) throw new Error(`${id}: no other family in the registry to invent a supersession from`);
+}
 if (activity) {
   const receipt = captured.get(activity.receiptUrl);
   if (!receipt) throw new Error(`no capture for activity receipt ${activity.receiptUrl} in the replay manifest`);
@@ -161,7 +179,7 @@ if (aaRun) {
 }
 await mkdir(outDir, { recursive: true });
 const reviewed = await reviewArtifact({ runDir: outDir, artifactId: `protocol-${entry.id}`, rows: [row], sources, criteria: PROTOCOL_REVIEW_CRITERIA });
-console.log(JSON.stringify({ id: entry.id, lie, row_status: row.status, accepted: reviewed.accepted,
+console.log(JSON.stringify({ id: entry.id, lie, lie_field: lieField, row_status: row.status, row_version_status: row.version_status, row_superseded_by: row.superseded_by, accepted: reviewed.accepted,
   fingerprints: reviewed.fingerprints.length, quarantined: reviewed.quarantined, errors: reviewed.errors,
   artifact_dir: join(outDir, 'gauntlet', `protocol-${entry.id}`.replace(/[^A-Za-z0-9._-]+/g, '-')) }, null, 2));
 process.exit(reviewed.accepted ? 0 : 1);
