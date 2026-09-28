@@ -14355,6 +14355,21 @@ sha. **`ONLY=cr152-5 verify-cr-148-158-backfill.mjs` is now 7/7** — the check 
 `hf-snapshot-names-the-systems-as-the-live-board-does`, reads "rows whose published name differs from the
 live board=0".
 
+### Seen in passing: a jobs PR landed in this checkout mid-iteration
+
+PR #62 (CR-196) was merged as `dc347725` while this iteration worked, and it arrived in this working
+copy on its own — the commit that records D237 has `dc347725` as its parent, not the `bb84e7e6` this
+iteration pushed. Nothing of someone else's was published by the push (`dc347725` was already on
+`origin/main`), but it is the shared-checkout behaviour worth re-reading `git log origin/main..HEAD` for.
+
+It matters for one reason: CR-196 **amended the v1.4.2.2 artifact again**, and D238's note is derived
+from that artifact's `sealed_aggregate`. So the harness was re-run against the amended bytes live at
+`dc347725` — **78/78** again (`iter259-independent-verify/d238-after-cr196/`). An artifact amendment is
+precisely the case that would break a hard-coded expectation, and it did not break a derived one. Gates
+re-run at the merged tree before the last push: `CI=true npm test` **1,551 / 1,550 pass / 0 fail /
+1 skip**, `npx tsc --noEmit -p .` exit 0. Posted on board #11 so the CR-196 job is not surprised by a
+third revision appearing on the hosts it is watching.
+
 **For the next iteration, in order:**
 
 1. **D230 F1** is the last one-row arm, and it is specified: the cost column's
