@@ -802,6 +802,14 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     if (browserOnly(entry)) { checks.push({ id: entry.id, status: 'retained_manual_snapshot', source_url: entry.primary_url, reason: entry.how_to_collect.access.reason }); continue; }
     checks.push({ id: entry.id, status: receipt?.status === 200 ? 'source_reachable_protocol_date_retained' : 'source_unreachable_or_manual', source_url: entry.primary_url, reason: receipt?.reason ?? 'No newly accepted protocol change' });
   }
+  // D249: a step that skipped units without reviewing a single one did not run out of clock — a
+  // deadline cannot pass before the first unit of a 140-minute budget. It means the deadline was
+  // already behind us when the step started (a bad `startedAt`, a stale env override), and the one
+  // outcome that must never follow is a green report that republishes yesterday's values as today's.
+  // Nothing changed on a quiet day is a different thing: then no unit was created and none was skipped.
+  if (budget.exhausted() && budget.skipped.length && !reviews.length) {
+    throw new Error(`review budget was already spent before the first unit (deadline ${new Date(budget.deadlineAt).toISOString()}, ${budget.skipped.length} unit(s) skipped, none reviewed): refusing to report a refresh that reviewed nothing`);
+  }
   const report = { ok: true, checked_at: at, sources_attempted: captured.size, concurrency, reuse: vendorCache.stats(), reused_units: vendorReused, checks, reviews,
     score_candidates: changedIds.size, accepted_changed_scores: accepted.size, retained_or_dropped: changedIds.size - accepted.size,
     retained_failures: checks.filter((c) => c.status === 'retained_after_failure').length,

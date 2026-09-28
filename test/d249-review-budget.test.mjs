@@ -197,3 +197,18 @@ test('a synchronous claim inside a concurrency worker is isolated, not a thrown 
   assert.ok(settled.slice(2).every((s) => isBudgetExhausted(s.reason)));
   assert.deepEqual(budget.skipped, ['scores-2', 'scores-3']);
 });
+
+test('a budget already spent before the first unit fails the step instead of reporting a green no-op', () => {
+  // A 140-minute budget cannot expire before its first review. If it has, the deadline was wrong when
+  // the step started, and the dangerous outcome is not a slow run — it is `ok: true` over a refresh
+  // that reviewed nothing and republished yesterday's values as today's.
+  const guard = refreshSrc.slice(refreshSrc.indexOf('if (budget.exhausted() && budget.skipped.length && !reviews.length)'));
+  assert.ok(guard.startsWith('if (budget.exhausted()'), 'the guard is missing');
+  assert.match(guard.slice(0, 600), /throw new Error\(/);
+  assert.match(guard.slice(0, 600), /refusing to report a refresh that reviewed nothing/);
+  // It must sit before the report is built, or it guards nothing.
+  assert.ok(refreshSrc.indexOf('if (budget.exhausted() && budget.skipped.length && !reviews.length)')
+    < refreshSrc.indexOf('const report = { ok: true, checked_at: at'));
+  // A quiet day creates no units at all, so nothing is skipped and the guard stays out of the way.
+  assert.match(guard.slice(0, 600), /budget\.skipped\.length/);
+});
