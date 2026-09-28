@@ -18483,3 +18483,187 @@ mismatch, and the only reason that is not in tomorrow's run is that two extra re
 spent on a board the change was not even about.
 
 **`ALL-ACCEPTED` is not appended.**
+
+---
+
+## Iteration 268 (claude-opus, 2026-09-28 21:30–23:xx UTC) — the half of D251.1 that was left, and the run that reviewed nothing
+
+Iteration 267 left three things at the top of the list. The first — "read the 05:17 run's
+`refresh-benchmarks.log` and count the retained arms" — **cannot be done yet**: 267 ran at 18:00–18:40
+UTC on 2026-09-28, so the acceptance run is 2026-09-29 05:17 and it has not happened. The other two are
+this iteration.
+
+### D251.4 — `version_status` is our word, and c2 never said what could settle it
+
+Mazur's round 2 on 2026-09-28 said "version_status and superseded_by cannot be settled from protocol
+text", and iteration 264's round 2 had written the same sentence four days earlier. Both were **right
+about the criterion and wrong about the row**. Criterion c2 asks for the lifecycle fields to be checked
+"against the same protocol text" and then explains only `status` and `superseded_by`. `version_status`
+is left undefined, and its most common value is a word no maintainer will ever write:
+
+> `"snapshot"` — this source publishes no release identifier, so our `version` is the dated identity
+> `snapshot-<date>` we wrote to freeze the methodology we observed that day.
+
+**169 of the 293 registry entries carry it.** A reviewer reading c2 literally has no way to answer
+except `missing_evidence`, on a row that is simply correct — so this was never mazur's problem, it was
+a shared weak spot that mazur happened to surface.
+
+The remedy is the same shape as the `[null, null]` range clause that landed hours earlier in D251.1:
+**say what the field claims, and say what absence in the source means.** c2 now defines all three
+values, and adds the two sentences that make absence readable as evidence rather than as a gap:
+
+> A protocol page that publishes no release identifier for this board is what supports `"snapshot"`,
+> and `"snapshot"` is a mismatch only when the page does publish one. … `superseded_by: null` is, in
+> the same way, the row declining to name a successor: a page that names no successor never
+> contradicts it, and it is a mismatch only when the protocol names a successor board.
+
+Pinned by `test/d251-4-lifecycle-vocabulary.test.mjs` (5 tests), including a check that the registry
+really has the shape c2 promises the reviewer — every `snapshot` entry's version matches
+`snapshot-\d{4}-\d{2}-\d{2}`.
+
+**Both clauses stay falsifiable, and that is now provable.** `replay-protocol-review.mjs` took only
+`--lie` (flip `status`); it now takes `--lie=status|version_status|superseded_by`, because a clause
+that reads silence as evidence is worthless if it cannot also be contradicted.
+
+### The replays, against the 05:17 run's own capture
+
+| replay | packet | verdict |
+|---|---|---|
+| `mazur-r1` | `--activity-from-run` | **accepted** — "No release identifier published; version_status 'snapshot' and superseded_by null are consistent" |
+| `mazur-r2` | `--activity-from-run` | **accepted** |
+| `mazur-r3` | `--activity-from-run` | **accepted** |
+| `lie-version-status` | `snapshot` → `published` | **blocked** — [major] "Protocol publishes no release identifier for this board, only date-stamped updates, so version_status should be 'snapshot', not 'published'" |
+| `lie-superseded-by` | `null` → `aa-aime::2025` | **blocked** — [blocker] "Set superseded_by to null (the protocol names no successor board … the named 'aa-aime::2025' identifier is unsupported by any packet)" |
+
+**3/3 accepted** where iteration 267 measured roughly one failure in three, and both lies are caught
+with the reviewer naming the exact correction *from the protocol's own silence*. That is the whole
+claim: the clause did not make the fields unjudgeable, it made them judgeable.
+
+### The criterion is in every packet, so it was controlled on other boards too
+
+The lesson iteration 267 wrote down — *replay the criterion change, not only the row change* — applies
+directly here, since c2 rides in all 293 arms. Controls chosen for the field values the clause is
+about:
+
+| control | shape | outcome |
+|---|---|---|
+| `aa-terminal-bench::2.1` | `published` + a real supersession + `status: active` | **accepted** — the board that publishes a version *and* names a successor is unaffected |
+| `aa-automationbench::1.0.6` | `published`, `superseded_by: null` (D251.3's board) | **accepted** — no regression to what landed hours earlier |
+| `aa-tau2-telecom::snapshot-2026-09-10` | `snapshot` + a real supersession, run **without** its summaries | not accepted — **and the new clause was not the reason** |
+| `aa-gdpval::2` | superseded predecessor | **could not be replayed**: its methodology passage is gone from the current page, which is what being superseded means. Not a defect |
+
+`aa-tau2-telecom` is worth reading carefully, because it is a near-miss that looks like a regression
+and is not one. Its producer wrote: "Source supports identity, pass@1 metric, retained/superseded
+status, **snapshot version_status**, and names successor 𝜏³-Banking" — the two fields D251.4 is about
+were both settled, by name. What it then flagged was (a) "unit/range cannot be verified without the
+run's served-value summary" and (b) the successor's *version*. (a) is an artefact of how I invoked the
+control — I ran it with no summaries at all, and the daily AA arm always attaches them; (b) is the
+thing c2 has told reviewers not to expect since CR-65.14 ("do not expect this board's protocol passage
+to establish the successor's version"), pinned in `test/cr-65-14-benchmark-lifecycle.test.mjs`.
+
+**But (a) is worth watching and I am recording it rather than explaining it away.** D251.3's clause
+says the served-value summary *is admissible when carried*; this producer read it as *required*. If
+that reading spreads, a packet that legitimately carries no summary becomes unreviewable. One
+observation is not a pattern — but if a future iteration sees "cannot be verified without the run's
+summary" on a board whose arm carries none, that is the cause, and the fix is a clause saying the
+summary's absence is not a deficiency.
+
+### D252 — the 11:23 run published after reviewing essentially nothing, and said STATUS ok
+
+This is iteration 267's third question, answered. **The decision: a run whose arms retained because no
+worker could be selected is a degraded publication. It should still publish — every retained arm kept
+its last reviewed values, which is the designed fail-closed behaviour, and the price, offer and
+catalog refresh in the same run is real and fresh — but it must never read like a green day.** This
+iteration makes it unable to.
+
+What actually happened on 2026-09-28 11:23: **28 arms retained, 25 of them carrying `round N: worker:
+No supported viable worker model found`, 24 of those in every single round.** That prefix means
+`selectModelForWorker` threw before the call — no producer and no critic ever saw today's capture. The
+run published, `cron.log` recorded "repair agent fixed it — pipeline published successfully today",
+and the Telegram summary named **two** stale sources, because `staleSources` only speaks once a
+source's last good day is three days old and 26 of the 28 had been good that morning.
+
+`reviewCapacityTotals` is the third per-run total beside D204's quarantined rows and D249's budget
+totals, and it is deliberately the same shape: counted, not listed per source, because it is a fact
+about a run and not about a board. Measured:
+
+| run | arms | reviewless | rounds lost |
+|---|---|---|---|
+| 2026-09-28 11:53 (published by the 11:23 self-heal) | **25** | **24** | **74** |
+| 2026-09-27 05:33 (healthy) | 0 | 0 | 0 |
+
+It reaches `reports/source-health.{json,md}`, the run report and the German summary line ("Ohne
+Pruefer zurueckgehalten (kein Worker waehlbar, alter Stand bleibt)"). An arm counts as *reviewless*
+only when **every** round ended at worker selection — `aa-benchmark-fields`, whose round 1 reached
+deepseek and timed out, is counted as an arm but not as reviewless, and a genuine `c1 mismatch` is not
+counted at all.
+
+### Why the pool emptied, and the second thing the run failed to record
+
+The cause is in the run's own receipts and took far longer to find than it should have:
+
+1. `z-ai/glm-5.3-flash` answered **`Incomplete completion (length)` three times** (21:38, 21:46, 21:53
+   in epoch terms `1790595482/1790595973/1790596422`). Three content strikes is exactly D199's
+   `HARD_EXCLUSION_STRIKES`, so it was **hard**-excluded — and the critic relaxation in
+   `selectModelForWorker` deliberately may not re-offer a hard-excluded route.
+2. `deepseek/deepseek-v4-flash-0731` then timed out and was soft-excluded.
+3. Those two **are the whole scheduled pool.** The catalog holds ten cheap models; the
+   `FLORIAN_ALLOWED_SCHEDULED_WORKERS` filter reduces it to those two, and the different-family critic
+   rule means one exclusion is enough to make every producer/critic pair impossible.
+4. The free Kimi K3 route, which CR-73.4 designates precisely as the critic that keeps this from
+   happening, was **absent from all three of that day's runs** — `"free_router": []` in every
+   `worker-catalog.json`. `BH_WORKER_FREE_ROUTER=1` *is* set by `daily.mjs`, so the route failed
+   `freeRouterCandidates`' health gate. As of 21:43 tonight it qualifies again
+   (`~/.llm-health.json` ranks `kimi-k3` first, utilization 0.42), so it flips.
+
+**Step 4 cost the most time and was entirely avoidable**: the run recorded that no free route was
+offered and not one word about why, so the cause had to be reconstructed from a health file that had
+already been rewritten three times since. `pick-worker-models.mjs` now writes `free_router_rejected`
+— one reason string per declared route ("route not healthy in models.kimi-k3", "…AA 33.7 below 34",
+"BH_WORKER_FREE_ROUTER is not 1"). The next such run is readable from its own reports.
+
+**What I deliberately did not change, and why.** Making the run *fail* on this was considered and
+rejected: failing it would discard the price, offer and catalog refresh that did succeed, and
+`self-heal` would retry straight into the same exhausted pool. Nor did I touch D199's three-strike
+bound or the different-family critic rule — both are carefully argued from measured runs, and one
+day's evidence is not enough to move them. The real remedy is a **second free different-family critic
+route**, which is CR-66.3's still-open acceptance ("0 paid calls … needs a free different-family
+critic that does not exist yet"); `Incomplete completion (length)` against a 32,768-token ceiling is
+the other half and deserves its own measurement.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D251.4 | open → **implemented; accepted 3/3 on mazur, both lie controls blocked** | `iter268-d251-4/mazur-r{1,2,3}.log` (accepted), `lie-version-status.log`, `lie-superseded-by.log` (both blocked with the correction named), `control-terminal-bench-21.log` + `control-automationbench.log` (both accepted); `test/d251-4-lifecycle-vocabulary.test.mjs` (5/5) | Commit `ee8deae9`. `version_status` and a `null` supersession are settled by what the source does **not** publish. **No live surface** — protocol criteria are not served; behavioural acceptance is the 2026-09-29 05:17 run moving mazur's `last_verified` off `2026-09-10`. |
+| D251.1 | half → **closed**: the unit dispute (iter 267) and the `version_status` residual (this iteration) are both answered | iteration 267's replays + the table above | The `version_status` complaint iteration 264 round 2 wrote down and nobody acted on is implemented and controlled. |
+| D252 | new → **implemented** | `test/d252-review-capacity.test.mjs` (5/5); measured 25/24/74 on the 11:23 run and 0/0/0 on 2026-09-27 05:33 | Commit `9a3bef5b`. Decision recorded above: such a run publishes but must not read green. Also `free_router_rejected` so the cause is in the run's own receipts. **Acceptance is the next degraded run** — a healthy run shows nothing, by design. |
+
+### Handoff from iteration 268
+
+Gates at `9a3bef5b`, all re-run on the committed tree: `node scripts/build-dataset.mjs` **868 / 673 /
+94 / 3,118** (only `generated_at`/`collected_at` moved; restored); `CI=true npm test` **1,631 tests,
+1,630 pass, 0 fail, 1 skip**, exit 0, unpiped; `npx tsc --noEmit -p .` exit 0; `node
+scripts/validate-benchmark-registry.mjs` **293 entries**. Logs in `iter268-d251-4/`.
+
+**What the next iteration should check first, in order.**
+
+1. **The 2026-09-29 05:17 run is now the acceptance for D251.3, D251.1, D251.4 and D252 at once.**
+   Read `reports/refresh-benchmarks.log` and `reports/source-health.md`. The unfakeable checks:
+   `last_verified` moving off `2026-09-10` for `mazur-creative-story-writing::snapshot-2026-09-10`,
+   off `2026-09-25` for `aa-automationbench::1.0.6` and off `2026-09-22` for
+   `mls-bench-lite::30-tasks` (`refresh-benchmarks.mjs:440` is the only thing allowed to move them);
+   and, if anything did retain on worker selection, a "Ohne Pruefer zurueckgehalten" line in the
+   summary that was not there before.
+2. **If mazur fails again, read *which* field.** The unit is answered (iter 267), `version_status` and
+   `superseded_by` are answered here. A third field would be new information, not a repeat.
+3. **Watch for "cannot be verified without the run's summary" on a board whose arm carries none** —
+   the `aa-tau2-telecom` observation above. One sighting so far; a second makes it a pattern with a
+   known fix.
+4. **`aa-analystagent::snapshot-2026-09-10` has been stale 17 days** ("zuletzt gut: nie"), the oldest
+   thing in the daily's own receipt, and its 11:23 failure was two `worker:` rounds — i.e. it may not
+   be a source problem at all. Nobody has replayed it.
+5. **Untouched and still open:** D249.2 / D249.4 (diagnosed in iterations 262–264), D253.2 (board
+   #4417, `BENCHMAXX_MIN_COMPARISONS = 6` is not derived from anything written down — still the one
+   question for Florian), and R9.1's two arms (`aa_coding_agents` 2026-09-09, `openrouter_aa_relay`
+   2026-09-18) under the written-permission hold, unchanged again this iteration.
+
+**`ALL-ACCEPTED` is not appended.**
