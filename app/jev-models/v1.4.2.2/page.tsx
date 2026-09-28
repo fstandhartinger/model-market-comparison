@@ -31,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description,
     alternates: { canonical: '/jev-models/v1.4.2.2' },
     openGraph: {
-      type: 'website', siteName: 'Benchmark Heaven', locale: 'en_US', url: '/jev-models',
+      type: 'website', siteName: 'Benchmark Heaven', locale: 'en_US', url: '/jev-models/v1.4.2.2',
       title, description,
       images: [{ url: image, type: 'image/png', secureUrl: image, width: 1200, height: 630, alt: imageAlt }],
     },
