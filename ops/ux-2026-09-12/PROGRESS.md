@@ -16471,6 +16471,7 @@ is the correct behaviour rather than a gap.
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
 | D238 / D246 | implemented → **verified** (non-implementer) | `iter259-independent-verify/d238-three-hosts{,-b,-c}/verification.json` **78/78** three times at `5a717087` (48/78 pre-fix); Kimi K3's own statement in `iter259-independent-verify/kimi-d238-direct.log` | Ten expected rows re-derived from the artifact, not typed. |
+| D247 (acceptance check) | **new** | `ops/ux-2026-09-12/bin/check-ugi-arms.mjs`; `iter259-d247/ugi-arms-before-the-fix-lands.json` red with 4 failures | Reads the run's receipt and the published rows; red today, so a green reading is evidence. |
 | D247 | open (diagnosed) → **implemented, proven offline** | `iter259-d247/{natint-r1,writing-r1,natint-lie}.log` + gauntlet dirs; `test/d247-public-activity.test.mjs` (8 checks); `test/cr-38-1-aa-activity.test.mjs` (7) | `ops/daily/refresh-benchmarks.mjs`: `publicValueActivity` + `activitySource`; attached for active single-capture public arms only. Needs the next unattended 05:17 run to publish `ugi-natint` / `ugi-writing`, and a non-implementer sign-off. |
 | iteration 258's commits | committed, unpushed → **pushed and deployed** | live `/api/meta` revision `5a717087` | Gates re-run at that tree before the push. |
 | D237 | fix prepared, publication blocked → **published and verified** | `iter259-d237/` (regenerated, published-before, published-after, all three hashed); `iter259-d237/cr152-5/verification.json` **7/7**; Space commit `862061ac` | Committed through the signed-in agent Chrome session's cookies, not a token. `revision: v1.4.2` kept. Board #11's handoff can be retired. |
@@ -16478,10 +16479,14 @@ is the correct behaviour rather than a gap.
 
 **For the next iteration, in order:**
 
-1. **Read today's 05:17 receipt for the two UGI arms.** D247's acceptance is `ugi-natint` and
-   `ugi-writing` publishing — `status: "candidate"` with 1,317 / 1,260 rows and capture dates of today
-   on the eight new models, not `retained_after_failure`. If they fail again, the packet is in the run's
-   `gauntlet/protocol-ugi-*/packet-r1.md`: check that the activity source is in it before touching
+1. **`node ops/ux-2026-09-12/bin/check-ugi-arms.mjs latest`** — that is D247's acceptance, in one
+   command. It reads the arm statuses out of the run's own receipt and the published row counts and
+   capture dates out of `public-observations.json`, and fails when a repaired arm is still
+   `retained_after_failure` **or** when its published rows are staler than a sibling's. Nothing in it is
+   pinned. Against the 00:41 run it is **red with four failures**
+   (`iter259-d247/ugi-arms-before-the-fix-lands.json`), which is what makes a green reading after the
+   05:17 run mean something. If the arms fail again, the packet is in the run's
+   `gauntlet/protocol-ugi-*/packet-r1.md`: check that the activity source reached it before touching
    anything else. Expect variance; one red round is not a wrong fix.
 2. **A non-implementer live check of D247's published half**, once the 05:17 run has published it.
 3. **Retire board #11's D237 handoff** — it asks for a credential nobody needs any more. The reusable
