@@ -1,8 +1,8 @@
 {
-  "benchmark": "Image JevBench v0.1.3",
-  "revision": "v0.1.3",
+  "benchmark": "Image JevBench v0.1.2",
+  "revision": "v0.1.2",
   "status": "preview",
-  "built_utc": "2026-09-28T03:46:01Z",
+  "built_utc": "2026-09-27T20:21:40Z",
   "sealed_item_details_included": false,
   "n_systems": 49,
   "method_sha256": "e7eaa2acffb7fd9655480311b96feafd528f112452fcebb170e48ceeacd555a3",
@@ -137,228 +137,10 @@
   "ranking": [
     {
       "api_flag": false,
-      "key": "imajev_4b",
-      "name": "Imajev-4B",
-      "kind": "gpu",
-      "tracks": {
-        "all": {
-          "public": {
-            "n": 228,
-            "correct": 185,
-            "accuracy": 0.8114035087719298,
-            "chance": 0.32127192982456143,
-            "chance_corrected_intelligence": 72.21324717285944,
-            "ece": 0.07784262664433397,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 228
-          },
-          "sealed": {
-            "n": 456,
-            "correct": 380,
-            "accuracy": 0.8333333333333334,
-            "chance": 0.3435672514619883,
-            "chance_corrected_intelligence": 74.61024498886415,
-            "ece": 0.031031410632512635,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 456
-          },
-          "intelligence_before_penalty": 73.7712957532625,
-          "raw_overall_gap_pp": -2.1929824561403577,
-          "matched_gap_pp": -4.233851232690031,
-          "matched_gap_detail": {
-            "Everyday photo": {
-              "n_public": 89,
-              "n_sealed": 95,
-              "gap_pp": -3.7256061502069726,
-              "weight": 45.95108695652174
-            },
-            "ScreenSpot": {
-              "n_public": 20,
-              "n_sealed": 29,
-              "gap_pp": -6.206896551724128,
-              "weight": 11.83673469387755
-            }
-          },
-          "penalty_points": 0.0,
-          "penalty_multiplier": 1.0,
-          "axes": {
-            "intelligence": 73.7712957532625,
-            "calibration": 90.51693275266999,
-            "speed": 87.592397733489,
-            "cost": 61.182008216246516
-          },
-          "speed": {
-            "score": 87.592397733489,
-            "raw_p50_s": 0.09945318949758075,
-            "raw_p95_s": 0.17447172000538558,
-            "adjusted_p50_s": 0.3489063789951615,
-            "adjusted_p95_s": 0.4989434400107712,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 61.182008216246516,
-            "raw_score": 61.182008216246516,
-            "usd_per_1000": 0.019675829903842413,
-            "total_usd": 0.013458267654228211,
-            "coverage": 1.0,
-            "source": "measured GPU seconds x $0.67/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 76.38798675595419,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 1.0
-            },
-            "score": 76.38798675595419
-          }
-        },
-        "core": {
-          "public": {
-            "n": 139,
-            "correct": 104,
-            "accuracy": 0.7482014388489209,
-            "chance": 0.21762589928057555,
-            "chance_corrected_intelligence": 67.816091954023,
-            "ece": 0.11120753665960482,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 139
-          },
-          "sealed": {
-            "n": 361,
-            "correct": 290,
-            "accuracy": 0.8033240997229917,
-            "chance": 0.30932594644506,
-            "chance_corrected_intelligence": 71.52406417112299,
-            "ece": 0.047555772016266214,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 361
-          },
-          "intelligence_before_penalty": 70.22627389513798,
-          "raw_overall_gap_pp": -5.512266087407081,
-          "matched_gap_pp": -6.206896551724128,
-          "matched_gap_detail": {
-            "ScreenSpot": {
-              "n_public": 20,
-              "n_sealed": 29,
-              "gap_pp": -6.206896551724128,
-              "weight": 11.83673469387755
-            }
-          },
-          "penalty_points": 0.0,
-          "penalty_multiplier": 1.0,
-          "axes": {
-            "intelligence": 70.22627389513798,
-            "calibration": 86.03322207171306,
-            "speed": 88.02332483840536,
-            "cost": 63.439346589608974
-          },
-          "speed": {
-            "score": 88.02332483840536,
-            "raw_p50_s": 0.08316986800491577,
-            "raw_p95_s": 0.1741631269978825,
-            "adjusted_p50_s": 0.31633973600983156,
-            "adjusted_p95_s": 0.498326253995765,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 63.439346589608974,
-            "raw_score": 63.439346589608974,
-            "usd_per_1000": 0.016545825776969062,
-            "total_usd": 0.008272912888484531,
-            "coverage": 1.0,
-            "source": "measured GPU seconds x $0.67/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 75.49047861959203,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 1.0
-            },
-            "score": 75.49047861959203
-          }
-        },
-        "everyday_photo": {
-          "public": {
-            "n": 89,
-            "correct": 81,
-            "accuracy": 0.9101123595505618,
-            "chance": 0.48314606741573035,
-            "chance_corrected_intelligence": 82.60869565217392,
-            "ece": 0.025733385159810003,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 89
-          },
-          "sealed": {
-            "n": 95,
-            "correct": 90,
-            "accuracy": 0.9473684210526315,
-            "chance": 0.47368421052631576,
-            "chance_corrected_intelligence": 89.99999999999999,
-            "ece": 0.033524974745016076,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 95
-          },
-          "intelligence_before_penalty": 87.41304347826086,
-          "raw_overall_gap_pp": -3.7256061502069726,
-          "matched_gap_pp": -3.7256061502069726,
-          "matched_gap_detail": {
-            "Everyday photo": {
-              "n_public": 89,
-              "n_sealed": 95,
-              "gap_pp": -3.7256061502069726,
-              "weight": 45.95108695652174
-            }
-          },
-          "penalty_points": 0.0,
-          "penalty_multiplier": 1.0,
-          "axes": {
-            "intelligence": 87.41304347826086,
-            "calibration": 93.84041632196121,
-            "speed": 86.5566891487961,
-            "cost": 56.50118044596454
-          },
-          "speed": {
-            "score": 86.5566891487961,
-            "raw_p50_s": 0.14606132000335492,
-            "raw_p95_s": 0.17489544200361706,
-            "adjusted_p50_s": 0.44212264000670987,
-            "adjusted_p95_s": 0.49979088400723415,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 56.50118044596454,
-            "raw_score": 56.50118044596454,
-            "usd_per_1000": 0.028181275900780872,
-            "total_usd": 0.00518535476574368,
-            "coverage": 1.0,
-            "source": "measured GPU seconds x $0.67/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 77.89952209964332,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 1.0
-            },
-            "score": 77.89952209964332
-          }
-        }
-      },
-      "score": 76.38798675595419,
-      "rank": 1,
-      "previous_rank": 11,
-      "previous_score": 65.72451137285294,
-      "prior_exposure": "Previous v0.1.2 row; remeasured on the customer's pinned fast-serving setup.",
-      "inference_setting": "PyTorch; one rotation; --fast; --merge-lora; calibration.json; server 8501f5c3; adapter c9e5f132."
-    },
-    {
-      "api_flag": false,
       "key": "jev_omni",
       "prior_exposure": "This checkpoint was measured on a separate frozen JevBench v1.4 text set before this run. It received no ImageJevBench task input before this evaluation.",
       "name": "Jev-Omni",
-      "rank": 2,
+      "rank": 1,
       "kind": "gpu",
       "tracks": {
         "all": {
@@ -575,7 +357,7 @@
       "key": "neohorse_jev_4b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "NeoHorse Jev 4B",
-      "rank": 3,
+      "rank": 2,
       "kind": "gpu",
       "tracks": {
         "all": {
@@ -792,7 +574,7 @@
       "key": "visual_jev_4b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "Visual-Jev 4B Answer-SFT",
-      "rank": 4,
+      "rank": 3,
       "kind": "gpu",
       "tracks": {
         "all": {
@@ -1009,7 +791,7 @@
       "key": "jpt_4b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "JPT-4B (kirp / llm2jev)",
-      "rank": 5,
+      "rank": 4,
       "kind": "gpu",
       "tracks": {
         "all": {
@@ -1226,7 +1008,7 @@
       "key": "imajev_2b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "imajev 2B",
-      "rank": 6,
+      "rank": 5,
       "kind": "gpu",
       "tracks": {
         "all": {
@@ -1443,7 +1225,7 @@
       "key": "glance_qwen3vl_4b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "Glance (frozen Qwen3-VL-4B)",
-      "rank": 7,
+      "rank": 6,
       "kind": "gpu",
       "tracks": {
         "all": {
@@ -1660,7 +1442,7 @@
       "key": "autojev_27b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "AutoJev-27B",
-      "rank": 8,
+      "rank": 7,
       "kind": "gpu",
       "tracks": {
         "all": {
@@ -1877,7 +1659,7 @@
       "key": "decider_2b_vision",
       "prior_exposure": "No evaluation run on this item set before this job.",
       "name": "Mapika decider-2b-vision BF16",
-      "rank": 9,
+      "rank": 8,
       "kind": "gpu",
       "tracks": {
         "all": {
@@ -2094,7 +1876,7 @@
       "key": "jev_spatial",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "jev-spatial (Fr0zencr4nE)",
-      "rank": 10,
+      "rank": 9,
       "kind": "gpu",
       "tracks": {
         "all": {
@@ -2311,7 +2093,7 @@
       "key": "jpt_9b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "JPT-9B (kirp / llm2jev)",
-      "rank": 11,
+      "rank": 10,
       "kind": "gpu",
       "tracks": {
         "all": {
@@ -2522,6 +2304,220 @@
       "score": 65.81901311661584,
       "previous_rank": 10,
       "previous_score": 65.81901311661584
+    },
+    {
+      "api_flag": false,
+      "key": "imajev_4b",
+      "name": "Imajev-4B",
+      "kind": "gpu",
+      "tracks": {
+        "all": {
+          "public": {
+            "n": 228,
+            "correct": 186,
+            "accuracy": 0.8157894736842105,
+            "chance": 0.32127192982456143,
+            "chance_corrected_intelligence": 72.859450726979,
+            "ece": 0.061736653738525805,
+            "probability_coverage": 1,
+            "valid_answer_count": 228
+          },
+          "sealed": {
+            "n": 456,
+            "correct": 379,
+            "accuracy": 0.831140350877193,
+            "chance": 0.3435672514619883,
+            "chance_corrected_intelligence": 74.2761692650334,
+            "ece": 0.05000143273770729,
+            "probability_coverage": 1,
+            "valid_answer_count": 456
+          },
+          "intelligence_before_penalty": 73.78031777671437,
+          "raw_overall_gap_pp": -1.5350877192982448,
+          "matched_gap_pp": -1.0343272266633394,
+          "matched_gap_detail": {
+            "Everyday photo": {
+              "n_public": 89,
+              "n_sealed": 95,
+              "gap_pp": -1.4784151389710232,
+              "weight": 45.95108695652174
+            },
+            "ScreenSpot": {
+              "n_public": 20,
+              "n_sealed": 29,
+              "gap_pp": 0.6896551724137945,
+              "weight": 11.83673469387755
+            }
+          },
+          "penalty_points": 0,
+          "penalty_multiplier": 1,
+          "axes": {
+            "intelligence": 73.78031777671437,
+            "calibration": 89.17824798240123,
+            "speed": 86.2180848762631,
+            "cost": 48.39983085638447
+          },
+          "speed": {
+            "score": 86.2180848762631,
+            "raw_p50_s": 0.1317698159982683,
+            "raw_p95_s": 0.21383138300006976,
+            "adjusted_p50_s": 0.41353963199653665,
+            "adjusted_p95_s": 0.5776627660001395,
+            "latency_coverage": 1
+          },
+          "cost": {
+            "score": 48.39983085638447,
+            "raw_score": 48.399830856384476,
+            "usd_per_1000": 0.0524814273476833,
+            "total_usd": 0.03589729630581538,
+            "coverage": 1,
+            "source": "measured GPU seconds x $1.19/GPU-hour"
+          },
+          "composite": {
+            "harmonic_before_gates": 70.14224902513585,
+            "gates": {
+              "intelligence": 1,
+              "speed": 1,
+              "cost": 0.9370174507706505
+            },
+            "score": 65.72451137285294
+          }
+        },
+        "core": {
+          "public": {
+            "n": 139,
+            "correct": 103,
+            "accuracy": 0.7410071942446043,
+            "chance": 0.21762589928057555,
+            "chance_corrected_intelligence": 66.89655172413792,
+            "ece": 0.0853502929762676,
+            "probability_coverage": 1,
+            "valid_answer_count": 139
+          },
+          "sealed": {
+            "n": 361,
+            "correct": 289,
+            "accuracy": 0.8005540166204986,
+            "chance": 0.30932594644506,
+            "chance_corrected_intelligence": 71.12299465240642,
+            "ece": 0.07096150654954986,
+            "probability_coverage": 1,
+            "valid_answer_count": 361
+          },
+          "intelligence_before_penalty": 69.64373962751245,
+          "raw_overall_gap_pp": -5.954682237589437,
+          "matched_gap_pp": 0.6896551724137945,
+          "matched_gap_detail": {
+            "ScreenSpot": {
+              "n_public": 20,
+              "n_sealed": 29,
+              "gap_pp": 0.6896551724137945,
+              "weight": 11.83673469387755
+            }
+          },
+          "penalty_points": 0,
+          "penalty_multiplier": 1,
+          "axes": {
+            "intelligence": 69.64373962751245,
+            "calibration": 84.80048364021978,
+            "speed": 86.79235891397268,
+            "cost": 49.57780806452426
+          },
+          "speed": {
+            "score": 86.79235891397268,
+            "raw_p50_s": 0.10654032550155534,
+            "raw_p95_s": 0.21322457500355085,
+            "adjusted_p50_s": 0.3630806510031107,
+            "adjusted_p95_s": 0.5764491500071017,
+            "latency_coverage": 1
+          },
+          "cost": {
+            "score": 49.57780806452426,
+            "raw_score": 49.57780806452426,
+            "usd_per_1000": 0.04794460347817739,
+            "total_usd": 0.023972301739088694,
+            "coverage": 1,
+            "source": "measured GPU seconds x $1.19/GPU-hour"
+          },
+          "composite": {
+            "harmonic_before_gates": 69.1524141971876,
+            "gates": {
+              "intelligence": 1,
+              "speed": 1,
+              "cost": 0.9831836209931228
+            },
+            "score": 67.98952099080714
+          }
+        },
+        "everyday_photo": {
+          "public": {
+            "n": 89,
+            "correct": 83,
+            "accuracy": 0.9325842696629213,
+            "chance": 0.48314606741573035,
+            "chance_corrected_intelligence": 86.95652173913044,
+            "ece": 0.04314908269934094,
+            "probability_coverage": 1,
+            "valid_answer_count": 89
+          },
+          "sealed": {
+            "n": 95,
+            "correct": 90,
+            "accuracy": 0.9473684210526315,
+            "chance": 0.47368421052631576,
+            "chance_corrected_intelligence": 89.99999999999999,
+            "ece": 0.029955912607162145,
+            "probability_coverage": 1,
+            "valid_answer_count": 95
+          },
+          "intelligence_before_penalty": 88.93478260869564,
+          "raw_overall_gap_pp": -1.4784151389710232,
+          "matched_gap_pp": -1.478415138971023,
+          "matched_gap_detail": {
+            "Everyday photo": {
+              "n_public": 89,
+              "n_sealed": 95,
+              "gap_pp": -1.4784151389710232,
+              "weight": 45.95108695652174
+            }
+          },
+          "penalty_points": 0,
+          "penalty_multiplier": 1,
+          "axes": {
+            "intelligence": 88.93478260869564,
+            "calibration": 93.08529557211506,
+            "speed": 85.08170156450375,
+            "cost": 45.650788995125716
+          },
+          "speed": {
+            "score": 85.08170156450375,
+            "raw_p50_s": 0.1933953539992217,
+            "raw_p95_s": 0.21406456600379897,
+            "adjusted_p50_s": 0.5367907079984434,
+            "adjusted_p95_s": 0.578129132007598,
+            "latency_coverage": 1
+          },
+          "cost": {
+            "score": 45.650788995125716,
+            "raw_score": 45.650788995125716,
+            "usd_per_1000": 0.06480975308003634,
+            "total_usd": 0.011924994566726684,
+            "coverage": 1,
+            "source": "measured GPU seconds x $1.19/GPU-hour"
+          },
+          "composite": {
+            "harmonic_before_gates": 71.88314906105494,
+            "gates": {
+              "intelligence": 1,
+              "speed": 1,
+              "cost": 0.8335978143509963
+            },
+            "score": 59.92163594596227
+          }
+        }
+      },
+      "score": 65.72451137285294,
+      "rank": 11
     },
     {
       "api_flag": false,
@@ -2737,7 +2733,7 @@
         }
       },
       "score": 65.65401049172186,
-      "previous_rank": 12,
+      "previous_rank": 11,
       "previous_score": 65.65401049172186
     },
     {
@@ -2954,7 +2950,7 @@
         }
       },
       "score": 65.3783959350721,
-      "previous_rank": 13,
+      "previous_rank": 12,
       "previous_score": 65.3783959350721
     },
     {
@@ -3171,7 +3167,7 @@
         }
       },
       "score": 65.14094838490126,
-      "previous_rank": 14,
+      "previous_rank": 13,
       "previous_score": 65.14094838490126
     },
     {
@@ -3388,7 +3384,7 @@
         }
       },
       "score": 64.99597596273422,
-      "previous_rank": 15,
+      "previous_rank": 14,
       "previous_score": 64.99597596273422
     },
     {
@@ -3605,7 +3601,7 @@
         }
       },
       "score": 63.82290305626187,
-      "previous_rank": 16,
+      "previous_rank": 15,
       "previous_score": 63.82290305626187
     },
     {
@@ -3822,7 +3818,7 @@
         }
       },
       "score": 63.79468806554283,
-      "previous_rank": 17,
+      "previous_rank": 16,
       "previous_score": 63.79468806554283
     },
     {
@@ -4039,7 +4035,7 @@
         }
       },
       "score": 63.45608935087729,
-      "previous_rank": 18,
+      "previous_rank": 17,
       "previous_score": 63.45608935087729
     },
     {
@@ -4256,7 +4252,7 @@
         }
       },
       "score": 63.39219804643599,
-      "previous_rank": 19,
+      "previous_rank": 18,
       "previous_score": 63.39219804643599
     },
     {
@@ -4473,7 +4469,7 @@
         }
       },
       "score": 63.19581668953735,
-      "previous_rank": 20,
+      "previous_rank": 19,
       "previous_score": 63.19581668953735
     },
     {
@@ -4690,7 +4686,7 @@
         }
       },
       "score": 62.83763311951888,
-      "previous_rank": 21,
+      "previous_rank": 20,
       "previous_score": 62.83763311951888
     },
     {
@@ -4907,7 +4903,7 @@
         }
       },
       "score": 62.6275571319289,
-      "previous_rank": 22,
+      "previous_rank": 21,
       "previous_score": 62.6275571319289
     },
     {
@@ -5124,7 +5120,7 @@
         }
       },
       "score": 59.804159757778926,
-      "previous_rank": 23,
+      "previous_rank": 22,
       "previous_score": 59.804159757778926
     },
     {
@@ -5341,7 +5337,7 @@
         }
       },
       "score": 59.021582112421314,
-      "previous_rank": 24,
+      "previous_rank": 23,
       "previous_score": 59.021582112421314
     },
     {
@@ -5558,7 +5554,7 @@
         }
       },
       "score": 58.33448481018041,
-      "previous_rank": 25,
+      "previous_rank": 24,
       "previous_score": 58.33448481018041
     },
     {
@@ -5775,7 +5771,7 @@
         }
       },
       "score": 57.73157794084028,
-      "previous_rank": 26,
+      "previous_rank": 25,
       "previous_score": 57.73157794084028
     },
     {
@@ -5992,7 +5988,7 @@
         }
       },
       "score": 50.04475234952653,
-      "previous_rank": 27,
+      "previous_rank": 26,
       "previous_score": 50.04475234952653
     },
     {
@@ -6209,7 +6205,7 @@
         }
       },
       "score": 49.37682723222856,
-      "previous_rank": 28,
+      "previous_rank": 27,
       "previous_score": 49.37682723222856
     },
     {
@@ -6426,7 +6422,7 @@
         }
       },
       "score": 48.75533162616978,
-      "previous_rank": 29,
+      "previous_rank": 28,
       "previous_score": 48.75533162616978
     },
     {
@@ -6643,7 +6639,7 @@
         }
       },
       "score": 47.67394429178607,
-      "previous_rank": 30,
+      "previous_rank": 29,
       "previous_score": 47.67394429178607
     },
     {
@@ -6860,7 +6856,7 @@
         }
       },
       "score": 47.13807675331833,
-      "previous_rank": 31,
+      "previous_rank": 30,
       "previous_score": 47.13807675331833
     },
     {
@@ -7077,7 +7073,7 @@
         }
       },
       "score": 46.635108691300836,
-      "previous_rank": 32,
+      "previous_rank": 31,
       "previous_score": 46.635108691300836
     },
     {
@@ -7294,7 +7290,7 @@
         }
       },
       "score": 43.55597082862413,
-      "previous_rank": 33,
+      "previous_rank": 32,
       "previous_score": 43.55597082862413
     },
     {
@@ -7511,7 +7507,7 @@
         }
       },
       "score": 30.50852632229154,
-      "previous_rank": 34,
+      "previous_rank": 33,
       "previous_score": 30.50852632229154
     },
     {
@@ -7728,7 +7724,7 @@
         }
       },
       "score": 29.762570235221094,
-      "previous_rank": 35,
+      "previous_rank": 34,
       "previous_score": 29.762570235221094
     },
     {
@@ -7945,7 +7941,7 @@
         }
       },
       "score": 29.009382616696207,
-      "previous_rank": 36,
+      "previous_rank": 35,
       "previous_score": 29.009382616696207
     },
     {
@@ -8162,7 +8158,7 @@
         }
       },
       "score": 26.834351305519125,
-      "previous_rank": 37,
+      "previous_rank": 36,
       "previous_score": 26.834351305519125
     },
     {
@@ -8379,7 +8375,7 @@
         }
       },
       "score": 26.813874953561992,
-      "previous_rank": 38,
+      "previous_rank": 37,
       "previous_score": 26.813874953561992
     },
     {
@@ -8596,7 +8592,7 @@
         }
       },
       "score": 21.851831390899317,
-      "previous_rank": 39,
+      "previous_rank": 38,
       "previous_score": 21.851831390899317
     },
     {
@@ -8813,7 +8809,7 @@
         }
       },
       "score": 21.500409276921392,
-      "previous_rank": 40,
+      "previous_rank": 39,
       "previous_score": 21.500409276921392
     },
     {
@@ -9030,7 +9026,7 @@
         }
       },
       "score": 19.25753655471137,
-      "previous_rank": 41,
+      "previous_rank": 40,
       "previous_score": 19.25753655471137
     },
     {
@@ -9247,7 +9243,7 @@
         }
       },
       "score": 17.435680664592812,
-      "previous_rank": 42,
+      "previous_rank": 41,
       "previous_score": 17.435680664592812
     },
     {
@@ -9465,7 +9461,7 @@
         }
       },
       "score": 16.055574320027326,
-      "previous_rank": 43,
+      "previous_rank": 42,
       "previous_score": 16.055574320027326
     },
     {
@@ -9682,7 +9678,7 @@
         }
       },
       "score": 11.047975697309383,
-      "previous_rank": 44,
+      "previous_rank": 43,
       "previous_score": 11.047975697309383
     },
     {
@@ -9899,7 +9895,7 @@
         }
       },
       "score": 9.577237093227275,
-      "previous_rank": 45,
+      "previous_rank": 44,
       "previous_score": 9.577237093227275
     },
     {
@@ -10116,7 +10112,7 @@
         }
       },
       "score": 0.11309859067225311,
-      "previous_rank": 46,
+      "previous_rank": 45,
       "previous_score": 0.11309859067225311
     },
     {
@@ -10333,7 +10329,7 @@
         }
       },
       "score": 0.0003119165425461845,
-      "previous_rank": 47,
+      "previous_rank": 46,
       "previous_score": 0.0003119165425461845
     },
     {
@@ -10550,7 +10546,7 @@
         }
       },
       "score": 0,
-      "previous_rank": 48,
+      "previous_rank": 47,
       "previous_score": 0
     },
     {
@@ -10767,7 +10763,7 @@
         }
       },
       "score": 0,
-      "previous_rank": 49,
+      "previous_rank": 48,
       "previous_score": 0
     }
   ],
@@ -10817,14 +10813,14 @@
     "scoring_status": "Neither track has a reviewed system or reusable output. Computer Use has no reviewed candidate in the current queue. Browser Use has one candidate requested, not yet evaluated: kev-0.6b-browser-use. Its public, ungated HF adapter is pinned at 08414b0001f6eba32bc69372abfeac5b74718ac0 (model card license: Apache-2.0), with base jaredpalmer/kev-0.6b at dece6dba8d43f0f7ded45e9f5b9df12474d90843. The model takes textual DOM state and uses a pointer head; its serving path and safe head loader are not independently reviewed. Its Mind2Web-derived examples remain public-only. Both tracks still lack a ready matched-family split and measurements, so they remain separate, requested, and unscored outside the core ranking."
   },
   "candidate_coverage": {
-    "checked_utc": "2026-09-28T03:46:01Z",
-    "included_note": "Candidate coverage reflects the published v0.1.3 aggregate; Imajev-4B's row was replaced after the requested fast-serving remeasurement.",
+    "checked_utc": "2026-09-27T10:05:49Z",
+    "included_note": "Candidate coverage reflects the published v0.1.2 aggregate; Imajev-4B is now included after the author-requested one-rotation run.",
     "candidates": [
       {
         "candidate": "CUA-S1-4B-0.2 multimodal adapter",
         "source_revision": "HF 16818868b0cc7813808aae4e87b417657046ab79",
         "access": "Public, ungated; pinned revision resolves",
-        "status": "included in v0.1.3 ranking (#22 of 49)",
+        "status": "included in v0.1.2 ranking (#22 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "cua_s1_4b"
       },
@@ -10832,7 +10828,7 @@
         "candidate": "Visual Jev 4B Answer-SFT",
         "source_revision": "HF 7a3f1bb0d8f7bfbbd8514d968ab7de3518849c8d",
         "access": "Public, ungated; pinned revision resolves",
-        "status": "included in v0.1.3 ranking (#4 of 49)",
+        "status": "included in v0.1.2 ranking (#3 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "visual_jev_4b"
       },
@@ -10840,7 +10836,7 @@
         "candidate": "NeoHorse-Jev-4B",
         "source_revision": "HF 56c36ae625a3ccca47d9a34fb7ca6203b39b309e",
         "access": "Public, ungated; pinned revision resolves",
-        "status": "included in v0.1.3 ranking (#3 of 49)",
+        "status": "included in v0.1.2 ranking (#2 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "neohorse_jev_4b"
       },
@@ -10848,7 +10844,7 @@
         "candidate": "Jevify Qwen3-VL-2B Tier 2",
         "source_revision": "HF 46e8e72c27b50fe08f671bdf6b0e013acee5aae6",
         "access": "Public, ungated; pinned revision resolves",
-        "status": "included in v0.1.3 ranking (#24 of 49)",
+        "status": "included in v0.1.2 ranking (#24 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "jevify_qwen3vl_2b_t2"
       },
@@ -10856,7 +10852,7 @@
         "candidate": "Standard One 3B",
         "source_revision": "HF c0d23877ec5577f3edcba9e788e658840fa95774",
         "access": "Public, ungated; pinned revision resolves",
-        "status": "included in v0.1.3 ranking (#36 of 49)",
+        "status": "included in v0.1.2 ranking (#36 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "standard_one_3b"
       },
@@ -10864,7 +10860,7 @@
         "candidate": "Standard One 8B",
         "source_revision": "HF 5d1285dd77075043b03a8d6c4ef42e3c1c695105",
         "access": "Public, ungated; pinned revision resolves",
-        "status": "included in v0.1.3 ranking (#23 of 49)",
+        "status": "included in v0.1.2 ranking (#23 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "standard_one_8b"
       },
@@ -10879,7 +10875,7 @@
         "candidate": "djev-distill-v4",
         "source_revision": "26B-class checkpoint; exact pin pending",
         "access": "No checkpoint staged",
-        "status": "included in v0.1.3 ranking (#27 of 49)",
+        "status": "included in v0.1.2 ranking (#27 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "djev_distill_v4"
       },
@@ -10887,7 +10883,7 @@
         "candidate": "yah01/vjev-vision",
         "source_revision": "HF 2fa8b58e40e5bc351a7d6dd39b953469a8f3ded2; Apache-2.0",
         "access": "Public, ungated",
-        "status": "included in v0.1.3 ranking (#30 of 49)",
+        "status": "included in v0.1.2 ranking (#30 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "vjev_vision"
       },
@@ -10902,7 +10898,7 @@
         "candidate": "Visual-Jev generic Qwen3.5-4B scorer",
         "source_revision": "GitHub 2d68c11011a16e5ef3a473dedc25ef64acf088de; MIT",
         "access": "Public repository",
-        "status": "included in v0.1.3 ranking (#26 of 49)",
+        "status": "included in v0.1.2 ranking (#26 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "visual_jev_generic_baseline"
       },
@@ -10910,7 +10906,7 @@
         "candidate": "divyanshx11/JEVision",
         "source_revision": "HF 324698caa13e08c8b92f72a32eff2280b1360303; Apache-2.0",
         "access": "Public, ungated",
-        "status": "included in v0.1.3 ranking (#40 of 49)",
+        "status": "included in v0.1.2 ranking (#40 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "jevision"
       },
@@ -10918,7 +10914,7 @@
         "candidate": "SeanLiu/Jev-Vision 8B",
         "source_revision": "Exact inference revision not pinned",
         "access": "Checkpoint page is public",
-        "status": "included in v0.1.3 ranking (#19 of 49)",
+        "status": "included in v0.1.2 ranking (#19 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "seanliu_jev_vision_8b"
       },
@@ -10926,7 +10922,7 @@
         "candidate": "Fr0zencr4nE/jev-spatial",
         "source_revision": "HF 5727eade6e1af2750ff852b1b1e90bb1f41a0602; Apache-2.0 metadata",
         "access": "Metadata public; previous anonymous weight-file inventory returned HTTP 401",
-        "status": "included in v0.1.3 ranking (#10 of 49)",
+        "status": "included in v0.1.2 ranking (#9 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "jev_spatial"
       },
@@ -10955,7 +10951,7 @@
         "candidate": "Jevify Gemma 4 E4B",
         "source_revision": "HF a6b5a716f5d7dba2949c14f2c9e93227956e935d; Gemma license",
         "access": "Public, ungated",
-        "status": "included in v0.1.3 ranking (#35 of 49)",
+        "status": "included in v0.1.2 ranking (#35 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "jevify_gemma4_e4b"
       },
@@ -10963,7 +10959,7 @@
         "candidate": "Jevify Gemma 4 26B-A4B",
         "source_revision": "HF d4c0d1d455892957d274f68ec64e9fc0881011c8; Gemma license",
         "access": "Public, ungated",
-        "status": "included in v0.1.3 ranking (#15 of 49)",
+        "status": "included in v0.1.2 ranking (#15 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "jevify_gemma4_26b_a4b"
       },
@@ -10971,7 +10967,7 @@
         "candidate": "JevAny-27B-SFT",
         "source_revision": "HF ad7b48b7056a9742f54aacc9b98b6b46dc2ce167; Apache-2.0",
         "access": "Public, ungated",
-        "status": "included in v0.1.3 ranking (#17 of 49)",
+        "status": "included in v0.1.2 ranking (#17 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "jevany_27b_sft"
       },
@@ -10979,7 +10975,7 @@
         "candidate": "JevAny-27B-RLCR",
         "source_revision": "HF 078883b2edbab687585bc86fe5508059756c7f09; Apache-2.0",
         "access": "Public, ungated",
-        "status": "included in v0.1.3 ranking (#18 of 49)",
+        "status": "included in v0.1.2 ranking (#18 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "jevany_27b_rlcr"
       },
@@ -11001,7 +10997,7 @@
         "candidate": "Bonsai-Llama-Jev submission (measured as Bonsai-2-27B v2)",
         "source_revision": "kyr0/Bonsai-Llama-Jev@7a4cf234c50d54a234c1e05d32a624e160f89bee; prism-ml/Ternary-Bonsai-2-27B-gguf@6ed5e12bf84b7a63069882c91dd9e9218647d17",
         "access": "Public pinned submission and model artifacts; completed item-level outputs reused from the Bonsai measurement job",
-        "status": "included in v0.1.3 ranking (#41 of 49)",
+        "status": "included in v0.1.2 ranking (#41 of 49)",
         "reason": "Bonsai-Llama-Jev is retained from the live ImageJevBench roster; see its ranking row above.",
         "ranking_key": "bonsai_2_27b_pq2_0"
       },
@@ -11009,7 +11005,7 @@
         "candidate": "AutoJev-27B",
         "source_revision": "GitHub denis-pplx/autojev ee63c1515980491a742f0bd0685c8dc5ca1f00c3; HF denis-pplx/autojev-27b 6f5b557e037f5edb25c7dc92dbc6553e5a19c015; base Qwen/Qwen3.8-27B 1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0",
         "access": "Public, ungated; Apache-2.0 weights / MIT code",
-        "status": "included in v0.1.3 ranking (#8 of 49)",
+        "status": "included in v0.1.2 ranking (#7 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "autojev_27b"
       },
@@ -11087,7 +11083,7 @@
         "candidate": "JPT-0.8B",
         "source_revision": "Pinned measurement aggregate",
         "access": "Public checkpoint; non-commercial terms",
-        "status": "included in v0.1.3 ranking (#34 of 49)",
+        "status": "included in v0.1.2 ranking (#34 of 49)",
         "reason": "Included under Florian's 27 Sep decision despite the stated non-commercial license; see the measured row above.",
         "ranking_key": "jpt_0p8b"
       },
@@ -11095,7 +11091,7 @@
         "candidate": "JPT-4B",
         "source_revision": "Pinned measurement aggregate",
         "access": "Public checkpoint; non-commercial terms",
-        "status": "included in v0.1.3 ranking (#5 of 49)",
+        "status": "included in v0.1.2 ranking (#4 of 49)",
         "reason": "Included under Florian's 27 Sep decision despite the stated non-commercial license; see the measured row above.",
         "ranking_key": "jpt_4b"
       },
@@ -11103,7 +11099,7 @@
         "candidate": "JPT-9B",
         "source_revision": "Pinned measurement aggregate",
         "access": "Public checkpoint; non-commercial terms",
-        "status": "included in v0.1.3 ranking (#11 of 49)",
+        "status": "included in v0.1.2 ranking (#10 of 49)",
         "reason": "Included under Florian's 27 Sep decision despite the stated non-commercial license; see the measured row above.",
         "ranking_key": "jpt_9b"
       },
@@ -11111,7 +11107,7 @@
         "candidate": "Qevi-2B",
         "source_revision": "Pinned measurement aggregate",
         "access": "Public checkpoint; non-commercial terms",
-        "status": "included in v0.1.3 ranking (#42 of 49)",
+        "status": "included in v0.1.2 ranking (#42 of 49)",
         "reason": "Included under Florian's 27 Sep decision despite the stated non-commercial license; see the measured row above.",
         "ranking_key": "qevi_2b"
       },
@@ -11119,7 +11115,7 @@
         "candidate": "OmniJev 0.8B",
         "source_revision": "Pinned measurement aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#38 of 49)",
+        "status": "included in v0.1.2 ranking (#38 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "omnijev_0p8b"
       },
@@ -11127,7 +11123,7 @@
         "candidate": "OmniJev 2B",
         "source_revision": "Pinned measurement aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#21 of 49)",
+        "status": "included in v0.1.2 ranking (#21 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "omnijev_2b"
       },
@@ -11135,23 +11131,23 @@
         "candidate": "OmniJev 4B",
         "source_revision": "Pinned measurement aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#12 of 49)",
+        "status": "included in v0.1.2 ranking (#12 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "omnijev_4b"
       },
       {
         "candidate": "Imajev-4B",
-        "source_revision": "Imajev-4B fast-serving remeasurement (2026-09-28)",
+        "source_revision": "Imajev-4B one-rotation evaluation (2026-09-27)",
         "access": "Public request model",
-        "status": "included in v0.1.3 ranking (#1 of 49)",
-        "reason": "Remeasured on the unchanged v0.1 method and split with the pinned server and adapter, one rotation, --fast, and --merge-lora. Only aggregate results are published.",
+        "status": "included in v0.1.2 ranking (#11 of 49)",
+        "reason": "Measured on the frozen v0.1 ImageJevBench method using the author-requested one-rotation setting; only aggregate results are published.",
         "ranking_key": "imajev_4b"
       },
       {
         "candidate": "Glance frozen Qwen3-VL-4B",
         "source_revision": "yoheinakajima/glance@d458a276",
         "access": "Frozen checkpoint; requested by Yohei",
-        "status": "included in v0.1.3 ranking (#7 of 49)",
+        "status": "included in v0.1.2 ranking (#6 of 49)",
         "reason": "Retained from the reviewed ImageJev aggregate. The hold applies only to the separate Qwen3-VL-2B CUDA speedlab path.",
         "ranking_key": "glance_qwen3vl_4b"
       },
@@ -11173,7 +11169,7 @@
         "candidate": "Winnow-12B",
         "source_revision": "EldanRing/winnow-inference@77d14580c6732ca2f3745750c1dc1fd446d8bcee",
         "access": "Reviewed source pin; independently scored ImageJev handoff",
-        "status": "included in v0.1.3 ranking (#33 of 49)",
+        "status": "included in v0.1.2 ranking (#33 of 49)",
         "reason": "Independent recomputation matched 21/21 metrics with zero delta. The pinned source and author build.py/runtime lock were used, but this run used an isolated server image rather than the separate multi-model load-test Docker context. Medium dependency reproducibility: apt packages resolved at build time and pip wheels lack hashes. All per-file hashes and image membership passed; a separate image-tree digest was not compared with the aggregate receipt (low assurance limitation).",
         "ranking_key": "winnow_12b_q8"
       },
@@ -11181,7 +11177,7 @@
         "candidate": "Jev-Omni",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#2 of 49)",
+        "status": "included in v0.1.2 ranking (#1 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "jev_omni"
       },
@@ -11189,7 +11185,7 @@
         "candidate": "imajev 2B",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#6 of 49)",
+        "status": "included in v0.1.2 ranking (#5 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "imajev_2b"
       },
@@ -11197,7 +11193,7 @@
         "candidate": "Mapika decider-2b-vision BF16",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#9 of 49)",
+        "status": "included in v0.1.2 ranking (#8 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "decider_2b_vision"
       },
@@ -11205,7 +11201,7 @@
         "candidate": "Reflex 4B (released stable configuration)",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#13 of 49)",
+        "status": "included in v0.1.2 ranking (#13 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "reflex_4b"
       },
@@ -11213,7 +11209,7 @@
         "candidate": "OmniJev-Qwen3.5-9B-v4 (tzcfly)",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#14 of 49)",
+        "status": "included in v0.1.2 ranking (#14 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "omnijev_9b_v4_tzcfly"
       },
@@ -11221,7 +11217,7 @@
         "candidate": "Surogate Rune 26B-A4B v3",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#16 of 49)",
+        "status": "included in v0.1.2 ranking (#16 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "surogate_rune_26b_v3"
       },
@@ -11229,7 +11225,7 @@
         "candidate": "shisa-de-1",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#20 of 49)",
+        "status": "included in v0.1.2 ranking (#20 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "shisa_de_1"
       },
@@ -11237,7 +11233,7 @@
         "candidate": "imajev 9B",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#25 of 49)",
+        "status": "included in v0.1.2 ranking (#25 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "imajev_9b"
       },
@@ -11245,7 +11241,7 @@
         "candidate": "djev-spark NVFP4",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#28 of 49)",
+        "status": "included in v0.1.2 ranking (#28 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "djev_spark_nvfp4"
       },
@@ -11253,7 +11249,7 @@
         "candidate": "diffusiongemma-26b djev v10 step160 (snowicarus)",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#29 of 49)",
+        "status": "included in v0.1.2 ranking (#29 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "djev_v10_step160_snowicarus"
       },
@@ -11261,7 +11257,7 @@
         "candidate": "Autoloops – Gemma 4 31B IT",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#31 of 49)",
+        "status": "included in v0.1.2 ranking (#31 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "kushal_gemma4_31b_it_autoloops"
       },
@@ -11269,7 +11265,7 @@
         "candidate": "djev-dev BF16",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#32 of 49)",
+        "status": "included in v0.1.2 ranking (#32 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "djev_dev_bf16"
       },
@@ -11277,7 +11273,7 @@
         "candidate": "Gevva E4B (text checkpoint, image input)",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#37 of 49)",
+        "status": "included in v0.1.2 ranking (#37 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "gevva_e4b"
       },
@@ -11285,7 +11281,7 @@
         "candidate": "Gevva E2B multimodal",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#39 of 49)",
+        "status": "included in v0.1.2 ranking (#39 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "gevva_e2b_multimodal"
       },
@@ -11293,7 +11289,7 @@
         "candidate": "GPT-6 Luna (low reasoning effort)",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#43 of 49)",
+        "status": "included in v0.1.2 ranking (#43 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "gpt6_luna"
       },
@@ -11301,7 +11297,7 @@
         "candidate": "GPT-5.6 Luna",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#44 of 49)",
+        "status": "included in v0.1.2 ranking (#44 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "gpt56_luna"
       },
@@ -11309,7 +11305,7 @@
         "candidate": "Gemini 3.1 Flash Lite",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#45 of 49)",
+        "status": "included in v0.1.2 ranking (#45 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "gemini31_flash_lite"
       },
@@ -11317,7 +11313,7 @@
         "candidate": "PlayJev 0.8B",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#46 of 49)",
+        "status": "included in v0.1.2 ranking (#46 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "playjev_0p8b"
       },
@@ -11325,7 +11321,7 @@
         "candidate": "Gemini 3.8 Flash",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#47 of 49)",
+        "status": "included in v0.1.2 ranking (#47 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "gemini38_flash"
       },
@@ -11333,7 +11329,7 @@
         "candidate": "OpenJev 4B NLI v2 (official image-premise path)",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#48 of 49)",
+        "status": "included in v0.1.2 ranking (#48 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "openjev_4b_nli"
       },
@@ -11341,7 +11337,7 @@
         "candidate": "OpenJev 4B NLI v5",
         "source_revision": "Frozen v0.1.1 aggregate",
         "access": "Public aggregate row",
-        "status": "included in v0.1.3 ranking (#49 of 49)",
+        "status": "included in v0.1.2 ranking (#49 of 49)",
         "reason": "Measured aggregate included in the ranking under the frozen ImageJevBench v0.1 method; see its row above.",
         "ranking_key": "openjev_4b_v5"
       }
@@ -11349,64 +11345,64 @@
   },
   "scoring_code_sha256": "d63c9f3dca2b2419fcb9b62ecfcec624e598dfe625b0216c41dca3aa18582c34",
   "release_provenance": {
-    "parent_revision": "v0.1.2",
+    "parent_revision": "v0.1.1",
     "method_sha256": "e7eaa2acffb7fd9655480311b96feafd528f112452fcebb170e48ceeacd555a3",
     "split_sha256": "4cb721cd36c4fbe4320ec1d5420f56bedd82e060c2c634b3fe7c420353d51224",
     "scoring_code_sha256": "d63c9f3dca2b2419fcb9b62ecfcec624e598dfe625b0216c41dca3aa18582c34",
     "source_sha256": {
-      "live_v0_1_2_artifact": "08ca91cada08c74656bffb9c648572e8ad148ff598d614ed62280906c2b9abd3",
-      "imajev_result_aggregate": "152dc8bceeaf39ebdac5ebc800c301612b8d879d41569041263b7490fca8f57b"
+      "live_v0_1_1_artifact": "749aae5c79b52e41eb691c50e4de2de65188bda8943e24afd8ad71434ac88140",
+      "imajev_result_rows": "51584c82047bf4392d5b05be1334775d6bfb51b2074cca682a87b1e7cdcaebf5"
     },
     "aggregate_row_sha256": {
-      "imajev_4b": "2d6b77789365cdc466a79d940812b702e69cef4fd47aa5f55153ee3cb37d0295",
-      "jev_omni": "97414dece8a733635c5fde0df1667b0f8fa0e7c89631727e6aaa8f838976d924",
-      "neohorse_jev_4b": "5c7dee1cdb1cfd129859ceea937dcbb24bf15dbbc6d91ed675d7b10fc823ddf6",
-      "visual_jev_4b": "c15004067b74dcf7c83838cc5dc927aa99431006138dea203f918993e179ee72",
-      "jpt_4b": "32c73764c466fc43b9cc32fb963b1d8ae3b3cab4d8d23c37030b180b9e5f8c3b",
-      "imajev_2b": "a7a5541d6dc96ef38afb5be6a12e1efa6d3ca6645a1aba7088df3a0cbc7770bb",
-      "glance_qwen3vl_4b": "614289856d0548d5395db992100cdb63fb265018e1ddfbe2063edc6c3bb628e2",
-      "autojev_27b": "7435d4fc0a49e1112a2f7bbbc3b6a276a3282ab730a9c3aa8daed1cc08385339",
-      "decider_2b_vision": "f49bb84f3b23860d55749a31eaf14604017920ec4e5d9ce4efc8162bb9105db7",
-      "jev_spatial": "d358cacf6d1342f0e101c408b444b535541db8389268d1669ba74aafb55dbd48",
-      "jpt_9b": "4a42246bd0898d94a07724a3ebefecbc38540665ce44ad3097598f51f9e83b50",
-      "omnijev_4b": "22388007415a4011903993a76de29e9986ca893c0956d77d2c3be52163557b1d",
-      "reflex_4b": "f8c0ce71f3eef03cc6ce834695df65fb083e4afb26bec89768f4d7e4bfd4eb55",
-      "omnijev_9b_v4_tzcfly": "4ab351f2eaf409e26ac92f64af94505f59ddfb4c834aa6f639151870fef4b5e6",
-      "jevify_gemma4_26b_a4b": "c00e83999ec1efdbcbfb33f9f5925b3de8fe3cc1f9994a2d507707846b426287",
-      "surogate_rune_26b_v3": "a962398907dc00d3c799d9df35c48102481e49f4d17fde9b67d3f593b1ca9e1a",
-      "jevany_27b_sft": "8a9d7359508ea01640d76b6cbca48b03b53708589ae74c1618e3995b455d09dc",
-      "jevany_27b_rlcr": "618ddc04bde713e3815cc4cc1271fb3f27fd8507c35da2c2b79fc7bd7f66e51c",
-      "seanliu_jev_vision_8b": "c827e984920302a17cf2c2609c076b1a11addcfa3665ed3153498081db4a41bf",
-      "shisa_de_1": "29ede06c277db717ea750f71b2764086ffb3b36cad3beabcfe3c15fae45c6883",
-      "omnijev_2b": "bbbb06b90482f6c92ed7194e5b163941246f8ae1bbbe255c32ef097b29edb82b",
-      "cua_s1_4b": "691bd0b6e9c7fbaf0be36f7f53b8d1acd9556ca2d75f0214fc4d3f9bb0443362",
-      "standard_one_8b": "ec5dda7f94d883685a0ead426d4ca46a48675ba3a60fd0f2a129e4b86478abe7",
-      "jevify_qwen3vl_2b_t2": "9d38fedeeb43fa773a09c8dc3634a6154d4383d10b0065efcb8ad8a7cfa304d5",
-      "imajev_9b": "aa4e8dd3efdbf4bb65c7c287af43da67848b9fa884d64b0db0fd325adb747398",
-      "visual_jev_generic_baseline": "9824723956425ed2b69365d05ae83e97e6d8202822b1d6a2a8dbed90fc4a04b8",
-      "djev_distill_v4": "b7c00722c776e4a7e28e427a6edb8cb6f03225fdfafbf36b15cecc05f2fc9316",
-      "djev_spark_nvfp4": "63fb91cb5758dc646143d6d66b25f7a1128bccf86eb4c0532910b353acfb244d",
-      "djev_v10_step160_snowicarus": "e268505e60d9c83ba9d549ab452b0c9fe2b3e8af2d755882af99174cd8d3da00",
-      "vjev_vision": "72093349dbeae2389b0da7a1685c56d63e4b8da32d51e39fc03a9b3e30fa6b8b",
-      "kushal_gemma4_31b_it_autoloops": "6185718c45646cee4b8e0cb9776ee56ff1fc3ad42a432a29bb67a8127a2c6aed",
-      "djev_dev_bf16": "5a04b4a28fc01d53a0132b234cf70b3f462a18439b40010affd095e79c7a72db",
-      "winnow_12b_q8": "b30ecf7fe259c7c8c733c4ad7b7476a0c2c28c9e7723a95fb1f5e899100e162c",
-      "jpt_0p8b": "20f36ae58b832d4f22886951a40a92fb7ac29949d69e23c6fe0587ed8d140897",
-      "jevify_gemma4_e4b": "7ad7c107b0dd543a8aacbfdd8ffe8f126698ef2cb5a7d0a312d8ec0632328819",
-      "standard_one_3b": "95163690cb3e1c6c4fa973ad82479d1bd41d34ac154b41fec5c661266cac7bc5",
-      "gevva_e4b": "859a4cb5cbcc148b028bdbeff6d60bca28ea326f3e039f2668e5e15bc260f5f8",
-      "omnijev_0p8b": "21aec6ed3c8e0c2b96086c573a56b37e7c33aeb3bb994394cd4e076e622f1386",
-      "gevva_e2b_multimodal": "09e078104e479f38946d5b075d5de632fa74b77ec0ead41e128004ddd7e5e395",
-      "jevision": "de548359cf38b843e6d3a422af2a3ff01da47b8837e850fad3d8bca0aa5a3ad4",
-      "bonsai_2_27b_pq2_0": "e42d9270fc64cb4c0342d6ba0d97f16474d710479804ca2e928c7ca6cbbbcfbe",
-      "qevi_2b": "57465b30213481bb840245ae085785f39c1f46003b21497355492e70d339d3c4",
-      "gpt6_luna": "0558443f26c56d25510ba23862149cc46b08d88c0880ec647e5233510025761f",
-      "gpt56_luna": "4066511c4ab567ae0058f9c47759f4f7b9dca8c22bf7903924437ba87ee9124c",
-      "gemini31_flash_lite": "eb3ddfdb9b01515f3bf8a604e06529cdefb1bb9f4089638f27fd4b74fb37d10f",
-      "playjev_0p8b": "4dfee91c0bf940c07f9b5244f3644c51ef13a7f183ef9a57eece4ac39aef2746",
-      "gemini38_flash": "da7263ed2269904cf0c126e8afd39d0e1377886933741ff0a3980c80d1294b7d",
-      "openjev_4b_nli": "b2423b316dee3f57302273f1bbeb59a2a60d73b509e8882866b1b21b18d1db0e",
-      "openjev_4b_v5": "e0e24e5428b0e166ba7678560838eb486fdb9dcdaa7d618552e2bc15b0d36885"
+      "jev_omni": "da5de6586023d7c16b5e99cfd6a5d73362cd9535aa9e1803fa4388e55c39e16a",
+      "neohorse_jev_4b": "4263cdf835d156879f81360da61ec5ba7561680267a0f28db64d03a0bdce63c7",
+      "visual_jev_4b": "4c128e185e49734f81aea3a65264d4ecf779b8ee3049945a8a3abaafaa47815c",
+      "jpt_4b": "80285b424ccca6ccdae22c519d59fb934f12b28e96823efd02e73204ba501c5c",
+      "imajev_2b": "d4da0ce387be18a392f7b004830b18cc12ab39c5b000fa6b60a31d9442f8ebc9",
+      "glance_qwen3vl_4b": "1b761d2ed5b7e9b185e03a0c9533bf5b492f3a6e4ac4bcccfc36a025d35cc428",
+      "autojev_27b": "a91ca6d4561c68085c21a73ea007b1e759832909a18176ff0be57e6847fd4395",
+      "decider_2b_vision": "21bf39078eab2ffee76ee9f6c3d9bbf5c2175a2679587d67ed832af1e5944c7d",
+      "jev_spatial": "1f42b80a0358efeebe951ab371c32d5c725bc60dee0caad8972d3bd44e853b2d",
+      "jpt_9b": "7b7164474f631b6efb1022433a3cd89a1b5da10ecfac924214737ae7f701a361",
+      "imajev_4b": "4dc45da6f07796b3be1698c2d7bd8fdff9b328190942858669f16e3a04378b48",
+      "omnijev_4b": "fee37bc9908a1aaa94adbbf9a007e3b980c8ad8cd6a96dbaa99c25be3a8cd0bb",
+      "reflex_4b": "a2981bf7639d56159a63278ca8e64fcce07d73268df8a6d5a0de3d7dbeb68837",
+      "omnijev_9b_v4_tzcfly": "c295ac1d32a3978ed75b1a319fc1934fb9111e465c72b41d4d10901db6f13e8d",
+      "jevify_gemma4_26b_a4b": "420cb789f065d6b00d4d2547c135f256e934dbbdd3fba642c8fe263514e04792",
+      "surogate_rune_26b_v3": "8dadf3a92e383e73986ce6d093e854edcacd454d14db9b5792fa1b9a0dbe9d24",
+      "jevany_27b_sft": "f943883acc7337b49e7baaf5fc240aabc5d29e35f78cc0fc30ea67593f766ef2",
+      "jevany_27b_rlcr": "f7d58fc455e5d5134be4c85115120d294d95432bb52a1f35cc4ce26e8180ce69",
+      "seanliu_jev_vision_8b": "ba35560a2e128c2c6029d05f9c367490ac9598bb26e024c6d6bc148f40158ffb",
+      "shisa_de_1": "2a65f1aba0a98883d6b359666b00d50f56e2e1c2e9f27e7be1b9eb28e05fa01b",
+      "omnijev_2b": "ba03f8a1ceb8ebbde459be3befd6f85a84f94cf660a71b77a8ac1d82a8579151",
+      "cua_s1_4b": "603a5614fe7d73d194441fb89cf3975ed3764bbc1159318e90d570c9553a3d1d",
+      "standard_one_8b": "1035e6a52a5e94eed517b5f116592043cf3f2cc6dc96be9421985fa7cf380a1e",
+      "jevify_qwen3vl_2b_t2": "0924ee973b6b7b144d3b1e0b79a6adaf51c889fe98cefac57ff097bd1e5a2aae",
+      "imajev_9b": "21d2f64ee000f45dcb7b3e6f7f8b21ac24ebaef3775615158173af23dc608f29",
+      "visual_jev_generic_baseline": "05787340a5f78744753253ea42ed6c84ed5af56a799c566c435c971f363982ec",
+      "djev_distill_v4": "289d6504ac5af9d6b480c86b371e9c63077d32ed9b8030cc72c819a7b3c19416",
+      "djev_spark_nvfp4": "828e1aa8e8c06657ca590585911b82f0c04049abdaa7d4602bc23b6a6df60842",
+      "djev_v10_step160_snowicarus": "f85ff173e34c1b2018e0ba03631fbc78f0c044b65c56f3dc728cf6f2af9b628e",
+      "vjev_vision": "edcc95d21ec99a7959e096028396e7454c3e307498f7933f15017861c3ba8c26",
+      "kushal_gemma4_31b_it_autoloops": "d64717acd36210f84e812f0969c555794b5a1f82fdb28e02c1ca02b0f3b1d203",
+      "djev_dev_bf16": "09561d8069cd15f3edef14ead1ab8d1bea713ba80b05c7e9b1d68547453df33f",
+      "winnow_12b_q8": "d6fdc342b05eba7f69553e25716a5eb8c3396aad6ab2104ab9d5d95ee6cb6e6d",
+      "jpt_0p8b": "61d6de5a9bc80ff08f4f3a2fd19a2a7b602f5a57c491b22ceae16e11ef501d3d",
+      "jevify_gemma4_e4b": "4560df4621b9499c04d22f950629235268b6f950662ccaddc030e682651fb6aa",
+      "standard_one_3b": "750499a79b3d0eec73112d62d658ca7b3b11e3e6778680c1635b19a5d7bf4641",
+      "gevva_e4b": "4c734656714d87fba375b6faff2024782adfb50c75e5f51fc983be652efd326f",
+      "omnijev_0p8b": "9c381cdbc6d5616cec7901ff3edfc71803eb4f859d5130fbb02210f804ee39b1",
+      "gevva_e2b_multimodal": "c642cf7d0f38356a8f49ded9f5926a78eaaadf66951fcc7501fd516070b01bc7",
+      "jevision": "8872fe4cb417357a28f0fbb8df5de13d31b2e1732b92038d8c40b52149d3eee1",
+      "bonsai_2_27b_pq2_0": "06ab13262cd3c41c01940855dd67ba5ab629257155af214e18fdd212daeae0bc",
+      "qevi_2b": "b04597ab0ea35ee06b453daf008088ec74badc27d5c1155497f28e906b53c2bd",
+      "gpt6_luna": "e0a90b2260d1b02534c8bc0c1b4235ff23523cda90e00866f32e5bad4a7ee45f",
+      "gpt56_luna": "0334590cf6a42b38d552402137192058aed2707f7ca325d80f0da615b4a9462d",
+      "gemini31_flash_lite": "351b6f611e2cf9baceb084e57ca536e4d8e3556c6f3627f01542f857cc2eb28b",
+      "playjev_0p8b": "ba4d02702baaf0d3db1d424efe94f58040f70ab1b2928a40ce0752ce83343131",
+      "gemini38_flash": "26ed82267a77640e6346bb9f811b8344fb00431ea34146c98329e6ae624987ff",
+      "openjev_4b_nli": "99b3966987cfa8f562335c9e6ca66ccc0beda3ca1bd14669d3d5044eca198b42",
+      "openjev_4b_v5": "20659e7d735de9761b3f99c6b7013448c29321ae94749aaba45e1594531fdca9"
     }
   }
 }

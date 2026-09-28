@@ -1,14 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { access, readFile } from 'node:fs/promises';
-import { formatMatchedGapPp, readArchivedMultimodalPreviewV011, readMultimodalPreview, validatePreviewTracks } from '../lib/jevbench-multimodal-preview.mjs';
+import { formatMatchedGapPp, readArchivedMultimodalPreviewV011, readArchivedMultimodalPreviewV012, readMultimodalPreview, validatePreviewTracks } from '../lib/jevbench-multimodal-preview.mjs';
 
 const expectedTopFive = [
+  'Imajev-4B',
   'Jev-Omni',
   'NeoHorse Jev 4B',
   'Visual-Jev 4B Answer-SFT',
   'JPT-4B (kirp / llm2jev)',
-  'imajev 2B',
 ];
 
 function forbiddenItemFields(value) {
@@ -26,10 +26,10 @@ function longArrays(value, path = 'root') {
   return Object.entries(value).flatMap(([key, child]) => longArrays(child, `${path}.${key}`));
 }
 
-test('Image JevBench v0.1.2 preserves the frozen method and top five while adding Imajev-4B', async () => {
+test('Image JevBench v0.1.3 preserves the frozen method and replaces Imajev-4B with the fast-serving row', async () => {
   const a = await readMultimodalPreview();
-  assert.equal(a.benchmark, 'Image JevBench v0.1.2');
-  assert.equal(a.revision, 'v0.1.2');
+  assert.equal(a.benchmark, 'Image JevBench v0.1.3');
+  assert.equal(a.revision, 'v0.1.3');
   assert.equal(a.sealed_item_details_included, false);
   assert.equal(a.split_sha256, '4cb721cd36c4fbe4320ec1d5420f56bedd82e060c2c634b3fe7c420353d51224');
   assert.equal(a.method_sha256, 'e7eaa2acffb7fd9655480311b96feafd528f112452fcebb170e48ceeacd555a3');
@@ -58,14 +58,16 @@ test('Image JevBench v0.1.2 preserves the frozen method and top five while addin
   assert.equal(imajev.name, 'Imajev-4B');
   assert.equal(imajev.kind, 'gpu');
   assert.equal(imajev.api_flag, false);
-  assert.equal(imajev.rank, 11);
-  assert.ok(Math.abs(imajev.score - 65.72451137285294) < 1e-10);
-  assert.equal(imajev.previous_rank, undefined);
-  assert.equal(imajev.previous_score, undefined);
+  assert.equal(imajev.rank, 1);
+  assert.ok(Math.abs(imajev.score - 76.38798675595419) < 1e-10);
+  assert.equal(imajev.previous_rank, 11);
+  assert.ok(Math.abs(imajev.previous_score - 65.72451137285294) < 1e-10);
+  assert.match(imajev.inference_setting, /--fast.*--merge-lora/);
+  assert.equal(imajev.tracks.all.cost.source, 'measured GPU seconds x $0.67/GPU-hour');
   const coverage = a.candidate_coverage.candidates.find((row) => row.candidate === 'Imajev-4B');
-  assert.equal(coverage.status, 'included in v0.1.2 ranking (#11 of 49)');
+  assert.equal(coverage.status, 'included in v0.1.3 ranking (#1 of 49)');
   assert.equal(coverage.ranking_key, 'imajev_4b');
-  assert.equal(a.release_provenance.parent_revision, 'v0.1.1');
+  assert.equal(a.release_provenance.parent_revision, 'v0.1.2');
   assert.equal(a.ranking.filter((s) => s.api_flag).length, 5);
   assert.ok(a.ranking.every((s, i) => s.rank === i + 1));
   assert.ok(a.ranking.every((s) => s.tracks.all.public.n === 228 && s.tracks.all.sealed.n === 456));
@@ -76,7 +78,7 @@ test('Image JevBench v0.1.2 preserves the frozen method and top five while addin
   const jevOmni = a.ranking.find((s) => s.key === 'jev_omni');
   assert.ok(jevOmni);
   assert.equal(jevOmni.api_flag, false);
-  assert.equal(jevOmni.rank, 1);
+  assert.equal(jevOmni.rank, 2);
   assert.ok(Math.abs(jevOmni.score - 73.10053647043314) < 0.005);
   assert.deepEqual([jevOmni.previous_rank, jevOmni.previous_score], [1, 73.10053647043314]);
   assert.deepEqual([jevOmni.tracks.all.public.n, jevOmni.tracks.all.public.correct], [228, 153]);
@@ -109,6 +111,13 @@ test('Image JevBench v0.1.1 is preserved as the exact parent release artifact', 
   assert.equal(archived.sha256, '749aae5c79b52e41eb691c50e4de2de65188bda8943e24afd8ad71434ac88140');
   assert.equal(archived.artifact.revision, 'v0.1.1');
   assert.equal(archived.artifact.n_systems, 48);
+});
+
+test('Image JevBench v0.1.2 is preserved as the exact parent release artifact', async () => {
+  const archived = await readArchivedMultimodalPreviewV012();
+  assert.equal(archived.sha256, '08ca91cada08c74656bffb9c648572e8ad148ff598d614ed62280906c2b9abd3');
+  assert.equal(archived.artifact.revision, 'v0.1.2');
+  assert.equal(archived.artifact.n_systems, 49);
 });
 
 test('preview tracks validator rejects missing or changed counts', async () => {

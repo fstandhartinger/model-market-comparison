@@ -4,8 +4,8 @@ import { ImageJevExamples } from '../../../components/ImageJevExamples';
 import { ImageJevRadar } from '../../../components/ImageJevRadar';
 
 export const metadata: Metadata = {
-  title: 'Image JevBench v0.1.2',
-  description: 'Image JevBench v0.1.2 results on the frozen v0.1 scoring method.',
+  title: 'Image JevBench v0.1.3',
+  description: 'Image JevBench v0.1.3 results on the frozen v0.1 scoring method.',
   alternates: { canonical: '/image-jev-bench' },
   robots: { index: false, follow: false, googleBot: { index: false, follow: false } },
 };
