@@ -18635,7 +18635,42 @@ the other half and deserves its own measurement.
 |---|---|---|---|
 | D251.4 | open → **implemented; accepted 3/3 on mazur, both lie controls blocked** | `iter268-d251-4/mazur-r{1,2,3}.log` (accepted), `lie-version-status.log`, `lie-superseded-by.log` (both blocked with the correction named), `control-terminal-bench-21.log` + `control-automationbench.log` (both accepted); `test/d251-4-lifecycle-vocabulary.test.mjs` (5/5) | Commit `ee8deae9`. `version_status` and a `null` supersession are settled by what the source does **not** publish. **No live surface** — protocol criteria are not served; behavioural acceptance is the 2026-09-29 05:17 run moving mazur's `last_verified` off `2026-09-10`. |
 | D251.1 | half → **closed**: the unit dispute (iter 267) and the `version_status` residual (this iteration) are both answered | iteration 267's replays + the table above | The `version_status` complaint iteration 264 round 2 wrote down and nobody acted on is implemented and controlled. |
-| D252 | new → **implemented** | `test/d252-review-capacity.test.mjs` (5/5); measured 25/24/74 on the 11:23 run and 0/0/0 on 2026-09-27 05:33 | Commit `9a3bef5b`. Decision recorded above: such a run publishes but must not read green. Also `free_router_rejected` so the cause is in the run's own receipts. **Acceptance is the next degraded run** — a healthy run shows nothing, by design. |
+| D252 | new → **implemented** | `test/d252-review-capacity.test.mjs` (5/5); measured 25/24/74 on the 11:23 run and 0/0/0 on 2026-09-27 05:33 | Commit `9a3bef5b`. Live check of this iteration's three commits found the deploy path itself dead; see the section below. Decision recorded above: such a run publishes but must not read green. Also `free_router_rejected` so the cause is in the run's own receipts. **Acceptance is the next degraded run** — a healthy run shows nothing, by design. |
+
+### The deploy path was dead, and it was not this workstream's push that broke it
+
+Verifying the push found all three hosts serving `be9becd0` — **two merges behind**, including another
+writer's PR #69 (CR-205, the JevBench page structure) merged around 19:00. Iteration 267 had written
+"a push still implies a deploy"; that stopped being true a few hours later.
+
+Coolify's server record for Sandy read `is_reachable: false, is_usable: false`, and the app read
+`exited:unhealthy` while the site served normally. `docker_version_checked_at` was
+**2026-09-28T18:56:17Z — the same minute as the last deployment that ever ran.** The cause is one line:
+
+- The `coolify` container sits only on the `sandy-control` network (172.30.2.0/24, gateway 172.30.2.1).
+- Its `/etc/hosts` mapped `host.docker.internal` → **172.30.0.1**, and no host interface carries that
+  address (`ip -4 -br addr` lists 172.30.1.1, .2.1, .3.1, .4.1, .5.1, .6.1, .9.1 and 172.18.0.1).
+- So every SSH from Coolify to its own host timed out, and **a webhook push created no deployment at
+  all** — matching the second cause in the "empty-log deploy failure" note rather than the prebuild guard.
+- sshd, ufw (22/tcp from anywhere plus a blanket 172.16.0.0/12 allow) and fail2ban were all fine, and
+  SSH from the container straight to 172.30.2.1 with Coolify's own key answered `SSH_OK`.
+
+**Repaired**: `/etc/hosts` rewritten in the running container to 172.30.2.1 (it is a bind mount, so
+`sed -i` fails "Resource busy" — write in place), server re-validated to `is_reachable: true`, a
+deployment queued and finished, and **all three hosts now serve `1bb169a6`** with `/`, `/jev-models`
+and `/api/benchmarks` answering 200. That also unblocked CR-205, which had been built and merged and
+was reaching nobody.
+
+**This repair is deliberately not durable, and that is the open decision.** It is lost on the next
+container restart, after which the container will resolve `host-gateway` to the same absent address.
+The two durable fixes — pinning the server record's IP to 172.30.2.1, or recreating the coolify
+container with `--add-host host.docker.internal:172.30.2.1` — both change the control plane for
+**every app on the box**, not just this one, so a self-reverting in-container edit was chosen over a
+shared-infrastructure change nobody is awake to approve. Full receipt:
+`iter268-d251-4/coolify-deploy-outage.md`.
+
+**The cheap check, for whoever pushes next:** a push that produces no deployment within ~5 minutes now
+has a first suspect — `GET /api/v1/servers` → `is_reachable`.
 
 ### Handoff from iteration 268
 
@@ -18661,7 +18696,10 @@ scripts/validate-benchmark-registry.mjs` **293 entries**. Logs in `iter268-d251-
 4. **`aa-analystagent::snapshot-2026-09-10` has been stale 17 days** ("zuletzt gut: nie"), the oldest
    thing in the daily's own receipt, and its 11:23 failure was two `worker:` rounds — i.e. it may not
    be a source problem at all. Nobody has replayed it.
-5. **Untouched and still open:** D249.2 / D249.4 (diagnosed in iterations 262–264), D253.2 (board
+5. **The Coolify host alias is patched, not fixed** (§ above). If a push stops deploying, check
+   `GET /api/v1/servers` → `is_reachable` first; the durable remedy needs an owner decision because it
+   touches every app on the box.
+6. **Untouched and still open:** D249.2 / D249.4 (diagnosed in iterations 262–264), D253.2 (board
    #4417, `BENCHMAXX_MIN_COMPARISONS = 6` is not derived from anything written down — still the one
    question for Florian), and R9.1's two arms (`aa_coding_agents` 2026-09-09, `openrouter_aa_relay`
    2026-09-18) under the written-permission hold, unchanged again this iteration.
