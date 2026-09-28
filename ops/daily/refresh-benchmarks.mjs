@@ -93,6 +93,46 @@ export function aaFieldActivity(rootField, changedRows, oldBySourceId) {
     payload: 'Artificial Analysis model-page payload', removed_phrase: 'value(s) newly null' };
 }
 
+// D251.3 (2026-09-28): a registry row's `unit` and `range` describe the numbers we store, and for an
+// AA board those are the numbers the maintainer serves — but a methodology page states the *rule*,
+// not the scale it is served on. AutomationBench-AA is the clean case: AA writes that a task
+// "receives the percentage of objectives the model completed" and serves that percentage as a
+// decimal on 0-1 (`automationBenchPartialScore`), so the row's `unit: "fraction"`, `range: [0,1]`
+// is exactly right and no sentence on the protocol page can show it. Three independent replay
+// rounds on 2026-09-28 all said so in their own words — "claimed unit 'fraction' and range [0,1]
+// contradict the protocol's 'percentage of objectives the model completed'", "unit (percentage vs
+// fraction/range) is not explicitly stated in the excerpt", "no conversion to a 0-1 fraction is
+// shown in the source" — and the board has been retained on it since 2026-09-25.
+//
+// So the packet carries the one thing that can settle it: this run's own read of every finite value
+// the maintainer serves for the field today, as count, lowest and highest. Same provenance class as
+// the activity summary (generated from the capture, named as generated, riding the capture's own
+// receipt and hash), and admitted by criterion c1 for exactly one judgement — whether `unit` and
+// `range` describe the served scale. It cannot argue for the metric's definition, the task set, the
+// harness, the judges or the version, and it is stated so in the criterion and in the text itself.
+//
+// Computed over every served row, not only today's changed ones: the question is what scale the
+// board publishes on, and answering it from the handful of rows that happened to move today would
+// make the evidence depend on which models AA re-ran. `field` is the full dotted path the
+// aa_field_map names (`briefcaseBreakdown.overall.elo`), because the root object of a structured
+// field has no scale. A field with no finite value served today yields null and no source: there is
+// nothing to show, and an empty summary would only invite an argument this run cannot support.
+export function aaFieldScale(field, rows) {
+  const path = field.split('.');
+  const values = [];
+  for (const row of rows) {
+    let value = row.fields;
+    for (const segment of path) {
+      if (value == null || typeof value !== 'object') { value = undefined; break; }
+      value = value[segment];
+    }
+    if (typeof value === 'number' && Number.isFinite(value)) values.push(value);
+  }
+  if (!values.length) return null;
+  return { field, count: values.length, min: Math.min(...values), max: Math.max(...values),
+    payload: 'Artificial Analysis model-page payload' };
+}
+
 // D247 (2026-09-28): the same affirmative evidence, for a public board arm. Such an arm's protocol
 // packet carries the maintainer's methodology text and nothing else — `protocol()` drops the values
 // payload on purpose, because a protocol review judges methodology and not values — so on
@@ -147,6 +187,22 @@ export function activitySource(receipt, activity) {
     locator: `${activity.models} model row(s) changed on the maintainer's board today; generated summary of this run's own capture comparison, not maintainer text`, content };
 }
 
+// D251.3: the served-scale summary, on the same receipt as the capture it was read from, so the
+// packet's hash chain is unchanged. Its locator and its own last sentence both say what it is and
+// what it cannot be used for; the criterion says the same thing a third time, because this is the
+// second generated source in an AA packet and a reviewer must not read it as maintainer prose.
+export function scaleSource(receipt, scale) {
+  if (!scale?.payload) throw new Error('scale summary needs the payload that describes the capture it was read from');
+  const content = [
+    `Generated value-scale summary for the maintainer's source field "${scale.field}".`,
+    `This run read every finite value the maintainer serves for that field in today's captured ${scale.payload} (sha256 ${receipt.sha256}, retrieved ${receipt.retrieved_at ?? receipt.fetched_at}) and found ${scale.count} value(s), the lowest ${scale.min} and the highest ${scale.max}.`,
+    'These are the numbers exactly as the maintainer serves them, before anything Benchmark Heaven does with them, so they show the scale this board is published on and nothing else: they cannot establish what the metric means, how it is computed, or which task set, harness, judges or version produced it.',
+  ].join(' ');
+  return { url: receipt.url, file: receipt.file, sha256: receipt.sha256,
+    retrieved_at: receipt.retrieved_at ?? receipt.fetched_at, published_at: null,
+    locator: `Observed scale of ${scale.count} served value(s) for "${scale.field}"; generated summary of this run's own read of the capture, not maintainer text`, content };
+}
+
 // Full short sources are supplied. For long pages, only an unchanged, exact previously reviewed
 // protocol passage may establish continuity. A page that publishes its own LLM prompts (MathArena's
 // /arxivmath and /brokenarxiv: "Respond only with a JSON object: {keep: boolean}") is reviewed on its
@@ -165,7 +221,7 @@ export const protocolSourceLocator = (reference) => reference.review_content ===
   : reference.excerpt ? 'Published protocol text; exact excerpt when the full page exceeds the bound' : 'full visible primary text';
 
 export const PROTOCOL_REVIEW_CRITERIA = [
-  'Check the registry version, benchmark identity, metric, units and description against the actual current primary protocol. If the excerpt cannot establish continuity, report missing evidence. A changed task set, harness, judges, configuration or release version cannot silently reuse the existing identity.',
+  'Check the registry version, benchmark identity, metric, units and description against the actual current primary protocol. If the excerpt cannot establish continuity, report missing evidence. A changed task set, harness, judges, configuration or release version cannot silently reuse the existing identity. When the packet additionally carries this run\'s own generated summary of the values the maintainer serves today for this board\'s source field — how many finite values there are and the lowest and the highest — that summary is admissible for exactly one judgement: whether the row\'s `unit` and `range` describe the scale the board is actually served on. A protocol page states the scoring rule and need never state that scale, so a row whose `unit` and `range` agree with the served values is correct on this point even when the protocol text says nothing about it, and a row that disagrees with them is a mismatch. That summary is this run\'s own read of the captured payload, not maintainer text: it settles nothing about what the metric means, how it is computed, or which task set, harness, judges or version produced it.',
   'Check the lifecycle fields (status, version_status, superseded_by) against the same protocol text. `status` records whether the maintainer still reports results for this board: `"active"` means it still publishes them; `"retained"` means the protocol shows the board retired, removed, or replaced going forward, and we keep the values already collected without claiming they are current. `superseded_by` holds **our registry id for the successor board**, not a quotation: check that the protocol names that successor, and do not expect this board\'s protocol passage to establish the successor\'s version — that version is settled by the successor\'s own registry entry and its own evidence. Read status and supersession independently: a board can be superseded in one index and still be reported in another, and a supersession note alone is not a retirement. Report a mismatch when the protocol text contradicts one of these fields, and missing evidence when the excerpt cannot settle it. These fields are the row\'s only statement about whether the board is still live; judge them, and judge nothing else as such a statement. When the packet additionally carries this run\'s own generated summary of how many model rows\' values for this board\'s source field were added or changed in today\'s captured maintainer payload compared with the previously published snapshot, a nonzero count of added or changed values is affirmative evidence for `status: "active"` for this board only — a maintainer serving new or changed values is still reporting them; that summary settles nothing about the methodology, task set, harness, judges or version, and it can never establish `"retained"`.',
 ];
 
@@ -431,6 +487,7 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       sources.push({ ...receipt, content: bounded(content, entry.id), locator: protocolSourceLocator(reference) });
     }
     if (extra?.activity) sources.push(activitySource(extra.receipt, extra.activity));
+    if (extra?.scale) sources.push(scaleSource(extra.receipt, extra.scale));
     budget.claim(`protocol-${entry.id}`);
     const reviewed = await review({ runDir: evidenceDir, artifactId: `protocol-${entry.id}`, rows: [protocolReviewRow(entry)],
       sources, criteria: PROTOCOL_REVIEW_CRITERIA });
@@ -461,7 +518,10 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
         // fact of today's capture. A retained board's field can change too (removals when AA drops
         // deprecated models); a removals-only summary says it establishes nothing (iteration 151).
         const activity = aaFieldActivity(mapping.field.split('.')[0], changed, old);
-        await protocol(registry.entries.find((e) => e.id === mapping.benchmark_id), { activity, receipt });
+        // D251.3: and the scale the board is served on, read from the same capture over every row
+        // it serves — the only thing that can settle a row's `unit` and `range` for an AA board.
+        const scale = aaFieldScale(mapping.field, next.rows);
+        await protocol(registry.entries.find((e) => e.id === mapping.benchmark_id), { activity, scale, receipt });
       }
       const records = flightRecords(html), native = new Map();
       const resolveAll = (v) => { v = resolveFlight(v, records); return Array.isArray(v) ? v.map(resolveAll) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, resolveAll(x)])) : v; };
