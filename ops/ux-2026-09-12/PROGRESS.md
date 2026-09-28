@@ -17722,11 +17722,51 @@ new `version_guard`, which wants a critic round, not a quick edit. Capture:
 | D251 | **implemented, replayed green** | `iter264-d251/{replay.log,mazur-after-fix/}`; `data/raw/benchmarks/{registry,collection-plan}.json` | `mazur-creative-story-writing` accepted on replay. A **non-implementer** should confirm against the next 05:17 run's own receipt. |
 | D251.1 (new) | open | `iter264-d251/mazur-after-fix/gauntlet/…/producer-r{1,2}.json` | Rounds 1 and 2 both called `unit: 'points'` unsupported before round 3 accepted the row. The README gives no unit; its column header is "Comparison score". Changing the unit is not free — the axis id is `benchmarkId@@cohort@@unit` and the observations carry their own unit — so it wants its own change. |
 | D251.2 (new) | open | `iter264-d251/mls-bench-lite--30-tasks/` | The board's chart keys no longer match the version_guard's harness-parenthesis rule. Re-derive the guard from today's capture; do not widen it to whatever passes. |
-| D251.3 (new) | open | the 05:17 packet's SOURCE 1 (AA methodology) | `aa-automationbench::1.0.6` says "Mean fraction … fraction" where the source says "percentage of objectives". The value is a fraction and is correct; the sentence is not. It is an Agentic category anchor — repair the prose, never the number. |
+| D251.3 (new) | open — the prose half is *not* enough, tried and reverted | `iter264-d251/automationbench-after-fix/producer-r{1,2}.json`; the 05:17 packet's SOURCE 1 | The row says "**Mean** fraction of objectives completed", unit `fraction`, range [0,1]; AA's methodology says a task "receives the **percentage** of objectives the model completed" and never says "mean". I rewrote the metric in the source's own words and replayed it: the producer then said the **metric text matches** — and raised the unit instead, as a round-1 **mismatch** ("claimed unit 'fraction' and range [0,1] contradict the protocol's 'percentage'"), which is worse than what is there now. Reverted. The value is right (172 observations, 0.0019–0.6954, the payload's own 0–1 scale); the unit and the metric have to move **together**, with the captured AA payload registered as the evidence for the scale. Also note the AA arm cannot be replayed faithfully from a `capture-benchmark-sources` manifest: `--activity`'s receipt URL (the AA model page) is fetched by `fetch-aa` and is not in it, so c2 always reports missing lifecycle evidence offline. It is an Agentic category anchor — repair the prose, never the number. |
 | D251.4 (new) | open | `iter264-d250/swe-atlas-index.html` | Scale's `sweatlas-tw` detail route 404s while the index still publishes the same scores. Wait a day; if it stays broken, move the source to the index page with a new version_guard and a critic round. |
 
 Gates: `node scripts/build-dataset.mjs` 868 / 673 / 94 / 3,118; `CI=true npm test` **1,598 tests,
 1,597 pass, 0 fail, 1 skip**, exit 0 (`iter264-d251/npm-test-final.log`, unpiped); `npx tsc --noEmit
 -p .` exit 0; `node scripts/validate-benchmark-registry.mjs` 293 entries.
+
+**`ALL-ACCEPTED` is not appended.**
+
+### Handoff from iteration 264 (claude-opus, 2026-09-28 13:00–14:00 UTC)
+
+Everything is committed, gated and **pushed**; `run.lock` was free throughout and the tree is clean.
+Live revision `9ebc1d44` on all three hosts. Two commits: `7196cc13` (D250 + D235's last two entries),
+`9ebc1d44` (D251 + the D250.3 record).
+
+**What changed, in one line each.**
+
+1. **D250** — `data/benchmark-caveats.json`, the file that decides the Judged tag and which rows a
+   category composite may average, had no coverage gate. Four boards fell through it; the Coding
+   composite was carrying a board that is a third judge's opinion. Verified live **36/36 per host**.
+2. **D235** — the two entries held back a day now carry the policy marker; `UNMARKED_POLICY` is `[]`.
+3. **D251** — `mazur-creative-story-writing`'s metric named evaluator versions its README does not;
+   repaired in the registry *and* the collection plan, and **accepted on offline replay**.
+
+**What the next iteration should check first, in order.**
+
+1. **The 05:17 daily is the acceptance for three things at once**: D249.5 (no `provider: "Wafer"`
+   receipt, no `Incomplete completion (length)` strike), D251 (`mazur-creative-story-writing` no
+   longer in `BENCHMARK RETAINED`), and whether the run finally publishes. Read
+   `<run>/reports/refresh-benchmarks.log` — **not** `work/data/raw/benchmarks/daily-checks.json`,
+   which is the copy the run cloned from main and is a day old. The 2026-09-28 review gate quoted
+   that stale copy and reported eight arms as retained that had in fact passed.
+2. **D250.3** is the largest open decision and its numbers are already measured
+   (`iter264-d250/d250-3-measurement.json`): registering the two GDP.pdf boards revives the Long
+   context category score from **one** model to **83**, and costs seven Benchmaxxing tags and twelve
+   level moves, one of them a tag CR-77.1 names. It needs its own change, its own before/after and a
+   non-implementer review — not a tail-end commit.
+3. **D248 and D250 both wait on a non-implementer** to set `verified`
+   (`bin/verify-d248-live.mjs <base> <outDir>`, `bin/verify-d250-live.mjs <base> <outDir>`).
+4. **D251.2 / D251.3 / D251.4** are diagnosed above with the remedy and the trap in each.
+
+**Two traps worth not re-learning.** A quote in `benchmark-caveats.json` must appear verbatim in the
+registry field it cites, so rewording a `scoring.metric` breaks the caveat that quotes it — that is
+the rule working, and the quote moves with the metric. And an AA protocol arm cannot be replayed
+faithfully from a `capture-benchmark-sources` manifest: the activity receipt it needs is the AA model
+page, which `fetch-aa` retrieves separately, so c2 always reports missing lifecycle evidence offline.
 
 **`ALL-ACCEPTED` is not appended.**
