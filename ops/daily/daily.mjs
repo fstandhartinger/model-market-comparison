@@ -464,6 +464,10 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     // normally. It is named on every run it stays quarantined, and the notify pass below raises a
     // human todo on the third consecutive one.
     report.quarantined_arms = benchmarks?.quarantined_arms?.length ? benchmarks.quarantined_arms : null;
+    // D252: arms that retained because no worker could be selected — the review never ran. Not a stale
+    // source (26 of the 28 on 2026-09-28 11:23 had been good that morning) and not a quarantine, so
+    // nothing above sees it, and that run reported itself green after reviewing essentially nothing.
+    report.review_capacity = benchmarks?.review_capacity?.arms ? benchmarks.review_capacity : null;
   } catch (error) { report.stale_sources = null; console.error(`SOURCE HEALTH FAILED: ${redact(error.message)}`); }
   const summary = [
     `STATUS: ${report.exit_code === 0 ? 'ok' : 'problem'}`,
@@ -492,6 +496,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     // sentence that names the cause and would have been acted on the first morning.
     ...(report.stale_sources?.length ? [`Veraltete Quellen (>= 3 Tage): ${report.stale_sources.length} — ${report.stale_sources.map((x) => `${x.id} (zuletzt gut: ${x.last_ok ?? 'nie'}${x.stale_days == null ? '' : `, seit ${x.stale_days} Tagen`}): ${x.reason ?? 'Grund nicht aufgezeichnet'}`).join('; ')}`] : []),
     ...(report.quarantined_arms?.length ? [`Arm stillgelegt (Quellprotokoll ungeprueft, alter Stand bleibt, alle anderen Quellen veroeffentlicht): ${report.quarantined_arms.map((a) => `${a.id} (${a.consecutive_quarantined_runs}. Lauf in Folge, seit ${String(a.quarantined_since ?? '').slice(0, 10) || 'unbekannt'}): ungeprueft ${(a.unreviewed_protocols ?? []).join(', ')}; geprueft ${(a.reviewed_protocols ?? []).join(', ') || 'keine Liste'}${a.escalate ? '; ESKALATION: Aufgabe fuer Florian gemeldet' : ''}`).join('; ')}`] : []),
+    ...(report.review_capacity ? [`Ohne Pruefer zurueckgehalten (kein Worker waehlbar, alter Stand bleibt): ${report.review_capacity.arms} Arm(e), davon ${report.review_capacity.reviewless} in jeder Runde; ${report.review_capacity.rounds_lost} Runde(n) endeten vor dem ersten Modellaufruf — ${report.review_capacity.sources.slice(0, 20).join(', ')}${report.review_capacity.sources.length > 20 ? ' …' : ''}`] : []),
     ...(report.quarantined_scores ? [`Zurueckgehaltene Score-Zeilen (geprueft, nicht veroeffentlicht): ${report.quarantined_scores.rows} in ${report.quarantined_scores.batches} Batch(es)${report.quarantined_scores.unknown_batches?.length ? `; Anzahl unbekannt fuer ${report.quarantined_scores.unknown_batches.join(', ')}` : ''}`] : []),
     report.error ? `FEHLER: ${report.error.split('\n').filter(Boolean).at(-1).slice(0, 800)}` : 'Build, Tests, Typpruefung und Quellpruefung erfolgreich.',
   ].join('\n') + '\n';

@@ -60,6 +60,45 @@ export function budgetTotals(run) {
     sources: checks.filter((c) => !NOT_A_SOURCE.test(c.id)).map((c) => c.id) };
 }
 
+// D252 (2026-09-28): the third per-run total, and the one that says the review itself did not happen.
+// A protocol or score arm whose rounds all read `worker: No supported viable worker model found` was
+// never shown to any model: `selectModelForWorker` threw before the call, so the arm retained
+// yesterday's values without a producer or a critic ever seeing today's capture. That is correct
+// fail-closed behaviour per arm and invisible in aggregate — the 2026-09-28 11:23 run retained 28
+// arms this way, published, and reported itself green, because `staleSources` only names a source
+// once its last good day is 3 days old and 26 of the 28 had been good that morning.
+//
+// It is a capacity failure, not a source failure: three `Incomplete completion (length)` answers hard-
+// excluded `z-ai/glm-5.3-flash` (D199's three-strike bound), a later timeout soft-excluded
+// `deepseek/deepseek-v4-flash-0731`, and those two are the whole scheduled pool once the free Kimi K3
+// route is absent from `~/.llm-health.json` — so no different-family producer/critic pair existed for
+// the rest of the run. Counted here so a run that reviewed nothing cannot read like a run that
+// reviewed everything and found nothing to change.
+const ROUND = /round (\d+): /g;
+/** A round whose text begins `worker: ` never reached a model — worker selection threw first. */
+export const WORKER_SELECTION_ROUND = /^worker: /;
+/** The `round N: …` segments of a retained arm's reason, in order; [] when the reason names no rounds. */
+export function reviewRounds(reason) {
+  const text = String(reason ?? '');
+  const marks = [...text.matchAll(ROUND)];
+  return marks.map((m, i) => text.slice(m.index + m[0].length, i + 1 < marks.length ? marks[i + 1].index : undefined)
+    .replace(/;\s*$/, '').trim());
+}
+export function reviewCapacityTotals(run) {
+  const arms = [];
+  for (const check of (run?.checks ?? [])) {
+    if (STATUS_KIND[check.status] !== 'failing') continue;
+    const rounds = reviewRounds(check.reason);
+    if (!rounds.length) continue;
+    const lost = rounds.filter((r) => WORKER_SELECTION_ROUND.test(r)).length;
+    if (!lost) continue;
+    arms.push({ id: check.id, rounds: rounds.length, rounds_lost: lost, reviewless: lost === rounds.length });
+  }
+  const reviewless = arms.filter((a) => a.reviewless);
+  return { arms: arms.length, reviewless: reviewless.length, rounds_lost: arms.reduce((n, a) => n + a.rounds_lost, 0),
+    sources: arms.map((a) => a.id) };
+}
+
 // A failed subprocess reason is the command line plus its traceback; the last line names the actual error.
 // 20 Sep 2026 (iteration 134): a captured step failure is a whole stdout+stderr transcript, and its
 // first line is usually progress, not the fault. `fetch-aa` was recorded for days as
@@ -135,7 +174,7 @@ export function sourceHealth(reports, { plan = { entries: [] } } = {}) {
   sources.sort((a, b) => order[a.kind] - order[b.kind] || (a.failing_since ?? '').localeCompare(b.failing_since ?? '') || a.id.localeCompare(b.id));
   const count = (k) => sources.filter((s) => s.kind === k).length;
   return { generated_from_runs: runs.length, newest_run: runs[0].checked_at, oldest_run: runs.at(-1).checked_at,
-    totals: Object.fromEntries(Object.keys(order).map((k) => [k, count(k)])), quarantine: quarantineTotals(runs[0]), budget: budgetTotals(runs[0]),
+    totals: Object.fromEntries(Object.keys(order).map((k) => [k, count(k)])), quarantine: quarantineTotals(runs[0]), budget: budgetTotals(runs[0]), review_capacity: reviewCapacityTotals(runs[0]),
     quarantined_arms: sources.filter((s) => s.consecutive_quarantined_runs > 0)
       .map((s) => ({ id: s.id, reason: s.reason, unreviewed_protocols: s.unreviewed_protocols,
         reviewed_protocols: s.reviewed_protocols, quarantined_since: s.quarantined_since,
@@ -152,6 +191,12 @@ export function healthMarkdown(health) {
   if (q?.batches) {
     lines.push(`Newest run: **${q.rows} score row(s) quarantined** across ${q.batches} batch(es) — reviewed, not published, and not listed below: a batch is a per-run unit, not a source.`
       + (q.unknown_batches?.length ? ` Row count not recorded for ${q.unknown_batches.join(', ')}.` : ''), '');
+  }
+  const rc = health.review_capacity;
+  if (rc?.arms) {
+    lines.push(`Newest run: **${rc.arms} arm(s) retained without a reviewer**, ${rc.reviewless} of them in every round — ${rc.rounds_lost} round(s) ended at worker selection, before any model saw today's capture.`
+      + ` Their published values are unchanged and nothing was rejected or accepted; the review did not run.`
+      + (rc.sources.length ? ` Arm(s): ${rc.sources.join(', ')}.` : ''), '');
   }
   const b = health.budget;
   if (b?.units) {

@@ -105,6 +105,29 @@ export function routerRouteHealthy(health, [block, key]) {
   return health.union_alpha?.available === true && (health.union_alpha.ranked_api ?? []).some((r) => r?.key === key && r.health === 'healthy');
 }
 
+// D252 (2026-09-28): why a route is *not* offered, recorded with the catalog. On 2026-09-28 all three
+// runs wrote `free_router: []`, the scheduled pool was the two paid families alone, and three
+// `Incomplete completion (length)` answers from `z-ai/glm-5.3-flash` hard-excluded one of them — after
+// which the different-family critic rule left no pair and 25 arms retained without any reviewer. The
+// run kept no record of *why* the free critic was missing, so the cause had to be reconstructed from a
+// health file that had already been rewritten. One reason string per route costs nothing and makes the
+// next such run readable from its own reports.
+export function freeRouterRejections(dataset, health, { workers = FREE_ROUTER_WORKERS, minimum = MIN_INDEX } = {}) {
+  const models = new Map((dataset?.models ?? []).map((m) => [m.id, m]));
+  const out = [];
+  for (const w of workers) {
+    const index = models.get(w.variant_model_id)?.benchmarks?.aa_intelligence_index;
+    const reasons = [];
+    if (!routerRouteHealthy(health, w.health)) reasons.push(`route not healthy in ${w.health.join('.')}`);
+    if (!w.allowed_as) reasons.push('not on Florian\'s scheduled-worker whitelist');
+    else if (!FLORIAN_ALLOWED_SCHEDULED_WORKERS.includes(w.allowed_as)) reasons.push(`${w.allowed_as} not on Florian's scheduled-worker whitelist`);
+    if (typeof index !== 'number' || !Number.isFinite(index)) reasons.push(`no AA index for ${w.variant_model_id}`);
+    else if (index < minimum) reasons.push(`${w.variant_model_id} AA ${index} below ${minimum}`);
+    if (reasons.length) out.push({ id: w.id, reasons });
+  }
+  return out;
+}
+
 /** CR-66.3: qualified, healthy free router workers in health order; each shaped like an OpenRouter candidate plus `transport`. */
 export function freeRouterCandidates(dataset, health, { workers = FREE_ROUTER_WORKERS, minimum = MIN_INDEX } = {}) {
   const models = new Map((dataset?.models ?? []).map((m) => [m.id, m]));

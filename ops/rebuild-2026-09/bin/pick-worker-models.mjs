@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { readFile } from 'node:fs/promises';
-import { candidateList, freeRouterCandidates } from './worker-policy.mjs';
+import { candidateList, freeRouterCandidates, freeRouterRejections } from './worker-policy.mjs';
 const args = process.argv.slice(2);
 const option = (name, fallback) => { const i = args.indexOf(name); return i < 0 ? fallback : Number(args[i + 1]); };
 try {
@@ -11,6 +11,10 @@ try {
   // CR-66.3: the qualified, healthy free router workers the daily run tries first (empty when unreadable).
   const health = await readFile(process.env.BH_LLM_HEALTH || `${process.env.HOME}/.llm-health.json`, 'utf8').then(JSON.parse).catch(() => null);
   result.free_router = process.env.BH_WORKER_FREE_ROUTER === '1' ? freeRouterCandidates(dataset, health) : [];
+  // D252: an empty `free_router` is a run-shaping fact — it decides whether the scheduled pool has a
+  // free different-family critic at all — so the catalog records why each route was left out.
+  result.free_router_rejected = process.env.BH_WORKER_FREE_ROUTER === '1' ? freeRouterRejections(dataset, health)
+    : [{ id: 'all', reasons: ['BH_WORKER_FREE_ROUTER is not 1'] }];
   if (args.includes('--json')) console.log(JSON.stringify(result, null, 2));
   else {
     console.log(`Worker candidates — minimum AA ${result.min_index}`);
