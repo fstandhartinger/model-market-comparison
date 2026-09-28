@@ -16843,3 +16843,83 @@ family holds a single `default` and joins under the standing policy with no new 
 5. CR-148.1 still owes a review-gate ruling — six iterations.
 
 **`ALL-ACCEPTED` is not appended.**
+
+### D248's root cause: the separate row is deliberate, and the obvious repair is measurably wrong
+
+Correcting the framing above before anyone acts on it. The `::openrouter` row is **not** an accident of a
+failed merge — `scripts/build-dataset.mjs:1099` creates it on purpose, and says why: *"Every current OpenRouter
+SKU must remain reachable. If AA points only at a preview/old alias while OpenRouter also publishes a newer
+stable SKU, create a separate catalog row rather than silently dropping or merging that route."* What D248
+records is that a rule written to stop a route being dropped has a consequence nobody measured: the product
+ends up on two rows, and for `Command A+` neither row can answer the question the site exists to answer.
+
+The three families do not share one cause. They split on two different branches of that block:
+
+- **`command-a+`** (and, it turns out, `nemotron-3-super-120b-a12b`) — the AA row carries **no OpenRouter slug
+  at all**, only a HuggingFace repository (`CohereLabs/command-a-plus-05-2026-bf16`). The `unlinked` escape
+  hatch that would have let the route join the existing row requires a row with *no* linkage of any kind, and
+  `huggingFaceForRow()` counts — so an HF-only row blocks it, although a HuggingFace repository says nothing
+  about which OpenRouter SKU belongs to the family.
+- **`gemini-2.5-pro`, `gemini-3.1-flash-lite`** — the AA row carries a **stale `-preview` slug**
+  (`google/gemini-2.5-pro-preview`), so `aliasesOverlap` misses the live `google/gemini-2.5-pro`. Its own
+  `aa_metadata.retained_fields` says the slug is a retention — *"Field absent from current AA leaderboard;
+  retained from last published metadata"*. That is a slug-aliasing question, not the HuggingFace one.
+
+**The obvious repair was tried and it is wrong.** `iter261-d248/naive-merge-experiment.json`:
+`build-dataset.mjs` patched behind `BH_D248_EXPERIMENT=1` so a HuggingFace URL no longer blocks `unlinked`,
+full rebuild, diffed, patch and dataset both reverted in the same shell call (tree is clean). Exactly the two
+HF-blocked rows disappear — 870 → 868 models — **and the offer total falls by exactly their 1 + 5 offers,
+3134 → 3128**. The offers are *dropped*, not re-attached to the surviving row. Command A+ would go from
+"benchmarks on one row, price on the other" to "benchmarks and no price anywhere", which is worse. The guard
+in that comment is doing its job; suppressing the extra row is not the repair.
+
+So the repair is the other direction: **attach the route's offers and pricing to the existing family row**
+instead of minting a second one, and for the two Google families teach the alias comparison that a retained
+`…-preview` slug and the live slug are the same SKU. Both are changes to that block with a measurable
+acceptance — `measure-split-catalog-families.mjs` must return an empty list, the model count must fall by 3,
+and the **offer total must not fall at all**. That last one is the test the naive patch fails, and it is the
+one to write first.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D248 | open — **root-caused to two branches of `build-dataset.mjs:1099`, and the naive repair measured and rejected** | `iter261-d248/naive-merge-experiment.json`; `split-catalog-families.json`; `d248-live-model-pages.json` | Acceptance for the real repair: split list empty, models −3, **offers unchanged at 3,134**. Tree clean; the experiment's patch and dataset were reverted in the same shell call. |
+
+**`ALL-ACCEPTED` is not appended.**
+
+### D248 is five families, not three — and one of the five is not a duplicate at all
+
+The first reading of `measure-split-catalog-families.mjs` only reported families whose non-routing rows were
+all `default`, because that was the shape the D243 question had asked about. That filter hid two families with
+the identical symptom, and the naive-merge experiment above surfaced one of them by accident. The measurement
+now reports **any** family holding a routing row beside another row — a routing row is never a *run* of the
+model, so wherever one sits beside another row the product is held twice — and labels the shape:
+
+| family | shape | benchmarks / offers | |
+|---|---|---|---|
+| `command-a+` | default + routing | 14 / **0** vs 0 / 1 | |
+| `gemini-2.5-pro` | default + routing | 13 / 6 vs 1 / 6 | slug mismatch, benchmarked row deprecated |
+| `gemini-3.1-flash-lite` | default + routing | 13 / 3 vs 3 / **6** | slug mismatch, benchmarked row deprecated |
+| `gpt-5.2-codex` | **effort** + routing | 13 / 1 vs 0 / **2** | benchmarked row deprecated |
+| `nemotron-3-super-120b-a12b` | **effort** + routing | 14 / 2 vs 0 / **5** | |
+
+`effort + routing` is the harder half: the repair cannot simply attach the route's offers to "the" family row,
+it has to say **which effort** an un-suffixed OpenRouter SKU is sold at. For `nemotron-3-super-120b-a12b` the
+family holds only `::reasoning`, so there is one answer; that is not a general rule and the other case must be
+decided on its own evidence.
+
+**And `gpt-5.2-codex` is a different defect wearing the same clothes.** Its AA row retains
+`openai/gpt-5.2` while the route is `openai/gpt-5.2-codex` — those are two different OpenAI products, not a
+`-preview` alias of one. So the "slug mismatch" flag is right that the slugs differ and wrong to suggest they
+should be reconciled: here the AA row is pointing at the wrong SKU, and aliasing them would merge two products.
+Any repair that treats a slug mismatch as an alias must exclude this row, which is the argument for fixing the
+three causes separately rather than with one rule.
+
+Revised acceptance for the repair, superseding the line in the table above: `measure-split-catalog-families.mjs`
+returns an empty list, **the offer total does not fall** (3,134), and `openai/gpt-5.2` is corrected on the AA
+row rather than aliased to `openai/gpt-5.2-codex`.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D248 | open — **5 families, three distinct causes** | `iter261-d248/split-catalog-families.json` (re-measured); `naive-merge-experiment.json`; `d248-live-model-pages.json`; `test/d248-split-catalog-families.test.mjs` (4/4) | (a) HF-only linkage blocks `unlinked` — `command-a+`, `nemotron-3-super-120b-a12b`; (b) stale `-preview` alias — the two Google families; (c) the AA row names a **different product** — `gpt-5.2-codex`. |
+
+**`ALL-ACCEPTED` is not appended.**

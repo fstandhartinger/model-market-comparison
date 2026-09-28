@@ -26,9 +26,10 @@ export function findSplitFamilies(models) {
   const split = [];
   for (const [family_key, members] of byFamily) {
     if (members.length < 2) continue;
-    // Only the shape where every configuration is either the setting-less default or a routing row:
-    // no effort is involved, so the several rows cannot be several runs.
-    if (!members.every((m) => m.variant === 'default' || ROUTING_VARIANTS.has(m.variant))) continue;
+    // A routing row is never a run of the model: wherever one sits beside other rows, one product is
+    // held twice. The first reading of this restricted itself to families whose other rows were all
+    // `default` and so reported 3 of the 5 — `nemotron-3-super-120b-a12b` (reasoning + openrouter) and
+    // `gpt-5.2-codex` (xhigh + openrouter) have the same symptom and were missed.
     if (!members.some((m) => ROUTING_VARIANTS.has(m.variant))) continue;
     const rows = members.map((m) => ({
       id: m.id, variant: m.variant, display_name: m.display_name ?? null, deprecated: m.deprecated === true,
@@ -54,6 +55,10 @@ export function findSplitFamilies(models) {
         && new Set(rows.map((r) => r.providers.join('|'))).size === 1,
       openrouter_slugs: [...new Set(slugs)],
       slug_mismatch: new Set(slugs).size > 1,
+      // `default` + routing is purely a duplicate; an effort row + routing additionally raises "which
+      // effort do the route's offers belong to?", so the repair has to answer more.
+      shape: members.every((m) => m.variant === 'default' || ROUTING_VARIANTS.has(m.variant))
+        ? 'default-plus-routing' : 'effort-plus-routing',
     });
   }
   return split.sort((a, b) => a.family_key.localeCompare(b.family_key));
@@ -78,7 +83,7 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {
   const out = await measure();
   console.log(`${out.models} models / ${out.families} families — ${out.split_families_found} split by a routing variant`);
   for (const f of out.split_families) {
-    console.log(`  ${f.family_key}${f.slug_mismatch ? '  [OpenRouter slug mismatch]' : ''}`);
+    console.log(`  ${f.family_key}  (${f.shape})${f.slug_mismatch ? '  [OpenRouter slug mismatch]' : ''}`);
     for (const r of f.rows) {
       console.log(`    ${r.id.padEnd(38)} benchmarks ${String(r.benchmarks).padStart(3)}  offers ${String(r.offers).padStart(3)}  providers ${String(r.providers.length).padStart(2)}  ${r.deprecated ? 'deprecated' : ''}`);
     }

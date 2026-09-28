@@ -14,21 +14,25 @@ const model = (id, variant, { family_key, benchmarks = 0, providers = [], deprec
   openrouter_metadata: orId ? { id: orId } : null,
 });
 
-test('D248: a default + routing pair is a split family; an effort split is not', () => {
+test('D248: any family holding a routing row beside another row is a split; an effort split alone is not', () => {
   const split = findSplitFamilies([
     model('a::default', 'default', { family_key: 'a', benchmarks: 14 }),
     model('a::openrouter', 'openrouter', { family_key: 'a', providers: ['Cohere'] }),
     // Two efforts are two runs of one product, not one product held twice — never reported.
     model('b::high', 'high', { family_key: 'b', benchmarks: 3, providers: ['X'] }),
     model('b::low', 'low', { family_key: 'b', benchmarks: 3, providers: ['X'] }),
-    // A default alongside an effort is two settings of one product, which is what a variant is for:
-    // it is a configuration split, not one product held twice, so it is not reported either.
-    model('c::default', 'default', { family_key: 'c' }),
-    model('c::max', 'max', { family_key: 'c' }),
+    // The first reading of this measurement required every other row to be `default` and so missed the
+    // real `nemotron-3-super-120b-a12b` and `gpt-5.2-codex` shapes: an effort row beside a routing row
+    // has exactly the same symptom — the benchmarks on one, the offers on the other.
+    model('c::reasoning', 'reasoning', { family_key: 'c', benchmarks: 14, providers: ['A', 'B'] }),
+    model('c::openrouter', 'openrouter', { family_key: 'c', providers: ['A', 'B', 'C', 'D', 'E'] }),
     // A lone row is never a split.
     model('d::default', 'default', { family_key: 'd', benchmarks: 5, providers: ['Y'] }),
   ]);
-  assert.deepEqual(split.map((f) => f.family_key), ['a']);
+  assert.deepEqual(split.map((f) => f.family_key), ['a', 'c']);
+  assert.deepEqual(split.map((f) => f.shape), ['default-plus-routing', 'effort-plus-routing']);
+  // The effort shape is the harder one: the repair has to say which effort the route's offers belong to.
+  assert.equal(split[1].benchmarks_and_offers_on_different_rows, true);
   assert.ok(ROUTING_VARIANTS.has('openrouter'));
 });
 
