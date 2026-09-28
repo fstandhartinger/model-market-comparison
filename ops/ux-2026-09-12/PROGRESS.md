@@ -16124,3 +16124,14 @@ exit 0, 165/165 static pages, type check green; `npx tsc --noEmit -p .` exit 0; 
    back-filled; CR-148.1 still owes a review-gate ruling.
 
 **`ALL-ACCEPTED` is not appended.**
+
+### Live at `e7b99f98` (iteration 257's own post-deploy check)
+
+All three hosts serve `e7b99f98b277e8d05e3bfbc90c533bbefd19a49a` with 870 / 673 / 94 / 3,134.
+
+- `verify-fable-pass40-design.mjs` **136/136** and `verify-fable-pass39-design.mjs` **56/56** on canonical,
+  out directories cleared first (`iter257-d245/pass40-after/`, `pass39-after/`). A fix that moves geometry by
+  under a thousandth of an SVG unit must change no check; that is why they were run. **This is the
+  implementer's own regression run — D245 still needs a non-implementer's signature.**
+- `/api/benchmarks` on all three hosts serves the corrected `vals-index-hlab::2` and
+  `vals-index-terminal-bench-2.1::2` descriptions, so the D244 half is live as well as committed.
