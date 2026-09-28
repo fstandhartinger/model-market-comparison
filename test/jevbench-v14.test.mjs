@@ -6,7 +6,7 @@ import { readJevbenchV14, JEVBENCH_V14_SHA256, JEVBENCH_V14_TOP5 } from '../lib/
 const { artifact, sha256 } = await readJevbenchV14();
 const route = await readFile(new URL('../app/api/jevbench/v1.4/route.ts', import.meta.url), 'utf8');
 const board = (await Promise.all(['JevModelsV14', 'JevBoardShared', 'JevBoardInteractive'].map((f) => readFile(new URL(`../components/${f}.tsx`, import.meta.url), 'utf8')))).join('\n'); // CR-151 split the board
-const page = await readFile(new URL('../app/jev-models/page.tsx', import.meta.url), 'utf8');
+const page = await readFile(new URL('../app/jev-models/v1.4.2.2/page.tsx', import.meta.url), 'utf8');
 
 test('CR-131 API is pinned to the approved aggregate-only v1.4 artifact', () => {
   const ranked = artifact.systems.filter((row) => row.listing === 'ranked').sort((a, b) => a.rank - b.rank);

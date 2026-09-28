@@ -9,7 +9,7 @@ import { readFileSync } from 'node:fs';
 const read = (p) => readFileSync(new URL(p, import.meta.url), 'utf8');
 const cap = read('../components/JevCapabilityChart.tsx');
 const ctx = read('../components/JevContextLength.tsx');
-const hub = read('../app/jev-models/page.tsx');
+const hub = read('../app/jev-models/v1.4.2.2/page.tsx');
 const price = read('../components/PriceValue.tsx');
 
 test('F-176(b): the licence sentence is in Credit, not beside the chart', () => {

@@ -5,6 +5,7 @@ import { readJevbenchV12, jevbenchV12View } from '../lib/jevbench-v12.mjs';
 import { readJevbenchV14, jevbenchV14View } from '../lib/jevbench-v14.mjs';
 
 const page = await readFile(new URL('../app/jev-models/page.tsx', import.meta.url), 'utf8');
+const releaseComponent = await readFile(new URL('../components/JevBenchV15ReleasePage.tsx', import.meta.url), 'utf8');
 const history = await readFile(new URL('../components/JevHistoryLazy.tsx', import.meta.url), 'utf8');
 const image = await readFile(new URL('../app/jev-models/opengraph-image.tsx', import.meta.url), 'utf8');
 const detail = await readFile(new URL('../app/jev-models/[system]/page.tsx', import.meta.url), 'utf8');
@@ -13,7 +14,7 @@ const historic = jevbenchV12View(await readJevbenchV12());
 const frozenV14 = jevbenchV14View(await readJevbenchV14());
 
 test('CR-131: the changing JevBench board has evergreen Open Graph and X metadata', () => {
-  const metadata = page.slice(page.indexOf('export async function generateMetadata'), page.indexOf('\nconst day ='));
+  const metadata = page.slice(page.indexOf('export async function generateMetadata'), page.indexOf('\nexport default async function'));
   assert.match(metadata, /JevBench by Benchmark Heaven/);
   assert.match(metadata, /Jev-class model benchmark/);
   assert.match(metadata, /intelligence, calibration, speed, and cost/);
@@ -23,7 +24,9 @@ test('CR-131: the changing JevBench board has evergreen Open Graph and X metadat
   assert.doesNotMatch(metadata, /rank|score|\bleads at\b|systems tested|decisions/i);
   assert.match(page, /const OG_ART_REVISION = 'og4'/);
   assert.match(metadata, /twitter:[\s\S]*title, description/);
-  assert.match(page, /href="\/jev-models\/v1\.4\.2\.2" data-bh-jev-version-share>Share this version/);
+  assert.match(page, /versionPath="\/jev-models\/v1\.5\.0"/);
+  assert.match(releaseComponent, /data-bh-jev-version-share/);
+  assert.match(releaseComponent, /href="\/jev-models\/v1\.4\.2\.2"/);
 });
 
 test('CR-134: the frozen /jev-models/v1.4 preview uses the immutable artifact and its top five', () => {

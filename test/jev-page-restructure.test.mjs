@@ -78,7 +78,7 @@ test('CR-176.4/.5: $/1k keeps numeric sort but loses the green heat in the board
 });
 
 test('page order: Capability headline, bubble charts, then the composite chart with sliders, compare and table', () => {
-  const page = read('../app/jev-models/page.tsx');
+  const page = read('../app/jev-models/v1.4.2.2/page.tsx');
   const headline = page.indexOf('<JevCapabilityRanking');
   const bubbles = page.indexOf('<JevBubbleCharts');
   const board = page.indexOf('<JevModelsV14Board');

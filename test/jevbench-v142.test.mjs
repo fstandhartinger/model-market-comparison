@@ -51,7 +51,7 @@ test('CR-191 preserves pinned v1.4.2.2 and v1.4.2 routes while v1.5 is live', as
   ]);
   assert.match(route, /readJevbenchV142\(\)/);
   assert.match(route, /'X-Content-SHA256': sha256/);
-  assert.match(version22Page, /canonical = '\/jev-models\/v1\.4\.2\.2'/);
+  assert.match(version22Page, /alternates: \{ canonical: '\/jev-models\/v1\.4\.2\.2' \}/);
   assert.match(version22Page, /revision: 'v1\.4\.2\.1'.*readJevbenchV1421/s);
   assert.match(version22Route, /readJevbenchV1422\(\)/);
   assert.match(version22Route, /'X-Content-SHA256': sha256/);

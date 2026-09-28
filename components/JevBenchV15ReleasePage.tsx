@@ -1,4 +1,5 @@
 import { JevBenchV15 } from './JevBenchV15Preview';
+import { CustomEvaluationOffer } from './CustomEvaluationOffer';
 import type { JevV15Artifact } from '../lib/jevbench-v15-preview.mjs';
 
 export function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '/jev-models/v1.5.0' }: {
@@ -8,7 +9,7 @@ export function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '/jev-m
 }) {
   return <>
     <header className="bh-page-head" data-bh-jev15-release-header>
-      <p className="bh-eyebrow" data-bh-jev-frozen-version>Official JevBench release {artifact.revision}</p>
+      <div className="bh-eyebrow flex flex-nowrap items-center" data-bh-jev-frozen-version><span>Official JevBench release {artifact.revision}</span><CustomEvaluationOffer /></div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">JevBench {artifact.revision} — Jev alternatives ranking</h1>
       <p className="bh-muted mt-3 max-w-3xl">JevBench measures Jev-class decision models on intelligence, calibration, speed and cost. v1.5 doubles the sample to {artifact.sample.total.toLocaleString('en-US')} decisions per system, scores Choice, Noul and Score requests natively and gives the fresh sealed set half of Intelligence. The official headline uses equal axis weights and gives the three request types equal weight; option B remains a secondary view.</p>
       <p className="bh-muted mt-2 max-w-3xl text-xs" data-bh-jev-meta>{artifact.sample.open} open + {artifact.sample.sealed} sealed decisions · {artifact.n_ranked} ranked of {artifact.roster_count} roster systems · only system-level sealed aggregates are published.</p>

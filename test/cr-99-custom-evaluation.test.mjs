@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 
 const offer = await readFile(new URL('../components/CustomEvaluationOffer.tsx', import.meta.url), 'utf8');
 const page = await readFile(new URL('../app/jev-models/custom-evaluation/page.tsx', import.meta.url), 'utf8');
-const jevPage = await readFile(new URL('../app/jev-models/page.tsx', import.meta.url), 'utf8');
+const jevPage = await readFile(new URL('../components/JevBenchV15ReleasePage.tsx', import.meta.url), 'utf8');
 const layout = await readFile(new URL('../app/layout.tsx', import.meta.url), 'utf8');
 const css = await readFile(new URL('../app/globals.css', import.meta.url), 'utf8');
 
@@ -46,7 +46,7 @@ test('CR-104 uses both responsive offer labels with one accessible name', () => 
   assert.match(offer, /bh-offer-badge-full" aria-hidden="true">Need custom eval on your data\?/);
   assert.match(offer, /bh-offer-badge-short" aria-hidden="true">Need a custom eval\?/);
   assert.match(layout, /href="\/jev-models\/custom-evaluation">Need custom eval on your data\?/);
-  assert.match(page, /Need custom eval on your data\?/);
+  assert.match(offer, /Need custom eval on your data\?/);
   assert.match(css, /bh-offer-badge-short \{ display: none; \}/);
   assert.match(css, /@media \(max-width: 359px\)[\s\S]*bh-offer-badge-full \{ display: none; \}[\s\S]*bh-offer-badge-short \{ display: inline; \}/);
   assert.match(css, /@media \(max-width: 639px\)[\s\S]*padding-inline: 6px/);

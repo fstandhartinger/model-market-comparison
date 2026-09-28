@@ -8,7 +8,7 @@ import { readFile } from 'node:fs/promises';
 
 const read = (p) => readFile(new URL(p, import.meta.url), 'utf8');
 const [page, css, sheet, report, jev] = await Promise.all([
-  read('../app/jev-models/page.tsx'), read('../app/globals.css'), read('../components/BenchmarkSheetLazy.tsx'),
+  read('../app/jev-models/v1.4.2.2/page.tsx'), read('../app/globals.css'), read('../components/BenchmarkSheetLazy.tsx'),
   read('../components/BenchmaxxingReport.tsx'), read('../components/JevModelsV12.tsx'),
 ]);
 
