@@ -18704,4 +18704,40 @@ scripts/validate-benchmark-registry.mjs` **293 entries**. Logs in `iter268-d251-
    question for Florian), and R9.1's two arms (`aa_coding_agents` 2026-09-09, `openrouter_aa_relay`
    2026-09-18) under the written-permission hold, unchanged again this iteration.
 
+## Fable pass 42 — 2026-09-28 ~23:40 UTC (claude-fable, design authority): the public hub at JevBench v1.5.0
+
+**Scope (Florian: Fable sparingly).** What changed since pass 41: `/jev-models` now serves the v1.5.0 release (CR-203, PR #68) with the v1.4.2.2
+section structure restored around it (CR-205, PR #69); the pinned `/jev-models/v1.5.0`; the frozen `/jev-models/v1.4.2.2`; Image JevBench v0.1.3
+(CR-199, PR #67). Judged at revision `4c15001e` on the canonical host, 1440/390 × light/dark, from `/opt/benchmarkheaven/state/ux-evidence/fable-20260928-pass42/canonical/`
+(`shoot-fable-pass42.mjs` + the pass-40 matrix re-run for the quick views). Verdict, decisions and directives F-221–F-226 are in
+`DESIGN-DIRECTIVES.md`; F-220 (pass 41) is superseded by F-224.
+
+**What the pass found.** The quick views (Simple, Advanced, Guided, Benchmaxxing, a model page, Benchmarks), the frozen v1.4.2.2 page and Image
+JevBench v0.1.3 hold: 0 page errors in all four contexts, min text 10 px, no sideways page scroll, NaN count 0. The public hub misses the bar in six
+places, all of them the release page's own shape rather than its data: the hero is the release note (h1 "JevBench v1.5.0 — Jev alternatives ranking",
+eight lines of "what changed" before any number, the first Capability row at **880 px** on a 390 px phone where the v1.4.2.2 hub had it at 727 and
+CR-163 had put it inside the first viewport), a full SHA-256 in the header (three lines at 390) that the provenance line prints again, the artifact's
+`unclassified` class in monospace in the legend and the compare picker, the official ranking printed three times (interactive chart, 89 static bars,
+an 89-row options table — the page is 25,332 px at 1440 and 38,411 px at 390, against 22,040 / 28,563 for v1.4.2.2), the 17-column axes table
+scrolling sideways at 1440 (F-220 gone public), and phone bubble labels on a tick and on the labelled points. Three fixed surgically by Fable
+(F-221, F-222, F-226), three directed (F-223, F-224, F-225).
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-221 (new) | **implemented** (Fable, surgical: `components/JevBenchV15ReleasePage.tsx` meta line uses `Sha`, exported from `JevBenchV15Preview.tsx`; `test/fable-pass42.test.mjs`) | `canonical/mobile_light-hub.png` (the 3-line hash); `live-before/verification.json` **9/47** (all groups, at `4c15001e`); `local-after/verification.json` **47/47** on a dev server | `ONLY=F-221`. Needs a non-Fable engine on the deployed revision. |
+| F-222 (new) | **implemented** (Fable, surgical: `live` prop on `JevBenchV15ReleasePage`, `app/jev-models/page.tsx` passes it; the hub's h1 is "JevBench by Benchmark Heaven", the definition sentence first, the release facts on `[data-bh-jev-meta]`, no self "View live board"; the pinned page keeps its release h1) | `canonical/mobile_light-hub.png`, `/tmp/probe-p42-hero.mjs` (first row 880 px at 390 vs 727 on v1.4.2.2; hero 8 lines; h1 2 lines); `live-before/` / `local-after/` as above | `ONLY=F-222`. Acceptance includes first Capability row ≤ 760 px at 390 on the live hub. Needs a non-Fable engine. |
+| F-226 (new) | **implemented** (Fable, surgical: `components/jevTypes.ts` `unclassified: "Unclassified"`; `system-one-open` stays unlabelled per F-192) | `canonical/desktop_light-hub-s-all-three-weight-options.png` (legend with `unclassified` in code font, before); `local-after/` | `ONLY=F-226`. Needs a non-Fable engine. |
+| F-223 (new) | **open** `[judgment]` — next work iteration (Claude Opus / Codex Luna) | `canonical/metrics-p42-{desktop,mobile}_light.json` (`heads`, `bars`/`opts` heights: 3,020 + 3,611 px at 1440, 7,906 + 4,091 at 390); `canonical/desktop_light-hub-s-jevbench-score-89-ranked-systems.png`, `mobile_light-hub-s-jevbench-score-89-ranked-systems.png` | Whiskers + tie count onto the interactive chart; the static bars and the options table fold. Page ≤ 18,500 px at 1440. Keep the CR-205 marker order; open the fold in the F-206 verifier. |
+| F-224 (new, supersedes F-220) | **open** `[judgment]` — next work iteration | `canonical/metrics-p42-desktop_light.json` `overflow` (1,480 px in 1,366 px at 1440); `canonical/desktop_light-hub-s-axes-request-types-latency-and-cost.png` | Two views by what is compared (Axes / Types & cost), as F-220 specified. |
+| F-225 (new) | **open** `[mechanical]` — next work iteration or the `JevBubbleChart.tsx` owner | `canonical/mobile_light-p42-bubble-0.png` ("2× Jev" on the "90" tick), `mobile_light-p42-bubble-1.png` (labels over four + two bubbles); `metrics-p42-mobile_light.json` `hub-svg` `overlaps`/`hits` | Drop the tick under the label; put the phone label column on the emptier side. |
+| F-220 (pass 41) | open → **superseded by F-224** | — | v1.5 was released with the table as it was; the directive moves to the public hub. |
+| F-219 (pass 41) | **open**, unchanged | — | The What-If page is still hidden and not linked from the public hub; the What-If owner's. |
+| CR-1.10 / X3 / X4 | Fable pass 42 held (the "what changed" pass; Florian: Fable sparingly) | this block | Quick views at the bar on today's data; the hub's directives above. |
+
+**Gates at the pass-42 commit (run on the committed tree, sequentially, unpiped):** `node scripts/build-dataset.mjs` **868 / 673 / 94 / 3,118** (only `generated_at`/`collected_at` moved; restored); `CI=true npm test` **1,634 tests, 1,633 pass, 0 fail, 1 skip**, exit 0; `npx tsc --noEmit -p .` exit 0. Logs: `/tmp/p42-build.log`, `/tmp/p42-npmtest.log`.
+
+**Needs a non-Fable engine to set `verified` on F-221, F-222 and F-226 (`verify-fable-pass42-design.mjs`, clear the out dir first) once the deploy
+carries them; F-223, F-224 and F-225 are for the next work iteration.**
+
+
 **`ALL-ACCEPTED` is not appended.**

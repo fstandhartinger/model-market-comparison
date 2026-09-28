@@ -1,12 +1,14 @@
-import { JevBenchV15 } from './JevBenchV15Preview';
+import { JevBenchV15, Sha } from './JevBenchV15Preview';
 import { CustomEvaluationOffer } from './CustomEvaluationOffer';
 import { readJevbenchV1422 } from '../lib/jevbench-v1422.mjs';
 import type { JevV15Artifact } from '../lib/jevbench-v15-preview.mjs';
 
-export async function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '/jev-models/v1.5.0' }: {
+export async function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '/jev-models/v1.5.0', live = false }: {
   artifact: JevV15Artifact;
   sha256: string;
   versionPath?: string;
+  /** True on the live board (`/jev-models`): the hero names the benchmark, not the release (Fable pass 42, F-222). */
+  live?: boolean;
 }) {
   // CR-205: rows that first appear in v1.5.0 get the board's "new" marker; v1.4.2.2 is the comparison base.
   const previousKeys = (await readJevbenchV1422()).artifact.systems.map((row: { key: string }) => row.key);
@@ -57,18 +59,26 @@ export async function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '
   };
   return <>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }} />
-    <header className="bh-page-head" data-bh-jev15-release-header>
-      <div className="bh-eyebrow flex flex-nowrap items-center" data-bh-jev-frozen-version><span>Official JevBench release {artifact.revision}</span><CustomEvaluationOffer /></div>
-      <h1 className="mt-1 text-3xl font-bold tracking-tight">JevBench {artifact.revision} — Jev alternatives ranking</h1>
-      <p className="bh-muted mt-3 max-w-3xl">JevBench measures Jev-class decision models on intelligence, calibration, speed and cost. v1.5 doubles the sample to {artifact.sample.total.toLocaleString('en-US')} decisions per system, scores Choice, Noul and Score requests natively and gives the fresh sealed set half of Intelligence. The official headline uses equal axis weights and gives the three request types equal weight; option B remains a secondary view.</p>
-      <p className="bh-muted mt-2 max-w-3xl text-xs" data-bh-jev-meta>{artifact.sample.open} open + {artifact.sample.sealed} sealed decisions · {artifact.n_ranked} ranked of {artifact.roster_count} roster systems · only system-level sealed aggregates are published.</p>
-      <p className="bh-muted mt-2 max-w-3xl text-xs">Published data: <a className="text-accent underline" href="/api/jevbench/v1.5.0">aggregate results JSON</a> · SHA-256 <code className="break-all" title={sha256}>{sha256}</code>.</p>
+    <header className="bh-page-head" data-bh-jev15-release-header data-bh-jev15-hero={live ? 'live' : 'pinned'}>
+      {/* F-222 (Fable pass 42): the hero says what JevBench is, then the release facts on one small line; the release notes live in "Method notes". */}
+      <div className="bh-eyebrow flex flex-nowrap items-center" data-bh-jev-frozen-version>
+        {live
+          ? <span><span className="sm:hidden">JevBench {artifact.revision}</span><span className="hidden sm:inline">JevBench {artifact.revision} · our own benchmark</span></span>
+          : <span>Official JevBench release {artifact.revision}</span>}
+        <CustomEvaluationOffer />
+      </div>
+      <h1 className="mt-1 text-3xl font-bold tracking-tight">{live ? 'JevBench by Benchmark Heaven' : `JevBench ${artifact.revision} — Jev alternatives ranking`}</h1>
+      <p className="mt-3 max-w-3xl text-lg" data-bh-jev-own>JevBench is <b>Benchmark Heaven&apos;s own benchmark</b> for Jev-class decision models: state and a bounded rubric in, a typed answer out.</p>
+      <p className="bh-muted mt-3 max-w-3xl text-xs leading-relaxed" data-bh-jev-meta>
+        {live ? `Release ${artifact.revision}` : 'Frozen release'} · {artifact.sample.total.toLocaleString('en-US')} decisions per system ({artifact.sample.open} open + {artifact.sample.sealed} sealed; sealed decisions are half of Intelligence) · {artifact.n_ranked} ranked of {artifact.roster_count} roster systems · only system-level sealed aggregates are published ·{' '}
+        <a className="text-accent underline" href="/api/jevbench/v1.5.0">aggregate results JSON</a> sha256 <Sha v={sha256} />
+      </p>
       <p className="mt-3 max-w-3xl text-sm" data-bh-image-jev-link-row>
         Making decisions from images? <a className="text-accent font-semibold underline" href="/image-jev-bench" data-bh-image-jev-link>Explore Image JevBench v0.1.3 and compare its systems</a>.
       </p>
       <p className="mt-3 max-w-3xl text-sm" data-bh-jev-version-share-row>
         <a className="text-accent underline" href={versionPath} data-bh-jev-version-share>Share this version</a>
-        {versionPath !== '/jev-models' && <span className="bh-muted"> · <a className="text-accent underline" href="/jev-models" data-bh-jev-live-link>View live board</a></span>}
+        {!live && <span className="bh-muted"> · <a className="text-accent underline" href="/jev-models" data-bh-jev-live-link>View live board</a></span>}
         <span className="bh-muted"> · Previous release: <a className="text-accent underline" href="/jev-models/v1.4.2.2">JevBench v1.4.2.2</a></span>
       </p>
     </header>

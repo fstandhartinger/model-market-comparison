@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function JevModelsPage() {
   const { artifact, sha256 } = await readJevbenchV15Release();
   return <>
-    <JevBenchV15ReleasePage artifact={artifact} sha256={sha256} versionPath="/jev-models/v1.5.0" />
+    <JevBenchV15ReleasePage artifact={artifact} sha256={sha256} versionPath="/jev-models/v1.5.0" live />
     <JevHistoryLazy />
   </>;
 }

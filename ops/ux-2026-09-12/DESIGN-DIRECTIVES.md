@@ -1,5 +1,18 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
+**Pass 42: 2026-09-28 ~23:30 UTC**, the "what changed since pass 41" pass (Florian: Fable sparingly). Since pass 41 the changed surface is the
+**public JevBench hub itself**: `/jev-models` now serves the **v1.5.0 release** (CR-203, PR #68 — the former hidden preview component, `JevBenchV15Preview`)
+and CR-205 (PR #69) put the v1.4.2.2 section structure back around it (Capability ranking, bubble charts, the interactive Composite chart, a v1.5-native
+compare view, the axes table, then every v1.5 addition and the guide/costs/method/3D/context/history sections); the pinned `/jev-models/v1.5.0` renders the
+same page; `/jev-models/v1.4.2.2` is frozen with its old hero; **Image JevBench v0.1.3** (CR-199, PR #67: the re-measured Imajev-4B row, #1 at 76.39).
+Judged on the canonical host (revision `4c15001e`, dataset 18:13 UTC) at 1440/390 × light/dark: `shoot-fable-pass42.mjs` (page outline with y positions,
+tables and their wrappers, overflow, min font, 64-hex runs, version words, SVG label/point hits) into `metrics-p42-<ctx>.json` plus full-page and
+per-section shots, the pass-40 matrix re-run for the quick views and release pages, and two one-off probes (`/tmp/probe-p42-hero.mjs`,
+`/tmp/probe-p42-bubble.mjs`, results quoted below) in `/opt/benchmarkheaven/state/ux-evidence/fable-20260928-pass42/canonical/`. 0 page errors in all four contexts, min text 10 px, no
+sideways page scroll on any page. Scripts: `bin/shoot-fable-pass42.mjs`; source pin: `test/fable-pass42.test.mjs`; live verifier for non-Fable engines:
+`bin/verify-fable-pass42-design.mjs <base> <outDir>` (groups `F-221`, `F-222`, `F-226`; it launches its own Chromium). Before-receipt at `4c15001e`:
+`…/live-before/verification.json`; the shipped fixes on a dev server: `…/local-after/verification.json` (numbers in the ledger).
+
 **Pass 41: 2026-09-28 ~11:50 UTC**, the "what changed since pass 40" pass (Florian: Fable sparingly). Since pass 40 the changed surface is small: the
 Imajev-4B **cost-basis wording** (CR-196, PR #62 — a text-only amendment of the v1.4.2.2 artifact, printed on the pair page's Conditions block and as the
 hub cost cell's title), the Image JevBench **retained-row note** (CR-197, PR #61 — one sentence in the closed candidates disclosure), the hidden **v1.5
@@ -120,6 +133,67 @@ Luna. Every delegated diff is reviewed before it lands. Record from passes 8, 11
 the reviewing engine directly.
 
 ---
+
+## Verdict on the live site — pass 42 (2026-09-28), the public hub at JevBench v1.5.0, the pinned v1.5.0 and v1.4.2.2 pages, Image JevBench v0.1.3
+
+**The release is the board's own copy where it counts, and the structure CR-205 restored is the v1.4.2.2 structure.** The eyebrow, the share link,
+the JSON link and the JSON-LD say v1.5.0; the Capability ranking names Jev 1.13.0 #1 at 80.0 with classifier.dev listed above it as an honorable mention;
+the interactive Composite chart carries the v1.5 presets (Official 25:25:25:25, Option B, …) and the leader sentence "Cygnet and Winnow-12B Q8 are joint
+leaders (statistical tie)"; the compare view's four radars (axes, per-type open/sealed, per-tier open and sealed) keep their labels outside the 100 ring
+with the halo; the frozen v1.4.2.2 page still opens with "JevBench by Benchmark Heaven" and Imajev-4B at 66.3; Image JevBench prints v0.1.3 in eyebrow,
+h1 and the hub's link, Imajev-4B #1 at 76.39 with its bar in the fast-serving colour. NaN count 0 on every page, 0 page errors in all four contexts.
+
+**Six things are not at the bar, all on the public hub; three fixed in this pass, three directed.**
+
+1. **The hero is the release note, not the board.** The live hub's h1 became "JevBench v1.5.0 — Jev alternatives ranking" (two lines at 390) and its
+   first paragraph is eight lines of what changed ("v1.5 doubles the sample … scores Choice, Noul and Score requests natively … option B remains a
+   secondary view") — B is undefined for another 19,000 px. The v1.4.2.2 hub said what JevBench *is* in one sentence and put the release facts on a small
+   meta line. Measured at 390: the first Capability row starts at **880 px**, below the phone's 844 px first viewport (v1.4.2.2 hub: 727; CR-163 restored
+   exactly this row to the first screen). "Share this version · View live board" prints on the live board itself (the component never knew which route
+   it was on). → **F-222**, fixed by Fable (a `live` flag: the hub's h1 is the product name, the definition sentence is first, the release facts are the
+   meta line, the pinned page keeps its release h1 and the live link).
+2. **A full SHA-256 in the hero, twice on the page.** "Published data: aggregate results JSON · SHA-256 6b2f…c643" prints all 64 hex characters in the
+   header (three lines at 390, `mobile_light-hub.png`) while the provenance foot line prints the same value in full again and the v1.4.2.2 hub prints
+   "sha256 7f39b2f742a6…". Pass 41 decision 1 applied to the public page. → **F-221**, fixed by Fable (`Sha`, exported from the preview component).
+3. **A class key in code font in the legend and the compare picker.** The v1.5 artifact carries `class: "unclassified"` for nine roster-addendum systems;
+   the legend printed `unclassified` in monospace with the title "Class named in the artifact; description pending" (`desktop_light-hub-s-all-three-weight-
+   options.png`, legend at y 3,932; the phone's compare legend). That fallback is F-192's honest rendering for a class the data owner has not *named*;
+   "unclassified" is the artifact's own word for a system the owner has not *classed* — a label, not a pending key. → **F-226**, fixed by Fable (one entry
+   in `JEV_TYPE_LABEL`; `system-one-open` stays the data owner's).
+4. **The ranking is printed three times.** The interactive Composite chart (y 2,506, 20 rows shown, fold to 100) is followed at y 9,844 by "JevBench Score:
+   89 ranked systems" — 89 static bars of the same official order (3,020 px at 1440, **7,906 px at 390**, three lines per row) — and at y 13,148 by "All
+   three weight options", an 89-row table (3,611 px) whose only new facts are the B/C ranks and the A interval. The hub is **25,332 px** at 1440 and
+   **38,411 px** at 390 (v1.4.2.2: 22,040 / 28,563). The static section's two facts a reader needs — the 95% whiskers and "75 of the 88 adjacent pairs are
+   statistical ties" — are not on the chart that everyone reads. → **F-223**, for the next work iteration.
+5. **The 17-column axes table scrolls sideways at 1440** (1,480 px in a 1,366 px wrapper; `metrics-p42-desktop_light.json` `overflow`), its "Endpoint" column
+   cut off on a desktop, and its own intro promises sideways scrolling "on a phone". This is pass 41's F-220, which was written for the hidden preview
+   and is now the public page. → **F-224** (supersedes F-220), for the next work iteration.
+6. **Bubble-chart labels on the phone.** On Capability vs cost the "2× Jev" label sits on the "90" tick (`mobile_light-p42-bubble-0.png`; `metrics-p42-mobile_
+   light.json` overlaps `['90', '2× Jev']`) because the dashed line is 40 px from the axis at 390; on Capability vs speed the F-204 label column stands in the
+   "most attractive quadrant" — exactly where the five labelled systems sit — so "2. Winnow-12B Q8" is drawn across four bubbles and "4. Jev-Omni" across
+   two (`mobile_light-p42-bubble-1.png`; `hits`). → **F-225**.
+
+Not defects: the honorable mention above rank 1 in the Capability ranking (CR-158's rule, printed under the bar); two open "Adjust weights ↓" panels
+(CR-158 asked for sliders above and below); the seven phone-width table scrollers (F-180/F-199); "system-one-open" in code font (F-192, the data owner's
+label); the hidden What-If page's radar (F-219, still the What-If owner's, unlinked from the public hub); the pinned v1.4.2.2 page linking Image JevBench
+v0.1.2 (frozen); Image JevBench's three "preview" words (the Computer Use and Browser Use tracks, pass 36).
+
+## Decisions in pass 42
+
+1. **The live board's hero names the benchmark; a pinned page's hero names the release (F-222):** "JevBench by Benchmark Heaven" + the one-sentence
+   definition + a meta line is the hub's shape since pass 36, and a release changes the meta line, not the h1. What changed in a release is the Method
+   notes' job ("Method notes: what changed in v1.5" already says every sentence the hero said). The phone's first Capability row is the budget's witness:
+   ≤ 760 px at 390 (the v1.4.2.2 hub measured 727).
+2. **A release page is one component with a route flag, never two copies (F-222):** `/jev-models` and `/jev-models/v1.5.0` render `JevBenchV15ReleasePage`;
+   the only difference is `live`, so the CR-205 structure test keeps pinning one source.
+3. **The artifact's own words are labels; only a class it names without describing stays a key (F-226):** F-192 protects the data owner's naming right, not
+   a monospace "unclassified" on a public legend.
+4. **One ranking, one figure (F-223):** the interactive Composite chart is the JevBench Score figure (CR-158 §3); a second static rendering of the same
+   order is not a "v1.5 addition" but a duplicate, and its two genuine additions (the interval whiskers and the tie count) belong on the figure or
+   directly under its leader sentence. Everything CR-205 restored stays reachable; folding is not removing.
+5. **A desktop table fits its panel (F-224 = pass 41 decision 4, now public):** split by what is compared, never by shrinking type.
+6. **A label never covers the data it names (F-225):** on a phone the label column goes where the points are not, and a tick that would sit under a
+   label is dropped, not overprinted.
 
 ## Verdict on the live site — pass 41 (2026-09-28), the three copy changes since pass 40 and the v1.5 preview at r5
 
@@ -695,6 +769,76 @@ and the counts line under it keeps the page honest (P4).
 
 ---
 
+## Directives (pass 42)
+
+### F-221 — The release header's SHA-256 prints as a 12-char prefix with the full value in the title `[mechanical]` — **shipped by Fable (pass 42)**
+
+*Where:* `components/JevBenchV15ReleasePage.tsx` (the meta line), `components/JevBenchV15Preview.tsx` (`Sha`, now exported); `test/fable-pass42.test.mjs`.
+*What:* the header's `<code className="break-all" title={sha256}>{sha256}</code>` becomes `sha256 <Sha v={sha256} />` on the meta line; the provenance
+foot line keeps its two full values (pass 41 decision 1).
+*Accept:* on `/jev-models` and `/jev-models/v1.5.0` at 1440/390: the header prints no 64-hex run; one `code` reads `[0-9a-f]{12}…`, one line tall, with the
+full value in its `title`; group **F-221** in `verify-fable-pass42-design.mjs`.
+
+### F-222 — The live hub's hero names the benchmark; the release facts are the meta line; the pinned page keeps the release name `[judgment]` — **shipped by Fable (pass 42)**
+
+*Where:* `components/JevBenchV15ReleasePage.tsx` (`live` prop, `data-bh-jev15-hero="live|pinned"`), `app/jev-models/page.tsx` (passes `live`); `test/fable-pass42.test.mjs`.
+*What:* live: eyebrow "JevBench v1.5.0 · our own benchmark" (phone: "JevBench v1.5.0"), h1 **"JevBench by Benchmark Heaven"**, then `[data-bh-jev-own]`
+"JevBench is **Benchmark Heaven's own benchmark** for Jev-class decision models: state and a bounded rubric in, a typed answer out." (the v1.4.2.2 hub's
+sentence), then the `[data-bh-jev-meta]` xs line "Release v1.5.0 · 1,624 decisions per system (904 open + 720 sealed; sealed decisions are half of
+Intelligence) · 89 ranked of 103 roster systems · only system-level sealed aggregates are published · aggregate results JSON sha256 6b2f6b058b36…", then the
+Image JevBench row and "Share this version · Previous release: JevBench v1.4.2.2". Pinned: eyebrow "Official JevBench release v1.5.0", h1 "JevBench v1.5.0 —
+Jev alternatives ranking", the same definition and meta line ("Frozen release · …"), and "View live board" between the two links. The paragraph "v1.5
+doubles the sample … option B remains a secondary view" is gone from both heroes (Method notes bullet 1 and the FAQ carry every fact in it).
+*Accept:* at 390 on `/jev-models`: h1 one line, the first Capability row's top ≤ 760 px; at both widths: the first sentence after the h1 starts "JevBench
+is Benchmark Heaven's own benchmark", the header contains none of "doubles the sample", "option B remains", "natively"; `[data-bh-jev-live-link]` absent
+on `/jev-models`, present on `/jev-models/v1.5.0`; the pinned h1 unchanged; group **F-222**.
+
+### F-223 — One ranking, one figure: the interval whiskers and the tie count move to the Composite chart; the static bars and the options table fold `[judgment]` — for the next work iteration (Claude Opus / Codex Luna), not Kimi
+
+*Where:* `components/JevBenchV15Preview.tsx` (`HeadlineBars`, `OptionsTable`, the `<JevScoreChart … approvedNote={leader}>` call), `components/JevBoardInteractive.tsx`
+(`JevScoreChart`, `scoreKind="v15"`), `lib/jevbench-v15-board.mjs`; the pins in `test/cr-205-jev-page-structure.test.mjs` (marker *order*, keep it),
+`test/fable-pass39.test.mjs` / `verify-fable-pass39-design.mjs` (F-206 a–e read `[data-bh-jev15-bars]` on the hidden preview, which shares this component —
+open the fold in the verifier, do not delete the markers).
+*What:* (a) under the interactive chart's leader sentence, one xs line: "Whiskers are 95% bootstrap intervals. 75 of the 88 adjacent pairs are statistical
+ties — read the order as a ranking, not the gaps as significant." (the strings `HeadlineBars` already computes; `pairs`/`ties` come from the artifact's
+`bootstrap`). (b) When the Official preset is active and View by = Overall, each bar in `JevScoreChart` draws the A interval as the `bh-jevc-ci` whisker
+`HeadlineBars` draws today (`row.ci.A` → `lo`/`hi` on the bar's percent scale); other presets draw none (the interval belongs to the official score).
+(c) `HeadlineBars` becomes a closed `<details>` "Official order with 95% intervals (89 systems) ▸" and `OptionsTable` a closed `<details>` "All three weight
+options (89 systems) ▸", both directly after the axes table where they are now — section order and every `data-bh-jev15-*` marker unchanged. (d) The
+roster-addendum, honorable-mention and not-ranked panels stay open (they are not duplicates).
+*Accept:* at 1440 `document.documentElement.scrollHeight` ≤ 18,500 px on `/jev-models` (today 25,332), at 390 ≤ 27,000 px (today 38,411); the tie line is
+within 120 px below the leader sentence; with the Official preset every ranked bar has a whisker whose left/right match `HeadlineBars`' `lo`/`hi` to 0.1
+(open the fold to compare); with "Option B" no whisker; `cr-205` test green; `verify-fable-pass39-design.mjs ONLY=F-206` green with the fold opened;
+`ONLY=F-210`/`F-211` unchanged.
+
+### F-224 — The axes table fits the panel at 1440: two views by what is compared `[judgment]` — supersedes F-220 (pass 41), now on the public hub; for the next work iteration
+
+*Where:* `components/JevBenchV15Preview.tsx` (`AxesTable`, its `<Th>` list and intro sentence).
+*What:* as F-220 wrote it: a pill pair above the table like the hub's View-by (pass 36) — **Axes**: #A · System · Score · Intel. · Calib. · Speed · Cost ·
+Gap · Penalty; **Types & cost**: #A · System · I open · I sealed · Choice o / s · Noul o / s · Score o / s · p50 / p95 · $/1k decisions · Endpoint. System
+sticky in both; the cost legend and the API note print under the second view only; Axes is the default; `?axes=types` deep-links the second. The intro's
+"On a phone the name column stays put while the table scrolls sideways" stays true only for phones — say so only there (`sm:hidden`).
+*Accept:* at 1440 neither view's wrapper has `scrollWidth > clientWidth + 2` (`metrics-p42-desktop_light.json` `overflow` empty for that wrapper); at 390
+both scroll inside their wrapper as today; row count 100 in both; pass-39 pins (F-206 a–e, F-210, F-211) green; `cr-205` green.
+
+### F-225 — Phone bubble-chart labels never cover ticks or points `[mechanical]` — for the next work iteration or the job that owns `JevBubbleChart.tsx`
+
+*Where:* `components/JevBubbleChart.tsx` (the CR-176 "2× Jev" label, the F-204 phone label column and its leader lines).
+*What:* (a) the "2× Jev" label: when the dashed line's x is within 48 px of the y-axis at the current width, drop the y tick whose box the label would
+intersect (the "90" at 390) — a tick under a label is worse than a missing tick — or, if the tick is the axis's max, shift the label down one gridline.
+(b) The phone label column: measure the five labelled points' x range; place the column on the side of the plot with fewer points in the label band's
+y range (for the speed chart that is the **left** third, x from the axis, anchor `start`, leader lines to the right; for the cost chart it stays where
+it is), and never inside the "most attractive quadrant" plate when that plate holds a labelled point.
+*Accept:* at 390 both charts report `hits: []` and no text-box overlap in `shoot-fable-pass42.mjs`'s `hub-svg` (the probe that found them); at 1440
+unchanged (`hits: []` today); the pass-38 pins (F-203/F-204) green.
+
+### F-226 — The artifact's `unclassified` prints as the word "Unclassified" `[mechanical]` — **shipped by Fable (pass 42)**
+
+*Where:* `components/jevTypes.ts` (`JEV_TYPE_LABEL`); `test/fable-pass42.test.mjs`.
+*What:* `unclassified: "Unclassified"` at the end of the label map (nine v1.5 roster-addendum rows carry it). `system-one-open` stays unlabelled (F-192).
+*Accept:* on `/jev-models` at 1440/390: no `main code` whose text is `unclassified`; a legend or picker item reads "Unclassified"; the F-192 pin
+(`data-bh-jev14-class-labelled="0"` for `system-one-open`) still holds; group **F-226**.
+
 ## Directives (pass 41)
 
 ### F-218 — Hashes in the v1.5 preview's prose print as a prefix with the full value in the title; the pricing hash is the artifact's field `[mechanical]` — **shipped by Fable (pass 41)**
@@ -718,7 +862,7 @@ inward. "50 (gate)" sits at the half-step between the Intelligence and Calibrati
 *Accept:* at 1440 and 390 `probe-fable-pass41b.mjs` reports `labelPointHits: []` and `labelsAcrossVerticalAxis: []` for the radar, every `text` ≥ 10 px,
 and no label box intersects the 100-ring polygon.
 
-### F-220 — The v1.5 axes table fits the panel at 1440: two views by what is compared `[judgment]` — for the iteration or job that owns the preview, before Florian releases v1.5
+### F-220 — The v1.5 axes table fits the panel at 1440: two views by what is compared `[judgment]` — **superseded by F-224 (pass 42): v1.5 was released with the table as it was**
 
 *Where:* `components/JevBenchV15Preview.tsx` (the "Axes, request types, latency and cost" table, its `<Th>` list).
 *What:* a pill pair above the table like the hub's View-by (pass 36): **Axes** — #A · System · Score · Intel. · Calib. · Speed · Cost · Gap · Penalty;
@@ -1517,6 +1661,9 @@ The label half is live and verified (`135a3098`, `4a9dd523`). Open: the identity
 
 | Directive | Commit | Evidence | Verified by |
 |---|---|---|---|
+| F-222 the live hub's hero names the benchmark (h1 "JevBench by Benchmark Heaven", the definition sentence first, release facts on the meta line, no self-link); the pinned page keeps the release name | pass-42 commit (Fable, surgical: `components/JevBenchV15ReleasePage.tsx` `live`, `app/jev-models/page.tsx`) + `test/fable-pass42.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260928-pass42/` (`canonical/mobile_light-hub.png` the two-line h1, the 8-line note and the 3-line hash; first row at 880 px; `live-before/`, `local-after/`; `verify-fable-pass42-design.mjs`) | implemented by Fable; needs a non-Fable engine (`ONLY=F-222`) on the deployed revision |
+| F-221 the release header's SHA-256 prints as a 12-char prefix with the full value in the title | same commit (`Sha` exported from `components/JevBenchV15Preview.tsx`) + test | same (group F-221) | implemented by Fable; needs a non-Fable engine (`ONLY=F-221`) |
+| F-226 the artifact's `unclassified` class prints as "Unclassified", not a monospace key | same commit (`components/jevTypes.ts`) + test | same (group F-226; `canonical/desktop_light-hub-s-all-three-weight-options.png` before) | implemented by Fable; needs a non-Fable engine (`ONLY=F-226`) |
 | F-218 hashes in the v1.5 preview's prose print as a 12-char prefix with the full value in the title; the pricing hash is the artifact's field, not a literal | pass-41 commit (Fable, surgical: `components/JevBenchV15Preview.tsx` `Sha`) + `test/fable-pass41.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260928-pass41/` (`canonical/*-v15-pricing-vp.png` the wrapped hashes; `live-before/` 14/24; `local-after/` 24/24 on a dev server; `verify-fable-pass41-design.mjs`) | implemented by Fable; needs a non-Fable engine to run `ONLY=F-218` on the deployed revision |
 | F-213 sealed family shares read as numbers whatever shape the artifact wrote (v1.4.2.2 writes Imajev-4B's as objects) | pass-40 commit (Fable, surgical: `lib/jevbench-v14.mjs` `sealedFamilyShares`, three readers) + `test/fable-pass40.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass40/` (`canonical/` the NaN spokes and errors in all four contexts; `live-before/` 64/136; `local-after/` 136/136 on a dev server; `verify-fable-pass40-design.mjs`) | implemented by Fable; needs a non-Fable engine to run `ONLY=F-213` on the deployed revision |
 | F-215 a ranked row's empty pooled family spoke is "no published hard-tier family breakdown", never "a partial run" | same commit (`components/JevCompareV14.tsx`) + test | same (group F-215: red ×8 before, green after) | implemented by Fable; needs a non-Fable engine (`ONLY=F-215`) |

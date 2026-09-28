@@ -12,6 +12,8 @@ export const JEV_TYPE_LABEL: Record<string, string> = {
   "small-tool-model": "Small tool-calling model", "jev-service": "Service built on Jev", classifier: "Zero-shot classifier",
   "decision-api": "Closed decision API", reranker: "Reranker (neutral adapter)", "raw-logit-control": "Raw-logit control (base model)",
   "native-logit": "Native-logit decision engine",
+  // F-226 (Fable pass 42): "unclassified" is the artifact's own value for a system the data owner has not classed — a word, not a pending key.
+  unclassified: "Unclassified",
 };
 
 /** F-192 (Fable pass 35): a class the artifact carries but this repo has no label for keeps its own swatch

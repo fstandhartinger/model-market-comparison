@@ -29,7 +29,7 @@ const signed = (v: number | null | undefined) => v == null ? '—' : `${v > 0 ? 
 // F-218 (Fable pass 41): a hash inside a sentence prints as the hub's provenance line does — the 12-character prefix with the full value in
 // the title — so no sentence wraps mid-hex at 390 or 1440; the provenance line at the foot keeps the full values, once. The value always
 // comes from the artifact (the pricing-correction hash was a literal in this file and would have outlived the next revision).
-const Sha = ({ v, id }: { v: string; id?: 'method' }) => <code title={v} data-bh-jev15-sha={id ?? 'prose'} data-bh-jev15-method-sha={id === 'method' ? '' : undefined}>{v.slice(0, 12)}…</code>;
+export const Sha = ({ v, id }: { v: string; id?: 'method' }) => <code title={v} data-bh-jev15-sha={id ?? 'prose'} data-bh-jev15-method-sha={id === 'method' ? '' : undefined}>{v.slice(0, 12)}…</code>;
 const secs = (v: number | null | undefined) => v == null ? '—' : `${v.toFixed(v < 1 ? 2 : 1)} s`;
 const usd = (v: number | null | undefined) => v == null ? '—' : `$${v.toFixed(v < 0.01 ? 4 : v < 1 ? 3 : 2)}`;
 const shortOnly = (display: string) => display.split(' (')[0].split(', formerly')[0];
