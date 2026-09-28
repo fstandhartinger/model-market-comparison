@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { access, readFile } from 'node:fs/promises';
 import { formatMatchedGapPp, readArchivedMultimodalPreviewV011, readMultimodalPreview, validatePreviewTracks } from '../lib/jevbench-multimodal-preview.mjs';
 
@@ -109,6 +110,24 @@ test('Image JevBench v0.1.1 is preserved as the exact parent release artifact', 
   assert.equal(archived.sha256, '749aae5c79b52e41eb691c50e4de2de65188bda8943e24afd8ad71434ac88140');
   assert.equal(archived.artifact.revision, 'v0.1.1');
   assert.equal(archived.artifact.n_systems, 48);
+});
+
+test('API.md pins the current JevBench and Image JevBench artifact hashes', async () => {
+  const files = [
+    '../data/raw/benchmarks/jevbench/v1.4.2.1/jevbench-v1.4.2.1-results.json',
+    '../data/raw/benchmarks/jevbench/v1.4.2.1/jevbench-v1.4.2.1-family-supplement.json',
+    '../data/raw/benchmarks/jevbench/v1.4.2.2/jevbench-v1.4.2.2-results.json',
+    '../data/raw/benchmarks/jevbench/v1.4.2.2/jevbench-v1.4.2.2-family-supplement.json',
+    '../data/raw/benchmarks/jevbench/multimodal-preview/preview.json',
+  ];
+  const [api, ...artifacts] = await Promise.all([
+    readFile(new URL('../API.md', import.meta.url), 'utf8'),
+    ...files.map((file) => readFile(new URL(file, import.meta.url))),
+  ]);
+  for (const [file, artifact] of files.map((file, index) => [file, artifacts[index]])) {
+    const sha256 = createHash('sha256').update(artifact).digest('hex');
+    assert.ok(api.includes(`\`${sha256}\``), `API.md must pin ${file} SHA-256 ${sha256}`);
+  }
 });
 
 test('preview tracks validator rejects missing or changed counts', async () => {

@@ -40,38 +40,42 @@ const browser = await chromium.launch();
 try {
   for (const host of hosts) {
     for (const [label, width, height] of [['desktop', 1440, 900], ['mobile', 390, 844]]) {
-      // A fresh context per viewport: the hub is heavy and a shared one loses its metrics.
-      const ctx = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: 1 });
-      const page = await ctx.newPage();
-      const pageErrors = [];
-      page.on('pageerror', (err) => pageErrors.push(String(err)));
-      let ok = false;
-      for (let attempt = 1; attempt <= 3 && !ok; attempt += 1) {
-        try { await page.goto(`${host}/jev-models`, { waitUntil: 'domcontentloaded', timeout: 60_000 }); ok = true; } catch (err) { if (attempt === 3) throw err; }
-      }
-      await page.waitForSelector('[data-bh-jev14-notes]', { timeout: 30_000 });
-      await page.evaluate(() => { document.querySelector('[data-bh-jev14-notes]').open = true; });
-      await page.waitForTimeout(300);
-      const seen = await page.evaluate(() => Object.fromEntries([...document.querySelectorAll('[data-bh-jev14-notes] li')]
-        .map((li) => [li.id.replace(/^jev14-note-/, ''), { text: li.innerText, visible: li.checkVisibility() }])));
-      const ctxName = `${new URL(host).host}/${label}`;
-      for (const row of expected) {
-        const li = seen[row.key];
-        const hits = li ? (li.text.match(new RegExp(String.raw`\b${row.ratio.replace('/', String.raw`\s*/\s*`)}\b`, 'g')) ?? []).length : 0;
-        record(`d238/${ctxName}/${row.key}-states-${row.ratio}-once`, !!li && li.visible && hits === 1,
-          li ? `visible=${li.visible} occurrences=${hits} text=${JSON.stringify(li.text.slice(-120))}` : 'no note entry for this row');
-      }
-      // D246's own row: the only published reason qwen3.8-27b is partial and unranked.
-      const qwen = seen['qwen3.8-27b'];
-      record(`d246/${ctxName}/qwen3.8-27b-keeps-its-published-partial-reason`,
-        !!qwen && qwen.visible && /Chutes rate limit stopped the run after 81\s*\/\s*308 items/.test(qwen.text),
-        qwen ? JSON.stringify(qwen.text.slice(0, 160)) : 'no note entry');
-      // The shared sentence the filter drops must not come back, and no note may repeat a ratio.
-      const shared = Object.entries(seen).filter(([, li]) => /sealed item text \(no golds\) was sent to/i.test(li.text)).map(([key]) => key);
-      record(`d238/${ctxName}/the-shared-sealed-exposure-sentence-is-still-dropped`, shared.length === 0, `rows repeating it=${JSON.stringify(shared)}`);
-      record(`d238/${ctxName}/no-page-errors`, pageErrors.length === 0, JSON.stringify(pageErrors.slice(0, 3)));
-      await page.screenshot({ path: resolve(outDir, `${new URL(host).host}-${label}-notes.png`), fullPage: false });
-      await ctx.close();
+       for (const theme of ['light', 'dark']) {
+        // A fresh context per viewport: the hub is heavy and a shared one loses its metrics.
+        const ctx = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: 1, colorScheme: theme, isMobile: label === 'mobile', hasTouch: label === 'mobile' });
+        await ctx.addInitScript((t) => { try { localStorage.setItem('theme', t); localStorage.setItem('bh-theme', t); } catch {} }, theme);
+        const page = await ctx.newPage();
+        const pageErrors = [];
+        page.on('pageerror', (err) => pageErrors.push(String(err)));
+        let ok = false;
+        for (let attempt = 1; attempt <= 3 && !ok; attempt += 1) {
+          try { await page.goto(`${host}/jev-models`, { waitUntil: 'domcontentloaded', timeout: 60_000 }); ok = true; } catch (err) { if (attempt === 3) throw err; }
+        }
+        await page.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
+        await page.waitForSelector('[data-bh-jev14-notes]', { timeout: 30_000 });
+        await page.evaluate(() => { document.querySelector('[data-bh-jev14-notes]').open = true; });
+        await page.waitForTimeout(300);
+        const seen = await page.evaluate(() => Object.fromEntries([...document.querySelectorAll('[data-bh-jev14-notes] li')]
+          .map((li) => [li.id.replace(/^jev14-note-/, ''), { text: li.innerText, visible: li.checkVisibility() }])));
+        const ctxName = `${new URL(host).host}/${label}/${theme}`;
+        for (const row of expected) {
+          const li = seen[row.key];
+          const hits = li ? (li.text.match(new RegExp(String.raw`\b${row.ratio.replace('/', String.raw`\s*/\s*`)}\b`, 'g')) ?? []).length : 0;
+          record(`d238/${ctxName}/${row.key}-states-${row.ratio}-once`, !!li && li.visible && hits === 1,
+            li ? `visible=${li.visible} occurrences=${hits} text=${JSON.stringify(li.text.slice(-120))}` : 'no note entry for this row');
+        }
+        // D246's own row: the only published reason qwen3.8-27b is partial and unranked.
+        const qwen = seen['qwen3.8-27b'];
+        record(`d246/${ctxName}/qwen3.8-27b-keeps-its-published-partial-reason`,
+          !!qwen && qwen.visible && /Chutes rate limit stopped the run after 81\s*\/\s*308 items/.test(qwen.text),
+          qwen ? JSON.stringify(qwen.text.slice(0, 160)) : 'no note entry');
+        // The shared sentence the filter drops must not come back, and no note may repeat a ratio.
+        const shared = Object.entries(seen).filter(([, li]) => /sealed item text \(no golds\) was sent to/i.test(li.text)).map(([key]) => key);
+        record(`d238/${ctxName}/the-shared-sealed-exposure-sentence-is-still-dropped`, shared.length === 0, `rows repeating it=${JSON.stringify(shared)}`);
+        record(`d238/${ctxName}/no-page-errors`, pageErrors.length === 0, JSON.stringify(pageErrors.slice(0, 3)));
+        await page.screenshot({ path: resolve(outDir, `${new URL(host).host}-${label}-${theme}-notes.png`), fullPage: false });
+        await ctx.close();
+       }
     }
   }
 } finally { await browser.close(); }

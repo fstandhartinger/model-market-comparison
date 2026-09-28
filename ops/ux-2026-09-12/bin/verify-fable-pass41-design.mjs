@@ -28,7 +28,9 @@ const previewProbe = () => {
   return { hasMethod: !!method, fullOutsideProv, shas, methodSha: methodSha ? { t: txt(methodSha), title: methodSha.getAttribute('title') || '' } : null, provFull, pricingPrefix: (pricingLi.match(/SHA-256: ([0-9a-f]{12})…/) || [])[1] || null, robots: document.querySelector('meta[name=robots]')?.content || '' };
 };
 const whatifProbe = () => { const t = document.body.innerText.replace(/\s+/g, ' '); return { prefix: (t.match(/Pricing disclosure correction SHA-256 ([0-9a-f]{12})…/) || [])[1] || null }; };
-for (const [kind, theme] of [['desktop', 'light'], ['mobile', 'dark']]) {
+// The gate's acceptance is desktop + mobile in both themes. Keep the full matrix here so a
+// verifier receipt cannot pass by checking only the two diagonal combinations.
+for (const [kind, theme] of [['desktop', 'light'], ['desktop', 'dark'], ['mobile', 'light'], ['mobile', 'dark']]) {
   const ctx = `${kind}_${theme}`;
   const browser = await chromium.launch({ headless: true });
   const bctx = await browser.newContext({ viewport: kind === 'mobile' ? { width: 390, height: 844 } : { width: 1440, height: 1000 }, deviceScaleFactor: kind === 'mobile' ? 2 : 1, isMobile: kind === 'mobile', hasTouch: kind === 'mobile', colorScheme: theme });
@@ -61,3 +63,4 @@ for (const [kind, theme] of [['desktop', 'light'], ['mobile', 'dark']]) {
 const pass = checks.filter((c) => c.ok).length;
 await fs.writeFile(`${OUT}/verification.json`, JSON.stringify({ base: BASE, at: new Date().toISOString(), only: ONLY, pass, total: checks.length, checks }, null, 1));
 console.log(`${pass}/${checks.length} checks passed (${BASE}${ONLY ? `, ONLY=${ONLY}` : ''})`);
+process.exitCode = pass === checks.length ? 0 : 1;
