@@ -88,15 +88,55 @@ export function aaFieldActivity(rootField, changedRows, oldBySourceId) {
     if (next == null) { removed++; continue; }
     if (!had || previous == null) added++; else changedValues++;
   }
-  return { field: rootField, models: models.size, added, changed: changedValues, removed, affirmative: added + changedValues };
+  return { field: rootField, models: models.size, added, changed: changedValues, removed, affirmative: added + changedValues,
+    payload: 'Artificial Analysis model-page payload', removed_phrase: 'value(s) newly null' };
+}
+
+// D247 (2026-09-28): the same affirmative evidence, for a public board arm. Such an arm's protocol
+// packet carries the maintainer's methodology text and nothing else — `protocol()` drops the values
+// payload on purpose, because a protocol review judges methodology and not values — so on
+// 2026-09-28 `ugi-natint` and `ugi-writing` both came back `revise` with one major finding each, the
+// same one: criterion c2 cannot settle `status: "active"` from a Space page that only defines the
+// columns. Both critics asked for this summary by name ("Attach this run's generated summary of
+// added/changed values for the board's source field from the captured maintainer payload"). The
+// arms that pass on text alone pass because their page happens to carry a changelog.
+//
+// Counted on the reconciled row id, so a board that lists one model twice is two rows and a
+// re-ordered board is not 1,300 changes. Only the published value decides: a row whose value is
+// unchanged is not activity however much of its context moved, because a re-run is not what this
+// summary claims — that the maintainer is still serving values. A row the board stopped publishing
+// is a removal and never affirmative, the same rule that stops a wound-down AA field from arguing
+// for `"active"`.
+export function publicValueActivity(field, rows, priorById, withdrawnRows = [], maintainer = null) {
+  let added = 0, changedValues = 0, removed = 0;
+  const counted = new Set();
+  for (const row of rows) {
+    const before = priorById.get(row.id);
+    const next = row.value, previous = before ? before.value : undefined;
+    if (before && equal(next, previous)) continue;
+    counted.add(row.id);
+    if (next == null) { removed++; continue; }
+    if (!before || previous == null) added++; else changedValues++;
+  }
+  for (const row of withdrawnRows) { if (counted.has(row.id)) continue; counted.add(row.id); removed++; }
+  return { field, models: counted.size, added, changed: changedValues, removed, affirmative: added + changedValues,
+    payload: `${maintainer ? `${maintainer}'s` : "the maintainer's"} published results payload for this board`,
+    removed_phrase: 'value(s) the board no longer publishes' };
 }
 
 // The activity summary rides the same receipt as the capture it was computed from, so the
 // packet's hash chain is unchanged; its locator states plainly that the text is generated.
-export function aaActivitySource(receipt, activity) {
+//
+// D247: the two phrases that were written for AA's payload now travel with the activity object.
+// `payload` names the captured payload the counts were compared against and `removed_phrase` says
+// what a removal is there — a value turning null on a model-page row is not the same event as a
+// board dropping the row altogether. Neither is computed. A caller that supplies neither gets an
+// error rather than a summary that silently claims it read Artificial Analysis.
+export function activitySource(receipt, activity) {
+  if (!activity.payload || !activity.removed_phrase) throw new Error('activity summary needs the payload and removed_phrase that describe the capture it compared');
   const content = [
     `Generated activity summary for the maintainer's source field "${activity.field}".`,
-    `This run compared today's captured Artificial Analysis model-page payload (sha256 ${receipt.sha256}, retrieved ${receipt.retrieved_at ?? receipt.fetched_at}) with the previously published snapshot and found ${activity.models} model row(s) whose "${activity.field}" value differs today: ${activity.added} value(s) on model rows that had none before, ${activity.changed} changed value(s), ${activity.removed} value(s) newly null.`,
+    `This run compared today's captured ${activity.payload} (sha256 ${receipt.sha256}, retrieved ${receipt.retrieved_at ?? receipt.fetched_at}) with the previously published snapshot and found ${activity.models} model row(s) whose "${activity.field}" value differs today: ${activity.added} value(s) on model rows that had none before, ${activity.changed} changed value(s), ${activity.removed} ${activity.removed_phrase}.`,
     activity.affirmative > 0
       ? 'A maintainer adding or changing the values it serves for this field is still running and reporting this board.'
       : 'Today shows no added or changed values (only removals or no change), so this summary does not by itself establish that the board is still being reported.',
@@ -368,9 +408,10 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   // Protocol evidence is deliberately separate from result rows. A changed
   // methodology needs a clean review before the existing identity can be reused.
   const protocolCache = new Map();
-  // `extra.activity` (only set by the AA-field arm below) attaches this run's own
-  // added/changed-value summary; the cache key includes its field so two fields on one
-  // entry each get their own review, and a plain call never reads a field-tagged one.
+  // `extra.activity` attaches this run's own added/changed-value summary — the AA-field arm
+  // below, and since D247 every public board arm whose values come from a single capture; the
+  // cache key includes its field so two fields on one entry each get their own review, and a
+  // plain call never reads a field-tagged one.
   // `reviewSink` lets a caller that runs several protocol reviews concurrently collect
   // their manifests per unit and splice them into `reviews` in input order, so the report
   // does not depend on which review finished first.
@@ -385,7 +426,7 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       const content = protocolSourceContent(entry.id, reference, await textSource(receipt, reference.recipe));
       sources.push({ ...receipt, content: bounded(content, entry.id), locator: protocolSourceLocator(reference) });
     }
-    if (extra?.activity) sources.push(aaActivitySource(extra.receipt, extra.activity));
+    if (extra?.activity) sources.push(activitySource(extra.receipt, extra.activity));
     const reviewed = await review({ runDir: evidenceDir, artifactId: `protocol-${entry.id}`, rows: [protocolReviewRow(entry)],
       sources, criteria: PROTOCOL_REVIEW_CRITERIA });
     reviewSink.push({ scope: entry.id, type: 'protocol', ...reviewed.manifest });
@@ -533,7 +574,28 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       // The sequential loop reached this as a TypeError inside `protocol()`; naming it keeps
       // the same retained-failure outcome with a reason a reader can act on.
       if (!entry) throw new Error(`${spec.benchmark_id}: changed rows but no registry entry to review the protocol against`);
-      pending.push({ index, spec, entry, proposed, candidate, evidence, changed, old, gone, withdrawnBySource });
+      // D247: this arm only reaches here because its values changed today, so the summary is a real
+      // fact of this run's capture — the same invariant the AA arm relies on. Two kinds of arm are
+      // withheld:
+      //
+      //  * a multi-capture arm (`parser.runs`: bu-bench-v1, hyper-tau-bench), because the summary
+      //    names the one capture its counts were computed from and those rows come from several;
+      //  * a row that does not claim `status: "active"`. The criterion admits this summary for
+      //    exactly one judgement — a nonzero count is affirmative evidence for `"active"` and it
+      //    "can never establish `retained`" — so on a retained row it carries nothing admissible
+      //    and one thing harmful. The replay proves that half: with the identical affirmative
+      //    summary and `status` flipped to `"retained"`, the reviewer rejects the row and asks for
+      //    `"active"` (iter259-d247/natint-lie.log). On a genuinely retained board whose maintainer
+      //    edits an old value that would turn a passing arm into a retained failure — the exact
+      //    failure this fix exists to remove. All seven retained public arms are `checked_unchanged`
+      //    in every run of the past week, so the withholding costs nothing observable.
+      //
+      // The AA arm attaches its summary whatever the row claims. That asymmetry is left alone
+      // deliberately: it is CR-38.1's behaviour, it carries the same latent risk it always has, and
+      // changing it needs its own AA replay rather than a ride along with this one.
+      const activity = spec.parser.runs || !spec.parser.value_field || entry.status !== 'active' ? null
+        : publicValueActivity(spec.parser.value_field, candidate.observations, old, reconciled.withdrawn, entry.maintainer);
+      pending.push({ index, spec, entry, proposed, candidate, evidence, changed, old, gone, withdrawnBySource, activity });
     } catch (error) {
       // F-209: exactly one failure shape is a quarantine — the collector saying the board publishes a
       // protocol revision the registry has not reviewed. Everything else stays a retained failure.
@@ -546,11 +608,12 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   }
   // One review per registry entry, at most `concurrency` in flight, results indexed by input
   // position. A rejection is isolated: it retains that benchmark and nothing else.
-  const protocolUnits = [...new Map(pending.map((item) => [item.entry.id, item.entry])).values()];
+  const protocolUnits = [...new Map(pending.map((item) => [item.entry.id, item])).values()];
   const reviewSlots = protocolUnits.map(() => []);
-  const protocolSettled = await mapWithConcurrency(protocolUnits, (entry, index) => protocol(entry, null, reviewSlots[index]), { limit: concurrency });
+  const protocolSettled = await mapWithConcurrency(protocolUnits, (unit, index) => protocol(unit.entry,
+    unit.activity ? { activity: unit.activity, receipt: unit.proposed.source } : null, reviewSlots[index]), { limit: concurrency });
   for (const slot of reviewSlots) reviews.push(...slot);
-  const protocolByEntry = new Map(protocolUnits.map((entry, index) => [entry.id, protocolSettled[index]]));
+  const protocolByEntry = new Map(protocolUnits.map((unit, index) => [unit.entry.id, protocolSettled[index]]));
   for (const { index, spec, entry, proposed, candidate, evidence, changed, old, gone, withdrawnBySource } of pending) {
     const settled = protocolByEntry.get(entry.id);
     if (settled.status === 'rejected') { fail(spec.benchmark_id, settled.reason, specChecks[index]); continue; }
