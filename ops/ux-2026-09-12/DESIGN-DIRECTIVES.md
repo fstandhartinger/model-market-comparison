@@ -1,5 +1,18 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
+**Pass 41: 2026-09-28 ~11:50 UTC**, the "what changed since pass 40" pass (Florian: Fable sparingly). Since pass 40 the changed surface is small: the
+Imajev-4B **cost-basis wording** (CR-196, PR #62 — a text-only amendment of the v1.4.2.2 artifact, printed on the pair page's Conditions block and as the
+hub cost cell's title), the Image JevBench **retained-row note** (CR-197, PR #61 — one sentence in the closed candidates disclosure), the hidden **v1.5
+preview at r5** (CR-201, PR #65 — a pricing-disclosure bullet in the method notes, the What-If page re-sourced) and D245's geometry rounding (no rendered
+change); the 05:17 UTC daily failed (D249), so the quick views were shot on the 23:59 UTC dataset. Judged on the canonical host (revision `4aec7994` after
+the 11:20 UTC deferred push; the first desktop context ran across the switchover and its 502/504s are that, not the page) at 1440/390 × light/dark:
+186 shots + `metrics-<ctx>.json` from `shoot-fable-pass40.mjs` re-run unchanged, plus `metrics-p41-<ctx>.json` and `metrics-p41b.json` from the two
+pass-41 probes, in `/opt/benchmarkheaven/state/ux-evidence/fable-20260928-pass41/canonical/`. The quick views (Simple, Advanced, Guided, Benchmaxxing, a
+model page, Benchmarks): min text 10 px on every page, no sideways page scroll, 0 page errors, at the bar. Scripts: `bin/shoot-fable-pass41.mjs`,
+`bin/probe-fable-pass41b.mjs`; source pin: `test/fable-pass41.test.mjs`; live verifier for non-Fable engines: `bin/verify-fable-pass41-design.mjs <base>
+<outDir>` (group `F-218`; it launches its own Chromium). Before-receipt at `4aec7994`: `…/live-before/verification.json` (**14/24**); the shipped fix on
+a dev server: `…/local-after/verification.json` (**24/24**). Regression: pass 40 `…/regress-pass40/verification.json` **136/136** live at `4aec7994`.
+
 **Pass 40: 2026-09-27 ~23:10 UTC**, the "what changed since pass 39" pass (Florian: Fable sparingly). Since pass 39 the changed surface is the
 **JevBench release v1.4.2.2** (CR-191, PR #57: Imajev-4B #1, Plumb-4B #2, Jev #4 of 91) on the hub, its two new pinned pages (`/jev-models/v1.4.2.1`,
 `/jev-models/v1.4.2.2`), the two new comparison pages (`jev-vs-imajev`, `jev-vs-plumb`), the two newcomers' leaf pages, **Image JevBench v0.1.2**
@@ -107,6 +120,47 @@ Luna. Every delegated diff is reviewed before it lands. Record from passes 8, 11
 the reviewing engine directly.
 
 ---
+
+## Verdict on the live site — pass 41 (2026-09-28), the three copy changes since pass 40 and the v1.5 preview at r5
+
+**The quick views hold and the three changed sentences say the true thing.** Simple, Advanced, Guided, Benchmaxxing, the model page and the Benchmarks
+page are pass 40's pages on the 23:59 UTC data (the 05:17 daily failed, D249; "updated 2026-09-27" under the hero is the data's own truth). CR-196's basis
+reads "full-forward input tokens are counted once for the single pinned server pass" where a basis is printed — the Jev-vs-Imajev page's Conditions block
+(`desktop_light-pair-jev-vs-imajev-cond-vp.png`) — and as the hub cost cell's `title`; the FAQ's "$0.022 per 1,000 decisions" is unchanged, as CR-196
+says. CR-197's sentence is a cell of the candidates table inside the closed "Requested and excluded candidates (68)" disclosure (where F-198 put the
+trail), one line at 1440. Pass 40's five directives hold (**136/136**); D245 shows as 0 hydration and 0 SVG errors in all four contexts.
+
+**Three things are not at the bar, all on the hidden v1.5 preview and its What-If page; one fixed in this pass, two directed.**
+
+1. **Six full hashes in prose, one of them a literal.** The method notes print the frozen-method, M2, headline-amendment and (since CR-201) the
+   pricing-correction SHA-256 in full inside sentences — 64 hex characters that wrap mid-hash at 1440 (the bullet is three lines, the hash two) and take
+   three of the bullet's nine lines at 390 (`desktop_light-v15-pricing-vp.png`, `mobile_light-v15-pricing-vp.png`) — where the public hub prints
+   `sha256.slice(0, 12)…` with the full value in the `title` (`JevModelsV14.tsx`) and the What-If page prints "1b660648bd49…". The pricing-correction
+   hash was typed into the component as a literal while the artifact carries it as `pricing_disclosure_correction_sha256` (validated by the lib): the
+   next r6 changes the field and the page keeps the old digits. → **F-218**, fixed by Fable (a `Sha` helper; four prose hashes as prefix + title; the
+   provenance foot line keeps its two full values; the literal is gone).
+2. **The What-If radar's spoke labels sit inside the chart, on the data.** `radar()` pulls "Calibration" and "Cost" 30 px inward from the axis tips with
+   the anchors reversed, so a system's Cost point (56.4) is drawn across the "Cost" label in every context (`metrics-p41b.json` `labelPointHits`: two hits
+   on "Cost"; `mobile_light-whatif-radar-vp.png`), and the 9.5 px "50 (gate)" ring label straddles the vertical axis (`labelsAcrossVerticalAxis`:
+   Intelligence, Speed). → **F-219**, for the job that writes the What-If page.
+3. **The axes table scrolls sideways at 1440.** "Axes, request types, latency and cost" has 17 columns and is 1,480 px wide in a 1,366 px panel
+   (`metrics-p41-desktop_light.json` `v15.overflow`): 114 px of horizontal scroll on a desktop, since F-206(e)'s Penalty column tipped it. → **F-220**.
+
+Not defects: the retained-row sentence living in a closed disclosure (pass 37, F-198); the basis as a `title` on the hub's cost cell (the row disclosure
+of CR-139.2 is where a basis is read, and the pair page prints it); "ESTIMATE:" and the receipt path inside the basis (the data owner's published basis,
+quoted); the two known preset-row and table scrollers on phones (F-199/F-180); the hub's three underscore words (a GitHub handle, a formula, a module
+path, all in pass 38).
+
+## Decisions in pass 41
+
+1. **A hash in a sentence is a reference, not a value (F-218):** the page follows its own hub — twelve characters and the full value in the title — and
+   the one line that exists to carry values (the provenance foot line) keeps them in full, once. Pass 37 decision 3 (a fact once per figure) applied to hex.
+2. **A component never carries a digest of the data it renders (F-218):** the artifact has the field and the lib validates it; a literal in a component is
+   a second copy that goes stale silently. Pass 40 decision 4 (structured data follows the same variable as the visible page) applied to the component.
+3. **A chart's labels live outside its data (F-219):** the radars in `JevRadars.tsx` place spoke names at R + 12 outside the 100 ring and the ring label at
+   the half-step between spokes with a halo (F-136); a hand-written chart on the same site follows the same rule, and 10 px is the floor on every page.
+4. **A desktop table fits its panel (F-220):** at 1440 the table is the figure, not a scroller; when a table outgrows 1,366 px it splits by what the reader
+   is comparing (the hub's View-by pills, pass 36), never by shrinking type.
 
 ## Verdict on the live site — pass 40 (2026-09-27), the JevBench v1.4.2.2 release surface, Image JevBench v0.1.2, the MentalHealthBench board
 
@@ -640,6 +694,38 @@ held through pass 16) after rejecting Florian's 2026-09-12 draft ("All … every
 and the counts line under it keeps the page honest (P4).
 
 ---
+
+## Directives (pass 41)
+
+### F-218 — Hashes in the v1.5 preview's prose print as a prefix with the full value in the title; the pricing hash is the artifact's field `[mechanical]` — **shipped by Fable (pass 41)**
+
+*Where:* `components/JevBenchV15Preview.tsx` (`Sha`, `Method`); `test/fable-pass41.test.mjs`.
+*What:* `Sha` renders `<code title={v}>{v.slice(0, 12)}…</code>` (`data-bh-jev15-sha`; the method one keeps `data-bh-jev15-method-sha`); the
+frozen-method, M2, headline-amendment and pricing-correction hashes render through it; the pricing-correction value is
+`a.pricing_disclosure_correction_sha256`, never a literal; `[data-bh-jev15-provenance]` keeps the two full values.
+*Accept:* on `/wip-oiifi41ouv1f/jevbench-v15` at 1440/390: no `code` outside the provenance line prints 64 hex; four `[data-bh-jev15-sha]`, each one line
+tall with a 64-hex `title` that starts with its prefix; the pricing prefix equals the one the What-If page prints; group **F-218** in
+`verify-fable-pass41-design.mjs`.
+
+### F-219 — The What-If radar's labels sit outside the 100 ring; the ring label at the half-step, 10 px `[mechanical]` — for the job that writes the What-If page (`jobs/*`, CR-172/CR-201 lineage), not Kimi
+
+*Where:* `public/wip-oiifi41ouv1f/jevbench-v15-whatif.html`, `radar()` (about line 712). The file is copied in by the release jobs, so the fix goes where it
+is generated; a fix in this repo alone is overwritten by the next copy.
+*What:* the SVG keeps `viewBox 0 0 340 320`; `R` becomes 96 (cx 170, cy 158) so the labels fit. Each spoke label sits at `pt(a, 100)` pushed 12 px outward
+along its axis: anchor `middle` for Intelligence and Speed, **`start` for Calibration** (right of the tip) and **`end` for Cost** (left of the tip) — never
+inward. "50 (gate)" sits at the half-step between the Intelligence and Calibration spokes (angle −45°), radius `0.5·R·cos(45°) − 3`, anchor `start`,
+`dominant-baseline hanging`, `font-size 10`, with the F-70 halo (`paint-order: stroke; stroke: var(--card); stroke-width: 3px`).
+*Accept:* at 1440 and 390 `probe-fable-pass41b.mjs` reports `labelPointHits: []` and `labelsAcrossVerticalAxis: []` for the radar, every `text` ≥ 10 px,
+and no label box intersects the 100-ring polygon.
+
+### F-220 — The v1.5 axes table fits the panel at 1440: two views by what is compared `[judgment]` — for the iteration or job that owns the preview, before Florian releases v1.5
+
+*Where:* `components/JevBenchV15Preview.tsx` (the "Axes, request types, latency and cost" table, its `<Th>` list).
+*What:* a pill pair above the table like the hub's View-by (pass 36): **Axes** — #A · System · Score · Intel. · Calib. · Speed · Cost · Gap · Penalty;
+**Types & cost** — #A · System · I open · I sealed · Choice o / s · Noul o / s · Score o / s · p50 / p95 · $/1k decisions · Endpoint. System stays sticky in
+both; the cost legend (F-206) prints under the second view only; Axes is the default; `?axes=types` deep-links the second.
+*Accept:* at 1440 neither view's wrapper has `scrollWidth > clientWidth + 2`; at 390 both scroll inside their wrapper as today; the pass-39 pins
+(F-206 a–e, F-210, F-211) still pass; the row count is unchanged.
 
 ## Directives (pass 40)
 
@@ -1431,6 +1517,7 @@ The label half is live and verified (`135a3098`, `4a9dd523`). Open: the identity
 
 | Directive | Commit | Evidence | Verified by |
 |---|---|---|---|
+| F-218 hashes in the v1.5 preview's prose print as a 12-char prefix with the full value in the title; the pricing hash is the artifact's field, not a literal | pass-41 commit (Fable, surgical: `components/JevBenchV15Preview.tsx` `Sha`) + `test/fable-pass41.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260928-pass41/` (`canonical/*-v15-pricing-vp.png` the wrapped hashes; `live-before/` 14/24; `local-after/` 24/24 on a dev server; `verify-fable-pass41-design.mjs`) | implemented by Fable; needs a non-Fable engine to run `ONLY=F-218` on the deployed revision |
 | F-213 sealed family shares read as numbers whatever shape the artifact wrote (v1.4.2.2 writes Imajev-4B's as objects) | pass-40 commit (Fable, surgical: `lib/jevbench-v14.mjs` `sealedFamilyShares`, three readers) + `test/fable-pass40.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260927-pass40/` (`canonical/` the NaN spokes and errors in all four contexts; `live-before/` 64/136; `local-after/` 136/136 on a dev server; `verify-fable-pass40-design.mjs`) | implemented by Fable; needs a non-Fable engine to run `ONLY=F-213` on the deployed revision |
 | F-215 a ranked row's empty pooled family spoke is "no published hard-tier family breakdown", never "a partial run" | same commit (`components/JevCompareV14.tsx`) + test | same (group F-215: red ×8 before, green after) | implemented by Fable; needs a non-Fable engine (`ONLY=F-215`) |
 | F-214 the pair page prints the release note only when it names Jev and the page's rival | same commit (`components/JevComparisonPage.tsx`) + test | same (group F-214: `jev-vs-imajev` printed the Imajev/Plumb note before) | implemented by Fable; needs a non-Fable engine (`ONLY=F-214`) |

@@ -17226,3 +17226,44 @@ Posted as board entry **#4047** on thread #8 so no other writer drops them.
 Nothing in this iteration touched the dataset, the registry or any published number.
 
 **`ALL-ACCEPTED` is not appended.**
+
+## Fable pass 41 — 2026-09-28 ~11:50 UTC (claude-fable, design authority)
+
+Scope (Florian: Fable sparingly): what changed since pass 40 — CR-196's Imajev-4B cost-basis wording (PR #62), CR-197's Image JevBench retained-row
+note (PR #61), CR-201's hidden v1.5 preview at r5 (PR #65) and D245's geometry rounding; the quick views on the 23:59 UTC data (the 05:17 daily failed,
+D249). Live revision `4aec7994` (iteration 262's deferred push landed 11:20 UTC; the first desktop context ran across the switchover). Evidence:
+`/opt/benchmarkheaven/state/ux-evidence/fable-20260928-pass41/` (`canonical/` 186 shots + `metrics-<ctx>.json` from the pass-40 matrix re-run
+unchanged, `metrics-p41-<ctx>.json` and `metrics-p41b.json` from the pass-41 probes; `regress-pass40/` **136/136** live; `live-before/` the pass-41
+verifier at `4aec7994` **14/24**; `local-after/` the shipped fix on a dev server **24/24**; `gates/` `build-dataset.log`, `npm-test.log`, `tsc.log`).
+Verdict, decisions and directives: `DESIGN-DIRECTIVES.md` "pass 41". Verifier for non-Fable engines: `bin/verify-fable-pass41-design.mjs <base> <outDir>`
+(group `F-218`).
+
+**What the pass found.** The quick views hold and the three changed sentences say the true thing where they are printed (the pair page's Conditions
+block and the hub cost cell's title for CR-196; a cell of the closed candidates disclosure for CR-197). The hidden v1.5 preview is where the bar is
+missed: its method notes print six full SHA-256 values inside sentences (the public hub prints a 12-character prefix with the full value in the title),
+CR-201's new bullet wraps its hash across lines at both widths, and that hash was a **literal in the component** while the artifact carries the field —
+the next revision would change the data and not the page. Fixed surgically (F-218). Two directed: the What-If radar draws a data point across its "Cost"
+label and its 9.5 px ring label across the vertical axis (F-219); the 17-column axes table is 1,480 px in a 1,366 px panel at 1440 (F-220).
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-218 (new) | **implemented** (Fable, surgical: `components/JevBenchV15Preview.tsx` `Sha` — four prose hashes as prefix + title, the pricing hash from `a.pricing_disclosure_correction_sha256`, the provenance line unchanged; `test/fable-pass41.test.mjs`) | `canonical/*-v15-pricing-vp.png`; `live-before/` **14/24** (four full hashes outside the provenance line, no prefixes); `local-after/` **24/24** | `ONLY=F-218`. Needs a non-Fable engine on the deployed revision. |
+| F-219 (new) | **open** `[mechanical]` — for the job that writes `public/wip-oiifi41ouv1f/jevbench-v15-whatif.html` | `canonical/metrics-p41b.json` (`labelPointHits` 2 × "Cost", `labelsAcrossVerticalAxis` Intelligence/Speed, "50 (gate)" 9.5 px); `canonical/{desktop,mobile}_light-whatif-radar-vp.png` | Spoke labels outside the 100 ring, ring label at the half-step with a halo, 10 px floor. Hidden page; before v1.5 is released. |
+| F-220 (new) | **open** `[judgment]` — for the owner of the preview before v1.5 is released | `canonical/metrics-p41-desktop_light.json` `v15.overflow` (1,480 px in 1,366 px) | Two views by what is compared (Axes / Types & cost), the hub's View-by pattern. |
+| F-212–F-216 (pass 40) | hold live at `4aec7994` | `regress-pass40/verification.json` 136/136 | Verified by iteration 257 (non-Fable); unchanged. |
+| CR-196 / CR-197 / CR-201 (presentation) | seen at the bar (Fable) apart from the rows above | `canonical/desktop_light-pair-jev-vs-imajev-cond-vp.png`, `metrics-p41b.json` (`bonsai` is a `td` in the closed disclosure), `canonical/*-v15*.png` | The release decisions are Florian's; only their presentation was judged. |
+| Quick views | at the bar | `canonical/*-simple.png`, `*-advanced.png`, `*-wizard.png`, `*-bmx.png`, `*-model.png`, `*-bench.png`; `*-geom` (minFont ≥ 10, plural1 [], overflow only inside the known scrollers, 0 errors in three contexts, 5xx only during the switchover) | Unchanged since pass 40 apart from the data. |
+| R3.1 | unchanged | `canonical/desktop_light-simple.png` | Florian's own hero copy since 2026-09-15; no re-decision. |
+
+Gates on the edited tree: `node scripts/build-dataset.mjs` exit 0, 870 / 673 / 94 / 3,134, only `generated_at`/`collected_at` moved and the file was
+restored (`gates/build-dataset.log`); `CI=true npm test` **1,584 tests, 1,583 pass, 0 fail, 1 skip**, exit 0 (`gates/npm-test.log`, unpiped);
+`npx tsc --noEmit -p .` exit 0 (`gates/tsc.log`). The dev server on port 3141 was stopped at the end of the pass.
+**Push:** the self-heal repair agent (pid 300482, `claude -p`, in this checkout) started `gated-run.sh` at 11:23 UTC and holds `run.lock`, so the
+pre-push hook refuses a push. As in iteration 262, the commit is left on `main` ahead of `origin/main` with a detached
+`/opt/benchmarkheaven/state/fable41-deferred-push.sh` (polls the lock up to 4 h, waits 90 s for the switchover, rebases, re-runs the suite, pushes only
+green; log `fable41-deferred-push.log`). `git log origin/main..HEAD` is authoritative. The other writer's tree had no changes of its own when this pass
+committed; only this pass's paths were staged.
+**Needs a non-Fable engine to set `verified` on F-218 (`verify-fable-pass41-design.mjs`, clear the out dir first) once the deploy carries it; F-219 and
+F-220 wait for the preview's owner.**
+
+**`ALL-ACCEPTED` is not appended.**
