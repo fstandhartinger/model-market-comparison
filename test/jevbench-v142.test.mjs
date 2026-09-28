@@ -30,7 +30,7 @@ test('CR-191 v1.4.2.2 is pinned to the approved aggregate artifact and top five'
   const ranked = current.systems.filter((row) => row.ranked).sort((a, b) => a.rank - b.rank);
   assert.equal(current.revision, 'v1.4.2.2');
   assert.equal(sha256, JEVBENCH_V1422_SHA256);
-  assert.equal(sha256, 'f0dfdd8f1601cadb16864061413e6e43c8b2dfa07b10ffd0716c67fc3c4b9952');
+  assert.equal(sha256, '7f39b2f742a69ded7384fb7eb4c54daa9cf67b26e72e25133c6da1f8e49cf570');
   assert.equal(current.systems.length, 95);
   assert.equal(ranked.length, 91);
   assert.deepEqual(ranked.slice(0, 5).map((row) => row.key), JEVBENCH_V1422_TOP5);

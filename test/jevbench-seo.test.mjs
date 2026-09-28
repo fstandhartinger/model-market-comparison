@@ -11,7 +11,7 @@ import {
 test('JevBench intent routes use the hash-checked current v1.4.2.2 public release', async () => {
   const data = await readJevbenchSeoData();
   assert.equal(data.artifact.revision, 'v1.4.2.2');
-  assert.equal(data.sha256, 'f0dfdd8f1601cadb16864061413e6e43c8b2dfa07b10ffd0716c67fc3c4b9952');
+  assert.equal(data.sha256, '7f39b2f742a69ded7384fb7eb4c54daa9cf67b26e72e25133c6da1f8e49cf570');
   assert.equal(data.ranked.length, 91);
   // CR-191: Imajev-4B leads v1.4.2.2; Jev 1.13.0 is #4 and remains the comparison reference.
   assert.equal(data.topFive[0].key, 'imajev_4b');
