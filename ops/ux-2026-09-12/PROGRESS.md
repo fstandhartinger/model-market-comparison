@@ -16876,8 +16876,9 @@ in that comment is doing its job; suppressing the extra row is not the repair.
 So the repair is the other direction: **attach the route's offers and pricing to the existing family row**
 instead of minting a second one, and for the two Google families teach the alias comparison that a retained
 `…-preview` slug and the live slug are the same SKU. Both are changes to that block with a measurable
-acceptance — `measure-split-catalog-families.mjs` must return an empty list, the model count must fall by 3,
-and the **offer total must not fall at all**. That last one is the test the naive patch fails, and it is the
+acceptance — `measure-split-catalog-families.mjs` must return an empty list, the model count must fall by one
+per merged family, and the **offer total must not fall at all**. (Written when this was three families; the
+next section measures five, so the count is five.) That last one is the test the naive patch fails, and it is the
 one to write first.
 
 | ID | Status | Evidence | Notes |
@@ -16921,5 +16922,28 @@ row rather than aliased to `openai/gpt-5.2-codex`.
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
 | D248 | open — **5 families, three distinct causes** | `iter261-d248/split-catalog-families.json` (re-measured); `naive-merge-experiment.json`; `d248-live-model-pages.json`; `test/d248-split-catalog-families.test.mjs` (4/4) | (a) HF-only linkage blocks `unlinked` — `command-a+`, `nemotron-3-super-120b-a12b`; (b) stale `-preview` alias — the two Google families; (c) the AA row names a **different product** — `gpt-5.2-codex`. |
+
+**`ALL-ACCEPTED` is not appended.**
+
+### One more check before the next iteration acts on causes (b) and (c): "retained" is not the discriminator
+
+The tempting single remedy for the two slug causes is "a **retained** `aa_metadata.openrouter_api_id` should
+not outrank a live OpenRouter route". Measured before proposing it: **336 of 870 catalog rows** carry a
+retained `openrouter_api_id`, every one of them with the same reason — *"Field absent from current AA
+leaderboard; retained from last published metadata"* — and the same `collected_at`, **2026-09-09**. AA dropped
+that field from its leaderboard that day, so retention is the norm, not a signal. A rule keyed on it would
+touch 336 rows to fix 3.
+
+The discriminator is narrower and testable: the retained slug **no longer resolves to a live route while a
+route for that family does exist**. That is true for exactly the three mismatched rows and no others.
+
+A related worry was checked and is clear: `gpt-5.2-codex::xhigh`'s retained `openai/gpt-5.2` has **not** pulled
+a GPT-5.2 price onto GPT-5.2 Codex. Its single offer is Azure AI Foundry at $1.75/$14.00, matched by the Azure
+catalog and not by the OpenRouter slug, and the `::openrouter` row carries the same price from OpenRouter. The
+stale slug is load-bearing only for the identity question, not for a published number.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D248 | open — the retention-based remedy is **rejected before implementation**: 336/870 rows are retained, all from 2026-09-09 | `data/dataset.json` `aa_metadata.retained_fields`; `iter261-d248/split-catalog-families.json` | Key the rule on "retained slug resolves to no live route while the family has one" — true for 3 rows. No wrong price is published from the stale `openai/gpt-5.2`. |
 
 **`ALL-ACCEPTED` is not appended.**
