@@ -17468,3 +17468,38 @@ Gates: `CI=true npm test` **1,593 tests, 1,592 pass, 0 fail, 1 skip**, exit 0
 (`iter263-d249-5/gates/npm-test-2.log`); `npx tsc --noEmit -p .` exit 0 (`gates/tsc-2.log`).
 
 **`ALL-ACCEPTED` is not appended.**
+
+### Two of the 28 retained arms replay green offline with the exclusion in place
+
+`bin/replay-protocol-review.mjs` runs the real producer/critic gauntlet against a capture the daily
+run already took, and writes nothing to `data/`. Replayed against **this morning's own capture**
+(`data/raw/benchmarks/daily-evidence/2026-09-28T11-53-42-848Z/manifest.json`), with the daily's own
+worker environment (`BH_WORKER_MAX_PRICE_PER_1M=4`, `BH_WORKER_REASONING_EFFORT=low`,
+`BH_WORKER_DISABLE_OPTIONAL_REASONING=0`, free router off):
+
+| arm | in the 11:23 run | replayed now |
+|---|---|---|
+| `simple-bench::snapshot-2026-09-10` | `worker: No supported viable worker model found` on rounds 1, 2 and 3 | **accepted on round 1** |
+| `vending-bench::2` | the same, three rounds | **accepted on round 1** |
+
+The critic receipts are the point:
+
+| arm | provider | ignored_providers | finish | completion | of which reasoning |
+|---|---|---|---|---|---|
+| `simple-bench` | Sail Research | `["Wafer"]` | stop | **617** | 274 |
+| `vending-bench` | InferenceNet | `["Wafer"]` | stop | **455** | 219 |
+
+455–617 completion tokens against the 4,257–32,768 the same critic spent on Wafer this morning, and
+two different endpoints across the two arms, so neither is one lucky draw. Receipts under
+`iter263-d249-5/replay{,2}/gauntlet/…/review-r1.json.meta.json`.
+
+**What this does not prove.** Two arms are not 28, and the 11:23 run also lost its *producer* to a
+600-second timeout on its last call (12:06:23–12:16:23, no provider recorded — the gap D249.6 closes).
+The replay establishes that the critic path works again on real packets; whether the whole day
+publishes without a retained arm is tomorrow's 05:17 run to show.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D249.5 | **implemented, replayed green on two of the failed arms** | `iter263-d249-5/replay{,2}/`; `failing-run-receipts.json` | Behavioural acceptance is the next unattended daily: check `workers/` for a Wafer receipt and `unavailable-models.jsonl` for a `length` strike. |
+
+**`ALL-ACCEPTED` is not appended.**
