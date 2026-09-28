@@ -16947,3 +16947,71 @@ stale slug is load-bearing only for the identity question, not for a published n
 | D248 | open — the retention-based remedy is **rejected before implementation**: 336/870 rows are retained, all from 2026-09-09 | `data/dataset.json` `aa_metadata.retained_fields`; `iter261-d248/split-catalog-families.json` | Key the rule on "retained slug resolves to no live route while the family has one" — true for 3 rows. No wrong price is published from the stale `openai/gpt-5.2`. |
 
 **`ALL-ACCEPTED` is not appended.**
+
+## Iteration 262 (claude-opus, 2026-09-28 08:0x UTC) — D249: the daily did not fail on its data, it ran out of clock because one OpenRouter provider ignored the effort directive
+
+The pipeline has not published since 2026-09-27 06:39 UTC. `state/pipeline-streak.json` names the cause as
+
+> `BENCHMARK RETAINED mls-bench-lite::30-tasks: … protocol not approved: round 1: 1 disputed rows quarantined …`
+
+and that sentence is a red herring. `BENCHMARK RETAINED` is the *normal* outcome of `fail()` in
+`ops/daily/refresh-benchmarks.mjs:352`: it pushes a check and returns — it never throws. The run that
+**published** on 2026-09-27 carried **27** of those lines; today's carried **4**. The recorded `error` is
+simply the step's captured stderr, so the streak file has been reporting a retained arm for a failure that
+has nothing to do with it.
+
+**What actually happened.** `refresh-benchmarks` ran 05:43:32.417Z → 08:03:32.592Z: **8,400,175 ms**
+against the **8,400,000 ms** command timeout in `ops/daily/daily.mjs:334`. It was killed on the clock,
+175 ms over, with every review it had completed thrown away.
+
+**Why it was slow — measured, not inferred.** From `reports/profile.json` and the per-call receipts in
+`runs/2026-09-28T05-17-01-942Z-2060109/workers/`:
+
+| run | step wall | worker calls | worker hours | eff. concurrency (limit 4) |
+|---|---|---|---|---|
+| 2026-09-27 05:17 (published) | 58 min | 103 | 2.36 | 2.42 |
+| 2026-09-28 00:41 | 67 min | 201 | 3.16 | 2.84 |
+| **2026-09-28 05:17 (killed)** | **140 min** | 172 | **7.50** | 3.21 |
+
+The call count is unremarkable; the **worker hours more than doubled**. Grouping the critic model
+`z-ai/glm-5.3-flash` by the `provider` field its own receipts record:
+
+| run | provider | n | median latency | median completion tokens |
+|---|---|---|---|---|
+| 2026-09-27 05:17 | Together | 53 | 8.3 s | 561 |
+| 2026-09-28 00:41 | Together | 92 | 10.5 s | 935 |
+| **2026-09-28 05:17** | **Wafer** | **86** | **191.9 s** | **11,900** |
+
+Every critic call goes out with `reasoning: { effort: 'low', exclude: true }`
+(`ops/rebuild-2026-09/bin/worker-runner.mjs:272`). Together honours it and answers in ~900 tokens; Wafer
+returned **12× the output** and took **20× the wall clock** for the same artifacts. Four further calls
+(provider unrecorded) ran to the `--max-tokens 32768` ceiling and took 410 s each. 86 calls × ~192 s is
+about 4.6 of the 7.5 worker-hours — the whole overrun.
+
+**`require_parameters` would not have prevented it.** All **33** endpoints OpenRouter lists for
+`z-ai/glm-5.3-flash` declare `reasoning` and `include_reasoning` support, Wafer included, so the flag the
+runner already sets for structured-output calls has nothing to filter on. Nor was this a price decision we
+made: Wafer is the **most expensive prompt price of the 33** ($1.00/M vs $0.15/M for Together), yet
+`provider: { sort: 'price' }` sent 86 of 94 calls there for those two hours.
+
+**It is already gone.** Re-probed at 08:14 UTC with the identical request shape (same model, same
+`reasoning` block, `sort: 'price'`, `max_tokens: 32768`): three calls routed to Together and DigitalOcean
+and returned in 0.36 s, 1.23 s and 0.36 s with 0–6 reasoning tokens. So the slow route was a transient
+OpenRouter routing state, not a change of ours and not something a pinned model protects against.
+
+**The defect worth fixing is not the provider — it is what the timeout does with the work.** The step had
+completed and approved **28 protocol reviews and 57 score batches** when it was killed, and *all* of it was
+discarded: nothing is written until after the last batch, so a 140-minute step that gets to minute 139
+publishes exactly as much as one that fails in minute 1. A provider we do not control and cannot predict
+therefore decides whether the site gets fresh data that day. The repair is to make the step **deadline-aware**
+rather than deadline-killed: stop admitting new review units at a soft deadline inside the command timeout,
+record the unreviewed ones with their own explicit status, and let the run finish and publish everything it
+did approve. That is the same contract the file already applies to an arm whose source is unreachable —
+retained, named, and not a reason to publish nothing.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D249 | open — root-caused and measured; repair specified, not yet implemented | `runs/2026-09-28T05-17-01-942Z-2060109/reports/{profile.json,run-report.json}`; `workers/worker-*.json` (provider + latency per call); OpenRouter `/models/z-ai/glm-5.3-flash/endpoints` (33 endpoints, all declare `reasoning`) | Proximate cause: 8,400,175 ms against the 8,400,000 ms timeout at `daily.mjs:334`. Cause of the slowness: `provider: { sort: 'price' }` routed 86/94 critic calls to Wafer, which ignored `effort: low` (11,900 vs 935 median completion tokens). Repair: soft deadline + `retained_budget_exhausted`, so a killed step still publishes its approved subset. |
+| D249.1 | open — `pipeline-streak.json` reports the wrong cause | `state/pipeline-streak.json` `error`; `refresh-benchmarks.mjs:352` | The recorded `error` is the step's stderr tail, so a non-fatal `BENCHMARK RETAINED` line is presented as the failure. A timeout must be recorded as a timeout. |
+
+**`ALL-ACCEPTED` is not appended.**
