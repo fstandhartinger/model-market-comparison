@@ -17138,3 +17138,51 @@ real and is filed below rather than patched blind.
 | D249.4 | open — measured, repair rejected before implementation | this section; OpenRouter `/models/{id}/endpoints` for the three whitelisted paid workers | The worker policy qualifies a model at its catalog price and then permits $4/M. Binding `max_price` to the qualified price admits **1 of 30** and **1 of 27** endpoints for the two DeepSeek workers, so the obvious rule is worse than the defect. Needs a rule keyed on something other than the headline price. |
 
 **`ALL-ACCEPTED` is not appended.**
+
+### Correction to the D249 entry above: the slow endpoint is not transient, and it is not ignoring the effort directive — it is obeying it differently
+
+The first D249 section says *"It is already gone … the slow route was a transient OpenRouter routing
+state"*, on the strength of three probes at 08:14 UTC that landed on Together and DigitalOcean. **That
+reading is wrong and is withdrawn.** Two pieces of evidence arrived after it:
+
+* the self-heal retry started at 08:23 was, by 08:31, taking `z-ai/glm-5.3-flash` on **Wafer** for 3 of
+  3 calls, 142.3 s median, 9,705 median completion tokens — the failure reproducing live;
+* a fourth probe of my own, with the daily's real `max_price` of $4, went to Wafer. Three probes that
+  happen to miss an endpoint prove nothing about a weighted router. The earlier sentence generalised
+  from a sample that could not support it.
+
+It also guessed at a mechanism — *"Wafer ignored `effort: low`"* — and that guess is wrong too. Probed
+directly with `provider: { only: [...] }`, one question, `max_tokens: 32768`:
+
+| endpoint | request | completion tokens | of which reasoning | wall |
+|---|---|---|---|---|
+| Wafer | `reasoning: { effort: 'low', exclude: true }` | 879 | **792** | 17.0 s |
+| Together | *identical* | 82 | 3 | 0.9 s |
+| Wafer | **no `reasoning` block at all** | 91 | 1 | 2.0 s |
+
+Wafer receives the field and *acts* on it: `effort: "low"` switches reasoning **on** there, where the
+same model id on Together reasons three tokens. Removing the block makes Wafer behave like Together.
+So this is not a provider dropping a parameter — it is two endpoints of one model implementing
+`"low"` incompatibly, and on a 40 KB critic packet that difference is the 11,901-token, 191.9-second
+median the failing run recorded.
+
+Which forecloses the request-level fixes. `require_parameters` cannot help (all 33 endpoints declare
+`reasoning`). Dropping the block is not neutral either — the runner already has
+`BH_WORKER_DISABLE_OPTIONAL_REASONING=1` for exactly that, and turning a critic's reasoning off to make
+it fast is a review-quality decision, not a performance tweak, and not one to take under time pressure
+on the morning of an outage. What is left is endpoint selection, and the evidence for excluding this
+one endpoint for this one model is now direct: 86 calls in the failed run, 3 in the live retry, and
+three controlled probes.
+
+**Deliberately not shipped today.** D249's budget already converts this from *the day does not publish*
+into *the day publishes with a named gap*, so the endpoint question is an optimisation, not a rescue,
+and it can be done by an iteration that can verify it live. Shipping a routing change I cannot deploy
+or watch — while a run I must not disturb is holding the push lock — is how a rescue becomes a second
+outage.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D249.5 | open — measured, ready to implement with a live check | this section; retry `2026-09-28T08-23-33-730Z-3294234/workers/`; `iter262-d249/profile-failed-run.md` | `effort: "low"` means ~800 reasoning tokens on Wafer and ~3 on Together for the same model id. Remedy is at endpoint selection (`provider.ignore`, or a per-endpoint qualification), not in the request. Must be verified on a live run, not probes. |
+| D249 (transient claim) | **withdrawn** | retry worker receipts 08:23–08:31; 4th probe at $4 ceiling | The route is in rotation now. The rest of the D249 root cause — the 8,400,175 ms against the 8,400,000 ms timeout, the worker-hour and token measurements — stands unchanged; only the "already gone" sentence is wrong. |
+
+**`ALL-ACCEPTED` is not appended.**
