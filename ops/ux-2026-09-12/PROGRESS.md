@@ -16501,3 +16501,122 @@ is the correct behaviour rather than a gap.
    need owner decisions; CR-148.1 still owes a review-gate ruling.
 
 **`ALL-ACCEPTED` is not appended.**
+
+## Iteration 260 — 2026-09-28 04:0x–05:0x UTC (claude-opus, work)
+
+Claude's weekly window read **63 %** at 04:01 UTC (session 15 %), so this iteration is written as a durable
+handoff per §1's 60 % rule: everything below names the file, the command and the next step, and the one piece
+of real judgement work was delegated to codex-luna, whose weekly window read **26 %**.
+
+### D247's offline half is signed off by a non-implementer
+
+Iteration 259 could not get this sign-off: a one-line Kimi packet ran over an hour without answering. It went
+to codex-luna instead, which is the right engine for it — it is a read of files on disk and needs no network.
+All six claims **CONFIRMED**, verdict `D247 offline half SIGNED OFF`
+(`iter260-independent-verify/d247-codex-signoff.md`, 8.3 KB, with the log beside it). Worth recording what it
+confirmed rather than only that it passed:
+
+- the three test files pass, counts read off its own run;
+- the two accepted replays and the `--lie` rejection say what the ledger claims, quoted from the receipt files;
+- the summary carries **counts only** — it named the test that asserts no board score can appear, rather than
+  accepting the shape assertion as proof;
+- the AA packet text is byte-identical, `PROTOCOL_REVIEW_CRITERIA` unchanged, and a caller supplying neither
+  phrase gets an error;
+- all three withholding rules exist and are covered, and it was asked for and gave a design judgement on the
+  zero-activity rule rather than only a pass;
+- `check-ugi-arms.mjs latest` is red **for the run's age**, which it confirmed explicitly instead of taking
+  the framing on trust.
+
+D247's **published** half is still open and cannot be closed before the 05:17 UTC run. Its acceptance is one
+command and nothing in it is pinned: `node ops/ux-2026-09-12/bin/check-ugi-arms.mjs latest`.
+
+### D243 is not one owner decision — it is measured now, and it splits 1 / 12 / 4
+
+D243 has been carried as "an owner decision, not an implementer's call" since iteration 256, four iterations,
+with nobody able to answer it. It was never *measured*, so this iteration measured it:
+`ops/ux-2026-09-12/bin/measure-d243-join.mjs <benchmark_id> [outDir]`. Nothing in it is pinned — the benchmark
+id, the source names and the catalog configurations all come from the published data, so a catalog change moves
+the answer instead of agreeing with this one. Receipt: `iter260-d243/d243-join-measurement.json`.
+
+For `openai-mentalhealthbench::snapshot-2026-09-23`, 17 observations, 0 joined today:
+
+| verdict | rows | what it means |
+|---|---|---|
+| `joinable` | **1** | Gemini 2.5 Flash: exactly one catalog configuration and its variant (`non-reasoning`) is not an effort setting, so the source's "default reasoning effort … (when applicable)" needs no vendor statement — there is no effort to set. `gemini-2.5-flash::non-reasoning`, `deprecated: true`. |
+| `ambiguous` | **12** | 2–6 configurations and **none named `default`** (e.g. GPT-6 Sol: max, xhigh, high, medium, low, non-reasoning). A join needs a captured vendor statement of that API's default effort. |
+| `single-config-but-effortful` | **1** | Gemini 3.1 Pro's only configuration is `high`. "Only one configuration" is *not* sufficient — the single variant is itself an effort the source never states. This case is why the measurement does not just count configurations. |
+| `no-catalog-family` | **4** | The dated snapshot names — "GPT-4o (March 2025)", "GPT-5.6 Sol (Aug 2026)", "GPT-5.6 Luna (Aug 2026)", "GPT-5 Thinking" — match no catalog display name. These need an identity decision about whether a dated snapshot is the same configuration as today's family, which is a different question from the effort one. |
+
+So the ledger's framing was too coarse in both directions: **one** row is joinable today with no invented claim,
+and the other sixteen fail for **two distinct reasons** that need different remedies. The source itself is not the
+obstacle — the paper states the setting in §2.3 ("We use each model's API at default reasoning effort,
+temperature, and verbosity setting (when applicable)") and the 17 observations' `protocol` already quotes it
+verbatim and records the consequence. What is missing is our side: the catalog has no `default` configuration to
+join *to*.
+
+**The mechanism for a join is already in the code and does not touch the 17 approvals.**
+`lib/benchmark-score-evidence.mjs` strips `identity_review` and `join_note` before `observationDigest` and
+checks a joined row's value approval against `unjoined(o)` — so setting `subject.model_id` does **not**
+invalidate the critic approvals CR-190.1 earned. It requires an `identity_review`: a packet whose `joins` carry
+the key `benchmark_id|source_id|model_id`, a verdict binding the packet sha, and a critic from outside the
+producer's vendor family. That is `verifyIdentityReview`.
+
+**Not shipped this iteration, deliberately.** A one-row data join needs the dataset rebuilt, full gates, a
+deploy and a live check on three hosts; the 05:17 UTC run holds `main` still from 05:17 to about 07:45, and
+starting that at 04:50 would have left it half-done across the freeze. The next iteration can ship it in one
+sitting with the recipe above.
+
+### Two ledger corrections
+
+- **The 27 Sep 19:40 review gate's CR-190.1 open row is stale.** It reads "the 17 self-reported observations
+  still need per-row score approvals, independent critic receipts, and the required gauntlet round". All three
+  exist and predate this iteration: `data/raw/benchmarks/score-approvals.json` carries 17
+  `…-openai-mentalhealthbench` rows, each bound to `observationDigest`, critic `moonshotai/kimi-k3`, producer
+  `anthropic/claude-opus-5`; the gauntlet round is
+  `data/raw/benchmarks/daily-evidence/2026-09-27-cr190/gauntlet/` with `review-r1.json` **pass, 0 errors, 0
+  findings, 17 covered, empty `missing_evidence`** and its `review-r1.json.meta.json` receipt. The round started
+  at 22:38 UTC, *after* that review was written. `/api/benchmarks` serves
+  `openai-mentalhealthbench::snapshot-2026-09-23` on all three hosts (293 entries each). CR-190.1's only
+  remaining clause is the join — which is D243.
+- **The 02:10 UTC review gate left no review.** `history.log` records `20260928T021004Z review codex-luna rc=0`,
+  but `/opt/benchmarkheaven/state/ux-evidence/review-20260928T021004Z/` holds only `api-readback.json` and
+  `cr197-artifact-diff.json` and no `REVIEW-*.md` was committed, so there is no gate record for that slot. Its
+  one substantive receipt is the CR-197 artifact diff, and it agrees with what iteration 259 recorded by hand:
+  one changed leaf, `candidate_coverage.candidates[23].reason`, ranking and candidate count identical,
+  `c86d85fb…` → `08ca91ca…`. Nothing is lost, but that slot's ruling — including the one CR-148.1 has been owed
+  since iteration 255 — did not happen.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D247 (offline half) | implemented, proven offline → **verified** (non-implementer) | `iter260-independent-verify/d247-codex-signoff.md` (6/6 CONFIRMED, `VERDICT: D247 offline half SIGNED OFF`); `d247-codex.log` | codex-luna, not the implementer. It re-read every number itself; the packet forbade restating a ledger figure. |
+| D247 (published half) | **open** | `iter259-d247/ugi-arms-before-the-fix-lands.json` still the only reading | Waits on the 05:17 UTC run. One command: `node ops/ux-2026-09-12/bin/check-ugi-arms.mjs latest`. |
+| D243 | open, "owner decision" for four iterations → **measured; 1 joinable / 12 need a vendor default-effort statement / 4 need a dated-name identity decision** | `ops/ux-2026-09-12/bin/measure-d243-join.mjs`; `iter260-d243/d243-join-measurement.json` | Not a single yes/no. The join mechanism (`identity_review`, `unjoined()`) is already in `lib/benchmark-score-evidence.mjs` and does not disturb the 17 value approvals. |
+| CR-190.1 | open per the 27 Sep 19:40 gate → **that gate's reason is stale; the only open clause is the join (D243)** | `score-approvals.json` (17 rows); `daily-evidence/2026-09-27-cr190/gauntlet/review-r1.json` + `.meta.json`; `/api/benchmarks` on three hosts | Approvals, critic receipt and gauntlet round all exist and postdate that review by ~3 h. |
+| 02:10 UTC review slot | ran rc=0 → **no review recorded** | `history.log`; `review-20260928T021004Z/` (two files, no `REVIEW-*.md`) | CR-148.1's owed ruling did not happen in that slot either. |
+
+**For the next iteration, in order:**
+
+1. **`node ops/ux-2026-09-12/bin/check-ugi-arms.mjs latest`** — D247's published half, in one command, once the
+   05:17 run has finished. Red against the 00:41 run is expected and was confirmed as an age effect by
+   codex-luna; a green reading after 05:17 is the acceptance. If it is red again, read
+   `gauntlet/protocol-ugi-*/packet-r1.md` in that run and check the activity source reached the packet before
+   touching anything. One red round is not a wrong fix.
+2. **Ship D243's one joinable row** and prove the mechanism end to end: `subject.model_id` =
+   `gemini-2.5-flash::non-reasoning` on `self-reported:gemini-2.5-flash-openai-mentalhealthbench`, written at the
+   **input** (`ops/ux-2026-09-12/bin/build-mentalhealthbench-rows.mjs`) and never in the generated
+   `scores.json`, with an `identity_review` packet + independent critic verdict per `verifyIdentityReview`. Then
+   rebuild the dataset, full gates, deploy, and check the value on the model page on all three hosts. Do it
+   outside 05:17–07:45. Re-run `measure-d243-join.mjs` afterwards: `already_joined` must read 1.
+3. **The twelve `ambiguous` rows need a captured vendor statement of each API's default reasoning effort** — a
+   bounded data task, not a decision: five vendors (Anthropic, Google, OpenAI, xAI, Muse) and their public API
+   docs, captured under E3's rules with the recipe written into `data/SCRAPING.md`. If a vendor does not
+   document a default, that row stays unjoined and the row says so. Never guess an effort.
+4. **CR-148.1 still owes a review-gate ruling** — now five iterations, and the 02:10 slot that should have made
+   it produced no review. The measurement it needs is already done (iteration 255, non-claude): PR #10 is
+   closed, unmerged, unreviewed, unlabelled, and its diff sha is `01290e7e…`, not the required `55599d17…`.
+   The only open question is whether "formally closed as superseded by CR-190" satisfies an acceptance that asks
+   for the exact preserved patch in a reviewed PR. A work iteration must not rule on it; a gate must.
+5. D236 and D239 still ride a JevBench release; D240 is deliberately not back-filled; CR-178.5 needs an owner
+   decision; R9.1 stays under the written-permission hold.
+
+**`ALL-ACCEPTED` is not appended.**
