@@ -9,6 +9,7 @@ import { freeRouterCandidates, selectModel, selectModelForWorker, validateComple
 import { writeJSONAtomic } from '../../../lib/snapshot.mjs';
 import { writeFile, rename, rm } from 'node:fs/promises';
 import { imageEvidence } from './worker-images.mjs';
+import { loadExclusions, ignoredProvidersFor } from './worker-endpoint-exclusions.mjs';
 import { exportSession } from './worker-export.mjs';
 const exec = promisify(execFile);
 const REPO = fileURLToPath(new URL('../../../', import.meta.url));
@@ -34,6 +35,8 @@ BH_WORKER_MAX_PRICE_PER_1M optionally caps live input/output prices for completi
 BH_WORKER_REASONING_EFFORT optionally selects a catalog-supported effort for completion calls.
 BH_WORKER_DISABLE_OPTIONAL_REASONING=1 disables thinking only where the live catalog marks it optional.
 BH_WORKER_EXCLUDE_MODELS is a comma-separated list of previously failed model IDs for a run.
+ops/daily/worker-endpoint-exclusions.json names OpenRouter endpoints a given model must not be served from, with the
+measurement behind each; the receipt records them as ignored_providers.
 BH_WORKER_HARD_EXCLUDE_MODELS is the subset of those whose failures were the model's own answers, not the
 transport's: the critic's last-resort retry of its excluded pool may re-offer the rest, never these.
 BH_WORKER_FREE_ROUTER=1 (set by the daily run) offers qualified, healthy free workers behind the local router first
@@ -235,6 +238,12 @@ try {
   attemptMetadata = metadata;
   if (!options.agent && chosen.transport !== 'router' && process.env.BH_WORKER_DISABLE_OPTIONAL_REASONING === '1' && catalog.find((m) => m.id === chosen.id)?.reasoning?.mandatory === false) reasoning = { enabled: false, exclude: true };
   metadata.reasoning = reasoning ?? null;
+  // D249.5: pinning a model does not pin a provider. One endpoint of this model may answer a
+  // request differently from the rest; where that was measured, the request says so out loud and
+  // the receipt records it, so a reader can tell an exclusion from a route that was simply busy.
+  const ignoredProviders = options.agent || chosen.transport === 'router'
+    ? [] : ignoredProvidersFor(await loadExclusions(), chosen.id);
+  metadata.ignored_providers = ignoredProviders;
   metadata.response_format_mode = responseFormat?.type ?? null;
   metadata.response_schema_sha256 = responseFormat ? createHash('sha256').update(JSON.stringify(responseFormat)).digest('hex') : null;
   console.error(`worker.sh: model=${metadata.requested_model} mode=${metadata.mode} AA=${chosen.aa_intelligence_index ?? 'unscored smoke only'}`);
@@ -269,7 +278,7 @@ try {
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST', signal: AbortSignal.timeout(options.timeout * 1000),
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', 'HTTP-Referer': 'https://benchmarkheaven.com', 'X-Title': 'Benchmark Heaven QA' },
-      body: JSON.stringify({ model: chosen.id, max_tokens: options.maxTokens, ...(reasoning ? { reasoning } : {}), ...(responseFormat ? { response_format: responseFormat } : {}), provider: { sort: 'price', ...(responseFormat ? { require_parameters: true } : {}), ...(Number.isFinite(options.maxPricePer1M) ? { max_price: { prompt: options.maxPricePer1M, completion: options.maxPricePer1M } } : {}) }, messages: [{ role: 'system', content: system }, { role: 'user', content: screenshots.parts.length ? [{ type: 'text', text: task }, ...screenshots.parts] : task }] }),
+      body: JSON.stringify({ model: chosen.id, max_tokens: options.maxTokens, ...(reasoning ? { reasoning } : {}), ...(responseFormat ? { response_format: responseFormat } : {}), provider: { sort: 'price', ...(ignoredProviders.length ? { ignore: ignoredProviders } : {}), ...(responseFormat ? { require_parameters: true } : {}), ...(Number.isFinite(options.maxPricePer1M) ? { max_price: { prompt: options.maxPricePer1M, completion: options.maxPricePer1M } } : {}) }, messages: [{ role: 'system', content: system }, { role: 'user', content: screenshots.parts.length ? [{ type: 'text', text: task }, ...screenshots.parts] : task }] }),
     });
     if (!response.ok) throw new Error(completionErrorMessage('OpenRouter', response.status, await response.text().catch(() => '')));
     const body = await response.json();

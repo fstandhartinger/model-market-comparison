@@ -17343,3 +17343,75 @@ Gates on the edited tree: `node scripts/build-dataset.mjs` exit 0, **868 / 673 /
 293 versioned entries (`gates/registry.log`).
 
 **`ALL-ACCEPTED` is not appended.**
+
+### D248 is live, and `command-a+` shows exactly what R4.10 says it should
+
+Deployed as `dd6330b4`; all three hosts report **868 models / 673 families / 94 providers / 3,118
+offers**. `bin/verify-d248-live.mjs <base> <outDir>` passes **31/31 per host** at 1440 px and 390 px
+(`iter263-d248/live-{benchmarkheaven,www,model-market-comparison}/verification.json`): one catalog row
+per merged family, the kept row is the benchmarked one, `/models/command-a+::openrouter` and
+`/models/nemotron-3-super-120b-a12b::openrouter` are gone, the three families that are still split are
+still split, and no page error.
+
+The first run of that check failed 2/27 on an assertion that was wrong rather than on the repair:
+`command-a+::default` shows **no dollar amount**. It is not missing a price — the page header states
+"1 offer" and prints *"No per-token pricing matches the active global filters."* The family's only
+provider is **Cohere**, and `data/raw/openrouter-data-policy.json` records it as
+`does_not_train: true, zero_retention: false`, so R4.10's default (the "Trains or keeps your data"
+opt-in unchecked) removes it. That is the required behaviour and the old `::openrouter` row would have
+rendered the same sentence. The check now asserts the header's offer count equals the API's
+`offer_count` and that a price is either shown or explicitly filtered out — silence would still fail.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D248 | **implemented, live-checked by its implementer, pending non-implementer verification** | `iter263-d248/live-*/verification.json` 31/31 × 3 hosts; `repair-acceptance.json` | Ground rule 2: claude-opus wrote the repair, so it may not set `verified`. |
+
+### D249.5: the request now names the endpoint it will not accept
+
+`provider.ignore` is the only lever the request has here — `require_parameters` cannot filter, because
+all 33 endpoints of `z-ai/glm-5.3-flash` advertise `reasoning` support — and
+`ops/daily/worker-endpoint-exclusions.json` is where the measurement that justifies each entry lives.
+Today the list has exactly one entry: Wafer for that model. The bar for a second one is written at the
+head of `worker-endpoint-exclusions.mjs`: one model and one provider tag, a dated measurement naming
+what it was compared against, and a property of the endpoint that our request cannot change.
+
+**That `ignore` binds is proved, not sampled** (`iter263-d249-5/probe-*.json`). Three requests:
+
+| request | outcome |
+|---|---|
+| `provider: { only: ['Wafer'] }` | served by **Wafer** — the endpoint is in rotation right now |
+| `provider: { only: ['Wafer'], ignore: ['Wafer'] }` | **404**, `failed_routing_step: "Filter by Ignored Providers"`, funnel 33 → 1 allowed → 0 |
+| the daily's real shape — `sort: 'price'`, `max_price` 4/4 — plus `ignore: ['Wafer']` | served by **InferenceNet**, 3 completion tokens, $0.0000013 |
+
+The middle row is the one that matters: it is a *negative* control that a lucky routing draw cannot
+produce, which is exactly what the withdrawn "the slow route is already gone" claim lacked. A real
+call through the runner then confirms the wiring end to end — receipt
+`iter263-d249-5/runner-call.txt.meta.json` records `ignored_providers: ["Wafer"]`, `provider:
+"Sail Research"`, `reasoning: { effort: "low", exclude: true }`, 3 completion tokens of which 1
+reasoning, $0.0000053.
+
+**The price ceiling stays rejected, and now with the prompt side measured too.** D249.4 asked whether
+binding `max_price` to the qualified price is the answer. Measured per endpoint today: a ceiling at the
+*cheapest* endpoint's prompt price admits **3 of 33** endpoints for this critic, **2 of 30** for
+`deepseek/deepseek-v4-flash-0731` and **1 of 28** for `deepseek/deepseek-v4.1-flash`. Splitting it —
+prompt only, ignoring the completion side — does not rescue it either. A multiple is an unmeasured
+constant. So D249.4 stays open as a cost-integrity question and is not what this change answers; the
+exclusion does lower cost as a side effect, since Wafer's $1.00/M prompt price is the highest of the 33
+and 22× the cheapest.
+
+**Also corrected:** `ops/daily/step-budget.mjs` still carried both sentences iteration 262 withdrew —
+that the endpoint "ignored `reasoning: { effort: 'low' }`" and that "the slow route was gone again by
+08:14". A withdrawn mechanism left in a code comment is the version the next reader believes. The
+comment now states what was measured and points at the exclusion list.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D249.5 | **implemented, pending its first unattended exercise** | `ops/daily/worker-endpoint-exclusions.json`; `ops/rebuild-2026-09/bin/worker-endpoint-exclusions.mjs`; `test/d249-5-worker-endpoint-exclusions.test.mjs` (4/4); `iter263-d249-5/{probe-*.json,runner-call.txt.meta.json,gates/}` | The mechanism is proved by a negative control; the *effect on a run* is tomorrow's 05:17 daily. Read its `workers/` receipts for `ignored_providers` and any Wafer call. |
+| D249 (step-budget comment) | **corrected** | `ops/daily/step-budget.mjs`; iteration 262's withdrawal above | The code no longer repeats the two withdrawn sentences. |
+| D249.4 | open — unchanged, and the prompt-only variant is now measured and also rejected | `iter263-d249-5/` probes; OpenRouter `/models/{id}/endpoints` 2026-09-28 | 3/33, 2/30, 1/28 at the cheapest endpoint's prompt price. Still needs a rule keyed on something other than price. |
+
+Gates: `CI=true npm test` **1,592 tests, 1,591 pass, 0 fail, 1 skip**, exit 0
+(`iter263-d249-5/gates/npm-test.log`, unpiped); `npx tsc --noEmit -p .` exit 0; `node
+scripts/build-dataset.mjs` exit 0, 868 / 673 / 94 / 3,118, timestamps only and the file restored.
+
+**`ALL-ACCEPTED` is not appended.**

@@ -10,12 +10,22 @@
 //
 // Why it overran is not something we control. The call count was ordinary (172, against 103 on
 // the run that published the day before); the worker hours went 2.36 → 7.50 because
-// `provider: { sort: 'price' }` routed 86 of 94 critic calls to a provider that ignored
-// `reasoning: { effort: 'low' }` and answered with 11,900 median completion tokens at 191.9 s,
-// where the previous day's provider answered 561 tokens in 8.3 s. All 33 OpenRouter endpoints for
-// that model advertise `reasoning` support, so `require_parameters` had nothing to filter on, and
-// the slow route was gone again by 08:14. Pinning a model does not pin a provider, and no amount
-// of worker policy makes a third party's latency predictable.
+// `provider: { sort: 'price' }` routed 86 of 94 critic calls to the Wafer endpoint of
+// `z-ai/glm-5.3-flash`, which answered with 11,900 median completion tokens at 191.9 s where the
+// previous day's endpoint answered 561 tokens in 8.3 s.
+//
+// Two sentences that stood here are withdrawn (iteration 262, PROGRESS.md). That endpoint does not
+// *ignore* `reasoning: { effort: 'low' }` — probed directly it acts on it, by switching reasoning
+// on: 792 reasoning tokens, against 3 for the same request on Together and 1 on Wafer itself when
+// the block is left out. And the route was not "gone again by 08:14": three probes that missed a
+// weighted router proved nothing, and the 08:23 self-heal retry was on it for 3 of 3 calls.
+// `require_parameters` cannot filter it out either, because all 33 endpoints of that model
+// advertise `reasoning` support. The remedy therefore sits at endpoint selection and is in
+// `ops/daily/worker-endpoint-exclusions.json` (D249.5), not in the shape of the request.
+//
+// None of that changes what this budget is for. Pinning a model does not pin a provider, one
+// exclusion is not a guarantee about the next endpoint, and no worker policy makes a third
+// party's latency predictable.
 //
 // So the budget is not a fix for slowness — it is the rule that slowness must cost only the
 // reviews that did not fit. Units are admitted while the soft deadline is ahead; after it, a unit

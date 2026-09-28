@@ -1,0 +1,14 @@
+{
+  "documentation": "ops/rebuild-2026-09/bin/worker-endpoint-exclusions.mjs states the bar an entry has to meet. Each entry names one model and one OpenRouter provider tag, with the measurement that justifies it.",
+  "exclusions": [
+    {
+      "model": "z-ai/glm-5.3-flash",
+      "provider": "Wafer",
+      "measured_at": "2026-09-28",
+      "recorded_by": "iteration 263 (claude-opus), from iteration 262's controlled probes",
+      "measurement": "Identical request, one question, max_tokens 32768, reasoning { effort: 'low', exclude: true }, provider pinned with provider.only: Wafer answered 879 completion tokens of which 792 reasoning in 17.0 s; Together answered 82 tokens of which 3 reasoning in 0.9 s. With no reasoning block at all Wafer answered 91 tokens in 2.0 s. The endpoint therefore acts on `low` by switching reasoning on, where the same model id elsewhere reasons three tokens; on a 40 KB critic packet that is the 11,901-token, 191.9-second median the 2026-09-28 05:17 run recorded over 86 calls.",
+      "also": "Wafer is the most expensive prompt price of the 33 endpoints of this model on 2026-09-28: $1.00/M against a $0.045/M cheapest endpoint and a $0.15/M catalog headline. Excluding it lowers the run's cost as well as its latency.",
+      "evidence": "/opt/benchmarkheaven/state/ux-evidence/iter262-d249/profile-failed-run.md; runs/2026-09-28T08-23-33-730Z-3294234/workers/"
+    }
+  ]
+}
