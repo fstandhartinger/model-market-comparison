@@ -14305,6 +14305,29 @@ Gates before each push: `node scripts/build-dataset.mjs` 870 models / 673 famili
 3,134 offers, `CI=true npm test` **1485 tests, 1484 pass, 0 fail, 1 skip**, `npx tsc --noEmit -p .`
 exit 0. Live: **55/55** (D228/D229) and **41/41** (D231) on canonical, `www` and legacy.
 
+### The delegation was not broken — `delegate.sh` was throwing the answers away
+
+`delegate.sh --kimi` was used twice for the D238/D246 check. Both times the harness ran and wrote
+**78/78**, and both times the wrapper announced "Kimi K3 failed" and fell through to
+`nex-agi/nex-n2.5-pro:free` ("No endpoints found"), whose error it then copied over `--out`. Running the
+same task through `opencode` directly produced the whole output *and* Kimi's own statement —
+`passed: 78 / 78`, `failed: []` — which is the **third** receipt, at 03:27:19Z, and the
+non-implementer sign-off this iteration owed.
+
+The cause is in the wrapper, and it is worth knowing: it decided a model had failed by scanning the
+entire output for provider words, including `rate.?limit`. The delegated task was a live verifier, and
+the page it reads says **"Chutes rate limit stopped the run after 81/308 items"** — twelve times in that
+output. So a healthy free worker was declared dead by a string in its own successful answer, and the
+answer was overwritten with an unrelated provider's error. Any delegated task whose output quotes a
+rate limit, a 401 or a 429 loses its result the same way; a live verifier is exactly the kind of task
+that quotes them.
+
+Fixed here: a failure is now the runner's own `Error:` line (which is how `opencode` reports a provider
+problem) or no output at all, and a fallback that fails too is appended as diagnosis instead of
+replacing the primary's answer. `test/delegate-failure-sniffer.test.mjs` pins the predicate against the
+three real cases from this iteration — the verbatim nex error, the verbatim verifier output with its
+twelve "rate limit" hits, and empty output.
+
 **For the next iteration, in order:**
 
 1. **D230 F1** is the last one-row arm, and it is specified: the cost column's
@@ -16301,5 +16324,126 @@ Logs in `iter258-d238/`.
 3. **D237** needs an HF token with write access to the org's spaces, or a turn at the shared Chrome. Board #11.
 4. D236 and D239 still ride a JevBench release; D240 is deliberately not back-filled; D243 and CR-178.5 need
    owner decisions; CR-148.1 still owes a review-gate ruling.
+
+**`ALL-ACCEPTED` is not appended.**
+
+## Iteration 259 — 2026-09-28 03:0x–05:0x UTC (claude-opus, work)
+
+**Iteration 258 never pushed.** Its five commits — the D238/D246 fix, the D237 snapshot builder, the
+acceptance harness and two ops records — sat in the local tree at `5a717087` while `origin/main` was
+still `725a0641`, so the fix it proved offline was not on the site. It is the failure mode
+`headless-iteration-cannot-wait-for-watchers` describes one step later: the work was committed, the
+push was not. Re-gated at that tree (`CI=true npm test` **1,535 / 1,534 pass / 0 fail / 1 skip**,
+`npx tsc --noEmit -p .` exit 0, `node scripts/build-dataset.mjs` 870 / 673 / 94 / 3,134 with only
+`generated_at` and `composite.collected_at` moved, restored) and pushed as the first act of this
+iteration. Live revision went `725a0641` → `5a717087`.
+
+### D238 / D246 are green live, and the number is the one iteration 258 could not fudge
+
+`verify-d238-sealed-shortfall.mjs` at deployed `5a717087`: **78/78 on three hosts**, ten expected
+rows re-derived from the artifact, zero failures. Iteration 258 measured the same harness against the
+pre-fix deploy at **48/78**, so the bar was set before the fix existed and 78/78 is a real pass, not a
+pinned one.
+
+### D247 — the activity summary is no longer AA-only
+
+**The cost of the defect, measured on the published dataset rather than argued:** the four UGI columns
+come out of one CSV, and two of them have not moved since the day they were first collected.
+
+| board | published rows | capture dates on those rows |
+|---|---|---|
+| `ugi` | 1,317 | 1,309 from 2026-09-10, 8 from 2026-09-25 |
+| `ugi-willingness` | 1,317 | 1,309 from 2026-09-10, 8 from 2026-09-25 |
+| `ugi-natint` | **1,309** | **all 2026-09-10** |
+| `ugi-writing` | **1,252** | **all 2026-09-10** |
+
+`ugi-natint` and `ugi-writing` are `retained_after_failure` in the publishing 05:17 runs of 26 and 27
+September and in the 00:41 run of 28 September, so the eight models their siblings published on
+25 September never reached them. Eighteen days of a live column quietly not being refreshed while the
+page keeps showing it — exactly the soft failure the daily receipt's stale-source line exists to catch,
+and nothing loud ever happened, because a rejected protocol review is isolated.
+
+**The fix is the one both critics asked for by name.** The 00:41 run's finding on `ugi-writing` reads
+"Attach this run's generated summary of added/changed values for the board's source field from the
+captured maintainer payload". `publicValueActivity()` computes exactly that for a public board arm and
+`protocol()` attaches it, the same way CR-38.1's `aaFieldActivity` has done for the AA arm since
+iteration 150. The values CSV the critic also mentions stays filtered out of the packet: a protocol
+review judges methodology, not values, and the summary carries counts only — the D247 test asserts that
+no score from the board can appear in it.
+
+Counted on the reconciled row id, so a board listing one model twice is two rows and a re-ordered board
+is not 1,300 changes. Only the published value decides: a row whose value is unchanged is not activity
+however much of its context moved, because the claim is that the maintainer is still *serving* values.
+A row the board stopped publishing is a removal and never affirmative.
+
+**Three kinds of arm are withheld from the summary, each on evidence:**
+
+- `parser.runs` arms (`bu-bench-v1`, `hyper-tau-bench`) — the summary names the one capture its counts
+  came from, and those rows come from several.
+- **a day with nothing added or changed.** This one was found by testing the change against arms it was
+  *not* written for, and it corrected the design. `arc-agi::1`, `vals-index-legal-research::2` and
+  `vulcanbench-frontier::4` were all candidates in the 00:41 run — 14, 65 and 4 changed rows — and all
+  three moved **no value at all**: the boards had renumbered their rows and reconciliation restored the
+  identities. So a public arm reaching a protocol review with zero value activity is the *common* case,
+  not the alarming one, and attaching "today shows no added or changed values" to a hundred arms that
+  pass on the maintainer's text would hand a reviewer an argument this run cannot support. A zero count
+  means nothing — a live board simply may not have changed a value today. Withholding leaves those
+  packets exactly as they are; the counts are in the run's own data either way. The condition is on the
+  question, not on the answer: the summary's only admissible use is settling `status: "active"`, and
+  with nothing added or changed it settles nothing.
+- **any row that does not claim `status: "active"`.** The criterion admits this summary for exactly one
+  judgement and says it "can never establish `retained`", so on a retained row it carries nothing
+  admissible and one thing harmful. The `--lie` replay is the proof of that half: the identical
+  affirmative summary with `status` flipped to `"retained"` is **rejected**, with the critic asking for
+  `"active"` back. On a genuinely retained board whose maintainer edits an old value that would turn a
+  passing arm into a retained failure — the very failure this fix removes. All seven retained public
+  arms (`toolathlon::pre-verified` and six MathArena boards) are `checked_unchanged` in every run of the
+  past week, so the withholding costs nothing observable. **The AA arm's own summary is left attaching
+  unconditionally**: that is CR-38.1's behaviour, it carries the same latent risk it always has, and
+  changing it needs its own AA replay rather than a ride along with this one.
+
+**The AA arm's packet text is byte-identical.** The two phrases written for AA's payload (`payload`,
+`removed_phrase`) now travel with the activity object instead of being hard-coded, `aaFieldActivity`
+supplies AA's, and a caller that supplies neither gets an error rather than a summary that silently
+claims it read Artificial Analysis. `PROTOCOL_REVIEW_CRITERIA` is **unchanged** — "this board's source
+field" is already the CSV column behind a public board and "today's captured maintainer payload" is
+already the arm's own capture — which is why generalising this cost no AA replay at all.
+
+**Replayed offline against the run that failed**, with the real producer/critic gauntlet, before the
+next daily goes near it. `replay-protocol-review.mjs --activity-from-run=<run work dir>` takes no counts:
+it re-runs that run's own extraction against that run's capture, reconciles against the rows the run
+started from and computes the summary with the production function, so the packet holds the numbers that
+run would have put there. (It also had to learn where a daily run's captures live — a manifest records
+them relative to its own checkout, not to this one.)
+
+| replay | activity computed from the 00:41 capture | outcome |
+|---|---|---|
+| `ugi-natint` | 8 rows, 8 added, 0 changed, 0 removed (1,317 today vs 1,309 published) | **accepted**, 1 fingerprint, 0 errors |
+| `ugi-writing` | 8 rows, 8 added, 0 changed, 0 removed (1,260 today vs 1,252 published) | **accepted**, 1 fingerprint, 0 errors |
+| `ugi-natint --lie` (`status: "retained"`) | the same summary | **rejected** — "Change status from \"retained\" to \"active\"" |
+
+`ugi` and `ugi-willingness` carry the same shape and were `checked_unchanged` in that run, so no value
+changed and they never reach a protocol review; the harness refuses to invent a summary for them, which
+is the correct behaviour rather than a gap.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D238 / D246 | implemented → **verified** (non-implementer) | `iter259-independent-verify/d238-three-hosts{,-b,-c}/verification.json` **78/78** three times at `5a717087` (48/78 pre-fix); Kimi K3's own statement in `iter259-independent-verify/kimi-d238-direct.log` | Ten expected rows re-derived from the artifact, not typed. |
+| D247 | open (diagnosed) → **implemented, proven offline** | `iter259-d247/{natint-r1,writing-r1,natint-lie}.log` + gauntlet dirs; `test/d247-public-activity.test.mjs` (8 checks); `test/cr-38-1-aa-activity.test.mjs` (7) | `ops/daily/refresh-benchmarks.mjs`: `publicValueActivity` + `activitySource`; attached for active single-capture public arms only. Needs the next unattended 05:17 run to publish `ugi-natint` / `ugi-writing`, and a non-implementer sign-off. |
+| iteration 258's commits | committed, unpushed → **pushed and deployed** | live `/api/meta` revision `5a717087` | Gates re-run at that tree before the push. |
+| `delegate.sh` (new) | **fixed** | `test/delegate-failure-sniffer.test.mjs` (5 checks); the three real logs it is pinned against | It read "rate limit" out of a *successful* verifier's own output, declared the worker dead and overwrote `--out` with the fallback's error. Every delegated live check was exposed to this. |
+
+**For the next iteration, in order:**
+
+1. **Read today's 05:17 receipt for the two UGI arms.** D247's acceptance is `ugi-natint` and
+   `ugi-writing` publishing — `status: "candidate"` with 1,317 / 1,260 rows and capture dates of today
+   on the eight new models, not `retained_after_failure`. If they fail again, the packet is in the run's
+   `gauntlet/protocol-ugi-*/packet-r1.md`: check that the activity source is in it before touching
+   anything else. Expect variance; one red round is not a wrong fix.
+2. **A non-implementer live check of D247's published half**, once the 05:17 run has published it.
+3. **D237** still needs an HF token with write access to the org's spaces, or a turn at the shared
+   Chrome. Board #11.
+4. D236 and D239 still ride a JevBench release; D240 is deliberately not back-filled; D243 and CR-178.5
+   need owner decisions; CR-148.1 still owes a review-gate ruling.
 
 **`ALL-ACCEPTED` is not appended.**
