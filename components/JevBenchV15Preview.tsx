@@ -4,7 +4,19 @@ import {
   jevV15LeaderSentence, jevV15TieSummary,
   type JevV15Artifact, type JevV15Option, type JevV15System,
 } from '../lib/jevbench-v15-preview.mjs';
+import { jevV15SliderPresets, jevV15BoardSystem, jevV15BoardRow, jevV15CompareRow, jevV15OpenSource } from '../lib/jevbench-v15-board.mjs';
+import { JEVBENCH_REPO } from '../lib/jevbench.mjs';
 import { jevTypeVarName, JEV_TYPE_LABEL } from './jevTypes';
+import { JevCapabilityRanking, jevClassView } from './JevCapabilityRanking';
+import { JevBubbleCharts } from './JevBubbleChart';
+import { JevScoreChart } from './JevBoardInteractive';
+import { JevCompareV15 } from './JevCompareV15';
+import { JevBoardIntentLinks } from './JevBenchSeoBlocks';
+import { JevCapabilityLazy } from './JevCapabilityLazy';
+import { JevContextLazy } from './JevContextLazy';
+import { JevCostsDisclosure } from './JevCostsDisclosure';
+import { jevSourceUrl } from './jevSystemLinks';
+import type { JevV14System } from '../lib/jevbench-v14.mjs';
 
 // JevBench v1.5 board. Server-rendered from the aggregate-only v1.5
 // artifact; it follows the v1.4.2 board's look (bars, sticky-name tables, thin tags) but shows the v1.5 fields:
@@ -258,7 +270,117 @@ function Method({ a, sha256 }: { a: JevV15Artifact; sha256: string }) {
   </section>;
 }
 
-export function JevBenchV15({ artifact: a, sha256 }: { artifact: JevV15Artifact; sha256: string }) {
+/** CR-205: the "What the run says" findings block the v1.4.2.2 page carried, computed from the v1.5 board. */
+function Findings({ a, jevClass, ranked, honorable, partial, addendum }: {
+  a: JevV15Artifact; jevClass: ReturnType<typeof jevClassView>; ranked: JevV15System[];
+  honorable: JevV15System[]; partial: JevV15System[]; addendum: JevV15System[];
+}) {
+  const [lead] = ranked;
+  const capabilityLead = jevClass.rows.find((r) => r.inClass && r.row.ranked);
+  const inClass = jevClass.rows.filter((r) => r.inClass).length;
+  const bestOpen = ranked.find((r) => r.key !== lead?.key && r.class === 'jev-rebuild' && jevV15OpenSource(r))
+    ?? ranked.find((r) => r.key !== lead?.key && jevV15OpenSource(r));
+  const topInt = ranked.filter((r) => r.key !== lead?.key).sort((x, y) => (y.axes.intelligence ?? 0) - (x.axes.intelligence ?? 0))[0];
+  const topSealed = [...ranked].sort((x, y) => (y.intelligence?.I_sealed ?? -1) - (x.intelligence?.I_sealed ?? -1))[0];
+  const { ties, pairs } = jevV15TieSummary(a.board[a.headline]);
+  const gap = (x: number | null, y: number | null) => x == null || y == null ? null : (Math.round(x * 10) - Math.round(y * 10)) / 10;
+  return <section className="mt-10 max-w-4xl" aria-labelledby="jev15-findings" data-bh-jev15-findings>
+    <h2 id="jev15-findings" className="text-xl font-semibold">What the run says</h2>
+    <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[15px]">
+      {capabilityLead && <li data-bh-jev15-capability-lead>Among the {inClass} Jev-class systems, <b>{short(capabilityLead.row.display)}</b> has the highest Capability, {one(capabilityLead.capability)} (Intelligence {one(capabilityLead.row.axes.intelligence)}, Calibration {one(capabilityLead.row.axes.calibration)}).</li>}
+      {lead && <li><b>{short(lead.display)}</b> leads the official JevBench {a.revision} score (option {a.headline}) with {one(lead.jevbench_score)}: Intelligence {one(lead.axes.intelligence)}, Calibration {one(lead.axes.calibration)}, Speed {one(lead.axes.speed)}, Cost {one(lead.axes.cost)} ({usd(lead.cost?.usd_per_1000)} per 1,000 decisions).</li>}
+      {bestOpen && lead && <li>The best open or open-planned rebuild, <b>{short(bestOpen.display)}</b>, is #{bestOpen.rank} at {one(bestOpen.jevbench_score)} — {one(gap(lead.jevbench_score, bestOpen.jevbench_score))} points behind.</li>}
+      {topInt && lead && topInt.key !== lead.key && <li><b>{short(topInt.display)}</b> has the highest Intelligence ({one(topInt.axes.intelligence)}) but places #{topInt.rank}: Speed {one(topInt.axes.speed)}, Cost {one(topInt.axes.cost)} — the harmonic mean does not let accuracy buy back a weak axis.</li>}
+      {topSealed?.intelligence?.I_sealed != null && <li>The strongest sealed Intelligence is {one(topSealed.intelligence.I_sealed)} (<b>{short(topSealed.display)}</b>, #{topSealed.rank}); sealed items carry half of Intelligence, and an open-minus-sealed gap beyond the field median plus eight points costs Intelligence.</li>}
+      {pairs > 0 && <li>{ties} of the {pairs} adjacent pairs are statistical ties — read the order as a ranking, not the gaps as significant.</li>}
+      {addendum.length > 0 && <li>{addendum.length} systems joined by separately hashed roster addenda; they sit outside the frozen {a.revision} order — their placements against it are in the addendum table below.</li>}
+      {honorable.map((r) => <li key={r.key}><b>{short(r.display)}</b> scores {one(r.jevbench_score)} but is <b>not ranked</b>: {r.not_ranked_because ?? 'it is a service running another entrant\u2019s model'}.</li>)}
+      {partial.length > 0 && <li>{partial.map((r) => short(r.display)).join(', ')} did not complete the full suite; they are listed without a rank.</li>}
+    </ul>
+  </section>;
+}
+
+/** CR-205: the v1.4.2.2 alternatives/self-hosting guide, with v1.5 data and method links. */
+function Guide({ a, ranked }: { a: JevV15Artifact; ranked: JevV15System[] }) {
+  const openAlternatives = ranked.filter((r) => jevV15OpenSource(r)).slice(0, 4);
+  const w = a.options[a.headline].weights;
+  return <section className="mt-10 max-w-5xl" aria-labelledby="jev-alternatives-heading" data-bh-jev-seo-guide>
+    <h2 id="jev-alternatives-heading" className="text-2xl font-semibold">Jev alternatives, open source and self-hosting</h2>
+    <p className="bh-muted mt-2 max-w-4xl">The chart and table above compare the tested systems, not marketing claims. These are the practical answers readers most often need before choosing a Jev-class decision model.</p>
+    <div className="mt-5 grid gap-4 md:grid-cols-2">
+      <article className="bh-panel p-5">
+        <h3 className="text-lg font-semibold">What are open-source alternatives to Jev?</h3>
+        <p className="bh-muted mt-2 text-sm">The highest-ranked open entrants in this run are {openAlternatives.map((r, i) => <span key={r.key}>{i ? ', ' : ''}<a className="text-accent underline" href={jevSourceUrl(r.key, r.repo) ?? JEVBENCH_REPO} target="_blank" rel="noopener noreferrer">{short(r.display)}</a> (#{r.rank}, {one(r.jevbench_score)})</span>)}. “Open” here means the tested row publishes code or weights; check the licence and exact configuration in the board before adopting one.</p>
+      </article>
+      <article className="bh-panel p-5">
+        <h3 className="text-lg font-semibold">Which Jev-class models can I self-host in the EU or use for GDPR-sensitive work?</h3>
+        <p className="bh-muted mt-2 text-sm">Open entrants with released code or weights can run on infrastructure you choose, including EU infrastructure. That can support data residency, but neither open source nor an EU server makes a deployment GDPR-compliant by itself. Assess your data, contracts, retention, subprocessors and security for the complete setup. See Benchmark Heaven&apos;s broader <a className="text-accent underline" href="/eu">EU-hosting comparison</a>.</p>
+        <p className="bh-muted mt-2 text-sm"><a className="text-accent underline" href="https://jev-router.com" target="_blank" rel="noopener noreferrer">jev-router.com</a> offers self-hosted open decision models. Neutrality disclosure: it is run by the authors of this benchmark; it receives no scoring advantage and is not a ranked entrant.</p>
+      </article>
+      <article className="bh-panel p-5">
+        <h3 className="text-lg font-semibold">How is JevBench scored?</h3>
+        <p className="bh-muted mt-2 text-sm">The official score (option {a.headline}) is the equal-weight harmonic mean of Intelligence, Calibration, Speed and Cost — {w.intelligence}/{w.calibration}/{w.speed}/{w.cost} — with an Intelligence floor of {a.options[a.headline].intelligence_floor} and low-axis gates on Speed and Cost. Version {a.revision} measures {a.sample.open.toLocaleString('en-US')} open and {a.sample.sealed.toLocaleString('en-US')} sealed decisions per system; Choice, Noul and Score each carry a third, sealed items contribute {Math.round(a.sealed_share_of_intelligence * 100)}% of Intelligence, and an open-minus-sealed gap beyond the field median costs points. <a className="text-accent underline" href="#jev15-method">Method notes</a> · <a className="text-accent underline" href="#jev15-options">options B and C</a>.</p>
+      </article>
+      <article className="bh-panel p-5">
+        <h3 className="text-lg font-semibold">How do I submit my model?</h3>
+        <p className="bh-muted mt-2 text-sm">Open an issue in the <a className="text-accent underline" href={`${JEVBENCH_REPO}/issues`} target="_blank" rel="noopener noreferrer">JevBench repository</a> with a reproducible endpoint or runnable code, the exact model and licence, and whether public JevBench items were used during development. New entrants use the same frozen harness and appear in a new version or a disclosed roster addendum. For private data, see the <a className="text-accent underline" href="/jev-models/custom-evaluation">custom evaluation options</a>.</p>
+      </article>
+    </div>
+  </section>;
+}
+
+/** CR-205: the "What a decision costs" section, on the v1.5 price rules and per-row bases. */
+function Costs({ a }: { a: JevV15Artifact }) {
+  const estimated = a.systems.filter((r) => r.cost?.kind === 'estimate');
+  const tariffs = a.systems.filter((r) => r.cost?.kind === 'tariff').length;
+  return <section id="jev-costs-section" className="mt-10 max-w-4xl scroll-mt-6 text-sm" data-bh-jev-costs>
+    <h2 className="mb-3 text-xl font-semibold">What a decision costs</h2>
+    <p className="bh-panel mb-3 p-3 text-[15px]" data-bh-jev15-cost-unit-panel>
+      <b>Every price here is US dollars per 1,000 decisions — not per 1,000 tokens.</b>{' '}
+      One decision is a whole typed request — state, rubric and options — not a single token.
+    </p>
+    <JevCostsDisclosure>
+      <p className="bh-muted mt-2">Systems with a public tariff (per token or per request) are priced at that tariff times the tokens we measured — {tariffs} rows carry a tariff. Systems without one — open weights, author demos, models we ran ourselves — are priced as if a <b className="text-gray-200">large inference provider</b> hosted them: the list price of the same weights, or the nearest larger sibling or size class when the exact weights are not listed. We do not use per-minute GPU rental or our own CPU time — providers buy capacity in bulk or own the hardware, and price accordingly. Price × tokens per decision = $ per 1,000 decisions, marked &ldquo;est.&rdquo;.</p>
+      <p className="bh-muted mt-2" data-bh-jev-price-rules><b className="text-gray-200">Price rules (v1.5).</b> Only public, bookable list prices that have been in effect for at least 30 days count; a manufacturer&apos;s standard, non-promotional launch list price counts from day one, and promotions, subsidies, credits and free tiers never do. The scoring price is never below the market reference price of the system&apos;s base model. A system without any eligible price is listed as unpriced — no Cost axis and no score until a price qualifies. A later price change triggers a re-score with a visible note on the row.</p>
+      <ul className="mt-3 space-y-1.5" data-bh-jev-cost-rows>
+        {estimated.map((r) => <li key={r.key}><b>{short(r.display)}</b> — <span className="whitespace-nowrap">~{usd(r.cost.usd_per_1000)} <span className="bh-thin-tag">est.</span></span> per 1,000 decisions: <span className="bh-muted">{r.cost.basis}</span></li>)}
+      </ul>
+    </JevCostsDisclosure>
+  </section>;
+}
+
+/** CR-205: the Limits disclosure, adapted to the v1.5 protocol. */
+function Limits({ a }: { a: JevV15Artifact }) {
+  return <details id="limits" className="bh-panel mt-3 max-w-4xl scroll-mt-6 p-5" data-bh-jev15-limits>
+    <summary className="cursor-pointer text-sm font-semibold">Limits</summary>
+    <ul className="bh-muted mt-4 list-disc space-y-2 pl-5 text-sm">
+      <li>{a.sample.total.toLocaleString('en-US')} decisions per system ({a.sample.open.toLocaleString('en-US')} open, {a.sample.sealed.toLocaleString('en-US')} sealed) is a measurement, not a census, and it is English-only.</li>
+      <li>The weights are a choice. Option {a.headline} weights the four axes equally and uses a harmonic mean, so the weakest axis dominates; options B and C are published alternatives and the weight sliders re-score the same axes for exploration — only the official option gives the official score and rank. If a wrong decision costs you more than a slow or expensive one, read the Intelligence column and the per-type competence rather than the score alone.</li>
+      <li data-bh-jev15-latency-limit><b className="text-gray-200">The latency adjustment (×2, +0.15 s on our own servers and demo endpoints) is an assumption, not a measurement.</b> We ran the self-hosted and demo endpoints one request at a time (parallelism 1, no other load), so their latency is likely better than the same model on a busy production server. Serving under load trades per-user speed for throughput. The +0.15 s stands for infrastructure our self-hosted tests lacked: authentication, load balancing, logging, billing and an API gateway. Both numbers are assumptions; raw p50/p95 latencies are in the table and the <a className="text-accent underline" href={JEVBENCH_REPO}>repo</a>.</li>
+      <li>Held-out decisions are sent to the evaluated services to get predictions. Not public is not the same as not seen.</li>
+      <li>Latency is one origin at one time of day; hosted endpoints, public demos and our own pods are different kinds of latency. Public demo endpoints are shared with everyone else using them.</li>
+      <li>Estimated costs describe what a large inference provider would charge for a model of that size, not what the author pays; a system on a tariff pays its tariff.</li>
+    </ul>
+  </details>;
+}
+
+/** CR-205: the Credit disclosure — harness repo, per-system author/licence/source, and the 3D library line. */
+function Credit({ a }: { a: JevV15Artifact }) {
+  const credits = [...a.systems].sort((x, y) => x.display.localeCompare(y.display));
+  return <details id="credit" className="bh-panel mt-3 max-w-4xl scroll-mt-6 p-5" data-bh-jev15-credit>
+    <summary className="cursor-pointer text-sm font-semibold">Credit</summary>
+    <div className="bh-muted mt-4 space-y-3 text-sm">
+      <p>Harness, public tasks and every scoring rule: <a className="text-accent underline" href={JEVBENCH_REPO}>github.com/fstandhartinger/jevbench</a> (MIT). Each project links its author&apos;s repository or vendor page.</p>
+      <ul className="list-disc space-y-1.5 pl-5" data-bh-jev-credits>
+        {credits.map((r) => <li key={r.key}><b className="text-gray-200">{r.display}</b> — {r.author}, {r.licence}{r.repo && <> — <a className="text-accent underline" href={r.repo} target="_blank" rel="noopener noreferrer">{r.repo.replace(/^https:\/\//, '')}</a></>}</li>)}
+      </ul>
+      <p>Authors: if we tested the wrong configuration, tell us and we will rerun it. New entrants become a new version or a disclosed roster addendum rather than silently changing this one.</p>
+      <p data-bh-jev-credit-3d>3D view: three.js r128 (MIT).</p>
+    </div>
+  </details>;
+}
+
+export function JevBenchV15({ artifact: a, sha256, previousKeys = [] }: { artifact: JevV15Artifact; sha256: string; previousKeys?: string[] }) {
   const ranked = a.systems.filter((s) => s.listing === 'ranked').sort((x, y) => (x.rank ?? 999) - (y.rank ?? 999));
   const partial = a.systems.filter((s) => s.listing === 'partial' || s.listing === 'unranked');
   const honorable = a.systems.filter((s) => s.listing === 'honorable_mention');
@@ -268,15 +390,40 @@ export function JevBenchV15({ artifact: a, sha256 }: { artifact: JevV15Artifact;
   const seen = new Map<string, number>();
   for (const s of [...a.systems, ...a.not_measured]) seen.set(shortOnly(s.display), (seen.get(shortOnly(s.display)) ?? 0) + 1);
   collisions = new Set([...seen].filter(([, n]) => n > 1).map(([name]) => name));
+  // CR-205: the complete v1.4.2.2 section order, on v1.5 data — capability ranking, the two bubble charts,
+  // the interactive composite chart, the compare view and the full table, then the evergreen disclosures.
+  const chartSystems = a.systems.map((s) => jevV15BoardSystem(s) as JevV14System);
+  const jevClass = jevClassView(chartSystems);
+  const previous = new Set(previousKeys);
+  const viewRows = a.systems.map((s) => jevV15BoardRow(s, { isNew: previous.size > 0 && !previous.has(s.key) }));
+  const compareRows = a.systems.map(jevV15CompareRow);
+  const named = new Map(a.systems.map((s) => [s.key, short(s.display)]));
+  const leader = jevV15LeaderSentence(a.board[a.headline], (key) => named.get(key) ?? key);
+  const newLabel = previous.size > 0 && viewRows.some((r) => r.isNew) ? a.revision : null;
   return <section data-bh-jevbench-v15 data-bh-jev15-run-kind={a.run_kind}>
+    <JevCapabilityRanking systems={chartSystems} revision={a.revision} officialHref="#jev14-chart-title" />
+    <JevBoardIntentLinks />
+    <JevBubbleCharts points={jevClass.points} costLimit={jevClass.limits.cost} referenceName="Jev" />
+    <p className="bh-muted mt-3 max-w-4xl text-sm" data-bh-jev15-whatif>
+      What-If: the <a className="text-accent underline" href="#jev14-chart-title">weight sliders below</a> re-score every system under other axis weights — only the equal 25/25/25/25 weights give the official option-{a.headline} ranking. The 3D view of capability, cost and speed loads <a className="text-accent underline" href="#jev14-capability-views">further down</a>.
+    </p>
+    <JevScoreChart revision={a.revision} rows={viewRows} rankedCount={ranked.length} newLabel={newLabel} fairness={null} approvedNote={leader} capabilityHref="#jev-capability" presets={jevV15SliderPresets(a)} compactMobile scoreKind="v15" methodLink={{ href: '#jev15-method', label: 'Method notes ↓' }} />
+    <JevCompareV15 rows={compareRows} openDecisions={a.sample.open} sealedDecisions={a.sample.sealed} />
+    <AxesTable a={a} rows={[...ranked, ...honorable, ...addendum, ...partial, ...unpriced]} />
     <HeadlineBars a={a} ranked={ranked} />
     <p className="bh-muted mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs" aria-label="System types">{classes.map((c) => <span key={c} style={typeVar(c)} className="whitespace-nowrap"><span className="mr-1 inline-block h-2.5 w-2.5 rounded-full bg-[rgb(var(--jev-t))] align-middle" aria-hidden="true" />{JEV_TYPE_LABEL[c] ?? c}</span>)}</p>
     <OptionsTable a={a} ranked={ranked} />
-    <AxesTable a={a} rows={[...ranked, ...honorable, ...addendum, ...partial, ...unpriced]} />
+    <Findings a={a} jevClass={jevClass} ranked={ranked} honorable={honorable} partial={partial} addendum={addendum} />
+    <Guide a={a} ranked={ranked} />
+    <Costs a={a} />
     <Honorable a={a} rows={honorable} />
     <Addendum rows={addendum} />
     <NotRanked a={a} partial={partial} unpriced={unpriced} />
     <Method a={a} sha256={sha256} />
+    <Limits a={a} />
+    <Credit a={a} />
+    <JevCapabilityLazy revision={a.revision} only3d />
+    <JevContextLazy />
     <p className="bh-muted mt-4 text-xs">Previous release: <a className="text-accent underline" href="/jev-models/v1.4.2.2">JevBench v1.4.2.2 (frozen results)</a>.</p>
   </section>;
 }

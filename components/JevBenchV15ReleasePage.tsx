@@ -1,13 +1,62 @@
 import { JevBenchV15 } from './JevBenchV15Preview';
 import { CustomEvaluationOffer } from './CustomEvaluationOffer';
+import { readJevbenchV1422 } from '../lib/jevbench-v1422.mjs';
 import type { JevV15Artifact } from '../lib/jevbench-v15-preview.mjs';
 
-export function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '/jev-models/v1.5.0' }: {
+export async function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '/jev-models/v1.5.0' }: {
   artifact: JevV15Artifact;
   sha256: string;
   versionPath?: string;
 }) {
+  // CR-205: rows that first appear in v1.5.0 get the board's "new" marker; v1.4.2.2 is the comparison base.
+  const previousKeys = (await readJevbenchV1422()).artifact.systems.map((row: { key: string }) => row.key);
+  const canonical = `https://benchmarkheaven.com${versionPath}`;
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage', '@id': `${canonical}#page`,
+        url: canonical, name: `JevBench ${artifact.revision} — official Jev alternatives ranking`,
+        description: `Independent comparison of ${artifact.systems.length} Jev-class systems across ${artifact.sample.total.toLocaleString('en-US')} open and sealed decisions each.`,
+        isPartOf: { '@id': 'https://benchmarkheaven.com/#website' },
+        mainEntity: { '@id': `${canonical}#dataset` },
+      },
+      {
+        '@type': 'Dataset', '@id': `${canonical}#dataset`,
+        name: `JevBench ${artifact.revision} results`,
+        description: `Measured JevBench results for ${artifact.systems.length} Jev-class systems on ${artifact.sample.total.toLocaleString('en-US')} typed decisions each.`,
+        url: canonical,
+        creator: { '@type': 'Organization', name: 'Benchmark Heaven', url: 'https://benchmarkheaven.com' },
+        license: 'https://github.com/fstandhartinger/jevbench/blob/main/LICENSE',
+        isAccessibleForFree: true,
+        variableMeasured: ['JevBench Score', 'Intelligence', 'Calibration', 'Speed', 'Cost'],
+        distribution: [{ '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `https://benchmarkheaven.com/api/jevbench/${artifact.revision}` }],
+      },
+      {
+        '@type': 'FAQPage', '@id': `${canonical}#faq`,
+        mainEntity: [
+          {
+            '@type': 'Question', name: 'What are open-source alternatives to Jev?',
+            acceptedAnswer: { '@type': 'Answer', text: `JevBench ${artifact.revision} ranks open implementations with published code or weights alongside hosted systems; the board links each tested project and records its code and model licences.` },
+          },
+          {
+            '@type': 'Question', name: 'Which Jev-class models can I self-host in the EU or use for a GDPR-sensitive workload?',
+            acceptedAnswer: { '@type': 'Answer', text: 'Open entrants with released code or weights can be deployed on infrastructure you choose, including EU infrastructure. That can support a data-residency plan, but a model licence or EU server location does not by itself make a deployment GDPR-compliant; the controller must assess the complete processing setup.' },
+          },
+          {
+            '@type': 'Question', name: 'How is JevBench scored?',
+            acceptedAnswer: { '@type': 'Answer', text: `JevBench ${artifact.revision} combines Intelligence, Calibration, Speed and Cost in an equal-weight harmonic mean with low-axis gates. Half of Intelligence comes from sealed decisions, an open-minus-sealed gap beyond the field median costs Intelligence, and the three request types — Choice, Noul and Score — carry equal weight.` },
+          },
+          {
+            '@type': 'Question', name: 'How do I submit my model?',
+            acceptedAnswer: { '@type': 'Answer', text: 'Open an issue in the JevBench repository with a reproducible endpoint or runnable code, the exact model and licence, and any public-task training disclosure. New entrants are measured with the same harness and published in a new version or a disclosed roster addendum.' },
+          },
+        ],
+      },
+    ],
+  };
   return <>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }} />
     <header className="bh-page-head" data-bh-jev15-release-header>
       <div className="bh-eyebrow flex flex-nowrap items-center" data-bh-jev-frozen-version><span>Official JevBench release {artifact.revision}</span><CustomEvaluationOffer /></div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">JevBench {artifact.revision} — Jev alternatives ranking</h1>
@@ -19,11 +68,10 @@ export function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '/jev-m
       </p>
       <p className="mt-3 max-w-3xl text-sm" data-bh-jev-version-share-row>
         <a className="text-accent underline" href={versionPath} data-bh-jev-version-share>Share this version</a>
-        {versionPath !== '/jev-models' && <> · <a className="text-accent underline" href="/jev-models" data-bh-jev-live-link>View live board</a></>}
-        {' · '}
-        <a className="text-accent underline" href="/jev-models/v1.4.2.2">Previous release: v1.4.2.2</a>
+        {versionPath !== '/jev-models' && <span className="bh-muted"> · <a className="text-accent underline" href="/jev-models" data-bh-jev-live-link>View live board</a></span>}
+        <span className="bh-muted"> · Previous release: <a className="text-accent underline" href="/jev-models/v1.4.2.2">JevBench v1.4.2.2</a></span>
       </p>
     </header>
-    <JevBenchV15 artifact={artifact} sha256={sha256} />
+    <JevBenchV15 artifact={artifact} sha256={sha256} previousKeys={previousKeys} />
   </>;
 }

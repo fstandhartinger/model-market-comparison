@@ -7,6 +7,7 @@ import {
 } from './JevBoardShared';
 import { JEV_TYPE_LABEL, jevLegendTypes } from './jevTypes';
 import { JEV_AXES, OFFICIAL_WEIGHTS, isOfficialWeights, weightedJevScore, type JevAxis, type JevWeights } from '../lib/jevbench-axis-weights.mjs';
+import { jevV15BoardScore } from '../lib/jevbench-v15-board.mjs';
 import { withFieldNames } from './jevFieldNames';
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 
@@ -137,7 +138,7 @@ export type JevPreset = { name: string; weights: JevWeights };
 const sameWeights = (a: JevWeights, b: JevWeights) => { const ta = JEV_AXES.reduce((t, k) => t + a[k], 0), tb = JEV_AXES.reduce((t, k) => t + b[k], 0); return ta > 0 && tb > 0 && JEV_AXES.every((k) => Math.abs(a[k] / ta - b[k] / tb) < 1e-6); };
 const share = (w: JevWeights, axis: JevAxis) => { const total = JEV_AXES.reduce((t, k) => t + w[k], 0); return total ? Math.round((100 * w[axis]) / total) : 0; };
 
-function JevWeightSliders({ position, weights, setWeights, presets }: { position: 'above' | 'below'; weights: JevWeights; setWeights: (w: JevWeights) => void; presets: JevPreset[] }) {
+function JevWeightSliders({ position, weights, setWeights, presets, gatesAlways = false }: { position: 'above' | 'below'; weights: JevWeights; setWeights: (w: JevWeights) => void; presets: JevPreset[]; gatesAlways?: boolean }) {
   const official = isOfficialWeights(weights);
   // F-199 (pass 36): on a phone the sliders fold into a closed "Adjust weights" disclosure; a reader who set custom
   // weights (?w= on load or a non-official preset) sees them open. Desktops always show the sliders (globals.css).
@@ -163,7 +164,7 @@ function JevWeightSliders({ position, weights, setWeights, presets }: { position
         </label>)}
       </div>
     </details>
-    {position === 'below' && <p className="bh-muted mt-1 text-[11.5px] leading-snug">Weights are relative: each axis counts in proportion to its slider. The score stays a weighted harmonic mean with the low-axis gates; an axis at 0 drops out together with its gate. Only equal weights give the official JevBench Score and rank.</p>}
+    {position === 'below' && <p className="bh-muted mt-1 text-[11.5px] leading-snug">Weights are relative: each axis counts in proportion to its slider. The score stays a weighted harmonic mean with the low-axis gates; {gatesAlways ? 'the gates still apply when an axis sits at 0' : 'an axis at 0 drops out together with its gate'}. Only equal weights give the official JevBench Score and rank.</p>}
   </div>;
 }
 
@@ -183,12 +184,15 @@ const GENERAL_LLM = 'llm-baseline';
 
 export type JevFairness = { leadName: string; topName: string; leadInt: number; topInt: number; leadsOn: string[] } | null;
 
-export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLabel, fairness, approvedNote = null, capabilityHref, presets = [], compactMobile = false }: { revision: string; rows: JevBoardViewRow[]; rankedCount: number; newLabel: string | null; fairness: JevFairness; approvedNote?: string | null; capabilityHref: string | null; presets?: JevPreset[]; compactMobile?: boolean }) {
+export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLabel, fairness, approvedNote = null, capabilityHref, presets = [], compactMobile = false, scoreKind = 'v14', methodLink }: { revision: string; rows: JevBoardViewRow[]; rankedCount: number; newLabel: string | null; fairness: JevFairness; approvedNote?: string | null; capabilityHref: string | null; presets?: JevPreset[]; compactMobile?: boolean; scoreKind?: 'v14' | 'v15'; methodLink?: { href: string; label: string } }) {
   // Florian 25 Sep 2026: weight sliders. Equal weights are the official score; any other mix re-scores every row with
   // the same formula and re-sorts by it, clearly marked as not the official ranking.
+  // CR-205: scoreKind 'v15' re-scores with the v1.5 composite — its low-axis gates apply even at weight 0.
+  const rescore = scoreKind === 'v15' ? jevV15BoardScore : weightedJevScore;
+  const changesLink = methodLink ?? { href: '#jev14-changes', label: 'What changed in v1.4 ↓' };
   const [weights, setWeightsState] = useState<JevWeights>(OFFICIAL_WEIGHTS);
   const custom = !isOfficialWeights(weights);
-  const rows = useMemo(() => custom ? officialRows.map((r) => ({ ...r, jevbench_score: weightedJevScore(r.axes, weights) })) : officialRows, [officialRows, weights, custom]);
+  const rows = useMemo(() => custom ? officialRows.map((r) => ({ ...r, jevbench_score: rescore(r.axes, weights) })) : officialRows, [officialRows, weights, custom, rescore]);
   const heat = useMemo(() => heatScales(rows), [rows]);
   const official = useMemo(() => new Map(officialRows.map((r, i) => [r.key, i])), [officialRows]);
   const [filters, setFilters] = useState<Filters>(NO_FILTERS);
@@ -241,8 +245,8 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
     {/* F-193 (main, 25 Sep): on the live board a phone hides the chart eyebrow and tightens spacing. */}
     <p className="bh-eyebrow" data-bh-jev14-chart-eyebrow>JevBench {revision}</p>
     <h2 id="jev14-chart-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">JevBench Composite Score: {rankedCount} ranked systems</h2>
-    <p className="bh-muted mt-1 text-sm">{custom ? <span className="bh-jevc-notdefault mr-2">Custom weights</span> : <span className="bh-jevc-official mr-2">Official</span>}· four axes 0–100, {custom ? 'your weights' : 'equal-weight'} harmonic mean · <a href="#jev14-changes" className="text-accent underline">What changed in v1.4 ↓</a></p>
-    <JevWeightSliders position="above" weights={weights} setWeights={setWeights} presets={presets} />
+    <p className="bh-muted mt-1 text-sm">{custom ? <span className="bh-jevc-notdefault mr-2">Custom weights</span> : <span className="bh-jevc-official mr-2">Official</span>}· four axes 0–100, {custom ? 'your weights' : 'equal-weight'} harmonic mean · <a href={changesLink.href} className="text-accent underline">{changesLink.label}</a></p>
+    <JevWeightSliders position="above" weights={weights} setWeights={setWeights} presets={presets} gatesAlways={scoreKind === 'v15'} />
 
     <div className="bh-jev-viewby mt-4" data-bh-jev-viewby>
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5" role="group" aria-label="View the field by">
@@ -295,10 +299,10 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
     <div className="mt-2 hidden grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_21rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
       <span /><span /><span className="bh-muted flex justify-between tabular"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span></span>
     </div>
-    <JevWeightSliders position="below" weights={weights} setWeights={setWeights} presets={presets} />
+    <JevWeightSliders position="below" weights={weights} setWeights={setWeights} presets={presets} gatesAlways={scoreKind === 'v15'} />
     <p className="mt-3 text-center text-[13px] sm:text-sm" data-bh-jev14-formula>
       {custom
-        ? <>Score = 1 / (w<sub>I</sub>/I + w<sub>C</sub>/C + w<sub>S</sub>/S + w<sub>K</sub>/K) with w = {JEV_AXES.map((a) => `${share(weights, a)}%`).join(' / ')} <span className="bh-muted">(× (axis / 50)² for a weighted Intelligence, Speed or Cost below 50). # stays the official rank.</span></>
+        ? <>Score = 1 / (w<sub>I</sub>/I + w<sub>C</sub>/C + w<sub>S</sub>/S + w<sub>K</sub>/K) with w = {JEV_AXES.map((a) => `${share(weights, a)}%`).join(' / ')} <span className="bh-muted">(× (axis / 50)² for {scoreKind === 'v15' ? 'Intelligence, Speed or Cost below 50 — the gates also apply at weight 0' : 'a weighted Intelligence, Speed or Cost below 50'}). # stays the official rank.</span></>
         : <>Score = 4 / (1/I + 1/C + 1/S + 1/K) <span className="bh-muted">(each 0–100; × (axis / 50)² for Intelligence, Speed or Cost below 50)</span></>}
     </p>
     <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="Legend" data-bh-jev14-legend>
