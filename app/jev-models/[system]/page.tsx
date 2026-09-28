@@ -63,7 +63,7 @@ async function findV142Row(key: string): Promise<{ row: JevV14System; view: { re
   const row = view.systems.find((candidate) => candidate.key === key);
   // readJevbenchV1422 validates the ranked rows' numeric fields before this narrow is applied.
   const hardFamilyN = (result.artifact.hard_dataset as { families?: Record<string, number> } | undefined)?.families ?? {};
-  return row ? { row, view, note: jevV14RowNote((result.artifact as { footnotes?: Record<string, string> }).footnotes?.[key]), sealedFamilyN: result.sealedFamilyN, hardFamilyN } : null;
+  return row ? { row, view, note: jevV14RowNote((result.artifact as { footnotes?: Record<string, string> }).footnotes?.[key], row), sealedFamilyN: result.sealedFamilyN, hardFamilyN } : null;
 }
 
 /** F-167: what this system's number is read against — Jev 1.13.0 everywhere, and on Jev's own page the

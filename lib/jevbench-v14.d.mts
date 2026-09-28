@@ -23,6 +23,8 @@ export interface JevV14System {
   api_exposure_note: string | null;
   priority_run?: boolean;
   not_ranked_because: string | null;
+  /** Published sealed-tier aggregate. `answered_valid`/`n` carry the sealed-answer shortfall (D238). */
+  sealed_aggregate?: { answered_valid?: number; n?: number; [key: string]: unknown };
   [key: string]: unknown;
 }
 
@@ -51,6 +53,7 @@ export function jevbenchV14View(input: { artifact: JevV14Artifact; sha256: strin
   ranked: JevV14System[]; unranked: JevV14System[]; systems: JevV14System[];
   rankedCount: number; publicDecisions: number; sealedDecisions: number; totalDecisions: number;
 };
-export function jevV14RowNote(footnote: string | null | undefined): string | null;
+export function jevV14SealedShortfallNote(row: JevV14System | null | undefined): string | null;
+export function jevV14RowNote(footnote: string | null | undefined, row?: JevV14System | null): string | null;
 /** F-213 (Fable pass 40): a row's sealed family shares as numbers whatever shape the artifact wrote them in; null without a breakdown. */
 export function sealedFamilyShares(row: object | null | undefined): Record<string, number | null> | null;

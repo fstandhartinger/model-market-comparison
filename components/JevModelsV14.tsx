@@ -72,7 +72,7 @@ export function JevModelsV14Board({ artifact, sha256, previous, capabilityHref, 
   const ranked = artifact.systems.filter((row) => row.listing === 'ranked').sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
   const unranked = artifact.systems.filter((row) => row.listing !== 'ranked').sort((a, b) => (b.jevbench_score ?? -1) - (a.jevbench_score ?? -1));
   const rows = [...ranked, ...unranked];
-  const noteOf = new Map(rows.map((row) => [row.key, jevV14RowNote(artifact.footnotes?.[row.key])]));
+  const noteOf = new Map(rows.map((row) => [row.key, jevV14RowNote(artifact.footnotes?.[row.key], row)]));
   const notes = rows.filter((row) => noteOf.get(row.key));
   const previousKeys = previous ? new Set(previous.keys) : null;
   const viewRows = rows.map((row) => viewRow(row, noteOf.get(row.key) ?? null, previousKeys));
