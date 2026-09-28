@@ -593,8 +593,21 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       // The AA arm attaches its summary whatever the row claims. That asymmetry is left alone
       // deliberately: it is CR-38.1's behaviour, it carries the same latent risk it always has, and
       // changing it needs its own AA replay rather than a ride along with this one.
-      const activity = spec.parser.runs || !spec.parser.value_field || entry.status !== 'active' ? null
+      //
+      // And it is attached only when it actually carries affirmative evidence. A public arm reaches
+      // this review whenever *anything* about a row moved, and on a public board that is usually the
+      // row order: `arc-agi::1`, `vals-index-legal-research::2` and `vulcanbench-frontier::4` were all
+      // candidates in the 00:41 run with 14, 65 and 4 changed rows, and all three moved **no value at
+      // all** — reconciliation restored the identities the board's reordering had renumbered. A zero
+      // count means nothing (a live board simply may not have changed a value today), so writing
+      // "today shows no added or changed values" into the packets of a hundred arms that pass on the
+      // maintainer's text would hand a reviewer an argument this run cannot support. Withholding it
+      // leaves those packets exactly as they are today; the counts are in the run's own receipt either
+      // way. This is a condition on the question, not on the answer: the summary's only admissible use
+      // is settling `status: "active"`, and with nothing added or changed it settles nothing.
+      const proposedActivity = spec.parser.runs || !spec.parser.value_field || entry.status !== 'active' ? null
         : publicValueActivity(spec.parser.value_field, candidate.observations, old, reconciled.withdrawn, entry.maintainer);
+      const activity = proposedActivity?.affirmative ? proposedActivity : null;
       pending.push({ index, spec, entry, proposed, candidate, evidence, changed, old, gone, withdrawnBySource, activity });
     } catch (error) {
       // F-209: exactly one failure shape is a quarantine — the collector saying the board publishes a

@@ -74,6 +74,22 @@ test('an unknown maintainer still describes the payload truthfully', () => {
   assert.equal(activity.payload, "the maintainer's published results payload for this board");
 });
 
+test('a day with nothing added or changed produces no affirmative evidence to attach', () => {
+  // A public arm reaches its protocol review whenever anything about a row moved, and on a public
+  // board that is usually the row order. Three arms that were candidates in the 00:41 run —
+  // arc-agi::1 (14 changed rows), vals-index-legal-research::2 (65) and vulcanbench-frontier::4 (4) —
+  // moved no value at all: reconciliation restored the identities the reordering had renumbered.
+  // The production condition is `activity.affirmative` truthy, so those packets stay as they are.
+  const prior = new Map([['r1', obs('r1', 27.1)], ['r2', obs('r2', 31.4)]]);
+  const reordered = publicValueActivity('NatInt 💡', [obs('r2', 31.4), obs('r1', 27.1)], prior, [], 'DontPlanToEnd');
+  assert.equal(reordered.affirmative, 0);
+  assert.equal(reordered.models, 0);
+  // Removals alone are not affirmative either, so a wound-down board attaches nothing.
+  const removalsOnly = publicValueActivity('NatInt 💡', [obs('r1', 27.1)], prior, [obs('r2', 31.4)], 'DontPlanToEnd');
+  assert.equal(removalsOnly.affirmative, 0);
+  assert.equal(removalsOnly.removed, 1);
+});
+
 test('the withheld arms are exactly the multi-capture and non-active ones', async () => {
   const plan = JSON.parse(await readFile('data/raw/benchmarks/collection-plan.json', 'utf8'));
   const registry = new Map(JSON.parse(await readFile('data/raw/benchmarks/registry.json', 'utf8'))
