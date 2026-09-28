@@ -18724,12 +18724,12 @@ scrolling sideways at 1440 (F-220 gone public), and phone bubble labels on a tic
 
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
-| F-221 (new) | **implemented** (Fable, surgical: `components/JevBenchV15ReleasePage.tsx` meta line uses `Sha`, exported from `JevBenchV15Preview.tsx`; `test/fable-pass42.test.mjs`) | `canonical/mobile_light-hub.png` (the 3-line hash); `live-before/verification.json` **9/47** (all groups, at `4c15001e`); `local-after/verification.json` **47/47** on a dev server | `ONLY=F-221`. Needs a non-Fable engine on the deployed revision. |
-| F-222 (new) | **implemented** (Fable, surgical: `live` prop on `JevBenchV15ReleasePage`, `app/jev-models/page.tsx` passes it; the hub's h1 is "JevBench by Benchmark Heaven", the definition sentence first, the release facts on `[data-bh-jev-meta]`, no self "View live board"; the pinned page keeps its release h1) | `canonical/mobile_light-hub.png`, `/tmp/probe-p42-hero.mjs` (first row 880 px at 390 vs 727 on v1.4.2.2; hero 8 lines; h1 2 lines); `live-before/` / `local-after/` as above | `ONLY=F-222`. Acceptance includes first Capability row ≤ 760 px at 390 on the live hub. Needs a non-Fable engine. |
-| F-226 (new) | **implemented** (Fable, surgical: `components/jevTypes.ts` `unclassified: "Unclassified"`; `system-one-open` stays unlabelled per F-192) | `canonical/desktop_light-hub-s-all-three-weight-options.png` (legend with `unclassified` in code font, before); `local-after/` | `ONLY=F-226`. Needs a non-Fable engine. |
-| F-223 (new) | **open** `[judgment]` — next work iteration (Claude Opus / Codex Luna) | `canonical/metrics-p42-{desktop,mobile}_light.json` (`heads`, `bars`/`opts` heights: 3,020 + 3,611 px at 1440, 7,906 + 4,091 at 390); `canonical/desktop_light-hub-s-jevbench-score-89-ranked-systems.png`, `mobile_light-hub-s-jevbench-score-89-ranked-systems.png` | Whiskers + tie count onto the interactive chart; the static bars and the options table fold. Page ≤ 18,500 px at 1440. Keep the CR-205 marker order; open the fold in the F-206 verifier. |
-| F-224 (new, supersedes F-220) | **open** `[judgment]` — next work iteration | `canonical/metrics-p42-desktop_light.json` `overflow` (1,480 px in 1,366 px at 1440); `canonical/desktop_light-hub-s-axes-request-types-latency-and-cost.png` | Two views by what is compared (Axes / Types & cost), as F-220 specified. |
-| F-225 (new) | **open** `[mechanical]` — next work iteration or the `JevBubbleChart.tsx` owner | `canonical/mobile_light-p42-bubble-0.png` ("2× Jev" on the "90" tick), `mobile_light-p42-bubble-1.png` (labels over four + two bubbles); `metrics-p42-mobile_light.json` `hub-svg` `overlaps`/`hits` | Drop the tick under the label; put the phone label column on the emptier side. |
+| F-221 (new) | implemented → **verified** (iteration 269, claude-opus: 47/47 on all three hosts) (Fable, surgical: `components/JevBenchV15ReleasePage.tsx` meta line uses `Sha`, exported from `JevBenchV15Preview.tsx`; `test/fable-pass42.test.mjs`) | `canonical/mobile_light-hub.png` (the 3-line hash); `live-before/verification.json` **9/47** (all groups, at `4c15001e`); `local-after/verification.json` **47/47** on a dev server | `ONLY=F-221`. Needs a non-Fable engine on the deployed revision. |
+| F-222 (new) | implemented → **verified** (iteration 269, claude-opus: 47/47 on all three hosts) (Fable, surgical: `live` prop on `JevBenchV15ReleasePage`, `app/jev-models/page.tsx` passes it; the hub's h1 is "JevBench by Benchmark Heaven", the definition sentence first, the release facts on `[data-bh-jev-meta]`, no self "View live board"; the pinned page keeps its release h1) | `canonical/mobile_light-hub.png`, `/tmp/probe-p42-hero.mjs` (first row 880 px at 390 vs 727 on v1.4.2.2; hero 8 lines; h1 2 lines); `live-before/` / `local-after/` as above | `ONLY=F-222`. Acceptance includes first Capability row ≤ 760 px at 390 on the live hub. Needs a non-Fable engine. |
+| F-226 (new) | implemented → **verified** (iteration 269, claude-opus: 47/47 on all three hosts) (Fable, surgical: `components/jevTypes.ts` `unclassified: "Unclassified"`; `system-one-open` stays unlabelled per F-192) | `canonical/desktop_light-hub-s-all-three-weight-options.png` (legend with `unclassified` in code font, before); `local-after/` | `ONLY=F-226`. Needs a non-Fable engine. |
+| F-223 (new) | open → **implemented** (iteration 269, claude-opus; needs a non-implementer) | `canonical/metrics-p42-{desktop,mobile}_light.json` (`heads`, `bars`/`opts` heights: 3,020 + 3,611 px at 1440, 7,906 + 4,091 at 390); `canonical/desktop_light-hub-s-jevbench-score-89-ranked-systems.png`, `mobile_light-hub-s-jevbench-score-89-ranked-systems.png` | Whiskers + tie count onto the interactive chart; the static bars and the options table fold. Page ≤ 18,500 px at 1440. Keep the CR-205 marker order; open the fold in the F-206 verifier. |
+| F-224 (new, supersedes F-220) | open → **implemented** (iteration 269, claude-opus; needs a non-implementer) | `canonical/metrics-p42-desktop_light.json` `overflow` (1,480 px in 1,366 px at 1440); `canonical/desktop_light-hub-s-axes-request-types-latency-and-cost.png` | Two views by what is compared (Axes / Types & cost), as F-220 specified. |
+| F-225 (new) | open → **implemented** (iteration 269, claude-opus; needs a non-implementer) | `canonical/mobile_light-p42-bubble-0.png` ("2× Jev" on the "90" tick), `mobile_light-p42-bubble-1.png` (labels over four + two bubbles); `metrics-p42-mobile_light.json` `hub-svg` `overlaps`/`hits` | Drop the tick under the label; put the phone label column on the emptier side. |
 | F-220 (pass 41) | open → **superseded by F-224** | — | v1.5 was released with the table as it was; the directive moves to the public hub. |
 | F-219 (pass 41) | **open**, unchanged | — | The What-If page is still hidden and not linked from the public hub; the What-If owner's. |
 | CR-1.10 / X3 / X4 | Fable pass 42 held (the "what changed" pass; Florian: Fable sparingly) | this block | Quick views at the bar on today's data; the hub's directives above. |
@@ -18738,5 +18738,112 @@ scrolling sideways at 1440 (F-220 gone public), and phone bubble labels on a tic
 
 **Live at `36d5383b` (pushed 22:57 UTC; the webhook created deployment `qotpmdbmfuxykvez36yw0ttu`, the revision flipped after ~160 s, all three hosts serve it): `live-after/verification.json` **47/47** (`ONLY` unset; 1440 light + 390 dark; `/jev-models` first Capability row inside the first viewport, no 64-hex in the header, "Unclassified" in the legend). F-221, F-222 and F-226 are `implemented` — still needs a non-Fable engine to set `verified` (`verify-fable-pass42-design.mjs`, clear the out dir first); F-223, F-224 and F-225 are for the next work iteration.**
 
+
+## Iteration 269 (claude-opus, 2026-09-28 23:05–00:10 UTC) — one ranking one figure, a table that fits its panel, and a label that stops covering its point
+
+**Scope.** The three rows Fable pass 42 directed to the work iteration (F-223, F-224, F-225), plus the
+non-Fable live verification pass 42 left open for F-221, F-222 and F-226. Everything here is on the public
+JevBench hub `/jev-models`, which has served the v1.5.0 release since CR-203/CR-205.
+
+### The non-Fable verification pass 42 was waiting for
+
+`bin/verify-fable-pass42-design.mjs` at the deployed revision `7739950c`, out dir cleared before each run,
+implementer claude-fable, verifier **claude-opus**: **47/47 on all three hosts** —
+`iter269-fable42/{canonical,www,legacy}/verification.json`. The before-receipt Fable recorded at `4c15001e`
+was 9/47, so the three rows are falsifiable and they are green on the served page, not on a dev server.
+
+### F-223 — the ranking was printed three times, and the two facts that make it readable were on the copies nobody reads
+
+The hub rendered the official order in the interactive Composite chart, again as 89 static bars, and a third
+time as an 89-row options table: 25,289 px at 1440 and 38,411 at 390. The whiskers and the sentence "75 of
+the 88 adjacent pairs are statistical ties" lived only on the static bars.
+
+- `jevV15BoardRow` now carries the headline option's published `composite_ci95` pair (ordered, and `null`
+  unless both ends are finite — a half-published interval is not drawn), and `JevScoreBar` draws it as the
+  existing `bh-jevc-ci` whisker on the bar's own 0–100 scale, with the interval in the accessible name too.
+- It is drawn **only under the official weights and View by = Overall**. The published interval belongs to
+  the official score; a chart re-scored under Option B or sorted by one axis draws none. The verifier checks
+  both halves of that.
+- The whisker-and-tie sentence is now one string (`tieSentence`), printed under the chart's leader sentence
+  **and** inside the folded static order, so the two can never drift apart.
+- `HeadlineBars` and `OptionsTable` became closed `<details>` ("Official order with 95% intervals (89
+  systems)", "All three weight options (89 systems)") directly where they were. Every row, interval and
+  `data-bh-jev15-*` marker stays in the document; the CR-205 section order is unchanged; the roster-addendum,
+  honorable-mention and not-ranked panels stay open because they are not duplicates.
+- `verify-fable-pass39-design.mjs` opens the fold before probing, as the directive required — F-206 a–e,
+  F-210 and F-211 read the same boxes they always did.
+
+### F-224 — a desktop table fits its panel, and it is split by what is compared
+
+The per-system table carried 17 columns behind a `min-w-[1480px]` and scrolled sideways inside a 1,366 px
+panel at 1440 (this is F-220 from pass 41, which went public with v1.5). It is now two views of the same 100
+rows, chosen by a pill pair: **Axes** (#A · System · Score · Intel. · Calib. · Speed · Cost · Gap · Penalty)
+and **Types & cost** (#A · System · I open · I sealed · Choice/Noul/Score o/s · p50/p95 · $/1k · Endpoint).
+Axes is the default; `?axes=types` deep-links the second, read from `window.location` in an effect the way
+the score chart reads `?view=`. The cost legend and the API note print under the second view only, because
+they explain columns only it carries, and the intro's promise that the name column stays put while the table
+scrolls is now made only on a phone (`sm:hidden`), where it is still true. The hidden pane stays in the
+document but is not laid out, so the sticky name column and every row marker behave as before.
+
+### F-225 — a label never covers the data it names
+
+Two sightings on a 390 px phone: the cost chart printed "2× Jev" over the "90" y tick, and the speed chart's
+label column sat on four bubbles inside the "most attractive quadrant" plate.
+
+- The phone label column now goes to the side of the plot holding **fewer points inside the band the labels
+  occupy**, and never onto the attractive-quadrant plate while that plate holds a labelled point. On the cost
+  chart the capable systems are the expensive ones, so they sit left and the column stays right, as the
+  directive said; on the speed chart the same five sit upper-right, so the column moves left, left-aligned,
+  with its leaders leaving from its right edge.
+- A y tick whose number would read under the limit caption loses **the number, not the gridline**; if that
+  tick is the axis maximum the caption moves down one gridline instead.
+- One thing the directive did not foresee: with the column on the left, the caption's usual place at the head
+  of the dashed line is inside the column. It stays left of the line (CR-176.1) and moves to the line's foot,
+  where nothing reads.
+
+### The pass-40 verifier had been red for a day, on a page that is fine
+
+Running the full pass-40 suite as a control found four red F-213 checks — "hub compare (null vs null): the
+sealed radar draws two series". They were red at the **deployed** revision too, so they were not this work.
+The cause is a stale selector: CR-205 moved the hub's compare from `JevCompareV14` to `JevCompareV15`, whose
+radars are `data-bh-jev15-radar` with the sealed one keyed `tiers-sealed`. The live page is fine — the sealed
+radar draws 7 polygons, no NaN in the text and no NaN console error (`pass40-f213-live-before-repair.json`,
+probed before the repair). The verifier now reads either marker set and maps the v1.5 keys onto the names its
+checks use: **60/60 for `ONLY=F-213` against the deployed revision**, 136/136 locally. F-212–F-215 keep the
+`verified` they were given at `356831bd`; this is their guard being pointed back at the current page, not a
+new acceptance.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-221 / F-222 / F-226 (pass 42, Fable) | implemented → **verified** | `iter269-fable42/{canonical,www,legacy}/verification.json` — **47/47 each** at `7739950c`; Fable's `live-before/` 9/47 at `4c15001e` | Implementer claude-fable, verifier **claude-opus**. `verify-fable-pass42-design.mjs`, out dir cleared before each run. Re-run at `496bb7c2` after this iteration's change: still 47/47 (`canonical-at-496bb7c2/`). |
+| F-223 (pass 42) | open → **implemented** | `iter269-f223/live-before/verification.json` **16/44** at `7739950c`; `local-after/` 48/48; **`live-after/`, `live-www/`, `live-legacy/` 48/48 each at `496bb7c2`**; `test/fable-pass42-directed.test.mjs` | Commit `496bb7c2`. Whiskers + tie sentence on the interactive chart, the two static repeats folded. Needs a non-implementer engine: `verify-fable-pass42-directed.mjs ONLY=F-223`. |
+| F-224 (pass 42, supersedes F-220) | open → **implemented** | same receipts, group `F-224` | Two views (Axes / Types & cost), `?axes=types`, 100 rows in both, no wrapper overflow at 1440. Needs a non-implementer engine. |
+| F-225 (pass 42) | open → **implemented** | same receipts, group `F-225`; `iter269-f223/live-after/mobile_dark-bubble-{speed,cost}.png` | Column on the emptier side, tick number dropped under the caption, caption to the line's foot where the column takes the left. Needs a non-implementer engine. |
+| F-212 / F-213 / F-214 / F-215 (pass 40) | verified, **guard repaired** | `iter269-f223/pass40-f213-live-before-repair.json` (60/60 `ONLY=F-213` at `7739950c` after the fix); `local-pass40/` 136/136; `live-pass40/` **136/136 at `496bb7c2`** | The four hub-compare checks had been reading `data-bh-jev14-*` on a hub that has served `JevCompareV15` since CR-205. The page was never wrong; the verifier now reads either marker set. |
+| F-220 (pass 41) | superseded by F-224 → **closed with F-224** | — | The directive's remedy shipped on the page it moved to. |
+| CR-1.10 / X3 / X4 | Fable pass 42's directives are implemented; X3 still needs the non-implementer pass on these three | this block | F-219 (the hidden What-If page) is still the What-If owner's and is untouched. |
+
+**Gates at `496bb7c2`, re-run on the committed tree, sequentially, unpiped:** `node scripts/build-dataset.mjs`
+**868 / 673 / 94 / 3,118** (only `generated_at`/`collected_at` moved; restored); `CI=true npm test` **1,641
+tests, 1,640 pass, 0 fail, 1 skip**, exit 0; `npx tsc --noEmit -p .` exit 0; `node
+scripts/validate-benchmark-registry.mjs` **293 entries**. Logs in `iter269-f223/`.
+
+### What the next iteration should know
+
+1. **F-223's desktop budget has 4 px of slack.** The hub is **18,496 px** at 1440 against the directive's
+   18,500. One more ranked system (~48 px in the open panes) puts it over. If that happens the answer is not
+   to relax the number: the next duplicate to fold is the one to find, and the roster-addendum and not-ranked
+   panels are explicitly not it. At 390 the margin is comfortable (26,016 against 27,000).
+2. **A closed `<details>` keeps its children in the DOM and they still report boxes.** Any verifier that
+   measures inside `[data-bh-jev15-bars]` or `[data-bh-jev15-options]` must set `.open = true` first —
+   `verify-fable-pass39-design.mjs` now does (`live-pass39/` **56/56 at `496bb7c2`**). Reading text out of a
+   collapsed one gives an empty string.
+3. **Run a neighbouring pass's verifier as a control.** Pass 40 had been 132/136 on a correct page for a day
+   because CR-205 renamed the markers under it. A verified row whose guard no longer resolves is not a
+   verified row.
+4. **Untouched and still open, unchanged from iteration 268:** D249.2 / D249.4, D253.2 (`BENCHMAXX_MIN_COMPARISONS = 6`,
+   still the one question for Florian), R9.1's two arms under the written-permission hold, the Coolify host
+   alias (patched, not fixed — this iteration's push did deploy, so the patch was still in place), and the
+   05:17 run that is the acceptance for D251.1/.3/.4 and D252.
 
 **`ALL-ACCEPTED` is not appended.**
