@@ -18027,3 +18027,186 @@ the union is the complete fix, not half of one. And a free-model review packet o
 questions returns nothing at all — budget for that instead of discovering it at minute fifty.
 
 **`ALL-ACCEPTED` is not appended.**
+
+## Iteration 266 (claude-opus, 2026-09-28 17:30 UTC) — the version_guard that was never true, Scale's route coming back, and four rows a non-implementer finally signed
+
+### D251.2 — the mls-bench-lite guard did not describe the board it guards, and never had
+
+The daily has retained `mls-bench-lite::30-tasks` every day since 25 September. Iteration 264 read the
+05:17 producer's verdict — "version_guard requires each chart key to have a harness parenthesis matching
+an allowed effort, but source 1 shows keys without parentheses … and one with 'max effort, with fallback'
+outside the allowed set" — and wrote it down as **a source change**. It is not one. The board is
+byte-for-byte the same shape it had on the day this entry was registered:
+
+| | 2026-09-22 capture (the registered evidence) | 2026-09-28 capture |
+|---|---|---|
+| rows | 15 | 16 (`GPT-6 Astra\|Codex (max)`, 50.0, is the only addition) |
+| keys with **no** parenthesis, `effort: ""` | 6 (`Qwen3.8-Max-0902\|Claude Code`, `Kimi K2.6\|Kimi-Code`, …) | the same 6 |
+| the qualified key | `Claude Fable 5\|Claude Code (max effort, with fallback)` | unchanged |
+
+So the producer is right and the source is innocent: our own **prose** was wrong at registration. The
+collector always enforced the correct rule — `collect-public-benchmarks.py:1104`, `bool(effort) !=
+bool(paren)` plus `re.match(effort + r'\b', paren[1])`: a parenthesis **exactly when** an effort is
+stated, opening with that effort word and free to qualify it afterwards. Only the sentence a reviewer
+reads demanded a parenthesis on every key. A guard narrower than the board it guards fails every day and
+teaches nobody anything.
+
+Re-derived from the board as it is (and as it was), in all three places that carry the string —
+`registry.json` `how_to_collect.version_guard`, the plan's `recipe.version_guard` and the plan's
+top-level `version_guard`, plus the one-line summary in `data/SCRAPING.md`:
+
+> … each key exactly `"<name>|<harness>"` for the row's own name; the row's stated effort one of max,
+> xhigh, high, medium, low or empty, and the harness agreeing with it — a trailing parenthesis exactly
+> when an effort is stated, opening with that effort word and free to qualify it afterwards (the board
+> serves "Claude Code (max effort)", "Codex (max)", "Codex (xhigh)", "Kimi-Code (max)" and "Claude Code
+> (max effort, with fallback)"), and no parenthesis at all when the board states no effort ("Claude
+> Code", "Kimi-Code"); …
+
+**This is not a widening.** It is the collector's own rule written out, and it is *stricter* in one place:
+the old "or none" left the no-effort case ambiguous, the new text binds it — no effort means no
+parenthesis, and a parenthesis appearing on a no-effort row still fails closed (`test/mls-bench.test.mjs`
+already probes exactly that). Nothing about the task subset, the harness set, the scores or the identity
+moved, and no value changed: `build-dataset` is 868 / 673 / 94 / 3,118, and the only `dataset.json` lines
+that differ are the guard string and the two timestamps.
+
+`test/d251-2-mls-bench-version-guard.test.mjs` (2 tests) pins the prose against the board's **own
+registered capture**, so it can never again be narrower than its source: it re-reads the 15 chart rows out
+of the committed `.gz`, asserts the six no-parenthesis keys and the one qualified key by name, checks
+every row against the collector's rule, and then requires the guard text to name the no-effort case, to
+quote `"Claude Code (max effort, with fallback)"` verbatim, to name every effort word and harness the
+capture states, and to be byte-identical in the registry and both plan fields. Falsifiability checked:
+restoring the old clause turns the second test red and leaves the first green.
+
+### D251.4 — Scale's route came back on its own; nothing to change
+
+Iteration 264's contingency was "wait a day; if it stays broken, move the source to the index page with a
+new version_guard and a critic round." It did not stay broken. Today `https://labs.scale.com/leaderboard/
+sweatlas-tw` answers **200** with `<title>SWE Atlas - Test Writing</title>` — its registered guard — and
+the registered `scale_swepro` parser, run unmodified against today's capture, reads **24 rows**
+(Fable-5.1 (Claude Code) xHigh* 67.04, Opus 5 (Claude Code) xHigh 62.22, …). So the 404 was a one-day
+transient on Scale's side, the source needs no move, no new guard and no critic round, and the right
+answer was to wait. Capture: `iter266-d251-4/sweatlas-tw-20260928.html`.
+
+**Replayed against the daily's own 11:53 capture** (`BH_REPLAY_MANIFEST=data/raw/benchmarks/daily-evidence/
+2026-09-28T11-53-42-848Z/manifest.json`, `replay-protocol-review.mjs`), four rounds, because a free
+critic pair varies:
+
+| run | producer | outcome |
+|---|---|---|
+| r1 | `match` — "All fields verified against sources … no supersession evidence" | critic `pass`, 0 errors, **accepted** |
+| r2 | `match` — "Source confirms leaderboard statement, chart schema/keys/efforts/scores …" | **accepted** |
+| r3 | `match` | **accepted** |
+| `--lie` (status flipped to `retained`) | `mismatch` — "c1 identity/scoring **matches** SOURCE 1-7 (guard quote, chart title/keys/humanSota 44.66, 30-task subset, arithmetic mean). c2 mismatch: status 'retained' contradicts SOURCE 1, which shows a live leaderboard with 16 rows" | **blocked**, as it must be |
+
+Three for three, and the control still fails closed — and the lie run's own note is the cleanest evidence
+that the repair landed: the producer now reads the **guard quote** as matching, and has to reach for the
+lifecycle field to find anything to complain about. `last_verified` is deliberately left at `2026-09-22`:
+`refresh-benchmarks.mjs:440` sets it only when the daily's own protocol review is accepted, so it moving
+off that date tomorrow is the unfaked acceptance.
+
+### What today's failed daily still needs — one arm, named
+
+The 05:17 run's `summary.txt` reports `Schritte: 34 erfolgreich; 2 fehlgeschlagen` and
+`Publikation: keine`, and `reports/refresh-benchmarks.log` ends with `Command failed: … phase-step.mjs
+benchmarks` over exactly four retained arms. After this iteration three of the four are answered:
+
+| retained arm | why it was retained on 2026-09-28 | state after this iteration |
+|---|---|---|
+| `mls-bench-lite::30-tasks` | protocol not approved — the guard clause above | **repaired** (D251.2); three replays, producer `match` each time |
+| `swe-atlas-test-writing::snapshot-2026-09-15` | `Primary source unavailable: … HTTP Error 404` | **recovered on Scale's side** (D251.4); route 200, parser reads 24 rows |
+| `mazur-creative-story-writing::snapshot-2026-09-10` | protocol not approved — the evaluator-version wording | **repaired in iteration 264**, replayed accepted there |
+| `aa-automationbench::1.0.6` | protocol not approved — "Mean fraction" vs AA's "percentage" | **still open (D251.3)** |
+
+So **D251.3 is now the last named blocker between the 05:17 run and a publication**, which is a much
+stronger reason to spend an iteration on it than it had this morning. Iteration 264 already proved the
+cheap half wrong: rewriting only the metric makes the producer raise the *unit* instead. The unit and the
+metric have to move together, and the captured AA payload has to be registered as the evidence for the
+0–1 scale — AA's methodology says a task "receives the **percentage** of objectives the model completed",
+the served `automationBenchPartialScore` expresses that on 0–1 (172 observations, 0.0019–0.6954), and a
+repair that states only one of those two facts contradicts the other. **The value is right; never touch
+it** — it is an Agentic category anchor. One practical trap for whoever takes it: the AA arm cannot be
+replayed faithfully from a `capture-benchmark-sources` manifest, because `--activity`'s receipt URL (the
+AA model page) is fetched by `fetch-aa` and is not in the manifest, so c2 reports missing lifecycle
+evidence offline; `--activity` needs counts computed from a real capture comparison, never typed.
+
+### D248, D250, D252, D253 — the sign-off that was missing
+
+Four rows had been sitting at "implemented, verified live by their implementer, pending a non-implementer"
+for between one and four iterations, all of them written by claude-opus. The whole acceptance is three
+committed verifier scripts, so the honest way to get a different engine to own the verdict is to let it
+run them and read its own receipts. `ops/ux-2026-09-12/bin/run-iter266-nonimplementer-checks.sh` is that,
+as one command: nine runs (three verifiers × three hosts), each into a **cleared** out dir, then a summary
+of every receipt. **Kimi K3 via `delegate.sh --kimi`** ran it end to end and reported:
+
+| verifier | benchmarkheaven.com | www.benchmarkheaven.com | legacy mintapis host |
+|---|---|---|---|
+| `verify-d248-live.mjs` | 31/31 | 31/31 | 31/31 |
+| `verify-d250-live.mjs` | 36/36 | 36/36 | 36/36 |
+| `verify-d252-d253-live.mjs` | 53/53 | 53/53 | 53/53 |
+
+Kimi's first report called **D248 FAIL** — correctly, on the rule it was given: my summary line read
+`j.pass`, and `verify-d248-live.mjs` writes `passed`, so three receipts printed `undefined/31` even though
+the per-host output above them said `31/31 checks passed`. That is a defect in my reporting line, not in
+the verification, and a verifier that refuses to read past the letter of its instruction is doing its job.
+Fixed the reader to accept `pass`, `passed` or a recount of the `checks` array, and sent Kimi back to
+re-read the three d248 receipts on their own: **31/31, 0 failing, on all three hosts**. Both verdicts are
+kept — `iter266-verify/kimi-verdict.md` and `kimi-d248-recheck.md`.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D251.2 | open → **implemented, accepted on 3/3 replays, control blocked** | `iter266-d251-2/replay-r{1,2,3}.log` (accepted), `replay-lie.log` (blocked); `test/d251-2-mls-bench-version-guard.test.mjs` (2/2) | The board never changed; the guard was wrong on the day it was written. Re-derived from the collector's own rule, pinned against the registered capture. The behavioural acceptance is tomorrow's 05:17 run: this arm stops being retained and `last_verified` moves off `2026-09-22`. |
+| D251.4 | open → **closed, no change needed** | `iter266-d251-4/sweatlas-tw-20260928.html`; parser run 24 rows | Scale's detail route 200s again and the registered guard and parser both hold. Confirm in tomorrow's `refresh-benchmarks.log`. |
+| D248 | implemented, pending non-implementer verification → **verified** | `iter266-verify/d248/*/verification.json` **31/31 × 3 hosts**; `kimi-verdict.md`, `kimi-d248-recheck.md` | Implementer claude-opus, verifier Kimi K3. |
+| D250 | implemented, live-checked by its implementer → **verified** | `iter266-verify/d250/*/verification.json` **36/36 × 3 hosts**; `kimi-verdict.md` | Same pair. |
+| D252 | implemented, live-checked by its implementer → **verified** | `iter266-verify/d252-d253/*/verification.json` **53/53 × 3 hosts**; `kimi-verdict.md` | Same pair. The 53 checks cover D252 and D253 together. |
+| D253 | implemented, live-checked by its implementer → **verified** | same receipt | Same pair. |
+
+### Handoff from iteration 266 (claude-opus, 2026-09-28 17:30–18:0x UTC)
+
+Everything is committed, gated and **pushed**; the tree is clean, `run.lock` was absent at every push and
+no daily process was running. Two commits: `94a61123` (D251.2) and this ledger.
+
+Gates: `node scripts/build-dataset.mjs` **868 / 673 / 94 / 3,118** (unchanged); `CI=true npm test`
+**1,605 tests, 1,604 pass, 0 fail, 1 skip**, exit 0, unpiped (`iter266-gates/npm-test.log`);
+`npx tsc --noEmit -p .` exit 0; `node scripts/validate-benchmark-registry.mjs` 293 entries.
+
+**What changed, in one line each.**
+
+1. **D251.2** — `mls-bench-lite::30-tasks`'s version_guard demanded a harness parenthesis on every chart
+   key; the board never served that, not even in the capture the entry was registered against. Re-derived
+   the prose from the collector's own rule; accepted on 3/3 replays, control blocked.
+2. **D251.4** — Scale's `sweatlas-tw` detail route is back at 200 and the registered parser reads 24 rows
+   from it. The 404 was a one-day transient; waiting was the right call and nothing needed changing.
+3. **D248 / D250 / D252 / D253** — a non-implementer (Kimi K3 via `delegate.sh`) ran all three live
+   verifiers on all three hosts and reported 31/31, 36/36 and 53/53. All four rows are now `verified`.
+
+**What the next iteration should check first, in order.**
+
+1. **Read the 05:17 run's `reports/refresh-benchmarks.log` and count the retained arms.** Today it held
+   four and the `benchmarks` step failed; three are answered, so the expected count is **one**
+   (`aa-automationbench::1.0.6`). If `mls-bench-lite::30-tasks` is retained again, the complaint will be a
+   *different* one — read it before touching the guard, because a free critic pair varies and the 25 and
+   27 September verdicts on this arm were about `scoring.*` evidence, not the keys. Also check that
+   `last_verified` for this entry moved off `2026-09-22`; that is the unfaked acceptance for D251.2, and
+   `refresh-benchmarks.mjs:440` is the only thing allowed to set it.
+2. **D251.3 is the last named blocker for a 05:17 publication** — the table above states why, what
+   iteration 264 already ruled out, and the replay trap (`--activity` needs counts from a real capture
+   comparison; the AA model page is not in a `capture-benchmark-sources` manifest). It is an Agentic
+   category anchor: repair the prose and the unit **together**, never the value.
+3. **D251.1** (mazur's `unit: 'points'`, unsupported in two of three rounds) and **D249.2 / D249.4** are
+   untouched and diagnosed in iterations 262–264.
+4. **D253.2 is still the one question for Florian** — board #4417, `BENCHMAXX_MIN_COMPARISONS = 6` is not
+   derived from anything written down and withholding DeepSeek V4.1 Flash's tag is a published signal.
+5. **A push still implies a deploy, as of this iteration** — live `/api/meta` `revision` was `504a3802`
+   (= `main`) when this iteration started, so iteration 265's Coolify `is_reachable` repair held.
+
+**Two things worth not re-learning.** A retained arm whose producer says "the source shows X the guard does
+not allow" is not evidence that the source changed: extract the row *shapes* from the registered evidence
+`.gz` and from today's capture and diff them first. Here they were identical and the guard had been wrong
+since the day it was written — four days of daily failures for a sentence. And when you hand a verifier a
+literal rule ("PASS if all three lines are total/total"), expect it to apply the rule literally: Kimi
+correctly failed D248 because my summary line printed `undefined/31`, the receipt writing `passed` where
+I read `pass`. The fix belonged in my script, and a verifier that will not read past its instruction is
+worth more than one that guesses.
+
+**`ALL-ACCEPTED` is not appended.**
