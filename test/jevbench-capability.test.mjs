@@ -51,7 +51,7 @@ test('Capability keeps valid zero-valued axes as a measured score', () => {
 
 test('Capability views define the measure, use twenty expandable bars, and follow the ranking table', () => {
   const source = readFileSync(path.join(root, 'components/JevCapabilityChart.tsx'), 'utf8');
-  const page = readFileSync(path.join(root, 'app/jev-models/page.tsx'), 'utf8');
+  const page = readFileSync(path.join(root, 'app/jev-models/v1.4.2.2/page.tsx'), 'utf8');
   const pinned = readFileSync(path.join(root, 'app/jev-models/v1.4.1/page.tsx'), 'utf8');
   const previous = readFileSync(path.join(root, 'app/jev-models/v1.4/page.tsx'), 'utf8');
   assert.match(source, /Capability is the arithmetic mean of Intelligence and Calibration/);

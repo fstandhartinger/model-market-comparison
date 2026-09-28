@@ -7,6 +7,7 @@ import {
   JEVBENCH_V15_PREVIEW_ARTIFACT, JEVBENCH_V15_PREVIEW_ROUTE, jevV15Composite, readJevbenchV15Preview, validateJevbenchV15Preview,
   jevV15LeaderKeys, jevV15LeaderSentence, jevV15TieSummary,
 } from '../lib/jevbench-v15-preview.mjs';
+import { readJevbenchV15Release } from '../lib/jevbench-v15-release.mjs';
 import { readJevbenchV142, JEVBENCH_V142_SHA256 } from '../lib/jevbench-v142.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -26,7 +27,20 @@ test('v1.5 preview artifact validates: aggregate-only, composites reproduce, boa
   assert.doesNotMatch(read(JEVBENCH_V15_PREVIEW_ARTIFACT), /"(item_id|item_text|question_text|gold|golds|expected|prediction|predicted|per_item|item_results)"\s*:/);
 });
 
-test('validator rejects item-level fields, a changed score and a published status', async () => {
+test('v1.5.0 public artifact matches the reviewed preview values and carries released status', async () => {
+  const [{ artifact: preview }, { artifact: release, bytes, sha256 }] = await Promise.all([
+    readJevbenchV15Preview(root), readJevbenchV15Release(root),
+  ]);
+  assert.equal(release.status, 'released');
+  assert.equal(release.run_kind, 'official');
+  assert.equal(sha256, '6b2f6b058b36203c98ec5f585eb8376038bc905f11db944f4e0bcd29c278c643');
+  assert.equal(JSON.stringify({ ...release, status: preview.status }), JSON.stringify(preview));
+  assert.equal(release.systems.length, 100);
+  assert.equal(release.systems.filter((system) => system.listing === 'ranked').length, 89);
+  assert.ok(bytes.length > 100_000);
+});
+
+test('validator rejects item-level fields, a changed score and an unknown status', async () => {
   const { artifact } = await readJevbenchV15Preview(root);
   const leak = clone(artifact); leak.systems[0].intelligence.gold = 'x';
   assert.throws(() => validateJevbenchV15Preview(leak), /item-level/);
@@ -55,23 +69,26 @@ test('option weights: B = 40/20/20/20 with floor 50; C floor 60', () => {
   assert.ok(Math.abs(c - a * (55 / 60) ** 2) < 1e-9);
 });
 
-test('hidden route: noindex, banner, diagnostic label, not in sitemap, nav, robots or any public page', () => {
+test('released route is public, versioned and listed while the former preview URL stays noindex', () => {
   assert.equal(JEVBENCH_V15_PREVIEW_ROUTE, '/wip-oiifi41ouv1f/jevbench-v15');
   const page = read('app/wip-oiifi41ouv1f/jevbench-v15/page.tsx');
-  assert.match(page, /robots:\s*\{\s*index:\s*false,\s*follow:\s*false/);
-  assert.match(page, /canonical: 'https:\/\/benchmarkheaven\.com\/wip-oiifi41ouv1f\/jevbench-v15'/);
-  assert.match(page, /Unpublished preview — not released/);
-  assert.match(page, /DIAGNOSTIC numbers/);
+  assert.match(page, /permanentRedirect\('\/jev-models\/v1\.5\.0'\)/);
   assert.match(read('next.config.mjs'), /source: "\/wip-oiifi41ouv1f\/:path\*", headers: \[\{ key: "X-Robots-Tag", value: "noindex, nofollow/);
-  for (const file of ['app/sitemap.ts', 'app/robots.ts', 'app/layout.tsx', 'app/jev-models/page.tsx', 'app/jev-models/v1.4.2/page.tsx', 'app/api/jevbench/route.ts']) {
+  assert.match(read('app/sitemap.ts'), /"\/jev-models\/v1\.5\.0"/);
+  assert.match(read('app/jev-models/page.tsx'), /readJevbenchV15Release/);
+  assert.match(read('app/jev-models/v1.5.0/page.tsx'), /canonical: '\/jev-models\/v1\.5\.0'/);
+  assert.match(read('app/api/jevbench/v1.5.0/route.ts'), /X-Content-SHA256/);
+  for (const file of ['app/robots.ts', 'app/layout.tsx', 'app/jev-models/v1.4.2/page.tsx', 'app/api/jevbench/route.ts']) {
     assert.doesNotMatch(read(file), /jevbench-v15|v1\.5\.0-preview|wip-oiifi41ouv1f/, `${file} must not reference the hidden v1.5 preview`);
   }
 });
 
-test('public JevBench pages still use the pinned v1.4.2 artifact', async () => {
+test('the prior frozen JevBench route stays pinned and the live board uses v1.5.0', async () => {
   const { sha256 } = await readJevbenchV142(root);
   assert.equal(sha256, JEVBENCH_V142_SHA256);
   assert.match(read('app/jev-models/v1.4.2/page.tsx'), /readJevbenchV142WithFamilies/);
+  assert.match(read('app/jev-models/v1.4.2.2/page.tsx'), /readJevbenchV1422WithFamilies/);
+  assert.match(read('app/jev-models/page.tsx'), /readJevbenchV15Release/);
 });
 
 test('hidden What-If Lab: noindex, unlinked, aggregate-only; addendum rows listed apart from the ranking', () => {

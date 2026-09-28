@@ -451,7 +451,7 @@ code{font-size:12px;background:#eef1f5;padding:0 4px;border-radius:3px}
     if (DATA.B === 0 || DATA.B === undefined) parts.push("<span>No bootstrap in this data: tie markers not available</span>");
     var off = DATA.run_kind === "official";
     $("banner").className = "banner " + (off ? "off" : "diag");
-    $("banner").textContent = off ? "Official v1.5 (unpublished preview)" : "DIAGNOSTIC data — not the official v1.5 result";
+    $("banner").textContent = off ? "Official JevBench v1.5.0 release" : "DIAGNOSTIC data — not the official v1.5.0 result";
     $("meta").innerHTML = parts.join("");
   })();
 
@@ -677,7 +677,7 @@ code{font-size:12px;background:#eef1f5;padding:0 4px;border-radius:3px}
     $("tableTitle").textContent = (inClass ? "Jev class — " : "Ranking — ") + shown.length + " of " + ranked.length + " ranked systems" + (byCap ? " (by Capability)" : "");
     $("tableHint").innerHTML = "# = what-if rank over all ranked systems; Δ compares with the official " + esc(W.OPTIONS[ui.cmp].label) +
       " order stored in the data. Highlighted cells differ from the official value. Red axis values are below their gate." +
-      (inClass ? " Class # renumbers within the filtered class." : "") + " What-If # can include measured addendum rows and changes with these settings; it is not the frozen-base hypothetical placement shown on the preview page.";
+      (inClass ? " Class # renumbers within the filtered class." : "") + " What-If # can include measured addendum rows and changes with these settings; it is not the frozen-base hypothetical placement shown on the official release page.";
 
     // unranked
     var U = [];

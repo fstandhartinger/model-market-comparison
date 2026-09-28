@@ -180,7 +180,7 @@ test('Jev chart names wrap on phones and only truncate at the desktop breakpoint
 // Fable pass 24 (2026-09-19): the Jev page's presentational rules, checked at the source so a refactor cannot undo them silently.
 test('Jev page pass-24 rules: no stretched presets, wrapping I/C/S/K line on phones, $ per 1,000 before the tiers, one one-liner', async () => {
   const cmp = await readFile(new URL('../components/JevModelsV12.tsx', import.meta.url), 'utf8');
-  const page = await readFile(new URL('../app/jev-models/page.tsx', import.meta.url), 'utf8');
+  const page = await readFile(new URL('../app/jev-models/v1.4.2.2/page.tsx', import.meta.url), 'utf8');
   const css = await readFile(new URL('../app/globals.css', import.meta.url), 'utf8');
   assert.match(cmp, /grid-cols-2 gap-2 lg:grid-cols-6 lg:items-start/, 'F-126: preset buttons must not stretch to the open Custom panel');
   assert.match(cmp, /row-start-3 mt-0\.5 min-w-0 font-mono text-\[10\.5px\] sm:whitespace-nowrap/, 'F-127: the axis line wraps below sm');
@@ -213,7 +213,7 @@ test('Jev pass-24 follow-up: the chart keeps one short visible note and moves de
 });
 
 test('Jev pass-24 follow-up: cost disclosure has a hash-open client helper', async () => {
-  const page = await readFile(new URL('../app/jev-models/page.tsx', import.meta.url), 'utf8');
+  const page = await readFile(new URL('../app/jev-models/v1.4.2.2/page.tsx', import.meta.url), 'utf8');
   const helper = await readFile(new URL('../components/JevCostsDisclosure.tsx', import.meta.url), 'utf8');
   assert.match(page, /JevCostsDisclosure/, 'F-135: page uses the disclosure helper');
   assert.match(helper, /id="jev-costs"/, 'F-135: the disclosure owns the anchor');

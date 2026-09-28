@@ -38,7 +38,7 @@ test('CR-191 v1.4.2.2 is pinned to the approved aggregate artifact and top five'
   assert.deepEqual(JEVBENCH_V1422_TOP5, ['imajev_4b', 'plumb-4b', 'decider-4b-v2', 'jev-1.13.0', 'jevk5-v02']);
 });
 
-test('CR-191 serves v1.4.2.2 live and preserves pinned v1.4.2 with its API and fairness note', async () => {
+test('CR-191 preserves pinned v1.4.2.2 and v1.4.2 routes while v1.5 is live', async () => {
   const [route, page, livePage, board, sitemap, version22Page, version22Route, version22FamiliesRoute] = await Promise.all([
     read('../app/api/jevbench/v1.4.2/route.ts'),
     read('../app/jev-models/v1.4.2/page.tsx'),
@@ -51,20 +51,21 @@ test('CR-191 serves v1.4.2.2 live and preserves pinned v1.4.2 with its API and f
   ]);
   assert.match(route, /readJevbenchV142\(\)/);
   assert.match(route, /'X-Content-SHA256': sha256/);
-  assert.match(version22Page, /canonical = '\/jev-models\/v1\.4\.2\.2'/);
-  assert.match(version22Page, /revision: 'v1\.4\.2\.1'.*readJevbenchV1421/s);
+  assert.match(version22Page, /alternates: \{ canonical: '\/jev-models\/v1\.4\.2\.2' \}/);
+  assert.match(version22Page, /const previousRelease = \(await readJevbenchV1421\(\)\)\.artifact/);
   assert.match(version22Route, /readJevbenchV1422\(\)/);
   assert.match(version22Route, /'X-Content-SHA256': sha256/);
   assert.match(version22FamiliesRoute, /readJevbenchV1422Families\(\)/);
   assert.match(page, /canonical = '\/jev-models\/v1\.4\.2'/);
   assert.match(page, /async function pinnedView\(\) \{\s*const result = await readJevbenchV142WithFamilies\(\);\s*return \{ \.\.\.jevbenchV142View\(result\), sealedFamilyN: result\.sealedFamilyN \};\s*\}/);
   assert.match(page, /export default async function JevModelsV142Page\(\) \{\s*const view = await pinnedView\(\);[\s\S]*<JevModelsV14Board artifact=\{view\.artifact\} sha256=\{view\.sha256\}/);
-  assert.match(livePage, /const v14Result = await readJevbenchV1422WithFamilies\(\);\s*const v14 = jevbenchV1422View\(v14Result\);/);
-  assert.match(livePage, /const previousRelease = \(await readJevbenchV1421\(\)\)\.artifact;/);
-  assert.match(livePage, /readJevbenchV1422WithFamilies\(\)/);
-  assert.match(livePage, /readJevbenchV1421\(\)/); // The exact preceding v1.4.2.1 release is the comparison base.
-  assert.match(livePage, /<JevModelsV14Board artifact=\{v14\.artifact\} sha256=\{v14\.sha256\} previous=\{previous\}/);
-  assert.match(livePage, /href="\/jev-models\/v1\.4\.2\.2" data-bh-jev-version-share/);
+  assert.match(version22Page, /readJevbenchV1422WithFamilies\(\)/);
+  assert.match(version22Page, /readJevbenchV1421\(\)/); // The exact preceding v1.4.2.1 release is the comparison base.
+  assert.match(version22Page, /<JevModelsV14Board artifact=\{v14\.artifact\} sha256=\{v14\.sha256\}/);
+  assert.match(version22Page, /href="\/jev-models\/v1\.4\.2\.2" data-bh-jev-version-share/);
+  assert.match(livePage, /readJevbenchV15Release\(\)/);
+  assert.match(livePage, /JevBenchV15ReleasePage/);
+  assert.match(livePage, /versionPath="\/jev-models\/v1\.5\.0"/);
   // F-189 (Fable pass 35, decision 2): CR-152's "visible Intelligence ordering" is a control, not a second table of the
   // numbers the chart already draws. CR-151 (Florian 25 Sep): that control is the "View by" switch (it supersedes the
   // two-button rank-by); the approved sentence sits beside it with a one-click Intelligence ordering.
@@ -80,11 +81,9 @@ test('CR-191 serves v1.4.2.2 live and preserves pinned v1.4.2 with its API and f
   assert.match(sitemap, /"\/jev-models\/v1\.4\.2\.1"/);
   assert.match(sitemap, /"\/jev-models\/v1\.4\.2\.2"/);
   assert.match(sitemap, /"\/jev-models\/v1\.4\.1"/);
-  // The temporary upload notice and its preview images (main 7c8d0212/811f0dd9) are gone with the release.
-  assert.doesNotMatch(livePage, /data-bh-release-notice|v142-preview/);
-  // F-193 (main, 25 Sep): the live board's phone view stays compact; the flag now reaches the interactive chart.
-  assert.match(livePage, /data-bh-jev-live-head/);
-  assert.match(livePage, /compactMobile/);
+  // The frozen v1.4.2.2 route is free of its former upload notice; current `/jev-models` is v1.5.
+  assert.doesNotMatch(version22Page, /data-bh-release-notice|v142-preview/);
+  // F-193 (main, 25 Sep): the v1.4 interactive chart retains its marked phone and eyebrow controls.
   const interactive = await read('../components/JevBoardInteractive.tsx');
   assert.match(interactive, /data-bh-jev14-compact/);
   assert.match(interactive, /data-bh-jev14-chart-eyebrow/);

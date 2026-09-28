@@ -8,7 +8,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
 const read = (p) => readFile(new URL(p, import.meta.url), 'utf8');
-const [jev, history, mm] = await Promise.all([read('../app/jev-models/page.tsx'), read('../components/JevHistoryContent.tsx'), read('../app/jev-models/multimodal-preview/page.tsx')]);
+const [jev, history, mm] = await Promise.all([read('../app/jev-models/v1.4.2.2/page.tsx'), read('../components/JevHistoryContent.tsx'), read('../app/jev-models/multimodal-preview/page.tsx')]);
 
 test('F-157: the CR-118.4 note is rendered inside the board, after the ranking chart, with its wording intact', () => {
   const board = history.indexOf('<JevModelsV12Board view={view} tasks={tasks}>');

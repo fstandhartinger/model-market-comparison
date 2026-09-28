@@ -5,7 +5,7 @@ import { readFile } from 'node:fs/promises';
 // CR-151 (Florian 25 Sep 2026): heat-shaded axis cells, sortable/filterable chart and table, a "View by" switch, and the
 // axes table moved below the compare view.
 const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
-const [board, shared, client, page, css] = await Promise.all([read('../components/JevModelsV14.tsx'), read('../components/JevBoardShared.tsx'), read('../components/JevBoardInteractive.tsx'), read('../app/jev-models/page.tsx'), read('../app/globals.css')]);
+const [board, shared, client, page, css] = await Promise.all([read('../components/JevModelsV14.tsx'), read('../components/JevBoardShared.tsx'), read('../components/JevBoardInteractive.tsx'), read('../app/jev-models/v1.4.2.2/page.tsx'), read('../app/globals.css')]);
 
 test('axis cells are shaded by their standing in the column; price and latency count lower as better', () => {
   assert.match(shared, /usd: \{ get: \(r\) => r\.cost\?\.usd_per_1000, lowerIsBetter: true \}/);
