@@ -31,6 +31,7 @@ export type JevV15Artifact = {
   source_sha256: string; method_sha256: string; pricing_addendum_sha256: string;
   base_results_sha256?: string; addenda_sources_sha256?: Record<string, string>;
   headline_method_addendum_sha256: string;
+  pricing_disclosure_correction_sha256: string; pricing_disclosure_normalizer_sha256: string;
   sample: { open: number; sealed: number; total: number; published_open: number };
   types: Record<JevV15Type, number>; tier_weights: Record<string, number>; sealed_share_of_intelligence: number;
   G_med: number | null; G_med_flag_gt10: boolean; headline: JevV15Option;

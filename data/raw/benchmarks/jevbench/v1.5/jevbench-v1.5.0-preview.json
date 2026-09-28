@@ -4,16 +4,22 @@
  "protocol": "jevbench::v1.5",
  "status": "preview-not-published",
  "run_kind": "official",
- "source_sha256": "cf9089b8e7a50f94576609c3759c4025fd787083fd1daf6dae2afa9e00c2879a",
+ "source_sha256": "452885de2a84cd5b9ed393d541fd8d6c6a540f9d7f762f9d2df9349383f26173",
  "base_results_sha256": "1cea4d6018da4c7e61132e932452b20ddea5758dcb8714a57a858e078dd6af12",
  "addenda_sources_sha256": {
   "A1": "2101bff95e6056fdebbcc6cfdb9e86c634ac8fb4a39419389c38bb47732e8c88",
   "A1_protocol": "fadbcd6ab18cc4576deab9f5dd7bc7e0af1eb93d111648719083e4093125b7ef",
-  "base": "1cea4d6018da4c7e61132e932452b20ddea5758dcb8714a57a858e078dd6af12"
+  "A2": "eea496b1a549963084db76659fe32d3a67c2e9ca281e1d6a231df9be759343a7",
+  "A2_protocol": "1fb818a123eedf68c49295fd860f62b27c79b80fb85953b2a2e86599f861f0f3",
+  "base": "1cea4d6018da4c7e61132e932452b20ddea5758dcb8714a57a858e078dd6af12",
+  "pricing_disclosure_correction": "1b660648bd498645a0888bd365bb24cfc616c79542862594d7a0077ed1db51fb",
+  "pricing_disclosure_normalizer": "2cbc7bd5fdd9c249d526e4269ee492261feafecabd0cc662251437223776f586"
  },
  "method_sha256": "c25d3d8b8512e4d93370a9e0c99705d19b2a9389956ca33b8a4bd2b0ec501c07",
  "pricing_addendum_sha256": "2fc44459ef801d0627062f7eefd973df40772e8ac117727479748e4be4c220cc",
  "headline_method_addendum_sha256": "752ddccc4e191c81412631ee3121563421c4b9077cb6c3f2243ed1d1545cfab0",
+ "pricing_disclosure_correction_sha256": "1b660648bd498645a0888bd365bb24cfc616c79542862594d7a0077ed1db51fb",
+ "pricing_disclosure_normalizer_sha256": "2cbc7bd5fdd9c249d526e4269ee492261feafecabd0cc662251437223776f586",
  "sample": {
   "open": 904,
   "sealed": 720,
@@ -4135,7 +4141,7 @@
    "cost": {
     "kind": "estimate",
     "usd_per_1000": 0.015201077586206898,
-    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
+    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)"
    },
    "rank": 5,
    "ranked": true,
@@ -4363,7 +4369,7 @@
    "cost": {
     "kind": "estimate",
     "usd_per_1000": 0.01701689039408867,
-    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
+    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)"
    },
    "rank": 6,
    "ranked": true,
@@ -4591,7 +4597,7 @@
    "cost": {
     "kind": "estimate",
     "usd_per_1000": 0.020857610837438423,
-    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
+    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)"
    },
    "rank": 7,
    "ranked": true,
@@ -4819,7 +4825,7 @@
    "cost": {
     "kind": "estimate",
     "usd_per_1000": 0.025642610837438424,
-    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
+    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)"
    },
    "rank": 8,
    "ranked": true,
@@ -5047,7 +5053,7 @@
    "cost": {
     "kind": "estimate",
     "usd_per_1000": 0.018118577586206896,
-    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
+    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)"
    },
    "rank": 9,
    "ranked": true,
@@ -5275,7 +5281,7 @@
    "cost": {
     "kind": "estimate",
     "usd_per_1000": 0.02968398399014778,
-    "basis": "price floor: base-model reference price applied; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
+    "basis": "price floor: base-model reference price applied; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)"
    },
    "rank": 10,
    "ranked": true,
@@ -5503,7 +5509,7 @@
    "cost": {
     "kind": "estimate",
     "usd_per_1000": 0.016926853448275863,
-    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
+    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)"
    },
    "rank": 11,
    "ranked": true,
@@ -6643,7 +6649,7 @@
    "cost": {
     "kind": "estimate",
     "usd_per_1000": 0.01701689039408867,
-    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
+    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)"
    },
    "rank": 16,
    "ranked": true,
@@ -10063,7 +10069,7 @@
    "cost": {
     "kind": "estimate",
     "usd_per_1000": 0.0167512315270936,
-    "basis": "ESTIMATE (proxy tokens, I-2): exact base-model market reference; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
+    "basis": "ESTIMATE (proxy tokens, I-2): exact base-model market reference; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)"
    },
    "rank": 31,
    "ranked": true,
@@ -11203,7 +11209,7 @@
    "cost": {
     "kind": "estimate",
     "usd_per_1000": 0.022786576354679802,
-    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
+    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)"
    },
    "rank": 36,
    "ranked": true,
@@ -12115,7 +12121,7 @@
    "cost": {
     "kind": "estimate",
     "usd_per_1000": 0.01589887315270936,
-    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
+    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)"
    },
    "rank": 40,
    "ranked": true,
@@ -14395,7 +14401,7 @@
    "cost": {
     "kind": "estimate",
     "usd_per_1000": 0.0106851539408867,
-    "basis": "price floor: base-model reference price applied; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
+    "basis": "price floor: base-model reference price applied; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)"
    },
    "rank": 50,
    "ranked": true,
@@ -23672,7 +23678,7 @@
    "cost": {
     "kind": "estimate",
     "usd_per_1000": 0.01701689039408867,
-    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
+    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)"
    },
    "rank": null,
    "ranked": false,
@@ -23906,7 +23912,7 @@
    "cost": {
     "kind": "estimate",
     "usd_per_1000": 0.01701689039408867,
-    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
+    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)"
    },
    "rank": null,
    "ranked": false,
@@ -24140,12 +24146,246 @@
    "cost": {
     "kind": "estimate",
     "usd_per_1000": 0.01701689039408867,
-    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
+    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)"
    },
    "rank": null,
    "ranked": false,
    "listing": "addendum",
    "not_ranked_because": "v1.5 roster addendum A1: complete run, scored with the frozen v1.5.0 median gap. Headline A score 70.83 would place about #6; secondary B score would place about #7. Roster addendum rows stay outside the v1.5.0 order and tie markers.",
+   "would_place_A": 6,
+   "would_place_B": 7,
+   "ranks": {
+    "A": null,
+    "B": null,
+    "C": null
+   }
+  },
+  {
+   "key": "imajev-4b-rtx5090-a2",
+   "display": "Imajev-4B (RTX 5090)",
+   "addendum": {
+    "id": "A2",
+    "release": "v1.5",
+    "label": "v1.5 roster addendum A2"
+   },
+   "author": "unknown",
+   "repo": null,
+   "class": "unclassified",
+   "licence": "not recorded",
+   "open": "unknown",
+   "underlying": null,
+   "endpoint_kind": "gpu",
+   "endpoint_condition": "evaluator-owned Lium GPU pod (RTX 5090), offline read-only container",
+   "gpu": "RTX 5090",
+   "adapter_id": "A2 reviewed bundle",
+   "api_flag": false,
+   "api_exposure_note": null,
+   "status": {
+    "status": "complete",
+    "rows": 1624,
+    "missing": 0,
+    "answered_ok": 1624
+   },
+   "full_coverage": true,
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "planned_weight_denominator": 1.0,
+   "axes": {
+    "intelligence": 53.47383727839022,
+    "calibration": 88.11694149062471,
+    "speed": 91.13208929836159,
+    "cost": 63.26458220826236
+   },
+   "scores": {
+    "A": 70.38659212275981,
+    "B": 66.19909019518123,
+    "C": 55.907508463046334
+   },
+   "views": {
+    "Balanced 33:33:33": 65.96240864336546,
+    "Emphasis on Accuracy 60:20:20": 60.32678975105616,
+    "Emphasis on Cost 20:20:60": 64.85613036338354,
+    "Emphasis on Speed 20:60:20": 74.15469284216614,
+    "Intelligence only": 53.47383727839022
+   },
+   "composite_ci95": {
+    "A": [
+     67.79966861439989,
+     71.61191717463264
+    ],
+    "B": [
+     63.11559140704828,
+     68.08825963056043
+    ],
+    "C": [
+     47.08310320444435,
+     64.45534727420464
+    ]
+   },
+   "jevbench_score": 70.38659212275981,
+   "intelligence": {
+    "I_open": 56.24619253993687,
+    "I_sealed": 50.70148201684356,
+    "base": 53.47383727839022,
+    "gap": 5.544710523093308,
+    "excess": 0.358083023014065,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 80.11776048417694,
+      "tiers": {
+       "easy": 98.19113656918904,
+       "standard": 89.08240187158823,
+       "judge": 85.47717842323651,
+       "hard": 67.09753231492361
+      },
+      "n": {
+       "easy": 72,
+       "standard": 84,
+       "judge": 114,
+       "hard": 169
+      }
+     },
+     "open|noul": {
+      "cc": 21.823071948006877,
+      "tiers": {
+       "easy": 64.70588235294117,
+       "standard": 51.515151515151516,
+       "judge": 27.450980392156854,
+       "hard": -7.964601769911505
+      },
+      "n": {
+       "easy": 34,
+       "standard": 66,
+       "judge": 102,
+       "hard": 113
+      }
+     },
+     "open|score": {
+      "cc": 66.79774518762679,
+      "tiers": {
+       "easy": 36.12484114152319,
+       "standard": 79.14114403997071,
+       "judge": 68.57269580952628,
+       "hard": 66.96305880655612
+      },
+      "n": {
+       "easy": 16,
+       "standard": 50,
+       "judge": 34,
+       "hard": 50
+      }
+     },
+     "sealed|choice": {
+      "cc": 82.32588710912236,
+      "tiers": {
+       "easy": 88.28125,
+       "standard": 76.9074032148517,
+       "judge": 81.4487632508834,
+       "hard": 84.2041312272175
+      },
+      "n": {
+       "easy": 50,
+       "standard": 101,
+       "judge": 101,
+       "hard": 108
+      }
+     },
+     "sealed|noul": {
+      "cc": 7.563636363636362,
+      "tiers": {
+       "easy": 43.99999999999999,
+       "standard": 4.0000000000000036,
+       "judge": 19.999999999999996,
+       "hard": -9.090909090909093
+      },
+      "n": {
+       "easy": 25,
+       "standard": 50,
+       "judge": 50,
+       "hard": 55
+      }
+     },
+     "sealed|score": {
+      "cc": 62.21492257777197,
+      "tiers": {
+       "easy": 73.37790947410274,
+       "standard": 65.41303393458439,
+       "judge": 62.0389806565921,
+       "hard": 57.95707661616796
+      },
+      "n": {
+       "easy": 25,
+       "standard": 50,
+       "judge": 50,
+       "hard": 55
+      }
+     }
+    }
+   },
+   "validity": {
+    "choice": {
+     "n": 799,
+     "invalid_rate": 0.0
+    },
+    "noul": {
+     "n": 495,
+     "invalid_rate": 0.0
+    },
+    "score": {
+     "n": 330,
+     "invalid_rate": 0.0
+    }
+   },
+   "calibration": {
+    "score": 88.11694149062471,
+    "parts": {
+     "choice": {
+      "ece_hard": 0.06801188748719926,
+      "ece_score": 86.39762250256014,
+      "mean_tvd": 0.2029350870949496,
+      "n_tvd": 50.0,
+      "n": 799.0,
+      "n_ece_hard": 277.0,
+      "score": 83.05205689653259
+     },
+     "noul": {
+      "ece": 0.04795614076750405,
+      "brier": 0.11127612689924851,
+      "n": 495.0,
+      "score": 90.40877184649919,
+      "abstention_rate": 0.3737373737373737
+     },
+     "score": {
+      "nrps": 0.08668615613253966,
+      "top_ece": 0.04775696464530638,
+      "n": 330.0,
+      "interval90_coverage": 0.9393939393939394,
+      "interval90_width": 0.3345959595959594,
+      "score": 90.88999572884238
+     }
+    }
+   },
+   "speed": {
+    "p50_s_raw": 0.041955091524869204,
+    "p95_s_raw": 0.08970695780590177,
+    "p50_s_adjusted": 0.2339101830497384,
+    "p95_s_adjusted": 0.32941391561180355,
+    "n": 450,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)"
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.016769261083743846,
+    "basis": "ESTIMATE (I-2): measured input tokens; zero generated output tokens for signed logits readout. M2 floor uses the 25 Sep 2026 DeepInfra Qwen3.5-4B snapshot rates (USD 0.03/M input, USD 0.15/M output); the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen3.5-9B."
+   },
+   "rank": null,
+   "ranked": false,
+   "listing": "addendum",
+   "not_ranked_because": "v1.5 roster addendum A2: complete run, scored with the frozen v1.5.0 median gap. Headline A score 70.39 would place about #6; secondary B score would place about #7. Roster addendum rows stay outside the v1.5.0 order and tie markers.",
    "would_place_A": 6,
    "would_place_B": 7,
    "ranks": {
@@ -24374,13 +24614,247 @@
    "cost": {
     "kind": "estimate",
     "usd_per_1000": 0.01701689039408867,
-    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
+    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)"
    },
    "rank": null,
    "ranked": false,
    "listing": "addendum",
    "not_ranked_because": "v1.5 roster addendum A1: complete run, scored with the frozen v1.5.0 median gap. Headline A score 70.39 would place about #6; secondary B score would place about #7. Roster addendum rows stay outside the v1.5.0 order and tie markers.",
    "would_place_A": 6,
+   "would_place_B": 7,
+   "ranks": {
+    "A": null,
+    "B": null,
+    "C": null
+   }
+  },
+  {
+   "key": "surogate-rune-26b-a4b-v3-rtxpro6000-a2",
+   "display": "Surogate Rune 26B-A4B v3 (RTX PRO 6000)",
+   "addendum": {
+    "id": "A2",
+    "release": "v1.5",
+    "label": "v1.5 roster addendum A2"
+   },
+   "author": "unknown",
+   "repo": null,
+   "class": "unclassified",
+   "licence": "not recorded",
+   "open": "unknown",
+   "underlying": null,
+   "endpoint_kind": "gpu",
+   "endpoint_condition": "evaluator-owned Lium GPU pod (RTX PRO 6000), offline read-only container",
+   "gpu": "RTX PRO 6000",
+   "adapter_id": "A2 reviewed bundle",
+   "api_flag": false,
+   "api_exposure_note": null,
+   "status": {
+    "status": "complete",
+    "rows": 1624,
+    "missing": 0,
+    "answered_ok": 1624
+   },
+   "full_coverage": true,
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "planned_weight_denominator": 1.0,
+   "axes": {
+    "intelligence": 69.7384372659144,
+    "calibration": 88.29679782691991,
+    "speed": 85.9674611821838,
+    "cost": 48.9678579741414
+   },
+   "scores": {
+    "A": 66.47011066179378,
+    "B": 66.55345952957438,
+    "C": 66.47011066179378
+   },
+   "views": {
+    "Balanced 33:33:33": 62.02253148171242,
+    "Emphasis on Accuracy 60:20:20": 63.881582091786825,
+    "Emphasis on Cost 20:20:60": 54.973713258577675,
+    "Emphasis on Speed 20:60:20": 68.84661497656214,
+    "Intelligence only": 66.88895581073571
+   },
+   "composite_ci95": {
+    "A": [
+     65.43169342866265,
+     67.00710945239213
+    ],
+    "B": [
+     65.10706397319322,
+     67.52972503849682
+    ],
+    "C": [
+     65.43169342866265,
+     67.00710945239213
+    ]
+   },
+   "jevbench_score": 66.47011066179378,
+   "intelligence": {
+    "I_open": 68.95080025326385,
+    "I_sealed": 70.52607427856495,
+    "base": 69.7384372659144,
+    "gap": -1.5752740253010984,
+    "excess": -6.761901525380341,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 81.98573910797714,
+      "tiers": {
+       "easy": 98.19113656918904,
+       "standard": 95.32102937353783,
+       "judge": 88.58921161825727,
+       "hard": 66.31414022718371
+      },
+      "n": {
+       "easy": 72,
+       "standard": 84,
+       "judge": 114,
+       "hard": 169
+      }
+     },
+     "open|noul": {
+      "cc": 45.58752543656239,
+      "tiers": {
+       "easy": 76.47058823529412,
+       "standard": 45.45454545454546,
+       "judge": 66.66666666666667,
+       "hard": 22.123893805309724
+      },
+      "n": {
+       "easy": 34,
+       "standard": 66,
+       "judge": 102,
+       "hard": 113
+      }
+     },
+     "open|score": {
+      "cc": 79.27913621525204,
+      "tiers": {
+       "easy": 77.45483328730258,
+       "standard": 87.3570213774979,
+       "judge": 80.61432644653624,
+       "hard": 74.69487669265334
+      },
+      "n": {
+       "easy": 16,
+       "standard": 50,
+       "judge": 34,
+       "hard": 50
+      }
+     },
+     "sealed|choice": {
+      "cc": 82.17410009259264,
+      "tiers": {
+       "easy": 94.140625,
+       "standard": 79.6241793072221,
+       "judge": 78.79858657243817,
+       "hard": 82.98906439854193
+      },
+      "n": {
+       "easy": 50,
+       "standard": 101,
+       "judge": 101,
+       "hard": 108
+      }
+     },
+     "sealed|noul": {
+      "cc": 49.52727272727273,
+      "tiers": {
+       "easy": 84.00000000000001,
+       "standard": 43.99999999999999,
+       "judge": 52.0,
+       "hard": 41.81818181818182
+      },
+      "n": {
+       "easy": 25,
+       "standard": 50,
+       "judge": 50,
+       "hard": 55
+      }
+     },
+     "sealed|score": {
+      "cc": 79.87685001582949,
+      "tiers": {
+       "easy": 81.44270010435835,
+       "standard": 80.09762263276632,
+       "judge": 83.36030214546362,
+       "hard": 76.76241208800323
+      },
+      "n": {
+       "easy": 25,
+       "standard": 50,
+       "judge": 50,
+       "hard": 55
+      }
+     }
+    }
+   },
+   "validity": {
+    "choice": {
+     "n": 799,
+     "invalid_rate": 0.0
+    },
+    "noul": {
+     "n": 495,
+     "invalid_rate": 0.0
+    },
+    "score": {
+     "n": 330,
+     "invalid_rate": 0.0
+    }
+   },
+   "calibration": {
+    "score": 88.29679782691991,
+    "parts": {
+     "choice": {
+      "ece_hard": 0.048130505772540376,
+      "ece_score": 90.37389884549192,
+      "mean_tvd": 0.26981249787409634,
+      "n_tvd": 50.0,
+      "n": 799.0,
+      "n_ece_hard": 277.0,
+      "score": 81.69632452904114
+     },
+     "noul": {
+      "ece": 0.041444379611227856,
+      "brier": 0.06554161668204889,
+      "n": 495.0,
+      "score": 91.71112407775442,
+      "abstention_rate": 0.24444444444444446
+     },
+     "score": {
+      "nrps": 0.04234138893172694,
+      "top_ece": 0.06399985679449458,
+      "n": 330.0,
+      "interval90_coverage": 0.9939393939393939,
+      "interval90_width": 0.28257575757575754,
+      "score": 91.4829448739642
+     }
+    }
+   },
+   "speed": {
+    "p50_s_raw": 0.10046782437711954,
+    "p95_s_raw": 0.28557565337978286,
+    "p50_s_adjusted": 0.3509356487542391,
+    "p95_s_adjusted": 0.7211513067595657,
+    "n": 450,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)"
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.050242518472906394,
+    "basis": "ESTIMATE: M2 base-model market reference from the frozen 25 Sep 2026 OpenRouter snapshot applied to measured tokens."
+   },
+   "rank": null,
+   "ranked": false,
+   "listing": "addendum",
+   "not_ranked_because": "v1.5 roster addendum A2: complete run, scored with the frozen v1.5.0 median gap. Headline A score 66.47 would place about #11; secondary B score would place about #7. Roster addendum rows stay outside the v1.5.0 order and tie markers.",
+   "would_place_A": 11,
    "would_place_B": 7,
    "ranks": {
     "A": null,
@@ -24614,6 +25088,240 @@
    "ranked": false,
    "listing": "addendum",
    "not_ranked_because": "v1.5 roster addendum A1: complete run, scored with the frozen v1.5.0 median gap. Headline A score 19.54 would place about #43; secondary B score would place about #40. Roster addendum rows stay outside the v1.5.0 order and tie markers.",
+   "would_place_A": 43,
+   "would_place_B": 40,
+   "ranks": {
+    "A": null,
+    "B": null,
+    "C": null
+   }
+  },
+  {
+   "key": "autojev-27b-rtxpro6000-a2",
+   "display": "AutoJev-27B (RTX PRO 6000)",
+   "addendum": {
+    "id": "A2",
+    "release": "v1.5",
+    "label": "v1.5 roster addendum A2"
+   },
+   "author": "unknown",
+   "repo": null,
+   "class": "unclassified",
+   "licence": "not recorded",
+   "open": "unknown",
+   "underlying": null,
+   "endpoint_kind": "gpu",
+   "endpoint_condition": "evaluator-owned Lium GPU pod (RTX PRO 6000), offline read-only container",
+   "gpu": "RTX PRO 6000",
+   "adapter_id": "A2 reviewed bundle",
+   "api_flag": false,
+   "api_exposure_note": null,
+   "status": {
+    "status": "complete",
+    "rows": 1624,
+    "missing": 0,
+    "answered_ok": 1624
+   },
+   "full_coverage": true,
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "planned_weight_denominator": 1.0,
+   "axes": {
+    "intelligence": 72.7504220700132,
+    "calibration": 86.68041666712992,
+    "speed": 87.06975289886662,
+    "cost": 29.365937020749882
+   },
+   "scores": {
+    "A": 19.482719520484327,
+    "B": 20.394920235576496,
+    "C": 19.482719520484327
+   },
+   "views": {
+    "Balanced 33:33:33": 17.455546885699814,
+    "Emphasis on Accuracy 60:20:20": 19.875735473140935,
+    "Emphasis on Cost 20:20:60": 13.538885114405412,
+    "Emphasis on Speed 20:60:20": 20.968224367337445,
+    "Intelligence only": 25.094770872027855
+   },
+   "composite_ci95": {
+    "A": [
+     19.262439246036728,
+     19.59873421101785
+    ],
+    "B": [
+     20.06322075545375,
+     20.611081472646248
+    ],
+    "C": [
+     19.262439246036728,
+     19.59873421101785
+    ]
+   },
+   "jevbench_score": 19.482719520484327,
+   "intelligence": {
+    "I_open": 72.0148638915178,
+    "I_sealed": 73.4859802485086,
+    "base": 72.7504220700132,
+    "gap": -1.471116356990791,
+    "excess": -6.657743857070034,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 84.92550002229234,
+      "tiers": {
+       "easy": 96.38227313837805,
+       "standard": 95.32102937353783,
+       "judge": 94.81327800829875,
+       "hard": 69.44770857814335
+      },
+      "n": {
+       "easy": 72,
+       "standard": 84,
+       "judge": 114,
+       "hard": 169
+      }
+     },
+     "open|noul": {
+      "cc": 51.14397488681716,
+      "tiers": {
+       "easy": 76.47058823529412,
+       "standard": 69.6969696969697,
+       "judge": 66.66666666666667,
+       "hard": 23.893805309734507
+      },
+      "n": {
+       "easy": 34,
+       "standard": 66,
+       "judge": 102,
+       "hard": 113
+      }
+     },
+     "open|score": {
+      "cc": 79.97511676544391,
+      "tiers": {
+       "easy": 80.15537374983703,
+       "standard": 86.72749010669713,
+       "judge": 79.87342491381291,
+       "hard": 76.63013473744229
+      },
+      "n": {
+       "easy": 16,
+       "standard": 50,
+       "judge": 34,
+       "hard": 50
+      }
+     },
+     "sealed|choice": {
+      "cc": 81.69795396305905,
+      "tiers": {
+       "easy": 91.2109375,
+       "standard": 78.2657912610369,
+       "judge": 77.47349823321555,
+       "hard": 84.2041312272175
+      },
+      "n": {
+       "easy": 50,
+       "standard": 101,
+       "judge": 101,
+       "hard": 108
+      }
+     },
+     "sealed|noul": {
+      "cc": 62.0,
+      "tiers": {
+       "easy": 84.00000000000001,
+       "standard": 52.0,
+       "judge": 63.99999999999999,
+       "hard": 60.00000000000001
+      },
+      "n": {
+       "easy": 25,
+       "standard": 50,
+       "judge": 50,
+       "hard": 55
+      }
+     },
+     "sealed|score": {
+      "cc": 76.75998678246677,
+      "tiers": {
+       "easy": 81.77890543489788,
+       "standard": 76.16408820390532,
+       "judge": 76.5872741824193,
+       "hard": 75.9327408586753
+      },
+      "n": {
+       "easy": 25,
+       "standard": 50,
+       "judge": 50,
+       "hard": 55
+      }
+     }
+    }
+   },
+   "validity": {
+    "choice": {
+     "n": 799,
+     "invalid_rate": 0.0
+    },
+    "noul": {
+     "n": 495,
+     "invalid_rate": 0.0
+    },
+    "score": {
+     "n": 330,
+     "invalid_rate": 0.0
+    }
+   },
+   "calibration": {
+    "score": 86.68041666712992,
+    "parts": {
+     "choice": {
+      "ece_hard": 0.05563197319122527,
+      "ece_score": 88.87360536175495,
+      "mean_tvd": 0.25077706263870864,
+      "n_tvd": 50.0,
+      "n": 799.0,
+      "n_ece_hard": 277.0,
+      "score": 81.89794954894205
+     },
+     "noul": {
+      "ece": 0.04353587849034292,
+      "brier": 0.05491962545051717,
+      "n": 495.0,
+      "score": 91.29282430193142,
+      "abstention_rate": 0.2080808080808081
+     },
+     "score": {
+      "nrps": 0.04503821273971415,
+      "top_ece": 0.10897613212498017,
+      "n": 330.0,
+      "interval90_coverage": 0.9878787878787879,
+      "interval90_width": 0.29318181818181815,
+      "score": 86.85047615051627
+     }
+    }
+   },
+   "speed": {
+    "p50_s_raw": 0.08811413822695613,
+    "p95_s_raw": 0.22593528539873534,
+    "p50_s_adjusted": 0.3262282764539123,
+    "p95_s_adjusted": 0.6018705707974706,
+    "n": 450,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)"
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.22618758620689655,
+    "basis": "ESTIMATE: M2 base-model market reference from the frozen 25 Sep 2026 OpenRouter snapshot applied to measured tokens."
+   },
+   "rank": null,
+   "ranked": false,
+   "listing": "addendum",
+   "not_ranked_because": "v1.5 roster addendum A2: complete run, scored with the frozen v1.5.0 median gap. Headline A score 19.48 would place about #43; secondary B score would place about #40. Roster addendum rows stay outside the v1.5.0 order and tie markers.",
    "would_place_A": 43,
    "would_place_B": 40,
    "ranks": {
@@ -25115,6 +25823,6 @@
    "reason": null
   }
  ],
- "roster_count": 100,
+ "roster_count": 103,
  "headline_hold": null
 }
