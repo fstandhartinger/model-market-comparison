@@ -73,8 +73,11 @@ function parsePair(search: string, keys: Set<string>): [string, string] | null {
   return a && b && a !== b && keys.has(a) && keys.has(b) ? [a, b] : null;
 }
 
-function SystemCombobox({ id, label, value, other, ranked, unranked, onChange }: {
-  id: string; label: string; value: string; other: string; ranked: JevCompareRow[]; unranked: JevCompareRow[]; onChange: (key: string) => void;
+/** The fields the pair picker reads — v1.4 and v1.5 compare rows both satisfy it. */
+export type JevComparePickRow = Pick<JevCompareRow, "key" | "name" | "rank" | "listing">;
+
+export function SystemCombobox({ id, label, value, other, ranked, unranked, onChange }: {
+  id: string; label: string; value: string; other: string; ranked: JevComparePickRow[]; unranked: JevComparePickRow[]; onChange: (key: string) => void;
 }) {
   const container = useRef<HTMLDivElement>(null);
   const input = useRef<HTMLInputElement>(null);
@@ -92,7 +95,7 @@ function SystemCombobox({ id, label, value, other, ranked, unranked, onChange }:
   }, [activeIndex, open]);
 
   const close = () => { setOpen(false); setQuery(''); setActive(0); };
-  const choose = (row: JevCompareRow) => { onChange(row.key); close(); input.current?.focus(); };
+  const choose = (row: JevComparePickRow) => { onChange(row.key); close(); input.current?.focus(); };
   const onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault();

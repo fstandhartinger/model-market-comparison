@@ -1,0 +1,28 @@
+# JevBench release checklist
+
+Durable requirements for every JevBench release on the site (CR-205, after PR #68 let v1.5 ship with a reduced page):
+
+## Page structure — required on the live route AND every versioned page
+
+A release must keep the complete section structure, in this order, on `/jev-models` **and** on its frozen `/jev-models/v*` page:
+
+1. **Capability bar chart** at the top (`JevCapabilityRanking`), including the Jev-class membership details and the class-limit disclosure.
+2. **Synchronized Capability vs Speed and Capability vs Cost charts** (`JevBubbleCharts`), including the 3D capability/cost/latency view (`JevCapabilityLazy`, `only3d`).
+3. **Main composite score chart** (`JevScoreChart`): the interactive board with weight sliders, published weight presets, the View-by switch and the official-order restore.
+4. **Direct comparison** (`JevCompareV15` or its successor): the two-system picker with the radar views and a copyable pair link.
+5. **Full table**: every listed system with its axes and per-type competence.
+6. **Everything else v1.4.2.2 carried**: "What the run says" findings, the alternatives/self-hosting guide, the cost disclosures and price rules (`JevCostsDisclosure`), unranked/partial/addendum/not-measured listings, method notes, limits, credits, the What-If link to the weight sliders, `JevContextLazy`, the lazy revision history (`JevHistoryLazy`), the ImageJevBench link (`data-bh-image-jev-link`), and the link to the previous frozen release.
+
+Release-specific additions (for v1.5: the official headline order with bootstrap intervals, the A/B/C options table, the per-type axes table, the addendum table, the sealed-intelligence method section) stay — restoring the shared structure never removes a release's own sections.
+
+## Scoring consistency
+
+- The interactive chart re-scores rows with the release's own composite semantics. For v1.5 that is `jevV15BoardScore` (`lib/jevbench-v15-board.mjs`): axes at weight 0 drop out of the harmonic mean, while the Intelligence/Speed/Cost low-axis gates still apply — the same rule the published `views` use.
+- Slider presets must include every published `views` entry so readers can reproduce the artifact's alternative rankings.
+- Rows new to the release are marked by diffing against the exact previous release's keys.
+
+## Required verification before a release PR
+
+- `node --test test/cr-205-jev-page-structure.test.mjs` must pass — it pins the section list and order on `/jev-models` and every versioned page, verifies the release artifact feeds each section, and fails when a new version route is not registered in it.
+- `npm test` must pass in full.
+- Historical result artifacts under `data/raw/benchmarks/jevbench/` are never modified; a new release adds its own pinned artifact and API route.
