@@ -1,21 +1,24 @@
-// iteration234 (opencode-kimi) live verification: CR-143.1, CR-151.1-.5, CR-152.3/.4, CR-153.1-.3, CR-156.x (page parts), CR-158.1-.3/.5.
-// Browser checks against live hosts via CDP 9333. Artifact/file checks run separately (see iteration notes).
+// Recheck CR-151/152/153/158 on the preserved JevBench v1.4.2.2 board. Since CR-203 promoted v1.5,
+// /jev-models is the new live hub and this verifier must stay on the version-pinned v1.4.2.2 route.
 import { createRequire } from 'node:module';
 import { createHash } from 'node:crypto';
 import { writeFileSync, mkdirSync } from 'node:fs';
-import { jevClassRows } from '/opt/model-market-comparison/lib/jevbench-jev-class.mjs';
+import { jevClassRows } from '../../../lib/jevbench-jev-class.mjs';
+import { JEVBENCH_V142_SHA256, JEVBENCH_V142_TOP5 } from '../../../lib/jevbench-v142.mjs';
+import { JEVBENCH_V1422_SHA256 } from '../../../lib/jevbench-v1422.mjs';
 
 const require = createRequire('/home/flori/n8n-local/');
 const { chromium } = require('playwright');
 
 const ALL_HOSTS = [
   { name: 'canonical', url: 'https://benchmarkheaven.com' },
+  { name: 'www', url: 'https://www.benchmarkheaven.com' },
   { name: 'legacy', url: 'https://model-market-comparison.app.mintapis.com' },
 ];
 const HOSTS = process.env.HOSTS ? ALL_HOSTS.filter((h) => process.env.HOSTS.split(',').includes(h.name)) : ALL_HOSTS;
 const OUT_ROOT = process.argv[2] || '/opt/benchmarkheaven/state/ux-evidence/iter234-cr151-158';
-const API_PATH = '/api/jevbench/v1.4.2';
-const LIVE_SHA = 'ac14e206dde51ae28e40dc1ea2ff1fecc4a449b941d098e9ecb5618bd533e5be';
+const API_PATH = '/api/jevbench/v1.4.2.2';
+const LIVE_SHA = JEVBENCH_V1422_SHA256;
 
 async function fetchJson(url) {
   const r = await fetch(url);
@@ -28,6 +31,12 @@ const one = (v) => (v == null ? '—' : v.toFixed(1));
 async function main() {
   const api = await fetchJson(`https://benchmarkheaven.com${API_PATH}`);
   if (api.shaHeader !== LIVE_SHA) throw new Error(`live API hash ${api.shaHeader} != expected ${LIVE_SHA}; aborting (deployment in flight?)`);
+  const v142Api = await fetchJson('https://benchmarkheaven.com/api/jevbench/v1.4.2');
+  if (v142Api.shaHeader !== JEVBENCH_V142_SHA256) throw new Error(`v1.4.2 API hash ${v142Api.shaHeader} != expected ${JEVBENCH_V142_SHA256}`);
+  const v142Artifact = JSON.parse(v142Api.text);
+  const v142Top5 = v142Artifact.systems.filter((s) => s.rank != null).sort((a, b) => a.rank - b.rank).slice(0, 5).map((s) => s.key);
+  if (JSON.stringify(v142Top5) !== JSON.stringify(JEVBENCH_V142_TOP5)) throw new Error(`v1.4.2 top five ${v142Top5} != pinned ${JEVBENCH_V142_TOP5}`);
+  const expectedIntelligenceLeader = [...v142Artifact.systems].filter((s) => s.rank != null && s.class !== 'llm-baseline').sort((a, b) => (b.axes.intelligence ?? 0) - (a.axes.intelligence ?? 0))[0]?.key;
   const artifact = JSON.parse(api.text);
   const systems = artifact.systems;
   const ranked = systems.filter((s) => s.rank != null).sort((a, b) => a.rank - b.rank);
@@ -54,12 +63,15 @@ async function main() {
 
   for (const host of HOSTS) {
     const hostRes = {};
-    const contexts = [
+    const allContexts = [
       { id: 'desktop_light', width: 1440, height: 1000, color: 'light' },
       { id: 'desktop_dark', width: 1440, height: 1000, color: 'dark' },
       { id: 'phone_light', width: 390, height: 844, color: 'light' },
       { id: 'phone_dark', width: 390, height: 844, color: 'dark' },
     ];
+    const contexts = process.env.CONTEXTS
+      ? allContexts.filter((ctx) => process.env.CONTEXTS.split(',').includes(ctx.id))
+      : allContexts;
     for (const ctx of contexts) {
       const dir = `${OUT_ROOT}/${host.name}/${ctx.id}`;
       mkdirSync(dir, { recursive: true });
@@ -73,8 +85,9 @@ async function main() {
         page.on('pageerror', (e) => errors.push(String(e).slice(0, 200)));
         page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text().slice(0, 200)); });
 
-        // ---- hub /jev-models ----
-        const resp = await page.goto(`${host.url}/jev-models`, { waitUntil: 'networkidle', timeout: 60000 });
+        // JevBench v1.5 is now the current hub. These v1.4 presentation requirements are rechecked
+        // on the latest frozen v1.4 route, which preserves CR-158's capability-first structure.
+        const resp = await page.goto(`${host.url}/jev-models/v1.4.2.2`, { waitUntil: 'networkidle', timeout: 60000 });
         check(r, 'hub-200', resp && resp.status() === 200, resp && resp.status());
         if (!resp || resp.status() !== 200) { hostRes[ctx.id] = r; continue; }
         await page.waitForSelector('[data-bh-jev-class-list]', { timeout: 30000 });
@@ -83,9 +96,9 @@ async function main() {
         await page.waitForTimeout(1800);
         check(r, 'hub-hydrated', topBarOk, `first bar=${await page.evaluate(() => { const b = document.querySelector('[data-bh-jev14-chart] [data-bh-jev14-bar]'); return b ? b.getAttribute('data-bh-jev14-bar') : null; })} expected=${expectedTop5[0]}`);
 
-        // CR-152.3 (read before any state-changing interaction): default view's first five bars are the official top five
+        // CR-191 (read before any state-changing interaction): v1.4.2.2 default first five match that release's official top five
         const topBarsFresh = await page.evaluate(() => [...document.querySelectorAll('[data-bh-jev14-chart] [data-bh-jev14-bar]')].slice(0, 5).map((el) => el.getAttribute('data-bh-jev14-bar')));
-        check(r, 'cr152_3_top5', JSON.stringify(topBarsFresh) === JSON.stringify(expectedTop5), `page=${topBarsFresh} expected=${expectedTop5}`);
+        check(r, 'cr191_top5', JSON.stringify(topBarsFresh) === JSON.stringify(expectedTop5), `page=${topBarsFresh} expected=${expectedTop5}`);
 
         // horizontal overflow (all CRs, 390 budget)
         const ovf = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
@@ -159,11 +172,23 @@ async function main() {
         await page.locator('[data-bh-jev14-sort-official]').first().click().catch(() => {});
         await page.waitForTimeout(300);
 
-        // CR-152.4: fairness note near top five + Intelligence sort control
+        // CR-152.3/.4 belong to frozen v1.4.2 (the later v1.4.2.2 release has its own top five).
+        const oldResp = await page.goto(`${host.url}/jev-models/v1.4.2`, { waitUntil: 'networkidle', timeout: 60000 });
+        check(r, 'cr152_archive-200', oldResp?.status() === 200, oldResp?.status());
+        const oldTop = await page.evaluate(() => [...document.querySelectorAll('[data-bh-jev14-chart] [data-bh-jev14-bar]')].slice(0, 5).map((el) => el.getAttribute('data-bh-jev14-bar')));
+        check(r, 'cr152_3_top5', JSON.stringify(oldTop) === JSON.stringify(JEVBENCH_V142_TOP5), `page=${oldTop} expected=${JEVBENCH_V142_TOP5}`);
         const note = await page.locator('[data-bh-jev14-top-five-note]').textContent().catch(() => '');
-        check(r, 'cr152_4_note', /Jev\s*1\.13\.0/.test(note) && /Intelligence/i.test(note), note.slice(0, 160));
-        const sortInt = await page.locator('[data-bh-jev14-sort-intelligence]').count();
-        check(r, 'cr152_4_sortctl', sortInt >= 1, `controls=${sortInt}`);
+        check(r, 'cr152_4_note', /Jev\s*1\.13\.0/.test(note) && /Intelligence/i.test(note) && /four axes equally/i.test(note), note.slice(0, 200));
+        const sortInt = page.locator('[data-bh-jev14-sort-intelligence]').first();
+        check(r, 'cr152_4_sortctl', await sortInt.count() >= 1 && await sortInt.isVisible().catch(() => false), `controls=${await sortInt.count()}`);
+        if (await sortInt.count()) {
+          await sortInt.click();
+          await page.waitForTimeout(350);
+          const first = await page.locator('[data-bh-jev14-chart] [data-bh-jev14-bar]').first().getAttribute('data-bh-jev14-bar');
+          check(r, 'cr152_4_sort-result', first === expectedIntelligenceLeader, `first=${first} expected=${expectedIntelligenceLeader}`);
+        }
+        await page.goto(`${host.url}/jev-models/v1.4.2.2`, { waitUntil: 'networkidle', timeout: 60000 });
+        await page.waitForSelector('[data-bh-jev14-chart] [data-bh-jev14-bar]', { timeout: 30000 });
 
         // CR-151.3: View-by above the chart, five views
         const viewby = await page.evaluate(() => {
@@ -300,7 +325,7 @@ async function main() {
         await page.waitForTimeout(400);
         await page.waitForFunction((want) => { const b = document.querySelector('[data-bh-jev14-chart] [data-bh-jev14-bar]'); return b && b.getAttribute('data-bh-jev14-bar') === want; }, expectedTop5[0], { timeout: 8000 }).catch(() => {});
         const topBars = await page.evaluate(() => [...document.querySelectorAll('[data-bh-jev14-chart] [data-bh-jev14-bar]')].slice(0, 5).map((el) => el.getAttribute('data-bh-jev14-bar')));
-        check(r, 'cr152_3_top5-restored', JSON.stringify(topBars) === JSON.stringify(expectedTop5), `page=${topBars} expected=${expectedTop5}`);
+        check(r, 'cr191_top5-restored', JSON.stringify(topBars) === JSON.stringify(expectedTop5), `page=${topBars} expected=${expectedTop5}`);
 
         // CR-153.1: compare radars, pooled hard radar, pair change
         const radars = await page.evaluate(() => [...document.querySelectorAll('[data-bh-jev14-radar]')].map((f) => ({ key: f.getAttribute('data-bh-jev14-radar'), pooled: f.getAttribute('data-bh-jev14-radar-pooled') || '' })));
@@ -366,15 +391,14 @@ async function main() {
         check(r, 'cr156_5_hub_gdpr', gdprClaims.affirmative.length === 0, `affirmative=${JSON.stringify(gdprClaims.affirmative)} mentions=${gdprClaims.mentions}`);
 
         if (ctx.id === 'desktop_light' && host.name === 'canonical') {
-          // CR-158.5: pinned v1.4.2 page shows the live artifact hash, presentation-only
+          // CR-158.5: the original v1.4.2 page keeps its frozen artifact and approved top five.
           await page.goto(`${host.url}/jev-models/v1.4.2`, { waitUntil: 'networkidle', timeout: 60000 });
           await page.waitForSelector('[data-bh-jev14-chart] [data-bh-jev14-bar]', { timeout: 30000 }).catch(() => {});
           const pinned = await page.evaluate((sha) => ({
             hash: (document.body.textContent.match(sha) || [null])[0],
-            disclosureClosed: !!document.querySelector('details') && !document.querySelector('details').open,
             top5: [...document.querySelectorAll('[data-bh-jev14-chart] [data-bh-jev14-bar]')].slice(0, 5).map((b) => b.getAttribute('data-bh-jev14-bar')),
-          }), LIVE_SHA.slice(0, 12));
-          check(r, 'cr158_5_pinned', pinned.hash === LIVE_SHA.slice(0, 12) && JSON.stringify(pinned.top5) === JSON.stringify(expectedTop5), JSON.stringify(pinned));
+          }), JEVBENCH_V142_SHA256.slice(0, 12));
+          check(r, 'cr158_5_pinned', pinned.hash === JEVBENCH_V142_SHA256.slice(0, 12) && JSON.stringify(pinned.top5) === JSON.stringify(JEVBENCH_V142_TOP5), JSON.stringify(pinned));
         }
 
         // CR-143.1 (acceptance: every public host, 1440/390, light/dark): the cost modal on a model page
@@ -416,7 +440,7 @@ async function main() {
       } finally {
         await page.close().catch(() => {});
       }
-      writeFileSync(`${dir}/verification.json`, JSON.stringify({ host: host.name, context: ctx.id, url: `${host.url}/jev-models`, checks: r, pass: r.filter((c) => c.ok).length, total: r.length }, null, 1));
+      writeFileSync(`${dir}/verification.json`, JSON.stringify({ host: host.name, context: ctx.id, url: `${host.url}/jev-models/v1.4.2.2`, checks: r, pass: r.filter((c) => c.ok).length, total: r.length }, null, 1));
       hostRes[ctx.id] = r;
       console.log(`[${host.name}/${ctx.id}] ${r.filter((c) => c.ok).length}/${r.length}`);
     }

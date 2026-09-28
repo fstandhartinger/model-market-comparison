@@ -27,30 +27,34 @@ The data is served from Postgres when `DATABASE_URL` is configured, otherwise fr
 All exact versioned registry entries, source/metric definitions, collection status and
 per-benchmark coverage. No family-only version aliases are accepted.
 
-### `GET /api/jevbench/v1.4.2.1`, `GET /api/jevbench/v1.4.2.2` and `/families`
+### `GET /api/jevbench/v1.4.2.1`, `GET /api/jevbench/v1.4.2.2`, and `GET /api/jevbench/v1.5.0`
 
-Immutable, version-pinned JevBench result artifacts. The `/families` suffix returns the
-matching aggregate family supplement used by the hard-tier and sealed-set comparison
-radars. Each route returns the committed JSON bytes and an `X-Content-SHA256` header;
-the readers reject item-level task text, answers and predictions.
+Immutable, version-pinned JevBench result artifacts. The v1.4.2.1 and v1.4.2.2 routes
+have `/families` companions that return the matching aggregate family supplement used by
+the hard-tier and sealed-set comparison radars. v1.5.0 publishes its result artifact only;
+it has no `/families` companion. Each result route returns the committed JSON bytes and an
+`X-Content-SHA256` header; the readers reject item-level task text, answers and predictions.
 
-| Release | Results SHA-256 | Family supplement SHA-256 | Frozen page |
+| Release | Results SHA-256 | Family supplement SHA-256 | Page |
 |---|---|---|---|
 | v1.4.2.1 | `e4c5ec1b510212e29cba130a7a861096623c484dab9f5ecf9893360c1e993166` | `968b7e6ce30e539328e42b24d1b1379f3214675b966dd3cf814dff3a74770814` | [`/jev-models/v1.4.2.1`](https://benchmarkheaven.com/jev-models/v1.4.2.1) |
 | v1.4.2.2 | `f0dfdd8f1601cadb16864061413e6e43c8b2dfa07b10ffd0716c67fc3c4b9952` | `df41a1152f32b9f32448ae0da2ea3a304d84727254650a01ab540b3a5284a078` | [`/jev-models/v1.4.2.2`](https://benchmarkheaven.com/jev-models/v1.4.2.2) |
+| v1.5.0 | `6b2f6b058b36203c98ec5f585eb8376038bc905f11db944f4e0bcd29c278c643` | Not published | [`/jev-models/v1.5.0`](https://benchmarkheaven.com/jev-models/v1.5.0) |
 
-The live `/jev-models` page uses v1.4.2.2; the versioned pages remain frozen. The result
-and supplement files are under `data/raw/benchmarks/jevbench/`.
+The live `/jev-models` page uses v1.5.0; its versioned page is also available at
+`/jev-models/v1.5.0`. The v1.4.2.1 and v1.4.2.2 pages remain frozen. Result and family
+supplement files are under `data/raw/benchmarks/jevbench/`.
 
 ### Image JevBench
 
 [`/image-jev-bench`](https://benchmarkheaven.com/image-jev-bench) is the current public
-HTML results page for Image JevBench v0.1.2; there is no separate public JSON API for this
+HTML results page for Image JevBench v0.1.3; there is no separate public JSON API for this
 benchmark. Its aggregate artifact is `data/raw/benchmarks/jevbench/multimodal-preview/preview.json`
-(SHA-256 `c86d85fb8dfdcb2b93a635502073b4aefa4aa21d73d73881f4ea90f1f75dcf0f`). The prior
-v0.1.1 artifact is retained as `preview-v0.1.1.json` in the same directory. The page
-publishes system-level aggregates only, not sealed images, tasks, answer keys or per-item
-predictions.
+(SHA-256 `539b78d92a1fe4d1c7bb0719ceba3e7e5525cfa6017635d0898bf670cc04397a`). The prior
+v0.1.1 and v0.1.2 artifacts are retained as `preview-v0.1.1.json` and
+`preview-v0.1.2.json` in the same directory. The v0.1.3 artifact contains 49 systems;
+Imajev-4B ranks first at 76.388. The page publishes system-level aggregates only, not
+sealed images, tasks, answer keys or per-item predictions.
 
 ### `GET /api/benchmark-matrix`
 

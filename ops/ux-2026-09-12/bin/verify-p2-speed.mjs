@@ -10,10 +10,12 @@ await fs.mkdir(OUT, { recursive: true });
 
 // Expected values straight from the live API, so the page is checked against the published data.
 const api = async (path) => (await fetch(BASE + path)).json();
-const measuredId = 'claude-opus-5::high', unmeasuredId = 'claude-opus-4.8::max';
+const ds = await api('/api/dataset');
+const measuredId = ds.models.find((m) => m.aa_speed?.output_tps > 0 && m.aa_speed?.ttft_s > 0 && m.aa_metadata?.context_window_tokens > 0)?.id;
+const unmeasuredId = ds.models.find((m) => m.aa_speed?.output_tps === null && m.aa_speed?.ttft_s === null && m.aa_metadata?.context_window_tokens > 0)?.id;
+if (!measuredId || !unmeasuredId) throw new Error('Live dataset needs one speed-measured and one unmeasured model with a context window');
 const one = async (id) => { const r = await api(`/api/models/${encodeURIComponent(id)}`); return r.model ?? r; };
 const measured = await one(measuredId), unmeasured = await one(unmeasuredId);
-const ds = await api('/api/dataset');
 const zeros = ds.models.filter((m) => m.aa_speed?.output_tps === 0 || m.aa_speed?.ttft_s === 0).length;
 
 const b = await chromium.launch();

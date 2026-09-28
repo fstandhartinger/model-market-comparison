@@ -18486,18 +18486,88 @@ spent on a board the change was not even about.
 
 ## Iteration 268 — Codex Luna review gate, 2026-09-28 18:50 UTC
 
+Branch allocation: **CR-206**, reserved for owner
+`bh-review-gate-20260928t185004z-2026-09-28` at 2026-09-28 20:14 UTC.
+
 ### Seed rows required by 04-CR-BRIEF §0
 
 These nine CR rows were missing as individual ledger rows. They are seeded open before recording this gate's verification outcome.
 
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
-| CR-151.2 | open (seeded; verification pending) | pending | Sortable and filterable board columns; live behavior and keyboard support to be checked. |
-| CR-151.3 | open (seeded; verification pending) | pending | Intelligence View-by ranking and LLM filter; verify live. |
-| CR-151.4 | open (seeded; verification pending) | pending | Axes table follows Compare; verify live section order and annotations. |
-| CR-151.5 | open (seeded; verification pending) | pending | Published page scores match the pinned API. |
-| CR-152.4 | open (seeded; verification pending) | pending | Fair presentation of the v1.4.2 leader and reachable Intelligence sort on the frozen route. |
-| CR-153.2 | open (seeded; verification pending) | pending | Intelligence view hides general-purpose LLMs by default and can reveal them. |
-| CR-153.3 | open (seeded; verification pending) | pending | Cost-view bars remain thin and red in both themes. |
-| CR-158.2 | open (seeded; verification pending) | pending | Capability × Cost and Capability × Speed bubbles, labels and interactive tooltips. |
-| CR-158.5 | open (seeded; verification pending) | pending | The v1.4.2 pinned release remains unchanged through the presentation restructure. |
+| CR-151.2 | **verified** (seeded open, then independently checked by this non-implementer gate) | `/opt/benchmarkheaven/state/ux-evidence/review-20260928T185004Z/cr151-158-consolidated.json` | Three hosts × desktop/mobile × light/dark; sorting, filters, keyboard operation, and no overflow pass in the consolidated 469/469 matrix. |
+| CR-151.3 | **verified** | same receipt | Intelligence View-by ranking and the LLM filter behavior pass across all 12 host/context combinations. |
+| CR-151.4 | **verified** | same receipt | Axes table order and explanatory annotations match acceptance in all contexts. |
+| CR-151.5 | **verified** | same receipt; pinned JevBench API artifacts | Rendered score/rank values match pinned release API values on all three hosts and all contexts. |
+| CR-152.4 | **verified** | same receipt | Frozen v1.4.2 leader note and reachable Intelligence sort pass on the correct frozen route; v1.4.2.2 remains preserved separately. |
+| CR-153.2 | **verified** | same receipt | Intelligence view excludes general-purpose LLMs by default and the control reveals them in all contexts. |
+| CR-153.3 | **verified** | same receipt | Cost-view bars retain thin red styling in light and dark themes on desktop and mobile. |
+| CR-158.2 | **verified** | same receipt | Capability × Cost / Speed plots, labels, named tooltips and pointer interaction pass across all 12 combinations. |
+| CR-158.5 | **verified** | same receipt; pinned v1.4.2 artifact digests | The v1.4.2 pinned release and hashes remain unchanged after the presentation restructure. |
+
+### Review gate evidence and status corrections
+
+The review covered the 75 commits and 677 changed files after the previous review commit, through
+the live revision `be9becd096c6dcd837a3c42857155dd901fa76c0`. Each of the canonical, `www`, and
+legacy hosts serves that same revision and reports 868 models, 673 families, 94 providers, and
+3,118 offers. The live browser matrix covered desktop/mobile in light/dark mode.
+
+- The corrected CR-151/152/153/158 verifier passes **469/469** checks across three hosts × four
+  contexts. One earlier canonical phone/light timeout was replaced with a targeted 39/39 rerun;
+  the consolidated receipt records that replacement explicitly.
+- Image JevBench v0.1.3 passes **96/96** across the same 12 host/context combinations, including
+  the 49-system roster and Imajev-4B's displayed 76.39 score. JevBench release APIs match pinned
+  local bytes and hashes on all three hosts. CR-190's verifier passes 63/63; D248 passes 31/31;
+  D250 passes 36/36; D252/D253 pass 53/53. D251.2 and D251.3's live guards pass 26/26 and 27/27
+  per host, respectively, but their promised 2026-09-29 05:17 behavioral acceptance has not
+  happened yet (the required `last_verified` timestamps have not advanced). **Their current status
+  is open pending that scheduled run**, overriding the older verified wording in iterations 266–267.
+- The custom five-route UX matrix passed 204/222 checks. F-219's Cost radar label overlaps two
+  plotted points in all 12 contexts. The hidden What-If result table is separately 1,341 px in a
+  1,258 px desktop wrapper in all six desktop contexts. DESIGN-DIRECTIVES.md says the F-219 source
+  is copied by release jobs, so a repo-only patch would be overwritten. The What-If table remains a
+  separate open review finding; there is no page overflow, and its mobile table remains inside its
+  scroll wrapper.
+- A focused read of F-220's actual public v1.5 preview target, `/jev-models/v1.5.0`, confirmed its
+  own open issue: the 17-column table is 1,480 px wide in a 1,366 px desktop panel (114 px of
+  horizontal scrolling), and it has no Axes / Types & cost view controls on any of 12 contexts. Its
+  100 data rows remain present; on mobile the table scrolls within its wrapper and the page itself
+  does not overflow. Receipt: `/opt/benchmarkheaven/state/ux-evidence/review-20260928T185004Z/f220-live.json`.
+- The Image page, JevBench pages, frozen releases, and What-If route rendered without browser page
+  errors. The Fable pass-41 verifier was corrected to test desktop/mobile × light/dark and the
+  initial redirect, noindex header, and final route; it now passes 56/56 on each host. The
+  CR-151–158 verifier was corrected to target the actual frozen v1.4.2 route for its historical
+  note and to distinguish v1.4.2 from v1.4.2.2. Both verifier scripts pass Node syntax checks.
+- X5 docs were updated for current JevBench v1.5 and Image JevBench v0.1.3 routes, hashes, counts,
+  and provenance. This gate authored those edits, so **X5 is implemented, awaiting a different
+  verifier**; it is not marked verified here.
+- The PRD's AA index link label was updated from v4.3 to the current page label v4.3.2. Kimi K3
+  independently reviewed SHA-256 `964f04d561f5beece3354840aca2e0e06751560a513dd90b6b52c15eb20151eb` and returned one medium REV-01 finding: the Fable pass-2 sentence saying the desktop first viewport still had no model row was stale. This gate reproduced the live home-page check at 1440×1000 on canonical and `www`, light and dark: first model row begins at 818 px, three full rows fit, and there are no page errors. The sentence now distinguishes the dated 2026-09-13/14 receipt from the superseding 2026-09-28 measurement. New PRD SHA-256: `820ca926314893809302e2f6cc3f348283f3911d43cda8c0c044e642d512a57a`. The focused Kimi K3 exact-digest recheck returned **PASS** against all four host/theme measurements and the screenshot. P2's live checks and remaining full-review claims also passed. Full, focused, and live receipts: `/opt/benchmarkheaven/state/ux-evidence/review-20260928T185004Z/{prd-independent-final.md,prd-independent-recheck.md,prd-gap2-first-screen/verification.json}`.
+- P2's two live feature checks were re-run across all three hosts, desktop/mobile and light/dark:
+  retained-history/F86 coverage passes **54/54 per host**; speed, first-token time and context
+  passes **41/41 per host**. The old speed verifier's hardcoded `claude-opus-5::high` example no
+  longer has AA speed values; this gate changed it to choose measured/unmeasured examples from
+  the current API dataset, then reran the verifier serially after parallel runs hit a transient
+  `ERR_NETWORK_CHANGED`. The captured live reference is Claude Opus 5.5 (max), 95.504 tokens/s,
+  388.268 s first token and 1M context; these display as 96 tokens/s and 388 s on the page. This
+  correction changes a verifier only, not source data or the product.
+- X7: the requested German completion update was sent through the central notifier as Telegram
+  message **15782** (480 characters including the freshness footer). It links this PR and includes
+  what to inspect, current open items, and the R4.4/R4.10/R5.2 interpretations. Receipt:
+  `/opt/benchmarkheaven/state/ux-evidence/review-20260928T185004Z/telegram-send-receipt.json`.
+
+| ID | Current status | Evidence | Reason / acceptance still needed |
+|---|---|---|---|
+| D251.2 | **open** (reopened by this gate) | `iter266-d251-2/live-*/verification.json`; D251.2 verifier | The live verifier is green, but the 2026-09-29 05:17 behavioral acceptance has not run and `last_verified` remains 2026-09-22. |
+| D251.3 | **open** (reopened by this gate) | `iter267-d251-3/live-*/verification.json`; D251.3 verifier | The live verifier is green, but the 2026-09-29 05:17 behavioral acceptance has not run and `last_verified` remains 2026-09-25. |
+| P1 | implemented; independent full review and focused exact-digest recheck passed; **not marked verified by this gate** | `/opt/benchmarkheaven/state/ux-evidence/review-20260928T185004Z/{prd-independent-final.md,prd-independent-recheck.md,prd-gap2-first-screen/verification.json}` | This gate edited the PRD, so its correction cannot be self-verified in the ledger. Current PRD digest: `820ca926314893809302e2f6cc3f348283f3911d43cda8c0c044e642d512a57a`. |
+| F-219 | **open** | `live-ux/verification.json` (12 failures); `public/wip-oiifi41ouv1f/jevbench-v15-whatif.html` | Cost label covers two radar points. Repair the release-job source and re-check before public release. |
+| F-220 | **open** | `f220-live.json` (18 failures) | The public v1.5 preview is still one 17-column table, with 114 px desktop overflow and no Axes / Types & cost views. Preview owner must implement the directive. |
+| What-If result-table overflow | open (new review finding) | `live-ux/verification.json` (6 desktop failures) | The hidden What-If table exceeds its wrapper by 83 px; the release-job artifact owner should fix it. |
+| X5 | implemented; pending non-implementer verification | `API.md`, `CHANGELOG.md`, `MSG-UPSTREAM-SYNC-PROMPT.md` | This gate edited these documents and cannot verify its own changes. |
+| X6 | **open; audit fails** | this review; carried-forward open ledger rows | Not every CR row and requirement is verified; known blockers include CR-190.1, CR-148.1/.2, CR-152.1/.2/.5, CR-153.4, R9.1, D192, D224, D227, D233–D235, CR-34.5, CR-37.3, CR-38.1, CR-50.2, CR-62.4, CR-73.5, CR-85.1/.2, CR-156.4, F-219 and F-220. |
+
+`CI=true npm test` passed (1,615 tests: 1,614 pass, 0 fail, 1 skip); `npx tsc --noEmit -p .`
+passed; `node scripts/build-dataset.mjs` passed (868 / 673 / 94 / 3,118; generated timestamp
+changes restored); and `node scripts/validate-benchmark-registry.mjs` passed (293 entries, 29 AA
+field mappings, 240 evidence files). `ALL-ACCEPTED` is not appended.
