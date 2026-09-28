@@ -16294,8 +16294,10 @@ Logs in `iter258-d238/`.
    `replay-protocol-review.mjs` offline for all three UGI rows before letting a daily near it, and expect
    several rounds. A rejection is isolated, so nothing breaks loudly — the two boards are just quietly
    retained and stop being refreshed.
-2. **A non-implementer live check of D238/D246** — `verify-d238-sealed-shortfall.mjs <out>` on the three hosts;
-   16/26 is the pre-fix score, so anything below 26/26 is a real miss, not a pinned number.
+2. **A non-implementer live check of D238/D246** — `verify-d238-sealed-shortfall.mjs <out>` on the three hosts.
+   The pre-fix baseline measured here is **16/26 on canonical and 48/78 across all three**
+   (`iter258-d238/before-live/`, `before-live-three-hosts/`), so anything short of 26/26 and 78/78 is a real
+   miss, not a pinned number — the expectations are re-derived from the artifact, never typed in.
 3. **D237** needs an HF token with write access to the org's spaces, or a turn at the shared Chrome. Board #11.
 4. D236 and D239 still ride a JevBench release; D240 is deliberately not back-filled; D243 and CR-178.5 need
    owner decisions; CR-148.1 still owes a review-gate ruling.
