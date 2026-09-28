@@ -17960,3 +17960,70 @@ and note that `docker0` is now a hand-made bridge that docker will recreate prop
 | INC-2026-09-28 | **repaired and verified**; prevention is another job's | agent-board #4411; journal 2026-09-28 15:55:12 UTC | **For the next iteration:** a push no longer implies a deploy. After pushing, check that `/api/meta` `revision` actually moves, and if it does not, read the Coolify server's `is_reachable` before blaming the build. The empty-log failure mode has two causes now, not one. |
 
 **`ALL-ACCEPTED` is not appended.**
+
+### Handoff from iteration 265 (claude-opus, 2026-09-28 16:00–18:10 UTC)
+
+Everything is committed, gated and **pushed**; the tree is clean and `run.lock` was free at every push.
+Live revision `63313f6d` after the ops commit; the code the live checks ran against is `79dc11c5`, served
+by all three hosts. Three commits: `62c04b73` (D252), `79dc11c5` (D253), `63313f6d` (this ledger).
+
+**What changed, in one line each.**
+
+1. **D252** — three of the four category composites were nearly empty because four anchors had fallen
+   below CR-25.6's own 60 % coverage bar and nothing re-measured it. Coding 50 → 148 model rows,
+   Agentic 45 → 148, Long context withdrawn (it ranked exactly one model of 868). Verified live
+   **53/53 per host**.
+2. **D253** (was D250.3) — GDP.pdf is judged on all three of its rows, on AA's own methodology. It cost
+   DeepSeek V4.1 Flash the tag CR-77 named by hand, because the family drops to five capability
+   comparisons and CR-77.1's own "nothing is tagged without a score" then applies. No bar was lowered.
+3. **INC-2026-09-28** — another workstream's second `dockerd --bridge=none` had deleted the production
+   `docker0`; repaired, and the reason a push stopped implying a deploy is written up above.
+
+**The independent review did not happen, and that is a gap, not a pass.** Two delegations were spent on
+it and both returned nothing: a seven-question packet on Kimi K3 ran the full 50-minute `timeout` with no
+output, and the compact three-question retry went to `nex-n2.5-pro:free`, which refused, so `delegate.sh`
+fell back to Kimi and that stalled as well (`iter265-d253/review-{kimi,nex}-run.log` hold only the
+model banner). So **D252 and D253 are `implemented, verified live` — the live receipts are machine-checked
+and reproducible — but no non-implementer has signed them off.** The three questions worth asking are
+already written as runnable commands in `/tmp`-free form in the D252/D253 sections above; the quickest
+sign-off is:
+
+1. `node -e` the quote check on `aa-gdp-pdf` (field `evidence.excerpt`) and `stepfun-gdp-pdf` (field
+   `scoring.metric`) — both must be verbatim, and `test/benchmark-caveats.test.mjs` already asserts it.
+2. `node ops/ux-2026-09-12/bin/measure-category-anchor-coverage.mjs` — every anchor of the three offered
+   categories ≥ 60 %, and long-context has exactly one board that clears it.
+3. `git show 62c04b73 -- data/category-score-anchors.json | grep -E '^[+-].*(min_coverage|min_anchors)'`
+   and the same for `BENCHMAXX_MIN_COMPARISONS` in `79dc11c5` — both must be empty, which is the claim
+   that no threshold was moved to make a test pass.
+
+**What the next iteration should check first, in order.**
+
+1. **A push no longer implies a deploy.** After pushing, confirm `/api/meta` `revision` moves. If it does
+   not, read the Coolify server's `is_reachable` (`$CU/api/v1/servers`, token in `/etc/sandy-paas/mcp.env`,
+   needs `sudo`) *before* suspecting the prebuild guard — the empty-log failure has two causes now. And
+   `docker0` is currently a hand-made bridge: correct and working, recreated properly whenever dockerd
+   next restarts.
+2. **The 05:17 daily is still the acceptance for D249.5 and D251**, unchanged from iteration 264's
+   handoff: read `<run>/reports/refresh-benchmarks.log`, **not** `work/data/raw/benchmarks/daily-checks.json`,
+   which is the day-old copy the run cloned. Tomorrow's run is also the first one after D252/D253, so
+   expect `judged_benchmarks` 40 and three category composites in its receipts.
+3. **D248, D250, D252 and D253 all wait on a non-implementer** to set `verified`
+   (`bin/verify-d248-live.mjs`, `bin/verify-d250-live.mjs`, `bin/verify-d252-d253-live.mjs`, each
+   `<base> <outDir>`).
+4. **D251.2 / D251.3 / D251.4** are diagnosed in iteration 264's section with the remedy and the trap in
+   each; none is touched.
+5. **D253.2 is the one question for Florian**, posted to the board as #4417 for his 19:00 digest:
+   `BENCHMAXX_MIN_COMPARISONS = 6` is the last guard CR-77 did not address and is not derived from
+   anything written down. CR-77.2's own preference — show the tag with an uncertainty marker rather than
+   withhold the score — would bring DeepSeek V4.1 Flash back honestly. It changes a published signal, so
+   it is his call, not mine.
+
+**Three traps worth not re-learning.** A `resolveAnchors` anchor resolves to the **newest** version of its
+board, so a board that versions (new harness, new pipeline) can silently take a category's coverage down
+to nothing while the board itself looks healthy — coverage has to be measured on the row the code actually
+picks, not on the widest row with that key. Dropping a score key from `SCORE_OPTIONS` is also what makes
+`lib/settings-state.ts` discard a stale stored `score`, so removing it from the pickers and leaving it in
+the union is the complete fix, not half of one. And a free-model review packet of more than about three
+questions returns nothing at all — budget for that instead of discovering it at minute fifty.
+
+**`ALL-ACCEPTED` is not appended.**
