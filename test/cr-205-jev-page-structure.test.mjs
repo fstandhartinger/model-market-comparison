@@ -14,7 +14,7 @@ import { OFFICIAL_WEIGHTS } from '../lib/jevbench-axis-weights.mjs';
 // sections and their order for every /jev-models page so a release cannot silently drop one.
 
 const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
-const [page, v150Page, releaseComponent, boardSource, page1422, page1421, page142, page141, page140, pageV1] = await Promise.all([
+const [page, v150Page, releaseComponent, boardSource, page1422, page1421, page142, page141, page140, pageV1, v14BoardSource, v14CapabilitySource] = await Promise.all([
   read('../app/jev-models/page.tsx'),
   read('../app/jev-models/v1.5.0/page.tsx'),
   read('../components/JevBenchV15ReleasePage.tsx'),
@@ -25,6 +25,8 @@ const [page, v150Page, releaseComponent, boardSource, page1422, page1421, page14
   read('../app/jev-models/v1.4.1/page.tsx'),
   read('../app/jev-models/v1.4/page.tsx'),
   read('../app/jev-models/v1/page.tsx'),
+  read('../components/JevModelsV14.tsx'),
+  read('../components/JevCapabilityChart.tsx'),
 ]);
 
 const { artifact, sha256 } = await readJevbenchV15Release();
@@ -108,14 +110,26 @@ test('CR-205: the frozen v1.4.2.2 page keeps its complete structure', () => {
 test('CR-205: every older versioned page keeps its board and disclosures', () => {
   // v1.0 is exempt from the composite-chart requirement by design: it predates the JevBench Score and
   // intentionally publishes no composite; its own board + not-measured/method/limits/credit structure is pinned.
-  // Every v1.4+ route must keep the composite board, the capability charts and the version links.
-  for (const [name, source] of [['v1.4.2.1', page1421], ['v1.4.2', page142], ['v1.4.1', page141]]) {
+  // Every v1.4+ route must keep its full composite/compare/table board. The v1.4.0 release predates the
+  // capability suite; v1.4.1+ pages must keep it. Frozen pages retain their release-specific presentation.
+  const modernRoutes = [
+    ['v1.4.2.1', page1421], ['v1.4.2', page142], ['v1.4.1', page141], ['v1.4', page140],
+  ];
+  for (const [name, source] of modernRoutes) {
     assert.match(source, /<JevModelsV14Board artifact=\{view\.artifact\}/, `${name} keeps the composite board`);
-    assert.match(source, /<JevCapabilityChart systems=\{view\.systems\}/, `${name} keeps the capability charts`);
     assert.match(source, /data-bh-jev-version-share/, `${name} keeps the share/live links`);
   }
-  assert.match(page140, /<JevModelsV14Board artifact=\{view\.artifact\}/);
-  assert.match(page140, /data-bh-jev-frozen-version/);
+  for (const [name, source] of [['v1.4.2.1', page1421], ['v1.4.2', page142], ['v1.4.1', page141]]) {
+    assert.match(source, /<JevCapabilityChart systems=\{view\.systems\}/, `${name} keeps the capability charts`);
+  }
+  assert.match(page140, /data-bh-jev-frozen-version/, 'v1.4.0 remains its pinned historical release');
+  ordered(v14BoardSource, [
+    '<JevScoreChart', '<JevCompareV14', 'id="jev14-table"', '<JevAxesTable',
+    'data-bh-jev14-api-note', '<section id="jev14-changes"',
+  ], 'shared v1.4+ board');
+  for (const marker of ['data-bh-jev14-capability-bars', 'data-bh-jev14-scatter', 'data-bh-jev14-capability-3d']) {
+    assert.ok(v14CapabilitySource.includes(marker), `v1.4+ capability suite keeps ${marker}`);
+  }
   ordered(pageV1, ['<JevModelsBoard', 'jev-not-measured', '<details id="method"', '<details id="limits"', '<details id="credit"'], '/jev-models/v1');
 });
 
