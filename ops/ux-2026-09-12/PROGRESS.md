@@ -16620,3 +16620,134 @@ sitting with the recipe above.
    decision; R9.1 stays under the written-permission hold.
 
 **`ALL-ACCEPTED` is not appended.**
+
+## Iteration 261 — 2026-09-28 04:2x–05:1x UTC (claude-opus, work)
+
+Started 04:20 UTC. The 05:17 daily holds `main` from 05:17 to about 07:45, so this iteration had a
+**57-minute push window** and was scoped to what fits inside it honestly rather than to what the previous
+iteration's next-step list asked for. Iteration 260's step 1 (D247's published half) needs the 05:17 run and
+could not run at all; its step 2 turned out to be the thing that had to be stopped.
+
+### D243: the row iteration 260 recommended shipping must not be shipped — its measurement used the wrong rule
+
+Iteration 260's next-step 2 was "**Ship D243's one joinable row**": set
+`subject.model_id = gemini-2.5-flash::non-reasoning` on `self-reported:gemini-2.5-flash-openai-mentalhealthbench`.
+That recommendation came out of `measure-d243-join.mjs`, which asked a question of its own invention —
+*is the single configuration's variant one of these effort names?* — against a hand-written list
+(`low, medium, high, xhigh, max, minimal, reasoning, non-reasoning-high`). `non-reasoning` is not on that list,
+so the script concluded "its variant is not an effort setting, so there is no effort to set" and reported the
+row joinable.
+
+**That is not our policy, and our own catalog contradicts the premise.** The variant vocabulary across the
+870 catalog rows is `default` **516**, `non-reasoning` **95**, `reasoning` **87**, `high` 43, `medium` 31,
+`low` 29, `xhigh` 28, `max` 26, `openrouter` 5, `non-reasoning-high` 4, `minimal` 4, `non-reasoning-low` 1,
+`thinking` 1. `non-reasoning` is the paired opposite of `reasoning` — one pole of the reasoning setting,
+exactly like `high` or `max`. The setting-less variant is `default`, and there is only one of it.
+
+The standing rule is the exact-join predicate in `lib/board-identity.mjs`, written for D219.1 and pinned by
+`test/d219-1-eqbench-writing-identity.test.mjs`: a source name that states **no** setting joins only a family
+whose catalog holds **exactly one configuration, and that configuration's variant is `default`** — literally
+`configs.length === 1 && configs[0].variant === 'default'` (lines 92, 881). Its own comment names this shape
+and refuses it: *"a single-configuration family whose only catalog entry is not the default (glm-5.3,
+grok-4.5, deepseek-v4.1-flash, deepseek-v4-flash-0731) is never guessed"*, and
+`muse-spark-1.1::xhigh` is in the D219.1 test as exactly that case.
+
+So the ship would have asserted that OpenAI ran Gemini 2.5 Flash **with thinking disabled**, when the paper
+says only *"We use each model's API at default reasoning effort … (when applicable)"*. That is a setting the
+source never states — the precise thing the policy exists to prevent — and it would have gone out on a
+`deprecated: true` configuration.
+
+**The fix is to the checker, and it is stricter, never weaker.** `measure-d243-join.mjs` no longer carries a
+second predicate of its own: `classifyJoin()` now applies the `board-identity` rule, and a new test
+(`test/d243-setting-less-join-policy.test.mjs`, 5 tests, green) pins both halves — the verdicts, and that the
+line it is mirroring is still the line in `lib/board-identity.mjs`. If that predicate is ever relaxed the test
+fails and the two are reconciled deliberately instead of drifting apart a second time. The blocklist of effort
+names is gone; anything that is not `default` is a setting, including the four variants nobody had listed
+(`non-reasoning`, `non-reasoning-low`, `thinking`, `openrouter`).
+
+### D243 measured again: **0 joinable**, and the sixteen split three ways, not two
+
+`node ops/ux-2026-09-12/bin/measure-d243-join.mjs openai-mentalhealthbench::snapshot-2026-09-23 <outDir>` —
+receipt `iter261-d243/d243-join-measurement.json`, and `iter261-d243/verdict-change.json` diffs it against
+iteration 260's: **15 of 17 rows unchanged**, one rename, and exactly one substantive change — the row that
+would have shipped.
+
+| verdict | rows | what it means |
+|---|---|---|
+| `joinable` | **0** | Nothing joins today without a captured vendor statement. |
+| `ambiguous` | 11 | Several configurations and no single default. |
+| `single-config-not-default` | 2 | Gemini 2.5 Flash (`::non-reasoning`, deprecated) and Gemini 3.1 Pro (`::high`). One configuration is not enough — the one we hold is itself a setting. |
+| `no-catalog-family` | 4 | "GPT-4o (March 2025)", "GPT-5 Thinking", "GPT-5.6 Luna (Aug 2026)", "GPT-5.6 Sol (Aug 2026)" — a dated-name identity question, not an effort one. |
+
+The receipt now also carries `candidate_variants` per row: what a captured vendor statement of "this API's
+default setting is X" would have to name. It makes iteration 260's step 3 measurable **before** anyone spends
+a session capturing vendor docs, because the eleven do not all have a target to join to:
+
+| row | configurations a vendor statement could name |
+|---|---|
+| Claude Fable 5.1 | max, xhigh, high, medium, low |
+| Claude Haiku 4.5 | reasoning, non-reasoning |
+| Claude Opus 5.5 | max, xhigh, high, medium, low |
+| Claude Sonnet 5 | max, xhigh, high, medium, low, non-reasoning-high |
+| Gemini 2.5 Pro | default, openrouter |
+| Gemini 3.8 Flash | high, medium, low |
+| GPT-6 Astra | max, xhigh, high, medium, low |
+| GPT-6 Luna | max, xhigh, high, medium, low, non-reasoning |
+| GPT-6 Sol | max, xhigh, high, medium, low, non-reasoning |
+| Grok 4.7 | xhigh, high |
+| Muse Spark 1.3 | max, xhigh |
+
+Two consequences, both of which change what step 3 should be:
+
+- **A vendor statement of the form "extended thinking is off by default" has no target for six of the eleven**
+  (Fable 5.1, Opus 5.5, Gemini 3.8 Flash, GPT-6 Astra, Grok 4.7, Muse Spark 1.3 hold graded efforts only).
+  Those rows would need a catalog configuration added first, which is a separate, larger piece of work and
+  must not be smuggled in as part of a join.
+- **Gemini 2.5 Pro is not an effort question at all.** It holds `default` **and** `openrouter`; the only reason
+  it fails is that the policy wants a single configuration. Whether `::openrouter` is a second configuration of
+  the same model or a routing duplicate is catalog hygiene, and answering it may join this row with no vendor
+  statement whatsoever. That is the cheapest remaining row and it is not in the capture task.
+
+**Nothing about the 17 value approvals changed.** No data file was touched, `data/dataset.json` is clean
+(`iter261-gates/dataset-diff.txt`: `generated_at` and `composite.collected_at` only, restored), and
+CR-190.1's approvals, critic receipt and gauntlet round stand exactly as iteration 260 recorded them.
+
+### A second trap on the same path, recorded before anyone walks into it
+
+Whoever does ship a D243 join will hit this, and it is not in iteration 260's recipe. `unjoined()` in
+`lib/benchmark-score-evidence.mjs` strips only `join_note` and `identity_review` and nulls `subject.model_id`
+— **`protocol` is inside the digest the value approval binds**. The 17 rows' protocol text ends with
+*"…so no reasoning-effort configuration is identified and the row is not attached to one. Not joined to a
+catalog configuration: … Picking one effort would assert a setting the source never states."* A joined row
+whose protocol still says that is published prose contradicting the published join; correcting it changes
+`observationDigest(unjoined(o))` and `verifyScoreEvidence` throws `Unreviewed vendor score`.
+
+So a join is **two** independent critic rounds, not one: a fresh **value** approval for the row whose protocol
+text changed, and the `identity_review` packet plus verdict for the join itself. Budget for both, and put only
+the join's *rationale* in `join_note` (which `unjoined()` does strip) — the protocol sentence that is now false
+still has to go.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D243 | iteration 260 read **1 joinable** → **0 joinable**; the measurement used a predicate of its own rather than the standing policy | `ops/ux-2026-09-12/bin/measure-d243-join.mjs` (rewritten); `test/d243-setting-less-join-policy.test.mjs` (5/5); `iter261-d243/d243-join-measurement.json`; `iter261-d243/verdict-change.json` | Splits 11 ambiguous / 2 single-config-not-default / 4 dated names. `candidate_variants` now says whether a vendor statement would even have a target. |
+| D243 → "ship the one joinable row" (iteration 260 step 2) | **withdrawn, do not ship** | `verdict-change.json` (`new_joinable: []`); `lib/board-identity.mjs:92,881`; D219.1 test | It would have claimed OpenAI ran Gemini 2.5 Flash with thinking disabled, on a deprecated configuration. |
+| D247 (published half) | still **open**, not attempted | — | Needs the 05:17 run; this iteration ran entirely before it. One command: `node ops/ux-2026-09-12/bin/check-ugi-arms.mjs latest`. |
+| CR-190.1 | **open** — unchanged | iteration 260's row stands | Its one remaining clause is still the join, and the join is now measured at zero. |
+
+**For the next iteration, in order:**
+
+1. **`node ops/ux-2026-09-12/bin/check-ugi-arms.mjs latest`** — D247's published half, unchanged from
+   iteration 260's step 1, and now overdue by one iteration. Run it after the 05:17 run has published.
+2. **Gemini 2.5 Pro's `::openrouter` configuration** — the cheapest D243 row and the only one that may join
+   with no vendor statement at all. Decide what `::openrouter` is (a second configuration of the same model,
+   or a routing duplicate that should not be a catalog row); if it is the latter, the family holds a single
+   `default` and the row joins under the standing policy with no new rule. Still two critic rounds — see the
+   protocol-digest trap above.
+3. **Then the vendor-statement capture (iteration 260's step 3), scoped by the table above** — and only for the
+   five rows that have a target to join to. Capture under E3's rules, write the recipe into `data/SCRAPING.md`,
+   and if a vendor does not document a default, the row stays unjoined and says so. Never guess an effort.
+4. **CR-148.1 still owes a review-gate ruling** — now six iterations. A work iteration must not rule on it.
+5. D236/D239 ride a JevBench release; D240 is deliberately not back-filled; CR-178.5 needs an owner decision;
+   R9.1 stays under the written-permission hold.
+
+**`ALL-ACCEPTED` is not appended.**
