@@ -6,7 +6,7 @@ import {
 } from '../lib/jevbench-v15-preview.mjs';
 import { jevTypeVarName, JEV_TYPE_LABEL } from './jevTypes';
 
-// JevBench v1.5 board, UNPUBLISHED PREVIEW (hidden noindex route only). Server-rendered from the aggregate-only v1.5
+// JevBench v1.5 board. Server-rendered from the aggregate-only v1.5
 // artifact; it follows the v1.4.2 board's look (bars, sticky-name tables, thin tags) but shows the v1.5 fields:
 // three weight options with A as headline, per-type (Choice / Noul / Score) competence for open and sealed, typed
 // calibration, adjusted latency, the cost basis, and honest listings for partial, unpriced and unmeasured systems.
@@ -258,7 +258,7 @@ function Method({ a, sha256 }: { a: JevV15Artifact; sha256: string }) {
   </section>;
 }
 
-export function JevBenchV15Preview({ artifact: a, sha256 }: { artifact: JevV15Artifact; sha256: string }) {
+export function JevBenchV15({ artifact: a, sha256 }: { artifact: JevV15Artifact; sha256: string }) {
   const ranked = a.systems.filter((s) => s.listing === 'ranked').sort((x, y) => (x.rank ?? 999) - (y.rank ?? 999));
   const partial = a.systems.filter((s) => s.listing === 'partial' || s.listing === 'unranked');
   const honorable = a.systems.filter((s) => s.listing === 'honorable_mention');
@@ -268,7 +268,7 @@ export function JevBenchV15Preview({ artifact: a, sha256 }: { artifact: JevV15Ar
   const seen = new Map<string, number>();
   for (const s of [...a.systems, ...a.not_measured]) seen.set(shortOnly(s.display), (seen.get(shortOnly(s.display)) ?? 0) + 1);
   collisions = new Set([...seen].filter(([, n]) => n > 1).map(([name]) => name));
-  return <section data-bh-jevbench-v15-preview data-bh-jev15-run-kind={a.run_kind}>
+  return <section data-bh-jevbench-v15 data-bh-jev15-run-kind={a.run_kind}>
     <HeadlineBars a={a} ranked={ranked} />
     <p className="bh-muted mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs" aria-label="System types">{classes.map((c) => <span key={c} style={typeVar(c)} className="whitespace-nowrap"><span className="mr-1 inline-block h-2.5 w-2.5 rounded-full bg-[rgb(var(--jev-t))] align-middle" aria-hidden="true" />{JEV_TYPE_LABEL[c] ?? c}</span>)}</p>
     <OptionsTable a={a} ranked={ranked} />
@@ -277,6 +277,9 @@ export function JevBenchV15Preview({ artifact: a, sha256 }: { artifact: JevV15Ar
     <Addendum rows={addendum} />
     <NotRanked a={a} partial={partial} unpriced={unpriced} />
     <Method a={a} sha256={sha256} />
-    <p className="bh-muted mt-4 text-xs">Earlier releases: <a className="text-accent underline" href="/jev-models/v1.4.2">JevBench v1.4.2 (current public release)</a>.</p>
+    <p className="bh-muted mt-4 text-xs">Previous release: <a className="text-accent underline" href="/jev-models/v1.4.2.2">JevBench v1.4.2.2 (frozen results)</a>.</p>
   </section>;
 }
+
+// Keep the old export name available for local preview tooling and screenshot scripts.
+export const JevBenchV15Preview = JevBenchV15;
