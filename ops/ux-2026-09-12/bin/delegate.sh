@@ -32,12 +32,22 @@ export OPENROUTER_API_KEY="${OPENROUTER_API_KEY:-${OPEN_ROUTER_API_KEY:-}}"
 export PATH="$HOME/.local/bin:$HOME/.opencode/bin:$HOME/.npm-global/bin:/usr/local/bin:/usr/bin:/bin"
 unset OPENAI_API_KEY ANTHROPIC_API_KEY
 
-TMP=$(mktemp)
-run() { (cd "$DIR" && timeout 5400 opencode run -m "$1" "$TASK") > "$TMP" 2>&1; }
+TMP=$(mktemp); ALT=$(mktemp)
+run() { (cd "$DIR" && timeout 5400 opencode run -m "$1" "$TASK") > "$2" 2>&1; }
+# A delegation failed when the *runner* says so, on its own error line. Scanning the whole output for
+# provider words instead cost this loop two good sign-offs on 2026-09-28: the delegated task was a live
+# verifier, its output echoed a page reading "Chutes rate limit stopped the run after 81/308 items", the
+# old sniffer read "rate limit", declared a healthy Kimi K3 dead, fell through to a model with no
+# endpoints — and copied that error over --out, destroying a 78/78 receipt's only written statement.
+# opencode reports a provider failure as its own `Error:` line, which is what this matches.
+failed() { [ ! -s "$1" ] || grep -qE $'^[[:space:]]*(\x1b\[[0-9;]*m)*Error:' "$1"; }
 echo "delegate.sh: model=$PRIMARY dir=$DIR" >&2
-if ! run "$PRIMARY" || [ ! -s "$TMP" ] || grep -qiE "model not found|ProviderModelNotFound|rate.?limit|No endpoints found|(HTTP|status|code|error)[ :=\"]*(401|402|429)\b" "$TMP"; then
+run "$PRIMARY" "$TMP" || true
+if failed "$TMP"; then
   echo "delegate.sh: $PRIMARY failed, falling back to $SECONDARY" >&2
-  run "$SECONDARY"
+  run "$SECONDARY" "$ALT" || true
+  # A failing fallback never destroys the primary's answer; it is appended as diagnosis.
+  if failed "$ALT"; then cat "$ALT" >> "$TMP"; else cp "$ALT" "$TMP"; fi
 fi
 [ -n "$OUT" ] && cp "$TMP" "$OUT"
-cat "$TMP"; rm -f "$TMP"
+cat "$TMP"; rm -f "$TMP" "$ALT"
