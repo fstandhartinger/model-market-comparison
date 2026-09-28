@@ -14,6 +14,9 @@ export function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '/jev-m
       <p className="bh-muted mt-3 max-w-3xl">JevBench measures Jev-class decision models on intelligence, calibration, speed and cost. v1.5 doubles the sample to {artifact.sample.total.toLocaleString('en-US')} decisions per system, scores Choice, Noul and Score requests natively and gives the fresh sealed set half of Intelligence. The official headline uses equal axis weights and gives the three request types equal weight; option B remains a secondary view.</p>
       <p className="bh-muted mt-2 max-w-3xl text-xs" data-bh-jev-meta>{artifact.sample.open} open + {artifact.sample.sealed} sealed decisions · {artifact.n_ranked} ranked of {artifact.roster_count} roster systems · only system-level sealed aggregates are published.</p>
       <p className="bh-muted mt-2 max-w-3xl text-xs">Published data: <a className="text-accent underline" href="/api/jevbench/v1.5.0">aggregate results JSON</a> · SHA-256 <code className="break-all" title={sha256}>{sha256}</code>.</p>
+      <p className="mt-3 max-w-3xl text-sm" data-bh-image-jev-link-row>
+        Making decisions from images? <a className="text-accent font-semibold underline" href="/image-jev-bench" data-bh-image-jev-link>Explore Image JevBench v0.1.3 and compare its systems</a>.
+      </p>
       <p className="mt-3 max-w-3xl text-sm" data-bh-jev-version-share-row>
         <a className="text-accent underline" href={versionPath} data-bh-jev-version-share>Share this version</a>
         {versionPath !== '/jev-models' && <> · <a className="text-accent underline" href="/jev-models" data-bh-jev-live-link>View live board</a></>}
