@@ -17080,3 +17080,61 @@ the `TIMEOUT` line's position in the tail.
 | D249.2 | open — noticed while replaying, not fixed | `iter262-d249/budget-replay.txt` (mtimes to 08:06:49Z after the 08:03:32Z SIGTERM) | The step's worker subprocesses outlive the SIGTERM that kills the step and keep writing into the run directory for ~3 minutes. Harmless today; it means a killed run's evidence directory is still being written while the next stage reads it. |
 
 **`ALL-ACCEPTED` is not appended.**
+
+### D249.3: the receipts knew which endpoint was slow all along — and the repair that looks obvious is measurably wrong
+
+Two follow-ups from the same failure, one shipped and one deliberately not.
+
+**Shipped.** Every worker receipt records `provider` — the OpenRouter endpoint that actually served the
+call — and nothing had ever read it. The run's own profile reported *172 calls, 7.50 worker-hours,
+$1.78*, every one of those an ordinary number, while the cause sat one `group()` call away. Establishing
+it meant opening 94 receipts by hand. `ops/daily/profile-run.mjs` now carries the provider through,
+groups by **model × provider** as well as by model and by provider, and prints a **median call** and
+**median answer length** beside every sum — a sum over 94 calls hides a per-call split completely. When
+one endpoint of a model is ≥5× slower than another it adds one sentence naming both, bounded to named
+endpoints with ≥3 calls and ≥1 completion so that a single outlier, or a failed call (which records no
+provider at all), can never be the headline. Re-run over the three real runs:
+
+| run | headline |
+|---|---|
+| 2026-09-27 05:17 (published) | table only, no headline — the slow endpoints there had one call each |
+| 2026-09-28 00:41 | table only, no headline |
+| **2026-09-28 05:17 (failed)** | *"`z-ai/glm-5.3-flash` answered **33× slower on Wafer** (191.9 s median, 11,901 tok) than on **Parasail** (5.9 s, 697 tok). Same model id, same request; the endpoint is not pinned."* |
+
+The same tables show the producer model has a milder version of it — `deepseek-v4-flash-0731` ran
+106 s / 3,999 tok on Sail Research against 17.4 s / 1,623 tok on Reka in that run.
+
+**Not shipped, and this is the part worth reading.** The tempting second repair is that the worker
+policy *qualifies* a model at a price (`z-ai/glm-5.3-flash` at $0.15/$0.50 per million) and then sends
+the request with a flat `max_price` of **$4** (`phase-step.mjs` sets `BH_WORKER_MAX_PRICE_PER_1M=4`), so
+the router may serve it at a price the policy never qualified. It did: **Wafer is the most expensive
+prompt price of the 33 endpoints, $1.00/M, 6.7× the qualified price.** Probed directly, the fix appears
+to work — with `max_price: {prompt: 0.15, completion: 0.5}` three calls went to Modal and Together;
+with `{4, 4}` three calls went to Together, Together and **Wafer**, so this is not a past transient,
+Wafer is in the rotation now.
+
+It is still the wrong repair, and the measurement says why. OpenRouter's headline price is the
+*cheapest* endpoint for some models and a middle price for others, so a ceiling at the qualified price
+is not a uniform rule:
+
+| model | headline | endpoints admitted by the headline |
+|---|---|---|
+| `z-ai/glm-5.3-flash` | 0.150 / 0.500 | **27 of 33** (excludes Wafer, Cloudflare, Morph, NextBit) |
+| `deepseek/deepseek-v4-flash-0731` | 0.021 / 0.320 | **1 of 30** (Relace only) |
+| `deepseek/deepseek-v4.1-flash` | 0.025 / 0.600 | **1 of 27** (Relace only) |
+
+Binding the ceiling to the qualified price would therefore collapse the *producer* model to a single
+provider on both DeepSeek routes — trading a rare latency outlier for a permanent single point of
+failure, and doing it to the model that makes half the calls. A multiple of the qualified price is
+the obvious patch and it is an unmeasured constant; nobody here can say what *k* is right for a price
+table we do not control. So the honest position is the one the shipped work already takes: **we cannot
+make a third party's latency predictable, and the fix is that it must only cost the reviews that did
+not fit** (D249). The cost-integrity question — that we qualify at one price and permit another — is
+real and is filed below rather than patched blind.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D249.3 | implemented, pending non-implementer verification | `29117cc0`; `iter262-d249/profile-{failed-run,2026-09-27T05-17-01-898Z-781906,2026-09-28T00-41-01-830Z-137530}.md` | Provider split + medians + the bounded endpoint-spread sentence. Silent on both healthy runs, fires on the failure. |
+| D249.4 | open — measured, repair rejected before implementation | this section; OpenRouter `/models/{id}/endpoints` for the three whitelisted paid workers | The worker policy qualifies a model at its catalog price and then permits $4/M. Binding `max_price` to the qualified price admits **1 of 30** and **1 of 27** endpoints for the two DeepSeek workers, so the obvious rule is worse than the defect. Needs a rule keyed on something other than the headline price. |
+
+**`ALL-ACCEPTED` is not appended.**
