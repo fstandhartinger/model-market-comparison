@@ -112,8 +112,13 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
   // Both charts improve toward the upper right. The cost domain stays logarithmic, with its visual direction reversed.
   const baseX = (v: number) => L + (W - L - R) * (kind === 'cost' ? (xMax - v) : (v - xMin)) / (xMax - xMin || 1);
   const baseY = (v: number) => T + (H - T - B) * (1 - (v - yMin) / (100 - yMin || 1));
-  const x = (v: number) => plotCenterX + (baseX(v) - plotCenterX) * view.zoom + view.panX;
-  const y = (v: number) => plotCenterY + (baseY(v) - plotCenterY) * view.zoom + view.panY;
+  // D245: the cost axis is a Math.log10 domain, and Math.log10 may differ in the last ULP between the
+  // Node that server-renders and the browser's V8 (a bubble's cx came out 239.7145944031871 against
+  // 239.71459440318708), which React reports as an attribute hydration mismatch. Three decimals of a
+  // 520-unit viewBox is far below a device pixel, and it is what `BenchmarkRadar` already does.
+  const r3 = (n: number) => Number(n.toFixed(3));
+  const x = (v: number) => r3(plotCenterX + (baseX(v) - plotCenterX) * view.zoom + view.panX);
+  const y = (v: number) => r3(plotCenterY + (baseY(v) - plotCenterY) * view.zoom + view.panY);
   const radius = (p: JevBubblePoint) => 2.5 + (narrow ? 5 : 7) * Math.sqrt(Math.max(0, p.score ?? 0) / 100);
 
   const placed = useMemo(() => plotted.map((p) => ({ p, cx: x(xValue(p)), cy: y(p.capability), r: radius(p) })),

@@ -25,14 +25,19 @@ export type Spoke = { key: string; lines: string[]; values: (number | null)[]; t
 
 export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke[]; series: Series[]; size: { w: number; h: number; r: number }; id: string; title: string; desc: string }) {
   const cx = size.w / 2, cy = size.h / 2 + 4, R = size.r;
-  const at = (i: number, v: number) => { const a = -Math.PI / 2 + (2 * Math.PI * i) / spokes.length; return [cx + (R * v / 100) * Math.cos(a), cy + (R * v / 100) * Math.sin(a)]; };
+  // D245: Math.sin/Math.cos may differ in the last ULP between the Node that server-renders and the
+  // browser's V8 (spoke 10 of an 11-spoke radar: 172.17492934337636 vs 172.1749293433764), so every
+  // ring polygon failed hydration as an attribute mismatch. Three decimals of an SVG user unit is far
+  // below a device pixel here and is the precision `BenchmarkRadar` already uses for the same reason.
+  const r3 = (n: number) => Number(n.toFixed(3));
+  const at = (i: number, v: number) => { const a = -Math.PI / 2 + (2 * Math.PI * i) / spokes.length; return [r3(cx + (R * v / 100) * Math.cos(a)), r3(cy + (R * v / 100) * Math.sin(a))]; };
   const ring = (v: number) => spokes.map((_, i) => at(i, v).join(",")).join(" ");
   return <svg viewBox={`0 0 ${size.w} ${size.h}`} className="h-auto w-full" role="img" aria-labelledby={`${id}-t ${id}-d`} data-bh-jev12-radar-svg>
     <title id={`${id}-t`}>{title}</title><desc id={`${id}-d`}>{desc}</desc>
     {[20, 40, 60, 80, 100].map((v) => <polygon key={v} points={ring(v)} fill="none" stroke="rgb(var(--line))" strokeOpacity={v === 100 ? 0.9 : 0.5} strokeWidth={1} />)}
     {/* F-136 (Fable pass 25, = F-113/F-117 for these radars): ring labels sit at the half-step between spoke 0 and spoke 1, inside their
         ring (on the polygon's apothem), with the F-70 halo, so the top spoke's own point never strikes them. */}
-    {[50, 100].map((v) => { const a = -Math.PI / 2 + Math.PI / spokes.length; const d = (R * v / 100) * Math.cos(Math.PI / spokes.length) - 3; return <text key={v} x={cx + d * Math.cos(a)} y={cy + d * Math.sin(a)} textAnchor="start" dominantBaseline="hanging" fontSize={11} fill="currentColor" opacity={0.7} style={{ paintOrder: "stroke", stroke: "var(--surface)", strokeWidth: "3px", strokeLinejoin: "round" }} data-radar-ring>{v}</text>; })}
+    {[50, 100].map((v) => { const a = -Math.PI / 2 + Math.PI / spokes.length; const d = (R * v / 100) * Math.cos(Math.PI / spokes.length) - 3; return <text key={v} x={r3(cx + d * Math.cos(a))} y={r3(cy + d * Math.sin(a))} textAnchor="start" dominantBaseline="hanging" fontSize={11} fill="currentColor" opacity={0.7} style={{ paintOrder: "stroke", stroke: "var(--surface)", strokeWidth: "3px", strokeLinejoin: "round" }} data-radar-ring>{v}</text>; })}
     {spokes.map((s, i) => { const [x, y] = at(i, 100); return <line key={s.key} x1={cx} y1={cy} x2={x} y2={y} stroke="rgb(var(--line))" strokeOpacity={0.6} />; })}
     {series.map((se, k) => {
       const pts = spokes.map((s, i) => (s.values[k] === null || s.thin[k] ? null : at(i, s.values[k] as number))).filter((p): p is number[] => p !== null);
@@ -44,10 +49,10 @@ export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke
     {spokes.map((s, i) => {
       const a = -Math.PI / 2 + (2 * Math.PI * i) / spokes.length;
       const cos = Math.cos(a), sin = Math.sin(a);
-      const x = cx + (R + 12) * cos, y0 = cy + (R + 12) * sin;
+      const x = r3(cx + (R + 12) * cos), y0 = r3(cy + (R + 12) * sin);
       const anchor = Math.abs(cos) < 0.2 ? "middle" : cos > 0 ? "start" : "end";
       const n = s.lines.length + 1;
-      const y = sin < -0.2 ? y0 - (n - 1) * 14 - 2 : sin > 0.2 ? y0 + 12 : y0 - ((n - 1) * 14) / 2 + 5;
+      const y = r3(sin < -0.2 ? y0 - (n - 1) * 14 - 2 : sin > 0.2 ? y0 + 12 : y0 - ((n - 1) * 14) / 2 + 5);
       return <text key={s.key} x={x} y={y} textAnchor={anchor} fontSize={13.5} fill="var(--text)" data-bh-jev12-radar-spoke={s.key}>
         {s.lines.map((l, j) => <tspan key={j} x={x} dy={j === 0 ? 0 : 14} fontWeight={600}>{l}</tspan>)}
         {/* F-216 (Fable pass 40): the separator sits between two printed values; a spoke whose A is unpublished prints B alone, not "· 74%". */}
