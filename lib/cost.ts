@@ -234,7 +234,9 @@ export const SCORE_OPTIONS: ScoreKey[] = [
   "cat_coding",
   "cat_agentic",
   "cat_science",
-  "cat_long_context",
+  // D252: "cat_long_context" was withdrawn on 2026-09-28 — only one long-context board clears
+  // CR-25.6's 60 % coverage bar. Leaving it out is also what makes sanitizeSettings drop a stored or
+  // deep-linked score=cat_long_context instead of showing a column of dashes.
 ];
 
 /** Default score across the whole app. */

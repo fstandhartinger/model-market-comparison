@@ -1,7 +1,7 @@
 {
-  "version": "1.0",
-  "recorded_at": "2026-09-15",
-  "note": "CR-25.6: category composite scores that can be selected like any other score. A category is only offered when at least two benchmarks in it are on a 0-100-style, higher-is-better scale AND are measured for at least 60 % of the featured model families (measured with ops/ux-2026-09-12/bin/cr-25-6-coverage.mjs). The anchor set is fixed here, not derived per model: a model gets the category score only when it has a result on EVERY anchor, so two models' category scores are always an average over the same benchmarks. Where a benchmark exists in several versions, the build picks the newest version (Terminal-Bench v4.0 over v2.1; newestRow in lib/category-scores.mjs), never a retired version that happens to cover more models; within one version the wider row wins (CR-65.16: this note said 'widest coverage' until 17 Sep). Reasoning and Vision have only one qualifying benchmark each (Humanity's Last Exam, MMMU Pro) and therefore get no category score. 2026-09-16 (CR-38.2/38.3, F-98): anchors are weighted, not averaged flat — a benchmark whose top five independently measured results average at least 90 % of its ceiling counts at half weight (SATURATED_WEIGHT in lib/benchmark-matrix.mjs), because it no longer separates the best models. Today that applies to GPQA Diamond in Science, so cat_science is (CritPt + 0.5 x GPQA Diamond) / 1.5. A preference or judge score may not be an anchor at all: computeCategoryScores throws rather than silently redefining a published score if one is ever reclassified (assertNoJudgedAnchors).",
+  "version": "1.1",
+  "recorded_at": "2026-09-28",
+  "note": "CR-25.6: category composite scores that can be selected like any other score. A category is only offered when at least two benchmarks in it are on a 0-100-style, higher-is-better scale AND are measured for at least 60 % of the featured model families (measured with ops/ux-2026-09-12/bin/cr-25-6-coverage.mjs). The anchor set is fixed here, not derived per model: a model gets the category score only when it has a result on EVERY anchor, so two models' category scores are always an average over the same benchmarks. Where a benchmark exists in several versions, the build picks the newest version (Terminal-Bench v4.0 over v2.1; newestRow in lib/category-scores.mjs), never a retired version that happens to cover more models; within one version the wider row wins (CR-65.16: this note said 'widest coverage' until 17 Sep). Reasoning and Vision have only one qualifying benchmark each (Humanity's Last Exam, MMMU Pro) and therefore get no category score. 2026-09-16 (CR-38.2/38.3, F-98): anchors are weighted, not averaged flat — a benchmark whose top five independently measured results average at least 90 % of its ceiling counts at half weight (SATURATED_WEIGHT in lib/benchmark-matrix.mjs), because it no longer separates the best models. Today that applies to GPQA Diamond in Science, so cat_science is (CritPt + 0.5 x GPQA Diamond) / 1.5. A preference or judge score may not be an anchor at all: computeCategoryScores throws rather than silently redefining a published score if one is ever reclassified (assertNoJudgedAnchors). 2026-09-28 (D252): the 60 % bar is a standing requirement on EVERY anchor, not a one-off gate on the category — that is how the sets were originally chosen (each anchor was recorded at >= 0.65 on 2026-09-15) and it is what makes the fixed set useful: a model is scored only with a result on every anchor, so one thin anchor decides the whole category's coverage. Nothing re-measured it, and four anchors had fallen below the bar: DeepSWE 65 % -> 35 %, EnterpriseOps-Gym-AA 65 % -> 35 %, MLCR-AA 90 % -> 55 %, and GDP.pdf (AA), whose current identity (snapshot-2026-09-21, a new LiteParse/OCR document pipeline) covers 15 % where the September 10 snapshot covered 65 %. The result was that Coding scored 50 of 868 model rows, Agentic 45, and Long context exactly one (gpt-6-astra::max). The anchors below the bar are withdrawn to `withdrawn` with their measured coverage; Coding and Agentic keep two anchors each and now score 148 model rows each. Long context is withdrawn entirely: only AA-LCR v1.1 clears the bar, so it falls under the same rule as Reasoning and Vision. test/d252-anchor-coverage.test.mjs re-measures every anchor from the built dataset on every run, so this cannot rot silently again, and pins that the score pickers offer exactly the categories the dataset publishes.",
   "min_coverage": 0.6,
   "min_anchors": 2,
   "categories": [
@@ -14,17 +14,14 @@
         {
           "key": "aa-terminal-bench",
           "name": "Terminal-Bench (AA)",
-          "coverage_2026_09_15": 1.0
+          "coverage_2026_09_15": 1.0,
+          "coverage_2026_09_28": 0.65
         },
         {
           "key": "aa-scicode",
           "name": "SciCode (AA subproblems)",
-          "coverage_2026_09_15": 1.0
-        },
-        {
-          "key": "deepswe",
-          "name": "DeepSWE (Datacurve, via Epoch AI)",
-          "coverage_2026_09_15": 0.65
+          "coverage_2026_09_15": 1.0,
+          "coverage_2026_09_28": 0.75
         }
       ]
     },
@@ -37,17 +34,14 @@
         {
           "key": "aa-automationbench",
           "name": "AutomationBench-AA",
-          "coverage_2026_09_15": 1.0
+          "coverage_2026_09_15": 1.0,
+          "coverage_2026_09_28": 0.75
         },
         {
           "key": "aa-tau3-banking",
           "name": "τ³-Banking (AA)",
-          "coverage_2026_09_15": 0.95
-        },
-        {
-          "key": "aa-enterpriseops-gym",
-          "name": "EnterpriseOps-Gym-AA",
-          "coverage_2026_09_15": 0.65
+          "coverage_2026_09_15": 0.95,
+          "coverage_2026_09_28": 0.6
         }
       ]
     },
@@ -60,38 +54,74 @@
         {
           "key": "aa-critpt",
           "name": "CritPt (AA)",
-          "coverage_2026_09_15": 1.0
+          "coverage_2026_09_15": 1.0,
+          "coverage_2026_09_28": 0.75
         },
         {
           "key": "aa-gpqa-diamond",
           "name": "GPQA Diamond (AA)",
-          "coverage_2026_09_15": 0.95
-        }
-      ]
-    },
-    {
-      "id": "long-context",
-      "key": "cat_long_context",
-      "label": "Long context",
-      "group": "long-context",
-      "anchors": [
-        {
-          "key": "aa-lcr",
-          "name": "AA-LCR v1.1",
-          "coverage_2026_09_15": 1.0
-        },
-        {
-          "key": "aa-gdp-pdf",
-          "name": "GDP.pdf (AA)",
-          "coverage_2026_09_15": 1.0
-        },
-        {
-          "key": "aa-mlcr",
-          "name": "MLCR-AA",
-          "coverage_2026_09_15": 0.9
+          "coverage_2026_09_15": 0.95,
+          "coverage_2026_09_28": 0.6
         }
       ]
     }
   ],
-  "saturation_weight": 0.5
+  "saturation_weight": 0.5,
+  "withdrawn": {
+    "note": "Anchors and categories removed because their measured coverage of the featured model families fell below `min_coverage`. Kept here so restoring one is a documented edit, never a guess: an anchor returns when it is measured for at least `min_coverage` of the featured families again, a category returns when at least `min_anchors` of its boards clear the bar.",
+    "recorded_at": "2026-09-28",
+    "anchors": [
+      {
+        "category": "coding",
+        "key": "deepswe",
+        "name": "DeepSWE (Datacurve, via Epoch AI)",
+        "coverage_2026_09_15": 0.65,
+        "coverage_2026_09_28": 0.35,
+        "why": "Coverage of the featured families fell from 65 % to 35 %; requiring it made the Coding composite cover 50 model rows instead of 148."
+      },
+      {
+        "category": "agentic",
+        "key": "aa-enterpriseops-gym",
+        "name": "EnterpriseOps-Gym-AA",
+        "coverage_2026_09_15": 0.65,
+        "coverage_2026_09_28": 0.35,
+        "why": "Coverage fell from 65 % to 35 %; requiring it made the Agentic composite cover 45 model rows instead of 148."
+      },
+      {
+        "category": "long-context",
+        "key": "aa-gdp-pdf",
+        "name": "GDP.pdf (AA)",
+        "coverage_2026_09_15": 1.0,
+        "coverage_2026_09_28": 0.15,
+        "why": "The board versioned: the current identity snapshot-2026-09-21 (LiteParse 2.5.0, English OCR, a changed image pipeline) covers 22 model rows and 15 % of the featured families, where snapshot-2026-09-10 covered 152 and 65 %. `newestRow` must take the current test (CR-65.16), so the anchor resolved to the thin row. It is also a judged board (D250.3)."
+      },
+      {
+        "category": "long-context",
+        "key": "aa-mlcr",
+        "name": "MLCR-AA",
+        "coverage_2026_09_15": 0.9,
+        "coverage_2026_09_28": 0.55,
+        "why": "Coverage fell from 90 % to 55 %, below the 60 % bar."
+      },
+      {
+        "category": "long-context",
+        "key": "aa-lcr",
+        "name": "AA-LCR v1.1",
+        "coverage_2026_09_15": 1.0,
+        "coverage_2026_09_28": 0.75,
+        "why": "Clears the bar at 75 %, but it is the only long-context board that does, and one anchor is below min_anchors. It returns as an anchor the day a second long-context board reaches 60 %; the nearest candidates today are MLCR-AA (55 %) and Context Arena MRCR v2 (25 %)."
+      }
+    ],
+    "categories": [
+      {
+        "id": "long-context",
+        "key": "cat_long_context",
+        "label": "Long context",
+        "group": "long-context",
+        "withdrawn_at": "2026-09-28",
+        "why": "Only one of its boards (AA-LCR v1.1, 75 %) clears the 60 % coverage bar, so the category falls under the rule that already leaves Reasoning and Vision without a category score. Before withdrawal it scored exactly one model row of 868 (gpt-6-astra::max), because it required a result on all three of AA-LCR (533 rows), GDP.pdf (AA) snapshot-2026-09-21 (22) and MLCR-AA (84).",
+        "returns_when": "A second long-context board is measured for at least 60 % of the featured families. GDP.pdf (AA) cannot be that board while it is classified judged (CR-38.3)."
+      }
+    ]
+  }
 }
