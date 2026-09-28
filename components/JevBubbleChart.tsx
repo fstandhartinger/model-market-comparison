@@ -138,13 +138,24 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
     const taken: Box[] = leaders.map((d) => ({ x: d.cx - d.r, y: d.cy - d.r, w: 2 * d.r, h: 2 * d.r }));
     const drawnLeaders: Seg[] = [];
     const fs = narrow ? 10.5 : 11.5;
-    const out: { key: string; text: string; x: number; y: number; anchor: 'start' | 'end'; lx: number; ly: number; far: boolean; ex?: number; ey?: number }[] = [];
+    const out: { key: string; text: string; x: number; y: number; anchor: 'start' | 'end'; lx: number; ly: number; far: boolean; ex?: number; ey?: number; col?: 'left' | 'right' }[] = [];
     if (stacked) {
       // A row has to clear the text box the browser actually draws: the glyph cell (~1.3 em) plus the 3 px halo
       // stroke this label carries, so the pitch is fs + 9 rather than the 13 px of a bare line of text.
       const rowH = Math.round(fs + 9);
-      const xEnd = W - R - 4;
+      const xEnd = W - R - 4, xStart = L + 4;
       const room = Math.max(60, xEnd - (L + 16));
+      // F-225(b) (Fable pass 42): a label never covers the data it names. The column goes to the side of the plot that
+      // holds fewer bubbles inside the band the labels occupy, and never onto the "most attractive quadrant" plate while
+      // that plate holds a labelled point. On the cost chart the capable systems are the expensive ones, so they sit left
+      // and the column stays right; on the speed chart the same five sit upper-right, so the column moves left.
+      const bandTop = T + 12 - rowH, bandBottom = T + 12 + leaders.length * rowH;
+      const third = (W - L - R) / 3;
+      const inBand = (cy: number) => cy >= bandTop && cy <= bandBottom;
+      const leftPts = placed.filter((o) => inBand(o.cy) && o.cx <= L + third).length;
+      const rightPts = placed.filter((o) => inBand(o.cy) && o.cx >= W - R - third).length;
+      const plateHoldsLabel = leaders.some((d) => d.cx >= plotCenterX && d.cy <= plotCenterY);
+      const side: 'left' | 'right' = leftPts < rightPts || (plateHoldsLabel && leftPts <= rightPts) ? 'left' : 'right';
       const items = leaders.map((d) => {
         let text = `${d.p.classRank}. ${d.p.name}`;
         let w = text.length * fs * 0.62 + 8;
@@ -156,7 +167,10 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
         return { d, text, w };
       });
       const place = (chosen: typeof items) => {
-        const gutter = Math.max(L + 4, xEnd - Math.max(...chosen.map((i) => i.w)) - 6);
+        const widest = Math.max(...chosen.map((i) => i.w));
+        // The gutter is the edge of the label block the leader lines attach to: their right edge on the left side of the
+        // plot, their left edge on the right side.
+        const gutter = side === 'left' ? Math.min(W - R - 4, xStart + widest + 6) : Math.max(L + 4, xEnd - widest - 6);
         const top = T + 12;
         const rows = new Array<number>(chosen.length).fill(0);
         [...chosen.keys()].sort((a2, b2) => chosen[a2].d.cy - chosen[b2].d.cy).forEach((item, row) => { rows[item] = row; });
@@ -177,8 +191,9 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
       // The directive's fallback: if five cannot be placed without a crossing, label the top three.
       if (laid.crossings > 0 && items.length > 3) { chosen = items.slice(0, 3); laid = place(chosen); }
       return chosen.map((it, i) => ({
-        key: it.d.p.key, text: it.text, x: xEnd, y: laid.top + laid.rows[i] * rowH, anchor: 'end' as const,
-        lx: it.d.cx, ly: it.d.cy, far: true, ex: laid.gutter, ey: laid.top + laid.rows[i] * rowH,
+        key: it.d.p.key, text: it.text, x: side === 'left' ? xStart : xEnd, y: laid.top + laid.rows[i] * rowH,
+        anchor: (side === 'left' ? 'start' : 'end') as 'start' | 'end',
+        lx: it.d.cx, ly: it.d.cy, far: true, ex: laid.gutter, ey: laid.top + laid.rows[i] * rowH, col: side,
       }));
     }
     for (const d of leaders) {
@@ -208,7 +223,7 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
     }
     return out;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [placed, narrow, stacked, W, H, L, R, T, B]);
+  }, [placed, narrow, stacked, W, H, L, R, T, B, plotCenterX, plotCenterY]);
 
   const nearest = (clientX: number, clientY: number, svg: SVGSVGElement) => {
     const rect = svg.getBoundingClientRect();
@@ -284,14 +299,15 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
   // CR-176.1/.2: the dashed limit line's caption sits on the LEFT of the line, with small direction arrows
   // across the top of the chart explaining which side is which. On a phone a short caption is used so it
   // stays left of the line without crossing the axis.
+  const sepWidthOf = (text: string) => text.length * (narrow ? 5.2 : 6) + 4;
   const separator = (value: number | null, marker: string, fullLabel: string, shortLabel: string, leftArrow: string, rightArrow: string) => {
     if (value == null || value <= L || value >= W - R) return null;
-    const widthOf = (text: string) => text.length * (narrow ? 5.2 : 6) + 4;
+    const widthOf = sepWidthOf;
     const label = value - 5 - widthOf(fullLabel) >= L ? fullLabel : shortLabel;
     const hborder = 4;
     return <g data-bh-jev-separator={marker} {...(marker === 'cost' ? { 'data-bh-jev-bubble-limit': '' } : { 'data-bh-jev-bubble-latency-limit': '' })}>
       <line x1={value} x2={value} y1={T} y2={H - B} stroke="var(--muted)" strokeDasharray="4 4" />
-      <text x={Math.max(hborder, value - 5)} y={T + 25} textAnchor="end" fill="var(--muted)" fontSize="10"
+      <text x={Math.max(hborder, value - 5)} y={T + 25 + sepLabelDy} textAnchor="end" fill="var(--muted)" fontSize="10"
         stroke="var(--surface)" strokeWidth="3" paintOrder="stroke" data-bh-jev-separator-label>{label}</text>
       {value - 6 - widthOf(leftArrow) >= hborder ? <text x={value - 6} y={T - 9} textAnchor="end" fill="var(--muted)" fontSize="10">{leftArrow}</text>
         : value - 6 >= hborder ? <text x={value - 4} y={T - 9} textAnchor="end" fill="var(--muted)" fontSize="10">←</text> : null}
@@ -306,6 +322,33 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
   const limitX = kind === 'cost' && costLimit > 0 ? x(Math.log10(costLimit)) : null;
   // Doubling the latency represented by the logarithmic Speed score moves it down by 20 log10(2) points.
   const latencyLimitX = kind === 'speed' && latencyLimit != null ? x(latencyLimit) : null;
+  // F-225(a) (Fable pass 42): at 390 the dashed line sits close to the y-axis, so its caption is pushed out over the
+  // axis numbers and printed on top of the "90" tick. A tick under a label is worse than a missing tick: the tick whose
+  // box the caption would cover loses its number (the gridline stays). If that tick is the axis maximum — the one the
+  // reader needs to read the scale at all — the caption moves down one gridline instead.
+  const sepX = kind === 'cost' ? limitX : latencyLimitX;
+  // F-225(b): when the phone's label column takes the left of the plot, the caption's usual place at the head of the
+  // line is inside that column. It stays left of the line (CR-176.1) and moves to the line's foot, where nothing reads.
+  const phoneColumnLeft = labels.some((l) => l.col === 'left');
+  const sepLabelBaseY = phoneColumnLeft ? H - B - 6 : T + 25;
+  const sepLabel = sepX != null && sepX > L && sepX < W - R && sepX - L <= 48
+    ? (() => {
+      const full = kind === 'cost' ? `2× ${referenceName} cost` : `2× ${referenceName} latency`;
+      const text = sepX - 5 - sepWidthOf(full) >= L ? full : `2× ${referenceName}`;
+      const right = Math.max(4, sepX - 5);
+      return { left: right - sepWidthOf(text), right };
+    })()
+    : null;
+  const tickCollision = sepLabel == null ? null : yTicks.find((t) => {
+    const ty = y(t) + 4;
+    // The tick number's own box: right-aligned at L − 6, ~6.1 px per digit at font size 11.
+    const box = { left: L - 6 - String(t).length * 6.1, right: L - 6, top: ty - 9, bottom: ty + 3 };
+    return box.right > sepLabel.left && box.left < sepLabel.right && box.bottom > sepLabelBaseY - 9 && box.top < sepLabelBaseY + 3;
+  }) ?? null;
+  const yTickMax = yTicks.length ? yTicks[yTicks.length - 1] : null;
+  const gridPitch = yTicks.length > 1 ? Math.abs(y(yTicks[0]) - y(yTicks[1])) : 0;
+  const sepLabelDy = sepLabelBaseY - (T + 25) + (tickCollision != null && tickCollision === yTickMax ? Math.round(gridPitch) : 0);
+  const hiddenYTick = tickCollision != null && tickCollision !== yTickMax ? tickCollision : null;
   const title = kind === 'cost' ? 'Capability vs cost' : 'Capability vs speed';
   const hint = kind === 'cost' ? 'Upper right is best: more capable and cheaper.' : 'Upper right is best: more capable and faster.';
 
@@ -342,7 +385,7 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
         </g>
         {yTicks.map((t) => <g key={`y${t}`}>
           {y(t) >= T && y(t) <= H - B && <><line x1={L} x2={W - R} y1={y(t)} y2={y(t)} stroke="rgb(var(--line) / .7)" />
-            <text x={L - 6} y={y(t) + 4} textAnchor="end" fill="var(--muted)" fontSize="11">{t}</text></>}
+            {t !== hiddenYTick && <text x={L - 6} y={y(t) + 4} textAnchor="end" fill="var(--muted)" fontSize="11" data-bh-jev-ytick={t}>{t}</text>}</>}
         </g>)}
         {xTicks.map((t) => <g key={`x${t.v}`}>
           {x(t.v) >= L && x(t.v) <= W - R && <><line x1={x(t.v)} x2={x(t.v)} y1={T} y2={H - B} stroke="rgb(var(--line) / .55)" />

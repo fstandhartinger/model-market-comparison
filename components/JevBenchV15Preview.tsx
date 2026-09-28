@@ -11,6 +11,7 @@ import { JevCapabilityRanking, jevClassView } from './JevCapabilityRanking';
 import { JevBubbleCharts } from './JevBubbleChart';
 import { JevScoreChart } from './JevBoardInteractive';
 import { JevCompareV15 } from './JevCompareV15';
+import { JevAxesViews } from './JevAxesViews';
 import { JevBoardIntentLinks } from './JevBenchSeoBlocks';
 import { JevCapabilityLazy } from './JevCapabilityLazy';
 import { JevContextLazy } from './JevContextLazy';
@@ -79,18 +80,30 @@ function NameCell({ row, rank }: { row: JevV15System; rank: ReactNode }) {
   </>;
 }
 
+/** F-223: the whisker-and-tie sentence. One string, printed under the interactive chart's leader sentence (where the
+ *  reader meets the ranking) and again inside the folded official order it used to belong to; null when the data file
+ *  carries no bootstrap pairs, because then there is nothing true to say about whiskers. */
+function tieSentence(a: JevV15Artifact) {
+  const { ties, pairs } = jevV15TieSummary(a.board[a.headline]);
+  return pairs ? `Whiskers are 95% bootstrap intervals. ${ties} of the ${pairs} adjacent pairs are statistical ties — read the order as a ranking, not the gaps as significant.` : null;
+}
+
 /** The official headline bars: every ranked system, the four axes and cost, plus secondary option ranks. */
 function HeadlineBars({ a, ranked }: { a: JevV15Artifact; ranked: JevV15System[] }) {
   const headline = a.headline;
   const markers = a.board[headline].markers ?? [];
   const tieBelow = new Map(markers.filter((m) => m.tie).map((m) => [m.upper, m.lower]));
-  const { ties, pairs } = jevV15TieSummary(a.board[headline]);
   const named = new Map(a.systems.map((s) => [s.key, short(s.display)]));
   const leader = jevV15LeaderSentence(a.board[headline], (key) => named.get(key) ?? key);
   const w = a.options[headline].weights;
   const weightText = `${w.intelligence} · ${w.calibration} · ${w.speed} · ${w.cost}`;
   const secondary = JEVBENCH_V15_OPTIONS.filter((o) => o !== headline) as [JevV15Option, JevV15Option];
-  return <figure className="bh-panel mt-6 p-4 sm:p-5" data-bh-jev15-board={headline} aria-labelledby="jev15-board-title">
+  // F-223 (Fable pass 42): one ranking, one figure. This static rendering of the official order is the third printing of
+  // the same ranking on the page, so it folds; every marker, row and interval stays in the document for the readers and
+  // verifiers that look for them. The interactive chart above now carries the whiskers and the tie sentence.
+  return <details className="mt-10" data-bh-jev15-bars-fold>
+    <summary className="cursor-pointer text-sm font-semibold text-accent" data-bh-jev15-bars-summary>Official order with 95% intervals ({ranked.length} systems)</summary>
+    <figure className="bh-panel mt-3 p-4 sm:p-5" data-bh-jev15-board={headline} aria-labelledby="jev15-board-title">
     <p className="bh-eyebrow">JevBench {a.revision} · headline option {headline}</p>
     <h2 id="jev15-board-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">JevBench Score: {ranked.length} ranked systems</h2>
     <p className="bh-muted mt-1 text-sm"><span className="bh-jevc-official mr-2">Official ({headline})</span>weighted harmonic mean of four 0–100 axes, Intelligence · Calibration · Speed · Cost = {weightText}, with the low-axis gates · <a href="#jev15-method" className="text-accent underline">Method ↓</a></p>
@@ -98,7 +111,7 @@ function HeadlineBars({ a, ranked }: { a: JevV15Artifact; ranked: JevV15System[]
         words, so the raw wording ("joint leaders (statistical tie)") is never printed on its own (pass 39: PR #53 had put it first). */}
     {leader && <p className="mt-2 text-sm font-semibold" data-bh-jev15-leader>{leader}</p>}
     {a.headline_hold && <p className="mt-2 rounded border border-amber-500/60 bg-amber-500/10 p-2 text-sm" data-bh-jev15-headline-hold>{a.headline_hold}</p>}
-    <p className="bh-muted mt-1 text-xs" data-bh-jev15-ties>{pairs ? `Whiskers are 95% bootstrap intervals. ${ties} of the ${pairs} adjacent pairs are statistical ties — read the order as a ranking, not the gaps as significant.` : 'Bootstrap intervals and tie markers are not in this data file yet; they come with the official scorer output.'}</p>
+    <p className="bh-muted mt-1 text-xs" data-bh-jev15-ties>{tieSentence(a) ?? 'Bootstrap intervals and tie markers are not in this data file yet; they come with the official scorer output.'}</p>
     <div className="mt-4 hidden grid-cols-[1.8rem_15rem_minmax(0,1fr)_3.4rem_24rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
       <span /><span /><span className="bh-muted font-mono">JevBench Score ({headline})</span><span className="bh-muted text-right font-mono">Score</span>
       <span className="bh-muted grid grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_3fr] text-right font-mono"><span>Intel.</span><span>Calib.</span><span>Speed</span><span>Cost</span><span>{secondary[0]} #</span><span>{secondary[1]} #</span><span>$/1k decisions</span></span>
@@ -128,12 +141,16 @@ function HeadlineBars({ a, ranked }: { a: JevV15Artifact; ranked: JevV15System[]
       </li>;
     })}</ol>
     <p className="bh-muted mt-3 text-xs" data-bh-jev15-cost-legend>{COST_LEGEND}</p>
-  </figure>;
+    </figure>
+  </details>;
 }
 
 function OptionsTable({ a, ranked }: { a: JevV15Artifact; ranked: JevV15System[] }) {
   const secondary = JEVBENCH_V15_OPTIONS.filter((o) => o !== a.headline) as [JevV15Option, JevV15Option];
-  return <section className="mt-10" aria-labelledby="jev15-options" data-bh-jev15-options>
+  // F-223: the same 89 systems a fourth time, under the two secondary weight options. It folds for the same reason.
+  return <details className="mt-10" data-bh-jev15-options-fold>
+    <summary className="cursor-pointer text-sm font-semibold text-accent" data-bh-jev15-options-summary>All three weight options ({ranked.length} systems)</summary>
+    <section className="mt-3" aria-labelledby="jev15-options" data-bh-jev15-options>
     <h2 id="jev15-options" className="scroll-mt-6 text-xl font-semibold">All three weight options</h2>
     <p className="bh-muted mt-1 max-w-4xl text-sm">A is the official headline: equal 25/25/25/25 axis weights and an Intelligence floor of 50. B remains the secondary 40/20/20/20 axis-weight view; C retains equal axes with an Intelligence floor of 60. All three use equal Choice/Noul/Score weights. The CI column is the paired-bootstrap 95% interval of the {a.headline} score.</p>
     <div className="mt-3 overflow-x-auto rounded-xl border border-line">
@@ -149,45 +166,66 @@ function OptionsTable({ a, ranked }: { a: JevV15Artifact; ranked: JevV15System[]
         </tr>)}</tbody>
       </table>
     </div>
+    </section>
+  </details>;
+}
+
+// F-224 (Fable pass 42): the section keeps its heading, id and `data-bh-jev15-axes` marker; the two panes below it hold
+// the columns that belong together. The name is unchanged because the page's section order is pinned by `<AxesTable`.
+function AxesTable({ a, rows }: { a: JevV15Artifact; rows: JevV15System[] }) {
+  return <section className="mt-10" aria-labelledby="jev15-axes" data-bh-jev15-axes>
+    <h2 id="jev15-axes" className="scroll-mt-6 text-xl font-semibold">Axes, request types, latency and cost</h2>
+    <JevAxesViews axes={<AxesView a={a} rows={rows} view="axes" />} types={<AxesView a={a} rows={rows} view="types" />} />
   </section>;
 }
 
-function AxesTable({ a, rows }: { a: JevV15Artifact; rows: JevV15System[] }) {
+function AxesView({ a, rows, view }: { a: JevV15Artifact; rows: JevV15System[]; view: 'axes' | 'types' }) {
   const cc = (row: JevV15System, split: string, t: string) => row.intelligence?.per_type_split?.[`${split}|${t}`]?.cc;
   const sup = (row: JevV15System, t: string) => row.support?.[t as 'choice'] ?? null;
-  return <section className="mt-10" aria-labelledby="jev15-axes" data-bh-jev15-axes>
-    <h2 id="jev15-axes" className="scroll-mt-6 text-xl font-semibold">Axes, request types, latency and cost</h2>
-    <p className="bh-muted mt-1 max-w-4xl text-sm">Every measured system. Intelligence is 50% open ({a.sample.open} decisions) and 50% sealed ({a.sample.sealed}); per-type columns are chance-corrected competence (CC, 0 = chance) for Choice, Noul and Score, open / sealed. Gap = I_open − I_sealed; the penalty applies only above the field median gap (G_med {one(a.G_med)}) plus 8. Latency is adjusted p50 / p95; cost is per 1,000 decisions. On a phone the name column stays put while the table scrolls sideways.</p>
-    <div className="mt-3 overflow-x-auto rounded-xl border border-line">
-      <table className="w-full min-w-[1480px] text-sm" aria-label="Per-system axes and details">
+  const isAxes = view === 'axes';
+  // The phone note is only true on a phone: at 1440 neither view scrolls sideways any more.
+  const phoneNote = <span className="sm:hidden"> On a phone the name column stays put while the table scrolls sideways.</span>;
+  return <>
+    <p className="bh-muted mt-2 max-w-4xl text-sm" data-bh-jev15-axes-intro={view}>{isAxes
+      ? <>Every measured system, under the four score axes. Intelligence is 50% open ({a.sample.open} decisions) and 50% sealed ({a.sample.sealed}); Gap = I_open − I_sealed, and the penalty applies only above the field median gap (G_med {one(a.G_med)}) plus 8. The per-type competence, latency and price of the same systems are in <b>Types &amp; cost</b>.{phoneNote}</>
+      : <>The same systems, by what was asked and what it cost. Per-type columns are chance-corrected competence (CC, 0 = chance) for Choice, Noul and Score, open / sealed; I open and I sealed are the two halves of Intelligence. Latency is adjusted p50 / p95; cost is per 1,000 decisions.{phoneNote}</>}</p>
+    <div className="mt-3 overflow-x-auto rounded-xl border border-line" data-bh-jev15-axes-wrap={view}>
+      <table className={`w-full text-sm ${isAxes ? 'min-w-[680px]' : 'min-w-[940px]'}`} aria-label={isAxes ? 'Per-system score axes' : 'Per-system request types, latency and cost'}>
         <thead><tr className="bg-[var(--surface)]">
-          <Th>#{a.headline}</Th><Th right={false}>System</Th><Th>Score</Th><Th>Intel.</Th><Th>Calib.</Th><Th>Speed</Th><Th>Cost</Th>
-          <Th title="Intelligence on the open set">I open</Th><Th title="Intelligence on the sealed set">I sealed</Th><Th>Gap</Th><Th title="Overfit multiplier on Intelligence">Penalty</Th>
-          {JEVBENCH_V15_TYPES.map((t) => <Th key={t} title={`${TYPE_LABEL[t]} competence, open / sealed`}>{TYPE_LABEL[t]} o / s</Th>)}
-          <Th title="Latency p50 / p95, adjusted">p50 / p95</Th><Th title="Cost per 1,000 decisions">$/1k decisions</Th><Th right={false}>Endpoint</Th>
+          <Th>#{a.headline}</Th><Th right={false}>System</Th>
+          {isAxes ? <><Th>Score</Th><Th>Intel.</Th><Th>Calib.</Th><Th>Speed</Th><Th>Cost</Th><Th>Gap</Th><Th title="Overfit multiplier on Intelligence">Penalty</Th></> : <>
+            <Th title="Intelligence on the open set">I open</Th><Th title="Intelligence on the sealed set">I sealed</Th>
+            {JEVBENCH_V15_TYPES.map((t) => <Th key={t} title={`${TYPE_LABEL[t]} competence, open / sealed`}>{TYPE_LABEL[t]} o / s</Th>)}
+            <Th title="Latency p50 / p95, adjusted">p50 / p95</Th><Th title="Cost per 1,000 decisions">$/1k decisions</Th><Th right={false}>Endpoint</Th></>}
         </tr></thead>
         <tbody>{rows.map((row) => {
           const i = row.intelligence;
           return <tr key={row.key} className={`border-t border-line ${row.ranked ? '' : 'opacity-80'}`} data-bh-jev15-row={row.key} data-bh-jev15-listing={row.listing}>
             <NameCell row={row} rank={row.ranks[a.headline] ?? <span className="bh-muted text-xs font-normal">–</span>} />
-            <td className="p-2 text-right font-bold tabular-nums">{row.ranked ? one(row.jevbench_score) : <span className="bh-muted font-normal" title={row.not_ranked_because ?? undefined}>—</span>}</td>
-            <td className="p-2 text-right tabular-nums">{one(row.axes.intelligence)}</td><td className="p-2 text-right tabular-nums">{one(row.axes.calibration)}</td>
-            <td className="p-2 text-right tabular-nums">{one(row.axes.speed)}</td><td className="p-2 text-right tabular-nums">{row.listing === 'unpriced' ? <span className="bh-muted">n/a</span> : one(row.axes.cost)}</td>
-            <td className="p-2 text-right tabular-nums">{one(i?.I_open)}</td><td className="p-2 text-right tabular-nums">{one(i?.I_sealed)}</td>
-            <td className="p-2 text-right tabular-nums">{signed(i?.gap)}</td><td className="p-2 text-right tabular-nums">{i?.penalty == null ? '—' : `×${i.penalty.toFixed(3)}`}</td>
-            {JEVBENCH_V15_TYPES.map((t) => <td key={t} className="whitespace-nowrap p-2 text-right tabular-nums" title={sup(row, t) ? `support: ${sup(row, t)}` : undefined}>
-              {sup(row, t) === 'unsupported' || sup(row, t) === 'not supported' ? <span className="bh-muted">not supported</span> : <>{f0(cc(row, 'open', t))} / {f0(cc(row, 'sealed', t))}</>}
-            </td>)}
-            <td className="whitespace-nowrap p-2 text-right tabular-nums" title={row.speed.adjustment ? `Adjustment: ${row.speed.adjustment}; raw p50 ${secs(row.speed.p50_s_raw)}, p95 ${secs(row.speed.p95_s_raw)}` : undefined}>{secs(row.speed.p50_s_adjusted)} / {secs(row.speed.p95_s_adjusted)}</td>
-            <td className="whitespace-nowrap p-2 text-right tabular-nums">{costCell(row)}</td>
-            <td className="bh-muted whitespace-nowrap p-2 text-xs" title={row.endpoint_condition ?? undefined}>{row.endpoint_kind === 'gpu' ? `GPU pod${row.gpu ? ` (${row.gpu})` : ''}` : row.endpoint_kind === 'cpu' ? 'CPU container' : row.endpoint_kind === 'demo' ? 'author demo endpoint' : row.endpoint_kind === 'api' ? 'hosted API' : '—'}</td>
+            {isAxes ? <>
+              <td className="p-2 text-right font-bold tabular-nums">{row.ranked ? one(row.jevbench_score) : <span className="bh-muted font-normal" title={row.not_ranked_because ?? undefined}>—</span>}</td>
+              <td className="p-2 text-right tabular-nums">{one(row.axes.intelligence)}</td><td className="p-2 text-right tabular-nums">{one(row.axes.calibration)}</td>
+              <td className="p-2 text-right tabular-nums">{one(row.axes.speed)}</td><td className="p-2 text-right tabular-nums">{row.listing === 'unpriced' ? <span className="bh-muted">n/a</span> : one(row.axes.cost)}</td>
+              <td className="p-2 text-right tabular-nums">{signed(i?.gap)}</td><td className="p-2 text-right tabular-nums">{i?.penalty == null ? '—' : `×${i.penalty.toFixed(3)}`}</td>
+            </> : <>
+              <td className="p-2 text-right tabular-nums">{one(i?.I_open)}</td><td className="p-2 text-right tabular-nums">{one(i?.I_sealed)}</td>
+              {JEVBENCH_V15_TYPES.map((t) => <td key={t} className="whitespace-nowrap p-2 text-right tabular-nums" title={sup(row, t) ? `support: ${sup(row, t)}` : undefined}>
+                {sup(row, t) === 'unsupported' || sup(row, t) === 'not supported' ? <span className="bh-muted">not supported</span> : <>{f0(cc(row, 'open', t))} / {f0(cc(row, 'sealed', t))}</>}
+              </td>)}
+              <td className="whitespace-nowrap p-2 text-right tabular-nums" title={row.speed.adjustment ? `Adjustment: ${row.speed.adjustment}; raw p50 ${secs(row.speed.p50_s_raw)}, p95 ${secs(row.speed.p95_s_raw)}` : undefined}>{secs(row.speed.p50_s_adjusted)} / {secs(row.speed.p95_s_adjusted)}</td>
+              <td className="whitespace-nowrap p-2 text-right tabular-nums">{costCell(row)}</td>
+              <td className="bh-muted whitespace-nowrap p-2 text-xs" title={row.endpoint_condition ?? undefined}>{row.endpoint_kind === 'gpu' ? `GPU pod${row.gpu ? ` (${row.gpu})` : ''}` : row.endpoint_kind === 'cpu' ? 'CPU container' : row.endpoint_kind === 'demo' ? 'author demo endpoint' : row.endpoint_kind === 'api' ? 'hosted API' : '—'}</td>
+            </>}
           </tr>;
         })}</tbody>
       </table>
     </div>
-    <p className="bh-muted mt-2 text-xs" data-bh-jev15-cost-legend>{COST_LEGEND}</p>
-    <p className="bh-muted mt-2 text-xs" data-bh-jev15-api-note>API = the operator's endpoint received sealed item text during evaluation, without answers. Sealed item text, answers and item-level results stay private; only system-level aggregates appear here. Hover a cost for its price basis and a latency for its raw values and adjustment.</p>
-  </section>;
+    {/* The cost legend and the API note explain columns that only the second view prints. */}
+    {!isAxes && <>
+      <p className="bh-muted mt-2 text-xs" data-bh-jev15-cost-legend>{COST_LEGEND}</p>
+      <p className="bh-muted mt-2 text-xs" data-bh-jev15-api-note>API = the operator&apos;s endpoint received sealed item text during evaluation, without answers. Sealed item text, answers and item-level results stay private; only system-level aggregates appear here. Hover a cost for its price basis and a latency for its raw values and adjustment.</p>
+    </>}
+  </>;
 }
 
 function Honorable({ a, rows }: { a: JevV15Artifact; rows: JevV15System[] }) {
@@ -395,7 +433,7 @@ export function JevBenchV15({ artifact: a, sha256, previousKeys = [] }: { artifa
   const chartSystems = a.systems.map((s) => jevV15BoardSystem(s) as JevV14System);
   const jevClass = jevClassView(chartSystems);
   const previous = new Set(previousKeys);
-  const viewRows = a.systems.map((s) => jevV15BoardRow(s, { isNew: previous.size > 0 && !previous.has(s.key) }));
+  const viewRows = a.systems.map((s) => jevV15BoardRow(s, { isNew: previous.size > 0 && !previous.has(s.key), headline: a.headline }));
   const compareRows = a.systems.map(jevV15CompareRow);
   const named = new Map(a.systems.map((s) => [s.key, short(s.display)]));
   const leader = jevV15LeaderSentence(a.board[a.headline], (key) => named.get(key) ?? key);
@@ -407,7 +445,7 @@ export function JevBenchV15({ artifact: a, sha256, previousKeys = [] }: { artifa
     <p className="bh-muted mt-3 max-w-4xl text-sm" data-bh-jev15-whatif>
       What-If: the <a className="text-accent underline" href="#jev14-chart-title">weight sliders below</a> re-score every system under other axis weights — only the equal 25/25/25/25 weights give the official option-{a.headline} ranking. The 3D view of capability, cost and speed loads <a className="text-accent underline" href="#jev14-capability-views">further down</a>.
     </p>
-    <JevScoreChart revision={a.revision} rows={viewRows} rankedCount={ranked.length} newLabel={newLabel} fairness={null} approvedNote={leader} capabilityHref="#jev-capability" presets={jevV15SliderPresets(a)} compactMobile scoreKind="v15" methodLink={{ href: '#jev15-method', label: 'Method notes ↓' }} />
+    <JevScoreChart revision={a.revision} rows={viewRows} rankedCount={ranked.length} newLabel={newLabel} fairness={null} approvedNote={leader} tieNote={tieSentence(a)} capabilityHref="#jev-capability" presets={jevV15SliderPresets(a)} compactMobile scoreKind="v15" methodLink={{ href: '#jev15-method', label: 'Method notes ↓' }} />
     <JevCompareV15 rows={compareRows} openDecisions={a.sample.open} sealedDecisions={a.sample.sealed} />
     <AxesTable a={a} rows={[...ranked, ...honorable, ...addendum, ...partial, ...unpriced]} />
     <HeadlineBars a={a} ranked={ranked} />

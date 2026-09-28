@@ -16,6 +16,8 @@ export type JevBoardRow = {
   cost: { kind: string; usd_per_1000: number | null; basis: string };
   speed: { p50_s_raw: number | null; adjustment?: string };
   endpoint_kind?: string; endpoint_condition?: string;
+  // F-223: the headline option's paired-bootstrap 95% interval, when the release publishes one (v1.5 onwards).
+  ci?: [number, number] | null;
 };
 
 /** A board row plus what the interactive views need: the row note, open code/weights, new in this release. */
@@ -98,13 +100,17 @@ function AxisValue({ level, children, title }: { level: number | null; children:
   return <span className={level == null ? 'bh-heat-cell sm:block' : 'bh-heat-cell bh-heat sm:block'} style={heatStyle(level)} title={title}>{children}</span>;
 }
 
-export function JevScoreBar({ row, reference = false, metric = 'score', heat, isNew = false, name }: { row: JevBoardRow; reference?: boolean; metric?: BarMetric; heat?: HeatScales; isNew?: boolean; name?: string }) {
+export function JevScoreBar({ row, reference = false, metric = 'score', heat, isNew = false, name, ci = null }: { row: JevBoardRow; reference?: boolean; metric?: BarMetric; heat?: HeatScales; isNew?: boolean; name?: string; ci?: [number, number] | null }) {
   const s = row.jevbench_score;
   const value = metricValue(row, metric);
+  // F-223 (Fable pass 42): the official score's 95% interval is drawn on the bar's own 0-100 scale, so the figure
+  // everyone reads shows the uncertainty. The caller decides when it applies (official weights, View by = Overall).
+  const clampPct = (v: number) => Math.max(0, Math.min(100, v));
+  const ciLo = ci ? clampPct(ci[0]) : null, ciHi = ci ? clampPct(ci[1]) : null;
   const usd = row.cost?.usd_per_1000;
   const kind = row.cost?.kind;
   const level = (column: HeatColumn) => heat ? heatLevel(heat, column, row) : null;
-  const label = `${row.display}: ${one(s)}${row.rank ? `, rank ${row.rank}` : `, ${NOT_RANKED[row.listing] ?? row.listing}, not ranked`}. Intelligence ${one(row.axes?.intelligence)}, calibration ${row.axes?.calibration == null ? 'none' : one(row.axes.calibration)}, speed ${one(row.axes?.speed)}, cost ${one(row.axes?.cost)}.`;
+  const label = `${row.display}: ${one(s)}${row.rank ? `, rank ${row.rank}` : `, ${NOT_RANKED[row.listing] ?? row.listing}, not ranked`}. Intelligence ${one(row.axes?.intelligence)}, calibration ${row.axes?.calibration == null ? 'none' : one(row.axes.calibration)}, speed ${one(row.axes?.speed)}, cost ${one(row.axes?.cost)}.${ciLo != null && ciHi != null ? ` 95% interval ${one(ciLo)} to ${one(ciHi)}.` : ''}`;
   return <li style={typeVar(row.class)} className="grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_21rem]"
     data-bh-jev14-bar={row.key} data-bh-jev14-bar-score={s == null ? '' : s.toFixed(3)} data-bh-jev14-bar-metric={metric === 'score' ? undefined : metric} data-bh-jev14-reference={reference ? '1' : undefined} aria-label={label}>
     <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs">{row.rank ?? ''}</span>
@@ -118,8 +124,9 @@ export function JevScoreBar({ row, reference = false, metric = 'score', heat, is
       {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1.5 align-middle" title={row.api_exposure_note ?? apiExplanation}>API</span>}
       {isNew && <span className="bh-new-tag ml-1.5 align-middle" data-bh-jev14-new={row.key}>new</span>}
     </span>
-    <span className="bh-jevc-grid col-start-2 row-start-2 mt-1 flex h-4 sm:col-start-3 sm:row-start-1 sm:mt-0 sm:h-6" aria-hidden="true">
+    <span className="bh-jevc-grid relative col-start-2 row-start-2 mt-1 flex h-4 sm:col-start-3 sm:row-start-1 sm:mt-0 sm:h-6" aria-hidden="true">
       {value != null && <span className={`bh-jevc-bar ${row.ranked ? '' : 'is-partial'} ${reference ? 'is-reference' : ''}`} style={{ width: `${Math.max(0, Math.min(100, value)).toFixed(4)}%` }} />}
+      {ciLo != null && ciHi != null && <span className="bh-jevc-ci" data-bh-jev14-ci={row.key} data-bh-jev14-ci-lo={ciLo.toFixed(3)} data-bh-jev14-ci-hi={ciHi.toFixed(3)} style={{ left: `${ciLo.toFixed(3)}%`, width: `${(ciHi - ciLo).toFixed(3)}%` }} />}
     </span>
     <b className={`tabular col-start-3 row-span-2 row-start-1 self-center text-right text-base sm:col-start-4 sm:row-span-1 sm:text-lg ${row.ranked ? '' : 'bh-muted font-normal'}`} data-bh-jev14-bar-value title={row.ranked ? undefined : 'Not ranked: this score is shown for reference only'}>{one(s)}</b>
     <span className="bh-muted col-start-2 row-start-3 mt-0.5 flex min-w-0 flex-wrap gap-x-2 font-mono text-[10.5px] sm:col-start-5 sm:row-start-1 sm:mt-0 sm:grid sm:grid-cols-[1fr_1fr_1fr_1fr_2.1fr] sm:gap-x-1 sm:whitespace-nowrap sm:text-right sm:text-[12px]" data-bh-jev14-bar-axes>

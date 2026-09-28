@@ -35,6 +35,11 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   const go = async (path) => { for (let a = 1; ; a++) { try { await p.goto(BASE + path, { waitUntil: 'domcontentloaded', timeout: 60000 }); break; } catch (e) { if (a >= 3) throw e; await p.waitForTimeout(3000); } } await p.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme); await p.waitForFunction(() => !document.querySelector('.bh-deferred'), null, { timeout: 90000 }).catch(() => {}); await p.waitForTimeout(500); };
 
   await go('/wip-oiifi41ouv1f/jevbench-v15'); await scrollThrough(p);
+  // F-223 (Fable pass 42, implemented iteration 269): the static official order and the weight-options table now sit in
+  // closed <details>. Every marker F-206 a–e reads is still in the document; the fold is opened here so the checks below
+  // measure rendered boxes rather than a collapsed one. Nothing about what is asserted changed.
+  await p.evaluate(() => { for (const d of document.querySelectorAll('[data-bh-jev15-bars-fold], [data-bh-jev15-options-fold]')) d.open = true; });
+  await p.waitForTimeout(400);
   const m = await p.evaluate(new Function(`${bxFn}
     const main = document.querySelector('main') || document.body; const all = (s) => [...main.querySelectorAll(s)];
     const leader = txt(main.querySelector('[data-bh-jev15-leader]'));

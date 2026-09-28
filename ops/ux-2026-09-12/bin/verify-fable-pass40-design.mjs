@@ -29,13 +29,20 @@ const probe = () => {
   const txt = (el) => el ? String(el.innerText ?? el.textContent ?? '').replace(/\s+/g, ' ').trim() : '';
   const main = document.querySelector('main') || document.body;
   const ld = [...document.querySelectorAll('script[type="application/ld+json"]')].map((s) => s.textContent).join(' ');
-  const radars = [...document.querySelectorAll('[data-bh-jev14-radar]')].map((f) => ({ key: f.getAttribute('data-bh-jev14-radar'), polygons: f.querySelectorAll('svg polygon, svg path[data-series], svg polyline').length, texts: [...f.querySelectorAll('svg text')].map((t) => txt(t)), missing: txt(f.querySelector('[data-bh-jev14-radar-missing]')) || null, nan: /NaN/.test(txt(f)) }));
+  // Iteration 269: CR-205 moved the hub's compare from JevCompareV14 to JevCompareV15, which names its radars
+  // `data-bh-jev15-radar` and the sealed one `tiers-sealed`. Reading only the v1.4 markers made the four hub checks
+  // fail against a page whose sealed radar is in fact fine (7 polygons, no NaN) — a stale selector, not a defect.
+  // Both marker sets are read, and the v1.5 keys are mapped onto the names the checks below use.
+  const V15_RADAR_KEY = { 'tiers-sealed': 'sealed', 'tiers-open': 'open', axes: 'axes', types: 'types' };
+  const readRadars = (attr, missAttr, mapKey) => [...document.querySelectorAll(`[${attr}]`)].map((f) => ({ key: mapKey ? (V15_RADAR_KEY[f.getAttribute(attr)] ?? f.getAttribute(attr)) : f.getAttribute(attr), polygons: f.querySelectorAll('svg polygon, svg path[data-series], svg polyline').length, texts: [...f.querySelectorAll('svg text')].map((t) => txt(t)), missing: txt(f.querySelector(`[${missAttr}]`)) || null, nan: /NaN/.test(txt(f)) }));
+  const radars = [...readRadars('data-bh-jev14-radar', 'data-bh-jev14-radar-missing', false), ...readRadars('data-bh-jev15-radar', 'data-bh-jev15-radar-missing', true)];
   const note = document.querySelector('[data-bh-jev-top-five-note]');
   const code = document.querySelector('[data-bh-jev-system-subline] code');
   return {
     text: txt(main), nanCount: (txt(main).match(/NaN/g) || []).length, ldContent: (ld.match(/\/api\/jevbench\/[^"]+/g) || []), ldCite: (ld.match(/blob\/[^/"]+\//g) || []), ldVersion: (ld.match(/"version":"([^"]+)"/) || [])[1] || null,
     radars, note: note ? txt(note) : null, codeTitle: code ? code.getAttribute('title') : null, h1: txt(main.querySelector('h1')),
-    compareA: document.querySelector('[data-bh-jev14-compare]')?.getAttribute('data-bh-jev14-compare-a') || null, compareB: document.querySelector('[data-bh-jev14-compare]')?.getAttribute('data-bh-jev14-compare-b') || null,
+    compareA: document.querySelector('[data-bh-jev14-compare]')?.getAttribute('data-bh-jev14-compare-a') || document.querySelector('[data-bh-jev15-compare]')?.getAttribute('data-bh-jev15-compare-a') || null,
+    compareB: document.querySelector('[data-bh-jev14-compare]')?.getAttribute('data-bh-jev14-compare-b') || document.querySelector('[data-bh-jev15-compare]')?.getAttribute('data-bh-jev15-compare-b') || null,
   };
 };
 const browser = await chromium.launch();

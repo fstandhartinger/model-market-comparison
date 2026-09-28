@@ -184,7 +184,7 @@ const GENERAL_LLM = 'llm-baseline';
 
 export type JevFairness = { leadName: string; topName: string; leadInt: number; topInt: number; leadsOn: string[] } | null;
 
-export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLabel, fairness, approvedNote = null, capabilityHref, presets = [], compactMobile = false, scoreKind = 'v14', methodLink }: { revision: string; rows: JevBoardViewRow[]; rankedCount: number; newLabel: string | null; fairness: JevFairness; approvedNote?: string | null; capabilityHref: string | null; presets?: JevPreset[]; compactMobile?: boolean; scoreKind?: 'v14' | 'v15'; methodLink?: { href: string; label: string } }) {
+export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLabel, fairness, approvedNote = null, tieNote = null, capabilityHref, presets = [], compactMobile = false, scoreKind = 'v14', methodLink }: { revision: string; rows: JevBoardViewRow[]; rankedCount: number; newLabel: string | null; fairness: JevFairness; approvedNote?: string | null; tieNote?: string | null; capabilityHref: string | null; presets?: JevPreset[]; compactMobile?: boolean; scoreKind?: 'v14' | 'v15'; methodLink?: { href: string; label: string } }) {
   // Florian 25 Sep 2026: weight sliders. Equal weights are the official score; any other mix re-scores every row with
   // the same formula and re-sorts by it, clearly marked as not the official ranking.
   // CR-205: scoreKind 'v15' re-scores with the v1.5 composite — its low-axis gates apply even at weight 0.
@@ -238,7 +238,10 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
   const rest = shown.slice(CHART_TOP);
   // Two configurations can share a short name (GPT-6 Luna and its low-effort setting); those rows keep the full name.
   const collide = useMemo(() => { const seen = new Map<string, number>(); for (const r of rows) seen.set(shortName(r.display), (seen.get(shortName(r.display)) ?? 0) + 1); return seen; }, [rows]);
-  const bar = (row: JevBoardViewRow) => <JevScoreBar key={row.key} row={row} metric={metric} heat={heat} isNew={row.isNew} name={(collide.get(shortName(row.display)) ?? 0) > 1 ? row.display : undefined} />;
+  // F-223 (Fable pass 42): one ranking, one figure. The official score's 95% interval is drawn here — on the official
+  // weights and the Overall view only, because the published interval belongs to the official score, not to a re-scored one.
+  const officialOverall = !custom && view === 'overall';
+  const bar = (row: JevBoardViewRow) => <JevScoreBar key={row.key} row={row} metric={metric} heat={heat} isNew={row.isNew} name={(collide.get(shortName(row.display)) ?? 0) > 1 ? row.display : undefined} ci={officialOverall ? row.ci ?? null : null} />;
   const status = `${shown.length} of ${rows.length} systems, sorted by ${SORT_LABEL[sort.key]}, ${dirWords(sort)}.`;
 
   return <figure className="bh-panel mt-6 p-4 sm:p-5" data-bh-jev14-chart data-bh-jev14-view={view} data-bh-jev14-compact={compactMobile ? '1' : undefined} aria-labelledby="jev14-chart-title">
@@ -265,6 +268,9 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
         Among the top five, <b className="text-[color:var(--text)]">{fairness.topName}</b> is still the strongest reasoner (Intelligence {one(fairness.topInt)} vs {one(fairness.leadInt)}){fairness.leadsOn.length > 0 ? <>; <b className="text-[color:var(--text)]">{fairness.leadName}</b> leads on {joinWords(fairness.leadsOn)}</> : null}. JevBench weighs Intelligence, Calibration, Speed and Cost equally —{' '}
         <button type="button" className="bh-inline-btn text-accent underline" onClick={() => choose('intelligence')} data-bh-jev-fairness-sort>view by Intelligence</button> for raw reasoning.
       </p> : null}
+      {/* F-223: the two facts the folded official order used to hold alone — what the whiskers are, and how many
+          adjacent pairs are statistical ties — sit under the leader sentence of the figure everyone reads. */}
+      {tieNote && officialOverall && <p className="bh-muted mt-1 text-xs leading-snug" data-bh-jev14-ties>{tieNote}</p>}
       {!approvedNote && !fairness && <p className="bh-muted mt-2 text-[13px] leading-snug" data-bh-jev-viewby-hint>The official order weighs Intelligence, Calibration, Speed and Cost equally. Each button re-sorts the same systems by one axis<span className="hidden sm:inline">, and the column headings sort too</span>.</p>}
       {view !== 'overall' && <p className="mt-2 text-[13px]" data-bh-jev-view-note><span className="bh-jevc-notdefault">Not the official order</span> <span className="bh-muted">Bars show {METRIC_LABEL[metric]} (0–100). The bold number stays the JevBench Score and # the official rank.</span></p>}
       {view === 'intelligence' && llmCount > 0 && <p className="mt-2 text-[13px]" data-bh-jev-llm-toggle-row>
