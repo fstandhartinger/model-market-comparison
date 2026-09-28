@@ -16017,3 +16017,110 @@ work iteration: find the attribute (`git stash` proves the baseline), no page ch
 pass 39 `regress/p39-after/` **56/56**; the re-pinned F-189 group `regress/p35-F189-after/` **62/62** (was 50/62). Fable-checked, so
 F-212–F-216 stay *implemented*.
 **Needs a non-Fable engine to set `verified` on F-212–F-216 (`verify-fable-pass40-design.mjs`, clear the out dir first); F-217 is for the next JevBench release job.**
+
+## Iteration 257 — 2026-09-28 00:2x UTC (claude-opus, work)
+
+Three things, in the order the previous iteration asked for them: the non-Fable verification pass 40 was
+waiting for, the offline replays D244 asked for before any repair, and D245's attribute.
+
+### Fable pass 40: F-212 – F-216 verified by a non-Fable engine
+
+`verify-fable-pass40-design.mjs` at the deployed revision `356831bd0a157a15095ced1bdf5f852fc02b62dc`, out
+directory removed before each run: **136/136 on all three hosts** (44 F-212, 60 F-213, 24 F-214, 8 F-215, in
+four viewport/theme contexts each). Fable measured the same suite at 64/136 before the fix, so it
+discriminates, and it reads the release from the committed artifact rather than a hard-coded `v1.4.2.2`.
+
+F-216 is not one of the verifier's groups, so it was read directly: on all three hosts at 1440 px and 390 px
+the Imajev-4B leaf prints the unpublished-value spoke as **`Hard 74%`** with no leading `· `, while all
+twenty spokes that do carry two values keep the `A · B` form. Receipts and the method:
+`/opt/benchmarkheaven/state/ux-evidence/iter257-pass40-verify/` (`VERIFICATION.md`, three `verification.json`,
+`f216-spokes.json`). Nothing was edited to reach it.
+
+### D244: six of the seven arms are proven offline, and one of them was not repaired yet
+
+Every replay uses the failing run's **own** capture (`daily-evidence/2026-09-27T05-33-09-831Z/manifest.json`),
+so it measures the repair and not a fresh page. Full table and method:
+`/opt/benchmarkheaven/state/ux-evidence/iter257-d244/README.md`.
+
+The ledger's framing needed one correction: five of the seven arms already had a repair that landed **after**
+the 05:33 run (D233 12:59, D234 14:17, D235 15:11–15:30), so they were never waiting for a diagnosis — they
+were waiting for proof. Two arms (`ugi-natint`, `ugi-writing`) are untouched since the run.
+
+- **`vulcanbench-frontier::4` — accepted, verdict `pass`, zero findings.** This is D234's repair proven, and
+  it is the single thing standing in front of **D224's four Claude Opus 5.5 cells**. It needed a merged
+  manifest: D234 made all five `judge-protocols.json` bundles protocol references hours after the 05:33
+  capture, so three of them had never been fetched. Tomorrow's run fetches all eleven references itself —
+  `captureTargets()` queues every `entry.evidence[]` URL — so no further work is needed there.
+- `blueprint-bench::2`, `vals-index-legal-research::2`, `vals-index-vibe-code-bench::2` — **accepted** unchanged.
+- **`vals-index-hlab::2` — the D235 repair was not enough, and the replay is what found it.** It fixed
+  `scoring.notes` and left `one_sentence_description` asserting *"Vals AI's run of Harvey's Legal Agent
+  Benchmark"*. The captured page says the opposite — *"Each benchmark column on the index is that benchmark's
+  own published standalone score"*, Code Migration the only exception — and introduces HLAB only as Harvey's
+  benchmark. The critic called the attribution unsupported; it is. Corrected, replayed, **accepted**.
+- `vals-index-terminal-bench-2.1::2` carried the same claim ("as run by Vals AI") under the same sentence of
+  the same page, and was green. Corrected preventively — the edit removes an assertion rather than adding
+  one — and replayed to prove it **stays accepted**.
+- `ugi-writing::snapshot-2026-09-10` — **accepted unchanged**, so its 05:33 failure was variance.
+- `ugi-natint::snapshot-2026-09-10` — not accepted, but on a **different** complaint than the one it failed
+  with at 05:33 (then: producer `missing_evidence` on c2; now: producer `match`, critic [major] on
+  `scoring.unit` asserting "score" without primary evidence). Two different reasons on the same unchanged row,
+  while its two siblings with the same unit pass, is the variance signature, not a stable defect. Left for the
+  next iteration with the complaint recorded rather than repaired on one sample.
+
+No score, observation, value, unit or range changed anywhere in this section; the two edits are description
+prose, and `data/dataset.json` carries them (four lines plus the timestamps).
+
+### D245: the attribute is `points` / `cx`, and the cause is not our code
+
+`Math.sin`, `Math.cos` and `Math.log10` are implementation-defined, and the Node that server-renders
+disagrees with the Chromium that hydrates in the **last ULP**: spoke 10 of an 11-spoke radar is
+`…172.17492934337636` in Node v26.8.1 and `…172.1749293433764` in Chromium. Those numbers are interpolated
+straight into SVG `points`, so React compares two strings differing in the 17th digit. Nothing moves on
+screen and production never prints the warning, but the mismatch is real.
+
+Fixed by rounding the coordinates where they leave the scale functions (`Number(n.toFixed(3))`) — the
+precision `components/BenchmarkRadar.tsx` has always used for the same reason. No printed value passes
+through those functions; they produce geometry only. Verifying it also turned up a **second instance the
+filing did not mention**: the `/jev-models` hub's `JevBubbleChart`, whose `Math.log10` cost axis produced
+`cx=239.7145944031871` against `239.71459440318708`. Both are fixed.
+
+A twelve-route dev sweep now logs **0 hydration errors** (was: four JevBench routes) and 0 `NaN` console
+errors. Root-cause receipt, sweep script and before/after:
+`/opt/benchmarkheaven/state/ux-evidence/iter257-d245/README.md`.
+
+Seen and dismissed while checking: `npx tsc --noEmit -p .` fails with TS2344 on
+`.next/types/app/jev-models/multimodal-preview/page.ts` when `.next` was last written by `next dev` — the dev
+server's generated route types reject `MultimodalPreviewContent` as a named export of a `page.tsx`. After a
+real `npm run build` the same command is **exit 0**, and the build's own "Linting and checking validity of
+types" passes. A dev artifact, not a defect; worth knowing because it makes the documented gate look red.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-212 / F-213 / F-214 / F-215 | implemented (Fable) → **verified** | `iter257-pass40-verify/VERIFICATION.md`; three `verification.json` | 136/136 on canonical, www and legacy at `356831bd`; 64/136 at the pre-fix revision. Implementer claude-fable, verifier claude-opus. |
+| F-216 | implemented (Fable) → **verified** | `iter257-pass40-verify/f216-spokes.json` | `Hard 74%` on 3 hosts × 2 viewports; the twenty two-value spokes keep `A · B`. |
+| F-217 | open `[data]` | unchanged | Still the next JevBench release artifact's contract. Untouched here. |
+| D244 | open → **six of seven arms proven offline; one repair was missing and is now in** | `iter257-d244/README.md` + seven replay directories | `vulcanbench-frontier::4` accepted (D234 proven). `vals-index-hlab::2` needed a description correction the D235 pass missed; `vals-index-terminal-bench-2.1::2` corrected preventively. `ugi-natint` fails on a second, different complaint — variance; recorded, not repaired. **The receipt for all of it is the ordinary 05:17 daily run.** |
+| D224 (live half) | open → **open, blocker proven clear offline** | `iter257-d244/replay-r1/` | The four Claude Opus 5.5 cells need nothing but `vulcanbench-frontier::4` publishing, and that arm's protocol review now passes on the failing run's own capture. No cell was forced. |
+| D245 (Fable pass 40) | open → **implemented** (`components/JevRadars.tsx`, `components/JevBubbleChart.tsx`) | `iter257-d245/README.md`, `node-vs-chromium-trig.txt`, `dev-hydration-sweep.mjs` | Node/Chromium last-ULP trig, not a component bug. Second instance found on the hub. Needs a non-implementer live check that pass 40 and pass 39 stay green at the deployed revision. |
+
+Gates at this tree: `node scripts/build-dataset.mjs` exit 0, **870 / 673 / 94 / 3,134**; `npm run build`
+exit 0, 165/165 static pages, type check green; `npx tsc --noEmit -p .` exit 0; `CI=true npm test` unpiped
+**1,531 tests, 1,530 pass, 0 fail, 1 skip**, exit 0 (`/opt/benchmarkheaven/state/ux-evidence/iter257-gates/`).
+
+**For the next iteration, in order:**
+
+1. **Read today's 05:17 daily receipt first.** It is the publication proof for D233, D234, D235, D242 and
+   this iteration's two Vals corrections, and the moment `vulcanbench-frontier::4` publishes, **D224's live
+   half closes with no further work**. `reports/source-health.md` names anything that did not clear.
+2. **A non-implementer live check of D245** — `verify-fable-pass40-design.mjs` and
+   `verify-fable-pass39-design.mjs` at the deployed revision, out dirs cleared. The fix moves geometry by
+   under a thousandth of an SVG unit, so both should be unchanged; that is the point of checking.
+3. **`ugi-natint::snapshot-2026-09-10`** if it fails a third time — the complaint to answer is `scoring.unit`
+   asserting "score" with no primary evidence, and `ugi-writing`/`ugi-willingness` carry the same unit, so any
+   repair belongs to all three or to none.
+4. **CR-190.1 still needs a non-implementer verification** (`verify-cr-190-live.mjs`) — claude-opus wrote it
+   and claude-opus wrote this, so it is not this engine's to sign.
+5. D243 still needs an owner decision; D236–D239 ride the next JevBench release; D240 is deliberately not
+   back-filled; CR-148.1 still owes a review-gate ruling.
+
+**`ALL-ACCEPTED` is not appended.**
