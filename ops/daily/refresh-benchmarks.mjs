@@ -165,6 +165,25 @@ export function publicValueActivity(field, rows, priorById, withdrawnRows = [], 
     removed_phrase: 'value(s) the board no longer publishes' };
 }
 
+// D251.1 (2026-09-28): the public form of D251.3's served-scale summary, and this one was asked for
+// by name. `mazur-creative-story-writing::snapshot-2026-09-10` claims `unit: "points"` on a board
+// whose README calls the column "Comparison score" and states no unit anywhere; two of three rounds
+// on 2026-09-25 returned `missing_evidence` on exactly that, and the replay taken right after
+// D251.3 shipped said what it wanted in one clause: "the row's scoring unit 'points' and range are
+// not stated in the protocol text, and **the packet provides no run-generated value summary to
+// verify the served scale**; cannot confirm those fields."
+//
+// The same rule as the AA form, over this board's own reconciled rows: the numbers as published,
+// nothing derived, and no summary at all when the board publishes no finite value. It is withheld
+// from a multi-capture arm (`parser.runs`) for the same reason its activity summary is — the
+// summary names the one capture it was read from, and those rows come from several.
+export function publicValueScale(field, rows, maintainer = null) {
+  const values = rows.map((row) => row.value).filter((v) => typeof v === 'number' && Number.isFinite(v));
+  if (!values.length) return null;
+  return { field, count: values.length, min: Math.min(...values), max: Math.max(...values),
+    payload: `${maintainer ? `${maintainer}'s` : "the maintainer's"} published results payload for this board` };
+}
+
 // The activity summary rides the same receipt as the capture it was computed from, so the
 // packet's hash chain is unchanged; its locator states plainly that the text is generated.
 //
@@ -221,7 +240,7 @@ export const protocolSourceLocator = (reference) => reference.review_content ===
   : reference.excerpt ? 'Published protocol text; exact excerpt when the full page exceeds the bound' : 'full visible primary text';
 
 export const PROTOCOL_REVIEW_CRITERIA = [
-  'Check the registry version, benchmark identity, metric, units and description against the actual current primary protocol. If the excerpt cannot establish continuity, report missing evidence. A changed task set, harness, judges, configuration or release version cannot silently reuse the existing identity. When the packet additionally carries this run\'s own generated summary of the values the maintainer serves today for this board\'s source field — how many finite values there are and the lowest and the highest — that summary is admissible for exactly one judgement: whether the row\'s `unit` and `range` describe the scale the board is actually served on. A protocol page states the scoring rule and need never state that scale, so a row whose `unit` and `range` agree with the served values is correct on this point even when the protocol text says nothing about it, and a row that disagrees with them is a mismatch. That summary is this run\'s own read of the captured payload, not maintainer text: it settles nothing about what the metric means, how it is computed, or which task set, harness, judges or version produced it.',
+  'Check the registry version, benchmark identity, metric, units and description against the actual current primary protocol. If the excerpt cannot establish continuity, report missing evidence. A changed task set, harness, judges, configuration or release version cannot silently reuse the existing identity. When the packet additionally carries this run\'s own generated summary of the values the maintainer serves today for this board\'s source field — how many finite values there are and the lowest and the highest — that summary is admissible for exactly one judgement: whether the row\'s `unit` and `range` describe the scale the board is actually served on. A protocol page states the scoring rule and need never state that scale, so a row whose `unit` and `range` agree with the served values is correct on this point even when the protocol text says nothing about it, and a row that disagrees with them is a mismatch. Judge only the bounds the row actually states: a `range` bound written as `null` is the row declining to claim one, and an unbounded bound is never contradicted by any served value, however large or small or negative. That summary is this run\'s own read of the captured payload, not maintainer text: it settles nothing about what the metric means, how it is computed, or which task set, harness, judges or version produced it.',
   'Check the lifecycle fields (status, version_status, superseded_by) against the same protocol text. `status` records whether the maintainer still reports results for this board: `"active"` means it still publishes them; `"retained"` means the protocol shows the board retired, removed, or replaced going forward, and we keep the values already collected without claiming they are current. `superseded_by` holds **our registry id for the successor board**, not a quotation: check that the protocol names that successor, and do not expect this board\'s protocol passage to establish the successor\'s version — that version is settled by the successor\'s own registry entry and its own evidence. Read status and supersession independently: a board can be superseded in one index and still be reported in another, and a supersession note alone is not a retirement. Report a mismatch when the protocol text contradicts one of these fields, and missing evidence when the excerpt cannot settle it. These fields are the row\'s only statement about whether the board is still live; judge them, and judge nothing else as such a statement. When the packet additionally carries this run\'s own generated summary of how many model rows\' values for this board\'s source field were added or changed in today\'s captured maintainer payload compared with the previously published snapshot, a nonzero count of added or changed values is affirmative evidence for `status: "active"` for this board only — a maintainer serving new or changed values is still reporting them; that summary settles nothing about the methodology, task set, harness, judges or version, and it can never establish `"retained"`.',
 ];
 
@@ -476,7 +495,11 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   // their manifests per unit and splice them into `reviews` in input order, so the report
   // does not depend on which review finished first.
   async function protocol(entry, extra = null, reviewSink = reviews) {
-    const cacheKey = extra?.activity ? `${entry.id}#${extra.activity.field}` : entry.id;
+    // D251.1: keyed on whichever generated summary the packet carries, because an arm may now carry
+    // the scale summary without the activity one (a board whose values moved but whose count is not
+    // affirmative), and such a review is still not interchangeable with a plain one.
+    const field = extra?.activity?.field ?? extra?.scale?.field;
+    const cacheKey = field ? `${entry.id}#${field}` : entry.id;
     if (protocolCache.has(cacheKey)) return protocolCache.get(cacheKey);
     const references = (entry.evidence ?? []).filter((s) => !s.source_sha256 && !/literal field/.test(s.excerpt ?? ''));
     if (!references.length) references.push({ url: entry.primary_url });
@@ -673,7 +696,12 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       const proposedActivity = spec.parser.runs || !spec.parser.value_field || entry.status !== 'active' ? null
         : publicValueActivity(spec.parser.value_field, candidate.observations, old, reconciled.withdrawn, entry.maintainer);
       const activity = proposedActivity?.affirmative ? proposedActivity : null;
-      pending.push({ index, spec, entry, proposed, candidate, evidence, changed, old, gone, withdrawnBySource, activity });
+      // D251.1: the served scale, on the rows this arm is publishing. Withheld from a multi-capture
+      // arm for the same reason the activity summary is; carried whatever the row's lifecycle says,
+      // because unlike the activity count it argues for nothing about whether the board is live.
+      const scale = spec.parser.runs || !spec.parser.value_field ? null
+        : publicValueScale(spec.parser.value_field, candidate.observations, entry.maintainer);
+      pending.push({ index, spec, entry, proposed, candidate, evidence, changed, old, gone, withdrawnBySource, activity, scale });
     } catch (error) {
       // F-209: exactly one failure shape is a quarantine — the collector saying the board publishes a
       // protocol revision the registry has not reviewed. Everything else stays a retained failure.
@@ -689,7 +717,8 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   const protocolUnits = [...new Map(pending.map((item) => [item.entry.id, item])).values()];
   const reviewSlots = protocolUnits.map(() => []);
   const protocolSettled = await mapWithConcurrency(protocolUnits, (unit, index) => protocol(unit.entry,
-    unit.activity ? { activity: unit.activity, receipt: unit.proposed.source } : null, reviewSlots[index]), { limit: concurrency });
+    unit.activity || unit.scale ? { activity: unit.activity, scale: unit.scale, receipt: unit.proposed.source } : null,
+    reviewSlots[index]), { limit: concurrency });
   for (const slot of reviewSlots) reviews.push(...slot);
   const protocolByEntry = new Map(protocolUnits.map((unit, index) => [unit.entry.id, protocolSettled[index]]));
   for (const { index, spec, entry, proposed, candidate, evidence, changed, old, gone, withdrawnBySource } of pending) {

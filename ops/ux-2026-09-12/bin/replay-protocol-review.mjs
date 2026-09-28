@@ -28,7 +28,7 @@ import { join, resolve } from 'node:path';
 import { execFile } from 'node:child_process';
 import { promisify, isDeepStrictEqual } from 'node:util';
 import { reviewArtifact } from '../../daily/gauntlet.mjs';
-import { protocolReviewRow, PROTOCOL_REVIEW_CRITERIA, protocolSourceContent, protocolSourceLocator, captureKey, activitySource, publicValueActivity, aaFieldActivity, aaFieldScale, scaleSource, followsPageScript, discoveredScriptReceipt } from '../../daily/refresh-benchmarks.mjs';
+import { protocolReviewRow, PROTOCOL_REVIEW_CRITERIA, protocolSourceContent, protocolSourceLocator, captureKey, activitySource, publicValueActivity, publicValueScale, aaFieldActivity, aaFieldScale, scaleSource, followsPageScript, discoveredScriptReceipt } from '../../daily/refresh-benchmarks.mjs';
 import { reconcilePublicIdentities } from '../../daily/public-identities.mjs';
 import { parseAaBenchmarkFields } from '../../../lib/aa-benchmark-fields.mjs';
 import { gunzipSync } from 'node:zlib';
@@ -126,9 +126,14 @@ if (fromRun) {
   const reconciled = reconcilePublicIdentities(candidate.observations, nativeEvidence, priorRows, { withdrawals });
   const computed = publicValueActivity(spec.parser.value_field, reconciled.rows,
     new Map(priorRows.map((r) => [r.id, r])), reconciled.withdrawn, entry.maintainer);
+  const scale = publicValueScale(spec.parser.value_field, reconciled.rows, entry.maintainer);
   console.error(`activity from ${fromRun}: ${JSON.stringify({ ...computed, rows: reconciled.rows.length, prior_rows: priorRows.length })}`);
+  console.error(`scale from ${fromRun}: ${JSON.stringify(scale)}`);
   if (computed.models === 0) throw new Error(`${id}: no value changed against ${fromRun}'s starting rows, so that run's arm carried no summary either`);
-  sources.push(activitySource(proposed.source, computed));
+  // D251.1: the daily attaches the activity summary only when it is affirmative and the scale
+  // summary whenever the board publishes a finite value; this reproduces both conditions.
+  if (computed.affirmative) sources.push(activitySource(proposed.source, computed));
+  if (scale) sources.push(scaleSource(proposed.source, scale));
 }
 // D251.3: the AA arm's two generated summaries, both recomputed here from that run's own capture.
 if (aaRun) {

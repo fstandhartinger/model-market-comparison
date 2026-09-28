@@ -69,4 +69,37 @@ test('criterion c1 admits the served scale for the unit and range question only'
   assert.match(identity, /whether the row's `unit` and `range` describe the scale the board is actually served on/);
   assert.match(identity, /a row whose `unit` and `range` agree with the served values is correct on this point even when the protocol text says nothing about it/);
   assert.match(identity, /settles nothing about what the metric means, how it is computed, or which task set, harness, judges or version produced it/);
+  // D251.1: two of three mazur rounds read `range: [null, null]` as disagreeing with a served scale
+  // of -5.071 to 3.83 — "the range does not describe the served scale". A null bound is the row
+  // declining to claim one; the criterion has to say so, or this evidence turns every unbounded
+  // board (mazur, and AA's Elo and points boards) into a mismatch.
+  assert.match(identity, /a `range` bound written as `null` is the row declining to claim one, and an unbounded bound is never contradicted by any served value/);
+});
+
+// D251.1: the public-board form of the same evidence. The mazur replay taken right after D251.3
+// shipped asked for it by name — "the packet provides no run-generated value summary to verify the
+// served scale" — on a board whose README states no unit at all.
+test('publicValueScale reads the published values of this board and nothing else', async () => {
+  const { publicValueScale } = await import('../ops/daily/refresh-benchmarks.mjs');
+  const rows = [{ id: 'a', value: -5.071 }, { id: 'b', value: 3.83 }, { id: 'c', value: 0 }];
+  assert.deepEqual(publicValueScale('value', rows, 'Lech Mazur (lechmazur)'),
+    { field: 'value', count: 3, min: -5.071, max: 3.83,
+      payload: "Lech Mazur (lechmazur)'s published results payload for this board" });
+  // Withheld rows and rows the board serves without a number are not values.
+  assert.deepEqual(publicValueScale('value', [{ id: 'a', value: null }, { id: 'b' }, { id: 'c', value: 7 }]),
+    { field: 'value', count: 1, min: 7, max: 7,
+      payload: "the maintainer's published results payload for this board" });
+  assert.equal(publicValueScale('value', [{ id: 'a', value: null }]), null);
+});
+
+test('the public scale summary names the maintainer and rides its own receipt', async () => {
+  const { publicValueScale } = await import('../ops/daily/refresh-benchmarks.mjs');
+  const receipt = { url: 'https://raw.githubusercontent.com/lechmazur/writing/main/README.md',
+    file: 'y.gz', sha256: 'e'.repeat(64), retrieved_at: '2026-09-28T05:43:32.652Z' };
+  const source = scaleSource(receipt, publicValueScale('value',
+    [{ id: 'a', value: -5.071 }, { id: 'b', value: 3.83 }], 'Lech Mazur (lechmazur)'));
+  assert.equal(source.sha256, receipt.sha256);
+  assert.match(source.content, /Lech Mazur \(lechmazur\)'s published results payload for this board/);
+  assert.match(source.content, /2 value\(s\), the lowest -5\.071 and the highest 3\.83/);
+  assert.match(source.locator, /not maintainer text/);
 });
