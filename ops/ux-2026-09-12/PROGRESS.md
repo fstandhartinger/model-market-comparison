@@ -17503,3 +17503,46 @@ publishes without a retained arm is tomorrow's 05:17 run to show.
 | D249.5 | **implemented, replayed green on two of the failed arms** | `iter263-d249-5/replay{,2}/`; `failing-run-receipts.json` | Behavioural acceptance is the next unattended daily: check `workers/` for a Wafer receipt and `unavailable-models.jsonl` for a `length` strike. |
 
 **`ALL-ACCEPTED` is not appended.**
+
+### Handoff from iteration 263 (claude-opus, 2026-09-28 12:30–14:15 UTC)
+
+Everything is committed, gated and **pushed**; `run.lock` was free the whole iteration and the tree is
+clean. Live revision `a044da12` on all three hosts (`9c6e4c13`, the last commit, is documentation
+only). Four commits: `dd6330b4` (D248), `8034ab5a` (D249.5), `a044da12` (D249.6), `9c6e4c13` (replay).
+
+**What changed today, in one line each.**
+
+1. **D248** — two of the five split catalog families merged; 868 models, no distinct offer lost,
+   verified live 31/31 per host. Needs a **non-implementer** to set `verified`
+   (`bin/verify-d248-live.mjs <base> <outDir>`).
+2. **D249.5 / D249.6** — the endpoint that has been emptying the daily's critic pool is excluded, and
+   a rejected completion's receipt now names its endpoint.
+3. **F-218** — verified on all three hosts.
+
+**What the next iteration should check first, in order:**
+
+1. **Tomorrow's 05:17 daily is D249.5's acceptance.** In its `workers/`: no receipt with
+   `provider: "Wafer"`, and no `Incomplete completion (length)` line in
+   `unavailable-models.jsonl`. If the 28 retained sources come back green, say so in the ledger and
+   set D249.5 `verified` (a non-implementer engine). If the pool empties again, read the *producer*
+   side too — the 11:23 run also lost `deepseek/deepseek-v4-flash-0731` to a 600 s timeout, and that
+   receipt now records its endpoint.
+2. **D248.1 and D248.2** — the three families still split. Neither is a slug rule: D248.1 needs a
+   vendor statement that a `-preview` snapshot and the GA snapshot are the same weights (OpenRouter's
+   own canonical slugs say they are not), and D248.2 needs a way to correct a *retained* AA field —
+   there is no override layer for `aa_metadata` today, and inventing one publishes a value AA did not
+   publish, so it wants a critic round before any code.
+3. **D249.4** stays open and is now measured on both sides: no price ceiling keyed on the catalog or
+   the cheapest endpoint survives contact with the three whitelisted workers (3/33, 2/30, 1/28).
+4. **F-219 and F-220** (Fable pass 41) are still for the v1.5 preview's owner.
+
+**One trap worth not re-learning.** `dataset.counts.offers` is a sum of **row-offer attachments**, not
+of offers — `modelRows.reduce((s, r) => s + r.offers.length, 0)`. Any acceptance written as "the offer
+total must not fall" will fail on a correct de-duplication, because a removed duplicate row stops
+re-listing its family's direct offers. The test that separates a merge from a loss is the **distinct**
+offer set and each family's reachable price set; `iter263-d248/repair-acceptance.json` computes both.
+
+Nothing in this iteration touched the registry, a published score or a protocol digest. The two
+replays wrote only to `/opt/benchmarkheaven/state/ux-evidence/`.
+
+**`ALL-ACCEPTED` is not appended.**
