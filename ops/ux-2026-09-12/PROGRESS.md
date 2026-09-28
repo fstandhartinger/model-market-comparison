@@ -17015,3 +17015,68 @@ retained, named, and not a reason to publish nothing.
 | D249.1 | open — `pipeline-streak.json` reports the wrong cause | `state/pipeline-streak.json` `error`; `refresh-benchmarks.mjs:352` | The recorded `error` is the step's stderr tail, so a non-fatal `BENCHMARK RETAINED` line is presented as the failure. A timeout must be recorded as a timeout. |
 
 **`ALL-ACCEPTED` is not appended.**
+
+### D249 repaired: the review budget, and what it would have done to the run that failed
+
+`ops/daily/step-budget.mjs` (new) gives the benchmarks step a soft deadline one reserve before the
+`8,400,000 ms` the parent kills it at, and `refresh-benchmarks.mjs` claims it at the four places that
+start an LLM call — the protocol review, the AA field chunks, the vendor extraction, the score batches.
+A unit the deadline never admits is recorded **`retained_budget_exhausted`**: its rows keep their
+published values through the `resolveRows` path that already exists, which is the same outcome an arm
+with an unreachable source has always had. The step then finishes, ingests, appends the history state
+and **publishes what it did approve**.
+
+In the score loop this needed one deliberate exception. `if (outcome.status === 'rejected') throw
+outcome.reason;` is correct for every review that was actually done and came back wrong — and fatal for
+one that was never done at all, because a single skipped batch would again cost the whole run. A budget
+rejection is now retained above that line; nothing else about it moved.
+
+**Replayed against the run that failed** (`iter262-d249/budget-replay.txt`). Its 85 gauntlet artifact
+directories, ordered by the earliest mtime inside each, against a soft deadline of 07:53:32Z:
+
+| | |
+|---|---|
+| units admitted before the soft deadline | **79** |
+| units started after it — would be `retained_budget_exhausted` | **6** (`scores-51` … `scores-56`) |
+| last admitted unit finished | **08:02:16Z** |
+| hard timeout | 08:03:32Z |
+
+So the run would have finished its review phase 76 s inside the kill, written its ingest, history state
+and report in the 6.4–7.0 s that takes, and **published 79 reviewed units with six retained** — instead
+of being killed with all 85 discarded. The score batches still queued behind those six would have been
+retained too; the day's outcome changes from *nothing published* to *a refresh with a named, bounded
+gap*, which is the whole claim.
+
+(Two caveats, so nobody reads more out of the table than it holds. An artifact directory's earliest
+mtime is when the unit started writing, not the instant it was admitted — close enough at this scale,
+not exact. And six of those directories carry mtimes up to 08:06:49Z, after the 08:03:32Z SIGTERM: the
+step's own worker subprocesses outlived the step that spawned them and went on writing for three
+minutes. That is a separate small defect and is filed as D249.2 rather than fixed here.)
+
+Two things came with it, both the same class of bug as the failure itself. The `8_400_000` now has a
+single definition that `daily.mjs` imports — two hardcoded copies of one timeout is exactly what killed
+the 2026-09-24 self-heal chain (`coordination/self-heal.sh` says so in its own header). And
+`source-health.mjs` reports the skipped units and rows, because leaving per-run batches out of the
+per-source table is how D204's quarantined rows ended up reported nowhere.
+
+**D249.1** is fixed in the same commit: `daily.mjs`'s `command()` appends `TIMEOUT: <step> was killed
+after N ms against its M ms limit` **after** the child's output, so the `slice(-1800)` and `slice(-3000)`
+that every downstream reader takes cannot clip it. For two days `pipeline-streak.json` presented a
+non-fatal `BENCHMARK RETAINED` line as the reason a run died on the clock.
+
+Gates at `ad58788c`: `node scripts/build-dataset.mjs` → 870 models / 673 families / 94 providers /
+3,134 offers, only `generated_at` and `composite.collected_at` moved and were restored;
+`CI=true npm test` → **1,576 pass, 0 fail, 1 skipped**; `npx tsc --noEmit -p .` → exit 0.
+`test/d249-review-budget.test.mjs` adds 17 tests: the deadline arithmetic and fail-closed configuration,
+the single error shape, that a synchronous claim inside a `mapWithConcurrency` worker isolates one unit
+instead of cancelling its siblings, that each of the four review sites claims before it calls, that the
+score loop retains a budget skip *before* its unconditional rethrow, the single timeout definition, and
+the `TIMEOUT` line's position in the tail.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D249 | implemented, pending non-implementer verification | `ad58788c`; `iter262-d249/budget-replay.txt`; `iter262-d249/gates/` | Not yet proven by a live run: the next unattended daily is the first real exercise. The budget is inert on a normal 58-minute run — it changes nothing until a step is within 10 minutes of its kill. |
+| D249.1 | implemented, pending non-implementer verification | `ad58788c` (`daily.mjs` `command()`) | A timeout is recorded as a timeout, last in the tail. |
+| D249.2 | open — noticed while replaying, not fixed | `iter262-d249/budget-replay.txt` (mtimes to 08:06:49Z after the 08:03:32Z SIGTERM) | The step's worker subprocesses outlive the SIGTERM that kills the step and keep writing into the run directory for ~3 minutes. Harmless today; it means a killed run's evidence directory is still being written while the next stage reads it. |
+
+**`ALL-ACCEPTED` is not appended.**
