@@ -17415,3 +17415,56 @@ Gates: `CI=true npm test` **1,592 tests, 1,591 pass, 0 fail, 1 skip**, exit 0
 scripts/build-dataset.mjs` exit 0, 868 / 673 / 94 / 3,118, timestamps only and the file restored.
 
 **`ALL-ACCEPTED` is not appended.**
+
+### D249.5 is not an optimisation: the 11:23 run's own receipts are the cause of today's 28 retained sources
+
+This was written when D249.5 looked like a latency refinement. Reading the receipts of the self-heal
+run that *did* publish today — `2026-09-28T11-23-07-137Z-342490`, the one behind `e10b3a85` — changes
+that. Its own `workers/` directory, tabulated in `iter263-d249-5/failing-run-receipts.json`:
+
+| started | mode | provider | finish | completion | of which reasoning | s |
+|---|---|---|---|---|---|---|
+| 11:26:50 | critic | **Wafer** | stop | 11,496 | 10,902 | 162.6 |
+| 11:27:04 | critic | **Wafer** | stop | 4,257 | 3,852 | 44.0 |
+| 11:27:31 | critic | **Wafer** | stop | 10,230 | 9,705 | 172.8 |
+| 11:28:33 | critic | **Wafer** | stop | 10,025 | 9,262 | 122.1 |
+| 11:29:33 | critic | **Wafer** | stop | 14,495 | 13,851 | 356.2 |
+| 11:31:14 | critic | **Wafer** | stop | 9,064 | 8,376 | 111.6 |
+| **11:31:33** | critic | — | **length** | **32,768** | **32,768** | 389.1 |
+| 11:32:00 | critic | **Wafer** | stop | 18,286 | 17,650 | 299.4 |
+| **11:38:03** | critic | — | **length** | **32,768** | **32,768** | 489.7 |
+| **11:46:13** | critic | — | **length** | **32,768** | **32,768** | 449.2 |
+| 12:04:59 | critic | **Wafer** | stop | 4,721 | 4,222 | 83.6 |
+
+Nine of ten critic calls that recorded a provider were served by Wafer, every one of them spending
+3,852–17,650 reasoning tokens where the same model id on Together spends **3**. The three bold rows hit
+the 32,768-token ceiling with the completion *entirely* reasoning, so they came back truncated and were
+recorded as `Incomplete completion (length)` transport strikes
+(`iter263-d249-5/unavailable-models.jsonl`, 11:38:02 / 11:46:13 / 11:53:42). Three strikes removed the
+only different-family critic on the scheduled whitelist, and from that moment every arm reported
+`worker: No supported viable worker model found` — **28 failing sources**, including all nine Vals
+boards, ARC-AGI, Terminal-Bench 4.0, FrontierCode, VulcanBench, SimpleBench and the three primary-source
+reads. The producer then timed out at 600 s on its last call and the run finished with the benchmarks
+retained.
+
+So the chain is: one endpoint's reading of `effort: "low"` → truncated critic answers → the critic
+struck off → an empty pool → a day of retained benchmarks. The exclusion shipped above cuts it at the
+first link. It does not make the pool robust — that is D199's bound and the budget — but it removes
+what has emptied the pool twice today.
+
+**One gap the receipts themselves revealed, and it is fixed (D249.6).** The three decisive rows record
+**no provider**. The runner set `metadata.provider` only from the accepted result, so a receipt for a
+*rejected* answer named no endpoint — exactly the receipts that most need to. `provider` is now
+recorded from the response body before the completion is judged, so a truncated or malformed answer
+still says which endpoint produced it. Without that, the strongest statement available about those
+three calls is circumstantial; with it, tomorrow's run can attribute them outright.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D249.5 | **implemented** — and re-scoped from optimisation to the cause of 28 retained sources | `iter263-d249-5/failing-run-receipts.json`; `unavailable-models.jsonl`; the exclusion and probes above | Tomorrow's 05:17 run is the behavioural acceptance: no Wafer receipt, and no `length` strike from it. |
+| D249.6 (new) | **implemented, pending non-implementer verification** | `ops/rebuild-2026-09/bin/worker-runner.mjs`; `test/d249-5-worker-endpoint-exclusions.test.mjs` (5/5) | A rejected completion's receipt now names its endpoint. The claim about the three truncated calls stays circumstantial for *this* run and is written as such. |
+
+Gates: `CI=true npm test` **1,593 tests, 1,592 pass, 0 fail, 1 skip**, exit 0
+(`iter263-d249-5/gates/npm-test-2.log`); `npx tsc --noEmit -p .` exit 0 (`gates/tsc-2.log`).
+
+**`ALL-ACCEPTED` is not appended.**

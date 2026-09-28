@@ -48,3 +48,13 @@ test('the runner sends the exclusions as provider.ignore and records them on the
   // The free router and the opencode agent do not go through OpenRouter's provider routing at all.
   assert.match(source, /options\.agent \|\| chosen\.transport === 'router'\s*\n?\s*\? \[\]/);
 });
+
+test('D249.6: the receipt names the endpoint before the completion is judged', () => {
+  const source = readFileSync(new URL('../ops/rebuild-2026-09/bin/worker-runner.mjs', import.meta.url), 'utf8');
+  // The failure receipt is a copy of `metadata` taken in the catch block, so anything recorded only
+  // after `validateCompletion` is absent from exactly the receipts that need it most.
+  const assignIndex = source.indexOf('provider: body.provider ?? null, finish_reason:');
+  const validateIndex = source.indexOf('validateCompletion(body, chosen.id)');
+  assert.ok(assignIndex > 0, 'the OpenRouter branch records provider on metadata');
+  assert.ok(assignIndex < validateIndex, 'provider is recorded before the completion can throw');
+});

@@ -282,7 +282,10 @@ try {
     });
     if (!response.ok) throw new Error(completionErrorMessage('OpenRouter', response.status, await response.text().catch(() => '')));
     const body = await response.json();
-    Object.assign(metadata, { actual_model: body.model ?? null, usage: body.usage ?? null, finish_reason: body.choices?.[0]?.finish_reason ?? null });
+    // D249.6: record the endpoint *before* the completion is judged. A receipt for a rejected answer
+    // used to name no provider at all, so the three truncated critic answers that emptied the worker
+    // pool on 2026-09-28 could not be attributed to the endpoint that produced them.
+    Object.assign(metadata, { actual_model: body.model ?? null, usage: body.usage ?? null, provider: body.provider ?? null, finish_reason: body.choices?.[0]?.finish_reason ?? null });
     result = { content: validateCompletion(body, chosen.id), actual_model: body.model, usage: body.usage ?? null, provider: body.provider ?? null };
   }
   if (options.json) {
