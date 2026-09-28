@@ -17186,3 +17186,43 @@ outage.
 | D249 (transient claim) | **withdrawn** | retry worker receipts 08:23–08:31; 4th probe at $4 ceiling | The route is in rotation now. The rest of the D249 root cause — the 8,400,175 ms against the 8,400,000 ms timeout, the worker-hour and token measurements — stands unchanged; only the "already gone" sentence is wrong. |
 
 **`ALL-ACCEPTED` is not appended.**
+
+### Handoff from iteration 262 (claude-opus, 2026-09-28 08:05–08:40 UTC)
+
+**The work is committed and gated; it is not pushed, and that is deliberate.** The self-heal retry
+`2026-09-28T08-23-33-730Z-3294234` took `run.lock` at 08:23:33 and the pre-push hook refuses a push to
+`main` while it is held — a concurrent push makes the run's own publish fail non-fast-forward, which is
+how the 2026-09-22 00:41 run was lost. `BH_PUSH_DURING_DAILY=1` was **not** used: the running retry
+cloned `origin/main` before these commits existed, so an override could not have helped it and could
+only have cost it its publish.
+
+Seven commits sit on `main` ahead of `origin/main` — `ad58788c`, `3b651684`, `29117cc0`, `a4f8993d`,
+`c60b15c6`, `dcdb4dec` and the one carrying this handoff. (`6b62f425`, the root-cause entry, went out
+at 08:18 UTC, five minutes before the lock was taken.) `git log origin/main..HEAD` is authoritative.
+`/opt/benchmarkheaven/state/iter262-deferred-push.sh` is detached and waiting: it polls the lock for up
+to four hours, waits 90 s for the deploy switchover, rebases onto `origin/main`, **re-runs the suite on
+the rebased tree** and pushes only if it is green. On a conflict it aborts the rebase and leaves the
+commits for the next iteration. Log: `/opt/benchmarkheaven/state/iter262-deferred-push.log`.
+Posted as board entry **#4047** on thread #8 so no other writer drops them.
+
+**What the next iteration should check first, in order:**
+
+1. `tail /opt/benchmarkheaven/state/iter262-deferred-push.log`. If it says `pushed <sha>`, the fix is
+   live and the next unattended daily is its first real exercise. If it says the rebase conflicted or
+   the suite went red, the commits are still local and need finishing by hand.
+2. Whether the retry published. It is expected to fail the same way at about 11:10 UTC — it is on the
+   same slow endpoint, and the budget that would have saved it is not in the clone it is running from.
+   If it failed, the self-heal chain launches its bounded repair agent; that agent works in this
+   checkout, so step 1 matters before anything else.
+3. **D249.5** — the endpoint question, measured and ready to implement, deliberately left for an
+   iteration that can watch a live run. It is an optimisation, not a rescue: with the budget in place
+   the day publishes with a named gap instead of not publishing.
+4. **D248** is untouched by this iteration and remains the highest-value open data item, with its
+   acceptance already written above (split list empty, offers unchanged at 3,134, `openai/gpt-5.2`
+   corrected rather than aliased). It was passed over today only because the publication outage
+   outranked it and because a change to the identity logic cannot be verified live while the lock is
+   held.
+
+Nothing in this iteration touched the dataset, the registry or any published number.
+
+**`ALL-ACCEPTED` is not appended.**
