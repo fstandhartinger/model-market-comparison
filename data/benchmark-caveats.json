@@ -205,6 +205,18 @@
       "field": "scoring.metric",
       "why": "Xiaomi's published copy of GDPval-AA 2.1, the same board as aa-gdpval, which is judged on its pairwise judge-panel Elo.",
       "added_by": "claude-opus (Sandy UX workstream, iteration 264, 2026-09-28) — D250"
+    },
+    "aa-gdp-pdf": {
+      "quote": "Judging: GPT-5.6 Luna Medium judges each criterion independently",
+      "field": "evidence.excerpt",
+      "why": "Artificial Analysis' own run of GDP.pdf. A judge model rules each of the 1,275 rubric criteria met or not and the published all-pass rate is the share of attempts where every one of its rulings was a pass, so the number is the judge's opinion of the answer, not a check against a reference answer. AA's methodology states the grader, so the entry's own evidence excerpt carries it; its sibling surge-gdp-pdf is judged on the same grader shape with Gemini 3.5 Flash.",
+      "added_by": "claude-opus (Sandy UX workstream, iteration 265, 2026-09-28) — D253, from the D250 review"
+    },
+    "stepfun-gdp-pdf": {
+      "quote": "Source-published score",
+      "field": "scoring.metric",
+      "why": "StepFun's published copy of the GDP.pdf number, the same board as aa-gdp-pdf and surge-gdp-pdf, both of which are judged: every rubric criterion is ruled by a judge model (AA: GPT-5.6 Luna Medium; Surge: Gemini 3.5 Flash). StepFun publishes no independent reproduction recipe, so whichever implementation it printed, the number is a judged score — a vendor reprinting a judged board does not make it task accuracy.",
+      "added_by": "claude-opus (Sandy UX workstream, iteration 265, 2026-09-28) — D253, from the D250 review"
     }
   },
   "considered_not_judged": {

@@ -157,14 +157,26 @@ test('CR-78.3: the three level changes from the simulation, and Hy3 moving down'
   if (!pinned) t.diagnostic(`CR-78.3 point pins were written for AA snapshot 2026-09-10T21:47:16.627Z; data is ${aaSnapshot} — re-pin due`);
   // CR-128 (2026-09-23): independent Opus/GPT-6 rows on existing boards move the catalog jaggedness mean to 13.24;
   // Muse Spark's unchanged inputs now blend to 17.48, so its pin follows the rounded current result.
+  // D253 (2026-09-28): GDP.pdf (AA) and StepFun's copy were classified judged, so both left the capability
+  // axes (CR-38.3 — a judge's opinion is not a capability). That moves every gap over the headline/held-out
+  // pairs and re-pins all four rows against the published data: Muse Spark 1.1 17.22/19.79, Qwen3.7 Max
+  // 4.72/5.92 (medium → light, the blend no longer reaches +6.0), Gemini 3.6 Flash 5.51/6.69 (light →
+  // medium, it had been 0.08 under the line), and Hy3, which now has too few capability comparisons to be
+  // scored at all. Tiers follow the numbers; none was fudged to keep this suite green.
   const expected = [
-    { id: 'muse-spark-1.1::xhigh', gap: 15.2, score: 17.5, before: 'strong', after: 'strong' },     // 11.69 → 14.03 → 18.08 → 17.87 before CR-128; 17.48 after
-    { id: 'qwen3.7-max::default', gap: 5.4, score: 6.7, before: 'light', after: 'medium' },         // 5.38 → 6.78 → 6.56
-    { id: 'gemini-3.6-flash::high', gap: 5.0, score: 6.0, before: 'light' },                        // 5.05 → 6.09 → 5.92 (0.08 under the medium line)
-    { id: 'hy3::default', gap: 5.8, score: 5.1, before: 'light', after: 'light' },                  // 5.82 → 4.22 → 4.20 → 5.13
+    { id: 'muse-spark-1.1::xhigh', gap: 17.2, score: 19.8, before: 'strong', after: 'strong' },     // 11.69 → 14.03 → 18.08 → 17.87 → 17.48 → 19.79
+    { id: 'qwen3.7-max::default', gap: 4.7, score: 5.9, before: 'light', after: 'light' },          // 5.38 → 6.78 → 6.56 → 5.92
+    { id: 'gemini-3.6-flash::high', gap: 5.5, score: 6.7, before: 'light', after: 'medium' },       // 5.05 → 6.09 → 5.92 → 6.69
+    { id: 'hy3::default', unscored: 'insufficient-coverage' },                                       // 5.82 → 4.22 → 4.20 → 5.13 → unscored (D253)
   ];
   for (const row of expected) {
     const report = scoreBenchmaxxing(view, row.id);
+    if (row.unscored) {
+      assert.equal(report.status, row.unscored, `${row.id}: expected ${row.unscored}`);
+      assert.ok(report.comparisons < report.rule.minComparisons,
+        `${row.id}: unscored for want of comparisons, ${report.comparisons} < ${report.rule.minComparisons}`);
+      continue;
+    }
     assert.equal(report.status, 'scored', `${row.id} is scored`);
     // The design contract that survives any refresh: the tag follows the published blend, nothing else.
     assert.ok(Math.abs(report.score - (report.parts.gap + report.parts.jaggednessTerm)) < 1e-9, `${row.id}: score = gap + jaggedness term`);

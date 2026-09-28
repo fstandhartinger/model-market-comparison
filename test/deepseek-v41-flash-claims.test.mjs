@@ -146,7 +146,11 @@ test('the card\'s boards cannot move the Benchmaxxing signal', async () => {
   const evid = evidencedAxisMaps(view);
   const stats = computePairStats(maps);
   const scored = scoreBenchmaxxing(view, MODEL, { maps, evid, stats });
-  assert.equal(scored.status, 'scored');
+  // D253 (2026-09-28): this model is `insufficient-coverage` today, because GDP.pdf (AA) was classified
+  // judged and left the capability axes, taking the family from 7 comparisons to 5. The contract this test
+  // exists for is unaffected and is asserted either way: removing the card's rows must change nothing —
+  // not the status, not the parts, not the score.
+  assert.ok(['scored', 'insufficient-coverage'].includes(scored.status), scored.status);
   // What a vendor claim could move, if it leaked in, is this model's own two parts (the gap over its
   // headline/held-out pairs and its within-topic jaggedness) and the catalog mean. The property is tested
   // directly: the same catalog without the card's rows scores this model identically, to the last bit.
@@ -161,6 +165,10 @@ test('the card\'s boards cannot move the Benchmaxxing signal', async () => {
   const bareMaps = measuredAxisMaps(bare);
   const reference = scoreBenchmaxxing(bare, MODEL, { maps: bareMaps, evid: evidencedAxisMaps(bare), stats: computePairStats(bareMaps) });
   assert.ok(without.benchmark_results.observations.length < dataset.benchmark_results.observations.length, 'the card rows were present to remove');
-  for (const key of ['gap', 'jaggedness', 'jaggednessMean']) assert.equal(scored.parts[key], reference.parts[key], key);
-  assert.equal(scored.score, reference.score);
+  assert.equal(scored.status, reference.status, 'the card rows cannot decide whether this model is scored');
+  assert.equal(scored.comparisons, reference.comparisons, 'nor how many capability comparisons it has');
+  if (scored.status === 'scored') {
+    for (const key of ['gap', 'jaggedness', 'jaggednessMean']) assert.equal(scored.parts[key], reference.parts[key], key);
+    assert.equal(scored.score, reference.score);
+  }
 });

@@ -92,13 +92,28 @@ test('D250: the four boards registered on 2026-09-28 stay registered', () => {
 //
 // This block exists so the flag cannot be forgotten. It does not assert that they stay unclassified:
 // classifying them is the point, and a test that fails when someone does the work is a trap.
+// D253 (2026-09-28) registered both, so both branches below now take the `classified` path. The block
+// stays: it is the record of who flagged them and of the pair rule, and the last check is the one that
+// matters going forward — the three identities of GDP.pdf move together or not at all.
 const FLAGGED_BY_REVIEW = {
   'aa-gdp-pdf': "Artificial Analysis' own run of GDP.pdf. Its registry evidence excerpt quotes AA's"
     + ' methodology, "Judging: GPT-5.6 Luna Medium judges each criterion independently", which is the'
-    + ' same grader shape that made surge-gdp-pdf judged. Blocked on D250.3: it is a Long context anchor.',
+    + ' same grader shape that made surge-gdp-pdf judged. Registered by D253, after D252 withdrew it'
+    + ' from the Long context anchors for coverage — so CR-38.3\'s build guard was already satisfied.',
   'stepfun-gdp-pdf': "StepFun's reprint of the same GDP.pdf number. Judged or not, it has to follow"
-    + ' aa-gdp-pdf and surge-gdp-pdf; a vendor reprinting a judged board does not make it task accuracy.',
+    + ' aa-gdp-pdf and surge-gdp-pdf; a vendor reprinting a judged board does not make it task accuracy.'
+    + ' Registered by D253 on the D250 precedent for a vendor copy, and it moves no number: its board'
+    + ' holds one vendor row, so it was never a capability axis for anyone else.',
 };
+
+// D253: all three identities of GDP.pdf are judged. Pin it, so a later edit cannot quietly take one out.
+test('D253: every identity of GDP.pdf is classified judged', () => {
+  for (const key of ['surge-gdp-pdf', 'aa-gdp-pdf', 'stepfun-gdp-pdf']) {
+    assert.ok(caveats.judged[key], `${key}: GDP.pdf has no answer key — every criterion is a judge's ruling`);
+  }
+  assert.equal(caveats.judged['aa-gdp-pdf'].field, 'evidence.excerpt',
+    "aa-gdp-pdf's grader is named in AA's methodology, which the entry carries as evidence");
+});
 
 test('D250.3: the GDP.pdf boards the review flagged are still on the record', () => {
   for (const [key, why] of Object.entries(FLAGGED_BY_REVIEW)) {

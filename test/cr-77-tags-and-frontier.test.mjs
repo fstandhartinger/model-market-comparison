@@ -65,7 +65,7 @@ test('CR-77.2: the note names the reason — thin coverage, an interval below ze
   assert.equal(benchmaxxingUncertaintyNote({ comparisons: 1, intervalLower: 3 }), 'Based on only 1 comparison — treat this tag as uncertain');
 });
 
-test('CR-77.1/77.2 on the real dataset: DeepSeek V4.1 Flash carries the medium tag, marked uncertain', async () => {
+test('CR-77.1/77.2 on the real dataset: the tag DeepSeek V4.1 Flash shows is the one its score implies', async () => {
   const view = buildBenchmarkView(JSON.parse(await readFile(new URL('../data/dataset.json', import.meta.url), 'utf8')));
   const fam = benchmaxxingFamilySignals(view);
   const family = 'deepseek-v4.1-flash';
@@ -74,12 +74,43 @@ test('CR-77.1/77.2 on the real dataset: DeepSeek V4.1 Flash carries the medium t
   // light one (5.90, 8 comparisons). Pinning the word "medium" would have made an honest re-score a
   // test failure — and tempted the next reader to fudge the tier to save the suite. The rule is what
   // CR-77.1 asked for, and it is the same rule the three families below are held to.
+  //
+  // D253, 2026-09-28: the family is not scored today, and that is the second half of the same rule.
+  // GDP.pdf (AA) was classified judged (AA's own methodology: "Judging: GPT-5.6 Luna Medium judges each
+  // criterion independently"), so it left the capability axes — a judge's opinion is not a capability
+  // (CR-38.3, lib/benchmax.mjs). That takes this family from 7 capability comparisons to 5, one below
+  // BENCHMAXX_MIN_COMPARISONS, so `scoreBenchmaxxing` reports `insufficient-coverage`. CR-77.1 says a
+  // model must still be scored and that nothing is tagged without a score, so the tag goes with the
+  // score. What CR-77 forbade was suppressing a tag whose score existed; it never asked for a tag
+  // without one, and the remedy here is more measured capability boards, never a lower bar.
   const own = fam.reports.find(([rid]) => (view.models.find((m) => m.id === rid)?.family ?? rid) === family);
-  assert.ok(own, 'DeepSeek V4.1 Flash is scored');
-  assert.equal(fam.familyLevels.get(family), benchmaxxingLevelFor(own[1].score), 'its tag is the tier its score implies');
-  assert.ok(fam.familyLevels.get(family), 'and it is tagged');
-  assert.ok(fam.familyUncertain.has(family), 'and its thin evidence is disclosed, not used to hide the tag');
-  assert.ok(own[1].comparisons < BENCHMAXX_TAG_MIN_COMPARISONS, 'thin is what "uncertain" is claiming here');
+  if (own) {
+    assert.equal(fam.familyLevels.get(family), benchmaxxingLevelFor(own[1].score), 'its tag is the tier its score implies');
+    assert.ok(fam.familyLevels.get(family), 'and it is tagged');
+    assert.ok(fam.familyUncertain.has(family), 'and its thin evidence is disclosed, not used to hide the tag');
+    assert.ok(own[1].comparisons < BENCHMAXX_TAG_MIN_COMPARISONS, 'thin is what "uncertain" is claiming here');
+  } else {
+    // Unscored: no tag anywhere, and the reason has to be the coverage rule, not a guard and not a bug.
+    assert.equal(fam.familyLevels.get(family) ?? null, null, 'unscored, so untagged (CR-77.1)');
+    const report = scoreBenchmaxxing(view, 'deepseek-v4.1-flash::max');
+    assert.equal(report.status, 'insufficient-coverage', 'the family is unscored for want of comparisons');
+    assert.ok(report.comparisons < report.rule.minComparisons,
+      `${report.comparisons} capability comparisons against a minimum of ${report.rule.minComparisons}`);
+    // Prove the cause: with GDP.pdf (AA) counted as a capability axis again the family clears the bar,
+    // so this row returns to the branch above the day it has another measured capability board — and
+    // nobody is tempted to lower minComparisons to bring it back.
+    const withGdp = buildBenchmarkView({
+      ...JSON.parse(await readFile(new URL('../data/dataset.json', import.meta.url), 'utf8')),
+      benchmark_results: {
+        ...JSON.parse(await readFile(new URL('../data/dataset.json', import.meta.url), 'utf8')).benchmark_results,
+        judged_benchmarks: JSON.parse(await readFile(new URL('../data/dataset.json', import.meta.url), 'utf8'))
+          .benchmark_results.judged_benchmarks.filter((k) => k !== 'aa-gdp-pdf' && k !== 'stepfun-gdp-pdf'),
+      },
+    });
+    const counterfactual = scoreBenchmaxxing(withGdp, 'deepseek-v4.1-flash::max');
+    assert.equal(counterfactual.status, 'scored', 'the judged classification is what unscored it');
+    assert.ok(counterfactual.comparisons > report.comparisons, 'and it is the two GDP.pdf axes that went');
+  }
   // Florian named these three as well; each carries the level its score implies.
   for (const other of ['gemini-3.7-flash', 'muse-spark-1.1', 'muse-spark-1.2']) {
     const [id, report] = fam.reports.find(([rid]) => (view.models.find((m) => m.id === rid)?.family ?? rid) === other) ?? [];
