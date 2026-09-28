@@ -9,6 +9,7 @@ import { parseAaBenchmarkFields, assertAaBenchmarkContinuity } from '../../lib/a
 import { flightRecords, objects, resolveFlight } from '../../lib/aa-rsc.mjs';
 import { reviewArtifact, batchRows, sha256, defaultRunner } from './gauntlet.mjs';
 import { mapWithConcurrency, dailyConcurrency } from './concurrency.mjs';
+import { unlimitedReviewBudget, isBudgetExhausted } from './step-budget.mjs';
 import { openReuseCache, unitFingerprint, reuseProvenance } from './reuse-cache.mjs';
 import { reconcilePublicIdentities } from './public-identities.mjs';
 import { aaMappingApplies } from '../../lib/benchmark-registry.mjs';
@@ -327,7 +328,7 @@ export function vendorReusable(entry, rows) {
 // fixtures can drive the aggregation without a worker call; production uses the defaults.
 // CR-73.2: `cache` is the cross-run reuse log (see ops/daily/reuse-cache.mjs); the default is a
 // disabled one, so nothing is reused unless the caller hands in an enabled cache.
-export async function refreshBenchmarks({ runDir, review = reviewArtifact, runner = defaultRunner, concurrency = dailyConcurrency(), cache = null, runId = null } = {}) {
+export async function refreshBenchmarks({ runDir, review = reviewArtifact, runner = defaultRunner, concurrency = dailyConcurrency(), cache = null, runId = null, budget = unlimitedReviewBudget() } = {}) {
   if (!runDir) throw new Error('refreshBenchmarks requires runDir');
   // A disabled cache misses on everything and writes nothing, so there is one code path below
   // whether or not reuse is on.
@@ -349,7 +350,10 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   // hands in its own per-spec slot so a parallel phase still reports in spec order.
   // `extra` carries structured facts a report should not have to re-read out of the prose reason
   // (D204: the quarantined row count). The reason text is unchanged — it is what a human reads.
-  const fail = (id, error, sink = checks, extra = {}) => { const reason = error.message ?? String(error); sink.push({ id, status: 'retained_after_failure', reason, ...extra }); console.error(`BENCHMARK RETAINED ${id}: ${reason}`); };
+  // D249: a unit the review budget never admitted is retained for a reason that is ours, not the
+  // source's, so it gets its own status. Everything else about the outcome is identical — the row
+  // keeps its published value — and the console line keeps its shape for ops/daily/profile-run.mjs.
+  const fail = (id, error, sink = checks, extra = {}) => { const reason = error.message ?? String(error); sink.push({ id, status: isBudgetExhausted(error) ? 'retained_budget_exhausted' : 'retained_after_failure', reason, ...extra }); console.error(`BENCHMARK RETAINED ${id}: ${reason}`); };
   const { urls, documentUrls } = captureTargets({ registry, plan, vendor });
   // AA's model page was already fetched by efficiency; never fetch it again.
   const live = (await readFile(join(runDir, 'sources', 'live-manifest.jsonl'), 'utf8')).trim().split('\n').map(JSON.parse);
@@ -427,6 +431,7 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       sources.push({ ...receipt, content: bounded(content, entry.id), locator: protocolSourceLocator(reference) });
     }
     if (extra?.activity) sources.push(activitySource(extra.receipt, extra.activity));
+    budget.claim(`protocol-${entry.id}`);
     const reviewed = await review({ runDir: evidenceDir, artifactId: `protocol-${entry.id}`, rows: [protocolReviewRow(entry)],
       sources, criteria: PROTOCOL_REVIEW_CRITERIA });
     reviewSink.push({ scope: entry.id, type: 'protocol', ...reviewed.manifest });
@@ -465,10 +470,10 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       // aggregated (and failed) in chunk order.
       const aaChunks = batchRows(changed.map((r) => ({ id: r.source_id, ...r }))).map((chunk) => ({ chunk,
         sources: chunk.map((r) => ({ ...receipt, locator: `Flight model UUID ${r.id}`, content: JSON.stringify(resolveAll(Object.fromEntries(['id', 'slug', 'name', 'effort', ...Object.keys(r.fields)].filter((k) => Object.hasOwn(native.get(r.id) ?? {}, k)).map((k) => [k, native.get(r.id)[k]])))) })) }));
-      const aaResults = await mapWithConcurrency(aaChunks, (unit, index) => review({
+      const aaResults = await mapWithConcurrency(aaChunks, (unit, index) => (budget.claim(`aa-fields-${index}`), review({
         runDir: evidenceDir, artifactId: `aa-fields-${index}`, rows: unit.chunk, sources: unit.sources,
         criteria: ['Verify exact UUID, slug, name and effort.slug; candidate fields copy the same named native fields with exact numbers, nulls and structures. Missing input is not zero. These are raw discovery fields; only the existing reviewed aa_field_map may identify score benchmarks.'],
-      }), { limit: concurrency });
+      })), { limit: concurrency });
       for (const [index, unit] of aaChunks.entries()) {
         const outcome = aaResults[index];
         if (outcome.status === 'rejected') throw outcome.reason;
@@ -685,6 +690,7 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     const fingerprint = vendorUnitFingerprint({ url, captureSha256: receipt.sha256, recipe, extractionParserSha256: extractionParser, reviewerSource, rows });
     const entry = fingerprint ? vendorCache.get(fingerprint) : null;
     if (vendorReusable(entry, rows)) return { reuse: reuseProvenance(entry), receipt, rows: rows.length };
+    budget.claim(`vendor-${url}`);
     const content = bounded(await textSource(receipt, recipe ?? undefined), url);
     const packet = join(temporary, `vendor-${index}.json`), out = join(temporary, `vendor-${index}-collected.json`);
     await put(packet, { source: { ...receipt, content }, slots: rows.map((r) => ({ id: r.id, benchmark_id: r.benchmark_id, subject: r.subject, unit: r.unit, locator: r.source.locator, protocol: r.protocol })) });
@@ -746,12 +752,16 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     .map((chunk, batch) => ({ batch, chunk,
       sources: [...new Map(chunk.flatMap((r) => evidenceById.get(r.id)).map((s) => [sha256(JSON.stringify(s)), s])).values()],
       producerModels: [...new Set(chunk.map((r) => vendorProducers.get(r.id)).filter(Boolean))] }));
-  const scoreResults = await mapWithConcurrency(scoreBatches, (unit) => review({
+  const scoreResults = await mapWithConcurrency(scoreBatches, (unit) => (budget.claim(`scores-${unit.batch}`), review({
     runDir: evidenceDir, artifactId: `scores-${unit.batch}`, rows: unit.chunk, sources: unit.sources, producerModels: unit.producerModels,
     criteria: ['For every observation verify exact primary value, model/checkpoint and explicitly published effort/harness, benchmark version, units, source date, measured/self_reported/derived basis and every derivation. A prior accepted subject identity is fixed; no alias inference is permitted. Verify protocol and locator against current primary evidence. Unknown configurations cannot create comparison_key values.'],
-  }), { limit: concurrency });
+  })), { limit: concurrency });
   for (const unit of scoreBatches) {
     const outcome = scoreResults[unit.batch];
+    // D249: a batch the clock never admitted is the one rejection that must not end the step — its
+    // rows simply keep their published values through `resolveRows` below, exactly as a quarantined
+    // row does. Every other rejection still fails the run.
+    if (outcome.status === 'rejected' && isBudgetExhausted(outcome.reason)) { fail(`score-batch-${unit.batch}`, outcome.reason, checks, { unreviewed_rows: unit.chunk.length }); continue; }
     if (outcome.status === 'rejected') throw outcome.reason;
     const result = outcome.value;
     reviews.push({ scope: 'scores', ...result.manifest });
@@ -795,8 +805,13 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   const report = { ok: true, checked_at: at, sources_attempted: captured.size, concurrency, reuse: vendorCache.stats(), reused_units: vendorReused, checks, reviews,
     score_candidates: changedIds.size, accepted_changed_scores: accepted.size, retained_or_dropped: changedIds.size - accepted.size,
     retained_failures: checks.filter((c) => c.status === 'retained_after_failure').length,
+    // D249: what the clock cost, stated by the step itself. `deadline_at: null` means no budget was
+    // applied at all (an unlimited caller), which is not the same as a budget that was never reached.
+    review_budget: { deadline_at: budget.deadlineAt === null ? null : new Date(budget.deadlineAt).toISOString(),
+      exhausted: budget.exhausted(), unreviewed_units: budget.skipped,
+      retained_budget_exhausted: checks.filter((c) => c.status === 'retained_budget_exhausted').length },
     note: 'Retained observations keep original dates and approvals. Unreachable/manual sources and incomplete or contested candidates are explicit; no claim of complete benchmark-universe freshness.', commitPaths: [] };
   await put(join(evidenceDir, 'checks.json'), report); await put(join(root, 'daily-checks.json'), report);
-  console.log(`Benchmark refresh: ${checks.length} checks; ${accepted.size}/${changedIds.size} changed score rows accepted; ${report.retained_failures} explicit retained failures`);
+  console.log(`Benchmark refresh: ${checks.length} checks; ${accepted.size}/${changedIds.size} changed score rows accepted; ${report.retained_failures} explicit retained failures${report.review_budget.exhausted ? `; ${report.review_budget.retained_budget_exhausted} unit(s) retained unreviewed after the review budget ran out at ${report.review_budget.deadline_at}` : ''}`);
   return report;
 }

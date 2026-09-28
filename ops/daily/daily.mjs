@@ -15,6 +15,7 @@ import { GATE_TIMEOUT_MS, gatedPublish } from './publish-gate.mjs';
 import { staleSources, updateCollectorHealth } from './source-health.mjs';
 import { profileRunDir } from './profile-run.mjs';
 import { dailyConcurrency } from './concurrency.mjs';
+import { BENCHMARK_STEP_TIMEOUT_MS } from './step-budget.mjs';
 const exec = promisify(execFile);
 const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 const hash = (value) => createHash('sha256').update(value).digest('hex');
@@ -78,7 +79,15 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       console.log(`OK ${name}`);
       return stdout.trimEnd();
     } catch (error) {
-      const detail = redact([error.stdout, error.stderr, error.message].filter(Boolean).join('\n'));
+      // D249.1: on a timeout the child is SIGTERMed and its *stderr* is all that is recorded, so a run
+      // killed on the clock was reported by its last non-fatal line — for two days pipeline-streak.json
+      // blamed a retained benchmark for a step that had simply run out of time. Every reader of this
+      // field takes the tail (`slice(-1800)`, `slice(-3000)`), so the timeout is stated last, where a
+      // tail cannot cut it off.
+      const timedOut = error.killed === true || error.signal === 'SIGTERM' || error.code === 'ETIMEDOUT';
+      const detail = redact([error.stdout, error.stderr, error.message,
+        timedOut ? `TIMEOUT: ${name} was killed after ${Date.now() - begin} ms against its ${timeout} ms limit; the lines above are its output at that moment, not the reason it failed.` : '',
+      ].filter(Boolean).join('\n'));
       await writeFile(join(reports, `${name.replace(/[^a-z0-9-]/gi, '-')}.log`), detail);
       report.steps.push({ name, ok: false, duration_ms: Date.now() - begin, started_at: new Date(begin).toISOString(), finished_at: new Date().toISOString(), error: detail.slice(-3000) });
       throw new Error(`${name} FAILED: ${detail.slice(-1800)}`);
@@ -331,7 +340,10 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       // Same reason, same bound: on 17 Sep each paid producer call took 2–5 min (1 min on 16 Sep) and this step ran past 45 min.
       // 140 min (was 100): the free max-effort critic needs 100–270 s per review; the 06:07 run of 17 Sep was killed at
       // 100 min. Live review (~25 min) + this + build/gate/publish (~5 min) still fits gated-run's 3 h limit.
-      await command('refresh-benchmarks', process.execPath, ['ops/daily/phase-step.mjs', 'benchmarks', runDir], work, 8_400_000);
+      // D249: the number lives in step-budget.mjs, because the step now derives its own soft
+      // deadline from it. Two hardcoded copies of one timeout is the bug that killed the
+      // 2026-09-24 self-heal chain (see coordination/self-heal.sh); this one is imported.
+      await command('refresh-benchmarks', process.execPath, ['ops/daily/phase-step.mjs', 'benchmarks', runDir], work, BENCHMARK_STEP_TIMEOUT_MS);
     }
     if (hash(await readFile(join(work, 'data/raw/aa-coding-agents.json'))) !== legacy) throw new Error('Legacy Coding Agent v1.4 changed: refusing publication');
     await command('build-dataset', process.execPath, ['scripts/build-dataset.mjs']);

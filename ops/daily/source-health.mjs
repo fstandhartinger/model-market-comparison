@@ -13,6 +13,10 @@ import { join } from 'node:path';
 export const STATUS_KIND = {
   checked_unchanged: 'ok', updated: 'ok', candidate: 'ok', vendor_candidate: 'ok', collected: 'ok', state_appended: 'ok', state_retained: 'ok',
   retained_after_failure: 'failing', retained_after_dispute: 'failing', source_unreachable_or_manual: 'failing',
+  // D249: the source answered; our own review clock ran out before the unit was admitted. That is not
+  // the source failing, so it is not 'failing' — but the published value is a day older than it looks,
+  // and a source that keeps landing after the deadline is exactly what this file exists to surface.
+  retained_budget_exhausted: 'attention',
   source_changed_retained: 'attention', contested: 'attention',
   // F-209 / D225: `source_changed_retained` is also the status a *quarantined* arm writes (a board
   // publishing a protocol revision outside the registry's reviewed set). The two are told apart by
@@ -40,6 +44,20 @@ export function quarantineTotals(run) {
     if (Number.isFinite(counted)) rows += counted; else unknown.push(b.id);
   }
   return { rows, batches: batches.length, unknown_batches: unknown };
+}
+
+// D249: the same reporting gap D204 closed for quarantined rows, for rows the review clock never
+// reached. A score batch is a per-run unit and stays out of the per-source table, so without this the
+// only trace of a run that dropped 20 batches on the deadline would be the step's own report.
+export function budgetTotals(run) {
+  const checks = (run?.checks ?? []).filter((c) => c.status === 'retained_budget_exhausted');
+  const batches = checks.filter((c) => SCORE_BATCH.test(c.id));
+  let rows = 0; const unknown = [];
+  for (const b of batches) {
+    if (Number.isInteger(b.unreviewed_rows)) rows += b.unreviewed_rows; else unknown.push(b.id);
+  }
+  return { units: checks.length, batches: batches.length, rows, unknown_batches: unknown,
+    sources: checks.filter((c) => !NOT_A_SOURCE.test(c.id)).map((c) => c.id) };
 }
 
 // A failed subprocess reason is the command line plus its traceback; the last line names the actual error.
@@ -117,7 +135,7 @@ export function sourceHealth(reports, { plan = { entries: [] } } = {}) {
   sources.sort((a, b) => order[a.kind] - order[b.kind] || (a.failing_since ?? '').localeCompare(b.failing_since ?? '') || a.id.localeCompare(b.id));
   const count = (k) => sources.filter((s) => s.kind === k).length;
   return { generated_from_runs: runs.length, newest_run: runs[0].checked_at, oldest_run: runs.at(-1).checked_at,
-    totals: Object.fromEntries(Object.keys(order).map((k) => [k, count(k)])), quarantine: quarantineTotals(runs[0]),
+    totals: Object.fromEntries(Object.keys(order).map((k) => [k, count(k)])), quarantine: quarantineTotals(runs[0]), budget: budgetTotals(runs[0]),
     quarantined_arms: sources.filter((s) => s.consecutive_quarantined_runs > 0)
       .map((s) => ({ id: s.id, reason: s.reason, unreviewed_protocols: s.unreviewed_protocols,
         reviewed_protocols: s.reviewed_protocols, quarantined_since: s.quarantined_since,
@@ -134,6 +152,14 @@ export function healthMarkdown(health) {
   if (q?.batches) {
     lines.push(`Newest run: **${q.rows} score row(s) quarantined** across ${q.batches} batch(es) — reviewed, not published, and not listed below: a batch is a per-run unit, not a source.`
       + (q.unknown_batches?.length ? ` Row count not recorded for ${q.unknown_batches.join(', ')}.` : ''), '');
+  }
+  const b = health.budget;
+  if (b?.units) {
+    lines.push(`Newest run: **${b.units} unit(s) retained unreviewed** because the benchmark step's review budget ran out`
+      + (b.batches ? ` — ${b.batches} score batch(es) holding ${b.rows} row(s)` : '')
+      + (b.sources.length ? `; source arm(s): ${b.sources.join(', ')}` : '')
+      + `. Their published values are unchanged and nothing was rejected; they were simply never reviewed today.`
+      + (b.unknown_batches?.length ? ` Row count not recorded for ${b.unknown_batches.join(', ')}.` : ''), '');
   }
   for (const arm of health.quarantined_arms ?? []) {
     lines.push(`Newest run: **${arm.id} quarantined** for ${arm.consecutive_quarantined_runs} consecutive run(s)`

@@ -8,7 +8,13 @@ import { reviewLive } from './review-live.mjs';
 import { buildLiveContractUnits, reviewLiveContracts } from './live-contracts.mjs';
 import { dailyConcurrency } from './concurrency.mjs';
 import { openReuseCache, reuseEnabled } from './reuse-cache.mjs';
+import { benchmarkReviewBudget } from './step-budget.mjs';
 
+// D249: the step's own clock. The parent kills this child at BENCHMARK_STEP_TIMEOUT_MS, and until
+// now that kill discarded every review the step had already finished. `startedAt` is taken here, a
+// few hundred milliseconds after the parent spawned us, so the deadline derived from it is if
+// anything slightly conservative.
+const startedAt = Date.now();
 const [step, directory] = process.argv.slice(2);
 if (!directory || !['live', 'benchmarks'].includes(step)) throw new Error('Usage: node ops/daily/phase-step.mjs live|benchmarks RUN_DIR');
 const runDir = resolve(directory);
@@ -26,7 +32,9 @@ try {
   let result;
   if (step === 'benchmarks') {
     const { refreshBenchmarks } = await import('./refresh-benchmarks.mjs');
-    result = await refreshBenchmarks({ runDir, cache: reuse, runId });
+    const budget = benchmarkReviewBudget({ startedAt });
+    console.log(`benchmark review budget: admitting units until ${new Date(budget.deadlineAt).toISOString()}`);
+    result = await refreshBenchmarks({ runDir, cache: reuse, runId, budget });
     if (result?.ok !== true) throw new Error('Benchmark refresh reported failure');
   } else {
     const verified = await reviewLive({ runDir, rawDir: resolve('data/raw'), batchSize: 10, maxPacketBytes: 50000 });
