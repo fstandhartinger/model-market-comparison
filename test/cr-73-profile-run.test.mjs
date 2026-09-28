@@ -3,7 +3,7 @@
 // invent a number a run did not record.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { profile, parseUnits, stepTimeline, unionMs } from "../ops/daily/profile-run.mjs";
+import { profile, parseUnits, stepTimeline, unionMs, toMarkdown } from "../ops/daily/profile-run.mjs";
 
 const T = (seconds) => new Date(Date.UTC(2026, 8, 17, 13, 0, seconds)).toISOString();
 
@@ -127,4 +127,80 @@ test("parseUnits reads the per-source lines the two long stages print", () => {
   assert.deepEqual(units[0], { stage: "review-live", unit: "aa", outcome: "accepted", rows: 652 });
   assert.equal(units[1].outcome, "retained");
   assert.equal(units[2].unit, "livebench::2026-06-25");
+});
+
+// D249 (2026-09-28): the profiler recorded 172 worker calls, 7.5 worker-hours and $1.78 for the run
+// that lost the day, and none of those numbers says what went wrong. The call count was ordinary and
+// the cost was ordinary; what changed was that one of a model's OpenRouter endpoints answered 33x
+// slower with 12x the output tokens. Each receipt had recorded the provider all along — nothing read
+// it, so finding the cause meant opening 94 receipts by hand.
+const spreadReport = {
+  started_at: T(0), finished_at: T(100), scope: "full", published: false, exit_code: 1,
+  steps: [{ name: "refresh-benchmarks", duration_ms: 100_000, ok: false, started_at: T(0), finished_at: T(100) }],
+  worker_calls: {
+    returned_cost_usd: 1, calls_without_returned_cost: 0,
+    calls: [
+      ...Array.from({ length: 4 }, (_, i) => ({ receipt: `slow-${i}.json`, role: "critic", actual_model: "z/flash", status: "complete", returned_cost_usd: 0.2 })),
+      ...Array.from({ length: 3 }, (_, i) => ({ receipt: `fast-${i}.json`, role: "critic", actual_model: "z/flash", status: "complete", returned_cost_usd: 0.05 })),
+      { receipt: "worker-failure-x.json", role: "critic", actual_model: "z/flash", status: "failed", returned_cost_usd: null },
+    ],
+  },
+};
+const spreadReceipts = [
+  ...Array.from({ length: 4 }, (_, i) => ({ receipt: `slow-${i}.json`, model: "z/flash", provider: "Wafer", completion_tokens: 12_000,
+    start: Date.parse(T(i * 6)), end: Date.parse(T(i * 6 + 6)), duration_ms: 6_000 })),
+  ...Array.from({ length: 3 }, (_, i) => ({ receipt: `fast-${i}.json`, model: "z/flash", provider: "Together", completion_tokens: 900,
+    start: Date.parse(T(30 + i)), end: Date.parse(T(30 + i)), duration_ms: 500 })),
+  // A failed call records no provider; it must never become the thing a reader is pointed at.
+  { receipt: "worker-failure-x.json", model: "z/flash", provider: null, completion_tokens: 32_768,
+    start: Date.parse(T(40)), end: Date.parse(T(80)), duration_ms: 40_000 },
+];
+
+test("D249: the profile splits a model by the endpoint that served it", () => {
+  const p = profile({ report: spreadReport, receipts: spreadReceipts });
+  const wafer = p.workers.by_model_provider.find((m) => m.provider === "Wafer");
+  const together = p.workers.by_model_provider.find((m) => m.provider === "Together");
+  assert.equal(wafer.model, "z/flash");
+  assert.equal(wafer.calls, 4);
+  assert.equal(wafer.median_ms, 6_000);
+  assert.equal(wafer.median_completion_tokens, 12_000);
+  assert.equal(together.median_ms, 500);
+  assert.equal(together.median_completion_tokens, 900);
+  // by_model alone cannot show it: one model, one row, a median between the two populations.
+  assert.equal(p.workers.by_model.length, 1);
+  assert.equal(p.workers.by_provider.find((m) => m.provider === "Wafer").calls, 4);
+  assert.equal(p.workers.by_provider.find((m) => m.provider === "unknown").calls, 1, "a failed call has no provider and is grouped as unknown");
+});
+
+test("D249: medians are reported beside the sums, because a sum hides a per-call split", () => {
+  const p = profile({ report: spreadReport, receipts: spreadReceipts });
+  const model = p.workers.by_model[0];
+  assert.equal(model.calls, 8);
+  assert.equal(model.duration_ms, 4 * 6_000 + 3 * 500 + 40_000);
+  assert.ok(Number.isFinite(model.median_ms), "the model row carries a median call");
+  // Even medians of an even-sized list are defined, and a group with no timing reports null rather than 0.
+  const empty = profile({ report: { ...spreadReport, worker_calls: { calls: [] } }, receipts: [] });
+  assert.deepEqual(empty.workers.by_provider, []);
+});
+
+test("D249: the markdown names the endpoint spread, and only when a reader could act on it", () => {
+  const md = toMarkdown(profile({ report: spreadReport, receipts: spreadReceipts }));
+  assert.match(md, /\*\*Endpoint spread:\*\* `z\/flash` answered 12x slower on Wafer/);
+  assert.match(md, /than on Together \(0\.5 s, 900 tok\)/);
+  assert.ok(!/on unknown/.test(md), "a failed call records no provider and must not be the headline");
+  assert.match(md, /\| Model \| provider \| calls \| min \| median call \(s\) \| median answer \(tok\) \| failed \|/);
+});
+
+test("D249: no endpoint-spread headline without enough calls to mean anything", () => {
+  // One slow call on a second endpoint is noise; the sentence must stay silent.
+  const receipts = [
+    ...Array.from({ length: 5 }, (_, i) => ({ receipt: `fast-${i}.json`, model: "z/flash", provider: "Together", completion_tokens: 900,
+      start: Date.parse(T(i)), end: Date.parse(T(i)), duration_ms: 500 })),
+    { receipt: "one-off.json", model: "z/flash", provider: "Wafer", completion_tokens: 12_000, start: Date.parse(T(50)), end: Date.parse(T(80)), duration_ms: 30_000 },
+  ];
+  const report = { ...spreadReport, worker_calls: { returned_cost_usd: 0, calls_without_returned_cost: 0,
+    calls: receipts.map((r) => ({ receipt: r.receipt, role: "critic", actual_model: "z/flash", status: "complete", returned_cost_usd: 0 })) } };
+  assert.ok(!/Endpoint spread/.test(toMarkdown(profile({ report, receipts }))));
+  // …and a single healthy endpoint never produces one either.
+  assert.ok(!/Endpoint spread/.test(toMarkdown(profile({ report: baseReport, receipts }))));
 });

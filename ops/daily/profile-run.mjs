@@ -18,6 +18,7 @@ import { join, resolve } from 'node:path';
 
 const ms = (value) => (Number.isFinite(value) ? value : null);
 const minutes = (value) => (Number.isFinite(value) ? Math.round((value / 60_000) * 10) / 10 : null);
+const seconds = (value) => (Number.isFinite(value) ? Math.round(value / 100) / 10 : null);
 const time = (value) => { const t = Date.parse(value ?? ''); return Number.isFinite(t) ? t : null; };
 const share = (part, whole) => (Number.isFinite(part) && whole > 0 ? Math.round((part / whole) * 1000) / 10 : null);
 
@@ -67,6 +68,11 @@ async function readReceipts(runDir) {
       receipt: name,
       model: receipt.actual_model ?? receipt.requested_model ?? null,
       requested_model: receipt.requested_model ?? null,
+      // D249: the receipt has always recorded which of a model's endpoints served the call; nothing
+      // read it. On 2026-09-28 one provider answered the same artifacts 20x slower with 12x the
+      // output tokens and took the day's publication with it, and the only way to see that was to
+      // open 94 receipts by hand.
+      provider: receipt.provider ?? null,
       transport: receipt.transport ?? null,
       effort: receipt.reasoning?.effort ?? null,
       finish_reason: receipt.finish_reason ?? null,
@@ -118,6 +124,7 @@ export function profile({ report, receipts = [], logs = {}, runDir = null }) {
       status: call.status ?? null,
       model: call.actual_model ?? measured.model ?? null,
       requested_model: call.requested_model ?? measured.requested_model ?? null,
+      provider: measured.provider ?? null,
       transport: measured.transport ?? null,
       effort: call.reasoning?.effort ?? measured.effort ?? null,
       cost_usd: Number.isFinite(call.returned_cost_usd) ? call.returned_cost_usd : null,
@@ -133,6 +140,7 @@ export function profile({ report, receipts = [], logs = {}, runDir = null }) {
   // answer), so they are counted rather than dropped.
   for (const r of receipts) if (!calls.some((c) => c.receipt === r.receipt)) workers.push({ ...r, role: null, status: 'no-run-report-entry', cost_usd: null });
 
+  for (const w of workers) w.model_provider = `${w.model ?? 'unknown'} @ ${w.provider ?? 'unknown'}`;
   const timedWorkers = workers.filter((w) => Number.isFinite(w.duration_ms));
   const workerSerialMs = timedWorkers.reduce((sum, w) => sum + w.duration_ms, 0);
   const workerUnionMs = unionMs(timedWorkers);
@@ -153,16 +161,29 @@ export function profile({ report, receipts = [], logs = {}, runDir = null }) {
     };
   }).sort((a, b) => (b.duration_ms ?? 0) - (a.duration_ms ?? 0));
 
+  // D249: totals alone could not have shown what happened. The run made an ordinary number of calls
+  // and cost an ordinary amount; what moved was the *per call* time and output length, and a sum over
+  // 94 calls hides that completely. So each group also reports the median call and the median answer
+  // length — the two numbers that told the 2026-09-28 story at a glance once they were computed.
+  const median = (values) => {
+    const list = values.filter(Number.isFinite).sort((a, b) => a - b);
+    if (!list.length) return null;
+    const mid = list.length >> 1;
+    return list.length % 2 ? list[mid] : Math.round((list[mid - 1] + list[mid]) / 2);
+  };
   const group = (key) => {
     const map = new Map();
     for (const w of workers) {
       const k = w[key] ?? 'unknown';
-      const entry = map.get(k) ?? { [key]: k, calls: 0, duration_ms: 0, cost_usd: 0, failed: 0 };
+      const entry = map.get(k) ?? { [key]: k, calls: 0, duration_ms: 0, cost_usd: 0, failed: 0, _durations: [], _completions: [] };
       entry.calls += 1; entry.duration_ms += ms(w.duration_ms) ?? 0; entry.cost_usd += w.cost_usd ?? 0;
+      entry._durations.push(ms(w.duration_ms)); entry._completions.push(ms(w.completion_tokens));
       if (w.status && w.status !== 'complete') entry.failed += 1;
       map.set(k, entry);
     }
-    return [...map.values()].sort((a, b) => b.duration_ms - a.duration_ms);
+    return [...map.values()]
+      .map(({ _durations, _completions, ...entry }) => ({ ...entry, median_ms: median(_durations), median_completion_tokens: median(_completions) }))
+      .sort((a, b) => b.duration_ms - a.duration_ms);
   };
 
   // What a perfectly cached, perfectly parallel run could not avoid: the steps that make no worker
@@ -201,9 +222,15 @@ export function profile({ report, receipts = [], logs = {}, runDir = null }) {
       failed_calls: failed.length, failed_ms: failedMs, failed_min: minutes(failedMs),
       cost_usd: Number.isFinite(report.worker_calls?.returned_cost_usd) ? report.worker_calls.returned_cost_usd : null,
       calls_without_returned_cost: report.worker_calls?.calls_without_returned_cost ?? null,
-      by_model: group('model'), by_role: group('role'),
+      by_model: group('model'), by_role: group('role'), by_provider: group('provider'),
+      // One model served by two endpoints that behave differently is the shape of D249, and neither
+      // by_model nor by_provider alone shows it.
+      by_model_provider: group('model_provider').map(({ model_provider, ...rest }) => {
+        const [model, provider] = String(model_provider).split(' @ ');
+        return { model, provider, ...rest };
+      }),
       slowest: [...timedWorkers].sort((a, b) => b.duration_ms - a.duration_ms).slice(0, 10)
-        .map((w) => ({ receipt: w.receipt, role: w.role, model: w.model, status: w.status, minutes: minutes(w.duration_ms), completion_tokens: w.completion_tokens, reasoning_tokens: w.reasoning_tokens })),
+        .map((w) => ({ receipt: w.receipt, role: w.role, model: w.model, provider: w.provider, status: w.status, minutes: minutes(w.duration_ms), completion_tokens: w.completion_tokens, reasoning_tokens: w.reasoning_tokens })),
     },
     units: { count: units.length, benchmark_checks: benchmarkChecks, list: units },
     sources: {
@@ -236,9 +263,33 @@ export function toMarkdown(p) {
   }
   lines.push('');
   lines.push(`**Workers:** ${p.workers.calls} calls, ${p.workers.serial_min} min of model time over ${p.workers.elapsed_min} min of clock (concurrency ${p.workers.concurrency}), ${p.workers.share_of_wall} % of the run. ${p.workers.failed_calls} returned nothing usable (${p.workers.failed_min} min). Reported cost $${(p.workers.cost_usd ?? 0).toFixed(4)}.`, '');
-  lines.push('| Model | calls | min | failed | $ |', '|---|---:|---:|---:|---:|');
-  for (const m of p.workers.by_model) lines.push(`| ${m.model} | ${m.calls} | ${minutes(m.duration_ms)} | ${m.failed} | ${m.cost_usd.toFixed(4)} |`);
+  lines.push('| Model | calls | min | median call (s) | median answer (tok) | failed | $ |', '|---|---:|---:|---:|---:|---:|---:|');
+  for (const m of p.workers.by_model) lines.push(`| ${m.model} | ${m.calls} | ${minutes(m.duration_ms)} | ${seconds(m.median_ms)} | ${m.median_completion_tokens ?? ''} | ${m.failed} | ${m.cost_usd.toFixed(4)} |`);
   lines.push('');
+  // D249: which endpoint served a call is the difference between a 58-minute step and one that is
+  // killed on its timeout. Split by model *and* provider, because the same model behaves differently
+  // on different endpoints and that is precisely what neither table alone would show.
+  const split = (p.workers.by_model_provider ?? []).filter((m) => m.calls > 0);
+  if (split.length > 1) {
+    lines.push('| Model | provider | calls | min | median call (s) | median answer (tok) | failed |', '|---|---|---:|---:|---:|---:|---:|');
+    for (const m of split) lines.push(`| ${m.model} | ${m.provider} | ${m.calls} | ${minutes(m.duration_ms)} | ${seconds(m.median_ms)} | ${m.median_completion_tokens ?? ''} | ${m.failed} |`);
+    lines.push('');
+    // Only endpoints a reader could act on: named (a failed call records no provider), with enough
+    // calls that the median means something, and answering the same model. A headline built on one
+    // call or on `unknown` points at nothing.
+    const comparable = split.filter((m) => m.provider && m.provider !== 'unknown' && m.calls >= 3
+      && m.calls > m.failed && Number.isFinite(m.median_ms) && m.median_ms > 0);
+    const byModel = new Map();
+    for (const m of comparable) byModel.set(m.model, [...(byModel.get(m.model) ?? []), m]);
+    const pairs = [...byModel.values()].filter((list) => list.length > 1)
+      .map((list) => [...list].sort((a, b) => b.median_ms - a.median_ms))
+      .map((list) => [list[0], list[list.length - 1]])
+      .sort((a, b) => b[0].median_ms / b[1].median_ms - a[0].median_ms / a[1].median_ms);
+    const [slowest, fastest] = pairs[0] ?? [];
+    if (slowest && fastest && slowest.median_ms >= fastest.median_ms * 5) {
+      lines.push(`**Endpoint spread:** \`${slowest.model}\` answered ${Math.round(slowest.median_ms / fastest.median_ms)}x slower on ${slowest.provider} (${seconds(slowest.median_ms)} s median, ${slowest.median_completion_tokens ?? '?'} tok) than on ${fastest.provider} (${seconds(fastest.median_ms)} s, ${fastest.median_completion_tokens ?? '?'} tok). Same model id, same request; the endpoint is not pinned.`, '');
+    }
+  }
   lines.push(`**Headroom:** cacheable model time ${minutes(p.headroom.cacheable_worker_ms)} min · serialisation ${minutes(p.headroom.serialisation_ms)} min · retries that returned nothing ${minutes(p.headroom.retry_waste_ms)} min · floor ${p.headroom.irreducible_floor_min} min. ${p.headroom.note}`, '');
   return lines.join('\n');
 }
