@@ -116,13 +116,18 @@
    "revision": "v1.4.2.2",
    "date": "2026-09-27",
    "note": "Added Imajev-4B, measured on the full v1.4 protocol with one rotation and calibration.json. The v1.4.2 scorer is unchanged; earlier rows are unchanged."
+  },
+  {
+   "revision": "v1.4.2.2 cost-basis wording correction",
+   "date": "2026-09-28",
+   "note": "Text-only correction: the Imajev-4B cost basis now states that full-forward input tokens are counted once for the single pinned server pass, matching the one-rotation run receipt. Previous v1.4.2.2 result SHA-256: f0dfdd8f1601cadb16864061413e6e43c8b2dfa07b10ffd0716c67fc3c4b9952. Previous candidate-row SHA-256: c26650b9bedc52445d693d2d8d67f047c5a21e40c3a2abd294c5c13b6424bb61. No measurement, score, axis, rank, eligibility, or numeric value changed."
   }
  ],
  "protocol": "jevbench::v1.4",
  "status": "final",
  "generated_utc": "2026-09-27T18:49:51+00:00",
  "measured_in": "Frozen v1.2 public/held-out items plus 308 sealed v1.4 items; all item text and answers remain private",
- "revision_note": "v1.4.2.2 adds the verified Imajev-4B row to v1.4.2.1 using the exact live v1.4.2 scoring code. Earlier measurements and score fields are unchanged; only ranks and preset ranks move where the new row changes the ordering.",
+ "revision_note": "v1.4.2.2 adds the verified Imajev-4B row to v1.4.2.1 using the exact live v1.4.2 scoring code. Earlier measurements and score fields are unchanged; only ranks and preset ranks move where the new row changes the ordering. A 28 Sep text-only amendment clarifies that full-forward input tokens are counted once for the single pinned server pass; no measurement, score, axis, rank, eligibility, or numeric value changed.",
  "score_name": "JevBench Score",
  "score_one_liner": "Intelligence, Calibration, Speed and Cost — equal-weight harmonic mean, with generalization and Jev-class gates.",
  "tiers": {
@@ -605,7 +610,7 @@
    "cost": {
     "kind": "estimate",
     "usd_per_1000": 0.02200522471910112,
-    "basis": "ESTIMATE: DeepInfra public model catalog for exact base Qwen/Qwen3.5-4B, retrieved 2026-09-27 00:52 UTC: USD 0.03/M input and USD 0.15/M output; see receipts/BASE-PRICE-REFERENCE.json; full-forward input tokens are counted inside each of the four pinned server passes; no generated output tokens; estimated, not charged",
+    "basis": "ESTIMATE: DeepInfra public model catalog for exact base Qwen/Qwen3.5-4B, retrieved 2026-09-27 00:52 UTC: USD 0.03/M input and USD 0.15/M output; see receipts/BASE-PRICE-REFERENCE.json; full-forward input tokens are counted once for the single pinned server pass; no generated output tokens; estimated, not charged",
     "usd_per_1000_v11_tiers": null,
     "usd_per_1000_hard": null,
     "self_host_sensitivity": null,
@@ -624,7 +629,7 @@
      "historical-private": 157,
      "current-sealed": 308
     },
-    "source_row_sha256": "c26650b9bedc52445d693d2d8d67f047c5a21e40c3a2abd294c5c13b6424bb61",
+    "source_row_sha256": "1b1755820752ba62e9910236f6dd6e18a0aa485fc0ed6990170e40cc4962f76f",
     "result_rows_handoff_sha256": "51584c82047bf4392d5b05be1334775d6bfb51b2074cca682a87b1e7cdcaebf5"
    },
    "new_in": "v1.4.2.2",
