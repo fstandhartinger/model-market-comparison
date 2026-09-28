@@ -18483,3 +18483,21 @@ mismatch, and the only reason that is not in tomorrow's run is that two extra re
 spent on a board the change was not even about.
 
 **`ALL-ACCEPTED` is not appended.**
+
+## Iteration 268 — Codex Luna review gate, 2026-09-28 18:50 UTC
+
+### Seed rows required by 04-CR-BRIEF §0
+
+These nine CR rows were missing as individual ledger rows. They are seeded open before recording this gate's verification outcome.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-151.2 | open (seeded; verification pending) | pending | Sortable and filterable board columns; live behavior and keyboard support to be checked. |
+| CR-151.3 | open (seeded; verification pending) | pending | Intelligence View-by ranking and LLM filter; verify live. |
+| CR-151.4 | open (seeded; verification pending) | pending | Axes table follows Compare; verify live section order and annotations. |
+| CR-151.5 | open (seeded; verification pending) | pending | Published page scores match the pinned API. |
+| CR-152.4 | open (seeded; verification pending) | pending | Fair presentation of the v1.4.2 leader and reachable Intelligence sort on the frozen route. |
+| CR-153.2 | open (seeded; verification pending) | pending | Intelligence view hides general-purpose LLMs by default and can reveal them. |
+| CR-153.3 | open (seeded; verification pending) | pending | Cost-view bars remain thin and red in both themes. |
+| CR-158.2 | open (seeded; verification pending) | pending | Capability × Cost and Capability × Speed bubbles, labels and interactive tooltips. |
+| CR-158.5 | open (seeded; verification pending) | pending | The v1.4.2 pinned release remains unchanged through the presentation restructure. |
