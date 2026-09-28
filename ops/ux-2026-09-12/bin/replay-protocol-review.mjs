@@ -14,7 +14,9 @@
 // `--activity-from-run` (D247) is the public-board form and takes no counts at all: it re-runs that
 // run's own extraction for this benchmark against that run's capture, reconciles it against the rows
 // the run started from, and computes the summary with the production `publicValueActivity`. That is
-// the only honest way to replay it — the counts cannot be typed.
+// the only honest way to replay it — the counts cannot be typed. It also selects this run's newest
+// successful manifest receipt for that source; a missing run capture fails closed instead of using
+// the generic historical manifest below.
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { execFile } from 'node:child_process';
@@ -22,6 +24,7 @@ import { promisify } from 'node:util';
 import { reviewArtifact } from '../../daily/gauntlet.mjs';
 import { protocolReviewRow, PROTOCOL_REVIEW_CRITERIA, protocolSourceContent, protocolSourceLocator, captureKey, activitySource, publicValueActivity, followsPageScript, discoveredScriptReceipt } from '../../daily/refresh-benchmarks.mjs';
 import { reconcilePublicIdentities } from '../../daily/public-identities.mjs';
+import { replayManifestForRun } from '../../daily/replay-manifest.mjs';
 
 const exec = promisify(execFile);
 const [id, outDir, ...flags] = process.argv.slice(2);
@@ -42,7 +45,15 @@ delete activity?.affirmative;
 const registry = JSON.parse(await readFile('data/raw/benchmarks/registry.json', 'utf8'));
 const entry = registry.entries.find((e) => e.id === id);
 if (!entry) throw new Error(`unknown benchmark id ${id}`);
-const manifestPath = process.env.BH_REPLAY_MANIFEST ?? 'data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/manifest.json';
+const runPlan = fromRun
+  ? JSON.parse(await readFile(join(fromRun, 'data/raw/benchmarks/collection-plan.json'), 'utf8'))
+  : null;
+const runSpec = runPlan?.entries.find((e) => e.benchmark_id === id);
+if (fromRun && !runSpec?.parser) throw new Error(`${id}: no parser in ${fromRun}'s collection plan`);
+const manifestPath = process.env.BH_REPLAY_MANIFEST
+  ?? (fromRun
+    ? await replayManifestForRun({ workDir: fromRun, source: runSpec.source, captureKey })
+    : 'data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/manifest.json');
 const manifests = JSON.parse(await readFile(manifestPath, 'utf8'));
 // A manifest records its capture files repo-relative, so replaying a *daily run's* manifest — the
 // only place a run's own captures survive — needs the checkout they are relative to. It is the
@@ -88,9 +99,7 @@ if (activity) {
 // reconcilePublicIdentities against the rows that run started from, publicValueActivity — so the
 // numbers in the packet are the numbers that run would have put there.
 if (fromRun) {
-  const plan = JSON.parse(await readFile(join(fromRun, 'data/raw/benchmarks/collection-plan.json'), 'utf8'));
-  const spec = plan.entries.find((e) => e.benchmark_id === id);
-  if (!spec?.parser) throw new Error(`${id}: no parser in ${fromRun}'s collection plan`);
+  const spec = runSpec;
   if (spec.parser.runs) throw new Error(`${id}: a multi-capture arm carries no activity summary`);
   const receipt = captured.get(captureKey(spec.source));
   if (!receipt) throw new Error(`no capture for ${captureKey(spec.source)} in the replay manifest`);

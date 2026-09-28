@@ -16947,3 +16947,21 @@ stale slug is load-bearing only for the identity question, not for a published n
 | D248 | open — the retention-based remedy is **rejected before implementation**: 336/870 rows are retained, all from 2026-09-09 | `data/dataset.json` `aa_metadata.retained_fields`; `iter261-d248/split-catalog-families.json` | Key the rule on "retained slug resolves to no live route while the family has one" — true for 3 rows. No wrong price is published from the stale `openai/gpt-5.2`. |
 
 **`ALL-ACCEPTED` is not appended.**
+
+## Review gate CR-200 — 2026-09-28 05:00 UTC (codex-luna)
+
+Review report: `REVIEW-20260928T050004Z.md`. Evidence is under
+`/opt/benchmarkheaven/state/ux-evidence/review-20260928T050004Z/`. Public canonical, www, and legacy hosts
+serve the same `b7a1ae1c` revision and 870/673/94/3,134 catalog counts. Pass 40 (136/136 each host), pass 39
+(56/56 each), D238/D246 (78/78 each), and CR-190 (63/63 each) were rechecked live. Dataset build, full tests,
+and TypeScript checks pass. **X6 remains open; `ALL-ACCEPTED` is not appended.**
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-200 | implemented — review gate complete; workstream acceptance incomplete | `REVIEW-20260928T050004Z.md`; evidence directory above | All 331 distinct CR checklist IDs are present in this ledger. Open items below mean X6 does not pass. |
+| CR-190.1 / D243 | open | `cr190/verification.json`; `d243-measurement/d243-join-measurement.json` | 17 observations are live and approved; measurement finds 0 policy-compliant joins (11 ambiguous, 2 single-config-not-default, 4 no catalog family). |
+| D247 published half | open | `/opt/benchmarkheaven-daily/runs/2026-09-28T05-17-01-942Z-2060109/`; `check-ugi-arms.mjs latest` not yet run | The scheduled 05:17 publication/gauntlet run was still active at review time. Do not close this until its final receipt and published rows pass the check. |
+| D248 | open | `d248-measurement/split-catalog-families.json`; `d248-live/d248-live-model-pages.json` | Five live split families remain. Naive merge loses offers; keep the root causes separate and preserve offer count in any repair. |
+| D247 replay helper | implemented on CR-200 branch; pending non-implementer review | `ops/daily/replay-manifest.mjs`; `ops/ux-2026-09-12/bin/replay-protocol-review.mjs`; `test/d247-replay-manifest.test.mjs`; `d247-replay-manifest-real-run.json` | Removes the hard-coded historical-manifest default for `--activity-from-run`; focused tests pass 2/2. This gate implemented it and does not mark it verified. |
+
+**`ALL-ACCEPTED` is not appended.**
