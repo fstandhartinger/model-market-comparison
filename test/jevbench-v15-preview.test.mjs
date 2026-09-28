@@ -33,9 +33,11 @@ test('v1.5.0 public artifact matches the reviewed preview values and carries rel
   ]);
   assert.equal(release.status, 'released');
   assert.equal(release.run_kind, 'official');
-  assert.equal(sha256.length, 64);
+  assert.equal(sha256, '6b2f6b058b36203c98ec5f585eb8376038bc905f11db944f4e0bcd29c278c643');
   assert.equal(JSON.stringify({ ...release, status: preview.status }), JSON.stringify(preview));
-  assert.equal(bytes.length > 500_000, true);
+  assert.equal(release.systems.length, 100);
+  assert.equal(release.systems.filter((system) => system.listing === 'ranked').length, 89);
+  assert.ok(bytes.length > 100_000);
 });
 
 test('validator rejects item-level fields, a changed score and an unknown status', async () => {
