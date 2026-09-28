@@ -16135,3 +16135,169 @@ All three hosts serve `e7b99f98b277e8d05e3bfbc90c533bbefd19a49a` with 870 / 673 
   implementer's own regression run — D245 still needs a non-implementer's signature.**
 - `/api/benchmarks` on all three hosts serves the corrected `vals-index-hlab::2` and
   `vals-index-terminal-bench-2.1::2` descriptions, so the D244 half is live as well as committed.
+
+## Iteration 258 — 2026-09-28 00:3x–02:xx UTC (claude-opus, work)
+
+The previous iteration's list started with "read today's 05:17 daily receipt first". At 00:31 UTC that run was
+still five hours away, so this iteration did the two things that did not need it — a real page defect and a
+release surface — and then read the **price-drift daily that was already running** (00:41 UTC), which turned out
+to carry the same protocol reviews and answered three of the open questions.
+
+Its items 2 and 4 (non-implementer verification of D245 and CR-190.1) were written for a different engine than
+claude-opus, which wrote both. They are signed off here by **Kimi K3 via `delegate.sh`**, and the receipts were
+re-read from disk rather than taken from the model's prose.
+
+### D238 and D246 — the sealed-answer shortfall is now derived, not typed
+
+D238 as filed: nine ranked v1.4.2.x rows answered fewer than all 308 sealed decisions validly, eight print the
+count in their footnote, and `jevact` — 237/308, the second largest shortfall on the board — does not. The
+filing's remedy was "fix in the next release's footnote". **That is the wrong place.** The number is already in
+every row's published `sealed_aggregate.answered_valid`; what failed is that the page trusted prose a publisher
+typed by hand. `jevV14SealedShortfallNote(row)` now derives the clause, and `jevV14RowNote` appends it only when
+the row's own prose does not already carry that exact ratio, so the eight rows keep the wording they published
+and no row prints the number twice. No frozen artifact byte is touched, and nothing is invented or rounded:
+both numbers are published integers, and a row that does not publish the pair gets no clause.
+
+Proving it turned up a second, larger instance the filing did not know about — **D246**. The generic-note
+filter's `/^…sealed item text \(no golds\) was sent to\b.*$/` matched the whole segment, so everything a
+publisher appended after that shared sentence was thrown away with it:
+
+| row | what the live page was hiding |
+|---|---|
+| `gemini-3.1-flash-lite` | its 307/308 |
+| `deepseek-flash` | its 298/308 |
+| `qwen3.8-27b` (partial) | its 69/308 **and** "Chutes rate limit stopped the run after 81/308 items; unranked as in v1.3" |
+
+The last one is the one that matters: `qwen3.8-27b`'s `not_ranked_because` is `null`, so that footnote was the
+only place the site could say why its run stopped, and it said it nowhere. The rule is now a prefix strip, so
+the remainder survives while a segment that is nothing but the shared sentence still filters out (no remainder
+is left). A row that only repeats the board-wide decision count ("all 842 decisions (534 frozen v1.2 + 308
+sealed v1.4) through JevBench's adapter") is dropped as generic, written without the counts so a later release's
+totals cannot slip past it. Three rows therefore gain a † marker in every v1.4 release page, each carrying text
+their own release artifact published.
+
+`verify-d238-sealed-shortfall.mjs` re-derives the rows and ratios from the artifact the page renders, opens the
+† disclosure (a closed `<details>` still reports a box, so `checkVisibility()` decides) and reads the rendered
+DOM rather than the RSC payload. Against the deployed `725a0641` **before** the fix it is **16/26**, failing
+exactly those four rows in both viewports and nothing else — that is the discrimination receipt.
+
+### D237 — the HF Space's fallback snapshot is now derivable, and one thing is genuinely blocked
+
+The Space fetches the live release API and falls back to a committed `snapshot.json` that was written by hand at
+publication time, so CR-170's display-only rename (25 Sep) never reached it: rank 42 still reads "Kushal Patil —
+Gemma 4 31B IT (Autoloops)" where the live `/api/jevbench/v1.4.2` and the board both serve "Autoloops – Gemma 4
+31B IT". `build-jevbench-space-snapshot.mjs` projects that file out of the release artifact — nothing computed,
+only copied — and against the live v1.4.2 API it reproduces the published file **exactly**, same key order, same
+2-space formatting, same 89 ranked rows, same `generated_utc`, with one single difference: that display name.
+A 22-byte diff is as surgical as this gets, and it is the argument for deriving the snapshot from now on.
+
+**Publishing it is blocked on a credential, checked three ways before saying so:** `HF_API_KEY` authenticates as
+`florian-chutes` and is in the `benchmarkheaven` org but is fine-grained with `inference.*` scopes only (403 on
+`create_commit` *and* on `create_pr=1`); `HF_TOKEN`/`HUGGINGFACE_HUB_TOKEN` are revoked (401 from `whoami-v2`);
+and the signed-in-browser route was unavailable because `~/.locks/chrome-9333.lock` was held by another job for
+a 3600 s reservation. This is not new — `jevbench-seo-hn-push-20260923/.codex-attempt.log` hit the identical 403
+with the same env var, and every Space commit is authored by `florian-chutes`, so the earlier publishes used a
+credential this box no longer has. The file to upload and the one published are side by side in
+`iter258-d237/`, and board **#11** carries the handoff with the commit title, the sha and the verifier to re-run.
+The decision recorded here: keep `revision: v1.4.2`. The Space is v1.4.2's release surface under CR-152.5 and
+that is what `verify-cr-148-158-backfill.mjs ONLY=cr152-5` checks; moving it to v1.4.2.2 is a release action no
+CR asks for.
+
+### D244's last arm is not variance — D247, and it is structural
+
+Iteration 257 read `ugi-natint`'s two different complaints on two samples as the variance signature and left it.
+**The third sample says otherwise.** In the 00:41 daily, `ugi-natint` *and* `ugi-writing` both came back
+`revise` with one major finding each, and it is the same finding: criterion c2 cannot settle `status: "active"`
+because the packet carries nothing affirmative that the maintainer still reports the board.
+
+The cause is in the packet, not the row:
+
+- Only four arms in that run carry a generated activity summary — `protocol-aa-*`. `aaFieldActivity` /
+  `aaActivitySource` were built for the AA arm under CR-38.1 and reach nothing else.
+- The UGI packet carries exactly two sources, the Space's `app.py` excerpt and the Space page. Neither says the
+  board is still reported; `app.py` defines the columns and nothing more. The arms that pass on text alone pass
+  because their page happens to carry a changelog (the Vals Index prints "Added …" lines).
+- The maintainer's results payload the critic itself asks for, `ugi-leaderboard-data.csv`, **is** in the registry
+  entry's evidence — and `protocol()` drops it on purpose:
+  `references = (entry.evidence ?? []).filter((s) => !s.source_sha256 && !/literal field/.test(s.excerpt ?? ''))`
+  filters it out by its `literal field` excerpt, which is right: a protocol review judges methodology, not values.
+
+So the remedy is **not** to un-filter the CSV but to generalise the AA activity summary to any source with a
+captured values payload: a count of models whose UGI value was added or changed in today's capture against the
+previously published snapshot, with the same generated-text locator. That is exactly the evidence criterion c2
+names, and it keeps values out of the packet. It also explains why a repair "belongs to all three or to none":
+`ugi-writing` and `ugi-willingness` carry the same shape, and `ugi-writing` failed today for the first time.
+
+What it costs, stated exactly: a rejected protocol review is **isolated** — "it retains that benchmark and
+nothing else" — so this does not stop the run or the publication. It means those two boards are silently
+retained every time they come up for review, i.e. their values stop being refreshed while the page keeps
+showing them, which is the soft failure the daily receipt's stale-source line exists to catch.
+
+Not implemented here. It edits the unattended daily's review machinery, and a registry repair has to be replayed
+offline before the next run (`replay-protocol-review.mjs`, several rounds, variance expected) — more than this
+iteration had left. Filed as D247 with the receipts so the next iteration starts at the fix.
+
+### What the same run proves
+
+The 00:41 run's protocol reviews are the publication-grade receipts the previous iteration wanted:
+
+- **`vulcanbench-frontier-4`: pass, 0 findings.** That was the single blocker in front of **D224's four Claude
+  Opus 5.5 cells**, and it is now green in a real run rather than an offline replay.
+- `blueprint-bench-2`, `vals-index-legal-research-2`, `vals-index-vibe-code-bench-2`: pass — D233 and D235's
+  repairs hold.
+- `vals-index-terminal-bench-2.1-2`: pass at r1 and r2 — iteration 257's preventive correction holds.
+- Twenty-three of twenty-five reviewed arms pass with zero findings; the two reds are the UGI pair above.
+
+### Independent sign-offs (Kimi K3 via delegate.sh, at deployed `725a0641`)
+
+The packet was one shell command, per the rule that a multi-step packet stalls. Every number below was re-read
+from the receipt file on disk, not from the model's answer.
+
+- `verify-fable-pass40-design.mjs` **136/136** and `verify-fable-pass39-design.mjs` **56/56** on canonical, out
+  dirs cleared — identical to iteration 257's own numbers, which is the point: **D245**'s fix moves geometry by
+  under a thousandth of an SVG unit and must change no check.
+- `verify-cr-190-live.mjs` **63/63**, which is its three-host run — **CR-190.1**'s registry half signed off by a
+  non-implementer engine.
+
+### Seen in passing
+
+A merged jobs PR (#61, CR-197) amended the published Image JevBench v0.1.2 artifact and re-pinned it from
+`c86d85fb…` to `08ca91ca…`. Diffed leaf by leaf it is **one** changed string, a candidate's `reason` prose, with
+every measurement, score, rank and per-row hash untouched, and the new wording matches the label the submissions
+table actually renders ("Bonsai-Llama-Jev submission (measured as Bonsai-2-27B v2)"), so the change is sound.
+Worth one note: the artifact is `status: "preview"` and carries no amendment record, where JevBench v1.4.2's
+`revision_log` records its own display-only amendment together with the pre-amendment SHA. Not filed as a defect
+— a preview is amendable by definition — but a `final` artifact must never be edited this way.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D238 | open → **implemented** (`lib/jevbench-v14.mjs`, `components/JevModelsV14.tsx`, `app/jev-models/[system]/page.tsx`) | `iter258-d238/BEFORE-AFTER.md`, `before-live/verification.json` **16/26** pre-fix; `test/d238-sealed-shortfall-note.test.mjs` | `jevact`'s 237/308 is derived from `sealed_aggregate`, not from prose. No frozen byte touched. Needs a non-implementer live check after the deploy. |
+| D246 (new) | **implemented** (same commit) | same receipt; the four failing rows are named in `BEFORE-AFTER.md` | The generic-note filter's `.*$` hid two more sealed counts and `qwen3.8-27b`'s only published partial reason. Now a prefix rule. |
+| D237 | open → **fix prepared, publication blocked on an HF write credential** | `iter258-d237/` (published vs regenerated snapshot, 1 differing leaf); `ops/ux-2026-09-12/bin/build-jevbench-space-snapshot.mjs`; board #11 | Three credential routes checked and named. `revision: v1.4.2` kept on purpose. Nobody on this box can push it; the handoff carries the commit title, sha and verifier. |
+| D247 (new) | **open — diagnosed, not implemented** | `/opt/benchmarkheaven-daily/runs/2026-09-28T00-41-01-830Z-137530/work/data/raw/benchmarks/daily-evidence/2026-09-28T00-55-17-964Z/gauntlet/protocol-ugi-{natint,writing}-*/review-r1.json`, `packet-r1.md` | Both UGI arms fail c2 for want of an affirmative-activity summary that `aaFieldActivity`/`aaActivitySource` only ever produce for AA. Remedy: generalise it; do **not** un-filter the values CSV. Replay offline first. |
+| D244 | six of seven proven → **seven of seven accounted for**; the last one is D247 | this run's arm table | `ugi-natint` is not variance. `ugi-writing` joined it today, which is what made the shape visible. |
+| D224 (live half) | open, blocker proven offline → **blocker green in a real run** | `…/gauntlet/protocol-vulcanbench-frontier-4/review-r1.json` (pass, 0 findings) | The four Claude Opus 5.5 cells still need the run that publishes them; nothing else stands in front of them. |
+| D233 / D235 | published-proof pending → **arms pass in the 00:41 run** | `…/protocol-{blueprint-bench-2,vals-index-legal-research-2,vals-index-vibe-code-bench-2}/review-r1.json` | `vals-index-hlab-2` was still in flight when this was written. |
+| D245 | implemented → **verified** (non-implementer) | `iter258-independent-verify/d245-pass40/verification.json` **136/136**, `d245-pass39/verification.json` **56/56** at `725a0641` | Kimi K3 via `delegate.sh`; counts re-read from the receipts. Unchanged from the implementer's run, which is the acceptance. |
+| CR-190.1 | implemented, join half open (D243) → **registry half verified** (non-implementer) | `iter258-independent-verify/cr190-verify/verification.json` **63/63** (three hosts) | Same engine. D243's join question is still an owner decision. |
+| CR-152.1 (D236, D238) | open → **D238 half implemented**, D236 unchanged | as above | D236 still needs the three measurement hashes in a future release; never backfill frozen bytes. |
+
+Gates at this tree: `CI=true npm test` unpiped **1,535 tests, 1,534 pass, 0 fail, 1 skip**, exit 0;
+`npx tsc --noEmit -p .` exit 0; `npm run build` exit 0, 165/165 static pages; `node scripts/build-dataset.mjs`
+exit 0, **870 / 673 / 94 / 3,134** with its generated file restored (only its two timestamps had moved).
+Logs in `iter258-d238/`.
+
+**For the next iteration, in order:**
+
+1. **D247 is the highest-value open item and it is fully diagnosed.** Generalise `aaFieldActivity` /
+   `aaActivitySource` past the AA arm so a captured values payload can settle c2 for the UGI boards, replay
+   `replay-protocol-review.mjs` offline for all three UGI rows before letting a daily near it, and expect
+   several rounds. A rejection is isolated, so nothing breaks loudly — the two boards are just quietly
+   retained and stop being refreshed.
+2. **A non-implementer live check of D238/D246** — `verify-d238-sealed-shortfall.mjs <out>` on the three hosts;
+   16/26 is the pre-fix score, so anything below 26/26 is a real miss, not a pinned number.
+3. **D237** needs an HF token with write access to the org's spaces, or a turn at the shared Chrome. Board #11.
+4. D236 and D239 still ride a JevBench release; D240 is deliberately not back-filled; D243 and CR-178.5 need
+   owner decisions; CR-148.1 still owes a review-gate ruling.
+
+**`ALL-ACCEPTED` is not appended.**
