@@ -18228,3 +18228,258 @@ I read `pass`. The fix belonged in my script, and a verifier that will not read 
 worth more than one that guesses.
 
 **`ALL-ACCEPTED` is not appended.**
+
+---
+
+## Iteration 267 (claude-opus, 2026-09-28 18:00 UTC) — the unit a methodology page can never state, and the summary that settles it
+
+### D251.3 — `aa-automationbench::1.0.6`: AA states the rule, the payload states the scale
+
+This was the last named blocker between the 05:17 run and a publication, and it had survived one
+prose-only attempt. The producer's complaint on 2026-09-28 was two objections in one sentence:
+
+> Protocol gives the task score as the percentage of objectives completed, with zero on guardrail
+> violation or error; the row instead states metric "Mean fraction of objectives completed" with unit
+> "fraction" and range [0,1], and "Mean" is not in the excerpt.
+
+Iteration 264 answered the first half — it rewrote the metric in AA's own words — and three rounds
+then moved the complaint to the second half, each in different words:
+
+| round (iter 264, after the prose-only fix) | verdict | what it actually asked for |
+|---|---|---|
+| r1 | `mismatch` | "claimed unit 'fraction' and range [0,1] contradict the protocol's 'percentage of objectives the model completed'" |
+| r2 | `missing_evidence` | "unit (percentage vs fraction/range) is not explicitly stated in the excerpt" |
+| r3 | `mismatch` | "no conversion to a 0-1 fraction is shown in the source" |
+
+**The reviewers were right, and the row was right too.** AA's methodology says a task "receives the
+**percentage** of objectives the model completed"; AA serves that percentage as a decimal on 0-1
+(`automationBenchPartialScore`, 192 finite values in today's capture, 0.0019–0.6954). So
+`unit: "fraction"`, `range: [0,1]` describes the served numbers exactly — and **no sentence on a
+methodology page can ever show that**, because a protocol page states the scoring rule and need
+never state the scale it is published on. The packet gave the reviewer nothing to check the claim
+against, and a careful reviewer refuses a claim it cannot check. The 2026-09-25 critic said so in
+its own uncertainties: "the served numeric scale (0-1 vs 0-100) could not be checked because the
+packet includes no served values for this board (Source 2 contains counts only)".
+
+**The repair is therefore two halves, and neither works alone.**
+
+1. **Evidence.** `aaFieldScale(field, rows)` reads every finite value the maintainer serves for the
+   board's field in today's capture — count, lowest, highest — at the **full dotted path** the
+   `aa_field_map` names, because the root object of a structured field (`briefcaseBreakdown`) has no
+   scale. `scaleSource()` renders it in the same provenance class as CR-38.1's activity summary: it
+   rides the capture's own receipt and hash so the packet's hash chain is unchanged, its locator
+   says "generated summary of this run's own read of the capture, not maintainer text", and its last
+   sentence states its own limit. Computed over **every served row**, never only today's changed
+   ones — the question is what scale the board publishes on, and answering it from whichever models
+   AA happened to re-run today would make the evidence depend on the weather. A field with no finite
+   value yields `null` and no source at all.
+2. **Admissibility.** Criterion c1 gains one conditional sentence, written the way CR-38.1 wrote c2's:
+   the summary is admissible **for exactly one judgement**, whether `unit` and `range` describe the
+   served scale; a row that agrees with the served values is correct on that point *even when the
+   protocol text says nothing about it*, and a row that disagrees is a mismatch. It then says a third
+   time that it settles nothing about what the metric means, how it is computed, or which task set,
+   harness, judges or version produced it.
+3. **Prose.** The metric states AA's per-task rule in AA's words, drops the "Mean" aggregation AA
+   never states, and names the scale the maintainer serves it on. **The value is untouched** — this
+   board is an Agentic category anchor.
+
+**Replayed against the 05:17 run's own capture.** The AA arm could not be replayed at all before
+this: `--activity`'s receipt URL is the AA model page, which `fetch-aa` fetches and
+`capture-benchmark-sources` never does, so it is in no `manifest.json` and the flag could never find
+it. `--aa-from-run=<run dir>` reads it out of that run's `sources/live-manifest.jsonl` instead, parses
+it with the production `parseAaBenchmarkFields`, and computes **both** summaries with `aaFieldActivity`
+and `aaFieldScale`. Nothing is typed: the computed activity is `39 added / 0 changed / 0 removed`,
+which is the daily's own number for that arm, printed in its own packet that morning.
+
+| run | producer | outcome |
+|---|---|---|
+| r1 | `match` — "unit 'fraction' and range [0,1] agree with SOURCE 3's observed served scale (192 values, min 0.00191, max 0.69539)" | critic `pass`, 0 errors, **accepted** |
+| r2 | `match` — "SOURCE 3 confirms served scale in [0,1]" | **accepted** |
+| r3 | `match` — "SOURCE3's served finite values 0.0019-0.695 fit fraction on [0,1]" | **accepted** |
+| `--lie` (status flipped to `retained`) | `mismatch` — "Protocol, metric, unit, range and description match source 1; **source 3 confirms 0-1 fraction scale**. Status field says retained, but source 2 reports 39 newly served values" | **blocked**, as it must be |
+
+Three for three, and the control still fails closed. The lie run is again the cleanest evidence that
+the repair landed: the c1 dispute is gone in its own words, and the only thing left to find is the
+lifecycle field that was deliberately falsified.
+
+**And it does not destabilise the arms that already pass.** The new source goes into *every* AA
+protocol packet, so two currently-passing boards from the same run were replayed with it. Both
+accepted, and both producers used it: `aa-apex-agents::snapshot-2026-09-10` — "Source 3 shows served
+values 0.0074–0.4705, consistent with unit fraction and range [0,1]" — and `aa-aime::2025`, a
+**retained** board whose activity summary carries no affirmative evidence at all (0 added, 0 changed,
+31 removed). Offline, all 29 `aa_field_map` boards were checked against their registry ranges first:
+every served min/max lies inside the range its entry claims, including the three `[null,null]` Elo and
+points boards, so there was no board for which this evidence could have argued against its own row.
+
+**`scores.json` and `dataset.json` are regenerated, not edited.** `ingest-benchmark-scores.mjs`
+composes each observation's `protocol` from `entry.scoring.metric`, so a registry-only fix would have
+left all 155 published cells quoting the withdrawn claim with every gate green. The regeneration
+changed exactly those 155 protocol strings and nothing else (155 insertions, 155 deletions); the 17
+CR-128 third-party rows on the same board carry their own reviewed protocol text and are untouched.
+Dataset counts unchanged: **868 / 673 / 94 / 3,118**.
+
+### What the retained-arm list looks like after this iteration
+
+The 05:17 run held four arms and the `benchmarks` step failed on them. All four are now answered:
+
+| retained arm | why it was retained on 2026-09-28 | state after iterations 266–267 |
+|---|---|---|
+| `mls-bench-lite::30-tasks` | protocol not approved — the harness-parenthesis guard | **repaired** (D251.2, iter 266), 3/3 replays |
+| `swe-atlas-test-writing::snapshot-2026-09-15` | `Primary source unavailable: … HTTP 404` | **recovered on Scale's side** (D251.4, iter 266) |
+| `mazur-creative-story-writing::snapshot-2026-09-10` | protocol not approved — evaluator-version wording | **repaired in iteration 264**, replayed accepted there |
+| `aa-automationbench::1.0.6` | protocol not approved — "Mean fraction" vs AA's "percentage" | **repaired** (D251.3, this iteration), 3/3 replays, control blocked |
+
+**So no named arm is left between the 05:17 run and a publication.** That is a claim about today's
+four, not a promise about tomorrow's: a free critic pair varies, and both `mazur` and
+`mls-bench-lite` have already been retained twice on *different* complaints about the same row.
+The behavioural acceptance is tomorrow's 05:17 run — `refresh-benchmarks.mjs:440` sets
+`last_verified` only when the daily's own protocol review is accepted, so `aa-automationbench`'s
+`last_verified` moving off `2026-09-25` is the unfakeable half of this.
+
+### The criterion change touches every arm, so two public arms were replayed too
+
+`PROTOCOL_REVIEW_CRITERIA[0]` is in **every** protocol packet, not only AA's, so the new sentence
+now reaches ~100 public-board packets that carry no scale summary at all. That is the one way this
+change could cost a publication it was meant to buy — a reviewer reading "when the packet
+additionally carries …" as a demand rather than a permission. Both arms this loop repaired most
+recently were replayed against the repo's 11:53 capture, with the new criterion text and no scale
+summary in the packet:
+
+| arm | packet | verdict |
+|---|---|---|
+| `mls-bench-lite::30-tasks` | new c1 text, **no** scale summary | `match`, **accepted** |
+| `mazur-creative-story-writing::snapshot-2026-09-10` | new c1 text, **no** scale summary | `missing_evidence` — "the row's scoring unit 'points' and range are not stated in the protocol text, and **the packet provides no run-generated value summary to verify the served scale**" |
+
+That mazur result is not a regression this change caused — the unit was already disputed in two of
+three rounds on 2026-09-25 (D251.1) and the arm was retained again in the 05:17 run. What the new
+sentence changed is that the producer now says **what would settle it, by name**. That is the same
+thing that happened to D247: two UGI arms came back `revise` asking for the activity summary by
+name, and the answer was to give it to them.
+
+### D251.1 — so the same evidence was extended to public boards, and it found a flaw in the sentence
+
+`publicValueScale` is the public form of `aaFieldScale`: the published values of this arm's own
+reconciled rows, as count/lowest/highest, withheld from a multi-capture arm for the same reason its
+activity summary is, and carried whatever the row's lifecycle says — unlike the activity count, a
+scale summary argues for nothing about whether the board is still live.
+
+The first replay pair looked like a clean win — mazur **accepted**, "SOURCE 3 shows served scale
+(-5.071 to 3.83) which does not contradict unit 'points' and null range"; `mls-bench-lite` still
+accepted, "served scale 16 values 24.4-50.3 consistent with unit/range [0,100]". Two more rounds
+said otherwise, and both said the same thing:
+
+> c1 mismatch: generated value scale shows 56 served values from -5.071 to 3.83, but row declares
+> range `[null,null]` with unit 'points'; **the range does not describe the served scale**.
+
+**My own sentence caused that.** "a row that disagrees with them is a mismatch" was read against a
+`range: [null, null]` — which is not a claim that disagrees, it is the row declining to claim a
+bound. Left alone it would have turned every unbounded board into a mismatch on the days its values
+move: mazur, and on the AA side `aa-briefcase::1.1`, `aa-gdpval::2.1` and `aa-omniscience`, none of
+which was in the first control set. So the criterion gained one more clause — *judge only the bounds
+the row actually states; a `null` bound is the row declining to claim one and is never contradicted
+by any served value, however large or small or negative* — and everything was replayed again:
+
+| arm | range claimed | verdict |
+|---|---|---|
+| `aa-automationbench::1.0.6` | `[0,1]` | `match` — "Source3 shows served values 0.0019-0.695 within [0,1], supporting unit=range" |
+| `aa-briefcase::1.1` (Elo) | `[null,null]` | `match` — "**null range unclaimed and not contradicted by** served 0-1821.85 scale" |
+| `mls-bench-lite::30-tasks` | `[0,100]` | `match` — "served values 24.4–50.3 within range [0,100]" |
+| `mazur…` r1 | `[null,null]` | `match` — "generated value summary (-5.071 to 3.83) is consistent with null range/unit 'points'" |
+| `mazur…` r2 | `[null,null]` | `missing_evidence` — **on a different field** (see below) |
+| `mazur…` r3 | `[null,null]` | `match` — "Served values (−5.071 to 3.83) and unit/range (null, null) agree" |
+
+The unit dispute that had held mazur since 2026-09-25 is gone in all three rounds. The clause is
+quoted back almost verbatim by the Elo board's producer, which is the cleanest evidence that it was
+read as written.
+
+**What is left on mazur is a different field, and it is not new.** Round 2 said: "unit/range
+consistent with protocol and served scale (SOURCE 3); **version_status and superseded_by cannot be
+settled from protocol text**." Iteration 264's round 2 had already written the same sentence —
+"'version_status':'snapshot' is absent from the protocol text" — and nobody acted on it because the
+unit complaint was louder. `snapshot` is our own word for "this source publishes no version", so no
+maintainer's README can ever confirm it; it is the third kind of registry text D235 identified, and
+it belongs either behind the policy marker or in a criterion clause of its own. **That is D251.1's
+remaining half and it is unresolved** — mazur should be expected to fail roughly one run in three
+until it is.
+
+### Two things the daily's own logs said that nobody has acted on
+
+1. **The 11:23 run published with every protocol arm retained.** `/opt/mmc-daily/cron.log` ends
+   "repair agent fixed it — pipeline published successfully today", and that is true: the self-heal
+   repair agent's run at 11:23 published. But its `reports/refresh-benchmarks.log` retains **~40
+   arms in a row**, every one of them with the same reason — `worker: No supported viable worker
+   model found`, in rounds 1, 2 *and* 3. That prefix means the worker-runner died before it ever
+   chose a model (catalog fetch), so that publication reviewed essentially nothing and every one of
+   those boards kept yesterday's values. The 05:17 run four hours earlier ran the same gauntlet
+   fine (deepseek-v4-flash producer, glm-5.3-flash critic), and every replay in this iteration ran
+   fine at 18:10–18:35, so it was not a dead account. **A publication with 40 `worker:` retentions
+   is a degraded publication and should not count as a green day** — whoever takes the next
+   iteration should decide whether `gated-run.sh` ought to fail on it.
+2. **`aa_coding_agents` (2026-09-09) and `openrouter_aa_relay` (2026-09-18) are still frozen**
+   under the written-permission hold, and R9.1 cannot close while they are. Unchanged this
+   iteration; noted so it does not vanish from the top of the list.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D251.3 | open → **implemented, verified live 27/27 on each of the three hosts; accepted on 3/3 replays + a 4th after the c1 amendment, control blocked** | `verify-d251-3-live.mjs`, `iter267-d251-3/live-*/verification.json` **27/27 × 3** at `272ebdb0`; `replay-r{1,2,3}.log` (accepted), `replay-lie.log` (blocked), `v2-automationbench.log` (accepted after the D251.1 amendment); `test/d251-3-aa-value-scale.test.mjs` (8/8) | The row was right and unprovable. AA states the rule, the payload states the scale; the packet now carries the scale as this run's own read of the capture, admitted by c1 for that one judgement. Value untouched — Agentic category anchor. Pre-deploy the same verifier read **17/27** at `25f51452`. Behavioural acceptance is tomorrow's 05:17 run moving `last_verified` off `2026-09-25`. |
+| D251.1 | open → **half implemented: the unit dispute is resolved (3/3 rounds after the amendment); `version_status: "snapshot"` is unresolved** | `iter267-d251-3/d2511-*.log` (first pair), `v2-mazur-r{1,2,3}.log`, `v2-briefcase.log`, `v2-mls.log`; `test/d251-3-aa-value-scale.test.mjs` | `publicValueScale` settles `unit`/`range` from the board's own published values. The `[null,null]` misreading it exposed is fixed in c1 and pinned by a test. Mazur's residual is a different field, already written down in iteration 264 round 2 and never acted on. **No live surface** — protocol criteria are not served; acceptance is tomorrow's run. |
+| D251.2 | verified (iter 266) | unchanged | Listed here only because tomorrow's run is the shared acceptance for all three. |
+
+### Handoff from iteration 267 (claude-opus, 2026-09-28 18:00–18:40 UTC)
+
+Everything is committed, gated and **pushed**; the tree is clean, `run.lock` was absent at every push
+and no daily process was running. Two code commits — `272ebdb0` (D251.3) and `593868c5` (D251.1) —
+plus this ledger commit. **Another writer merged PR #68 (JevBench v1.5) into the shared checkout at
+18:03 UTC, mid-iteration**; `272ebdb0` sits on top of it, contains only this iteration's seven files,
+and every gate below was re-run on the merged tree.
+
+Gates at `593868c5`: `node scripts/build-dataset.mjs` **868 / 673 / 94 / 3,118** (unchanged);
+`CI=true npm test` **1,614 tests, 1,613 pass, 0 fail, 1 skip**, exit 0, unpiped
+(`iter267-d251-3/npm-test-v2.log`); `npx tsc --noEmit -p .` exit 0;
+`node scripts/validate-benchmark-registry.mjs` 293 entries.
+Live verified at `272ebdb0`: **27/27 on benchmarkheaven.com, www.benchmarkheaven.com and the legacy
+mintapis host**; the same verifier read 17/27 against the pre-deploy revision.
+
+**What changed, in one line each.**
+
+1. **D251.3** — an AA board's `unit` and `range` describe the scale the maintainer serves on, and no
+   methodology page states a scale. The packet now carries this run's own read of the served values;
+   c1 admits it for that one judgement. `aa-automationbench::1.0.6`'s metric also drops the "Mean"
+   AA never wrote and names the served scale, and `scores.json`/`dataset.json` were **regenerated**
+   from the registry so all 155 published cells quote it.
+2. **D251.1** — the same evidence for public boards, which is what mazur's producer asked for by
+   name. Its unit dispute is resolved; a `version_status: "snapshot"` complaint remains.
+3. **A flaw in my own criterion sentence, found by replaying it** — a `[null,null]` range was read as
+   disagreeing with the served values. Fixed and pinned; `aa-briefcase::1.1` now quotes the fix back.
+
+**What the next iteration should check first, in order.**
+
+1. **Read the 05:17 run's `reports/refresh-benchmarks.log` and count the retained arms.** The four
+   named arms of 2026-09-28 are all answered, so the expected count from *those* is zero. Check
+   `last_verified` for `aa-automationbench::1.0.6` (was `2026-09-25`), `mls-bench-lite::30-tasks`
+   (was `2026-09-22`) and `mazur-creative-story-writing::snapshot-2026-09-10` (was `2026-09-10`):
+   `refresh-benchmarks.mjs:440` is the only thing allowed to move them, so a date that moved is the
+   unfakeable acceptance and a date that did not is the real verdict on this iteration.
+2. **Expect mazur to fail about one run in three, on `version_status`, not on the unit.** The
+   remedy is designed and not implemented: `snapshot` is our own word for "this source publishes no
+   version" and belongs either behind `POLICY_NOTE_MARKER` or in a c1 clause of its own, the same
+   way D235 handled our-handling sentences. Read iteration 264's round 2 note first — it wrote this
+   down four days before anyone noticed.
+3. **Decide whether a run with 40 `worker:` retentions counts as a published day** (§ above). That
+   is the largest unexamined thing in today's logs and it is not a benchmark question.
+4. **D249.2 / D249.4** are untouched and diagnosed in iterations 262–264. **D253.2** is still the one
+   question for Florian — board #4417, `BENCHMAXX_MIN_COMPARISONS = 6` is not derived from anything
+   written down.
+5. **A push still implies a deploy**, as of this iteration: `272ebdb0` went live on all three hosts
+   within ~4 minutes of the push.
+
+**Two things worth not re-learning.** First: when a reviewer refuses a field, ask whether the packet
+*can* settle it before rewriting the field. Three rounds refused `unit: "fraction"` and all three
+were right — the claim was true and uncheckable, and four days of failures went into rewording a
+sentence that was never the problem. Second: **replay the criterion change, not only the row
+change.** `PROTOCOL_REVIEW_CRITERIA` is in every packet, so a sentence written for one board is a
+change to a hundred; mine was correct for a bounded range and turned every unbounded board into a
+mismatch, and the only reason that is not in tomorrow's run is that two extra replay rounds were
+spent on a board the change was not even about.
+
+**`ALL-ACCEPTED` is not appended.**
