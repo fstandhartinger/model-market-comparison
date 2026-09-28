@@ -113,21 +113,39 @@ test('Image JevBench v0.1.1 is preserved as the exact parent release artifact', 
 });
 
 test('API.md pins the current JevBench and Image JevBench artifact hashes', async () => {
-  const files = [
-    '../data/raw/benchmarks/jevbench/v1.4.2.1/jevbench-v1.4.2.1-results.json',
-    '../data/raw/benchmarks/jevbench/v1.4.2.1/jevbench-v1.4.2.1-family-supplement.json',
-    '../data/raw/benchmarks/jevbench/v1.4.2.2/jevbench-v1.4.2.2-results.json',
-    '../data/raw/benchmarks/jevbench/v1.4.2.2/jevbench-v1.4.2.2-family-supplement.json',
-    '../data/raw/benchmarks/jevbench/multimodal-preview/preview.json',
+  const releases = [
+    {
+      version: 'v1.4.2.1',
+      results: '../data/raw/benchmarks/jevbench/v1.4.2.1/jevbench-v1.4.2.1-results.json',
+      families: '../data/raw/benchmarks/jevbench/v1.4.2.1/jevbench-v1.4.2.1-family-supplement.json',
+    },
+    {
+      version: 'v1.4.2.2',
+      results: '../data/raw/benchmarks/jevbench/v1.4.2.2/jevbench-v1.4.2.2-results.json',
+      families: '../data/raw/benchmarks/jevbench/v1.4.2.2/jevbench-v1.4.2.2-family-supplement.json',
+    },
   ];
+  const imagePreviewFile = '../data/raw/benchmarks/jevbench/multimodal-preview/preview.json';
   const [api, ...artifacts] = await Promise.all([
     readFile(new URL('../API.md', import.meta.url), 'utf8'),
-    ...files.map((file) => readFile(new URL(file, import.meta.url))),
+    ...releases.flatMap(({ results, families }) => [results, families])
+      .concat(imagePreviewFile)
+      .map((file) => readFile(new URL(file, import.meta.url))),
   ]);
-  for (const [file, artifact] of files.map((file, index) => [file, artifacts[index]])) {
-    const sha256 = createHash('sha256').update(artifact).digest('hex');
-    assert.ok(api.includes(`\`${sha256}\``), `API.md must pin ${file} SHA-256 ${sha256}`);
+  for (const [index, release] of releases.entries()) {
+    const row = api.split('\n').find((line) => line.startsWith(`| ${release.version} |`));
+    assert.ok(row, `API.md must include a ${release.version} release row`);
+    for (const [label, file, artifact] of [
+      ['results', release.results, artifacts[index * 2]],
+      ['family supplement', release.families, artifacts[index * 2 + 1]],
+    ]) {
+      const sha256 = createHash('sha256').update(artifact).digest('hex');
+      assert.ok(row.includes(`\`${sha256}\``), `${release.version} API row must pin ${label} ${file} SHA-256 ${sha256}`);
+    }
   }
+  const imagePreviewSha256 = createHash('sha256').update(artifacts.at(-1)).digest('hex');
+  const imagePin = api.match(/multimodal-preview\/preview\.json`\r?\n\(SHA-256 `([0-9a-f]{64})`\)/);
+  assert.equal(imagePin?.[1], imagePreviewSha256, `Image JevBench section must pin preview.json SHA-256 ${imagePreviewSha256}`);
 });
 
 test('preview tracks validator rejects missing or changed counts', async () => {
