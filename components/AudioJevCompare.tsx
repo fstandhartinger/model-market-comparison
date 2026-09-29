@@ -22,6 +22,53 @@ const METRICS: Metric[] = [
   { label: 'USD per 1,000 decisions', get: (r) => r.usd, fmt: usd, better: 'low' },
 ];
 
+const RADAR_AXES: Array<{ label: string; get: (r: AudioJevRow) => number | null }> = [
+  { label: 'Intelligence', get: (r) => r.intelligence ?? r.iPublic },
+  { label: 'Calibration', get: (r) => r.calibration },
+  { label: 'Speed', get: (r) => r.speed },
+  { label: 'Cost', get: (r) => r.cost },
+];
+
+function AudioRadar({ a, b }: { a: AudioJevRow; b: AudioJevRow }) {
+  const axes = RADAR_AXES.filter((axis) => axis.get(a) != null && axis.get(b) != null);
+  if (axes.length < 3) return <p className="bh-muted mt-4 text-sm">A radar needs at least three shared measured axes; compare the available values in the table below.</p>;
+  const cx = 260, cy = 176, radius = 112, labelRadius = 150;
+  const point = (index: number, value: number, r = radius) => {
+    const angle = -Math.PI / 2 + index * 2 * Math.PI / axes.length;
+    const d = r * Math.max(0, Math.min(100, value)) / 100;
+    return [cx + Math.cos(angle) * d, cy + Math.sin(angle) * d] as const;
+  };
+  const polygon = (row: AudioJevRow) => axes.map((axis, index) => point(index, axis.get(row) ?? 0).join(',')).join(' ');
+  const colorA = 'rgb(var(--jev-t-jev))', colorB = 'rgb(var(--jev-t-rebuild))';
+  return <figure className="bh-panel mt-4 p-3 sm:p-4" data-bh-audiojev-radar>
+    <figcaption className="text-base font-semibold">Head-to-head radar</figcaption>
+    <p className="bh-muted mt-1 text-xs">Up to four 0–100 axes; farther from the centre is better. Public-only rows use public Intelligence, and unmeasured axes are omitted.</p>
+    <svg viewBox="0 0 520 300" className="mx-auto mt-2 block w-full max-w-2xl" role="img" aria-label={`Head-to-head radar comparing ${a.name} and ${b.name} across ${axes.map((x) => x.label).join(', ')}`}>
+      <title>{`Head-to-head radar: ${a.name} and ${b.name}`}</title>
+      {[20, 40, 60, 80, 100].map((level) => <polygon key={level} points={axes.map((_, index) => point(index, level).join(',')).join(' ')} fill="none" stroke="rgb(var(--line))" strokeWidth="1" />)}
+      {axes.map((axis, index) => {
+        const [x, y] = point(index, 100);
+        const [lx, ly] = point(index, 100, labelRadius);
+        return <g key={axis.label}>
+          <line x1={cx} y1={cy} x2={x} y2={y} stroke="rgb(var(--line))" strokeWidth="1" />
+          <text x={lx} y={ly + 4} textAnchor={Math.abs(lx - cx) < 18 ? 'middle' : lx < cx ? 'end' : 'start'} fill="currentColor" fontSize="13">{axis.label}</text>
+        </g>;
+      })}
+      <polygon points={polygon(a)} fill={colorA} fillOpacity=".16" stroke={colorA} strokeWidth="2.5" />
+      <polygon points={polygon(b)} fill={colorB} fillOpacity=".14" stroke={colorB} strokeWidth="2.5" />
+      {axes.map((axis, index) => {
+        const [ax, ay] = point(index, axis.get(a) ?? 0);
+        const [bx, by] = point(index, axis.get(b) ?? 0);
+        return <g key={`${axis.label}-points`}><circle cx={ax} cy={ay} r="3.5" fill={colorA} /><circle cx={bx} cy={by} r="3.5" fill={colorB} /></g>;
+      })}
+    </svg>
+    <div className="mx-auto flex max-w-2xl flex-wrap justify-center gap-x-6 gap-y-1 text-xs">
+      <span className="flex max-w-full items-center gap-2"><span className="h-0.5 w-4 shrink-0" style={{ background: colorA }} /><span className="truncate">{a.name}</span></span>
+      <span className="flex max-w-full items-center gap-2"><span className="h-0.5 w-4 shrink-0" style={{ background: colorB }} /><span className="truncate">{b.name}</span></span>
+    </div>
+  </figure>;
+}
+
 function Side({ r, tone }: { r: AudioJevRow; tone: string }) {
   return <div className="min-w-0">
     <p className="truncate font-semibold" style={{ color: tone }}>{r.name}</p>
@@ -59,6 +106,7 @@ export function AudioJevCompare({ rows, defaults }: { rows: AudioJevRow[]; defau
       <div className="mt-4 grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-3 border-b border-line pb-3">
         <Side r={a} tone={toneA} /><Side r={b} tone={toneB} />
       </div>
+      <AudioRadar a={a} b={b} />
       <dl className="mt-2 divide-y divide-[rgb(var(--line))]">
         {METRICS.map((m) => {
           const va = m.get(a), vb = m.get(b);
