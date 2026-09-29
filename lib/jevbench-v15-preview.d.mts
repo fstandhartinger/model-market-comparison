@@ -4,6 +4,7 @@ export type JevV15Type = 'choice' | 'noul' | 'score';
 export type JevV15Cell = { cc: number | null; tiers: Record<'easy' | 'standard' | 'judge' | 'hard', number | null>; n: Record<'easy' | 'standard' | 'judge' | 'hard', number> };
 export type JevV15System = {
   key: string; display: string; author: string; repo: string | null; class: string; licence: string; open: string;
+  underlying?: string | null;
   addendum: { id: string; release: string; label: string } | null;
   endpoint_kind: string | null; endpoint_condition: string | null; gpu?: string | null;
   api_flag: boolean; api_exposure_note: string | null;
