@@ -105,13 +105,21 @@ export function routerRouteHealthy(health, [block, key]) {
   return health.union_alpha?.available === true && (health.union_alpha.ranked_api ?? []).some((r) => r?.key === key && r.health === 'healthy');
 }
 
-// D252 (2026-09-28): why a route is *not* offered, recorded with the catalog. On 2026-09-28 all three
-// runs wrote `free_router: []`, the scheduled pool was the two paid families alone, and three
-// `Incomplete completion (length)` answers from `z-ai/glm-5.3-flash` hard-excluded one of them — after
-// which the different-family critic rule left no pair and 25 arms retained without any reviewer. The
-// run kept no record of *why* the free critic was missing, so the cause had to be reconstructed from a
-// health file that had already been rewritten. One reason string per route costs nothing and makes the
-// next such run readable from its own reports.
+// D252 (2026-09-28): why a route is *not* offered, recorded with the catalog. On 2026-09-28 the 11:23 run
+// offered no free route on any of its 20 worker calls (`free_routes_offered: []` in every receipt), so the
+// scheduled pool was the two paid families alone — after which the different-family critic rule left no
+// pair and 28 arms retained without any reviewer. The run kept no record of *why* the free critic was
+// missing, so the cause had to be reconstructed from a health file that had already been rewritten. One
+// reason string per route costs nothing and makes the next such run readable from its own reports.
+//
+// D254 (2026-09-28) corrects the mechanism this comment first recorded. It said three `Incomplete
+// completion (length)` answers *hard-excluded* `z-ai/glm-5.3-flash`; the run's own
+// `workers/unavailable-models.jsonl` shows those three were filed `failure: "transport"`, which
+// `hardExcludedWorkerModels` does not count, so glm carried exactly one content strike and was only ever
+// soft-excluded. The run ended review at 12:16, when a single 600 s timeout soft-excluded the last
+// producer as well and the producer path — unlike the critic's — has no last-resort retry. The
+// misclassification is fixed in `gauntlet.mjs` (`workerFailureClass`); the two-family pool behind it is
+// an owner decision and is recorded as D254.1 in PROGRESS.md.
 export function freeRouterRejections(dataset, health, { workers = FREE_ROUTER_WORKERS, minimum = MIN_INDEX } = {}) {
   const models = new Map((dataset?.models ?? []).map((m) => [m.id, m]));
   const out = [];

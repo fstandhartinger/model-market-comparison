@@ -95,8 +95,11 @@ test('D199: the reasons and the bound travel together from the gauntlet to the r
   // The runner is handed both lists, computed from the same records with the same role.
   assert.match(gauntlet, /hardFailed = hardExcludedWorkerModels\(records, \{ role \}\)/);
   assert.match(gauntlet, /BH_WORKER_HARD_EXCLUDE_MODELS: \[\.\.\.new Set\(\[\.\.\.hardFailed/);
-  // Both writers of a record say which kind of failure it was.
-  assert.match(gauntlet, /reason, role, failure: 'transport'/);
+  // Both writers of a record say which kind of failure it was. D254: the runner's writer no longer calls
+  // every worker-process failure transport — it asks `workerFailureClass`, which files the two messages
+  // about the model's own answer as content. The classification itself is proven in
+  // test/d254-model-answer-failures.test.mjs.
+  assert.match(gauntlet, /reason, role, failure: workerFailureClass\(reason\)/);
   assert.match(gauntlet, /reason, failure: 'content'/);
   const runner = await readFile(new URL('../ops/rebuild-2026-09/bin/worker-runner.mjs', import.meta.url), 'utf8');
   assert.match(runner, /hardExcludeModels: \(process\.env\.BH_WORKER_HARD_EXCLUDE_MODELS \|\| ''\)/);

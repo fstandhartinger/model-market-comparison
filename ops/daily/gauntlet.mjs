@@ -162,6 +162,23 @@ export function workerMaxTokens(role) {
 // answered three times without meeting the contract has shown what it can do today, and anything
 // earned before that — glm's usable round-3 review of `scores-14` on the same run — is still collected.
 export const HARD_EXCLUSION_STRIKES = 3;
+// D254 (2026-09-28): which side of that bound a worker-process failure falls on. Everything `worker.sh`
+// reports comes back through one `catch`, so every one of them was filed `transport` — including the two
+// messages `validateCompletion` raises about the answer the model actually returned. `Incomplete
+// completion (length)` is the model writing past the caller's cap and `Empty completion` is it writing
+// nothing: both are its own answer, and the critic cap is already at WORKER_MAX_TOKENS_CEILING, so
+// neither can be retried into success. Filed as transport they never hardened, and the critic last-resort
+// retry re-offered the route forever — which is the unbounded burn D199 set out to stop.
+// Measured on the 2026-09-28 11:23 run: `z-ai/glm-5.3-flash` took one content strike at 11:29 ("Critic
+// did not echo the exact frozen artifact hash") and then three `Incomplete completion (length)` answers
+// at 11:38, 11:46 and 11:53, each costing the 600 s worker timeout. Under D199's bound those are four
+// strikes, so the route should have been out after 11:46; filed as transport it was re-offered twice
+// more (11:53, 12:04) and the run spent ~20 further minutes on calls that could not succeed.
+// A transport failure — a timeout, a dropped connection, a dead process — is still not the model's
+// answer and still never hardens.
+export const MODEL_ANSWER_FAILURE = /^(Incomplete completion|Empty completion)\b/;
+/** `content` when the worker's failure was the model's own answer, `transport` when it was not. */
+export const workerFailureClass = (reason) => (MODEL_ANSWER_FAILURE.test(String(reason ?? '')) ? 'content' : 'transport');
 /** Routes whose failures were their own answers, struck out often enough that the retry may not re-offer them. */
 export function hardExcludedWorkerModels(records, { role = null } = {}) {
   if (role !== null && !WORKER_ROLES.includes(role)) throw new Error(`Unknown worker role ${role}`);
@@ -249,8 +266,10 @@ export async function defaultRunner(args, { attempt = 1, maxTokens = null } = {}
     const reason = error.stderr?.match(/^WORKER_ERROR: (.*)/m)?.[1] ?? 'Worker process failed';
     if (model && failedFile && !ACCOUNT_LEVEL_HTTP.test(reason)) {
       await mkdir(state, { recursive: true });
-      // D199: the transport or the process failed, not the model's answer — this strike never hardens.
-      await appendFile(failedFile, JSON.stringify({ model, at: new Date().toISOString(), reason, role, failure: 'transport' }) + '\n');
+      // D199: a transport or process failure is not the model's answer and never hardens. D254: two of the
+      // messages that arrive here *are* its answer (`Incomplete completion`, `Empty completion`), and those
+      // count against the three-strike bound like any other content failure.
+      await appendFile(failedFile, JSON.stringify({ model, at: new Date().toISOString(), reason, role, failure: workerFailureClass(reason) }) + '\n');
     }
     throw new Error(`${model ?? 'worker'}: ${reason}`);
   }
