@@ -20,6 +20,8 @@ const nextConfig = {
       { source: "/:path*", headers: [{ key: "Permissions-Policy", value: "tools=(self)" }] },
       // Unlisted work-in-progress previews (e.g. the unpublished JevBench v1.5 page): never indexed.
       { source: "/wip-oiifi41ouv1f/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }] },
+      // Unlisted AudioJevBench WIP preview: never indexed, even if a link leaks.
+      { source: "/wip-33gyqg9xwm5y/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }] },
     ];
   },
 };
