@@ -236,6 +236,10 @@ try {
     free_route_role: options.agent ? null : role, free_routes_offered: freeRouter.map((c) => c.id), excluded_models: [...options.excludeModels], hard_excluded_models: [...options.hardExcludeModels],
     catalog: { source: catalogReceipt.source, fetched_at: catalogReceipt.fetched_at } };
   attemptMetadata = metadata;
+  // Record the actual request bounds on both successful and failed receipts;
+  // token usage alone cannot distinguish a cap from a shorter caller timeout.
+  metadata.request_limits = { max_tokens: options.maxTokens, timeout_seconds: options.timeout,
+    input_bytes: Buffer.byteLength(task) };
   if (!options.agent && chosen.transport !== 'router' && process.env.BH_WORKER_DISABLE_OPTIONAL_REASONING === '1' && catalog.find((m) => m.id === chosen.id)?.reasoning?.mandatory === false) reasoning = { enabled: false, exclude: true };
   metadata.reasoning = reasoning ?? null;
   // D249.5: pinning a model does not pin a provider. One endpoint of this model may answer a
