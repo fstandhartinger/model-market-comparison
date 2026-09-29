@@ -18966,10 +18966,11 @@ Logs in `iter270-d254/`.
    answers is named in every later receipt's `hard_excluded_models` for that role; and the hard-exclusion
    set the run wrote equals the one its own reasons imply. **A run that recorded no such answer is reported
    `INCONCLUSIVE`, not PASS** — do not read it as acceptance.
-   It is falsifiable, not decorative: it is red on both runs that exercised the defect
-   (2026-09-28 11:23 and 05:17, 4/6 with 2 FAIL each — `iter270-d254/live-before/`) and 5/6-with-an-
-   INCONCLUSIVE on the three that never hit it. Two of five recent runs hit it, so this was the daily's
-   routine behaviour, not one bad afternoon.
+   It is falsifiable, not decorative: run over the five most recent runs it is **red on every one that
+   exercised the defect** — 2026-09-28 00:41 and 2026-09-27 05:17 never recorded such an answer and come
+   back 5/6 with an INCONCLUSIVE, while **2026-09-28 05:17, 08:23 and 11:23 are each 4/6 with 2 FAIL**.
+   Receipts per run in `iter270-d254/live-before/<runDir>/`. Three of five, on three different runs of the
+   same day: this was the daily's routine behaviour, not one bad afternoon.
 2. **D254.1 is the one that costs days.** Check `free_routes_offered` in the run's worker receipts before
    blaming a board: if it is `[]` across a whole run, the pool was two families and the retained arms are a
    capacity story, not a source story.
