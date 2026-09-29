@@ -19008,5 +19008,6 @@ Scope: previous gate `REVIEW-20260927T194003Z.md` through deployed `7b2123e`; cu
 | R9.1 | open | `api-meta-hosts.jsonl`, `api-meta-full.json` | `aa_coding_agents` (2026-09-09) and `openrouter_aa_relay` (2026-09-18) remain under written-permission hold. |
 | X5 | verified → **open pending non-implementer verification** | this review branch's `API.md`, `CHANGELOG.md`, `MSG-UPSTREAM-SYNC-PROMPT.md`; API receipts | Current v1.5.0/v0.1.3 docs and hashes were corrected by this gate; independent review is still required. |
 | X6 | open | this review and the unresolved rows above | The line-by-line audit fails while any requirement/CR row remains open; 04 requires every CR row verified. |
+| X7 | verified | Telegram message 15794 (`~/bin/notify now --requested`, 2026-09-29 01:30 UTC) | Short German completion note sent with the commit/PR, first review files, F-222/F-223 status and the recorded R4.4/R4.10/R5.2 interpretations. |
 
 `node scripts/build-dataset.mjs`, `CI=true npm test` (1,643 pass / 0 fail / 1 skip), `npx tsc --noEmit -p .`, registry validation and `git diff --check` pass. No `ALL-ACCEPTED` line was appended.
