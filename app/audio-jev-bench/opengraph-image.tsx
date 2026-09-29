@@ -16,7 +16,7 @@ export default async function Image() {
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', marginTop: 20 }}>
         <div style={{ fontSize: 72, lineHeight: 1.05, fontWeight: 800 }}>AudioJevBench v0.1</div>
-        <div style={{ color: '#c3cfde', fontSize: 32, fontWeight: 600, marginTop: 12 }}>Voice-agent decisions straight from audio · {v.systems.length} systems</div>
+        <div style={{ display: 'flex', color: '#c3cfde', fontSize: 32, fontWeight: 600, marginTop: 12 }}>Voice-agent decisions straight from audio · {v.systems.length} systems</div>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
         {top.map((r) => <div key={r.key} style={{ display: 'flex', alignItems: 'center', gap: 18, fontSize: 28 }}>
