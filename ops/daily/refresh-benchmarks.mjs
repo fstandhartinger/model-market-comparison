@@ -5,8 +5,8 @@ import { gunzipSync } from 'node:zlib';
 import { execFile } from 'node:child_process';
 import { promisify, isDeepStrictEqual as equal } from 'node:util';
 import { writeJSONAtomic } from '../../lib/snapshot.mjs';
-import { parseAaBenchmarkFields, assertAaBenchmarkContinuity } from '../../lib/aa-benchmark-fields.mjs';
-import { flightRecords, objects, resolveFlight } from '../../lib/aa-rsc.mjs';
+import { parseAaBenchmarkFields, assertAaBenchmarkContinuity, aaNativeReviewEvidence } from '../../lib/aa-benchmark-fields.mjs';
+import { flightRecords, objects } from '../../lib/aa-rsc.mjs';
 import { reviewArtifact, batchRows, sha256, defaultRunner } from './gauntlet.mjs';
 import { mapWithConcurrency, dailyConcurrency } from './concurrency.mjs';
 import { unlimitedReviewBudget, isBudgetExhausted } from './step-budget.mjs';
@@ -19,6 +19,7 @@ const exec = promisify(execFile);
 const root = 'data/raw/benchmarks';
 const json = async (p) => JSON.parse(await readFile(p, 'utf8'));
 const put = (p, v) => writeJSONAtomic(p, v);
+export const AA_FIELD_REVIEW_CRITERIA = ['Verify exact UUID, slug, name and effort.slug against native_source_row. Candidate fields copy same-named native fields except for the explicitly supplied field_name_map: the only reviewed renames are terminalbenchV21 from terminalBench21 and terminalbenchV40 from terminalBench40. Verify exact numbers, nulls and structures after this name mapping; never infer another alias. Missing input is not zero. These are raw discovery fields; only the existing reviewed aa_field_map may identify score benchmarks.'];
 // CR-65.14: the row a protocol review compares against the source must carry what the registry
 // claims about the board's lifecycle. Artificial Analysis retires boards and keeps publishing
 // their last values (AIME 2025, LiveCodeBench, Terminal-Bench 2.1, tau2 Telecom, Terminal-Bench
@@ -569,15 +570,14 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
         await protocol(registry.entries.find((e) => e.id === mapping.benchmark_id), { activity, scale, receipt });
       });
       const records = flightRecords(html), native = new Map();
-      const resolveAll = (v) => { v = resolveFlight(v, records); return Array.isArray(v) ? v.map(resolveAll) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, resolveAll(x)])) : v; };
       for (const record of records.values()) for (const obj of objects(record)) if (obj.id && obj.slug && Object.hasOwn(obj, 'intelligenceIndex')) native.set(obj.id, obj);
       // CR-73.3: one artifact per chunk, disjoint rows — reviewed concurrently,
       // aggregated (and failed) in chunk order.
       const aaChunks = batchRows(changed.map((r) => ({ id: r.source_id, ...r }))).map((chunk) => ({ chunk,
-        sources: chunk.map((r) => ({ ...receipt, locator: `Flight model UUID ${r.id}`, content: JSON.stringify(resolveAll(Object.fromEntries(['id', 'slug', 'name', 'effort', ...Object.keys(r.fields)].filter((k) => Object.hasOwn(native.get(r.id) ?? {}, k)).map((k) => [k, native.get(r.id)[k]])))) })) }));
+        sources: chunk.map((r) => ({ ...receipt, locator: `Flight model UUID ${r.id}`, content: JSON.stringify(aaNativeReviewEvidence(native.get(r.id), r.fields, records)) })) }));
       const aaResults = await mapWithConcurrency(aaChunks, (unit, index) => (budget.claim(`aa-fields-${index}`), review({
         runDir: evidenceDir, artifactId: `aa-fields-${index}`, rows: unit.chunk, sources: unit.sources,
-        criteria: ['Verify exact UUID, slug, name and effort.slug; candidate fields copy the same named native fields with exact numbers, nulls and structures. Missing input is not zero. These are raw discovery fields; only the existing reviewed aa_field_map may identify score benchmarks.'],
+        criteria: AA_FIELD_REVIEW_CRITERIA,
       })), { limit: concurrency });
       for (const [index, unit] of aaChunks.entries()) {
         const outcome = aaResults[index];
