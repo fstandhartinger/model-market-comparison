@@ -1,14 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { access, readFile } from 'node:fs/promises';
-import { formatMatchedGapPp, readArchivedMultimodalPreviewV011, readArchivedMultimodalPreviewV012, readMultimodalPreview, validatePreviewTracks } from '../lib/jevbench-multimodal-preview.mjs';
+import { formatMatchedGapPp, readArchivedMultimodalPreviewV011, readArchivedMultimodalPreviewV012, readArchivedMultimodalPreviewV013, readMultimodalPreview, validatePreviewTracks } from '../lib/jevbench-multimodal-preview.mjs';
 
 const expectedTopFive = [
+  'Wity-1',
   'Imajev-4B',
   'Jev-Omni',
   'NeoHorse Jev 4B',
   'Visual-Jev 4B Answer-SFT',
-  'JPT-4B (kirp / llm2jev)',
 ];
 
 function forbiddenItemFields(value) {
@@ -26,10 +26,10 @@ function longArrays(value, path = 'root') {
   return Object.entries(value).flatMap(([key, child]) => longArrays(child, `${path}.${key}`));
 }
 
-test('Image JevBench v0.1.3 preserves the frozen method and replaces Imajev-4B with the fast-serving row', async () => {
+test('Image JevBench v0.1.4 preserves the frozen method and publishes Wity-1 from a fresh hosted run', async () => {
   const a = await readMultimodalPreview();
-  assert.equal(a.benchmark, 'Image JevBench v0.1.3');
-  assert.equal(a.revision, 'v0.1.3');
+  assert.equal(a.benchmark, 'Image JevBench v0.1.4');
+  assert.equal(a.revision, 'v0.1.4');
   assert.equal(a.sealed_item_details_included, false);
   assert.equal(a.split_sha256, '4cb721cd36c4fbe4320ec1d5420f56bedd82e060c2c634b3fe7c420353d51224');
   assert.equal(a.method_sha256, 'e7eaa2acffb7fd9655480311b96feafd528f112452fcebb170e48ceeacd555a3');
@@ -51,24 +51,44 @@ test('Image JevBench v0.1.3 preserves the frozen method and replaces Imajev-4B w
   assert.match(a.method.difficulty_caveat, /easier for frontier API models/);
   assert.deepEqual(a.weights, { public: 0.35, sealed: 0.65 });
   assert.equal(a.gap_allowance_pp, 15);
-  assert.equal(a.n_systems, 49);
+  assert.equal(a.n_systems, 50);
   assert.deepEqual(a.ranking.slice(0, 5).map((s) => s.name), expectedTopFive);
+  const wity = a.ranking.find((s) => s.key === 'wity_1');
+  assert.ok(wity);
+  assert.equal(wity.name, 'Wity-1');
+  assert.equal(wity.kind, 'api');
+  assert.equal(wity.api_flag, true);
+  assert.equal(wity.rank, 1);
+  assert.equal(wity.previous_rank, undefined);
+  assert.equal(wity.tracks.all.public.n, 228);
+  assert.equal(wity.tracks.all.sealed.n, 456);
+  assert.ok(Math.abs(wity.score - 80.19853920531308) < 1e-9);
+  assert.ok(Math.abs(wity.tracks.all.cost.total_usd - 0.005062764) < 1e-12);
+  assert.ok(Math.abs(wity.tracks.all.cost.usd_per_1000 - 0.007401701754385965) < 1e-12);
+  assert.equal(wity.tracks.all.cost.coverage, 1);
+  assert.equal(wity.tracks.all.cost.source, 'Wity public billing tariff: USD 0.042/M input tokens; output free, applied to returned usage receipts');
+  assert.equal(wity.inference_setting, 'Wity SystemOne, reasoning=auto');
+  assert.match(wity.measurement_source, /live Wity SystemOne endpoint/);
+  assert.deepEqual(a.ranking.slice(0, 5).map((s) => s.key), ['wity_1', 'imajev_4b', 'jev_omni', 'neohorse_jev_4b', 'visual_jev_4b']);
   const imajev = a.ranking.find((s) => s.key === 'imajev_4b');
   assert.ok(imajev);
   assert.equal(imajev.name, 'Imajev-4B');
   assert.equal(imajev.kind, 'gpu');
   assert.equal(imajev.api_flag, false);
-  assert.equal(imajev.rank, 1);
+  assert.equal(imajev.rank, 2);
   assert.ok(Math.abs(imajev.score - 76.38798675595419) < 1e-10);
-  assert.equal(imajev.previous_rank, 11);
-  assert.ok(Math.abs(imajev.previous_score - 65.72451137285294) < 1e-10);
+  assert.equal(imajev.previous_rank, 1);
+  assert.ok(Math.abs(imajev.previous_score - 76.38798675595419) < 1e-10);
   assert.match(imajev.inference_setting, /--fast.*--merge-lora/);
   assert.equal(imajev.tracks.all.cost.source, 'measured GPU seconds x $0.67/GPU-hour');
   const coverage = a.candidate_coverage.candidates.find((row) => row.candidate === 'Imajev-4B');
-  assert.equal(coverage.status, 'included in v0.1.3 ranking (#1 of 49)');
+  assert.equal(coverage.status, 'included in v0.1.4 ranking (#2 of 50)');
   assert.equal(coverage.ranking_key, 'imajev_4b');
-  assert.equal(a.release_provenance.parent_revision, 'v0.1.2');
-  assert.equal(a.ranking.filter((s) => s.api_flag).length, 5);
+  const wityCoverage = a.candidate_coverage.candidates.find((row) => row.candidate === 'Wity-1');
+  assert.equal(wityCoverage.status, 'included in v0.1.4 ranking (#1 of 50)');
+  assert.equal(wityCoverage.ranking_key, 'wity_1');
+  assert.equal(a.release_provenance.parent_revision, 'v0.1.3');
+  assert.equal(a.ranking.filter((s) => s.api_flag).length, 6);
   assert.ok(a.ranking.every((s, i) => s.rank === i + 1));
   assert.ok(a.ranking.every((s) => s.tracks.all.public.n === 228 && s.tracks.all.sealed.n === 456));
   assert.ok(a.ranking.every((s) => s.tracks.core.public.n === 139 && s.tracks.core.sealed.n === 361));
@@ -78,9 +98,9 @@ test('Image JevBench v0.1.3 preserves the frozen method and replaces Imajev-4B w
   const jevOmni = a.ranking.find((s) => s.key === 'jev_omni');
   assert.ok(jevOmni);
   assert.equal(jevOmni.api_flag, false);
-  assert.equal(jevOmni.rank, 2);
+  assert.equal(jevOmni.rank, 3);
   assert.ok(Math.abs(jevOmni.score - 73.10053647043314) < 0.005);
-  assert.deepEqual([jevOmni.previous_rank, jevOmni.previous_score], [1, 73.10053647043314]);
+  assert.deepEqual([jevOmni.previous_rank, jevOmni.previous_score], [2, 73.10053647043314]);
   assert.deepEqual([jevOmni.tracks.all.public.n, jevOmni.tracks.all.public.correct], [228, 153]);
   assert.deepEqual([jevOmni.tracks.all.sealed.n, jevOmni.tracks.all.sealed.correct], [456, 368]);
   for (const [axis, expected] of Object.entries({ intelligence: 63.92802530124383, calibration: 89.89724215081463, speed: 89.68343733284763, cost: 59.51521419000006 })) {
@@ -103,7 +123,7 @@ test('Image JevBench v0.1.3 preserves the frozen method and replaces Imajev-4B w
   assert.deepEqual(forbiddenItemFields(a), []);
   // The release candidate-coverage roster is metadata, not per-item output.
   // Reject every other unexpectedly long array in the validated artifact.
-  assert.deepEqual(longArrays(a), ['root.candidate_coverage.candidates']);
+  assert.deepEqual(longArrays(a), ['root.ranking', 'root.candidate_coverage.candidates']);
 });
 
 test('Image JevBench v0.1.1 is preserved as the exact parent release artifact', async () => {
@@ -118,6 +138,14 @@ test('Image JevBench v0.1.2 is preserved as the exact parent release artifact', 
   assert.equal(archived.sha256, '08ca91cada08c74656bffb9c648572e8ad148ff598d614ed62280906c2b9abd3');
   assert.equal(archived.artifact.revision, 'v0.1.2');
   assert.equal(archived.artifact.n_systems, 49);
+});
+
+test('Image JevBench v0.1.3 is preserved as the exact parent release artifact', async () => {
+  const archived = await readArchivedMultimodalPreviewV013();
+  assert.equal(archived.sha256, '539b78d92a1fe4d1c7bb0719ceba3e7e5525cfa6017635d0898bf670cc04397a');
+  assert.equal(archived.artifact.revision, 'v0.1.3');
+  assert.equal(archived.artifact.n_systems, 49);
+  assert.deepEqual(archived.artifact.ranking.slice(0, 5).map((row) => row.key), ['imajev_4b', 'jev_omni', 'neohorse_jev_4b', 'visual_jev_4b', 'jpt_4b']);
 });
 
 test('preview tracks validator rejects missing or changed counts', async () => {
@@ -150,9 +178,11 @@ test('public Image JevBench route leads with the ranking and preserves aggregate
     readFile(new URL('../scripts/build-jevbench-multimodal-preview.mjs', import.meta.url), 'utf8'),
   ]);
   assert.match(page, /robots: \{ index: false, follow: false/);
-  assert.match(page, /Image JevBench v0\.1\.3/);
+  assert.match(page, /Image JevBench v0\.1\.4/);
+  assert.match(page, /data-bh-mm-author-review/);
+  assert.match(page, /data-bh-mm-author-review-summary/);
   assert.match(publicPage, /canonical: '\/image-jev-bench'/);
-  assert.match(publicPage, /Image JevBench v0\.1\.3/);
+  assert.match(publicPage, /Image JevBench v0\.1\.4/);
   assert.match(publicPage, /openGraph:/);
   // F-198 (pass 36, iter235): the page is its results. Order: head → Composite score → Full ranking →
   // Compare two systems → Examples → Results by track → Split → preview tracks → Method → closed candidates.
@@ -203,7 +233,7 @@ test('public Image JevBench route leads with the ranking and preserves aggregate
   const artifact = JSON.parse(data);
   assert.equal(artifact.sealed_item_details_included, false);
   assert.deepEqual(forbiddenItemFields(artifact), []);
-  // The 68-entry release candidate-coverage manifest is metadata, not per-item output.
+  // The 69-entry release candidate-coverage manifest is metadata, not per-item output.
   // Keep rejecting every other unexpectedly long array in the public artifact.
-  assert.deepEqual(longArrays(artifact), ['root.candidate_coverage.candidates']);
+  assert.deepEqual(longArrays(artifact), ['root.ranking', 'root.candidate_coverage.candidates']);
 });

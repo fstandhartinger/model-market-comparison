@@ -4,8 +4,8 @@ import { ImageJevExamples } from '../../../components/ImageJevExamples';
 import { ImageJevRadar } from '../../../components/ImageJevRadar';
 
 export const metadata: Metadata = {
-  title: 'Image JevBench v0.1.3',
-  description: 'Image JevBench v0.1.3 results on the frozen v0.1 scoring method.',
+  title: 'Image JevBench v0.1.4',
+  description: 'Image JevBench v0.1.4 results on the frozen v0.1 scoring method.',
   alternates: { canonical: '/image-jev-bench' },
   robots: { index: false, follow: false, googleBot: { index: false, follow: false } },
 };
@@ -69,6 +69,7 @@ function RankingTable({ systems, track, all = false }: { systems: any[]; track: 
           <td className="sticky left-0 z-[1] w-14 min-w-14 bg-[var(--surface)] p-3 font-bold tabular-nums shadow-[inset_-1px_0_0_rgb(var(--line))]">{i + 1}</td>
           <th scope="row" className="sticky left-14 z-[1] w-52 min-w-52 bg-[var(--surface)] p-3 text-left font-semibold shadow-[inset_-1px_0_0_rgb(var(--line))]">
             <SystemName name={s.name} gate={gate} />
+            {s.key === 'wity_1' && <p className="mt-1 text-xs font-semibold text-amber-700 dark:text-amber-300" data-bh-mm-author-review>Under author review: the endpoint did not report its server build ID. We will update this row after the author confirms the build.</p>}
             {s.inference_setting && <p className="bh-muted mt-1 text-xs">Setting: {s.inference_setting}</p>}
             {t.cost.coverage < 0.9995 && <p className="bh-muted mt-1 text-xs">Cost receipts cover {pct(t.cost.coverage)} of calls</p>}
             {s.api_flag && <span className="mt-1 inline-block rounded-full border border-accent px-2 py-0.5 text-[0.68rem] font-bold text-accent">API</span>}
@@ -139,12 +140,13 @@ export async function MultimodalPreviewContent() {
       <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">Image JevBench {a.release_version}</h1>
       <p className="mt-3 max-w-3xl text-lg">A held-out comparison of systems that make decisions from images, from interface targets to everyday scenes.</p>
       <p className="bh-muted mt-2 max-w-4xl">The frozen benchmark has {s.items_total} scored items: {s.items_public} public and {s.items_sealed} sealed; {s.items_retired} further items are retired and not scored. This page shows aggregate sealed results only. It contains no sealed task, image, answer key, or per-item prediction.</p>
+      {a.revision === 'v0.1.4' && <p className="mt-3 max-w-4xl rounded-lg border border-amber-600 bg-amber-50 px-4 py-2 text-sm text-amber-950 dark:bg-amber-950/40 dark:text-amber-100" role="note" data-bh-mm-author-review-summary><b>Wity-1 under author review.</b> The run used the listed production endpoint, but its response did not identify the deployed build. The author is checking the build; this score may change after a full rerun.</p>}
       <p className="mt-3 max-w-4xl rounded-lg border border-amber-600 bg-amber-50 px-4 py-2 text-sm text-amber-950 dark:bg-amber-950/40 dark:text-amber-100" role="note" data-bh-mm-difficulty-caveat><b>Caveat:</b> {a.method.difficulty_caveat}</p>
     </header>
 
     <section className="mt-10" aria-labelledby="bars-heading">
       <h2 id="bars-heading" className="text-2xl font-semibold">Composite score</h2>
-      <p className="bh-muted mt-1 text-sm">Whole benchmark, {s.items_total} decisions. Bars include all {a.n_systems} systems. Pink bars are hosted APIs; Gemma used Autoloops and no provider no-retention claim is made. A system whose Cost or Calibration axis falls under the gate scores 0; the row says which gate it is.</p>
+      <p className="bh-muted mt-1 text-sm">Whole benchmark, {s.items_total} decisions. Bars include all {a.n_systems} systems. Pink bars are hosted APIs; Wity-1 and Gemma are hosted endpoints without a no-retention claim. A system whose Cost or Calibration axis falls under the gate scores 0; the row says which gate it is.</p>
       <ScoreBars systems={a.ranking} track="all" />
     </section>
 
@@ -223,11 +225,11 @@ export async function MultimodalPreviewContent() {
         <p><b>Intelligence.</b> Accuracy counts missing, invalid and unparseable answers as wrong. Each part is chance-corrected against its own average chance rate, then combined as {a.weights.public * 100}% public and {a.weights.sealed * 100}% sealed. Calibration uses the same weights.</p>
         <p><b>Matched-family overfit penalty.</b> The gap is public accuracy minus sealed accuracy within families that have at least 10 items on both sides: ScreenSpot and Everyday photo. If that matched gap is above {a.gap_allowance_pp} percentage points, Intelligence is multiplied by max(0, 1 − (gap − {a.gap_allowance_pp})/100). The same rule applies to every system. The raw overall gap is shown in the data but does not affect the score.</p>
         <p><b>Calibration.</b> Ten-bin top-label ECE is scaled by valid probability coverage. Label-only output receives zero calibration. OpenJev's NLI entailment values select an answer but are not treated as categorical probabilities.</p>
-        <p><b>Speed and cost.</b> These rules are unchanged. Speed uses whole-call p50 and p95 latency; local latency uses the v1.4 2× plus 0.15-second adjustment. Hosted unit cost uses returned per-call usage receipts; missing receipts are not zero-filled, and the Cost axis is scaled by receipt coverage. Retry costs are tracked separately. Local cost uses measured GPU seconds at the recorded per-system GPU-hour rate and excludes loading, downloads, build, and idle time. For self-hosted systems, the original run's timings are combined with the fresh-item run on the same GPU type.</p>
+        <p><b>Speed and cost.</b> These rules are unchanged. Speed uses whole-call p50 and p95 latency; local latency uses the v1.4 2× plus 0.15-second adjustment. Hosted unit cost uses returned per-call usage receipts; missing receipts are not zero-filled, and the Cost axis is scaled by receipt coverage. Retry costs are tracked separately. Wity-1 uses the public <a className="text-accent underline" href="https://wity.alphanimble.com/pricing" target="_blank" rel="noopener noreferrer">Wity pricing page</a>: USD 0.042 per million input tokens and free output; introductory credit is not scored as a zero tariff. Local cost uses measured GPU seconds at the recorded per-system GPU-hour rate and excludes loading, downloads, build, and idle time. For self-hosted systems, the original run's timings are combined with the fresh-item run on the same GPU type.</p>
         <p><b>Composite and gates.</b> These rules are unchanged. The four axes use an equal-weight harmonic mean, followed by the Jev-class Intelligence, Speed, and Cost gates below 50. Gemini 3.8 Flash's high raw accuracy but near-zero composite reflects its measured cost and the Cost gate; label-only systems have zero Calibration under the inherited convention.</p>
         <p><b>Difficulty balance.</b> The split follows exposure, not a stratified draw, so the parts differ in family mix: browser actions (Mind2Web), chart questions (FinQA) and geometry are public-only, while ScreenSpot-Pro, Android-in-the-Wild and the fresh pool families are sealed-only. This is why the overfit penalty compares only matched families (ScreenSpot and Everyday photo).</p>
         <p><b>Fresh-item difficulty.</b> {a.method.difficulty_caveat} Scores on this split are therefore not comparable with the earlier 228/216 preview.</p>
-        <p><b>Exposure.</b> GPT-6 Luna and Gemini 3.8 Flash previously saw public promo-photo candidates and sealed-photo candidates in stateless label-check calls, including candidates later dropped. The checks showed no gold; human gold-blind adjudication decided inclusion. GPT-6 Luna is the saved low-reasoning-effort setting. Four OpenRouter systems used the requested no-retention route with fallback disabled; Gemma used the Autoloops endpoint and is API-flagged, with no no-retention claim made here. Local systems ran without network, credentials, or gold maps. {a.exposure.fresh_pool}</p>
+        <p><b>Exposure.</b> GPT-6 Luna and Gemini 3.8 Flash previously saw public promo-photo candidates and sealed-photo candidates in stateless label-check calls, including candidates later dropped. The checks showed no gold; human gold-blind adjudication decided inclusion. GPT-6 Luna is the saved low-reasoning-effort setting. {a.exposure.hosted} {a.exposure.gemma} {a.exposure.djev_spark} Local systems ran without network, credentials, or gold maps. {a.exposure.fresh_pool}</p>
       </div>
     </section>
 
