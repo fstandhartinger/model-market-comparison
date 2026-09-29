@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { ClientData } from "../lib/client-model";
-import { compositeChartVisible, compositeCoverageLabel, hasScoreEvidence } from "../lib/client-model";
+import { compositeChartVisible, compositeCoverageLabel, coverageMarker, hasScoreEvidence } from "../lib/client-model";
 import { SCORE_PICKER_LABELS, SCORE_SHORT_LABELS, type ScoreKey } from "../lib/types";
 import { formatValue, shortlistColumns } from "../lib/benchmark-matrix.mjs";
 import { seriesColor } from "./BenchmarkBars";
@@ -12,6 +12,7 @@ import { GearIcon } from "./GearIcon";
 import { counted } from "../lib/format";
 import { useSettings } from "./SettingsContext";
 import { IncompleteCompositeToggle } from "./IncompleteCompositeToggle";
+import { compositeBarStyle } from "./CompositeDot";
 
 /** CR-33.2: the scores the chart can show. The Main Composite is the default; category composites join
  *  this list too (CR-25.6). */
@@ -58,10 +59,10 @@ export function ShortlistColumns({ data, ids, tableIds, names, onToggle, full = 
   const elo = score.startsWith("designarena");
   const unit = elo ? "Elo" : "points";
   // CR-211: on the Main Composite the chart draws only 7/7 models unless the reader includes incomplete ones, which are
-  // then dashed and labelled "N/7". The shortlist table below is unchanged. Other scores are not gated.
-  const { includeIncompleteComposites } = useSettings();
+  // then labelled "N/7" and drawn half-filled (4–6/7) or dashed and hollow (3/7 or fewer) — CR-213. The shortlist table below is unchanged. Other scores are not gated.
+  const { showIncompleteComposites } = useSettings();
   const coverageOf = useMemo(() => new Map(ids.map((id) => { const m = byId.get(id); return [id, m && hasScoreEvidence(m, score) ? compositeCoverageLabel(m, score) : null]; })), [ids, byId, score]);
-  const shownIds = useMemo(() => ids.filter((id) => { const m = byId.get(id); return !m || compositeChartVisible(m, score, includeIncompleteComposites) || !hasScoreEvidence(m, score); }), [ids, byId, score, includeIncompleteComposites]);
+  const shownIds = useMemo(() => ids.filter((id) => { const m = byId.get(id); return !m || compositeChartVisible(m, score, showIncompleteComposites) || !hasScoreEvidence(m, score); }), [ids, byId, score, showIncompleteComposites]);
   const hiddenIncomplete = ids.length - shownIds.length;
   const shownIncomplete = shownIds.filter((id) => coverageOf.get(id)).length;
   const { columns, kind, domain, ticks } = useMemo(() => shortlistColumns(shownIds.map((id) => {
@@ -123,7 +124,7 @@ export function ShortlistColumns({ data, ids, tableIds, names, onToggle, full = 
             const bar = <>{c.noData
                   ? <span className="bh-muted text-[10px]">no data</span>
                   : coverageOf.get(c.id)
-                  ? <span className="block h-3.5 rounded-t rounded-r border border-dashed" data-incomplete-composite={coverageOf.get(c.id)} style={{ width: `${Math.round((c.height ?? 0) * 100)}%`, borderColor: j >= 0 ? seriesColor(j) : "rgb(var(--accent))", background: "transparent" }} />
+                  ? <span className="block h-3.5 rounded-t rounded-r border" data-incomplete-composite={coverageOf.get(c.id)} data-composite-marker={coverageMarker(coverageOf.get(c.id))} style={{ width: `${Math.round((c.height ?? 0) * 100)}%`, ...compositeBarStyle(coverageOf.get(c.id)!, j >= 0 ? seriesColor(j) : "rgb(var(--accent))") }} />
                   : <span className="block h-3.5 rounded-t rounded-r" style={{ width: `${Math.round((c.height ?? 0) * 100)}%`, background: j >= 0 ? seriesColor(j) : "rgb(var(--accent) / .45)" }} />}</>;
             return <div key={c.id} className="flex items-center gap-2 text-[11px] leading-tight" data-col={c.id} data-no-data={c.noData ? "1" : undefined}>
               <span className="order-3 w-10 shrink-0 text-right font-semibold tabular" aria-hidden="true">{c.noData ? "" : valueText}{!c.noData && coverageOf.get(c.id) && <span className="bh-muted block font-normal">{coverageOf.get(c.id)}</span>}</span>
@@ -148,7 +149,7 @@ export function ShortlistColumns({ data, ids, tableIds, names, onToggle, full = 
                     ? <span className="bh-muted absolute inset-0 flex items-end justify-center rounded-t border border-dashed border-line pb-1 text-[10px]" aria-hidden="true">no data</span>
                     : <>
                       {coverageOf.get(c.id)
-                        ? <span className="absolute inset-x-0 bottom-0 rounded-t border border-dashed" aria-hidden="true" data-incomplete-composite={coverageOf.get(c.id)} style={{ height: h, borderColor: j >= 0 ? seriesColor(j) : "rgb(var(--accent))", background: "transparent" }} />
+                        ? <span className="absolute inset-x-0 bottom-0 rounded-t border" aria-hidden="true" data-incomplete-composite={coverageOf.get(c.id)} data-composite-marker={coverageMarker(coverageOf.get(c.id))} style={{ height: h, ...compositeBarStyle(coverageOf.get(c.id)!, j >= 0 ? seriesColor(j) : "rgb(var(--accent))") }} />
                         : <span className="absolute inset-x-0 bottom-0 rounded-t" aria-hidden="true" style={{ height: h, background: j >= 0 ? seriesColor(j) : "rgb(var(--accent) / .45)" }} />}
                       <span className="absolute inset-x-0 text-center text-[10px] font-semibold leading-none tabular" aria-hidden="true" style={{ bottom: `calc(${h} + 3px)` }}>{formatValue(c.value as number, unit)}{coverageOf.get(c.id) && <span className="bh-muted block font-normal">{coverageOf.get(c.id)}</span>}</span>
                     </>;

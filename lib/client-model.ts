@@ -207,6 +207,20 @@ export function compositeCoverageLabel(model: Pick<ClientModel, "composite_cover
   return score === "composite" && !isCompleteComposite(model) ? `${compositeInputCount(model)}/${COMPOSITE_INPUT_TOTAL}` : null;
 }
 
+/** CR-213 (Florian 2026-09-29): how a chart marks a Main Composite point. More than 3 of 7 inputs (4/7–6/7) is drawn
+ *  half-filled; 3/7 or fewer stays hollow with a dashed outline; 7/7 — and every other score — is solid. */
+export type CompositeMarker = "solid" | "half" | "hollow";
+export const HALF_FILLED_MIN_INPUTS = 4;
+export function compositeMarker(model: Pick<ClientModel, "composite_coverage" | "composite_attached">, score: ScoreKey): CompositeMarker {
+  if (score !== "composite" || isCompleteComposite(model)) return "solid";
+  return compositeInputCount(model) >= HALF_FILLED_MIN_INPUTS ? "half" : "hollow";
+}
+/** CR-213: the marker for a chart-side "N/7" label (null = complete). */
+export function coverageMarker(coverage: string | null | undefined): CompositeMarker {
+  if (!coverage) return "solid";
+  return Number(coverage.split("/")[0]) >= HALF_FILLED_MIN_INPUTS ? "half" : "hollow";
+}
+
 /** CR-65.4 (data & math gauntlet C5), reversed by CR-74.3 (= CR-70): every row sorts by its value alone, in either
  *  direction — thin Composites (isThinComposite) are no longer demoted into a separate band; the table marks them
  *  with a "Thin data" badge instead. Missing values sink as before. The model argument stays for call sites. */

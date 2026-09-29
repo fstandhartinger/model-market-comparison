@@ -75,3 +75,10 @@ test("sanitize rejects implausible limits", () => {
   assert.equal(s.minScore, 86);
   assert.equal(s.minScoreTouched, false);
 });
+
+test("CR-213: incomplete Composites are shown by default; CR-211's stored false no longer hides them", () => {
+  assert.equal(SETTINGS_DEFAULTS.showIncompleteComposites, true);
+  assert.equal(load({ includeIncompleteComposites: false }).showIncompleteComposites, true);
+  assert.equal(load({ showIncompleteComposites: false }).showIncompleteComposites, false);
+  assert.equal(load({ showIncompleteComposites: "no" }).showIncompleteComposites, true);
+});
