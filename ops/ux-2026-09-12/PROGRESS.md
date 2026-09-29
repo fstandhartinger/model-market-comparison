@@ -19284,3 +19284,132 @@ Logs in `iter272-d249-2/gates/`.
    written-permission hold, and the Coolify host alias (patched, not fixed).
 
 **`ALL-ACCEPTED` is not appended.**
+
+---
+
+## Iteration 273 (claude-opus, 2026-09-29 04:00–05:00 UTC) — D256: an appended column quarantines its arm, not the day
+
+Iteration 272 ended with a prediction: "the 05:17 run is the first real test of both halves [D255/D255.2]".
+The prediction was about DesignArena and it held — but the run that was meant to prove it, 02:33, got
+*further* and died somewhere else. `fetch-da` withheld the self-contradicting board, `review-live`
+accepted the withholding and completed the live stage, and then **`npm test` failed with five
+assertions**, all of them from the run's own fresh captures. Nothing was published. Left alone, 05:17
+would have lost 2026-09-29 the same way — one phase further down again.
+
+### One source push, three reviewed-identity changes, five red tests
+
+VulcanBench Frontier updated its board (`Updated 2026-09-28` on `leaderboard.html`) and changed three
+things in the same push:
+
+1. **Two appended columns** — `passed_of` and `combined_timeouts_zero`, after the reviewed 18.
+2. **A sixteenth protocol revision** — `code-quality-maintenance-v3.16`, report `swe-v4-gpt6-luna-v316.html`.
+3. **A new model at five efforts** — GPT-6 Luna (OpenAI, Codex), two of whose rows carry `n=19` / `n=21`
+   against `passed_of=23`, with a separate `combined_timeouts_zero` value.
+
+The collector did the right thing with the data: `BENCHMARK RETAINED vulcanbench-frontier::4 …
+ValueError: VulcanBench Frontier CSV header changed`. **No number reached the dataset.** The defect is
+what happened next.
+
+### The defect: the one guard that runs first had no quarantine path
+
+F-209/D225 (iteration 258) moved this exact fence into the collector so that "a source change
+quarantines its own arm, never the day". That design has one entry point: `quarantine()`, raised from
+the **row loop** when a row states an unreviewed protocol revision. The `require_header` check runs
+*before* the row loop, so an appended column raised a plain `ValueError`:
+
+* the arm **failed** instead of quarantining → no `quarantine.json` entry;
+* so `acceptedCaptures()` counted the capture as **accepted**;
+* so `test/d188-protocol-notes-match-source.test.mjs` read a board the collector had refused, and went
+  red on v3.16 and on the board's new `Updated` date;
+* and the publish gate runs the whole suite, so **no source published at all** — the precise blast
+  radius D225 exists to bound, re-entered through the guard that runs first.
+
+`test/vulcanbench-kernelbench.test.mjs` made it worse from the other side. Its comment claimed it read
+"the newest retained capture … the same rule the protocol tests use"; its code walked the evidence dirs
+itself and took the newest 200 receipt outright. So even a correct quarantine record would not have
+saved it. It failed on `GPT-6 Luna [max]`, a label the arm had refused to publish.
+
+### The repair
+
+**Appended columns are the same class of event as an unreviewed revision.** Every reviewed column is
+still present, in order, under the same name; the board simply publishes something the registry has not
+reviewed. So they quarantine the arm — one arm, fail-closed, nothing published, the previously published
+rows untouched, every other source through.
+
+**A renamed, reordered or removed column is *not* that class** and stays a hard failure: it may equally
+mean our recipe points at the wrong artifact, and that is a question about us, not about the board. With
+no registry entry there is no arm to quarantine, so there too it stays a hard failure.
+
+The quarantine vocabulary grew one field rather than a parallel mechanism: `unreviewed_columns` beside
+`unreviewed_protocols`, with `unreviewedFacts()` in `lib/source-quarantine.mjs` as the single place that
+turns either into prose — so source-health's markdown and the human-action block can never describe the
+same quarantine differently. `isQuarantine` requires at least one of the two lists non-empty, which
+keeps CR-34.2's changed-capture retention (same status, no lists) out of it, and a payload with neither
+list populated stays malformed rather than becoming a licence to withhold an arm's captures.
+
+`test/vulcanbench-kernelbench.test.mjs` now goes through `acceptedCaptures`/`newestAccepted`, which
+*names* a quarantined newer capture rather than silently reading an older one or nothing.
+
+### Two source facts, verified against the primary source rather than the run's output
+
+* **Claude Sonnet 5.5** joined `platform.claude.com/docs/en/about-claude/pricing` at $2/$10, cache write
+  $2.50 / 1h $4, cache read $0.20, batch $1/$5 (14 → 15 callable models). It takes Sonnet 5's headline
+  row; **Sonnet 5 moved to "Additional models" at the same price and kept its own retirement date**, so
+  nothing retired — the test now pins that too, because "a new headline row is not a retirement" is the
+  claim a bare count would have hidden. Re-fetched here and cross-read off the page independently of the
+  run. Model id `claude-sonnet-5-5` is the fetcher's `derived` mapping (the deprecations table does not
+  list it yet) and the docs' own `/models/sonnet-5-5/` paths agree.
+* **The benchmark-view payload ceiling had drifted from what it guards.** 799.2 KB against an 800 KB
+  ceiling is a 0.1 % margin, and an ordinary day of value movement — *no new axis, the same 490* — put
+  the run's copy at 801.0 KB. A budget that any Tuesday can trip is not a guard, it is a tripwire across
+  the publish gate. The invariant is now asserted directly (the payload is < 15 % of the 13.8 MB matrix;
+  the selected model's own score rows are 20.8 KB in 39 rows, bounded at 120 KB) and 900 KB — ~13 % of
+  headroom — is the absolute bloat ceiling the number was meant to be.
+
+### What this deliberately does not do
+
+It does not review GPT-6 Luna, protocol v3.16, or what `passed_of` and `combined_timeouts_zero` mean for
+the published comparison. **The VulcanBench arm is quarantined and publishes nothing until that review
+happens**; its rows on the site stay the last reviewed ones, and source-health names it on every run
+with an escalation to Florian on the third. That review is D256.1 below, and it is not a parser question:
+`n=19` with `passed_of=23` and a separate timeouts-as-zero combined score is a **denominator** question —
+whether a run judged on 19 of 23 tasks, and a score computed on a different rule, may be compared with
+the full-suite rows at all. Getting that wrong publishes a wrong ranking; getting it slowly publishes
+nothing, which is the cheaper error.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D256 (new) | **implemented**, pending non-implementer verification | `iter273-d256/before/` (the 02:33 dry run's own receipts: `dry-run-npm-test.log` 5 failures, `dry-run-vulcanbench-retained.txt` the header raise, `dry-run-summary.txt` `FEHLER: Command failed: npm test`); `iter273-d256/d256/verification.json` **17/17** with three controls; `test/d225-source-arm-quarantine.test.mjs` +1 test | One line: `node ops/ux-2026-09-12/bin/verify-d256-column-quarantine.mjs <outDir>` (clear the out dir first; no network, no model call — it replays the 02:33 run's own captured bytes). Controls: check 3 cuts the columns *and* drops v3.16 and the arm collects; check 3b cuts only the columns and it quarantines on the revision alone; check 5 removes the quarantine record and the same tree reproduces the 2026-09-29 failures. |
+| D256.1 (new) | **open** | — | Review GPT-6 Luna, `code-quality-maintenance-v3.16` and the two appended columns into `vulcanbench-frontier::4`. Needs: the v3.16 `judge-protocols.json` bundle checked against the D223 invariants and its `amends` chain (the test enforces both); the `passed_of` / `combined_timeouts_zero` denominator decision written down; `parseVulcanbenchFrontierLabel` extended for `GPT-6 Luna` with `gpt-6-luna::*` proven to be real catalog configurations; the reviewed header widened; the guard's date annotation re-derived from the board's own page (it now prints `Updated 2026-09-28`, the guard still cites 2026-09-19). |
+| Claude Sonnet 5.5 (first-party catalog) | **implemented**, pending non-implementer verification | `data/raw/claude-code.json` (`collected_at` 2026-09-29, 15 models); `test/dataset.test.mjs` pins id, $2/$10, cache write/read, batch output, and that Sonnet 5 is still active | Re-fetched and cross-read off the pricing page in this iteration, not taken from the run. |
+| benchmark-view payload guard | **implemented**, pending non-implementer verification | `test/benchmark-view.test.mjs` (relative bound + score-row bound + 900 KB tripwire) | The old 800 KB bound had 0.1 % margin and was red on a day with no new axis. |
+| D255 / D255.2 (iteration 271/272) | still `implemented`, and now **exercised further** | `iter273-d256/before/dry-run-report.json` `retained_sources[designarena]`, `dry-run-summary.txt`'s German retention line, and `review-live` reaching `live stage complete` | The 02:33 run is the second independent exercise of both halves: DesignArena withheld at `fetch-da`, the withholding accepted at `review-live`. Both still need a non-implementer engine. |
+
+**Gates on the committed tree, sequentially, unpiped:** `node scripts/build-dataset.mjs`
+**869 / 674 / 94 / 3,119** (only `generated_at`/`composite.collected_at` moved; restored);
+`CI=true npm test` **1,673 tests, 1,672 pass, 0 fail, 1 skip**, exit 0; `npx tsc --noEmit -p .` exit 0;
+`node scripts/validate-benchmark-registry.mjs` **293 entries, 29 AA field mappings, 240 verified
+evidence files**. Logs in `iter273-d256/gates/`.
+
+### What the next iteration should know
+
+1. **Read `reports/summary.txt` of the 05:17 run for two lines, not one.** `designarena` retained is
+   D255 working; `vulcanbench-frontier::4` should now appear as a **quarantined arm** ("Arm stillgelegt")
+   rather than in the failing-source list, and the run should publish. If `npm test` is red again it is
+   something new — this iteration's five failures are each pinned by a test now.
+2. **A dry run remains worth its hour, twice over.** 02:18 found D255.2; 02:33 found D256. Neither the
+   1,672 tests nor the four gates saw either: both need a real capture to exist.
+3. **D256.1 is the open half and it is a data-honesty decision, not a parser edit.** Do not widen the
+   reviewed header to make the arm collect again without settling the denominator question first — that
+   is how a run judged on 19 of 23 tasks gets ranked against one judged on 23.
+4. **Untouched and still open, unchanged:** D249.4 (a price ceiling keyed on something other than the
+   headline price), D253.2 (`BENCHMAXX_MIN_COMPARISONS = 6`), D254.1 (the two-family reviewer pool),
+   D255.1 (whether a headline source may be retained at all — Florian's line), R9.1's two arms under the
+   written-permission hold, and the Coolify host alias (patched, not fixed).
+5. **F-223, F-224, F-225 (Fable pass 42), D254, D255, D249.2, D255.2 and now D256 are all `implemented`
+   and need a non-implementer engine** — iterations 269–273 were all claude-opus. The one-line
+   acceptances are `bin/verify-fable-pass42-directed.mjs`, `bin/verify-d254-live.mjs`,
+   `bin/verify-d255-replay.mjs`, `bin/verify-d255-2-live-review.mjs` and
+   `bin/verify-d256-column-quarantine.mjs`, each with its out dir cleared first.
+
+**`ALL-ACCEPTED` is not appended.**
