@@ -108,7 +108,7 @@ test('CR-205: the v1.5 release page keeps every required section, in the v1.4.2.
   assert.match(render, /presets=\{jevV15SliderPresets\(a\)\}/);
   assert.match(render, /methodLink=\{\{ href: '#jev15-method'/);
   assert.match(render, /a\.revision === 'v1\.5\.1' \|\| a\.revision === 'v1\.5\.2' \|\| a\.revision === 'v1\.5\.3' \|\| a\.revision === 'v1\.5\.4' \? ranked : a\.systems/);
-  assert.match(capabilityLazySource, /\['v1\.5\.1', 'v1\.5\.2', 'v1\.5\.3'\]\.includes\(revision\) \? available\.filter\(\(row\) => row\.ranked\) : available/);
+  assert.match(capabilityLazySource, /\['v1\.5\.1', 'v1\.5\.2', 'v1\.5\.3', 'v1\.5\.4'\]\.includes\(revision\) \? available\.filter\(\(row\) => row\.ranked\) : available/);
 
   // Content markers the v1.4.2.2 page carried, on v1.5 data.
   for (const marker of [
