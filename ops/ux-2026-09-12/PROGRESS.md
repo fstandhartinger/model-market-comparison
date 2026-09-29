@@ -19494,3 +19494,19 @@ evidence files**. Logs in `iter273-d256/gates/`.
    `bin/verify-d256-column-quarantine.mjs`, each with its out dir cleared first.
 
 **`ALL-ACCEPTED` is not appended.**
+
+## CR checklist rows missing from the ledger — seeded 2026-09-29 07:32 UTC (review gate CR-208)
+
+Section 0 of `04-CR-BRIEF.md` requires every checklist row to have an explicit ledger status before review work. These nine rows had no discrete status entry. They are seeded open only; no acceptance is claimed by this bookkeeping entry.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-151.2 | open | — | Columns sortable and filterable. Seeded from `04-CR-BRIEF.md` on 2026-09-29; needs current live, code, and test evidence. |
+| CR-151.3 | open | — | Compact “View by” switch with the fairness sentence. Seeded from `04-CR-BRIEF.md` on 2026-09-29; needs current live, code, and test evidence. |
+| CR-151.4 | open | — | Axes table sortable/filterable/annotated and after “Compare two systems”. Seeded from `04-CR-BRIEF.md` on 2026-09-29; needs current live, code, and test evidence. |
+| CR-151.5 | open | — | Rendered values equal the live v1.4.2 API. Seeded from `04-CR-BRIEF.md` on 2026-09-29; needs current live, code, and test evidence. |
+| CR-152.4 | open | — | Present the new #1 fairly and make Intelligence sorting reachable. Seeded from `04-CR-BRIEF.md` on 2026-09-29; needs current live, code, and test evidence. |
+| CR-153.2 | open | — | Intelligence ranking chart with default-on general-purpose-LLM filter. Seeded from `04-CR-BRIEF.md` on 2026-09-29; needs current live, code, and test evidence. |
+| CR-153.3 | open | — | Cost bars are thinner and red in both themes. Seeded from `04-CR-BRIEF.md` on 2026-09-29; needs current live, code, and test evidence. |
+| CR-158.2 | open | — | Capability × Cost and Capability × Speed bubble charts with their required labels/tooltips/axes. Seeded from `04-CR-BRIEF.md` on 2026-09-29; needs current live, code, and test evidence. |
+| CR-158.5 | open | — | Presentation restructure preserves scores, ranks, method, and artifact hash byte-for-byte. Seeded from `04-CR-BRIEF.md` on 2026-09-29; needs current artifact and code evidence. |
