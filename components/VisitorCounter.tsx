@@ -17,5 +17,7 @@ export function VisitorCounter() {
   }, []);
 
   if (visits === null) return null;
-  return <span aria-label={`${visits.toLocaleString("en-US")} visitors`}>{visits.toLocaleString("en-US")} visitors</span>;
+  const label = `${visits.toLocaleString("en-US")} visitor sessions`;
+  const description = "Anonymous visitor sessions since tracking began. A returning visitor can be counted again on another day.";
+  return <span aria-label={`${label}. ${description}`} title={description}>{label}</span>;
 }
