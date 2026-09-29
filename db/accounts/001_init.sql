@@ -64,9 +64,77 @@ CREATE INDEX IF NOT EXISTS bh_priority_eval_due_refund_idx
 CREATE INDEX IF NOT EXISTS bh_priority_eval_notification_idx
   ON bh_priority_evaluation_requests (created_at)
   WHERE status = 'paid' AND notification_status = 'pending';
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS paid_at timestamptz;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS review_basis text;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS result_url text;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS refund_reason text;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS refund_attention_notified_attempts integer NOT NULL DEFAULT 0;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS refund_attention_notified_state text;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS refund_attempt_seq integer NOT NULL DEFAULT 0;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS pickup_status text NOT NULL DEFAULT 'not_due';
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS pickup_job_dir text;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS pickup_owner text;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS pickup_attempts integer NOT NULL DEFAULT 0;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS last_pickup_attempt_at timestamptz;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS board_status text NOT NULL DEFAULT 'not_due';
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS confirmation_status text NOT NULL DEFAULT 'not_due';
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS review_email_status text NOT NULL DEFAULT 'not_due';
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS delivery_email_status text NOT NULL DEFAULT 'not_due';
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS refusal_email_status text NOT NULL DEFAULT 'not_due';
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS customer_hold_started_at timestamptz;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS customer_hold_reason text;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS sla_paused_seconds integer NOT NULL DEFAULT 0;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS sla_24h_alerted_at timestamptz;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS sla_36h_alerted_at timestamptz;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS evaluation_status text NOT NULL DEFAULT 'pending';
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS release_status text NOT NULL DEFAULT 'not_due';
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS release_job_dir text;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS synthetic_test boolean NOT NULL DEFAULT false;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS mail_last_checked_at timestamptz;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS evaluation_attempts integer NOT NULL DEFAULT 0;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS release_attempts integer NOT NULL DEFAULT 0;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS sla_24h_alert_claimed_at timestamptz;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS sla_36h_alert_claimed_at timestamptz;
+CREATE TABLE IF NOT EXISTS bh_priority_eval_customer_mail_events (
+  gmail_message_id text PRIMARY KEY,
+  gmail_thread_id text,
+  request_id uuid NOT NULL REFERENCES bh_priority_evaluation_requests(id) ON DELETE CASCADE,
+  sender_email text NOT NULL,
+  subject text NOT NULL,
+  received_at timestamptz NOT NULL,
+  summary text NOT NULL,
+  body_file text NOT NULL,
+  notification_status text NOT NULL DEFAULT 'pending' CHECK (notification_status IN ('pending','sending','sent','failed')),
+  board_status text NOT NULL DEFAULT 'pending' CHECK (board_status IN ('pending','sending','sent','failed')),
+  notified_at timestamptz,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  updated_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS bh_priority_eval_customer_mail_pending_idx
+  ON bh_priority_eval_customer_mail_events (received_at)
+  WHERE notification_status IN ('pending','failed');
+CREATE INDEX IF NOT EXISTS bh_priority_eval_customer_mail_sending_idx
+  ON bh_priority_eval_customer_mail_events (updated_at)
+  WHERE notification_status='sending' OR board_status='sending';
 CREATE TABLE IF NOT EXISTS bh_priority_eval_webhook_events (
   event_id text PRIMARY KEY,
   event_type text NOT NULL,
   request_id uuid REFERENCES bh_priority_evaluation_requests(id) ON DELETE SET NULL,
   received_at timestamptz NOT NULL DEFAULT now()
+);
+
+UPDATE bh_priority_evaluation_requests SET refund_attempt_seq=GREATEST(refund_attempts,refund_attention_notified_attempts,CASE WHEN refund_id IS NOT NULL OR refund_idempotency_key IS NOT NULL THEN 1 ELSE 0 END)
+WHERE refund_attempt_seq < GREATEST(refund_attempts,refund_attention_notified_attempts,CASE WHEN refund_id IS NOT NULL OR refund_idempotency_key IS NOT NULL THEN 1 ELSE 0 END);
+
+-- Exact approved transactional envelopes; the trusted host stages, shared sender claims.
+CREATE TABLE IF NOT EXISTS bh_priority_eval_transactional_mail (
+  id uuid PRIMARY KEY,
+  request_id uuid NOT NULL REFERENCES bh_priority_evaluation_requests(id),
+  template_key text NOT NULL CHECK (template_key IN ('payment_confirmation_v1','review_passed_v1','result_private_v1','result_public_v1')),
+  recipient text NOT NULL, subject text NOT NULL,
+  body_sha256 text NOT NULL CHECK (body_sha256 ~ '^[a-f0-9]{64}$'),
+  state text NOT NULL DEFAULT 'pending' CHECK (state IN ('pending','sending','sent','uncertain')),
+  created_at timestamptz NOT NULL DEFAULT now(), expires_at timestamptz NOT NULL,
+  claimed_at timestamptz, sent_at timestamptz,
+  UNIQUE (request_id,template_key)
 );

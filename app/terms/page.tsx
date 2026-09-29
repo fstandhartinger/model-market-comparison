@@ -36,9 +36,9 @@ export default function TermsPage() {
       ImageJevBench incurs the selected fee twice. Applicable taxes are calculated at checkout. Payment is completed
       through Stripe Checkout; Stripe sends the payment receipt to the email address provided at checkout.</p>
     <p className="mt-2">Every submission is reviewed before evaluation. We may refuse a submission that is unsafe or cannot be
-      evaluated fairly, and we will issue a full refund. After a submission passes code review, we provide its results
-      within 48 hours. If we miss that deadline, we automatically issue a full refund. The 48-hour period starts when we
-      tell you the code review has passed.</p>
+      evaluated fairly, and we will issue a full refund. We provide results within 48 hours of payment. If we miss that
+      deadline, we automatically issue a full refund. The 48-hour clock pauses while we wait for information requested
+      from you.</p>
     <p className="mt-2">For a public request, you authorize us to publish the resulting aggregate leaderboard row, marked
       “priority run”. A private request produces a report for your team and is not published without your consent. We may
       still evaluate the model later on our own schedule if it becomes a matter of public interest. You must not submit

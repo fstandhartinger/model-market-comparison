@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { recordPaidCheckout } from '../../../../lib/priority-evaluation-db';
-import { verifyStripeSignature } from '../../../../lib/priority-evaluation.mjs';
+import { paidAtFromStripeEvent, verifyStripeSignature } from '../../../../lib/priority-evaluation.mjs';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -33,10 +33,12 @@ export async function POST(req: NextRequest) {
   const metadata = checkout.metadata && typeof checkout.metadata === 'object' ? checkout.metadata as Record<string, unknown> : null;
   const requestId = metadata?.priority_request_id;
   if (typeof requestId !== 'string') return json({ error: 'Missing request reference.' }, 400);
+  const paidAt = paidAtFromStripeEvent(event.created);
+  if (!paidAt) return json({ error: 'Invalid checkout event.' }, 400);
 
   try {
     const result = await recordPaidCheckout({
-      eventId, eventType, requestId, mode: activeMode,
+      eventId, eventType, requestId, mode: activeMode, paidAt,
       session: checkout as never,
     });
     return json({ received: true, result });

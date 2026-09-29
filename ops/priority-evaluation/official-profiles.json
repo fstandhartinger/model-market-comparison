@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "jevbench": {
+      "version_prefix": "v1.5.",
+      "files": {
+        "scorer.py": {
+          "path": "/home/flori/jobs/jevbench-v15-measure-20260925/harness/score_v15.py",
+          "sha256": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447"
+        },
+        "gold.jsonl": {
+          "path": "/home/flori/jevbench-sealed/v1.5/frozen/all-1624.jsonl",
+          "sha256": "1989d30e29c968de79192b458073eed1bd7588e46f34c2f140b1310217afb75f"
+        },
+        "baseline.json": {
+          "path": "/home/flori/jevbench-sealed/v1.5/scoring/headline-A-20260927/RESULTS-v1.5.0.json",
+          "sha256": "1cea4d6018da4c7e61132e932452b20ddea5758dcb8714a57a858e078dd6af12"
+        },
+        "headline.py": {
+          "path": "/home/flori/jobs/jevbench-v15-measure-20260925/harness/score_v15_headlineA.py",
+          "sha256": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c"
+        }
+      }
+    },
+    "imagejevbench": {
+      "version_prefix": "v0.1.",
+      "files": {
+        "scorer.py": {
+          "path": "/home/flori/jobs/imagejev-winnow12b-20260927/scoring/frozen/score_final.py",
+          "sha256": "d63c9f3dca2b2419fcb9b62ecfcec624e598dfe625b0216c41dca3aa18582c34"
+        },
+        "public-map.jsonl": {
+          "path": "/home/flori/jevbench-sealed/multimodal-v0.1-clean/public-scoring-map.jsonl",
+          "sha256": "a9073e2089c411c5cacbd36727c2e165a36a52c189ff67b7374d1276d8a82fdd"
+        },
+        "sealed-map.jsonl": {
+          "path": "/home/flori/jevbench-sealed/multimodal-v0.1-clean/sealed-scoring-map.jsonl",
+          "sha256": "02ed4807fa3aa1ec53d04e8c457f1bf4e343ef9b6c084d64482bb73971f5f316"
+        },
+        "manifest.jsonl": {
+          "path": "/home/flori/jevbench-sealed/multimodal-v0.1-clean/split-manifest.jsonl",
+          "sha256": "680d8472fcdf2ac7841839c0b429ac4591132aa962e436f33fed472b16a288ca"
+        },
+        "fresh-inputs.jsonl": {
+          "path": "/home/flori/jevbench-sealed/multimodal-v0.1-clean/run-input/items.jsonl",
+          "sha256": "9129d0c31d7b9ad91d6348e8b7e8423bd7890c93fda7a088f089e0e5e7632a35"
+        },
+        "old-public-inputs.jsonl": {
+          "path": "/home/flori/jobs/image-jev-bench-continue-20260923/public/run-input/items.jsonl",
+          "sha256": "3eb83cede6feeb6585ceb3925653c830112fd69e4645761c3995ea34340ce390"
+        },
+        "old-sealed-inputs.jsonl": {
+          "path": "/home/flori/jevbench-sealed/multimodal-v0.1/run-input/items.jsonl",
+          "sha256": "ab81a68be9ea9092de46dec15f4e187101403187c16e359ef3f6359d9a394e24"
+        },
+        "method.md": {
+          "path": "/home/flori/jobs/imagejev-clean-sealed-20260925/METHOD.md",
+          "sha256": "e7eaa2acffb7fd9655480311b96feafd528f112452fcebb170e48ceeacd555a3"
+        },
+        "split.json": {
+          "path": "/home/flori/jobs/imagejev-clean-sealed-20260925/SPLIT-FROZEN.json",
+          "sha256": "4cb721cd36c4fbe4320ec1d5420f56bedd82e060c2c634b3fe7c420353d51224"
+        }
+      }
+    }
+  }
+}

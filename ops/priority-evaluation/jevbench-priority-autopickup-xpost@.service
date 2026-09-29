@@ -1,0 +1,15 @@
+[Unit]
+Description=Single @airesearch12 top-five post for delivered fast-lane order %i
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=exec
+ExecStart=/usr/bin/python3 %h/bin/jevbench-autopickup.py xpost %i
+WorkingDirectory=%h/jobs/fastlane-evaluations
+UMask=0077
+NoNewPrivileges=true
+RuntimeMaxSec=2h
+TimeoutStopSec=120
+KillMode=control-group
+Restart=no

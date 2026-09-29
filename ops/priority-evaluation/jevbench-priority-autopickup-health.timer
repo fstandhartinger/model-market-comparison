@@ -1,0 +1,11 @@
+[Unit]
+Description=Fast-lane pickup sweep and health check at 00:05, 06:05, 12:05 and 18:05 UTC
+
+[Timer]
+OnCalendar=*-*-* 00,06,12,18:05:00 UTC
+AccuracySec=1min
+Persistent=true
+Unit=jevbench-priority-autopickup-health.service
+
+[Install]
+WantedBy=timers.target
