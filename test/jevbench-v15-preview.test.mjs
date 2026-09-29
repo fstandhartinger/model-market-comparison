@@ -76,20 +76,22 @@ test('released route is public, versioned and listed while the former preview UR
   assert.match(read('next.config.mjs'), /source: "\/wip-oiifi41ouv1f\/:path\*", headers: \[\{ key: "X-Robots-Tag", value: "noindex, nofollow/);
   assert.match(read('app/sitemap.ts'), /"\/jev-models\/v1\.5\.0"/);
   assert.match(read('app/sitemap.ts'), /"\/jev-models\/v1\.5\.1"/);
-  assert.match(read('app/jev-models/page.tsx'), /readJevbenchV151Release/);
+  assert.match(read('app/sitemap.ts'), /"\/jev-models\/v1\.5\.2"/);
+  assert.match(read('app/jev-models/page.tsx'), /readJevbenchV152Release/);
   assert.match(read('app/jev-models/v1.5.0/page.tsx'), /canonical: '\/jev-models\/v1\.5\.0'/);
   assert.match(read('app/api/jevbench/v1.5.0/route.ts'), /X-Content-SHA256/);
+  assert.match(read('app/api/jevbench/v1.5.2/route.ts'), /X-Content-SHA256/);
   for (const file of ['app/robots.ts', 'app/layout.tsx', 'app/jev-models/v1.4.2/page.tsx', 'app/api/jevbench/route.ts']) {
     assert.doesNotMatch(read(file), /jevbench-v15|v1\.5\.0-preview|wip-oiifi41ouv1f/, `${file} must not reference the hidden v1.5 preview`);
   }
 });
 
-test('the v1.5.0 route stays pinned and the live board uses v1.5.1', async () => {
+test('the v1.5.0 route stays pinned and the live board uses v1.5.2', async () => {
   const { sha256 } = await readJevbenchV142(root);
   assert.equal(sha256, JEVBENCH_V142_SHA256);
   assert.match(read('app/jev-models/v1.4.2/page.tsx'), /readJevbenchV142WithFamilies/);
   assert.match(read('app/jev-models/v1.4.2.2/page.tsx'), /readJevbenchV1422WithFamilies/);
-  assert.match(read('app/jev-models/page.tsx'), /readJevbenchV151Release/);
+  assert.match(read('app/jev-models/page.tsx'), /readJevbenchV152Release/);
 });
 
 test('hidden What-If Lab: noindex, unlinked, aggregate-only; addendum rows listed apart from the ranking', () => {
