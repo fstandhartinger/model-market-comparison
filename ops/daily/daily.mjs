@@ -167,6 +167,9 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     await writeJSONAtomic(join(reports, 'dataset-before.json'), before);
     await cp(join(work, 'data/raw'), join(runDir, 'before/raw'), { recursive: true });
     const legacy = hash(await readFile(join(work, 'data/raw/aa-coding-agents.json')));
+    // Preserve independent source receipts even if worker selection or a core collector/review fails.
+    // This phase uses the existing robots/rate-limited capturers and cannot update scores.
+    if (full) await command('capture-benchmarks', process.execPath, ['ops/daily/phase-step.mjs', 'capture', runDir], work, 3_900_000);
     // Workers only review benchmark sources; a prices run has none to review (the publish gate checks the offers).
     if (full) {
       const catalog = JSON.parse(await command('worker-catalog', process.execPath, ['ops/rebuild-2026-09/bin/pick-worker-models.mjs', '--json']));

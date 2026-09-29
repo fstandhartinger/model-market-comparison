@@ -17,6 +17,7 @@ import { retainedAaBenchmarks, reviewAaMappings, loadAaBenchmarkSnapshots } from
 import { checkRealSweSnapshot, isRealSweEntry, REALSWE_CAPTURE_TARGET } from './realswe-check.mjs';
 import { checkFrozenVendorSources, frozenVendorEntries, frozenVendorModule } from './frozen-vendor-check.mjs';
 import { parseQuarantine, quarantineCheck } from '../../lib/source-quarantine.mjs';
+import { loadCaptureState, saveCaptureState } from './capture-state.mjs';
 const exec = promisify(execFile);
 const root = 'data/raw/benchmarks';
 const json = async (p) => JSON.parse(await readFile(p, 'utf8'));
@@ -436,13 +437,13 @@ export function vendorReusable(entry, rows) {
 // fixtures can drive the aggregation without a worker call; production uses the defaults.
 // CR-73.2: `cache` is the cross-run reuse log (see ops/daily/reuse-cache.mjs); the default is a
 // disabled one, so nothing is reused unless the caller hands in an enabled cache.
-export async function refreshBenchmarks({ runDir, review = reviewArtifact, runner = defaultRunner, concurrency = dailyConcurrency(), cache = null, runId = null, budget = unlimitedReviewBudget() } = {}) {
+export async function refreshBenchmarks({ runDir, review = reviewArtifact, runner = defaultRunner, concurrency = dailyConcurrency(), cache = null, runId = null, budget = unlimitedReviewBudget(), captureOnly = false, captureRunner = exec } = {}) {
   if (!runDir) throw new Error('refreshBenchmarks requires runDir');
   // A disabled cache misses on everything and writes nothing, so there is one code path below
   // whether or not reuse is on.
   const vendorCache = cache ?? await openReuseCache({ enabled: false });
   const at = new Date().toISOString(), day = at.slice(0, 10);
-  const evidenceDir = join(root, 'daily-evidence', at.replace(/[:.]/g, '-'));
+  let evidenceDir = join(root, 'daily-evidence', at.replace(/[:.]/g, '-'));
   const temporary = join(runDir, 'benchmark-candidates');
   await mkdir(evidenceDir, { recursive: true }); await mkdir(temporary, { recursive: true });
   const [registry, plan, oldPublic, vendor, oldAa, lock, approvals] = await Promise.all([
@@ -462,49 +463,60 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   // source's, so it gets its own status. Everything else about the outcome is identical — the row
   // keeps its published value — and the console line keeps its shape for ops/daily/profile-run.mjs.
   const fail = (id, error, sink = checks, extra = {}) => { const reason = error.message ?? String(error); sink.push({ id, status: isBudgetExhausted(error) ? 'retained_budget_exhausted' : 'retained_after_failure', reason, ...extra }); console.error(`BENCHMARK RETAINED ${id}: ${reason}`); };
-  const { urls, documentUrls } = captureTargets({ registry, plan, vendor });
-  // AA's model page was already fetched by efficiency; never fetch it again.
-  const live = (await readFile(join(runDir, 'sources', 'live-manifest.jsonl'), 'utf8')).trim().split('\n').map(JSON.parse);
+  const live = (await readFile(join(runDir, 'sources', 'live-manifest.jsonl'), 'utf8').catch((error) => { if (error.code === 'ENOENT') return ''; throw error; })).trim().split('\n').filter(Boolean).map(JSON.parse);
+  const captureInputs = { registry, plan, vendor };
+  const stagedCapture = await loadCaptureState({ runDir, inputs: captureInputs });
   const captured = new Map();
-  for (const receipt of live) if (receipt.status === 200 && urls.has(captureKey(receipt))) {
-    // A page whose bundle hash changes every deploy is never satisfied by a
-    // reused receipt of the page alone; it always re-runs the follow logic.
-    const wanted = urls.get(captureKey(receipt));
-    if (wanted && typeof wanted === 'object' && (wanted.follow_module_script || wanted.follow_script_marker)) continue;
-    const target = join(evidenceDir, `${receipt.sha256.slice(0, 20)}.gz`);
-    await cp(receipt.file, target); captured.set(captureKey(receipt), { ...receipt, file: target }); urls.delete(captureKey(receipt));
-  }
-  await put(join(temporary, 'urls.json'), [...urls.values()]);
-  const capture = await exec('python3', ['scripts/capture-benchmark-sources.py', join(temporary, 'urls.json'), evidenceDir], { timeout: 1_800_000, maxBuffer: 8_000_000 });
-  await writeFile(join(temporary, 'capture.log'), capture.stdout + capture.stderr);
-  for (const receipt of await json(join(evidenceDir, 'manifest.json'))) captured.set(captureKey(receipt), receipt);
-  // D201: the declared-PDF documents. The capture runs in the run's scratch directory, not in the
-  // evidence directory, because the script writes its own `manifest.json` and a `<host>-robots.txt`
-  // and would overwrite the manifest just read. Only the retained text layer is copied into the
-  // evidence directory, and its receipt is appended to that directory's manifest — so the manifest
-  // still describes every file beside it, which is the whole point of keeping one.
-  // A thrown capture is recorded and the run continues: those entries then report exactly what they
-  // reported before this change, so this path can never cost a publication.
-  if (documentUrls.size) {
-    const documentDir = join(temporary, 'documents');
-    try {
-      await mkdir(documentDir, { recursive: true });
-      await put(join(temporary, 'document-urls.json'), [...documentUrls]);
-      const documents = await exec('python3', ['scripts/capture-vendor-documents.py', join(temporary, 'document-urls.json'), documentDir], { timeout: 1_800_000, maxBuffer: 8_000_000 });
-      await writeFile(join(temporary, 'capture-documents.log'), documents.stdout + documents.stderr);
-      const manifestPath = join(evidenceDir, 'manifest.json');
-      const manifest = await json(manifestPath);
-      for (const receipt of await json(join(documentDir, 'manifest.json'))) {
-        if (receipt.file) {
-          const target = join(evidenceDir, `${receipt.sha256.slice(0, 20)}.gz`);
-          await cp(receipt.file, target); receipt.file = target;
+  if (stagedCapture) {
+    evidenceDir = stagedCapture.evidenceDir;
+    for (const receipt of stagedCapture.receipts) captured.set(captureKey(receipt), receipt);
+    checks.push(...stagedCapture.checks);
+  } else {
+    const { urls, documentUrls } = captureTargets({ registry, plan, vendor });
+    // Reuse an existing same-run primary receipt when called after live collection.
+    for (const receipt of live) if (receipt.status === 200 && urls.has(captureKey(receipt))) {
+      // A page whose bundle hash changes every deploy is never satisfied by a
+      // reused receipt of the page alone; it always re-runs the follow logic.
+      const wanted = urls.get(captureKey(receipt));
+      if (wanted && typeof wanted === 'object' && (wanted.follow_module_script || wanted.follow_script_marker)) continue;
+      const target = join(evidenceDir, `${receipt.sha256.slice(0, 20)}.gz`);
+      await cp(receipt.file, target); captured.set(captureKey(receipt), { ...receipt, file: target }); urls.delete(captureKey(receipt));
+    }
+    await put(join(temporary, 'urls.json'), [...urls.values()]);
+    const capture = await captureRunner('python3', ['scripts/capture-benchmark-sources.py', join(temporary, 'urls.json'), evidenceDir], { timeout: 1_800_000, maxBuffer: 8_000_000 });
+    await writeFile(join(temporary, 'capture.log'), capture.stdout + capture.stderr);
+    for (const receipt of await json(join(evidenceDir, 'manifest.json'))) captured.set(captureKey(receipt), receipt);
+    // D201: the declared-PDF documents. The capture runs in the run's scratch directory, not in the
+    // evidence directory, because the script writes its own `manifest.json` and a `<host>-robots.txt`
+    // and would overwrite the manifest just read. Only the retained text layer is copied into the
+    // evidence directory, and its receipt is appended to that directory's manifest — so the manifest
+    // still describes every file beside it, which is the whole point of keeping one.
+    // A thrown capture is recorded and the run continues: those entries then report exactly what they
+    // reported before this change, so this path can never cost a publication.
+    if (documentUrls.size) {
+      const documentDir = join(temporary, 'documents');
+      try {
+        await mkdir(documentDir, { recursive: true });
+        await put(join(temporary, 'document-urls.json'), [...documentUrls]);
+        const documents = await captureRunner('python3', ['scripts/capture-vendor-documents.py', join(temporary, 'document-urls.json'), documentDir], { timeout: 1_800_000, maxBuffer: 8_000_000 });
+        await writeFile(join(temporary, 'capture-documents.log'), documents.stdout + documents.stderr);
+        const manifestPath = join(evidenceDir, 'manifest.json');
+        const manifest = await json(manifestPath);
+        for (const receipt of await json(join(documentDir, 'manifest.json'))) {
+          if (receipt.file) {
+            const target = join(evidenceDir, `${receipt.sha256.slice(0, 20)}.gz`);
+            await cp(receipt.file, target); receipt.file = target;
+          }
+          manifest.push(receipt);
+          captured.set(captureKey(receipt), receipt);
         }
-        manifest.push(receipt);
-        captured.set(captureKey(receipt), receipt);
-      }
-      await put(manifestPath, manifest);
-    } catch (error) { fail('vendor-documents', error); }
+        await put(manifestPath, manifest);
+      } catch (error) { fail('vendor-documents', error); }
+    }
+    await saveCaptureState({ runDir, inputs: captureInputs, evidenceDir, receipts: [...captured.values()], checks });
   }
+  // Collection is evidence only: no protocol, value, date, approval or score is changed here.
+  if (captureOnly) return { ok: true, capture_only: true, receipts: captured.size, evidence_dir: evidenceDir, checks };
   const current = (source) => {
     if (followsPageScript(source)) {
       // The current source is the script discovered from this run's page capture.
