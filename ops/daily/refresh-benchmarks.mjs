@@ -15,6 +15,7 @@ import { reconcilePublicIdentities } from './public-identities.mjs';
 import { aaMappingApplies } from '../../lib/benchmark-registry.mjs';
 import { retainedAaBenchmarks, reviewAaMappings, loadAaBenchmarkSnapshots } from '../../lib/aa-snapshot-locks.mjs';
 import { checkRealSweSnapshot, isRealSweEntry, REALSWE_CAPTURE_TARGET } from './realswe-check.mjs';
+import { checkFrozenVendorSources, frozenVendorEntries, frozenVendorModule } from './frozen-vendor-check.mjs';
 import { parseQuarantine, quarantineCheck } from '../../lib/source-quarantine.mjs';
 const exec = promisify(execFile);
 const root = 'data/raw/benchmarks';
@@ -367,6 +368,8 @@ export function captureTargets({ registry, plan, vendor }) {
     // Real-SWE bundles rotate; discover today's declared data chunk rather than
     // fetching the dated chunk pinned only for the published snapshot.
     if (isRealSweEntry(entry)) { urls.set(REALSWE_CAPTURE_TARGET.url, { ...REALSWE_CAPTURE_TARGET }); continue; }
+    // A reviewed Vite document pins bundle bytes, not its landing-page HTML.
+    if (frozenVendorModule(entry)) { add({ page_url: entry.primary_url, follow_module_script: true }); continue; }
     add({ url: entry.primary_url }); for (const source of entry.evidence ?? []) add(source);
   }
   for (const spec of plan.entries) {
@@ -945,6 +948,11 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   const { stdout: historyStdout } = await exec(process.execPath, ['scripts/build-benchmark-history.mjs'], { timeout: 120_000, maxBuffer: 2_000_000 });
   const history = JSON.parse(historyStdout);
   checks.push({ id: 'benchmark-history', status: history.written ? 'state_appended' : 'state_retained', state_id: history.state_id, rows: history.count });
+  if (frozenVendorEntries({ entries: registry.entries, plan }).length) {
+    const published = await json(join(root, 'scores.json'));
+    checks.push(...await checkFrozenVendorSources({ entries: registry.entries, plan,
+      observations: published.observations, receipts: [...captured.values()] }));
+  }
   // Registry entries without an executable public adapter keep explicit status;
   // a checked URL is never represented as a new benchmark measurement.
   for (const entry of registry.entries) if (!checks.some((c) => c.id === entry.id) && !protocolCache.has(entry.id)) {
