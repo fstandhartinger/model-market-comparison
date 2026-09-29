@@ -7,6 +7,7 @@ import { dirname, join, resolve, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { writeJSONAtomic } from '../../lib/snapshot.mjs';
+import { BOARD_REGISTRY_INCONSISTENT } from '../../lib/live-source.mjs';
 import { COMMIT_TRAILER, assessCommitScope, parseScope, parseStatusPorcelain, pricesScopeViolations, selectProducerCritic, sourceFreshnessErrors } from './policy.mjs';
 import { executeNotifications } from './notify.mjs';
 import { compactPublishedRun } from './compact-run.mjs';
@@ -31,6 +32,27 @@ export function matchesPublishedSnapshot(published, expected) {
   if (!published || typeof published !== 'object' || Array.isArray(published)) return false;
   const { _source, ...snapshot } = published;
   return ['bundled', 'postgres'].includes(_source) && isDeepStrictEqual(snapshot, expected);
+}
+
+// D255: recognise the single DesignArena determination the daily may withhold instead of failing the
+// whole day closed. Three things must hold together, or the run fails closed as before: the step's
+// output carries the collector's marker, this run's own sidecar records that determination with at
+// least one contradicted identity, and the staged board file is byte-identical to the one this run
+// copied from the published snapshot — the capture must not have landed.
+export async function readDesignArenaInconsistency({ sourcesDir, runDir, work, error, read = readFile }) {
+  if (!new RegExp(`\\b${BOARD_REGISTRY_INCONSISTENT}\\b`).test(String(error?.message ?? ''))) return null;
+  const file = join(sourcesDir, 'designarena-board-inconsistency.json');
+  let record;
+  try { record = JSON.parse(await read(file, 'utf8')); }
+  catch { return null; }
+  if (record?.source !== 'designarena' || record?.determination !== BOARD_REGISTRY_INCONSISTENT) return null;
+  const boards = Array.isArray(record.boards) ? record.boards : [];
+  if (!boards.length || !boards.every((b) => Array.isArray(b.contradicted) && b.contradicted.length)) return null;
+  const staged = await read(join(work, 'data/raw/designarena.json')).catch(() => null);
+  const published = await read(join(runDir, 'before/raw/designarena.json')).catch(() => null);
+  if (!staged || !published || hash(staged) !== hash(published)) return null;
+  const names = boards.flatMap((b) => b.contradicted.map((c) => `${b.board}:${c.id}`)).join(', ');
+  return { record, file, reason: `DesignArena board rows absent while the source's own registry still serves them as active for that category (${names}); today's capture is withheld and the published board of ${record.retained_collected_at ?? 'unknown date'} stays with its own date.` };
 }
 
 export async function linkDryRunDependencies(repo, work) {
@@ -150,7 +172,25 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       await writeJSONAtomic(join(reports, 'worker-catalog.json'), catalog);
       await writeJSONAtomic(join(reports, 'workers.json'), report.workers);
     }
-    for (const source of full ? ['aa', 'da', 'or'] : ['or-prices']) await command(`fetch-${source.replace('-prices', '')}`, process.execPath, ['scripts/fetch-live.mjs', source], work, 1_800_000);
+    for (const source of full ? ['aa', 'da', 'or'] : ['or-prices']) {
+      const step = `fetch-${source.replace('-prices', '')}`;
+      try {
+        await command(step, process.execPath, ['scripts/fetch-live.mjs', source], work, 1_800_000);
+      } catch (error) {
+        // D255: the one DesignArena failure that is not a decision the collector is allowed to make.
+        // Its sidecar is written only by the code path that found the board contradicting the source's
+        // own registry; the board snapshot is untouched, so withholding it keeps the last verified
+        // board with its own date and lets every other contract publish. Any other failure — a
+        // corroborated withdrawal, a malformed response, an HTTP or access change — still fails the
+        // run closed, as does this one for any source other than DesignArena.
+        const retained = source === 'da' ? await readDesignArenaInconsistency({ sourcesDir: join(runDir, 'sources'), runDir, work, error }) : null;
+        if (!retained) throw error;
+        report.retained_sources.push({ source: 'designarena', step, reason: retained.reason, determination: retained.record.determination, sidecar: retained.file });
+        report.warnings = report.warnings || [];
+        report.warnings.push(`${step} withheld: ${retained.reason}`);
+        console.warn(`WARN ${step}: keeping the previously published board (${retained.record.retained_collected_at ?? 'unknown date'})`);
+      }
+    }
     // CR-66.1: bounded OpenRouter withdrawals publish; the run report names every one with its date.
     report.openrouter_withdrawals = (await readJSON(join(work, 'data/raw/openrouter.json'))).withdrawal_run ?? null;
     if (full) {

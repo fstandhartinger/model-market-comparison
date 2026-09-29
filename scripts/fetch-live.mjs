@@ -11,7 +11,7 @@ import { writeJSONAtomic } from "../lib/snapshot.mjs";
 import { refreshAaEfficiency } from "./fetch-aa-efficiency.mjs";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { assertApprovedIdentityCoverage, assertIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, endpointIdentity, planOpenRouterWithdrawals } from '../lib/live-source.mjs';
+import { BOARD_REGISTRY_INCONSISTENT, absentIdentities, assertApprovedIdentityCoverage, assertIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, classifyBoardAbsence, endpointIdentity, planOpenRouterWithdrawals } from '../lib/live-source.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const RAW = join(__dirname, "..", "data", "raw");
@@ -155,6 +155,14 @@ async function fetchDesignArena() {
   let previous = {};
   try { previous = JSON.parse(await readFile(join(RAW, 'designarena.json'), 'utf8')); }
   catch (error) { if (error.code !== 'ENOENT') throw error; }
+  // Leaderboard ids are serving identifiers, not always public product names
+  // (for example `yoda` is displayed as Grok 4.5). Snapshot the source-owned
+  // registry metadata used by the leaderboard UI so dataset joins do not depend
+  // on a growing local alias list. Fail closed if the registry and boards drift.
+  // D255: read before the boards, so an absent row can be checked against the source's own record.
+  permit(`GET ${baseUrl}/api/registry`);
+  const registry = await getJSON(`${baseUrl}/api/registry`);
+  const inconsistencies = [];
   for (const q of queries) {
     const data = await getJSON(`${baseUrl}/api/leaderboard`, {
       method: "POST",
@@ -162,18 +170,48 @@ async function fetchDesignArena() {
       body: JSON.stringify(q.body),
     });
     out[q.key] = { request: q.body, data: data.data || [] };
-    assertIdentityCoverage(previous.leaderboards?.[q.key]?.data, out[q.key].data, (row) => row.modelId, `DesignArena ${q.key}`);
+    const prior = previous.leaderboards?.[q.key]?.data;
+    try {
+      assertIdentityCoverage(prior, out[q.key].data, (row) => row.modelId, `DesignArena ${q.key}`);
+    } catch (error) {
+      // D255: only the missing-identity case is classifiable. An empty, malformed or duplicate-id
+      // response is still fatal here, whatever the registry says.
+      const missing = absentIdentities(prior, out[q.key].data, (row) => row.modelId);
+      if (!missing.length) throw error;
+      const { contradicted, corroborated } = classifyBoardAbsence(missing, registry, q.body.category);
+      // A single corroborated withdrawal keeps the whole capture on the review path: publishing the
+      // rest of the board would accept that withdrawal silently.
+      if (corroborated.length || !contradicted.length) throw error;
+      inconsistencies.push({
+        board: q.key, category: q.body.category, label: `DesignArena ${q.key}`,
+        prior_count: prior.length, current_count: out[q.key].data.length,
+        board_last_update: data.metadata?.lastUpdateTime ?? null, board_total_votes: data.metadata?.totalVotes ?? null,
+        contradicted, coverage_error: error.message,
+      });
+    }
     for (const row of out[q.key].data) {
       if (!Number.isFinite(row.elo) || !Number.isSafeInteger(row.battles) || row.battles < 0) throw new Error(`DesignArena invalid Elo/battles: ${row.modelId}`);
     }
     console.log(`  ${q.key}: ${out[q.key].data.length} models`);
   }
-  // Leaderboard ids are serving identifiers, not always public product names
-  // (for example `yoda` is displayed as Grok 4.5). Snapshot the source-owned
-  // registry metadata used by the leaderboard UI so dataset joins do not depend
-  // on a growing local alias list. Fail closed if the registry and boards drift.
-  permit(`GET ${baseUrl}/api/registry`);
-  const registry = await getJSON(`${baseUrl}/api/registry`);
+  if (inconsistencies.length) {
+    // The snapshot is written atomically at the end of this function, so returning here leaves the
+    // previously published board byte-for-byte intact. The daily reads the sidecar, withholds only
+    // this source with its own date, and publishes every other contract (CR-67.2's principle:
+    // one problem must not block a whole day). Nothing is inferred and no number is changed.
+    const record = {
+      source: 'designarena', determination: BOARD_REGISTRY_INCONSISTENT,
+      determined_at: new Date().toISOString(),
+      registry_endpoint: `GET ${baseUrl}/api/registry`, board_endpoint: `POST ${baseUrl}/api/leaderboard`,
+      retained_collected_at: previous.collected_at ?? null,
+      basis: 'Rows absent from the board while the source\'s own registry still serves them as active for that category. DesignArena keeps a retired model on the board (Grok 4.20 Beta and Gemini 3.1 Pro Preview, 15 Sep 2026; Inkling at active:false), so this contradicts the source\'s record of itself and is not an established withdrawal.',
+      boards: inconsistencies,
+    };
+    const evidenceDir = process.env.BH_EVIDENCE_DIR;
+    if (evidenceDir) await writeJSONAtomic(join(evidenceDir, 'designarena-board-inconsistency.json'), record);
+    const names = inconsistencies.flatMap((b) => b.contradicted.map((c) => `${b.board}:${c.id}`)).join(', ');
+    throw new Error(`${BOARD_REGISTRY_INCONSISTENT} DesignArena: ${names} absent from the board while the source's own registry still serves them as active for that category. Today's capture is not published; the previously published board (${previous.collected_at ?? 'unknown date'}) stays.`);
+  }
   const modelIds = [...new Set(Object.values(out).flatMap((board) => board.data.map((row) => row.modelId)))].sort();
   const missingRegistryIds = modelIds.filter((id) => !registry.models?.[id]);
   if (missingRegistryIds.length) {
