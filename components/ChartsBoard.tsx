@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import {
   BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LabelList,
 } from "recharts";
-import { compositeChartVisible, compositeCoverageLabel, hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
+import { compositeChartVisible, compositeCoverageLabel, coverageMarker, hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
 import { SCORE_PICKER_LABELS, SCORE_SHORT_LABELS, type ScoreKey } from "../lib/types";
 import { orgColor, counted } from "../lib/format";
 import { FIXED_BLENDS, SCORE_OPTIONS, modelPrice, scopedCatalogOffers, scopeFromSettings, priceContext, priceLabel, type PriceResult, type PriceSettings } from "../lib/cost";
@@ -14,6 +14,7 @@ import { useSettings } from "./SettingsContext";
 import { CostCapabilityScatter } from "./CostCapabilityScatter";
 import { preferredVariantIds, collapseModels, collapsedName, selectableModels } from "../lib/variants";
 import { IncompleteCompositeToggle } from "./IncompleteCompositeToggle";
+import { compositeBarStyle } from "./CompositeDot";
 
 interface PoolEntry {
   m: ClientModel;
@@ -43,8 +44,9 @@ const BAR_FILL = "rgb(var(--accent))";
 
 /** F-09: every model as a dot on one axis per group, with the group mean as a tick — the
  *  spread is the point, which two average bars hid. Missing values are not drawn. */
-/** CR-211: `incomplete[i]` marks a value from a Main Composite with fewer than 7 of 7 inputs — drawn hollow, dashed. */
-function DotStrip({ label, groups, format, log, composite = false }: { label: string; groups: { name: string; values: number[]; incomplete?: boolean[]; pointLabels?: string[] }[]; format: (v: number) => string; log?: boolean; composite?: boolean }) {
+/** CR-211: `incomplete[i]` holds the "N/7" of a value from a Main Composite with fewer than 7 of 7 inputs (null when
+ *  complete) — CR-213: drawn half-filled at 4/7–6/7, hollow and dashed at 3/7 or fewer. */
+function DotStrip({ label, groups, format, log, composite = false }: { label: string; groups: { name: string; values: number[]; incomplete?: (string | null)[]; pointLabels?: string[] }[]; format: (v: number) => string; log?: boolean; composite?: boolean }) {
   const usable = (v: number) => Number.isFinite(v) && (!log || v > 0);
   const all = groups.flatMap((g) => g.values).filter(usable);
   if (!all.length) return <p className="mb-4 text-xs text-gray-500">{label}: no values in view.</p>;
@@ -56,15 +58,15 @@ function DotStrip({ label, groups, format, log, composite = false }: { label: st
     <div className="mb-5">
       <div className="mb-1 flex justify-between gap-2 text-[11px] text-gray-500"><span>{label}</span><span className="tabular">{format(lo)} – {format(hi)}{log ? " · log scale" : ""}</span></div>
       {groups.map((g) => {
-        const marks = g.values.map((v, i) => ({ v, thin: !!g.incomplete?.[i], pointLabel: g.pointLabels?.[i] })).filter((d) => usable(d.v));
+        const marks = g.values.map((v, i) => ({ v, thin: g.incomplete?.[i] ?? null, pointLabel: g.pointLabels?.[i] })).filter((d) => usable(d.v));
         const vals = marks.map((d) => d.v);
         const thin = marks.filter((d) => d.thin).length;
         const mean = vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
         return (
           <div key={g.name} className="grid grid-cols-[5rem_1fr] items-center gap-2 pt-4">
             <span className="text-xs text-gray-400">{g.name} <span className="text-gray-600">({vals.length})</span></span>
-            <div className="relative h-6 rounded bg-line/40" role="img" aria-label={`${g.name}: ${counted(vals.length, "model")}${thin ? `, ${thin} with an incomplete Composite (fewer than 7 of 7 inputs), drawn hollow` : ""}${mean != null ? `, mean ${format(mean)}` : ", no values"}`}>
-              {marks.map((d, i) => <span key={i} className={`absolute top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full ${d.thin ? "border border-dashed border-accent bg-transparent" : "bg-accent/50"}`} data-incomplete-composite={d.thin || undefined} title={`${d.pointLabel ? `${d.pointLabel} · ` : ""}${format(d.v)}${d.thin ? " · incomplete Composite" : composite ? " · Composite inputs 7/7" : ""}`} style={{ left: `${pos(d.v)}%` }} />)}
+            <div className="relative h-6 rounded bg-line/40" role="img" aria-label={`${g.name}: ${counted(vals.length, "model")}${thin ? `, ${thin} with an incomplete Composite (fewer than 7 of 7 inputs), drawn half-filled or hollow` : ""}${mean != null ? `, mean ${format(mean)}` : ", no values"}`}>
+              {marks.map((d, i) => <span key={i} className={`absolute top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full ${d.thin ? "border" : "bg-accent/50"}`} data-incomplete-composite={d.thin || undefined} data-composite-marker={d.thin ? coverageMarker(d.thin) : undefined} title={`${d.pointLabel ? `${d.pointLabel} · ` : ""}${format(d.v)}${d.thin ? " · incomplete Composite" : composite ? " · Composite inputs 7/7" : ""}`} style={{ left: `${pos(d.v)}%`, ...(d.thin ? compositeBarStyle(d.thin, "rgb(var(--accent))") : {}) }} />)}
               {mean != null && <>
                 <span className="absolute top-0 h-6 w-0.5 -translate-x-1/2 bg-gray-400" style={{ left: `${pos(mean)}%` }} />
                 <span className="absolute -top-4 -translate-x-1/2 whitespace-nowrap text-[10px] tabular text-gray-400" style={{ left: `${clamp(pos(mean))}%` }}>mean {format(mean)}</span>
@@ -106,7 +108,7 @@ function MobileBars({ rows, max, format, log }: { rows: { name: string; org: str
       </div>
       {scale
         ? <div className="bh-cost-track relative mx-1 mt-1.5 h-0.5 rounded bg-line/50"><span className="bh-cost-dot absolute top-1/2 h-[7px] w-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent" style={{ left: `${scale.pos(row.value)}%` }} /></div>
-        : <div className="mt-1 h-1.5 rounded bg-line"><div className={`h-full rounded ${row.coverage ? "border border-dashed border-accent bg-accent/25" : "bg-accent/80"}`} style={{ width: `${Math.max(0.5, 100 * row.value / max)}%` }} /></div>}
+        : <div className="mt-1 h-1.5 rounded bg-line"><div className={`h-full rounded ${row.coverage ? "border" : "bg-accent/80"}`} style={{ width: `${Math.max(0.5, 100 * row.value / max)}%`, ...(row.coverage ? compositeBarStyle(row.coverage, "rgb(var(--accent))") : {}) }} /></div>}
     </div>
   ))}</>;
 }
@@ -184,7 +186,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
 
   // CR-211: on the Main Composite the score panels plot only 7/7 models unless the reader includes incomplete ones
   // (then marked "N/7"). The cost-only panels are not gated, and no other score is.
-  const includeIncomplete = s.includeIncompleteComposites;
+  const includeIncomplete = s.showIncompleteComposites;
   const scored = useMemo(() => pool.filter((x) => x.hasEvidence && x.sc != null), [pool]);
   const scoredShown = useMemo(() => scored.filter((x) => compositeChartVisible(x.m, score, includeIncomplete)), [scored, score, includeIncomplete]);
   const scoreHidden = scored.length - scoredShown.length;
@@ -209,7 +211,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
       // CR-211: the score strip follows the incomplete-Composite toggle; the cost strip does not.
       const scoredRows = arr.filter((x) => x.hasEvidence && x.sc != null && compositeChartVisible(x.m, score, includeIncomplete));
       const scores = scoredRows.map((x) => x.sc as number);
-      const incomplete = scoredRows.map((x) => compositeCoverageLabel(x.m, score) != null);
+      const incomplete = scoredRows.map((x) => compositeCoverageLabel(x.m, score));
       const priced = arr.filter((x) => x.price.value != null);
       const costSum = priced.reduce((a, x) => a + (x.price.value as number), 0);
       const scoreRows = scoredRows.map((x) => ({ id: x.m.id, name: collapsedName(x.m, s.collapse, preferredId), value: x.sc as number, coverage: compositeCoverageLabel(x.m, score) }));
@@ -258,7 +260,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
                 <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} labelStyle={tipLabel} itemStyle={tipItem}
                   labelFormatter={(name: string) => { const c = leaderboard.find((d) => d.name === name)?.coverage; return c ? `${name} · incomplete Composite, ${c} inputs` : score === "composite" ? `${name} · Composite inputs 7/7` : name; }} />
                 <Bar dataKey="value" fill={BAR_FILL} fillOpacity={0.8} radius={[0, 4, 4, 0]}>
-                  {leaderboard.map((d, i) => <Cell key={i} fillOpacity={d.coverage ? 0.25 : 0.8} stroke={d.coverage ? BAR_FILL : undefined} strokeDasharray={d.coverage ? "3 2" : undefined} />)}
+                  {leaderboard.map((d, i) => <Cell key={i} fillOpacity={d.coverage ? coverageMarker(d.coverage) === "half" ? 0.45 : 0.1 : 0.8} stroke={d.coverage ? BAR_FILL : undefined} strokeDasharray={d.coverage && coverageMarker(d.coverage) === "hollow" ? "3 2" : undefined} />)}
                   <LabelList dataKey="value" position="right" fill="#8a93a3" fontSize={11} formatter={(v: number) => v.toFixed(isElo ? 0 : 1)} />
                 </Bar>
               </BarChart>

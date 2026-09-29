@@ -4,10 +4,11 @@ import { SLIDER_MAX, costToSlider, logPosition, nearestHitId, pickChart, sliderT
 import { formatValue } from "../lib/benchmark-matrix.mjs";
 import { seriesColor, seriesLetter } from "./BenchmarkBars";
 import { counted } from "../lib/format";
-import { compositeChartVisible, compositeCoverageLabel } from "../lib/client-model";
+import { compositeChartVisible, compositeCoverageLabel, coverageMarker } from "../lib/client-model";
 import type { ScoreKey } from "../lib/types";
 import { useSettings } from "./SettingsContext";
 import { IncompleteCompositeToggle } from "./IncompleteCompositeToggle";
+import { CompositeDot } from "./CompositeDot";
 
 type Candidate = { id: string; display_name: string; org: string; scores: Record<string, number | null | undefined>; cost: number | null; composite_coverage: number; composite_attached: number };
 
@@ -37,12 +38,13 @@ export function PickFromChart({ candidates, score, scoreLabel, ids, onToggle, ma
   const [maxCost, setMaxCost] = useState<number | null>(null);
   const [wrap, width] = useWidth<HTMLDivElement>();
   // CR-211: on the Main Composite only 7/7 candidates are plotted unless the reader includes incomplete ones, which are
-  // then drawn hollow, labelled "N/7" and kept off the green line. Other scores are not gated.
-  const { includeIncompleteComposites } = useSettings();
+  // then labelled "N/7" and marked half-filled (4–6/7) or hollow (3/7 or fewer); CR-213: they join the green line.
+  // Other scores are not gated.
+  const { showIncompleteComposites } = useSettings();
   const scoreKey = score as ScoreKey;
   const coverageOf = useMemo(() => new Map(candidates.map((c) => [c.id, compositeCoverageLabel(c, scoreKey)])), [candidates, scoreKey]);
-  const plotted = useMemo(() => candidates.filter((c) => compositeChartVisible(c, scoreKey, includeIncompleteComposites))
-    .map((c) => ({ ...c, incomplete: coverageOf.get(c.id) != null })), [candidates, scoreKey, includeIncompleteComposites, coverageOf]);
+  const plotted = useMemo(() => candidates.filter((c) => compositeChartVisible(c, scoreKey, showIncompleteComposites))
+    .map((c) => ({ ...c, incomplete: coverageOf.get(c.id) != null })), [candidates, scoreKey, showIncompleteComposites, coverageOf]);
   const hiddenIncomplete = candidates.filter((c) => c.scores[score] != null).length - plotted.filter((c) => c.scores[score] != null).length;
   const chart = useMemo(() => pickChart(plotted, score, { minScore, maxCost }), [plotted, score, minScore, maxCost]);
   const shownIncomplete = chart.points.filter((p) => p.incomplete).length;
@@ -89,7 +91,7 @@ export function PickFromChart({ candidates, score, scoreLabel, ids, onToggle, ma
           min={0} max={SLIDER_MAX} step={1} value={costToSlider(maxCost, chart.costRange)} onChange={(e) => setMaxCost(sliderToCost(Number(e.target.value), chart.costRange))} />
       </label>
     </div>
-    <IncompleteCompositeToggle score={scoreKey} hidden={hiddenIncomplete} shown={shownIncomplete} frontier />
+    <IncompleteCompositeToggle score={scoreKey} hidden={hiddenIncomplete} shown={shownIncomplete} />
     <p className="bh-muted text-xs" role="status">
       <span className="tabular font-semibold text-[color:var(--text)]">{passing}</span> of {chart.points.length} priced candidates within the limits
       {chart.unpriced > 0 && <> · {chart.unpriced} without a price are not plotted</>}
@@ -105,17 +107,19 @@ export function PickFromChart({ candidates, score, scoreLabel, ids, onToggle, ma
           const j = selectedIndex.get(p.id), selected = j != null, c = byId.get(p.id);
           const disabled = !selected && full;
           const coverage = coverageOf.get(p.id);
-          const label = `${nameOf(p.id)} (${c?.org ?? ""}): ${scoreLabel} ${formatValue(p.y, "points")}${coverage ? ` (incomplete Composite, ${coverage} inputs, not on the green line)` : score === "composite" ? " (Composite inputs 7/7)" : ""}, ${p.free ? "free route" : money(p.cost)} per task${selected ? `, column ${seriesLetter(j)} — press to remove` : disabled ? " — columns full" : " — press to add"}`;
+          const label = `${nameOf(p.id)} (${c?.org ?? ""}): ${scoreLabel} ${formatValue(p.y, "points")}${coverage ? ` (incomplete Composite, ${coverage} inputs)` : score === "composite" ? " (Composite inputs 7/7)" : ""}, ${p.free ? "free route" : money(p.cost)} per task${selected ? `, column ${seriesLetter(j)} — press to remove` : disabled ? " — columns full" : " — press to add"}`;
           return <g key={p.id} role="button" tabIndex={p.pass || selected ? 0 : -1} aria-pressed={selected} aria-disabled={disabled || undefined} aria-label={label}
             className="bh-pick-point" data-id={p.id} data-selected={selected || undefined} data-pass={p.pass || undefined}
             onKeyDown={(e) => { if ((e.key === "Enter" || e.key === " ") && !disabled) { e.preventDefault(); onToggle(p.id); } }}>
             <title>{label}</title>
             <circle cx={X(p.x)} cy={Y(p.y)} r={hitR} fill="transparent" />
             {selected
-              ? <><circle cx={X(p.x)} cy={Y(p.y)} r={7} fill={coverage ? "var(--surface)" : seriesColor(j)} stroke={coverage ? seriesColor(j) : "var(--surface)"} strokeWidth={2} strokeDasharray={coverage ? "2 1.5" : undefined} data-incomplete-composite={coverage || undefined} />
+              ? <>{coverage
+                  ? <CompositeDot cx={X(p.x)} cy={Y(p.y)} r={7} color={seriesColor(j)} marker={coverageMarker(coverage) as "half" | "hollow"} coverage={coverage} strokeWidth={2} />
+                  : <circle cx={X(p.x)} cy={Y(p.y)} r={7} fill={seriesColor(j)} stroke="var(--surface)" strokeWidth={2} />}
                   <text x={X(p.x) + 10} y={Y(p.y) - 8} fontSize={11} fontWeight={700} fill="var(--text)" paintOrder="stroke" stroke="var(--surface)" strokeWidth={3}>{seriesLetter(j)}</text></>
               : coverage
-                ? <circle cx={X(p.x)} cy={Y(p.y)} r={4} fill="var(--surface)" stroke="rgb(var(--accent))" strokeOpacity={p.pass ? 0.9 : 0.3} strokeWidth={1.5} strokeDasharray="2 1.5" data-incomplete-composite={coverage} />
+                ? <CompositeDot cx={X(p.x)} cy={Y(p.y)} r={4} color="rgb(var(--accent))" opacity={p.pass ? 0.9 : 0.3} marker={coverageMarker(coverage) as "half" | "hollow"} coverage={coverage} />
                 : <circle cx={X(p.x)} cy={Y(p.y)} r={4} fill="rgb(var(--accent))" fillOpacity={p.pass ? 0.55 : 0.12} stroke="var(--surface)" strokeWidth={1.5} />}
             {coverage && selected && <circle cx={X(p.x)} cy={Y(p.y)} r={10} fill="none" stroke={seriesColor(j)} strokeWidth={1} strokeDasharray="2 2" data-incomplete-composite={coverage} />}
           </g>;
