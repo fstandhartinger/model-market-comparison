@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import { readJevbenchV150Release } from '../../../lib/jevbench-v15-release.mjs';
+import { readJevbenchV151Release } from '../../../lib/jevbench-v15-release.mjs';
 import { JevBenchV15ReleasePage } from '../../../components/JevBenchV15ReleasePage';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 
 async function currentRelease() {
-  return readJevbenchV150Release();
+  return readJevbenchV151Release();
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -15,20 +15,18 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: '/jev-models/v1.5.0' },
-    openGraph: { type: 'website', siteName: 'Benchmark Heaven', locale: 'en_US', url: '/jev-models/v1.5.0', title, description,
+    alternates: { canonical: '/jev-models/v1.5.1' },
+    openGraph: { type: 'website', siteName: 'Benchmark Heaven', locale: 'en_US', url: '/jev-models/v1.5.1', title, description,
       images: [{ url: 'https://benchmarkheaven.com/jev-models/opengraph-image?v=og4', type: 'image/png', width: 1200, height: 630 }] },
     twitter: { card: 'summary_large_image', site: '@benchmarkheaven', creator: '@benchmarkheaven', title, description,
       images: [{ url: 'https://benchmarkheaven.com/jev-models/opengraph-image?v=og4' }] },
   };
 }
 
-export default async function JevModelsV150Page() {
+export default async function JevModelsV151Page() {
   const { artifact, sha256 } = await currentRelease();
-  // CR-205: the frozen v1.5.0 page keeps the same section structure as the live board, ending with the
-  // revision history (the historical v1.3.0 board, loaded lazily).
   return <>
-    <JevBenchV15ReleasePage artifact={artifact} sha256={sha256} />
+    <JevBenchV15ReleasePage artifact={artifact} sha256={sha256} versionPath="/jev-models/v1.5.1" />
     <JevHistoryLazy />
   </>;
 }

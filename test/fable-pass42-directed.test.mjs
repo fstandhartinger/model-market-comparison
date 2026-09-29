@@ -40,7 +40,8 @@ test('F-223: the interval is drawn only under the official weights and the Overa
 
 test('F-223: the whisker-and-tie sentence is one string, under the chart leader sentence and in the folded order', () => {
   assert.match(preview, /function tieSentence\(a: JevV15Artifact\)/);
-  assert.match(preview, /Whiskers are 95% bootstrap intervals\. \$\{ties\} of the \$\{pairs\} adjacent pairs are statistical ties/);
+  assert.match(preview, /Whiskers are 95% bootstrap intervals\. \$\{ties\} of \$\{pairs\} adjacent pairs with published paired-bootstrap comparisons are statistical ties/);
+  assert.match(preview, /No paired comparison is published for the other \$\{untested\} adjacent pairs, so no tie classification is inferred/);
   assert.match(preview, /tieNote=\{tieSentence\(a\)\}/, 'the interactive chart gets it');
   assert.match(preview, /data-bh-jev15-ties>\{tieSentence\(a\) \?\?/, 'the folded official order prints the same string');
   assert.match(board, /\{tieNote && officialOverall && <p [^>]*data-bh-jev14-ties>\{tieNote\}<\/p>\}/);
@@ -67,7 +68,7 @@ test('F-223: the two static repeats of the official ranking fold, and every mark
 
 test('F-224: the per-system table is two views of what is compared, Axes first', () => {
   assert.match(preview, /<JevAxesViews axes=\{<AxesView a=\{a\} rows=\{rows\} view="axes" \/>\} types=\{<AxesView a=\{a\} rows=\{rows\} view="types" \/>\} \/>/);
-  assert.match(preview, /<AxesTable a=\{a\} rows=\{\[\.\.\.ranked/, 'the pinned section order still names AxesTable');
+  assert.match(preview, /<AxesTable a=\{a\} rows=\{\[\.\.\.new Map\(\[\.\.\.ranked[\s\S]*?\.map\(\(row\) => \[row\.key, row\]\)\)\.values\(\)\]\}/, 'the full table deduplicates rows by system key while retaining AxesTable in its pinned section');
   assert.match(axesViews, /useState<'axes' \| 'types'>\('axes'\)/, 'Axes is the default');
   assert.match(axesViews, /params\.get\('axes'\) === 'types'/, '?axes=types deep-links the second view');
   assert.match(axesViews, /url\.searchParams\.set\('axes', 'types'\)/, 'and choosing it writes the link back');

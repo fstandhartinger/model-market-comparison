@@ -1,6 +1,7 @@
 import { JevBenchV15, Sha } from './JevBenchV15Preview';
 import { CustomEvaluationOffer } from './CustomEvaluationOffer';
 import { readJevbenchV1422 } from '../lib/jevbench-v1422.mjs';
+import { readJevbenchV150Release } from '../lib/jevbench-v15-release.mjs';
 import type { JevV15Artifact } from '../lib/jevbench-v15-preview.mjs';
 
 export async function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '/jev-models/v1.5.0', live = false }: {
@@ -10,8 +11,10 @@ export async function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '
   /** True on the live board (`/jev-models`): the hero names the benchmark, not the release (Fable pass 42, F-222). */
   live?: boolean;
 }) {
-  // CR-205: rows that first appear in v1.5.0 get the board's "new" marker; v1.4.2.2 is the comparison base.
-  const previousKeys = (await readJevbenchV1422()).artifact.systems.map((row: { key: string }) => row.key);
+  // CR-205: a release compares against the immediately prior official ranking; v1.5.0 began at v1.4.2.2.
+  const previousKeys = artifact.revision === 'v1.5.1'
+    ? (await readJevbenchV150Release()).artifact.systems.map((row: { key: string }) => row.key)
+    : (await readJevbenchV1422()).artifact.systems.map((row: { key: string }) => row.key);
   const canonical = `https://benchmarkheaven.com${versionPath}`;
   const structuredData = {
     '@context': 'https://schema.org',
@@ -71,7 +74,7 @@ export async function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '
       <p className="mt-3 max-w-3xl text-lg" data-bh-jev-own>JevBench is <b>Benchmark Heaven&apos;s own benchmark</b> for Jev-class decision models: state and a bounded rubric in, a typed answer out.</p>
       <p className="bh-muted mt-3 max-w-3xl text-xs leading-relaxed" data-bh-jev-meta>
         {live ? `Release ${artifact.revision}` : 'Frozen release'} · {artifact.sample.total.toLocaleString('en-US')} decisions per system ({artifact.sample.open} open + {artifact.sample.sealed} sealed; sealed decisions are half of Intelligence) · {artifact.n_ranked} ranked of {artifact.roster_count} roster systems · only system-level sealed aggregates are published ·{' '}
-        <a className="text-accent underline" href="/api/jevbench/v1.5.0">aggregate results JSON</a> sha256 <Sha v={sha256} />
+        <a className="text-accent underline" href={`/api/jevbench/${artifact.revision}`}>aggregate results JSON</a> sha256 <Sha v={sha256} />
       </p>
       <p className="mt-3 max-w-3xl text-sm" data-bh-image-jev-link-row>
         Making decisions from images? <a className="text-accent font-semibold underline" href="/image-jev-bench" data-bh-image-jev-link>Explore Image JevBench v0.1.3 and compare its systems</a>.
@@ -79,7 +82,7 @@ export async function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '
       <p className="mt-3 max-w-3xl text-sm" data-bh-jev-version-share-row>
         <a className="text-accent underline" href={versionPath} data-bh-jev-version-share>Share this version</a>
         {!live && <span className="bh-muted"> · <a className="text-accent underline" href="/jev-models" data-bh-jev-live-link>View live board</a></span>}
-        <span className="bh-muted"> · Previous release: <a className="text-accent underline" href="/jev-models/v1.4.2.2">JevBench v1.4.2.2</a></span>
+        <span className="bh-muted"> · Previous release: <a className="text-accent underline" href={artifact.revision === 'v1.5.1' ? '/jev-models/v1.5.0' : '/jev-models/v1.4.2.2'}>{artifact.revision === 'v1.5.1' ? 'JevBench v1.5.0' : 'JevBench v1.4.2.2'}</a></span>
       </p>
     </header>
     <JevBenchV15 artifact={artifact} sha256={sha256} previousKeys={previousKeys} />
