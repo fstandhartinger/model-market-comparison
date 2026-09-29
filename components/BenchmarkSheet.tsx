@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { BenchmarkView } from '../lib/benchmark-view.mjs';
-import { latestScores } from '../lib/benchmark-view.mjs';
+import { isSnapshotIndexAxis, latestScores } from '../lib/benchmark-view.mjs';
 import { AnomalySummary } from './BenchmarkEvidence';
 import { LazyMissingCoverage, SheetRows, type SheetRow } from './BenchmarkSheetLazy';
 import { InfoTip } from './InfoTip';
@@ -17,7 +17,7 @@ const nativeValue = (value: number, unit: string | null) => formatNative(value, 
  *  `percentiles` are computed on the full catalog view (this view is filtered to one model). */
 export function BenchmarkSheet({ view, modelId, percentiles, attachments = {} }: { view: BenchmarkView; modelId: string; percentiles: Record<string, number | null>; attachments?: Partial<Record<CompositeSlot, CompositeAttachment>> }) {
   const axes = view.axes.filter((a) => a.scores.some((r) => r.modelId === modelId));
-  const versions = new Set(axes.filter((a) => !a.id.startsWith('aa_coding_index') && !a.id.startsWith('aa_intelligence_index') && !a.id.startsWith('frontend') && !a.id.startsWith('fullstack')).map((a) => a.benchmarkId)).size;
+  const versions = new Set(axes.filter((a) => !isSnapshotIndexAxis(a)).map((a) => a.benchmarkId)).size;
   const categories = [...new Set(axes.map((a) => a.category))].sort();
   const sheetRows = axes.map((a): SheetRow => {
     const rows = a.scores.filter((r) => r.modelId === modelId);
@@ -30,7 +30,7 @@ export function BenchmarkSheet({ view, modelId, percentiles, attachments = {} }:
   // CR-127.4: the sheet explains † but had nothing to say about ‡, which it was also rendering unmarked.
   const preliminaryRows = sheetRows.filter((row) => row.basis === 'preliminary');
   const vendorOrg = view.models.find((model) => model.id === modelId)?.org || 'the developer';
-  const absent = [...new Map(view.axes.filter((a) => !axes.some((present) => present.benchmarkId === a.benchmarkId)).map((a) => [a.benchmarkId, a])).values()];
+  const absent = [...new Map(view.axes.filter((a) => !isSnapshotIndexAxis(a) && !axes.some((present) => present.benchmarkId === a.benchmarkId)).map((a) => [a.benchmarkId, a])).values()];
   const attachedEntries = Object.values(attachments);
   return <section id="benchmark-sheet" className="mt-8 scroll-mt-6 space-y-5">
     <div className="flex flex-wrap items-end justify-between gap-3"><div><h2 className="text-2xl font-semibold">Benchmark sheet</h2><p className="bh-muted mt-1 text-sm">{versions} of {view.registryCount} registered benchmark versions · bars show the percentile among all models measured on each benchmark.</p>{vendorRows.length > 0 && <p className="bh-muted mt-2 text-xs" data-bh-sheet-vendor-line>{vendorRows.length} of {counted(sheetRows.length, "value")} {sheetRows.length === 1 ? "is" : "are"} {vendorOrg}&apos;s own claim{sheetRows.length === 1 ? "" : "s"} (†), not independent measurements; a matching independent result replaces a claim as soon as one exists.</p>}{preliminaryRows.length > 0 && <p className="bh-muted mt-2 text-xs" data-bh-sheet-preliminary-line>{preliminaryRows.length} of {counted(sheetRows.length, "value")} {sheetRows.length === 1 ? "is an" : "are"} announced, chart-read figure{sheetRows.length === 1 ? "" : "s"} (‡): shown only, and never entering a score, a ranking or a percentile.</p>}{attachedEntries.length > 0 && <div className="bh-muted mt-2 text-xs" role="note" aria-label="Composite attached inputs"><span className="font-medium text-gray-300">Composite attachments</span> <span>(used in the score, not counted as exact benchmarks):</span><ul className="mt-1 flex flex-wrap gap-x-3 gap-y-1">{attachedEntries.map((attachment) => <li key={attachment.label} className="inline-flex items-center gap-1"><span>{attachment.label} · attached</span><InfoTip title={`${attachment.label} attachment`} label={`explain ${attachment.label} attachment`}>{attachment.note}</InfoTip></li>)}</ul></div>}</div><Link className="bh-button" href={`/compare?model=${encodeURIComponent(modelId)}`}>Compare this model →</Link></div>

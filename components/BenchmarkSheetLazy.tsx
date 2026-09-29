@@ -2,7 +2,7 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import type { BenchmarkView } from '../lib/benchmark-view.mjs';
-import { cohortLabel } from '../lib/benchmark-view.mjs';
+import { cohortLabel, isSnapshotIndexAxis } from '../lib/benchmark-view.mjs';
 import { SourceScore } from './BenchmarkEvidence';
 import { humanVersion } from '../lib/version-label';
 
@@ -47,7 +47,7 @@ export function LazyEvidenceRow({ modelId, axisId, summary, head }: { modelId: s
 export function LazyMissingCoverage({ modelId, count }: { modelId: string; count: number }) {
   const [open, setOpen] = useState(false);
   const { view, error } = useModelView(modelId, open);
-  const absent = view ? [...new Map(view.axes.filter((a) => !view.axes.some((present) => present.benchmarkId === a.benchmarkId && present.scores.some((r) => r.modelId === modelId))).map((a) => [a.benchmarkId, a])).values()] : [];
+  const absent = view ? [...new Map(view.axes.filter((a) => !isSnapshotIndexAxis(a) && !view.axes.some((present) => present.benchmarkId === a.benchmarkId && present.scores.some((r) => r.modelId === modelId))).map((a) => [a.benchmarkId, a])).values()] : [];
   return <details className="bh-panel p-5" onToggle={(e) => setOpen(e.currentTarget.open)}><summary className="font-medium">Missing coverage · {count} benchmark versions</summary><p className="bh-muted my-3 text-sm">No result does not mean a zero, or that the model was never tested. Collection failures and disputed versions retain their distinct status.</p>
     {open && (view ? <ul className="grid gap-3 md:grid-cols-2">{absent.map((a) => { const missing = view.missing.find((m) => m.model_id === modelId && m.benchmark_id === a.benchmarkId); return <li key={a.benchmarkId} className="rounded border border-line p-3 text-sm"><Link className="text-accent" href={`/benchmarks?benchmark=${encodeURIComponent(a.benchmarkId)}`}>{a.name} · {humanVersion(a.version).label}</Link><p className="bh-muted mt-1 text-xs">{missing ? `${missing.status.replaceAll('_', ' ')}: ${missing.reason}` : a.collection && a.collection.status !== 'collected' ? `${a.collection.status.replaceAll('_', ' ')}: ${a.collection.reason}` : 'Unknown: no published result matched to this configuration.'}</p></li>; })}</ul> : pending(error))}
   </details>;
