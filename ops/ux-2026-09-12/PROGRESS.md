@@ -19358,6 +19358,39 @@ list populated stays malformed rather than becoming a licence to withhold an arm
 `test/vulcanbench-kernelbench.test.mjs` now goes through `acceptedCaptures`/`newestAccepted`, which
 *names* a quarantined newer capture rather than silently reading an older one or nothing.
 
+### The fifth blocker, which only a full replay found
+
+Four fixes plus the quarantine made the two VulcanBench suites green in my own acceptance, and the
+acceptance was wrong. Its check 5 built the quarantine record by withholding **every capture of
+vulcanbench.com**; the daily withholds `armCaptures[index]`, which is `spec.source` plus five typed
+parser sub-source keys plus `parser.runs` — and this parser has none of those, so a quarantine withholds
+**exactly one URL**, the board CSV. `leaderboard.html` belongs to no arm and cannot be withheld at all.
+
+So the replay that matters is the one on the run's own tree: a copy of
+`.../2026-09-29T02-33-18-119Z-2827687/work`, the repaired sources dropped in, and a `quarantine.json`
+withholding the single URL the daily would. It came back **red on a fifth test** the acceptance had
+hidden:
+
+```
+✖ D188: every date the VulcanBench guard annotates is a date the board prints
+  the guard cites 2026-09-19, which the board's own page never prints (it says "Updated 2026-09-28")
+```
+
+The guard's date is a citation of a *past* board update — "the board's 2026-09-19 update: GPT-5.6 Sol at
+max, 22 of 23" — and the page prints one `Updated` date, its current one. So the check silently meant
+**"the board has not been updated since we wrote this guard"**, and a board update alone turned the
+publish gate red. Third instance of the same blast radius in one day, this time in a test.
+
+The provable form of the same claim: a date the guard cites must be a date the board's page printed **in
+some accepted capture we hold** — we hold 11 — which is stable across board updates and still red on an
+invented date (controlled: replacing 2026-09-19 with 2026-09-17 fails with "no capture of the board page
+we hold ever prints" it). When we genuinely no longer hold a capture showing a cited date, the failure
+says exactly that, which is honest rather than a pin on the source standing still.
+
+**Receipt: `CI=true npm test` on the run's own fresh captures with the repair — 1,674 tests, 1,673 pass,
+0 fail, 1 skip, exit 0** (`iter273-d256/gates/replay-on-run-data-npm-test.log`). That is the pre-flight
+for 05:17, and it is the only one of this iteration's checks that could have caught the fifth failure.
+
 ### Two source facts, verified against the primary source rather than the run's output
 
 * **Claude Sonnet 5.5** joined `platform.claude.com/docs/en/about-claude/pricing` at $2/$10, cache write
@@ -19387,7 +19420,7 @@ nothing, which is the cheaper error.
 
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
-| D256 (new) | **implemented**, pending non-implementer verification | `iter273-d256/before/` (the 02:33 dry run's own receipts: `dry-run-npm-test.log` 5 failures, `dry-run-vulcanbench-retained.txt` the header raise, `dry-run-summary.txt` `FEHLER: Command failed: npm test`); `iter273-d256/d256/verification.json` **17/17** with three controls; `test/d225-source-arm-quarantine.test.mjs` +2 tests (the second covers the generic `require_header` guard the other 26 entries use, with the fixture read out of the plan rather than named) | One line: `node ops/ux-2026-09-12/bin/verify-d256-column-quarantine.mjs <outDir>` (clear the out dir first; no network, no model call — it replays the 02:33 run's own captured bytes). Controls: check 3 cuts the columns *and* drops v3.16 and the arm collects; check 3b cuts only the columns and it quarantines on the revision alone; check 5 removes the quarantine record and the same tree reproduces the 2026-09-29 failures. |
+| D256 (new) | **implemented**, pending non-implementer verification | `iter273-d256/before/` (the 02:33 dry run's own receipts: `dry-run-npm-test.log` 5 failures, `dry-run-vulcanbench-retained.txt` the header raise, `dry-run-summary.txt` `FEHLER: Command failed: npm test`); `iter273-d256/d256/verification.json` **18/18** with four controls, one of which pins the withheld set to the daily's own `armCaptures` derivation after the first version of this script withheld too much and hid a real failure; `iter273-d256/gates/replay-on-run-data-npm-test.log` the full suite green on the run's own captures; `test/d225-source-arm-quarantine.test.mjs` +2 tests (the second covers the generic `require_header` guard the other 26 entries use, with the fixture read out of the plan rather than named) | One line: `node ops/ux-2026-09-12/bin/verify-d256-column-quarantine.mjs <outDir>` (clear the out dir first; no network, no model call — it replays the 02:33 run's own captured bytes). Controls: check 3 cuts the columns *and* drops v3.16 and the arm collects; check 3b cuts only the columns and it quarantines on the revision alone; check 5 removes the quarantine record and the same tree reproduces the 2026-09-29 failures. |
 | D256.1 (new) | **open** — every factual precondition proven, the one decision not taken | `iter273-d256/d256-1-evidence/FINDINGS.md` + the four primary artifacts beside it | Proven here: v3.16 is byte-equal to v3.4 on all 13 D223 invariants, declares the protocol its rows state, amends the whole chain incl. v3.4 and v3.15, and ran the identical 23-task set (115 rows = 23 × 5 efforts); all five board efforts resolve to real catalog configurations `gpt-6-luna::{max,xhigh,high,medium,low}`; and the board's own footnote defines `passed_of` as the denominator of `passed` and `combined_timeouts_zero` as the combined score over all 23 runs with each timeout scored 0 — the figure **the operator itself** uses for its best-effort tags. **Not taken:** whether a timed-out run may be published at that figure instead of withheld (iteration 143's rule). §4 of FINDINGS states three readings and argues for publishing `combined_timeouts_zero`; it changes what a published cell means for a timed-out run, so it is a `scoring.notes` change wanting a critic round, not a parser edit. Then mechanical: widen the reviewed header to 20 columns and the guard's "Exact 18-column header" with it, add v3.16 to the notes *and* the guard allow-list (D188/D223 compare all three sets), extend `parseVulcanbenchFrontierLabel`, and move the guard's date annotation off 2026-09-19 — the page now prints `Updated 2026-09-28` and D188 re-derives that from the page. |
 | Claude Sonnet 5.5 (first-party catalog) | **implemented**, pending non-implementer verification | `data/raw/claude-code.json` (`collected_at` 2026-09-29, 15 models); `test/dataset.test.mjs` pins id, $2/$10, cache write/read, batch output, and that Sonnet 5 is still active | Re-fetched and cross-read off the pricing page in this iteration, not taken from the run. |
 | benchmark-view payload guard | **implemented**, pending non-implementer verification | `test/benchmark-view.test.mjs` (relative bound + score-row bound + 900 KB tripwire) | The old 800 KB bound had 0.1 % margin and was red on a day with no new axis. |
@@ -19424,12 +19457,18 @@ affordance question on a page the design authority owns, not a data repair.
 
 **Gates on the committed tree, sequentially, unpiped:** `node scripts/build-dataset.mjs`
 **869 / 674 / 94 / 3,119** (only `generated_at`/`composite.collected_at` moved; restored);
-`CI=true npm test` **1,674 tests, 1,673 pass, 0 fail, 1 skip**, exit 0; `npx tsc --noEmit -p .` exit 0;
+`CI=true npm test` **1,674 tests, 1,673 pass, 0 fail, 1 skip**, exit 0 (and the same suite green on the
+02:33 run's own fresh captures, which is the check that matters); `npx tsc --noEmit -p .` exit 0;
 `node scripts/validate-benchmark-registry.mjs` **293 entries, 29 AA field mappings, 240 verified
 evidence files**. Logs in `iter273-d256/gates/`.
 
 ### What the next iteration should know
 
+0. **Replay the run's own tree before trusting any acceptance script, including mine.** D256's first
+   acceptance was 17/17 while the real run would still have failed: it withheld more captures than a
+   quarantine can. `cp -a <run>/work /tmp/x`, drop the repaired files in, write the `quarantine.json` the
+   daily would write (`armCaptures` = `spec.source` + five typed parser sub-sources + `parser.runs`), run
+   `CI=true npm test`. Five minutes, and it is the only thing that found the fifth failure.
 1. **Read `reports/summary.txt` of the 05:17 run for two lines, not one.** `designarena` retained is
    D255 working; `vulcanbench-frontier::4` should now appear as a **quarantined arm** ("Arm stillgelegt")
    rather than in the failing-source list, and the run should publish. If `npm test` is red again it is

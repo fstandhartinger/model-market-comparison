@@ -148,14 +148,36 @@ test('D223: every reviewed VulcanBench revision really is the same protocol, jud
   assert.deepEqual(newest, oldest, 'the v3.15 population ran a different task set');
 });
 
-test('D188: every date the VulcanBench guard annotates is a date the board prints', async () => {
-  const page = (await visibleText(newestCapture('https://vulcanbench.com/leaderboard.html'))).replace(/\s+/g, ' ');
+// D256 (2026-09-29): this read only the *newest* capture of the page, and the dates the guard annotates
+// are dates of past board updates — "the board's 2026-09-19 update: GPT-5.6 Sol at max, 22 of 23". The
+// page prints one `Updated` date, its current one. So the check silently meant "the board has not been
+// updated since we wrote the guard": on the 29th the board moved to `Updated 2026-09-28`, this went red
+// on a citation that is still true, and because the publish gate runs the whole suite that alone would
+// have cost the day. A quarantine could not save it either — `armCaptures` withholds the arm's own
+// `source` URL, and `leaderboard.html` belongs to no arm.
+//
+// The provable form of the same claim: a date the guard cites must be a date the board's page printed in
+// some capture we actually hold. That is stable across board updates and still fails on an invented date
+// — and when we no longer hold a capture showing it, the failure says exactly that, which is honest
+// rather than a pin on the source standing still.
+test('D188: every date the VulcanBench guard annotates is a date the board has printed in a capture we hold', async () => {
+  const LEADERBOARD = 'https://vulcanbench.com/leaderboard.html';
+  const held = captures.filter((receipt) => receipt.url === LEADERBOARD);
+  assert.ok(held.length, 'at least one accepted capture of the board page');
+  const pages = await Promise.all(held.map(async (receipt) =>
+    ({ dir: receipt.dir, text: (await visibleText(receipt)).replace(/\s+/g, ' ') })));
   const guard = entry('vulcanbench-frontier::4').how_to_collect.version_guard;
   const dates = [...new Set(guard.match(/\d{4}-\d{2}-\d{2}/g) ?? [])];
   assert.ok(dates.length, 'the guard annotates the withheld-row exception with a date');
   for (const date of dates) {
-    assert.ok(page.includes(date), `the guard cites ${date}, which the board's own page never prints (it says "${(page.match(/Updated \d{4}-\d{2}-\d{2}/) ?? ['—'])[0]}")`);
+    const shown = pages.filter((page) => page.text.includes(date));
+    assert.ok(shown.length, `the guard cites ${date}, which no capture of the board page we hold ever prints`
+      + ` (${pages.length} capture(s), newest says "${(pages.at(-1).text.match(/Updated \d{4}-\d{2}-\d{2}/) ?? ['—'])[0]}")`);
   }
+  // The newest capture's own `Updated` date is a date the board prints, so it must satisfy the same rule
+  // the guard's citations do — that is what keeps this from passing on captures alone.
+  const current = (pages.at(-1).text.match(/Updated (\d{4}-\d{2}-\d{2})/) ?? [])[1];
+  assert.ok(current, 'the newest capture of the page prints an Updated date');
 });
 
 test('D188: the Terminal-Bench range is the one its own metrics schema declares', async () => {

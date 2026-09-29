@@ -17,7 +17,12 @@
 //      class of header change, not "any header change is tolerated now".
 //   5  the day survives: with a quarantine record beside the capture, the two suites that read this
 //      board are green; with the record removed the same tree reproduces the 2026-09-29 failures.
-//      That A/B is the whole claim.
+//      That A/B is the whole claim. The record withholds **exactly the arm's own capture set**, derived
+//      the way `refresh-benchmarks.mjs` derives `armCaptures` — `spec.source`, the five typed parser
+//      sub-source keys and `parser.runs`. Withholding every capture of the host instead (which this
+//      script did when first written) made the check pass while the real run would still have failed:
+//      `leaderboard.html` belongs to no arm, so a quarantine cannot withhold it, and the guard's date
+//      annotation is checked against it.
 //   6  it is visible: source-health names the arm and the column on every quarantined run, and the
 //      notify human-action block renders on the third with the repair it actually needs.
 import { readFile, writeFile, mkdir, rm, readdir, cp } from 'node:fs/promises';
@@ -161,7 +166,14 @@ try {
     copied.push({ ...r, file: `${probeDir}/${name}` });
   }
   await writeFile(join(probeDir, 'manifest.json'), JSON.stringify(copied, null, 1));
-  const keys = copied.map((r) => r.url);
+  // `armCaptures` in refresh-benchmarks.mjs, re-derived rather than assumed: the arm owns its `source`,
+  // the five typed parser sub-sources and `parser.runs`, and nothing else on the host.
+  const keys = [spec.source, ...['method_source', 'categories_source', 'frontend_source', 'detail_source', 'config_source']
+    .map((key) => spec.parser[key]), ...(spec.parser.runs ?? [])].filter(Boolean)
+    .map((source) => (source.zip_member ? `${source.url}#zip:${source.zip_member}` : source.url));
+  check(5, "the record withholds exactly the arm's own captures, not every capture of the host",
+    keys.length > 0 && keys.length < copied.length && keys.includes(spec.source.url),
+    { arm_captures: keys, captures_of_the_host: copied.map((r) => r.url) });
   const record = { schema_version: 1, generated_at: new Date().toISOString(), day: '2026-09-29',
     arms: [{ id: BOARD, reason: quarantine?.reason ?? '', unreviewed_protocols: [],
       unreviewed_columns: quarantine?.columns ?? [], captures: keys }] };
