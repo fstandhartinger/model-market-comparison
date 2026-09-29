@@ -19125,3 +19125,162 @@ revision with 868 / 673 / 94 / 3,118 and 164 table rows at 1440 *and* 390, zero 
 staleness signal a retention needs. Receipts and shots in `iter271-designarena/live-site/`.
 
 **`ALL-ACCEPTED` is not appended.**
+
+## Iteration 272 (claude-opus, 2026-09-29 02:10–UTC) — a killed step kept writing for three minutes, and the process group that ends it
+
+**Scope.** D249.2, open since iteration 262 and carried unchanged through nine iterations: *"the step's
+worker subprocesses outlive the SIGTERM that kills the step and keep writing into the run directory for
+~3 minutes."* It was filed as "harmless today". It is not the kind of harmless that stays harmless, and
+it is cheap to end. Evidence in `iter272-d249-2/`.
+
+### What the defect is
+
+`daily.mjs` ran every step through `promisify(execFile)` with a `timeout` and `killSignal: 'SIGTERM'`.
+Node's timeout calls `child.kill()`, which signals **the direct child and nothing below it**. The
+benchmarks step is `node ops/daily/refresh-benchmarks.mjs`, and it spawns `bash ops/rebuild-2026-09/bin/worker.sh`
+per review call. When the parent kills the step, every worker is reparented to init and keeps going.
+
+That is what iteration 262 measured on the run that died at 08:03:32Z: six gauntlet artifact directories
+carrying mtimes up to **08:06:49Z**. Three minutes of writes into a run directory whose owner was already
+gone — while `profile-run.mjs`, `source-health.mjs` and the report writer were reading it.
+
+The cost is not the wasted CPU. It is that **the evidence a killed run leaves is not a snapshot of the
+moment it died**; it is whatever the orphans had finished writing by the time something read it. A
+half-written artifact in such a run cannot be attributed: the receipt cannot say whether it was the
+step's last act or an orphan's first. That is unfalsifiable by construction, which is the one property
+this workstream's receipts are not allowed to have.
+
+Reproduced before the change, at the same shape and one-second resolution
+(`iter272-d249-2/RECEIPT.txt`, a 3 s step spawning a worker that ticks every second):
+
+| | before — `promisify(execFile)` | after — `runStep` |
+|---|---|---|
+| worker lines written **after** the kill | **7 and still counting** (ticks 5–11) | **0** |
+| worker processes alive 8 s after the kill | **1** | **0** |
+
+### The repair: the process group, not a longer wait
+
+`ops/daily/step-process.mjs` (new) exports `runStep`. It spawns each step `detached: true` — which makes
+it a process-group leader — and its own timer signals **`-pid`**: the step, its workers, and anything
+they spawned, at any depth. The group gets `killSignal` first, so a worker can still finish its own
+receipt, and `SIGKILL` one grace period (20 s) later for whatever ignores it. This is deliberately not
+`execFile` plus a flag: Node's `timeout` handling is precisely what signals the wrong pid, so the timer
+has to be ours.
+
+It resolves and rejects in `execFile`'s shape — `killed`, `signal`, `code`, `stdout`, `stderr` — because
+**D249.1's timeout detection reads exactly those fields** and every log reader takes the tail of the
+message it builds. A test asserts that predicate directly rather than the fields alone.
+
+Three properties are worth naming because they are what makes the change safe rather than merely correct:
+
+- **A detached group no longer dies with the parent's own group**, so `killLiveStepGroups()` is
+  registered on `exit` and on SIGINT/SIGTERM/SIGHUP. Net, a step outlives its parent in strictly fewer
+  cases than before this change, not more.
+- **The pid is never signalled after the child is reaped.** A group kill on a reused pid is how a kill
+  hits a stranger on a shared box; `killGroup` refuses once `exitCode`/`signalCode` is set.
+- **`close` is preferred but never waited on indefinitely.** One descendant that survives SIGKILL (an
+  uninterruptible read) would otherwise stall the run at the one place that must not stall; a 5 s
+  `stdioGraceMs` bounds it.
+
+`stdin` is closed rather than piped. No step reads it, and a tool that would have blocked on an open pipe
+until its timeout — `git` asking for a credential, which this pipeline has hit three times in five days —
+now fails in the second it takes to notice.
+
+### The second call site, because one fix is how it comes back
+
+`publish-gate.mjs`'s `runGateStage` had the identical defect, and its children are the heaviest in the
+pipeline: `build-dataset`, `npm test`, `next build`. Killing only the `node gate.mjs` wrapper left those
+three writing into the **staging checkout whose commit the verdict is about**. It now runs through the
+same `runStep`. The `exec` beside it stays on `execFile` on purpose: it reads `HEAD:data/dataset.json`
+as a `Buffer` for the verdict's binding hash, and `runStep` decodes to utf8.
+
+The gauntlet's own worker call needs nothing: `worker.sh` is `exec node worker-runner.mjs`, so bash
+replaces itself and the direct child *is* the runner. And the group kill is transitive — `opencode` and
+its children, `curl`, `python3` captures, all of it now ends with the step that started it.
+
+### What this does not claim
+
+It does not make a killed run publish. D249's review budget is what turns an overrun into a bounded gap;
+this is only the guarantee that when a step is killed, the run directory stops changing. Nor does it
+reach a descendant that calls `setsid` for itself — nothing in the pipeline does, and a test would be
+asserting the absence of a thing rather than a behaviour.
+
+### D255.2 — and the withheld board that the next phase failed anyway
+
+The dry run that was meant to exercise this change (`iter272-d249-2/dry-run/`) exercised something else
+first. D255 shipped six hours earlier and its first live test was due at 05:17. This run reached
+`fetch-da`, withheld the self-contradicting capture exactly as designed — `WARN fetch-da: keeping the
+previously published board (2026-09-28)`, `retained_sources` naming it, the summary line in German —
+carried on through 30 steps, and then **died at `review-live`**:
+
+```
+DAILY LIVE FAILED: live-review: da frontend leaderboard rows mismatch
+  — staged: [...gpt-6-astra...] — source-derived: [...]
+```
+
+`ops/daily/review-live.mjs` re-derives every staged raw file from this run's capture. A withheld board
+is *deliberately* yesterday's, so the comparison it makes is between two things that are correctly
+different. Iteration 271 predicted the 05:17 run would publish with `designarena` retained; this run
+falsifies that prediction. Without this fix, 2026-09-29 was the second whole day lost to two rows —
+the exact outcome D255 exists to prevent, one phase further down.
+
+**The repair is a proof, not a bypass.** `verifyWithheldDa` does not trust the collector's sidecar. For
+every staged board it recomputes the absent identities against *this run's captured* board response and
+re-classifies them against *this run's captured* registry, with `absentIdentities` and
+`classifyBoardAbsence` — the same two functions the collector used, on the same bytes. It then requires:
+
+- **one absence the registry corroborates fails closed**, exactly as before — gone, inactive, or no
+  longer listing this category is a withdrawal and belongs in review, not in a withholding;
+- the staged board **equals the snapshot the run started from**, deep-equal, so a withheld source
+  contributes not one new value (and not a moved date: DesignArena's `collected_at` is a bare day and
+  parses to midnight, so `assertRetainedDate` alone could never catch a same-day redate — the equality
+  is what binds it);
+- the determination's contradicted identities, prior count and current count **equal what the capture
+  shows**, so a sidecar cannot name a model the bytes do not;
+- at least one board actually shows a contradicted absence.
+
+A withheld board contributes **no packet row** to the critic. There is no fresh value to check, and
+putting yesterday's rows beside today's receipts is the one thing this review must never do. The report
+says so instead: `datasets.da.withheld`, `retained.designarena_board`, a new line in `limitations`, and
+`da:withheld (retained 2026-09-28)` in the step's own summary.
+
+**Falsifiable, and falsified.** `bin/verify-d255-2-live-review.mjs` replays the real run offline — it
+reads no live source and costs DesignArena nothing — and is **9/9**. Its control is check 5: with the
+determination file removed, the *same run* fails with the same `da frontend leaderboard rows mismatch`
+this section opens with. Checks 6–9 each break the withholding a different way (registry corroborates
+one absence; one `elo` edited by 1; the board redated to today; the determination naming a model the
+capture still shows) and each is red.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D249.2 | open → **implemented**, pending non-implementer verification | `iter272-d249-2/RECEIPT.txt` (before: 7 lines written after the kill, 1 worker alive; after: 0 and 0); `iter272-d249-2/before/`, `after/`; `test/d249-2-step-process-group.test.mjs` **12 tests**, the first of them the control that the replaced mechanism leaves the worker running | `ops/daily/step-process.mjs` `runStep`, used by `daily.mjs`'s `command()` and `publish-gate.mjs`'s `runGateStage`. Open since iteration 262. |
+| D255.2 (new) | **implemented**, pending non-implementer verification | `iter272-d249-2/dry-run/gated-run.log` is the before-receipt (a real run, withheld correctly at `fetch-da`, dead at `review-live`); `iter272-d249-2/d255-2/verification.json` **9/9** with the control; `test/d255-2-live-review-withheld-board.test.mjs` **10 tests** | Acceptance is one line: `node ops/ux-2026-09-12/bin/verify-d255-2-live-review.mjs [runDir] [outDir]` (no runDir = newest run with a determination; clear the out dir first). It replays a real run's own captures offline. |
+| D255 (iteration 271) | implemented → **incomplete as shipped** | the same dry run | The collector half works on the real source. The run still could not publish, so the claim "a day need not be lost" was not true until D255.2. Both halves still need a non-implementer engine. |
+
+**Gates at this commit, run on the committed tree, sequentially, unpiped:** `node scripts/build-dataset.mjs`
+**868 / 673 / 94 / 3,118** (only `generated_at`/`composite.collected_at` moved; restored); `CI=true npm test`
+**1,672 tests, 1,671 pass, 0 fail, 1 skip**, exit 0; `npx tsc --noEmit -p .` exit 0; `node
+scripts/validate-benchmark-registry.mjs` **293 entries, 29 AA field mappings, 240 verified evidence files**.
+Logs in `iter272-d249-2/gates/`.
+
+### What the next iteration should know
+
+1. **The 05:17 run is the first real test of both halves.** If DesignArena is still contradicting
+   itself, the run should now publish with `retained_sources` naming `designarena`, the German summary
+   line "Veraltete externe Quelle (alter gepruefter Stand bleibt): designarena: …", and
+   `sources.designarena` on the live site staying 2026-09-28 while every other date moves. Read
+   `reports/review-live.log` for `da:withheld (retained 2026-09-28)`. If the three rows are back, the
+   board simply collects and there is nothing to see; that is a pass, not a miss.
+2. **A dry run is worth its hour.** The 02:18 dry run found D255.2 three hours before the scheduled run
+   would have hit it, on the same day D255 shipped. Neither the 1,660 tests nor the four gates saw it:
+   the two halves are in different files and only a real capture puts them in the same run.
+3. **F-223, F-224, F-225 (Fable pass 42), D254, D255, D249.2 and D255.2 are all `implemented` and need a
+   non-implementer engine** — iterations 269–272 were all claude-opus. The one-line acceptances are
+   `bin/verify-fable-pass42-directed.mjs`, `bin/verify-d254-live.mjs`, `bin/verify-d255-replay.mjs` and
+   `bin/verify-d255-2-live-review.mjs`, each with its out dir cleared first.
+4. **Untouched and still open, unchanged:** D249.4 (a price ceiling keyed on something other than the
+   headline price), D253.2 (`BENCHMAXX_MIN_COMPARISONS = 6`), D254.1 (the two-family reviewer pool),
+   D255.1 (whether a headline source may be retained at all — Florian's line), R9.1's two arms under the
+   written-permission hold, and the Coolify host alias (patched, not fixed).
+
+**`ALL-ACCEPTED` is not appended.**
