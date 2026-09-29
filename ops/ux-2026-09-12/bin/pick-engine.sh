@@ -47,17 +47,25 @@ PY_INNER
 fi
 
 avoid_family=$(engine_family "$AVOID")
-picked=$(QUOTA_PACE_CALLER="bh-ux:$MODE" "$QP" pick --kind "$KIND")
+# Florian's current instruction prohibits new Claude UX units. Ask the shared picker to select
+# among the currently permitted paid engines for every role; it still applies quota eligibility.
+picked=$(QUOTA_PACE_CALLER="bh-ux:$MODE" "$QP" pick --kind "$KIND" --order codex,devin)
 
 # Reviews must use a different engine family from the implementation.
 if [ "$MODE" = review ] && [ -n "$avoid_family" ] && [ "$(engine_family "$picked")" = "$avoid_family" ]; then
-  picked=none
+  case "$avoid_family" in
+    codex) fallback_order=devin ;;
+    devin) fallback_order=codex ;;
+    *) fallback_order=codex,devin ;;
+  esac
+  picked=$(QUOTA_PACE_CALLER="bh-ux:$MODE-independent" "$QP" pick --kind "$KIND" --order "$fallback_order")
+  if [ "$(engine_family "$picked")" = "$avoid_family" ]; then picked=none; fi
 fi
 
-# Cap Claude-backed UX units. Devin Opus is included for design/review; Devin Sonnet work is not.
+# Cap direct Claude Code UX units to one per rolling 24 hours.
 if [ "$claude_recent" -ge 1 ]; then
   case "$MODE:$picked" in
-    work:claude|design:claude|review:claude|design:devin|review:devin)
+    work:claude|design:claude|review:claude)
       if [ "$MODE" = work ]; then picked=free; else picked=none; fi
       ;;
   esac
@@ -81,7 +89,7 @@ case "$MODE:$picked" in
   work:free) echo opencode-free ;;
   review:claude|design:claude) echo claude-opus-medium ;;
   review:codex|design:codex) echo codex-luna-xhigh ;;
-  review:devin|design:devin) echo devin-opus-medium ;;
+  review:devin|design:devin) echo devin-sonnet-high ;;
   review:free|design:free) echo none ;;
   *) echo none ;;
 esac
