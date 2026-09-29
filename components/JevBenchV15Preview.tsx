@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react';
 import {
-  JEVBENCH_V15_METHOD_URL, JEVBENCH_V15_HEADLINE_METHOD_URL, JEVBENCH_V15_PRICING_URL, JEVBENCH_V15_OPTIONS, JEVBENCH_V15_TYPES,
+  JEVBENCH_V15_METHOD_LINKS, JEVBENCH_V15_METHOD_URL, JEVBENCH_V15_HEADLINE_METHOD_URL, JEVBENCH_V15_PRICING_URL, JEVBENCH_V15_OPTIONS, JEVBENCH_V15_TYPES,
   jevV15LeaderSentence, jevV15TieSummary,
   type JevV15Artifact, type JevV15Option, type JevV15System,
 } from '../lib/jevbench-v15-preview.mjs';
@@ -292,8 +292,17 @@ function NotRanked({ a, partial, unpriced }: { a: JevV15Artifact; partial: JevV1
 function Method({ a, sha256 }: { a: JevV15Artifact; sha256: string }) {
   return <section id="jev15-method" className="bh-panel mt-10 max-w-5xl scroll-mt-6 p-5" aria-labelledby="jev15-method-head" data-bh-jev15-method>
     <h2 id="jev15-method-head" className="text-lg font-semibold">Method notes: what changed in v1.5</h2>
+    <h3 className="mt-4 text-base font-semibold">The four axes</h3>
+    <dl className="mt-2 grid gap-3 text-sm sm:grid-cols-2" data-bh-jev15-four-axes>
+      <div><dt className="font-semibold">Intelligence · 25%</dt><dd className="bh-muted mt-1">How often answers are right, adjusted for chance, across Choice, Noul and Score (one third each). Easy, Standard, Judge and Hard items count 10%, 20%, 30% and 40%. The open and sealed sets count equally.</dd></div>
+      <div><dt className="font-semibold">Calibration · 25%</dt><dd className="bh-muted mt-1">How closely stated probabilities match what happens. It uses ECE and TVD for Choice, ECE and Brier for Noul, and normalized RPS plus top-level ECE for Score. The three types count equally; open and sealed items are pooled.</dd></div>
+      <div><dt className="font-semibold">Speed · 25%</dt><dd className="bh-muted mt-1">Serial response latency on open Standard and Judge items. The p50 and p95 each get a log score: 100 − 20 × log₁₀(seconds ÷ 0.1), then are averaged. Self-hosted and demo endpoints get the published ×2 plus 0.15-second adjustment.</dd></div>
+      <div><dt className="font-semibold">Cost · 25%</dt><dd className="bh-muted mt-1">Estimated or billed US dollars per 1,000 decisions, using pooled token use across {a.sample.total.toLocaleString('en-US')} decisions and the documented price rules. The log score is 100 − 30 × log₁₀(cost ÷ $0.001). The price reference is $0.001 per 1,000 decisions.</dd></div>
+    </dl>
+    <p className="bh-muted mt-3 text-sm">The official score is the weighted harmonic mean of the four axes. Option A gives each axis 25%; option B (40/20/20/20) is a secondary view, while option C keeps equal axes and sets the Intelligence gate at 60. In A and B, Intelligence, Speed and Cost each have a quadratic gate below 50. To limit benchmaxxing on the public items, the open-minus-sealed Intelligence gap may be up to 8 points above the field median (<code>G_med</code>) before a penalty applies. Each further point lowers the multiplier on unpenalized Intelligence by one percentage point.</p>
     <p className="bh-muted mt-2 text-sm">Frozen method <a className="text-accent underline" href={JEVBENCH_V15_METHOD_URL}>METHOD-v1.5</a>, SHA-256 <Sha v={a.method_sha256} id="method" />; pricing addendum <a className="text-accent underline" href={JEVBENCH_V15_PRICING_URL}>v1.5-M2</a>, SHA-256 <Sha v={a.pricing_addendum_sha256} />.</p>
     <p className="bh-muted mt-2 text-sm">The method owner chose equal axis weights and equal weights for Choice, Noul and Score after reviewing the What-If Lab, preserving continuity with v1.4 and treating the three decision types equally. Disclosed headline amendment: <a className="text-accent underline" href={JEVBENCH_V15_HEADLINE_METHOD_URL}>equal-axis, equal-type A</a>, SHA-256 <Sha v={a.headline_method_addendum_sha256} />. B remains a secondary view.</p>
+    <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm" aria-label="JevBench v1.5 method documents" data-bh-jev15-method-links>{JEVBENCH_V15_METHOD_LINKS.map((doc) => <li key={doc.filename}><a className="text-accent underline" href={doc.url}>{doc.label}</a></li>)}</ul>
     <ul className="bh-muted mt-3 list-disc space-y-2 pl-5 text-sm">
       <li>{a.sample.total.toLocaleString('en-US')} decisions per system: {a.sample.open} open ({a.sample.published_open} published) and {a.sample.sealed} sealed, drawn fresh from a private pool with the same tier mix as the open set. Sealed counts for 50% of Intelligence: <code>base = 0.5 × I_open + 0.5 × I_sealed</code>.</li>
       <li>Three request types are scored natively and chance-corrected per item: Choice, Noul and Score each receive one third. Tier weights easy / standard / judge / hard = 10 / 20 / 30 / 40. A type a system does not support is excluded, never scored zero; only full-coverage systems are ranked.</li>
