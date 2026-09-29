@@ -69,7 +69,7 @@ function RankingTable({ systems, track, all = false }: { systems: any[]; track: 
           <td className="sticky left-0 z-[1] w-14 min-w-14 bg-[var(--surface)] p-3 font-bold tabular-nums shadow-[inset_-1px_0_0_rgb(var(--line))]">{i + 1}</td>
           <th scope="row" className="sticky left-14 z-[1] w-52 min-w-52 bg-[var(--surface)] p-3 text-left font-semibold shadow-[inset_-1px_0_0_rgb(var(--line))]">
             <SystemName name={s.name} gate={gate} />
-            {s.key === 'wity_1' && <p className="mt-1 text-xs font-semibold text-amber-700 dark:text-amber-300" data-bh-mm-author-review>Under author review: the endpoint did not report its server build ID. We will update this row after the author confirms the build.</p>}
+            {s.key === 'wity_1' && <p className="mt-1 text-xs font-semibold text-amber-700 dark:text-amber-300" data-bh-mm-author-review>Under author review: server build ID was not recorded; this score may change after verification.</p>}
             {s.inference_setting && <p className="bh-muted mt-1 text-xs">Setting: {s.inference_setting}</p>}
             {t.cost.coverage < 0.9995 && <p className="bh-muted mt-1 text-xs">Cost receipts cover {pct(t.cost.coverage)} of calls</p>}
             {s.api_flag && <span className="mt-1 inline-block rounded-full border border-accent px-2 py-0.5 text-[0.68rem] font-bold text-accent">API</span>}
