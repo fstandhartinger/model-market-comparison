@@ -1,53 +1,70 @@
-#!/bin/bash
-# Hand bulk / mechanical work to a free model, so the expensive engines only decide,
-# integrate and verify.
-#
-#   delegate.sh "<task>"                 OpenCode + nex-agi/nex-n2.5-pro:free (OpenRouter)
-#   delegate.sh --kimi "<task>"          OpenCode + Kimi K3 via Chutes (free for us)
-#   delegate.sh --out <file> "<task>"    also save the final answer to a file
-#   delegate.sh --dir <path> "<task>"    run in another working directory (default: repo)
-#
-# OpenCode can read and edit files in the working directory. Treat everything a free model
-# produces as a DRAFT: review the diff, re-check any number against its primary source.
-# If the nex free model is unavailable, this falls back to Kimi K3 automatically, and vice
-# versa, so a delegation never silently does nothing.
-set -uo pipefail
-REPO=/opt/model-market-comparison
-MODEL_NEX="${BH_NEX_MODEL:-openrouter/nex-agi/nex-n2.5-pro:free}"
-MODEL_KIMI="chutes/moonshotai/Kimi-K3-TEE"
-PRIMARY="$MODEL_NEX"; SECONDARY="$MODEL_KIMI"; OUT=""; DIR="$REPO"
-while [[ $# -gt 0 ]]; do
+#!/usr/bin/env bash
+# Run a small mechanical subtask through the health-selected free OpenCode route.
+set -Eeuo pipefail
+
+OUT=
+DIR=$(git rev-parse --show-toplevel)
+while [ "$#" -gt 0 ]; do
   case "$1" in
-    --kimi) PRIMARY="$MODEL_KIMI"; SECONDARY="$MODEL_NEX"; shift;;
-    --out)  OUT="$2"; shift 2;;
-    --dir)  DIR="$2"; shift 2;;
-    --help|-h) sed -n '2,16p' "$0"; exit 0;;
-    *) break;;
+    --out)
+      [ "$#" -ge 2 ] || { echo "delegate.sh: --out needs a path" >&2; exit 64; }
+      OUT=$2
+      shift 2
+      ;;
+    --dir)
+      [ "$#" -ge 2 ] || { echo "delegate.sh: --dir needs a path" >&2; exit 64; }
+      DIR=$2
+      shift 2
+      ;;
+    --help|-h)
+      echo 'delegate.sh [--out file] [--dir worktree] "mechanical task"'
+      exit 0
+      ;;
+    *) break ;;
   esac
 done
-TASK="${1:-}"; [ -n "$TASK" ] || { echo "delegate.sh: no task (see --help)" >&2; exit 2; }
+TASK=${1:-}
+[ -n "$TASK" ] || { echo "delegate.sh: no task supplied" >&2; exit 64; }
+TASK+=$'\n\nTreat your answer as a draft. Make mechanical edits only; do not make product, benchmark, security, or publication decisions.'
+[ -d "$DIR" ] || { echo "delegate.sh: directory not found: $DIR" >&2; exit 66; }
+DIR=$(realpath "$DIR")
+case "$DIR/" in
+  /opt/*) echo "delegate.sh: working directory must stay outside /opt" >&2; exit 70 ;;
+esac
+if [ -n "$OUT" ]; then OUT=$(realpath -m "$OUT"); fi
+case "$OUT" in
+  /opt/*) echo "delegate.sh: output must stay outside /opt" >&2; exit 70 ;;
+esac
 
-for f in "$HOME/.config/dev-secrets.env" /root/.config/dev-secrets.env; do [ -r "$f" ] && { set -a; . "$f"; set +a; break; }; done
-export OPENROUTER_API_KEY="${OPENROUTER_API_KEY:-${OPEN_ROUTER_API_KEY:-}}"
-export PATH="$HOME/.local/bin:$HOME/.opencode/bin:$HOME/.npm-global/bin:/usr/local/bin:/usr/bin:/bin"
-unset OPENAI_API_KEY ANTHROPIC_API_KEY
-
-TMP=$(mktemp); ALT=$(mktemp)
-run() { (cd "$DIR" && timeout 5400 opencode run -m "$1" "$TASK") > "$2" 2>&1; }
-# A delegation failed when the *runner* says so, on its own error line. Scanning the whole output for
-# provider words instead cost this loop two good sign-offs on 2026-09-28: the delegated task was a live
-# verifier, its output echoed a page reading "Chutes rate limit stopped the run after 81/308 items", the
-# old sniffer read "rate limit", declared a healthy Kimi K3 dead, fell through to a model with no
-# endpoints — and copied that error over --out, destroying a 78/78 receipt's only written statement.
-# opencode reports a provider failure as its own `Error:` line, which is what this matches.
-failed() { [ ! -s "$1" ] || grep -qE $'^[[:space:]]*(\x1b\[[0-9;]*m)*Error:' "$1"; }
-echo "delegate.sh: model=$PRIMARY dir=$DIR" >&2
-run "$PRIMARY" "$TMP" || true
-if failed "$TMP"; then
-  echo "delegate.sh: $PRIMARY failed, falling back to $SECONDARY" >&2
-  run "$SECONDARY" "$ALT" || true
-  # A failing fallback never destroys the primary's answer; it is appended as diagnosis.
-  if failed "$ALT"; then cat "$ALT" >> "$TMP"; else cp "$ALT" "$TMP"; fi
+if [ -r "$HOME/.config/dev-secrets.env" ]; then
+  set -a
+  . "$HOME/.config/dev-secrets.env"
+  set +a
 fi
-[ -n "$OUT" ] && cp "$TMP" "$OUT"
-cat "$TMP"; rm -f "$TMP" "$ALT"
+OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-${OPEN_ROUTER_API_KEY:-}}
+export OPENROUTER_API_KEY
+export PATH="$HOME/.local/bin:$HOME/.opencode/bin:$HOME/.npm-global/bin:/usr/local/bin:/usr/bin:/bin"
+unset OPENAI_API_KEY OPENAI_BASE_URL ANTHROPIC_API_KEY ANTHROPIC_AUTH_TOKEN
+
+MODEL=$("$HOME/bin/opencode-best" 2>/dev/null || true)
+[ -n "$MODEL" ] || { echo "delegate.sh: no healthy free route" >&2; exit 75; }
+ALT_MODEL=$("$HOME/bin/opencode-best" --fast 2>/dev/null || true)
+
+TMP=$(mktemp "${TMPDIR:-/tmp}/bh-ux-delegate.XXXXXX")
+ALT=$(mktemp "${TMPDIR:-/tmp}/bh-ux-delegate-alt.XXXXXX")
+trap 'rm -f "$TMP" "$ALT"' EXIT
+run() { (cd "$DIR" && timeout 5400 opencode run -m "$1" "$TASK") > "$2" 2>&1; }
+# Inspect OpenCode's own error line only; task output can contain quoted provider errors or HTTP statuses.
+failed() { [ ! -s "$1" ] || grep -qE $'^[[:space:]]*(\x1b\[[0-9;]*m)*Error:' "$1"; }
+echo "delegate.sh: model=$MODEL dir=$DIR" >&2
+run "$MODEL" "$TMP" || true
+if failed "$TMP"; then
+  if [ -n "$ALT_MODEL" ] && [ "$ALT_MODEL" != "$MODEL" ]; then
+    echo "delegate.sh: $MODEL failed, trying the separately health-selected fast route $ALT_MODEL" >&2
+    run "$ALT_MODEL" "$ALT" || true
+    # A failing fallback never destroys the primary's answer; it is appended as diagnosis.
+    if failed "$ALT"; then cat "$ALT" >> "$TMP"; else cp "$ALT" "$TMP"; fi
+  fi
+fi
+if [ -n "$OUT" ]; then cp "$TMP" "$OUT"; fi
+cat "$TMP"

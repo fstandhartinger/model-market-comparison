@@ -1,108 +1,80 @@
 # Benchmark Heaven — UX, data & analysis workstream (commissioned 2026-09-12)
 
-**Authoritative sources:** `00-REQUIREMENTS-VERBATIM.md` and `02-ADDENDUM-HERMES-CHAT.md`
-(requirements Florian sent only to Hermes: ECI in the Composite, eight extra benchmarks, PRD
-review, one-writer coordination). This brief turns it into a checklist.
-Where they disagree, the verbatim text wins. Where the verbatim text is ambiguous, this brief
-records the decision taken, so a reviewer can challenge it.
+The product requirements in 00-REQUIREMENTS-VERBATIM.md and 02-ADDENDUM-HERMES-CHAT.md remain
+authoritative, with newer change requests in 03-CHANGE-REQUESTS-VERBATIM.md. This brief turns
+them into a checklist; the operations below were updated on 2026-09-29.
 
-**Where:** Sandy Hetzner (`65.109.49.103`), user `flori`, repo `/opt/model-market-comparison`,
-live at **https://benchmarkheaven.com** (and the legacy host
-`https://model-market-comparison.app.mintapis.com`, which must keep working). Pushes to
-`main` auto-deploy through the Coolify webhook; `/opt/mmc-daily/redeploy.sh` is the fallback.
+Where: Benchmark Heaven runs live at https://benchmarkheaven.com and
+https://model-market-comparison.app.mintapis.com. The UX coordinator is the isolated worktree
+/home/flori/wt/bh-ux-workstream. Each unit gets a separate /home/flori/wt/<job> worktree and
+jobs/<job> branch. Each unit opens a PR; the serialized merge queue runs release gates, merges,
+and deploys. Jobs never write to /opt/model-market-comparison.
 
-**Who:** fully autonomous agent iterations started by `bin/tick.sh` (cron, every 10 min).
-Florian's laptop is shut down. Nobody will answer questions — decide like a careful
-colleague, write the decision down, keep going.
+Who: autonomous iterations start from the home-local coordinator every 10 minutes. State, logs,
+prompts, outputs, and evidence live under
+/home/flori/.local/state/benchmarkheaven/ux-workstream.
 
 ---
 
 ## 0. Ground rules
 
-1. **Nothing is done until it is verified live.** "Implemented" means: code merged, tests
-   green, deployed, and checked on https://benchmarkheaven.com in a real browser at desktop
-   *and* mobile width, with a screenshot or DOM check saved under
-   `/opt/benchmarkheaven/state/ux-evidence/`. A claim without evidence stays open.
-2. **`PROGRESS.md` in this folder is the single ledger.** Every item below has a row:
-   `ID | status (open / in-progress / implemented / verified) | evidence path | notes`.
-   Only a *different engine than the implementer* may set `verified`.
-3. **Hermes already recovered these requirements** into
-   `/opt/benchmarkheaven/state/USER-UX-CORRECTION-ACCEPTANCE.md` and shipped parts of them
-   (commits `f59c021` "Deliver simple UX and topic-local Benchmaxxing signal", `4c363b6`,
-   `53e8ad7`, `9caf5f3`, and phase 10's historical retention `573ea60`). The first iteration
-   seeds `PROGRESS.md` from both that record and this brief, **re-checks every "shipped"
-   claim against the live site**, and marks as open whatever is not demonstrably live.
-   On 2026-09-12 19:20 UTC the live page still showed the old hero claim, no 30:1 blend, no
-   "Strong confidential guarantees", no "Trains or keeps your data", no `#benchmarks`
-   column and no "Are you a company" — so a lot is still open.
-4. **Keep `main` green:** `node scripts/build-dataset.mjs`, `npm test`,
-   `npx tsc --noEmit -p .` before every push. Small, reviewable commits.
-5. **Data honesty:** every number has provenance; estimates and bridged/approximated values
-   are labelled as such in data *and* UI. Never invent a score, a price, a quota or a policy.
-6. **Respect robots.txt, rate limits and bot protection.** Never circumvent access control.
-7. **Billing:** Codex only via Florian's ChatGPT Pro subscription (never an API key); Claude
-   Code only via the subscription login (never `ANTHROPIC_API_KEY`). The runner enforces
-   both; if you ever see API-key auth, stop and report.
-8. **Do not disturb other workloads on Sandy.** Postgres, the tao-trader stack, mosquitto,
-   bookstack tenants and other crons share this box. Disk is ~90 % full: clean up after
-   yourself, keep logs bounded, no big downloads without checking `df -h /`.
-9. **Commit trailer:** name the engine that did the work, e.g.
-   `Co-Authored-By: Claude Opus 5 (Sandy UX workstream) <noreply@anthropic.com>` or
-   `Co-Authored-By: Codex GPT-6 Astra (Sandy UX workstream) <noreply@openai.com>`.
+1. Nothing is done until it is verified live. Implemented means code merged, required
+   merge-queue gates passed, deployed, and checked at desktop and mobile widths, with evidence
+   saved under /home/flori/.local/state/benchmarkheaven/ux-workstream/evidence/. A claim without
+   evidence stays open.
+2. PROGRESS.md in this folder is the single ledger. Every requirement has an open, in-progress,
+   implemented, or verified status. Only an engine different from the implementer may set
+   verified.
+3. Historical note: Hermes recovered additional requirements and earlier implementation
+   evidence on 2026-09-12. PROGRESS.md is the current ledger. Do not seed from or write evidence
+   to files under /opt; verify current claims against the live site and keep them open when
+   evidence is unavailable.
+4. Release gates: open an isolated PR without running the test suite locally. After owner review,
+   the serialized merge queue runs the dataset build, typecheck, production build, and full tests
+   before merge. Keep commits small and reviewable.
+5. Data honesty: every number has provenance; estimates and bridged or approximated values are
+   labelled as such in data and UI. Never invent a score, price, quota, or policy.
+6. Respect robots.txt, rate limits, and bot protection. Never circumvent access control.
+7. Billing: Codex uses Florian's ChatGPT subscription, never an API key; Claude Code uses the
+   signed-in subscription, never ANTHROPIC_API_KEY.
+8. Do not disturb other workloads on Sandy. Disk is limited: remove only job-owned temporary
+   data, keep logs bounded, and check df -h / before downloads above 10 GB.
+9. Commit trailers name the engine that did the work: Claude Opus 5.5, Codex GPT-6 Luna, Devin
+   Sonnet 5.5, or the selected OpenCode engine.
 
 ---
 
-## 1. Engines, limits and delegation (verbatim rule, made operational)
+## 1. Engines, limits and delegation
 
-> **Update 2026-09-12 ~20:00 UTC (Florian):** "Ich fürchte wir müssen GPT-6 Astra etwas
-> sparsamer einsetzen, das Limit ist bei 63% und der Rest bis 100 muss noch 6d 12h reichen …
-> lass uns lieber auf GPT 5.6 Luna ausweichen wenn wir codex einsetzen." → Wherever this
-> workstream uses Codex (fallback work engine and review gates), the model is
-> **GPT-5.6 Luna** (`gpt-5.6-luna`), not GPT-6 Astra. Engine id `codex-luna`. Do not call
-> `gpt-6-astra` from this workstream at all. The 75 % start / 80 % hard cap still applies.
+Current operating rules, updated 2026-09-29:
 
-Every iteration, `bin/pick-engine.sh` measures the real limits with
-`~/.claude/skills/agent-limits/limits.py --json` and chooses **in this order**:
+- Before each unit, check quota-pace status and select with quota-pace pick for that role.
+  Recheck admission with quota-pace allow immediately before starting a paid engine. If status
+  is over pace, only judgement work is allowed; new work uses a free engine only for mechanical
+  tasks. Unknown or stale measurements fail closed.
+- Design and review use the selected judgement engine: Claude Opus 5.5 at medium effort
+  (run-devin.sh with DEVIN_MODEL=claude-opus-5-5-medium when quota-pace selects Devin, or the
+  signed-in Claude runner) or Codex GPT-6 Luna at xhigh. A review must use an engine different
+  from the implementer. Do not route design or review to OpenCode.
+- Work uses the engine selected by quota-pace. Devin work uses Claude Sonnet 5.5 at high effort;
+  Codex uses GPT-6 Luna at xhigh; Claude uses Opus 5.5 at medium effort. If the selected route
+  is free OpenCode, perform only a small, mechanically specified task; do not make product,
+  design, benchmark, security, or publication decisions.
+- Fable is retired. Cap Claude-backed UX units, including Devin-hosted Opus units, at one per
+  rolling 24 hours. Save Claude for a genuinely necessary design or review pass rather than
+  routine work.
+- Each unit runs in its own home-local worktree on a jobs/<job> branch. It may not commit, push,
+  deploy, change crontabs, message Florian, or write outside its worktree. The wrapper creates
+  the commit and PR. After owner review, use the serialized merge queue.
+- Keep the full /jev-models page structure. Keep wrappers and subsidised entries in their
+  separately labelled section below rankings. Treat free-engine output as a draft and verify
+  claims before they ship.
+- Frame reviews as quality assurance of our own product before users see it. Never describe
+  review work as attacking or breaking the service.
 
-1. **Claude Code Opus 5** — while the Claude session *and* weekly windows are both below
-   70 % and no hard limit hit is recent. (Florian's shared `QUOTA-CONTINUITY.md` of
-   2026-09-12 is stricter than this message and binds all agents on Sandy: prepare a durable
-   handoff at 60 %, start no new Claude unit at 70 %. The stricter gate wins.)
-2. **Codex GPT-5.6 Luna** (was GPT-6 Astra until 2026-09-12 20:00 UTC) — if Claude is near its limit, and Codex's weekly window is below
-   75 %. **Hard cap: Codex must never exceed 80 % of the weekly limit** (Florian: keep 20 %
-   in reserve; QUOTA-CONTINUITY: prepare handoff at 70 %, admit no new unit at 75 %). `iterate.sh` re-measures every 5 minutes during a Codex run and stops the
-   run at 80 %.
-3. **OpenCode + Kimi K3 via Chutes** (`chutes/moonshotai/Kimi-K3-TEE`, free for us).
-4. **OpenCode + `nex-agi/nex-n2.5-pro:free` via OpenRouter** — last fallback.
-
-The goal is that work never stops because one quota ran out. Unknown or unmeasurable quota
-counts as *no headroom* for that engine (fall through to the next one, never guess).
-Before a long Claude unit reaches 60 %, leave a durable handoff in `PROGRESS.md` (what is
-half-done, which files, next step) so the next engine can continue without loss. Fable 5.1
-is used only for design passes, never as a fallback work engine.
-
-**Inside a Claude Opus 5 iteration, delegate as much as possible** — to OpenCode with
-`nex-agi/nex-n2.5-pro:free` and OpenCode with Kimi K3 via Chutes (see `bin/delegate.sh`):
-scraping, bulk extraction, first drafts, tests, mechanical refactors, research digests.
-Opus decides, integrates and verifies. Treat free-model output as a draft: check numbers
-against primary sources before they land.
-
-**Codex review gate (GPT-5.6 Luna)** runs "immer wieder mal zwischendurch": `tick.sh` schedules
-it after every 3rd work iteration and before anything is declared finished — only while
-Codex is below 75 %. It reviews the diff since the last gate against the verbatim
-requirements, re-verifies claims live, and flips unproven `verified`/`implemented` rows back
-to `open` with a one-line reason. If Codex has no headroom, the gate falls back to Claude
-Opus 5, then Kimi K3 — but never to the engine that implemented the reviewed work.
-
-**Fable 5.1 is the design authority** ("hat den besten User-Interface-Geschmack").
-`tick.sh` schedules a Fable 5.1 design pass after every 2nd work iteration that touched the
-UI, while Claude has headroom. Fable reviews live screenshots (desktop + mobile, light +
-dark) and writes concrete, implementable directives into `DESIGN-DIRECTIVES.md` — Fable
-decides, others implement. The design bar, from Florian: **minimalistic and simple, very
-expressive, not overloaded. Key messages first. Graphical — many charts.**
-
-Framing for every review prompt: this is quality assurance of *our own* product before
-users see it. Never phrase a review as attacking or breaking something.
+The original commissioning request named Fable as design authority. That engine has been retired;
+the design bar still applies: minimal and simple, expressive, not overloaded, key messages first,
+graphical, and complete.
 
 ---
 

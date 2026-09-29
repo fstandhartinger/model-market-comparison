@@ -1,145 +1,283 @@
-#!/bin/bash
-# Run ONE Benchmark Heaven UX-workstream iteration with a given engine and role.
-#   iterate.sh <engine> <role>
-#   engine: claude-opus | claude-fable | codex-luna | opencode-kimi | opencode-nex
-#   role:   work | review | design
-set -uo pipefail
-ENGINE="${1:?engine}"; ROLE="${2:-work}"
-# Paths are overridable so the rebase-safety behaviour can be tested against a scratch repo
-# (test/d203-iterate-rebase-abort.test.mjs); the defaults are the real ones.
-REPO="${BH_UX_REPO:-/opt/model-market-comparison}"
-WS=$REPO/ops/ux-2026-09-12
-STATE="${BH_UX_STATE:-/opt/benchmarkheaven/state/ux}"
-LOGS="${BH_UX_LOGS:-/opt/benchmarkheaven/logs/ux}"
-mkdir -p "$STATE" "$LOGS" /opt/benchmarkheaven/state/ux-evidence
-TS=$(date -u +%Y%m%dT%H%M%SZ)
-LOG="$LOGS/$TS-$ROLE-$ENGINE.log"
+#!/usr/bin/env bash
+# One bounded UX unit, isolated to a per-unit worktree and surfaced as an unready PR.
+set -Eeuo pipefail
 
-for f in "$HOME/.config/dev-secrets.env" /root/.config/dev-secrets.env; do [ -r "$f" ] && { set -a; . "$f"; set +a; break; }; done
-[ -f /etc/profile.d/telegram.sh ] && . /etc/profile.d/telegram.sh
-export ARTIFICIAL_ANALYSIS_API_KEY="${ARTIFICIAL_ANALYSIS_API_KEY:-${ARTIF_ANALYSIS_API_KEY:-}}"
-export OPENROUTER_API_KEY="${OPENROUTER_API_KEY:-${OPEN_ROUTER_API_KEY:-}}"
-export PATH="$HOME/.local/bin:$HOME/.opencode/bin:$HOME/.npm-global/bin:/usr/local/bin:/usr/bin:/bin"
-# Billing guards: subscriptions only. Both keys would silently switch a CLI to API billing.
-unset OPENAI_API_KEY OPENAI_BASE_URL ANTHROPIC_API_KEY ANTHROPIC_AUTH_TOKEN
-
-cd "$REPO" || exit 1
-# A stopped rebase leaves conflict markers in the worktree and a detached HEAD, and every other job
-# sharing this checkout (merge queue, self-heal) needs a clean index. Never hand that to an agent:
-# on failure restore the pre-pull state and say so in the prompt. (25 Sep 2026: the daily published
-# while an iteration was mid-flight; the agent was launched onto a conflicted data/dataset.json.)
+# Compatibility probe for the established D203 startup-pull safety regression test. Cron units
+# use the four-argument worktree path below; this probe never starts an agent or accepts /opt paths.
 GIT_STATE_NOTE=""
-if ! git pull --rebase --autostash -q origin main >> "$LOG" 2>&1; then
-  echo "warn: pull failed" >> "$LOG"
-  if [ -d .git/rebase-merge ] || [ -d .git/rebase-apply ]; then
-    if git rebase --abort >> "$LOG" 2>&1; then
-      echo "warn: rebase conflicted; aborted and restored the pre-pull worktree" >> "$LOG"
-      GIT_STATE_NOTE="
-
-IMPORTANT — the automatic \`git pull --rebase origin main\` that starts every iteration hit a conflict
-and was aborted, so this checkout is back at its pre-pull state and is NOT up to date with
-origin/main. Any local commits are intact and unpushed. Rebase deliberately before other work:
-\`data/dataset.json\` is generated, so resolve it by taking origin's side
-(\`git checkout --ours data/dataset.json\`) and re-running \`node scripts/build-dataset.mjs\` so the
-data/raw edits are re-projected — never hand-merge it — then re-run the gates before pushing."
+legacy_startup_probe() {
+  local engine=$1 role=$2 repo state logs ts log
+  repo=$(realpath "${BH_UX_REPO:?}")
+  state=${BH_UX_STATE:-$HOME/.local/state/benchmarkheaven/ux-workstream}
+  logs=${BH_UX_LOGS:-$state/logs}
+  case "$repo/" in /opt/*) echo "iterate: refusing deploy checkout" >&2; return 70 ;; esac
+  case "$state/" in /opt/*) echo "iterate: state must stay outside /opt" >&2; return 70 ;; esac
+  case "$logs/" in /opt/*) echo "iterate: logs must stay outside /opt" >&2; return 70 ;; esac
+  mkdir -p "$state" "$logs"
+  ts=$(date -u +%Y%m%dT%H%M%SZ)
+  log=$logs/$ts-$role-$engine.log
+  cd "$repo"
+  if ! git pull --rebase --autostash -q origin main >> "$log" 2>&1; then
+    echo "warn: pull failed" >> "$log"
+    if [ -d .git/rebase-merge ] || [ -d .git/rebase-apply ]; then
+      if git rebase --abort >> "$log" 2>&1; then
+        echo "warn: rebase conflicted; aborted and restored the pre-pull worktree" >> "$log"
+        GIT_STATE_NOTE="IMPORTANT: the startup pull conflicted and was aborted. Preserve the local commit and uncommitted work. The generated dataset must be regenerated from raw inputs; never hand-merge it, and run build-dataset.mjs after taking origin's side."
+      else
+        GIT_STATE_NOTE="IMPORTANT: the startup pull failed and could not be aborted. Inspect git status and the rebase state before changing anything; do not commit or push until the checkout is sane."
+      fi
     else
-      GIT_STATE_NOTE="
-
-IMPORTANT — the automatic \`git pull --rebase origin main\` failed AND could not be aborted. This
-checkout may still hold conflict markers or a detached HEAD. Inspect \`git status\` and
-\`.git/rebase-merge\` and repair it before any other work; do not commit or push until it is sane."
+      GIT_STATE_NOTE="IMPORTANT: the startup pull failed before rebasing. The checkout may be behind origin/main; fetch and check git log origin/main..HEAD before committing."
     fi
-  else
-    GIT_STATE_NOTE="
-
-IMPORTANT — the automatic \`git pull --rebase origin main\` that starts every iteration failed
-(network, a lock, or a hook). This checkout may be behind origin/main; check
-\`git log origin/main..HEAD\` and fetch before you commit or push."
   fi
-fi
-
-ROLE_TEXT=""
-case "$ROLE" in
-  work) ROLE_TEXT="You are a WORK iteration. Follow section 3 of the brief: seed or read PROGRESS.md, pick the highest-value open items, implement, verify live, record evidence, commit, push, exit." ;;
-  review) ROLE_TEXT="You are a REVIEW GATE — quality assurance of our own product before users see it. Review everything changed since the last REVIEW-*.md (git log), against 00-REQUIREMENTS-VERBATIM.md and PROGRESS.md. Re-verify every 'implemented'/'verified' claim yourself on the live site (desktop + mobile, light + dark) and in the code/tests. You may set 'verified' only on items you did not implement. Flip anything unproven back to 'open' with a one-line reason. Fix small defects directly; list larger ones as open items. Write ops/ux-2026-09-12/REVIEW-$TS.md, commit, push. If — and only if — every item, including every CR- row from 04-CR-BRIEF.md, is verified live and X6's line-by-line audit passes, append the line ALL-ACCEPTED to PROGRESS.md." ;;
-  design) ROLE_TEXT="You are the DESIGN AUTHORITY (Fable 5.1). Florian's bar: minimalistic and simple, very expressive, not overloaded, key messages first, graphical with many charts. Take fresh screenshots of https://benchmarkheaven.com (Simple, Advanced, wizard, Benchmaxxing, a model page; desktop 1440px and mobile 390px; light and dark). Judge them. Write concrete, implementable directives into ops/ux-2026-09-12/DESIGN-DIRECTIVES.md (replace directives that are done, keep a short 'done' log), and pick the hero claim (R3.1) if not yet decided. Delegate implementation — do not build large UI changes yourself; small, surgical fixes are fine. Florian 2026-09-14: Fable 5.1 is used sparingly — keep this pass focused on what changed (currently the CR-1 Benchmarks page once implemented) and finish quickly. Commit, push, exit." ;;
-esac
-
-PROMPT="You are part of the autonomous Benchmark Heaven workstream on the Sandy server (user flori, repo $REPO). Florian's laptop is off; nobody will answer questions — decide carefully, document decisions, keep going.
-
-Read first, in this order:
-  ops/ux-2026-09-12/00-REQUIREMENTS-VERBATIM.md   (authoritative, verbatim — it wins every conflict)
-  ops/ux-2026-09-12/01-BRIEF.md                   (checklist R1.1…X7, engine rules, ground rules)
-  ops/ux-2026-09-12/02-ADDENDUM-HERMES-CHAT.md    (equally binding: ECI in Composite, 8 extra benchmarks, PRD review, one-writer rule)
-  ops/ux-2026-09-12/03-CHANGE-REQUESTS-VERBATIM.md (Florian's change requests from 2026-09-14 on — verbatim, equally authoritative, newer than 00 and wins conflicts with it)
-  ops/ux-2026-09-12/04-CR-BRIEF.md                (checklist CR-…; section 0 explains how it fits this loop — seed the CR rows into PROGRESS.md first)
-  ops/ux-2026-09-12/PROGRESS.md                   (ledger; create it from the brief + /opt/benchmarkheaven/state/USER-UX-CORRECTION-ACCEPTANCE.md if missing)
-  ops/ux-2026-09-12/DESIGN-DIRECTIVES.md and the newest ops/ux-2026-09-12/REVIEW-*.md (if present)
-
-Your engine: $ENGINE. $ROLE_TEXT
-
-Delegation: bulk and mechanical work goes to free models via
-  bash ops/ux-2026-09-12/bin/delegate.sh --help
-(OpenCode with nex-agi/nex-n2.5-pro:free via OpenRouter, or Kimi K3 via Chutes). Verify their output; never let an unverified number ship.
-
-Hard rules: keep main green (build-dataset, npm test, tsc) before pushing; no invented data; respect robots.txt/rate limits; never use API-key billing for codex or claude; do not disturb other services on this server; keep the iteration under ~3 hours and exit cleanly. Evidence goes to /opt/benchmarkheaven/state/ux-evidence/.$GIT_STATE_NOTE"
-
-echo "=== $TS $ROLE $ENGINE start ===" >> "$LOG"
-echo "$ENGINE $ROLE $TS $$" > "$STATE/running"
-
-run_with_codex_cap() {
-  "$@" >> "$LOG" 2>&1 &
-  local pid=$!
-  while kill -0 "$pid" 2>/dev/null; do
-    sleep 300
-    local w
-    w=$(python3 "$HOME/.claude/skills/agent-limits/limits.py" --json 2>/dev/null | python3 -c 'import json,sys; print((json.load(sys.stdin).get("codex") or {}).get("week_percent") or 0)' 2>/dev/null || echo 0)
-    if python3 -c "import sys; sys.exit(0 if float(sys.argv[1])>=80 else 1)" "$w"; then
-      echo "=== codex weekly window at ${w}% >= 80% — stopping run to keep the 20% reserve ===" >> "$LOG"
-      pkill -TERM -P "$pid" 2>/dev/null; kill -TERM "$pid" 2>/dev/null
-      echo "$(( $(date +%s) + 21600 ))" > "$STATE/codex-cooldown-until"
-      break
-    fi
-  done
-  wait "$pid"; return $?
 }
+if [ "$#" -eq 2 ] && [ -n "${BH_UX_REPO:-}" ]; then
+  legacy_startup_probe "$1" "$2"
+  exit $?
+fi
+[ "$#" -eq 4 ] || { echo "usage: iterate.sh <engine> <role> <state-dir> <job-slug>" >&2; exit 64; }
 
-rc=0
+ENGINE=$1
+ROLE=$2
+STATE=$3
+JOB=$4
+BIN=$(cd "$(dirname "$0")" && pwd)
+ROOT=$(git -C "$BIN/../../.." rev-parse --show-toplevel)
+WT_ROOT=/home/flori/wt
+WT=$WT_ROOT/$JOB
+BRANCH=jobs/$JOB
+RUN_DIR=$STATE/runs/$JOB
+TS=$(date -u +%Y%m%dT%H%M%SZ)
+
+case "$JOB" in
+  *[!A-Za-z0-9._-]*|'') echo "iterate: invalid job slug" >&2; exit 64 ;;
+esac
+case "$ROLE" in work|review|design) ;; *) echo "iterate: invalid role" >&2; exit 64 ;; esac
+case "$ROOT/" in /opt/*) echo "iterate: refusing deploy checkout" >&2; exit 70 ;; esac
+case "$STATE/" in /opt/*) echo "iterate: state must stay outside /opt" >&2; exit 70 ;; esac
+[ -d "$WT_ROOT" ] || { echo "iterate: worktree root missing" >&2; exit 66; }
+[ ! -e "$WT" ] || { echo "iterate: unit worktree already exists; inspect $WT" >&2; exit 73; }
+[ ! -e "$STATE/pending-unit.json" ] || { echo "iterate: another unit is pending" >&2; exit 73; }
+
 case "$ENGINE" in
-  claude-opus|claude-fable)
-    MODEL=claude-opus-5; [ "$ENGINE" = claude-fable ] && MODEL=claude-fable-5-1
-    timeout 10800 claude -p --model "$MODEL" --permission-mode bypassPermissions --output-format stream-json --verbose "$PROMPT" >> "$LOG" 2>&1; rc=$?
-    if grep -qiE "hit your (session|weekly)? ?limit|usage limit reached|limit will reset" "$LOG"; then
-      echo "$(( $(date +%s) + 3600 ))" > "$STATE/claude-cooldown-until"
-      echo "=== claude limit detected — cooling down Claude for 1h ===" >> "$LOG"
-    fi ;;
-  codex-luna)
-    case "$(codex login status 2>&1 | head -1)" in *ChatGPT*) ;; *) echo "ABORT: codex not on ChatGPT subscription" >> "$LOG"; rm -f "$STATE/running"; exit 1;; esac
-    # Florian 25.09.2026, binding (~/AGENTS.md §6 / ~/.hermes/model-economy-policy.md):
-    # "GPT-6 Luna at xhigh is the default. GPT-6 Sol only for the hardest tasks."
-    EFFORT=xhigh
-    run_with_codex_cap timeout 10800 codex exec --dangerously-bypass-approvals-and-sandbox \
-      -m "${BH_CODEX_MODEL:-gpt-6-luna}" -c model_reasoning_effort="$EFFORT" -c tools.web_search=true -C "$REPO" "$PROMPT" < /dev/null; rc=$? ;;
-  opencode-kimi|opencode-nex)
-    # 16 Sep 2026: opencode-kimi = best healthy premium-free route (Union Alpha via OpenRouter / AI/ML API /
-    # OpenCode Zen, else the free chain) from ~/bin/opencode-best; opencode-nex = quickest healthy free model
-    # (opencode-best --fast). Union Alpha steps can wait 1-3 min for a first token: the 3 h run timeout covers it.
-    # Pinned defaults if the monitor is down. stdin closed: `opencode run` blocks on an open non-TTY stdin.
-    if [ "$ENGINE" = opencode-kimi ]; then FW_ARGS=""; FW_DEFAULT=chutes/moonshotai/Kimi-K3-TEE
-    else FW_ARGS="--fast"; FW_DEFAULT="${BH_NEX_MODEL:-openrouter/nex-agi/nex-n2.5-pro:free}"; fi
-    FW_MODEL=$("$HOME/bin/opencode-best" $FW_ARGS 2>/dev/null) || FW_MODEL="$FW_DEFAULT"
-    [ -n "$FW_MODEL" ] || FW_MODEL="$FW_DEFAULT"
-    echo "=== free worker model: $FW_MODEL ===" >> "$LOG"
-    timeout 10800 opencode run -m "$FW_MODEL" "$PROMPT" < /dev/null >> "$LOG" 2>&1; rc=$?
-    if [ $rc -ne 0 ] && [ "$(stat -c%s "$LOG")" -lt 20000 ]; then
-      "$HOME/bin/llm-health" record "$FW_MODEL" fail --kind "exit $rc" --source benchmarkheaven-ux >/dev/null 2>&1
-      [ "$ENGINE" = opencode-kimi ] && echo "$(( $(date +%s) + 1800 ))" > "$STATE/kimi-cooldown-until"
-    fi ;;
+  claude-opus-medium) QENGINE=claude; if [ "$ROLE" = work ]; then QKIND=work; else QKIND=judgement; fi ;;
+  codex-luna-xhigh) QENGINE=codex ;;
+  devin-opus-medium) QENGINE=devin; QKIND=judgement; [ "$ROLE" != work ] || { echo "iterate: Devin Opus is judgement-only" >&2; exit 64; } ;;
+  devin-sonnet-high) QENGINE=devin; QKIND=work; [ "$ROLE" = work ] || { echo "iterate: Devin Sonnet is a work engine" >&2; exit 64; } ;;
+  opencode-free) QENGINE=free; QKIND=work ;;
+  *) echo "iterate: unsupported engine $ENGINE" >&2; exit 64 ;;
+esac
+if [ "$ENGINE" = codex-luna-xhigh ]; then
+  if [ "$ROLE" = work ]; then QKIND=work; else QKIND=judgement; fi
+fi
+if [ "$QENGINE" != free ]; then
+  QUOTA_PACE_CALLER="bh-ux:$ROLE" "$HOME/bin/quota-pace" allow "$QENGINE" --kind "$QKIND" || {
+    echo "iterate: $QENGINE is no longer eligible for $QKIND" >&2
+    exit 75
+  }
+fi
+if [ "$QENGINE" = free ]; then
+  [ "$ROLE" = work ] || { echo "iterate: free route cannot design or review" >&2; exit 75; }
+  [ "$(printenv BH_UX_MECHANICAL 2>/dev/null || true)" = 1 ] || {
+    echo "iterate: free OpenCode requires an explicitly mechanical work unit" >&2
+    exit 75
+  }
+fi
+case "$ENGINE" in
+  claude-*) BOARD_ENGINE=claude ;;
+  codex-*) BOARD_ENGINE=codex ;;
+  devin-*) BOARD_ENGINE=devin ;;
+  *) BOARD_ENGINE=opencode ;;
 esac
 
-echo "=== $(date -u +%FT%TZ) $ROLE $ENGINE end rc=$rc ===" >> "$LOG"
-echo "$TS $ROLE $ENGINE rc=$rc" >> "$STATE/history.log"
-rm -f "$STATE/running"
-find "$LOGS" -name '*.log' -size +40M -exec truncate -s 20M {} \;
-find "$LOGS" -name '*.log' -mtime +14 -delete
-exit $rc
+mkdir -p "$RUN_DIR" "$STATE/history"
+git -C "$ROOT" fetch --quiet origin main
+git -C "$ROOT" worktree add -b "$BRANCH" "$WT" origin/main
+BASE=$(git -C "$WT" rev-parse HEAD)
+CR_JSON=$(~/bin/bh-allocate-cr --owner "$JOB" --title "Benchmark Heaven UX $ROLE unit")
+CR=$(python3 -c 'import json,sys; print(json.load(sys.stdin)["cr"])' <<< "$CR_JSON")
+python3 - "$STATE/pending-unit.json" "$JOB" "$BRANCH" "$WT" "$CR" "$ENGINE" "$ROLE" "$BASE" <<'PY_PENDING'
+import datetime, json, os, sys, tempfile
+path, job, branch, wt, cr, engine, role, base = sys.argv[1:]
+row = {
+    "job": job, "branch": branch, "worktree": wt, "cr": cr,
+    "engine": engine, "role": role, "base": base,
+    "started_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+}
+fd, tmp = tempfile.mkstemp(dir=os.path.dirname(path), prefix=".pending-unit.")
+with os.fdopen(fd, "w") as f:
+    json.dump(row, f, sort_keys=True)
+    f.write("\n")
+os.replace(tmp, path)
+PY_PENDING
+echo "$$ $ROLE $ENGINE $TS" > "$STATE/running"
+printf "%s %s %s started\n" "$TS" "$ROLE" "$ENGINE" >> "$STATE/history.log"
+cleanup() {
+  if [ -f "$STATE/running" ] && [ "$(awk '{print $1}' "$STATE/running")" = "$$" ]; then
+    rm -f "$STATE/running"
+  fi
+}
+trap cleanup EXIT
+cat > "$RUN_DIR/PROMPT.md" <<EOF_PROMPT
+You are continuing Benchmark Heaven's UX workstream in a disposable per-unit worktree.
+
+Read these repository files first:
+- ops/ux-2026-09-12/00-REQUIREMENTS-VERBATIM.md
+- ops/ux-2026-09-12/01-BRIEF.md
+- ops/ux-2026-09-12/02-ADDENDUM-HERMES-CHAT.md
+- ops/ux-2026-09-12/03-CHANGE-REQUESTS-VERBATIM.md
+- ops/ux-2026-09-12/04-CR-BRIEF.md
+- ops/ux-2026-09-12/PROGRESS.md
+- ops/ux-2026-09-12/DESIGN-DIRECTIVES.md, if present
+
+Current role: $ROLE
+Engine: $ENGINE
+Allocated change request: $CR
+Worktree: $WT
+Branch: $BRANCH
+
+Keep the complete /jev-models page structure required by /home/flori/AGENTS.md: capability bar chart; synced capability-vs-speed and capability-vs-cost charts with 3D toggle; composite score chart; direct comparison; full table; method notes, presets, What-If and revision history. Keep wrappers and subsidised entries in a separately labelled section below rankings.
+
+Role instructions:
+- work: choose one small, well-specified open requirement and implement it. If the only next item requires a product/design/data decision, stop with no edits and explain that in OUTPUT.md. When using free OpenCode, work only on the first explicit MECHANICAL-OPEN line in ops/ux-2026-09-12/MECHANICAL-QUEUE.md; if none exists, make no edits. Do not make product, design, benchmark, security or publication decisions. Mark a completed queue line MECHANICAL-DONE with a concise result.
+- design: make concise, actionable changes to DESIGN-DIRECTIVES.md based on the written requirements and current evidence. Do not write factual or policy claims without provenance.
+- review: perform quality assurance of our own product. Inspect recent relevant changes against the requirements and record concrete findings in a dated REVIEW file. Mark nothing verified without evidence from an engine different from the implementer and a live deployed check.
+- Do not set an item to implemented until its code is merged and deployed. Do not set verified without independent live verification.
+
+Hard rules:
+- Work only in this branch and worktree. Do not read or write /opt/model-market-comparison or any other deploy checkout. The process mount denies writes to /opt.
+- Do not create commits, push branches, open PRs, deploy, change crontabs, send messages, or edit files outside this worktree. The wrapper owns those steps.
+- Do not run tests or download dependencies. The serialized merge queue runs required gates after owner review.
+- Do not read secrets, credentials, customer data or held-out evaluation data. Do not write them into files or output.
+- Keep the change small and explain the files changed and any evidence or limitations in OUTPUT.md.
+Evidence goes to $RUN_DIR/evidence. $GIT_STATE_NOTE
+
+The worktree starts from origin/main at $BASE. There are no local commits to preserve.
+EOF_PROMPT
+cp "$RUN_DIR/PROMPT.md" "$WT/PROMPT.md"
+
+run_sandbox() {
+  bwrap --bind / / --ro-bind /opt /opt --proc /proc --dev /dev --clearenv \
+    --setenv HOME "$HOME" \
+    --setenv USER flori \
+    --setenv LOGNAME flori \
+    --setenv LANG C.UTF-8 \
+    --setenv TERM dumb \
+    --setenv PATH "$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/.opencode/bin:/usr/local/bin:/usr/bin:/bin" \
+    --setenv OPENAI_API_KEY "" \
+    --setenv AGENT_BOARD_JOBDIR "$RUN_DIR" \
+    --setenv AGENT_BOARD_NAME "$BOARD_ENGINE:$JOB" \
+    --chdir "$WT" "$@"
+}
+KIND=$QKIND
+set +e
+case "$ENGINE" in
+  codex-luna-xhigh)
+    run_sandbox --setenv AGENT_PAID_ONLY 1 --setenv AGENT_SKIP_CLAUDE_FALLBACK 1 -- \
+      "$HOME/bin/run-codex.sh" "$WT" gpt-6-luna xhigh "$KIND" \
+      >"$RUN_DIR/runner.log" 2>&1
+    RUN_RC=$?
+    ;;
+  claude-opus-medium)
+    run_sandbox -- /bin/bash -c '
+      QUOTA_PACE_CALLER=bh-ux-claude "$HOME/bin/quota-pace" allow claude --kind "$1" || exit 75
+      printf "%s\n" "claude-opus-5-5 medium" > .engine
+      prompt="$(cat /home/flori/bin/job-preamble.txt "$2/PROMPT.md")"
+      env -u ANTHROPIC_API_KEY timeout --signal=INT --kill-after=30 10800 \
+        /home/flori/.local/bin/claude -p "$prompt" --model opus --effort medium \
+        --dangerously-skip-permissions --output-format text > OUTPUT.md
+    ' ux-claude "$KIND" "$WT" >"$RUN_DIR/runner.log" 2>&1
+    RUN_RC=$?
+    ;;
+  devin-opus-medium)
+    run_sandbox --setenv DEVIN_MODEL claude-opus-5-5-medium \
+      --setenv DEVIN_TIMEOUT_SEC 10800 -- \
+      "$HOME/bin/run-devin.sh" "$WT" judgement >"$RUN_DIR/runner.log" 2>&1
+    RUN_RC=$?
+    ;;
+  devin-sonnet-high)
+    run_sandbox --setenv DEVIN_MODEL claude-sonnet-5-5-high \
+      --setenv DEVIN_TIMEOUT_SEC 10800 -- \
+      "$HOME/bin/run-devin.sh" "$WT" work >"$RUN_DIR/runner.log" 2>&1
+    RUN_RC=$?
+    ;;
+  opencode-free)
+    run_sandbox --setenv AGENT_RUNNER opencode --setenv AGENT_KIND work \
+      --setenv AGENT_PAID_ONLY 1 -- \
+      "$HOME/bin/agent-run.sh" --prompt-file "$WT/PROMPT.md" --out "$WT/OUTPUT.md" \
+        --dir "$WT" --timeout 10800 >"$RUN_DIR/runner.log" 2>&1
+    RUN_RC=$?
+    ;;
+esac
+set -e
+
+ENGINE_USED=$(cat "$WT/.engine" 2>/dev/null || printf '%s' "$ENGINE")
+for file in PROMPT.md OUTPUT.md .engine .codex-attempt.log .devin-attempt.log; do
+  if [ -e "$WT/$file" ]; then mv "$WT/$file" "$RUN_DIR/$file"; fi
+done
+[ -f "$RUN_DIR/.engine" ] && ENGINE_USED=$(cat "$RUN_DIR/.engine")
+printf '%s %s %s rc=%s actual=%s\n' "$TS" "$ROLE" "$ENGINE" "$RUN_RC" "$ENGINE_USED" >> "$STATE/history.log"
+if [ "$RUN_RC" -ne 0 ]; then
+  echo "iterate: engine exited $RUN_RC; unit retained at $WT; see $RUN_DIR/runner.log" >&2
+  exit "$RUN_RC"
+fi
+[ -s "$RUN_DIR/OUTPUT.md" ] || {
+  echo "iterate: runner produced no OUTPUT.md; retained $WT and $RUN_DIR" >&2
+  exit 65
+}
+[ "$(git -C "$WT" rev-parse HEAD)" = "$BASE" ] || {
+  echo "iterate: agent committed; refusing an agent-created commit" >&2
+  exit 65
+}
+git -C "$WT" diff --check
+git -C "$WT" add -A
+[ -n "$(git -C "$WT" diff --cached --name-only)" ] || {
+  rm -f "$STATE/pending-unit.json"
+  echo "iterate: no code or documentation change; no PR opened" >&2
+  exit 65
+}
+if git -C "$WT" diff --cached --name-only | rg -q '(^|/)(\.env|.*credentials|.*secret)|jevbench-sealed'; then
+  echo "iterate: staged paths include a forbidden secret or held-out-data name" >&2
+  exit 65
+fi
+git -C "$WT" diff --cached --stat > "$RUN_DIR/staged-stat.txt"
+case "$ENGINE_USED" in
+  *claude*|*opus*) COAUTHOR="Co-Authored-By: Claude Opus 5.5 (Benchmark Heaven UX workstream) <noreply@anthropic.com>" ;;
+  *sonnet*) COAUTHOR="Co-Authored-By: Claude Sonnet 5.5 (Devin, Benchmark Heaven UX workstream) <noreply@anthropic.com>" ;;
+  *codex*) COAUTHOR="Co-Authored-By: Codex GPT-6 Luna (Benchmark Heaven UX workstream) <noreply@openai.com>" ;;
+  *) COAUTHOR="Co-Authored-By: OpenCode (Benchmark Heaven UX workstream) <noreply@openai.com>" ;;
+esac
+git -C "$WT" commit -m "$CR: Benchmark Heaven UX $ROLE unit" -m "$COAUTHOR"
+git -C "$WT" push -u origin "$BRANCH"
+cat > "$RUN_DIR/PR-BODY.md" <<EOF_BODY
+## Change
+
+$CR — Benchmark Heaven UX $ROLE unit, created from the isolated UX workstream.
+
+$(cat "$RUN_DIR/OUTPUT.md")
+
+## Review and release
+
+- Work is isolated in branch $BRANCH and was prepared by the supervised UX workstream.
+- No tests were run by the unit; the serialized Benchmark Heaven merge queue runs the required gates.
+- This PR has not been marked merge-ready. Owner review is required first.
+EOF_BODY
+PR_JSON=$(~/bin/bh-pr open --head "$BRANCH" --title "$CR: Benchmark Heaven UX $ROLE unit" \
+  --body-file "$RUN_DIR/PR-BODY.md")
+python3 - "$STATE/pending-pr.json" "$PR_JSON" "$JOB" "$BRANCH" "$CR" "$WT" "$ENGINE_USED" <<'PY_PR'
+import datetime, json, os, sys, tempfile
+path, pr_text, job, branch, cr, wt, engine = sys.argv[1:]
+pr = json.loads(pr_text)
+row = {
+    "number": pr["number"], "url": pr["url"], "state": "OPEN",
+    "job": job, "branch": branch, "cr": cr, "worktree": wt, "engine": engine,
+    "opened_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+}
+fd, tmp = tempfile.mkstemp(dir=os.path.dirname(path), prefix=".pending-pr.")
+with os.fdopen(fd, "w") as f:
+    json.dump(row, f, sort_keys=True)
+    f.write("\n")
+os.replace(tmp, path)
+PY_PR
+rm -f "$STATE/pending-unit.json"
+echo "PR $PR_JSON"

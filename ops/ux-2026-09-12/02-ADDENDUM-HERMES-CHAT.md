@@ -11,6 +11,21 @@ portfolio round Florian ordered on 2026-09-12) and `.../policy.md` (its quality 
 
 ---
 
+## Operating update — 2026-09-29
+
+This addendum preserves the original requirements. Its historical Fable assignment and one-writer
+coordination text below are superseded by the current engine and site workflow: design and review
+use quota-selected Claude Opus 5.5 medium or Codex GPT-6 Luna xhigh; work uses the quota-selected
+work engine, with free OpenCode limited to mechanical tasks. Fable is retired and Claude-backed
+UX units are capped at one in any rolling 24-hour period.
+
+The site repository now uses one worktree per job, an allocated CR, a PR, owner review, and the
+serialized merge queue. The UX owner lease marks this track active; it does not grant exclusive
+write access to the site repository. Jobs never write to the /opt deploy checkout. State and
+evidence stay under /home/flori/.local/state/benchmarkheaven/ux-workstream.
+
+---
+
 ## E — Extra benchmarks and scoring (Florian → Hermes, 2026-09-11/12)
 
 - **E1 — ECI into the Composite** (2026-09-11 10:32 UTC, newer than the 2026-09-10 "keep the
