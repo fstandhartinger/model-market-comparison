@@ -62,7 +62,7 @@ test('CR-66.7: runDaily --scope prices collects OpenRouter without efficiency an
     assert.equal(await readFile(join(result.run_dir, 'work/fetch-live-args.txt'), 'utf8'), 'or-prices\n');
     const names = result.steps.map((s) => s.name);
     assert.ok(names.includes('fetch-or') && result.steps.find((s) => s.name === 'fetch-or').ok);
-    for (const skipped of ['worker-catalog', 'fetch-aa', 'fetch-da', 'fetch-coding-v1.5', 'fetch-epoch-eci', 'build-epoch-provenance', 'fetch-openrouter-benchmarks', 'fetch-lumina-ledger', 'review-live', 'refresh-benchmarks']) {
+    for (const skipped of ['capture-benchmarks', 'worker-catalog', 'fetch-aa', 'fetch-da', 'fetch-coding-v1.5', 'fetch-epoch-eci', 'build-epoch-provenance', 'fetch-openrouter-benchmarks', 'fetch-lumina-ledger', 'review-live', 'refresh-benchmarks']) {
       assert.ok(!names.includes(skipped), `${skipped} must not run in the prices scope`);
     }
     assert.equal(result.workers, undefined);

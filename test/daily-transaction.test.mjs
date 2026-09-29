@@ -39,6 +39,7 @@ test('actual isolated daily transaction cannot alter main or remote after a part
       'data/raw/aa-coding-agents.json': JSON.stringify({ version: '1.4', fixture: true }),
       'data/raw/artificialanalysis.json': 'ACCEPTED_FIXTURE_BYTES\n',
       'ops/rebuild-2026-09/bin/pick-worker-models.mjs': `console.log(JSON.stringify({free_verified:[],cheap_verified:[{id:'deepseek/fixture',family:'deepseek',aa_intelligence_index:34,input_per_1m:0,output_per_1m:0},{id:'z-ai/fixture',family:'z-ai',aa_intelligence_index:34,input_per_1m:0,output_per_1m:0}]}));`,
+      'ops/daily/phase-step.mjs': `import {writeFileSync} from 'node:fs';import {join} from 'node:path';if(process.argv[2] !== 'capture') throw new Error('unexpected review');writeFileSync(join(process.argv[3], 'reports/captured-before-failure.json'), JSON.stringify({capture_only:true}));`,
       'scripts/fetch-live.mjs': `import {writeFileSync} from 'node:fs';writeFileSync('data/raw/artificialanalysis.json','PARTIAL_STAGED_FIXTURE');throw new Error('synthetic incomplete collection');`,
     };
     for (const [path, body] of Object.entries(files)) { await mkdir(join(repo, path, '..'), { recursive: true }); await writeFile(join(repo, path), body); }
@@ -50,6 +51,9 @@ test('actual isolated daily transaction cannot alter main or remote after a part
     const result = await runDaily({ repo, home: join(directory, 'home'), dryRun: true });
     assert.equal(result.exit_code, 1); assert.equal(result.published, false);
     assert.match(result.error, /synthetic incomplete collection/);
+    assert.deepEqual(JSON.parse(await readFile(join(result.run_dir, 'reports/captured-before-failure.json'), 'utf8')), {capture_only:true});
+    assert.ok(result.steps.findIndex((s) => s.name === 'capture-benchmarks') < result.steps.findIndex((s) => s.name === 'worker-catalog'));
+    assert.ok(!result.steps.some((s) => s.name === 'refresh-benchmarks'));
     assert.equal(await readFile(join(repo, 'data/raw/artificialanalysis.json'), 'utf8'), 'OWNER_LOCAL_FIXTURE\n');
     assert.equal(await git('rev-parse', 'HEAD'), before);
     assert.equal((await exec('git', ['--git-dir', origin, 'rev-parse', 'main'])).stdout.trim(), before);

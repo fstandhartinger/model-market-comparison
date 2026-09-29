@@ -16,7 +16,7 @@ import { benchmarkReviewBudget } from './step-budget.mjs';
 // anything slightly conservative.
 const startedAt = Date.now();
 const [step, directory] = process.argv.slice(2);
-if (!directory || !['live', 'benchmarks'].includes(step)) throw new Error('Usage: node ops/daily/phase-step.mjs live|benchmarks RUN_DIR');
+if (!directory || !['capture', 'live', 'benchmarks'].includes(step)) throw new Error('Usage: node ops/daily/phase-step.mjs capture|live|benchmarks RUN_DIR');
 const runDir = resolve(directory);
 process.env.BH_WORKER_MAX_PRICE_PER_1M = '4';
 process.env.BH_WORKER_REASONING_EFFORT = 'low';
@@ -28,9 +28,12 @@ await mkdir(process.env.BH_STATE, { recursive: true });
 const runId = runDir.split('/').filter(Boolean).at(-1) ?? null;
 try {
   // An unusable BH_DAILY_REUSE fails the step with a step result, rather than guessing.
-  const reuse = await openReuseCache({ dir: process.env.BH_DAILY_REUSE_DIR || null, enabled: reuseEnabled() && !!process.env.BH_DAILY_REUSE_DIR });
+  const reuse = await openReuseCache({ dir: process.env.BH_DAILY_REUSE_DIR || null, enabled: step !== 'capture' && reuseEnabled() && !!process.env.BH_DAILY_REUSE_DIR });
   let result;
-  if (step === 'benchmarks') {
+  if (step === 'capture') {
+    const { refreshBenchmarks } = await import('./refresh-benchmarks.mjs');
+    result = await refreshBenchmarks({ runDir, captureOnly: true });
+  } else if (step === 'benchmarks') {
     const { refreshBenchmarks } = await import('./refresh-benchmarks.mjs');
     const budget = benchmarkReviewBudget({ startedAt });
     console.log(`benchmark review budget: admitting units until ${new Date(budget.deadlineAt).toISOString()}`);
