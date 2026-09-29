@@ -166,6 +166,46 @@ print(json.dumps([r['id'] for r in rows]))`], { maxBuffer: 8_000_000 });
   assert.equal(parseQuarantine(noEntry), null);
 });
 
+test('D256: the generic reviewed-header guard quarantines an appended column too', async () => {
+  // 26 plan entries state a reviewed header through the generic `csv` recipe's `require_header`, and
+  // every one of them had the same gap: the check runs before any row is read, so an appended column
+  // raised a plain error, the arm failed instead of quarantining, and its capture counted as accepted
+  // evidence. One rule for all of them. The fixture is whichever entry the plan actually states, so
+  // this cannot pass by asserting a board we no longer collect.
+  const plan = JSON.parse(await readFile('data/raw/benchmarks/collection-plan.json', 'utf8')).entries;
+  const withHeader = plan.filter((e) => e.parser?.kind === 'csv' && Array.isArray(e.parser.require_header)
+    && registry.entries.some((r) => r.id === e.benchmark_id));
+  assert.ok(withHeader.length, 'at least one plan entry states a reviewed CSV header');
+  const fixture = withHeader[0];
+  const header = fixture.parser.require_header;
+  const run = (head) => exec('python3', ['-c', `
+import importlib.util,json,sys
+spec=importlib.util.spec_from_file_location('c','${COLLECTOR}')
+m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+reg=json.load(open('data/raw/benchmarks/registry.json'))
+plan=json.load(open('data/raw/benchmarks/collection-plan.json'))['entries']
+pe=[e for e in plan if e['benchmark_id']==sys.argv[1]][0]
+entry=[e for e in reg['entries'] if e['id']==pe['benchmark_id']][0]
+head=json.loads(sys.argv[2])
+print(len(m.parse(','.join(head)+chr(10)+','.join(['1']*len(head)),pe['parser'],None,entry)))`,
+    fixture.benchmark_id, JSON.stringify(head)], { maxBuffer: 8_000_000 });
+
+  // Appended: a quarantine naming the column.
+  const appended = await run([...header, 'a_new_column']).then(() => null, (e) => e);
+  assert.ok(appended, 'an appended column must not parse');
+  const quarantine = parseQuarantine(appended);
+  assert.ok(quarantine, `the failure must be a quarantine, got: ${String(appended.message).slice(-300)}`);
+  assert.equal(quarantine.entry, fixture.benchmark_id);
+  assert.deepEqual(quarantine.columns, ['a_new_column']);
+  assert.deepEqual(quarantine.unreviewed, []);
+
+  // Renamed: still a hard failure. This guard states an exact header and must keep doing so.
+  const renamed = await run([...header.slice(0, -1), 'renamed_column']).then(() => null, (e) => e);
+  assert.ok(renamed, 'a renamed column must not parse');
+  assert.equal(parseQuarantine(renamed), null, 'a renamed column is not a quarantine');
+  assert.match(renamed.message, /CSV header changed/);
+});
+
 test('a caller with no registry entry keeps the original family floor', async () => {
   // Only a test parses without the registry. It must still not accept an arbitrary protocol: without
   // a reviewed set there is no fence to quarantine against, so the family literal is the floor.

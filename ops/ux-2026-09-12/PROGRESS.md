@@ -19340,6 +19340,14 @@ rows untouched, every other source through.
 mean our recipe points at the wrong artifact, and that is a question about us, not about the board. With
 no registry entry there is no arm to quarantine, so there too it stays a hard failure.
 
+**And the rule is not VulcanBench-shaped.** 26 plan entries state a reviewed header through the generic
+`csv` recipe's `require_header`, and every one of them had the identical gap — that check also runs
+before any row is read. Fixing only the board that happened to break today would have left 26 arms one
+appended column away from the same lost day, so both guards go through the same
+`appended_columns()` / `quarantine_columns()` pair. Nothing publishes either way; what changes is that
+the arm reports as `attention` rather than `failing`, its captures stop counting as accepted evidence,
+and it escalates to Florian on the third consecutive run.
+
 The quarantine vocabulary grew one field rather than a parallel mechanism: `unreviewed_columns` beside
 `unreviewed_protocols`, with `unreviewedFacts()` in `lib/source-quarantine.mjs` as the single place that
 turns either into prose — so source-health's markdown and the human-action block can never describe the
@@ -19379,7 +19387,7 @@ nothing, which is the cheaper error.
 
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
-| D256 (new) | **implemented**, pending non-implementer verification | `iter273-d256/before/` (the 02:33 dry run's own receipts: `dry-run-npm-test.log` 5 failures, `dry-run-vulcanbench-retained.txt` the header raise, `dry-run-summary.txt` `FEHLER: Command failed: npm test`); `iter273-d256/d256/verification.json` **17/17** with three controls; `test/d225-source-arm-quarantine.test.mjs` +1 test | One line: `node ops/ux-2026-09-12/bin/verify-d256-column-quarantine.mjs <outDir>` (clear the out dir first; no network, no model call — it replays the 02:33 run's own captured bytes). Controls: check 3 cuts the columns *and* drops v3.16 and the arm collects; check 3b cuts only the columns and it quarantines on the revision alone; check 5 removes the quarantine record and the same tree reproduces the 2026-09-29 failures. |
+| D256 (new) | **implemented**, pending non-implementer verification | `iter273-d256/before/` (the 02:33 dry run's own receipts: `dry-run-npm-test.log` 5 failures, `dry-run-vulcanbench-retained.txt` the header raise, `dry-run-summary.txt` `FEHLER: Command failed: npm test`); `iter273-d256/d256/verification.json` **17/17** with three controls; `test/d225-source-arm-quarantine.test.mjs` +2 tests (the second covers the generic `require_header` guard the other 26 entries use, with the fixture read out of the plan rather than named) | One line: `node ops/ux-2026-09-12/bin/verify-d256-column-quarantine.mjs <outDir>` (clear the out dir first; no network, no model call — it replays the 02:33 run's own captured bytes). Controls: check 3 cuts the columns *and* drops v3.16 and the arm collects; check 3b cuts only the columns and it quarantines on the revision alone; check 5 removes the quarantine record and the same tree reproduces the 2026-09-29 failures. |
 | D256.1 (new) | **open** — every factual precondition proven, the one decision not taken | `iter273-d256/d256-1-evidence/FINDINGS.md` + the four primary artifacts beside it | Proven here: v3.16 is byte-equal to v3.4 on all 13 D223 invariants, declares the protocol its rows state, amends the whole chain incl. v3.4 and v3.15, and ran the identical 23-task set (115 rows = 23 × 5 efforts); all five board efforts resolve to real catalog configurations `gpt-6-luna::{max,xhigh,high,medium,low}`; and the board's own footnote defines `passed_of` as the denominator of `passed` and `combined_timeouts_zero` as the combined score over all 23 runs with each timeout scored 0 — the figure **the operator itself** uses for its best-effort tags. **Not taken:** whether a timed-out run may be published at that figure instead of withheld (iteration 143's rule). §4 of FINDINGS states three readings and argues for publishing `combined_timeouts_zero`; it changes what a published cell means for a timed-out run, so it is a `scoring.notes` change wanting a critic round, not a parser edit. Then mechanical: widen the reviewed header to 20 columns and the guard's "Exact 18-column header" with it, add v3.16 to the notes *and* the guard allow-list (D188/D223 compare all three sets), extend `parseVulcanbenchFrontierLabel`, and move the guard's date annotation off 2026-09-19 — the page now prints `Updated 2026-09-28` and D188 re-derives that from the page. |
 | Claude Sonnet 5.5 (first-party catalog) | **implemented**, pending non-implementer verification | `data/raw/claude-code.json` (`collected_at` 2026-09-29, 15 models); `test/dataset.test.mjs` pins id, $2/$10, cache write/read, batch output, and that Sonnet 5 is still active | Re-fetched and cross-read off the pricing page in this iteration, not taken from the run. |
 | benchmark-view payload guard | **implemented**, pending non-implementer verification | `test/benchmark-view.test.mjs` (relative bound + score-row bound + 900 KB tripwire) | The old 800 KB bound had 0.1 % margin and was red on a day with no new axis. |
@@ -19387,7 +19395,7 @@ nothing, which is the cheaper error.
 
 **Gates on the committed tree, sequentially, unpiped:** `node scripts/build-dataset.mjs`
 **869 / 674 / 94 / 3,119** (only `generated_at`/`composite.collected_at` moved; restored);
-`CI=true npm test` **1,673 tests, 1,672 pass, 0 fail, 1 skip**, exit 0; `npx tsc --noEmit -p .` exit 0;
+`CI=true npm test` **1,674 tests, 1,673 pass, 0 fail, 1 skip**, exit 0; `npx tsc --noEmit -p .` exit 0;
 `node scripts/validate-benchmark-registry.mjs` **293 entries, 29 AA field mappings, 240 verified
 evidence files**. Logs in `iter273-d256/gates/`.
 

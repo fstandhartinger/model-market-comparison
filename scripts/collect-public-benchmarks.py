@@ -121,7 +121,17 @@ def parse(source,spec,load_source,entry=None):
     elif kind=='csv':
         rows=csvrows(source)
         # Optional version guards: an exact header and per-row constants (e.g. the question count).
-        if 'require_header' in spec and list(rows[0].keys() if rows else [])!=spec['require_header']:raise ValueError('CSV header changed')
+        # D256: 26 plan entries state a reviewed header here, and every one of them had the same gap the
+        # VulcanBench recipe had — an appended column raised before any quarantine path existed, so the
+        # arm failed instead of quarantining and its capture counted as accepted evidence. One rule for
+        # all of them: appended columns quarantine the arm, any other header change stays a hard failure.
+        if 'require_header' in spec:
+            seen=list(rows[0].keys() if rows else [])
+            added=appended_columns(spec['require_header'],seen)
+            if added is None:raise ValueError('CSV header changed')
+            if added:
+                if entry is None:raise ValueError('CSV header changed')
+                raise quarantine_columns(entry['id'],added,spec['require_header'],'the reviewed columns are unchanged and in order, but what the new column(s) mean for the published comparison has not been reviewed')
         for field,expected in spec.get('require_values',{}).items():
             if any(r.get(field)!=expected for r in rows):raise ValueError(f'CSV {field} differs from {expected}')
     elif kind=='json':rows=at(json.loads(source),spec.get('row_path',''))
