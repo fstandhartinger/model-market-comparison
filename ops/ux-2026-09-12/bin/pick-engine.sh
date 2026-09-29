@@ -17,7 +17,7 @@ esac
 engine_family() {
   case "$1" in
     claude|claude-*) echo claude ;;
-    codex|codex-*) echo codex ;;
+    codex|codex-*|gpt-6-*) echo codex ;;
     devin|devin-*) echo devin ;;
     *) echo "" ;;
   esac
@@ -28,7 +28,7 @@ if [ -r "$HISTORY" ]; then
   claude_recent=$(python3 - "$HISTORY" <<'PY_INNER'
 import datetime, sys
 cutoff = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=24)
-count = 0
+used = set()
 for line in open(sys.argv[1], errors="replace"):
     fields = line.split()
     if len(fields) < 3:
@@ -37,47 +37,43 @@ for line in open(sys.argv[1], errors="replace"):
         stamp = datetime.datetime.strptime(fields[0], "%Y%m%dT%H%M%SZ").replace(tzinfo=datetime.timezone.utc)
     except ValueError:
         continue
-    engine = fields[2].split(":", 1)[0]
+    engine = next((field.split("=", 1)[1] for field in fields[3:] if field.startswith("actual=")), fields[2])
+    engine = engine.split(":", 1)[0]
     if stamp >= cutoff and fields[1] in ("work", "review", "design") and (engine.startswith("claude") or engine.startswith("devin-opus")):
-        count += 1
-print(count)
+        used.add(fields[0])
+print(len(used))
 PY_INNER
 )
 fi
 
 avoid_family=$(engine_family "$AVOID")
-order=claude,codex,devin
-if [ -n "$avoid_family" ]; then
-  order=$(printf '%s' "$order" | tr ',' '\n' | awk -v a="$avoid_family" '$0 != a' | paste -sd, -)
-fi
-# At most one Claude-backed UX unit may start in a rolling 24-hour period.
-if [ "$claude_recent" -ge 1 ]; then
-  if [ "$MODE" = work ]; then
-    order=$(printf '%s' "$order" | tr ',' '\n' | awk '$0 != "claude"' | paste -sd, -)
-  else
-    order=$(printf '%s' "$order" | tr ',' '\n' | awk '$0 != "claude" && $0 != "devin"' | paste -sd, -)
-  fi
-fi
-if [ -z "$order" ]; then
-  echo none
-  exit 0
+picked=$(QUOTA_PACE_CALLER="bh-ux:$MODE" "$QP" pick --kind "$KIND")
+
+# Reviews must use a different engine family from the implementation.
+if [ "$MODE" = review ] && [ -n "$avoid_family" ] && [ "$(engine_family "$picked")" = "$avoid_family" ]; then
+  picked=none
 fi
 
-picked=$(QUOTA_PACE_CALLER="bh-ux:$MODE" "$QP" pick --kind "$KIND" --order "$order")
-case "$picked" in
-  claude|codex|devin)
-    if [ "$MODE" = work ]; then
-      pace_status=$("$QP" status 2>&1 || true)
-      pace_line=$(printf '%s\n' "$pace_status" | awk -v engine="$picked" '$1 == engine { print; exit }')
-      case "$pace_line" in
-        *"OVER PACE"*|'') picked=free ;;
-      esac
-    fi
-    if [ "$picked" != free ] && ! QUOTA_PACE_CALLER="bh-ux:$MODE-allow" "$QP" allow "$picked" --kind "$KIND" >/dev/null 2>&1; then
+# Cap Claude-backed UX units. Devin Opus is included for design/review; Devin Sonnet work is not.
+if [ "$claude_recent" -ge 1 ]; then
+  case "$MODE:$picked" in
+    work:claude|design:claude|review:claude|design:devin|review:devin)
       if [ "$MODE" = work ]; then picked=free; else picked=none; fi
-    fi
-    ;;
-esac
+      ;;
+  esac
+fi
+
+# quota-pace status can impose a stricter pace line than the paid-engine hard-stop admission.
+if [ "$MODE" = work ] && [[ "$picked" =~ ^(claude|codex|devin)$ ]]; then
+  pace_status=$("$QP" status 2>&1 || true)
+  pace_line=$(printf '%s\n' "$pace_status" | awk -v engine="$picked" 'tolower($1) == engine { print; exit }')
+  case "$pace_line" in
+    *"OVER PACE"*|'') picked=free ;;
+  esac
+fi
+if [[ "$picked" =~ ^(claude|codex|devin)$ ]] && ! QUOTA_PACE_CALLER="bh-ux:$MODE-allow" "$QP" allow "$picked" --kind "$KIND" >/dev/null 2>&1; then
+  if [ "$MODE" = work ]; then picked=free; else picked=none; fi
+fi
 case "$MODE:$picked" in
   work:claude) echo claude-opus-medium ;;
   work:codex) echo codex-luna-xhigh ;;

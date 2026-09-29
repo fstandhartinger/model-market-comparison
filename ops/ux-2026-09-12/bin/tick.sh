@@ -73,18 +73,24 @@ except Exception:
     raise SystemExit(2)
 PY_INNER
 ) || { log "pending PR receipt is invalid; failing closed"; exit 0; }
-  pr_state=$(gh pr view "$pr" --repo fstandhartinger/model-market-comparison --json state,mergedAt \
-    --jq '.state + " " + (.mergedAt // "")' 2>/dev/null) || {
-      log "cannot read pending PR #$pr; failing closed"
-      exit 0
-    }
-  case "$pr_state" in
-    OPEN*)
+  pr_state=$(python3 "$BIN/pr-state.py" "$pr" 2>/dev/null) || {
+    log "cannot read pending PR #$pr; failing closed"
+    exit 0
+  }
+  pr_state_name=$(python3 -c 'import json,sys; print(json.load(sys.stdin)["state"])' <<< "$pr_state") || {
+    log "pending PR #$pr status is invalid; failing closed"
+    exit 0
+  }
+  case "$pr_state_name" in
+    open)
       log "PR #$pr is still open; waiting for owner review and the merge queue"
       exit 0
       ;;
-    CLOSED*)
-      merged_at=$(printf '%s\n' "$pr_state" | cut -d' ' -f2-)
+    closed)
+      merged_at=$(python3 -c 'import json,sys; print(json.load(sys.stdin).get("merged_at") or "")' <<< "$pr_state") || {
+        log "pending PR #$pr status is invalid; failing closed"
+        exit 0
+      }
       if [ -z "$merged_at" ]; then
         log "PR #$pr was closed without merge; manual review required"
         exit 0

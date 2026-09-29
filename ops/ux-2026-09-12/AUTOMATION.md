@@ -10,6 +10,8 @@ The coordinator runs the tick script. Each unit receives an allocated CR, commit
 wrapper, pushes its own branch, and opens a PR without the merge-ready label. After owner review,
 the normal Benchmark Heaven merge queue runs its gates, merges, and waits for the existing
 deployment webhook. The UX runner never edits the deploy checkout.
+The coordinator reads a pending PR through `bin/pr-state.py`, which uses the scoped Git
+credential helper directly and does not depend on an authenticated `gh` CLI session.
 
 State, logs, prompts, outputs, and evidence belong under
 /home/flori/.local/state/benchmarkheaven/ux-workstream. The old state and logs under /opt are

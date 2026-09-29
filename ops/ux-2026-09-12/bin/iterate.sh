@@ -12,7 +12,6 @@ WT_ROOT=/home/flori/wt
 WT=$WT_ROOT/$JOB
 BRANCH=jobs/$JOB
 RUN_DIR=$STATE/runs/$JOB
-REPO=fstandhartinger/model-market-comparison
 TS=$(date -u +%Y%m%dT%H%M%SZ)
 
 case "$JOB" in
@@ -77,7 +76,6 @@ with os.fdopen(fd, "w") as f:
 os.replace(tmp, path)
 PY_PENDING
 echo "$$ $ROLE $ENGINE $TS" > "$STATE/running"
-printf "%s %s %s started\n" "$TS" "$ROLE" "$ENGINE" >> "$STATE/history.log"
 printf "%s %s %s started\n" "$TS" "$ROLE" "$ENGINE" >> "$STATE/history.log"
 cleanup() {
   if [ -f "$STATE/running" ] && [ "$(awk '{print $1}' "$STATE/running")" = "$$" ]; then
@@ -182,7 +180,7 @@ for file in PROMPT.md OUTPUT.md .engine .codex-attempt.log .devin-attempt.log; d
   if [ -e "$WT/$file" ]; then mv "$WT/$file" "$RUN_DIR/$file"; fi
 done
 [ -f "$RUN_DIR/.engine" ] && ENGINE_USED=$(cat "$RUN_DIR/.engine")
-printf '%s %s %s rc=%s\n' "$TS" "$ROLE" "$ENGINE_USED" "$RUN_RC" >> "$STATE/history.log"
+printf '%s %s %s rc=%s actual=%s\n' "$TS" "$ROLE" "$ENGINE" "$RUN_RC" "$ENGINE_USED" >> "$STATE/history.log"
 if [ "$RUN_RC" -ne 0 ]; then
   echo "iterate: engine exited $RUN_RC; unit retained at $WT; see $RUN_DIR/runner.log" >&2
   exit "$RUN_RC"
@@ -228,15 +226,14 @@ $(cat "$RUN_DIR/OUTPUT.md")
 - No tests were run by the unit; the serialized Benchmark Heaven merge queue runs the required gates.
 - This PR has not been marked merge-ready. Owner review is required first.
 EOF_BODY
-~/bin/bh-pr open --head "$BRANCH" --title "$CR: Benchmark Heaven UX $ROLE unit" \
-  --body-file "$RUN_DIR/PR-BODY.md" > "$RUN_DIR/pr-open.log"
-PR_JSON=$(gh pr view "$BRANCH" --repo "$REPO" --json number,url,state)
+PR_JSON=$(~/bin/bh-pr open --head "$BRANCH" --title "$CR: Benchmark Heaven UX $ROLE unit" \
+  --body-file "$RUN_DIR/PR-BODY.md")
 python3 - "$STATE/pending-pr.json" "$PR_JSON" "$JOB" "$BRANCH" "$CR" "$WT" "$ENGINE_USED" <<'PY_PR'
 import datetime, json, os, sys, tempfile
 path, pr_text, job, branch, cr, wt, engine = sys.argv[1:]
 pr = json.loads(pr_text)
 row = {
-    "number": pr["number"], "url": pr["url"], "state": pr["state"],
+    "number": pr["number"], "url": pr["url"], "state": "OPEN",
     "job": job, "branch": branch, "cr": cr, "worktree": wt, "engine": engine,
     "opened_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
 }
@@ -247,4 +244,4 @@ with os.fdopen(fd, "w") as f:
 os.replace(tmp, path)
 PY_PR
 rm -f "$STATE/pending-unit.json"
-echo "PR $PR_JSON"\n\n\n\n
+echo "PR $PR_JSON"

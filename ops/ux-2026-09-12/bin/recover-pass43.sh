@@ -9,7 +9,6 @@ JOB=bh-ux-pass43-recovery-20260929
 BRANCH=jobs/$JOB
 WT=$WT_ROOT/$JOB
 RUN_DIR=$STATE/runs/$JOB
-REPO=fstandhartinger/model-market-comparison
 COMMIT=f8cdd2c92d3dc246bf34b689e5581be0a20a5bc8
 PARENT=468c291bfb7440ce0cacd556f48a6c64c39db322
 TS=$(date -u +%Y%m%dT%H%M%SZ)
@@ -132,15 +131,14 @@ The one-off Fable screenshot helper was excluded because it writes evidence unde
 - Full /jev-models structure, wrapper placement, and benchmark ranking were not changed by this recovery.
 - This PR has not been marked merge-ready. Owner review is required first.
 EOF_BODY
-~/bin/bh-pr open --head "$BRANCH" --title "$CR: recover useful UX pass 43 changes" \
-  --body-file "$RUN_DIR/PR-BODY.md" > "$RUN_DIR/pr-open.log"
-PR_JSON=$(gh pr view "$BRANCH" --repo "$REPO" --json number,url,state)
+PR_JSON=$(~/bin/bh-pr open --head "$BRANCH" --title "$CR: recover useful UX pass 43 changes" \
+  --body-file "$RUN_DIR/PR-BODY.md")
 python3 - "$STATE/pending-pr.json" "$PR_JSON" "$JOB" "$BRANCH" "$CR" "$WT" <<'PY_PR'
 import datetime, json, os, sys, tempfile
 path, pr_text, job, branch, cr, wt = sys.argv[1:]
 pr = json.loads(pr_text)
 row = {
-    "number": pr["number"], "url": pr["url"], "state": pr["state"],
+    "number": pr["number"], "url": pr["url"], "state": "OPEN",
     "job": job, "branch": branch, "cr": cr, "worktree": wt,
     "engine": "deterministic recovery", "opened_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
 }
@@ -152,4 +150,4 @@ os.replace(tmp, path)
 PY_PR
 printf '%s work recovery-deterministic rc=0\n' "$TS" >> "$STATE/history.log"
 rm -f "$STATE/pending-unit.json"
-echo "PR $PR_JSON"\n\n
+echo "PR $PR_JSON"
