@@ -13,6 +13,8 @@ import { readJevbenchV1422WithFamilies } from '../../../lib/jevbench-v1422-famil
 import { jevV14RowNote } from '../../../lib/jevbench-v14.mjs';
 import { previewMetadata } from '../../../lib/seo';
 import { jevSystemKeyFromSlug, jevSystemPath, jevSystemSlug } from '../../../lib/jev-system-slug.mjs';
+import { JevV15SystemDetail } from '../../../components/JevV15SystemDetail';
+import { readJevbenchV152Release } from '../../../lib/jevbench-v15-release.mjs';
 
 // CR-129 (2026-09-23): Google Trends shows readers searching individual JevBench system names
 // (e.g. "semif", "laya model") directly — until now every one of them only existed as a row inside the
@@ -66,6 +68,12 @@ async function findV142Row(key: string): Promise<{ row: JevV14System; view: { re
   return row ? { row, view, note: jevV14RowNote((result.artifact as { footnotes?: Record<string, string> }).footnotes?.[key], row), sealedFamilyN: result.sealedFamilyN, hardFamilyN } : null;
 }
 
+async function findV152Addendum(key: string) {
+  const { artifact } = await readJevbenchV152Release();
+  const row = artifact.systems.find((candidate) => candidate.key === key && candidate.addendum !== null);
+  return row ? { row, artifact } : null;
+}
+
 /** F-167: what this system's number is read against — Jev 1.13.0 everywhere, and on Jev's own page the
  *  rank-2 system, because a reference identical to the point would say nothing. An unranked listing is
  *  still drawn against Jev: it is not compared in words (F-168), but the reader still needs the scale. */
@@ -90,18 +98,22 @@ function describeRow(row: JevV12Row, view: JevV12View, all: JevV12Row[]): string
 export async function generateStaticParams() {
   const view = jevbenchV12View(await readJevbenchV12());
   const existing = [...view.ranked, ...view.honorable, ...view.partial].map((r) => ({ system: jevSystemSlug(r.key) }));
-  const existingKeys = new Set(existing.map(({ system }) => system));
   const current = jevbenchV1422View(await readJevbenchV1422()).systems.map((r) => ({ system: jevSystemSlug(r.key) }));
-  const currentKeys = new Set(current.map(({ system }) => system));
-  return [...current, ...existing.filter(({ system }) => !currentKeys.has(system))].filter(({ system }, index, rows) => rows.findIndex((r) => r.system === system) === index);
+  const existingKeys = new Set([...existing, ...current].map(({ system }) => system));
+  const latest = await readJevbenchV152Release();
+  const addenda = latest.artifact.systems
+    .filter((row) => row.addendum !== null && !existingKeys.has(jevSystemSlug(row.key)))
+    .map((row) => ({ system: jevSystemSlug(row.key) }));
+  return [...current, ...existing, ...addenda].filter(({ system }, index, rows) => rows.findIndex((r) => r.system === system) === index);
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ system: string }> }): Promise<Metadata> {
   const { system } = await params;
   const key = jevSystemKeyFromSlug(decodeURIComponent(system));
   const current = await findV142Row(key);
-  const found = current ? null : await findRow(key);
-  const row = found?.row ?? current?.row;
+  const addendum = current ? null : await findV152Addendum(key);
+  const found = current || addendum ? null : await findRow(key);
+  const row = found?.row ?? current?.row ?? addendum?.row;
   if (!row) return { title: 'System not found' };
   const title = `${short(row.display)} — JevBench by Benchmark Heaven`;
   const description = `Explore the ${short(row.display)} configuration evaluated across intelligence, calibration, speed, and cost.`;
@@ -113,6 +125,8 @@ export default async function JevSystemPage({ params }: { params: Promise<{ syst
   const key = jevSystemKeyFromSlug(decodeURIComponent(system));
   const current = await findV142Row(key);
   if (current) return <JevV141SystemDetail row={current.row} ranked={current.view.ranked} revision={current.view.revision} generated={current.view.generated} note={current.note} sealedFamilyN={current.sealedFamilyN} hardFamilyN={current.hardFamilyN} />;
+  const addendum = await findV152Addendum(key);
+  if (addendum) return <JevV15SystemDetail artifact={addendum.artifact} row={addendum.row} />;
   const found = await findRow(key);
   if (!found) {
     notFound();
