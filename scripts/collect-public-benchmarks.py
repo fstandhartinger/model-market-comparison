@@ -93,6 +93,25 @@ def quarantine(bid,unreviewed,reviewed,detail):
         +f'; {detail}. The arm is quarantined: its published rows are unchanged and every other source still publishes, until the revision is reviewed into the registry (version_guard and scoring.notes) or given its own version identity.')
     return ValueError(f'{QUARANTINE_MARK} {payload} — {prose}')
 
+# D256 (2026-09-29): the header guard runs before the row loop, so before this an appended column
+# raised a plain error — the arm failed, its capture counted as accepted, and the repo-level
+# continuity suites read a board the collector had refused. Appended columns are the same class of
+# event as an unreviewed revision (every reviewed column still present, in order, same name; the
+# board simply publishes something unreviewed), so they quarantine the arm. A renamed, reordered or
+# removed column is a different class — it may mean the recipe points at the wrong artifact — and
+# stays a hard failure.
+def appended_columns(reviewed_header,seen_header):
+    """The columns a board appended to its reviewed header, or None when the header changed otherwise."""
+    if list(seen_header[:len(reviewed_header)])!=list(reviewed_header):return None
+    return list(seen_header[len(reviewed_header):])
+def quarantine_columns(bid,added,reviewed_header,detail):
+    """The quarantine an appended column declares. Same marker, same blast radius: one arm."""
+    payload=json.dumps({'entry':bid,'unreviewed':[],'unreviewed_columns':sorted(set(added)),'reviewed':[]},ensure_ascii=False,separators=(',',':'))
+    prose=(f"{bid}: the board appended column(s) "+', '.join(sorted(set(added)))
+        +' to its reviewed '+str(len(reviewed_header))+'-column header'
+        +f'; {detail}. The arm is quarantined: its published rows are unchanged and every other source still publishes, until the added column(s) are reviewed into the registry and the recipe header, or the board is given its own version identity.')
+    return ValueError(f'{QUARANTINE_MARK} {payload} — {prose}')
+
 def parse(source,spec,load_source,entry=None):
     kind=spec['kind'];rows=[]
     if kind=='template_csv':
@@ -552,7 +571,14 @@ def parse(source,spec,load_source,entry=None):
         parsed=csvrows(source)
         reviewed=reviewed_protocols(entry)
         header=['rank','model','lab','harness','effort','best_effort','n','combined_33','combined_33_se','code_quality','passed','mean_minutes','mean_usd','mean_raw_tokens','median_output_tokens','mean_output_tokens','report','protocol']
-        if list(parsed[0].keys() if parsed else [])!=header:raise ValueError('VulcanBench Frontier CSV header changed')
+        seen=list(parsed[0].keys() if parsed else [])
+        added=appended_columns(header,seen)
+        if added is None:raise ValueError('VulcanBench Frontier CSV header changed')
+        # A caller with no registry entry (only a test parses without one) has no arm to quarantine,
+        # so for it an appended column stays the hard failure it has always been.
+        if added:
+            if entry is None:raise ValueError('VulcanBench Frontier CSV header changed')
+            raise quarantine_columns(entry['id'],added,header,'the reviewed columns are unchanged and in order, but what the new column(s) mean for the published comparison has not been reviewed')
         partial=[]
         for index,r in enumerate(parsed):
             # 2026-09-21: the board publishes a run judged on fewer than its 23 tasks when the v3.7 protocol

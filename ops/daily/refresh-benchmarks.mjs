@@ -719,8 +719,9 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
         : publicValueScale(spec.parser.value_field, candidate.observations, entry.maintainer);
       pending.push({ index, spec, entry, proposed, candidate, evidence, changed, old, gone, withdrawnBySource, activity, scale });
     } catch (error) {
-      // F-209: exactly one failure shape is a quarantine — the collector saying the board publishes a
-      // protocol revision the registry has not reviewed. Everything else stays a retained failure.
+      // F-209: exactly one failure shape is a quarantine — the collector saying the board publishes
+      // something the registry has not reviewed: a protocol revision outside the reviewed set, or
+      // (D256) a column appended to the reviewed header. Everything else stays a retained failure.
       const quarantine = parseQuarantine(error);
       if (!quarantine) { fail(spec.benchmark_id, error, specChecks[index]); continue; }
       specChecks[index].push(quarantineCheck(quarantine, { rows: priorRows.length }));
@@ -759,7 +760,9 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   if (quarantined.length) {
     const record = { schema_version: 1, generated_at: new Date().toISOString(), day,
       arms: quarantined.map((arm) => ({ id: arm.entry, reason: arm.reason,
-        unreviewed_protocols: arm.unreviewed, reviewed_protocols: arm.reviewed,
+        unreviewed_protocols: arm.unreviewed,
+        ...(arm.columns?.length ? { unreviewed_columns: arm.columns } : {}),
+        reviewed_protocols: arm.reviewed,
         captures: arm.captures.filter((key) => !acceptedCaptureKeys.has(key)) })) };
     await put(join(evidenceDir, 'quarantine.json'), record);
   }

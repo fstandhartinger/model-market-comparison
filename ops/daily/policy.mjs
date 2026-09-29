@@ -6,6 +6,8 @@
 // treated as a bug: malformed state degrades to "no comparison possible",
 // never to "everything is fine".
 
+import { unreviewedFacts } from '../../lib/source-quarantine.mjs';
+
 // --- Tunables (master brief §6 + phase 08 contract) ------------------------
 export const TOP_N = 5; // Composite top-N family watchlist
 export const NOTABLE_AA_INDEX = 55; // "meaningful new major model": AA index >= 55 ...
@@ -129,16 +131,16 @@ export function quarantineHumanTodo(arms, { escalateAfter = QUARANTINE_ESCALATIO
   if (!due.length) return null;
   const lines = [STATUS_HUMAN, '', '🧑 Für dich'];
   for (const arm of due) {
-    const revisions = (arm.unreviewed_protocols ?? []).join(', ') || 'an unreviewed revision';
+    const revisions = unreviewedFacts(arm).join(', ') || 'an unreviewed source change';
     lines.push(`- ${arm.id}: quarantined for ${arm.consecutive_quarantined_runs} consecutive daily runs`,
       `  Why: the board publishes ${revisions}, which the registry has not reviewed, so this arm publishes nothing while every other source does. Its rows on the site are the last reviewed ones.`,
       '  Steps:',
       `  1. Read the retained capture of the arm and the source's own evidence for ${revisions}.`,
-      `  2. Either review the revision into data/raw/benchmarks/registry.json (how_to_collect.version_guard and scoring.notes for ${arm.id}) or give it its own version identity.`,
+      `  2. Either review it into data/raw/benchmarks/registry.json (how_to_collect.version_guard and scoring.notes for ${arm.id}, and the recipe's reviewed header where a column was added) or give it its own version identity.`,
       '  3. Run the next daily refresh and check that the arm publishes again.',
       '  Time: 45 min');
   }
-  return { key: `quarantine:${due.map((arm) => `${arm.id}@${(arm.unreviewed_protocols ?? []).join('+')}`).sort().join('|')}`,
+  return { key: `quarantine:${due.map((arm) => `${arm.id}@${[...(arm.unreviewed_protocols ?? []), ...(arm.unreviewed_columns ?? [])].join('+')}`).sort().join('|')}`,
     text: lines.join('\n'), arms: due.map((arm) => arm.id) };
 }
 

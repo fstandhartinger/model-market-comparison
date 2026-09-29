@@ -368,7 +368,18 @@ test("confirmed non-US provider metadata reaches the provider directory", () => 
 test("Claude first-party snapshot contains every currently callable model", () => {
   assert.ok(claude.collected_at >= "2026-09-08");
   // 2026-09-23: Claude Opus 5.5 joined the pricing table (13 -> 14 callable models).
-  assert.equal(claude.models.length, 14);
+  // 2026-09-29: Claude Sonnet 5.5 joined it (14 -> 15), taking Sonnet 5's headline row; Sonnet 5 moved
+  // to "Additional models" at the same $2/$10 and kept its own retirement date, so nothing retired.
+  assert.equal(claude.models.length, 15);
+  // 2026-09-29 pricing page: Sonnet 5.5 at $2/$10, cache write $2.50 / 1h $4, cache read $0.20, batch $1/$5.
+  const sonnet55 = claude.models.find((model) => model.model_name === "Claude Sonnet 5.5");
+  assert.deepEqual(
+    [sonnet55?.model_id, sonnet55?.input_per_1m_usd, sonnet55?.output_per_1m_usd,
+      sonnet55?.cache_write_per_1m_usd, sonnet55?.cache_read_per_1m_usd, sonnet55?.batch_output_per_1m_usd],
+    ["claude-sonnet-5-5", 2, 10, 2.5, 0.2, 5],
+  );
+  // The model it displaced is still callable, at its own terms — a new headline row is not a retirement.
+  assert.ok(claude.models.some((model) => model.model_name === "Claude Sonnet 5" && model.lifecycle_status === "active"));
   assert.ok(claude.models.some((model) => model.model_name === "Claude Mythos 5"));
   // 2026-09-08: official lifecycle confirms retirement on August 5.
   assert.equal(claude.models.some((model) => model.model_name === "Claude Opus 4.1"), false);

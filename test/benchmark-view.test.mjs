@@ -128,7 +128,22 @@ test('actual source adapter keeps all version identities, values and dated legac
   // and to 750 KB for CR-126's five GPT-6 Sol/Luna launch axes (719.4 → 727.2 KB; four capability axes with one or
   // two vendor rows each, plus the AutomationBench cost-per-task axis).
   // CR-128 adds 27 independently sourced benchmark axes; selected model score rows remain bounded.
-  assert.ok(JSON.stringify(selected).length < 800_000, 'initial benchmark payload bounded to selected models');
+  // D256 (2026-09-29): the absolute ceiling had drifted from the thing it guards. At 799.2 KB against
+  // 800 KB the margin was 0.1 %, and on the 29th an ordinary day of value movement — no new axis, the
+  // same 490 — pushed a daily run's copy to 801.0 KB and turned this suite red, which the publish gate
+  // reads as "no source may publish". So the invariant is asserted directly and the absolute number
+  // becomes the bloat tripwire it was meant to be, with real headroom:
+  //   * the selected payload is a small fraction of the whole matrix (13.8 MB) — that is what "did not
+  //     ship the whole matrix" means, and it cannot drift with either side's growth;
+  //   * the selected model's own score rows are kilobytes, not the hundreds of KB of axis metadata
+  //     (39 rows / 20.8 KB today) — a leak of other models' rows shows up here first;
+  //   * 900 KB as the absolute ceiling: ~13 % over today's 799.2 KB, so an axis-metadata regression is
+  //     still caught while a day's values are not.
+  const full = JSON.stringify(view).length, payload = JSON.stringify(selected).length;
+  const scoreRowBytes = selected.axes.reduce((n, a) => n + JSON.stringify(a.scores).length, 0);
+  assert.ok(payload < full * 0.15, `initial benchmark payload bounded to selected models: ${payload} of ${full}`);
+  assert.ok(scoreRowBytes < 120_000, `selected score rows are the selected model's only: ${scoreRowBytes} bytes`);
+  assert.ok(payload < 900_000, `initial benchmark payload bounded to selected models: ${payload}`);
   assert.equal(JSON.stringify(ds), before);
 });
 

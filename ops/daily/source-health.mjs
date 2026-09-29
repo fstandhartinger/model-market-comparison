@@ -8,6 +8,7 @@
 // Usage: node ops/daily/source-health.mjs [--runs DIR] [--out DIR]   (prints the markdown summary)
 import { readFile, readdir, writeFile, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
+import { unreviewedFacts } from '../../lib/source-quarantine.mjs';
 
 /** Statuses written by ops/daily/refresh-benchmarks.mjs, by what they mean for freshness. */
 export const STATUS_KIND = {
@@ -20,7 +21,8 @@ export const STATUS_KIND = {
   source_changed_retained: 'attention', contested: 'attention',
   // F-209 / D225: `source_changed_retained` is also the status a *quarantined* arm writes (a board
   // publishing a protocol revision outside the registry's reviewed set). The two are told apart by
-  // the structured `unreviewed_protocols` field the quarantine carries, never by the status alone —
+  // the structured `unreviewed_protocols` / `unreviewed_columns` field the quarantine carries (D256
+  // added the second: a board that appends a column it has not had reviewed), never by the status —
   // OpenRouter's dated snapshot board has used this status for a changed capture since CR-34.2.
   retained_manual_snapshot: 'manual', manual_required: 'manual', source_reachable_protocol_date_retained: 'no_adapter',
 };
@@ -128,7 +130,8 @@ const reasonLine = (reason) => {
 // field the quarantine writes (lib/source-quarantine.mjs), so it is never confused with the same
 // status used for an ordinary changed-capture retention.
 export const isQuarantine = (check) => check?.status === 'source_changed_retained'
-  && Array.isArray(check.unreviewed_protocols) && check.unreviewed_protocols.length > 0;
+  && (arrayOf(check.unreviewed_protocols).length > 0 || arrayOf(check.unreviewed_columns).length > 0);
+const arrayOf = (value) => (Array.isArray(value) ? value : []);
 
 /** How many consecutive runs a quarantine must survive before the digest asks a human to act. */
 export const QUARANTINE_ESCALATION_RUNS = 3;
@@ -164,7 +167,8 @@ export function sourceHealth(reports, { plan = { entries: [] } } = {}) {
       failing_since: streak ? history[streak - 1].at : null, consecutive_failed_runs: streak,
       quarantined_since: quarantineStreak ? history[quarantineStreak - 1].at : null,
       consecutive_quarantined_runs: quarantineStreak,
-      ...(isQuarantine(latest.check) ? { unreviewed_protocols: latest.check.unreviewed_protocols,
+      ...(isQuarantine(latest.check) ? { unreviewed_protocols: arrayOf(latest.check.unreviewed_protocols),
+        ...(arrayOf(latest.check.unreviewed_columns).length ? { unreviewed_columns: latest.check.unreviewed_columns } : {}),
         reviewed_protocols: latest.check.reviewed_protocols ?? null } : {}),
       reason: reasonLine(latest.check.reason),
       cadence: cadence.get(id) ?? null, runs_seen: history.length,
@@ -177,6 +181,7 @@ export function sourceHealth(reports, { plan = { entries: [] } } = {}) {
     totals: Object.fromEntries(Object.keys(order).map((k) => [k, count(k)])), quarantine: quarantineTotals(runs[0]), budget: budgetTotals(runs[0]), review_capacity: reviewCapacityTotals(runs[0]),
     quarantined_arms: sources.filter((s) => s.consecutive_quarantined_runs > 0)
       .map((s) => ({ id: s.id, reason: s.reason, unreviewed_protocols: s.unreviewed_protocols,
+        ...(s.unreviewed_columns ? { unreviewed_columns: s.unreviewed_columns } : {}),
         reviewed_protocols: s.reviewed_protocols, quarantined_since: s.quarantined_since,
         consecutive_quarantined_runs: s.consecutive_quarantined_runs,
         escalate: s.consecutive_quarantined_runs >= QUARANTINE_ESCALATION_RUNS })), sources };
@@ -208,7 +213,7 @@ export function healthMarkdown(health) {
   }
   for (const arm of health.quarantined_arms ?? []) {
     lines.push(`Newest run: **${arm.id} quarantined** for ${arm.consecutive_quarantined_runs} consecutive run(s)`
-      + ` (since ${day(arm.quarantined_since)}) — unreviewed protocol revision(s) ${arm.unreviewed_protocols.join(', ')};`
+      + ` (since ${day(arm.quarantined_since)}) — unreviewed ${unreviewedFacts(arm).join(', ') || 'source change'};`
       + ` its published rows are unchanged and every other source published. ${arm.reason ?? ''}`.trimEnd(), '');
   }
   const failing = health.sources.filter((s) => s.kind === 'failing' || s.kind === 'attention' || s.kind === 'unknown');

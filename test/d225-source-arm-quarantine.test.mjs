@@ -99,6 +99,73 @@ print(json.dumps([r['context']['protocol'] for r in rows]))`], { maxBuffer: 8_00
   assert.deepEqual(parseQuarantine(alien)?.unreviewed, ['some-other-protocol-v1.0']);
 });
 
+test('D256: a column appended to the reviewed header quarantines the arm; any other header change fails', async () => {
+  // 2026-09-29: VulcanBench appended `passed_of` and `combined_timeouts_zero` and shipped a sixteenth
+  // protocol revision in the same push. The header guard runs before the row loop, so it raised a plain
+  // error: the arm failed instead of quarantining, its capture counted as accepted, and two repo-level
+  // continuity suites read a board the collector had refused — the blast radius F-209 exists to bound.
+  const entry = registry.entries.find((e) => reviewedProtocols(e.how_to_collect?.version_guard)
+    && e.how_to_collect.version_guard.includes('code-quality-maintenance'));
+  assert.ok(entry, 'the fixture board is still in the registry');
+  const reviewed = reviewedProtocols(entry.how_to_collect.version_guard);
+  const HEAD = 'rank,model,lab,harness,effort,best_effort,n,combined_33,combined_33_se,code_quality,passed,mean_minutes,mean_usd,mean_raw_tokens,median_output_tokens,mean_output_tokens,report,protocol';
+  const ROW = `1,Fixture Model,Lab,Codex,max,True,23,90.0,0.4,80.0,23,10.0,1.0,100,10,10,benchmarks/fixture.html,${reviewed[0]}`;
+  const run = async (head, row, withEntry = true) => exec('python3', ['-c', `
+import importlib.util,json
+spec=importlib.util.spec_from_file_location('c','${COLLECTOR}')
+m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+reg=json.load(open('data/raw/benchmarks/registry.json'))
+entry=[e for e in reg['entries'] if e['id']=='${entry.id}'][0] if ${withEntry ? 'True' : 'False'} else None
+rows=m.parse(${JSON.stringify(head)}+chr(10)+${JSON.stringify(row)},{'kind':'vulcanbench_frontier_csv'},None,entry)
+print(json.dumps([r['id'] for r in rows]))`], { maxBuffer: 8_000_000 });
+
+  // The reviewed header still parses — this is not a blanket refusal of the board.
+  assert.deepEqual(JSON.parse((await run(HEAD, ROW)).stdout.trim()), ['Fixture Model [max]']);
+
+  // Two appended columns: every reviewed column present, in order, same name. That is a quarantine,
+  // and it names the columns rather than a revision, because no revision is what changed.
+  const appended = await run(`${HEAD},passed_of,combined_timeouts_zero`, `${ROW},23,67.2629`).then(() => null, (e) => e);
+  assert.ok(appended, 'an appended column must not parse');
+  const quarantine = parseQuarantine(appended);
+  assert.ok(quarantine, `the failure must be a quarantine, got: ${String(appended.message).slice(-400)}`);
+  assert.equal(quarantine.entry, entry.id);
+  assert.deepEqual(quarantine.columns, ['combined_timeouts_zero', 'passed_of']);
+  assert.deepEqual(quarantine.unreviewed, [], 'an appended column is not a revision claim');
+  assert.match(quarantine.reason, /passed_of/);
+  assert.match(quarantine.reason, /published rows are unchanged/);
+  assert.match(quarantine.reason, /every other source still publishes/);
+  // It reaches source-health as `attention` and its prose says column, not revision.
+  const check = quarantineCheck(quarantine, { rows: 34 });
+  assert.ok(isQuarantine(check));
+  assert.deepEqual(check.unreviewed_columns, ['combined_timeouts_zero', 'passed_of']);
+  assert.match(healthMarkdown(sourceHealth([{ checked_at: '2026-09-29T05:17:00.000Z', checks: [check] }])),
+    /unreviewed column combined_timeouts_zero, column passed_of/);
+  // And the escalation block asks for the right repair, keyed on the columns.
+  const todo = quarantineHumanTodo([{ id: entry.id, consecutive_quarantined_runs: 3,
+    unreviewed_protocols: [], unreviewed_columns: ['passed_of'], quarantined_since: '2026-09-29T05:17:00.000Z' }]);
+  assert.match(todo.text, /column passed_of/);
+  assert.equal(todo.key, `quarantine:${entry.id}@passed_of`);
+
+  // A renamed, reordered or removed column is a *different* class — it may mean the recipe points at
+  // the wrong artifact — and stays the hard failure it has always been.
+  for (const [head, why] of [
+    [HEAD.replace(',protocol', ',protocol_id'), 'renamed column'],
+    [HEAD.replace('rank,model', 'model,rank'), 'reordered columns'],
+    [HEAD.replace(',mean_usd', ''), 'removed column'],
+  ]) {
+    const error = await run(head, ROW).then(() => null, (e) => e);
+    assert.ok(error, `${why} must not parse`);
+    assert.equal(parseQuarantine(error), null, `${why} is not a quarantine`);
+    // A removed column trips the generic row-width guard first; either way it is a hard failure.
+    assert.match(error.message, /CSV (header changed|row width mismatch)/);
+  }
+
+  // With no registry entry there is no arm to quarantine, so an appended column stays a hard failure.
+  const noEntry = await run(`${HEAD},passed_of`, `${ROW},23`, false).then(() => null, (e) => e);
+  assert.ok(noEntry, 'an appended column must not parse without a registry entry either');
+  assert.equal(parseQuarantine(noEntry), null);
+});
+
 test('a caller with no registry entry keeps the original family floor', async () => {
   // Only a test parses without the registry. It must still not accept an arbitrary protocol: without
   // a reviewed set there is no fence to quarantine against, so the family literal is the floor.
@@ -120,6 +187,8 @@ test('any other collector failure is still a failing arm, not a quarantine', () 
   assert.equal(parseQuarantine(new Error('Prior result identities disappeared; source/version/reordering needs review')), null);
   assert.equal(parseQuarantine(new Error(`${QUARANTINE_MARK} not-json — prose`)), null, 'a malformed payload is not a quarantine');
   assert.equal(parseQuarantine(new Error(`${QUARANTINE_MARK} {"entry":"x","unreviewed":[]} — prose`)), null, 'an empty revision list is not a quarantine');
+  assert.equal(parseQuarantine(new Error(`${QUARANTINE_MARK} {"entry":"x","unreviewed":[],"unreviewed_columns":[]} — prose`)), null,
+    'D256: a quarantine has to name something unreviewed — neither list populated is malformed, not a licence to withhold');
 });
 
 test('a quarantined arm is `attention` in source health, and only when it carries the structured field', () => {

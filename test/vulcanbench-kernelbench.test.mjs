@@ -4,6 +4,7 @@ import { execFileSync } from 'node:child_process';
 import { readFileSync, readdirSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 import { parseVulcanbenchFrontierLabel, parseKernelbenchCudaLabel } from '../lib/board-identity.mjs';
+import { acceptedCaptures, newestAccepted } from '../lib/source-quarantine.mjs';
 
 // 2026-09-18 (iteration 114, CR-82.3 / CR-82.4). The sources are the committed captures of
 // vulcanbench.com's board CSV and kernelbench.com's baked leaderboard.json; mutations below are
@@ -77,25 +78,26 @@ print('ok')
 // labels for days, and a correct rebuild that finally joined them would have turned the count red.
 // The board itself is the expectation now: every column it publishes has to resolve to an exact
 // catalog configuration, and every join the map holds has to be a column the board really carries.
-test('VulcanBench Frontier joins: every model x effort column the board publishes is an exact catalog configuration', () => {
+test('VulcanBench Frontier joins: every model x effort column the board publishes is an exact catalog configuration', async () => {
   assert.deepEqual(parseVulcanbenchFrontierLabel('Fable 5.1 [max]'), { family: 'claude-fable-5.1', effort: 'max' });
   assert.deepEqual(parseVulcanbenchFrontierLabel('GPT-5.5 [extra-high]'), { family: 'gpt-5.5', effort: 'xhigh' }, "VulcanBench's own spelling of the xhigh tier");
   assert.deepEqual(parseVulcanbenchFrontierLabel('GPT-6 Astra [ultra]'), { family: 'gpt-6-astra', effort: 'ultra' }, 'an unreviewed setting is refused downstream');
   assert.deepEqual(parseVulcanbenchFrontierLabel('Opus 5.5 [high]'), { family: 'claude-opus-5.5', effort: 'high' }, 'D224: the board spells Claude Opus 5.5 "Opus 5.5"');
 
-  // The newest retained capture of the board, whatever run took it — the same rule the protocol
-  // tests use, so a fresher board in a daily run is what this reads, not a pinned fixture.
+  // The newest capture of the board the collector *accepted*, whatever run took it — the same rule
+  // the D188/D223 protocol suites use, so a fresher board in a daily run is what this reads, not a
+  // pinned fixture. D256 (2026-09-29): this scan used to take the newest 200 capture outright. On the
+  // 29th the collector quarantined that capture (the board appended two columns and a sixteenth
+  // protocol revision) and this check read it anyway, went red on a model the arm had refused to
+  // publish, and took the whole publish gate with it — the blast radius F-209 exists to bound.
   const EVIDENCE = 'data/raw/benchmarks/daily-evidence';
   const BOARD = 'https://vulcanbench.com/assets/data/swe-v4-board.csv';
-  let newest = null;
-  for (const dir of readdirSync(EVIDENCE).sort()) {
-    let manifest;
-    try { manifest = JSON.parse(readFileSync(`${EVIDENCE}/${dir}/manifest.json`, 'utf8')); } catch { continue; }
-    for (const receipt of Array.isArray(manifest) ? manifest : []) {
-      if (receipt.status === 200 && receipt.url === BOARD && receipt.file) newest = receipt;
-    }
-  }
-  assert.ok(newest, 'a retained capture of the board CSV');
+  const pool = await acceptedCaptures({
+    dirs: readdirSync(EVIDENCE).map((dir) => `${EVIDENCE}/${dir}`),
+    readJson: async (path) => { try { return JSON.parse(readFileSync(path, 'utf8')); } catch { return null; } },
+  });
+  // Throws — naming the quarantined newer capture — rather than quietly falling back to nothing.
+  const newest = newestAccepted(pool, BOARD);
   const lines = gunzipSync(readFileSync(newest.file)).toString('utf8').trim().split('\n');
   const head = lines[0].split(',');
   const rows = lines.slice(1).map((line) => Object.fromEntries(line.split(',').map((cell, i) => [head[i], cell])));
