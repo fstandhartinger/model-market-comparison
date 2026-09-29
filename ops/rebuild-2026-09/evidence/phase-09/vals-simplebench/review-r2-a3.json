@@ -1,0 +1,31 @@
+{
+  "artifact_id": "cr173-vals-simplebench",
+  "artifact_sha256": "84a4427250021eabff55f81db6a0bfc1bceccf50a3070ad7ebf2a1b035efaa09",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "all 17 artifact rows on vals-vibe-code-bench::1.1 (cr173:0d8c84f211d341d17af9ec79, cr173:5f471ca1b7f18724b98c1b3f, cr173:1cdaf36e49220fbd15c66346, cr173:40d8e719de6e2bbef5c1d25f, cr173:19b02f6c1afff33f135edfba, cr173:dd64fd0b5abbc5c2bbb0fa03, cr173:d725a9ba6b9d1576e6561a6a, cr173:a7338ada391283da56aa3bcc, cr173:f457a8788ead5511876681af, cr173:7bec39eb9f39de79a5e8aeea, cr173:6ccbfe8a15c7b5d3d8649d55, cr173:f992157277057479baece5e6, cr173:dd2d727b70dd4cddd470b8a5, cr173:0f1f6517153b1cd72826001b, cr173:b83bed89798dcec876ed5a9a, cr173:fbcd5a9c858d5c0fc81c5543, cr173:31b9da46b0cb3f06ffa80eb4) plus the 2 pre-published cr128 rows cross-checked against the same evidence",
+    "all 18 artifact rows on vals-code-migration::snapshot-2026-09-22",
+    "all 17 artifact rows on vals-emb::snapshot-2026-09-22",
+    "all 4 artifact rows on vals-cyberbench-v1-1::1.1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Value check: every one of the 56 artifact values equals the accuracy number in the pair-encoded evidence for its exact source_id, no rounding; joins match C2 against the catalog (stated settings all exist in the catalog for joined rows; null rows are null for the stated reason: setting absent and family has >1 configuration, or stated setting absent from catalog, or non-catalog slug). Identity dates equal metadata.updated/page 'Updated' for the two dated snapshots; the two versioned identities carry 1.1 matching metadata.version 1.1.",
+    "The three alibaba/qwen3.8-max rows (cr173:f992157277057479baece5e6, cr173:cf8f3b9170ed95977e6034bb, cr173:876f5d017804f3f9c0bcd6f5) are kept null via slug-stripping declared as a known refusal in the packet; note that read as family qwen3.8-max, the catalog has exactly one default configuration, so a default join would also satisfy C2. Accepted here as the packet-declared intended behavior, not scored as an error. The variant 'max' recorded on those unmatched rows is derived from the slug parse, not from any source-stated setting.",
+    "artifact_sha256 is reported as given in the packet; I have no execution capability to recompute the digest of artifact-r2-a3.json.",
+    "cr128 rows are outside this artifact; their values were checked only against the evidence quoted in this packet (90.294, 89.594; joins claude-opus-5.5::max, gpt-6-astra::max both catalog-valid)."
+  ],
+  "missing_evidence": [
+    "C4: field-level registry records (maintainer, evidence-file field) for the new identity vals-cyberbench-v1-1::1.1 are not shown in this packet part; verified only to the level of the packet-supplied source URL, capture timestamp, sha256, board metadata, and the stated manual-board-observations.json provenance.",
+    "C3: superseded_by link targets for the 'supersede' boards covered here (vals-code-migration, vals-emb) are not shown in this packet part.",
+    "C5: no withdrawn rows appear in this packet part, so the withdrawal rule is only vacuously exercised here.",
+    "C6: no tier assignments for these four boards are included in this packet part; nothing to check here."
+  ]
+}

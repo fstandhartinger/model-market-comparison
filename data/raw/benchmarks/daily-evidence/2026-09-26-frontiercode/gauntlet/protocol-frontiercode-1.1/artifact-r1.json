@@ -1,0 +1,22 @@
+[
+  {
+    "id": "frontiercode::1.1",
+    "version": "1.1",
+    "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Score: weighted aggregate of the rubric items; solutions failing blocking criteria receive 0",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Reported as a percentage (methodology: \"achieves a score of only 13.4%\"; task authors write solutions that \"target a range of scores from 0 to 100%\"). Main subset: the 100 hardest of the full 150-task Extended set. Runs flagged for unfair internet use are zeroed in 1.1. Secondary benchmark, not a Composite input."
+    },
+    "description": "Whether a maintainer would merge the agent's pull request, on tasks crafted by open-source maintainers and graded with tests, rubrics and verifiers.",
+    "maintainer": "Cognition"
+  }
+]

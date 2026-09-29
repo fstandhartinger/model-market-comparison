@@ -1,0 +1,19 @@
+```json
+{
+  "artifact_id": "protocol-arc-agi-1",
+  "artifact_sha256": "ee4935adc7147559679b89fd79b3108da9a36a31b7428cc4bd737f4cb406e4a8",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["arc-agi::1", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not recompute SHA-256 hashes for artifact, rows, or sources; relied on owner-computed bindings as instructed.",
+    "Sources are bounded excerpts; continuity of the full live page beyond the excerpt is not verifiable here.",
+    "The row's metric description is a summary of the source convention (Semi-Private Eval Set used for Verified Leaderboard frontier testing; incomplete test outputs marked incorrect per leaderboard notes and policy), not a verbatim transcription; wording differences judged acceptable under the criteria.",
+    "The packet contains no run summary of added/changed maintainer payload values, so status 'active' rests on the protocol text alone (ARC-AGI-1 remains a listed leaderboard on arcprize.org and policy still describes ARC-AGI-1 evaluations); this is sufficient but noted."
+  ],
+  "missing_evidence": []
+}
+```

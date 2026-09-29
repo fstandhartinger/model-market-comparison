@@ -1,0 +1,71 @@
+{
+  "started_at": "2026-09-26T05:24:59.700Z",
+  "mode": "critic",
+  "requested_model": "chutes/moonshotai/Kimi-K3-TEE",
+  "producers": [
+    "anthropic/claude-opus-5-5"
+  ],
+  "qualification": {
+    "id": "chutes/moonshotai/Kimi-K3-TEE",
+    "family": "moonshotai",
+    "free": true,
+    "input_per_1m": 0,
+    "output_per_1m": 0,
+    "context": null,
+    "aa_intelligence_index": 43.6,
+    "aa_source": "exact_variant",
+    "matched_model_ids": [
+      "kimi-k3::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "kimi-k3::max",
+        "index": 43.6
+      }
+    ],
+    "transport": "router",
+    "router_model": "fw-kimi-k3",
+    "provider_model": "moonshotai/Kimi-K3-TEE",
+    "reasoning_effort": "max",
+    "allowed_as": "moonshotai/kimi-k3",
+    "healthy": true
+  },
+  "input_sha256": "e497d161e60adb1e8a2e96473b35aa8b250b735bdb8ab1ada027ab6b454ac5ea",
+  "route": "router:fw-kimi-k3",
+  "attempt": 1,
+  "free_route_role": "any",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [],
+  "hard_excluded_models": [],
+  "catalog": {
+    "source": "fetched",
+    "fetched_at": "2026-09-26T05:24:59.620Z"
+  },
+  "reasoning": {
+    "effort": "max"
+  },
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "moonshotai/Kimi-K3-TEE",
+  "usage": {
+    "completion_tokens": 2066,
+    "prompt_tokens": 6766,
+    "total_tokens": 8832,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1269,
+      "text_tokens": 797
+    },
+    "cost": 0
+  },
+  "finish_reason": "stop",
+  "transport": "router",
+  "router_model": "fw-kimi-k3",
+  "price_context": "Free route behind the local router (Chutes under the owner's arrangement); cost recorded as $0.",
+  "provider": "chutes (via local router)",
+  "session_id": null,
+  "finished_at": "2026-09-26T05:26:21.423Z",
+  "output_sha256": "16cec8093dcc9539ad9ea811267252730f8d2af81a105dd330035e24060be8da"
+}

@@ -93,3 +93,5 @@ the last run it refreshed or was confirmed unchanged, and — when failing — s
 runs, across every run still held under `runs/` plus the committed `daily-evidence/*/checks.json`. A retained failure
 keeps the previous values on the site (correct), so this is where a stuck source becomes visible. Run it by hand with
 `node ops/daily/source-health.mjs` (prints the failing table). Writing it can never fail the step.
+
+**Registry coverage (CR-223).** Every completed benchmark phase writes `reports/source-coverage.{json,md}` for every registry entry, including entries with no run receipt. Grouped AA and authenticated OpenRouter outcomes take precedence over generic protocol checks. Checked sources, parsed candidates, withheld reviews, access failures, protocol-only checks and explicit manual/frozen exemptions remain distinct. The report preserves oldest/newest observation capture dates; a current check never re-dates a retained score. Duplicate collection-plan IDs fail the census instead of silently selecting a recipe.

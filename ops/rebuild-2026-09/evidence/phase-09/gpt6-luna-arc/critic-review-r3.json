@@ -1,0 +1,21 @@
+{
+  "artifact_id": "gpt6-luna-arc-v1-v2",
+  "artifact_sha256": "8fb01d03b5a07c2bd7a1738e30097594b4e35d033ea39d24a18d8efade5f4a05",
+  "round": 3,
+  "verdict": "pass",
+  "coverage_checked": [
+    "ARC Prize page evidence: title 'GPT-6 Luna', ARC Prize Verified badge (alt text), published date Sep 22, 2026 — all present",
+    "ARC-AGI-1 values per variant vs table: Max 86.7, XHigh 73.0, High 70.3, Medium 61.0, Low 37.7, None 8.8 — all match excerpt exactly",
+    "ARC-AGI-2 values per variant vs table: Max 59.3, XHigh 41.9, High 31.4, Medium 18.1, Low 4.6, None 0.0 — all match excerpt exactly",
+    "Units percent, basis measured, published_at 2026-09-22, source URL/locator/retrieved_at consistent across all 12 rows",
+    "OpenAI catalog excerpt: gpt-6-luna supports none, low, medium, high, xhigh, max — all 12 proposed_model_ids and source_effort labels supported; None→non-reasoning canonical mapping consistent with criteria",
+    "Coverage grid: arc-agi::1 and arc-agi::2 × Max/XHigh/High/Medium/Low/None, each exactly once (12 rows, no ARC-AGI-3 rows, no extras)",
+    "Protocol wording: quotes Semi-Private only for the two stated best scores (86.7% v1, 59.3% v2); classifies table rows as evaluator-published results; no per-cell Semi-Private claim beyond page support"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [],
+  "missing_evidence": [],
+  "notes": "Independent cross-check of all 12 rows against the embedded primary-source excerpts found no discrepancies. I did not run commands or recompute hashes; verification is against the supplied excerpt text only. The 'GPT-6 Luna (Non-reasoning)' display name for the None variant is a canonicalization consistent with the stated identity rule."
+}

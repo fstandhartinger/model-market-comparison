@@ -1,0 +1,55 @@
+{
+  "artifact_id": "gpt6-luna-arc-v1-v2",
+  "task": "Independently transcribe a bounded set of verified ARC Prize scores from the supplied primary-source HTML excerpt.",
+  "primary_source": {
+    "url": "https://arcprize.org/results/openai-gpt-6-luna",
+    "published_at": "2026-09-22",
+    "retrieved_at": "2026-09-24T20:22:51.069121+00:00",
+    "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e",
+    "excerpt_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/primary-source-excerpt.html"
+  },
+  "extraction_rules": {
+    "score_columns": [
+      "ARC-AGI-1",
+      "ARC-AGI-2"
+    ],
+    "excluded_columns": [
+      "ARC-AGI-3 (Standard harness)",
+      "ARC-AGI-3 (Provider Adapter harness)"
+    ],
+    "source_variant_to_catalog_effort": {
+      "Max": "max",
+      "XHigh": "xhigh",
+      "High": "high",
+      "Medium": "medium",
+      "Low": "low",
+      "None": "none"
+    },
+    "catalog_ids": {
+      "max": "gpt-6-luna::max",
+      "xhigh": "gpt-6-luna::xhigh",
+      "high": "gpt-6-luna::high",
+      "medium": "gpt-6-luna::medium",
+      "low": "gpt-6-luna::low",
+      "non-reasoning": "gpt-6-luna::non-reasoning"
+    },
+    "source_id_rule": "Exact page title, a vertical bar, and the exact Variant cell; for example GPT-6 Luna|Max.",
+    "name_rule": "Use the existing catalog display name for the exact mapped model id.",
+    "units": "Percent, copy the numeric percentage without the percent sign.",
+    "basis": "measured, because the ARC Prize source labels the page ARC Prize Verified and the table Verified scores.",
+    "date_rule": "Published date from the source page metadata; retrieval date from this receipt.",
+    "coverage": "All six variant rows for ARC-AGI-1 and ARC-AGI-2; 12 rows total."
+  },
+  "required_json_schema": {
+    "rows": [
+      {
+        "benchmark_id": "arc-agi::1 or arc-agi::2",
+        "source_id": "GPT-6 Luna|Max (exact page variant)",
+        "model_id": "mapped gpt-6-luna model id",
+        "reasoning_effort": "max/xhigh/high/medium/low/none",
+        "value": "numeric percent from one of ARC-AGI-1 or ARC-AGI-2 columns"
+      }
+    ]
+  },
+  "coverage": "Return exactly 12 rows: six page variants for each of ARC-AGI-1 and ARC-AGI-2. Do not return metadata inside each row; the primary source metadata applies to all rows."
+}

@@ -103,7 +103,7 @@ test('the withheld arms are exactly the multi-capture and non-active ones', asyn
     'bu-bench-v1::snapshot-2026-09-09', 'hyper-tau-bench::release-v1',
     'matharena-aime::2026', 'matharena-apex-shortlist::2025', 'matharena-apex::2025',
     'matharena-hmmt::2025-11', 'matharena-hmmt::2026-02', 'matharena-usamo::2026',
-    'toolathlon::pre-verified',
+    'simple-bench::snapshot-2026-09-10', 'toolathlon::pre-verified',
   ]);
   assert.ok(parsed.length - withheld.length > 100, 'every other collected arm carries one');
 });

@@ -1,0 +1,860 @@
+{
+  "created_at": "2026-09-26T04:40:52.096Z",
+  "producer_models": [
+    "anthropic/claude-opus-5-5"
+  ],
+  "rules": "Join only when the source label names exactly this model (not a sibling such as -mini/-pro/-fast/-flash/a dated snapshot/an earlier version) and the stated reasoning effort equals the catalog variant. FrontierCode ids are Model|effort, where effort is the data file's own key for that model (data.v1_1.efforts[model]); \"none\" or a non-effort key means no effort stated and may only join a family whose only catalog configuration is ::default.",
+  "source": {
+    "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+    "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+    "retrieved_at": "2026-09-26T04:23:00.682196+00:00"
+  },
+  "joins": [
+    {
+      "key": "frontiercode::1.1|Claude Opus 5.5|low|claude-opus-5.5::low",
+      "board": "frontiercode::1.1",
+      "source_label": "Claude Opus 5.5|low",
+      "source_model_name": "Claude Opus 5.5",
+      "source_effort_key": "low",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "claude-code",
+      "catalog_id": "claude-opus-5.5::low",
+      "catalog_display_name": "Claude Opus 5.5 (Adaptive Reasoning, Low Effort, Default Fallback)",
+      "family_configurations": [
+        "claude-opus-5.5::max",
+        "claude-opus-5.5::xhigh",
+        "claude-opus-5.5::high",
+        "claude-opus-5.5::medium",
+        "claude-opus-5.5::low"
+      ],
+      "rule": "label states model claude-opus-5.5 and effort low; exact catalog configuration claude-opus-5.5::low"
+    },
+    {
+      "key": "frontiercode::1.1|Claude Opus 5.5|medium|claude-opus-5.5::medium",
+      "board": "frontiercode::1.1",
+      "source_label": "Claude Opus 5.5|medium",
+      "source_model_name": "Claude Opus 5.5",
+      "source_effort_key": "medium",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "claude-code",
+      "catalog_id": "claude-opus-5.5::medium",
+      "catalog_display_name": "Claude Opus 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)",
+      "family_configurations": [
+        "claude-opus-5.5::max",
+        "claude-opus-5.5::xhigh",
+        "claude-opus-5.5::high",
+        "claude-opus-5.5::medium",
+        "claude-opus-5.5::low"
+      ],
+      "rule": "label states model claude-opus-5.5 and effort medium; exact catalog configuration claude-opus-5.5::medium"
+    },
+    {
+      "key": "frontiercode::1.1|Claude Opus 5.5|high|claude-opus-5.5::high",
+      "board": "frontiercode::1.1",
+      "source_label": "Claude Opus 5.5|high",
+      "source_model_name": "Claude Opus 5.5",
+      "source_effort_key": "high",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "claude-code",
+      "catalog_id": "claude-opus-5.5::high",
+      "catalog_display_name": "Claude Opus 5.5 (Adaptive Reasoning, High Effort, Default Fallback)",
+      "family_configurations": [
+        "claude-opus-5.5::max",
+        "claude-opus-5.5::xhigh",
+        "claude-opus-5.5::high",
+        "claude-opus-5.5::medium",
+        "claude-opus-5.5::low"
+      ],
+      "rule": "label states model claude-opus-5.5 and effort high; exact catalog configuration claude-opus-5.5::high"
+    },
+    {
+      "key": "frontiercode::1.1|Claude Opus 5.5|xhigh|claude-opus-5.5::xhigh",
+      "board": "frontiercode::1.1",
+      "source_label": "Claude Opus 5.5|xhigh",
+      "source_model_name": "Claude Opus 5.5",
+      "source_effort_key": "xhigh",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "claude-code",
+      "catalog_id": "claude-opus-5.5::xhigh",
+      "catalog_display_name": "Claude Opus 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",
+      "family_configurations": [
+        "claude-opus-5.5::max",
+        "claude-opus-5.5::xhigh",
+        "claude-opus-5.5::high",
+        "claude-opus-5.5::medium",
+        "claude-opus-5.5::low"
+      ],
+      "rule": "label states model claude-opus-5.5 and effort xhigh; exact catalog configuration claude-opus-5.5::xhigh"
+    },
+    {
+      "key": "frontiercode::1.1|Claude Opus 5.5|max|claude-opus-5.5::max",
+      "board": "frontiercode::1.1",
+      "source_label": "Claude Opus 5.5|max",
+      "source_model_name": "Claude Opus 5.5",
+      "source_effort_key": "max",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "claude-code",
+      "catalog_id": "claude-opus-5.5::max",
+      "catalog_display_name": "Claude Opus 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",
+      "family_configurations": [
+        "claude-opus-5.5::max",
+        "claude-opus-5.5::xhigh",
+        "claude-opus-5.5::high",
+        "claude-opus-5.5::medium",
+        "claude-opus-5.5::low"
+      ],
+      "rule": "label states model claude-opus-5.5 and effort max; exact catalog configuration claude-opus-5.5::max"
+    },
+    {
+      "key": "frontiercode::1.1|GPT-6 Sol|low|gpt-6-sol::low",
+      "board": "frontiercode::1.1",
+      "source_label": "GPT-6 Sol|low",
+      "source_model_name": "GPT-6 Sol",
+      "source_effort_key": "low",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-sol::low",
+      "catalog_display_name": "GPT-6 Sol (low)",
+      "family_configurations": [
+        "gpt-6-sol::max",
+        "gpt-6-sol::xhigh",
+        "gpt-6-sol::high",
+        "gpt-6-sol::medium",
+        "gpt-6-sol::low",
+        "gpt-6-sol::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-sol and effort low; exact catalog configuration gpt-6-sol::low"
+    },
+    {
+      "key": "frontiercode::1.1|GPT-6 Sol|medium|gpt-6-sol::medium",
+      "board": "frontiercode::1.1",
+      "source_label": "GPT-6 Sol|medium",
+      "source_model_name": "GPT-6 Sol",
+      "source_effort_key": "medium",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-sol::medium",
+      "catalog_display_name": "GPT-6 Sol (medium)",
+      "family_configurations": [
+        "gpt-6-sol::max",
+        "gpt-6-sol::xhigh",
+        "gpt-6-sol::high",
+        "gpt-6-sol::medium",
+        "gpt-6-sol::low",
+        "gpt-6-sol::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-sol and effort medium; exact catalog configuration gpt-6-sol::medium"
+    },
+    {
+      "key": "frontiercode::1.1|GPT-6 Sol|high|gpt-6-sol::high",
+      "board": "frontiercode::1.1",
+      "source_label": "GPT-6 Sol|high",
+      "source_model_name": "GPT-6 Sol",
+      "source_effort_key": "high",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-sol::high",
+      "catalog_display_name": "GPT-6 Sol (high)",
+      "family_configurations": [
+        "gpt-6-sol::max",
+        "gpt-6-sol::xhigh",
+        "gpt-6-sol::high",
+        "gpt-6-sol::medium",
+        "gpt-6-sol::low",
+        "gpt-6-sol::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-sol and effort high; exact catalog configuration gpt-6-sol::high"
+    },
+    {
+      "key": "frontiercode::1.1|GPT-6 Sol|xhigh|gpt-6-sol::xhigh",
+      "board": "frontiercode::1.1",
+      "source_label": "GPT-6 Sol|xhigh",
+      "source_model_name": "GPT-6 Sol",
+      "source_effort_key": "xhigh",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-sol::xhigh",
+      "catalog_display_name": "GPT-6 Sol (xhigh)",
+      "family_configurations": [
+        "gpt-6-sol::max",
+        "gpt-6-sol::xhigh",
+        "gpt-6-sol::high",
+        "gpt-6-sol::medium",
+        "gpt-6-sol::low",
+        "gpt-6-sol::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-sol and effort xhigh; exact catalog configuration gpt-6-sol::xhigh"
+    },
+    {
+      "key": "frontiercode::1.1|GPT-6 Sol|max|gpt-6-sol::max",
+      "board": "frontiercode::1.1",
+      "source_label": "GPT-6 Sol|max",
+      "source_model_name": "GPT-6 Sol",
+      "source_effort_key": "max",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-sol::max",
+      "catalog_display_name": "GPT-6 Sol (max)",
+      "family_configurations": [
+        "gpt-6-sol::max",
+        "gpt-6-sol::xhigh",
+        "gpt-6-sol::high",
+        "gpt-6-sol::medium",
+        "gpt-6-sol::low",
+        "gpt-6-sol::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-sol and effort max; exact catalog configuration gpt-6-sol::max"
+    },
+    {
+      "key": "frontiercode::1.1|GPT-6 Luna|low|gpt-6-luna::low",
+      "board": "frontiercode::1.1",
+      "source_label": "GPT-6 Luna|low",
+      "source_model_name": "GPT-6 Luna",
+      "source_effort_key": "low",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-luna::low",
+      "catalog_display_name": "GPT-6 Luna (low)",
+      "family_configurations": [
+        "gpt-6-luna::max",
+        "gpt-6-luna::xhigh",
+        "gpt-6-luna::high",
+        "gpt-6-luna::medium",
+        "gpt-6-luna::low",
+        "gpt-6-luna::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-luna and effort low; exact catalog configuration gpt-6-luna::low"
+    },
+    {
+      "key": "frontiercode::1.1|GPT-6 Luna|medium|gpt-6-luna::medium",
+      "board": "frontiercode::1.1",
+      "source_label": "GPT-6 Luna|medium",
+      "source_model_name": "GPT-6 Luna",
+      "source_effort_key": "medium",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-luna::medium",
+      "catalog_display_name": "GPT-6 Luna (medium)",
+      "family_configurations": [
+        "gpt-6-luna::max",
+        "gpt-6-luna::xhigh",
+        "gpt-6-luna::high",
+        "gpt-6-luna::medium",
+        "gpt-6-luna::low",
+        "gpt-6-luna::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-luna and effort medium; exact catalog configuration gpt-6-luna::medium"
+    },
+    {
+      "key": "frontiercode::1.1|GPT-6 Luna|high|gpt-6-luna::high",
+      "board": "frontiercode::1.1",
+      "source_label": "GPT-6 Luna|high",
+      "source_model_name": "GPT-6 Luna",
+      "source_effort_key": "high",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-luna::high",
+      "catalog_display_name": "GPT-6 Luna (high)",
+      "family_configurations": [
+        "gpt-6-luna::max",
+        "gpt-6-luna::xhigh",
+        "gpt-6-luna::high",
+        "gpt-6-luna::medium",
+        "gpt-6-luna::low",
+        "gpt-6-luna::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-luna and effort high; exact catalog configuration gpt-6-luna::high"
+    },
+    {
+      "key": "frontiercode::1.1|GPT-6 Luna|xhigh|gpt-6-luna::xhigh",
+      "board": "frontiercode::1.1",
+      "source_label": "GPT-6 Luna|xhigh",
+      "source_model_name": "GPT-6 Luna",
+      "source_effort_key": "xhigh",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-luna::xhigh",
+      "catalog_display_name": "GPT-6 Luna (xhigh)",
+      "family_configurations": [
+        "gpt-6-luna::max",
+        "gpt-6-luna::xhigh",
+        "gpt-6-luna::high",
+        "gpt-6-luna::medium",
+        "gpt-6-luna::low",
+        "gpt-6-luna::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-luna and effort xhigh; exact catalog configuration gpt-6-luna::xhigh"
+    },
+    {
+      "key": "frontiercode::1.1|GPT-6 Luna|max|gpt-6-luna::max",
+      "board": "frontiercode::1.1",
+      "source_label": "GPT-6 Luna|max",
+      "source_model_name": "GPT-6 Luna",
+      "source_effort_key": "max",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-luna::max",
+      "catalog_display_name": "GPT-6 Luna (max)",
+      "family_configurations": [
+        "gpt-6-luna::max",
+        "gpt-6-luna::xhigh",
+        "gpt-6-luna::high",
+        "gpt-6-luna::medium",
+        "gpt-6-luna::low",
+        "gpt-6-luna::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-luna and effort max; exact catalog configuration gpt-6-luna::max"
+    },
+    {
+      "key": "frontiercode::1.1|Grok 4.7|high|grok-4.7::high",
+      "board": "frontiercode::1.1",
+      "source_label": "Grok 4.7|high",
+      "source_model_name": "Grok 4.7",
+      "source_effort_key": "high",
+      "source_efforts_for_model": [
+        "high",
+        "xhigh"
+      ],
+      "source_harness": "grok-build",
+      "catalog_id": "grok-4.7::high",
+      "catalog_display_name": "Grok 4.7 (high)",
+      "family_configurations": [
+        "grok-4.7::xhigh",
+        "grok-4.7::high"
+      ],
+      "rule": "label states model grok-4.7 and effort high; exact catalog configuration grok-4.7::high"
+    },
+    {
+      "key": "frontiercode::1.1|Grok 4.7|xhigh|grok-4.7::xhigh",
+      "board": "frontiercode::1.1",
+      "source_label": "Grok 4.7|xhigh",
+      "source_model_name": "Grok 4.7",
+      "source_effort_key": "xhigh",
+      "source_efforts_for_model": [
+        "high",
+        "xhigh"
+      ],
+      "source_harness": "grok-build",
+      "catalog_id": "grok-4.7::xhigh",
+      "catalog_display_name": "Grok 4.7 (xhigh)",
+      "family_configurations": [
+        "grok-4.7::xhigh",
+        "grok-4.7::high"
+      ],
+      "rule": "label states model grok-4.7 and effort xhigh; exact catalog configuration grok-4.7::xhigh"
+    },
+    {
+      "key": "frontiercode-cost::1.1|Claude Opus 5.5|low|claude-opus-5.5::low",
+      "board": "frontiercode-cost::1.1",
+      "source_label": "Claude Opus 5.5|low",
+      "source_model_name": "Claude Opus 5.5",
+      "source_effort_key": "low",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "claude-code",
+      "catalog_id": "claude-opus-5.5::low",
+      "catalog_display_name": "Claude Opus 5.5 (Adaptive Reasoning, Low Effort, Default Fallback)",
+      "family_configurations": [
+        "claude-opus-5.5::max",
+        "claude-opus-5.5::xhigh",
+        "claude-opus-5.5::high",
+        "claude-opus-5.5::medium",
+        "claude-opus-5.5::low"
+      ],
+      "rule": "label states model claude-opus-5.5 and effort low; exact catalog configuration claude-opus-5.5::low"
+    },
+    {
+      "key": "frontiercode-cost::1.1|Claude Opus 5.5|medium|claude-opus-5.5::medium",
+      "board": "frontiercode-cost::1.1",
+      "source_label": "Claude Opus 5.5|medium",
+      "source_model_name": "Claude Opus 5.5",
+      "source_effort_key": "medium",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "claude-code",
+      "catalog_id": "claude-opus-5.5::medium",
+      "catalog_display_name": "Claude Opus 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)",
+      "family_configurations": [
+        "claude-opus-5.5::max",
+        "claude-opus-5.5::xhigh",
+        "claude-opus-5.5::high",
+        "claude-opus-5.5::medium",
+        "claude-opus-5.5::low"
+      ],
+      "rule": "label states model claude-opus-5.5 and effort medium; exact catalog configuration claude-opus-5.5::medium"
+    },
+    {
+      "key": "frontiercode-cost::1.1|Claude Opus 5.5|high|claude-opus-5.5::high",
+      "board": "frontiercode-cost::1.1",
+      "source_label": "Claude Opus 5.5|high",
+      "source_model_name": "Claude Opus 5.5",
+      "source_effort_key": "high",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "claude-code",
+      "catalog_id": "claude-opus-5.5::high",
+      "catalog_display_name": "Claude Opus 5.5 (Adaptive Reasoning, High Effort, Default Fallback)",
+      "family_configurations": [
+        "claude-opus-5.5::max",
+        "claude-opus-5.5::xhigh",
+        "claude-opus-5.5::high",
+        "claude-opus-5.5::medium",
+        "claude-opus-5.5::low"
+      ],
+      "rule": "label states model claude-opus-5.5 and effort high; exact catalog configuration claude-opus-5.5::high"
+    },
+    {
+      "key": "frontiercode-cost::1.1|Claude Opus 5.5|xhigh|claude-opus-5.5::xhigh",
+      "board": "frontiercode-cost::1.1",
+      "source_label": "Claude Opus 5.5|xhigh",
+      "source_model_name": "Claude Opus 5.5",
+      "source_effort_key": "xhigh",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "claude-code",
+      "catalog_id": "claude-opus-5.5::xhigh",
+      "catalog_display_name": "Claude Opus 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",
+      "family_configurations": [
+        "claude-opus-5.5::max",
+        "claude-opus-5.5::xhigh",
+        "claude-opus-5.5::high",
+        "claude-opus-5.5::medium",
+        "claude-opus-5.5::low"
+      ],
+      "rule": "label states model claude-opus-5.5 and effort xhigh; exact catalog configuration claude-opus-5.5::xhigh"
+    },
+    {
+      "key": "frontiercode-cost::1.1|Claude Opus 5.5|max|claude-opus-5.5::max",
+      "board": "frontiercode-cost::1.1",
+      "source_label": "Claude Opus 5.5|max",
+      "source_model_name": "Claude Opus 5.5",
+      "source_effort_key": "max",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "claude-code",
+      "catalog_id": "claude-opus-5.5::max",
+      "catalog_display_name": "Claude Opus 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",
+      "family_configurations": [
+        "claude-opus-5.5::max",
+        "claude-opus-5.5::xhigh",
+        "claude-opus-5.5::high",
+        "claude-opus-5.5::medium",
+        "claude-opus-5.5::low"
+      ],
+      "rule": "label states model claude-opus-5.5 and effort max; exact catalog configuration claude-opus-5.5::max"
+    },
+    {
+      "key": "frontiercode-cost::1.1|GPT-6 Sol|low|gpt-6-sol::low",
+      "board": "frontiercode-cost::1.1",
+      "source_label": "GPT-6 Sol|low",
+      "source_model_name": "GPT-6 Sol",
+      "source_effort_key": "low",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-sol::low",
+      "catalog_display_name": "GPT-6 Sol (low)",
+      "family_configurations": [
+        "gpt-6-sol::max",
+        "gpt-6-sol::xhigh",
+        "gpt-6-sol::high",
+        "gpt-6-sol::medium",
+        "gpt-6-sol::low",
+        "gpt-6-sol::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-sol and effort low; exact catalog configuration gpt-6-sol::low"
+    },
+    {
+      "key": "frontiercode-cost::1.1|GPT-6 Sol|medium|gpt-6-sol::medium",
+      "board": "frontiercode-cost::1.1",
+      "source_label": "GPT-6 Sol|medium",
+      "source_model_name": "GPT-6 Sol",
+      "source_effort_key": "medium",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-sol::medium",
+      "catalog_display_name": "GPT-6 Sol (medium)",
+      "family_configurations": [
+        "gpt-6-sol::max",
+        "gpt-6-sol::xhigh",
+        "gpt-6-sol::high",
+        "gpt-6-sol::medium",
+        "gpt-6-sol::low",
+        "gpt-6-sol::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-sol and effort medium; exact catalog configuration gpt-6-sol::medium"
+    },
+    {
+      "key": "frontiercode-cost::1.1|GPT-6 Sol|high|gpt-6-sol::high",
+      "board": "frontiercode-cost::1.1",
+      "source_label": "GPT-6 Sol|high",
+      "source_model_name": "GPT-6 Sol",
+      "source_effort_key": "high",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-sol::high",
+      "catalog_display_name": "GPT-6 Sol (high)",
+      "family_configurations": [
+        "gpt-6-sol::max",
+        "gpt-6-sol::xhigh",
+        "gpt-6-sol::high",
+        "gpt-6-sol::medium",
+        "gpt-6-sol::low",
+        "gpt-6-sol::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-sol and effort high; exact catalog configuration gpt-6-sol::high"
+    },
+    {
+      "key": "frontiercode-cost::1.1|GPT-6 Sol|xhigh|gpt-6-sol::xhigh",
+      "board": "frontiercode-cost::1.1",
+      "source_label": "GPT-6 Sol|xhigh",
+      "source_model_name": "GPT-6 Sol",
+      "source_effort_key": "xhigh",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-sol::xhigh",
+      "catalog_display_name": "GPT-6 Sol (xhigh)",
+      "family_configurations": [
+        "gpt-6-sol::max",
+        "gpt-6-sol::xhigh",
+        "gpt-6-sol::high",
+        "gpt-6-sol::medium",
+        "gpt-6-sol::low",
+        "gpt-6-sol::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-sol and effort xhigh; exact catalog configuration gpt-6-sol::xhigh"
+    },
+    {
+      "key": "frontiercode-cost::1.1|GPT-6 Sol|max|gpt-6-sol::max",
+      "board": "frontiercode-cost::1.1",
+      "source_label": "GPT-6 Sol|max",
+      "source_model_name": "GPT-6 Sol",
+      "source_effort_key": "max",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-sol::max",
+      "catalog_display_name": "GPT-6 Sol (max)",
+      "family_configurations": [
+        "gpt-6-sol::max",
+        "gpt-6-sol::xhigh",
+        "gpt-6-sol::high",
+        "gpt-6-sol::medium",
+        "gpt-6-sol::low",
+        "gpt-6-sol::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-sol and effort max; exact catalog configuration gpt-6-sol::max"
+    },
+    {
+      "key": "frontiercode-cost::1.1|GPT-6 Luna|low|gpt-6-luna::low",
+      "board": "frontiercode-cost::1.1",
+      "source_label": "GPT-6 Luna|low",
+      "source_model_name": "GPT-6 Luna",
+      "source_effort_key": "low",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-luna::low",
+      "catalog_display_name": "GPT-6 Luna (low)",
+      "family_configurations": [
+        "gpt-6-luna::max",
+        "gpt-6-luna::xhigh",
+        "gpt-6-luna::high",
+        "gpt-6-luna::medium",
+        "gpt-6-luna::low",
+        "gpt-6-luna::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-luna and effort low; exact catalog configuration gpt-6-luna::low"
+    },
+    {
+      "key": "frontiercode-cost::1.1|GPT-6 Luna|medium|gpt-6-luna::medium",
+      "board": "frontiercode-cost::1.1",
+      "source_label": "GPT-6 Luna|medium",
+      "source_model_name": "GPT-6 Luna",
+      "source_effort_key": "medium",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-luna::medium",
+      "catalog_display_name": "GPT-6 Luna (medium)",
+      "family_configurations": [
+        "gpt-6-luna::max",
+        "gpt-6-luna::xhigh",
+        "gpt-6-luna::high",
+        "gpt-6-luna::medium",
+        "gpt-6-luna::low",
+        "gpt-6-luna::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-luna and effort medium; exact catalog configuration gpt-6-luna::medium"
+    },
+    {
+      "key": "frontiercode-cost::1.1|GPT-6 Luna|high|gpt-6-luna::high",
+      "board": "frontiercode-cost::1.1",
+      "source_label": "GPT-6 Luna|high",
+      "source_model_name": "GPT-6 Luna",
+      "source_effort_key": "high",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-luna::high",
+      "catalog_display_name": "GPT-6 Luna (high)",
+      "family_configurations": [
+        "gpt-6-luna::max",
+        "gpt-6-luna::xhigh",
+        "gpt-6-luna::high",
+        "gpt-6-luna::medium",
+        "gpt-6-luna::low",
+        "gpt-6-luna::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-luna and effort high; exact catalog configuration gpt-6-luna::high"
+    },
+    {
+      "key": "frontiercode-cost::1.1|GPT-6 Luna|xhigh|gpt-6-luna::xhigh",
+      "board": "frontiercode-cost::1.1",
+      "source_label": "GPT-6 Luna|xhigh",
+      "source_model_name": "GPT-6 Luna",
+      "source_effort_key": "xhigh",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-luna::xhigh",
+      "catalog_display_name": "GPT-6 Luna (xhigh)",
+      "family_configurations": [
+        "gpt-6-luna::max",
+        "gpt-6-luna::xhigh",
+        "gpt-6-luna::high",
+        "gpt-6-luna::medium",
+        "gpt-6-luna::low",
+        "gpt-6-luna::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-luna and effort xhigh; exact catalog configuration gpt-6-luna::xhigh"
+    },
+    {
+      "key": "frontiercode-cost::1.1|GPT-6 Luna|max|gpt-6-luna::max",
+      "board": "frontiercode-cost::1.1",
+      "source_label": "GPT-6 Luna|max",
+      "source_model_name": "GPT-6 Luna",
+      "source_effort_key": "max",
+      "source_efforts_for_model": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "source_harness": "codex",
+      "catalog_id": "gpt-6-luna::max",
+      "catalog_display_name": "GPT-6 Luna (max)",
+      "family_configurations": [
+        "gpt-6-luna::max",
+        "gpt-6-luna::xhigh",
+        "gpt-6-luna::high",
+        "gpt-6-luna::medium",
+        "gpt-6-luna::low",
+        "gpt-6-luna::non-reasoning"
+      ],
+      "rule": "label states model gpt-6-luna and effort max; exact catalog configuration gpt-6-luna::max"
+    },
+    {
+      "key": "frontiercode-cost::1.1|Grok 4.7|high|grok-4.7::high",
+      "board": "frontiercode-cost::1.1",
+      "source_label": "Grok 4.7|high",
+      "source_model_name": "Grok 4.7",
+      "source_effort_key": "high",
+      "source_efforts_for_model": [
+        "high",
+        "xhigh"
+      ],
+      "source_harness": "grok-build",
+      "catalog_id": "grok-4.7::high",
+      "catalog_display_name": "Grok 4.7 (high)",
+      "family_configurations": [
+        "grok-4.7::xhigh",
+        "grok-4.7::high"
+      ],
+      "rule": "label states model grok-4.7 and effort high; exact catalog configuration grok-4.7::high"
+    },
+    {
+      "key": "frontiercode-cost::1.1|Grok 4.7|xhigh|grok-4.7::xhigh",
+      "board": "frontiercode-cost::1.1",
+      "source_label": "Grok 4.7|xhigh",
+      "source_model_name": "Grok 4.7",
+      "source_effort_key": "xhigh",
+      "source_efforts_for_model": [
+        "high",
+        "xhigh"
+      ],
+      "source_harness": "grok-build",
+      "catalog_id": "grok-4.7::xhigh",
+      "catalog_display_name": "Grok 4.7 (xhigh)",
+      "family_configurations": [
+        "grok-4.7::xhigh",
+        "grok-4.7::high"
+      ],
+      "rule": "label states model grok-4.7 and effort xhigh; exact catalog configuration grok-4.7::xhigh"
+    }
+  ]
+}

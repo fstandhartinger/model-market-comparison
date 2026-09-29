@@ -1,0 +1,35 @@
+```json
+{
+  "artifact_id": "cr173-vals-simplebench",
+  "artifact_sha256": "d6152cbe5ae9769d80552add8300521e9dbfd4d0e1b8bd80a42cf1b46b464f63",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "C1", "C2", "C3",
+    "all 44 rows: cr173 vals-biomysterybench (9), vals-cua-bench (2), vals-ioi (15), vals-medscribe (18)",
+    "C3 identity/date equality for the 4 in-scope boards",
+    "Section A identity-decision table scan (all 20 boards) for C3 date/version consistency"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "Section A identity decisions, slug srebench (vals-sre-bench)",
+      "evidence": "Identity is \"vals-sre-bench::snapshot-2026-09-22\" but the quoted page text is \"Updated 9/21/2026\"; C3 requires a dated snapshot identity's date to equal the page's own \"Updated M/D/YYYY\". A re-dated page is a new dated identity.",
+      "repair": "Re-date the identity to vals-sre-bench::snapshot-2026-09-21 (or re-capture the page and re-verify its \"Updated\" date) before release."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "cua_bench source row openai/gpt-6-astra (accuracy 19.166667, reasoning_effort=max, compute_effort=max) has no row among this packet's 44 rows; the plan (target_rows=2, action \"existing\") implies a previously ingested row, whose id/value is not shown here.",
+    "qwen3.8-max rows (vals-ioi, vals-medscribe): artifact keeps variant \"max\" although the source states no reasoning_effort/compute_effort; accepted per the documented parseValsIndexId refusal (family qwen3.8 absent from catalog), but variant semantics elsewhere could expect stated-only settings.",
+    "artifact_sha256 could not be independently recomputed (no execution tools); digest echoed as supplied."
+  ],
+  "missing_evidence": [
+    "cua_bench: source evidence contains openai/gpt-6-astra (accuracy 19.166667, reasoning_effort=max, compute_effort=max -> expected gpt-6-astra::max), but no such row exists among the 44 rows; plan (action \"existing\", target_rows 2) implies a previously ingested row whose id/value is not supplied, so C1/C2 cannot be confirmed for that model.",
+    "C4 registry records for the new identities (vals-cyberbench-v1-1, vals-medcode, vals-sage, vals-tax-agent-bench) are not included in this packet part.",
+    "C6 tier facts/assignments are not included in this packet part; tier correctness is not verifiable here."
+  ]
+}
+```

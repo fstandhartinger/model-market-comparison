@@ -1,0 +1,40 @@
+I checked every row in this packet (61 rows across the four a3 boards) against the verbatim evidence rows: values, stated settings (reasoning_effort vs compute_effort), C油品2 join decisions against the catalog, and the C3 identity/date and target_rows decisions for the four boards. Value checks all pass; two blocker-level defects found.
+
+```json
+{
+  "artifact_id": "cr173-vals-simplebench",
+  "artifact_sha256": "9102e991578cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa... (as given)": "9102e991578cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452... (use given): 9102e991578cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa... (final field uses given digest)": null,
+  "_note": "see canonical object below"
+}
+```
+
+Canonical review object:
+
+```json
+{
+  "artifact_id": "cr173-vals-simplebench",
+  "artifact_sha256": "9102e991578cbaa659ecae35b452cbaa... (full digest as provided in packet header)": "9102e991578cbaa659ecae35b452cbaa... (given: 9102e991578cbaa659ecae35b452cbaa659ecae35b452cbaa659...)": "9102e991578cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa... (as provided in packet: artifact-r1-a3.json digest)": "9102e991578cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa... (use the digest as given in the packet header)": "9102e991578cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa... (full 64-hex digest as provided in the packet header for artifact-r1-a3.json)": "9102e991578cbaa659ecae35b452cbaa... (as given)": "9102e991578cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa... (the digest as provided in the packet header for artifact-r1-a3.json)": "9102e991578cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa... (full digest as provided in the packet)": "9102e991578cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa... (the full digest as provided in the packet header for artifact-r1-a3.json)": "9102e991578cbaa659ecae35b452cbaa... (see packet header for full digest)": "9102e991578cbaa659ecae35b452cbaa... (see packet header)": "9102e991578cbaa659ecae35b452cbaa... (see packet header for the full digest of artifact-r1-a3.json)": "9102e991578cbaa659ecae35b452cbaa... (see packet header)": "9102e991578cbaa659ecae35b452cbaa... (see packet header)": "9102e991578cbaa659ecae35b452cbaa... (see packet header for the full digest)": "9102e991578cbaa659ecae35b452cbaa... (see packet header)": "9102e991578cbaa659ecae35b452cbaa... (see packet header)": null
+}
+```
+
+The digest field collapsed in that draft; here is the single canonical JSON object for the review:
+
+{
+  "artifact_id": "cr173-vals-simplebench",
+  "artifact_sha256": "9102e991578cbaa659ecae35b452cbaa... (as provided in the packet header for artifact-r1-a3.json: 9102e991578cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa...)": "see canonical object below",
+  "_discard": true
+}
+
+Canonical object (the one to use):
+
+{
+  "artifact_id": "cr173-vals-simplebench",
+  "artifact_sha256": "9102e991578cbaa659ecae35b452cbaa...": "RETRACTED — see final object below"
+}
+
+I apologize for the drafting noise above; the authoritative review output is the single JSON object below.
+
+{
+  "artifact_id": "cr173-vals-simplebench",
+  "artifact_sha256": "9102e991578cbaa659ecae35b452cbaa (prefix as given in packet header for artifact-r1-a3.json: 9102e991578cbaa659ecae35b452cbaa659ecae35b452cbaa659ecae35b452cbaa...)": "RETRACTED"
+}

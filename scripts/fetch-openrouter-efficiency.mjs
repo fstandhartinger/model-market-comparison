@@ -8,6 +8,7 @@ import { parseOpenRouterPage, parseOpenRouterCache, parseOpenRouterRankings } fr
 import { completedWeek } from "../lib/chutes-efficiency.mjs";
 import { writeJSONAtomic } from "../lib/snapshot.mjs";
 import { captureLiveSource } from '../lib/live-source.mjs';
+import { selectOpenRouterEfficiencyModels } from "../lib/openrouter-gpt6.mjs";
 
 const raw = new URL("../data/raw/", import.meta.url);
 const target = new URL("openrouter-efficiency.json", raw);
@@ -38,7 +39,7 @@ try {
     && m.architecture.output_modalities[0] === "text" && !m.id.includes(":") && m.endpoints?.length).map((m) => m.id));
   const collected_at = new Date().toISOString();
   const window = completedWeek(new Date(collected_at));
-  const selected = explicit || [...catalogIds].sort((a, b) => (previous.attempts[a]?.collected_at || "").localeCompare(previous.attempts[b]?.collected_at || "") || a.localeCompare(b)).slice(0, limit);
+  const selected = explicit || selectOpenRouterEfficiencyModels({ catalogIds, attempts: previous.attempts, limit });
   if (selected.length > 12 || !selected.length || new Set(selected).size !== selected.length || selected.some((id) => !catalogIds.has(id))) throw new Error("Select 1..12 unique exact catalog model IDs with text output");
   // The public robots policy currently allows these pages. Fail closed on a
   // changed policy; a human can review and narrow this small collector if needed.
@@ -120,7 +121,7 @@ try {
   await writeJSONAtomic(fileURLToPath(target), {
     collected_at, models, attempts, rankings, rankings_attempt: rankingsAttempt,
     coverage: { catalog_models: catalog.models.length, eligible_page_models: catalogIds.size, pages_selected: selected.length, pages_succeeded_this_run: successes, retained_model_pages: Object.keys(models).length,
-      policy: "At most four model pages per normal daily run, oldest-attempt first; explicit initial batches capped at twelve. Per-observation dates are retained." },
+      policy: "At most four model pages per normal daily run: one oldest-attempt-first page from the maintained GPT-6 model/mode priority set, then up to three oldest-attempt-first pages from the remaining catalog; explicit targeted batches are capped at twelve. Per-observation dates are retained." },
   });
 } catch (error) {
   console.error(`OpenRouter efficiency refresh failed: ${error.message}`);

@@ -1,0 +1,38 @@
+{
+  "artifact_id": "frontiercode-extended-1.1-batch3-cr173-2026-09-26",
+  "artifact_sha256": "cec25e412911f4df5c2bc913610660f3912214390552413ce36d3ae3e441f82b",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:f44cac93f24c8f853f5ca4f7",
+    "public:856b70a75754d7e3f4ff84ae",
+    "public:6a3cad0d8d073c764dcad268",
+    "public:d56e1624c59d0d2af10d3ce0",
+    "public:95eb59cb5d57c61343902ec4",
+    "public:a2aba367a1b058083bd172d2",
+    "public:5d967442f722613d0d637f2e",
+    "public:3f7be12af91784dd639d2a62",
+    "public:250065952eef3b2b15621540",
+    "public:44a969f9e8560f36a02529ae",
+    "public:65f0ec7d16e91d7c56009ce3",
+    "public:f58efaedc84d6e1d70cdda91",
+    "public:a910e1e09a93e110ea43d44b",
+    "public:1fa6e4cd2db8b80a56ac1e77",
+    "public:3f649d409a6d5502340a10e3",
+    "public:d0e83250f97d1b9c7200be85",
+    "public:d9c21b053420b3ce05244fc4",
+    "public:182609698d889eb0499ec406",
+    "public:6314334f411b738768d92f48",
+    "public:dee38bbfc1afac260b058aaa"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Verification is limited to the supplied packet: each row's source_efforts_for_model, source_harness_for_model and source_extended_entry are taken as the authoritative verbatim capture. The underlying data.json (SHA-256 edba28c8...) was not independently re-fetched or re-hashed by this reviewer; no browsing/execution tools are available.",
+    "Locator strings (\"source row 40\"–\"source row 59\") are internally sequential and consistent with the stated row count of 20, but their row-number mapping into the source data file could not be cross-checked against the raw capture itself.",
+    "Some values carry binary floating-point representations (e.g., 61.309999999999995 for 0.6131×100, 47.660000000000004 for 0.4766×100, 54.50000000000001 for 0.545×100). Differences are far below the stated 1e-9 tolerance and were accepted as representation artifacts, not errors.",
+    "Consistency between value and derivation.inputs was checked for all 20 rows (inputs[i] equals source_extended_entry.new_score verbatim; value equals new_score×100 within tolerance). All rows pass criteria 1–5, including effort membership (e.g., \"none\" for SWE-1.7), harness equality (grok-build, claude-code, codex, chisel), model_id null, unit \"percent\", basis \"derived\" and source_basis \"self_reported\"."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "aa-automationbench::1.0.6",
+    "version": "1.0.6",
+    "version_guard": "Verify the published version 1.0.6 before reading results.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Headline score: per task, the percentage of objectives completed, or 0 if any guardrail is violated or the task errored",
+      "unit": "fraction",
+      "range": [
+        0,
+        1
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate., which carries the headline score on a 0-1 scale (the methodology states it as a percentage); values keep the field's own 0-1 scale."
+    },
+    "description": "Tests multi-app SaaS workflows through REST tools on a held-out AutomationBench split.",
+    "maintainer": "Artificial Analysis"
+  }
+]

@@ -69,6 +69,9 @@ try {
   }
   await writeJSONAtomic(join(runDir, 'reports', `${step}-step-result.json`), result);
   if (step === 'benchmarks') {
+    // A complete registry census must accompany every benchmark transaction.
+    const { writeSourceCoverage } = await import('./source-coverage.mjs');
+    await writeSourceCoverage({ outDir: join(runDir, 'reports'), report: result });
     // CR-38.5: per-source health across all held runs (reports/source-health.{json,md}). Never fails the step.
     try {
       const { writeSourceHealth } = await import('./source-health.mjs');

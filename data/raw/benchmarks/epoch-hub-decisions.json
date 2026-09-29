@@ -69,7 +69,61 @@
       "board": "frontiermath_erdos",
       "decision": "exclude",
       "reason": "All five published rows score exactly 0.0 (claude-fable-5-1 max, gpt-5.5 xhigh, ...), so the board carries no discriminative information; Epoch's benchmark_metadata.csv leaves its source_file and score_column blank (in_eci False), i.e. Epoch itself has not classified it. A zero-information board would add a misleading row. Revisit when Epoch publishes non-zero results or completes the metadata.",
+      "metadata_row": "FrontierMath-Erdos,False,,,1.0,0.0,1.0,2026-09-03,",
+      "superseded_by_decision": "2026-09-26 (CR-173): ingest as frontiermath-erdos::snapshot-2026-09-26 — see the later decision row."
+    },
+    {
+      "board": "furniture_assembly",
+      "decision": "ingest",
+      "identity": "furniture-assembly::snapshot-2026-09-26",
+      "category": "Vision",
+      "benchmaxxing_tier": "heldout",
+      "decided_at": "2026-09-26",
+      "decided_by": "CR-173 lane epoch-scale-arena (claude-opus-5-5)",
+      "reason": "Epoch runs it itself (CC BY 4.0); photos of Epoch’s own IKEA builds with deliberate mistakes, released 2026-09-23, not published elsewhere; answer key plus lenient LLM grader for the description.",
+      "metadata_row": "Furniture Assembly,True,furniture_assembly.csv,Best score (across scorers),1.0,0.3,1.0,2026-09-23,"
+    },
+    {
+      "board": "frontiermath_erdos",
+      "decision": "ingest",
+      "identity": "frontiermath-erdos::snapshot-2026-09-26",
+      "category": "Math",
+      "benchmaxxing_tier": "heldout",
+      "decided_at": "2026-09-26",
+      "decided_by": "CR-173 lane epoch-scale-arena (claude-opus-5-5)",
+      "reason": "Revisit condition of the 2026-09-19 exclusion met: the 2026-09-26 archive publishes a non-zero result (gpt-6-astra_max 0.0294 = 2 of 68). Epoch runs it itself; open problems with machine-checked proofs, so the value is not a judge or a memorised answer.",
       "metadata_row": "FrontierMath-Erdos,False,,,1.0,0.0,1.0,2026-09-03,"
     }
-  ]
+  ],
+  "archive_sha256_captured_2026-09-26": "9391cbdd98035a1731e50164c89433188c72dfcd3c934f0eeeb43d493d95ecdb",
+  "refresh_2026-09-26": {
+    "recorded_by": "CR-173 lane epoch-scale-arena",
+    "archive_sha256": "9391cbdd98035a1731e50164c89433188c72dfcd3c934f0eeeb43d493d95ecdb",
+    "retrieved_at": "2026-09-26T04:22:02Z",
+    "rows_added": {
+      "ebr-bench::snapshot-2026-09-18": [
+        "claude-opus-5-5_max",
+        "gpt-6-sol_max"
+      ],
+      "chess-puzzles::snapshot-2026-09-18": [
+        "muse-spark-1.3_max"
+      ],
+      "mystery-game-puzzles::snapshot-2026-09-18": [
+        "muse-spark-1.3_max"
+      ],
+      "frontiermath-tiers-1-3::v2": [
+        "muse-spark-1.3_max",
+        "muse-spark-1.3_xhigh"
+      ],
+      "frontiermath-tier-4::v2": [
+        "muse-spark-1.3_max",
+        "muse-spark-1.3_xhigh"
+      ]
+    },
+    "not_ingested": {
+      "otis_mock_aime_2024_2025": "Registry identity otis-mock-aime::2024-2025 stays contested (collection-plan status): the hub file mixes runs from before and after the September-2025 answer-extractor change (Started at 2025-02 .. 2026-09; one row without a date) and the registry requires current-grader evidence per row. The only GPT-6 OTIS row published before was the D180-withdrawn eci_benchmarks.csv value, which is not re-added. Owner decision: accept hub rows with Started at >= 2025-10-01 under this identity, or not.",
+      "external_relay_files": "*_external.csv members (DTBench, LMCA, ALE-Bench, BTF3, APEX-Agents, ...) are copies of other organisations’ boards and are not joined from Epoch (CR-35.5 original-source rule).",
+      "math_level_5": "Unchanged exclusion (2026-09-19)."
+    }
+  }
 }

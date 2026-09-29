@@ -1,0 +1,461 @@
+[
+{
+"benchmark_id": "vals-mysterymechanism::snapshot-2026-09-23",
+"id": "cr173:73b87a695461405e5afd57b8",
+"source_id": "openai/gpt-6-astra",
+"value": 53.153,
+"model_id": "gpt-6-astra::max",
+"variant": "max",
+"join": "label states model gpt-6-astra and setting max; exact catalog configuration gpt-6-astra::max"
+},
+{
+"benchmark_id": "vals-mysterymechanism::snapshot-2026-09-23",
+"id": "cr173:5fe35986a50d07adea7880ef",
+"source_id": "anthropic/claude-opus-5-5",
+"value": 49.55,
+"model_id": "claude-opus-5.5::max",
+"variant": "max",
+"join": "label states model claude-opus-5.5 and setting max; exact catalog configuration claude-opus-5.5::max"
+},
+{
+"benchmark_id": "vals-mysterymechanism::snapshot-2026-09-23",
+"id": "cr173:b359d6d5aae6ab265ff4bbf7",
+"source_id": "anthropic/claude-fable-5-1",
+"value": 47.748,
+"model_id": "claude-fable-5.1::max",
+"variant": "max",
+"join": "label states model claude-fable-5.1 and setting max; exact catalog configuration claude-fable-5.1::max"
+},
+{
+"benchmark_id": "vals-mysterymechanism::snapshot-2026-09-23",
+"id": "cr173:38e3dc5484944e011ad327df",
+"source_id": "google/gemini-3.8-flash",
+"value": 36.486,
+"model_id": "gemini-3.8-flash::high",
+"variant": "high",
+"join": "label states model gemini-3.8-flash and setting high; exact catalog configuration gemini-3.8-flash::high"
+},
+{
+"benchmark_id": "vals-mysterymechanism::snapshot-2026-09-23",
+"id": "cr173:b7fec6f1bdb11fe38f396b19",
+"source_id": "grok/grok-4.7",
+"value": 25.225,
+"model_id": "grok-4.7::xhigh",
+"variant": "xhigh",
+"join": "label states model grok-4.7 and setting xhigh; exact catalog configuration grok-4.7::xhigh"
+},
+{
+"benchmark_id": "vals-mysterymechanism::snapshot-2026-09-23",
+"id": "cr173:1e73e8d4ad7dfda2d5df93b8",
+"source_id": "alibaba/qwen3.8-max",
+"value": 23.874,
+"model_id": null,
+"variant": "max",
+"join": "slug qwen3.8 is not a catalog family"
+},
+{
+"benchmark_id": "vals-mysterymechanism::snapshot-2026-09-23",
+"id": "cr173:de1e52c0868c029940c16d59",
+"source_id": "zai/glm-5.3",
+"value": 22.973,
+"model_id": "glm-5.3::max",
+"variant": "max",
+"join": "label states model glm-5.3 and setting max; exact catalog configuration glm-5.3::max"
+},
+{
+"benchmark_id": "vals-mysterymechanism::snapshot-2026-09-23",
+"id": "cr173:acd87da464a89e10943e38a1",
+"source_id": "deepseek/deepseek-v4.1-flash",
+"value": 21.171,
+"model_id": null,
+"variant": "high",
+"join": "no catalog configuration for deepseek-v4.1-flash with setting high"
+},
+{
+"benchmark_id": "vals-mysterymechanism::snapshot-2026-09-23",
+"id": "cr173:8aefde5322703c689fcb13ce",
+"source_id": "openai/gpt-6-luna",
+"value": 19.369,
+"model_id": "gpt-6-luna::max",
+"variant": "max",
+"join": "label states model gpt-6-luna and setting max; exact catalog configuration gpt-6-luna::max"
+},
+{
+"benchmark_id": "vals-programbench::snapshot-2026-09-23",
+"id": "cr173:d95f24096151fa31dc9db78a",
+"source_id": "anthropic/claude-opus-5-5",
+"value": 18.5,
+"model_id": "claude-opus-5.5::max",
+"variant": "max",
+"join": "label states model claude-opus-5.5 and setting max; exact catalog configuration claude-opus-5.5::max"
+},
+{
+"benchmark_id": "vals-programbench::snapshot-2026-09-23",
+"id": "cr173:d37891e0f3b5440100cffe89",
+"source_id": "anthropic/claude-fable-5-1",
+"value": 7,
+"model_id": "claude-fable-5.1::max",
+"variant": "max",
+"join": "label states model claude-fable-5.1 and setting max; exact catalog configuration claude-fable-5.1::max"
+},
+{
+"benchmark_id": "vals-programbench::snapshot-2026-09-23",
+"id": "cr173:11826cd205dd26fc683e07d4",
+"source_id": "openai/gpt-6-astra",
+"value": 5.5,
+"model_id": "gpt-6-astra::max",
+"variant": "max",
+"join": "label states model gpt-6-astra and setting max; exact catalog configuration gpt-6-astra::max"
+},
+{
+"benchmark_id": "vals-programbench::snapshot-2026-09-23",
+"id": "cr173:48e95b8dfa992b5976f6f61d",
+"source_id": "openai/gpt-6-sol",
+"value": 2,
+"model_id": "gpt-6-sol::max",
+"variant": "max",
+"join": "label states model gpt-6-sol and setting max; exact catalog configuration gpt-6-sol::max"
+},
+{
+"benchmark_id": "vals-programbench::snapshot-2026-09-23",
+"id": "cr173:5bf8817551879f684387867c",
+"source_id": "kimi/kimi-k3",
+"value": 2,
+"model_id": null,
+"variant": null,
+"join": "setting not stated and kimi-k3 has 3 catalog configurations"
+},
+{
+"benchmark_id": "vals-programbench::snapshot-2026-09-23",
+"id": "cr173:2a27dd3312f30c485c9118df",
+"source_id": "zai/glm-5.3",
+"value": 1.5,
+"model_id": "glm-5.3::max",
+"variant": "max",
+"join": "label states model glm-5.3 and setting max; exact catalog configuration glm-5.3::max"
+},
+{
+"benchmark_id": "vals-programbench::snapshot-2026-09-23",
+"id": "cr173:b66fa10dcba79c93b2739ee9",
+"source_id": "google/gemini-3.8-flash",
+"value": 1,
+"model_id": "gemini-3.8-flash::high",
+"variant": "high",
+"join": "label states model gemini-3.8-flash and setting high; exact catalog configuration gemini-3.8-flash::high"
+},
+{
+"benchmark_id": "vals-programbench::snapshot-2026-09-23",
+"id": "cr173:136219cb474c5f21a085093d",
+"source_id": "grok/grok-4.7",
+"value": 0.5,
+"model_id": "grok-4.7::xhigh",
+"variant": "xhigh",
+"join": "label states model grok-4.7 and setting xhigh; exact catalog configuration grok-4.7::xhigh"
+},
+{
+"benchmark_id": "vals-programbench::snapshot-2026-09-23",
+"id": "cr173:4512751168f49421c4fdf059",
+"source_id": "zai/glm-5.2",
+"value": 0.5,
+"model_id": "glm-5.2::max",
+"variant": "max",
+"join": "label states model glm-5.2 and setting max; exact catalog configuration glm-5.2::max"
+},
+{
+"benchmark_id": "vals-programbench::snapshot-2026-09-23",
+"id": "cr173:82bda24145eea03d48d13529",
+"source_id": "openai/gpt-6-luna",
+"value": 0.5,
+"model_id": "gpt-6-luna::max",
+"variant": "max",
+"join": "label states model gpt-6-luna and setting max; exact catalog configuration gpt-6-luna::max"
+},
+{
+"benchmark_id": "vals-programbench::snapshot-2026-09-23",
+"id": "cr173:76995739214fce00a80fa627",
+"source_id": "deepseek/deepseek-v4-pro-0813",
+"value": 0,
+"model_id": "deepseek-v4-pro-0813::max",
+"variant": "max",
+"join": "label states model deepseek-v4-pro-0813 and setting max; exact catalog configuration deepseek-v4-pro-0813::max"
+},
+{
+"benchmark_id": "vals-programbench::snapshot-2026-09-23",
+"id": "cr173:d90a384f0d66e78a2a97b573",
+"source_id": "alibaba/qwen3.8-max",
+"value": 0,
+"model_id": null,
+"variant": "max",
+"join": "slug qwen3.8 is not a catalog family"
+},
+{
+"benchmark_id": "vals-programbench::snapshot-2026-09-23",
+"id": "cr173:5f341a9606a5f5655a0ffabc",
+"source_id": "deepseek/deepseek-v4-flash-0731",
+"value": 0,
+"model_id": null,
+"variant": "high",
+"join": "no catalog configuration for deepseek-v4-flash-0731 with setting high"
+},
+{
+"benchmark_id": "vals-programbench::snapshot-2026-09-23",
+"id": "cr173:0be98755c4490455a775756a",
+"source_id": "zai/glm-5.3-flash",
+"value": 0,
+"model_id": null,
+"variant": "max",
+"join": "no catalog configuration for glm-5.3-flash with setting max"
+},
+{
+"benchmark_id": "vals-programbench::snapshot-2026-09-23",
+"id": "cr173:c6966a111a292017210aad00",
+"source_id": "zai/glm-5.1",
+"value": 0,
+"model_id": null,
+"variant": null,
+"join": "setting not stated and glm-5.1 has 2 catalog configurations"
+},
+{
+"benchmark_id": "vals-programbench::snapshot-2026-09-23",
+"id": "cr173:0d21937ea0de44601ca4f134",
+"source_id": "alibaba/qwen3.8-27b",
+"value": 0,
+"model_id": "qwen3.8-27b::xhigh",
+"variant": "xhigh",
+"join": "label states model qwen3.8-27b and setting xhigh; exact catalog configuration qwen3.8-27b::xhigh"
+},
+{
+"benchmark_id": "vals-programbench::snapshot-2026-09-23",
+"id": "cr173:248cd7f8ec27cf80915d7917",
+"source_id": "deepseek/deepseek-v4-pro",
+"value": 0,
+"model_id": "deepseek-v4-pro::max",
+"variant": "max",
+"join": "label states model deepseek-v4-pro and setting max; exact catalog configuration deepseek-v4-pro::max"
+},
+{
+"benchmark_id": "vals-proofbench-v1-1::1.1",
+"id": "cr173:055c5e9a5c288d4407b2fd6a",
+"source_id": "anthropic/claude-fable-5-1",
+"value": 100,
+"model_id": "claude-fable-5.1::max",
+"variant": "max",
+"join": "label states model claude-fable-5.1 and setting max; exact catalog configuration claude-fable-5.1::max"
+},
+{
+"benchmark_id": "vals-proofbench-v1-1::1.1",
+"id": "cr173:eb7c6d3aebc29d800640e10e",
+"source_id": "kimi/kimi-k3",
+"value": 87,
+"model_id": null,
+"variant": null,
+"join": "setting not stated and kimi-k3 has 3 catalog configurations"
+},
+{
+"benchmark_id": "vals-proofbench-v1-1::1.1",
+"id": "cr173:5b6bb8ac074f814cca089995",
+"source_id": "openai/gpt-6-sol",
+"value": 83,
+"model_id": "gpt-6-sol::max",
+"variant": "max",
+"join": "label states model gpt-6-sol and setting max; exact catalog configuration gpt-6-sol::max"
+},
+{
+"benchmark_id": "vals-proofbench-v1-1::1.1",
+"id": "cr173:1ffe703bc9598c6fbfbb1d9a",
+"source_id": "openai/gpt-6-luna",
+"value": 64,
+"model_id": "gpt-6-luna::max",
+"variant": "max",
+"join": "label states model gpt-6-luna and setting max; exact catalog configuration gpt-6-luna::max"
+},
+{
+"benchmark_id": "vals-proofbench-v1-1::1.1",
+"id": "cr173:4b37418114c46b008211aeff",
+"source_id": "alibaba/qwen3.8-max",
+"value": 58,
+"model_id": null,
+"variant": "max",
+"join": "slug qwen3.8 is not a catalog family"
+},
+{
+"benchmark_id": "vals-proofbench-v1-1::1.1",
+"id": "cr173:ccea33949116f16cd550bfa5",
+"source_id": "deepseek/deepseek-v4-flash-0731",
+"value": 56,
+"model_id": null,
+"variant": null,
+"join": "setting not stated and deepseek-v4-flash-0731 has 1 catalog configurations"
+},
+{
+"benchmark_id": "vals-proofbench-v1-1::1.1",
+"id": "cr173:672b22b1e303e55fac3b4d15",
+"source_id": "deepseek/deepseek-v4.1-flash",
+"value": 54,
+"model_id": null,
+"variant": "high",
+"join": "no catalog configuration for deepseek-v4.1-flash with setting high"
+},
+{
+"benchmark_id": "vals-proofbench-v1-1::1.1",
+"id": "cr173:88ccf0c9feb52193e2549be7",
+"source_id": "deepseek/deepseek-v4-pro-0813",
+"value": 50,
+"model_id": "deepseek-v4-pro-0813::max",
+"variant": "max",
+"join": "label states model deepseek-v4-pro-0813 and setting max; exact catalog configuration deepseek-v4-pro-0813::max"
+},
+{
+"benchmark_id": "vals-proofbench-v1-1::1.1",
+"id": "cr173:dfbab1afa4b4488ed8ec208a",
+"source_id": "zai/glm-5.3",
+"value": 49,
+"model_id": "glm-5.3::max",
+"variant": "max",
+"join": "label states model glm-5.3 and setting max; exact catalog configuration glm-5.3::max"
+},
+{
+"benchmark_id": "vals-proofbench-v1-1::1.1",
+"id": "cr173:2c9e875dc76e5676cdf87605",
+"source_id": "google/gemini-3.8-flash",
+"value": 48,
+"model_id": "gemini-3.8-flash::high",
+"variant": "high",
+"join": "label states model gemini-3.8-flash and setting high; exact catalog configuration gemini-3.8-flash::high"
+},
+{
+"benchmark_id": "vals-proofbench-v1-1::1.1",
+"id": "cr173:9d2d34edfaaafd3a8afebefc",
+"source_id": "grok/grok-4.7",
+"value": 26,
+"model_id": "grok-4.7::xhigh",
+"variant": "xhigh",
+"join": "label states model grok-4.7 and setting xhigh; exact catalog configuration grok-4.7::xhigh"
+},
+{
+"benchmark_id": "vals-proofbench-v1-1::1.1",
+"id": "cr173:118be758b3eeab07febb20e9",
+"source_id": "zai/glm-5.3-flash",
+"value": 21,
+"model_id": null,
+"variant": "max",
+"join": "no catalog configuration for glm-5.3-flash with setting max"
+},
+{
+"benchmark_id": "vals-proofbench-v1-1::1.1",
+"id": "cr173:18d050bc8ba452431bb58915",
+"source_id": "deepseek/deepseek-v4-pro",
+"value": 16,
+"model_id": "deepseek-v4-pro::max",
+"variant": "max",
+"join": "label states model deepseek-v4-pro and setting max; exact catalog configuration deepseek-v4-pro::max"
+},
+{
+"benchmark_id": "vals-proofbench-v1-1::1.1",
+"id": "cr173:14013681e098ea911b263545",
+"source_id": "alibaba/qwen3.8-27b",
+"value": 16,
+"model_id": "qwen3.8-27b::xhigh",
+"variant": "xhigh",
+"join": "label states model qwen3.8-27b and setting xhigh; exact catalog configuration qwen3.8-27b::xhigh"
+},
+{
+"benchmark_id": "vals-public-benefits-bench-v1-1::1.1",
+"id": "cr173:e39ec3e366e0dae484e816fa",
+"source_id": "anthropic/claude-fable-5-1",
+"value": 74.899,
+"model_id": "claude-fable-5.1::max",
+"variant": "max",
+"join": "label states model claude-fable-5.1 and setting max; exact catalog configuration claude-fable-5.1::max"
+},
+{
+"benchmark_id": "vals-public-benefits-bench-v1-1::1.1",
+"id": "cr173:f8f0075eb8a2a2984612b61b",
+"source_id": "zai/glm-5.3",
+"value": 68.539,
+"model_id": "glm-5.3::max",
+"variant": "max",
+"join": "label states model glm-5.3 and setting max; exact catalog configuration glm-5.3::max"
+},
+{
+"benchmark_id": "vals-public-benefits-bench-v1-1::1.1",
+"id": "cr173:64613a60725baff3b3a46884",
+"source_id": "kimi/kimi-k3",
+"value": 68.268,
+"model_id": null,
+"variant": null,
+"join": "setting not stated and kimi-k3 has 3 catalog configurations"
+},
+{
+"benchmark_id": "vals-public-benefits-bench-v1-1::1.1",
+"id": "cr173:c119d9ee692e10aa9d4e7bb1",
+"source_id": "alibaba/qwen3.8-max",
+"value": 67.118,
+"model_id": null,
+"variant": "max",
+"join": "slug qwen3.8 is not a catalog family"
+},
+{
+"benchmark_id": "vals-public-benefits-bench-v1-1::1.1",
+"id": "cr173:1b138d90597cec6095c06b4c",
+"source_id": "grok/grok-4.7",
+"value": 65.629,
+"model_id": "grok-4.7::xhigh",
+"variant": "xhigh",
+"join": "label states model grok-4.7 and setting xhigh; exact catalog configuration grok-4.7::xhigh"
+},
+{
+"benchmark_id": "vals-public-benefits-bench-v1-1::1.1",
+"id": "cr173:11402a146a28bcd6454c3ab3",
+"source_id": "google/gemini-3.8-flash",
+"value": 65.291,
+"model_id": "gemini-3.8-flash::high",
+"variant": "high",
+"join": "label states model gemini-3.8-flash and setting high; exact catalog configuration gemini-3.8-flash::high"
+},
+{
+"benchmark_id": "vals-public-benefits-bench-v1-1::1.1",
+"id": "cr173:144f68c147ebe1c377b88478",
+"source_id": "deepseek/deepseek-v4.1-flash",
+"value": 64.276,
+"model_id": null,
+"variant": "high",
+"join": "no catalog configuration for deepseek-v4.1-flash with setting high"
+},
+{
+"benchmark_id": "vals-public-benefits-bench-v1-1::1.1",
+"id": "cr173:1444b18e296bbe91f268b92c",
+"source_id": "deepseek/deepseek-v4-pro",
+"value": 62.923,
+"model_id": "deepseek-v4-pro::max",
+"variant": "max",
+"join": "label states model deepseek-v4-pro and setting max; exact catalog configuration deepseek-v4-pro::max"
+},
+{
+"benchmark_id": "vals-public-benefits-bench-v1-1::1.1",
+"id": "cr173:119493642d0b2e7cea7bb43d",
+"source_id": "zai/glm-5.1",
+"value": 61.84,
+"model_id": null,
+"variant": null,
+"join": "setting not stated and glm-5.1 has 2 catalog configurations"
+},
+{
+"benchmark_id": "vals-public-benefits-bench-v1-1::1.1",
+"id": "cr173:49e4d86ba76182c083875dd5",
+"source_id": "openai/gpt-6-luna",
+"value": 57.645,
+"model_id": "gpt-6-luna::max",
+"variant": "max",
+"join": "label states model gpt-6-luna and setting max; exact catalog configuration gpt-6-luna::max"
+},
+{
+"benchmark_id": "vals-public-benefits-bench-v1-1::1.1",
+"id": "cr173:cea33dc5dea8d1e736f904a7",
+"source_id": "openai/gpt-6-sol",
+"value": 56.631,
+"model_id": "gpt-6-sol::max",
+"variant": "max",
+"join": "label states model gpt-6-sol and setting max; exact catalog configuration gpt-6-sol::max"
+}
+]

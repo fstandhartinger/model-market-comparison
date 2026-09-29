@@ -1,0 +1,41 @@
+```json
+{
+  "artifact_id": "cr173-openai-charts-deepswe-cost",
+  "artifact_sha256": "5bf6a9cac00d229f5fbb03ff5857096525eb5a28d7277485f4ddbdccba07579e",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": [
+    "self-reported:gpt-6-astra-low-openai-deepswe-v1-1-cost",
+    "self-reported:gpt-6-astra-medium-openai-deepswe-v1-1-cost",
+    "self-reported:gpt-6-astra-high-openai-deepswe-v1-1-cost",
+    "self-reported:gpt-6-astra-xhigh-openai-deepswe-v1-1-cost",
+    "self-reported:gpt-6-astra-max-openai-deepswe-v1-1-cost",
+    "self-reported:gpt-6-luna-low-openai-deepswe-v1-1-cost",
+    "self-reported:gpt-6-luna-medium-openai-deepswe-v1-1-cost",
+    "self-reported:gpt-6-luna-high-openai-deepswe-v1-1-cost",
+    "self-reported:gpt-6-luna-xhigh-openai-deepswe-v1-1-cost",
+    "self-reported:gpt-6-luna-max-openai-deepswe-v1-1-cost",
+    "self-reported:gpt-6-sol-low-openai-deepswe-v1-1-cost",
+    "self-reported:gpt-6-sol-medium-openai-deepswe-v1-1-cost",
+    "self-reported:gpt-6-sol-high-openai-deepswe-v1-1-cost",
+    "self-reported:gpt-6-sol-xhigh-openai-deepswe-v1-1-cost",
+    "self-reported:gpt-6-sol-max-openai-deepswe-v1-1-cost"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "missing_evidence": [],
+  "uncertainties": [
+    "Verification is strictly bounded by the supplied evidence: I could not recompute the source sha256 values or re-extract datapoints from the raw capture; values, labels, and quotations were checked byte-for-byte against evidence.chart.gpt6_points, evidence.astra_post_points, evidence.source, and evidence.chart metadata as provided.",
+    "JSON numeric literal formatting inside quoted datapoints (e.g. 3.1 vs 3.10, 0.73 vs 0.730) was compared exactly as serialized in the evidence and matched in every protocol quote."
+  ]
+}
+```
+
+Summary of the review (all 15 rows checked against the packet evidence, no defects found):
+
+- **Values (criterion 1):** Every row's `value` equals the `cost` field of the matching model/effortLabel datapoint in `evidence.chart.gpt6_points` exactly (Astra 1.5952/3.0755/3.9237/4.4291/7.4978; Luna 0.0057/0.0518/0.0838/0.1096/0.2169; Sol 0.1623/0.3798/0.6404/1.0033/2.7439). All are `openai-deepswe-v1-1-cost::1.1`, unit USD, basis self_reported, no derivation.
+- **Subject mapping (criterion 2):** `name`, `variant`, and `model_id` (`<family>::<effortLabel>`) match the dataset fields for all 15 rows; every model_id is in `evidence.catalog_configurations`.
+- **Scope (criterion 4):** Exactly the 15 GPT-6 datapoints; no Claude/GPT-5.6 rows; `gpt-6-luna::max` and `gpt-6-sol::max` cost rows correctly retained since the skips in `skipped_existing_configs` apply to the score benchmark only.
+- **Provenance/locator (criterion 6):** url, retrieved_at, published_at, sha256, file all match `evidence.source`; locators carry the registry name "DeepSWE v1.1 cost per task", section "Coding", chart id 6yH2LVSbmONCIcmQ9ntEQU, linkId "deepswe", exact caption, and verbatim datapoint quotes (including `$$` escaping, e.g. `"$$1.60"` rendered as `$1.60` in the tooltip note). `comparison_key` is null on all rows.
+- **Astra cross-checks (criterion 7):** All five protocol quotes match `evidence.astra_post_points` for the same effort exactly (low 1.6/0.67; medium 3.1/0.728; high 3.9/0.732; xhigh 4.4/0.741; max 7.5/0.73, with correct `x_label` and `effort_display` strings) and cite the matching Wayback URL and sha256.

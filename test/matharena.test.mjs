@@ -53,7 +53,8 @@ test('MathArena joins: reviewed names only, the parenthesis is the stated settin
   const arxiv = map.filter((e) => e.benchmark_id === 'matharena-arxivmath::2026-06');
   // 2026-09-21 (iteration 154): 11 → 14 — the 2026-09-21 refresh published three new rows (GPT-6 Astra (low),
   // Claude-Fable-5.1 (low), DeepSeek-V4.1-Flash (Max)); each names an existing configuration exactly.
-  assert.equal(arxiv.length, 14);
+  // 2026-09-26 (CR-173): 14 → 17 — GPT-6 Sol (max), Grok 4.7 (xhigh) and Claude-Opus-5.5 (high), each an exact configuration.
+  assert.equal(arxiv.length, 17);
   // 2026-09-22 (iteration 161): "(Think)" is the unreviewed setting; "Kimi K2 Thinking" (Apex, HMMT Nov 2025) is a
   // model name, the catalog's single-default kimi-k2-thinking family, and joins.
   assert.ok(!map.some((e) => e.benchmark_id.startsWith('matharena-') && /\(Think\)|Grok 4\.5|Qwen3\.6/.test(e.source_id)), 'unreviewed settings and non-default single configurations stay unjoined');

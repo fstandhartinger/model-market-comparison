@@ -1,0 +1,50 @@
+```json
+{
+  "artifact_id": "cr173-openai-charts-automationbench",
+  "artifact_sha256": "651ced94d3b6739b567a72a61c09d54b502419d96b4e54bc5490935e2ac53bf5",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "self-reported:gpt-6-astra-low-openai-automationbench-1-0-6",
+    "self-reported:gpt-6-astra-low-openai-automationbench-1-0-6-cost",
+    "self-reported:gpt-6-astra-medium-openai-automationbench-1-0-6",
+    "self-reported:gpt-6-astra-medium-openai-automationbench-1-0-6-cost",
+    "self-reported:gpt-6-astra-high-openai-automationbench-1-0-6",
+    "self-reported:gpt-6-astra-high-openai-automationbench-1-0-6-cost",
+    "self-reported:gpt-6-astra-xhigh-openai-automationbench-1-0-6",
+    "self-reported:gpt-6-astra-xhigh-openai-automationbench-1-0-6-cost",
+    "self-reported:gpt-6-astra-max-openai-automationbench-1-0-6",
+    "self-reported:gpt-6-astra-max-openai-automationbench-1-0-6-cost",
+    "self-reported:gpt-6-luna-low-openai-automationbench-1-0-6",
+    "self-reported:gpt-6-luna-low-openai-automationbench-1-0-6-cost",
+    "self-reported:gpt-6-luna-medium-openai-automationbench-1-0-6",
+    "self-reported:gpt-6-luna-medium-openai-automationbench-1-0-6-cost",
+    "self-reported:gpt-6-luna-high-openai-automationbench-1-0-6",
+    "self-reported:gpt-6-luna-high-openai-automationbench-1-0-6-cost",
+    "self-reported:gpt-6-luna-xhigh-openai-automationbench-1-0-6",
+    "self-reported:gpt-6-luna-xhigh-openai-automationbench-1-0-6-cost",
+    "self-reported:gpt-6-luna-max-openai-automationbench-1-0-6",
+    "self-reported:gpt-6-luna-max-openai-automationbench-1-0-6-cost",
+    "self-reported:gpt-6-sol-low-openai-automationbench-1-0-6",
+    "self-reported:gpt-6-sol-low-openai-automationbench-1-0-6-cost",
+    "self-reported:gpt-6-sol-medium-openai-automationbench-1-0-6",
+    "self-reported:gpt-6-sol-medium-openai-automationbench-1-0-6-cost",
+    "self-reported:gpt-6-sol-high-openai-automationbench-1-0-6",
+    "self-reported:gpt-6-sol-high-openai-automationbench-1-0-6-cost",
+    "self-reported:gpt-6-sol-max-openai-automationbench-1-0-6",
+    "self-reported:gpt-6-sol-max-openai-automationbench-1-0-6-cost"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "missing_evidence": [],
+  "uncertainties": [
+    "I verified each score row's value against score x 100 on the printed decimals (e.g. 0.303->30.3, 0.3196->31.96, 0.012->1.2) and each derivation.inputs == [score]; I cannot execute, so bit-level float-representation equivalence of value vs score*100 is asserted only at the decimal level, per the criterion's allowance for float representation.",
+    "Each locator's 'exact datapoint' quote was string-compared against the corresponding entry in evidence.chart.gpt6_points (model, cost_label incl. '$$' escaping, score, cost, order, modelLabel, effortLabel) and matched for all 28 rows; the underlying raw RSC payload itself is not directly inspectable from this packet, so verbatim-ness relative to the live page relies on the supplied evidence digest (sha256 de4e8f...58f5).",
+    "Astra protocol cross-check quotes were compared field-by-field against evidence.astra_post_points for all 5 efforts (score, x_label, x_value, series_order) and matched in all 10 Astra rows; small value differences vs the 2026-09-22 dataset (e.g. x_value 1.087119 vs cost 1.08) are disclosure only per the criterion and were not counted as defects.",
+    "artifact_sha256 651ced94...3bf5 is echoed from the packet as instructed by response_format; it cannot be recomputed read-only.",
+    "Completeness was checked as set membership: 28 rows = 14 non-skipped configs x (1 score + 1 cost), both skipped_existing_configs entries (gpt-6-sol::xhigh score and cost) confirmed absent, no duplicate ids, and all 15 subject.model_id strings confirmed present in evidence.catalog_configurations; the earlier accepted row for gpt-6-sol::xhigh itself is outside the packet and was not inspected.",
+    "Benchmark version '1.0.6' in every benchmark_id was string-matched against the caption text 'AutomationBench 1.0.6' in evidence.chart.caption."
+  ]
+}
+```
