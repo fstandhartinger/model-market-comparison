@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync, mkdtempSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { captureTargets } from '../ops/daily/refresh-benchmarks.mjs';
 
 // 2026-09-15 coding intake: DeepSWE (via Epoch AI) and Scale AI's SWE Atlas boards.
 const json = (p) => JSON.parse(readFileSync(new URL(`../${p}`, import.meta.url)));
@@ -135,9 +136,19 @@ test('DeepSWE is a reviewed manual snapshot the daily refresh never fetches; SWE
   assert.equal(spec(IDS[0]).refresh, 'manual');
   for (const id of IDS.slice(1)) assert.equal(spec(id).refresh, undefined);
   const refresh = readFileSync(new URL('../ops/daily/refresh-benchmarks.mjs', import.meta.url), 'utf8');
-  assert.match(refresh, /filter\(\(spec\) => spec\.refresh === 'manual'\)/);
-  assert.match(refresh, /if \(manual\.has\(entry\.id\)\) continue; add\(\{ url: entry\.primary_url \}\)/, 'registry URLs of manual entries are not queued');
-  assert.match(refresh, /if \(manual\.has\(spec\.benchmark_id\)\) continue;\s*add\(spec\.source\)/, 'plan sources of manual entries are not queued');
+  const registry = json('data/raw/benchmarks/registry.json');
+  const targetsFor = (ids) => captureTargets({
+    registry: { entries: registry.entries.filter((entry) => ids.includes(entry.id)) },
+    plan: { entries: plan.entries.filter((entry) => ids.includes(entry.benchmark_id)) },
+    vendor: { observations: [] },
+  });
+  const manual = targetsFor([IDS[0]]);
+  assert.equal(manual.urls.size, 0, 'neither the manual registry URL nor its plan sources are queued');
+  assert.equal(manual.documentUrls.size, 0);
+  const mixed = targetsFor(IDS);
+  assert.ok(!mixed.urls.has(registry.entries.find((entry) => entry.id === IDS[0]).primary_url));
+  assert.ok(!mixed.urls.has(spec(IDS[0]).source.url));
+  for (const id of IDS.slice(1)) assert.ok(mixed.urls.has(spec(id).source.url), `${id} stays in the daily capture`);
   assert.match(refresh, /status: 'retained_manual_snapshot'/, 'their rows are retained, not re-parsed');
   assert.match(json('data/raw/benchmarks/registry.json').entries.find((e) => e.id === IDS[0]).how_to_collect.notes, /^Manual snapshot, not part of the automatic daily refresh/);
 });
