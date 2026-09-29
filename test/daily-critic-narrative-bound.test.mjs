@@ -42,7 +42,9 @@ test('a formally passing oversized critic cannot mint fingerprints or become una
       criteria: ['Exact transcription'], runner, maxRounds: 1 });
     assert.equal(result.accepted, false); assert.equal(result.fingerprints.length, 0);
     assert.equal(result.objections, 1); assert.equal(result.manifest.rounds_used, 1); assert.equal(calls, 2);
-    assert.equal(reviewerUnavailable(result), false, 'live contracts must retain a quality-disputed review');
+    const exhausted = { ...result, manifest: { ...result.manifest, rounds_used: 3 } };
+    assert.equal(reviewerUnavailable(exhausted), false, 'quality objections must prevent fallback after full budget too');
+    assert.equal(reviewerUnavailable({ ...exhausted, objections: 0 }), true, 'isolate the objection signal from budget/shape checks');
     assert.match(result.errors.join(' '), /narrative.*bound/);
   } finally { await rm(runDir, { recursive: true, force: true }); }
 });
