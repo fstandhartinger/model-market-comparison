@@ -87,3 +87,12 @@ test('the compare page builds its preview tags and image from the URL on the ser
   assert.match(component, /resolveCompareIds/, 'the client resolves the same ids and keeps unknown ones');
   assert.match(component, /data-bh-coming-soon/);
 });
+
+test('CR-218: a vendor product id resolves to the model it runs on, never to a same-named catalog family', () => {
+  const withDots = [...families, { id: 'dots-3-note-preview::default', name: 'Dots 3 Note Preview', org: 'Dots Studio', score: null, current: true, variants: ['dots-3-note-preview::default'] }];
+  const { picks, pending } = resolveCompareIds(['dots', 'claude-opus-5'], withDots);
+  assert.deepEqual(picks, ['gpt-6-astra::max', 'claude-opus-5::max']);
+  assert.equal(pending.length, 0);
+  assert.deepEqual(resolveCompareIds(['Dots'], withDots).picks, ['gpt-6-astra::max']);
+  assert.deepEqual(resolveCompareIds(['dots-3-note-preview'], withDots).picks, ['dots-3-note-preview::default']);
+});
