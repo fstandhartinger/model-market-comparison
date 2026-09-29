@@ -1,0 +1,35 @@
+{
+  "artifact_id": "protocol-arc-agi-3",
+  "artifact_sha256": "95716ef98d721e5a0c3f9c69bd5024d97b8aa40916a61e38fdf901ea9069d450",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["arc-agi::3", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row arc-agi::3, scoring.unit / scoring.range (criterion c1)",
+      "evidence": "Candidate row's scoring object contains only a \"metric\" string; no `unit` or `range` field is present. The run's generated served-scale summary for source field \"score\" (payload sha256 325d7442e022a030d0b49b8c964cd3af3b5d65e85f04ee6cbce9113ecf6344b3) reports 69 finite value(s), lowest 0.01, highest 99.94571232125699. With no stated unit or bounds in the row, the row's `unit` and `range` cannot be reconciled with the scale the board is served on, so criterion c1's units/range continuity check cannot be established.",
+      "repair": "Add explicit `unit` (e.g., the percent-type scale the served values use) and `range` fields expressing the served scale (for instance lowest–highest 0.01–99.94571232125699, or an unbounded/null bound per the artifact schema), so the row states the unit and bounds it is claiming."
+    },
+    {
+      "id": "F2",
+      "severity": "minor",
+      "location": "row arc-agi::3, scoring.metric (criterion c1)",
+      "evidence": "The metric string contains an elision marker: \"Semi-private interactive game action […] The final aggregate bound is not assumed from that cap. ...\". The full metric wording is therefore not available for sentence-level comparison against the protocol passage. What is visible (interactive semi-private game action, aggregate cost bound, preview/baseline caveats) is consistent with the supplied source text about a cost cap, human-action-efficiency baseline, and preview results, but the complete claim cannot be verified.",
+      "repair": "Ensure the frozen artifact stores the full untruncated metric sentence; if the ellipsis is intentional truncation in the row content, replace it with the complete protocol-derived metric text."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Read-only reviewer: could not recompute sha256 hashes (row c77722bf... or payload 325d7442...), verify transport, or rerun the owner's qualification checks; those are owner-executed and assumed as stated.",
+    "Ambiguity whether the '…' inside scoring.metric is a literal artifact character or prompt-level display elision; judged as presented.",
+    "Ambiguity whether the true frozen artifact's scoring object contains additional keys (unit/range/value/description) elided from the supplied row; based on the supplied content only `metric` exists, which is the basis of finding F1.",
+    "The generated served-scale and activity summaries are this run's own reads of the captured payload, not maintainer text; they settle the served scale and activity evidence only, and nothing about metric meaning, methodology, task set, harness, judges, or version.",
+    "status:\"active\" is treated as affirmed by the generated activity summary (12 model rows newly serving score values today); that summary has no bearing on c1's metric/identity checks.",
+    "version_status:\"published\" turns on the packet showing the maintainer publishes an identifier for this board (ARC-AGI-3 name, v3.json payload), which the excerpt supports; no contrary release-identifier evidence is present.",
+    "superseded_by:\"null\" judged consistent because the protocol excerpt names no successor board for ARC-AGI-3."
+  ],
+  "missing_evidence": []
+}

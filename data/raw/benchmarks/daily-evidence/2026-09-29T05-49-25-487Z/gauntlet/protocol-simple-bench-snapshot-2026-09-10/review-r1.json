@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-simple-bench-snapshot-2026-09-10",
+  "artifact_sha256": "d848e72e3fb3b5e1c420b8d18dd1df027eebb5fadcffc027b9a93800a1e2785e",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "simple-bench::snapshot-2026-09-10",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I could not independently recompute the source or row hashes or re-execute transport/qualification checks; those are owner-executed.",
+    "The generated value-scale summary is this run's own read of the capture and is used only for the unit/range and active-status judgments allowed by the criteria.",
+    "The protocol page retrieval date is after the snapshot date, but the page publishes no release identifier for this board, so the snapshot version_status remains supported."
+  ],
+  "missing_evidence": []
+}

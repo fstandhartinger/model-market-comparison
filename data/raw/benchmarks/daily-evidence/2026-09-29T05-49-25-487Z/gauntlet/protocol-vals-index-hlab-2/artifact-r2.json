@@ -1,0 +1,22 @@
+[
+  {
+    "id": "vals-index-hlab::2",
+    "version": "2",
+    "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "HLAB accuracy",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Legal sector component; the page describes HLAB as Harvey's Legal Agent Benchmark, long-horizon legal work product creation, and — unlike EMB, Code Migration and Legal Research Bench — does not call it a private benchmark. The page reports these columns under its \"ACCURACY\" view (heading \"Industry Average Accuracy Comparison\") and prints index values as percentages in its Key Takeaways."
+    },
+    "description": "Long-horizon legal work product creation. The index column is Harvey's Legal Agent Benchmark's own published standalone score, reported as accuracy.",
+    "maintainer": "Vals AI"
+  }
+]

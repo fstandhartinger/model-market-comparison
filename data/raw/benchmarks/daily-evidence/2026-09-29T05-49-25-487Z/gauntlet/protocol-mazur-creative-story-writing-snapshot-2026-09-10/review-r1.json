@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-mazur-creative-story-writing-snapshot-2026-09-10",
+  "artifact_sha256": "d0bedc67f03020a1918d640a6c576ae6937e5130eb4cf9579a6d457ab8fc7a3e",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "mazur-creative-story-writing::snapshot-2026-09-10",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "The supplied protocol excerpt is partial; absence of an explicit release identifier within the excerpt supports the snapshot version_status, but complete absence in the full page cannot be independently verified from this bound.",
+    "The protocol text does not explicitly name the unit; the row's 'points' is consistent with the served numeric scale (range -5.07 to 3.796) and is not contradicted by the source.",
+    "Owner-side hash and transport/qualification checks cannot be independently re-executed in this review; those are performed separately by the owner."
+  ],
+  "missing_evidence": []
+}

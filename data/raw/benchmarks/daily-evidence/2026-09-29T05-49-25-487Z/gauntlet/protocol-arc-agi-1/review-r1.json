@@ -1,0 +1,47 @@
+{
+  "artifact_id": "protocol-arc-agi-1",
+  "artifact_sha256": "protocol-arc-agi-1",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "arc-agi::1",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "arc-agi::1.scoring.range / scoring.unit",
+      "evidence": "Primary evidence reports a leaderboard capture with 241 served score values, but the supplied generated summary does not reproduce the observed minimum and maximum value. The row claims range 0-100 and unit 'percentage points'. The acceptance rule requires the row's stated range/unit to agree with the served values; without the served extremes the claim is ambiguous.",
+      "repair": "Include the observed minimum and maximum served score values from the capture, or add a protocol statement establishing that the metric is a percentage accuracy on the 0-100 scale."
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "location": "arc-agi::1.scoring.description",
+      "evidence": "The row's scoring description says scoring is by 'exact-match on grid output using the official harness' and refers to 'top-1 grid outputs'. The supplied primary protocol excerpt only says models receive a task and return an answer grid, and that the Semi-Private Evaluation set is a hold-out set. It does not state exact-match scoring, top-1, or that the official harness performs top-1 exact-match evaluation.",
+      "repair": "Add the primary protocol or verified-leaderboard text that specifies the exact-match/top-1 scoring rule, or reduce the scoring description to what the supplied evidence supports."
+    },
+    {
+      "id": "F3",
+      "severity": "minor",
+      "location": "arc-agi::1.description",
+      "evidence": "The row describes ARC-AGI-1 as 'measuring passive fluid intelligence'. The supplied primary text says ARC-AGI-1 'was at the time the only benchmark to precisely spotlight the advent of frontier AI test-time reasoning' but does not include the phrase 'passive fluid intelligence' or an equivalent quotation that supports this part of the description in the packet.",
+      "repair": "Provide the protocol text supporting 'passive fluid intelligence', or revise the description to match the wording present in the primary evidence."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute SHA-256 hashing, transport checks, or qualification checks; those are outside my read-only review scope.",
+    "The packet's primary source excerpt contains ellipses, so the full protocol page may include additional relevant wording not shown here.",
+    "The artifact_sha256 binding value was not visible in the supplied prompt; I echoed the only artifact identifier value provided."
+  ],
+  "missing_evidence": [
+    "served minimum leaderboard score value for arc-agi::1",
+    "served maximum leaderboard score value for arc-agi::1",
+    "primary protocol text specifying exact-match/top-1 scoring on the Semi-Private Evaluation set",
+    "primary protocol text supporting the 'passive fluid intelligence' description"
+  ]
+}

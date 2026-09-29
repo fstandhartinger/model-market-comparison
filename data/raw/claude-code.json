@@ -48,7 +48,8 @@
       "batch_input_per_1m_usd": 1,
       "batch_output_per_1m_usd": 5,
       "mapping": "derived",
-      "model_id_source": "derived from the pricing-table name; not listed in the deprecations table"
+      "model_id_source": "derived from the pricing-table name; not listed in the deprecations table",
+      "tentative_retirement": "Not sooner than September 28, 2027"
     },
     {
       "model_name": "Claude Haiku 4.5",
@@ -279,15 +280,13 @@
     "Claude Haiku 3.5 (Retired)"
   ],
   "response_sha256": {
-    "pricing": "6f88aec9c34177843084cd107d1fdca7c7cb83561a518ab0aae44821a24bdbda",
-    "deprecations": "4ece0ac160fd09c16fc8dc2ce7253e0048140549875de20ed789fa682201a238",
-    "enterprise": "55299571f6cd374b219523551a7848d428c27bf4e81fd519691c1d8ac3c88809",
-    "enterprise_terms": "3eb8bd74882bd56dd8079724ed0caa7138cb1369d1d8c9e7e27926657bae1425"
+    "pricing": "ba5a16747a173c3899ae2172d6613c1ed79a5014fd1df50b771efa3c353a547c",
+    "deprecations": "da0509f95e1e1bc446a8edffb6f1f43d3a150fa786ffdaa8f7aaacc259c73ea4",
+    "enterprise": "373dd1c1265f4686f667f759b3dc317baa467781fbc01124173f724c3a1b11da",
+    "enterprise_terms": "025c0c24eb3f8cff06cf0c38f998b46a7e84941083e7a7d37d1ba2b47a48058c"
   },
   "diff": {
-    "added": [
-      "Claude Sonnet 5.5"
-    ],
+    "added": [],
     "removed": [],
     "price_changed": [],
     "lifecycle_changed": [],

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "vals-index-finance-agent::2",
+    "version": "2",
+    "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Finance Agent v2 accuracy",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Finance sector component; the page's 2026-05-13 update states that Finance uses the Finance Agent v2 index subset, averaging three runs per model. The page reports these columns under its \"ACCURACY\" view (heading \"Industry Average Accuracy Comparison\") and prints index values as percentages in its Key Takeaways."
+    },
+    "description": "Multi-step financial reasoning tasks.",
+    "maintainer": "Vals AI"
+  }
+]

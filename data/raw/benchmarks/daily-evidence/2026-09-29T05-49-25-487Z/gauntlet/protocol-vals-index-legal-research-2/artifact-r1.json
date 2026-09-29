@@ -1,0 +1,22 @@
+[
+  {
+    "id": "vals-index-legal-research::2",
+    "version": "2",
+    "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Legal Research Bench accuracy",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Legal sector component; the page's 2026-08-13 v2 update calls Legal Research Bench \"A private benchmark involving answering legal questions grounded in case law\". The page reports these columns under its \"ACCURACY\" view (heading \"Industry Average Accuracy Comparison\") and prints index values as percentages in its Key Takeaways."
+    },
+    "description": "Case and statute research with citation-backed answers.",
+    "maintainer": "Vals AI"
+  }
+]

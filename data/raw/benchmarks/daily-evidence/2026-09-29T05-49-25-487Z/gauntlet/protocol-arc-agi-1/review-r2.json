@@ -1,0 +1,40 @@
+{
+  "artifact_id": "protocol-arc-agi-1",
+  "artifact_sha256": null,
+  "round": 2,
+  "verdict": "blocked",
+  "coverage_checked": ["arc-agi::1", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "location": "row arc-agi::1 scoring object and SOURCE 6 generated scale summary",
+      "evidence": "The candidate row as delivered is elided mid-JSON: \"scoring\":{\"metric\":\"Semi-Private Evaluation Set accuracy [...]\"} — the scoring object is cut off after \"accuracy\", so scoring.unit and scoring.range are absent, and the metric string may be incomplete. Independently, the run's own generated summary of served values is cut off at \"Observed scale of 241 served value(s) for [...]\" so the lowest and highest served finite values are not shown. Criterion c1 requires checking benchmark identity, metric, units and description against the served values; that comparison cannot be completed.",
+      "repair": "Supply the complete scoring object for row arc-agi::1 (full metric, unit, range — explicit null if the row declines a bound), and state the minimum and maximum of the 241 served finite values from the SOURCE 6 capture, so criterion c1 can be verified."
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "location": "row arc-agi::1 description field",
+      "evidence": "The description is elided: \"The first-generation ARC-AGI benchmark measuring passive fluid intelligence, with leaderboard score plotted against [...]\" — the closing portion is absent, so the description cannot be compared with any claim the packet makes about the served source field.",
+      "repair": "Provide the full description string for row arc-agi::1 so the c1 description check can be performed."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The packet as supplied to me is elided with '[...]' inside both candidate rows and the SOURCE 5/SOURCE 6 excerpts; I could not confirm that the elided text is identical to the full frozen artifact, and in particular the row's scoring object and description are truncated.",
+    "artifact_sha256 for this call was not present in my instructions, so I could not echo a value; expects owner-verified hash artifact.",
+    "I cannot execute the owner's hashing, transport, or qualification checks; that is a limitation of my environment, not missing numeric source evidence.",
+    "'version_status': 'published' is inferred from the published data endpoint /media/data/leaderboard/v1.json rather than from any explicit protocol sentence saying a release identifier is published for this board; nothing in the protocol contradicts it.",
+    "'superseded_by': 'arc-agi::2' is supported only by the protocol naming ARC-AGI-2 as a successive benchmark version (and ARC-AGI-1 in the past tense); there is no explicit 'ARC-AGI-2 supersedes ARC-AGI-1' sentence, leaving minor ambiguity.",
+    "Status 'active' relies on the run's own capture-comparison summary (20 newly added model scores, 0 changed, 0 removed); per the criteria that summary is affirmative for 'active' but settles nothing about methodology or version, which I have not treated it as doing.",
+    "The 241 served finite values and the sha256 ca91a484945ee71677023ef91730a26ff588c3e6db852eedbe26dcc00d057aa9 are recorded SOURCE 6 metadata; I could not independently re-derive them."
+  ],
+  "missing_evidence": [
+    "row arc-agi::1 scoring.unit value",
+    "row arc-agi::1 scoring.range value",
+    "row arc-agi::1 full description string",
+    "SOURCE 6 served finite-value minimum and maximum for the 241 served values"
+  ]
+}

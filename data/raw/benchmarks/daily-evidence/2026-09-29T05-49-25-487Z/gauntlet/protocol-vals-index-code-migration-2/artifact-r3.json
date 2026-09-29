@@ -1,0 +1,22 @@
+[
+  {
+    "id": "vals-index-code-migration::2",
+    "version": "2",
+    "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Code Migration accuracy",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Coding sector component; the page's 2026-08-13 v2 update calls Code Migration \"A private benchmark involving porting projects to a set of four languages, including COBOL modernization\". Its Component Scores note states that the index scores a fixed subset of the published run — 50 of the 120 CLI migration tasks plus all 10 COBOL tasks, weighted 75% CLI and 25% COBOL — and not the full standalone run. The page reports these columns under its \"ACCURACY\" view (heading \"Industry Average Accuracy Comparison\") and prints index values as percentages in its Key Takeaways."
+    },
+    "description": "Porting projects to another language, including COBOL modernization.",
+    "maintainer": "Vals AI"
+  }
+]

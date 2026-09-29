@@ -1,0 +1,42 @@
+{
+  "artifact_id": "protocol-aa-automationbench-1.0.6",
+  "artifact_sha256": "add750e008cee42398ce98bcb587dc56545f3c94e2967cb7bd4dff64516ca6eb",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["aa-automationbench::1.0.6", "c1", "c2"],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row aa-automationbench::1.0.6 (version, benchmark identity, metric, description) vs primary protocol",
+      "evidence": "The packet's primary-source evidence section contains only SOURCE 3, the generated value-scale summary for the maintainer field \"automationBenchPartialScore\", plus the producer receipt. No captured primary protocol page excerpt is supplied. Therefore the row's version \"1.0.6\", benchmark identity (AutomationBench-AA), metric meaning and description cannot be compared against the actual current primary protocol; doing so would require inventing content from memory.",
+      "repair": "Include the captured primary protocol excerpt (the published text the row transcribes) so the version 1.0.6, benchmark identity, metric definition and description can be verified verbatim. If the page actually differs from the row, correct the row to match."
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "location": "row aa-automationbench::1.0.6 version_status=\"published\"",
+      "evidence": "version_status \"published\" requires a protocol page that publishes a release identifier for this board that the row's version copies. No such page text is present in the packet, so this field is unsupported by any supplied evidence.",
+      "repair": "Supply the protocol excerpt showing the page publishes a release identifier for this board (which would support \"published\"), or, if the page publishes no release identifier, change version_status to \"snapshot\" with the dated identity."
+    },
+    {
+      "id": "F3",
+      "severity": "minor",
+      "location": "row aa-automationbench::1.0.6 superseded_by=null",
+      "evidence": "The packet contains no protocol passage that names or declines to name a successor board, so the row's declining claim superseded_by: null cannot be settled. The generated summary addresses only value additions, not supersession.",
+      "repair": "Add the protocol statement about successor boards (or explicitly confirm the page names no successor) so the null value can be verified; adjust superseded_by if the page names a successor."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I could not recompute SHA-256 hashes or re-retrieve any source; I relied on the supplied owner hashes and the packet's captured content.",
+    "The generated summary settles exactly two points: unit/range ([0,1] on a fraction scale consistent with 198 served values spanning 0.0019111706206154657 to 0.7132534614553299) and status \"active\" via 45 newly added values. Those specific points pass but do not settle version identity, description, version_status, or supersession.",
+    "I did not treat absence of the words 'snapshot', 'published', or 'retained' in the protocol as an error by itself."
+  ],
+  "missing_evidence": [
+    "Primary protocol page excerpt establishing benchmark identity, dataset/board version 1.0.6, metric definition and description",
+    "Protocol statement of whether the page publishes a release identifier for this board (to verify version_status \"published\")",
+    "Protocol statement of whether the page names a successor board (to verify superseded_by null)"
+  ]
+}

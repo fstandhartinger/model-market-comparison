@@ -1,0 +1,172 @@
+{
+  "artifact_id": "scores-13",
+  "rounds_used": 3,
+  "rows": {
+    "total": 15,
+    "accepted": [],
+    "quarantined": [
+      "public:276bac6a156513ab5b9da30b",
+      "public:fbba3571ac62f6d000a41f4f",
+      "public:595e5a99d4ad81903fc1fd81",
+      "public:1c37b94791ef1a5cf3a734fd",
+      "public:b98fb80819451f859276231d",
+      "public:a038628fd831449be458fa7b",
+      "public:5abdfb29561c4c0bdbf9d298",
+      "public:8861b9c706ade9680090a7f7",
+      "public:4a9d5f6e9fc8612d1c173935",
+      "public:afb26be6dfbe37bb948e6b52",
+      "public:e31c6b748765f7dce57e129a",
+      "public:41b47c850c9cda2970544f05",
+      "public:79ddb94d2dde880941e34f38",
+      "public:857ff88ed24e88229b80bfe2",
+      "public:3c87be8f9f4a3685d0cbb05a"
+    ]
+  },
+  "producer_flagged": [],
+  "criteria": [
+    "c1"
+  ],
+  "coverage": {
+    "producer": null,
+    "critic": [],
+    "final": {
+      "rows_covered": 0,
+      "criteria_covered": 0,
+      "complete": false
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "chutes/moonshotai/Kimi-K3-TEE",
+      "model": "moonshotai/Kimi-K3-TEE",
+      "route": "router:fw-kimi-k3",
+      "attempt": 1,
+      "cost_usd": 0,
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-29T05-49-25-487Z/gauntlet/scores-13/producer-r1.json",
+      "output_sha256": "a82f4a1647eb4e203b2568cba7f931e671963dcaece55f1a0315dfdda852eb0e",
+      "qualification": {
+        "id": "chutes/moonshotai/Kimi-K3-TEE",
+        "family": "moonshotai",
+        "free": true,
+        "input_per_1m": 0,
+        "output_per_1m": 0,
+        "context": null,
+        "aa_intelligence_index": 43.6,
+        "aa_source": "exact_variant",
+        "matched_model_ids": [
+          "kimi-k3::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "kimi-k3::max",
+            "index": 43.6
+          }
+        ],
+        "transport": "router",
+        "router_model": "fw-kimi-k3",
+        "provider_model": "moonshotai/Kimi-K3-TEE",
+        "reasoning_effort": "max",
+        "allowed_as": "moonshotai/kimi-k3",
+        "healthy": true
+      },
+      "usage": {
+        "completion_tokens": 3028,
+        "prompt_tokens": 18208,
+        "total_tokens": 21236,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1518,
+          "text_tokens": 1510
+        },
+        "cost": 0
+      },
+      "reasoning": {
+        "effort": "max"
+      }
+    },
+    {
+      "round": 2,
+      "role": "producer",
+      "reused_from_round": 1,
+      "requested_model": "chutes/moonshotai/Kimi-K3-TEE",
+      "model": "moonshotai/Kimi-K3-TEE",
+      "route": "router:fw-kimi-k3",
+      "attempt": 1,
+      "cost_usd": 0,
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-29T05-49-25-487Z/gauntlet/scores-13/producer-r1.json",
+      "output_sha256": "a82f4a1647eb4e203b2568cba7f931e671963dcaece55f1a0315dfdda852eb0e",
+      "qualification": {
+        "id": "chutes/moonshotai/Kimi-K3-TEE",
+        "family": "moonshotai",
+        "free": true,
+        "input_per_1m": 0,
+        "output_per_1m": 0,
+        "context": null,
+        "aa_intelligence_index": 43.6,
+        "aa_source": "exact_variant",
+        "matched_model_ids": [
+          "kimi-k3::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "kimi-k3::max",
+            "index": 43.6
+          }
+        ],
+        "transport": "router",
+        "router_model": "fw-kimi-k3",
+        "provider_model": "moonshotai/Kimi-K3-TEE",
+        "reasoning_effort": "max",
+        "allowed_as": "moonshotai/kimi-k3",
+        "healthy": true
+      },
+      "usage": null,
+      "reasoning": {
+        "effort": "max"
+      }
+    },
+    {
+      "round": 3,
+      "role": "producer",
+      "reused_from_round": 1,
+      "requested_model": "chutes/moonshotai/Kimi-K3-TEE",
+      "model": "moonshotai/Kimi-K3-TEE",
+      "route": "router:fw-kimi-k3",
+      "attempt": 1,
+      "cost_usd": 0,
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-29T05-49-25-487Z/gauntlet/scores-13/producer-r1.json",
+      "output_sha256": "a82f4a1647eb4e203b2568cba7f931e671963dcaece55f1a0315dfdda852eb0e",
+      "qualification": {
+        "id": "chutes/moonshotai/Kimi-K3-TEE",
+        "family": "moonshotai",
+        "free": true,
+        "input_per_1m": 0,
+        "output_per_1m": 0,
+        "context": null,
+        "aa_intelligence_index": 43.6,
+        "aa_source": "exact_variant",
+        "matched_model_ids": [
+          "kimi-k3::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "kimi-k3::max",
+            "index": 43.6
+          }
+        ],
+        "transport": "router",
+        "router_model": "fw-kimi-k3",
+        "provider_model": "moonshotai/Kimi-K3-TEE",
+        "reasoning_effort": "max",
+        "allowed_as": "moonshotai/kimi-k3",
+        "healthy": true
+      },
+      "usage": null,
+      "reasoning": {
+        "effort": "max"
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+```json
+{
+  "artifact_id": "protocol-arc-agi-2",
+  "artifact_sha256": "4def015e2ee7af9204caf82a96e34ed82c8f210c181e369fb11fb2e504cc1d29",
+  "round": 3,
+  "verdict": "pass",
+  "coverage_checked": ["arc-agi::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-executed hash verifications (response sha256, output_sha256) and transport/qualification checks were reported in the packet but not independently executable by me; treated as owner-run receipts per instructions.",
+    "Primary evidence excerpts are ellipsis-bounded abbreviations of larger captures; my comparisons apply to the projected/reported fields they carry, not fields they omit.",
+    "Criterion c1's range/unit proviso applies symmetrically: the row declines only through whatever 'range' field it states; any null/unbounded bound was judged accordingly rather than penalized for lack of matching scale language."
+  ],
+  "missing_evidence": []
+}
+```
+
+Field-by-field rationale (row arc-agi::2):
+- Criterion c1 – Registry version "2"/benchmark identity consistent with protocol passages naming ARC‑AGI‑1, ‑2, ‑3 successively; metric/description snippets align with captured leaderboard framing of the board being scored under the described scoring/publish conventions; SOURCE 5 corroborates the served scale and agrees with the row’s band pairing, satisfying the row-vs-served-values clause as well as the scoring-rule derivation itself.
+- Criterion c2 – Lifecycle fields resolve cleanly:
+  • `status: "active"` — supported affirmatively by SOURCE 4’s zero-value-changed / added-row pattern.
+  • `version_status: "published"` — the fact that maintained distinct-version identifiers (`v2.json`) exist in the fetched locations plus narrative references to benchmark evolution support the interpretation described above; thus the condition “the registry publishes version info” is satisfied.
+  • `superseded_by: "arc-agi::3"` — backed by transition-relevant prose indicating continuation past v2 followed by later-generation doc segments and `media/data/leaderboard/<n>.json` fetch patterns implying incremental successor publication paths.
+No blockers arise under application-policy clauses.

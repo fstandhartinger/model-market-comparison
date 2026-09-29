@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-29T06:52:30.001Z",
+  "day": "2026-09-29",
+  "arms": [
+    {
+      "id": "vulcanbench-frontier::4",
+      "reason": "vulcanbench-frontier::4: the board appended column(s) combined_timeouts_zero, passed_of to its reviewed 18-column header; the reviewed columns are unchanged and in order, but what the new column(s) mean for the published comparison has not been reviewed. The arm is quarantined: its published rows are unchanged and every other source still publishes, until the added column(s) are reviewed into the registry and the recipe header, or the board is given its own version identity.",
+      "unreviewed_protocols": [],
+      "unreviewed_columns": [
+        "combined_timeouts_zero",
+        "passed_of"
+      ],
+      "reviewed_protocols": [],
+      "captures": [
+        "https://vulcanbench.com/assets/data/swe-v4-board.csv"
+      ]
+    }
+  ]
+}

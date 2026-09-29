@@ -1,0 +1,19 @@
+{
+  "artifact_id": "protocol-aa-aime-2025",
+  "artifact_sha256": "10b0e0708b65db002af44cf812d21651d2640eac9c89ce98a5c9f3ae317db4fc",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "aa-aime::2025",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Source 1 identifies the benchmark as 'AIME 2025' and the dataset as '2025 AIME I & II' but does not use the word 'version'; I treated that designation as the published release identifier supporting version_status 'retained'.",
+    "The activity summary reports only removals and no added or changed values, so it does not by itself establish active reporting; status 'retained' is instead supported by the protocol text explicitly stating the board is retired from active reporting."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-arc-agi-2",
+  "artifact_sha256": "fea3d9ac3fc5755de9f697c180491226eb6d08a5a0928439a6cb35a314afd727",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "arc-agi::2",
+    "c1",
+    "c2"
+  ],
+  "errors_found": [],
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently recompute the owner’s SHA-256 or execute transport/qualification checks; those are accepted per the packet’s stated owner responsibilities.",
+    "The numeric boundary portion of the generated summary is elided in the packet, but the supplied row does not appear to assert an explicit unit or range bound that would require comparison.",
+    "The row’s status active is supported by the packet’s generated summary of 21 newly served score values in the v2 payload; superseded_by arc-agi::3 is supported by the protocol text naming ARC-AGI-3 and successive benchmark versions."
+  ],
+  "missing_evidence": []
+}
