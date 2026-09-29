@@ -1,7 +1,7 @@
 import { JevBenchV15, Sha } from './JevBenchV15Preview';
 import { CustomEvaluationOffer } from './CustomEvaluationOffer';
 import { readJevbenchV1422 } from '../lib/jevbench-v1422.mjs';
-import { readJevbenchV150Release, readJevbenchV151Release, readJevbenchV152Release } from '../lib/jevbench-v15-release.mjs';
+import { readJevbenchV150Release, readJevbenchV151Release, readJevbenchV152Release, readJevbenchV153Release } from '../lib/jevbench-v15-release.mjs';
 import type { JevV15Artifact } from '../lib/jevbench-v15-preview.mjs';
 
 export async function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '/jev-models/v1.5.0', live = false }: {
@@ -12,7 +12,9 @@ export async function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '
   live?: boolean;
 }) {
   // CR-205: a release compares against the immediately prior official ranking; v1.5.0 began at v1.4.2.2.
-  const previousKeys = artifact.revision === 'v1.5.3'
+  const previousKeys = artifact.revision === 'v1.5.4'
+    ? (await readJevbenchV153Release()).artifact.systems.map((row: { key: string }) => row.key)
+    : artifact.revision === 'v1.5.3'
     ? (await readJevbenchV152Release()).artifact.systems.map((row: { key: string }) => row.key)
     : artifact.revision === 'v1.5.2'
     ? (await readJevbenchV151Release()).artifact.systems.map((row: { key: string }) => row.key)
@@ -86,7 +88,7 @@ export async function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '
       <p className="mt-3 max-w-3xl text-sm" data-bh-jev-version-share-row>
         <a className="text-accent underline" href={versionPath} data-bh-jev-version-share>Share this version</a>
         {!live && <span className="bh-muted"> · <a className="text-accent underline" href="/jev-models" data-bh-jev-live-link>View live board</a></span>}
-        <span className="bh-muted"> · Previous release: <a className="text-accent underline" href={artifact.revision === 'v1.5.3' ? '/jev-models/v1.5.2' : artifact.revision === 'v1.5.2' ? '/jev-models/v1.5.1' : artifact.revision === 'v1.5.1' ? '/jev-models/v1.5.0' : '/jev-models/v1.4.2.2'}>{artifact.revision === 'v1.5.3' ? 'JevBench v1.5.2' : artifact.revision === 'v1.5.2' ? 'JevBench v1.5.1' : artifact.revision === 'v1.5.1' ? 'JevBench v1.5.0' : 'JevBench v1.4.2.2'}</a></span>
+        <span className="bh-muted"> · Previous release: <a className="text-accent underline" href={artifact.revision === 'v1.5.4' ? '/jev-models/v1.5.3' : artifact.revision === 'v1.5.3' ? '/jev-models/v1.5.2' : artifact.revision === 'v1.5.2' ? '/jev-models/v1.5.1' : artifact.revision === 'v1.5.1' ? '/jev-models/v1.5.0' : '/jev-models/v1.4.2.2'}>{artifact.revision === 'v1.5.4' ? 'JevBench v1.5.3' : artifact.revision === 'v1.5.3' ? 'JevBench v1.5.2' : artifact.revision === 'v1.5.2' ? 'JevBench v1.5.1' : artifact.revision === 'v1.5.1' ? 'JevBench v1.5.0' : 'JevBench v1.4.2.2'}</a></span>
       </p>
     </header>
     <JevBenchV15 artifact={artifact} sha256={sha256} previousKeys={previousKeys} />

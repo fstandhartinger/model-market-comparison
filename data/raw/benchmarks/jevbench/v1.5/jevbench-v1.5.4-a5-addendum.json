@@ -1,0 +1,248 @@
+{
+  "schema": "jevbench-v15-addendum-rows-1",
+  "source_aggregate_sha256": {
+    "P80": "8e200f0fae137913333458b51cb5f2ba9ea6bcfc98b1fba9f6ecfa79c9c72030"
+  },
+  "independent_recompute_sha256": "c3cf1fadaed043126363f7710bdf5dcfd2cb282dd4bd0624e2991ab94bb0565d",
+  "rows": [
+    {
+      "key": "manchego-v21-v15",
+      "display": "Manchego v2.1",
+      "author": "oraculumai",
+      "repo": "https://github.com/nschlaepfer/manchego-serve",
+      "class": "system-one-open",
+      "licence": "Apache-2.0 (code and weights, author-declared)",
+      "open": "yes",
+      "underlying": "Author server manchego-serve v0.1.1 @ 0ee62188af474e3c1d11d47a9c4c8b3a08766db3; oraculumai/Manchego @ 77403228b7dfdf823af99a5f562bdcf80b708d4c. Evaluator-owned RTX6000, offline/read-only container, safetensors with verified weight and support-file checksums, bfloat16, sequential execution, temperature 1.0 and original option order. Stock TypeSafe adapter; all three types native. The author disclosed using public aggregate/family results during development, a prior Jev-assisted phrase filter on two template pools, and one Jev-labelled development group for checkpoint selection. These disclosures do not establish item-text leakage; this is not a claim of fully independent development. Cost is an estimate using measured token usage and the frozen Qwen3.5-4B reference, not a bookable Manchego tariff.",
+      "addendum": {
+        "id": "A5",
+        "release": "v1.5",
+        "label": "v1.5 roster addendum A5"
+      },
+      "endpoint_kind": "gpu",
+      "endpoint_condition": "evaluator-owned offline RTX6000 GPU",
+      "gpu": "RTX6000",
+      "api_flag": false,
+      "api_exposure_note": null,
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "full_coverage": true,
+      "support": {
+        "choice": "native",
+        "noul": "native",
+        "score": "native"
+      },
+      "axes": {
+        "calibration": 84.93112825268614,
+        "cost": 64.32996474661243,
+        "intelligence": 51.20184270705086,
+        "speed": 88.62537294079893
+      },
+      "scores": {
+        "A": 68.80761689677726,
+        "B": 64.38018631013303,
+        "C": 50.10778416696766
+      },
+      "views": {
+        "Balanced 33:33:33": 64.71255893501207,
+        "Emphasis on Accuracy 60:20:20": 58.53433737109407,
+        "Emphasis on Cost 20:20:60": 64.55897645258989,
+        "Emphasis on Speed 20:60:20": 72.54182553989001,
+        "Intelligence only": 51.20184270705086
+      },
+      "composite_ci95": {
+        "A": [
+          59.64248809653487,
+          70.28410645077331
+        ],
+        "B": [
+          55.15919797188127,
+          66.46786069230929
+        ],
+        "C": [
+          41.41839451148256,
+          58.14284654406695
+        ]
+      },
+      "jevbench_score": 68.80761689677726,
+      "intelligence": {
+        "I_open": 54.41148123727507,
+        "I_sealed": 47.99220417682665,
+        "base": 51.20184270705086,
+        "gap": 6.419277060448422,
+        "excess": 1.2326495603691798,
+        "penalty": 1.0,
+        "per_type_split": {
+          "open|choice": {
+            "cc": 66.94351121298551,
+            "n": {
+              "easy": 72,
+              "hard": 169,
+              "judge": 114,
+              "standard": 84
+            },
+            "tiers": {
+              "easy": 94.57340970756708,
+              "hard": 48.29612220916568,
+              "judge": 69.91701244813278,
+              "standard": 85.96308812061348
+            }
+          },
+          "open|noul": {
+            "cc": 34.25772561639298,
+            "n": {
+              "easy": 34,
+              "hard": 113,
+              "judge": 102,
+              "standard": 66
+            },
+            "tiers": {
+              "easy": 70.58823529411764,
+              "hard": 0.8849557522123908,
+              "judge": 47.058823529411775,
+              "standard": 63.63636363636365
+            }
+          },
+          "open|score": {
+            "cc": 62.033206882446706,
+            "n": {
+              "easy": 16,
+              "hard": 50,
+              "judge": 34,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 34.3709559077937,
+              "hard": 60.770086798948284,
+              "judge": 64.83247181126286,
+              "standard": 74.19167514354584
+            }
+          },
+          "sealed|choice": {
+            "cc": 65.03832742179372,
+            "n": {
+              "easy": 50,
+              "hard": 108,
+              "judge": 101,
+              "standard": 101
+            },
+            "tiers": {
+              "easy": 82.421875,
+              "hard": 61.11786148238154,
+              "judge": 62.897526501766784,
+              "standard": 67.39868689155536
+            }
+          },
+          "sealed|noul": {
+            "cc": 16.836363636363636,
+            "n": {
+              "easy": 25,
+              "hard": 55,
+              "judge": 50,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 36.00000000000001,
+              "hard": 9.090909090909083,
+              "judge": 32.00000000000001,
+              "standard": 0.0
+            }
+          },
+          "sealed|score": {
+            "cc": 62.101921472322594,
+            "n": {
+              "easy": 25,
+              "hard": 55,
+              "judge": 50,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 74.89366417691731,
+              "hard": 58.49813000579771,
+              "judge": 57.75114937104047,
+              "standard": 69.43979120499819
+            }
+          }
+        }
+      },
+      "validity": {
+        "choice": {
+          "invalid_rate": 0.0,
+          "n": 799
+        },
+        "noul": {
+          "invalid_rate": 0.0,
+          "n": 495
+        },
+        "score": {
+          "invalid_rate": 0.0,
+          "n": 330
+        }
+      },
+      "calibration": {
+        "score": 84.93112825268614,
+        "parts": {
+          "choice": {
+            "ece_hard": 0.10479140539833864,
+            "ece_score": 79.04171892033227,
+            "mean_tvd": 0.22156451070856284,
+            "n": 799,
+            "n_ece_hard": 277,
+            "n_tvd": 50,
+            "score": 78.44263392473799
+          },
+          "noul": {
+            "abstention_rate": 0.29494949494949496,
+            "brier": 0.11884554661503123,
+            "ece": 0.04608265988248972,
+            "n": 495,
+            "score": 90.78346802350205
+          },
+          "score": {
+            "interval90_coverage": 0.9181818181818182,
+            "interval90_width": 0.3199494949494949,
+            "n": 330,
+            "nrps": 0.09691145971046623,
+            "score": 85.56728280981838,
+            "top_ece": 0.09587144204658307
+          }
+        }
+      },
+      "speed": {
+        "p50_s_raw": 0.08445541537366807,
+        "p95_s_raw": 0.14016094417311223,
+        "p50_s_adjusted": 0.31891083074733617,
+        "p95_s_adjusted": 0.4303218883462244,
+        "n": 450,
+        "adjustment": "x2 + 0.15 s (assumption, not measured)"
+      },
+      "cost": {
+        "kind": "estimate",
+        "usd_per_1000": 0.015452586206896551,
+        "basis": "ESTIMATE: frozen 25 Sep DeepInfra Qwen/Qwen3.5-4B market reference, already marked deprecated at that cutoff (replaced by Qwen/Qwen3.5-9B). $0.03/M input, zero generated output; 836,500 measured input tokens across 1,624 decisions. Frozen v1.5 base-model floor applied; no bookable Manchego tariff claimed. Re-score if the basis changes."
+      },
+      "rank": null,
+      "ranks": {
+        "A": null,
+        "B": null,
+        "C": null
+      },
+      "ranked": true,
+      "listing": "ranked",
+      "not_ranked_because": null,
+      "provenance": {
+        "result_sha256": "8e200f0fae137913333458b51cb5f2ba9ea6bcfc98b1fba9f6ecfa79c9c72030",
+        "raw_sha256": "c11f5566b9e8f76bf3f82e4ebdb8ae9eb5584b4a81f726714fd82ffe6f177354",
+        "meta_sha256": "3701b1f6daf8014c77dce025681b584d2a499bc250f0c6f420dd3078cf168de3",
+        "spec_sha256": "0f17e0ecda3ad53ef61022870bdb9dfd0a9b7e31f9934e35a8e896ac7898da1c",
+        "revision": "77403228b7dfdf823af99a5f562bdcf80b708d4c",
+        "code_revision": "0ee62188af474e3c1d11d47a9c4c8b3a08766db3",
+        "image_sha256": "4974fc89be14225ac5ec73d3c5a7fbe5ae30ebf176020b152f782b9bc81d92dc"
+      }
+    }
+  ]
+}

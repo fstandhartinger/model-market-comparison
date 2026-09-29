@@ -77,7 +77,7 @@ test('released route is public, versioned and listed while the former preview UR
   assert.match(read('app/sitemap.ts'), /"\/jev-models\/v1\.5\.0"/);
   assert.match(read('app/sitemap.ts'), /"\/jev-models\/v1\.5\.1"/);
   assert.match(read('app/sitemap.ts'), /"\/jev-models\/v1\.5\.2"/);
-  assert.match(read('app/jev-models/page.tsx'), /readJevbenchV153Release/);
+  assert.match(read('app/jev-models/page.tsx'), /readJevbenchV154Release/);
   assert.match(read('app/jev-models/v1.5.0/page.tsx'), /canonical: '\/jev-models\/v1\.5\.0'/);
   assert.match(read('app/api/jevbench/v1.5.0/route.ts'), /X-Content-SHA256/);
   assert.match(read('app/api/jevbench/v1.5.2/route.ts'), /X-Content-SHA256/);
@@ -86,12 +86,12 @@ test('released route is public, versioned and listed while the former preview UR
   }
 });
 
-test('the v1.5.0 route stays pinned and the live board uses v1.5.3', async () => {
+test('the v1.5.0 route stays pinned and the live board uses v1.5.4', async () => {
   const { sha256 } = await readJevbenchV142(root);
   assert.equal(sha256, JEVBENCH_V142_SHA256);
   assert.match(read('app/jev-models/v1.4.2/page.tsx'), /readJevbenchV142WithFamilies/);
   assert.match(read('app/jev-models/v1.4.2.2/page.tsx'), /readJevbenchV1422WithFamilies/);
-  assert.match(read('app/jev-models/page.tsx'), /readJevbenchV153Release/);
+  assert.match(read('app/jev-models/page.tsx'), /readJevbenchV154Release/);
 });
 
 test('hidden What-If Lab: noindex, unlinked, aggregate-only; addendum rows listed apart from the ranking', () => {

@@ -23,7 +23,7 @@ export function JevCapabilityLazy({ revision, only3d = false }: { revision: stri
       .then((data) => {
         if (!active) return;
         const available = data.systems ?? [];
-        setSystems(['v1.5.1', 'v1.5.2', 'v1.5.3'].includes(revision) ? available.filter((row) => row.ranked) : available);
+        setSystems(['v1.5.1', 'v1.5.2', 'v1.5.3', 'v1.5.4'].includes(revision) ? available.filter((row) => row.ranked) : available);
       })
       .catch(() => { if (active) setError(true); });
     return () => { active = false; };
