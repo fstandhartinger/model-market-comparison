@@ -46,6 +46,7 @@ export const JEVBENCH_V15_PREVIEW_ROUTE: string;
 export const JEVBENCH_V15_OPTIONS: JevV15Option[];
 export const JEVBENCH_V15_AXES: (keyof JevV15Axes)[];
 export const JEVBENCH_V15_TYPES: JevV15Type[];
+export const JEVBENCH_V15_METHOD_LINKS: readonly { label: string; filename: string; url: string }[];
 export const JEVBENCH_V15_METHOD_URL: string;
 export const JEVBENCH_V15_HEADLINE_METHOD_URL: string;
 export const JEVBENCH_V15_PRICING_URL: string;
