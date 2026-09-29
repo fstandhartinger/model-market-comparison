@@ -19393,6 +19393,35 @@ nothing, which is the cheaper error.
 | benchmark-view payload guard | **implemented**, pending non-implementer verification | `test/benchmark-view.test.mjs` (relative bound + score-row bound + 900 KB tripwire) | The old 800 KB bound had 0.1 % margin and was red on a day with no new axis. |
 | D255 / D255.2 (iteration 271/272) | still `implemented`, and now **exercised further** | `iter273-d256/before/dry-run-report.json` `retained_sources[designarena]`, `dry-run-summary.txt`'s German retention line, and `review-live` reaching `live stage complete` | The 02:33 run is the second independent exercise of both halves: DesignArena withheld at `fetch-da`, the withholding accepted at `review-live`. Both still need a non-implementer engine. |
 
+### Live check of the new model page, and one thing it turned up that is *not* a defect
+
+`iter273-d256/live/sonnet55-{desktop,mobile}.png` + `sonnet55-metrics.json`:
+`/models/claude-sonnet-5.5::default` loads at 1440×900 and 390×844, `h1` "Claude Sonnet 5.5", title
+"Claude Sonnet 5.5 — benchmarks & cost", **no page errors and no console errors** at either width. A new
+family row is exactly the thing that breaks a model page, so this was worth shooting.
+
+The page shows **no price at all**: the header reads "Anthropic · 1 offer" and the Providers card reads
+"No per-token pricing matches the active global filters", with "Token offers by platform · 0 offers".
+I chased this expecting a data defect and it is not one. The default settings carry
+`allowDataTraining: false`, which `scopeFromSettings` turns into `privateDataOnly`, and
+`offerMatchesScope` drops every offer with `data_private === false`. Anthropic's OpenRouter policy
+record is `does_not_train: true, zero_retention: false` → `private: false`, while `amazon-bedrock`,
+`google-vertex` and `azure` are `zero_retention: true` → `private: true`. The filter is the verbatim
+requirement's "**Trains or keeps your data**", so retention counts and excluding Anthropic direct is
+the intended reading, not a mistake. The two other first-party-only Anthropic rows
+(`claude-mythos-5.1::default`, `claude-mythos-5::default`) behave identically, so nothing here is new
+with Sonnet 5.5 either.
+
+What *is* worth a design decision is that the reader is told "1 offer" and then shown nothing, with no
+hint that the one offer exists and is excluded on confidentiality. F-145/F-162 already gave the
+genuinely-no-offers case its own sentence rather than one that blames the filters; this is the mirror
+case and has no sentence of its own. Filed as **D257** below — for Fable, since it is a wording and
+affordance question on a page the design authority owns, not a data repair.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D257 (new) | **open — for the design authority** | `iter273-d256/live/sonnet55-desktop.png`, `sonnet55-mobile.png`, `sonnet55-metrics.json` | A model whose only offer is excluded by the confidentiality default shows "1 offer" in the header and "No per-token pricing matches the active global filters" in the body, with no price anywhere and no statement of *which* filter or that a price exists. Affects `claude-sonnet-5.5::default`, `claude-mythos-5.1::default`, `claude-mythos-5::default` today, and any Anthropic-direct-only row in future (all 50 Anthropic first-party offers are `data_private: false` by the same correct reading). Not a data defect: `components/ModelDetailOffers.tsx` + `offerMatchesScope` are behaving as the "Trains or keeps your data" requirement specifies. |
+
 **Gates on the committed tree, sequentially, unpiped:** `node scripts/build-dataset.mjs`
 **869 / 674 / 94 / 3,119** (only `generated_at`/`composite.collected_at` moved; restored);
 `CI=true npm test` **1,674 tests, 1,673 pass, 0 fail, 1 skip**, exit 0; `npx tsc --noEmit -p .` exit 0;
