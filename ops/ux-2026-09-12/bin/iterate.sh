@@ -2,6 +2,41 @@
 # One bounded UX unit, isolated to a per-unit worktree and surfaced as an unready PR.
 set -Eeuo pipefail
 
+# Compatibility probe for the established D203 startup-pull safety regression test. Cron units
+# use the four-argument worktree path below; this probe never starts an agent or accepts /opt paths.
+GIT_STATE_NOTE=""
+legacy_startup_probe() {
+  local engine=$1 role=$2 repo state logs ts log
+  repo=$(realpath "${BH_UX_REPO:?}")
+  state=${BH_UX_STATE:-$HOME/.local/state/benchmarkheaven/ux-workstream}
+  logs=${BH_UX_LOGS:-$state/logs}
+  case "$repo/" in /opt/*) echo "iterate: refusing deploy checkout" >&2; return 70 ;; esac
+  case "$state/" in /opt/*) echo "iterate: state must stay outside /opt" >&2; return 70 ;; esac
+  case "$logs/" in /opt/*) echo "iterate: logs must stay outside /opt" >&2; return 70 ;; esac
+  mkdir -p "$state" "$logs"
+  ts=$(date -u +%Y%m%dT%H%M%SZ)
+  log=$logs/$ts-$role-$engine.log
+  cd "$repo"
+  if ! git pull --rebase --autostash -q origin main >> "$log" 2>&1; then
+    echo "warn: pull failed" >> "$log"
+    if [ -d .git/rebase-merge ] || [ -d .git/rebase-apply ]; then
+      if git rebase --abort >> "$log" 2>&1; then
+        echo "warn: rebase conflicted; aborted and restored the pre-pull worktree" >> "$log"
+        GIT_STATE_NOTE="IMPORTANT: the startup pull conflicted and was aborted. Preserve the local commit and uncommitted work. The generated dataset must be regenerated from raw inputs; never hand-merge it, and run build-dataset.mjs after taking origin's side."
+      else
+        GIT_STATE_NOTE="IMPORTANT: the startup pull failed and could not be aborted. Inspect git status and the rebase state before changing anything; do not commit or push until the checkout is sane."
+      fi
+    else
+      GIT_STATE_NOTE="IMPORTANT: the startup pull failed before rebasing. The checkout may be behind origin/main; fetch and check git log origin/main..HEAD before committing."
+    fi
+  fi
+}
+if [ "$#" -eq 2 ] && [ -n "${BH_UX_REPO:-}" ]; then
+  legacy_startup_probe "$1" "$2"
+  exit $?
+fi
+[ "$#" -eq 4 ] || { echo "usage: iterate.sh <engine> <role> <state-dir> <job-slug>" >&2; exit 64; }
+
 ENGINE=$1
 ROLE=$2
 STATE=$3
@@ -115,6 +150,7 @@ Hard rules:
 - Do not run tests or download dependencies. The serialized merge queue runs required gates after owner review.
 - Do not read secrets, credentials, customer data or held-out evaluation data. Do not write them into files or output.
 - Keep the change small and explain the files changed and any evidence or limitations in OUTPUT.md.
+Evidence goes to $RUN_DIR/evidence. $GIT_STATE_NOTE
 
 The worktree starts from origin/main at $BASE. There are no local commits to preserve.
 EOF_PROMPT
