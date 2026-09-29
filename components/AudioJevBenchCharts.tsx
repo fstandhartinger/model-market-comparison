@@ -138,6 +138,9 @@ export function AudioJevBenchCharts({ ranked, provisional, limits }: {
   const lead = ranked.find((r) => r.capabilityRank === 1);
   const rankedInClass = ranked.filter((r) => r.jevClass).length;
   const extraInClass = provisional.filter((r) => r.jevClass).length;
+  const extraSummary = extraInClass === 0
+    ? 'No additional provisional or partial rows meet the speed/cost limits.'
+    : `${extraInClass} additional provisional or partial ${extraInClass === 1 ? 'row meets' : 'rows meet'} the speed/cost limits but ${extraInClass === 1 ? 'is' : 'are'} not ranked.`;
 
   const points3d = useMemo(() => shownAll.filter((r) => r.capability != null && r.usd != null && r.speed != null).map((r) => ({
     key: r.key, name: r.name, rank: r.group === 'full' ? r.rank ?? null : null, colorVariable: GROUP_VAR[r.group],
@@ -159,7 +162,7 @@ export function AudioJevBenchCharts({ ranked, provisional, limits }: {
         {lead && <> <b>{lead.name}</b> leads the Jev-class audio systems with <b>{one(lead.capability)}</b>.</>}
       </p>
       <p className="bh-muted mt-1 max-w-4xl text-[13px] leading-snug">
-        Jev-class: median latency ≤ {limits.p50AdjS.toFixed(1)} s <b>and</b> ≤ {usd(limits.usdPer1000)} per 1,000 decisions. {rankedInClass} of {ranked.length} full-coverage systems meet the ranking gate; {extraInClass} additional provisional or partial rows meet the speed/cost limits but are not ranked.
+        Jev-class: median latency ≤ {limits.p50AdjS.toFixed(1)} s <b>and</b> ≤ {usd(limits.usdPer1000)} per 1,000 decisions. {rankedInClass} of {ranked.length} full-coverage systems meet the ranking gate. {extraSummary}
       </p>
       <label className="mt-3 inline-flex min-h-10 cursor-pointer items-center gap-2 text-sm" data-bh-audiojev-class-filter>
         <input type="checkbox" checked={classOnly} onChange={(e) => { setClassOnly(e.target.checked); setActive(null); }} />
