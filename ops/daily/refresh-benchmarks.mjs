@@ -14,6 +14,7 @@ import { openReuseCache, unitFingerprint, reuseProvenance } from './reuse-cache.
 import { reconcilePublicIdentities } from './public-identities.mjs';
 import { aaMappingApplies } from '../../lib/benchmark-registry.mjs';
 import { retainedAaBenchmarks, reviewAaMappings, loadAaBenchmarkSnapshots } from '../../lib/aa-snapshot-locks.mjs';
+import { checkRealSweSnapshot, isRealSweEntry, REALSWE_CAPTURE_TARGET } from './realswe-check.mjs';
 import { parseQuarantine, quarantineCheck } from '../../lib/source-quarantine.mjs';
 const exec = promisify(execFile);
 const root = 'data/raw/benchmarks';
@@ -361,7 +362,13 @@ export function captureTargets({ registry, plan, vendor }) {
   // 2026-09-15: a reviewed manual snapshot (e.g. a ZIP-only source whose maintainer site blocks crawlers)
   // is never fetched by the daily run; its committed rows are retained unchanged.
   const manual = new Set(plan.entries.filter((spec) => spec.refresh === 'manual').map((spec) => spec.benchmark_id));
-  for (const entry of registry.entries) { if (manual.has(entry.id)) continue; add({ url: entry.primary_url }); for (const source of entry.evidence ?? []) add(source); }
+  for (const entry of registry.entries) {
+    if (manual.has(entry.id)) continue;
+    // Real-SWE bundles rotate; discover today's declared data chunk rather than
+    // fetching the dated chunk pinned only for the published snapshot.
+    if (isRealSweEntry(entry)) { urls.set(REALSWE_CAPTURE_TARGET.url, { ...REALSWE_CAPTURE_TARGET }); continue; }
+    add({ url: entry.primary_url }); for (const source of entry.evidence ?? []) add(source);
+  }
   for (const spec of plan.entries) {
     if (manual.has(spec.benchmark_id)) continue;
     add(spec.source); for (const key of ['method_source', 'categories_source', 'frontend_source', 'detail_source', 'config_source']) add(spec.parser?.[key]);
@@ -609,6 +616,9 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     checks.push({ id: 'aa-benchmark-fields', status: changed.length ? 'updated' : 'checked_unchanged', rows: next.count, changed_rows: changed.length,
       ...(coverageDrops.length ? { coverage_drops: coverageDrops } : {}), source: sourceRef(receipt, 'All explicit model-page benchmark fields') });
   } catch (error) { fail('aa-benchmark-fields', error); }
+  // Compare the complete public Real-SWE sample with its frozen observation lock.
+  // Changed samples are retained for a reviewed dated release, never relabelled.
+  checks.push(...await checkRealSweSnapshot({ entries: registry.entries, receipts: [...captured.values()], lock: lock.realswe }));
   // Coding v1.5 has already passed complete primary-source review in the live
   // stage. Preserve the v1.4 lock and snapshot without changing their dates.
   const liveReview = await json(join(runDir, 'reports', 'live-step-result.json'));
