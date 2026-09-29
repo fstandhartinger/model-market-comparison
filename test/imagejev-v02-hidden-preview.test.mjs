@@ -49,12 +49,11 @@ test('all displayed axes and row memberships are valid aggregates', () => {
   }
 });
 
-test('preview is unlinked from sitemap and route sends crawler headers', async () => {
+test('former preview URL is unlinked from sitemap and permanently redirects to the public release', async () => {
   const sitemap = await readFile(new URL('../app/sitemap.ts', import.meta.url), 'utf8');
   assert.doesNotMatch(sitemap, /wip-imagejev-v02-9e2d4a/);
   const route = await readFile(new URL('../app/wip-imagejev-v02-9e2d4a/route.ts', import.meta.url), 'utf8');
-  assert.match(route, /'X-Robots-Tag': 'noindex, nofollow, noarchive'/);
-  assert.match(route, /'Cache-Control': 'no-store'/);
+  assert.match(route, /Response\.redirect\('https:\/\/benchmarkheaven\.com\/image-jev-bench', 308\)/);
 });
 
 test('all five fresh models and their three tracks match the downloadable measurement record', () => {
