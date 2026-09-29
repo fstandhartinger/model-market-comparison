@@ -24,7 +24,7 @@ export async function getBenchmarkMatrixPage() {
   const models = cd.models.filter((m) => withValues.has(m.id)).map((m) => ({
     id: m.id, family_key: m.family_key, family_name: m.family_name, display_name: m.display_name, org: m.org, variant: m.variant,
     open_weights: m.open_weights, featured: m.featured, deprecated: m.deprecated, scores: m.scores, composite_raw: m.composite_raw,
-    composite_coverage: m.composite_coverage, benchmark_count: m.benchmark_count, family_alive: alive.has(m.family_key),
+    composite_coverage: m.composite_coverage, composite_attached: m.composite_attached, benchmark_count: m.benchmark_count, family_alive: alive.has(m.family_key),
   }));
   const offers: Record<string, MatrixOffer[]> = {};
   const byId = new Map(cd.models.map((m) => [m.id, m]));

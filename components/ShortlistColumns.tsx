@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { ClientData } from "../lib/client-model";
-import { hasScoreEvidence } from "../lib/client-model";
+import { compositeChartVisible, compositeCoverageLabel, hasScoreEvidence } from "../lib/client-model";
 import { SCORE_PICKER_LABELS, SCORE_SHORT_LABELS, type ScoreKey } from "../lib/types";
 import { formatValue, shortlistColumns } from "../lib/benchmark-matrix.mjs";
 import { seriesColor } from "./BenchmarkBars";
@@ -10,6 +10,8 @@ import { AaCredit } from "./AaCredit";
 import { EpochCredit } from "./EpochCredit";
 import { GearIcon } from "./GearIcon";
 import { counted } from "../lib/format";
+import { useSettings } from "./SettingsContext";
+import { IncompleteCompositeToggle } from "./IncompleteCompositeToggle";
 
 /** CR-33.2: the scores the chart can show. The Main Composite is the default; category composites join
  *  this list too (CR-25.6). */
@@ -31,7 +33,7 @@ export function ShortlistColumns({ data, ids, tableIds, names, onToggle, full = 
     const j = tableIds.indexOf(id), inTable = j >= 0, blocked = !inTable && full, name = names.get(id) ?? id;
     return {
       type: "button" as const, "aria-pressed": inTable, "aria-disabled": blocked || undefined, "data-toggle": id,
-      "aria-label": `${name}, ${value}, ${inTable ? `in your comparison as ${String.fromCharCode(65 + j)}` : "not in your comparison"}`,
+      "aria-label": `${name}, ${value}${covText(id)}, ${inTable ? `in your comparison as ${String.fromCharCode(65 + j)}` : "not in your comparison"}`,
       title: blocked ? `Your comparison is full (${tableIds.length}) — remove a model first` : inTable ? `Remove ${name} from the comparison below` : `Add ${name} to the comparison below`,
       onClick: () => toggle(id, inTable),
     };
@@ -55,10 +57,19 @@ export function ShortlistColumns({ data, ids, tableIds, names, onToggle, full = 
   const byId = useMemo(() => new Map(data.models.map((m) => [m.id, m])), [data]);
   const elo = score.startsWith("designarena");
   const unit = elo ? "Elo" : "points";
-  const { columns, kind, domain, ticks } = useMemo(() => shortlistColumns(ids.map((id) => {
+  // CR-211: on the Main Composite the chart draws only 7/7 models unless the reader includes incomplete ones, which are
+  // then dashed and labelled "N/7". The shortlist table below is unchanged. Other scores are not gated.
+  const { includeIncompleteComposites } = useSettings();
+  const coverageOf = useMemo(() => new Map(ids.map((id) => { const m = byId.get(id); return [id, m && hasScoreEvidence(m, score) ? compositeCoverageLabel(m, score) : null]; })), [ids, byId, score]);
+  const shownIds = useMemo(() => ids.filter((id) => { const m = byId.get(id); return !m || compositeChartVisible(m, score, includeIncompleteComposites) || !hasScoreEvidence(m, score); }), [ids, byId, score, includeIncompleteComposites]);
+  const hiddenIncomplete = ids.length - shownIds.length;
+  const shownIncomplete = shownIds.filter((id) => coverageOf.get(id)).length;
+  const { columns, kind, domain, ticks } = useMemo(() => shortlistColumns(shownIds.map((id) => {
     const m = byId.get(id);
     return { id, value: m && hasScoreEvidence(m, score) ? m.scores[score] ?? null : null };
-  }), unit, { zeroBaseline }), [ids, byId, score, unit, zeroBaseline]);
+  }), unit, { zeroBaseline }), [shownIds, byId, score, unit, zeroBaseline]);
+  /** "3/7" suffix for a value from an incomplete Main Composite, spoken as "3 of 7 inputs". */
+  const covText = (id: string) => { const c = coverageOf.get(id); return c ? `, incomplete Composite, ${c.replace("/", " of ")} inputs` : ""; };
   if (ids.length < 2) return null;
   const label = score === "composite" ? "Benchmark Heaven Score (Main Composite Score)" : SCORE_SHORT_LABELS[score];
   const measured = columns.filter((c) => !c.noData).length;
@@ -94,9 +105,10 @@ export function ShortlistColumns({ data, ids, tableIds, names, onToggle, full = 
         </div>}
       </div>
     </div>
+    <IncompleteCompositeToggle score={score} hidden={hiddenIncomplete} shown={shownIncomplete} className="mt-1" />
     {range && <p className="bh-muted mt-1 flex items-center gap-1.5 text-[11px]" data-axis-range={kind} aria-live="polite">{kind === "zoomed" && <AxisBreak />}{range}</p>}
     {onToggle && !hintSeen && <p className="bh-muted mt-1 text-[11px]" data-toggle-hint>{rows ? "Tap a bar" : "Click a column"} to add or remove a model from the table below.</p>}
-    <p className="sr-only" data-chart-summary>{`${label}${rangeText}: ${columns.map((c) => `${names.get(c.id) ?? c.id} ${c.noData ? "no data" : formatValue(c.value as number, unit)}`).join(", ")}`}</p>
+    <p className="sr-only" data-chart-summary>{`${label}${rangeText}: ${columns.map((c) => `${names.get(c.id) ?? c.id} ${c.noData ? "no data" : formatValue(c.value as number, unit)}${c.noData ? "" : covText(c.id)}`).join(", ")}`}</p>
     <div className={rows ? "mt-3" : "mt-3 overflow-x-auto"} data-shortlist-plot>
       {rows
         ? <div className="space-y-1">
@@ -110,9 +122,11 @@ export function ShortlistColumns({ data, ids, tableIds, names, onToggle, full = 
             const valueText = c.noData ? "no data" : formatValue(c.value as number, unit);
             const bar = <>{c.noData
                   ? <span className="bh-muted text-[10px]">no data</span>
+                  : coverageOf.get(c.id)
+                  ? <span className="block h-3.5 rounded-t rounded-r border border-dashed" data-incomplete-composite={coverageOf.get(c.id)} style={{ width: `${Math.round((c.height ?? 0) * 100)}%`, borderColor: j >= 0 ? seriesColor(j) : "rgb(var(--accent))", background: "transparent" }} />
                   : <span className="block h-3.5 rounded-t rounded-r" style={{ width: `${Math.round((c.height ?? 0) * 100)}%`, background: j >= 0 ? seriesColor(j) : "rgb(var(--accent) / .45)" }} />}</>;
             return <div key={c.id} className="flex items-center gap-2 text-[11px] leading-tight" data-col={c.id} data-no-data={c.noData ? "1" : undefined}>
-              <span className="order-3 w-10 shrink-0 text-right font-semibold tabular" aria-hidden="true">{c.noData ? "" : valueText}</span>
+              <span className="order-3 w-10 shrink-0 text-right font-semibold tabular" aria-hidden="true">{c.noData ? "" : valueText}{!c.noData && coverageOf.get(c.id) && <span className="bh-muted block font-normal">{coverageOf.get(c.id)}</span>}</span>
               <Link href={`/models/${encodeURIComponent(c.id)}`} tabIndex={-1} aria-hidden="true" className="order-1 w-[38%] shrink-0 hover:underline">{names.get(c.id)}</Link>
               {onToggle
                 ? <button {...toggleProps(c.id, valueText)} className="bh-col-toggle order-2 flex h-6 min-h-0 flex-1 items-center rounded p-0">{bar}</button>
@@ -133,8 +147,10 @@ export function ShortlistColumns({ data, ids, tableIds, names, onToggle, full = 
                   const inner = c.noData
                     ? <span className="bh-muted absolute inset-0 flex items-end justify-center rounded-t border border-dashed border-line pb-1 text-[10px]" aria-hidden="true">no data</span>
                     : <>
-                      <span className="absolute inset-x-0 bottom-0 rounded-t" aria-hidden="true" style={{ height: h, background: j >= 0 ? seriesColor(j) : "rgb(var(--accent) / .45)" }} />
-                      <span className="absolute inset-x-0 text-center text-[10px] font-semibold leading-none tabular" aria-hidden="true" style={{ bottom: `calc(${h} + 3px)` }}>{formatValue(c.value as number, unit)}</span>
+                      {coverageOf.get(c.id)
+                        ? <span className="absolute inset-x-0 bottom-0 rounded-t border border-dashed" aria-hidden="true" data-incomplete-composite={coverageOf.get(c.id)} style={{ height: h, borderColor: j >= 0 ? seriesColor(j) : "rgb(var(--accent))", background: "transparent" }} />
+                        : <span className="absolute inset-x-0 bottom-0 rounded-t" aria-hidden="true" style={{ height: h, background: j >= 0 ? seriesColor(j) : "rgb(var(--accent) / .45)" }} />}
+                      <span className="absolute inset-x-0 text-center text-[10px] font-semibold leading-none tabular" aria-hidden="true" style={{ bottom: `calc(${h} + 3px)` }}>{formatValue(c.value as number, unit)}{coverageOf.get(c.id) && <span className="bh-muted block font-normal">{coverageOf.get(c.id)}</span>}</span>
                     </>;
                   return onToggle
                     ? <button key={c.id} {...toggleProps(c.id, c.noData ? "no data" : formatValue(c.value as number, unit))} className="bh-col-toggle relative block h-full min-h-0 min-w-[2.2rem] flex-1 rounded-t p-0" data-col={c.id} data-no-data={c.noData ? "1" : undefined}>{inner}</button>

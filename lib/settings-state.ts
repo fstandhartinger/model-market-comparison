@@ -42,9 +42,12 @@ export interface SettingsState {
   inputWeight: number;     // raw mode's fixed input:output blend; persists while adjusted
   ioBasis: IoBasis;        // CR-65.8: adjusted mode's workload — one common I/O ratio (default) or each model's OpenRouter usage
   includeBenchmaxxing: boolean; // CR-74.4: the Main Composite includes the marginal Benchmaxxing penalty (on by default)
+  // CR-211: Main Composite charts plot only rows with all 7 inputs (exact + attached) unless this is on; then the
+  // incomplete rows are drawn, marked and labelled "N/7". Chart-only: rankings, tables and scores ignore it.
+  includeIncompleteComposites: boolean;
 }
 
-export const SETTINGS_DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, hostedIn: [...REGION_BUCKETS], providerBasedIn: [...REGION_BUCKETS], labBasedIn: [...REGION_BUCKETS], labs: [], openOnly: false, minScore: 86, minScoreTouched: false, simpleMaxCost: null, advancedMinScore: 0, featuredTouched: false, teeOnly: false, allowDataTraining: false, isCompany: false, maxCost: null, minIntelligence: null, minCoding: null, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: DEFAULT_BLEND, ioBasis: DEFAULT_IO_BASIS, includeBenchmaxxing: true };
+export const SETTINGS_DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, hostedIn: [...REGION_BUCKETS], providerBasedIn: [...REGION_BUCKETS], labBasedIn: [...REGION_BUCKETS], labs: [], openOnly: false, minScore: 86, minScoreTouched: false, simpleMaxCost: null, advancedMinScore: 0, featuredTouched: false, teeOnly: false, allowDataTraining: false, isCompany: false, maxCost: null, minIntelligence: null, minCoding: null, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: DEFAULT_BLEND, ioBasis: DEFAULT_IO_BASIS, includeBenchmaxxing: true, includeIncompleteComposites: false };
 
 const BLEND_VALUES = new Set(FIXED_BLENDS.map((b) => b.value));
 export const isBlendValue = (n: number) => BLEND_VALUES.has(n);
@@ -93,6 +96,8 @@ export function sanitizeSettings(input: unknown): Partial<SettingsState> {
   if (raw.ioBasis === "common" || raw.ioBasis === "usage") out.ioBasis = raw.ioBasis;
   // CR-74.4: added without a key bump — a payload without it loads with the default (on).
   if (bool(raw.includeBenchmaxxing)) out.includeBenchmaxxing = raw.includeBenchmaxxing;
+  // CR-211: likewise added without a key bump — a payload without it loads with the default (complete rows only).
+  if (bool(raw.includeIncompleteComposites)) out.includeIncompleteComposites = raw.includeIncompleteComposites;
   return out;
 }
 
@@ -108,7 +113,8 @@ export function advancedFiltersActive(s: SettingsState): boolean {
   return sharedFiltersActive(s) || s.advancedMinScore > 0 || s.maxCost != null || s.minIntelligence != null || s.minCoding != null;
 }
 
-/** Any setting anywhere differs from its default; drives the global Reset. */
+/** Any setting anywhere differs from its default; drives the global Reset. CR-211: the incomplete-Composite chart
+ *  toggle is a chart display choice like the value map's cogwheel, not a filter, so it is left out here. */
 export function anyFiltersActive(s: SettingsState): boolean {
   return advancedFiltersActive(s) || s.minScoreTouched || s.simpleMaxCost != null;
 }
