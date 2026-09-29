@@ -2,12 +2,20 @@
 
 import { useEffect, useMemo, useRef } from "react";
 import type { ClientOffer, ProviderInfo, ClientModel, ClientData } from "../lib/client-model";
-import { offerPrice, priceContext, priceLabel, scopeFromSettings, rankedOffers, scopedCatalogRoutes } from "../lib/cost";
+import { offerMatchesScope, offerPrice, priceContext, priceLabel, scopeFromSettings, rankedOffers, scopedCatalogRoutes } from "../lib/cost";
 import { FREE_ROUTE_NOTE, freeRouteLabel, freeRouteTitle, isCurrentFreeRoute, isFreeRoute, isStealthPreview } from "../lib/free-route.mjs";
 import { describeOpenRouterPriceOverrideWithRates } from "../lib/openrouter-pricing.mjs";
 import { usdPerM, counted } from "../lib/format";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
+
+// "A", "A and B", "A, B and C", "A, B, C and 2 more".
+const nameList = (names: string[]) => {
+  const shown = names.slice(0, 3);
+  const rest = names.length - shown.length;
+  if (rest > 0) return `${shown.join(", ")} and ${rest} more`;
+  return shown.length > 1 ? `${shown.slice(0, -1).join(", ")} and ${shown[shown.length - 1]}` : shown[0] ?? "";
+};
 
 export function ModelDetailOffers({
   offers,
@@ -33,6 +41,14 @@ export function ModelDetailOffers({
     ...offer,
     price: offerPrice(offer, ctx),
   })), [offers, scope, ctx]);
+  // F-227 (Fable pass 43, D257): priced offers the filters hide. `byData` are the providers the data filter alone removes — the
+  // one filter that is on by default — so the card can name them and offer that filter's own switch.
+  const hidden = useMemo(() => {
+    const priced = rankedOffers(offers, null, ctx).filter((offer) => !offerMatchesScope(offer, scope));
+    const byData = scope.privateDataOnly ? priced.filter((offer) => offerMatchesScope(offer, { ...scope, privateDataOnly: false })) : [];
+    return { priced, byData: [...new Set(byData.map((offer) => offer.provider))] };
+  }, [offers, scope, ctx]);
+  const outside = offers.length - catalog.length;
   const freeWhen = { snapshotDate: pricingData.sourceDates?.openrouter, generatedAt: pricingData.generated_at };
   // CR-50.2: the overview's "Free route" pill links to #all-offers; open the folded route list when it is the target.
   const allRef = useRef<HTMLDetailsElement>(null);
@@ -87,10 +103,20 @@ export function ModelDetailOffers({
               ))}
             </tbody>
           </table>
-        ) : offers.some(isStealthPreview)
+        ) : offers.some(isStealthPreview) && hidden.priced.length === 0
           // CR-60.3: a stealth model's only route is its $0 preview — say so instead of "no pricing".
           ? <p className="text-sm text-gray-500"><span className="rounded border border-line px-1 text-xs text-gray-400">free (stealth preview)</span> on OpenRouter — rate-limited and temporary, not a paid price; the eventual price is not announced.</p>
-          : <p className="text-sm text-gray-500">No per-token pricing matches the active global filters.</p>}
+          // F-227 (mirror of F-145/F-162): a price exists and the filters hide it — say which filter and why, with its switch,
+          // instead of a sentence that reads as "no price exists".
+          : hidden.byData.length
+            ? <div data-bh-hidden-offers={hidden.byData.length} data-bh-hidden-why="data">
+                <p className="text-sm">A price exists, but your data filter hides it.</p>
+                <p className="mt-1 text-xs text-gray-500">{nameList(hidden.byData)} {hidden.byData.length === 1 ? "is" : "are"} not on OpenRouter&apos;s list of providers that neither train on nor retain prompts, and such providers are left out while “Trains or keeps your data” is off.</p>
+                <button type="button" className="bh-button mt-3 text-sm" onClick={() => s.setAllowDataTraining(true)}>Include {hidden.byData.length === 1 ? hidden.byData[0] : "these providers"}</button>
+              </div>
+            : hidden.priced.length
+              ? <p className="text-sm text-gray-500" data-bh-hidden-offers={hidden.priced.length} data-bh-hidden-why="filters">{hidden.priced.length === 1 ? "One priced offer falls" : String(hidden.priced.length) + " priced offers fall"} outside the active global filters (providers, regions, confidentiality). Change them under Options.</p>
+              : <p className="text-sm text-gray-500">No provider publishes a paid per-token price for this model yet.</p>}
       </section>
     );
   }
@@ -106,7 +132,7 @@ export function ModelDetailOffers({
     <details ref={allRef} id="all-offers" className="card mt-6 min-w-0 overflow-x-auto p-4">
       <summary className="font-semibold">Token offers by platform · {counted(catalog.length, "offer")} <span className="text-xs font-normal text-gray-500">({priceLabel(s)})</span></summary>
       <PriceAssumptions />
-      <p className="mb-3 text-[11px] text-gray-500">{counted(catalog.length, "offer")} within the active global filters; “—” means the catalog is active but no public token price is available.</p>
+      <p className="mb-3 text-[11px] text-gray-500">{counted(catalog.length, "offer")} within the active global filters{outside > 0 ? `, ${outside} more outside them` : ""}; “—” means the catalog is active but no public token price is available.</p>
       {[...byPlatform.entries()].map(([platform, platformOffers]) => (
         <div key={platform} className="mb-4">
           <h3 className="mb-1 text-sm font-medium text-accent">{platform} <span className="text-xs font-normal text-gray-500">({platformOffers.length})</span></h3>
@@ -131,7 +157,7 @@ export function ModelDetailOffers({
           </table>
         </div>
       ))}
-      {catalog.length === 0 && <p className="text-sm text-gray-500">No token offers match the active global filters.</p>}
+      {catalog.length === 0 && <p className="text-sm text-gray-500">{outside > 0 ? `${outside === 1 ? "This model's one offer is" : `All ${outside} offers of this model are`} outside the active global filters.` : "No token offers match the active global filters."}</p>}
     </details>
   );
 }
