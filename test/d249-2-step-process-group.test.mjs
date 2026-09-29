@@ -116,6 +116,20 @@ test('a timed-out step rejects with the error shape every reader already expects
   assert.equal(error.killed === true || error.signal === 'SIGTERM' || error.code === 'ETIMEDOUT', true);
 });
 
+test('a timed-out step that handles SIGTERM with exit zero still rejects as killed', async (t) => {
+  const dir = await mkdtemp(join(tmpdir(), 'd249-2-'));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const step = join(dir, 'graceful-timeout.mjs');
+  await writeFile(step, "process.on('SIGTERM', () => { console.log('handled timeout'); process.exit(0); }); setInterval(() => {}, 1000);\n");
+  const error = await runStep(process.execPath, [step], { timeout: 1_200, killSignal: 'SIGTERM' })
+    .then(() => null, (e) => e);
+  assert.ok(error, 'a graceful exit cannot convert a timeout into success');
+  assert.equal(error.killed, true);
+  assert.equal(error.code, 0);
+  assert.equal(error.signal, null);
+  assert.match(error.stdout, /handled timeout/);
+});
+
 test('a step that ignores the signal is SIGKILLed one grace period later', async (t) => {
   const dir = await mkdtemp(join(tmpdir(), 'd249-2-'));
   t.after(() => rm(dir, { recursive: true, force: true }));

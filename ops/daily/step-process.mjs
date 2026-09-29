@@ -186,7 +186,7 @@ export function runStep(file, args = [], {
       forget();
       const stdout = Buffer.concat(out).toString('utf8');
       const stderr = Buffer.concat(err).toString('utf8');
-      if (!error && code === 0 && !signal) return resolve({ stdout, stderr });
+      if (!error && !timedOut && code === 0 && !signal) return resolve({ stdout, stderr });
       const failure = error ?? new Error(`Command failed: ${command}\n${stderr}`);
       failure.cmd = command;
       failure.code = failure.code ?? (code === null ? undefined : code);
