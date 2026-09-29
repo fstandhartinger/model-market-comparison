@@ -19,4 +19,4 @@ ReadWritePaths=%h/.local/state/fastlane-autopickup %h/jobs/fastlane-evaluations
 ReadWritePaths=%h/wt %h/.local/state/bh
 ReadWritePaths=%h/.agent-board %h/.notify %h/.claude/skills/email-access
 ReadWritePaths=%h/.local/state/telegram-reply-broker/callback-status.d
-RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK

@@ -170,7 +170,7 @@ def notify_card(state, path, now):
     caption = ("🧑 DU BIST DRAN\n\n🧑 Für dich\n"
                f"- Decide the refusal email for order {state['draft']['request_id'][:8]}.\n"
                "  Why: Source review failed; the full refund succeeded.\n"
-               "  Steps: 1. Read the attached exact email. 2. Tap Send this email or Keep unsent.\n"
+               "  Steps:\n  1. Read the attached exact email.\n  2. Tap Send this email or Keep unsent.\n"
                "  Time: 1 minute. Buttons expire in 12 hours.")
     image_path = path.with_suffix(".png")
     card(image_path, state["draft"])

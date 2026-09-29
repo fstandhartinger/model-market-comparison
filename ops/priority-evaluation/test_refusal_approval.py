@@ -1,5 +1,7 @@
 """Inert tests of exact draft authorization; no Telegram, mail, or production DB."""
 import copy
+import importlib.machinery
+import importlib.util
 import json
 from pathlib import Path
 import sqlite3
@@ -153,6 +155,23 @@ class ApprovalTests(unittest.TestCase):
         self.assertEqual(state["created_at"], NOW)
         approval.apply_callbacks(state, [click()], NOW + 0.9)
         self.assertEqual(state["decision"], "send")
+
+    def test_caption_passes_actual_shared_notify_formatter(self):
+        notify_path=Path.home()/'bin/notify'
+        if not notify_path.exists():self.skipTest('Sandy notification formatter unavailable')
+        loader=importlib.machinery.SourceFileLoader('refusal_notify_format_test',str(notify_path))
+        spec=importlib.util.spec_from_loader(loader.name,loader)
+        module=importlib.util.module_from_spec(spec);loader.exec_module(module)
+        state=prepared()
+        with patch.object(approval, "HOME", self.root), patch.object(approval, "telegram_config", return_value=("dummy", 456)), \
+             patch.object(approval, "card"), patch.object(approval.subprocess, "run", side_effect=[Mock(stdout=b"No matching entries."), Mock(returncode=0,stdout="message would be queued")]) as run:
+            (self.root / "DECISIONS.md").write_text("fixture")
+            approval.notify_card(state,self.path,NOW)
+        caption=run.call_args.kwargs['input']
+        parsed=module.validate_format(caption,'now')
+        self.assertEqual(len(parsed),1)
+        self.assertEqual(len(parsed[0]['steps']),2)
+        self.assertLessEqual(len(caption),500)
 
     def test_unread_board_entry_blocks_ask(self):
         state = prepared()

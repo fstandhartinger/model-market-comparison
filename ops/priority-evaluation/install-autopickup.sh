@@ -44,7 +44,7 @@ for benchmark in ('jevbench', 'imagejevbench'):
 print('Official scorer/reference pins verified')
 VERIFY_PROFILES
 # Apply the repository's idempotent schema before either worker can see new columns.
-psql -X -q -v ON_ERROR_STOP=1 -d benchmarkheaven_accounts -f "$REPO_ROOT/db/accounts/001_init.sql" >/dev/null
+psql -X -q --single-transaction -v ON_ERROR_STOP=1 -d benchmarkheaven_accounts -f "$REPO_ROOT/db/accounts/001_init.sql" >/dev/null
 install -m 700 "$SRC/worker.py" "$BIN/jevbench-priority-worker.py"
 ln -sfn "$SHARE/runtime/autopickup.py" "$BIN/jevbench-autopickup.py"
 install -m 644 "$SRC/jevbench-priority-worker.service" "$UNITS/jevbench-priority-worker.service"
@@ -90,7 +90,7 @@ state.setdefault("jobs", {})["fastlane-autopickup"] = {
     "want": True,
     "why": ("Florian 29 Sep 2026: new paid fast-lane orders run fully autonomously (payment time, "
             "confirmation, owner handoff, evaluation, PR + bh-merge-queue release, result mail, "
-            "@airesearch12 post only on a top-five change). 15-minute pickup + 4 daily sweeps; "
+            "@airesearch12 post only on a top-five change). 5-minute pickup + 4 daily sweeps; "
             "24/36 h alerts and automatic refund 48 h after payment. Kill switch: "
             "~/.local/state/fastlane-autopickup/KILL."),
     "unit": "jevbench-priority-autopickup.timer + jevbench-priority-autopickup-health.timer",
