@@ -18981,3 +18981,33 @@ Logs in `iter270-d254/`.
    R9.1's two arms under the written-permission hold, and the Coolify host alias (patched, not fixed).
 
 **`ALL-ACCEPTED` is not appended.**
+
+## Review gate 20260929T001003Z — codex-luna
+
+Scope: previous gate `REVIEW-20260927T194003Z.md` through deployed `7b2123e`; current review evidence is in `/opt/benchmarkheaven/state/ux-evidence/review-20260929T001003Z/`. The main dataset/test/typecheck/registry gates pass. The live review found F-222 and F-223 outside their exact layout budgets; small spacing fixes are in the review branch, not deployed. X6 fails; no acceptance marker was added.
+
+| ID | Status after this gate | Evidence | Reason / note |
+|---|---|---|---|
+| F-212–F-215 | verified | `fable40-{canonical,www,legacy}/verification.json`, 136/136 per host | Rechecked desktop/mobile, light/dark. |
+| F-218 | verified | `fable41-{canonical,www,legacy}-corrected-final/verification.json`, 49/49 per host | Corrected current-route/hash checks pass. Explicit brand asset paths return 200; the root favicon fallback still needs a live check after this branch publishes. |
+| F-221 | verified | `fable42-design-{canonical,www,legacy}-final/verification.json` | All F-221 checks pass on the deployed revision. |
+| F-222 | verified → **open** | same F-222 receipts; `fable42-design-local-fix/verification.json` | Live first Capability row starts at 767 px on mobile light/dark (limit 760); local spacing fix measures 759 px but is not deployed. |
+| F-226 | verified | same F-226 receipts | All F-226 checks pass on the deployed revision. |
+| F-223 | implemented → **open** | `fable42-directed-{canonical,www,legacy}-final/verification.json`; `fable42-directed-local-fix/verification.json` | Live desktop height is 18,512 px (limit 18,500); local spacing fix measures 18,492 px but is not deployed. |
+| F-224 | implemented → **verified** | directed receipts, F-224 group | All F-224 checks pass on all three hosts, four contexts. |
+| F-225 | implemented → **verified** | directed receipts, F-225 group | All F-225 checks pass on all three hosts, four contexts. |
+| Image JevBench v0.1.3 | verified | `imagejev-{canonical,www,legacy}/verification.json`, 32/32 per host | Four contexts; 49 rows; Imajev-4B #1; no overflow. Artifact SHA-256 `539b78d92a1fe4d1c7bb0719ceba3e7e5525cfa6017635d0898bf670cc04397a`. |
+| D248 | verified | `d248-{canonical,www,legacy}/verification.json`, 51/51 per host | Rechecked current routing-row merge. |
+| D250 | verified | `d250-{canonical,www,legacy}/verification.json`, 36/36 per host | Rechecked live. |
+| D251.2 / D251.4 | implemented; scheduled-run acceptance open | `d251-2-{canonical,www,legacy}/verification.json`, 26/26 per host | Live claim checks pass; 05:17 behavioral acceptance has not run. |
+| D251.3 | implemented; scheduled-run acceptance open | `d251-3-{canonical,www,legacy}/verification.json`, 27/27 per host | Live claim checks pass; 05:17 behavioral acceptance has not run. |
+| D252 / D253 | existing verified checks re-confirmed; owner decision remains open | `d252-d253-{canonical,www,legacy}/verification.json`, 53/53 per host | The verifier passes; D253.2's owner-set comparison threshold remains open. |
+| D254 | implemented → **open pending live acceptance** | `iter270-d254/live-before/verification.json`; `test/d254-model-answer-failures.test.mjs` | The current pre-fix live baseline is not acceptance; the required 05:17 run is still in the future. |
+| D254.1 | open | `iter270-d254/pool-census.json` | Choosing a third critic family requires an owner policy decision. |
+| CR-190.1 | open | `cr190/verification.json`, 63/63; registry and scores artifacts | Live surface passes; D243 has zero joins and no supported per-run cost. |
+| R9.1 | open | `api-meta-hosts.jsonl`, `api-meta-full.json` | `aa_coding_agents` (2026-09-09) and `openrouter_aa_relay` (2026-09-18) remain under written-permission hold. |
+| X5 | verified → **open pending non-implementer verification** | this review branch's `API.md`, `CHANGELOG.md`, `MSG-UPSTREAM-SYNC-PROMPT.md`; API receipts | Current v1.5.0/v0.1.3 docs and hashes were corrected by this gate; independent review is still required. |
+| X6 | open | this review and the unresolved rows above | The line-by-line audit fails while any requirement/CR row remains open; 04 requires every CR row verified. |
+| X7 | verified | Telegram message 15794 (`~/bin/notify now --requested`, 2026-09-29 01:30 UTC) | Short German completion note sent with the commit/PR, first review files, F-222/F-223 status and the recorded R4.4/R4.10/R5.2 interpretations. |
+
+`node scripts/build-dataset.mjs`, `CI=true npm test` (1,643 pass / 0 fail / 1 skip), `npx tsc --noEmit -p .`, registry validation and `git diff --check` pass. No `ALL-ACCEPTED` line was appended.

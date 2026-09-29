@@ -39,7 +39,7 @@ export function JevHistoryLazy() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <details id="jev13-history" open={open} className="bh-panel mt-10 max-w-5xl scroll-mt-6 p-5" data-bh-jev13-history onToggle={(event) => { setOpen(event.currentTarget.open); if (event.currentTarget.open) void load(); }}>
+  return <details id="jev13-history" open={open} className="bh-panel mt-7 max-w-5xl scroll-mt-6 p-5" data-bh-jev13-history onToggle={(event) => { setOpen(event.currentTarget.open); if (event.currentTarget.open) void load(); }}>
     <summary className="cursor-pointer text-sm font-semibold">Historical v1.3.0 board: weightings, per-task grid, topic radars and held-out diagnostics</summary>
     <div className="mt-5">
       {!payload && !loading && !error && <p className="bh-muted max-w-4xl text-sm">Open this section to load the earlier public-only board and diagnostics.</p>}

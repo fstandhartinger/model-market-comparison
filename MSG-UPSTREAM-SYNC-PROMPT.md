@@ -50,21 +50,29 @@ collection recipe and provenance files with the data sync.
 
 Do this:
 
-### JevBench and Image JevBench release data (2026-09-27)
+### JevBench and Image JevBench release data (updated 2026-09-29)
 
-The current JevBench board at `/jev-models` uses v1.4.2.2. Preserve both version-pinned
-result artifacts and their family supplements under
+The current JevBench board at `/jev-models` uses v1.5.0 (100 roster systems, 89 ranked).
+Preserve its exact result artifact at
+`data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.0-results.json` (SHA-256
+`6b2f6b058b36203c98ec5f585eb8376038bc905f11db944f4e0bcd29c278c643`) and the frozen
+`/jev-models/v1.5.0` page. Its read-only API is `GET /api/jevbench/v1.5.0`, with the
+artifact hash in `X-Content-SHA256`; it has no separate family-supplement route.
+
+Also preserve both version-pinned v1.4.2.1 and v1.4.2.2 result artifacts and their family supplements under
 `data/raw/benchmarks/jevbench/v1.4.2.1/` and `v1.4.2.2/`; v1.4.2.1 is a frozen
-90-ranked-system release and v1.4.2.2 is the current 91-ranked-system release. Their
-read-only APIs are documented in `API.md`: each results route has a `/families` companion
-and an `X-Content-SHA256` response header. Keep the separate frozen pages at
-`/jev-models/v1.4.2.1` and `/jev-models/v1.4.2.2`.
+90-ranked-system release and v1.4.2.2 is a frozen 91-ranked-system release. Their
+read-only APIs have `/families` companions and an `X-Content-SHA256` response header.
+Keep the frozen pages at `/jev-models/v1.4.2.1` and `/jev-models/v1.4.2.2`.
 
-Image JevBench's current page is `/image-jev-bench` (v0.1.2). Preserve its aggregate
-artifact at `data/raw/benchmarks/jevbench/multimodal-preview/preview.json` and the previous
-v0.1.1 artifact at `preview-v0.1.1.json`. There is no separate public JSON API for this
-benchmark. These artifacts and pages contain system-level aggregates only; do not copy or
-publish sealed images, tasks, answer keys or per-item predictions.
+Image JevBench's current page is `/image-jev-bench` (v0.1.3, 49 systems; Imajev-4B is #1
+at 76.39). Preserve its aggregate artifact at
+`data/raw/benchmarks/jevbench/multimodal-preview/preview.json` (SHA-256
+`539b78d92a1fe4d1c7bb0719ceba3e7e5525cfa6017635d0898bf670cc04397a`) and the previous
+v0.1.2 and v0.1.1 artifacts at `preview-v0.1.2.json` and `preview-v0.1.1.json`. There is
+no separate public JSON API for this benchmark. These artifacts and pages contain
+system-level aggregates only; do not copy or publish sealed images, tasks, answer keys or
+per-item predictions.
 
 1. **Add upstream + fetch.**
    ```bash

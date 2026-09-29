@@ -73,10 +73,10 @@ export async function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '
         {live ? `Release ${artifact.revision}` : 'Frozen release'} · {artifact.sample.total.toLocaleString('en-US')} decisions per system ({artifact.sample.open} open + {artifact.sample.sealed} sealed; sealed decisions are half of Intelligence) · {artifact.n_ranked} ranked of {artifact.roster_count} roster systems · only system-level sealed aggregates are published ·{' '}
         <a className="text-accent underline" href="/api/jevbench/v1.5.0">aggregate results JSON</a> sha256 <Sha v={sha256} />
       </p>
-      <p className="mt-3 max-w-3xl text-sm" data-bh-image-jev-link-row>
+      <p className="mt-2 max-w-3xl text-sm" data-bh-image-jev-link-row>
         Making decisions from images? <a className="text-accent font-semibold underline" href="/image-jev-bench" data-bh-image-jev-link>Explore Image JevBench v0.1.3 and compare its systems</a>.
       </p>
-      <p className="mt-3 max-w-3xl text-sm" data-bh-jev-version-share-row>
+      <p className="mt-2 max-w-3xl text-sm" data-bh-jev-version-share-row>
         <a className="text-accent underline" href={versionPath} data-bh-jev-version-share>Share this version</a>
         {!live && <span className="bh-muted"> · <a className="text-accent underline" href="/jev-models" data-bh-jev-live-link>View live board</a></span>}
         <span className="bh-muted"> · Previous release: <a className="text-accent underline" href="/jev-models/v1.4.2.2">JevBench v1.4.2.2</a></span>
