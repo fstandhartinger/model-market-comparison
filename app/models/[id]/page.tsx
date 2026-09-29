@@ -36,11 +36,19 @@ function catalogPercentile(values: number[], value: number | null): number | nul
 
 export const dynamic = "force-dynamic";
 
+// F-228 (Fable pass 43): an exact id, a family key, or a variant id whose variant has left the data while its family is still here —
+// a launch-day "::default" row gains real variants a day later, and the link shared on launch day must not 404.
+function findModel<T extends { id: string; family_key: string }>(models: T[], raw: string): T | undefined {
+  const id = decodeURIComponent(raw);
+  const family = id.split("::")[0];
+  return models.find((m) => m.id === id || m.family_key === id) ?? (family !== id ? models.find((m) => m.family_key === family) : undefined);
+}
+
 // CR-62.2: each model page previews as itself.
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
   const ds = await getDataset();
-  const model = ds.models.find((m) => m.id === decodeURIComponent(id) || m.family_key === decodeURIComponent(id));
+  const model = findModel(ds.models, id);
   if (!model) return { title: "Model not found" };
   return previewMetadata({ path: `/models/${encodeURIComponent(model.id)}`, documentTitle: `${model.display_name} — benchmarks & cost`, title: `${model.display_name} — Benchmark Heaven`,
     description: `${model.display_name} by ${model.org}: every benchmark result with its source, and what it actually costs per task across providers.` });
@@ -50,7 +58,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
   const { id } = await params;
   const ds = await getDataset();
   const data = clientData(ds, {}, await compositeBenchmaxxingSignals()); // CR-74.4
-  const model = ds.models.find((m) => m.id === decodeURIComponent(id) || m.family_key === decodeURIComponent(id));
+  const model = findModel(ds.models, id);
   if (!model) notFound();
 
   const variants = ds.models
