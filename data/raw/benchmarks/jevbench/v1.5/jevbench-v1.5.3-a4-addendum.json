@@ -1,0 +1,1545 @@
+{
+  "schema": "jevbench-v15-addendum-rows-1",
+  "source_aggregate_sha256": {
+    "r27": "8bb335c0515c2d6e8542073c02df65155c06618bb5aacd7fd966ee9cc5bff10e",
+    "r30": "d0a2f72ae9176a255acb3e34f7bd3aa2d90891aba0fb8d8dbbeca91453ab1ae3"
+  },
+  "independent_recompute_sha256": "0c3bde7cb7d457c074d9cf6b5c924f0dd2c2efb6f9067d0ba403c6f72848060e",
+  "release_base_listing_adoption": {
+    "absolute_delta": 0.0,
+    "adopted_by": "allout-jevbench-addendum-20260929 release owner",
+    "base_model": "jhu-clsp/mmBERT-base",
+    "candidate_usd_per_1000": 0.003933940886699508,
+    "classification": "unlisted in frozen snapshots",
+    "comparable": "deepinfra:BAAI/bge-m3",
+    "floored_usd_per_1000": 0.003933940886699508,
+    "frozen_modules_modified": false,
+    "no_match": {
+      "deepinfra": [],
+      "openrouter": []
+    },
+    "snapshot_counts": {
+      "deepinfra": 383,
+      "openrouter": 458
+    }
+  },
+  "rows": [
+    {
+      "key": "bev-bonsai-27b",
+      "display": "Bev / Bonsai 27B",
+      "author": "Reza Sayar",
+      "repo": "https://huggingface.co/Reza2kn/Bev",
+      "class": "system-one-open",
+      "licence": "Not independently recorded",
+      "open": "yes",
+      "underlying": "Reza2kn/Bev @ f01edf952e3f2da8147aa08ec6d6229c863d5d19. Unchanged Prism ML Ternary-Bonsai-2-27B PQ2_0 quantization of Qwen3.8-27B, with selected-token readout; not a fine-tune. GGUF SHA-256 3907dc1658db1f78a9826bf8d5bcb8dc65db0d466388937af57f2294fae62ec1. H100; CUDA backend compiled from the author-pinned source 9a9394a895b96003ca842a6041cb28ac49a108f7 with the author patch, rather than their prebuilt binary. The wire shim drops noul criteria because the submitted schema rejects them; that loses option descriptions for noul.",
+      "addendum": {
+        "id": "A4",
+        "release": "v1.5",
+        "label": "v1.5 roster addendum A4"
+      },
+      "endpoint_kind": "gpu",
+      "endpoint_condition": "evaluator-owned H100 GPU",
+      "gpu": "H100",
+      "api_flag": false,
+      "api_exposure_note": null,
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "full_coverage": true,
+      "support": {
+        "choice": "native",
+        "noul": "native",
+        "score": "native"
+      },
+      "axes": {
+        "calibration": 77.68300841021404,
+        "cost": 28.231834531826323,
+        "intelligence": 53.07961797733752,
+        "speed": 72.73203087877548
+      },
+      "scores": {
+        "A": 15.76679073032579,
+        "B": 15.985139309893963,
+        "C": 12.339466396153052
+      },
+      "views": {
+        "Balanced 33:33:33": 14.063337300172195,
+        "Emphasis on Accuracy 60:20:20": 15.082679507174351,
+        "Emphasis on Cost 20:20:60": 11.480395704067952,
+        "Emphasis on Speed 20:60:20": 16.690477334623086,
+        "Intelligence only": 16.922556770880934
+      },
+      "composite_ci95": {
+        "A": [
+          15.13110809633317,
+          16.04616413792168
+        ],
+        "B": [
+          15.196436261253575,
+          16.412086843884516
+        ],
+        "C": [
+          10.507713955786926,
+          14.308972050624499
+        ]
+      },
+      "jevbench_score": 15.76679073032579,
+      "intelligence": {
+        "I_open": 48.70342036973206,
+        "I_sealed": 57.45581558494299,
+        "base": 53.07961797733752,
+        "gap": -8.752395215210932,
+        "excess": -13.939022715290175,
+        "penalty": 1.0,
+        "per_type_split": {
+          "open|choice": {
+            "cc": 74.10904291712107,
+            "n": {
+              "easy": 72,
+              "hard": 169,
+              "judge": 114,
+              "standard": 84
+            },
+            "tiers": {
+              "easy": 94.57340970756708,
+              "hard": 52.21308264786526,
+              "judge": 92.73858921161826,
+              "standard": 79.7244606186639
+            }
+          },
+          "open|noul": {
+            "cc": 4.2906945561812835,
+            "n": {
+              "easy": 34,
+              "hard": 113,
+              "judge": 102,
+              "standard": 66
+            },
+            "tiers": {
+              "easy": 64.70588235294117,
+              "hard": -4.424778761061942,
+              "judge": -21.568627450980394,
+              "standard": 30.303030303030297
+            }
+          },
+          "open|score": {
+            "cc": 67.71052363589384,
+            "n": {
+              "easy": 16,
+              "hard": 50,
+              "judge": 34,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 34.62594304706389,
+              "hard": 66.10009875133802,
+              "judge": 72.50055118261103,
+              "standard": 80.28862237934466
+            }
+          },
+          "sealed|choice": {
+            "cc": 76.26708198929727,
+            "n": {
+              "easy": 50,
+              "hard": 108,
+              "judge": 101,
+              "standard": 101
+            },
+            "tiers": {
+              "easy": 94.140625,
+              "hard": 70.83839611178615,
+              "judge": 73.49823321554771,
+              "standard": 82.34095539959247
+            }
+          },
+          "sealed|noul": {
+            "cc": 29.490909090909092,
+            "n": {
+              "easy": 25,
+              "hard": 55,
+              "judge": 50,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 76.0,
+              "hard": 12.72727272727272,
+              "judge": 48.0,
+              "standard": 12.00000000000001
+            }
+          },
+          "sealed|score": {
+            "cc": 66.60945567462261,
+            "n": {
+              "easy": 25,
+              "hard": 55,
+              "judge": 50,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 80.42544656099223,
+              "hard": 64.7448867723984,
+              "judge": 62.52545185937295,
+              "standard": 69.55660375876072
+            }
+          }
+        }
+      },
+      "validity": {
+        "choice": {
+          "invalid_rate": 0.0,
+          "n": 799
+        },
+        "noul": {
+          "invalid_rate": 0.0,
+          "n": 495
+        },
+        "score": {
+          "invalid_rate": 0.0,
+          "n": 330
+        }
+      },
+      "calibration": {
+        "score": 77.68300841021404,
+        "parts": {
+          "choice": {
+            "ece_hard": 0.11074115762490726,
+            "ece_score": 77.85176847501855,
+            "mean_tvd": 0.3026939289901451,
+            "n": 799,
+            "n_ece_hard": 277,
+            "n_tvd": 50,
+            "score": 73.79118778800202
+          },
+          "noul": {
+            "abstention_rate": 0.33131313131313134,
+            "brier": 0.1532148615040574,
+            "ece": 0.14379474902433848,
+            "n": 495,
+            "score": 71.2410501951323
+          },
+          "score": {
+            "interval90_coverage": 0.9484848484848485,
+            "interval90_width": 0.37929292929292907,
+            "n": 330,
+            "nrps": 0.08475583626209313,
+            "score": 88.0167872475078,
+            "top_ece": 0.07745420939387523
+          }
+        }
+      },
+      "speed": {
+        "p50_s_raw": 1.0203800285235047,
+        "p95_s_raw": 1.1416680468188134,
+        "p50_s_adjusted": 2.1907600570470094,
+        "p95_s_adjusted": 2.4333360936376267,
+        "n": 450,
+        "adjustment": "x2 + 0.15 s (assumption, not measured)"
+      },
+      "cost": {
+        "kind": "estimate",
+        "usd_per_1000": 0.2467585344827586,
+        "basis": "ESTIMATE: documented hosted-model estimate. Frozen market reference qwen/qwen3.8-27b."
+      },
+      "rank": null,
+      "ranks": {
+        "A": null,
+        "B": null,
+        "C": null
+      },
+      "ranked": true,
+      "listing": "ranked",
+      "not_ranked_because": null,
+      "provenance": {
+        "result_sha256": "8bb335c0515c2d6e8542073c02df65155c06618bb5aacd7fd966ee9cc5bff10e",
+        "raw_sha256": "374b491982e884a902786a9e3d75eff0afcee984fb9cbca23883a09d476b475e",
+        "meta_sha256": "2771d6102b79fcc3fb756ffe83b95468055d443db9f18f27c611b5ebbf834921",
+        "spec_sha256": "c46f41838f91aeb618bb84b2877a78cd43c3ba1fe075693a83590af0e3045de0",
+        "revision": "f01edf952e3f2da8147aa08ec6d6229c863d5d19"
+      }
+    },
+    {
+      "key": "deem-0.8-v1",
+      "display": "Deem 0.8B v1",
+      "author": "LibertAI",
+      "repo": "https://huggingface.co/LibertAIDAI/deem-0.8-v1",
+      "class": "system-one-open",
+      "licence": "Not independently recorded",
+      "open": "yes",
+      "underlying": "LibertAIDAI/deem-0.8-v1 @ 8cbabbb2c4a7ef13c6b43f0ef3ae4157983c6d21; root model.safetensors SHA-256 80438125177c0681e855158d46720cbbd4ff07ea620cd55b0f456aafbfcf778d. Author Python GPU server, default DEEM_N_ORDERS=1, raw softmax (temperature 1.0). A four-field shim translates the wire format. The submitted interface accepts choice labels without descriptions and noul instructions without criteria; score receives full level descriptions. The author Rust/AVX-512 latency claim was not measured.",
+      "addendum": {
+        "id": "A4",
+        "release": "v1.5",
+        "label": "v1.5 roster addendum A4"
+      },
+      "endpoint_kind": "gpu",
+      "endpoint_condition": "evaluator-owned H100 GPU",
+      "gpu": "H100",
+      "api_flag": false,
+      "api_exposure_note": null,
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "full_coverage": true,
+      "support": {
+        "choice": "native",
+        "noul": "native",
+        "score": "native"
+      },
+      "axes": {
+        "calibration": 38.88308141545836,
+        "cost": 80.28784730320886,
+        "intelligence": 13.018560520368553,
+        "speed": 84.31592206067447
+      },
+      "scores": {
+        "A": 2.1377954147719667,
+        "B": 1.6643688711130227,
+        "C": 1.4845801491471993
+      },
+      "views": {
+        "Balanced 33:33:33": 2.0110948003022258,
+        "Emphasis on Accuracy 60:20:20": 1.330553214727523,
+        "Emphasis on Cost 20:20:60": 2.6893700756428167,
+        "Emphasis on Speed 20:60:20": 2.7150050800655516,
+        "Intelligence only": 0.8825694501778247
+      },
+      "composite_ci95": {
+        "A": [
+          0.9013827541388953,
+          4.339998581049578
+        ],
+        "B": [
+          0.6749277570554943,
+          3.509628387319667
+        ],
+        "C": [
+          0.6259602459297883,
+          3.0138879035066504
+        ]
+      },
+      "jevbench_score": 2.1377954147719667,
+      "intelligence": {
+        "I_open": 24.68504180710586,
+        "I_sealed": 3.588493488177514,
+        "base": 14.136767647641687,
+        "gap": 21.09654831892835,
+        "excess": 15.909920818849105,
+        "penalty": 0.920900791811509,
+        "per_type_split": {
+          "open|choice": {
+            "cc": 28.484893379182306,
+            "n": {
+              "easy": 72,
+              "hard": 169,
+              "judge": 114,
+              "standard": 84
+            },
+            "tiers": {
+              "easy": 78.29363883026832,
+              "hard": 15.393654524089289,
+              "judge": 17.012448132780097,
+              "standard": 46.97166623342864
+            }
+          },
+          "open|noul": {
+            "cc": 7.674506648999101,
+            "n": {
+              "easy": 34,
+              "hard": 113,
+              "judge": 102,
+              "standard": 66
+            },
+            "tiers": {
+              "easy": 70.58823529411764,
+              "hard": -22.123893805309734,
+              "judge": 25.49019607843137,
+              "standard": 9.090909090909083
+            }
+          },
+          "open|score": {
+            "cc": 37.895725393136175,
+            "n": {
+              "easy": 16,
+              "hard": 50,
+              "judge": 34,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 13.463015866927375,
+              "hard": 38.578482232475906,
+              "judge": 37.60005408849165,
+              "standard": 49.19007343452789
+            }
+          },
+          "sealed|choice": {
+            "cc": 19.54194981480656,
+            "n": {
+              "easy": 50,
+              "hard": 108,
+              "judge": 101,
+              "standard": 101
+            },
+            "tiers": {
+              "easy": 50.1953125,
+              "hard": 8.869987849331737,
+              "judge": 15.194346289752657,
+              "standard": 32.08059769074034
+            }
+          },
+          "sealed|noul": {
+            "cc": -28.727272727272727,
+            "n": {
+              "easy": 25,
+              "hard": 55,
+              "judge": 50,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": -19.999999999999996,
+              "hard": -41.81818181818182,
+              "judge": -12.0,
+              "standard": -31.999999999999996
+            }
+          },
+          "sealed|score": {
+            "cc": 19.950803376998707,
+            "n": {
+              "easy": 25,
+              "hard": 55,
+              "judge": 50,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 33.36950139400526,
+              "hard": 15.402382192743858,
+              "judge": 18.11072926542714,
+              "standard": 25.098407904362485
+            }
+          }
+        }
+      },
+      "validity": {
+        "choice": {
+          "invalid_rate": 0.0,
+          "n": 799
+        },
+        "noul": {
+          "invalid_rate": 0.0,
+          "n": 495
+        },
+        "score": {
+          "invalid_rate": 0.0,
+          "n": 330
+        }
+      },
+      "calibration": {
+        "score": 38.88308141545836,
+        "parts": {
+          "choice": {
+            "ece_hard": 0.4730603088757785,
+            "ece_score": 5.3879382248443015,
+            "mean_tvd": 0.4105312779462238,
+            "n": 799,
+            "n_ece_hard": 277,
+            "n_tvd": 50,
+            "score": 32.16740521511096
+          },
+          "noul": {
+            "abstention_rate": 0.18585858585858583,
+            "brier": 0.34734312788526955,
+            "ece": 0.33055020477253005,
+            "n": 495,
+            "score": 33.88995904549399
+          },
+          "score": {
+            "interval90_coverage": 0.7484848484848485,
+            "interval90_width": 0.5409090909090909,
+            "n": 330,
+            "nrps": 0.2192114941535248,
+            "score": 50.591879985770156,
+            "top_ece": 0.384475453065536
+          }
+        }
+      },
+      "speed": {
+        "p50_s_raw": 0.17555958102457225,
+        "p95_s_raw": 0.2943488817138131,
+        "p50_s_adjusted": 0.5011191620491445,
+        "p95_s_adjusted": 0.7386977634276263,
+        "n": 450,
+        "adjustment": "x2 + 0.15 s (assumption, not measured)"
+      },
+      "cost": {
+        "kind": "estimate",
+        "usd_per_1000": 0.004540166256157636,
+        "basis": "ESTIMATE: documented hosted-model estimate. Frozen market reference deepinfra:Qwen/Qwen3.5-0.8B."
+      },
+      "rank": null,
+      "ranks": {
+        "A": null,
+        "B": null,
+        "C": null
+      },
+      "ranked": true,
+      "listing": "ranked",
+      "not_ranked_because": null,
+      "provenance": {
+        "result_sha256": "8bb335c0515c2d6e8542073c02df65155c06618bb5aacd7fd966ee9cc5bff10e",
+        "raw_sha256": "5b7854c31f520580f79febae3afc038086af0b901ad60f1eaf9e870353235767",
+        "meta_sha256": "44fe2459fb4ec4e9bc55a34a17784cdf76ac86cb24d3f72a243e8decaf843659",
+        "spec_sha256": "c46f41838f91aeb618bb84b2877a78cd43c3ba1fe075693a83590af0e3045de0",
+        "revision": "8cbabbb2c4a7ef13c6b43f0ef3ae4157983c6d21"
+      }
+    },
+    {
+      "key": "evalengine-decision-4b",
+      "display": "Decision-4B (Eval Engine / Chromia)",
+      "author": "Eval Engine / Chromia",
+      "repo": "https://huggingface.co/evalengine/decision-4b",
+      "class": "system-one-open",
+      "licence": "Not independently recorded",
+      "open": "yes",
+      "underlying": "Eval Engine / Chromia; unrelated to FlyMyJev Decision-4B. Adapter @ facac5a59ae44c94edc8d75e135a4fd278c85dc9; author GGUF @ 08859d1d8307f7b7ea452549e303b7805c35e350, Q8_0 SHA-256 f2519bcdc945291974c81a37ff92417b22df27154c9df2564420d08576b907ce. Our H100 llama.cpp evaluator used a 2,048-token context setting based on the model card, not a submitted server limit. 74 items overflowed (69 open/hard, 2 open/judge, 1 sealed/judge, 2 sealed/hard). This is incomplete evidence: no official score, axis comparison or rank is published.",
+      "addendum": {
+        "id": "A4",
+        "release": "v1.5",
+        "label": "v1.5 roster addendum A4"
+      },
+      "endpoint_kind": "gpu",
+      "endpoint_condition": "evaluator-owned H100 GPU",
+      "gpu": "H100",
+      "api_flag": false,
+      "api_exposure_note": null,
+      "status": {
+        "answered_ok": 1550,
+        "missing": 0,
+        "reason": "PREREG-R23 \u00a76 as amended: 1550 of 1624 valid, 0 missing, 74 x 422, 74 not HTTP 200 - shown, not ranked",
+        "rows": 1624,
+        "status": "partial"
+      },
+      "full_coverage": false,
+      "support": {
+        "choice": "native",
+        "noul": "native",
+        "score": "native"
+      },
+      "axes": {
+        "calibration": null,
+        "cost": null,
+        "intelligence": null,
+        "speed": null
+      },
+      "scores": {
+        "A": null,
+        "B": null,
+        "C": null
+      },
+      "views": {},
+      "composite_ci95": null,
+      "jevbench_score": null,
+      "intelligence": null,
+      "validity": {
+        "choice": {
+          "invalid_rate": 0.06633291614518144,
+          "n": 799
+        },
+        "noul": {
+          "invalid_rate": 0.03232323232323231,
+          "n": 495
+        },
+        "score": {
+          "invalid_rate": 0.015151515151515138,
+          "n": 330
+        }
+      },
+      "calibration": {
+        "score": null,
+        "parts": {}
+      },
+      "speed": {
+        "p50_s_raw": 0.04159021802479401,
+        "p95_s_raw": 0.11431500643957394,
+        "p50_s_adjusted": 0.23318043604958802,
+        "p95_s_adjusted": 0.3786300128791479,
+        "n": 450,
+        "adjustment": "x2 + 0.15 s (assumption, not measured)"
+      },
+      "cost": {
+        "kind": "estimate",
+        "usd_per_1000": 0.013721693349753695,
+        "basis": "ESTIMATE: documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, already marked deprecated at that cutoff (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3). Frozen market reference deepinfra:Qwen/Qwen3.5-4B."
+      },
+      "rank": null,
+      "ranks": {
+        "A": null,
+        "B": null,
+        "C": null
+      },
+      "ranked": false,
+      "listing": "unranked",
+      "not_ranked_because": "PARTIAL / UNRANKED: 1,550 of 1,624 valid answers; 74 context overflows in our evaluator at 2,048 tokens. No official score or rank.",
+      "provenance": {
+        "result_sha256": "8bb335c0515c2d6e8542073c02df65155c06618bb5aacd7fd966ee9cc5bff10e",
+        "raw_sha256": "8d9763030aa2b6b32c9ac751ac9f8006ac148e8a607b3394e34dd538ef5b1f5e",
+        "meta_sha256": "313d671ee2c8a66027bca01d35dbda9cd656901fa37b22cd3de22f0dfb3ade7b",
+        "spec_sha256": "c46f41838f91aeb618bb84b2877a78cd43c3ba1fe075693a83590af0e3045de0",
+        "revision": "08859d1d8307f7b7ea452549e303b7805c35e350 (GGUF); adapter facac5a59ae44c94edc8d75e135a4fd278c85dc9"
+      }
+    },
+    {
+      "key": "instinct-dual-4b",
+      "display": "Instinct Dual 4B",
+      "author": "ZooWork / pierre-srp",
+      "repo": "https://github.com/fstandhartinger/jevbench/issues/123",
+      "class": "decision-api",
+      "licence": "Not independently recorded",
+      "open": "no",
+      "underlying": "Operator-hosted free-preview demo measured 27/28 Sep 2026. No immutable model artifact is externally verifiable; the pin is endpoint/model ID instinct-dual-4b on the measurement date. Operator reports Qwen3.5-4B, two option-order probability passes, no weight training and zero generated tokens; these architecture claims are self-reported. The author disclosed selecting the method using all 231 published items. ZooWork had already received all 720 sealed item texts in an earlier evaluation; no labels were supplied. Costs use the frozen exact-base reference estimate, not the announced $0.01/M tariff. Latency uses the frozen demo adjustment (2x).",
+      "addendum": {
+        "id": "A4",
+        "release": "v1.5",
+        "label": "v1.5 roster addendum A4"
+      },
+      "endpoint_kind": "demo",
+      "endpoint_condition": "operator-hosted free-preview API",
+      "gpu": null,
+      "api_flag": true,
+      "api_exposure_note": "API measurement: the operator's endpoint received sealed item text, without answers.",
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "full_coverage": true,
+      "support": {
+        "choice": "native",
+        "noul": "native",
+        "score": "native"
+      },
+      "axes": {
+        "calibration": 88.30057060841276,
+        "cost": 60.18614652266257,
+        "intelligence": 43.118121336422504,
+        "speed": 81.95420185350125
+      },
+      "scores": {
+        "A": 46.96798492261902,
+        "B": 42.97361789449912,
+        "C": 32.61665619626321
+      },
+      "views": {
+        "Balanced 33:33:33": 42.89642082772045,
+        "Emphasis on Accuracy 60:20:20": 37.790602414383045,
+        "Emphasis on Cost 20:20:60": 43.622371712131404,
+        "Emphasis on Speed 20:60:20": 48.66113190680343,
+        "Intelligence only": 32.06560823724263
+      },
+      "composite_ci95": {
+        "A": [
+          37.85771956863736,
+          56.76642232869667
+        ],
+        "B": [
+          34.20382591400303,
+          52.827067159513085
+        ],
+        "C": [
+          26.290083033775943,
+          39.42112661715047
+        ]
+      },
+      "jevbench_score": 46.96798492261902,
+      "intelligence": {
+        "I_open": 46.289429515060846,
+        "I_sealed": 39.94681315778416,
+        "base": 43.118121336422504,
+        "gap": 6.3426163572766825,
+        "excess": 1.15598885719744,
+        "penalty": 1.0,
+        "per_type_split": {
+          "open|choice": {
+            "cc": 75.04626250241199,
+            "n": {
+              "easy": 72,
+              "hard": 169,
+              "judge": 114,
+              "standard": 84
+            },
+            "tiers": {
+              "easy": 94.57340970756708,
+              "hard": 52.996474735605155,
+              "judge": 92.73858921161826,
+              "standard": 82.84377436963868
+            }
+          },
+          "open|noul": {
+            "cc": 4.4097928793399905,
+            "n": {
+              "easy": 34,
+              "hard": 113,
+              "judge": 102,
+              "standard": 66
+            },
+            "tiers": {
+              "easy": 52.941176470588225,
+              "hard": -27.43362831858407,
+              "judge": 23.529411764705888,
+              "standard": 15.15151515151516
+            }
+          },
+          "open|score": {
+            "cc": 59.41223316343054,
+            "n": {
+              "easy": 16,
+              "hard": 50,
+              "judge": 34,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 41.53336290322579,
+              "hard": 59.49876522506621,
+              "judge": 55.146022280471826,
+              "standard": 74.57792049469964
+            }
+          },
+          "sealed|choice": {
+            "cc": 74.48965768027807,
+            "n": {
+              "easy": 50,
+              "hard": 108,
+              "judge": 101,
+              "standard": 101
+            },
+            "tiers": {
+              "easy": 85.3515625,
+              "hard": 75.69866342648847,
+              "judge": 72.1731448763251,
+              "standard": 70.11546298392577
+            }
+          },
+          "sealed|noul": {
+            "cc": -12.799999999999997,
+            "n": {
+              "easy": 25,
+              "hard": 55,
+              "judge": 50,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 28.000000000000004,
+              "hard": -19.999999999999996,
+              "judge": -12.0,
+              "standard": -19.999999999999996
+            }
+          },
+          "sealed|score": {
+            "cc": 58.15078179307443,
+            "n": {
+              "easy": 25,
+              "hard": 55,
+              "judge": 50,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 73.5396875,
+              "hard": 54.231996915959925,
+              "judge": 52.70050294860994,
+              "standard": 66.46931696053737
+            }
+          }
+        }
+      },
+      "validity": {
+        "choice": {
+          "invalid_rate": 0.0,
+          "n": 799
+        },
+        "noul": {
+          "invalid_rate": 0.0,
+          "n": 495
+        },
+        "score": {
+          "invalid_rate": 0.0,
+          "n": 330
+        }
+      },
+      "calibration": {
+        "score": 88.30057060841276,
+        "parts": {
+          "choice": {
+            "ece_hard": 0.04615695667870035,
+            "ece_score": 90.76860866425993,
+            "mean_tvd": 0.25991541655000167,
+            "n": 799,
+            "n_ece_hard": 277,
+            "n_tvd": 50,
+            "score": 82.38853350462988
+          },
+          "noul": {
+            "abstention_rate": 0.4626262626262626,
+            "brier": 0.1326669640208929,
+            "ece": 0.029953006060606007,
+            "n": 495,
+            "score": 94.0093987878788
+          },
+          "score": {
+            "interval90_coverage": 0.9545454545454546,
+            "interval90_width": 0.5411616161616163,
+            "n": 330,
+            "nrps": 0.09880276086055886,
+            "score": 88.50377953272962,
+            "top_ece": 0.0655608242424243
+          }
+        }
+      },
+      "speed": {
+        "p50_s_raw": 0.2529672160744667,
+        "p95_s_raw": 0.6301668915897607,
+        "p50_s_adjusted": 0.5059344321489334,
+        "p95_s_adjusted": 1.2603337831795214,
+        "n": 450,
+        "adjustment": "x2 (demo assumption, not measured)"
+      },
+      "cost": {
+        "kind": "estimate",
+        "usd_per_1000": 0.021238725369458127,
+        "basis": "ESTIMATE: ESTIMATE: exact base-model market reference (operator tariff excluded by 30-day rule); reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, already marked deprecated at that cutoff (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3). Frozen market reference deepinfra:Qwen/Qwen3.5-4B."
+      },
+      "rank": null,
+      "ranks": {
+        "A": null,
+        "B": null,
+        "C": null
+      },
+      "ranked": true,
+      "listing": "ranked",
+      "not_ranked_because": null,
+      "provenance": {
+        "result_sha256": "8bb335c0515c2d6e8542073c02df65155c06618bb5aacd7fd966ee9cc5bff10e",
+        "raw_sha256": "526dc36eebd25dbd8f57205c36706016c325afc143f39165c1d45f70022f1aab",
+        "meta_sha256": "c8ba9fbea5aee6e260834a0d352c37d1dfc51fbbfda690c2e9d8ca3afc25dddd",
+        "spec_sha256": "c743d0775b951de848167e7aee3f7a4cb1fbde3fe6e57b170bbf4ec56320cc80",
+        "revision": "operator-hosted, no artefact we can pin: the row pins the model ID instinct-dual-4b as served on 27/28 Sep 2026 and nothing more. A hosted API can change under its own name, which is exactly what the api_flag marks."
+      }
+    },
+    {
+      "key": "bosun-v31-0.6b",
+      "display": "Bosun v3.1 0.6B",
+      "author": "Clause Logic",
+      "repo": "https://huggingface.co/Hanno-Labs/bosun-v3.1-0.6b",
+      "class": "system-one-open",
+      "licence": "apache-2.0, not gated; LICENSE + NOTICE (Clause Logic Inc.) present at the pinned revision",
+      "open": "yes",
+      "underlying": "Hanno-Labs/bosun-v3.1-0.6b @ 1d8b6f9611f9b64b514ce8b57cd86398fbc31a3b; base Qwen/Qwen3-0.6B @ c1899de289a04d12100db370d81485cdf75e47ca. Author predict interface preserves candidate mapping and masking. Offline shared AMD Ryzen 5 3600 CPU, four threads; float32 instead of dtype=auto/bfloat16. This numerical precision deviation does not establish parity with bfloat16. Shared-host latency is not a controlled GPU comparison. The 1.7B sibling is not included. The public/sealed gap and frozen overfit penalty remain applied.",
+      "addendum": {
+        "id": "A4",
+        "release": "v1.5",
+        "label": "v1.5 roster addendum A4"
+      },
+      "endpoint_kind": "cpu",
+      "endpoint_condition": "evaluator-owned CPU, Sandy (AMD Ryzen 5 3600), 4 of 12 threads, nice -n 5, shared host, offline (HF_HUB_OFFLINE=1, local_files_only=True), credential-free (no API key, no HF token)",
+      "gpu": "cpu",
+      "api_flag": false,
+      "api_exposure_note": null,
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "full_coverage": true,
+      "support": {
+        "choice": "native",
+        "noul": "native",
+        "score": "native"
+      },
+      "axes": {
+        "calibration": 65.16279314945697,
+        "cost": 77.54568039374416,
+        "intelligence": 13.580986254814757,
+        "speed": 61.7605061985211
+      },
+      "scores": {
+        "A": 2.499532093665368,
+        "B": 1.92430905548223,
+        "C": 1.735786176156506
+      },
+      "views": {
+        "Balanced 33:33:33": 2.1547194317400353,
+        "Emphasis on Accuracy 60:20:20": 1.4756383679451661,
+        "Emphasis on Cost 20:20:60": 2.8704696936619025,
+        "Emphasis on Speed 20:60:20": 2.7304143064542523,
+        "Intelligence only": 1.0019681585263835
+      },
+      "composite_ci95": {
+        "A": [
+          1.1547578471662476,
+          4.5612101619915055
+        ],
+        "B": [
+          0.8546483628125978,
+          3.6350240889071226
+        ],
+        "C": [
+          0.8019151716432277,
+          3.167507056938545
+        ]
+      },
+      "jevbench_score": 2.499532093665368,
+      "intelligence": {
+        "I_open": 23.15089767511634,
+        "I_sealed": 5.330772386868677,
+        "base": 14.240835030992509,
+        "gap": 17.820125288247663,
+        "excess": 12.63349778816842,
+        "penalty": 0.9536650221183158,
+        "per_type_split": {
+          "open|choice": {
+            "cc": 33.438608526091784,
+            "n": {
+              "easy": 72,
+              "hard": 169,
+              "judge": 114,
+              "standard": 84
+            },
+            "tiers": {
+              "easy": 87.33795598432319,
+              "hard": 15.393654524089289,
+              "judge": 25.311203319502088,
+              "standard": 54.76995061086561
+            }
+          },
+          "open|noul": {
+            "cc": -4.1517202214755535,
+            "n": {
+              "easy": 34,
+              "hard": 113,
+              "judge": 102,
+              "standard": 66
+            },
+            "tiers": {
+              "easy": 41.176470588235304,
+              "hard": -38.05309734513275,
+              "judge": 35.29411764705883,
+              "standard": -18.181818181818176
+            }
+          },
+          "open|score": {
+            "cc": 40.165804720732794,
+            "n": {
+              "easy": 16,
+              "hard": 50,
+              "judge": 34,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 17.425885989678335,
+              "hard": 43.22955710870943,
+              "judge": 39.69068514075752,
+              "standard": 46.12093868026965
+            }
+          },
+          "sealed|choice": {
+            "cc": 36.694872703949954,
+            "n": {
+              "easy": 50,
+              "hard": 108,
+              "judge": 101,
+              "standard": 101
+            },
+            "tiers": {
+              "easy": 56.054687499999986,
+              "hard": 34.386391251518845,
+              "judge": 36.3957597173145,
+              "standard": 32.08059769074034
+            }
+          },
+          "sealed|noul": {
+            "cc": -57.85454545454546,
+            "n": {
+              "easy": 25,
+              "hard": 55,
+              "judge": 50,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": -60.0,
+              "hard": -63.63636363636363,
+              "judge": -56.00000000000001,
+              "standard": -48.0
+            }
+          },
+          "sealed|score": {
+            "cc": 37.15198991120153,
+            "n": {
+              "easy": 25,
+              "hard": 55,
+              "judge": 50,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 55.25627928504221,
+              "hard": 28.502836232357264,
+              "judge": 31.374185404755195,
+              "standard": 54.06485934163923
+            }
+          }
+        }
+      },
+      "validity": {
+        "choice": {
+          "invalid_rate": 0.0,
+          "n": 799
+        },
+        "noul": {
+          "invalid_rate": 0.0,
+          "n": 495
+        },
+        "score": {
+          "invalid_rate": 0.0,
+          "n": 330
+        }
+      },
+      "calibration": {
+        "score": 65.16279314945697,
+        "parts": {
+          "choice": {
+            "ece_hard": 0.253057430689946,
+            "ece_score": 49.3885138620108,
+            "mean_tvd": 0.36218237276448767,
+            "n": 799,
+            "n_ece_hard": 277,
+            "n_tvd": 50,
+            "score": 56.58513829278101
+          },
+          "noul": {
+            "abstention_rate": 0.4808080808080808,
+            "brier": 0.23519184845226973,
+            "ece": 0.15411620192003972,
+            "n": 495,
+            "score": 69.17675961599205
+          },
+          "score": {
+            "interval90_coverage": 0.8878787878787879,
+            "interval90_width": 0.6457070707070707,
+            "n": 330,
+            "nrps": 0.17405174441681068,
+            "score": 69.72648153959787,
+            "top_ece": 0.21570931239561603
+          }
+        }
+      },
+      "speed": {
+        "p50_s_raw": 1.943604987114668,
+        "p95_s_raw": 8.182299686223207,
+        "p50_s_adjusted": 4.037209974229336,
+        "p95_s_adjusted": 16.514599372446412,
+        "n": 450,
+        "adjustment": "x2 + 0.15 s (assumption, not measured)"
+      },
+      "cost": {
+        "kind": "estimate",
+        "usd_per_1000": 0.005603731527093597,
+        "basis": "ESTIMATE: documented hosted-model estimate; no exact base-model floor applies. $0.01/M input, $0/M output; same-base frozen raw-qwen3-0.6b estimate."
+      },
+      "rank": null,
+      "ranks": {
+        "A": null,
+        "B": null,
+        "C": null
+      },
+      "ranked": true,
+      "listing": "ranked",
+      "not_ranked_because": null,
+      "provenance": {
+        "result_sha256": "d0a2f72ae9176a255acb3e34f7bd3aa2d90891aba0fb8d8dbbeca91453ab1ae3",
+        "raw_sha256": "b7c3b0c7279b7571bd0dccdcf2abad6ca9bdf438091a50ee2a76272d9c4854b8",
+        "meta_sha256": "b65775d976d86bdcc4ca098192616dcbbbb750680253e7af678f645c3d4c644f",
+        "spec_sha256": "284319a64669122e8865c8d0c0f9c7357e5a1de4b4b371c647d8279b43e2159c",
+        "revision": "HF Hanno-Labs/bosun-v3.1-0.6b@1d8b6f9611f9b64b514ce8b57cd86398fbc31a3b (the submitter's immutable pin, not the branch), on Qwen/Qwen3-0.6B@c1899de289a04d12100db370d81485cdf75e47ca"
+      }
+    },
+    {
+      "key": "laya-multilingual",
+      "display": "Laya multilingual",
+      "author": "Convai Innovations",
+      "repo": "https://huggingface.co/convaiinnovations/laya/tree/1c5edc17a7acd8701df6fc341c0d179f1c62c982/multilingual",
+      "class": "system-one-open",
+      "licence": "apache-2.0, not gated",
+      "open": "yes",
+      "underlying": "convaiinnovations/laya @ 1c5edc17a7acd8701df6fc341c0d179f1c62c982, multilingual/; mmBERT-base 322M, max_len 1024. Distinct from the published English root checkpoint. Fresh run from item 1 on 29 Sep; interrupted earlier runs were not stitched. In-process, offline, shared AMD Ryzen 5 3600 CPU, four threads. Measured latency includes shared-host conditions; it is not a controlled GPU comparison. The release owner independently adopted mmBERT as unlisted in the frozen pricing snapshots; the labelled same-class encoder estimate has zero cost delta against BAAI/bge-m3.",
+      "addendum": {
+        "id": "A4",
+        "release": "v1.5",
+        "label": "v1.5 roster addendum A4"
+      },
+      "endpoint_kind": "cpu",
+      "endpoint_condition": "evaluator-owned CPU, Sandy (AMD Ryzen 5 3600), 4 of 12 threads, nice -n 5, shared host, offline (HF_HUB_OFFLINE=1)",
+      "gpu": "cpu",
+      "api_flag": false,
+      "api_exposure_note": null,
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "full_coverage": true,
+      "support": {
+        "choice": "native",
+        "noul": "native",
+        "score": "native"
+      },
+      "axes": {
+        "calibration": 43.57757174543102,
+        "cost": 82.1551651086044,
+        "intelligence": 2.3532902618156077,
+        "speed": 73.72350050572948
+      },
+      "scores": {
+        "A": 0.018708552536889286,
+        "B": 0.012326363810076901,
+        "C": 0.012992050372839787
+      },
+      "views": {
+        "Balanced 33:33:33": 0.014745872318613356,
+        "Emphasis on Accuracy 60:20:20": 0.0085163771965205,
+        "Emphasis on Cost 20:20:60": 0.023316934625311203,
+        "Emphasis on Speed 20:60:20": 0.02318106376562865,
+        "Intelligence only": 0.005212985108120288
+      },
+      "composite_ci95": {
+        "A": [
+          0.0,
+          0.27271670861130226
+        ],
+        "B": [
+          0.0,
+          0.19167140030632931
+        ],
+        "C": [
+          0.0,
+          0.18938660320229322
+        ]
+      },
+      "jevbench_score": 0.018708552536889286,
+      "intelligence": {
+        "I_open": 2.7904953113874384,
+        "I_sealed": 1.916085212243777,
+        "base": 2.3532902618156077,
+        "gap": 0.8744100991436614,
+        "excess": -4.312217400935581,
+        "penalty": 1.0,
+        "per_type_split": {
+          "open|choice": {
+            "cc": 20.060503072299763,
+            "n": {
+              "easy": 72,
+              "hard": 169,
+              "judge": 114,
+              "standard": 84
+            },
+            "tiers": {
+              "easy": 69.24932167621344,
+              "hard": -0.2741872307089941,
+              "judge": 24.273858921161843,
+              "standard": 29.815440603067323
+            }
+          },
+          "open|noul": {
+            "cc": -35.98236398340511,
+            "n": {
+              "easy": 34,
+              "hard": 113,
+              "judge": 102,
+              "standard": 66
+            },
+            "tiers": {
+              "easy": -17.647058823529417,
+              "hard": -27.43362831858407,
+              "judge": -43.13725490196079,
+              "standard": -51.515151515151516
+            }
+          },
+          "open|score": {
+            "cc": 24.293346845267664,
+            "n": {
+              "easy": 16,
+              "hard": 50,
+              "judge": 34,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 17.144470046082926,
+              "hard": 29.479964695498694,
+              "judge": 17.736238532110114,
+              "standard": 27.330212014134304
+            }
+          },
+          "sealed|choice": {
+            "cc": 9.126479517820176,
+            "n": {
+              "easy": 50,
+              "hard": 108,
+              "judge": 101,
+              "standard": 101
+            },
+            "tiers": {
+              "easy": 23.828124999999982,
+              "hard": 8.869987849331737,
+              "judge": 1.9434628975265131,
+              "standard": 13.063165044147636
+            }
+          },
+          "sealed|noul": {
+            "cc": -31.054545454545455,
+            "n": {
+              "easy": 25,
+              "hard": 55,
+              "judge": 50,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": -52.0,
+              "hard": -23.636363636363633,
+              "judge": -28.000000000000004,
+              "standard": -40.0
+            }
+          },
+          "sealed|score": {
+            "cc": 27.67632157345661,
+            "n": {
+              "easy": 25,
+              "hard": 55,
+              "judge": 50,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 38.32119565217392,
+              "hard": 25.59317656129535,
+              "judge": 21.125231676495382,
+              "standard": 36.34680940386232
+            }
+          }
+        }
+      },
+      "validity": {
+        "choice": {
+          "invalid_rate": 0.0,
+          "n": 799
+        },
+        "noul": {
+          "invalid_rate": 0.0,
+          "n": 495
+        },
+        "score": {
+          "invalid_rate": 0.0,
+          "n": 330
+        }
+      },
+      "calibration": {
+        "score": 43.57757174543102,
+        "parts": {
+          "choice": {
+            "ece_hard": 0.3898942238267147,
+            "ece_score": 22.021155234657066,
+            "mean_tvd": 0.4591341665500018,
+            "n": 799,
+            "n_ece_hard": 277,
+            "n_tvd": 50,
+            "score": 38.05386928982845
+          },
+          "noul": {
+            "abstention_rate": 0.3535353535353535,
+            "brier": 0.3725478912525254,
+            "ece": 0.3469004040404041,
+            "n": 495,
+            "score": 30.619919191919177
+          },
+          "score": {
+            "interval90_coverage": 0.8727272727272727,
+            "interval90_width": 0.7800505050505046,
+            "n": 330,
+            "nrps": 0.21161116187878792,
+            "score": 62.05892675454545,
+            "top_ece": 0.2736051515151515
+          }
+        }
+      },
+      "speed": {
+        "p50_s_raw": 0.44284138455986977,
+        "p95_s_raw": 1.97329829223454,
+        "p50_s_adjusted": 1.0356827691197394,
+        "p95_s_adjusted": 4.09659658446908,
+        "n": 450,
+        "adjustment": "x2 + 0.15 s (assumption, not measured)"
+      },
+      "cost": {
+        "kind": "estimate",
+        "usd_per_1000": 0.003933940886699508,
+        "basis": "ESTIMATE: documented hosted-model estimate; no exact base-model floor applies. $0.01/M input, $0/M output; same-class hosted-encoder estimate; no exact-base market floor."
+      },
+      "rank": null,
+      "ranks": {
+        "A": null,
+        "B": null,
+        "C": null
+      },
+      "ranked": true,
+      "listing": "ranked",
+      "not_ranked_because": null,
+      "provenance": {
+        "result_sha256": "d0a2f72ae9176a255acb3e34f7bd3aa2d90891aba0fb8d8dbbeca91453ab1ae3",
+        "raw_sha256": "271c34903cd60c2faa8172baadb21bcdcbd980297c2469e1f5dc77765549f16e",
+        "meta_sha256": "bd3878964aeb77760d6b2220e3b0f437c96e587d9642490b8532fe34ad771a4d",
+        "spec_sha256": "eb022a35241492ecb3008ef348258b61e9a9726031bcd29fd0220bc247352e15",
+        "revision": "HF convaiinnovations/laya@1c5edc17a7acd8701df6fc341c0d179f1c62c982, subfolder multilingual/"
+      }
+    },
+    {
+      "key": "laya-typed-decisions",
+      "display": "Laya typed-decisions",
+      "author": "Convai Innovations",
+      "repo": "https://huggingface.co/convaiinnovations/laya/tree/1c5edc17a7acd8701df6fc341c0d179f1c62c982/typed-decisions",
+      "class": "system-one-open",
+      "licence": "apache-2.0, not gated",
+      "open": "yes",
+      "underlying": "convaiinnovations/laya @ 1c5edc17a7acd8701df6fc341c0d179f1c62c982, typed-decisions/; ModernBERT-large, max_len 1024, distinct head and calibration from the English root. Fresh full run on 29 Sep; in-process, offline, shared AMD Ryzen 5 3600 CPU, four threads. Measured latency includes shared-host conditions; it is not a controlled GPU comparison. Complete valid probabilities on all types; frequent noul abstention lowers Intelligence to its zero floor and thus the composite to zero. This is not a transport failure.",
+      "addendum": {
+        "id": "A4",
+        "release": "v1.5",
+        "label": "v1.5 roster addendum A4"
+      },
+      "endpoint_kind": "cpu",
+      "endpoint_condition": "evaluator-owned CPU, Sandy (AMD Ryzen 5 3600), 4 of 12 threads, nice -n 5, shared host, offline (HF_HUB_OFFLINE=1)",
+      "gpu": "cpu",
+      "api_flag": false,
+      "api_exposure_note": null,
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "full_coverage": true,
+      "support": {
+        "choice": "native",
+        "noul": "native",
+        "score": "native"
+      },
+      "axes": {
+        "calibration": 83.33778364859957,
+        "cost": 82.52942826196218,
+        "intelligence": 0.0,
+        "speed": 63.380934368713
+      },
+      "scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0
+      },
+      "views": {
+        "Balanced 33:33:33": 0.0,
+        "Emphasis on Accuracy 60:20:20": 0.0,
+        "Emphasis on Cost 20:20:60": 0.0,
+        "Emphasis on Speed 20:60:20": 0.0,
+        "Intelligence only": 0.0
+      },
+      "composite_ci95": {
+        "A": [
+          0.0,
+          0.0
+        ],
+        "B": [
+          0.0,
+          0.0
+        ],
+        "C": [
+          0.0,
+          0.0
+        ]
+      },
+      "jevbench_score": 0.0,
+      "intelligence": {
+        "I_open": -8.46265407803453,
+        "I_sealed": -16.923528146620757,
+        "base": -12.693091112327643,
+        "gap": 8.460874068586227,
+        "excess": 3.2742465685069844,
+        "penalty": 1.0,
+        "per_type_split": {
+          "open|choice": {
+            "cc": 31.177221235431812,
+            "n": {
+              "easy": 72,
+              "hard": 169,
+              "judge": 114,
+              "standard": 84
+            },
+            "tiers": {
+              "easy": 83.72022912270124,
+              "hard": 5.992949471210316,
+              "judge": 40.87136929460582,
+              "standard": 40.73303873147908
+            }
+          },
+          "open|noul": {
+            "cc": -91.904626693799,
+            "n": {
+              "easy": 34,
+              "hard": 113,
+              "judge": 102,
+              "standard": 66
+            },
+            "tiers": {
+              "easy": -70.58823529411764,
+              "hard": -94.69026548672566,
+              "judge": -100.0,
+              "standard": -84.84848484848484
+            }
+          },
+          "open|score": {
+            "cc": 35.339443224263604,
+            "n": {
+              "easy": 16,
+              "hard": 50,
+              "judge": 34,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 10.988709677419362,
+              "hard": 40.21072374227717,
+              "judge": 31.89744429882043,
+              "standard": 42.93524734982333
+            }
+          },
+          "sealed|choice": {
+            "cc": 17.84220183212708,
+            "n": {
+              "easy": 50,
+              "hard": 108,
+              "judge": 101,
+              "standard": 101
+            },
+            "tiers": {
+              "easy": 50.1953125,
+              "hard": 17.375455650060772,
+              "judge": 7.24381625441697,
+              "standard": 18.496717228888414
+            }
+          },
+          "sealed|noul": {
+            "cc": -99.2,
+            "n": {
+              "easy": 25,
+              "hard": 55,
+              "judge": 50,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": -92.0,
+              "hard": -100.0,
+              "judge": -100.0,
+              "standard": -100.0
+            }
+          },
+          "sealed|score": {
+            "cc": 30.587213728010646,
+            "n": {
+              "easy": 25,
+              "hard": 55,
+              "judge": 50,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 42.890217391304354,
+              "hard": 28.521356977640743,
+              "judge": 23.372662173546786,
+              "standard": 39.38925272879936
+            }
+          }
+        }
+      },
+      "validity": {
+        "choice": {
+          "invalid_rate": 0.0,
+          "n": 799
+        },
+        "noul": {
+          "invalid_rate": 0.0,
+          "n": 495
+        },
+        "score": {
+          "invalid_rate": 0.0,
+          "n": 330
+        }
+      },
+      "calibration": {
+        "score": 83.33778364859957,
+        "parts": {
+          "choice": {
+            "ece_hard": 0.035489169675090235,
+            "ece_score": 92.90216606498196,
+            "mean_tvd": 0.28015199993333995,
+            "n": 799,
+            "n_ece_hard": 277,
+            "n_tvd": 50,
+            "score": 82.44348303582399
+          },
+          "noul": {
+            "abstention_rate": 0.9656565656565657,
+            "brier": 0.24281967393939405,
+            "ece": 0.08572121212121223,
+            "n": 495,
+            "score": 82.85575757575756
+          },
+          "score": {
+            "interval90_coverage": 0.906060606060606,
+            "interval90_width": 0.7631313131313125,
+            "n": 330,
+            "nrps": 0.1741862781641415,
+            "score": 84.71411033421717,
+            "top_ece": 0.06576575757575757
+          }
+        }
+      },
+      "speed": {
+        "p50_s_raw": 1.5835404098033905,
+        "p95_s_raw": 6.845229769125576,
+        "p50_s_adjusted": 3.317080819606781,
+        "p95_s_adjusted": 13.840459538251153,
+        "n": 450,
+        "adjustment": "x2 + 0.15 s (assumption, not measured)"
+      },
+      "cost": {
+        "kind": "estimate",
+        "usd_per_1000": 0.003822543103448276,
+        "basis": "ESTIMATE: documented hosted-model estimate; no exact base-model floor applies. $0.01/M input, $0/M output; same-class hosted-encoder estimate; no exact-base market floor."
+      },
+      "rank": null,
+      "ranks": {
+        "A": null,
+        "B": null,
+        "C": null
+      },
+      "ranked": true,
+      "listing": "ranked",
+      "not_ranked_because": null,
+      "provenance": {
+        "result_sha256": "d0a2f72ae9176a255acb3e34f7bd3aa2d90891aba0fb8d8dbbeca91453ab1ae3",
+        "raw_sha256": "a9116767edd024449b728921f3fa2a076be6c1d31e4d7ac96fb6952701d33334",
+        "meta_sha256": "d37e14f7376a7976a46fa2e043f62b4a7990b23c82ced05966cf86e5c8ef0c06",
+        "spec_sha256": "619e5f28b748d147a3f90e49bb86b0594665f3e72a125a6189cdc220213bfc2d",
+        "revision": "HF convaiinnovations/laya@1c5edc17a7acd8701df6fc341c0d179f1c62c982, subfolder typed-decisions/"
+      }
+    }
+  ]
+}
