@@ -42,49 +42,58 @@ for (const family of STILL_SPLIT) {
 
 const browser = await chromium.launch();
 for (const [kind, width, height] of [['desktop', 1440, 900], ['mobile', 390, 844]]) {
-  const ctx = await browser.newContext({ viewport: { width, height } });
-  const page = await ctx.newPage();
-  let pageerror = null;
-  page.on('pageerror', (e) => { pageerror = String(e); });
-  for (const { family, kept, gone } of MERGED) {
-    for (const [id, expectLive] of [[kept, true], [gone, false]]) {
-      const url = `${BASE}/models/${encodeURIComponent(id)}`;
-      let response = null;
-      for (let i = 0; i < 3; i++) {
-        try { response = await page.goto(url, { waitUntil: 'networkidle', timeout: 60000 }); break; }
-        catch (e) { if (i === 2) throw e; }
+   for (const theme of ['light', 'dark']) {
+    const ctx = await browser.newContext({ viewport: { width, height }, colorScheme: theme, isMobile: kind === 'mobile', hasTouch: kind === 'mobile' });
+    await ctx.addInitScript((t) => { try { localStorage.setItem('theme', t); localStorage.setItem('bh-theme', t); } catch {} }, theme);
+    const page = await ctx.newPage();
+    let pageerror = null;
+    page.on('pageerror', (e) => { pageerror = String(e); });
+    for (const { family, kept, gone } of MERGED) {
+      for (const [id, expectLive] of [[kept, true], [gone, false]]) {
+        const url = `${BASE}/models/${encodeURIComponent(id)}`;
+        pageerror = null;
+        let response = null;
+        for (let i = 0; i < 3; i++) {
+          try {
+            response = await page.goto(url, { waitUntil: 'networkidle', timeout: 60000 });
+            await page.waitForFunction(() => document.body !== null, null, { timeout: 15000 });
+            break;
+          }
+          catch (e) { if (i === 2) throw e; }
+        }
+        await page.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
+        const seen = await page.evaluate(() => {
+          const text = document.body.innerText;
+          return {
+            h1: document.querySelector('h1')?.innerText.trim() ?? null,
+            dollars: (text.match(/\$\d[\d.,]*/g) || []).length,
+            headerOffers: Number(text.match(/(\d+)\s+offers?\b/)?.[1] ?? NaN),
+            filteredOut: /no per-token pricing matches the active global filters/i.test(text),
+            saysUnknown: /not found|unknown model|no such model/i.test(text),
+          };
+        });
+        if (expectLive) {
+          check(`${kind} ${id}: page renders`, response?.status() === 200 && !seen.saysUnknown, `${response?.status()} ${seen.h1}`);
+          // The point of the repair: the row with the benchmarks now states the family's offers. A
+          // price is not always *shown* — `command-a+`'s only provider is Cohere, which the default
+          // "Trains or keeps your data" filter removes (R4.10, `zero_retention: false`), and the page
+          // says so rather than rendering an empty table. Either outcome proves the offer arrived;
+          // silence would not.
+          const apiOffers = rowsOf(family)[0]?.offer_count ?? rowsOf(family)[0]?.offers?.length ?? 0;
+          check(`${kind} ${id}: header states the API's offer count`, seen.headerOffers === apiOffers,
+            `page ${seen.headerOffers} vs api ${apiOffers}`);
+          check(`${kind} ${id}: a price is shown or explicitly filtered out`, seen.dollars > 0 || seen.filteredOut,
+            { dollars: seen.dollars, filteredOut: seen.filteredOut });
+          check(`${kind} ${id}: no page error`, pageerror === null, pageerror);
+        } else {
+          check(`${kind} ${id}: the routing row is gone`, response?.status() === 404 || seen.saysUnknown,
+            `${response?.status()} ${seen.h1}`);
+        }
+        await page.screenshot({ path: `${OUT}/${kind}-${theme}-${id.replace(/[^a-z0-9.+-]/gi, '_')}.png`, fullPage: false });
       }
-      const seen = await page.evaluate(() => {
-        const text = document.body.innerText;
-        return {
-          h1: document.querySelector('h1')?.innerText.trim() ?? null,
-          dollars: (text.match(/\$\d[\d.,]*/g) || []).length,
-          headerOffers: Number(text.match(/(\d+)\s+offers?\b/)?.[1] ?? NaN),
-          filteredOut: /no per-token pricing matches the active global filters/i.test(text),
-          saysUnknown: /not found|unknown model|no such model/i.test(text),
-        };
-      });
-      if (expectLive) {
-        check(`${kind} ${id}: page renders`, response?.status() === 200 && !seen.saysUnknown, `${response?.status()} ${seen.h1}`);
-        // The point of the repair: the row with the benchmarks now states the family's offers. A
-        // price is not always *shown* — `command-a+`'s only provider is Cohere, which the default
-        // "Trains or keeps your data" filter removes (R4.10, `zero_retention: false`), and the page
-        // says so rather than rendering an empty table. Either outcome proves the offer arrived;
-        // silence would not.
-        const apiOffers = rowsOf(family)[0]?.offer_count ?? rowsOf(family)[0]?.offers?.length ?? 0;
-        check(`${kind} ${id}: header states the API's offer count`, seen.headerOffers === apiOffers,
-          `page ${seen.headerOffers} vs api ${apiOffers}`);
-        check(`${kind} ${id}: a price is shown or explicitly filtered out`, seen.dollars > 0 || seen.filteredOut,
-          { dollars: seen.dollars, filteredOut: seen.filteredOut });
-        check(`${kind} ${id}: no page error`, pageerror === null, pageerror);
-      } else {
-        check(`${kind} ${id}: the routing row is gone`, response?.status() === 404 || seen.saysUnknown,
-          `${response?.status()} ${seen.h1}`);
-      }
-      await page.screenshot({ path: `${OUT}/${kind}-${id.replace(/[^a-z0-9.+-]/gi, '_')}.png`, fullPage: false });
     }
-  }
-  await ctx.close();
+    await ctx.close();
+   }
 }
 await browser.close();
 

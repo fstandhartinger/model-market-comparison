@@ -4,6 +4,7 @@ import { HomeModeLoader } from "../components/deferred/HomeModeLoader";
 import { pageDataVersion } from "../lib/page-data";
 import { BRAND_CLAIM, BRAND_LINE, previewMetadata } from "../lib/seo";
 import { noWidow } from "../lib/typography";
+import { HomeJsonLd } from "../components/HomeJsonLd";
 
 
 export const metadata = previewMetadata({ path: "/", title: "Benchmark Heaven",
@@ -24,6 +25,7 @@ export default async function Home() {
 
   return (
     <div>
+      <HomeJsonLd results={results} benchmarks={benchmarks} models={ds.counts.models} updated={updated} />
       {/* F-01 (Fable 5.1 design pass, 2026-09-13): compact hero — the recommendation list
           must be visible on the first screen. R3.1 claim decided in DESIGN-DIRECTIVES.md. */}
       <section className="bh-hero mb-4">

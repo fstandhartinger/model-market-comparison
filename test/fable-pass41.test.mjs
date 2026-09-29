@@ -5,6 +5,15 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const component = readFileSync(new URL('../components/JevBenchV15Preview.tsx', import.meta.url), 'utf8');
+const verifier = readFileSync(new URL('../ops/ux-2026-09-12/bin/verify-fable-pass41-design.mjs', import.meta.url), 'utf8');
+
+test('F-218: independent live verifier covers desktop and mobile in both themes', () => {
+  for (const context of ["['desktop', 'light']", "['desktop', 'dark']", "['mobile', 'light']", "['mobile', 'dark']"]) {
+    assert.ok(verifier.includes(context), `missing verifier context ${context}`);
+  }
+  assert.match(verifier, /process\.exitCode = pass === checks\.length \? 0 : 1;/,
+    'a failing live receipt must produce a failing process exit code');
+});
 
 test('F-218: no 64-hex literal lives in the preview component — every hash comes from the artifact', () => {
   assert.doesNotMatch(component, /[0-9a-f]{64}/, 'a hash literal in a component outlives the artifact revision it was copied from');

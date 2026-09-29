@@ -4,6 +4,15 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-29 — JevBench v1.5.2 and Image JevBench v0.1.4
+
+The live JevBench board now uses v1.5.2; v1.5.0 and v1.5.1 remain frozen releases.
+The result routes are `/api/jevbench/v1.5.0`, `/api/jevbench/v1.5.1` and
+`/api/jevbench/v1.5.2`, with exact artifact hashes documented in `API.md`.
+Image JevBench now uses v0.1.4; the v0.1.1–v0.1.3 aggregate artifacts remain archived.
+These release notes update the downstream documentation; this cleanup changes no
+benchmark artifact, score or published order.
+
 ## 2026-09-27 — JevBench v1.4.2.1/v1.4.2.2 and Image JevBench v0.1.1/v0.1.2
 
 JevBench v1.4.2.1 adds Plumb-4B and preserves a frozen **94-system / 90-ranked** release.

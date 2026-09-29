@@ -1,9 +1,9 @@
 // Fable pass-41 live verifier (non-Fable engines run it before flipping a row to verified).
 // Usage: node verify-fable-pass41-design.mjs <base> <outDir>   ONLY=F-218 restricts the groups (there is one).
-// Group F-218, on the hidden v1.5 preview (`/wip-oiifi41ouv1f/jevbench-v15`) and its What-If page, at 1440 and 390:
+// Group F-218, on the released v1.5 page reached from the former preview URL and its What-If page, at 1440/390 × light/dark:
 //   the method notes print no full 64-hex hash outside the provenance line; the four prose hashes are 12-char prefixes whose title is
 //   the full hash and whose box is one line tall; the method hash keeps its marker; the pricing-correction prefix on the preview is the
-//   prefix the What-If page prints; 0 page errors.
+//   prefix the What-If page prints; the former preview URL returns a permanent redirect with an X-Robots-Tag noindex header; 0 page errors.
 import { createRequire } from 'node:module';
 const require = createRequire('/home/flori/n8n-local/');
 const { chromium } = require('playwright');
@@ -28,7 +28,7 @@ const previewProbe = () => {
   return { hasMethod: !!method, fullOutsideProv, shas, methodSha: methodSha ? { t: txt(methodSha), title: methodSha.getAttribute('title') || '' } : null, provFull, pricingPrefix: (pricingLi.match(/SHA-256: ([0-9a-f]{12})…/) || [])[1] || null, robots: document.querySelector('meta[name=robots]')?.content || '' };
 };
 const whatifProbe = () => { const t = document.body.innerText.replace(/\s+/g, ' '); return { prefix: (t.match(/Pricing disclosure correction SHA-256 ([0-9a-f]{12})…/) || [])[1] || null }; };
-for (const [kind, theme] of [['desktop', 'light'], ['mobile', 'dark']]) {
+for (const [kind, theme] of [['desktop', 'light'], ['desktop', 'dark'], ['mobile', 'light'], ['mobile', 'dark']]) {
   const ctx = `${kind}_${theme}`;
   const browser = await chromium.launch({ headless: true });
   const bctx = await browser.newContext({ viewport: kind === 'mobile' ? { width: 390, height: 844 } : { width: 1440, height: 1000 }, deviceScaleFactor: kind === 'mobile' ? 2 : 1, isMobile: kind === 'mobile', hasTouch: kind === 'mobile', colorScheme: theme });
@@ -37,8 +37,16 @@ for (const [kind, theme] of [['desktop', 'light'], ['mobile', 'dark']]) {
   p.on('console', (m) => { if (m.type() === 'error' && !/status of 50[0-9]/.test(m.text())) errors.push(m.text().slice(0, 200)); });
   try {
     if (want('F-218')) {
+      const formerPreview = await fetch(`${BASE}/wip-oiifi41ouv1f/jevbench-v15`, { redirect: 'manual' });
+      const formerLocation = formerPreview.headers.get('location') || '';
+      const robotsHeader = formerPreview.headers.get('x-robots-tag') || '';
+      check('F-218', ctx, 'former preview URL permanently redirects to the released v1.5 page',
+        formerPreview.status === 308 && new URL(formerLocation, BASE).pathname === '/jev-models/v1.5.0',
+        `${formerPreview.status} ${formerLocation}`);
+      check('F-218', ctx, 'former preview redirect remains noindex', /noindex,\s*nofollow/.test(robotsHeader), robotsHeader);
       await goto(p, `${BASE}/wip-oiifi41ouv1f/jevbench-v15`); await p.waitForTimeout(1500);
       const m = await p.evaluate(previewProbe);
+      check('F-218', ctx, 'the redirected page is the public v1.5 canonical route', new URL(p.url()).pathname === '/jev-models/v1.5.0', p.url());
       check('F-218', ctx, 'method section present', m.hasMethod);
       check('F-218', ctx, 'no full hash printed outside the provenance line', m.fullOutsideProv.length === 0, JSON.stringify(m.fullOutsideProv));
       check('F-218', ctx, 'four prose hashes', m.shas.length === 4, m.shas.length);
@@ -48,7 +56,6 @@ for (const [kind, theme] of [['desktop', 'light'], ['mobile', 'dark']]) {
       check('F-218', ctx, 'the method hash keeps its marker and is a prefix', !!m.methodSha && /^[0-9a-f]{12}…$/.test(m.methodSha.t) && /^[0-9a-f]{64}$/.test(m.methodSha.title), JSON.stringify(m.methodSha));
       check('F-218', ctx, 'the provenance line keeps two full hashes', m.provFull.length === 2 && m.provFull.every((h) => /^[0-9a-f]{64}$/.test(h)), JSON.stringify(m.provFull.map((h) => h.slice(0, 12))));
       check('F-218', ctx, 'the pricing-correction bullet prints a prefix', !!m.pricingPrefix, m.pricingPrefix);
-      check('F-218', ctx, 'the preview stays noindex', /noindex/.test(m.robots), m.robots);
       await p.screenshot({ path: `${OUT}/${ctx}-v15-method.png` }).catch(() => {});
       await goto(p, `${BASE}/wip-oiifi41ouv1f/jevbench-v15-whatif.html`); await p.waitForTimeout(1500);
       const w = await p.evaluate(whatifProbe);
@@ -61,3 +68,5 @@ for (const [kind, theme] of [['desktop', 'light'], ['mobile', 'dark']]) {
 const pass = checks.filter((c) => c.ok).length;
 await fs.writeFile(`${OUT}/verification.json`, JSON.stringify({ base: BASE, at: new Date().toISOString(), only: ONLY, pass, total: checks.length, checks }, null, 1));
 console.log(`${pass}/${checks.length} checks passed (${BASE}${ONLY ? `, ONLY=${ONLY}` : ''})`);
+
+process.exitCode = pass === checks.length ? 0 : 1;

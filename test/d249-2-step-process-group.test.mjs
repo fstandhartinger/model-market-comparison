@@ -77,6 +77,29 @@ test('a timed-out step takes its workers with it', async (t) => {
   assert.equal(await workersAlive(join(f.dir, 'worker.sh')), false, 'no worker may outlive its step');
 });
 
+test('a timed-out step also kills a worker that ignores SIGTERM after the step exits', async (t) => {
+  const dir = await mkdtemp(join(tmpdir(), 'd249-2-'));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const step = join(dir, 'parent-exits.mjs');
+  const pidFile = join(dir, 'stubborn-worker.pid');
+  const workerCommand = 'trap "" TERM; echo $$ > "$1"; exec sleep 45';
+  await writeFile(step, [
+    "import { spawn } from 'node:child_process';",
+    `spawn('bash', ['-c', ${JSON.stringify(workerCommand)}, 'fixture-worker', ${JSON.stringify(pidFile)}], { stdio: 'inherit' });`,
+    'setInterval(() => {}, 1000);',
+  ].join('\n'));
+  let workerPid = null;
+  t.after(() => { if (workerPid) try { process.kill(workerPid, 'SIGKILL'); } catch { /* already gone */ } });
+  const error = await runStep(process.execPath, [step], {
+    timeout: 1_200, killSignal: 'SIGTERM', killGraceMs: 300, stdioGraceMs: 800,
+  }).then(() => null, (e) => e);
+  assert.ok(error?.killed, 'the parent step must time out');
+  workerPid = Number((await readFile(pidFile, 'utf8')).trim());
+  const stat = await readFile(`/proc/${workerPid}/stat`, 'utf8').catch(() => '');
+  const state = stat.slice(stat.lastIndexOf(')') + 2).split(' ')[0];
+  assert.ok(!state || state === 'Z', `the same-group worker must be dead after timeout (state ${state || 'missing'}; runStep signal ${error.signal})`);
+});
+
 test('a timed-out step rejects with the error shape every reader already expects', async (t) => {
   const dir = await mkdtemp(join(tmpdir(), 'd249-2-'));
   t.after(() => rm(dir, { recursive: true, force: true }));

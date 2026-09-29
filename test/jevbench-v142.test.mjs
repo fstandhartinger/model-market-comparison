@@ -88,3 +88,11 @@ test('CR-191 preserves pinned v1.4.2.2 and v1.4.2 routes while v1.5.2 is live', 
   assert.match(interactive, /data-bh-jev14-compact/);
   assert.match(interactive, /data-bh-jev14-chart-eyebrow/);
 });
+
+test('CR-151 sorts the displayed endpoint column like every other axes-table header', async () => {
+  const board = await read('../components/JevBoardInteractive.tsx');
+  assert.match(board, /type SortKey = [^;]*\|\s*'endpoint'/);
+  assert.match(board, /endpoint: 'endpoint'/);
+  assert.match(board, /case 'endpoint': return endpointLabel\(row\.endpoint_kind\)\.toLowerCase\(\)/);
+  assert.match(board, /<Th k="endpoint" sort=\{sort\} toggle=\{toggle\}>Endpoint<\/Th>/);
+});
