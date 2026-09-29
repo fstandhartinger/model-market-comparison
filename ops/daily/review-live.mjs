@@ -35,7 +35,7 @@ import { parseAaEfficiency } from '../../lib/aa-efficiency.mjs';
 import { CODING_AGENT_URL, parseCodingAgents } from '../../lib/aa-coding-agents.mjs';
 import { parseOpenRouterPage, parseOpenRouterCache, parseOpenRouterRankings } from '../../lib/openrouter-efficiency.mjs';
 import { parseChutesUsage } from '../../lib/chutes-efficiency.mjs';
-import { endpointIdentity } from '../../lib/live-source.mjs';
+import { absentIdentities, classifyBoardAbsence, endpointIdentity, BOARD_REGISTRY_INCONSISTENT } from '../../lib/live-source.mjs';
 
 const RAW_DEFAULT = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'data', 'raw');
 const AA_API_URL = 'https://artificialanalysis.ai/api/v2/data/llms/models';
@@ -215,13 +215,74 @@ export function assertRetainedCache(cache, previous, runStart, hasRates = false)
   eq(cache, { ...previous, retained_after_failure: true }, 'retained cache equals prior accepted summary');
 }
 
+// D255.2 (29 Sep 2026): D255 lets the collector *withhold* a DesignArena capture that contradicts the
+// source's own registry, keeping the previously published board. The 2026-09-29 02:18 dry run showed
+// that this review then failed the run anyway — it re-derives `data/raw/designarena.json` from this
+// run's capture, and the staged board is deliberately yesterday's. `live-review: da frontend
+// leaderboard rows mismatch` would have cost the 05:17 run its whole day, which is the one outcome
+// D255 exists to prevent.
+//
+// The withheld path is not a bypass. It proves the withholding from the captured primary bytes rather
+// than trusting the collector's sidecar: for every staged board it recomputes the absent identities
+// against this run's capture and re-classifies them against the captured registry. A single absence
+// the registry *corroborates* — gone, inactive, or no longer listing this category — fails closed, as
+// it did before, because that is a withdrawal and belongs in review. And the staged bytes must equal
+// the snapshot the run started from, with their own older date: a withheld source may not contribute
+// one new byte, and may never claim this run's freshness.
+export async function verifyWithheldDa({ staged, src, runStart, registryBody }) {
+  let record;
+  try { record = JSON.parse(await readFile(join(src.runDir, 'sources', 'designarena-board-inconsistency.json'), 'utf8')); }
+  catch { return null; }
+  // No determination for this run: the ordinary source-derived path applies unchanged.
+  if (record?.source !== 'designarena' || record?.determination !== BOARD_REGISTRY_INCONSISTENT) return null;
+  const declared = Array.isArray(record.boards) ? record.boards : [];
+  if (!declared.length) fail('da withheld: the determination names no board');
+  const byBoard = new Map(declared.map((b) => [b.board, b]));
+
+  eq(staged, await baseline(src, 'designarena.json'), 'da withheld board equals the snapshot this run started from');
+  assertRetainedDate(staged.collected_at, runStart, 'da withheld board');
+  eq(staged.collected_at, record.retained_collected_at, 'da withheld board retained date');
+
+  const proven = [];
+  for (const [key, board] of Object.entries(staged.leaderboards)) {
+    const category = board?.request?.category;
+    if (typeof category !== 'string' || !category) fail(`da ${key}: staged request has no category to classify against`);
+    const receipt = src.requirePost(`${DA_BASE_URL}/api/leaderboard`, board.request, `designarena ${key} (withheld)`);
+    const payload = jbody(receipt, `da ${key}`);
+    if (!Array.isArray(payload.data)) fail(`da ${key}: source data is not an array`);
+    const missing = absentIdentities(board.data, payload.data, (row) => row?.modelId);
+    const { contradicted, corroborated } = classifyBoardAbsence(missing, registryBody, category);
+    if (corroborated.length) {
+      fail(`da ${key} withheld: the registry corroborates ${corroborated.length} absent identity/identities (${corroborated.map((c) => c.id).join(', ')}); that is a withdrawal for review, not a self-contradicting board`);
+    }
+    const entry = byBoard.get(key);
+    if (!missing.length) {
+      if (entry) fail(`da ${key}: the determination names it, but this run's capture has every staged identity`);
+      continue;
+    }
+    if (!entry) fail(`da ${key}: ${missing.length} absent identity/identities that the determination does not name`);
+    eq(contradicted.map((c) => c.id).sort(), (entry.contradicted || []).map((c) => c?.id).sort(), `da ${key} withheld contradicted identities`);
+    eq(board.data.length, entry.prior_count, `da ${key} withheld prior row count`);
+    eq(payload.data.length, entry.current_count, `da ${key} withheld source row count`);
+    proven.push({ board: key, category, contradicted: contradicted.map((c) => c.id), retained_rows: board.data.length, source_rows: payload.data.length, source: loc(receipt) });
+  }
+  if (!proven.length) fail("da withheld: no staged board shows a contradicted absence in this run's capture");
+  return { retained_collected_at: staged.collected_at, determined_at: record.determined_at ?? null, boards: proven };
+}
+
 async function verifyDa(rawDir, src, runStart, rows) {
   const staged = JSON.parse(await readFile(join(rawDir, 'designarena.json'), 'utf8'));
   const boards = staged.leaderboards && typeof staged.leaderboards === 'object' ? staged.leaderboards : null;
   if (!boards || !Object.keys(boards).length) fail('da staged leaderboards missing');
   const regReceipt = src.requireGet(`${DA_BASE_URL}/api/registry`, 'designarena registry');
-  const registry = jbody(regReceipt, 'da registry').models;
+  const registryBody = jbody(regReceipt, 'da registry');
+  const registry = registryBody.models;
   if (!registry || typeof registry !== 'object') fail('da registry source has no models map');
+  const withheld = await verifyWithheldDa({ staged, src, runStart, registryBody });
+  // A withheld board stages nothing new, so it contributes no packet row: there is no fresh value for
+  // a critic to check, and presenting yesterday's rows beside today's receipts would be the one thing
+  // this review must never do. The report and the run summary name it instead.
+  if (withheld) return { da: { withheld } };
   const out = [];
   const seenIds = new Set();
   for (const [key, board] of Object.entries(boards)) {
@@ -621,6 +682,8 @@ async function collectLiveRun({ runDir, rawDir = RAW_DEFAULT } = {}) {
   const receipts = await loadReceipts(join(runDir, 'sources'));
   const src = indexSources(receipts);
   src.beforeDir = join(runDir, 'before', 'raw');
+  // D255.2: the withheld-board determination is a per-run artifact beside the captures.
+  src.runDir = runDir;
   const rows = new Map();
   const report = { datasets: {}, retained: {} };
   await verifyAa(rawDir, src, src.first, rows, report.datasets);
@@ -633,6 +696,8 @@ async function collectLiveRun({ runDir, rawDir = RAW_DEFAULT } = {}) {
   report.retained = {
     or_efficiency_pages: report.datasets.or_efficiency?.pages_retained ?? [],
     aa_metadata_fields: report.datasets.aa?.retained_metadata_fields ?? 0,
+    // D255.2: null on an ordinary day; on a withheld day it names the boards and the retained date.
+    designarena_board: report.datasets.da?.withheld ?? null,
   };
   const run = { sources_dir: join(runDir, 'sources'), receipts: receipts.length, first_receipt: src.first, last_receipt: src.last };
   return { run, rows, report };
@@ -672,6 +737,7 @@ export async function reviewLive({ runDir, rawDir = RAW_DEFAULT, batchSize = 25,
     limitations: [
       'Rotated/retained OpenRouter page, cache and rankings entries and AA retained metadata are prior accepted observations republished with original dates; they are checked for original dates AND equality to the prior accepted snapshot, not re-verified against this run\u2019s sources.',
       'data/raw/aa-coding-agents.json (v1.4) is intentionally untouched; the daily orchestrator validates it.',
+      'A withheld DesignArena board (retained.designarena_board) stages no new byte: its rows are the previously published snapshot with its own older date, proven equal to it, and the withholding itself is re-derived from this run\u2019s captured board and registry bytes. Those rows are not in the critic packets, because there is no fresh value to check.',
       'This report is the programmatic numeric/source check only. The separate live-step-result.json records adapter-contract gauntlet acceptance and exact model example coverage.',
     ],
     evidence: null,
@@ -699,7 +765,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === new URL(`file://${proc
       maxPacketBytes: Number(opt('max-packet-bytes', 120000)),
       write: !args.includes('--no-write'),
     });
-    const d = Object.entries(report.datasets).map(([k, v]) => `${k}:${v.rows ?? v.models ?? v.pages_verified ?? 0}`).join(' ');
+    const d = Object.entries(report.datasets).map(([k, v]) => `${k}:${v.withheld ? `withheld (retained ${v.withheld.retained_collected_at})` : (v.rows ?? v.models ?? v.pages_verified ?? 0)}`).join(' ');
     console.log(`live-review ok: ${report.coverage.covered_rows} rows verified (${d}); evidence at ${report.evidence?.directory ?? 'stdout'}`);
   } catch (error) {
     console.error(error.message);
