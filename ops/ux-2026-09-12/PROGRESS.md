@@ -19119,4 +19119,9 @@ Against the real source at ~02:45 UTC in a scratch clone of `7201b368`
 D255.1, D254.1 and D253.2 are posted for Florian's digest as board entry **#4763** in thread #8
 (D254.1 had been recorded in iteration 270 but never reached the board).
 
+Deployed and checked live at `96776c2b`: all three hosts (canonical, `www`, legacy) serve that
+revision with 868 / 673 / 94 / 3,118 and 164 table rows at 1440 *and* 390, zero page errors, and
+`sources.designarena` still 2026-09-28 — which is the withheld date made publicly visible, the only
+staleness signal a retention needs. Receipts and shots in `iter271-designarena/live-site/`.
+
 **`ALL-ACCEPTED` is not appended.**
