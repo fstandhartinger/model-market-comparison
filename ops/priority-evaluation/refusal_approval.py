@@ -171,11 +171,19 @@ def notify_card(state, path, now):
                f"- Decide the refusal email for order {state['draft']['request_id'][:8]}.\n"
                "  Why: Source review failed; the full refund succeeded.\n"
                "  Steps:\n  1. Read the attached exact email.\n  2. Tap Send this email or Keep unsent.\n"
-               "  Time: 1 minute. Buttons expire in 12 hours.")
+               "  Time: 1 minute. Buttons expire in 12 hours. A text reply does not authorize sending.")
     image_path = path.with_suffix(".png")
     card(image_path, state["draft"])
-    command = [str(HOME / "bin/notify"), "now", "--photo", str(image_path), "--text-stdin"]
-    env = {**os.environ, "NOTIFY_SOURCE": SOURCE}
+    # This is an explicit Florian-only approval from the 27 Sep fast-lane decision.
+    # The durable text-reply action resumes the owner; only the exact button callback
+    # below can authorize the email.
+    command = [str(HOME / "bin/notify"), "now", "--florian-only",
+               "Florian's fast-lane decision requires the exact refusal Send button.",
+               "--ask", str(WINDOW // 60), "--photo", str(image_path), "--text-stdin"]
+    reply_job_dir = str(HOME / "jobs" / "fastlane-autopilot-20260929")
+    env = {**os.environ, "NOTIFY_SOURCE": SOURCE,
+           "AGENT_BOARD_JOBDIR": reply_job_dir,
+           "NOTIFY_REPLY_JOB_DIR": reply_job_dir}
     preview = subprocess.run(command + ["--dry-run"], input=caption, text=True, capture_output=True,
                              timeout=45, env=env, check=False)
     if preview.returncode or "[DRY RUN] would send to the" not in preview.stdout:

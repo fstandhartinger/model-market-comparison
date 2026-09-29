@@ -168,7 +168,13 @@ class ApprovalTests(unittest.TestCase):
             (self.root / "DECISIONS.md").write_text("fixture")
             approval.notify_card(state,self.path,NOW)
         caption=run.call_args.kwargs['input']
-        parsed=module.validate_format(caption,'now')
+        command=run.call_args.args[0]
+        self.assertIn("--florian-only", command)
+        self.assertIn("--ask", command)
+        reply_job_dir=str(self.root/'jobs'/'fastlane-autopilot-20260929')
+        self.assertEqual(run.call_args.kwargs['env']['AGENT_BOARD_JOBDIR'],reply_job_dir)
+        self.assertEqual(run.call_args.kwargs['env']['NOTIFY_REPLY_JOB_DIR'],reply_job_dir)
+        parsed=module.validate_format(caption,'now',ask_minutes=720)
         self.assertEqual(len(parsed),1)
         self.assertEqual(len(parsed[0]['steps']),2)
         self.assertLessEqual(len(caption),500)
