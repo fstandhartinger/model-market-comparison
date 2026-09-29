@@ -168,10 +168,12 @@ test('matched gap formatting removes negative zero', () => {
   assert.equal(formatMatchedGapPp(-0.15), '-0.1 pp');
 });
 
-test('public Image JevBench route leads with the ranking and preserves aggregate-only data', async () => {
-  const [page, publicPage, radar, data, nav, sitemap, builder] = await Promise.all([
+test('Image JevBench v0.1.4 archive preserves its historical results and the current route serves v0.2', async () => {
+  const [page, archivePage, publicRoute, publicHtml, radar, data, nav, sitemap, builder] = await Promise.all([
     readFile(new URL('../app/jev-models/multimodal-preview/page.tsx', import.meta.url), 'utf8'),
-    readFile(new URL('../app/image-jev-bench/page.tsx', import.meta.url), 'utf8'),
+    readFile(new URL('../app/image-jev-bench/v0.1.4/page.tsx', import.meta.url), 'utf8'),
+    readFile(new URL('../app/image-jev-bench/route.ts', import.meta.url), 'utf8'),
+    readFile(new URL('../data/releases/imagejev-v02.html', import.meta.url), 'utf8'),
     readFile(new URL('../components/ImageJevRadar.tsx', import.meta.url), 'utf8'),
     readFile(new URL('../data/raw/benchmarks/jevbench/multimodal-preview/preview.json', import.meta.url), 'utf8'),
     readFile(new URL('../components/Nav.tsx', import.meta.url), 'utf8'),
@@ -182,9 +184,17 @@ test('public Image JevBench route leads with the ranking and preserves aggregate
   assert.match(page, /Image JevBench v0\.1\.4/);
   assert.match(page, /data-bh-mm-author-review/);
   assert.match(page, /data-bh-mm-author-review-summary/);
-  assert.match(publicPage, /canonical: '\/image-jev-bench'/);
-  assert.match(publicPage, /Image JevBench v0\.1\.4/);
-  assert.match(publicPage, /openGraph:/);
+  assert.match(archivePage, /canonical: '\/image-jev-bench\/v0\.1\.4'/);
+  assert.match(archivePage, /Archived release: ImageJevBench v0\.1\.4/);
+  assert.match(archivePage, /href="\/image-jev-bench"/);
+  assert.match(archivePage, /openGraph:/);
+  assert.match(publicRoute, /data\/releases\/imagejev-v02\.html/);
+  assert.match(publicHtml, /<meta name="robots" content="index,follow/);
+  assert.match(publicHtml, /<link rel="canonical" href="https:\/\/benchmarkheaven\.com\/image-jev-bench">/);
+  assert.match(publicHtml, /PUBLIC RELEASE · v0\.2/);
+  for (const id of ['capability', 'tradeoffs', 'composite', 'compare', 'table', 'pilot', 'method', 'whatif', 'history']) {
+    assert.ok(publicHtml.includes(`id="${id}"`), `public v0.2 artifact includes ${id}`);
+  }
   // F-198 (pass 36, iter235): the page is its results. Order: head → Composite score → Full ranking →
   // Compare two systems → Examples → Results by track → Split → preview tracks → Method → closed candidates.
   assert.doesNotMatch(page, /Top five by composite score/, 'the top-five panel is gone');
@@ -227,7 +237,7 @@ test('public Image JevBench route leads with the ranking and preserves aggregate
   assert.doesNotMatch(builder, /multimodal-preview\/preview\.json/);
   assert.doesNotMatch(builder, /jevbench-multimodal-preview\//, 'legacy example images are removed');
   await assert.rejects(access(new URL('../public/jevbench-multimodal-preview', import.meta.url)), 'legacy public image folder stays deleted');
-  await access(new URL('../app/image-jev-bench/page.tsx', import.meta.url));
+  await access(new URL('../app/image-jev-bench/v0.1.4/page.tsx', import.meta.url));
   assert.match(page, /data-bh-mm-difficulty-caveat/);
   assert.doesNotMatch(page, /data-bh-mm-split-disposition/, 'the disposition alert is gone; Split says the numbers plainly');
   assert.doesNotMatch(page, /Split target deviation|deviation pending/);
@@ -253,10 +263,11 @@ test('API.md pins the current JevBench and Image JevBench artifact hashes', asyn
     },
   ];
   const imagePreviewFile = '../data/raw/benchmarks/jevbench/multimodal-preview/preview.json';
+  const imageV02File = '../data/releases/imagejev-v02.html';
   const [api, ...artifacts] = await Promise.all([
     readFile(new URL('../API.md', import.meta.url), 'utf8'),
     ...releases.flatMap(({ results, families }) => [results, families])
-      .concat(imagePreviewFile)
+      .concat(imagePreviewFile, imageV02File)
       .map((file) => readFile(new URL(file, import.meta.url))),
   ]);
   for (const [index, release] of releases.entries()) {
@@ -270,7 +281,9 @@ test('API.md pins the current JevBench and Image JevBench artifact hashes', asyn
       assert.ok(row.includes(`\`${sha256}\``), `${release.version} API row must pin ${label} ${file} SHA-256 ${sha256}`);
     }
   }
-  const imagePreviewSha256 = createHash('sha256').update(artifacts.at(-1)).digest('hex');
-  const imagePin = api.match(/multimodal-preview\/preview\.json`\r?\n\(SHA-256 `([0-9a-f]{64})`\)/);
-  assert.equal(imagePin?.[1], imagePreviewSha256, `Image JevBench section must pin preview.json SHA-256 ${imagePreviewSha256}`);
+  const imageV014Sha256 = createHash('sha256').update(artifacts.at(-2)).digest('hex');
+  const imageV02Sha256 = createHash('sha256').update(artifacts.at(-1)).digest('hex');
+  const imageSection = api.split('### Image JevBench')[1]?.split('\n### ')[0] ?? '';
+  assert.ok(imageSection.includes(imageV014Sha256), `Image JevBench archive section must pin v0.1.4 aggregate SHA-256 ${imageV014Sha256}`);
+  assert.ok(imageSection.includes(imageV02Sha256), `Image JevBench section must pin v0.2 public HTML SHA-256 ${imageV02Sha256}`);
 });
