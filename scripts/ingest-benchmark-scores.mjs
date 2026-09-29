@@ -9,6 +9,7 @@ import { verifyScoreEvidence } from '../lib/benchmark-score-evidence.mjs';
 import { parseRealSwe, buildRealSweSnapshot } from '../lib/realswe.mjs';
 import { buildOpenRouterBenchmarkObservations, BENCHMARK_IDS as OPENROUTER_BENCHMARKS } from '../lib/openrouter-benchmark-scores.mjs';
 import { aaMappingApplies } from '../lib/benchmark-registry.mjs';
+import { loadAaBenchmarkSnapshots } from '../lib/aa-snapshot-locks.mjs';
 const read = async (p) => JSON.parse(await readFile(p, 'utf8'));
 const hash = (s) => createHash('sha256').update(s).digest('hex');
 const registry = await read('data/raw/benchmarks/registry.json');
@@ -16,6 +17,7 @@ const models = (await read('data/dataset.json')).models;
 const lock = await read('data/raw/benchmarks/ingestion-lock.json');
 const aa = await read('data/raw/benchmarks/aa-observed-fields.json');
 if (aa.source_sha256 !== lock.aa.source_sha256 || hash(await readFile('data/raw/benchmarks/aa-observed-fields.json')) !== lock.aa.observations_sha256) throw new Error('AA snapshot changed: review methodology/version mapping and refresh ingestion-lock before accepting scores');
+const aaSnapshots = await loadAaBenchmarkSnapshots({ snapshot: aa, lock: lock.aa, mappings: registry.aa_field_map });
 const observations = [], missing = [], collections = [], rejected = [];
 const details = {};
 const aaModels = new Map(models.filter((m) => m.aa_model_id).map((m) => [m.aa_model_id, m]));
@@ -40,6 +42,7 @@ const preserveSourceIdentity = new Set(registry.entries
   .filter((e) => e.how_to_collect?.identity_policy === 'source_label')
   .map((e) => e.id));
 for (const mapping of registry.aa_field_map) {
+  const { snapshot: aa, lock: aaLock } = aaSnapshots.get(mapping.benchmark_id);
   const entry = entryById.get(mapping.benchmark_id);
   // A re-versioned field reads only the snapshots inside its identity's window; the other identity of
   // the same field publishes nothing from this snapshot rather than a value on the wrong scale.
@@ -52,12 +55,14 @@ for (const mapping of registry.aa_field_map) {
   }
   const blocked = mapping.field === 'livecodebench';
   collections.push({ benchmark_id: entry.id, status: blocked ? 'contested' : 'collected', source_url: aa.source_url,
-    reason: blocked ? 'Historical task date window is unverified; all values withheld.' : 'Exact AA UUID and field from the reviewed protocol snapshot; null does not prove whether AA ran the test.' });
+    reason: blocked ? 'Historical task date window is unverified; all values withheld.' : aaLock.reason
+      ? `Original reviewed AA snapshot retained: ${aaLock.reason}`
+      : 'Exact AA UUID and field from the reviewed protocol snapshot; null does not prove whether AA ran the test.' });
   for (const row of aa.rows) {
     const model = aaModels.get(row.source_id);
     const value = mapping.field.split('.').reduce((v, k) => v?.[k], row.fields);
     const source = { url: aa.source_url, retrieved_at: aa.collected_at, published_at: null,
-      sha256: aa.source_sha256, file: lock.aa.source_file, locator: `model UUID ${row.source_id}; ${mapping.field}` };
+      sha256: aa.source_sha256, file: aaLock.source_file, locator: `model UUID ${row.source_id}; ${mapping.field}` };
     if (blocked) {
       if (typeof value === 'number') rejected.push({ benchmark_id: entry.id, source_id: row.source_id, reason: 'Unverified LiveCodeBench task window; raw value retained only in aa-observed-fields.json.' });
       if (model) missing.push({ model_id: model.id, benchmark_id: entry.id, status: 'contested', reason: 'Exact evaluation task window is unknown.', source });

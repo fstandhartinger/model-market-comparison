@@ -27,9 +27,10 @@ export function sourceCoverage({ registry, plan, report, observations = [] }) {
     const group = aa.has(entry.id) ? 'aa-benchmark-fields'
       : entry.id.startsWith('openrouter-') ? 'openrouter-benchmarks' : null;
     const groupCheck = group && checks.find((c) => c.id === group);
+    const fieldCheck = group && checks.find((c) => c.id === entry.id && c.collector === group);
     const direct = checks.find((c) => c.id === entry.id);
     const document = checks.find((c) => c.id === entry.primary_url);
-    const check = groupCheck || (direct && !['source_reachable_protocol_date_retained', 'source_unreachable_or_manual'].includes(direct.status) ? direct : document || direct);
+    const check = fieldCheck || groupCheck || (direct && !['source_reachable_protocol_date_retained', 'source_unreachable_or_manual'].includes(direct.status) ? direct : document || direct);
     const rows = byBenchmark.get(entry.id) ?? [];
     const dates = rows.map((r) => r.source?.retrieved_at).filter(Boolean).sort();
     let mode = group ? 'group_collector' : spec?.refresh === 'manual' ? 'manual_snapshot'

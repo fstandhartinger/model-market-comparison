@@ -13,6 +13,7 @@ import { unlimitedReviewBudget, isBudgetExhausted } from './step-budget.mjs';
 import { openReuseCache, unitFingerprint, reuseProvenance } from './reuse-cache.mjs';
 import { reconcilePublicIdentities } from './public-identities.mjs';
 import { aaMappingApplies } from '../../lib/benchmark-registry.mjs';
+import { retainedAaBenchmarks, reviewAaMappings, loadAaBenchmarkSnapshots } from '../../lib/aa-snapshot-locks.mjs';
 import { parseQuarantine, quarantineCheck } from '../../lib/source-quarantine.mjs';
 const exec = promisify(execFile);
 const root = 'data/raw/benchmarks';
@@ -552,12 +553,12 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     const coverageDrops = assertAaBenchmarkContinuity(oldAa, next);
     const old = new Map(oldAa.rows.map((r) => [r.source_id, r]));
     const changed = next.rows.filter((r) => !equal(r, old.get(r.source_id)));
-    if (changed.length) {
+    if (changed.length || Object.keys(lock.aa.retained_benchmarks ?? {}).length) {
       const fields = new Set(changed.flatMap((r) => Object.keys(r.fields).filter((key) => !equal(r.fields[key], old.get(r.source_id)?.fields[key]))));
       // Only the identity whose window holds this snapshot is reviewed; a retained predecessor of a
       // re-versioned field (its passage gone from AA's page) never reads the new snapshot.
-      const affected = registry.aa_field_map.filter((m) => fields.has(m.field.split('.')[0]) && aaMappingApplies(m, next.collected_at));
-      for (const mapping of affected) {
+      const affected = registry.aa_field_map.filter((m) => (fields.has(m.field.split('.')[0]) || lock.aa.retained_benchmarks?.[m.benchmark_id]) && aaMappingApplies(m, next.collected_at));
+      const decisions = await reviewAaMappings(affected, async (mapping) => {
         // This arm only runs for a field whose values changed today, so the summary is a real
         // fact of today's capture. A retained board's field can change too (removals when AA drops
         // deprecated models); a removals-only summary says it establishes nothing (iteration 151).
@@ -566,7 +567,7 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
         // it serves — the only thing that can settle a row's `unit` and `range` for an AA board.
         const scale = aaFieldScale(mapping.field, next.rows);
         await protocol(registry.entries.find((e) => e.id === mapping.benchmark_id), { activity, scale, receipt });
-      }
+      });
       const records = flightRecords(html), native = new Map();
       const resolveAll = (v) => { v = resolveFlight(v, records); return Array.isArray(v) ? v.map(resolveAll) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, resolveAll(x)])) : v; };
       for (const record of records.values()) for (const obj of objects(record)) if (obj.id && obj.slug && Object.hasOwn(obj, 'intelligenceIndex')) native.set(obj.id, obj);
@@ -584,9 +585,26 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
         reviews.push({ scope: 'aa-fields', ...outcome.value.manifest });
         if (!outcome.value.accepted || outcome.value.fingerprints.length !== unit.chunk.length) throw new Error('AA changed fields not completely approved');
       }
-      await put(join(root, 'aa-observed-fields.json'), next);
-      lock.aa = { ...lock.aa, source_sha256: receipt.sha256, observations_sha256: sha256(await readFile(join(root, 'aa-observed-fields.json'))), source_file: receipt.file,
-        protocol_review: join(evidenceDir, 'checks.json') };
+      // No per-field success receipt is emitted until ALL changed raw rows pass
+      // the unchanged numeric gauntlet above. A raw-row failure retains the arm.
+      const priorBytes = await readFile(join(root, 'aa-observed-fields.json'));
+      if (sha256(priorBytes) !== lock.aa.observations_sha256 || oldAa.source_sha256 !== lock.aa.source_sha256) throw new Error('AA prior snapshot lock mismatch');
+      const priorFile = join(evidenceDir, `aa-retained-${lock.aa.observations_sha256.slice(0, 20)}.json`);
+      if (decisions.some((d) => !d.accepted && !lock.aa.retained_benchmarks?.[d.benchmark_id])) await writeFile(priorFile, priorBytes);
+      const retained = retainedAaBenchmarks({ previous: lock.aa.retained_benchmarks, priorSnapshotLock: { ...lock.aa, observations_file: priorFile }, decisions });
+      // Verify old retained bytes before changing the default snapshot/lock.
+      await loadAaBenchmarkSnapshots({ snapshot: oldAa, lock: { ...lock.aa, retained_benchmarks: retained }, mappings: registry.aa_field_map });
+      if (changed.length) {
+        await put(join(root, 'aa-observed-fields.json'), next);
+        lock.aa = { ...lock.aa, source_sha256: receipt.sha256, observations_sha256: sha256(await readFile(join(root, 'aa-observed-fields.json'))), source_file: receipt.file,
+          protocol_review: join(evidenceDir, 'checks.json') };
+      }
+      lock.aa.retained_benchmarks = retained;
+      for (const mapping of registry.aa_field_map) {
+        const prior = retained[mapping.benchmark_id];
+        if (prior) fail(mapping.benchmark_id, decisions.find((d) => d.benchmark_id === mapping.benchmark_id)?.error ?? new Error(prior.reason), checks, { collector: 'aa-benchmark-fields', retained_snapshot: prior.observations_file });
+        else checks.push({ id: mapping.benchmark_id, collector: 'aa-benchmark-fields', status: changed.length ? 'updated' : 'checked_unchanged' });
+      }
     }
     checks.push({ id: 'aa-benchmark-fields', status: changed.length ? 'updated' : 'checked_unchanged', rows: next.count, changed_rows: changed.length,
       ...(coverageDrops.length ? { coverage_drops: coverageDrops } : {}), source: sourceRef(receipt, 'All explicit model-page benchmark fields') });

@@ -12,6 +12,16 @@ test('a grouped retained failure wins over a generic reachable protocol receipt'
   const r = make([entry('aa-a')], [], [{ id: 'aa-a', status: 'source_reachable_protocol_date_retained' }, { id: 'aa-benchmark-fields', status: 'retained_after_failure', reason: 'No eligible critic' }], { aa_field_map: [{ benchmark_id: 'aa-a' }] });
   assert.equal(r.entries[0].status, 'failed_retained'); assert.equal(r.entries[0].reason, 'No eligible critic');
 });
+test('AA per-benchmark outcomes distinguish a retained field from accepted neighbours', () => {
+  const r = make([entry('aa-a'), entry('aa-b')], [], [
+    { id: 'aa-a', status: 'source_reachable_protocol_date_retained' },
+    { id: 'aa-benchmark-fields', status: 'updated' },
+    { id: 'aa-a', collector: 'aa-benchmark-fields', status: 'retained_after_failure', reason: 'Protocol not accepted; original snapshot retained' },
+    { id: 'aa-b', collector: 'aa-benchmark-fields', status: 'updated' },
+  ], { aa_field_map: [{ benchmark_id: 'aa-a' }, { benchmark_id: 'aa-b' }] });
+  assert.deepEqual(r.entries.map((x) => x.status), ['failed_retained', 'checked']);
+  assert.match(r.entries[0].reason, /original snapshot retained/);
+});
 test('manual, robots refusal, parsed candidates and reachable-only sources stay distinct', () => {
   const r = make(['manual','robots','candidate','protocol'].map((id) => entry(id)), [{ benchmark_id: 'manual', refresh: 'manual', reason: 'Frozen dated snapshot' }], [
     { id: 'robots', status: 'source_unreachable_or_manual', reason: 'robots.txt disallows capture' },
