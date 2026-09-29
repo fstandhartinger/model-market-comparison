@@ -30,8 +30,9 @@ SHARE="$HOME/.local/share/priority-evaluation"
 STATE="$HOME/.local/state/fastlane-autopickup"
 UNITS="$HOME/.config/systemd/user"
 install -d -m 700 "$SHARE" "$STATE" "$STATE/requests" "$HOME/jobs/fastlane-evaluations"
-install -d -m 700 "$SHARE/runtime" "$HOME/wt" "$HOME/.local/state/bh"
-for f in autopickup.py official_scoring.py official_score.py official-profiles.json release_render.py host_github.py public_artifacts.py measurement_dispatch.py measurement_driver.py measurement-profiles.json static_agent.py MEASUREMENT-CONTRACT.md; do
+install -d -m 700 "$SHARE/runtime" "$HOME/wt" "$HOME/.local/state/bh" \
+  "$HOME/.local/state/telegram-reply-broker/callback-status.d"
+for f in autopickup.py refusal_approval.py official_scoring.py official_score.py official-profiles.json release_render.py host_github.py public_artifacts.py measurement_dispatch.py measurement_driver.py measurement-profiles.json static_agent.py MEASUREMENT-CONTRACT.md; do
   install -m 600 "$SRC/$f" "$SHARE/runtime/$f"
 done
 python3 - "$SHARE/runtime" <<'VERIFY_PROFILES'
