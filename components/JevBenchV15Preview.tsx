@@ -150,7 +150,7 @@ function HeadlineBars({ a, ranked }: { a: JevV15Artifact; ranked: JevV15System[]
 
 function OptionsTable({ a, ranked }: { a: JevV15Artifact; ranked: JevV15System[] }) {
   const secondary = JEVBENCH_V15_OPTIONS.filter((o) => o !== a.headline) as [JevV15Option, JevV15Option];
-  // F-223: the same 89 systems a fourth time, under the two secondary weight options. It folds for the same reason.
+  // F-223: the ranked systems appear a fourth time under the two secondary weight options; fold to save space.
   return <details className="mt-10" data-bh-jev15-options-fold>
     <summary className="cursor-pointer text-sm font-semibold text-accent" data-bh-jev15-options-summary>All three weight options ({ranked.length} systems)</summary>
     <section className="mt-3" aria-labelledby="jev15-options" data-bh-jev15-options>
@@ -247,9 +247,9 @@ function Addendum({ a, rows }: { a: JevV15Artifact; rows: JevV15System[] }) {
     return ci ? `${one(ci[0])}–${one(ci[1])}` : 'CI unavailable';
   };
   const score = (row: JevV15System, option: 'A' | 'B' | 'C') => <>{one(row.scores[option])} <span className="bh-muted">{interval(row, option)}</span></>;
-  if (a.revision === 'v1.5.1') return <section className="bh-panel mt-10 max-w-5xl p-5" aria-labelledby="jev15-addendum" data-bh-jev15-addendum-section>
+  if (a.revision === 'v1.5.1' || a.revision === 'v1.5.2') return <section className="bh-panel mt-10 max-w-5xl p-5" aria-labelledby="jev15-addendum" data-bh-jev15-addendum-section>
     <h2 id="jev15-addendum" className="text-lg font-semibold">Roster addendum: newcomers scored on the same frozen protocol ({rows.length})</h2>
-    <p className="bh-muted mt-1 text-sm">All {rows.length} A1/A2 systems below completed all {a.sample.total.toLocaleString('en-US')} decisions and now have official ranks in A, B, and C; the interactive score presets also include them. Their scores, individual 95% intervals, and the frozen v1.5.0 G_med are unchanged. No new paired-bootstrap comparisons were computed for addendum systems. Existing tie markers are retained only for base-system pairs that remain adjacent; no tie or separation is inferred for the other pairs.</p>
+    <p className="bh-muted mt-1 text-sm">All {rows.length} {a.revision === 'v1.5.2' ? 'A1/A2/A3' : 'A1/A2'} systems below completed all {a.sample.total.toLocaleString('en-US')} decisions and now have official ranks in A, B, and C; the interactive score presets also include them. Their scores, individual 95% intervals, and the frozen v1.5.0 G_med are unchanged. No new paired-bootstrap comparisons were computed for addendum systems. Existing tie markers are retained only for base-system pairs that remain adjacent; no tie or separation is inferred for the other pairs.</p>
     <div className="mt-3 overflow-x-auto rounded-xl border border-line">
       <table className="w-full min-w-[900px] text-sm" data-bh-jev15-addendum-table aria-label="Completed roster addendum systems with official ranks and scores in options A, B, and C">
         <thead><tr className="bg-[var(--surface)]">
@@ -339,7 +339,7 @@ function Method({ a, sha256 }: { a: JevV15Artifact; sha256: string }) {
       <li>Calibration is typed (Choice ECE/TVD, Noul ECE with Brier, Score normalised RPS and top-level ECE), pooled over open and sealed. Speed and Cost formulas are unchanged from v1.4; self-hosted and demo endpoints carry the ×2 + 0.15 s adjustment. A manufacturer's standard, non-promotional launch list price counts from day one, but a newer price cut younger than 30 days does not. Rows without token counts use the measured proxy-token basis. A system without any eligible public, bookable price is listed as unpriced.</li>
       <li>The frozen 25 Sep DeepInfra snapshot records Qwen3.5-4B as deprecated on 11 Jun 2026 and replaced by Qwen3.5-9B. Its frozen snapshot rates remain the v1.5 M2 reference; price basis tooltips and the correction note disclose this. Pricing disclosure correction SHA-256: <Sha v={a.pricing_disclosure_correction_sha256} />.</li>
       <li>Composite: weighted harmonic mean with the Intelligence, Speed and Cost gates below 50 (Intelligence below 60 in option C). The official headline A uses equal 25 / 25 / 25 / 25 axis weights and Intelligence floor 50. B remains the secondary 40 / 20 / 20 / 20 view; C keeps equal axes and Intelligence floor 60. Ties come from the paired bootstrap.</li>
-      <li>{a.revision === 'v1.5.1' ? <>The nine full-coverage systems marked with a <b>v1.5 roster addendum</b> label are officially ranked in A, B, C, and every score preset. Their scores, individual intervals, method, pricing rules and frozen G_med are unchanged. No new paired-bootstrap comparison is inferred for addendum pairs.</> : <>Rows marked with a <b>v1.5 roster addendum</b> label were added by separately hashed roster addenda: same frozen sample, method, pricing rules and G_med. They remain outside the base release order and its tie markers.</>}</li>
+      <li>{a.revision === 'v1.5.2' ? <>All {a.systems.filter((system) => system.addendum != null && system.status?.status === 'complete').length} full-coverage systems marked with a <b>v1.5 roster addendum</b> label are officially ranked in A, B, C, and every score preset. Their scores, individual intervals, method, pricing rules and frozen G_med are unchanged. No new paired-bootstrap comparison is inferred for addendum pairs.</> : a.revision === 'v1.5.1' ? <>The nine full-coverage systems marked with a <b>v1.5 roster addendum</b> label are officially ranked in A, B, C, and every score preset. Their scores, individual intervals, method, pricing rules and frozen G_med are unchanged. No new paired-bootstrap comparison is inferred for addendum pairs.</> : <>Rows marked with a <b>v1.5 roster addendum</b> label were added by separately hashed roster addenda: same frozen sample, method, pricing rules and G_med. They remain outside the base release order and its tie markers.</>}</li>
       <li>Before every release we review the leaderboard for anomalies and close loopholes with general, documented rules. The page and Git repository provide transparent data and method details; Benchmark Heaven owns its rules.</li>
     </ul>
     <p className="bh-muted mt-3 text-xs" data-bh-jev15-provenance>Data file SHA-256 <code className="break-all">{sha256}</code> · scorer output SHA-256 <code className="break-all">{a.source_sha256}</code> · run kind <b>{a.run_kind}</b>.</p>
@@ -369,7 +369,7 @@ function Findings({ a, jevClass, ranked, honorable, partial, addendum }: {
       {topInt && lead && topInt.key !== lead.key && <li><b>{short(topInt.display)}</b> has the highest Intelligence ({one(topInt.axes.intelligence)}) but places #{topInt.rank}: Speed {one(topInt.axes.speed)}, Cost {one(topInt.axes.cost)} — the harmonic mean does not let accuracy buy back a weak axis.</li>}
       {topSealed?.intelligence?.I_sealed != null && <li>The strongest sealed Intelligence is {one(topSealed.intelligence.I_sealed)} (<b>{short(topSealed.display)}</b>, #{topSealed.rank}); sealed items carry half of Intelligence, and an open-minus-sealed gap beyond the field median plus eight points costs Intelligence.</li>}
       {pairs > 0 && <li>{ties} of {pairs} adjacent pairs with published paired-bootstrap comparisons are statistical ties — read the order as a ranking, not the gaps as significant.{pairs < a.board[a.headline].order.length - 1 ? ' No paired comparison is published for the other adjacent pairs, so no tie classification is inferred.' : ''}</li>}
-      {addendum.length > 0 && <li>{a.revision === 'v1.5.1' ? `All ${addendum.length} systems joined by separately hashed roster addenda and have official ranks in this revision; their A/B/C ranks and intervals are in the addendum table below.` : `${addendum.length} systems joined by separately hashed roster addenda; they sit outside the frozen ${a.revision} order — their placements against it are in the addendum table below.`}</li>}
+      {addendum.length > 0 && <li>{a.revision === 'v1.5.1' || a.revision === 'v1.5.2' ? `All ${addendum.length} systems joined by separately hashed roster addenda and have official ranks in this revision; their A/B/C ranks and intervals are in the addendum table below.` : `${addendum.length} systems joined by separately hashed roster addenda; they sit outside the frozen ${a.revision} order — their placements against it are in the addendum table below.`}</li>}
       {honorable.map((r) => <li key={r.key}><b>{short(r.display)}</b> scores {one(r.jevbench_score)} but is <b>not ranked</b>: {r.not_ranked_because ?? 'it is a service running another entrant\u2019s model'}.</li>)}
       {partial.length > 0 && <li>{partial.map((r) => short(r.display)).join(', ')} did not complete the full suite; they are listed without a rank.</li>}
     </ul>
@@ -462,8 +462,8 @@ export function JevBenchV15({ artifact: a, sha256, previousKeys = [] }: { artifa
   const honorable = a.systems.filter((s) => s.listing === 'honorable_mention');
   const addendum = a.systems.filter((s) => s.addendum != null).sort((x, y) => (x.rank ?? x.would_place_A ?? 999) - (y.rank ?? y.would_place_A ?? 999));
   const unpriced = a.systems.filter((s) => s.listing === 'unpriced');
-  // v1.5.1 keeps wrappers and other non-eligible rows out of every ranked visualization. v1.5.0 stays frozen.
-  const chartData = a.revision === 'v1.5.1' ? ranked : a.systems;
+  // v1.5.1 and v1.5.2 keep wrappers and other non-eligible rows out of every ranked visualization. v1.5.0 stays frozen.
+  const chartData = a.revision === 'v1.5.1' || a.revision === 'v1.5.2' ? ranked : a.systems;
   const classes = [...new Set(chartData.map((s) => s.class))];
   const seen = new Map<string, number>();
   for (const s of [...a.systems, ...a.not_measured]) seen.set(shortOnly(s.display), (seen.get(shortOnly(s.display)) ?? 0) + 1);
@@ -486,7 +486,7 @@ export function JevBenchV15({ artifact: a, sha256, previousKeys = [] }: { artifa
       What-If: the <a className="text-accent underline" href="#jev14-chart-title">weight sliders below</a> re-score every system under other axis weights — only the equal 25/25/25/25 weights give the official option-{a.headline} ranking. The 3D view of capability, cost and speed loads <a className="text-accent underline" href="#jev14-capability-views">further down</a>.
     </p>
     <JevScoreChart revision={a.revision} rows={viewRows} rankedCount={ranked.length} newLabel={newLabel} fairness={null} approvedNote={leader} tieNote={tieSentence(a)} capabilityHref="#jev-capability" presets={jevV15SliderPresets(a)} compactMobile scoreKind="v15" methodLink={{ href: '#jev15-method', label: 'Method notes ↓' }} />
-    {a.revision === 'v1.5.1' && <Honorable a={a} rows={honorable} />}
+    {(a.revision === 'v1.5.1' || a.revision === 'v1.5.2') && <Honorable a={a} rows={honorable} />}
     <JevCompareV15 rows={compareRows} openDecisions={a.sample.open} sealedDecisions={a.sample.sealed} />
     <AxesTable a={a} rows={[...new Map([...ranked, ...honorable, ...addendum, ...partial, ...unpriced].map((row) => [row.key, row])).values()]} />
     <HeadlineBars a={a} ranked={ranked} />
@@ -495,7 +495,7 @@ export function JevBenchV15({ artifact: a, sha256, previousKeys = [] }: { artifa
     <Findings a={a} jevClass={jevClass} ranked={ranked} honorable={honorable} partial={partial} addendum={addendum} />
     <Guide a={a} ranked={ranked} />
     <Costs a={a} />
-    {a.revision !== 'v1.5.1' && <Honorable a={a} rows={honorable} />}
+    {a.revision !== 'v1.5.1' && a.revision !== 'v1.5.2' && <Honorable a={a} rows={honorable} />}
     <Addendum a={a} rows={addendum} />
     <NotRanked a={a} partial={partial} unpriced={unpriced} />
     <Method a={a} sha256={sha256} />
@@ -503,7 +503,7 @@ export function JevBenchV15({ artifact: a, sha256, previousKeys = [] }: { artifa
     <Credit a={a} />
     <JevCapabilityLazy revision={a.revision} only3d />
     <JevContextLazy />
-    <p className="bh-muted mt-4 text-xs">Previous release: <a className="text-accent underline" href={a.revision === 'v1.5.1' ? '/jev-models/v1.5.0' : '/jev-models/v1.4.2.2'}>{a.revision === 'v1.5.1' ? 'JevBench v1.5.0' : 'JevBench v1.4.2.2'} (frozen results)</a>.</p>
+    <p className="bh-muted mt-4 text-xs">Previous release: <a className="text-accent underline" href={a.revision === 'v1.5.2' ? '/jev-models/v1.5.1' : a.revision === 'v1.5.1' ? '/jev-models/v1.5.0' : '/jev-models/v1.4.2.2'}>{a.revision === 'v1.5.2' ? 'JevBench v1.5.1' : a.revision === 'v1.5.1' ? 'JevBench v1.5.0' : 'JevBench v1.4.2.2'} (frozen results)</a>.</p>
   </section>;
 }
 

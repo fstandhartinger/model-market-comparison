@@ -1,0 +1,244 @@
+{
+  "independent_numeric_comparison_sha256": "c87301cd91e27d796775f51b8c5f7947294c1812b31b4211d78e5a81472cc080",
+  "rows": [
+    {
+      "adapter_id": "a3/candidates/nemotron-diffusion-8b/spec.json:jevbench.adapters.typesafe.TypeSafeAdapter",
+      "addendum": {
+        "id": "A3",
+        "label": "v1.5 roster addendum A3",
+        "release": "v1.5"
+      },
+      "api_exposure_note": null,
+      "api_flag": false,
+      "author": "pst2154",
+      "axes": {
+        "calibration": 76.24688293519233,
+        "cost": 55.49170925809556,
+        "intelligence": 33.84367245974849,
+        "speed": 93.74324086172008
+      },
+      "calibration": {
+        "parts": {
+          "choice": {
+            "ece_hard": 0.09594518072709125,
+            "ece_score": 80.81096385458176,
+            "mean_tvd": 0.3020534686259666,
+            "n": 799.0,
+            "n_ece_hard": 277.0,
+            "n_tvd": 50.0,
+            "score": 75.30280849599255
+          },
+          "noul": {
+            "abstention_rate": 0.3656565656565657,
+            "brier": 0.18855886879495318,
+            "ece": 0.1293343161293865,
+            "n": 495.0,
+            "score": 74.1331367741227
+          },
+          "score": {
+            "interval90_coverage": 0.906060606060606,
+            "interval90_width": 0.5267676767676769,
+            "n": 330.0,
+            "nrps": 0.1366270109569611,
+            "score": 79.30470353546178,
+            "top_ece": 0.1386394591669016
+          }
+        },
+        "score": 76.24688293519233
+      },
+      "class": "system-one-open",
+      "composite_ci95": {
+        "A": [
+          18.600485994675733,
+          32.782504356457665
+        ],
+        "B": [
+          16.093431518950908,
+          29.451782528235324
+        ],
+        "C": [
+          12.91700416296926,
+          22.765628025317827
+        ]
+      },
+      "cost": {
+        "basis": "documented hosted-model estimate; no exact base-model floor applies",
+        "kind": "estimate",
+        "usd_per_1000": 0.03045157019704434
+      },
+      "display": "Nemotron Diffusion 8B (pst2154, optimized vLLM)",
+      "endpoint_condition": "evaluator-owned Lium GPU pod (H100), offline read-only container",
+      "endpoint_kind": "gpu",
+      "full_coverage": true,
+      "gpu": "H100",
+      "intelligence": {
+        "I_open": 39.537877662793036,
+        "I_sealed": 28.14946725670395,
+        "base": 33.84367245974849,
+        "excess": 6.201782906009844,
+        "gap": 11.388410406089086,
+        "penalty": 1.0,
+        "per_type_split": {
+          "open|choice": {
+            "cc": 57.04524835356567,
+            "n": {
+              "easy": 72,
+              "hard": 169,
+              "judge": 114,
+              "standard": 84
+            },
+            "tiers": {
+              "easy": 89.14681941513415,
+              "hard": 44.3791617704661,
+              "judge": 56.43153526970955,
+              "standard": 67.24720561476475
+            }
+          },
+          "open|noul": {
+            "cc": 10.773429242976352,
+            "n": {
+              "easy": 34,
+              "hard": 113,
+              "judge": 102,
+              "standard": 66
+            },
+            "tiers": {
+              "easy": 52.941176470588225,
+              "hard": -27.43362831858407,
+              "judge": 56.86274509803921,
+              "standard": -3.0303030303030276
+            }
+          },
+          "open|score": {
+            "cc": 50.79495539183709,
+            "n": {
+              "easy": 16,
+              "hard": 50,
+              "judge": 34,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 24.69718225067451,
+              "hard": 53.55396011795156,
+              "judge": 45.622339029237644,
+              "standard": 66.08475705408861
+            }
+          },
+          "sealed|choice": {
+            "cc": 58.80957283866533,
+            "n": {
+              "easy": 50,
+              "hard": 108,
+              "judge": 101,
+              "standard": 101
+            },
+            "tiers": {
+              "easy": 79.4921875,
+              "hard": 51.39732685297693,
+              "judge": 64.22261484098941,
+              "standard": 55.17319447588863
+            }
+          },
+          "sealed|noul": {
+            "cc": -16.909090909090907,
+            "n": {
+              "easy": 25,
+              "hard": 55,
+              "judge": 50,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 4.0000000000000036,
+              "hard": -27.27272727272727,
+              "judge": 8.000000000000007,
+              "standard": -43.99999999999999
+            }
+          },
+          "sealed|score": {
+            "cc": 42.54791984053743,
+            "n": {
+              "easy": 25,
+              "hard": 55,
+              "judge": 50,
+              "standard": 50
+            },
+            "tiers": {
+              "easy": 59.566799606231854,
+              "hard": 36.06447446405748,
+              "judge": 38.947749671897505,
+              "standard": 52.405625963610014
+            }
+          }
+        }
+      },
+      "jevbench_score": 25.684702471457477,
+      "key": "nemotron-diffusion-8b",
+      "licence": "MIT (application code); modified vLLM runtime Apache-2.0; nvidia/Nemotron-Labs-Diffusion-8B keeps its upstream licence",
+      "listing": "addendum",
+      "not_ranked_because": "v1.5 roster addendum A3: complete run, scored with the frozen v1.5.0 median gap. Headline A score 25.68 would place about #37; secondary B score would place about #39. Roster addendum rows stay outside the v1.5.0 order and tie markers.",
+      "open": "yes",
+      "planned_weight_denominator": 1.0,
+      "rank": null,
+      "ranked": false,
+      "ranks": {
+        "A": null,
+        "B": null,
+        "C": null
+      },
+      "repo": "https://github.com/pst2154/Nemotron_Jev",
+      "scores": {
+        "A": 25.684702471457477,
+        "B": 22.70384890919707,
+        "C": 17.836598938512132
+      },
+      "speed": {
+        "adjustment": "x2 + 0.15 s (assumption, not measured)",
+        "n": 450,
+        "p50_s_adjusted": 0.18745839605107903,
+        "p50_s_raw": 0.018729198025539517,
+        "p95_s_adjusted": 0.22530509717762465,
+        "p95_s_raw": 0.03765254858881232
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "support": {
+        "choice": "native",
+        "noul": "native",
+        "score": "native"
+      },
+      "underlying": "nvidia/Nemotron-Labs-Diffusion-8B @ 16c67f05 (unchanged weights) served by github.com/pst2154/Nemotron_Jev @ cdc36d60 on the author's digest-pinned modified vLLM runtime: BF16, candidate-only output projection, direct candidate logits, CUDA graphs, one masked forward pass per decision, nothing generated. Disclosed by the author: the inherited option-ordering rule was selected using public benchmark examples in earlier 14B experiments. Our earlier v1.4.3 run of this system used a recipe that left the base image's older 14B application in place; this v1.5 row is a fresh measurement of the 8B.",
+      "validity": {
+        "choice": {
+          "invalid_rate": 0.0,
+          "n": 799
+        },
+        "noul": {
+          "invalid_rate": 0.0,
+          "n": 495
+        },
+        "score": {
+          "invalid_rate": 0.0,
+          "n": 330
+        }
+      },
+      "views": {
+        "Balanced 33:33:33": 23.60187012246317,
+        "Emphasis on Accuracy 60:20:20": 19.52415109652738,
+        "Emphasis on Cost 20:20:60": 24.29843756293519,
+        "Emphasis on Speed 20:60:20": 28.78936736571111,
+        "Intelligence only": 15.505737990644903
+      },
+      "would_place_A": 37,
+      "would_place_B": 39
+    }
+  ],
+  "schema": "jevbench-v15-addendum-rows-1",
+  "source_a3_aggregate_sha256": "424be19ec82f8f784fc264955ae0e4a76dbfb1b71486a21741b91c450c747c8c",
+  "source_a3_protocol_sha256": "369d916b4ba00e48e6bc4669c7d05feaa9614554887ec9a3c721c231ed734648",
+  "source_merged_aggregate_sha256": "f4c0a2d74018d49f115eea6b2cee88b7a45dad6e4524e3a34de8565ca05692ff",
+  "source_v15_projection_sha256": "b82e79de420380f23e15c13b98a2749bcbe8d3249ec35af5dd857468ab8d785e"
+}
