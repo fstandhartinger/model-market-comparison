@@ -54,13 +54,15 @@ for (const rawAccepted of [true, false]) {
       await write('scripts/build-benchmark-history.mjs', 'console.log(JSON.stringify({written:false,state_id:"fixture",count:0}));');
       process.chdir(dir);
       const calls = [];
-      const report = await refreshBenchmarks({ runDir: join(dir, 'run'), concurrency: 1,
+      let acceptRefused = false;
+      const options = { runDir: join(dir, 'run'), concurrency: 1,
         review: async ({ artifactId, rows }) => {
           calls.push(artifactId);
-          const accepted = artifactId !== 'protocol-aa-refused::1' && (rawAccepted || !artifactId.startsWith('aa-fields-'));
+          const accepted = (acceptRefused || artifactId !== 'protocol-aa-refused::1') && (rawAccepted || !artifactId.startsWith('aa-fields-'));
           return { accepted, fingerprints: accepted ? rows.map((r) => ({ id: r.id })) : [],
             errors: accepted ? [] : ['fixture rejection'], manifest: { artifact_id: artifactId } };
-        } });
+        } };
+      const report = await refreshBenchmarks(options);
       assert.ok(calls.includes('protocol-aa-refused::1'));
       assert.ok(calls.includes('protocol-aa-accepted::1'), 'neighbour reviewed after refusal');
       assert.ok(calls.includes('aa-fields-0'), 'raw numeric gate still runs');
@@ -75,6 +77,21 @@ for (const rawAccepted of [true, false]) {
         assert.equal(views.get('aa-accepted::1').snapshot.collected_at, '2026-09-29T05:17:00Z');
         assert.equal(report.checks.find((c) => c.id === 'aa-refused::1' && c.collector).status, 'retained_after_failure');
         assert.equal(report.checks.find((c) => c.id === 'aa-accepted::1' && c.collector).status, 'updated');
+        // The next run's raw rows are unchanged. A repeated refusal must still
+        // be reviewed and retain the original Sep10 lock, not the Sep29 default.
+        calls.length = 0;
+        await refreshBenchmarks(options);
+        assert.deepEqual(calls, ['protocol-aa-refused::1']);
+        const repeated = (await read(`${root}/ingestion-lock.json`)).aa;
+        assert.equal(repeated.retained_benchmarks['aa-refused::1'].observations_sha256, oldLock.observations_sha256);
+        // Only an explicit protocol success releases that older lock. Numeric
+        // rows were already accepted in the first run and need no invented date.
+        acceptRefused = true; calls.length = 0;
+        await refreshBenchmarks(options);
+        assert.deepEqual(calls, ['protocol-aa-refused::1']);
+        const released = (await read(`${root}/ingestion-lock.json`)).aa;
+        assert.deepEqual(released.retained_benchmarks, {});
+        assert.equal(released.observations_sha256, repeated.observations_sha256);
       } else {
         assert.deepEqual(actual, old);
         assert.deepEqual(lock, oldLock);
