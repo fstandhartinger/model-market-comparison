@@ -6,7 +6,7 @@ Wants=network-online.target
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/python3 %h/bin/jevbench-priority-worker.py cycle
-TimeoutStartSec=180
+TimeoutStartSec=360
 UMask=0077
 NoNewPrivileges=true
 PrivateTmp=true

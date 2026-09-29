@@ -10,7 +10,7 @@ export default function PriorityEvaluationSuccessPage() {
   return <article className="max-w-2xl text-[15px] leading-relaxed">
     <p className="bh-eyebrow">Priority evaluation request</p>
     <h1 className="mt-1 text-3xl font-bold tracking-tight">Thanks for your request</h1>
-    <p className="bh-muted mt-4">If your payment completed, Stripe will send a receipt. We will email you after reviewing the submission. The 48-hour results window starts when the code review passes. If the request is unsafe or cannot be evaluated fairly, we will refuse it and issue a full refund.</p>
+    <p className="bh-muted mt-4">If your payment completed, Stripe will send a receipt and we will start reviewing your submission. Results are due within 48 hours of payment. If we miss that deadline, the payment is automatically refunded in full. If we need information from you, the clock pauses while we wait. If the request is unsafe or cannot be evaluated fairly, we will refuse it and issue a full refund.</p>
     <p className="mt-5"><Link className="text-accent underline" href="/jev-models">Return to JevBench</Link></p>
   </article>;
 }

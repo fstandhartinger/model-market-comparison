@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHmac, randomUUID } from 'node:crypto';
 import * as priorityEvaluation from '../lib/priority-evaluation.mjs';
-import { quotePriorityEvaluation, validatePrioritySubmission, verifyStripeSignature } from '../lib/priority-evaluation.mjs';
+import { paidAtFromStripeEvent, quotePriorityEvaluation, validatePrioritySubmission, verifyStripeSignature } from '../lib/priority-evaluation.mjs';
 
 const valid = (overrides = {}) => ({
   submissionId: randomUUID(), email: 'author@example.com', modelName: 'Example Jev',
@@ -132,4 +132,14 @@ test('Stripe signatures require a valid HMAC and a fresh timestamp', () => {
   assert.equal(verifyStripeSignature(body, `t=${now},v1=${'0'.repeat(64)}`, secret, now), false);
   assert.equal(verifyStripeSignature(body, `t=${now - 301},v1=${digest}`, secret, now), false);
   assert.equal(verifyStripeSignature(body, `t=${now},v1=${digest}`, 'wrong', now), false);
+});
+
+test('payment time comes only from a plausible signed event creation time', () => {
+  const now = 1_790_000_000;
+  assert.equal(paidAtFromStripeEvent(1_789_999_000, now), new Date(1_789_999_000 * 1000).toISOString());
+  assert.equal(paidAtFromStripeEvent(now + 301, now), null);
+  assert.equal(paidAtFromStripeEvent(1_600_000_000, now), null);
+  assert.equal(paidAtFromStripeEvent('1789999000', now), null);
+  assert.equal(paidAtFromStripeEvent(1_789_999_000.5, now), null);
+  assert.equal(paidAtFromStripeEvent(undefined, now), null);
 });

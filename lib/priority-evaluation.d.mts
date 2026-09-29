@@ -29,3 +29,4 @@ export function startPriorityCheckout(input: {
   | { status: 502; body: { error: string; requestId: string } }
 >;
 export function verifyStripeSignature(payload: Buffer, header: string | null, secret: string | null, nowSeconds?: number, toleranceSeconds?: number): boolean;
+export function paidAtFromStripeEvent(created: unknown, nowSeconds?: number): string | null;

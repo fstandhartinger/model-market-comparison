@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "code": {
+    "run_v15.py": {
+      "path": "/home/flori/jobs/jevbench-v15-measure-20260925/harness/run_v15.py",
+      "sha256": "a5a37181e52c421e4c6588c7b4a3d84f7458f42a18758face8be511f65e544a0"
+    },
+    "evaluate_api.py": {
+      "path": "/home/flori/jobs/imagejev-clean-sealed-20260925/work/evaluate_api.py",
+      "sha256": "3920bedc4fc8f0067d1592cbec70673d3a14dc2d8be2484d2fb1f484ad1322b5"
+    },
+    "jevbench/adapters/base.py": {
+      "path": "/home/flori/jobs/jevbench-v15-measure-20260925/harness/vendor/jevbench/adapters/base.py",
+      "sha256": "fdddc42e4f71d774096f806c4ee844cc4c4b428385f01a017cb64153d7c089f4"
+    },
+    "jevbench/adapters/typesafe.py": {
+      "path": "/home/flori/jobs/jevbench-v15-measure-20260925/harness/vendor/jevbench/adapters/typesafe.py",
+      "sha256": "780f879416479b645ee519bb85d0cce722d0df7aa2b41a029de92b76f2593e51"
+    },
+    "jevbench/adapters/openai_compat.py": {
+      "path": "/home/flori/jobs/jevbench-v15-measure-20260925/harness/vendor/jevbench/adapters/openai_compat.py",
+      "sha256": "5f0450ef2db2743db05bdf756cd50db951654533e33cdfd23002709ca485c95e"
+    }
+  },
+  "inputs": {
+    "jevbench": {
+      "count": 1624,
+      "items": {
+        "path": "/home/flori/jevbench-sealed/v1.5/inputs/input-1624.jsonl",
+        "sha256": "985e7672646ef1e4ca33fa55e797c9f4789f116660f53b0309658e163a6093b1"
+      }
+    },
+    "imagejevbench": {
+      "count": 684,
+      "root": "/home/flori/jevbench-sealed/imagejev-intake-20260925/pod-input",
+      "manifest": {
+        "path": "/home/flori/jobs/fastlane-imajev4b-fast-imagejev-20260928/receipts/IMAGEJEV-POD-MANIFEST.json",
+        "sha256": "d6f9d0834f2c2d2680c581c59add3bcade1142edeb60d388e9fe8953bd60e85d"
+      }
+    }
+  }
+}

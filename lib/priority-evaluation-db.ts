@@ -85,6 +85,8 @@ export async function markCheckoutFailed(requestId: string) {
 
 type CheckoutEvent = {
   eventId: string; eventType: string; requestId: string; mode: 'test' | 'live';
+  // ISO time from the signed event's `created` field; the 48-hour delivery clock starts here.
+  paidAt: string;
   session: {
     id?: unknown; mode?: unknown; status?: unknown; payment_status?: unknown; currency?: unknown;
     amount_subtotal?: unknown; amount_total?: unknown; payment_intent?: unknown;
@@ -103,6 +105,7 @@ export async function recordPaidCheckout(input: CheckoutEvent): Promise<'recorde
   const paymentIntent = typeof session.payment_intent === 'string' ? session.payment_intent : '';
   if (!paymentIntent.startsWith('pi_')) throw new Error('Checkout payment reference is invalid');
   if (typeof session.id !== 'string' || !session.id.startsWith('cs_')) throw new Error('Checkout session reference is invalid');
+  if (typeof input.paidAt !== 'string' || Number.isNaN(Date.parse(input.paidAt))) throw new Error('Checkout payment time is invalid');
 
   const p = await db();
   const client: PoolClient = await p.connect();
@@ -135,9 +138,9 @@ export async function recordPaidCheckout(input: CheckoutEvent): Promise<'recorde
     if (row.status !== 'checkout_pending' && row.status !== 'checkout_failed') throw new Error('Request is not awaiting payment');
     await client.query(
       `UPDATE bh_priority_evaluation_requests SET status='paid', checkout_session_id=$2, payment_intent_id=$3,
-       amount_total=$4, notification_status='pending', updated_at=now()
+       amount_total=$4, notification_status='pending', paid_at=COALESCE(paid_at, $5::timestamptz), updated_at=now()
        WHERE id=$1`,
-      [requestId, session.id, paymentIntent, session.amount_total],
+      [requestId, session.id, paymentIntent, session.amount_total, input.paidAt],
     );
     await client.query('COMMIT');
     return 'recorded';

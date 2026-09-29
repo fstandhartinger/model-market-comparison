@@ -1,0 +1,19 @@
+[Unit]
+Description=Fast-lane pickup sweep and health check (four times a day)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+Environment=AGENT_BOARD_NAME=fastlane-autopickup
+Environment=GH_NO_UPDATE_NOTIFIER=1
+ExecStart=/usr/bin/python3 %h/bin/jevbench-autopickup.py health
+TimeoutStartSec=1200
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%h/.local/state/fastlane-autopickup %h/jobs/fastlane-evaluations
+ReadWritePaths=%h/.agent-board %h/.notify %h/.claude/skills/email-access
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6

@@ -36,7 +36,7 @@ export default function RequestPriorityEvaluationPage() {
         <li>Payment buys earlier scheduling only. It never buys a different method, score or rank. Every model uses the same frozen task set and rules.</li>
         <li>We decide which models we evaluate and when. We may also evaluate any model early on our own if it is of public interest.</li>
         <li>Every submission goes through code review. We refuse and fully refund requests that are unsafe or cannot be evaluated fairly.</li>
-        <li>After a request passes code review, we provide results within 48 hours. If we miss that deadline, the payment is automatically refunded.</li>
+        <li>We provide results within 48 hours of payment. If we miss that deadline, the payment is automatically refunded in full. The clock pauses while we wait for information requested from you.</li>
         <li>A public paid run carries a visible “priority run” marker in the data. A private report is never published without your team&apos;s consent. We may still evaluate the model later on our own schedule if it becomes a matter of public interest.</li>
       </ul>
     </section>

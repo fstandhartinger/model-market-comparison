@@ -1,0 +1,20 @@
+[Unit]
+Description=Paid fast-lane evaluation for order %i (quota-picked paid judgement engine)
+After=network-online.target
+Wants=network-online.target
+
+# Only this trusted host controller has deployment/database access. Model processes use
+# request-scoped bubblewrap; fixed measurement API processes have separate input/credential
+# mounts, and official scoring runs offline. No submitted code executes in an agent.
+[Service]
+Type=exec
+ExecStart=/usr/bin/python3 %h/bin/jevbench-autopickup.py evaluate %i
+WorkingDirectory=%h/jobs/fastlane-evaluations
+UMask=0077
+MemoryMax=4G
+TasksMax=128
+NoNewPrivileges=true
+RuntimeMaxSec=46h
+TimeoutStopSec=120
+KillMode=control-group
+Restart=no
