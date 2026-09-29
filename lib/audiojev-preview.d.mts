@@ -9,7 +9,7 @@ export type AudioJevRobustness = Record<string, AudioJevSlice | number | null | 
 };
 
 export type AudioJevRow = {
-  key: string; table: string; group: AudioJevGroup; apiFlag: boolean; sealedRoute: boolean;
+  key: string; name: string; config: string | null; table: string; group: AudioJevGroup; apiFlag: boolean; sealedRoute: boolean;
   families: string[] | null; support: Record<string, string>;
   nItems: number | null; nRows: number | null; nErrors: number | null;
   iPublic: number | null; iPublicCi: [number, number] | null; iSealed: number | null;
@@ -37,6 +37,8 @@ export type AudioJevExample = {
   labels: string[]; descriptions: Record<string, string>; gold: string | null; durationS: number | null;
 };
 
+export function displayName(key: unknown): { name: string; config: string | null };
+export const GROUP_LABEL: Record<AudioJevGroup, string>;
 export function tableGroup(table: unknown): AudioJevGroup;
 export function jevClassReasons(system: unknown): string[];
 export function normalizeSystem(system: unknown): AudioJevRow;
