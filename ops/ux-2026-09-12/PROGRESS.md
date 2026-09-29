@@ -19647,3 +19647,15 @@ files** (240 before; the two new ones are the v3.16 report page and bundle), exi
    were all claude-opus.
 
 **`ALL-ACCEPTED` is not appended.**
+
+
+## CR-221 — recovery of undelivered PR fixes (2026-09-29)
+
+Recovery preserves useful code from old PRs on current main and keeps dated review
+reports in `../pr-cleanup-20260929/`. Archived reports do not mark current acceptance
+verified. In particular, PR #44's old consent conclusion is still unresolved, and
+CR-177.3 download counts remain open under the analytics owner. Old #5/#23/#46 ledger
+patches are archival evidence only; current CR numbering and later sign-offs remain.
+
+Queue gates and live verification for this recovery are recorded in its GitHub PR and
+the cleanup job's disposition ledger; no ALL-ACCEPTED marker is added.

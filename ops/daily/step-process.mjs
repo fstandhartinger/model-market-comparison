@@ -27,9 +27,35 @@
 // the wrong pid, so the timer has to be ours.
 
 import { spawn } from 'node:child_process';
+import { readdirSync, readFileSync } from 'node:fs';
 
 /** Time a signalled group keeps to exit before it is SIGKILLed. */
 export const STEP_GROUP_KILL_GRACE_MS = 20_000;
+const STEP_GROUP_POLL_MS = 100;
+
+/**
+ * Snapshot live members of this detached session/process group. After its leader exits, a PGID
+ * alone is not enough to signal safely: the numeric id can be reused. Linux start ticks let the
+ * timeout path prove a member still belongs to the group it originally spawned.
+ */
+function liveGroupMembers(pgid) {
+  const members = new Map();
+  let entries;
+  try { entries = readdirSync('/proc'); } catch { return members; }
+  for (const entry of entries) {
+    if (!/^\d+$/.test(entry)) continue;
+    let stat;
+    try { stat = readFileSync(`/proc/${entry}/stat`, 'utf8'); } catch { continue; }
+    const close = stat.lastIndexOf(')');
+    if (close < 0) continue;
+    const fields = stat.slice(close + 2).trim().split(/\s+/);
+    // fields[0..3] are state, parent pid, process group, and session; starttime is field 22.
+    if (fields[0] === 'Z' || Number(fields[2]) !== pgid || Number(fields[3]) !== pgid) continue;
+    const starttime = Number(fields[19]);
+    if (Number.isFinite(starttime)) members.set(Number(entry), starttime);
+  }
+  return members;
+}
 
 /** Groups this process has spawned and not yet reaped, so the parent's own death can clear them. */
 const liveGroups = new Set();
@@ -95,31 +121,72 @@ export function runStep(file, args = [], {
     const out = [], err = [];
     let outBytes = 0, errBytes = 0;
     let settled = false, timedOut = false, overflow = null, spawnError = null;
-    let killTimer = null, graceTimer = null, stdioTimer = null;
+    let killTimer = null, groupPollTimer = null, stdioTimer = null;
+    let groupDeadline = 0, stdioDeadline = 0, groupKillSent = false, groupDrained = false;
+    let knownGroupMembers = new Map(), deferredFinish = null;
     const group = () => (Number.isInteger(child.pid) && child.pid > 0 ? child.pid : null);
 
     const forget = () => {
       const pid = group();
       if (pid !== null) liveGroups.delete(pid);
-      for (const timer of [killTimer, graceTimer, stdioTimer]) if (timer) clearTimeout(timer);
-      killTimer = graceTimer = stdioTimer = null;
+      for (const timer of [killTimer, groupPollTimer, stdioTimer]) if (timer) clearTimeout(timer);
+      killTimer = groupPollTimer = stdioTimer = null;
     };
 
-    const killGroup = (signal) => {
+    const originalGroupStillLive = () => {
       const pid = group();
-      // Before the group exists there is nothing to signal; after the child is reaped the pid may have
-      // been reused, and signalling a reused pid group is how a kill hits a stranger.
-      if (pid === null || child.exitCode !== null || child.signalCode !== null) return false;
+      if (pid === null || groupDrained) return false;
+      const current = liveGroupMembers(pid);
+      const matchesOriginal = [...current].some(([member, starttime]) => knownGroupMembers.get(member) === starttime);
+      if (matchesOriginal) for (const [member, starttime] of current) knownGroupMembers.set(member, starttime);
+      return matchesOriginal;
+    };
+
+    const killGroup = (signal, { afterLeaderExit = false } = {}) => {
+      const pid = group();
+      // Before the group exists there is nothing to signal. After its leader is reaped, require a live
+      // member whose pid and /proc start tick were captured from this original group before signalling.
+      if (pid === null) return false;
+      if (child.exitCode !== null || child.signalCode !== null) {
+        if (!afterLeaderExit || !originalGroupStillLive()) return false;
+      }
       return signalGroup(pid, signal);
     };
 
-    const finish = (error, code, signal) => {
+    let finish;
+    const pollTimedOutGroup = () => {
+      groupPollTimer = null;
+      if (settled || !timedOut) return;
+      if (!originalGroupStillLive()) {
+        groupDrained = true;
+        if (deferredFinish) finish(deferredFinish.error, deferredFinish.code, deferredFinish.signal, true);
+        return;
+      }
+      if (!groupKillSent && Date.now() >= groupDeadline) {
+        groupKillSent = killGroup('SIGKILL', { afterLeaderExit: true });
+      }
+      if (groupKillSent && Date.now() >= stdioDeadline) {
+        // SIGKILL is pending for an uninterruptible member; stop waiting on its inherited pipes.
+        const result = deferredFinish ?? { error: overflow ?? spawnError, code: child.exitCode, signal: child.signalCode };
+        finish(result.error, result.code, result.signal, true);
+        return;
+      }
+      groupPollTimer = setTimeout(pollTimedOutGroup, STEP_GROUP_POLL_MS);
+    };
+
+    finish = (error, code, signal, force = false) => {
       if (settled) return;
+      if (!force && timedOut && !groupDrained && originalGroupStillLive()) {
+        deferredFinish ??= { error, code, signal };
+        if (!groupPollTimer) groupPollTimer = setTimeout(pollTimedOutGroup, STEP_GROUP_POLL_MS);
+        return;
+      }
+      if (timedOut && !groupDrained && !force) groupDrained = true;
       settled = true;
       forget();
       const stdout = Buffer.concat(out).toString('utf8');
       const stderr = Buffer.concat(err).toString('utf8');
-      if (!error && code === 0 && !signal) return resolve({ stdout, stderr });
+      if (!error && !timedOut && code === 0 && !signal) return resolve({ stdout, stderr });
       const failure = error ?? new Error(`Command failed: ${command}\n${stderr}`);
       failure.cmd = command;
       failure.code = failure.code ?? (code === null ? undefined : code);
@@ -158,8 +225,12 @@ export function runStep(file, args = [], {
     if (timeout > 0) {
       killTimer = setTimeout(() => {
         timedOut = true;
+        const pid = group();
+        knownGroupMembers = pid === null ? new Map() : liveGroupMembers(pid);
+        groupDeadline = Date.now() + killGraceMs;
+        stdioDeadline = groupDeadline + stdioGraceMs;
         killGroup(killSignal);
-        graceTimer = setTimeout(() => killGroup('SIGKILL'), killGraceMs);
+        groupPollTimer = setTimeout(pollTimedOutGroup, STEP_GROUP_POLL_MS);
       }, timeout);
     }
 

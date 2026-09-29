@@ -237,9 +237,16 @@ function Projected3D({ points, costBounds, jevClassOnly, tipRef, resetViewRef, r
           { name: 'cost', text: 'Cost · $/1k decisions · cheaper →', at: project(5.8, -5, 4.2) },
           { name: 'capability', text: 'Capability 0–100', at: project(0, 6.3, 0) },
           { name: 'speed', text: 'Speed · faster →', at: project(0, -5, 7.2) },
-        ].map((label) => (
-          <text key={label.name} data-bh-jev14-3d-axis-label={label.name} className="bh-jev-3d-axis-label" x={label.at.x} y={label.at.y}>{label.text}</text>
-        ))}
+        ].map((label) => {
+          // The cost caption is the longest axis label. Right-anchor it within the plot so its
+          // full text remains visible when the phone layout projects its endpoint at the edge.
+          const estimatedTextWidth = label.name === 'cost' ? label.text.length * 7 : 0;
+          const x = label.name === 'cost'
+            ? Math.min(Math.max(label.at.x, estimatedTextWidth + 4), size.width - 4)
+            : label.at.x;
+          return <text key={label.name} data-bh-jev14-3d-axis-label={label.name} className="bh-jev-3d-axis-label"
+            textAnchor={label.name === 'cost' ? 'end' : 'middle'} x={x} y={label.at.y}>{label.text}</text>;
+        })}
       </g>
       <g aria-hidden="true" className="bh-jev-3d-model-labels" data-bh-jev14-3d-model-labels="true" pointerEvents="none" textAnchor="start" fill="var(--muted)" fontSize="11" fontFamily="inherit">
         {declump(rankedPoints
@@ -523,7 +530,12 @@ export function JevCapability3D({ points, costBounds }: { points: Point[]; costB
             };
           };
           const put = (el: HTMLElement, px: number, py: number, behind: boolean) => {
-            el.style.transform = `translate(${px.toFixed(1)}px, ${py.toFixed(1)}px) translate(-50%, -115%)`;
+            const isCostAxis = el.getAttribute('data-bh-jev14-3d-axis-label') === 'cost';
+            const axisWidth = isCostAxis ? (el.offsetWidth || 0) : 0;
+            const anchorX = isCostAxis ? Math.min(Math.max(px, axisWidth + inset), w - inset) : px;
+            const anchor = isCostAxis ? '-100%' : '-50%';
+            el.style.textAlign = isCostAxis ? 'right' : '';
+            el.style.transform = `translate(${anchorX.toFixed(1)}px, ${py.toFixed(1)}px) translate(${anchor}, -115%)`;
             el.style.opacity = behind ? '0' : '1';
           };
           for (const item of fixedRefs) { const at = projectTo(item); put(item.el, at.px, at.py, at.behind); }

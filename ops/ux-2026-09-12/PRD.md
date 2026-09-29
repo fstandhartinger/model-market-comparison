@@ -108,8 +108,8 @@ The current public index page also exposes benchmark, token-use, and cost views:
    gate. This closes the largest factual gap before adding more UI.
 2. **Decision UX:** finish the open Fable directives and verify both hosts in both
    themes. The Simple value map (`e573ef6`) and mobile first row are live; the desktop
-   first screen at 1440×1000 still shows no model row because the value map sits above
-   the list (F-01 vs F-03, for Fable pass 2). A recommendation page that shows no
+   first screen at 1440×1000 showed no model row in the September 13 baseline because the value map sat above
+   the list (F-01 vs F-03, for Fable pass 2). Later release reviews supersede that viewport observation; use their dated receipts for current acceptance. A recommendation page that shows no
    recommendation in the first viewport fails its primary job.
 3. **Cost completeness:** R6.3 is live (`0e7380c`): cited company eligibility, vendor-page
    prices, `quota not published`, and break-even task counts instead of invented per-task

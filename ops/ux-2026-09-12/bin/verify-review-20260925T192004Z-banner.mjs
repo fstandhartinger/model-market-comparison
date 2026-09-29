@@ -61,7 +61,17 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       const teaser = p.locator('[data-bh-fastlane-teaser]');
       if (await teaser.isVisible().catch(() => false)) { await teaser.click(); await p.waitForTimeout(350); }
     };
-    const go = async (path) => { await p.goto(BASE + path, { waitUntil: 'domcontentloaded', timeout: 60000 }); await p.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme); await p.waitForLoadState('networkidle').catch(() => {}); await p.waitForTimeout(800); };
+    const go = async (path) => {
+      await p.goto(BASE + path, { waitUntil: 'domcontentloaded', timeout: 60000 });
+      await p.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
+      await p.waitForLoadState('networkidle').catch(() => {});
+      // Legacy-host mobile hydration can insert the client banner after networkidle; wait for the
+      // positive-route marker so a slow mount is not misreported as a missing product surface.
+      if (/^\/(?:jev-models|image-jev-bench)/.test(path)) {
+        await p.waitForSelector('[data-bh-fastlane-banner]', { timeout: 5000 }).catch(() => {});
+      }
+      await p.waitForTimeout(800);
+    };
 
     for (const [label, path] of [['hub', '/jev-models'], ['imagejev', '/image-jev-bench'], ['pinned', '/jev-models/v1.4.2']]) {
       await go(path);

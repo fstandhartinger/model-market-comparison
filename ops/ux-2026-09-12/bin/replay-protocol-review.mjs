@@ -34,6 +34,7 @@ import { promisify, isDeepStrictEqual } from 'node:util';
 import { reviewArtifact } from '../../daily/gauntlet.mjs';
 import { protocolReviewRow, PROTOCOL_REVIEW_CRITERIA, protocolSourceContent, protocolSourceLocator, captureKey, activitySource, publicValueActivity, publicValueScale, aaFieldActivity, aaFieldScale, scaleSource, followsPageScript, discoveredScriptReceipt } from '../../daily/refresh-benchmarks.mjs';
 import { reconcilePublicIdentities } from '../../daily/public-identities.mjs';
+import { replayManifestForRun } from '../../daily/replay-manifest.mjs';
 import { parseAaBenchmarkFields } from '../../../lib/aa-benchmark-fields.mjs';
 import { gunzipSync } from 'node:zlib';
 
@@ -62,14 +63,21 @@ delete activity?.affirmative;
 const registry = JSON.parse(await readFile('data/raw/benchmarks/registry.json', 'utf8'));
 const entry = registry.entries.find((e) => e.id === id);
 if (!entry) throw new Error(`unknown benchmark id ${id}`);
-const manifestPath = process.env.BH_REPLAY_MANIFEST ?? 'data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/manifest.json';
+const runPlan = fromRun
+  ? JSON.parse(await readFile(join(fromRun, 'data/raw/benchmarks/collection-plan.json'), 'utf8'))
+  : null;
+const runSpec = runPlan?.entries.find((e) => e.benchmark_id === id);
+if (fromRun && !runSpec?.parser) throw new Error(`${id}: no parser in ${fromRun}'s collection plan`);
+const manifestPath = fromRun
+  ? await replayManifestForRun({ workDir: fromRun, source: runSpec.source, captureKey })
+  : process.env.BH_REPLAY_MANIFEST ?? 'data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/manifest.json';
 const manifests = JSON.parse(await readFile(manifestPath, 'utf8'));
 // A manifest records its capture files repo-relative, so replaying a *daily run's* manifest — the
 // only place a run's own captures survive — needs the checkout they are relative to. It is the
 // manifest's own location minus the fixed data/raw/benchmarks/daily-evidence/<dir>/manifest.json
 // tail; BH_REPLAY_ROOT overrides it. The extraction itself stays this checkout's, because the next
 // run is the one this replay is a proof for.
-const replayRoot = process.env.BH_REPLAY_ROOT
+const replayRoot = fromRun ? resolve(fromRun) : process.env.BH_REPLAY_ROOT
   ?? resolve(manifestPath, '..', '..', '..', '..', '..', '..');
 const captured = new Map(manifests.filter((r) => r.status === 200)
   .map((r) => [captureKey(r), { ...r, file: r.file ? resolve(replayRoot, r.file) : r.file }]));
@@ -118,9 +126,7 @@ if (activity) {
 // reconcilePublicIdentities against the rows that run started from, publicValueActivity — so the
 // numbers in the packet are the numbers that run would have put there.
 if (fromRun) {
-  const plan = JSON.parse(await readFile(join(fromRun, 'data/raw/benchmarks/collection-plan.json'), 'utf8'));
-  const spec = plan.entries.find((e) => e.benchmark_id === id);
-  if (!spec?.parser) throw new Error(`${id}: no parser in ${fromRun}'s collection plan`);
+  const spec = runSpec;
   if (spec.parser.runs) throw new Error(`${id}: a multi-capture arm carries no activity summary`);
   const receipt = captured.get(captureKey(spec.source));
   if (!receipt) throw new Error(`no capture for ${captureKey(spec.source)} in the replay manifest`);
