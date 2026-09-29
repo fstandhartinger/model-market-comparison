@@ -574,13 +574,13 @@ def parse(source,spec,load_source,entry=None):
                     'mean_output_tokens':r.get('mean_output_tokens'),'mean_final_best':r.get('mean_final_best')}})
     elif kind=='vulcanbench_frontier_csv':
         # VulcanBench Frontier v4 (Morgan Linton): the published board CSV (assets/data/swe-v4-board.csv) is the
-        # same table leaderboard.html renders — one row per model x effort column. Guards: the exact 18-column
-        # header, 23 tasks in every published row, the stated harness/effort enums and one frozen protocol family
-        # on every row. A renamed/renumbered suite or another protocol family is a different identity and fails
-        # closed.
+        # same table leaderboard.html renders — one row per model x effort column. Guards: the exact 20-column
+        # header, the stated harness/effort enums, one frozen protocol family on every row, and the full
+        # 23-task denominator on every row we publish. A renamed/renumbered suite or another protocol family
+        # is a different identity and fails closed.
         parsed=csvrows(source)
         reviewed=reviewed_protocols(entry)
-        header=['rank','model','lab','harness','effort','best_effort','n','combined_33','combined_33_se','code_quality','passed','mean_minutes','mean_usd','mean_raw_tokens','median_output_tokens','mean_output_tokens','report','protocol']
+        header=['rank','model','lab','harness','effort','best_effort','n','combined_33','combined_33_se','code_quality','passed','mean_minutes','mean_usd','mean_raw_tokens','median_output_tokens','mean_output_tokens','report','protocol','passed_of','combined_timeouts_zero']
         seen=list(parsed[0].keys() if parsed else [])
         added=appended_columns(header,seen)
         if added is None:raise ValueError('VulcanBench Frontier CSV header changed')
@@ -591,12 +591,11 @@ def parse(source,spec,load_source,entry=None):
             raise quarantine_columns(entry['id'],added,header,'the reviewed columns are unchanged and in order, but what the new column(s) mean for the published comparison has not been reviewed')
         partial=[]
         for index,r in enumerate(parsed):
-            # 2026-09-21: the board publishes a run judged on fewer than its 23 tasks when the v3.7 protocol
-            # withholds a task's Code quality score (its own "§" footnote on leaderboard.html — GPT-5.6 Sol at
-            # max, judged on 22 of 23 because a judge probe quoted an excerpt absent from the code). The
-            # combined score then has a different denominator, so such a row is withheld rather than compared
-            # with the full-suite rows. A row claiming *more* than 23 tasks is a different suite and still
-            # fails closed, as does an implausible count of partial rows.
+            # 2026-09-21: the board publishes a run judged on fewer than its 23 tasks. The combined score then
+            # has a different denominator, so such a row was withheld rather than compared with the full-suite
+            # rows. D256.1 (2026-09-29) keeps that rule and sharpens what "denominator" means, because the two
+            # columns the board appended on 2026-09-29 make its two kinds of short row tell themselves apart
+            # for the first time. See the registry's version guard for the reviewed sentence.
             if r.get('harness') not in ('Codex','Claude Code'):raise ValueError(f"VulcanBench Frontier row {index}: harness {r.get('harness')!r} is not a stated harness")
             if r.get('effort') not in ('low','medium','high','extra-high','max'):raise ValueError(f"VulcanBench Frontier row {index}: effort {r.get('effort')!r} not stated")
             # F-209: the reviewed revisions are the registry's own sentence, not a prefix test — the
@@ -612,14 +611,51 @@ def parse(source,spec,load_source,entry=None):
                 raise quarantine(entry['id'],[r.get('protocol')],reviewed,f"row {index} ({r.get('model')} [{r.get('effort')}]) states it")
             # The identity guards above apply to every row on the board; only the denominator decides whether a
             # row may be published beside the full-suite ones.
-            if r.get('n')!='23':
-                if not re.fullmatch(r'\d{1,2}',r.get('n') or '') or not 1<=int(r['n'])<23:raise ValueError(f"VulcanBench Frontier row {index}: task count changed ({r.get('n')!r})")
-                partial.append(f"{r.get('model')} [{r.get('effort')}] n={r['n']}");continue
-            rows.append({'name':f"{r['model']} [{r['effort']}]",'id':f"{r['model']} [{r['effort']}]",'combined_33':r['combined_33'],'source_row':index,'harness':r['harness'],
-                'context':{'model':r['model'],'lab':r['lab'],'harness':r['harness'],'effort':r['effort'],'n_tasks':int(r['n']),'tasks_passed':int(r['passed']),
+            #
+            # `passed_of` is the denominator the board counts `passed` out of — the task set the row was
+            # scored over. `n` is how many of those runs it actually judged. They separate two events the old
+            # `n != 23` test had to lump together:
+            #
+            #  * `passed_of < 23` — the board itself scored the row over a smaller task set (a task's Code
+            #    quality withheld under v3.7, GPT-5.6 Sol at max; a safeguard stop leaving an empty patch
+            #    under v3.15, Opus 5.5 at high). No figure on the full 23 exists, so the row is withheld,
+            #    exactly as before.
+            #  * `passed_of == 23` and `n < 23` — the board kept the full denominator and published the
+            #    combined score on it in `combined_timeouts_zero`. Its own report says why: "A run stopped at
+            #    the bound has no code to judge, so it counts as a failed task … The second figure counts each
+            #    timed-out run as a combined score of 0 over all 23 runs." That figure is on the same 23 tasks
+            #    as every full row, and it is the figure the operator itself compares two efforts of one model
+            #    with (it tags extra-high, not max, as GPT-6 Luna's best effort, which only these figures order
+            #    that way). It is *not* the board's headline cell — the operator keeps `combined_33` there
+            #    "because it is computed the same way as every other column on the board". We publish a
+            #    ranking, so we take the operator's own full-denominator figure and say so in the registry.
+            #
+            # The identity `combined_timeouts_zero == combined_33 x n / passed_of` is what makes the two
+            # figures one scale rather than two, so it is checked on every row that carries the column —
+            # including the rows where nothing timed out and the board simply restates `combined_33`.
+            n_raw,denominator_raw=r.get('n') or '',r.get('passed_of') or ''
+            if not re.fullmatch(r'\d{1,2}',n_raw) or not re.fullmatch(r'\d{1,2}',denominator_raw):
+                raise ValueError(f"VulcanBench Frontier row {index}: task counts changed (n={r.get('n')!r}, passed_of={r.get('passed_of')!r})")
+            judged,denominator=int(n_raw),int(denominator_raw)
+            if not 1<=denominator<=23 or not 1<=judged<=denominator:
+                raise ValueError(f"VulcanBench Frontier row {index}: task counts changed (n={judged}, passed_of={denominator})")
+            timeouts_zero=(r.get('combined_timeouts_zero') or '').strip()
+            if timeouts_zero:
+                # Both figures are published to four decimals, so the restatement can differ by at most 1e-4.
+                if abs(float(timeouts_zero)-float(r['combined_33'])*judged/denominator)>1e-3:
+                    raise ValueError(f"VulcanBench Frontier row {index}: combined_timeouts_zero {timeouts_zero} is not combined_33 {r['combined_33']} over {judged} of {denominator} runs; the column no longer means what the report defines")
+            if denominator!=23:
+                partial.append(f"{r.get('model')} [{r.get('effort')}] scored over {denominator} tasks, not 23");continue
+            if judged<denominator and not timeouts_zero:
+                partial.append(f"{r.get('model')} [{r.get('effort')}] judged on {judged} of 23 with no full-denominator figure");continue
+            value=timeouts_zero if judged<denominator else r['combined_33']
+            rows.append({'name':f"{r['model']} [{r['effort']}]",'id':f"{r['model']} [{r['effort']}]",'combined_full_denominator':value,'source_row':index,'harness':r['harness'],
+                'context':{'model':r['model'],'lab':r['lab'],'harness':r['harness'],'effort':r['effort'],'n_tasks':denominator,'runs_judged':judged,
+                    'unfinished_runs':denominator-judged,'tasks_passed':int(r['passed']),'combined_33':float(r['combined_33']),
+                    'scored_on':('all 23 tasks; the '+str(denominator-judged)+' unfinished runs count as failed tasks and score 0 (the board\'s combined_timeouts_zero)') if judged<denominator else 'all 23 tasks, every run judged',
                     'combined_33_se':float(r['combined_33_se']),'code_quality':float(r['code_quality']),'mean_minutes':float(r['mean_minutes']),'mean_usd':float(r['mean_usd']),
                     'protocol':r['protocol'],'report':r['report'],'best_effort':r['best_effort']=='True'}})
-        if len(partial)>3:raise ValueError('VulcanBench Frontier: '+str(len(partial))+' rows judged on fewer than 23 tasks ('+'; '.join(partial)+'); the suite may have changed')
+        if len(partial)>3:raise ValueError('VulcanBench Frontier: '+str(len(partial))+' rows without a score on the full 23 tasks ('+'; '.join(partial)+'); the suite may have changed')
     elif kind=='kernelbench_cuda_board':
         # KernelBench-CUDA (Elliot Arledge, kernelbench.com): the published per-hardware leaderboard JSON
         # (benchmarks/cuda/results/leaderboard.json) is the artifact the site bakes and renders. One row per

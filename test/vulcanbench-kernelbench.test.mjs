@@ -11,62 +11,107 @@ import { acceptedCaptures, newestAccepted } from '../lib/source-quarantine.mjs';
 // synthetic failure probes, never source claims.
 test('VulcanBench Frontier v4 parser reads the board CSV, keeps the protocol and fails closed on header, task count, harness, effort and protocol', () => {
   const output = execFileSync('python3', ['-B', '-c', String.raw`
-import importlib.util,gzip,hashlib,json,copy,csv,io
+import importlib.util,gzip,hashlib,json
 from pathlib import Path
 s=importlib.util.spec_from_file_location('collector','scripts/collect-public-benchmarks.py');m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
 entries={e['benchmark_id']:e for e in json.loads(Path('data/raw/benchmarks/collection-plan.json').read_text())['entries']}
-e=entries['vulcanbench-frontier::4'];raw=gzip.decompress(Path(e['source']['file']).read_bytes());assert hashlib.sha256(raw).hexdigest()==e['source']['sha256']
-rows=m.parse(raw.decode('utf-8'),e['parser'],None)
-assert len(rows)==24,len(rows)
+reg={e['id']:e for e in json.loads(Path('data/raw/benchmarks/registry.json').read_text())['entries']}
+e=entries['vulcanbench-frontier::4'];entry=reg['vulcanbench-frontier::4']
+raw=gzip.decompress(Path(e['source']['file']).read_bytes());assert hashlib.sha256(raw).hexdigest()==e['source']['sha256']
+rows=m.parse(raw.decode('utf-8'),e['parser'],None,entry)
+assert len(rows)==37,len(rows)
 got={r['id']:r for r in rows}
-assert abs(m.numeric(got['Fable 5.1 [max]']['combined_33'])-91.8365)<1e-9
+field=e['parser']['value_field']
+assert field=='combined_full_denominator',field
+assert abs(m.numeric(got['Fable 5.1 [max]'][field])-91.8365)<1e-9
 assert got['Fable 5.1 [max]']['context']['harness']=='Claude Code'
 assert got['GPT-5.5 [low]']['context']['n_tasks']==23 and got['GPT-5.5 [low]']['context']['tasks_passed']==1
 assert got['Fable 5.1 [extra-high]']['context']['effort']=='extra-high'
 text=raw.decode('utf-8-sig')
 def fails(csv_text,why):
-  try: m.parse(csv_text,e['parser'],None)
+  try: m.parse(csv_text,e['parser'],None,entry)
   except ValueError: return
   raise AssertionError('accepted: '+why)
 fails(text.replace('code-quality-maintenance-v3.4','code-quality-maintenance-v4.0'),'protocol family changed')
-fails(text.replace(',23,','/24,') if False else text.replace('True,23,','True,24,'),'task count changed')
+fails(text.replace('True,23,91.8365','True,24,91.8365'),'a judged count above its own denominator')
 fails(text.replace('Claude Code','ClaudeCode'),'unlisted harness')
 fails('\n'.join([text.splitlines()[0].replace(',n,','/tasks,')]+text.splitlines()[1:]),'header changed')
-fails(text.replace(',max,0.4651',',ultra,0.4651') if False else text.replace('Anthropic,Claude Code,max,','Anthropic,Claude Code,mega,'),'unlisted effort')
+fails(text.replace('Anthropic,Claude Code,max,','Anthropic,Claude Code,mega,'),'unlisted effort')
 print('ok')
 `]).toString();
   assert.equal(output.trim(), 'ok');
 });
 
-// 2026-09-21 (iteration 143): the board began publishing a run judged on fewer than its 23 tasks
-// (its own "§" footnote — the v3.7 protocol withholds one task's Code quality score). Before this,
-// the whole board's daily refresh failed closed on that single row and the source had been frozen
-// since 2026-09-20. A short denominator is withheld, a grown one still fails closed.
-test('VulcanBench Frontier withholds a partial-suite row and still fails closed on a grown or implausible one', () => {
+// 2026-09-21 (iteration 143): the board began publishing a run judged on fewer than its 23 tasks, and
+// the whole board's daily refresh had been failing closed on that single row since 2026-09-20. The rule
+// then was "withhold any row whose n is not 23".
+//
+// D256.1 (2026-09-29): the board appended `passed_of` and `combined_timeouts_zero`, and they show that
+// rule was conflating two different events. `passed_of` is the task set a row was scored over; `n` is how
+// many of those runs were judged. A row with `passed_of` below 23 was scored over a smaller set and has no
+// figure on the full 23 — it stays withheld. A row with `passed_of` 23 and a lower `n` ran the full suite
+// and did not finish every run, and the board publishes the combined score over all 23 with each unfinished
+// run scored 0; that figure is on one denominator with every other row, so it is the one we publish. The
+// identity `combined_timeouts_zero == combined_33 x n / passed_of` is what ties the two figures to one
+// scale, and breaking it has to fail closed — otherwise the column could come to mean anything.
+test('VulcanBench Frontier publishes the full-denominator figure, withholds a reduced-suite row, and fails closed on a grown, implausible or inconsistent one', () => {
   const output = execFileSync('python3', ['-B', '-c', String.raw`
 import importlib.util,gzip,json
 from pathlib import Path
 s=importlib.util.spec_from_file_location('collector','scripts/collect-public-benchmarks.py');m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
 entries={e['benchmark_id']:e for e in json.loads(Path('data/raw/benchmarks/collection-plan.json').read_text())['entries']}
-e=entries['vulcanbench-frontier::4'];text=gzip.decompress(Path(e['source']['file']).read_bytes()).decode('utf-8-sig')
+reg={e['id']:e for e in json.loads(Path('data/raw/benchmarks/registry.json').read_text())['entries']}
+e=entries['vulcanbench-frontier::4'];entry=reg['vulcanbench-frontier::4'];field=e['parser']['value_field']
+text=gzip.decompress(Path(e['source']['file']).read_bytes()).decode('utf-8-sig')
 lines=text.splitlines()
-def with_n(row_index,n):
-  out=list(lines);cells=out[row_index].split(',');cells[6]=str(n);out[row_index]=','.join(cells);return '\n'.join(out)+'\n'
-base=len(m.parse(text,e['parser'],None));assert base==24,base
-# One short row: that row is withheld, every other row still publishes.
-short=m.parse(with_n(1,22),e['parser'],None);assert len(short)==base-1,len(short)
-assert all(r['context']['n_tasks']==23 for r in short)
+head=lines[0].split(',');col={name:i for i,name in enumerate(head)}
+def edit(row_index,**cells):
+  out=list(lines);c=out[row_index].split(',')
+  for name,value in cells.items():c[col[name]]=str(value)
+  out[row_index]=','.join(c);return '\n'.join(out)+'\n'
+def parse(csv_text):return {r['id']:r for r in m.parse(csv_text,e['parser'],None,entry)}
+got=parse(text);assert len(got)==37,len(got)
+
+# The board's two 22-task rows are the reduced-suite case: scored over a smaller set, so withheld.
+assert 'GPT-5.6 Sol [max]' not in got and 'Opus 5.5 [high]' not in got
+# The timed-out rows ran all 23 and are published at the board's own full-denominator figure, never at
+# the headline cell value, and the row says so in its own provenance.
+luna=got['GPT-6 Luna [max]']
+assert abs(m.numeric(luna[field])-67.2629)<1e-9,luna[field]
+assert abs(luna['context']['combined_33']-81.4235)<1e-9
+assert luna['context']['runs_judged']==19 and luna['context']['unfinished_runs']==4 and luna['context']['n_tasks']==23
+assert 'count as failed tasks and score 0' in luna['context']['scored_on']
+xhigh=got['GPT-6 Luna [extra-high]']
+assert abs(m.numeric(xhigh[field])-71.9354)<1e-9
+# A row that finished every run is published at combined_33 and says nothing about timeouts.
+low=got['GPT-6 Luna [low]']
+assert abs(m.numeric(low[field])-40.8310)<1e-9 and low['context']['unfinished_runs']==0
+assert 'every run judged' in low['context']['scored_on']
+
 def fails(csv_text,why):
-  try: m.parse(csv_text,e['parser'],None)
+  try: m.parse(csv_text,e['parser'],None,entry)
   except ValueError: return
   raise AssertionError('accepted: '+why)
-fails(with_n(1,24),'a grown suite is a different identity')
-fails(with_n(1,0),'a zero task count is not a partial run')
-fails(with_n(1,'n/a'),'a non-numeric task count')
+luna_row=[i for i,l in enumerate(lines) if l.startswith('23,GPT-6 Luna,')][0]
+# The identity that makes the two figures one scale. Control: restoring it parses again.
+fails(edit(luna_row,combined_timeouts_zero='80.0'),'a timeouts-zero figure that is not the judged mean over all 23')
+assert abs(m.numeric(parse(edit(luna_row,combined_timeouts_zero='67.2629'))['GPT-6 Luna [max]'][field])-67.2629)<1e-9
+# It is checked on full rows too, where the board simply restates combined_33.
+fails(edit([i for i,l in enumerate(lines) if l.startswith('34,GPT-6 Luna,')][0],combined_timeouts_zero='60.0'),
+      'a restatement that disagrees with combined_33 on a row where nothing timed out')
+# A run judged on all 23 but with no full-denominator figure is withheld, not guessed.
+short=parse(edit(luna_row,combined_timeouts_zero=''))
+assert 'GPT-6 Luna [max]' not in short and len(short)==36,len(short)
+fails(edit(1,passed_of=24),'a grown suite is a different identity')
+fails(edit(1,n=24,passed_of=24),'a grown suite is a different identity however it is spelled')
+fails(edit(1,n=24),'more judged runs than the row was scored over')
+fails(edit(1,passed_of=0,n=0),'a zero task count is not a partial run')
+fails(edit(1,n='n/a'),'a non-numeric task count')
+fails(edit(1,passed_of='n/a'),'a non-numeric denominator')
 many=list(lines)
 for i in range(1,6):
-  cells=many[i].split(',');cells[6]='22';many[i]=','.join(cells)
-fails('\n'.join(many)+'\n','five partial rows means the suite changed, not one withheld judge score')
+  c=many[i].split(',');c[col['passed_of']]='22';c[col['n']]='22';many[i]=','.join(c)
+fails('\n'.join(many)+'\n','five reduced-suite rows means the suite changed, not one withheld judge score')
 print('ok')
 `]).toString();
   assert.equal(output.trim(), 'ok');
@@ -83,6 +128,7 @@ test('VulcanBench Frontier joins: every model x effort column the board publishe
   assert.deepEqual(parseVulcanbenchFrontierLabel('GPT-5.5 [extra-high]'), { family: 'gpt-5.5', effort: 'xhigh' }, "VulcanBench's own spelling of the xhigh tier");
   assert.deepEqual(parseVulcanbenchFrontierLabel('GPT-6 Astra [ultra]'), { family: 'gpt-6-astra', effort: 'ultra' }, 'an unreviewed setting is refused downstream');
   assert.deepEqual(parseVulcanbenchFrontierLabel('Opus 5.5 [high]'), { family: 'claude-opus-5.5', effort: 'high' }, 'D224: the board spells Claude Opus 5.5 "Opus 5.5"');
+  assert.deepEqual(parseVulcanbenchFrontierLabel('GPT-6 Luna [max]'), { family: 'gpt-6-luna', effort: 'max' }, 'D256.1: the v3.16 population, five effort columns');
 
   // The newest capture of the board the collector *accepted*, whatever run took it — the same rule
   // the D188/D223 protocol suites use, so a fresher board in a daily run is what this reads, not a

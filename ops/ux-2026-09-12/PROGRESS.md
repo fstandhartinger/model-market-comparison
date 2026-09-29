@@ -19494,3 +19494,145 @@ evidence files**. Logs in `iter273-d256/gates/`.
    `bin/verify-d256-column-quarantine.mjs`, each with its out dir cleared first.
 
 **`ALL-ACCEPTED` is not appended.**
+
+---
+
+## Iteration 274 (claude-opus, 2026-09-29 09:00–UTC) — D256.1: the decision the new columns made takeable
+
+Iteration 273 fenced the VulcanBench arm (D256) and deliberately left one thing untaken: whether a run
+that did not finish every task may be published at all, and at which figure. It proved every factual
+precondition and stopped, 40 minutes before the scheduled run, with no second engine. The 05:17 run then
+published normally with the arm quarantined — `Arm stillgelegt … vulcanbench-frontier::4 (1. Lauf in
+Folge)`, `designarena` retained, `STATUS: ok`, commit `f2345357`. D256 and D255 both did exactly what
+they were built to do.
+
+This iteration takes the decision, and the two columns the board appended make it a different question
+from the one `FINDINGS.md` framed.
+
+### What `passed_of` actually revealed
+
+`FINDINGS.md` §4 read the board as having one kind of short row and asked whether to publish
+`combined_timeouts_zero` for it. The capture says otherwise. `passed_of` is not a constant 23 — across
+the 39 rows it takes two values, and with `n` it separates **two different events**:
+
+| shape | rows | what happened |
+|---|---|---|
+| `n == passed_of == 23` | 35 | the full suite, every run judged |
+| `n == passed_of == 22` | Opus 5.5 [high] (v3.15), GPT-5.6 Sol [max] (v3.7) | the board scored the row **over a smaller task set** |
+| `n < passed_of == 23` | GPT-6 Luna [max] (19), [extra-high] (21) | the full suite; some runs did not finish |
+
+The old rule was `n != 23 → withhold`, which could not tell those apart — and it is why the arm would
+have failed even after the columns were reviewed: four short rows against a `len(partial) > 3` cap.
+
+The second thing the capture settles is what the column *is*. **`combined_timeouts_zero ==
+combined_33 × n ÷ passed_of` on every row that carries it**, to 8.7e-06 on the two timed-out rows (two
+four-decimal figures) and exactly on the three where nothing timed out. So `combined_33` is the mean
+over the judged runs and `combined_timeouts_zero` is the mean over all 23 with the unfinished runs at 0.
+That is an identity, not a reading, and the collector now asserts it on every row that carries the
+column — including the rows where the board merely restates `combined_33`, because that equality is
+what makes the two figures one scale rather than two.
+
+### The decision, and what it costs
+
+**A row is published when the board gives it a combined score over the full 23 tasks, and that figure is
+the one we publish.** `passed_of` below 23 → withheld, unchanged. `passed_of` 23 with a lower `n` →
+published at `combined_timeouts_zero`. `passed_of == n == 23` → `combined_33`, unchanged.
+
+Not the board's headline cell, because `combined_33` on a short row is the mean over the tasks the model
+*finished*, and the runs it dropped are the ones it was still working on at a three-hour bound — the
+subset is not random and the figure is biased upward. Putting GPT-6 Luna's 81.42 (19 of 23) beside GPT-6
+Astra's 89.30 (23 of 23) is the comparison iteration 143's rule exists to prevent. The operator keeps
+`combined_33` in the cell for formula consistency ("computed the same way as every other column"), which
+is a different concern from denominator consistency; and wherever the operator itself makes a
+*comparison* it uses the other figure — it tags GPT-6 Luna **extra-high** as best effort, not max, and
+only the timeouts-zero figures order them that way (71.94 > 67.26, while 81.42 > 78.79 would pick max).
+
+Not "keep withholding both" either: that leaves GPT-6 Luna on the site with its three weakest efforts
+and its two strongest absent, which is a worse misrepresentation and just as much a divergence from the
+source — only a silent one.
+
+**The cost, stated rather than buried:** our cell is *lower* than vulcanbench.com's for such a row —
+67.26 against 81.42 for GPT-6 Luna at max. So `scoring.notes` names the divergence and that exact pair of
+numbers, all three copies of the version guard state which rule applies to which kind of row, and every
+such observation carries `combined_33`, `runs_judged`, `unfinished_runs` and the sentence "all 23 tasks;
+the N unfinished runs count as failed tasks and score 0 (the board's `combined_timeouts_zero`)" in its
+own provenance. A per-cell marker in the UI would be better than provenance alone; that is a page the
+design authority owns and it is **D258** below, not a decision taken here.
+
+Full argument, the three readings and the receipts: `iter274-d256-1/DECISION.md`.
+
+### What else had to move with it, and one thing that did not
+
+v3.16 enters the reviewed set on the D223 standard, re-derived here from the operator's own bundle: it
+amends v3…v3.7 and v3.15, is byte-identical to the v3.4 bundle on all 13 invariants, and its per-run
+export is the same 23 task ids in 115 rows. `parseVulcanbenchFrontierLabel` gains `GPT-6 Luna` on D224's
+evidence standard — the board states lab OpenAI and the population's report is titled "GPT-6 Luna across
+every effort level". The plan's `value_field` becomes `combined_full_denominator` rather than leaving
+`combined_33` as the name of a field that is sometimes not `combined_33`; every observation's locator
+says so.
+
+The capture the 05:17 run took is **not** retroactively accepted. Its `quarantine.json` is a truthful
+record of what that run did and stays untouched; the review instead captured the board itself into
+`data/raw/benchmarks/daily-evidence/2026-09-29-d256-1/`, byte-identical CSV (body sha256
+`d10593f1…3027a6`), so the continuity suites read a capture this review actually holds. The registry's
+board-CSV and `leaderboard.html` references now point at that capture, and the leaderboard one is
+re-excerpted to the footnote this whole decision rests on — which is how the reviewer can check it:
+every quotation the notes make is verbatim in a capture the packet carries.
+
+**Not moved:** the guard's `2026-09-19` date annotation. `FINDINGS.md` §5 expected it to go stale, but
+D256 had already replaced that check with "a date the guard cites must be a date the board's page
+printed in some accepted capture we hold" — and eight accepted captures still print it. Nothing to fix.
+
+### What tomorrow's run will and will not do
+
+The parse against the run's own capture publishes **37 of 39 rows, nine of them new**: GPT-6 Luna ×5 and
+**Opus 5.5 ×4 — which is D224**, absent from the live APIs since 26 Sep because this arm has published
+nothing since 25 Sep. No currently published row disappears, so no withdrawal record arises.
+
+That is the collector, and it is only the first of three gates. The arm also has to pass its **protocol
+review** — which six replays here show it does not pass today, and does not pass at HEAD either (D260) —
+and then its nine new rows have to clear a **score-batch critic round**, which on 2026-09-29 no batch
+did: 216 rows in 21 batches and 38 arms retained with "worker: No supported viable worker model found",
+because the scheduled pool resolved to two families once the one free route was struck off and the
+different-family critic rule then left no pair (D254.1). So: the rule, the guard and the parser are
+right and tested, and **the arm still publishes nothing until the review pipeline is repaired**. That is
+the honest state of this repair, and it is the same state the arm is in today — fail-closed, nothing
+wrong published.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D256.1 | **implemented**, pending non-implementer verification **and an accepted protocol review** | `iter274-d256-1/DECISION.md`; `iter274-d256-1/evidence/` (the report page, its extracted text, and the 37-row candidate the real daily path produces); `iter274-d256-1/gates/`; the six replay directories beside them | One line to re-derive the parse: `node --test test/vulcanbench-kernelbench.test.mjs`, which asserts the rule, the identity, the two withheld rows and four controls (breaking the identity fails; restoring it parses; an empty `combined_timeouts_zero` withholds rather than guesses). **The registry row's own protocol review did not pass** — see D260: it does not pass at HEAD either, so this is not a regression the change introduced, but it does mean the arm publishes nothing until D260 is fixed. Fail-closed, and the same state the arm is in today. |
+| D224 | still **open**, now unblocked at the collector | `iter274-d256-1/gates/npm-test.log`; the row-set comparison in this entry | The four Claude Opus 5.5 cells are in the 37 rows this arm now parses. They are not published until a daily run's score batch clears a critic round. |
+| D258 (new) | **open — for the design authority** | `iter274-d256-1/DECISION.md` §"What it costs" | A VulcanBench cell for a row with unfinished runs is the board's full-suite figure, not the board's headline cell, and reads lower than vulcanbench.com (GPT-6 Luna [max]: 67.26 here, 81.42 there). The reason is in the observation's provenance and in the registry notes; nothing on the model page or the benchmark table says it. Mirror of D257's shape: correct data, no sentence of its own. |
+| D260 (new) | **open** | Six replays of this one registry row, all in `iter274-d256-1/`: `critic-control-head/` and `critic-control-head-2/` (HEAD's row, 11 references, 151 KB packet) — producer **`match`**, critic failed all three rounds; `critic/`, `critic-freeroute/`, `critic-12ref/`, `critic-11ref-newrow/`, `critic-final/` and `exp-guardswap-headguard-newnotes/` (this iteration's row at 153, 177, 183 and 200 KB, with the long guard, the short guard and HEAD's guard) — producer **`missing_evidence` 8 times out of 8**, never accepted | **The protocol review of this row does not pass, and it does not pass at HEAD either.** The producer's stated reason is false and checkable: it says the candidate row is "elided", "empty" or absent, and the packet's own fenced JSON block parses to the complete 9-key row every time (verified byte-for-byte). It is `deepseek/deepseek-v4-flash-0731`, AA 34.3, the weakest worker the whitelist allows, and it confabulates. The critic side fails through two different routes for two different reasons: `z-ai/glm-5.3-flash` returns malformed JSON or times out, and the free Kimi K3 route returns `fetch failed` on six consecutive rounds — **while the same route, given the identical 200 KB critic packet at `reasoning_effort: max` and `max_tokens: 16384` by plain curl, answers HTTP 200 in 18 s**. So it is not packet size, not effort and not route availability; something in `worker-runner.mjs`'s router call is failing and nothing records what. Instrumenting that is the first thing to do; `response_format` (D259) is the second. Packet composition — 183,450 extracted bytes over 12 references, 113,501 of them six `judge-protocols.json` bundles, growing ~20 KB per protocol revision the operator ships — is worth bounding but is **not** what this measurement blames. |
+| D259 (new) | **open** | `data/raw/benchmarks/daily-evidence/2026-09-29T05-49-25-487Z/gauntlet/protocol-ugi-writing-snapshot-2026-09-10/review-r1.json` (the malformed answer, in full) and `critic-schema-r1.json` beside it (written, never used); the same pair reproduced in `iter274-d256-1/critic/`; the receipts' own `response_format_mode` | **The producer is constrained and the critic is not.** `gauntlet.mjs` passes `--json` for the producer, so every producer receipt records `response_format_mode: "json_object"`; the critic call passes no format flag at all and every critic receipt records `response_format_mode: null` — while the critic is the role that writes the long structured answer and the only one that fails with "Malformed critic output: not JSON" (7 rounds on 2026-09-29). `gauntlet.mjs` writes a `critic-schema-r{round}.json` on every round and passes it to nobody; `worker-runner.mjs` has implemented `--schema` (`response_format: json_schema`, `strict: true`) since the daily was installed and **no caller anywhere passes it**. The retained output shows this is not a fences-or-preamble problem a tolerant parser would fix: glm-5.3-flash spent 9,088 reasoning tokens and degenerated into word salad inside an unterminated string, with `finish_reason: "stop"`. **Not done here**: `--schema` also filters the catalog to models advertising `structured_outputs`, which can shrink a pool that is already the binding constraint (D254.1), and the router branch's forwarding of `response_format` is unproven. It wants its own iteration with a replay, not a hopeful flag. |
+
+### Gates
+
+On the committed tree, sequentially, unpiped: `node scripts/build-dataset.mjs` **875 / 676 / 96 / 3,178**
+(exit 0; the rebuilt `dataset.json` ships with the registry edit); `CI=true npm test` **1,680 tests,
+1,679 pass, 0 fail, 1 skip**, exit 0; `npx tsc --noEmit -p .` exit 0;
+`node scripts/validate-benchmark-registry.mjs` **293 entries, 29 AA field mappings, 242 verified evidence
+files** (240 before; the two new ones are the v3.16 report page and bundle), exit 0. Logs in
+`iter274-d256-1/gates/`.
+
+### What the next iteration should know
+
+1. **The collector repair is only half of a published row.** D256.1 and D224 both now wait on a score
+   batch clearing a critic round. Read `reports/summary.txt` for
+   `Zurueckgehaltene Score-Zeilen` before concluding either shipped, and check
+   `workers/unavailable-models.jsonl` for *why* — today it was three content strikes and a run of
+   600 s timeouts against a two-family pool.
+2. **D259 is the cheapest thing left that could change that number**, and it is a one-file change with a
+   real downside. Replay it before believing it: the free router route and every paid candidate have to
+   still be selectable with `--schema` set, or the fix costs more rounds than it saves.
+3. **D260 is measured, not suspected, and it is the blocker.**
+   Do not read the producer's `missing_evidence` as a packet defect or as something this row's wording caused:
+   the row JSON is complete and parses in every packet, HEAD's row fails the same review, and the free critic
+   route answers the identical packet by curl in 18 seconds. The numbers and the six replays are in D260's row.
+4. **Untouched and still open, unchanged:** D249.4, D253.2, D254.1, D255.1, D257, R9.1's two arms under
+   the written-permission hold, and the Coolify host alias. F-223/F-224/F-225, D254, D255, D249.2, D255.2,
+   D256 and now D256.1 are all `implemented` and need a **non-implementer engine** — iterations 269–274
+   were all claude-opus.
+
+**`ALL-ACCEPTED` is not appended.**

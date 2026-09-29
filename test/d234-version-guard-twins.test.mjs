@@ -64,7 +64,7 @@ test('D223: all three of VulcanBench Frontier v4\'s guards name the reviewed rev
   const entry = planned.find((e) => e.benchmark_id === id);
   const reviewed = registry.get(id).how_to_collect.version_guard;
   for (const [what, text] of [['registry', reviewed], ['plan', entry.version_guard], ['plan recipe', entry.recipe.version_guard]]) {
-    for (const revision of ['v3.4', 'v3.5', 'v3.6', 'v3.7', 'v3.15']) {
+    for (const revision of ['v3.4', 'v3.5', 'v3.6', 'v3.7', 'v3.15', 'v3.16']) {
       assert.ok(text.includes(`code-quality-maintenance-${revision}`), `the ${what} guard omits ${revision}`);
     }
     assert.doesNotMatch(text, /protocol starting code-quality-maintenance-v3\b/,
@@ -74,8 +74,18 @@ test('D223: all three of VulcanBench Frontier v4\'s guards name the reviewed rev
 
 test('the guard does not claim the board withholds what the board ranks', () => {
   const text = registry.get('vulcanbench-frontier::4').how_to_collect.version_guard;
-  // The board publishes and ranks two disclosed 22-of-23 rows; only our comparison withholds them.
+  // The board publishes and ranks every short row it measures; only our comparison treats them
+  // differently. D256.1 (2026-09-29): it now treats the board's two kinds of short row differently
+  // from each other, so the guard has to say which rule applies to which — but still never claim the
+  // board itself withholds anything.
   assert.doesNotMatch(text, /every published row must state n=23/);
-  assert.match(text, /Every row Benchmark Heaven\s+compares states n=23|Every row Benchmark Heaven compares states n=23/);
-  assert.match(text, /publishes and ranks its disclosed short rows/);
+  assert.match(text, /The board itself publishes and ranks its disclosed short rows/);
+  assert.match(text, /Every row Benchmark Heaven compares carries a combined score over the full 23 tasks/);
+  // The two rules, each keyed on the board's own column rather than on a bare `n`.
+  assert.match(text, /where passed_of is below 23 .*so the row is withheld/);
+  assert.match(text, /where passed_of is 23 and n is lower, .*in combined_timeouts_zero/);
+  assert.match(text, /never the headline combined_33 over the judged runs alone/);
+  // And the identity that keeps the two figures on one scale is stated where the collector can be
+  // checked against it.
+  assert.match(text, /combined_timeouts_zero must equal combined_33 × n ÷ passed_of/);
 });
