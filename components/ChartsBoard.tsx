@@ -1,9 +1,9 @@
 "use client";
 import { useMemo } from "react";
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LabelList,
+  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LabelList,
 } from "recharts";
-import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
+import { compositeChartVisible, compositeCoverageLabel, hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
 import { SCORE_PICKER_LABELS, SCORE_SHORT_LABELS, type ScoreKey } from "../lib/types";
 import { orgColor, counted } from "../lib/format";
 import { FIXED_BLENDS, SCORE_OPTIONS, modelPrice, scopedCatalogOffers, scopeFromSettings, priceContext, priceLabel, type PriceResult, type PriceSettings } from "../lib/cost";
@@ -13,6 +13,7 @@ import { PriceValue, PriceAssumptions, priceNumber } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
 import { CostCapabilityScatter } from "./CostCapabilityScatter";
 import { preferredVariantIds, collapseModels, collapsedName, selectableModels } from "../lib/variants";
+import { IncompleteCompositeToggle } from "./IncompleteCompositeToggle";
 
 interface PoolEntry {
   m: ClientModel;
@@ -24,13 +25,16 @@ interface PoolEntry {
 
 /** F-09: bars are one accent colour; the organisation lives only in the 8 px dot before
  *  the label. The axis is 205 px wide, so the dot and label are anchored at its left edge. */
-function orgTick(orgByName: Map<string, string>) {
+/** CR-211: `coverageByName` holds the "N/7" of an incomplete Main Composite; it stays readable after truncation. */
+function orgTick(orgByName: Map<string, string>, coverageByName: Map<string, string> = new Map()) {
   return function OrgTick({ x, y, payload }: { x: number; y: number; payload: { value: string } }) {
-    const t = payload.value.length > 26 ? payload.value.slice(0, 25) + "…" : payload.value;
+    const coverage = coverageByName.get(payload.value);
+    const max = coverage ? 21 : 26;
+    const t = payload.value.length > max ? payload.value.slice(0, max - 1) + "…" : payload.value;
     const org = orgByName.get(payload.value);
     return <g>
       {org && <circle cx={x - 197} cy={y} r={4} fill={orgColor(org)} />}
-      <text x={x - 188} y={y} dy={3} textAnchor="start" fill="#9aa4b2" fontSize={11}><title>{org ? `${payload.value} · ${org}` : payload.value}</title>{t}</text>
+      <text x={x - 188} y={y} dy={3} textAnchor="start" fill="#9aa4b2" fontSize={11}><title>{`${payload.value}${org ? ` · ${org}` : ""}${coverage ? ` · incomplete Composite, ${coverage} inputs` : ""}`}</title>{t}{coverage && <tspan fill="rgb(var(--warn))" data-incomplete-composite={coverage}> {coverage}</tspan>}</text>
     </g>;
   };
 }
@@ -39,7 +43,8 @@ const BAR_FILL = "rgb(var(--accent))";
 
 /** F-09: every model as a dot on one axis per group, with the group mean as a tick — the
  *  spread is the point, which two average bars hid. Missing values are not drawn. */
-function DotStrip({ label, groups, format, log }: { label: string; groups: { name: string; values: number[] }[]; format: (v: number) => string; log?: boolean }) {
+/** CR-211: `incomplete[i]` marks a value from a Main Composite with fewer than 7 of 7 inputs — drawn hollow, dashed. */
+function DotStrip({ label, groups, format, log, composite = false }: { label: string; groups: { name: string; values: number[]; incomplete?: boolean[]; pointLabels?: string[] }[]; format: (v: number) => string; log?: boolean; composite?: boolean }) {
   const usable = (v: number) => Number.isFinite(v) && (!log || v > 0);
   const all = groups.flatMap((g) => g.values).filter(usable);
   if (!all.length) return <p className="mb-4 text-xs text-gray-500">{label}: no values in view.</p>;
@@ -51,13 +56,15 @@ function DotStrip({ label, groups, format, log }: { label: string; groups: { nam
     <div className="mb-5">
       <div className="mb-1 flex justify-between gap-2 text-[11px] text-gray-500"><span>{label}</span><span className="tabular">{format(lo)} – {format(hi)}{log ? " · log scale" : ""}</span></div>
       {groups.map((g) => {
-        const vals = g.values.filter(usable);
+        const marks = g.values.map((v, i) => ({ v, thin: !!g.incomplete?.[i], pointLabel: g.pointLabels?.[i] })).filter((d) => usable(d.v));
+        const vals = marks.map((d) => d.v);
+        const thin = marks.filter((d) => d.thin).length;
         const mean = vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
         return (
           <div key={g.name} className="grid grid-cols-[5rem_1fr] items-center gap-2 pt-4">
             <span className="text-xs text-gray-400">{g.name} <span className="text-gray-600">({vals.length})</span></span>
-            <div className="relative h-6 rounded bg-line/40" role="img" aria-label={`${g.name}: ${counted(vals.length, "model")}${mean != null ? `, mean ${format(mean)}` : ", no values"}`}>
-              {vals.map((v, i) => <span key={i} className="absolute top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/50" style={{ left: `${pos(v)}%` }} />)}
+            <div className="relative h-6 rounded bg-line/40" role="img" aria-label={`${g.name}: ${counted(vals.length, "model")}${thin ? `, ${thin} with an incomplete Composite (fewer than 7 of 7 inputs), drawn hollow` : ""}${mean != null ? `, mean ${format(mean)}` : ", no values"}`}>
+              {marks.map((d, i) => <span key={i} className={`absolute top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full ${d.thin ? "border border-dashed border-accent bg-transparent" : "bg-accent/50"}`} data-incomplete-composite={d.thin || undefined} title={`${d.pointLabel ? `${d.pointLabel} · ` : ""}${format(d.v)}${d.thin ? " · incomplete Composite" : composite ? " · Composite inputs 7/7" : ""}`} style={{ left: `${pos(d.v)}%` }} />)}
               {mean != null && <>
                 <span className="absolute top-0 h-6 w-0.5 -translate-x-1/2 bg-gray-400" style={{ left: `${pos(mean)}%` }} />
                 <span className="absolute -top-4 -translate-x-1/2 whitespace-nowrap text-[10px] tabular text-gray-400" style={{ left: `${clamp(pos(mean))}%` }}>mean {format(mean)}</span>
@@ -87,18 +94,19 @@ const moneyTick = (v: number) => `$${v}`;
 /** F-59: below md the 205 px category axis eats the recharts chart, so each bar chart is
  *  replaced by plain rows — org dot, name, value, and a 6 px bar proportional to the panel max.
  *  F-72: with `log`, the second line is a track with a dot at the log position instead. */
-function MobileBars({ rows, max, format, log }: { rows: { name: string; org: string; value: number }[]; max: number; format: (v: number) => string; log?: boolean }) {
+function MobileBars({ rows, max, format, log }: { rows: { name: string; org: string; value: number; coverage?: string | null }[]; max: number; format: (v: number) => string; log?: boolean }) {
   const scale = log ? logScale(rows.map((r) => r.value)) : null;
   return <>{rows.map((row, i) => (
     <div className="py-1.5" role="listitem" key={i}>
       <div className="flex items-center gap-2 text-[13px]">
         <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: orgColor(row.org) }} />
         <span className="min-w-0 flex-1 truncate">{row.name}</span>
+        {row.coverage && <span className="bh-thin-tag" data-incomplete-composite={row.coverage} title={`Incomplete Composite: ${row.coverage.replace("/", " of ")} inputs`}><span aria-hidden="true">{row.coverage}</span><span className="sr-only">Incomplete Composite: {row.coverage.replace("/", " of ")} inputs</span></span>}
         <span className="tabular text-gray-400">{format(row.value)}</span>
       </div>
       {scale
         ? <div className="bh-cost-track relative mx-1 mt-1.5 h-0.5 rounded bg-line/50"><span className="bh-cost-dot absolute top-1/2 h-[7px] w-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent" style={{ left: `${scale.pos(row.value)}%` }} /></div>
-        : <div className="mt-1 h-1.5 rounded bg-line"><div className="h-full rounded bg-accent/80" style={{ width: `${Math.max(0.5, 100 * row.value / max)}%` }} /></div>}
+        : <div className="mt-1 h-1.5 rounded bg-line"><div className={`h-full rounded ${row.coverage ? "border border-dashed border-accent bg-accent/25" : "bg-accent/80"}`} style={{ width: `${Math.max(0.5, 100 * row.value / max)}%` }} /></div>}
     </div>
   ))}</>;
 }
@@ -174,28 +182,41 @@ export function ChartsBoard({ data }: { data: ClientData }) {
   [base, s.maxCost, s.advancedMinScore]);
   const costChoices = costMeasureChoices(FIXED_BLENDS, s.inputWeight);
 
+  // CR-211: on the Main Composite the score panels plot only 7/7 models unless the reader includes incomplete ones
+  // (then marked "N/7"). The cost-only panels are not gated, and no other score is.
+  const includeIncomplete = s.includeIncompleteComposites;
+  const scored = useMemo(() => pool.filter((x) => x.hasEvidence && x.sc != null), [pool]);
+  const scoredShown = useMemo(() => scored.filter((x) => compositeChartVisible(x.m, score, includeIncomplete)), [scored, score, includeIncomplete]);
+  const scoreHidden = scored.length - scoredShown.length;
+
   const leaderboard = useMemo(() =>
-    pool.filter((x) => x.hasEvidence && x.sc != null).sort((a, b) => (b.sc as number) - (a.sc as number)).slice(0, 18)
-      .map((x) => ({ name: collapsedName(x.m, s.collapse, preferredId), value: x.sc as number, org: x.m.org })),
-    [pool, s.collapse, preferredId]);
+    [...scoredShown].sort((a, b) => (b.sc as number) - (a.sc as number)).slice(0, 18)
+      .map((x) => ({ name: collapsedName(x.m, s.collapse, preferredId), value: x.sc as number, org: x.m.org, coverage: compositeCoverageLabel(x.m, score) })),
+    [scoredShown, s.collapse, preferredId, score]);
+  const leaderIncomplete = leaderboard.filter((d) => d.coverage).length;
 
   const cheapest = useMemo(() =>
     pool.filter((x) => x.price.value != null).sort((a, b) => (a.price.value as number) - (b.price.value as number)).slice(0, 18)
       .map((x) => ({ name: collapsedName(x.m, s.collapse, preferredId), value: x.price.value as number, org: x.m.org, price: x.price })),
     [pool, s.collapse, preferredId]);
 
-  const leaderTick = useMemo(() => orgTick(new Map(leaderboard.map((d) => [d.name, d.org]))), [leaderboard]);
+  const leaderTick = useMemo(() => orgTick(new Map(leaderboard.map((d) => [d.name, d.org])), new Map(leaderboard.flatMap((d) => d.coverage ? [[d.name, d.coverage] as [string, string]] : []))), [leaderboard]);
 
   const openVsClosed = useMemo(() => {
     const groups = { Open: pool.filter((x) => x.m.open_weights), Closed: pool.filter((x) => !x.m.open_weights) };
     return Object.entries(groups).map(([k, arr]) => {
       // No measured score is not a zero: models without evidence are left out, not plotted at 0.
-      const scores = arr.filter((x) => x.hasEvidence).map((x) => x.sc).filter((v): v is number => v != null);
+      // CR-211: the score strip follows the incomplete-Composite toggle; the cost strip does not.
+      const scoredRows = arr.filter((x) => x.hasEvidence && x.sc != null && compositeChartVisible(x.m, score, includeIncomplete));
+      const scores = scoredRows.map((x) => x.sc as number);
+      const incomplete = scoredRows.map((x) => compositeCoverageLabel(x.m, score) != null);
       const priced = arr.filter((x) => x.price.value != null);
       const costSum = priced.reduce((a, x) => a + (x.price.value as number), 0);
-      return { name: k, scores, costs: priced.map((x) => x.price.value as number), avgCost: priced.length ? costSum / priced.length : null, costSum, priced };
+      const scoreRows = scoredRows.map((x) => ({ id: x.m.id, name: collapsedName(x.m, s.collapse, preferredId), value: x.sc as number, coverage: compositeCoverageLabel(x.m, score) }));
+      return { name: k, scores, incomplete, scoreRows, costs: priced.map((x) => x.price.value as number), avgCost: priced.length ? costSum / priced.length : null, costSum, priced };
     });
-  }, [pool]);
+  }, [pool, score, includeIncomplete, s.collapse, preferredId]);
+  const stripIncomplete = openVsClosed.reduce((n, g) => n + g.incomplete.filter(Boolean).length, 0);
 
   const isElo = score.startsWith("designarena");
   const adjusted = s.priceMode === "adjusted";
@@ -224,6 +245,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
 
       <div className="grid gap-6 xl:grid-cols-2">
         <Panel title={`Capability leaderboard — ${SCORE_SHORT_LABELS[score]}`}>
+          <IncompleteCompositeToggle score={score} hidden={scoreHidden} shown={leaderIncomplete} className="-mt-2 mb-2" />
           <div className="md:hidden" role="list" aria-label="Capability leaderboard">
             <MobileBars rows={leaderboard} max={isElo ? Math.max(...leaderboard.map((d) => d.value)) : 100} format={(v) => v.toFixed(isElo ? 0 : 1)} />
           </div>
@@ -233,8 +255,10 @@ export function ChartsBoard({ data }: { data: ClientData }) {
                 <CartesianGrid stroke="#222932" horizontal={false} />
                 <XAxis type="number" stroke="#8a93a3" fontSize={11} domain={isElo ? ["dataMin - 20", "dataMax"] : [0, "auto"]} />
                 <YAxis type="category" dataKey="name" width={205} tick={leaderTick} interval={0} />
-                <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} labelStyle={tipLabel} itemStyle={tipItem} />
+                <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} labelStyle={tipLabel} itemStyle={tipItem}
+                  labelFormatter={(name: string) => { const c = leaderboard.find((d) => d.name === name)?.coverage; return c ? `${name} · incomplete Composite, ${c} inputs` : score === "composite" ? `${name} · Composite inputs 7/7` : name; }} />
                 <Bar dataKey="value" fill={BAR_FILL} fillOpacity={0.8} radius={[0, 4, 4, 0]}>
+                  {leaderboard.map((d, i) => <Cell key={i} fillOpacity={d.coverage ? 0.25 : 0.8} stroke={d.coverage ? BAR_FILL : undefined} strokeDasharray={d.coverage ? "3 2" : undefined} />)}
                   <LabelList dataKey="value" position="right" fill="#8a93a3" fontSize={11} formatter={(v: number) => v.toFixed(isElo ? 0 : 1)} />
                 </Bar>
               </BarChart>
@@ -272,8 +296,20 @@ export function ChartsBoard({ data }: { data: ClientData }) {
         </Panel>
 
         <Panel id="open-vs-closed" title="Open weights vs closed">
-          <DotStrip label={SCORE_SHORT_LABELS[score]} format={(v) => v.toFixed(isElo ? 0 : 1)}
-            groups={openVsClosed.map((g) => ({ name: g.name, values: g.scores }))} />
+          <IncompleteCompositeToggle score={score} hidden={scoreHidden} shown={stripIncomplete} className="-mt-2 mb-2" />
+          <DotStrip label={SCORE_SHORT_LABELS[score]} format={(v) => v.toFixed(isElo ? 0 : 1)} composite={score === "composite"}
+            groups={openVsClosed.map((g) => ({ name: g.name, values: g.scores, incomplete: g.incomplete, pointLabels: g.scoreRows.map((r) => `${r.name}${r.coverage ? ` · ${r.coverage}` : ""}`) }))} />
+          {score === "composite" && includeIncomplete && stripIncomplete > 0 && <details className="mb-4 text-xs" data-bh-composite-strip-labels>
+            <summary className="cursor-pointer text-gray-400">Composite points by model, with each input count</summary>
+            <div className="mt-2 grid gap-4 sm:grid-cols-2">
+              {openVsClosed.map((g) => <div key={g.name}>
+                <p className="mb-1 font-semibold text-gray-300">{g.name}</p>
+                <ul className="space-y-1">
+                  {g.scoreRows.map((r) => <li key={r.id} className="flex justify-between gap-3 text-gray-400"><span className="min-w-0 truncate">{r.name}</span><span className="shrink-0 tabular">{r.value.toFixed(1)}{r.coverage && <span className="ml-2 text-amber-300" data-incomplete-composite={r.coverage}>{r.coverage}</span>}</span></li>)}
+                </ul>
+              </div>)}
+            </div>
+          </details>}
           <DotStrip label={`Cost (${unitShort})`} format={(v) => priceNumber(v)} log
             groups={openVsClosed.map((g) => ({ name: g.name, values: g.costs }))} />
           <details className="mt-1">

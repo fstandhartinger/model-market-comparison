@@ -182,6 +182,31 @@ export function isThinComposite(model: Pick<ClientModel, "composite_coverage" | 
   return model.composite_coverage + model.composite_attached < 3;
 }
 
+/** CR-211: how many of the seven fixed Main Composite inputs hold a value, exact plus explicitly attached. */
+export const COMPOSITE_INPUT_TOTAL = 7;
+export function compositeInputCount(model: Pick<ClientModel, "composite_coverage" | "composite_attached">): number {
+  return Math.min(COMPOSITE_INPUT_TOTAL, (model.composite_coverage ?? 0) + (model.composite_attached ?? 0));
+}
+
+/** CR-211: a Main Composite is complete when all seven inputs are filled (exact or attached). Charts that compare the
+ *  Main Composite plot complete rows by default; incomplete ones only on request, marked and labelled "N/7". The
+ *  score, its ranking and the source records are never changed by this — it only decides what a chart draws. */
+export function isCompleteComposite(model: Pick<ClientModel, "composite_coverage" | "composite_attached">): boolean {
+  return compositeInputCount(model) >= COMPOSITE_INPUT_TOTAL;
+}
+
+/** CR-211: whether a chart plotting `score` draws this model. Only the Main Composite is gated; every other score
+ *  keeps its existing rule. */
+export function compositeChartVisible(model: Pick<ClientModel, "composite_coverage" | "composite_attached">, score: ScoreKey, includeIncomplete: boolean): boolean {
+  return score !== "composite" || includeIncomplete || isCompleteComposite(model);
+}
+
+/** CR-211: the short coverage label a chart shows for an incomplete Main Composite ("3/7"); null when complete or
+ *  when the chart is not plotting the Main Composite. */
+export function compositeCoverageLabel(model: Pick<ClientModel, "composite_coverage" | "composite_attached">, score: ScoreKey): string | null {
+  return score === "composite" && !isCompleteComposite(model) ? `${compositeInputCount(model)}/${COMPOSITE_INPUT_TOTAL}` : null;
+}
+
 /** CR-65.4 (data & math gauntlet C5), reversed by CR-74.3 (= CR-70): every row sorts by its value alone, in either
  *  direction — thin Composites (isThinComposite) are no longer demoted into a separate band; the table marks them
  *  with a "Thin data" badge instead. Missing values sink as before. The model argument stays for call sites. */

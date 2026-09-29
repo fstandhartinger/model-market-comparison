@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import {
   ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label, Customized,
 } from "recharts";
-import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
+import { compositeChartVisible, compositeCoverageLabel, hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
 import { SCORE_SHORT_LABELS } from "../lib/types";
 import { scoreChartLabel } from "../lib/score-label";
 import { orgColor, counted } from "../lib/format";
@@ -19,6 +19,7 @@ import { paretoFrontier } from "../lib/pareto.mjs";
 import { COST_AXIS, LABEL_LIMIT, QUADRANT_NOTE, annotationBox, attractiveQuadrant, costAxisCaption, FRONTIER_GRACE_NOTE, frontierGrace, labelCandidates, placeLabels, valueMapYDomain } from "../lib/value-map.mjs";
 import { AaCredit } from "./AaCredit";
 import { EpochCredit } from "./EpochCredit";
+import { IncompleteCompositeToggle } from "./IncompleteCompositeToggle";
 
 type PlotOffset = { left: number; top: number; width: number; height: number };
 
@@ -38,9 +39,13 @@ function AttractiveQuadrant(props: { offset?: PlotOffset; gradientId: string; fo
   </g>;
 }
 
-function PointShape(props: { cx?: number; cy?: number; fill?: string; payload?: { open?: boolean } }) {
+// CR-211: a Main Composite built on fewer than 7 of 7 inputs is drawn hollow with a dashed outline, never solid.
+function PointShape(props: { cx?: number; cy?: number; fill?: string; payload?: { open?: boolean; coverage?: string | null } }) {
   const { cx, cy, fill, payload } = props;
   if (cx == null || cy == null) return <g />;
+  if (payload?.coverage) return payload.open
+    ? <rect x={cx - 4.5} y={cy - 4.5} width={9} height={9} fill="var(--surface)" fillOpacity={0.6} stroke={fill} strokeWidth={1.5} strokeDasharray="2 1.5" data-incomplete-composite={payload.coverage} />
+    : <circle cx={cx} cy={cy} r={5} fill="var(--surface)" fillOpacity={0.6} stroke={fill} strokeWidth={1.5} strokeDasharray="2 1.5" data-incomplete-composite={payload.coverage} />;
   if (payload?.open) return <rect x={cx - 4.5} y={cy - 4.5} width={9} height={9} fill={fill} stroke="#0e1116" strokeWidth={0.5} />;
   return <circle cx={cx} cy={cy} r={5} fill={fill} stroke="#0e1116" strokeWidth={0.5} />;
 }
@@ -55,9 +60,10 @@ function ParetoHalo(props: { cx?: number; cy?: number; payload?: { id?: string }
 }
 
 // F-17: dots only — names are placed by <PointLabels>, which can see every label at once.
-function CompactPointShape(props: { cx?: number; cy?: number; payload?: { pass: boolean } }) {
+function CompactPointShape(props: { cx?: number; cy?: number; payload?: { pass: boolean; coverage?: string | null } }) {
   const { cx, cy, payload } = props;
   if (cx == null || cy == null) return <g />;
+  if (payload?.coverage) return <circle cx={cx} cy={cy} r={payload.pass ? 5 : 4} fill="var(--surface)" fillOpacity={0.6} stroke="rgb(var(--accent))" strokeOpacity={payload.pass ? 1 : 0.35} strokeWidth={1.5} strokeDasharray="2 1.5" data-incomplete-composite={payload.coverage} />;
   return <circle cx={cx} cy={cy} r={payload?.pass ? 5 : 4} fill="rgb(var(--accent))" opacity={payload?.pass ? 1 : 0.25} stroke="rgb(var(--ink))" strokeWidth={1} />;
 }
 
@@ -181,18 +187,25 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
       return !!tokens && !tokens.stale && Number.isFinite(tokens.value.output) && tokens.value.output > 0;
     });
     return pool
-      .map((m: ClientModel) => ({ m, price: modelPrice(m, data, offerScope, priceSettings), sc: m.scores[score], hasEvidence: hasScoreEvidence(m, score) }))
+      .map((m: ClientModel) => ({ m, price: modelPrice(m, data, offerScope, priceSettings), sc: m.scores[score], hasEvidence: hasScoreEvidence(m, score), coverage: compositeCoverageLabel(m, score) }))
       .filter((x) => x.hasEvidence && x.sc != null);
   }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.labAllowed, preferredId, measuredOnly, s.priceMode, idKey]);
-  const allPoints = useMemo(() => evaluated
+  // CR-211: on the Main Composite the map plots only 7/7 models unless the reader includes incomplete ones; the
+  // table beside it still ranks every model. Other scores are not gated.
+  const includeIncomplete = s.includeIncompleteComposites;
+  const plotted = useMemo(() => evaluated.filter((x) => compositeChartVisible(x.m, score, includeIncomplete)), [evaluated, score, includeIncomplete]);
+  const hiddenIncomplete = evaluated.length - plotted.length;
+  const allPoints = useMemo(() => plotted
     .filter((x) => x.price.value != null && (x.price.value as number) >= 0)
     .map((x) => ({ x: x.price.value as number, y: x.sc as number, price: x.price, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100,
+      coverage: x.coverage, compositeChart: score === "composite",
       pass: (x.sc as number) >= minScore && (maxCost == null || (x.price.value as number) <= maxCost) })),
-  [evaluated, minScore, maxCost, s.collapse, preferredId]);
+  [plotted, minScore, maxCost, s.collapse, preferredId, score]);
+  const shownIncomplete = allPoints.filter((p) => p.coverage).length;
   // CR-80.2 (Florian 2026-09-18): a model with a score but no public API price is listed in the table,
   // but it cannot be plotted on a cost chart — say how many are missing instead of staying silent.
-  const unpricedCount = useMemo(() => evaluated.filter((x) => x.price.value == null || (x.price.value as number) < 0).length, [evaluated]);
-  const unpricedNames = useMemo(() => evaluated.filter((x) => x.price.value == null || (x.price.value as number) < 0).map((x) => x.m.display_name).join(", "), [evaluated]);
+  const unpricedCount = useMemo(() => plotted.filter((x) => x.price.value == null || (x.price.value as number) < 0).length, [plotted]);
+  const unpricedNames = useMemo(() => plotted.filter((x) => x.price.value == null || (x.price.value as number) < 0).map((x) => x.m.display_name).join(", "), [plotted]);
 
   const points = useMemo(() => allPoints.filter((p) => (compact || p.pass) && (!logCostAxis || p.x > 0)), [allPoints, logCostAxis, compact]);
   const zeroCount = allPoints.filter((p) => p.x === 0).length;
@@ -210,8 +223,9 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
   // with a halo would contradict the dimming.
   // CR-77.3: with a grace band on the capability axis, so a model only marginally behind the frontier at its price
   // (Claude Fable 5.1 against GPT-6 Astra) is part of the line.
+  // CR-211: a model with fewer than 7 of 7 Composite inputs is plotted only on request and never joins the line.
   const pareto = useMemo(() => {
-    const passing = allPoints.filter((p) => p.pass);
+    const passing = allPoints.filter((p) => p.pass && !p.coverage);
     const grace = frontierGrace(passing.map((p) => p.y), { elo: score.startsWith("designarena") });
     const frontier = paretoFrontier(passing, { grace }) as typeof allPoints;
     return compact ? frontier.map((p) => pinFree(p, xFloor)) : frontier.filter((p) => !logCostAxis || p.x > 0);
@@ -239,9 +253,10 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
     // cut by a score line, so only the frontier is named there.
     // 2026-09-15: at most LABEL_LIMIT names; unnamed points keep their tooltip and table row.
     // Every candidate is offered in priority order; placement stops after LABEL_LIMIT names fit.
-    const labels = labelCandidates(passing.filter((p) => !advanced || wide || frontierIds.has(p.id)), frontierIds, Number.POSITIVE_INFINITY);
+    const labels = labelCandidates(passing.filter((p) => !advanced || wide || frontierIds.has(p.id)), frontierIds, Number.POSITIVE_INFINITY)
+      .map((p) => p.coverage ? { ...p, name: `${p.name.length > 15 ? `${p.name.slice(0, 14)}…` : p.name} · ${p.coverage}` } : p);
     // F-13: inside Simple's shortlist card the map has no card of its own, one header line.
-    return <div className="bh-value-map" role="img" aria-label={`Score versus adjusted cost value map: ${counted(compactPoints.length, "model")}. Higher scores are further up and cheaper models further right, so the most attractive models sit in the top-right quadrant.`}>
+    return <div className="bh-value-map" role="img" aria-label={`Score versus adjusted cost value map: ${counted(compactPoints.length, "model")}${shownIncomplete ? `, ${shownIncomplete} of them with an incomplete Composite (fewer than 7 of 7 inputs), drawn hollow and left off the green line` : ""}. Higher scores are further up and cheaper models further right, so the most attractive models sit in the top-right quadrant.`}>
       <div className="relative flex items-center justify-end gap-2 lg:mb-1">
         <span className="text-[11px] text-gray-500"><span title={FRONTIER_GRACE_NOTE}>{advanced && !wide ? "cheaper → right · green line = Pareto frontier" : advanced ? `Value map · ${counted(compactPoints.length, "model")} · cheaper → right · green line = Pareto` : `${counted(compactPoints.length, "model")} · cheaper → right`}</span> · <AaCredit /> · <EpochCredit bare /></span>
         <button type="button" aria-label="Chart settings" aria-expanded={prefsOpen} aria-controls="bh-value-map-settings" data-value-map-settings onClick={() => setPrefsOpen((o) => !o)}
@@ -285,6 +300,13 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
         <span data-bh-axis-y>↑ Capability · {SCORE_SHORT_LABELS[score]}</span>
         <span data-bh-axis-x>→ Adjusted cost per task{logCostAxis ? " · log scale" : ""}</span>
       </div>
+      <IncompleteCompositeToggle score={score} hidden={hiddenIncomplete} shown={shownIncomplete} frontier={mapPrefs.pareto} />
+      {simplePair && score === "composite" && <details className="mt-2 text-[11px] leading-relaxed text-gray-500" data-bh-composite-method-note>
+        <summary className="cursor-pointer text-gray-400">How this compares with OpenAI’s GPT-6 announcement</summary>
+        <p className="mt-1 max-w-4xl">
+          OpenAI’s launch report compares GPT-6 Astra (not Sol) with GPT-5.6 Sol on Artificial Analysis Intelligence Index v4.1.1: 61.2 vs 60.9. OpenAI describes lower estimated task cost for Astra on several evaluations, not every workload. In current v4.3.2 results, Artificial Analysis scores GPT-6 Sol 48 vs GPT-5.6 Sol 47 and reports their Index-task costs at about $1.06 vs $1.99; Astra scores 53 vs 47 and costs about $3.26 vs $1.99. This Main Composite is a different seven-input mix. GPT-6 Sol and GPT-5.6 Sol have 2/7 and 5/7 inputs here, so both are hidden by default. The chart’s $2.01 vs $1.95 estimates (29 Sep 2026) combine AA output tokens per task with a shared 22.17:1 Chutes input/output proxy and provider-specific pricing and cache assumptions; GPT-6 Sol’s estimated prompt length crosses the selected Azure/OpenRouter endpoint’s long-context price tier. These are estimates for different workloads, not a like-for-like contradiction. See the <a className="text-accent underline" href="https://openai.com/index/gpt-6-astra/" target="_blank" rel="noreferrer">OpenAI release</a>, <a className="text-accent underline" href="https://developers.openai.com/api/docs/guides/latest-model" target="_blank" rel="noreferrer">OpenAI model guidance</a>, and current Artificial Analysis comparisons for <a className="text-accent underline" href="https://artificialanalysis.ai/models/comparisons/gpt-6-sol-vs-gpt-5-6-sol" target="_blank" rel="noreferrer">GPT-6 Sol vs GPT-5.6 Sol</a> and <a className="text-accent underline" href="https://artificialanalysis.ai/models/comparisons/gpt-6-astra-vs-gpt-5-6-sol" target="_blank" rel="noreferrer">GPT-6 Astra vs GPT-5.6 Sol</a>. The estimated GPT-6 Sol endpoint pricing is listed by <a className="text-accent underline" href="https://openrouter.ai/api/v1/models/openai/gpt-6-sol/endpoints" target="_blank" rel="noreferrer">OpenRouter</a>.
+        </p>
+      </details>}
       {/* CR-75.2: the home page says what the green line means, in words, right under the chart. */}
       {/* CR-77.3: the sentence stays as Florian phrased it; the small tolerance is named in its tooltip and on /about. */}
       {!advanced && mapPrefs.pareto && pareto.length > 0 && <p className="mt-1 text-xs text-gray-400" data-bh-pareto-caption title={FRONTIER_GRACE_NOTE}>Models on the green line are the most capable in their price range.</p>}
@@ -298,6 +320,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
         <span className="text-sm text-gray-400">Capability (Y): <b className="text-gray-200">{SCORE_SHORT_LABELS[score]}</b></span>
         <Toggle label="Log cost axis" on={logX} set={setLogX} />
         <Toggle label="Pareto frontier" on={showPareto} set={setShowPareto} />
+        <IncompleteCompositeToggle score={score} hidden={hiddenIncomplete} shown={shownIncomplete} frontier={showPareto} />
         <span className="ml-auto text-xs text-gray-500">
           {/* F-18: the count is what the filters allow, so it opens them. */}
           <button type="button" data-bh-filters-toggle onClick={s.openFilters} className="min-h-0 text-accent underline decoration-dotted underline-offset-2">{counted(points.length, "model")}</button> · cost: cheaper → right{offerScope.restricted ? " · provider-filtered" : ""}</span>
@@ -367,7 +390,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
             <tbody>
               {[...allPoints].sort((a, b) => a.x - b.x).map((p) => (
                 <tr key={p.id}>
-                  <td className="px-3 py-1"><Link href={`/models/${encodeURIComponent(p.id)}`} className="text-accent underline">{p.name}</Link> <span className="text-gray-500">{p.org}{p.open ? " · open" : ""}</span></td>
+                  <td className="px-3 py-1"><Link href={`/models/${encodeURIComponent(p.id)}`} className="text-accent underline">{p.name}</Link> <span className="text-gray-500">{p.org}{p.open ? " · open" : ""}</span>{p.coverage && <span className="bh-thin-tag ml-1" data-incomplete-composite={p.coverage} title={`Incomplete Composite: ${p.coverage.replace("/", " of ")} inputs`}><span aria-hidden="true">{p.coverage}</span><span className="sr-only">Incomplete Composite: {p.coverage.replace("/", " of ")} inputs</span></span>}</td>
                   <td className="px-3 py-1 text-right tabular">{p.y.toFixed(isElo ? 0 : 1)}</td>
                   <td className="px-3 py-1 text-right"><PriceValue price={p.price} compact /></td>
                 </tr>
@@ -380,7 +403,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
   );
 }
 
-function Dot({ active, payload }: { active?: boolean; payload?: { payload: { name: string; x: number; y: number; org: string; open: boolean; price: PriceResult } }[] }) {
+function Dot({ active, payload }: { active?: boolean; payload?: { payload: { name: string; x: number; y: number; org: string; open: boolean; price: PriceResult; coverage?: string | null; compositeChart?: boolean } }[] }) {
   if (!active || !payload?.length) return null;
   const p = payload[0].payload;
   return (
@@ -389,6 +412,8 @@ function Dot({ active, payload }: { active?: boolean; payload?: { payload: { nam
       <div className="text-gray-400">{p.org}{p.open ? " · open weights" : " · closed"}</div>
       <div className="mt-1">Capability: <span className="font-semibold">{p.y.toFixed(1)}</span></div>
       <div>Cheapest price: <PriceValue price={p.price} compact /></div>
+      {/* CR-211: the Composite's input count, stated on every Composite point; an incomplete one is never "7/7". */}
+      {p.compositeChart && <div className={p.coverage ? "mt-1 text-amber-300" : "mt-1 text-gray-400"} data-bh-composite-inputs>{p.coverage ? `Incomplete Composite: ${p.coverage} inputs — not on the green line` : "Composite inputs: 7/7"}</div>}
     </div>
   );
 }

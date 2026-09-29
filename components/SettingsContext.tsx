@@ -64,6 +64,8 @@ interface SettingsCtx extends SettingsState {
   setIoBasis: (b: IoBasis) => void;
   /** CR-74.4: include the marginal Benchmaxxing penalty in the Main Composite. */
   setIncludeBenchmaxxing: (b: boolean) => void;
+  /** CR-211: plot Main Composite rows with fewer than 7 of 7 inputs on Composite charts (marked "N/7"). */
+  setIncludeIncompleteComposites: (b: boolean) => void;
   /** CR-4.1: replace every filter key at once with a resolved preset (lib/presets.mjs). */
   applyFilters: (filters: Record<string, unknown>) => void;
   /** CR-5.2: the persisted settings alone (what the account stores). */
@@ -181,6 +183,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setInputWeight: (inputWeight) => setState((s) => isBlendValue(inputWeight) ? { ...s, inputWeight } : s),
     setIoBasis: (ioBasis) => setState((s) => ({ ...s, ioBasis })),
     setIncludeBenchmaxxing: (includeBenchmaxxing) => setState((s) => ({ ...s, includeBenchmaxxing })),
+    setIncludeIncompleteComposites: (includeIncompleteComposites) => setState((s) => ({ ...s, includeIncompleteComposites })),
     // Sanitised like a stored payload, so a saved preset from an older build cannot wedge the UI.
     applyFilters: (filters) => setState((s) => ({ ...s, ...sanitizeSettings({ ...s, ...filters, advancedMinScore: filters.advancedMinScore ?? s.advancedMinScore }) })),
     settingsState: state,

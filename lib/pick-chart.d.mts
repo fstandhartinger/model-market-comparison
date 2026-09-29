@@ -1,4 +1,4 @@
-export interface PickPoint { id: string; cost: number; x: number; free: boolean; y: number; pass: boolean }
+export interface PickPoint { id: string; cost: number; x: number; free: boolean; y: number; pass: boolean; incomplete: boolean }
 export interface PickChart {
   points: PickPoint[]; frontier: string[]; unpriced: number;
   xDomain: [number, number]; yDomain: [number, number]; xTicks: number[]; yTicks: number[];
@@ -10,6 +10,6 @@ export function logPosition(x: number, domain: [number, number]): number;
 export const SLIDER_MAX: number;
 export function sliderToCost(pos: number, range: [number, number]): number | null;
 export function costToSlider(cost: number | null, range: [number, number]): number;
-export function pickChart(candidates: { id: string; scores: Record<string, number | null | undefined>; cost: number | null }[], score: string, limits?: { minScore?: number | null; maxCost?: number | null }): PickChart;
+export function pickChart(candidates: { id: string; scores: Record<string, number | null | undefined>; cost: number | null; incomplete?: boolean }[], score: string, limits?: { minScore?: number | null; maxCost?: number | null }): PickChart;
 export function toggleColumn(ids: string[], id: string, max: number): string[] | null;
 export function nearestHitId(pointsXY: { id: string; x: number; y: number }[], coord: { x: number; y: number }, hitR: number): string | null;
