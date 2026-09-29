@@ -22,7 +22,7 @@ test('F-221: the release header prints the data hash through Sha (12-char prefix
 
 test('F-222: the live hub says what JevBench is first; the release facts sit on the small meta line; the release notes are not the hero', () => {
   assert.match(release, /live = false \}/, 'the component takes a live flag');
-  assert.match(livePage, /<JevBenchV15ReleasePage artifact=\{artifact\} sha256=\{sha256\} versionPath="\/jev-models\/v1\.5\.0" live \/>/, '/jev-models is the live board');
+  assert.match(livePage, /<JevBenchV15ReleasePage artifact=\{artifact\} sha256=\{sha256\} versionPath="\/jev-models\/v1\.5\.1" live \/>/, '/jev-models is the live board');
   assert.doesNotMatch(pinnedPage, /live \/>/, 'the pinned v1.5.0 page is not the live board');
   assert.match(release, /\{live \? 'JevBench by Benchmark Heaven' : `JevBench \$\{artifact\.revision\} — Jev alternatives ranking`\}/, 'the live h1 is the product name; the pinned h1 keeps the release name');
   assert.match(release, /data-bh-jev-own>JevBench is <b>Benchmark Heaven&apos;s own benchmark<\/b> for Jev-class decision models: state and a bounded rubric in, a typed answer out\.<\/p>/);
@@ -33,9 +33,10 @@ test('F-222: the live hub says what JevBench is first; the release facts sit on 
   assert.match(release, /data-bh-jev-meta>\s*\{live \? `Release \$\{artifact\.revision\}` : 'Frozen release'\} · \{artifact\.sample\.total/, 'the meta line carries the sample and roster facts');
   assert.match(release, /\{!live && <span className="bh-muted"> · <a className="text-accent underline" href="\/jev-models" data-bh-jev-live-link>View live board<\/a><\/span>\}/, 'the live board does not link to itself');
   // The section order CR-205 pins is untouched: the header still carries every marker its test asks for.
-  for (const marker of ['data-bh-jev15-release-header', 'data-bh-image-jev-link', 'data-bh-jev-version-share', 'data-bh-jev-meta', '/api/jevbench/v1.5.0']) {
+  for (const marker of ['data-bh-jev15-release-header', 'data-bh-image-jev-link', 'data-bh-jev-version-share', 'data-bh-jev-meta']) {
     assert.ok(release.includes(marker), `header keeps ${marker}`);
   }
+  assert.match(release, /api\/jevbench\/\$\{artifact\.revision\}/, 'the page links to the matching release API route');
 });
 
 test('F-226: the artifact value "unclassified" has a label; system-one-open stays the data owner\'s to name (F-192)', () => {

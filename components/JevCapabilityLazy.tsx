@@ -20,7 +20,11 @@ export function JevCapabilityLazy({ revision, only3d = false }: { revision: stri
         if (!response.ok) throw new Error(`JevBench API returned ${response.status}`);
         return response.json() as Promise<{ systems?: JevV14System[] }>;
       })
-      .then((data) => { if (active) setSystems(data.systems ?? []); })
+      .then((data) => {
+        if (!active) return;
+        const available = data.systems ?? [];
+        setSystems(revision === 'v1.5.1' ? available.filter((row) => row.ranked) : available);
+      })
       .catch(() => { if (active) setError(true); });
     return () => { active = false; };
   }, [revision]);
