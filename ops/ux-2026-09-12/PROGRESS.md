@@ -19100,4 +19100,23 @@ mappings, 240 verified evidence files**. Logs in `iter271-designarena/gate-*.log
    D254.1 (the two-family reviewer pool), R9.1's two arms under the written-permission hold, and the
    Coolify host alias (patched, not fixed).
 
+### Live receipts, taken after the push
+
+Against the real source at ~02:45 UTC in a scratch clone of `7201b368`
+(`iter271-designarena/live-fetch-da/RECEIPT.md`):
+
+- `node scripts/fetch-live.mjs da` → exit 1, `frontend: 44 models`, `fullstack: 46 models`, then the
+  named determination listing all five contradicted board/identity pairs.
+- `git status --short data/raw/designarena.json` in that clone: **empty**. The refused capture left the
+  published `collected_at: 2026-09-28` board byte-for-byte intact.
+- `readDesignArenaInconsistency` on that run's own sidecar and step output: **recognised**,
+  `retained_collected_at: 2026-09-28`. The same sidecar with an `HTTP 503` step output:
+  **not recognised** — any other failure of the step still fails the run closed.
+- The registry capture is byte-identical to the 01:40Z probe
+  (`c04941b6ffb147fd88073728be21332ffbe1d215f9375601eb08fe8bf1cd39f1`), so the source has held all
+  three at `active: true` across an hour while the boards kept refitting without them.
+
+D255.1, D254.1 and D253.2 are posted for Florian's digest as board entry **#4763** in thread #8
+(D254.1 had been recorded in iteration 270 but never reached the board).
+
 **`ALL-ACCEPTED` is not appended.**
