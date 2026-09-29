@@ -4,8 +4,8 @@ import { access, readFile } from 'node:fs/promises';
 import { formatMatchedGapPp, readArchivedMultimodalPreviewV011, readArchivedMultimodalPreviewV012, readArchivedMultimodalPreviewV013, readMultimodalPreview, validatePreviewTracks } from '../lib/jevbench-multimodal-preview.mjs';
 
 const expectedTopFive = [
-  'Wity-1',
   'Imajev-4B',
+  'Wity-1',
   'Jev-Omni',
   'NeoHorse Jev 4B',
   'Visual-Jev 4B Answer-SFT',
@@ -26,7 +26,7 @@ function longArrays(value, path = 'root') {
   return Object.entries(value).flatMap(([key, child]) => longArrays(child, `${path}.${key}`));
 }
 
-test('Image JevBench v0.1.4 preserves the frozen method and publishes Wity-1 from a fresh hosted run', async () => {
+test('Image JevBench v0.1.4 preserves the frozen method and prices Wity-1 at its base-model estimate', async () => {
   const a = await readMultimodalPreview();
   assert.equal(a.benchmark, 'Image JevBench v0.1.4');
   assert.equal(a.revision, 'v0.1.4');
@@ -58,34 +58,34 @@ test('Image JevBench v0.1.4 preserves the frozen method and publishes Wity-1 fro
   assert.equal(wity.name, 'Wity-1');
   assert.equal(wity.kind, 'api');
   assert.equal(wity.api_flag, true);
-  assert.equal(wity.rank, 1);
+  assert.equal(wity.rank, 2);
   assert.equal(wity.previous_rank, undefined);
   assert.equal(wity.tracks.all.public.n, 228);
   assert.equal(wity.tracks.all.sealed.n, 456);
-  assert.ok(Math.abs(wity.score - 80.19853920531308) < 1e-9);
-  assert.ok(Math.abs(wity.tracks.all.cost.total_usd - 0.005062764) < 1e-12);
-  assert.ok(Math.abs(wity.tracks.all.cost.usd_per_1000 - 0.007401701754385965) < 1e-12);
+  assert.ok(Math.abs(wity.score - 74.36394536053653) < 1e-9);
+  assert.ok(Math.abs(wity.tracks.all.cost.total_usd - 0.0180813) < 1e-12);
+  assert.ok(Math.abs(wity.tracks.all.cost.usd_per_1000 - 0.026434649122807023) < 1e-12);
   assert.equal(wity.tracks.all.cost.coverage, 1);
-  assert.equal(wity.tracks.all.cost.source, 'Wity public billing tariff: USD 0.042/M input tokens; output free, applied to returned usage receipts');
+  assert.equal(wity.tracks.all.cost.source, 'Estimated Qwen3.6-35B-A3B base-model market reference: USD 0.15/M input, USD 1.00/M output; measured Wity usage (zero output tokens)');
   assert.equal(wity.inference_setting, 'Wity SystemOne, reasoning=auto');
-  assert.match(wity.measurement_source, /live Wity SystemOne endpoint/);
-  assert.deepEqual(a.ranking.slice(0, 5).map((s) => s.key), ['wity_1', 'imajev_4b', 'jev_omni', 'neohorse_jev_4b', 'visual_jev_4b']);
+  assert.match(wity.measurement_source, /production-named Wity SystemOne endpoint/);
+  assert.deepEqual(a.ranking.slice(0, 5).map((s) => s.key), ['imajev_4b', 'wity_1', 'jev_omni', 'neohorse_jev_4b', 'visual_jev_4b']);
   const imajev = a.ranking.find((s) => s.key === 'imajev_4b');
   assert.ok(imajev);
   assert.equal(imajev.name, 'Imajev-4B');
   assert.equal(imajev.kind, 'gpu');
   assert.equal(imajev.api_flag, false);
-  assert.equal(imajev.rank, 2);
+  assert.equal(imajev.rank, 1);
   assert.ok(Math.abs(imajev.score - 76.38798675595419) < 1e-10);
   assert.equal(imajev.previous_rank, 1);
   assert.ok(Math.abs(imajev.previous_score - 76.38798675595419) < 1e-10);
   assert.match(imajev.inference_setting, /--fast.*--merge-lora/);
   assert.equal(imajev.tracks.all.cost.source, 'measured GPU seconds x $0.67/GPU-hour');
   const coverage = a.candidate_coverage.candidates.find((row) => row.candidate === 'Imajev-4B');
-  assert.equal(coverage.status, 'included in v0.1.4 ranking (#2 of 50)');
+  assert.equal(coverage.status, 'included in v0.1.4 ranking (#1 of 50)');
   assert.equal(coverage.ranking_key, 'imajev_4b');
   const wityCoverage = a.candidate_coverage.candidates.find((row) => row.candidate === 'Wity-1');
-  assert.equal(wityCoverage.status, 'included in v0.1.4 ranking (#1 of 50)');
+  assert.equal(wityCoverage.status, 'included in v0.1.4 ranking (#2 of 50)');
   assert.equal(wityCoverage.ranking_key, 'wity_1');
   assert.equal(a.release_provenance.parent_revision, 'v0.1.3');
   assert.equal(a.ranking.filter((s) => s.api_flag).length, 6);

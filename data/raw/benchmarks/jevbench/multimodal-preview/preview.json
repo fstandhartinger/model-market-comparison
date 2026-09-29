@@ -115,7 +115,7 @@
   "overfit_penalty": "Matched-family public-minus-sealed accuracy gap (ScreenSpot and Everyday photo, inverse-variance weighted). Above 15 points, Intelligence is multiplied by 1 - (gap - 15)/100. Same rule for every system.",
   "calibration": "10-bin top-label ECE scaled by valid probability coverage, 35% public / 65% sealed; label-only outputs receive zero calibration.",
   "speed": "p50 and p95 whole-call latency; local latency uses the v1.4 2× plus 0.15-second adjustment. For self-hosted systems the original run's timings are combined with the fresh-item run on the same GPU type.",
-  "cost": "Hosted cost uses returned usage receipts: OpenRouter receipt costs for four endpoints, saved Autoloops per-request Gemma 4 31B token usage at published rates, and Wity-1 input tokens at USD 0.042 per million from the public Wity pricing page; Wity output is free. Introductory credit is not scored as a zero tariff. Missing receipts are not zero-filled; the cost axis is scaled by receipt coverage. Local cost uses measured GPU seconds at the recorded per-system GPU-hour rate.",
+  "cost": "Hosted cost uses returned usage receipts for four OpenRouter endpoints and published Gemma 4 rates for Autoloops. Wity-1 uses the estimated Qwen3.6-35B-A3B base-model market reference (USD 0.15/M input, USD 1.00/M output) applied to its measured 120,542 input and zero output tokens, following the 29 Sep price decision; Wity image and thinking usage is unbilled and not quantified by the API. Introductory credit is not scored as a zero tariff. Missing receipts are not zero-filled; Cost is scaled by receipt coverage. Local cost uses measured GPU seconds at recorded GPU-hour rates. See PRICING-v0.1.4.md.",
   "composite": "Equal-weight harmonic mean of Intelligence, Calibration, Speed, and Cost, followed by the v1.4 intelligence, speed, and cost gates below 50.",
   "difficulty_caveat": "The 333 fresh sealed items are our own synthetic images and renders. They are easier for frontier API models than the older real-source items, so sealed accuracy is higher than on the earlier split for most hosted systems."
  },
@@ -135,223 +135,6 @@
  "gap_allowance_pp": 15,
  "gap_slope_k": 1,
  "ranking": [
-  {
-   "key": "wity_1",
-   "name": "Wity-1",
-   "kind": "api",
-   "api_flag": true,
-   "prior_exposure": "Fresh first measurement on 228 public and 456 sealed ImageJevBench decisions through the hosted Wity SystemOne endpoint.",
-   "inference_setting": "Wity SystemOne, reasoning=auto",
-   "measurement_source": "Fresh 29 Sep 2026 server-side run on the live Wity SystemOne endpoint.",
-   "tracks": {
-    "all": {
-     "public": {
-      "n": 228,
-      "correct": 200,
-      "accuracy": 0.8771929824561403,
-      "chance": 0.32127192982456143,
-      "chance_corrected_intelligence": 81.90630048465266,
-      "ece": 0.031515342402260914,
-      "probability_coverage": 1,
-      "valid_answer_count": 228
-     },
-     "sealed": {
-      "n": 456,
-      "correct": 410,
-      "accuracy": 0.8991228070175439,
-      "chance": 0.3435672514619883,
-      "chance_corrected_intelligence": 84.6325167037862,
-      "ece": 0.07760500664667615,
-      "probability_coverage": 1,
-      "valid_answer_count": 456
-     },
-     "intelligence_before_penalty": 83.67834102708946,
-     "raw_overall_gap_pp": -2.1929824561403577,
-     "matched_gap_pp": 2.094565415583045,
-     "matched_gap_detail": {
-      "Everyday photo": {
-       "n_public": 89,
-       "n_sealed": 95,
-       "gap_pp": 2.9450029568302782,
-       "weight": 45.95108695652174
-      },
-      "ScreenSpot": {
-       "n_public": 20,
-       "n_sealed": 29,
-       "gap_pp": -1.2068965517241348,
-       "weight": 11.83673469387755
-      }
-     },
-     "penalty_points": 0,
-     "penalty_multiplier": 1,
-     "axes": {
-      "intelligence": 83.67834102708946,
-      "calibration": 87.70527516777383,
-      "speed": 76.9482637672557,
-      "cost": 73.92005255304716
-     },
-     "speed": {
-      "score": 76.9482637672557,
-      "raw_p50_s": 0.7100653946399689,
-      "raw_p95_s": 2.843644328415394,
-      "adjusted_p50_s": 0.7100653946399689,
-      "adjusted_p95_s": 2.843644328415394,
-      "latency_coverage": 1
-     },
-     "cost": {
-      "score": 73.92005255304716,
-      "raw_score": 73.92005255304716,
-      "usd_per_1000": 0.007401701754385965,
-      "total_usd": 0.005062764000000001,
-      "coverage": 1,
-      "source": "Wity public billing tariff: USD 0.042/M input tokens; output free, applied to returned usage receipts"
-     },
-     "composite": {
-      "harmonic_before_gates": 80.19853920531308,
-      "gates": {
-       "intelligence": 1,
-       "speed": 1,
-       "cost": 1
-      },
-      "score": 80.19853920531308
-     }
-    },
-    "core": {
-     "public": {
-      "n": 139,
-      "correct": 114,
-      "accuracy": 0.8201438848920863,
-      "chance": 0.21762589928057555,
-      "chance_corrected_intelligence": 77.01149425287356,
-      "ece": 0.048975871310188164,
-      "probability_coverage": 1,
-      "valid_answer_count": 139
-     },
-     "sealed": {
-      "n": 361,
-      "correct": 321,
-      "accuracy": 0.889196675900277,
-      "chance": 0.30932594644506,
-      "chance_corrected_intelligence": 83.9572192513369,
-      "ece": 0.08944598314514182,
-      "probability_coverage": 1,
-      "valid_answer_count": 361
-     },
-     "intelligence_before_penalty": 81.52621550187473,
-     "raw_overall_gap_pp": -6.905279100819062,
-     "matched_gap_pp": -1.2068965517241348,
-     "matched_gap_detail": {
-      "ScreenSpot": {
-       "n_public": 20,
-       "n_sealed": 29,
-       "gap_pp": -1.2068965517241348,
-       "weight": 11.83673469387755
-      }
-     },
-     "penalty_points": 0,
-     "penalty_multiplier": 1,
-     "axes": {
-      "intelligence": 81.52621550187473,
-      "calibration": 84.94371119941837,
-      "speed": 76.45121800152036,
-      "cost": 72.6981875088729
-     },
-     "speed": {
-      "score": 76.45121800152036,
-      "raw_p50_s": 0.6713419742882252,
-      "raw_p95_s": 3.372363641858101,
-      "adjusted_p50_s": 0.6713419742882252,
-      "adjusted_p95_s": 3.372363641858101,
-      "latency_coverage": 1
-     },
-     "cost": {
-      "score": 72.6981875088729,
-      "raw_score": 72.6981875088729,
-      "usd_per_1000": 0.008129436,
-      "total_usd": 0.004064718,
-      "coverage": 1,
-      "source": "Wity public billing tariff: USD 0.042/M input tokens; output free, applied to returned usage receipts"
-     },
-     "composite": {
-      "harmonic_before_gates": 78.6252647853872,
-      "gates": {
-       "intelligence": 1,
-       "speed": 1,
-       "cost": 1
-      },
-      "score": 78.6252647853872
-     }
-    },
-    "everyday_photo": {
-     "public": {
-      "n": 89,
-      "correct": 86,
-      "accuracy": 0.9662921348314607,
-      "chance": 0.48314606741573035,
-      "chance_corrected_intelligence": 93.47826086956523,
-      "ece": 0.05123739066436098,
-      "probability_coverage": 1,
-      "valid_answer_count": 89
-     },
-     "sealed": {
-      "n": 95,
-      "correct": 89,
-      "accuracy": 0.9368421052631579,
-      "chance": 0.47368421052631576,
-      "chance_corrected_intelligence": 87.99999999999999,
-      "ece": 0.048322460099844186,
-      "probability_coverage": 1,
-      "valid_answer_count": 95
-     },
-     "intelligence_before_penalty": 89.91739130434783,
-     "raw_overall_gap_pp": 2.9450029568302782,
-     "matched_gap_pp": 2.945002956830278,
-     "matched_gap_detail": {
-      "Everyday photo": {
-       "n_public": 89,
-       "n_sealed": 95,
-       "gap_pp": 2.9450029568302782,
-       "weight": 45.95108695652174
-      }
-     },
-     "penalty_points": 0,
-     "penalty_multiplier": 1,
-     "axes": {
-      "intelligence": 89.91739130434783,
-      "calibration": 90.131462840515,
-      "speed": 80.09961364959264,
-      "cost": 77.97001793806444
-     },
-     "speed": {
-      "score": 80.09961364959264,
-      "raw_p50_s": 0.7182572260499,
-      "raw_p95_s": 1.3606882393360138,
-      "adjusted_p50_s": 0.7182572260499,
-      "adjusted_p95_s": 1.3606882393360138,
-      "latency_coverage": 1
-     },
-     "cost": {
-      "score": 77.97001793806444,
-      "raw_score": 77.97001793806444,
-      "usd_per_1000": 0.005424163043478261,
-      "total_usd": 0.000998046,
-      "coverage": 1,
-      "source": "Wity public billing tariff: USD 0.042/M input tokens; output free, applied to returned usage receipts"
-     },
-     "composite": {
-      "harmonic_before_gates": 84.16424245720599,
-      "gates": {
-       "intelligence": 1,
-       "speed": 1,
-       "cost": 1
-      },
-      "score": 84.16424245720599
-     }
-    }
-   },
-   "score": 80.19853920531308,
-   "rank": 1
-  },
   {
    "api_flag": false,
    "key": "imajev_4b",
@@ -564,11 +347,228 @@
     }
    },
    "score": 76.38798675595419,
-   "rank": 2,
+   "rank": 1,
    "previous_rank": 1,
    "previous_score": 76.38798675595419,
    "prior_exposure": "Previous v0.1.2 row; remeasured on the customer's pinned fast-serving setup.",
    "inference_setting": "PyTorch; one rotation; --fast; --merge-lora; calibration.json; server 8501f5c3; adapter c9e5f132."
+  },
+  {
+   "key": "wity_1",
+   "name": "Wity-1",
+   "kind": "api",
+   "api_flag": true,
+   "prior_exposure": "Full measurement on the current 228-public/456-sealed Image JevBench split through the hosted Wity SystemOne endpoint; exact server build under author review.",
+   "inference_setting": "Wity SystemOne, reasoning=auto",
+   "measurement_source": "Full 684-decision run on 29 Sep 2026 through the production-named Wity SystemOne endpoint; deployed build ID not recorded.",
+   "tracks": {
+    "all": {
+     "public": {
+      "n": 228,
+      "correct": 200,
+      "accuracy": 0.8771929824561403,
+      "chance": 0.32127192982456143,
+      "chance_corrected_intelligence": 81.90630048465266,
+      "ece": 0.031515342402260914,
+      "probability_coverage": 1,
+      "valid_answer_count": 228
+     },
+     "sealed": {
+      "n": 456,
+      "correct": 410,
+      "accuracy": 0.8991228070175439,
+      "chance": 0.3435672514619883,
+      "chance_corrected_intelligence": 84.6325167037862,
+      "ece": 0.07760500664667615,
+      "probability_coverage": 1,
+      "valid_answer_count": 456
+     },
+     "intelligence_before_penalty": 83.67834102708946,
+     "raw_overall_gap_pp": -2.1929824561403577,
+     "matched_gap_pp": 2.094565415583045,
+     "matched_gap_detail": {
+      "Everyday photo": {
+       "n_public": 89,
+       "n_sealed": 95,
+       "gap_pp": 2.9450029568302782,
+       "weight": 45.95108695652174
+      },
+      "ScreenSpot": {
+       "n_public": 20,
+       "n_sealed": 29,
+       "gap_pp": -1.2068965517241348,
+       "weight": 11.83673469387755
+      }
+     },
+     "penalty_points": 0,
+     "penalty_multiplier": 1,
+     "axes": {
+      "intelligence": 83.67834102708946,
+      "calibration": 87.70527516777383,
+      "speed": 76.9482637672557,
+      "cost": 57.334793493313725
+     },
+     "speed": {
+      "score": 76.9482637672557,
+      "raw_p50_s": 0.7100653946399689,
+      "raw_p95_s": 2.843644328415394,
+      "adjusted_p50_s": 0.7100653946399689,
+      "adjusted_p95_s": 2.843644328415394,
+      "latency_coverage": 1
+     },
+     "cost": {
+      "score": 57.334793493313725,
+      "raw_score": 57.334793493313725,
+      "usd_per_1000": 0.026434649122807023,
+      "total_usd": 0.0180813,
+      "coverage": 1,
+      "source": "Estimated Qwen3.6-35B-A3B base-model market reference: USD 0.15/M input, USD 1.00/M output; measured Wity usage (zero output tokens)"
+     },
+     "composite": {
+      "harmonic_before_gates": 74.36394536053653,
+      "gates": {
+       "intelligence": 1,
+       "speed": 1,
+       "cost": 1
+      },
+      "score": 74.36394536053653
+     }
+    },
+    "core": {
+     "public": {
+      "n": 139,
+      "correct": 114,
+      "accuracy": 0.8201438848920863,
+      "chance": 0.21762589928057555,
+      "chance_corrected_intelligence": 77.01149425287356,
+      "ece": 0.048975871310188164,
+      "probability_coverage": 1,
+      "valid_answer_count": 139
+     },
+     "sealed": {
+      "n": 361,
+      "correct": 321,
+      "accuracy": 0.889196675900277,
+      "chance": 0.30932594644506,
+      "chance_corrected_intelligence": 83.9572192513369,
+      "ece": 0.08944598314514182,
+      "probability_coverage": 1,
+      "valid_answer_count": 361
+     },
+     "intelligence_before_penalty": 81.52621550187473,
+     "raw_overall_gap_pp": -6.905279100819062,
+     "matched_gap_pp": -1.2068965517241348,
+     "matched_gap_detail": {
+      "ScreenSpot": {
+       "n_public": 20,
+       "n_sealed": 29,
+       "gap_pp": -1.2068965517241348,
+       "weight": 11.83673469387755
+      }
+     },
+     "penalty_points": 0,
+     "penalty_multiplier": 1,
+     "axes": {
+      "intelligence": 81.52621550187473,
+      "calibration": 84.94371119941837,
+      "speed": 76.45121800152036,
+      "cost": 56.11292844913949
+     },
+     "speed": {
+      "score": 76.45121800152036,
+      "raw_p50_s": 0.6713419742882252,
+      "raw_p95_s": 3.372363641858101,
+      "adjusted_p50_s": 0.6713419742882252,
+      "adjusted_p95_s": 3.372363641858101,
+      "latency_coverage": 1
+     },
+     "cost": {
+      "score": 56.11292844913949,
+      "raw_score": 56.11292844913949,
+      "usd_per_1000": 0.0290337,
+      "total_usd": 0.01451685,
+      "coverage": 1,
+      "source": "Estimated Qwen3.6-35B-A3B base-model market reference: USD 0.15/M input, USD 1.00/M output; measured Wity usage (zero output tokens)"
+     },
+     "composite": {
+      "harmonic_before_gates": 72.80678257384854,
+      "gates": {
+       "intelligence": 1,
+       "speed": 1,
+       "cost": 1
+      },
+      "score": 72.80678257384854
+     }
+    },
+    "everyday_photo": {
+     "public": {
+      "n": 89,
+      "correct": 86,
+      "accuracy": 0.9662921348314607,
+      "chance": 0.48314606741573035,
+      "chance_corrected_intelligence": 93.47826086956523,
+      "ece": 0.05123739066436098,
+      "probability_coverage": 1,
+      "valid_answer_count": 89
+     },
+     "sealed": {
+      "n": 95,
+      "correct": 89,
+      "accuracy": 0.9368421052631579,
+      "chance": 0.47368421052631576,
+      "chance_corrected_intelligence": 87.99999999999999,
+      "ece": 0.048322460099844186,
+      "probability_coverage": 1,
+      "valid_answer_count": 95
+     },
+     "intelligence_before_penalty": 89.91739130434783,
+     "raw_overall_gap_pp": 2.9450029568302782,
+     "matched_gap_pp": 2.945002956830278,
+     "matched_gap_detail": {
+      "Everyday photo": {
+       "n_public": 89,
+       "n_sealed": 95,
+       "gap_pp": 2.9450029568302782,
+       "weight": 45.95108695652174
+      }
+     },
+     "penalty_points": 0,
+     "penalty_multiplier": 1,
+     "axes": {
+      "intelligence": 89.91739130434783,
+      "calibration": 90.131462840515,
+      "speed": 80.09961364959264,
+      "cost": 61.38475887833102
+     },
+     "speed": {
+      "score": 80.09961364959264,
+      "raw_p50_s": 0.7182572260499,
+      "raw_p95_s": 1.3606882393360138,
+      "adjusted_p50_s": 0.7182572260499,
+      "adjusted_p95_s": 1.3606882393360138,
+      "latency_coverage": 1
+     },
+     "cost": {
+      "score": 61.38475887833102,
+      "raw_score": 61.38475887833102,
+      "usd_per_1000": 0.019372010869565217,
+      "total_usd": 0.00356445,
+      "coverage": 1,
+      "source": "Estimated Qwen3.6-35B-A3B base-model market reference: USD 0.15/M input, USD 1.00/M output; measured Wity usage (zero output tokens)"
+     },
+     "composite": {
+      "harmonic_before_gates": 78.44465069369441,
+      "gates": {
+       "intelligence": 1,
+       "speed": 1,
+       "cost": 1
+      },
+      "score": 78.44465069369441
+     }
+    }
+   },
+   "score": 74.36394536053653,
+   "rank": 2
   },
   {
    "api_flag": false,
@@ -11034,8 +11034,8 @@
   "scoring_status": "Neither track has a reviewed system or reusable output. Computer Use has no reviewed candidate in the current queue. Browser Use has one candidate requested, not yet evaluated: kev-0.6b-browser-use. Its public, ungated HF adapter is pinned at 08414b0001f6eba32bc69372abfeac5b74718ac0 (model card license: Apache-2.0), with base jaredpalmer/kev-0.6b at dece6dba8d43f0f7ded45e9f5b9df12474d90843. The model takes textual DOM state and uses a pointer head; its serving path and safe head loader are not independently reviewed. Its Mind2Web-derived examples remain public-only. Both tracks still lack a ready matched-family split and measurements, so they remain separate, requested, and unscored outside the core ranking."
  },
  "candidate_coverage": {
-  "checked_utc": "2026-09-29T13:31:30Z",
-  "included_note": "Wity-1 completed a fresh 684-decision server-side run on the live endpoint; its cost uses the returned input-token receipts at Wity’s published rate.",
+  "checked_utc": "2026-09-29T14:37:30Z",
+  "included_note": "Wity-1 completed a full 684-decision API run. Its Cost axis uses the Qwen3.6-35B-A3B market reference applied to returned usage, by the 29 Sep price decision; the server build remains under author review.",
   "candidates": [
    {
     "candidate": "CUA-S1-4B-0.2 multimodal adapter",
@@ -11360,7 +11360,7 @@
     "candidate": "Imajev-4B",
     "source_revision": "Imajev-4B fast-serving remeasurement (2026-09-28)",
     "access": "Public request model",
-    "status": "included in v0.1.4 ranking (#2 of 50)",
+    "status": "included in v0.1.4 ranking (#1 of 50)",
     "reason": "Remeasured on the unchanged v0.1 method and split with the pinned server and adapter, one rotation, --fast, and --merge-lora. Only aggregate results are published.",
     "ranking_key": "imajev_4b"
    },
@@ -11564,10 +11564,10 @@
    },
    {
     "candidate": "Wity-1",
-    "source_revision": "Wity SystemOne live deployment, checked 2026-09-29",
-    "access": "Hosted Wity SystemOne API; public billing tariff USD 0.042/M input tokens and free output",
-    "status": "included in v0.1.4 ranking (#1 of 50)",
-    "reason": "Completed the frozen 684-decision run with valid answer probabilities; returned input-token usage was available for every decision.",
+    "source_revision": "Wity production-named endpoint; deployed build ID unavailable on 29 Sep 2026",
+    "access": "Hosted Wity SystemOne API; Cost estimated from Qwen3.6-35B-A3B market reference",
+    "status": "included in v0.1.4 ranking (#2 of 50)",
+    "reason": "Full 684-decision run with valid probabilities and complete input/output usage; base-model reference applied to measured tokens. Server build under author review.",
     "ranking_key": "wity_1"
    }
   ]
@@ -11587,7 +11587,11 @@
    "wity_score_adapter": "6d318b8f12f7837cc4b90c2785d220be8bf4f001029e1bc23f87cfc56aec294c",
    "wity_preview_builder": "de9b93b6a55916f72f7c93921501f88e7a6bdffbbf91c5619839eac761371ca1",
    "wity_aggregate": "b8f5fca4bfc190ff53ff6a34ebf30a4033f23f05894ee6efc868894e0404dae3",
-   "wity_pricing_page": "cc2f0eb5f821ba0e2080b5b5b49e3c3bf043aa6bfb6b878eb7778a74ebd17b0c"
+   "wity_pricing_page": "cc2f0eb5f821ba0e2080b5b5b49e3c3bf043aa6bfb6b878eb7778a74ebd17b0c",
+   "wity_operator_candidate": "21922ecea7b539f0ea92a68dcf6534a509ce0e2d252503979bde4949986f1645",
+   "wity_base_price_roster": "369d916b4ba00e48e6bc4669c7d05feaa9614554887ec9a3c721c231ed734648",
+   "wity_price_addendum": "e9e8294e402a6aee6a34839961b36842e16bb77e264183d2c645879213b0e8b3",
+   "wity_reprice_builder": "f183fee9a8587fdb071344be41c673574491badfc065383b2720f2eca73b8c0c"
   },
   "aggregate_row_sha256": {
    "autojev_27b": "4cc9c6080f563d441a5136c42a7f78b6da4f08405530f77a0ae74143ed8539b1",
@@ -11606,7 +11610,7 @@
    "gpt56_luna": "da6a8bea26272a94d05a110c744c3fcabb091f221aa75dce8e174d8f129d35fa",
    "gpt6_luna": "f532b48aad7f1fa8725bc42a17f7e60f98159ebb4d208b503f5284edae08ce66",
    "imajev_2b": "65c37bc6f4c6e77124666d1736e5a0adc8edacefe368672b2adf5efa23a7a0e5",
-   "imajev_4b": "83ba968282586fd787acd4087eaf76ba8cdd9d312c4221c3402306ecb167bb92",
+   "imajev_4b": "72e73071fbf10a8b97dcfa617b3ca5d52c617b17d8e8eb4df97afed4523df2f1",
    "imajev_9b": "8a79e9403a090ef9e94fe92785e40ef91b37b849d4a9965b66c0a0246a1a5636",
    "jev_omni": "37a12133d12694956aff3355c634b499bdb59cfa2b2cb086941e1ecc44109e9f",
    "jev_spatial": "3dc1689419af337383c319fb2ce94b8e967234d5ba93af88bdea99e11ae2bb73",
@@ -11639,7 +11643,7 @@
    "visual_jev_generic_baseline": "3ccd55d82df468be4298b50c22e9dc5566f5804487f8bbc4cc33dde89e05d301",
    "vjev_vision": "ece12ccbdd7f938d4771b7089c7a4475515c4efdea1d784250584f56bc2a0105",
    "winnow_12b_q8": "3aa640049ac04ca6ea054568c03354c3367aaa97549cb00219d51ed304cacb25",
-   "wity_1": "dac19c8f2adf4b37f90ced80ff91c75f3de6c8b549bf5d58e874be78ce421f0d"
+   "wity_1": "703b5f1a2e42a8fbd6f016da2cc87142b8858b43d655e049681a04985c41dd21"
   }
  }
 }
