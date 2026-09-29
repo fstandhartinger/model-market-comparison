@@ -14,12 +14,13 @@ import { OFFICIAL_WEIGHTS } from '../lib/jevbench-axis-weights.mjs';
 // sections and their order for every /jev-models page so a release cannot silently drop one.
 
 const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
-const [page, v150Page, v151Page, v152Page, v153Page, releaseComponent, boardSource, capabilityLazySource, page1422, page1421, page142, page141, page140, pageV1, v14BoardSource, v14CapabilitySource] = await Promise.all([
+const [page, v150Page, v151Page, v152Page, v153Page, v154Page, releaseComponent, boardSource, capabilityLazySource, page1422, page1421, page142, page141, page140, pageV1, v14BoardSource, v14CapabilitySource] = await Promise.all([
   read('../app/jev-models/page.tsx'),
   read('../app/jev-models/v1.5.0/page.tsx'),
   read('../app/jev-models/v1.5.1/page.tsx'),
   read('../app/jev-models/v1.5.2/page.tsx'),
   read('../app/jev-models/v1.5.3/page.tsx'),
+  read('../app/jev-models/v1.5.4/page.tsx'),
   read('../components/JevBenchV15ReleasePage.tsx'),
   read('../components/JevBenchV15Preview.tsx'),
   read('../components/JevCapabilityLazy.tsx'),
@@ -49,19 +50,20 @@ const ordered = (source, markers, where) => {
 
 test('CR-205: the live board and all frozen v1.5 pages render the complete release page', () => {
   for (const [name, source, loader] of [
-    ['/jev-models', page, 'readJevbenchV153Release'],
+    ['/jev-models', page, 'readJevbenchV154Release'],
     ['/jev-models/v1.5.0', v150Page, 'readJevbenchV150Release'],
     ['/jev-models/v1.5.1', v151Page, 'readJevbenchV151Release'],
     ['/jev-models/v1.5.2', v152Page, 'readJevbenchV152Release'],
     ['/jev-models/v1.5.3', v153Page, 'readJevbenchV153Release'],
+    ['/jev-models/v1.5.4', v154Page, 'readJevbenchV154Release'],
   ]) {
     assert.match(source, new RegExp(`${loader}\\(\\)`), `${name} reads its frozen release artifact`);
     assert.match(source, /<JevBenchV15ReleasePage artifact=\{artifact\} sha256=\{sha256\}/, `${name} renders the full release page`);
     assert.ok(source.indexOf('<JevBenchV15ReleasePage') < source.indexOf('<JevHistoryLazy />'), `${name} ends with the lazy revision history`);
   }
-  assert.match(page, /versionPath="\/jev-models\/v1\.5\.3"/);
-  assert.match(page, /readJevbenchV153Release/);
-  assert.match(page, /versionPath="\/jev-models\/v1\.5\.3"/);
+  assert.match(page, /versionPath="\/jev-models\/v1\.5\.4"/);
+  assert.match(page, /readJevbenchV154Release/);
+  assert.match(page, /versionPath="\/jev-models\/v1\.5\.4"/);
   assert.match(page, /canonical: '\/jev-models'/);
   assert.match(v151Page, /canonical: '\/jev-models\/v1\.5\.1'/);
   assert.match(v151Page, /versionPath="\/jev-models\/v1\.5\.1"/);
@@ -105,7 +107,7 @@ test('CR-205: the v1.5 release page keeps every required section, in the v1.4.2.
   assert.match(render, /scoreKind="v15"/);
   assert.match(render, /presets=\{jevV15SliderPresets\(a\)\}/);
   assert.match(render, /methodLink=\{\{ href: '#jev15-method'/);
-  assert.match(render, /a\.revision === 'v1\.5\.1' \|\| a\.revision === 'v1\.5\.2' \|\| a\.revision === 'v1\.5\.3' \? ranked : a\.systems/);
+  assert.match(render, /a\.revision === 'v1\.5\.1' \|\| a\.revision === 'v1\.5\.2' \|\| a\.revision === 'v1\.5\.3' \|\| a\.revision === 'v1\.5\.4' \? ranked : a\.systems/);
   assert.match(capabilityLazySource, /\['v1\.5\.1', 'v1\.5\.2', 'v1\.5\.3'\]\.includes\(revision\) \? available\.filter\(\(row\) => row\.ranked\) : available/);
 
   // Content markers the v1.4.2.2 page carried, on v1.5 data.
@@ -253,7 +255,7 @@ test('CR-205: every versioned JevBench route is covered by this test', async () 
   const entries = await readdir(new URL('../app/jev-models', import.meta.url), { withFileTypes: true });
   const versionDirs = entries.filter((e) => e.isDirectory() && /^v[\d.]+$/.test(e.name)).map((e) => e.name).sort();
   // A new versioned page must be added to the structure assertions above — not silently reduced.
-  assert.deepEqual(versionDirs, ['v1', 'v1.4', 'v1.4.1', 'v1.4.2', 'v1.4.2.1', 'v1.4.2.2', 'v1.5.0', 'v1.5.1', 'v1.5.2', 'v1.5.3'].sort());
+  assert.deepEqual(versionDirs, ['v1', 'v1.4', 'v1.4.1', 'v1.4.2', 'v1.4.2.1', 'v1.4.2.2', 'v1.5.0', 'v1.5.1', 'v1.5.2', 'v1.5.3', 'v1.5.4'].sort());
 });
 
 test('CR-205: the board sections are fed by the pinned v1.5 release artifact', async () => {

@@ -38,7 +38,7 @@ test('CR-191 v1.4.2.2 is pinned to the approved aggregate artifact and top five'
   assert.deepEqual(JEVBENCH_V1422_TOP5, ['imajev_4b', 'plumb-4b', 'decider-4b-v2', 'jev-1.13.0', 'jevk5-v02']);
 });
 
-test('CR-191 preserves pinned v1.4.2.2 and v1.4.2 routes while v1.5.3 is live', async () => {
+test('CR-191 preserves pinned v1.4.2.2 and v1.4.2 routes while v1.5.4 is live', async () => {
   const [route, page, livePage, board, sitemap, version22Page, version22Route, version22FamiliesRoute] = await Promise.all([
     read('../app/api/jevbench/v1.4.2/route.ts'),
     read('../app/jev-models/v1.4.2/page.tsx'),
@@ -63,9 +63,9 @@ test('CR-191 preserves pinned v1.4.2.2 and v1.4.2 routes while v1.5.3 is live', 
   assert.match(version22Page, /readJevbenchV1421\(\)/); // The exact preceding v1.4.2.1 release is the comparison base.
   assert.match(version22Page, /<JevModelsV14Board artifact=\{v14\.artifact\} sha256=\{v14\.sha256\}/);
   assert.match(version22Page, /href="\/jev-models\/v1\.4\.2\.2" data-bh-jev-version-share/);
-  assert.match(livePage, /readJevbenchV153Release\(\)/);
+  assert.match(livePage, /readJevbenchV154Release\(\)/);
   assert.match(livePage, /JevBenchV15ReleasePage/);
-  assert.match(livePage, /versionPath="\/jev-models\/v1\.5\.3"/);
+  assert.match(livePage, /versionPath="\/jev-models\/v1\.5\.4"/);
   // F-189 (Fable pass 35, decision 2): CR-152's "visible Intelligence ordering" is a control, not a second table of the
   // numbers the chart already draws. CR-151 (Florian 25 Sep): that control is the "View by" switch (it supersedes the
   // two-button rank-by); the approved sentence sits beside it with a one-click Intelligence ordering.
