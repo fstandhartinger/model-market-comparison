@@ -1,0 +1,54 @@
+{
+  "artifact_id": "frontiercode-cost-1.1-cr173-2026-09-26",
+  "artifact_sha256": "5dde26a69bea437c285926381fef0a2caa039885741b1b7d979aecec5064b87a",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:12128c1ffa036e461e35d64e",
+    "public:4202ad72ec468f1bca9903a5",
+    "public:f4bb76e9c291754cc60a9e36",
+    "public:d3cd32ca97d2036f7b513c58",
+    "public:29dd4adda3f0b74cbb7538f8",
+    "public:281adbe645b1e673ff5db075",
+    "public:044fbbb34eb6e76e5537e1c9",
+    "public:c34fad1f31ca99df0cd9f08f",
+    "public:696514db72e7b9a68e4dc9a8",
+    "public:6a394ffb172c7ce353c4bb41",
+    "public:810ce9c40797578dd1c5cd9d",
+    "public:7d8695ff61177d102f6c0367",
+    "public:eddb9f3e36588ecd21c96617",
+    "public:89b7b9b1e97fd6559c21f9a5",
+    "public:00f31303697fb77100fa1396",
+    "public:a485bfda81d58c42dd65df6b",
+    "public:64e09fdcd713014e81b00d05"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    {
+      "location": "rows 5-14 (GPT-6 Sol / GPT-6 Luna), criterion 5",
+      "note": "The extract's 'efforts' block shows no visible effort arrays for 'GPT-6 Sol' and 'GPT-6 Luna' (elided between keys), so the low/medium/high/xhigh/max keys used in the source_id/name fields could not be directly confirmed as the data file's own effort keys. All 10 cost values for these models do match data.v1_1.data entries verbatim (Sol: 0.4324, 0.7659, 1.0393, 1.325, 2.0651; Luna: 0.0199, 0.0512, 0.0646, 0.07, 0.1027), so criterion 2 is satisfied; only criterion 5 remains unverified for these rows pending the full capture."
+    },
+    {
+      "location": "row 16 (public:a485bfda81d58c42dd65df6b, Grok 4.7|high), criterion 5",
+      "note": "The visible efforts list for 'Grok 4.7' contains only 'xhigh'; the 'high' key is not evidenced in the supplied extract. The Grok 4.7 data block does contain an entry with cost 6.6472 matching the row value, but that entry carries no visible effort label (consistent with elision in the truncated capture, since the other visible Grok entry, cost 8.2891, corresponds to the 'xhigh' row). No effort inference is permitted under criterion 5, so this key should be confirmed against the full data.json capture before publication."
+    },
+    {
+      "location": "rows 16-17 locators ('source row 113', 'source row 114')",
+      "note": "These locator row indices are non-sequential relative to rows 0-14 used by the other 15 rows. This may be legitimate if they index positions in the full data.json (which contains more models than the 17-row artifact), but the supplied extract does not contain enough of the file to confirm the indices."
+    },
+    {
+      "location": "all rows, criterion 3 (harness)",
+      "note": "Harness values are visible only in the compact renderings of rows 0 (claude-code), 5 (codex), and 16 (grok-build); all three match extract.harness. The frozen full objects for the remaining 14 rows were not supplied in the packet, so harness equality for those rows could not be independently confirmed here."
+    },
+    {
+      "location": "source extract overall",
+      "note": "The supplied extract is truncated and syntactically malformed (unclosed braces, elided fields such as flagged_rate and effort labels for some entries). Verification relied on the cost values that are present verbatim; no cost value in any of the 17 rows failed to match."
+    }
+  ],
+  "missing_evidence": [
+    "The full data.json capture (sha256 edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc) was not supplied, only a partial extract; the complete 'efforts' arrays for GPT-6 Sol, GPT-6 Luna, and Grok 4.7 are needed to fully verify criterion 5 (no effort inference) for rows 5-17.",
+    "The frozen full row objects from the artifact were not supplied; harness, unit, basis, and model_id fields could only be checked for the rows where the compact rendering included them (harness on rows 0/5/16, basis/unit/model_id on row 0)."
+  ]
+}

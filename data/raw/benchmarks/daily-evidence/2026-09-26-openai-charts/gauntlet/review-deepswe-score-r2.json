@@ -1,0 +1,30 @@
+{
+  "artifact_id": "cr173-openai-charts-deepswe-score",
+  "artifact_sha256": "c07e02af69cbdba4f4a3b2a1dee10695e4f71bc68553a5c3b9a1ab81d4fab0ef",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": [
+    "self-reported:gpt-6-astra-low-openai-deepswe-v1-1",
+    "self-reported:gpt-6-astra-medium-openai-deepswe-v1-1",
+    "self-reported:gpt-6-astra-high-openai-deepswe-v1-1",
+    "self-reported:gpt-6-astra-xhigh-openai-deepswe-v1-1",
+    "self-reported:gpt-6-astra-max-openai-deepswe-v1-1",
+    "self-reported:gpt-6-luna-low-openai-deepswe-v1-1",
+    "self-reported:gpt-6-luna-medium-openai-deepswe-v1-1",
+    "self-reported:gpt-6-luna-high-openai-deepswe-v1-1",
+    "self-reported:gpt-6-luna-xhigh-openai-deepswe-v1-1",
+    "self-reported:gpt-6-sol-low-openai-deepswe-v1-1",
+    "self-reported:gpt-6-sol-medium-openai-deepswe-v1-1",
+    "self-reported:gpt-6-sol-high-openai-deepswe-v1-1",
+    "self-reported:gpt-6-sol-xhigh-openai-deepswe-v1-1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "missing_evidence": [],
+  "uncertainties": [
+    "I have no execution or browsing tools, so I could not recompute artifact_sha256 or independently confirm that evidence.chart.gpt6_points was extracted verbatim from the live source page; verification is internal consistency of every row against the supplied evidence packet (owner_receipts attests the owner's recomputation).",
+    "Completeness was verified as 15 GPT-6 datapoints minus the 2 skipped_existing_configs (gpt-6-luna::max, gpt-6-sol::max) equals the 13 rows present, with no duplicate ids and no competitor/predecessor rows; I cannot verify beyond the packet that no additional GPT-6 configurations exist in the chart.",
+    "All checks passed: value = score x 100 recomputed for all 13 rows; derivation.inputs == [score]; subject.name/variant/model_id match dataset fields and catalog_configurations; benchmark_id version \"1.1\" matches the caption's \"DeepSWE 1.1\"; all source fields equal evidence.source; every locator opens with the correct registry name, model, effortLabel, \"score\" key, section/figure/chart id/linkId, and quotes the datapoint verbatim; all five Astra protocol cross-check datapoints match evidence.astra_post_points (low 0.67, medium 0.728, high 0.732, xhigh 0.741, max 0.73 with matching x_value/x_label/effort_display/pointOrder, chart title, Wayback URL and sha256); comparison_key is null on every row."
+  ]
+}

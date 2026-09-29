@@ -1,0 +1,505 @@
+{
+  "artifact_id": "arc-verified-openai-gpt-6-astra",
+  "artifact_sha256": "940c7b52694ba5bae4f002e7f2a446c53a8f4fdbc3283339ceb44946ab9ec645",
+  "round": 1,
+  "review_scope": "Review our own frozen candidate before publication: 12 measured ARC-AGI-1/ARC-AGI-2 observations parsed from the ARC Prize Verified results page for GPT-6 Astra, and 10 proposed identity joins to catalog configurations.",
+  "acceptance_criteria": [
+    "c1: Every row's value, benchmark (ARC-AGI-1 column -> arc-agi::1, ARC-AGI-2 column -> arc-agi::2) and source variant label must match the included table excerpt exactly; unit percent; no row may come from an ARC-AGI-3 column.",
+    "c2: Coverage: exactly one arc-agi::1 and one arc-agi::2 row per table variant, no duplicates, none missing, no extras.",
+    "c3: The excerpt must show the ARC Prize Verified badge, a title equal to the row model, and the vendor/date line. Basis measured follows our precedent that a Verified per-model page is the evaluator's own published result.",
+    "c4: published_at must be null; the page date is kept only as source_row_context.model_release_date, because the line under the title is the model release date (owner cross-check: it equals modelReleaseDate in ARC Prize's leaderboard JSON for every page; the Kimi K3 page dated Jul 16, 2026 says \"As of July 31, 2026\").",
+    "c5: A proposed_model_id is allowed only when the source variant names an exact configuration listed in catalog_configurations (None -> non-reasoning only where that configuration exists). A variant without its own catalog configuration stays unjoined (proposed_model_id null) with a reason. Check every identity_map_candidates entry against its row.",
+    "c6: The protocol text must state only what the excerpt supports (no Semi-Private claim beyond the page summary).",
+    "Return pass only if every row and join is supported by the supplied evidence; otherwise revise or blocked naming exact row ids. Keep coverage_checked short (one entry per criterion)."
+  ],
+  "source_evidence": [
+    {
+      "source": "ARC Prize GPT-6 Astra results page",
+      "url": "https://arcprize.org/results/openai-gpt-6-astra",
+      "retrieved_at": "2026-09-26T04:22:35.628163+00:00",
+      "capture_file": "ops/rebuild-2026-09/evidence/phase-09/arc/captures/26e71e75eb565a5ef867.gz",
+      "capture_payload_sha256": "26e71e75eb565a5ef86753a202ef6111223860c069a16ca65e2b3dc2400de9f6",
+      "html_excerpt_file": "ops/rebuild-2026-09/evidence/phase-09/arc/excerpts/openai-gpt-6-astra.html",
+      "html_excerpt_sha256": "1812f866cfd85e51838cfb2df604d1cf0ab3089f6fecb42d4fbd3cb22c5330bd",
+      "html_excerpt": "<img src=\"/media/images/badges/arc-prize-verified-badge-dark-color.svg\" alt=\"ARC Prize Verified\" class=\"absolute right-4 top-8 w-[128px] sm:w-[152px]\" style=\"display:block\"/>\n\n<h1 class=\"mb-2\">GPT-6 Astra</h1><div class=\"mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-neutral-400\"><span>OpenAI</span><span class=\"text-neutral-700\">·</span><span>Sep 2, 2026</span><span class=\"text-neutral-700\">·</span><span>12 harness configurations</span></div>\n\n<p class=\"mt-5 max-w-[720px] text-[14px] leading-relaxed text-neutral-300\">GPT-6 Astra&#x27;s best observed ARC-AGI-3 Semi-Private result with the <span class=\"relative inline-block\"><span class=\"peer cursor-help underline decoration-dotted\">Standard harness</span><span role=\"tooltip\" class=\"pointer-events-none invisible absolute left-1/2 top-full z-50 mt-2 w-72 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded border border-neutral-700 bg-neutral-950 px-3 py-2 text-left text-[12px] font-normal normal-case leading-relaxed tracking-normal text-neutral-200 opacity-0 shadow-xl transition-opacity peer-hover:visible peer-hover:opacity-100\">Standard harness enables a model to carry forward notes it chooses to keep with it throughout the environment.</span></span> was 62.7% at max reasoning for $26,098. With the <span class=\"relative inline-block\"><span class=\"peer cursor-help underline decoration-dotted\">Provider Adapter harness</span><span role=\"tooltip\" class=\"pointer-events-none invisible absolute left-1/2 top-full z-50 mt-2 w-72 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded border border-neutral-700 bg-neutral-950 px-3 py-2 text-left text-[12px] font-normal normal-case leading-relaxed tracking-normal text-neutral-200 opacity-0 shadow-xl transition-opacity peer-hover:visible peer-hover:opacity-100\">The Provider Adapter harness preserves opaque reasoning state between requests and uses compaction for longer conversations, allowing the model to reuse prior work.</span></span>, its best observed result was 99.9% at high reasoning for $18,817. Read more in our blog post, <a class=\"underline underline-offset-2 hover:text-neutral-100\" href=\"/blog/astra\">OpenAI&#x27;s GPT-6 Astra on ARC-AGI-3</a>.</p>\n\n<table class=\"w-full border-collapse text-sm table-fixed\" style=\"min-width:800px\"><colgroup><col class=\"w-[16%]\"/><col span=\"4\" class=\"w-[21%]\"/></colgroup><thead class=\"bg-neutral-900 text-[11px] uppercase tracking-wider text-neutral-400\"><tr><th class=\"px-3 py-1.5 text-left\">Variant</th><th class=\"px-3 py-1.5 text-center whitespace-nowrap\">ARC-AGI-1</th><th class=\"px-3 py-1.5 text-center whitespace-nowrap\">ARC-AGI-2</th><th class=\"px-3 py-1.5 text-center whitespace-nowrap\"><span class=\"block\">ARC-AGI-3</span><span class=\"block\">(Standard harness)</span></th><th class=\"px-3 py-1.5 text-center whitespace-nowrap\"><span class=\"block\">ARC-AGI-3</span><span class=\"block\">(Provider Adapter harness)</span></th></tr></thead><tbody><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"GPT-6 Astra (Max)\">Max</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">97.5%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] font-bold\">95.0%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] font-bold\">62.71%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">98.55%</div></td></tr><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"GPT-6 Astra (XHigh)\">XHigh</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] font-bold\">98.5%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">93.3%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">59.34%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">98.44%</div></td></tr><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"GPT-6 Astra (High)\">High</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] font-bold\">98.5%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">92.1%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">54.82%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] font-bold\">99.95%</div></td></tr><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"GPT-6 Astra (Medium)\">Medium</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">97.5%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">92.1%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">38.59%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">98.44%</div></td></tr><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"GPT-6 Astra (Low)\">Low</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">96.5%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">85.4%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">17.45%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">98.03%</div></td></tr><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"GPT-6 Astra (None)\">None</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">86.0%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">59.6%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">35.18%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">96.72%</div></td></tr></tbody></table>\n"
+    }
+  ],
+  "owner_crosscheck_receipt": {
+    "file": "ops/rebuild-2026-09/evidence/phase-09/arc/owner-crosscheck.txt",
+    "note": "lines for this page only; owner-run script output",
+    "content": "Owner cross-check 2026-09-26: every results-page row vs ARC Prize leaderboard JSON rows with the same resultsUrl and display name\n(v1.json/v2.json captured 2026-09-26, see leaderboard-json/manifest.json). JSON score x100 rounded half-up to 1 decimal; release date = modelReleaseDate.\narc-agi::1 GPT-6 Astra|Max page 97.5 | json 0.975 v1_Semi_Private 2026-09-02 -> 97.5 OK\narc-agi::1 GPT-6 Astra|XHigh page 98.5 | json 0.985 v1_Semi_Private 2026-09-02 -> 98.5 OK\narc-agi::1 GPT-6 Astra|High page 98.5 | json 0.985 v1_Semi_Private 2026-09-02 -> 98.5 OK\narc-agi::1 GPT-6 Astra|Medium page 97.5 | json 0.975 v1_Semi_Private 2026-09-02 -> 97.5 OK\narc-agi::1 GPT-6 Astra|Low page 96.5 | json 0.965 v1_Semi_Private 2026-09-02 -> 96.5 OK\narc-agi::1 GPT-6 Astra|None page 86.0 | json 0.86 v1_Semi_Private 2026-09-02 -> 86.0 OK\narc-agi::2 GPT-6 Astra|Max page 95.0 | json 0.95 v2_Semi_Private 2026-09-02 -> 95.0 OK\narc-agi::2 GPT-6 Astra|XHigh page 93.3 | json 0.9333333333333333 v2_Semi_Private 2026-09-02 -> 93.3 OK\narc-agi::2 GPT-6 Astra|High page 92.1 | json 0.9208333333333333 v2_Semi_Private 2026-09-02 -> 92.1 OK\narc-agi::2 GPT-6 Astra|Medium page 92.1 | json 0.9208333333333333 v2_Semi_Private 2026-09-02 -> 92.1 OK\narc-agi::2 GPT-6 Astra|Low page 85.4 | json 0.8541666666666666 v2_Semi_Private 2026-09-02 -> 85.4 OK\narc-agi::2 GPT-6 Astra|None page 59.6 | json 0.5958333333333333 v2_Semi_Private 2026-09-02 -> 59.6 OK\n"
+  },
+  "frozen_artifact": {
+    "artifact_id": "arc-verified-openai-gpt-6-astra",
+    "rows": [
+      {
+        "id": "public:23ef12ad50b5fd621129bedb",
+        "benchmark_id": "arc-agi::1",
+        "source_id": "GPT-6 Astra|Max",
+        "name": "GPT-6 Astra (max)",
+        "value": 97.5,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/openai-gpt-6-astra",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:35.628163+00:00",
+        "source_sha256": "26e71e75eb565a5ef86753a202ef6111223860c069a16ca65e2b3dc2400de9f6",
+        "locator": "arc_verified_results_page; source row 1; GPT-6 Astra|Max; field value",
+        "source_row_context": {
+          "page_model": "GPT-6 Astra",
+          "page_vendor": "OpenAI",
+          "source_variant": "Max",
+          "reasoning_effort": "max",
+          "benchmark_column": "ARC-AGI-1",
+          "cells": [
+            "Max",
+            "97.5%",
+            "95.0%",
+            "62.71%",
+            "98.55%"
+          ],
+          "model_release_date": "2026-09-02"
+        },
+        "proposed_model_id": "gpt-6-astra::max",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:cf17372338713629f57a5411",
+        "benchmark_id": "arc-agi::1",
+        "source_id": "GPT-6 Astra|XHigh",
+        "name": "GPT-6 Astra (xhigh)",
+        "value": 98.5,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/openai-gpt-6-astra",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:35.628163+00:00",
+        "source_sha256": "26e71e75eb565a5ef86753a202ef6111223860c069a16ca65e2b3dc2400de9f6",
+        "locator": "arc_verified_results_page; source row 2; GPT-6 Astra|XHigh; field value",
+        "source_row_context": {
+          "page_model": "GPT-6 Astra",
+          "page_vendor": "OpenAI",
+          "source_variant": "XHigh",
+          "reasoning_effort": "xhigh",
+          "benchmark_column": "ARC-AGI-1",
+          "cells": [
+            "XHigh",
+            "98.5%",
+            "93.3%",
+            "59.34%",
+            "98.44%"
+          ],
+          "model_release_date": "2026-09-02"
+        },
+        "proposed_model_id": "gpt-6-astra::xhigh",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:8d32ed704595b8fddce70233",
+        "benchmark_id": "arc-agi::1",
+        "source_id": "GPT-6 Astra|High",
+        "name": "GPT-6 Astra (high)",
+        "value": 98.5,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/openai-gpt-6-astra",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:35.628163+00:00",
+        "source_sha256": "26e71e75eb565a5ef86753a202ef6111223860c069a16ca65e2b3dc2400de9f6",
+        "locator": "arc_verified_results_page; source row 3; GPT-6 Astra|High; field value",
+        "source_row_context": {
+          "page_model": "GPT-6 Astra",
+          "page_vendor": "OpenAI",
+          "source_variant": "High",
+          "reasoning_effort": "high",
+          "benchmark_column": "ARC-AGI-1",
+          "cells": [
+            "High",
+            "98.5%",
+            "92.1%",
+            "54.82%",
+            "99.95%"
+          ],
+          "model_release_date": "2026-09-02"
+        },
+        "proposed_model_id": "gpt-6-astra::high",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:e4b6f7f576a091baadac1694",
+        "benchmark_id": "arc-agi::1",
+        "source_id": "GPT-6 Astra|Medium",
+        "name": "GPT-6 Astra (medium)",
+        "value": 97.5,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/openai-gpt-6-astra",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:35.628163+00:00",
+        "source_sha256": "26e71e75eb565a5ef86753a202ef6111223860c069a16ca65e2b3dc2400de9f6",
+        "locator": "arc_verified_results_page; source row 4; GPT-6 Astra|Medium; field value",
+        "source_row_context": {
+          "page_model": "GPT-6 Astra",
+          "page_vendor": "OpenAI",
+          "source_variant": "Medium",
+          "reasoning_effort": "medium",
+          "benchmark_column": "ARC-AGI-1",
+          "cells": [
+            "Medium",
+            "97.5%",
+            "92.1%",
+            "38.59%",
+            "98.44%"
+          ],
+          "model_release_date": "2026-09-02"
+        },
+        "proposed_model_id": "gpt-6-astra::medium",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:7f3731d06d9a719412cc82fb",
+        "benchmark_id": "arc-agi::1",
+        "source_id": "GPT-6 Astra|Low",
+        "name": "GPT-6 Astra (low)",
+        "value": 96.5,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/openai-gpt-6-astra",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:35.628163+00:00",
+        "source_sha256": "26e71e75eb565a5ef86753a202ef6111223860c069a16ca65e2b3dc2400de9f6",
+        "locator": "arc_verified_results_page; source row 5; GPT-6 Astra|Low; field value",
+        "source_row_context": {
+          "page_model": "GPT-6 Astra",
+          "page_vendor": "OpenAI",
+          "source_variant": "Low",
+          "reasoning_effort": "low",
+          "benchmark_column": "ARC-AGI-1",
+          "cells": [
+            "Low",
+            "96.5%",
+            "85.4%",
+            "17.45%",
+            "98.03%"
+          ],
+          "model_release_date": "2026-09-02"
+        },
+        "proposed_model_id": "gpt-6-astra::low",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:da732b2d1a92fe7ca4a4d3d7",
+        "benchmark_id": "arc-agi::1",
+        "source_id": "GPT-6 Astra|None",
+        "name": "GPT-6 Astra (none)",
+        "value": 86.0,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/openai-gpt-6-astra",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:35.628163+00:00",
+        "source_sha256": "26e71e75eb565a5ef86753a202ef6111223860c069a16ca65e2b3dc2400de9f6",
+        "locator": "arc_verified_results_page; source row 6; GPT-6 Astra|None; field value",
+        "source_row_context": {
+          "page_model": "GPT-6 Astra",
+          "page_vendor": "OpenAI",
+          "source_variant": "None",
+          "reasoning_effort": "none",
+          "benchmark_column": "ARC-AGI-1",
+          "cells": [
+            "None",
+            "86.0%",
+            "59.6%",
+            "35.18%",
+            "96.72%"
+          ],
+          "model_release_date": "2026-09-02"
+        },
+        "proposed_model_id": null,
+        "unjoined_reason": "not joined: catalog family gpt-6-astra has configurations ['gpt-6-astra::high', 'gpt-6-astra::low', 'gpt-6-astra::max', 'gpt-6-astra::medium', 'gpt-6-astra::xhigh']; no configuration for source variant None (GPT-6 Astra has no non-reasoning configuration)"
+      },
+      {
+        "id": "public:fe70cbbd07f3661bca73a87f",
+        "benchmark_id": "arc-agi::2",
+        "source_id": "GPT-6 Astra|Max",
+        "name": "GPT-6 Astra (max)",
+        "value": 95.0,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/openai-gpt-6-astra",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:35.628163+00:00",
+        "source_sha256": "26e71e75eb565a5ef86753a202ef6111223860c069a16ca65e2b3dc2400de9f6",
+        "locator": "arc_verified_results_page; source row 1; GPT-6 Astra|Max; field value",
+        "source_row_context": {
+          "page_model": "GPT-6 Astra",
+          "page_vendor": "OpenAI",
+          "source_variant": "Max",
+          "reasoning_effort": "max",
+          "benchmark_column": "ARC-AGI-2",
+          "cells": [
+            "Max",
+            "97.5%",
+            "95.0%",
+            "62.71%",
+            "98.55%"
+          ],
+          "model_release_date": "2026-09-02"
+        },
+        "proposed_model_id": "gpt-6-astra::max",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:ec457d0e9c141a5bea8609dd",
+        "benchmark_id": "arc-agi::2",
+        "source_id": "GPT-6 Astra|XHigh",
+        "name": "GPT-6 Astra (xhigh)",
+        "value": 93.3,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/openai-gpt-6-astra",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:35.628163+00:00",
+        "source_sha256": "26e71e75eb565a5ef86753a202ef6111223860c069a16ca65e2b3dc2400de9f6",
+        "locator": "arc_verified_results_page; source row 2; GPT-6 Astra|XHigh; field value",
+        "source_row_context": {
+          "page_model": "GPT-6 Astra",
+          "page_vendor": "OpenAI",
+          "source_variant": "XHigh",
+          "reasoning_effort": "xhigh",
+          "benchmark_column": "ARC-AGI-2",
+          "cells": [
+            "XHigh",
+            "98.5%",
+            "93.3%",
+            "59.34%",
+            "98.44%"
+          ],
+          "model_release_date": "2026-09-02"
+        },
+        "proposed_model_id": "gpt-6-astra::xhigh",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:bf2f94f81b2e2d25db0e5f18",
+        "benchmark_id": "arc-agi::2",
+        "source_id": "GPT-6 Astra|High",
+        "name": "GPT-6 Astra (high)",
+        "value": 92.1,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/openai-gpt-6-astra",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:35.628163+00:00",
+        "source_sha256": "26e71e75eb565a5ef86753a202ef6111223860c069a16ca65e2b3dc2400de9f6",
+        "locator": "arc_verified_results_page; source row 3; GPT-6 Astra|High; field value",
+        "source_row_context": {
+          "page_model": "GPT-6 Astra",
+          "page_vendor": "OpenAI",
+          "source_variant": "High",
+          "reasoning_effort": "high",
+          "benchmark_column": "ARC-AGI-2",
+          "cells": [
+            "High",
+            "98.5%",
+            "92.1%",
+            "54.82%",
+            "99.95%"
+          ],
+          "model_release_date": "2026-09-02"
+        },
+        "proposed_model_id": "gpt-6-astra::high",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:76af44b465c228665d643e9c",
+        "benchmark_id": "arc-agi::2",
+        "source_id": "GPT-6 Astra|Medium",
+        "name": "GPT-6 Astra (medium)",
+        "value": 92.1,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/openai-gpt-6-astra",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:35.628163+00:00",
+        "source_sha256": "26e71e75eb565a5ef86753a202ef6111223860c069a16ca65e2b3dc2400de9f6",
+        "locator": "arc_verified_results_page; source row 4; GPT-6 Astra|Medium; field value",
+        "source_row_context": {
+          "page_model": "GPT-6 Astra",
+          "page_vendor": "OpenAI",
+          "source_variant": "Medium",
+          "reasoning_effort": "medium",
+          "benchmark_column": "ARC-AGI-2",
+          "cells": [
+            "Medium",
+            "97.5%",
+            "92.1%",
+            "38.59%",
+            "98.44%"
+          ],
+          "model_release_date": "2026-09-02"
+        },
+        "proposed_model_id": "gpt-6-astra::medium",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:5a0902c10cc1b6c6dd652838",
+        "benchmark_id": "arc-agi::2",
+        "source_id": "GPT-6 Astra|Low",
+        "name": "GPT-6 Astra (low)",
+        "value": 85.4,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/openai-gpt-6-astra",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:35.628163+00:00",
+        "source_sha256": "26e71e75eb565a5ef86753a202ef6111223860c069a16ca65e2b3dc2400de9f6",
+        "locator": "arc_verified_results_page; source row 5; GPT-6 Astra|Low; field value",
+        "source_row_context": {
+          "page_model": "GPT-6 Astra",
+          "page_vendor": "OpenAI",
+          "source_variant": "Low",
+          "reasoning_effort": "low",
+          "benchmark_column": "ARC-AGI-2",
+          "cells": [
+            "Low",
+            "96.5%",
+            "85.4%",
+            "17.45%",
+            "98.03%"
+          ],
+          "model_release_date": "2026-09-02"
+        },
+        "proposed_model_id": "gpt-6-astra::low",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:f751efda3e94acdb4e793514",
+        "benchmark_id": "arc-agi::2",
+        "source_id": "GPT-6 Astra|None",
+        "name": "GPT-6 Astra (none)",
+        "value": 59.6,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/openai-gpt-6-astra",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:35.628163+00:00",
+        "source_sha256": "26e71e75eb565a5ef86753a202ef6111223860c069a16ca65e2b3dc2400de9f6",
+        "locator": "arc_verified_results_page; source row 6; GPT-6 Astra|None; field value",
+        "source_row_context": {
+          "page_model": "GPT-6 Astra",
+          "page_vendor": "OpenAI",
+          "source_variant": "None",
+          "reasoning_effort": "none",
+          "benchmark_column": "ARC-AGI-2",
+          "cells": [
+            "None",
+            "86.0%",
+            "59.6%",
+            "35.18%",
+            "96.72%"
+          ],
+          "model_release_date": "2026-09-02"
+        },
+        "proposed_model_id": null,
+        "unjoined_reason": "not joined: catalog family gpt-6-astra has configurations ['gpt-6-astra::high', 'gpt-6-astra::low', 'gpt-6-astra::max', 'gpt-6-astra::medium', 'gpt-6-astra::xhigh']; no configuration for source variant None (GPT-6 Astra has no non-reasoning configuration)"
+      }
+    ],
+    "protocol": "Official ARC Prize GPT-6 Astra results page (OpenAI), carrying an ARC Prize Verified badge; the date on the page, 2026-09-02, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"GPT-6 Astra's best observed ARC-AGI-3 Semi-Private result with the Standard harness was 62.7% at max reasoning for $26,098. With the Provider Adapter harness, its best observed result was 99.9% at high reasoning for $18,817. Read more in our blog post, OpenAI's GPT-6 Astra on ARC-AGI-3.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+    "identity_map_candidates": [
+      {
+        "benchmark_id": "arc-agi::1",
+        "source_id": "GPT-6 Astra|Max",
+        "model_id": "gpt-6-astra::max",
+        "rule": "ARC Prize GPT-6 Astra results page (ARC Prize Verified) gives the exact source variant Max; the catalog holds exactly the configuration gpt-6-astra::max.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::1",
+        "source_id": "GPT-6 Astra|XHigh",
+        "model_id": "gpt-6-astra::xhigh",
+        "rule": "ARC Prize GPT-6 Astra results page (ARC Prize Verified) gives the exact source variant XHigh; the catalog holds exactly the configuration gpt-6-astra::xhigh.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::1",
+        "source_id": "GPT-6 Astra|High",
+        "model_id": "gpt-6-astra::high",
+        "rule": "ARC Prize GPT-6 Astra results page (ARC Prize Verified) gives the exact source variant High; the catalog holds exactly the configuration gpt-6-astra::high.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::1",
+        "source_id": "GPT-6 Astra|Medium",
+        "model_id": "gpt-6-astra::medium",
+        "rule": "ARC Prize GPT-6 Astra results page (ARC Prize Verified) gives the exact source variant Medium; the catalog holds exactly the configuration gpt-6-astra::medium.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::1",
+        "source_id": "GPT-6 Astra|Low",
+        "model_id": "gpt-6-astra::low",
+        "rule": "ARC Prize GPT-6 Astra results page (ARC Prize Verified) gives the exact source variant Low; the catalog holds exactly the configuration gpt-6-astra::low.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::2",
+        "source_id": "GPT-6 Astra|Max",
+        "model_id": "gpt-6-astra::max",
+        "rule": "ARC Prize GPT-6 Astra results page (ARC Prize Verified) gives the exact source variant Max; the catalog holds exactly the configuration gpt-6-astra::max.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::2",
+        "source_id": "GPT-6 Astra|XHigh",
+        "model_id": "gpt-6-astra::xhigh",
+        "rule": "ARC Prize GPT-6 Astra results page (ARC Prize Verified) gives the exact source variant XHigh; the catalog holds exactly the configuration gpt-6-astra::xhigh.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::2",
+        "source_id": "GPT-6 Astra|High",
+        "model_id": "gpt-6-astra::high",
+        "rule": "ARC Prize GPT-6 Astra results page (ARC Prize Verified) gives the exact source variant High; the catalog holds exactly the configuration gpt-6-astra::high.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::2",
+        "source_id": "GPT-6 Astra|Medium",
+        "model_id": "gpt-6-astra::medium",
+        "rule": "ARC Prize GPT-6 Astra results page (ARC Prize Verified) gives the exact source variant Medium; the catalog holds exactly the configuration gpt-6-astra::medium.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::2",
+        "source_id": "GPT-6 Astra|Low",
+        "model_id": "gpt-6-astra::low",
+        "rule": "ARC Prize GPT-6 Astra results page (ARC Prize Verified) gives the exact source variant Low; the catalog holds exactly the configuration gpt-6-astra::low.",
+        "basis": "measured"
+      }
+    ],
+    "catalog_configurations": {
+      "gpt-6-astra": [
+        "gpt-6-astra::high",
+        "gpt-6-astra::low",
+        "gpt-6-astra::max",
+        "gpt-6-astra::medium",
+        "gpt-6-astra::xhigh"
+      ]
+    }
+  },
+  "required_verdict_contract": {
+    "artifact_id": "arc-verified-openai-gpt-6-astra",
+    "artifact_sha256": "<artifact_sha256 above>",
+    "round": 1,
+    "verdict": "pass|revise|blocked",
+    "coverage_checked": [
+      "one short entry per criterion id c1..c6"
+    ],
+    "errors_found": 0,
+    "findings": [],
+    "fixed": [],
+    "uncertainties": [],
+    "missing_evidence": []
+  }
+}

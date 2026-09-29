@@ -1,0 +1,131 @@
+{
+  "producer": "deepseek/deepseek-v4-flash-0731",
+  "producer_meta_sha256": "2f337765912d52a381c89ea2874610e755ac1cf131aff94b4c1641a3893fb0a9",
+  "candidate_count": 12,
+  "producer_count": 12,
+  "normalization": "Producer emitted decimal numerals as JSON strings; converted with Decimal only for equality comparison. Candidate artifact stores numeric values.",
+  "match_count": 12,
+  "mismatches": [],
+  "rows": [
+    {
+      "benchmark_id": "arc-agi::1",
+      "source_id": "GPT-6 Luna|Max",
+      "producer_value": "86.7",
+      "normalized_value": "86.7",
+      "parser_value": 86.7,
+      "model_id": "gpt-6-luna::max",
+      "expected_model_id": "gpt-6-luna::max",
+      "match": true
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "source_id": "GPT-6 Luna|Max",
+      "producer_value": "59.3",
+      "normalized_value": "59.3",
+      "parser_value": 59.3,
+      "model_id": "gpt-6-luna::max",
+      "expected_model_id": "gpt-6-luna::max",
+      "match": true
+    },
+    {
+      "benchmark_id": "arc-agi::1",
+      "source_id": "GPT-6 Luna|XHigh",
+      "producer_value": "73.0",
+      "normalized_value": "73.0",
+      "parser_value": 73.0,
+      "model_id": "gpt-6-luna::xhigh",
+      "expected_model_id": "gpt-6-luna::xhigh",
+      "match": true
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "source_id": "GPT-6 Luna|XHigh",
+      "producer_value": "41.9",
+      "normalized_value": "41.9",
+      "parser_value": 41.9,
+      "model_id": "gpt-6-luna::xhigh",
+      "expected_model_id": "gpt-6-luna::xhigh",
+      "match": true
+    },
+    {
+      "benchmark_id": "arc-agi::1",
+      "source_id": "GPT-6 Luna|High",
+      "producer_value": "70.3",
+      "normalized_value": "70.3",
+      "parser_value": 70.3,
+      "model_id": "gpt-6-luna::high",
+      "expected_model_id": "gpt-6-luna::high",
+      "match": true
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "source_id": "GPT-6 Luna|High",
+      "producer_value": "31.4",
+      "normalized_value": "31.4",
+      "parser_value": 31.4,
+      "model_id": "gpt-6-luna::high",
+      "expected_model_id": "gpt-6-luna::high",
+      "match": true
+    },
+    {
+      "benchmark_id": "arc-agi::1",
+      "source_id": "GPT-6 Luna|Medium",
+      "producer_value": "61.0",
+      "normalized_value": "61.0",
+      "parser_value": 61.0,
+      "model_id": "gpt-6-luna::medium",
+      "expected_model_id": "gpt-6-luna::medium",
+      "match": true
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "source_id": "GPT-6 Luna|Medium",
+      "producer_value": "18.1",
+      "normalized_value": "18.1",
+      "parser_value": 18.1,
+      "model_id": "gpt-6-luna::medium",
+      "expected_model_id": "gpt-6-luna::medium",
+      "match": true
+    },
+    {
+      "benchmark_id": "arc-agi::1",
+      "source_id": "GPT-6 Luna|Low",
+      "producer_value": "37.7",
+      "normalized_value": "37.7",
+      "parser_value": 37.7,
+      "model_id": "gpt-6-luna::low",
+      "expected_model_id": "gpt-6-luna::low",
+      "match": true
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "source_id": "GPT-6 Luna|Low",
+      "producer_value": "4.6",
+      "normalized_value": "4.6",
+      "parser_value": 4.6,
+      "model_id": "gpt-6-luna::low",
+      "expected_model_id": "gpt-6-luna::low",
+      "match": true
+    },
+    {
+      "benchmark_id": "arc-agi::1",
+      "source_id": "GPT-6 Luna|None",
+      "producer_value": "8.8",
+      "normalized_value": "8.8",
+      "parser_value": 8.8,
+      "model_id": "gpt-6-luna::non-reasoning",
+      "expected_model_id": "gpt-6-luna::non-reasoning",
+      "match": true
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "source_id": "GPT-6 Luna|None",
+      "producer_value": "0.0",
+      "normalized_value": "0.0",
+      "parser_value": 0.0,
+      "model_id": "gpt-6-luna::non-reasoning",
+      "expected_model_id": "gpt-6-luna::non-reasoning",
+      "match": true
+    }
+  ]
+}

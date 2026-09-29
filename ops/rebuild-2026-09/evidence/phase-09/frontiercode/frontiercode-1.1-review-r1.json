@@ -1,0 +1,35 @@
+{
+  "artifact_id": "frontiercode-1.1-cr173-2026-09-26",
+  "artifact_sha256": "4d1eabed56a19f3b77f77fd76a40cfe3688d4185a4b73b32c59f92a6bbeaeeba",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:4f12e8261bb656b38a5235b6",
+    "public:9bd0fdee8f06a7f740e36367",
+    "public:2401765576e3c0590d9762c3",
+    "public:194a115799accdd3e35ddad1",
+    "public:d68ce0c9239acd20fb5134b8",
+    "public:372ac94acfb1b3b83ee190ba",
+    "public:13a18198fb784faced66c163",
+    "public:a407d784e0aef9c6d6047206",
+    "public:7874e22669bf2b6526dc811f",
+    "public:9568d9e7431dfc8a04237e5e",
+    "public:12a38954d39ae277fa09a34f",
+    "public:5b59c57adc78913ebbdc9d33",
+    "public:20600df0446527fb8d43b12f",
+    "public:0b34b4c07bcb644ee56a8e03",
+    "public:6fe6fb66f04e445d21bda17e",
+    "public:42bc73085cff3f9adb853c9e",
+    "public:be140745966b836160b9c7b3"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Per-row acceptance checks all pass: for each of the 17 rows, source_id matches '<extract model key>|<extract effort key>', name matches '<model> · <effort>', value equals new_score × 100 of data[model][effort].main (differences only IEEE-754 representation, e.g. 47.699999999999996 vs 47.7, 48.449999999999996 vs 48.45, 47.589999999999996 vs 47.59 — all within the stated 1e-9 tolerance and therefore not errors), derivation_inputs equals [new_score], harness matches extract.harness[model] (claude-code / codex / codex / grok-build), unit is 'percent', basis is 'derived' with source_basis 'self_reported' (not 'measured'), and model_id is null with no effort inference beyond the data file's own effort keys.",
+    "Artifact SHA-256 (4d1eabed…) and captured data-file SHA-256 (edba28c8…) are recorded as supplied; no execution or hashing tool was available to recompute them. Hash verification was not part of per-row acceptance and no row check depended on it.",
+    "Locator strings reference 'source row N' indices (0–14, 113, 114) of the full captured data file; the supplied extract is keyed by model/effort rather than row order, so those indices could not be independently confirmed from the supplied evidence.",
+    "Row ID suffixes (public:<24-hex>) and the ID-derivation scheme could not be verified from the supplied material; all 17 IDs were confirmed unique and matched the expected coverage list exactly."
+  ],
+  "missing_evidence": []
+}

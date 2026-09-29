@@ -217,6 +217,16 @@
       "field": "scoring.metric",
       "why": "StepFun's published copy of the GDP.pdf number, the same board as aa-gdp-pdf and surge-gdp-pdf, both of which are judged: every rubric criterion is ruled by a judge model (AA: GPT-5.6 Luna Medium; Surge: Gemini 3.5 Flash). StepFun publishes no independent reproduction recipe, so whichever implementation it printed, the number is a judged score — a vendor reprinting a judged board does not make it task accuracy.",
       "added_by": "claude-opus (Sandy UX workstream, iteration 265, 2026-09-28) — D253, from the D250 review"
+    },
+    "frontiercode-extended": {
+      "quote": "weighted aggregate of the rubric items",
+      "field": "scoring.metric",
+      "why": "Rubric items decide the score; tests only gate it (CR-173: the same grading as the Main subset, on the full 150-task set)."
+    },
+    "lmarena-webdev": {
+      "quote": "Preference rating from pairwise community votes, not task accuracy",
+      "field": "scoring.notes",
+      "why": "The rating summarizes community preferences rather than task accuracy."
     }
   },
   "considered_not_judged": {

@@ -1,0 +1,24 @@
+{
+  "artifact_id": "cr173-vals-simplebench",
+  "artifact_sha256": "d6152cbe5ae9769d80552add8300521e9dbfd4d0e1b8bd80a42cf1b46b464f63",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": [
+    "C1: all 44 row values matched digit-for-digit to the quoted evidence accuracy fields — vals-biomysterybench::snapshot-2026-09-22 (9/9: 79.259, 79.259, 74.815, 71.481, 69.259, 67.778, 64.444, 62.222, 61.481), vals-cua-bench::snapshot-2026-09-18 (2/2: 13.166667, 4.166667), vals-ioi::snapshot-2026-09-23 (15/15: 100, 95.056, 90.778, 82.611, 68.889, 68.444, 57.722, 56.944, 55.556, 52.5, 51.611, 48.944, 40.278, 39.056, 32.722), vals-medscribe::snapshot-2026-09-22 (18/18: 91.43, 91.294, 89.377, 88.936, 88.81, 87.958, 87.908, 85.5, 84.947, 84.496, 83.849, 83.71, 83.534, 82.034, 80.363, 80.174, 75.144, 72.27)",
+    "C2: all 44 join decisions — 31 catalog joins verified against listed configurations (incl. compute_effort 'max' joins for claude-opus-5.5/claude-fable-5.1, both-efforts-stated-and-agreeing cases on vals-cua-bench); 13 correct null model_ids (deepseek-v4.1-flash 'high' x3, deepseek-v4-flash-0731 'high' x3, glm-5.3-flash 'max' x2, kimi-k3/glm-5.2/glm-5.1 setting-not-stated multi-config, alibaba/qwen3.8-max documented slug refusal x2); join reason strings match the catalog facts",
+    "C3: all 4 board identity dates equal the page 'Updated M/D/YYYY' text and metadata.updated (09-22, 09-18, 09-23, 09-22); none of the C3 versioned-name boards (ProofBench/Public Benefits/Vibe Code/CyberBench v1.1) appear in this part, so dated-snapshot identities are correct here",
+    "Row-set completeness: 44 artifact rows correspond 1:1 to evidence source_ids (no omissions, no extras); target_rows counts 9/2/15/18 match; cua_bench's third evidence row (gpt-6-astra 19.166667) is the pre-existing CR-128 row correctly excluded from this artifact"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "artifact_sha256 echoed as supplied in the packet; not independently recomputed (read-only review, no hashing performed)",
+    "Adjacent-value swap bait checked and clean: medscribe 87.958 (kimi-k3) vs 87.908 (gpt-6-astra) and ioi 68.889 (qwen3.8-max) vs 68.444 (glm-5.3) are kept on the correct rows",
+    "C4/C5/C6 not exercised by this part's content: the 44 rows include no new identities, no withdrawals, and no tier facts; row excerpts omit evidence-id and registry fields, so only the packet-quoted capture metadata (URL, timestamp, sha256, updated dates) was checked"
+  ],
+  "missing_evidence": [
+    "Supersede mechanics for boards with action 'supersede' (biomysterybench, ioi, medscribe): retention of the prior dated identities with superseded_by cannot be verified from this packet; packet states other split parts are reviewed separately",
+    "Full artifact row fields beyond the shown excerpts (evidence ids per row) and any registry/tier entries for other parts of CR-173 are not included in this split part"
+  ]
+}

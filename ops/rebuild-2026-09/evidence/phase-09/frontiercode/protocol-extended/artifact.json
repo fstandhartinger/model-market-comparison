@@ -1,0 +1,42 @@
+[
+  {
+    "id": "frontiercode-extended::1.1",
+    "version": "1.1",
+    "version_guard": "Require data.json key v1_1 with subsets.extended == 150 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Main subset are different identities.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Score: weighted aggregate of the rubric items; solutions failing blocking criteria receive 0",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Reported as a percentage (methodology: \"achieves a score of only 13.4%\"; task authors write solutions that \"target a range of scores from 0 to 100%\"). Extended subset: the full set of 150 tasks. Runs flagged for unfair internet use are zeroed in 1.1. Secondary benchmark, not a Composite input."
+    },
+    "description": "Whether a maintainer would merge the agent's pull request, on the full 150-task FrontierCode set crafted by open-source maintainers and graded with tests, rubrics and verifiers.",
+    "maintainer": "Cognition"
+  },
+  {
+    "id": "frontiercode-extended-cost::1.1",
+    "version": "1.1",
+    "version_guard": "Require data.json key v1_1 with subsets.extended == 150 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Main subset are different identities.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Cost per rollout",
+      "unit": "USD",
+      "range": [
+        0,
+        null
+      ],
+      "higher_better": false,
+      "notes": "Separate published metric, not a capability score and not a Composite input; the changelog notes pricing corrections (e.g. Sep 10, 2026)."
+    },
+    "description": "Cognition's published mean USD spend per rollout for each FrontierCode 1.1 Extended model and reasoning effort.",
+    "maintainer": "Cognition"
+  }
+]

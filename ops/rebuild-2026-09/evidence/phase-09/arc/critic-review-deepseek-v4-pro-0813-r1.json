@@ -1,0 +1,22 @@
+{
+  "artifact_id": "arc-verified-deepseek-v4-pro-0813",
+  "artifact_sha256": "f20d1bb61d6fe3880d91a1b7d99cf6c1f3c7184e64e34fb5994670a1465fca54",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "c1: All 8 values match the excerpt table exactly (arc-agi::1: Max 90.0, High 87.2, Low 90.5, None 13.0; arc-agi::2: Max 61.3, High 59.7, Low 56.3, None 0.8); correct column mapping; unit percent; variant labels Max/High/Low/None exact; no ARC-AGI-3 row (column is all '—').",
+    "c2: Exactly one arc-agi::1 and one arc-agi::2 row for each of the 4 table variants; 8 rows total; no duplicates, none missing, no extras.",
+    "c3: Excerpt shows ARC Prize Verified badge, h1 'DeepSeek V4 Pro 0813' equal to row page_model, and vendor/date line 'DeepSeek · Aug 13, 2026 · 4 reasoning variants'; all rows basis 'measured' per stated precedent.",
+    "c4: published_at null on all 8 rows; page date kept only as source_row_context.model_release_date=2026-08-13 in every row; owner crosscheck receipt confirms release date = modelReleaseDate 2026-08-13 on all lines.",
+    "c5: Only Max rows joined to deepseek-v4-pro-0813::max, which exists in catalog_configurations; High/Low/None rows (both benchmarks) unjoined with accurate reasons citing the single catalog configuration; both identity_map_candidates (arc-agi::1 and arc-agi::2 Max) match their rows' source_id, benchmark_id, proposed_model_id and basis.",
+    "c6: Protocol states only excerpt-supported facts; Semi-Private appears only inside the verbatim quoted page summary; date/release-date claim is backed by the owner crosscheck receipt."
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row name fields lowercase the variant ('DeepSeek V4 Pro 0813 (max)') while the excerpt tooltip reads '(Max)'; the source variant label itself (source_variant 'Max') matches the excerpt exactly, so c1 is unaffected.",
+    "c4 relies on the supplied owner crosscheck receipt text; the leaderboard v1.json/v2.json and manifest.json it references were not included in this packet."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,36 @@
+{  "artifact_id": "frontiercode-extended-cost-1.1-batch5-cr173-2026-09-26",
+  "artifact_sha256": "44a18355af35ac670609ddc5cc6dd590df80c43832ac964b18557e0d640b2981",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:5ca12a06ed4b63aa66718a85",
+    "public:c5f7302d415a770986cd939c",
+    "public:e140da64b51e64fe51b8ff29",
+    "public:80bfe5b99eb14cfbe3c4f2e4",
+    "public:95c243eac896fd67f10738eb",
+    "public:e0fb46a5d78e86f9adac7d0f",
+    "public:a3f5c6c6928e06e71347397b",
+    "public:6c06868f0120a9b3b053e173",
+    "public:e0389c918ab589efdc7cf452",
+    "public:513dbcb781d04ede4cce52c5",
+    "public:a8111e912bf6268a05bbdf0c",
+    "public:f3c19f530b0dfaa87fa1ecef",
+    "public:45bcb5cf992c932d300e4d0f",
+    "public:81a81fa6b9c2ae2d9c275a4f",
+    "public:bd4ebdb88532518db30dff41",
+    "public:0a476d5ceb3e5601ccfff0c6",
+    "public:2b6980de8783790a659c2ecf",
+    "public:827aa7cb40dea346242bfe22",
+    "public:0426b37047f0a952dc0a776b",
+    "public:150ed3123a7f38641878ee52"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I could not independently recompute the artifact SHA-256 or the data-file SHA-256 from raw bytes; I have no execution or browsing tools, so these binding values were accepted as stated in the packet.",
+    "Verification relied only on the per-row verbatim source fields embedded in the packet (source_efforts_for_model, source_harness_for_model, source_extended_entry); I could not fetch the upstream data.json to confirm those embedded values match the live source.",
+    "Row public:0a476d5ceb3e5601ccfff0c6 (DeepSeek V4 Flash 0731|high) carries source flagged_rate 0.1911. The acceptance criteria do not gate cost rows on flagged_rate, so no finding was raised, but downstream consumers may wish to note it."
+  ],
+  "missing_evidence": []
+}

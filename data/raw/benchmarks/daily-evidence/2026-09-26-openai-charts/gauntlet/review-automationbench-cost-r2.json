@@ -1,0 +1,34 @@
+```json
+{
+ "artifact_id": "cr173-openai-charts-automationbench-cost",
+ "artifact_sha256": "ea2ee74cdf811604c6a74a6370e71db7d8454706e006f279c2a16cde64b8a1d2",
+ "round": 2,
+ "verdict": "pass",
+ "coverage_checked": [
+  "self-reported:gpt-6-astra-low-openai-automationbench-1-0-6-cost",
+  "self-reported:gpt-6-astra-medium-openai-automationbench-1-0-6-cost",
+  "self-reported:gpt-6-astra-high-openai-automationbench-1-0-6-cost",
+  "self-reported:gpt-6-astra-xhigh-openai-automationbench-1-0-6-cost",
+  "self-reported:gpt-6-astra-max-openai-automationbench-1-0-6-cost",
+  "self-reported:gpt-6-luna-low-openai-automationbench-1-0-6-cost",
+  "self-reported:gpt-6-luna-medium-openai-automationbench-1-0-6-cost",
+  "self-reported:gpt-6-luna-high-openai-automationbench-1-0-6-cost",
+  "self-reported:gpt-6-luna-xhigh-openai-automationbench-1-0-6-cost",
+  "self-reported:gpt-6-luna-max-openai-automationbench-1-0-6-cost",
+  "self-reported:gpt-6-sol-low-openai-automationbench-1-0-6-cost",
+  "self-reported:gpt-6-sol-medium-openai-automationbench-1-0-6-cost",
+  "self-reported:gpt-6-sol-high-openai-automationbench-1-0-6-cost",
+  "self-reported:gpt-6-sol-max-openai-automationbench-1-0-6-cost"
+ ],
+ "errors_found": 0,
+ "findings": [],
+ "fixed": [],
+ "missing_evidence": [],
+ "uncertainties": [
+  "The five Astra protocol texts state the earlier Astra launch post date as 2026-09-03; the supplied evidence (evidence.astra_post_points.source) gives only the Wayback URL (timestamp 20260920053907) and sha256, so that date is not independently verifiable from this packet. It is not a quoted datapoint, so per criterion 7 it is not counted as a defect.",
+  "Per-row locators and protocols mention the x-axis title \"Cost per task\"; the supplied evidence does not carry the axis title as a separate field (chart evidence supplies title, section, caption, and gpt6_points only), so this phrase could not be cross-verified. No contradiction observed.",
+  "I could not recompute sha256 values or re-run the extraction script (no execution environment); I relied on the packet-reported hashes matching evidence.source/evidence.astra_post_points and on owner_receipts.",
+  "All 14 row values were checked digit-by-digit against evidence.chart.gpt6_points cost fields (e.g., Astra low 1.08, Luna low 0.006, Sol max 0.3406); all match, including comparison of full verbatim datapoint JSON in locators and of the five Astra cross-check datapoints against evidence.astra_post_points. Completeness: 15 chart GPT-6 datapoints minus the skipped gpt-6-sol::xhigh configuration = the 14 rows present, with no competitor/predecessor rows and no duplicates."
+ ]
+}
+```

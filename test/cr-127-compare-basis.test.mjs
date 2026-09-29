@@ -76,10 +76,13 @@ test('the measured-basis gate is what keeps a non-measured value out of the perc
     'the probe value really does fall inside the measured distribution');
   assert.equal(gated(probe, populated), null, 'and the basis gate is what keeps it out');
   // Whatever the live population holds, a row exposed to a measured distribution may only be one of
-  // CR-60.2's chart reads — a vendor claim there would be the defect CR-127 was raised for.
-  assert.ok(exposed.every((e) => e.endsWith('preliminary')), `unexpected exposed bases: ${exposed.join(', ')}`);
+  // CR-60.2's chart reads, or ARC board submissions beside verified measurements.
+  assert.ok(exposed.every((e) => e.endsWith('preliminary') || /^arc-agi::[12]@@/.test(e) && e.endsWith('self_reported')), `unexpected exposed bases: ${exposed.join(', ')}`);
   const mixed = view.axes.filter((a) => a.scores.some((r) => r.basis === 'self_reported') && a.scores.some((r) => r.basis === 'measured'));
-  assert.equal(mixed.length, 0, `axes now mix bases (${mixed.map((a) => a.id).join(', ')}); re-read this suite's note`);
+  // CR-173: the ARC-AGI-1/2 axes are the first mixed ones (verified GPT-6 Luna rows beside board submissions); the
+  // gate above holds for them. Any further mixed axis is a new case — re-read this suite's note first.
+  const known = mixed.filter((a) => !/^arc-agi::[12]@@/.test(a.id));
+  assert.equal(known.length, 0, `axes now mix bases (${known.map((a) => a.id).join(', ')}); re-read this suite's note`);
 });
 
 test('Compare prefers a measured row over the same model\'s vendor claim', () => {

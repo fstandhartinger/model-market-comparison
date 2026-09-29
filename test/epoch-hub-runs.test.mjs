@@ -6,7 +6,9 @@ import { parseDeepSweId } from '../lib/coding-identity.mjs';
 
 // 2026-09-16 (iteration 80, CR-30.2): FrontierMath Tiers 1–3 v2, Tier 4 v2 and SimpleQA Verified as Epoch AI runs them,
 // from the committed CSV members of Epoch's Benchmarking Hub archive.
-const IDS = { 'frontiermath-tiers-1-3::v2': 106, 'frontiermath-tier-4::v2': 62, 'simpleqa-verified::snapshot-2026-09-16': 80 };
+// 2026-09-26 (CR-173): +2 rows each on the two FrontierMath boards (muse-spark-1.3 max/xhigh) from the 2026-09-26 archive
+// capture, added through `additional_sources` with an allow-list; the 2026-09-16 rows are unchanged.
+const IDS = { 'frontiermath-tiers-1-3::v2': 108, 'frontiermath-tier-4::v2': 64, 'simpleqa-verified::snapshot-2026-09-16': 80 };
 const json = (p) => JSON.parse(readFileSync(p, 'utf8'));
 
 test('Epoch hub runs: the collector reproduces the committed observations from the committed evidence alone', () => {
@@ -22,7 +24,9 @@ print(json.dumps([[o['id'],o['benchmark_id'],o['subject']['source_id'],o['value'
   const fresh = JSON.parse(out);
   const committed = json('data/raw/benchmarks/public-observations.json').observations.filter((o) => o.benchmark_id in IDS)
     .map((o) => [o.id, o.benchmark_id, o.subject.source_id, o.value]);
-  assert.deepEqual(fresh, committed);
+  // CR-173: rows added by a later capture are appended to the committed file, so compare as sets.
+  const byId = (a, b) => a[0].localeCompare(b[0]);
+  assert.deepEqual([...fresh].sort(byId), [...committed].sort(byId));
   for (const [id, n] of Object.entries(IDS)) assert.equal(fresh.filter((o) => o[1] === id).length, n, id);
   // The source's own numbers, read from the CSV: Claude Fable 5.1 (max).
   const v = (id) => fresh.find((o) => o[1] === id && o[2] === 'claude-fable-5-1_max')?.[3];

@@ -20,6 +20,14 @@ if sys.argv[1] == 'text':
             raw='\n'.join(f'PDF page {i+1}\n'+pages[i] for i in range(max(0,index-1),index+1))
     else:
         raw=data.decode('utf-8-sig')
+    # frontiercode-meta (CR-173, 2026-09-26): the leaderboard data file is 78 KB of values, over the review
+    # bound, but its board-level keys are what the FrontierCode registry version guard names (v1_1, the
+    # subset task counts, the per-model harness and published efforts). Print only those keys, verbatim;
+    # the per-run values ("data") stay out of a protocol review.
+    if len(sys.argv)>3 and sys.argv[3]=='frontiercode-meta':
+        board=json.loads(raw)
+        print(json.dumps({version:{key:board[version][key] for key in ['subsets','harness','efforts']} for version in ['v1_1']},ensure_ascii=False))
+        sys.exit(0)
     # next-rsc: the page renders from its own RSC payload, so the protocol text lives inside the
     # inline <script> chunks; include them verbatim (only where a review names this recipe).
     rsc = len(sys.argv) > 3 and sys.argv[3] == 'next-rsc'

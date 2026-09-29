@@ -226,9 +226,11 @@ test('Composite coverage separates exact inputs from family- or product-attached
   // 2026-09-19 (iteration 115, CR-54.2): three Epoch Benchmarking Hub boards join their slugs —
   // Chess Puzzles (0.41), MirrorCode (0.639), GPQA Diamond Epoch run (0.833) — boards eight to ten.
   // 2026-09-22 (iteration 167, CR-37.1): Surge AI's Chartography row "Claude Fable 5 (Adaptive/High)" (29.5) — the eleventh.
-  assert.equal(fable.benchmark_count, 11);
+  // 2026-09-26 (CR-173): FrontierCode 1.1 Extended ("Claude Fable 5|high", reviewed identity join; its cost twin is the
+  // fifth joined cost row, still excluded), LMArena WebDev ("claude-fable-5-high") and Agent Arena ("Claude Fable 5 (High)").
+  assert.equal(fable.benchmark_count, 14);
   assert.equal(dataset.benchmark_results.observations.filter((o) => o.subject.model_id === fable.id
-    && dataset.benchmark_results.registry.find((e) => e.id === o.benchmark_id)?.category === 'Efficiency').length, 4,
+    && dataset.benchmark_results.registry.find((e) => e.id === o.benchmark_id)?.category === 'Efficiency').length, 5,
     'joined cost rows exist for this configuration and are excluded from #benchmarks');
   assert.equal(fable.composite_coverage, 1);
   // CR-65.1: AA measures per effort setting, so `::high` no longer shows `::max`'s AA indices; the family-scope

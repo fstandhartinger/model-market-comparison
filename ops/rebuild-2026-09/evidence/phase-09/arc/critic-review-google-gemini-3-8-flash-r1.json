@@ -1,0 +1,23 @@
+{
+  "artifact_id": "arc-verified-google-gemini-3-8-flash",
+  "artifact_sha256": "83240491cc33237062048b95bd544014e8e0d1f9eb99db613428bc641cab8fc7",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "c1: all 6 values match excerpt cells exactly (arc-agi::1: 98.5/97.5/90.5; arc-agi::2: 89.2/82.9/77.5), variant labels High/Medium/Low match, unit percent, cells arrays identical to excerpt rows; no ARC-AGI-3 values used",
+    "c2: exactly one arc-agi::1 and one arc-agi::2 row per variant (High, Medium, Low); 6 rows total, no duplicates, none missing, no extras",
+    "c3: excerpt shows ARC Prize Verified badge (img alt), h1 'Gemini 3.8 Flash' equals rows' page_model, vendor/date line 'Google · Sep 2, 2026 · 6 harness configurations'; basis measured per stated Verified-page precedent",
+    "c4: published_at null on all 6 rows; page date Sep 2, 2026 kept only as source_row_context.model_release_date=2026-09-02, consistent with owner crosscheck receipt (release date = modelReleaseDate, 2026-09-02, all six lines)",
+    "c5: all 6 identity_map_candidates checked against rows; High/Medium/Low map to existing catalog configs gemini-3.8-flash::high/::medium/::low; proposed_model_id in every row matches; no None variants so no unjoined rows required",
+    "c6: protocol quotes the page summary verbatim (tooltips noted as omitted), Semi-Private appears only within the quoted summary; release-date and no-publication-date claims are supported by excerpt plus crosscheck receipt"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "artifact_sha256, capture and excerpt hashes echoed as supplied; not recomputable in this read-only review",
+    "join uses case normalization (page variant 'High' -> config '::high'), consistent with each row's reasoning_effort field; treated as convention, not an error",
+    "c4's cross-page Kimi K3 example and the underlying v1.json/v2.json files are not in the supplied packet; the owner crosscheck receipt is sufficient for this artifact"
+  ],
+  "missing_evidence": []
+}

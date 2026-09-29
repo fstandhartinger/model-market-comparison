@@ -1,0 +1,29 @@
+{
+ "artifact_id": "cr173-openai-charts-automationbench-score",
+ "artifact_sha256": "8962d30f5a808e2432d02f345a334a857390f5e3aa3d95b61e813acd3aa0d8aa",
+ "round": 2,
+ "verdict": "pass",
+ "coverage_checked": [
+  "self-reported:gpt-6-astra-low-openai-automationbench-1-0-6",
+  "self-reported:gpt-6-astra-medium-openai-automationbench-1-0-6",
+  "self-reported:gpt-6-astra-high-openai-automationbench-1-0-6",
+  "self-reported:gpt-6-astra-xhigh-openai-automationbench-1-0-6",
+  "self-reported:gpt-6-astra-max-openai-automationbench-1-0-6",
+  "self-reported:gpt-6-luna-low-openai-automationbench-1-0-6",
+  "self-reported:gpt-6-luna-medium-openai-automationbench-1-0-6",
+  "self-reported:gpt-6-luna-high-openai-automationbench-1-0-6",
+  "self-reported:gpt-6-luna-xhigh-openai-automationbench-1-0-6",
+  "self-reported:gpt-6-luna-max-openai-automationbench-1-0-6",
+  "self-reported:gpt-6-sol-low-openai-automationbench-1-0-6",
+  "self-reported:gpt-6-sol-medium-openai-automationbench-1-0-6",
+  "self-reported:gpt-6-sol-high-openai-automationbench-1-0-6",
+  "self-reported:gpt-6-sol-max-openai-automationbench-1-0-6"
+ ],
+ "errors_found": 0,
+ "findings": [],
+ "fixed": [],
+ "missing_evidence": [],
+ "uncertainties": [
+  "Verification was static, against the supplied packet only: each value/derivation.inputs pair was checked against evidence.chart.gpt6_points by decimal multiplication of the printed literals (e.g. 0.39 x 100 = 39.0, 0.2116 x 100 = 21.16, 0.012 x 100 = 1.2), not by executing the IEEE float product; all locator/figure captions, quoted datapoints (with $$-escaped cost_labels), source url/retrieved_at/published_at/sha256/file, protocol footnote quotes, and the five Astra cross-check datapoints matched evidence.astra_post_points string-for-string. Integrity of the underlying capture bytes rests on the owner-reported sha256 recompute in evidence, which I cannot independently recompute; no independent re-fetch of the source page was possible. Every datapoint quoted in each locator matched evidence.chart.gpt6_points verbatim, all 14 model_ids are in evidence.catalog_configurations, gpt-6-sol::xhigh is correctly absent per evidence.skipped_existing_configs, 15 datapoints minus 1 skipped = the 14 rows present with no duplicates, and all comparison_key fields are null."
+ ]
+}

@@ -1,0 +1,52 @@
+```json
+{
+ "artifact_id": "cr173-openai-charts-deepswe",
+ "artifact_sha256": "6b76774b144ecbe34df441be2ff1590ab0252b16048b1d3057e900b255ca65eb",
+ "round": 1,
+ "verdict": "pass",
+ "coverage_checked": [
+  "self-reported:gpt-6-astra-low-openai-deepswe-v1-1",
+  "self-reported:gpt-6-astra-low-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-astra-medium-openai-deepswe-v1-1",
+  "self-reported:gpt-6-astra-medium-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-astra-high-openai-deepswe-v1-1",
+  "self-reported:gpt-6-astra-high-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-astra-xhigh-openai-deepswe-v1-1",
+  "self-reported:gpt-6-astra-xhigh-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-astra-max-openai-deepswe-v1-1",
+  "self-reported:gpt-6-astra-max-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-luna-low-openai-deepswe-v1-1",
+  "self-reported:gpt-6-luna-low-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-luna-medium-openai-deepswe-v1-1",
+  "self-reported:gpt-6-luna-medium-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-luna-high-openai-deepswe-v1-1",
+  "self-reported:gpt-6-luna-high-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-luna-xhigh-openai-deepswe-v1-1",
+  "self-reported:gpt-6-luna-xhigh-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-luna-max-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-sol-low-openai-deepswe-v1-1",
+  "self-reported:gpt-6-sol-low-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-sol-medium-openai-deepswe-v1-1",
+  "self-reported:gpt-6-sol-medium-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-sol-high-openai-deepswe-v1-1",
+  "self-reported:gpt-6-sol-high-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-sol-xhigh-openai-deepswe-v1-1",
+  "self-reported:gpt-6-sol-xhigh-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-sol-max-openai-deepswe-v1-1-cost"
+ ],
+ "errors_found": 0,
+ "findings": [],
+ "fixed": [],
+ "missing_evidence": [],
+ "uncertainties": [
+  "Criterion 1: every score row value recomputed as score x 100 from evidence.chart.gpt6_points (0.6704->67.04, 0.7279->72.79, 0.7323->73.23 twice, 0.7412->74.12, 0.0243->2.43, 0.4447->44.47, 0.5929->59.29, 0.6128->61.28, 0.3717->37.17, 0.5664->56.64, 0.6527->65.27, 0.6659->66.59); derivation.inputs == [score] in each case; every cost row value equals the cost field exactly (1.5952, 3.0755, 3.9237, 4.4291, 7.4978, 0.0057, 0.0518, 0.0838, 0.1096, 0.2169, 0.1623, 0.3798, 0.6404, 1.0033, 2.7439). No rounding discrepancy observed at float representation.",
+  "Criterion 2: subject.name, subject.variant and model_id match the dataset model and effortLabel and the gpt-6-astra / gpt-6-sol / gpt-6-luna family mapping; all 15 distinct model_ids used are present in evidence.catalog_configurations; no row is attached to a neighbouring effort (locator effortLabel agrees with subject.variant in every row).",
+  "Criterion 3: only GPT-6 Astra, Sol and Luna rows present; no Claude or GPT-5.6 rows.",
+  "Criterion 4: 28 rows = 15 score + 15 cost minus the two skipped score rows (gpt-6-luna::max and gpt-6-sol::max per evidence.skipped_existing_configs, which are absent as required); each remaining datapoint has exactly one score row and one cost row; all 28 ids unique.",
+  "Criterion 5: benchmark_id suffix \"1.1\" matches caption text \"DeepSWE 1.1\".",
+  "Criterion 6: url, retrieved_at, published_at, sha256 and file match evidence.source in all 28 rows; locators name section \"Coding\", figure \"DeepSWE\", chart id 6yH2LVSbmONCIcmQ9ntEQU, linkId \"deepswe\", and quote each datapoint verbatim including the \"$$\" escaping (compared field-by-field against evidence.chart.gpt6_points); comparison_key is null in all rows.",
+  "Criterion 7: the five GPT-6 Astra score rows quote cross-check datapoints in protocol text; each was compared verbatim against evidence.astra_post_points for the same effort (low 0.67/1.6/$$1.60, medium 0.728/3.1/$$3.10, high 0.732/3.9/$$3.90, xhigh 0.741/4.4/$$4.40, max 0.73/7.5/$$7.50) and all match.",
+  "Limits of this review: sha256 equality was verified as a string match against evidence.source, not by recomputation from the retained file (no execution tools); the chart dataset itself was taken from the supplied evidence.gpt6_points, not independently re-extracted from the page payload."
+ ]
+}
+```

@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "benchmark_id": "arc-agi::1",
+      "parser": {
+        "kind": "json",
+        "row_path": "evaluations",
+        "name_field": "modelDisplayName",
+        "id_field": "modelId",
+        "value_field": "score",
+        "scale": 100,
+        "filter_field": "datasetId",
+        "filter_value": "v1_Semi_Private",
+        "skip_field": "modelGroup",
+        "skip_values": [
+          "Human"
+        ],
+        "display_only": true,
+        "context_fields": [
+          "modelType",
+          "modelGroup",
+          "providerId",
+          "display",
+          "resultsUrl",
+          "costPerTask",
+          "cost",
+          "modelReleaseDate"
+        ]
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Leaderboard version v1_Semi_Private; data.js loads /media/data/leaderboard/v1.json evaluations. Keep verified and community submissions and every split separate.",
+      "recipe": {
+        "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://arcprize.org/leaderboard --output /tmp/benchmark-source.txt",
+        "format": "HTML/embedded data",
+        "locator": "Leaderboard version v1_Semi_Private; data.js loads /media/data/leaderboard/v1.json evaluations. Keep verified and community submissions and every split separate.",
+        "version_guard": "Verify the published version 1 before reading results.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Verify the published version 1 before reading results.",
+      "source": {
+        "url": "https://arcprize.org/media/data/leaderboard/v1.json",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/public-sources/2aa739d957fc2ca6f531.gz",
+        "sha256": "2aa739d957fc2ca6f531763ab1818c804f583fee0ed4169cea46a6dbe314d277",
+        "retrieved_at": "2026-09-10T23:12:34.479721+00:00"
+      },
+      "protocol": "ARC-AGI 1; v1_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.",
+      "basis": "self_reported",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://arcprize.org/media/data/leaderboard/v1.json",
+        "https://arcprize.org/results/openai-gpt-6-luna"
+      ],
+      "additional_sources": [
+        {
+          "source": {
+            "url": "https://arcprize.org/results/openai-gpt-6-luna",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/captures/184926c7cd259eddc3f7.gz",
+            "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e",
+            "retrieved_at": "2026-09-24T20:22:51.069121+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "GPT-6 Luna",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3 (Standard harness)",
+              "ARC-AGI-3 (Provider Adapter harness)"
+            ],
+            "expected_variants": [
+              "Max",
+              "XHigh",
+              "High",
+              "Medium",
+              "Low",
+              "None"
+            ],
+            "effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low",
+              "None": "none"
+            },
+            "display_effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low",
+              "None": "Non-reasoning"
+            },
+            "benchmark_column": "ARC-AGI-1",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize GPT-6 Luna results page, published 2026-09-22, carrying an ARC Prize Verified badge. Its summary identifies 86.7% on ARC-AGI-1/v1 and 59.3% on ARC-AGI-2/v2 as the model's best Semi-Private scores; the table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 6
+        }
+      ]
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "parser": {
+        "kind": "json",
+        "row_path": "evaluations",
+        "name_field": "modelDisplayName",
+        "id_field": "modelId",
+        "value_field": "score",
+        "scale": 100,
+        "filter_field": "datasetId",
+        "filter_value": "v2_Semi_Private",
+        "skip_field": "modelGroup",
+        "skip_values": [
+          "Human"
+        ],
+        "display_only": true,
+        "context_fields": [
+          "modelType",
+          "modelGroup",
+          "providerId",
+          "display",
+          "resultsUrl",
+          "costPerTask",
+          "cost",
+          "modelReleaseDate"
+        ]
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Leaderboard version v2_Semi_Private; data.js loads /media/data/leaderboard/v2.json evaluations. Keep verified and community submissions and every split separate.",
+      "recipe": {
+        "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://arcprize.org/leaderboard --output /tmp/benchmark-source.txt",
+        "format": "HTML/embedded data",
+        "locator": "Leaderboard version v2_Semi_Private; data.js loads /media/data/leaderboard/v2.json evaluations. Keep verified and community submissions and every split separate.",
+        "version_guard": "Verify the published version 2 before reading results.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Verify the published version 2 before reading results.",
+      "source": {
+        "url": "https://arcprize.org/media/data/leaderboard/v2.json",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/public-sources/b5cb5ec6e8c7547c4f11.gz",
+        "sha256": "b5cb5ec6e8c7547c4f11a4e61e5ed7e0f28a26208f87bd16c83d1703777a2627",
+        "retrieved_at": "2026-09-10T23:12:37.919569+00:00"
+      },
+      "protocol": "ARC-AGI 2; v2_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.",
+      "basis": "self_reported",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://arcprize.org/media/data/leaderboard/v2.json",
+        "https://arcprize.org/results/openai-gpt-6-luna"
+      ],
+      "additional_sources": [
+        {
+          "source": {
+            "url": "https://arcprize.org/results/openai-gpt-6-luna",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/captures/184926c7cd259eddc3f7.gz",
+            "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e",
+            "retrieved_at": "2026-09-24T20:22:51.069121+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "GPT-6 Luna",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3 (Standard harness)",
+              "ARC-AGI-3 (Provider Adapter harness)"
+            ],
+            "expected_variants": [
+              "Max",
+              "XHigh",
+              "High",
+              "Medium",
+              "Low",
+              "None"
+            ],
+            "effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low",
+              "None": "none"
+            },
+            "display_effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low",
+              "None": "Non-reasoning"
+            },
+            "benchmark_column": "ARC-AGI-2",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize GPT-6 Luna results page, published 2026-09-22, carrying an ARC Prize Verified badge. Its summary identifies 86.7% on ARC-AGI-1/v1 and 59.3% on ARC-AGI-2/v2 as the model's best Semi-Private scores; the table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 6
+        }
+      ]
+    }
+  ]
+}

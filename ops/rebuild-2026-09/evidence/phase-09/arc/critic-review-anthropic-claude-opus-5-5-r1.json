@@ -1,0 +1,24 @@
+```json
+{
+  "artifact_id": "arc-verified-anthropic-claude-opus-5-5",
+  "artifact_sha256": "14e156fca1085b6b89f8ff2396c3b08c749fbb22eb697e304941a5419e9aa08e",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "c1: all 10 values, benchmark mappings (ARC-AGI-1 -> arc-agi::1, ARC-AGI-2 -> arc-agi::2) and variant labels (Max/XHigh/High/Medium/Low) match the excerpt cells exactly; unit percent; no ARC-AGI-3 rows (column is '—' for all variants)",
+    "c2: 5 variants x 2 benchmarks = exactly 10 rows; no duplicates, none missing, no extras",
+    "c3: excerpt shows 'ARC Prize Verified' badge (img alt), h1 'Claude Opus 5.5' equals row page_model, vendor/date line 'Anthropic · Sep 22, 2026 · 5 reasoning variants'; basis 'measured' consistent with Verified-page precedent",
+    "c4: published_at null on all 10 rows; page date kept only as source_row_context.model_release_date '2026-09-22', matching 'Sep 22, 2026' and owner crosscheck modelReleaseDate lines",
+    "c5: all 10 identity_map_candidates checked against rows: Max/XHigh/High/Medium/Low each map to existing catalog configs claude-opus-5.5::{max,xhigh,high,medium,low}; joins match row proposed_model_id 1:1; no 'None' variant on page so no unjoined rows required",
+    "c6: protocol quotes the page summary verbatim ('98.5% on v1 Semi-Private and 93.3% on v2 Semi-Private') with no Semi-Private claim beyond it; release-date statement backed by owner crosscheck receipt"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "artifact/capture/excerpt sha256 values accepted as supplied; no tools available to independently recompute them",
+    "protocol sentence 'The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages' omits mention of the table's empty ARC-AGI-3 column; an omission, not an unsupported claim (informational only)"
+  ],
+  "missing_evidence": []
+}
+```

@@ -1,0 +1,34 @@
+{
+  "artifact_id": "cr173-openai-charts-osworld-score",
+  "artifact_sha256": "5d1770c4bda435c476faed8174462efa9a49d83999054680ff721f4aa5a3a54d",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": [
+    "self-reported:gpt-6-astra-low-openai-osworld-2-offline",
+    "self-reported:gpt-6-astra-medium-openai-osworld-2-offline",
+    "self-reported:gpt-6-astra-high-openai-osworld-2-offline",
+    "self-reported:gpt-6-astra-xhigh-openai-osworld-2-offline",
+    "self-reported:gpt-6-astra-max-openai-osworld-2-offline",
+    "self-reported:gpt-6-luna-low-openai-osworld-2-offline",
+    "self-reported:gpt-6-luna-medium-openai-osworld-2-offline",
+    "self-reported:gpt-6-luna-high-openai-osworld-2-offline",
+    "self-reported:gpt-6-luna-xhigh-openai-osworld-2-offline",
+    "self-reported:gpt-6-luna-max-openai-osworld-2-offline",
+    "self-reported:gpt-6-sol-low-openai-osworld-2-offline",
+    "self-reported:gpt-6-sol-medium-openai-osworld-2-offline",
+    "self-reported:gpt-6-sol-high-openai-osworld-2-offline",
+    "self-reported:gpt-6-sol-max-openai-osworld-2-offline"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "missing_evidence": [],
+  "uncertainties": [
+    "All 14 values recomputed as score x 100 match exactly (e.g. 0.0826x100=8.26, 0.54x100=54.0, 0.4143x100=41.43); derivation.inputs == [score] in every row.",
+    "Completeness verified: 14 unique score rows = 15 evidence.chart.gpt6_points datapoints minus the one skipped config [openai-osworld-2-offline::v2026.08.08, gpt-6-sol::xhigh]; gpt-6-sol::xhigh correctly absent; ids unique; no competitor or predecessor rows.",
+    "Each locator was checked verbatim against evidence.gpt6_points (key order and '$$' escaping preserved), registry name, section, title, chart_id 6xqZKBY16kxH0Zm4jCsAaS, linkId osworld, and caption verbatim; all match evidence.",
+    "Astra protocol cross-check quotes verified verbatim against evidence.astra_post_points (low/high/xhigh/max datapoints exact, incl. floats and '$$' x_labels); astra-medium protocol's claim of no medium point is consistent with evidence (no medium key). Note: the astra-medium protocol cites only the Wayback sha256 and omits the archive URL that sibling Astra rows include; criterion 7 does not require it and the absence claim is consistent with evidence, so this is not counted as a defect.",
+    "Read-only verification: rows were checked against the supplied evidence only; I cannot independently recompute sha256 or re-extract datapoints from the raw payload, and rely on the supplied evidence and owner_receipts for those."
+  ],
+  "errors_found": 0
+}

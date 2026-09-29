@@ -1,0 +1,313 @@
+{
+  "artifact_id": "arc-verified-deepseek-v4-flash-0731",
+  "artifact_sha256": "c00519bac35570cdb814dd39d188ceeecfe3ab448eb6dd3536b61016787e0283",
+  "round": 1,
+  "review_scope": "Review our own frozen candidate before publication: 8 measured ARC-AGI-1/ARC-AGI-2 observations parsed from the ARC Prize Verified results page for DeepSeek V4 Flash 0731, and 2 proposed identity joins to catalog configurations.",
+  "acceptance_criteria": [
+    "c1: Every row's value, benchmark (ARC-AGI-1 column -> arc-agi::1, ARC-AGI-2 column -> arc-agi::2) and source variant label must match the included table excerpt exactly; unit percent; no row may come from an ARC-AGI-3 column.",
+    "c2: Coverage: exactly one arc-agi::1 and one arc-agi::2 row per table variant, no duplicates, none missing, no extras.",
+    "c3: The excerpt must show the ARC Prize Verified badge, a title equal to the row model, and the vendor/date line. Basis measured follows our precedent that a Verified per-model page is the evaluator's own published result.",
+    "c4: published_at must be null; the page date is kept only as source_row_context.model_release_date, because the line under the title is the model release date (owner cross-check: it equals modelReleaseDate in ARC Prize's leaderboard JSON for every page; the Kimi K3 page dated Jul 16, 2026 says \"As of July 31, 2026\").",
+    "c5: A proposed_model_id is allowed only when the source variant names an exact configuration listed in catalog_configurations (None -> non-reasoning only where that configuration exists). A variant without its own catalog configuration stays unjoined (proposed_model_id null) with a reason. Check every identity_map_candidates entry against its row.",
+    "c6: The protocol text must state only what the excerpt supports (no Semi-Private claim beyond the page summary).",
+    "Return pass only if every row and join is supported by the supplied evidence; otherwise revise or blocked naming exact row ids. Keep coverage_checked short (one entry per criterion)."
+  ],
+  "source_evidence": [
+    {
+      "source": "ARC Prize DeepSeek V4 Flash 0731 results page",
+      "url": "https://arcprize.org/results/deepseek-v4-flash-0731",
+      "retrieved_at": "2026-09-26T04:22:50.346871+00:00",
+      "capture_file": "ops/rebuild-2026-09/evidence/phase-09/arc/captures/69f3f516118936fc86a4.gz",
+      "capture_payload_sha256": "69f3f516118936fc86a4f9daa76a91f9b2ca3688638eca8c772d5b6baf535c80",
+      "html_excerpt_file": "ops/rebuild-2026-09/evidence/phase-09/arc/excerpts/deepseek-v4-flash-0731.html",
+      "html_excerpt_sha256": "31b9fc13581bac87c310e9ebde1a05a2a0f3a4180fe0fc90d1cf65eabbe96ba8",
+      "html_excerpt": "<img src=\"/media/images/badges/arc-prize-verified-badge-dark-color.svg\" alt=\"ARC Prize Verified\" class=\"absolute right-4 top-8 w-[128px] sm:w-[152px]\" style=\"display:block\"/>\n\n<h1 class=\"mb-2\">DeepSeek V4 Flash 0731</h1><div class=\"mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-neutral-400\"><span>DeepSeek</span><span class=\"text-neutral-700\">·</span><span>Jul 31, 2026</span><span class=\"text-neutral-700\">·</span><span>4 reasoning variants</span></div>\n\n<p class=\"mt-5 max-w-[720px] text-[14px] leading-relaxed text-neutral-300\">At max effort, DeepSeek V4 Flash 0731 scores 89.0% on ARC-AGI-1 Semi-Private at $0.02 per task and 61.4% on ARC-AGI-2 Semi-Private at $0.04 per task.</p>\n\n<table class=\"w-full border-collapse text-sm \"><thead class=\"bg-neutral-900 text-[11px] uppercase tracking-wider text-neutral-400\"><tr><th class=\"px-3 py-1.5 text-left\">Variant</th><th class=\"px-3 py-1.5 text-center whitespace-nowrap\">ARC-AGI-1</th><th class=\"px-3 py-1.5 text-center whitespace-nowrap\">ARC-AGI-2</th><th class=\"px-3 py-1.5 text-center whitespace-nowrap\">ARC-AGI-3</th></tr></thead><tbody><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"DeepSeek V4 Flash 0731 (Max)\">Max</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] font-bold\">89.0%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] font-bold\">61.4%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">—</div></td></tr><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"DeepSeek V4 Flash 0731 (High)\">High</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">87.0%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">56.0%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">—</div></td></tr><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"DeepSeek V4 Flash 0731 (Low)\">Low</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">84.0%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">46.0%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">—</div></td></tr><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"DeepSeek V4 Flash 0731 (None)\">None</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">11.8%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">2.1%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">—</div></td></tr></tbody></table>\n"
+    }
+  ],
+  "owner_crosscheck_receipt": {
+    "file": "ops/rebuild-2026-09/evidence/phase-09/arc/owner-crosscheck.txt",
+    "note": "lines for this page only; owner-run script output",
+    "content": "Owner cross-check 2026-09-26: every results-page row vs ARC Prize leaderboard JSON rows with the same resultsUrl and display name\n(v1.json/v2.json captured 2026-09-26, see leaderboard-json/manifest.json). JSON score x100 rounded half-up to 1 decimal; release date = modelReleaseDate.\narc-agi::1 DeepSeek V4 Flash 0731|Max page 89.0 | json 0.89 v1_Semi_Private 2026-07-31 -> 89.0 OK\narc-agi::1 DeepSeek V4 Flash 0731|High page 87.0 | json 0.87 v1_Semi_Private 2026-07-31 -> 87.0 OK\narc-agi::1 DeepSeek V4 Flash 0731|Low page 84.0 | json 0.84 v1_Semi_Private 2026-07-31 -> 84.0 OK\narc-agi::1 DeepSeek V4 Flash 0731|None page 11.8 | json 0.11833333333333335 v1_Semi_Private 2026-07-31 -> 11.8 OK\narc-agi::2 DeepSeek V4 Flash 0731|Max page 61.4 | json 0.6138888888888888 v2_Semi_Private 2026-07-31 -> 61.4 OK\narc-agi::2 DeepSeek V4 Flash 0731|High page 56.0 | json 0.5597222222222221 v2_Semi_Private 2026-07-31 -> 56.0 OK\narc-agi::2 DeepSeek V4 Flash 0731|Low page 46.0 | json 0.4597222222222222 v2_Semi_Private 2026-07-31 -> 46.0 OK\narc-agi::2 DeepSeek V4 Flash 0731|None page 2.1 | json 0.020833333333333332 v2_Semi_Private 2026-07-31 -> 2.1 OK\n"
+  },
+  "frozen_artifact": {
+    "artifact_id": "arc-verified-deepseek-v4-flash-0731",
+    "rows": [
+      {
+        "id": "public:76d16849a2342d06244c1889",
+        "benchmark_id": "arc-agi::1",
+        "source_id": "DeepSeek V4 Flash 0731|Max",
+        "name": "DeepSeek V4 Flash 0731 (max)",
+        "value": 89.0,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/deepseek-v4-flash-0731",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:50.346871+00:00",
+        "source_sha256": "69f3f516118936fc86a4f9daa76a91f9b2ca3688638eca8c772d5b6baf535c80",
+        "locator": "arc_verified_results_page; source row 1; DeepSeek V4 Flash 0731|Max; field value",
+        "source_row_context": {
+          "page_model": "DeepSeek V4 Flash 0731",
+          "page_vendor": "DeepSeek",
+          "source_variant": "Max",
+          "reasoning_effort": "max",
+          "benchmark_column": "ARC-AGI-1",
+          "cells": [
+            "Max",
+            "89.0%",
+            "61.4%",
+            "—"
+          ],
+          "model_release_date": "2026-07-31"
+        },
+        "proposed_model_id": "deepseek-v4-flash-0731::max",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:c020ca9ba2b6493b97cf33ae",
+        "benchmark_id": "arc-agi::1",
+        "source_id": "DeepSeek V4 Flash 0731|High",
+        "name": "DeepSeek V4 Flash 0731 (high)",
+        "value": 87.0,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/deepseek-v4-flash-0731",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:50.346871+00:00",
+        "source_sha256": "69f3f516118936fc86a4f9daa76a91f9b2ca3688638eca8c772d5b6baf535c80",
+        "locator": "arc_verified_results_page; source row 2; DeepSeek V4 Flash 0731|High; field value",
+        "source_row_context": {
+          "page_model": "DeepSeek V4 Flash 0731",
+          "page_vendor": "DeepSeek",
+          "source_variant": "High",
+          "reasoning_effort": "high",
+          "benchmark_column": "ARC-AGI-1",
+          "cells": [
+            "High",
+            "87.0%",
+            "56.0%",
+            "—"
+          ],
+          "model_release_date": "2026-07-31"
+        },
+        "proposed_model_id": null,
+        "unjoined_reason": "not joined: catalog family deepseek-v4-flash-0731 has configurations ['deepseek-v4-flash-0731::max']; no configuration for source variant High"
+      },
+      {
+        "id": "public:4fda2ec660ff4c16c38fa32f",
+        "benchmark_id": "arc-agi::1",
+        "source_id": "DeepSeek V4 Flash 0731|Low",
+        "name": "DeepSeek V4 Flash 0731 (low)",
+        "value": 84.0,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/deepseek-v4-flash-0731",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:50.346871+00:00",
+        "source_sha256": "69f3f516118936fc86a4f9daa76a91f9b2ca3688638eca8c772d5b6baf535c80",
+        "locator": "arc_verified_results_page; source row 3; DeepSeek V4 Flash 0731|Low; field value",
+        "source_row_context": {
+          "page_model": "DeepSeek V4 Flash 0731",
+          "page_vendor": "DeepSeek",
+          "source_variant": "Low",
+          "reasoning_effort": "low",
+          "benchmark_column": "ARC-AGI-1",
+          "cells": [
+            "Low",
+            "84.0%",
+            "46.0%",
+            "—"
+          ],
+          "model_release_date": "2026-07-31"
+        },
+        "proposed_model_id": null,
+        "unjoined_reason": "not joined: catalog family deepseek-v4-flash-0731 has configurations ['deepseek-v4-flash-0731::max']; no configuration for source variant Low"
+      },
+      {
+        "id": "public:3ac8f0f87369ff1b3ba6ae69",
+        "benchmark_id": "arc-agi::1",
+        "source_id": "DeepSeek V4 Flash 0731|None",
+        "name": "DeepSeek V4 Flash 0731 (none)",
+        "value": 11.8,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/deepseek-v4-flash-0731",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:50.346871+00:00",
+        "source_sha256": "69f3f516118936fc86a4f9daa76a91f9b2ca3688638eca8c772d5b6baf535c80",
+        "locator": "arc_verified_results_page; source row 4; DeepSeek V4 Flash 0731|None; field value",
+        "source_row_context": {
+          "page_model": "DeepSeek V4 Flash 0731",
+          "page_vendor": "DeepSeek",
+          "source_variant": "None",
+          "reasoning_effort": "none",
+          "benchmark_column": "ARC-AGI-1",
+          "cells": [
+            "None",
+            "11.8%",
+            "2.1%",
+            "—"
+          ],
+          "model_release_date": "2026-07-31"
+        },
+        "proposed_model_id": null,
+        "unjoined_reason": "not joined: catalog family deepseek-v4-flash-0731 has configurations ['deepseek-v4-flash-0731::max']; no configuration for source variant None"
+      },
+      {
+        "id": "public:a8d323e729c65bf0e23ffc4e",
+        "benchmark_id": "arc-agi::2",
+        "source_id": "DeepSeek V4 Flash 0731|Max",
+        "name": "DeepSeek V4 Flash 0731 (max)",
+        "value": 61.4,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/deepseek-v4-flash-0731",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:50.346871+00:00",
+        "source_sha256": "69f3f516118936fc86a4f9daa76a91f9b2ca3688638eca8c772d5b6baf535c80",
+        "locator": "arc_verified_results_page; source row 1; DeepSeek V4 Flash 0731|Max; field value",
+        "source_row_context": {
+          "page_model": "DeepSeek V4 Flash 0731",
+          "page_vendor": "DeepSeek",
+          "source_variant": "Max",
+          "reasoning_effort": "max",
+          "benchmark_column": "ARC-AGI-2",
+          "cells": [
+            "Max",
+            "89.0%",
+            "61.4%",
+            "—"
+          ],
+          "model_release_date": "2026-07-31"
+        },
+        "proposed_model_id": "deepseek-v4-flash-0731::max",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:eb69bfa8049bcc203e55dc1d",
+        "benchmark_id": "arc-agi::2",
+        "source_id": "DeepSeek V4 Flash 0731|High",
+        "name": "DeepSeek V4 Flash 0731 (high)",
+        "value": 56.0,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/deepseek-v4-flash-0731",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:50.346871+00:00",
+        "source_sha256": "69f3f516118936fc86a4f9daa76a91f9b2ca3688638eca8c772d5b6baf535c80",
+        "locator": "arc_verified_results_page; source row 2; DeepSeek V4 Flash 0731|High; field value",
+        "source_row_context": {
+          "page_model": "DeepSeek V4 Flash 0731",
+          "page_vendor": "DeepSeek",
+          "source_variant": "High",
+          "reasoning_effort": "high",
+          "benchmark_column": "ARC-AGI-2",
+          "cells": [
+            "High",
+            "87.0%",
+            "56.0%",
+            "—"
+          ],
+          "model_release_date": "2026-07-31"
+        },
+        "proposed_model_id": null,
+        "unjoined_reason": "not joined: catalog family deepseek-v4-flash-0731 has configurations ['deepseek-v4-flash-0731::max']; no configuration for source variant High"
+      },
+      {
+        "id": "public:7e29a29cbc3bba2213042db8",
+        "benchmark_id": "arc-agi::2",
+        "source_id": "DeepSeek V4 Flash 0731|Low",
+        "name": "DeepSeek V4 Flash 0731 (low)",
+        "value": 46.0,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/deepseek-v4-flash-0731",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:50.346871+00:00",
+        "source_sha256": "69f3f516118936fc86a4f9daa76a91f9b2ca3688638eca8c772d5b6baf535c80",
+        "locator": "arc_verified_results_page; source row 3; DeepSeek V4 Flash 0731|Low; field value",
+        "source_row_context": {
+          "page_model": "DeepSeek V4 Flash 0731",
+          "page_vendor": "DeepSeek",
+          "source_variant": "Low",
+          "reasoning_effort": "low",
+          "benchmark_column": "ARC-AGI-2",
+          "cells": [
+            "Low",
+            "84.0%",
+            "46.0%",
+            "—"
+          ],
+          "model_release_date": "2026-07-31"
+        },
+        "proposed_model_id": null,
+        "unjoined_reason": "not joined: catalog family deepseek-v4-flash-0731 has configurations ['deepseek-v4-flash-0731::max']; no configuration for source variant Low"
+      },
+      {
+        "id": "public:5c57ee6a15be26aa92b79da4",
+        "benchmark_id": "arc-agi::2",
+        "source_id": "DeepSeek V4 Flash 0731|None",
+        "name": "DeepSeek V4 Flash 0731 (none)",
+        "value": 2.1,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/deepseek-v4-flash-0731",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:50.346871+00:00",
+        "source_sha256": "69f3f516118936fc86a4f9daa76a91f9b2ca3688638eca8c772d5b6baf535c80",
+        "locator": "arc_verified_results_page; source row 4; DeepSeek V4 Flash 0731|None; field value",
+        "source_row_context": {
+          "page_model": "DeepSeek V4 Flash 0731",
+          "page_vendor": "DeepSeek",
+          "source_variant": "None",
+          "reasoning_effort": "none",
+          "benchmark_column": "ARC-AGI-2",
+          "cells": [
+            "None",
+            "11.8%",
+            "2.1%",
+            "—"
+          ],
+          "model_release_date": "2026-07-31"
+        },
+        "proposed_model_id": null,
+        "unjoined_reason": "not joined: catalog family deepseek-v4-flash-0731 has configurations ['deepseek-v4-flash-0731::max']; no configuration for source variant None"
+      }
+    ],
+    "protocol": "Official ARC Prize DeepSeek V4 Flash 0731 results page (DeepSeek), carrying an ARC Prize Verified badge; the date on the page, 2026-07-31, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"At max effort, DeepSeek V4 Flash 0731 scores 89.0% on ARC-AGI-1 Semi-Private at $0.02 per task and 61.4% on ARC-AGI-2 Semi-Private at $0.04 per task.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+    "identity_map_candidates": [
+      {
+        "benchmark_id": "arc-agi::1",
+        "source_id": "DeepSeek V4 Flash 0731|Max",
+        "model_id": "deepseek-v4-flash-0731::max",
+        "rule": "ARC Prize DeepSeek V4 Flash 0731 results page (ARC Prize Verified) gives the exact source variant Max; the catalog holds exactly the configuration deepseek-v4-flash-0731::max.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::2",
+        "source_id": "DeepSeek V4 Flash 0731|Max",
+        "model_id": "deepseek-v4-flash-0731::max",
+        "rule": "ARC Prize DeepSeek V4 Flash 0731 results page (ARC Prize Verified) gives the exact source variant Max; the catalog holds exactly the configuration deepseek-v4-flash-0731::max.",
+        "basis": "measured"
+      }
+    ],
+    "catalog_configurations": {
+      "deepseek-v4-flash-0731": [
+        "deepseek-v4-flash-0731::max"
+      ]
+    }
+  },
+  "required_verdict_contract": {
+    "artifact_id": "arc-verified-deepseek-v4-flash-0731",
+    "artifact_sha256": "<artifact_sha256 above>",
+    "round": 1,
+    "verdict": "pass|revise|blocked",
+    "coverage_checked": [
+      "one short entry per criterion id c1..c6"
+    ],
+    "errors_found": 0,
+    "findings": [],
+    "fixed": [],
+    "uncertainties": [],
+    "missing_evidence": []
+  }
+}

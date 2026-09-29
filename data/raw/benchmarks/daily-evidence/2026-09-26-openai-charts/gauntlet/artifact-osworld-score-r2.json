@@ -1,0 +1,453 @@
+{
+  "schema_version": 1,
+  "observations": [
+    {
+      "id": "self-reported:gpt-6-astra-low-openai-osworld-2-offline",
+      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#osworld/GPT-6 Astra/low",
+        "name": "GPT-6 Astra",
+        "model_id": "gpt-6-astra::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 62.17,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.6217
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"OSWorld 2.0 offline (v2026.08.08 release), chart dataset entry model GPT-6 Astra with effortLabel low\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Computer use\", figure \"OSWorld 2.0, offline set\" (chart component id 6xqZKBY16kxH0Zm4jCsAaS, dotcomConfig.linkId \"osworld\"; figure caption: \"In OSWorld 2.0, AI agents attempt long-horizon computer-use workflows spanning everyday and professional tasks. We report the partial reward on the offline set from the v2026.08.08 release.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Astra\" and effortLabel \"low\"; exact datapoint: {\"model\":\"GPT-6 Astra\",\"cost_label\":\"$$2.55\",\"score\":0.6217,\"cost\":2.5457,\"order\":0,\"modelLabel\":\"GPT-6 Astra\",\"effortLabel\":\"low\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Astra at low reasoning effort on OSWorld 2.0 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available. Cross-check: OpenAI's earlier GPT-6 Astra launch post (2026-09-03; Wayback copy https://web.archive.org/web/20260920053907id_/https://openai.com/index/gpt-6-astra/, sha256 28dd99f38f5b866d258624acb06096052eb946e4299d22d2b515b66566eefa7a) charts this Astra configuration in \"OSWorld 2.0 · Offline\" as {\"effort_display\":\"Low\",\"model\":\"GPT-6 Astra\",\"model_display\":\"GPT-6 Astra\",\"pointOrder\":5,\"score\":0.6144039877172959,\"x_label\":\"$$3.2\",\"x_metric\":\"api_cost_usd\",\"x_value\":3.19500468658537,\"seriesId\":\"series-3\"}. This row carries only the 2026-09-22 dataset value.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"low\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-astra::low and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-astra-medium-openai-osworld-2-offline",
+      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#osworld/GPT-6 Astra/medium",
+        "name": "GPT-6 Astra",
+        "model_id": "gpt-6-astra::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 69.25,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.6925
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"OSWorld 2.0 offline (v2026.08.08 release), chart dataset entry model GPT-6 Astra with effortLabel medium\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Computer use\", figure \"OSWorld 2.0, offline set\" (chart component id 6xqZKBY16kxH0Zm4jCsAaS, dotcomConfig.linkId \"osworld\"; figure caption: \"In OSWorld 2.0, AI agents attempt long-horizon computer-use workflows spanning everyday and professional tasks. We report the partial reward on the offline set from the v2026.08.08 release.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Astra\" and effortLabel \"medium\"; exact datapoint: {\"model\":\"GPT-6 Astra\",\"cost_label\":\"$$5.10\",\"score\":0.6925,\"cost\":5.1009,\"order\":1,\"modelLabel\":\"GPT-6 Astra\",\"effortLabel\":\"medium\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Astra at medium reasoning effort on OSWorld 2.0 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available. Cross-check: OpenAI's earlier GPT-6 Astra launch post (2026-09-03; Wayback copy sha256 28dd99f38f5b866d258624acb06096052eb946e4299d22d2b515b66566eefa7a) charts no Astra medium point for this benchmark. This row carries only the 2026-09-22 dataset value.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"medium\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-astra::medium and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-astra-high-openai-osworld-2-offline",
+      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#osworld/GPT-6 Astra/high",
+        "name": "GPT-6 Astra",
+        "model_id": "gpt-6-astra::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 70.02,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.7002
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"OSWorld 2.0 offline (v2026.08.08 release), chart dataset entry model GPT-6 Astra with effortLabel high\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Computer use\", figure \"OSWorld 2.0, offline set\" (chart component id 6xqZKBY16kxH0Zm4jCsAaS, dotcomConfig.linkId \"osworld\"; figure caption: \"In OSWorld 2.0, AI agents attempt long-horizon computer-use workflows spanning everyday and professional tasks. We report the partial reward on the offline set from the v2026.08.08 release.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Astra\" and effortLabel \"high\"; exact datapoint: {\"model\":\"GPT-6 Astra\",\"cost_label\":\"$$6.60\",\"score\":0.7002,\"cost\":6.6024,\"order\":2,\"modelLabel\":\"GPT-6 Astra\",\"effortLabel\":\"high\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Astra at high reasoning effort on OSWorld 2.0 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available. Cross-check: OpenAI's earlier GPT-6 Astra launch post (2026-09-03; Wayback copy https://web.archive.org/web/20260920053907id_/https://openai.com/index/gpt-6-astra/, sha256 28dd99f38f5b866d258624acb06096052eb946e4299d22d2b515b66566eefa7a) charts this Astra configuration in \"OSWorld 2.0 · Offline\" as {\"effort_display\":\"High\",\"model\":\"GPT-6 Astra\",\"model_display\":\"GPT-6 Astra\",\"pointOrder\":7,\"score\":0.7159908953008942,\"x_label\":\"$$6.97\",\"x_metric\":\"api_cost_usd\",\"x_value\":6.970020441463411,\"seriesId\":\"series-3\"}. This row carries only the 2026-09-22 dataset value.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"high\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-astra::high and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-astra-xhigh-openai-osworld-2-offline",
+      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#osworld/GPT-6 Astra/xhigh",
+        "name": "GPT-6 Astra",
+        "model_id": "gpt-6-astra::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 71.27,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.7127
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"OSWorld 2.0 offline (v2026.08.08 release), chart dataset entry model GPT-6 Astra with effortLabel xhigh\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Computer use\", figure \"OSWorld 2.0, offline set\" (chart component id 6xqZKBY16kxH0Zm4jCsAaS, dotcomConfig.linkId \"osworld\"; figure caption: \"In OSWorld 2.0, AI agents attempt long-horizon computer-use workflows spanning everyday and professional tasks. We report the partial reward on the offline set from the v2026.08.08 release.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Astra\" and effortLabel \"xhigh\"; exact datapoint: {\"model\":\"GPT-6 Astra\",\"cost_label\":\"$$7.17\",\"score\":0.7127,\"cost\":7.1744,\"order\":3,\"modelLabel\":\"GPT-6 Astra\",\"effortLabel\":\"xhigh\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Astra at xhigh reasoning effort on OSWorld 2.0 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available. Cross-check: OpenAI's earlier GPT-6 Astra launch post (2026-09-03; Wayback copy https://web.archive.org/web/20260920053907id_/https://openai.com/index/gpt-6-astra/, sha256 28dd99f38f5b866d258624acb06096052eb946e4299d22d2b515b66566eefa7a) charts this Astra configuration in \"OSWorld 2.0 · Offline\" as {\"effort_display\":\"Xhigh\",\"model\":\"GPT-6 Astra\",\"model_display\":\"GPT-6 Astra\",\"pointOrder\":8,\"score\":0.7172340990045012,\"x_label\":\"$$7.88\",\"x_metric\":\"api_cost_usd\",\"x_value\":7.8837753548780505,\"seriesId\":\"series-3\"}. This row carries only the 2026-09-22 dataset value.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"xhigh\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-astra::xhigh and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-astra-max-openai-osworld-2-offline",
+      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#osworld/GPT-6 Astra/max",
+        "name": "GPT-6 Astra",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 73.49,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.7349
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"OSWorld 2.0 offline (v2026.08.08 release), chart dataset entry model GPT-6 Astra with effortLabel max\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Computer use\", figure \"OSWorld 2.0, offline set\" (chart component id 6xqZKBY16kxH0Zm4jCsAaS, dotcomConfig.linkId \"osworld\"; figure caption: \"In OSWorld 2.0, AI agents attempt long-horizon computer-use workflows spanning everyday and professional tasks. We report the partial reward on the offline set from the v2026.08.08 release.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Astra\" and effortLabel \"max\"; exact datapoint: {\"model\":\"GPT-6 Astra\",\"cost_label\":\"$$9.07\",\"score\":0.7349,\"cost\":9.0733,\"order\":4,\"modelLabel\":\"GPT-6 Astra\",\"effortLabel\":\"max\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Astra at max reasoning effort on OSWorld 2.0 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available. Cross-check: OpenAI's earlier GPT-6 Astra launch post (2026-09-03; Wayback copy https://web.archive.org/web/20260920053907id_/https://openai.com/index/gpt-6-astra/, sha256 28dd99f38f5b866d258624acb06096052eb946e4299d22d2b515b66566eefa7a) charts this Astra configuration in \"OSWorld 2.0 · Offline\" as {\"effort_display\":\"Max\",\"model\":\"GPT-6 Astra\",\"model_display\":\"GPT-6 Astra\",\"pointOrder\":9,\"score\":0.726360447603916,\"x_label\":\"$$10.1\",\"x_metric\":\"api_cost_usd\",\"x_value\":10.103974470731698,\"seriesId\":\"series-3\"}. This row carries only the 2026-09-22 dataset value.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"max\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-astra::max and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-luna-low-openai-osworld-2-offline",
+      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#osworld/GPT-6 Luna/low",
+        "name": "GPT-6 Luna",
+        "model_id": "gpt-6-luna::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 8.26,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.0826
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"OSWorld 2.0 offline (v2026.08.08 release), chart dataset entry model GPT-6 Luna with effortLabel low\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Computer use\", figure \"OSWorld 2.0, offline set\" (chart component id 6xqZKBY16kxH0Zm4jCsAaS, dotcomConfig.linkId \"osworld\"; figure caption: \"In OSWorld 2.0, AI agents attempt long-horizon computer-use workflows spanning everyday and professional tasks. We report the partial reward on the offline set from the v2026.08.08 release.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Luna\" and effortLabel \"low\"; exact datapoint: {\"model\":\"GPT-6 Luna\",\"cost_label\":\"$$0.030\",\"score\":0.0826,\"cost\":0.0297,\"order\":0,\"modelLabel\":\"GPT-6 Luna\",\"effortLabel\":\"low\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Luna at low reasoning effort on OSWorld 2.0 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"low\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-luna::low and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-luna-medium-openai-osworld-2-offline",
+      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#osworld/GPT-6 Luna/medium",
+        "name": "GPT-6 Luna",
+        "model_id": "gpt-6-luna::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 31.54,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.3154
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"OSWorld 2.0 offline (v2026.08.08 release), chart dataset entry model GPT-6 Luna with effortLabel medium\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Computer use\", figure \"OSWorld 2.0, offline set\" (chart component id 6xqZKBY16kxH0Zm4jCsAaS, dotcomConfig.linkId \"osworld\"; figure caption: \"In OSWorld 2.0, AI agents attempt long-horizon computer-use workflows spanning everyday and professional tasks. We report the partial reward on the offline set from the v2026.08.08 release.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Luna\" and effortLabel \"medium\"; exact datapoint: {\"model\":\"GPT-6 Luna\",\"cost_label\":\"$$0.062\",\"score\":0.3154,\"cost\":0.0624,\"order\":1,\"modelLabel\":\"GPT-6 Luna\",\"effortLabel\":\"medium\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Luna at medium reasoning effort on OSWorld 2.0 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"medium\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-luna::medium and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-luna-high-openai-osworld-2-offline",
+      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#osworld/GPT-6 Luna/high",
+        "name": "GPT-6 Luna",
+        "model_id": "gpt-6-luna::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 41.43,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.4143
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"OSWorld 2.0 offline (v2026.08.08 release), chart dataset entry model GPT-6 Luna with effortLabel high\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Computer use\", figure \"OSWorld 2.0, offline set\" (chart component id 6xqZKBY16kxH0Zm4jCsAaS, dotcomConfig.linkId \"osworld\"; figure caption: \"In OSWorld 2.0, AI agents attempt long-horizon computer-use workflows spanning everyday and professional tasks. We report the partial reward on the offline set from the v2026.08.08 release.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Luna\" and effortLabel \"high\"; exact datapoint: {\"model\":\"GPT-6 Luna\",\"cost_label\":\"$$0.12\",\"score\":0.4143,\"cost\":0.1227,\"order\":2,\"modelLabel\":\"GPT-6 Luna\",\"effortLabel\":\"high\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Luna at high reasoning effort on OSWorld 2.0 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"high\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-luna::high and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-luna-xhigh-openai-osworld-2-offline",
+      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#osworld/GPT-6 Luna/xhigh",
+        "name": "GPT-6 Luna",
+        "model_id": "gpt-6-luna::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 46.7,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.467
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"OSWorld 2.0 offline (v2026.08.08 release), chart dataset entry model GPT-6 Luna with effortLabel xhigh\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Computer use\", figure \"OSWorld 2.0, offline set\" (chart component id 6xqZKBY16kxH0Zm4jCsAaS, dotcomConfig.linkId \"osworld\"; figure caption: \"In OSWorld 2.0, AI agents attempt long-horizon computer-use workflows spanning everyday and professional tasks. We report the partial reward on the offline set from the v2026.08.08 release.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Luna\" and effortLabel \"xhigh\"; exact datapoint: {\"model\":\"GPT-6 Luna\",\"cost_label\":\"$$0.16\",\"score\":0.467,\"cost\":0.1639,\"order\":3,\"modelLabel\":\"GPT-6 Luna\",\"effortLabel\":\"xhigh\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Luna at xhigh reasoning effort on OSWorld 2.0 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"xhigh\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-luna::xhigh and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-luna-max-openai-osworld-2-offline",
+      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#osworld/GPT-6 Luna/max",
+        "name": "GPT-6 Luna",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 52.68,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.5268
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"OSWorld 2.0 offline (v2026.08.08 release), chart dataset entry model GPT-6 Luna with effortLabel max\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Computer use\", figure \"OSWorld 2.0, offline set\" (chart component id 6xqZKBY16kxH0Zm4jCsAaS, dotcomConfig.linkId \"osworld\"; figure caption: \"In OSWorld 2.0, AI agents attempt long-horizon computer-use workflows spanning everyday and professional tasks. We report the partial reward on the offline set from the v2026.08.08 release.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Luna\" and effortLabel \"max\"; exact datapoint: {\"model\":\"GPT-6 Luna\",\"cost_label\":\"$$0.27\",\"score\":0.5268,\"cost\":0.2678,\"order\":4,\"modelLabel\":\"GPT-6 Luna\",\"effortLabel\":\"max\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Luna at max reasoning effort on OSWorld 2.0 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"max\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-luna::max and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-sol-low-openai-osworld-2-offline",
+      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#osworld/GPT-6 Sol/low",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 43.9,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.439
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"OSWorld 2.0 offline (v2026.08.08 release), chart dataset entry model GPT-6 Sol with effortLabel low\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Computer use\", figure \"OSWorld 2.0, offline set\" (chart component id 6xqZKBY16kxH0Zm4jCsAaS, dotcomConfig.linkId \"osworld\"; figure caption: \"In OSWorld 2.0, AI agents attempt long-horizon computer-use workflows spanning everyday and professional tasks. We report the partial reward on the offline set from the v2026.08.08 release.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Sol\" and effortLabel \"low\"; exact datapoint: {\"model\":\"GPT-6 Sol\",\"cost_label\":\"$$0.97\",\"score\":0.439,\"cost\":0.9675,\"order\":0,\"modelLabel\":\"GPT-6 Sol\",\"effortLabel\":\"low\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Sol at low reasoning effort on OSWorld 2.0 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"low\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-sol::low and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-sol-medium-openai-osworld-2-offline",
+      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#osworld/GPT-6 Sol/medium",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 54.0,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.54
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"OSWorld 2.0 offline (v2026.08.08 release), chart dataset entry model GPT-6 Sol with effortLabel medium\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Computer use\", figure \"OSWorld 2.0, offline set\" (chart component id 6xqZKBY16kxH0Zm4jCsAaS, dotcomConfig.linkId \"osworld\"; figure caption: \"In OSWorld 2.0, AI agents attempt long-horizon computer-use workflows spanning everyday and professional tasks. We report the partial reward on the offline set from the v2026.08.08 release.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Sol\" and effortLabel \"medium\"; exact datapoint: {\"model\":\"GPT-6 Sol\",\"cost_label\":\"$$1.32\",\"score\":0.54,\"cost\":1.3169,\"order\":1,\"modelLabel\":\"GPT-6 Sol\",\"effortLabel\":\"medium\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Sol at medium reasoning effort on OSWorld 2.0 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"medium\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-sol::medium and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-sol-high-openai-osworld-2-offline",
+      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#osworld/GPT-6 Sol/high",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 58.29,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.5829
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"OSWorld 2.0 offline (v2026.08.08 release), chart dataset entry model GPT-6 Sol with effortLabel high\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Computer use\", figure \"OSWorld 2.0, offline set\" (chart component id 6xqZKBY16kxH0Zm4jCsAaS, dotcomConfig.linkId \"osworld\"; figure caption: \"In OSWorld 2.0, AI agents attempt long-horizon computer-use workflows spanning everyday and professional tasks. We report the partial reward on the offline set from the v2026.08.08 release.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Sol\" and effortLabel \"high\"; exact datapoint: {\"model\":\"GPT-6 Sol\",\"cost_label\":\"$$1.64\",\"score\":0.5829,\"cost\":1.6379,\"order\":2,\"modelLabel\":\"GPT-6 Sol\",\"effortLabel\":\"high\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Sol at high reasoning effort on OSWorld 2.0 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"high\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-sol::high and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-sol-max-openai-osworld-2-offline",
+      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#osworld/GPT-6 Sol/max",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 64.43,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.6443
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"OSWorld 2.0 offline (v2026.08.08 release), chart dataset entry model GPT-6 Sol with effortLabel max\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Computer use\", figure \"OSWorld 2.0, offline set\" (chart component id 6xqZKBY16kxH0Zm4jCsAaS, dotcomConfig.linkId \"osworld\"; figure caption: \"In OSWorld 2.0, AI agents attempt long-horizon computer-use workflows spanning everyday and professional tasks. We report the partial reward on the offline set from the v2026.08.08 release.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Sol\" and effortLabel \"max\"; exact datapoint: {\"model\":\"GPT-6 Sol\",\"cost_label\":\"$$3.25\",\"score\":0.6443,\"cost\":3.2543,\"order\":4,\"modelLabel\":\"GPT-6 Sol\",\"effortLabel\":\"max\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Sol at max reasoning effort on OSWorld 2.0 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"max\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-sol::max and never an effort alias."
+    }
+  ]
+}
