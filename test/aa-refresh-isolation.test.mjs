@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, mkdir, writeFile, readFile, rm, cp } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { tmpdir } from 'node:os';
 import { gzipSync } from 'node:zlib';
@@ -62,6 +62,12 @@ for (const rawAccepted of [true, false]) {
           return { accepted, fingerprints: accepted ? rows.map((r) => ({ id: r.id })) : [],
             errors: accepted ? [] : ['fixture rejection'], manifest: { artifact_id: artifactId } };
         } };
+      const nextRun = async (n) => {
+        options.runDir = join(dir, `run-${n}`);
+        await mkdir(join(options.runDir, 'reports'), { recursive: true });
+        await cp(join(dir, 'run/sources'), join(options.runDir, 'sources'), { recursive: true });
+        await cp(join(dir, 'run/reports/live-step-result.json'), join(options.runDir, 'reports/live-step-result.json'));
+      };
       const report = await refreshBenchmarks(options);
       assert.ok(calls.includes('protocol-aa-refused::1'));
       assert.ok(calls.includes('protocol-aa-accepted::1'), 'neighbour reviewed after refusal');
@@ -80,6 +86,7 @@ for (const rawAccepted of [true, false]) {
         // The next run's raw rows are unchanged. A repeated refusal must still
         // be reviewed and retain the original Sep10 lock, not the Sep29 default.
         calls.length = 0;
+        await nextRun(2);
         await refreshBenchmarks(options);
         assert.deepEqual(calls, ['protocol-aa-refused::1']);
         const repeated = (await read(`${root}/ingestion-lock.json`)).aa;
@@ -87,6 +94,7 @@ for (const rawAccepted of [true, false]) {
         // Only an explicit protocol success releases that older lock. Numeric
         // rows were already accepted in the first run and need no invented date.
         acceptRefused = true; calls.length = 0;
+        await nextRun(3);
         await refreshBenchmarks(options);
         assert.deepEqual(calls, ['protocol-aa-refused::1']);
         const released = (await read(`${root}/ingestion-lock.json`)).aa;

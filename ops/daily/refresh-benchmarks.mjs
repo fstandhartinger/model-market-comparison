@@ -463,6 +463,7 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   // source's, so it gets its own status. Everything else about the outcome is identical — the row
   // keeps its published value — and the console line keeps its shape for ops/daily/profile-run.mjs.
   const fail = (id, error, sink = checks, extra = {}) => { const reason = error.message ?? String(error); sink.push({ id, status: isBudgetExhausted(error) ? 'retained_budget_exhausted' : 'retained_after_failure', reason, ...extra }); console.error(`BENCHMARK RETAINED ${id}: ${reason}`); };
+  const live = (await readFile(join(runDir, 'sources', 'live-manifest.jsonl'), 'utf8').catch((error) => { if (error.code === 'ENOENT') return ''; throw error; })).trim().split('\n').filter(Boolean).map(JSON.parse);
   const captureInputs = { registry, plan, vendor };
   const stagedCapture = await loadCaptureState({ runDir, inputs: captureInputs });
   const captured = new Map();
@@ -473,7 +474,6 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   } else {
     const { urls, documentUrls } = captureTargets({ registry, plan, vendor });
     // Reuse an existing same-run primary receipt when called after live collection.
-    const live = (await readFile(join(runDir, 'sources', 'live-manifest.jsonl'), 'utf8').catch((error) => { if (error.code === 'ENOENT') return ''; throw error; })).trim().split('\n').filter(Boolean).map(JSON.parse);
     for (const receipt of live) if (receipt.status === 200 && urls.has(captureKey(receipt))) {
       // A page whose bundle hash changes every deploy is never satisfied by a
       // reused receipt of the page alone; it always re-runs the follow logic.
