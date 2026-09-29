@@ -18867,8 +18867,11 @@ stop, reached by a different road: D199 bounded the *reasons it knew about* and 
 quietly relabelled two of them.
 
 The cap cannot be the remedy. `workerMaxTokens('critic')` is already `WORKER_MAX_TOKENS_CEILING` (32,768),
-raised there in iteration 180 for exactly this failure — so a length answer cannot be retried into success,
-and re-offering the route only spends the 600 s worker timeout again.
+raised there in iteration 180 for exactly this failure — so for the packet that produced it there is no
+larger cap to ask for, and re-offering the route only spends the 600 s worker timeout again. The honest
+counter-argument is that a *shorter* packet later in the run might still have fitted; that is precisely the
+trade D199's bound already decides, and this change only puts these two reasons on the side of it they
+belong on. What the route earned before its third own answer is still collected.
 
 **Measured on the run's own `workers/unavailable-models.jsonl`** (`iter270-d254/replay-11-23-exclusions.json`):
 `z-ai/glm-5.3-flash` took one content strike at 11:29:32 ("Critic did not echo the exact frozen artifact
@@ -18942,7 +18945,7 @@ and a receipt that names the right cause. The arms need D254.1.
 
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
-| D254 | **implemented**, pending non-implementer verification | `iter270-d254/replay-11-23-exclusions.json`; `test/d254-model-answer-failures.test.mjs` (3 tests, one replaying the real record stream); `test/d199-bounded-critic-retry.test.mjs` source pin updated | `workerFailureClass` in `ops/daily/gauntlet.mjs`. The 2026-09-29 05:17 run is its first live exercise — it publishes from a staging clone of `origin/main`, so this push is in it. |
+| D254 | **implemented**, pending non-implementer verification | `iter270-d254/replay-11-23-exclusions.json`; `iter270-d254/live-before/verification.json` **4/6, 2 FAIL** at the defect; `test/d254-model-answer-failures.test.mjs` (3 tests, one replaying the real record stream); `test/d199-bounded-critic-retry.test.mjs` source pin updated | `workerFailureClass` in `ops/daily/gauntlet.mjs`. Live acceptance is one line: `node ops/ux-2026-09-12/bin/verify-d254-live.mjs [runDir] [outDir]` (no runDir = newest run with an exclusion log; clear the out dir first). The 2026-09-29 05:17 run is its first live exercise — the daily publishes from a staging clone of `origin/main`, and this push deployed at `29cdea5f`, so it is in it. |
 | D254.1 | **open — measured, remedy needs an owner decision** | `iter270-d254/pool-census.json` | Two eligible families. Three candidate third families, each one attribute short; all three remedies move a ceiling, a whitelist or a quality floor. Second standing question for Florian, beside D253.2. |
 | D252 | verified, **diagnosis corrected** | `iter270-d254/replay-11-23-exclusions.json` vs the comment at `worker-policy.mjs` | The counting stands; the recorded mechanism (a hard exclusion) did not happen. The comment now says what the receipt shows. |
 | `aa-analystagent::snapshot-2026-09-10` (iter 268 handoff #4) | **closed as not a source failure** | `runs/2026-09-28T11-23-07-137Z-342490/reports/refresh-benchmarks.log`; the census above | Its round 1 was a producer timeout and rounds 2–3 never reached a model. 17 days stale because it keeps landing on this, not because the board moved. |
@@ -18955,11 +18958,18 @@ Logs in `iter270-d254/`.
 
 ### What the next iteration should know
 
-1. **The 2026-09-29 05:17 run is D254's first live exercise.** The unfakeable check is in that run's
-   `workers/unavailable-models.jsonl`: any `Incomplete completion` or `Empty completion` record must now
-   carry `"failure": "content"`. If a route collects three of them, it must stop appearing in later
-   receipts' `hard_excluded_models`. A run with no length answers proves nothing either way — say so rather
-   than reading it as a pass.
+1. **The 2026-09-29 05:17 run is D254's first live exercise, and the check is one line.**
+   `node ops/ux-2026-09-12/bin/verify-d254-live.mjs` (no argument takes the newest run with an exclusion
+   log; clear the out dir first). It reads that run's `workers/unavailable-models.jsonl` and its worker
+   receipts and asserts four things: every `Incomplete completion` / `Empty completion` record carries
+   `"failure": "content"`; no transport reason was filed as the model's answer; a route with three own
+   answers is named in every later receipt's `hard_excluded_models` for that role; and the hard-exclusion
+   set the run wrote equals the one its own reasons imply. **A run that recorded no such answer is reported
+   `INCONCLUSIVE`, not PASS** — do not read it as acceptance.
+   It is falsifiable, not decorative: it is red on both runs that exercised the defect
+   (2026-09-28 11:23 and 05:17, 4/6 with 2 FAIL each — `iter270-d254/live-before/`) and 5/6-with-an-
+   INCONCLUSIVE on the three that never hit it. Two of five recent runs hit it, so this was the daily's
+   routine behaviour, not one bad afternoon.
 2. **D254.1 is the one that costs days.** Check `free_routes_offered` in the run's worker receipts before
    blaming a board: if it is `[]` across a whole run, the pool was two families and the retained arms are a
    capacity story, not a source story.

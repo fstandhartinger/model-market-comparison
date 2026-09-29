@@ -12,7 +12,8 @@
 // (length)` answers at 11:38, 11:46 and 11:53, each paying the 600 s worker timeout. Under D199's bound
 // those are four own answers and the route is out after the third; filed as transport it was re-offered
 // twice more and the run spent ~20 further minutes on calls that could not succeed. The critic cap is
-// already at WORKER_MAX_TOKENS_CEILING, so a length failure cannot be retried into success.
+// already at WORKER_MAX_TOKENS_CEILING, so for the packet that produced it there is no larger cap to ask
+// for; a shorter packet later in the run might still have fitted, which is the trade D199's bound decides.
 //
 // A timeout, a dropped connection or a dead process is still not the model's answer and still never hardens.
 import test from 'node:test';

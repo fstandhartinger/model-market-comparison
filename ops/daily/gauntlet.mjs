@@ -166,9 +166,12 @@ export const HARD_EXCLUSION_STRIKES = 3;
 // reports comes back through one `catch`, so every one of them was filed `transport` — including the two
 // messages `validateCompletion` raises about the answer the model actually returned. `Incomplete
 // completion (length)` is the model writing past the caller's cap and `Empty completion` is it writing
-// nothing: both are its own answer, and the critic cap is already at WORKER_MAX_TOKENS_CEILING, so
-// neither can be retried into success. Filed as transport they never hardened, and the critic last-resort
+// nothing: both are its own answer. Filed as transport they never hardened, and the critic last-resort
 // retry re-offered the route forever — which is the unbounded burn D199 set out to stop.
+// A length answer cannot be retried into success *for the packet that produced it* — the critic cap is
+// already WORKER_MAX_TOKENS_CEILING, so there is no larger one to ask for. A shorter packet later in the
+// run might still have fitted, and that is exactly the trade D199's bound already decides: three own
+// answers in one run is enough, and what the route earned before the third is still collected.
 // Measured on the 2026-09-28 11:23 run: `z-ai/glm-5.3-flash` took one content strike at 11:29 ("Critic
 // did not echo the exact frozen artifact hash") and then three `Incomplete completion (length)` answers
 // at 11:38, 11:46 and 11:53, each costing the 600 s worker timeout. Under D199's bound those are four
