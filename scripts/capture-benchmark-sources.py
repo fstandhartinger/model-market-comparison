@@ -83,10 +83,13 @@ while queue:
      time.sleep(max(0,delay-(time.monotonic()-last.get(host,0))))
      s=urllib.request.urlopen(urllib.request.Request(u,headers={'User-Agent':UA}),timeout=45);sb=s.read(12000000);last[host]=time.monotonic()
      if len(sb)>=12000000:raise RuntimeError('Declared script exceeds 12MB bound: '+u)
+     if any(x in sb[:100000].lower() for x in [b'<title>just a moment',b'cf-chl-',b'g-recaptcha',b'hcaptcha']):blocked.add(host);raise RuntimeError('Challenge detected in declared script; stopped host')
      if marker in sb.decode('utf-8','replace'):hits.append(u)
     if len(hits)!=1:raise RuntimeError('Expected exactly one declared script containing the marker, found '+str(len(hits)))
     queue.append({'url':hits[0],'discovered_from':url,'follow_marker':marker})
-   except Exception as e:r['follow_error']=str(e)
+   except Exception as e:
+    if isinstance(e,urllib.error.HTTPError) and e.code in [403,429]:blocked.add(host)
+    r['follow_error']=str(e)
    r.update(follow_marker=marker,declared_scripts=len(declared),marker_matches=hits)
  except Exception as e:
   if isinstance(e,urllib.error.HTTPError) and e.code in [403,429]:blocked.add(host)

@@ -5,45 +5,50 @@
 // bundles. We fetch the page, then probe its chunk list for the bundle that carries
 // the task list, and store both response bodies through captureLiveSource so the
 // manifest records exactly what was received.
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import { readFile, writeFile, mkdir, mkdtemp, rm } from 'node:fs/promises';
+import { resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
 import { REALS_WE_ACCESS_URL } from '../lib/realswe.mjs';
 import { writeJSONAtomic } from '../lib/snapshot.mjs';
 import { captureLiveSource } from '../lib/live-source.mjs';
+import { REALSWE_CAPTURE_TARGET } from '../ops/daily/realswe-check.mjs';
 
-const USER_AGENT = 'BenchmarkHeaven/1.0 (+https://github.com/fstandhartinger/model-market-comparison)';
-const CHUNK_MARKER = 'entitlement-overage-lines';
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
+const exec = promisify(execFile);
 
-async function get(url, fetcher) {
-  const response = await fetcher(url, { headers: { 'User-Agent': USER_AGENT }, signal: AbortSignal.timeout(60_000) });
-  if (!response.ok) throw new Error(`Real-SWE fetch HTTP ${response.status} for ${url}`);
-  return response.text();
-}
-
-export async function collectRealSwe({ directory, fetcher = fetch, page, chunk, chunkUrl } = {}) {
+export async function collectRealSwe({ directory, page, chunk, chunkUrl } = {}) {
   if (!directory) throw new Error('Real-SWE collector needs an evidence directory');
-  const html = page ?? await get(REALS_WE_ACCESS_URL, fetcher);
-  const pageReceipt = await captureLiveSource(REALS_WE_ACCESS_URL, html, { directory });
-
-  let dataset = chunk;
-  let datasetUrl = chunkUrl ?? null;
-  if (dataset === undefined) {
-    const paths = [...new Set([...html.matchAll(/(?:src|href)="(\/_next\/static\/chunks\/[^"]+?\.js(?:\?[^"]*)?)"/g)].map((m) => m[1]))];
-    if (!paths.length) throw new Error('Real-SWE: page references no Next.js chunks');
-    for (const path of paths) {
-      const url = new URL(path, REALS_WE_ACCESS_URL).href;
-      const body = await get(url, fetcher);
-      if (body.includes(CHUNK_MARKER)) { dataset = body; datasetUrl = url; break; }
-    }
-    if (dataset === undefined) throw new Error('Real-SWE: no chunk carried the dataset marker');
+  let pageReceipt, chunkReceipt, datasetUrl;
+  if (page !== undefined || chunk !== undefined) {
+    if (page === undefined || chunk === undefined) throw new Error('Offline Real-SWE capture requires both page and chunk');
+    pageReceipt = await captureLiveSource(REALS_WE_ACCESS_URL, page, { directory });
+    datasetUrl = chunkUrl ?? `${REALS_WE_ACCESS_URL}#inline-dataset`;
+    chunkReceipt = await captureLiveSource(datasetUrl, chunk, { directory });
+  } else {
+    // All network access uses the same bounded robots/rate/challenge policy as
+    // the daily pipeline; the legacy CLI must not provide an unguarded path.
+    await mkdir(directory, { recursive: true });
+    const temp = await mkdtemp(join(directory, '.capture-input-'));
+    try {
+      const urls = join(temp, 'urls.json');
+      await writeFile(urls, JSON.stringify([REALSWE_CAPTURE_TARGET]));
+      await exec('python3', [fileURLToPath(new URL('./capture-benchmark-sources.py', import.meta.url)), urls, directory], { timeout: 1_800_000, maxBuffer: 2_000_000 });
+      const manifest = JSON.parse(await readFile(join(directory, 'manifest.json'), 'utf8'));
+      const captured = manifest.find((r) => r.url === REALSWE_CAPTURE_TARGET.url);
+      if (captured?.status !== 200 || captured.follow_error || captured.marker_matches?.length !== 1) throw new Error(`Real-SWE discovery failed: ${captured?.follow_error ?? captured?.reason ?? 'no unique data chunk'}`);
+      const data = manifest.find((r) => r.status === 200 && r.url === captured.marker_matches[0]
+        && r.discovered_from === captured.url && r.follow_marker === REALSWE_CAPTURE_TARGET.follow_script_marker);
+      if (!data) throw new Error('Real-SWE discovered data chunk capture failed');
+      pageReceipt = { ...captured, fetched_at: captured.retrieved_at };
+      chunkReceipt = data; datasetUrl = data.url;
+    } finally { await rm(temp, { recursive: true, force: true }); }
   }
-  const chunkReceipt = await captureLiveSource(datasetUrl ?? `${REALS_WE_ACCESS_URL}#inline-dataset`, dataset, { directory });
 
   const receipt = {
-    url: REALS_WE_ACCESS_URL,
+    url: pageReceipt.url ?? REALS_WE_ACCESS_URL,
     retrieved_at: pageReceipt.fetched_at,
     source_file: pageReceipt.file,
     source_sha256: pageReceipt.sha256,
