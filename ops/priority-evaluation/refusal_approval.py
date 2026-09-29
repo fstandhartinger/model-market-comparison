@@ -95,6 +95,33 @@ def apply_callbacks(state, rows, now):
         state.update(decision="expired", decided_at=now)
 
 
+def close_durable_reply_action(state, actions=None):
+    """Stop the generic free-text dispatcher after this card reaches a decision."""
+    try:
+        message_id = state["message_id"]
+        if type(message_id) is not int or message_id <= 0:
+            return False
+        if actions is None:
+            helper = HOME / "bin" / "notify_reply_actions.py"
+            spec = importlib.util.spec_from_file_location("fastlane_notify_reply_actions", helper)
+            if spec is None or spec.loader is None:
+                return False
+            actions = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(actions)
+
+        action = actions.get_action(message_id)
+        if (not action or action["channel"] != "telegram"
+                or Path(action["job_dir"]).resolve()
+                != (HOME / "jobs" / "fastlane-autopilot-20260929").resolve()):
+            return False
+        if action["status"] != "resolved":
+            actions.update(message_id, status="resolved", last_error=None)
+        closed = actions.get_action(message_id)
+        return bool(closed and closed["status"] == "resolved")
+    except Exception:
+        return False
+
+
 def telegram_config():
     # Reuse the notification owner's config loader, keeping credentials in memory.
     loader = importlib.machinery.SourceFileLoader("fastlane_notify_config", str(HOME / "bin/notify"))
@@ -245,6 +272,13 @@ def advance(row, to, subject, body, root, effects, now):
             state["buttons_attached"] = True
             atomic(path, state)
         apply_callbacks(state, callback_rows(state["message_id"], state["chat_id"]), now)
+        if state.get("decision") in ("send", "keep", "expired") and not state.get("reply_action_resolved"):
+            if not close_durable_reply_action(state):
+                state["reply_action_resolution_hold"] = "durable reply action could not be closed"
+                atomic(path, state)
+                return "pending"
+            state["reply_action_resolved"] = True
+            state["reply_action_resolved_at"] = int(now)
         atomic(path, state)
         decision = state.get("decision")
         if decision in ("keep", "expired"):

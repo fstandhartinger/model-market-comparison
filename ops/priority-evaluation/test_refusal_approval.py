@@ -46,6 +46,7 @@ class ApprovalTests(unittest.TestCase):
     def run_advance(self, callbacks=(), **kwargs):
         with patch.object(approval, "callback_rows", return_value=callbacks), \
              patch.object(approval, "attach"), patch.object(approval, "notify_card") as notify, \
+             patch.object(approval, "close_durable_reply_action", return_value=True), \
              patch.object(approval, "resolve_ask", return_value=True):
             result = approval.advance(kwargs.get("row", ROW), TO, SUBJECT, kwargs.get("body", BODY),
                                       self.root, self.fx, NOW)
@@ -118,6 +119,33 @@ class ApprovalTests(unittest.TestCase):
         self.save()
         self.assertEqual(self.run_advance([click(data="random_keep")])[0], "held")
         self.fx.mail.assert_not_called()
+
+    def test_exact_send_callback_closes_durable_reply_action_before_mail(self):
+        self.save()
+        loader = importlib.machinery.SourceFileLoader(
+            "notify_reply_actions", str(Path.home() / "bin/notify_reply_actions.py"))
+        spec = importlib.util.spec_from_loader(loader.name, loader)
+        registry = importlib.util.module_from_spec(spec)
+        loader.exec_module(registry)
+        with patch.object(registry, "DB_PATH", self.root / "reply-actions.sqlite3"):
+            registry.register_telegram(
+                123, "refusal card", "/home/flori/jobs/fastlane-autopilot-20260929",
+                str(self.root / "reply.json"), "codex:allout-bh-pipeline-20260929", minutes=720)
+            self.assertEqual(len(registry.waiting_telegram()), 1)
+            def send_only_after_reply_action_is_closed(*args):
+                self.assertEqual(registry.waiting_telegram(), [])
+                return True, "ok"
+            self.fx.mail.side_effect = send_only_after_reply_action_is_closed
+            close_action = approval.close_durable_reply_action
+            with patch.object(approval, "close_durable_reply_action",
+                              side_effect=lambda state: close_action(state, registry)), \
+                 patch.object(approval, "callback_rows", return_value=[click()]), \
+                 patch.object(approval, "attach"), \
+                 patch.object(approval, "resolve_ask", return_value=True):
+                result = approval.advance(ROW, TO, SUBJECT, BODY, self.root, self.fx, NOW)
+            self.assertEqual(result, "sent")
+            self.assertEqual(registry.waiting_telegram(), [])
+        self.fx.mail.assert_called_once_with(TO, SUBJECT, BODY)
 
     def test_uncertain_notification_is_not_resent(self):
         self.save(notification="attempted", message_id=None)
