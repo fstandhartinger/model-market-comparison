@@ -217,7 +217,7 @@ function AxesView({ a, rows, view }: { a: JevV15Artifact; rows: JevV15System[]; 
               </td>)}
               <td className="whitespace-nowrap p-2 text-right tabular-nums" title={row.speed.adjustment ? `Adjustment: ${row.speed.adjustment}; raw p50 ${secs(row.speed.p50_s_raw)}, p95 ${secs(row.speed.p95_s_raw)}` : undefined}>{secs(row.speed.p50_s_adjusted)} / {secs(row.speed.p95_s_adjusted)}</td>
               <td className="whitespace-nowrap p-2 text-right tabular-nums">{costCell(row)}</td>
-              <td className="bh-muted whitespace-nowrap p-2 text-xs" title={row.endpoint_condition ?? undefined}>{row.endpoint_kind === 'gpu' ? `GPU pod${row.gpu ? ` (${row.gpu})` : ''}` : row.endpoint_kind === 'cpu' ? 'CPU container' : row.endpoint_kind === 'demo' ? 'author demo endpoint' : row.endpoint_kind === 'api' ? 'hosted API' : '—'}</td>
+              <td className="bh-muted whitespace-nowrap p-2 text-xs" title={row.endpoint_condition ?? undefined}>{row.endpoint_kind === 'gpu' ? `GPU pod${row.gpu ? ` (${row.gpu})` : ''}` : row.endpoint_kind === 'cpu' ? (row.addendum?.id === 'A4' ? 'CPU (shared host)' : 'CPU container') : row.endpoint_kind === 'demo' ? 'author demo endpoint' : row.endpoint_kind === 'api' ? 'hosted API' : '—'}</td>
             </>}
           </tr>;
         })}</tbody>
