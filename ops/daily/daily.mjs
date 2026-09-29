@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 // A daily refresh is a transaction: only a fully checked staging commit can publish.
-import { execFile } from 'node:child_process';
-import { promisify, isDeepStrictEqual } from 'node:util';
+import { isDeepStrictEqual } from 'node:util';
 import { cp, mkdir, readFile, writeFile, appendFile, stat, symlink, rm, readdir } from 'node:fs/promises';
 import { dirname, join, resolve, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -17,7 +16,10 @@ import { staleSources, updateCollectorHealth } from './source-health.mjs';
 import { profileRunDir } from './profile-run.mjs';
 import { dailyConcurrency } from './concurrency.mjs';
 import { BENCHMARK_STEP_TIMEOUT_MS } from './step-budget.mjs';
-const exec = promisify(execFile);
+// D249.2: steps run through `runStep`, not `promisify(execFile)` — a timeout has to signal the
+// child's process group, or the step's workers outlive the kill and keep writing into a run
+// directory the next stage is already reading. See ops/daily/step-process.mjs.
+import { runStep } from './step-process.mjs';
 const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 const hash = (value) => createHash('sha256').update(value).digest('hex');
 const readJSON = async (path) => JSON.parse(await readFile(path, 'utf8'));
@@ -95,7 +97,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
   const command = async (name, file, args, cwd = work, timeout = 600_000, env = environment) => {
     const begin = Date.now();
     try {
-      const { stdout, stderr } = await exec(file, args, { cwd, env, timeout, killSignal: 'SIGTERM', maxBuffer: 32_000_000 });
+      const { stdout, stderr } = await runStep(file, args, { cwd, env, timeout, killSignal: 'SIGTERM', maxBuffer: 32_000_000 });
       await writeFile(join(reports, `${name.replace(/[^a-z0-9-]/gi, '-')}.log`), redact(stdout + stderr));
       report.steps.push({ name, ok: true, duration_ms: Date.now() - begin, started_at: new Date(begin).toISOString(), finished_at: new Date().toISOString() });
       console.log(`OK ${name}`);

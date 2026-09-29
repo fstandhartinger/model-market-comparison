@@ -9,6 +9,11 @@ import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { promisify } from 'node:util';
+// D249.2: the stage runs through `runStep`, whose timeout signals the child's process group. A gate
+// stage is the heaviest child in the pipeline — `npm test`, `next build`, `build-dataset` — and
+// killing only the `node gate.mjs` wrapper left those writing into the staging checkout whose commit
+// the verdict is about. `exec` stays for the `git show` below: that one reads bytes, not a stage.
+import { runStep } from './step-process.mjs';
 
 const exec = promisify(execFile);
 export const GATE_TIMEOUT_MS = 7 * 60_000;
@@ -27,7 +32,7 @@ export function gateRequirement({ home, env = process.env }) {
 export async function runGateStage(stage, { home, work, env = process.env, timeoutMs = GATE_TIMEOUT_MS }) {
   const begin = Date.now();
   try {
-    const { stderr } = await exec(process.execPath, [gatePath(home), stage], {
+    const { stderr } = await runStep(process.execPath, [gatePath(home), stage], {
       cwd: work, timeout: timeoutMs, killSignal: 'SIGTERM', maxBuffer: 32_000_000,
       env: { ...env, BH_GATE_REQUIRED: '1', BH_DAILY_HOME: home, BH_GATE_STAGE_BUDGET_MS: String(Math.min(GATE_STAGE_BUDGET_MS, timeoutMs - 30_000)) },
     });
