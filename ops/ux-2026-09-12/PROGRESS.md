@@ -18847,3 +18847,126 @@ scripts/validate-benchmark-registry.mjs` **293 entries**. Logs in `iter269-f223/
    05:17 run that is the acceptance for D251.1/.3/.4 and D252.
 
 **`ALL-ACCEPTED` is not appended.**
+
+## Iteration 270 (claude-opus, 2026-09-29 00:00–01:00 UTC) — the answer a model gives when it runs past the cap, and a reviewer pool two families deep
+
+**Scope.** The 2026-09-28 11:23 catch-up run retained **28 arms**, 24 of them with *every* round reading
+`worker: No supported viable worker model found` — D252 made that visible last iteration but nothing had
+replayed *why*. Handoff item 4 from iteration 268 (`aa-analystagent::snapshot-2026-09-10`, stale 17 days,
+"may not be a source problem at all — nobody has replayed it") is the same run, and it is the entry point.
+It is not a source problem. Evidence in `iter270-d254/`.
+
+### D254 — `Incomplete completion (length)` is the model's answer, and it was filed as the transport's
+
+Everything `worker.sh` reports comes back to `defaultRunner` through one `catch`, which filed all of it
+`failure: 'transport'`. Two of those messages are raised by `validateCompletion` about the answer the model
+actually returned: `Incomplete completion (…)` — it wrote past the caller's cap — and `Empty completion` —
+it wrote nothing. `hardExcludedWorkerModels` counts only `content`, so neither ever hardened, and the
+critic's last-resort retry re-offered the route indefinitely. That is the unbounded burn D199 set out to
+stop, reached by a different road: D199 bounded the *reasons it knew about* and the runner's own catch
+quietly relabelled two of them.
+
+The cap cannot be the remedy. `workerMaxTokens('critic')` is already `WORKER_MAX_TOKENS_CEILING` (32,768),
+raised there in iteration 180 for exactly this failure — so a length answer cannot be retried into success,
+and re-offering the route only spends the 600 s worker timeout again.
+
+**Measured on the run's own `workers/unavailable-models.jsonl`** (`iter270-d254/replay-11-23-exclusions.json`):
+`z-ai/glm-5.3-flash` took one content strike at 11:29:32 ("Critic did not echo the exact frozen artifact
+hash") and then three `Incomplete completion (length)` answers at 11:38:02, 11:46:13 and 11:53:42. As
+written, `hardExcludedWorkerModels(records, {role:'critic'})` is `[]` — nothing hardened. Classified as the
+code now classifies it, the route is out **after 11:46:13**, its third own answer; the 11:53:42 and
+12:04:59 re-offers are never made and the run keeps ~20 minutes it spent on calls that could not succeed.
+
+`gauntlet.mjs` now exports `MODEL_ANSWER_FAILURE` and `workerFailureClass(reason)`, and the runner's writer
+asks it instead of hardcoding `'transport'`. A timeout, a dropped connection, a dead process, an
+account-level HTTP status and a provider that routed elsewhere are all still *not* the model's answer and
+still never harden. Nothing else reads the field — `hardExcludedWorkerModels` is its only consumer
+(`grep '\.failure\b'`), so the change is confined to the retry's licence.
+
+### The diagnosis D252 recorded was wrong about the mechanism, and the comment is corrected
+
+`worker-policy.mjs` said three `Incomplete completion (length)` answers **hard-excluded** glm. They did not:
+they were filed `transport`, which that bound does not count, so glm carried exactly one content strike and
+was only ever *soft*-excluded — and soft exclusion is what the critic retry exists to relax. The run's review
+actually ended at **12:16:23**, when a single 600 s timeout soft-excluded the last producer as well, and the
+producer path — unlike the critic's — has no last-resort retry at all. A future engine reading that comment
+would have gone after D199's three-strike bound, which was not the lever. The comment now states what the
+receipt shows and points here.
+
+### D254.1 — the pool is two vendor families deep, and no third one can be admitted without Florian
+
+This is the finding the retry policy cannot fix, and it is why the 24 arms would have failed even with D254
+in place: with a different-family critic rule, **two families mean any single route loss ends all review for
+the rest of the run.** The census is `iter270-d254/pool-census.json`, taken against the live OpenRouter
+catalog and today's dataset:
+
+| Route | Family | $/M in·out | AA | Verdict |
+|---|---|---|---|---|
+| `deepseek/deepseek-v4-flash-0731` | deepseek | 0.018 · 0.32 | 34.3 | **eligible** (0.3 above the floor) |
+| `z-ai/glm-5.3-flash` | z-ai | 0.15 · 0.5 | 41.8 | **eligible** |
+| `deepseek/deepseek-v4.1-flash` | deepseek | 0.3 · 1.2 | 24.7 | below the 34 floor — and the same family anyway |
+| `nex-agi/nex-n2.5-pro` | nex-agi | 0.075 · 0.25 | — | on the whitelist, cheap, **AA has not measured it** (only Nex-N2-Pro, 28.2) |
+| `moonshotai/kimi-k3` (paid) | moonshotai | 3 · 15 | 34.5 | over the `BH_WORKER_MAX_PRICE_PER_1M=4` ceiling |
+| `z-ai/glm-5.3-flash-0731` | — | — | — | not in the OpenRouter catalog |
+| `chutes/Qwen/Qwen3.8-27B-TEE` (free router) | qwen | free | 33.7 | **0.3 below the floor**, and not on the whitelist |
+| `chutes/moonshotai/Kimi-K3-TEE` (free router) | moonshotai | free | 43.6 | the only third family — present **only while Chutes utilization < 50 %** |
+
+So the third family is the free Chutes route, and it is conditional. On 2026-09-28 it was absent for the
+whole 11:23 run: `free_routes_offered: []` in **all 20** worker receipts. It is usable again now (34.9 %
+against the 50 % ceiling, `iter270-d254/pool-census.json`), which is why the 05:17 runs still work and the
+11:23 one did not — the ceiling is a business-hours ceiling.
+
+**Three remedies exist and all three are Florian's, not an agent's** (his cost ceilings and whitelist are
+"policy, not suggestions", and no number may be invented to clear a quality floor):
+
+1. Raise `BH_WORKER_MAX_PRICE_PER_1M` **for the critic role only**, enough to admit `moonshotai/kimi-k3`
+   (AA 34.5, $3/$15 per M). It is already on his whitelist; only the ceiling keeps it out. Cheapest to
+   reason about, most expensive per call, and used only when the free route is gone.
+2. Add `Qwen/Qwen3.8-27B-TEE` to the whitelist. It is free, healthy and already probed — but AA measures
+   its best variant at **33.7**, and `candidateList` refuses a minimum below 34 by construction. Admitting
+   it means moving a quality floor for one route, which is a worse trade than (1).
+3. Wait for AA to measure Nex-N2.5-Pro. `nex-agi/nex-n2.5-pro` appeared in the OpenRouter catalog between
+   11:26 and now, at $0.075/$0.25 per M, and is already whitelisted — the only thing missing is a score we
+   are not allowed to invent.
+
+Filed beside D253.2 as the second standing question for Florian. Until one is answered, a Chutes-busy
+window plus one route loss is still a run that reviews nothing — correctly fail-closed per arm, correctly
+reported since D252, and still a day without review.
+
+### What this does *not* claim
+
+D254 does not save those 24 arms. Replayed with the new classification the 11:23 run still loses them: glm
+is out (correctly, two calls earlier), deepseek is the only family left, and a critic must differ from the
+producer. What D254 buys is the ~20 minutes of doomed calls, a bound that matches the rule D199 wrote down,
+and a receipt that names the right cause. The arms need D254.1.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D254 | **implemented**, pending non-implementer verification | `iter270-d254/replay-11-23-exclusions.json`; `test/d254-model-answer-failures.test.mjs` (3 tests, one replaying the real record stream); `test/d199-bounded-critic-retry.test.mjs` source pin updated | `workerFailureClass` in `ops/daily/gauntlet.mjs`. The 2026-09-29 05:17 run is its first live exercise — it publishes from a staging clone of `origin/main`, so this push is in it. |
+| D254.1 | **open — measured, remedy needs an owner decision** | `iter270-d254/pool-census.json` | Two eligible families. Three candidate third families, each one attribute short; all three remedies move a ceiling, a whitelist or a quality floor. Second standing question for Florian, beside D253.2. |
+| D252 | verified, **diagnosis corrected** | `iter270-d254/replay-11-23-exclusions.json` vs the comment at `worker-policy.mjs` | The counting stands; the recorded mechanism (a hard exclusion) did not happen. The comment now says what the receipt shows. |
+| `aa-analystagent::snapshot-2026-09-10` (iter 268 handoff #4) | **closed as not a source failure** | `runs/2026-09-28T11-23-07-137Z-342490/reports/refresh-benchmarks.log`; the census above | Its round 1 was a producer timeout and rounds 2–3 never reached a model. 17 days stale because it keeps landing on this, not because the board moved. |
+
+**Gates at this commit, run on the committed tree, sequentially, unpiped:** `node scripts/build-dataset.mjs`
+**868 / 673 / 94 / 3,118** (only `generated_at`/`collected_at` moved; restored); `CI=true npm test`
+**1,644 tests, 1,643 pass, 0 fail, 1 skip**, exit 0; `npx tsc --noEmit -p .` exit 0; `node
+scripts/validate-benchmark-registry.mjs` **293 entries, 29 AA field mappings, 240 verified evidence files**.
+Logs in `iter270-d254/`.
+
+### What the next iteration should know
+
+1. **The 2026-09-29 05:17 run is D254's first live exercise.** The unfakeable check is in that run's
+   `workers/unavailable-models.jsonl`: any `Incomplete completion` or `Empty completion` record must now
+   carry `"failure": "content"`. If a route collects three of them, it must stop appearing in later
+   receipts' `hard_excluded_models`. A run with no length answers proves nothing either way — say so rather
+   than reading it as a pass.
+2. **D254.1 is the one that costs days.** Check `free_routes_offered` in the run's worker receipts before
+   blaming a board: if it is `[]` across a whole run, the pool was two families and the retained arms are a
+   capacity story, not a source story.
+3. **F-223, F-224 and F-225 (Fable pass 42) are still `implemented` and need a non-implementer engine** —
+   iteration 269 was claude-opus, so this iteration could not verify them either.
+   `bin/verify-fable-pass42-directed.mjs`, out dir cleared first.
+4. **Untouched and still open, unchanged:** D249.2 / D249.4, D253.2 (`BENCHMAXX_MIN_COMPARISONS = 6`),
+   R9.1's two arms under the written-permission hold, and the Coolify host alias (patched, not fixed).
+
+**`ALL-ACCEPTED` is not appended.**
