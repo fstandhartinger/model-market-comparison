@@ -154,14 +154,52 @@ if [ "$RECOVER" = 1 ]; then
   exit $?
 fi
 
-last_role=$(tail -1 "$STATE/history.log" 2>/dev/null | awk '{print $2}')
-works_since_review=$(awk '$2 == "review" { n=0; next } $2 == "work" { n++ } END { print n+0 }' "$STATE/history.log" 2>/dev/null)
-works_since_design=$(awk '$2 == "design" { n=0; next } $2 == "work" { n++ } END { print n+0 }' "$STATE/history.log" 2>/dev/null)
-impl_engine=$(awk '$2 == "work" { e=$3 } END { print e }' "$STATE/history.log" 2>/dev/null)
+mapfile -t history_metrics < <(python3 - "$STATE/history.log" <<'PY_HISTORY'
+import sys
+completed = []
+try:
+    lines = open(sys.argv[1], errors="replace")
+except OSError:
+    lines = []
+seen = set()
+for line in lines:
+    fields = line.split()
+    # Started/failed/no-change rows never advance cadence. Count one successful unit only
+    # after its reviewable PR has opened.
+    if len(fields) >= 4 and fields[2] == "completed-pr" and fields[1] in ("work", "review", "design"):
+        job = next((field.split("=", 1)[1] for field in fields[4:] if field.startswith("job=")), fields[0])
+        if job in seen:
+            continue
+        seen.add(job)
+        actual = next((field.split("=", 1)[1] for field in fields[4:] if field.startswith("actual=")), fields[3])
+        completed.append((fields[1], actual))
+last_role = completed[-1][0] if completed else ""
+since_review = next((i for i in range(len(completed) - 1, -1, -1) if completed[i][0] == "review"), -1)
+since_design = next((i for i in range(len(completed) - 1, -1, -1) if completed[i][0] == "design"), -1)
+works_review = sum(1 for role, _ in completed[since_review + 1:] if role == "work")
+works_design = sum(1 for role, _ in completed[since_design + 1:] if role == "work")
+impl_engine = next((engine for role, engine in reversed(completed) if role == "work"), "")
+family = impl_engine if impl_engine in ("claude", "codex", "devin") else ""
+if not family and impl_engine.startswith("claude-"):
+    family = "claude"
+elif not family and impl_engine.startswith("codex-"):
+    family = "codex"
+elif not family and impl_engine.startswith("devin-"):
+    family = "devin"
+print(last_role)
+print(works_review)
+print(works_design)
+print(family)
+PY_HISTORY
+)
+last_role=${history_metrics[0]:-}
+works_since_review=${history_metrics[1]:-0}
+works_since_design=${history_metrics[2]:-0}
+impl_engine=${history_metrics[3]:-}
 
 role=work
-if grep -q 'CLAIM-ALL-DONE' "$WS/PROGRESS.md" 2>/dev/null && [ "$last_role" != review ]; then
-  role=review
+if [ "$(cat "$STATE/next-role" 2>/dev/null || true)" = design ]; then
+  role=design
 elif [ "$works_since_review" -ge 3 ]; then
   role=review
 elif [ "$works_since_design" -ge 6 ] && [ "$last_role" != design ]; then

@@ -62,8 +62,7 @@ case "$STATE/" in /opt/*) echo "iterate: state must stay outside /opt" >&2; exit
 case "$ENGINE" in
   claude-opus-medium) QENGINE=claude; if [ "$ROLE" = work ]; then QKIND=work; else QKIND=judgement; fi ;;
   codex-luna-xhigh) QENGINE=codex ;;
-  devin-opus-medium) QENGINE=devin; QKIND=judgement; [ "$ROLE" != work ] || { echo "iterate: Devin Opus is judgement-only" >&2; exit 64; } ;;
-  devin-sonnet-high) QENGINE=devin; QKIND=work; [ "$ROLE" = work ] || { echo "iterate: Devin Sonnet is a work engine" >&2; exit 64; } ;;
+  devin-sonnet-high) QENGINE=devin; if [ "$ROLE" = work ]; then QKIND=work; else QKIND=judgement; fi ;;
   opencode-free) QENGINE=free; QKIND=work ;;
   *) echo "iterate: unsupported engine $ENGINE" >&2; exit 64 ;;
 esac
@@ -139,7 +138,7 @@ Branch: $BRANCH
 Keep the complete /jev-models page structure required by /home/flori/AGENTS.md: capability bar chart; synced capability-vs-speed and capability-vs-cost charts with 3D toggle; composite score chart; direct comparison; full table; method notes, presets, What-If and revision history. Keep wrappers and subsidised entries in a separately labelled section below rankings.
 
 Role instructions:
-- work: choose one small, well-specified open requirement and implement it. If the only next item requires a product/design/data decision, stop with no edits and explain that in OUTPUT.md. When using free OpenCode, work only on the first explicit MECHANICAL-OPEN line in ops/ux-2026-09-12/MECHANICAL-QUEUE.md; if none exists, make no edits. Do not make product, design, benchmark, security or publication decisions. Mark a completed queue line MECHANICAL-DONE with a concise result.
+- work: choose one small, well-specified open requirement and implement it. If no feasible in-scope item is available, stop with no edits and explain that in OUTPUT.md. Include a final Deferred items: section with only exact open IDs you could not address and a concrete scope blocker for each; do not mark them complete. When using free OpenCode, work only on the first explicit MECHANICAL-OPEN line in ops/ux-2026-09-12/MECHANICAL-QUEUE.md; if none exists, make no edits. Do not make product, design, benchmark, security or publication decisions. Mark a completed queue line MECHANICAL-DONE with a concise result.
 - design: make concise, actionable changes to DESIGN-DIRECTIVES.md based on the written requirements and current evidence. Do not write factual or policy claims without provenance.
 - review: perform quality assurance of our own product. Inspect recent relevant changes against the requirements and record concrete findings in a dated REVIEW file. Mark nothing verified without evidence from an engine different from the implementer and a live deployed check.
 - Do not set an item to implemented until its code is merged and deployed. Do not set verified without independent live verification.
@@ -154,6 +153,16 @@ Evidence goes to $RUN_DIR/evidence. $GIT_STATE_NOTE
 
 The worktree starts from origin/main at $BASE. There are no local commits to preserve.
 EOF_PROMPT
+if [ -s "$STATE/deferred-items.log" ]; then
+  cat >> "$RUN_DIR/PROMPT.md" <<'EOF_DEFERRED'
+
+Previously attempted open items are listed below with the exact reason they could not be completed
+inside this workstream's allowed scope. Keep them open and choose another feasible, in-scope
+requirement. Revisit a deferred item only after its source or ownership boundary changes.
+
+EOF_DEFERRED
+  cat "$STATE/deferred-items.log" >> "$RUN_DIR/PROMPT.md"
+fi
 cp "$RUN_DIR/PROMPT.md" "$WT/PROMPT.md"
 
 run_sandbox() {
@@ -189,16 +198,10 @@ case "$ENGINE" in
     ' ux-claude "$KIND" "$WT" >"$RUN_DIR/runner.log" 2>&1
     RUN_RC=$?
     ;;
-  devin-opus-medium)
-    run_sandbox --setenv DEVIN_MODEL claude-opus-5-5-medium \
-      --setenv DEVIN_TIMEOUT_SEC 10800 -- \
-      "$HOME/bin/run-devin.sh" "$WT" judgement >"$RUN_DIR/runner.log" 2>&1
-    RUN_RC=$?
-    ;;
   devin-sonnet-high)
     run_sandbox --setenv DEVIN_MODEL claude-sonnet-5-5-high \
       --setenv DEVIN_TIMEOUT_SEC 10800 -- \
-      "$HOME/bin/run-devin.sh" "$WT" work >"$RUN_DIR/runner.log" 2>&1
+      "$HOME/bin/run-devin.sh" "$WT" "$KIND" >"$RUN_DIR/runner.log" 2>&1
     RUN_RC=$?
     ;;
   opencode-free)
@@ -232,6 +235,37 @@ fi
 git -C "$WT" diff --check
 git -C "$WT" add -A
 [ -n "$(git -C "$WT" diff --cached --name-only)" ] || {
+  python3 - "$RUN_DIR/OUTPUT.md" "$STATE/deferred-items.log" "$JOB" <<'PY_IDS'
+import datetime, re, sys
+source, target, job = sys.argv[1:]
+text = open(source, errors="replace").read().splitlines()
+in_section = False
+items = []
+for line in text:
+    if line.strip().lower() == "deferred items:":
+        in_section = True
+        continue
+    if in_section:
+        match = re.match(r"\s*[-*]\s*((?:CR|F)-[0-9]+(?:\.[0-9]+)?)\s*(?:—|--|:)\s*(.+?)\s*$", line)
+        if match:
+            item, reason = match.groups()
+            reason = re.sub(r"[\t\r\n]+", " ", reason)
+            if item not in {row[0] for row in items}:
+                items.append((item, reason))
+        elif line.strip() and not line.lstrip().startswith(("-", "*")):
+            break
+if items:
+    stamp = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+    with open(target, "a") as f:
+        for item, reason in items:
+            f.write(f"{stamp} job={job} {item}: {reason}\n")
+PY_IDS
+  printf '%s %s no-change %s\n' "$TS" "$ROLE" "$ENGINE" >> "$STATE/history.log"
+  if [ "$ROLE" = work ]; then
+    printf 'design\n' > "$STATE/next-role"
+  else
+    rm -f "$STATE/next-role"
+  fi
   rm -f "$STATE/pending-unit.json"
   echo "iterate: no code or documentation change; no PR opened" >&2
   exit 65
@@ -279,5 +313,18 @@ with os.fdopen(fd, "w") as f:
     f.write("\n")
 os.replace(tmp, path)
 PY_PR
+actual_model=$(printf '%s' "$ENGINE_USED" | tr '[:space:]' '-')
+ACTUAL_ENGINE_FAMILY=$BOARD_ENGINE
+case "${ENGINE_USED,,}" in
+  codex*|*gpt-6-*) ACTUAL_ENGINE_FAMILY=codex ;;
+  *sonnet*) ACTUAL_ENGINE_FAMILY=devin ;;
+  *devin*) ACTUAL_ENGINE_FAMILY=devin ;;
+  *claude*|*opus*)
+    case "$ENGINE" in devin-*) ACTUAL_ENGINE_FAMILY=devin ;; *) ACTUAL_ENGINE_FAMILY=claude ;; esac
+    ;;
+esac
+printf '%s %s completed-pr %s actual=%s model=%s job=%s\n' \
+  "$TS" "$ROLE" "$ENGINE" "$ACTUAL_ENGINE_FAMILY" "$actual_model" "$JOB" >> "$STATE/history.log"
+if [ "$ROLE" = design ]; then rm -f "$STATE/next-role"; fi
 rm -f "$STATE/pending-unit.json"
 echo "PR $PR_JSON"
