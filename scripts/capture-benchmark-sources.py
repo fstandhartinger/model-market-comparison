@@ -61,7 +61,15 @@ while queue:
    # Single-page apps ship their data in one hashed bundle; the name changes every deploy. Two build
    # tools, one rule: exactly one bundle script must match, and its src is resolved against the page.
    page=b.decode('utf-8','replace')
-   matches=re.findall(r'<script type="module"[^>]*\ssrc="(/assets/[A-Za-z0-9._-]+\.js)"',page)
+   matches=[]
+   # Vite may declare an absolute same-origin URL (StepFun) instead of /assets/.
+   # Only its reviewed assets path is followed; external analytics scripts are not.
+   for tag in re.findall(r'<script\b[^>]*>',page,re.I):
+    if not re.search(r'\btype="module"',tag,re.I):continue
+    src=re.search(r'\bsrc="([^"]+)"',tag,re.I)
+    if not src:continue
+    u=urllib.parse.urljoin(q.geturl(),src[1]);parts=urllib.parse.urlsplit(u)
+    if parts.scheme=='https' and parts.netloc==host and re.fullmatch(r'/assets/[A-Za-z0-9._-]+\.js',parts.path) and not parts.query and not parts.fragment:matches.append(u)
    matches+=re.findall(r'<script[^>]*\sdefer[^>]*\ssrc="(\.?/?static/js/main\.[A-Za-z0-9]+\.js)"',page)
    if len(matches)!=1:r['follow_error']='Expected exactly one module script, found '+str(len(matches))
    else:queue.append({'url':urllib.parse.urljoin(q.geturl(),matches[0]),'discovered_from':url})

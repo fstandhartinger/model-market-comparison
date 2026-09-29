@@ -35,6 +35,8 @@ export function sourceCoverage({ registry, plan, report, observations = [] }) {
     const dates = rows.map((r) => r.source?.retrieved_at).filter(Boolean).sort();
     let mode = group ? 'group_collector' : spec?.refresh === 'manual' ? 'manual_snapshot'
       : spec?.parser ? 'public_adapter' : document ? 'vendor_document' : 'protocol_only';
+    if (check?.collector === 'frozen-vendor-document') mode = 'frozen_document';
+    if (check?.collector === 'realswe-frozen-snapshot') mode = 'snapshot_comparison';
     if (access?.mode === 'browser_only') mode = 'browser_only';
     if (entry.id === 'aa-coding-agent-index::1.4') mode = 'frozen_snapshot';
     if (entry.family === 'jevbench' || entry.id.startsWith('jevbench::')) mode = 'on_demand_evaluation';

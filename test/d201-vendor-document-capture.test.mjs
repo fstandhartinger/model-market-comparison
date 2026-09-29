@@ -76,7 +76,7 @@ test('routing a document removes that one URL from the generic queue and nothing
   const { urls, documentUrls } = captureTargets({ registry, plan, vendor });
   // The same plan with the routing rule switched off is what the daily did before D201.
   const before = captureTargets({
-    registry: { ...registry, entries: registry.entries.map((e) => ({ ...e, how_to_collect: { ...e.how_to_collect, format: 'x' } })) },
+    registry: { ...registry, entries: registry.entries.map((e) => ({ ...e, how_to_collect: { ...e.how_to_collect, format: /\bPDF\b/.test(e.how_to_collect?.format ?? '') ? 'x' : e.how_to_collect?.format } })) },
     plan, vendor,
   }).urls;
   assert.equal(before.size - urls.size, documentUrls.size, 'exactly the routed documents left the generic queue');
