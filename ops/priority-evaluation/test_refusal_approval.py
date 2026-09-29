@@ -129,7 +129,7 @@ class ApprovalTests(unittest.TestCase):
         loader.exec_module(registry)
         with patch.object(registry, "DB_PATH", self.root / "reply-actions.sqlite3"):
             registry.register_telegram(
-                123, "refusal card", "/home/flori/jobs/fastlane-autopilot-20260929",
+                123, "refusal card", "/home/flori/jobs/fastlane-refusal-reply-guard-20260929",
                 str(self.root / "reply.json"), "codex:allout-bh-pipeline-20260929", minutes=720)
             self.assertEqual(len(registry.waiting_telegram()), 1)
             def send_only_after_reply_action_is_closed(*args):
@@ -146,6 +146,69 @@ class ApprovalTests(unittest.TestCase):
             self.assertEqual(result, "sent")
             self.assertEqual(registry.waiting_telegram(), [])
         self.fx.mail.assert_called_once_with(TO, SUBJECT, BODY)
+
+    def test_exact_keep_callback_closes_durable_reply_action_without_mail(self):
+        self.save()
+        loader = importlib.machinery.SourceFileLoader(
+            "notify_reply_actions", str(Path.home() / "bin/notify_reply_actions.py"))
+        spec = importlib.util.spec_from_loader(loader.name, loader)
+        registry = importlib.util.module_from_spec(spec)
+        loader.exec_module(registry)
+        with patch.object(registry, "DB_PATH", self.root / "reply-actions.sqlite3"):
+            registry.register_telegram(
+                123, "refusal card", "/home/flori/jobs/fastlane-refusal-reply-guard-20260929",
+                str(self.root / "reply.json"), "codex:allout-bh-pipeline-20260929", minutes=720)
+            close_action = approval.close_durable_reply_action
+            with patch.object(approval, "close_durable_reply_action",
+                              side_effect=lambda state: close_action(state, registry)), \
+                 patch.object(approval, "callback_rows", return_value=[click(data="random_keep")]), \
+                 patch.object(approval, "attach"), \
+                 patch.object(approval, "resolve_ask", return_value=True):
+                result = approval.advance(ROW, TO, SUBJECT, BODY, self.root, self.fx, NOW)
+            self.assertEqual(result, "held")
+            self.assertEqual(registry.waiting_telegram(), [])
+        self.fx.mail.assert_not_called()
+
+    def test_expired_refusal_card_preserves_durable_reply_expiry(self):
+        self.save(expires_at=NOW - 1)
+        loader = importlib.machinery.SourceFileLoader(
+            "notify_reply_actions", str(Path.home() / "bin/notify_reply_actions.py"))
+        spec = importlib.util.spec_from_loader(loader.name, loader)
+        registry = importlib.util.module_from_spec(spec)
+        loader.exec_module(registry)
+        with patch.object(registry, "DB_PATH", self.root / "reply-actions.sqlite3"):
+            registry.register_telegram(
+                123, "refusal card", "/home/flori/jobs/fastlane-refusal-reply-guard-20260929",
+                str(self.root / "reply.json"), "codex:allout-bh-pipeline-20260929", minutes=720)
+            expires_at = registry.get_action(123)["expires_at"]
+            close_action = approval.close_durable_reply_action
+            close = Mock(side_effect=lambda state: close_action(state, registry))
+            with patch.object(approval, "close_durable_reply_action", close), \
+                 patch.object(approval, "callback_rows", return_value=[]), \
+                 patch.object(approval, "attach"), \
+                 patch.object(approval, "resolve_ask", return_value=True):
+                result = approval.advance(ROW, TO, SUBJECT, BODY, self.root, self.fx, NOW)
+            self.assertEqual(result, "held")
+            close.assert_not_called()
+            self.assertEqual(registry.get_action(123)["status"], "waiting")
+            self.assertEqual(registry.get_action(123)["expires_at"], expires_at)
+            registry.update(123, status="expired")
+            self.assertEqual(registry.waiting_telegram(), [])
+        self.fx.mail.assert_not_called()
+
+    def test_unrecognized_reply_action_status_is_not_overwritten(self):
+        loader = importlib.machinery.SourceFileLoader(
+            "notify_reply_actions", str(Path.home() / "bin/notify_reply_actions.py"))
+        spec = importlib.util.spec_from_loader(loader.name, loader)
+        registry = importlib.util.module_from_spec(spec)
+        loader.exec_module(registry)
+        with patch.object(registry, "DB_PATH", self.root / "reply-actions.sqlite3"):
+            registry.register_telegram(
+                123, "refusal card", "/home/flori/jobs/fastlane-refusal-reply-guard-20260929",
+                str(self.root / "reply.json"), "codex:allout-bh-pipeline-20260929", minutes=720)
+            registry.update(123, status="manual_review")
+            self.assertFalse(approval.close_durable_reply_action(prepared(), registry))
+            self.assertEqual(registry.get_action(123)["status"], "manual_review")
 
     def test_uncertain_notification_is_not_resent(self):
         self.save(notification="attempted", message_id=None)
@@ -199,9 +262,12 @@ class ApprovalTests(unittest.TestCase):
         command=run.call_args.args[0]
         self.assertIn("--florian-only", command)
         self.assertIn("--ask", command)
-        reply_job_dir=str(self.root/'jobs'/'fastlane-autopilot-20260929')
+        reply_job_dir=str(self.root/'jobs'/'fastlane-refusal-reply-guard-20260929')
         self.assertEqual(run.call_args.kwargs['env']['AGENT_BOARD_JOBDIR'],reply_job_dir)
         self.assertEqual(run.call_args.kwargs['env']['NOTIFY_REPLY_JOB_DIR'],reply_job_dir)
+        service=(Path(__file__).with_name('jevbench-priority-autopickup.service')).read_text()
+        self.assertIn('Environment=AGENT_BOARD_JOBDIR=%h/jobs/fastlane-refusal-reply-guard-20260929',service)
+        self.assertIn('Environment=NOTIFY_REPLY_JOB_DIR=%h/jobs/fastlane-refusal-reply-guard-20260929',service)
         parsed=module.validate_format(caption,'now',ask_minutes=720)
         self.assertEqual(len(parsed),1)
         self.assertEqual(len(parsed[0]['steps']),2)

@@ -109,15 +109,44 @@ def close_durable_reply_action(state, actions=None):
             actions = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(actions)
 
-        action = actions.get_action(message_id)
-        if (not action or action["channel"] != "telegram"
-                or Path(action["job_dir"]).resolve()
-                != (HOME / "jobs" / "fastlane-autopilot-20260929").resolve()):
-            return False
-        if action["status"] != "resolved":
-            actions.update(message_id, status="resolved", last_error=None)
-        closed = actions.get_action(message_id)
-        return bool(closed and closed["status"] == "resolved")
+        expected_job_dir = str((HOME / "jobs" / "fastlane-refusal-reply-guard-20260929").resolve())
+        db = actions.connect()
+        try:
+            db.execute("BEGIN IMMEDIATE")
+            action = db.execute(
+                "SELECT channel,job_dir,status FROM actions WHERE ask_id=?", (message_id,)
+            ).fetchone()
+            if (not action or action["channel"] != "telegram"
+                    or Path(action["job_dir"]).resolve() != Path(expected_job_dir)):
+                db.rollback()
+                return False
+            if action["status"] == "resolved":
+                db.commit()
+                return True
+            actionable = {"waiting", "matched", "resuming", "ack_pending_reaction",
+                          "acknowledged", "dead_letter", "expired"}
+            if action["status"] not in actionable:
+                db.rollback()
+                return False
+            changed = db.execute(
+                "UPDATE actions SET status='resolved',last_error=NULL "
+                "WHERE ask_id=? AND channel='telegram' AND job_dir=? AND status=?",
+                (message_id, expected_job_dir, action["status"]),
+            )
+            if changed.rowcount != 1:
+                db.rollback()
+                return False
+            closed = db.execute(
+                "SELECT status FROM actions WHERE ask_id=? AND channel='telegram' AND job_dir=?",
+                (message_id, expected_job_dir),
+            ).fetchone()
+            if not closed or closed["status"] != "resolved":
+                db.rollback()
+                return False
+            db.commit()
+            return True
+        finally:
+            db.close()
     except Exception:
         return False
 
@@ -202,12 +231,12 @@ def notify_card(state, path, now):
     image_path = path.with_suffix(".png")
     card(image_path, state["draft"])
     # This is an explicit Florian-only approval from the 27 Sep fast-lane decision.
-    # The durable text-reply action resumes the owner; only the exact button callback
-    # below can authorize the email.
+    # The durable text-reply action resumes only the isolated reply guard; only the
+    # exact button callback below can authorize the email.
     command = [str(HOME / "bin/notify"), "now", "--florian-only",
                "Florian's fast-lane decision requires the exact refusal Send button.",
                "--ask", str(WINDOW // 60), "--photo", str(image_path), "--text-stdin"]
-    reply_job_dir = str(HOME / "jobs" / "fastlane-autopilot-20260929")
+    reply_job_dir = str(HOME / "jobs" / "fastlane-refusal-reply-guard-20260929")
     env = {**os.environ, "NOTIFY_SOURCE": SOURCE,
            "AGENT_BOARD_JOBDIR": reply_job_dir,
            "NOTIFY_REPLY_JOB_DIR": reply_job_dir}
@@ -272,7 +301,7 @@ def advance(row, to, subject, body, root, effects, now):
             state["buttons_attached"] = True
             atomic(path, state)
         apply_callbacks(state, callback_rows(state["message_id"], state["chat_id"]), now)
-        if state.get("decision") in ("send", "keep", "expired") and not state.get("reply_action_resolved"):
+        if state.get("decision") in ("send", "keep") and not state.get("reply_action_resolved"):
             if not close_durable_reply_action(state):
                 state["reply_action_resolution_hold"] = "durable reply action could not be closed"
                 atomic(path, state)

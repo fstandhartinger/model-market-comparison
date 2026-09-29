@@ -6,8 +6,8 @@ Wants=network-online.target
 [Service]
 Type=oneshot
 Environment=AGENT_BOARD_NAME=fastlane-autopickup
-Environment=AGENT_BOARD_JOBDIR=%h/jobs/fastlane-autopilot-20260929
-Environment=NOTIFY_REPLY_JOB_DIR=%h/jobs/fastlane-autopilot-20260929
+Environment=AGENT_BOARD_JOBDIR=%h/jobs/fastlane-refusal-reply-guard-20260929
+Environment=NOTIFY_REPLY_JOB_DIR=%h/jobs/fastlane-refusal-reply-guard-20260929
 Environment=GH_NO_UPDATE_NOTIFIER=1
 ExecStart=/usr/bin/python3 %h/bin/jevbench-autopickup.py cycle
 TimeoutStartSec=900
