@@ -103,7 +103,7 @@ export function JevV15SystemDetail({ artifact, row }: { artifact: JevV15Artifact
     </section>
 
     <p className="bh-muted mt-8 max-w-3xl text-sm">
-      Read the <Link className="text-accent underline" href="/jev-models">full leaderboard</Link>, the <Link className="text-accent underline" href="/jev-models/v1.5.2">v1.5.2 release page</Link>, and the <a className="text-accent underline" href="https://github.com/fstandhartinger/jevbench/blob/main/docs/METHOD-v1.5.md">published method</a>.
+      Read the <Link className="text-accent underline" href="/jev-models">full leaderboard</Link>, the <Link className="text-accent underline" href={`/jev-models/${artifact.revision}`}>{artifact.revision} release page</Link>, and the <a className="text-accent underline" href="https://github.com/fstandhartinger/jevbench/blob/main/docs/METHOD-v1.5.md">published method</a>.
     </p>
   </>;
 }

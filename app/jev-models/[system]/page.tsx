@@ -14,7 +14,7 @@ import { jevV14RowNote } from '../../../lib/jevbench-v14.mjs';
 import { previewMetadata } from '../../../lib/seo';
 import { jevSystemKeyFromSlug, jevSystemPath, jevSystemSlug } from '../../../lib/jev-system-slug.mjs';
 import { JevV15SystemDetail } from '../../../components/JevV15SystemDetail';
-import { readJevbenchV152Release } from '../../../lib/jevbench-v15-release.mjs';
+import { readJevbenchV153Release } from '../../../lib/jevbench-v15-release.mjs';
 
 // CR-129 (2026-09-23): Google Trends shows readers searching individual JevBench system names
 // (e.g. "semif", "laya model") directly — until now every one of them only existed as a row inside the
@@ -68,8 +68,8 @@ async function findV142Row(key: string): Promise<{ row: JevV14System; view: { re
   return row ? { row, view, note: jevV14RowNote((result.artifact as { footnotes?: Record<string, string> }).footnotes?.[key], row), sealedFamilyN: result.sealedFamilyN, hardFamilyN } : null;
 }
 
-async function findV152Addendum(key: string) {
-  const { artifact } = await readJevbenchV152Release();
+async function findV153Addendum(key: string) {
+  const { artifact } = await readJevbenchV153Release();
   const row = artifact.systems.find((candidate) => candidate.key === key && candidate.addendum !== null);
   return row ? { row, artifact } : null;
 }
@@ -100,7 +100,7 @@ export async function generateStaticParams() {
   const existing = [...view.ranked, ...view.honorable, ...view.partial].map((r) => ({ system: jevSystemSlug(r.key) }));
   const current = jevbenchV1422View(await readJevbenchV1422()).systems.map((r) => ({ system: jevSystemSlug(r.key) }));
   const existingKeys = new Set([...existing, ...current].map(({ system }) => system));
-  const latest = await readJevbenchV152Release();
+  const latest = await readJevbenchV153Release();
   const addenda = latest.artifact.systems
     .filter((row) => row.addendum !== null && !existingKeys.has(jevSystemSlug(row.key)))
     .map((row) => ({ system: jevSystemSlug(row.key) }));
@@ -111,7 +111,7 @@ export async function generateMetadata({ params }: { params: Promise<{ system: s
   const { system } = await params;
   const key = jevSystemKeyFromSlug(decodeURIComponent(system));
   const current = await findV142Row(key);
-  const addendum = current ? null : await findV152Addendum(key);
+  const addendum = current ? null : await findV153Addendum(key);
   const found = current || addendum ? null : await findRow(key);
   const row = found?.row ?? current?.row ?? addendum?.row;
   if (!row) return { title: 'System not found' };
@@ -125,7 +125,7 @@ export default async function JevSystemPage({ params }: { params: Promise<{ syst
   const key = jevSystemKeyFromSlug(decodeURIComponent(system));
   const current = await findV142Row(key);
   if (current) return <JevV141SystemDetail row={current.row} ranked={current.view.ranked} revision={current.view.revision} generated={current.view.generated} note={current.note} sealedFamilyN={current.sealedFamilyN} hardFamilyN={current.hardFamilyN} />;
-  const addendum = await findV152Addendum(key);
+  const addendum = await findV153Addendum(key);
   if (addendum) return <JevV15SystemDetail artifact={addendum.artifact} row={addendum.row} />;
   const found = await findRow(key);
   if (!found) {
