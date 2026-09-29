@@ -56,3 +56,27 @@ test('preview is unlinked from sitemap and route sends crawler headers', async (
   assert.match(route, /'X-Robots-Tag': 'noindex, nofollow, noarchive'/);
   assert.match(route, /'Cache-Control': 'no-store'/);
 });
+
+test('all five fresh models and their three tracks match the downloadable measurement record', () => {
+  const measured = aggregate.documents.results;
+  assert.equal(measured.ranking.length, 5);
+  const byKey = new Map(measured.ranking.map(r => [r.key, r]));
+  for (const view of aggregate.views.slice(0, 3)) {
+    assert.equal(view.rows.length, 5);
+    assert.deepEqual(new Set(view.rows.map(r => r.key)), new Set(byKey.keys()));
+    for (const row of view.rows) {
+      const model = byKey.get(row.key);
+      const track = model.tracks[view.key];
+      assert.equal(model.terminal_predictions, 573);
+      assert.deepEqual(row.axes, track.axes);
+      assert.equal(row.composite, track.composite);
+      assert.equal(row.failures, track.failures);
+      assert.equal(row.public_label, `${track.correct_public}/${track.n_public}`);
+      assert.equal(row.sealed_label, `${track.correct_sealed}/${track.n_sealed}`);
+      assert.match(row.model_url, /^https:\/\/huggingface\.co\/.+\/tree\/[0-9a-f]{40}$/);
+    }
+  }
+  const trials = aggregate.documents.pilot.rows;
+  assert.equal(trials.reduce((n, r) => n + r.assigned_trials, 0), 24);
+  assert.equal(trials.reduce((n, r) => n + r.provider_requests, 0), 48);
+});
