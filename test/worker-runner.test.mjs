@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, writeFile, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, writeFile, readFile, readdir, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -48,11 +48,20 @@ test('worker CLI preserves output on provider failures and accepts a large embed
       assert.equal(await readFile(out, 'utf8'), 'prior valid artifact');
       assert.equal(await readFile(out + '.meta.json', 'utf8'), 'prior receipt');
     }
+    for (const name of (await readdir(dir)).filter((name) => name.startsWith('worker-failure-'))) {
+      const receipt = JSON.parse(await readFile(join(dir, name), 'utf8'));
+      assert.equal(receipt.request_limits.max_tokens, 8192);
+      assert.equal(receipt.request_limits.timeout_seconds, 1);
+      assert.ok(receipt.request_limits.input_bytes > 160000);
+    }
     const result = spawnSync(process.execPath, args, { encoding: 'utf8', timeout: 10000, env: {...process.env, BH_STATE: dir, OPEN_ROUTER_API_KEY: 'synthetic-test-key', WORKER_CASE: 'large', BH_WORKER_REASONING_EFFORT: 'low'} });
     assert.equal(result.status, 0, result.stderr);
     const body = await readFile(out, 'utf8'), meta = JSON.parse(await readFile(out + '.meta.json', 'utf8'));
     assert.equal(body, 'accepted test artifact\n');
     assert.equal(meta.actual_model, 'deepseek/deepseek-v4-flash-0731');
+    assert.equal(meta.request_limits.max_tokens, 8192);
+    assert.equal(meta.request_limits.timeout_seconds, 1);
+    assert.ok(meta.request_limits.input_bytes > 160000);
     assert.deepEqual(meta.reasoning, { effort: 'low', exclude: true });
     assert.equal(meta.output_sha256, createHash('sha256').update(body).digest('hex'));
     assert.equal((await readFile(join(dir, 'last-worker-model'), 'utf8')).trim(), meta.actual_model);
