@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 import {
-  audiojevView, jevClassReasons, publicExamples, readAudiojevExamples, readAudiojevPreview, robustnessColumns, tableGroup,
+  audiojevView, displayName, jevClassReasons, publicExamples, readAudiojevExamples, readAudiojevPreview, robustnessColumns, tableGroup,
 } from '../lib/audiojev-preview.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
@@ -56,17 +56,45 @@ test('examples are public only; a sealed item throws', async () => {
   assert.equal(publicExamples(null).length, 0);
 });
 
-test('the preview is noindex, bannered and reads only the committed data', () => {
-  const page = read(PAGE);
-  assert.match(page, /robots:\s*\{\s*index:\s*false,\s*follow:\s*false/);
-  assert.match(page, /data-bh-wip-banner/);
-  assert.match(page, /WORK IN PROGRESS/);
-  assert.match(page, /Preview — not published, numbers may change/);
-  assert.match(read('next.config.mjs'), new RegExp(`/${SEGMENT}/:path\\*.*X-Robots-Tag`, 's'));
+test('display names cover every committed system', async () => {
+  const v = audiojevView(await readAudiojevPreview(root));
+  for (const r of v.systems) {
+    assert.ok(r.name && r.name.length <= 60, r.key);
+    assert.notEqual(r.name, r.key, `no display name for ${r.key}`);
+  }
+  assert.deepEqual(displayName('foo (bar)'), { name: 'foo', config: 'bar' });
 });
 
-test('the preview route is in neither sitemap nor robots, and nothing links to it', () => {
-  assert.doesNotMatch(read('app/sitemap.ts'), /wip-|audio-jev/);
+test('CR-214: capability numbers go to Jev-class full rows only; the committed top five', async () => {
+  const v = audiojevView(await readAudiojevPreview(root));
+  const numbered = v.capability.filter((r) => r.capabilityRank != null);
+  for (const r of numbered) assert.ok(r.jevClass && r.group === 'full', r.key);
+  for (const r of [...v.publicOnly, ...v.partial]) assert.equal(r.capabilityRank, null, r.key);
+  assert.deepEqual(numbered.slice(0, 5).map((r) => r.key.split(' ')[0]),
+    ['qwen3-omni-30b-a3b-instruct', 'qwen2.5-omni-7b', 'qwen2.5-omni-3b', 'voxtral-mini-3b-2507', 'ultravox-v0_5-llama-3_2-1b']);
+  assert.equal(v.full[0].key.split(' ')[0], 'qwen3-omni-30b-a3b-instruct');
+  for (const r of v.publicOnly) assert.ok(r.iPublicCi, `${r.key} shows a CI`);
+});
+
+test('CR-214: public page is indexable, canonical, in the sitemap and nav, and keeps the section order', () => {
+  const page = read('app/audio-jev-bench/page.tsx');
+  assert.doesNotMatch(page, /robots:\s*\{/);
+  assert.match(page, /canonical: '\/audio-jev-bench'/);
+  assert.match(read('app/sitemap.ts'), /"\/audio-jev-bench"/);
+  assert.match(read('components/Nav.tsx'), /\["\/audio-jev-bench", "AudioJevBench"\]/);
+  assert.match(read('lib/visit-stats.mjs'), /"audio-jev-bench"/);
+  const order = ['<AudioJevBenchCharts', '<CompositeBars', '<AudioJevCompare', 'data-bh-audiojev-full-table', 'data-bh-audiojev-method', 'data-bh-audiojev-history'].map((m) => page.indexOf(m));
+  for (const i of order) assert.ok(i > 0);
+  assert.deepEqual([...order].sort((a, b) => a - b), order);
+  const charts = read('components/AudioJevBenchCharts.tsx');
+  assert.ok(charts.indexOf('data-bh-audiojev-capability-bars') < charts.indexOf('data-bh-audiojev-bubbles'));
+  assert.match(charts, /JevCapability3D/);
+  assert.match(read('app/audio-jev-bench/opengraph-image.tsx'), /ImageResponse/);
+});
+
+test('CR-214: the old hidden route redirects to the public page and nothing links to the hidden segment', () => {
+  assert.match(read(PAGE), /permanentRedirect\('\/audio-jev-bench'\)/);
+  assert.doesNotMatch(read('app/sitemap.ts'), /wip-/);
   assert.doesNotMatch(read('app/robots.ts'), /wip-|audio-jev/);
   const hits = [];
   const walk = (dir) => {
@@ -79,6 +107,5 @@ test('the preview route is in neither sitemap nor robots, and nothing links to i
     }
   };
   for (const d of ['app', 'components', 'lib', 'public', 'data']) walk(path.join(root, d));
-  // Only the page file itself (its own folder) may carry the segment; next.config.mjs holds the noindex header.
   assert.deepEqual(hits.filter((h) => !h.startsWith(`app/${SEGMENT}/`)), []);
 });

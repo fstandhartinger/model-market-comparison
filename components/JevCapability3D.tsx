@@ -292,7 +292,8 @@ function Projected3D({ points, costBounds, jevClassOnly, tipRef, resetViewRef, r
   </div>;
 }
 
-export function JevCapability3D({ points, costBounds }: { points: Point[]; costBounds: [number, number] }) {
+// CR-214: `benchmarkName` lets AudioJevBench reuse this view without JevBench wording; default unchanged.
+export function JevCapability3D({ points, costBounds, benchmarkName = 'JevBench' }: { points: Point[]; costBounds: [number, number]; benchmarkName?: string }) {
   const boxRef = useRef<HTMLDivElement>(null);
   const tipRef = useRef<HTMLDivElement>(null);
   const resetViewRef = useRef<() => void>(() => {});
@@ -706,11 +707,11 @@ export function JevCapability3D({ points, costBounds }: { points: Point[]; costB
       <div ref={tipRef} hidden role="status" className="pointer-events-none absolute z-10 max-w-[230px] whitespace-pre-line rounded-lg border border-line bg-panel px-3 py-2 text-xs shadow-xl" />
       {!visible && <p className="bh-muted absolute inset-x-4 top-1/2 -translate-y-1/2 text-center text-sm">Scroll here to load the interactive 3D view.</p>}
     </div>
-    <p className="bh-muted mt-2 text-xs">Top five {jevClassOnly ? 'Jev-class ' : ''}systems by {officialWeights ? 'official JevBench Composite Score' : 'Composite Score with the selected weights (unofficial)'}.</p>
+    <p className="bh-muted mt-2 text-xs">Top five {jevClassOnly ? 'Jev-class ' : ''}systems by {officialWeights ? `official ${benchmarkName} Composite Score` : 'Composite Score with the selected weights (unofficial)'}.</p>
     <ol className="mt-2 grid gap-x-4 gap-y-2 text-xs sm:grid-cols-2" aria-label={`Top five ${jevClassOnly ? 'Jev-class ' : ''}systems by ${officialWeights ? 'official' : 'custom'} composite score in the 3D view`} data-bh-jev14-3d-top-five>
       {ranked.map(({ point, score }, index) => <li key={point.key} className="flex min-w-0 items-start gap-2" data-bh-jev14-3d-leader={point.key}>
         <span className="mt-1 inline-block h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: `rgb(var(${point.colorVariable}))` }} aria-hidden="true" />
-        <span className="min-w-0"><b>Composite #{index + 1} · {point.name}</b><br /><span className="bh-muted">Score {score.toFixed(1)} · Capability {point.capability.toFixed(1)} · Cost {describeCost(point.cost)} / 1,000 decisions · Speed {point.speed?.toFixed(1) ?? '—'}{point.rank == null ? '' : ` · Official JevBench #${point.rank}`}</span></span>
+        <span className="min-w-0"><b>Composite #{index + 1} · {point.name}</b><br /><span className="bh-muted">Score {score.toFixed(1)} · Capability {point.capability.toFixed(1)} · Cost {describeCost(point.cost)} / 1,000 decisions · Speed {point.speed?.toFixed(1) ?? '—'}{point.rank == null ? '' : ` · Official ${benchmarkName} #${point.rank}`}</span></span>
       </li>)}
     </ol>
     <p className="bh-muted mt-1 text-center text-xs" role="status" aria-live="polite" data-bh-jev14-capability-3d-status>{status}</p>
