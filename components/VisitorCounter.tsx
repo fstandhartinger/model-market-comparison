@@ -17,5 +17,5 @@ export function VisitorCounter() {
   }, []);
 
   if (visits === null) return null;
-  return <span aria-label={`${visits.toLocaleString("en-US")} visits`}>{visits.toLocaleString("en-US")} visits</span>;
+  return <span aria-label={`${visits.toLocaleString("en-US")} visitors`}>{visits.toLocaleString("en-US")} visitors</span>;
 }

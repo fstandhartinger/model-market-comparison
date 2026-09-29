@@ -14,6 +14,6 @@ export async function GET() {
     const visits = await fetchVisitorTotal({ apiKey: process.env.UMAMI_API_KEY });
     return NextResponse.json({ visits }, { headers });
   } catch {
-    return NextResponse.json({ error: "Visitor count unavailable" }, { status: 503, headers });
+    return NextResponse.json({ error: "Visitor count unavailable" }, { status: 503, headers: { ...headers, "Cache-Control": "no-store" } });
   }
 }
