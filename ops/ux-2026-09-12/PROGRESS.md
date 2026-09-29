@@ -18981,3 +18981,123 @@ Logs in `iter270-d254/`.
    R9.1's two arms under the written-permission hold, and the Coolify host alias (patched, not fixed).
 
 **`ALL-ACCEPTED` is not appended.**
+
+## Iteration 271 (claude-opus, 2026-09-29 01:40–03:10 UTC) — the board that contradicted its own registry, and a day that need not have been lost
+
+**Scope.** The 2026-09-29 **00:41 run published nothing**: `exit_code: 1`, `published: false`, dead at
+`fetch-da` with `DesignArena frontend: partial response or removal requiring review (2 prior
+identities absent: gpt-6-astra, kimi-k3)`. Everything else in that run was fine — AA had been
+collected, the worker pair was picked (and the free Chutes critic *was* offered, so D254.1's window
+was open). Evidence in `iter271-designarena/`.
+
+### What the source actually did
+
+`agon_webapps` went 46 → 44 identities and `fullstack` 49 → 46; absent are `gpt-6-astra` and
+`kimi-k3` from both, plus `gpt-6-sol` from `fullstack`. Nothing was added to either board. The boards
+are alive and refitting, not truncated: `metadata.lastUpdateTime` moved 2026-09-28T22:47 →
+2026-09-29T00:47 between two captures 65 minutes apart, `totalVotes` grew 79,962 → 79,970, retained
+rows' battle counts increment, and the arithmetic fits the absences having left the duel set (the
+removed rows held 2,778 `agon_webapps` battles; the retained rows lost 2,545 between them, the
+remainder being the pair's own duels). The site's own UI serves the same 44-row roster
+(`/leaderboard/webapps`, "Updated Sep 29, 2026, 12:47 AM UTC"). One orthogonal transient, and not the
+reason the run failed: by 01:30 every row on both boards reported `btStdErr: null`, where the 00:41
+capture has it on all 46.
+
+### Why no withdrawal approval was written
+
+`assertIdentityCoverage` says "partial response **or** removal requiring review" because a collector
+cannot tell them apart. Here the source's own record decides, and it decides against a removal:
+
+1. The registry still serves all three as `active: true` with exactly these categories in
+   `arenas.agents`.
+2. **A DesignArena retirement keeps the row on the board.** Its changelog's 15 Sep 2026 entries
+   ("removed Grok 4.20 Beta — Retired … from new tournaments", same for Gemini 3.1 Pro Preview) left
+   those rows ranked — `gemini-3.1-pro-preview` is *still* on the current board — and `camellia`
+   (Inkling) sits on it at `active: false`. A retirement lowers `active` and leaves the row. This is
+   the opposite shape.
+3. The changelog records no removal of these three; its newest entries are additions (28 Sep Claude
+   Sonnet 5.5, 22 Sep GPT-6 Sol).
+4. Both are still ranked on other DesignArena boards — Text-to-HTML has Kimi K3 #1 and GPT-6 Astra #2.
+5. A relabel is excluded: no identity was added, and the registry still keys both under their old ids.
+
+So the honest reading is not "the board withdrew three models" but "the board is publishing something
+its own registry contradicts", and the right thing to publish is the last board we verified.
+
+### D255 — a board that contradicts its own registry is withheld, not published, and not fatal either
+
+The defect worth fixing is the third state. Before this change there were exactly two: accept the
+capture, or lose the whole day — prices, AA, every benchmark arm — because two rows moved on one of
+94 sources. Florian's 17 Sep instruction is explicit on both sides: "ensure a transient one-row
+dispute cannot prevent unrelated, fully sourced updates from publishing safely", and "Do not weaken
+the evidence, critic, or publication gate merely to make a run pass." Withholding satisfies both: the
+*previously verified* board stays, byte-for-byte, with its own date; no number changes and nothing is
+inferred; and the other contracts publish.
+
+- `lib/live-source.mjs`: `absentIdentities`, `classifyBoardAbsence(missing, registry, category)` and
+  the `BOARD_REGISTRY_INCONSISTENT` marker. `contradicted` = still active in the registry for this
+  board's category. `corroborated` = gone from the registry, not active, or no longer offered for
+  this board — **that is still a withdrawal the collector refuses on its own and hands to review.**
+- `scripts/fetch-live.mjs`: the registry is now read *before* the boards (both endpoints were already
+  permitted; the scope is unchanged) so an absent row can be checked against it. Only the
+  missing-identity error is classifiable — an empty, malformed or duplicate-id response stays fatal
+  whatever the registry says — and **one corroborated absence anywhere keeps the whole capture on the
+  review path**, because publishing the rest of the board would accept that withdrawal silently. On a
+  purely contradicted absence the collector writes a sidecar into the run's evidence directory and
+  throws before its atomic write, so the published board is untouched.
+- `ops/daily/daily.mjs`: `readDesignArenaInconsistency` withholds `designarena` only when three
+  things hold together — the step's output carries the marker, **this run's own** sidecar records the
+  determination with at least one contradicted identity, and the staged board file is byte-identical
+  to the copy the run took from the published snapshot. Any other failure of the same step, and every
+  failure of `fetch-aa` or `fetch-or`, still fails the run closed. The retention rides the existing
+  `retained_sources` path, so `sourceFreshnessErrors` requires the withheld source's date to be
+  *unchanged* and the run summary names it.
+
+**What it does not do.** It writes no approval and accepts no withdrawal: if the three come back the
+board simply collects again, and if the registry ever corroborates their absence the run fails closed
+for review, as it does today. It is also not a timer — retention ends when the source stops
+contradicting itself, not after N days. The staleness that remains visible is the published
+`sources.designarena` date on the site itself and the run report's retained-source line, which is how
+`epoch_eci` and the OpenRouter data-policy table have worked since 17 Sep.
+
+**A decision Florian may want to overrule, filed as D255.1.** `ops/daily/live-retention.mjs` records
+"Headline and price sources (AA, DesignArena, OpenRouter models/endpoints) are never retainable".
+That rule is about a contract the producer/critic review *rejected*; this is a collector-level refusal
+of a self-contradictory capture, before any review, and it withholds rather than overrules. I read
+the two as different mechanisms and implemented accordingly — but it is his line and he may want
+DesignArena to keep failing whole days closed. Posted to the board with D253.2 and D254.1.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D255 | **implemented**, pending non-implementer verification | `iter271-designarena/OBSERVATIONS.md`; the 00:41 run's own `published:false` report is the before-receipt; `replay/verification.json` **10/10**; `test/d255-designarena-board-registry.test.mjs` (6 tests, both directions) | Acceptance is one line: `node ops/ux-2026-09-12/bin/verify-d255-replay.mjs` (clear the out dir first). It replays the *retained real captures* offline — it reads no live source and costs DesignArena nothing. |
+| D255.1 | **open — decision recorded, Florian may overrule** | this section; `ops/daily/live-retention.mjs` core-source comment | Third standing question, beside D253.2 and D254.1. |
+| The three absent identities | **not withdrawn; no approval written** | `iter271-designarena/OBSERVATIONS.md` §"Why this is not an established withdrawal" | `gpt-6-astra`, `kimi-k3` (both boards) and `gpt-6-sol` (`fullstack`). Their published 2026-09-28 rows stay; no history-bridge estimate is created, because no observation was deleted. |
+
+**Gates at this commit, run on the committed tree, sequentially, unpiped:** `node
+scripts/build-dataset.mjs` **868 / 673 / 94 / 3,118** (only `generated_at`/`composite.collected_at`
+moved; restored); `CI=true npm test` **1,650 tests, 1,649 pass, 0 fail, 1 skip**, exit 0; `npx tsc
+--noEmit -p .` exit 0; `node scripts/validate-benchmark-registry.mjs` **293 entries, 29 AA field
+mappings, 240 verified evidence files**. Logs in `iter271-designarena/gate-*.log`.
+
+### What the next iteration should know
+
+1. **D255's live exercise is the next full run.** The 2026-09-29 05:17 run publishes from a staging
+   clone of `origin/main`, so it carries this change. If DesignArena is still contradicting itself,
+   the run should publish with `retained_sources` naming `designarena` and the summary line
+   "Veraltete externe Quelle (alter gepruefter Stand bleibt): designarena: …" — and `sources.designarena`
+   on the live site stays 2026-09-28 while every other date moves to 2026-09-29. If the three rows are
+   back, the board simply collects and there is nothing to see; that is a pass, not a miss.
+2. **If the absence persists for days, the question is the source's, not ours.** The conservative
+   reading holds only while the registry contradicts the board. Watch for the registry flipping any of
+   the three to `active: false` or dropping the category — at that moment the run fails closed again
+   and a reviewed withdrawal approval becomes the right answer. DesignArena has no approval path
+   wired at all (`assertApprovedIdentityCoverage` is AA-only), so that is the next code change, not a
+   config edit.
+3. **F-223, F-224 and F-225 (Fable pass 42) and D254 are all still `implemented` and need a
+   non-implementer engine** — iterations 269, 270 and 271 were all claude-opus, so none of them could
+   verify the others. `bin/verify-fable-pass42-directed.mjs` and `bin/verify-d254-live.mjs`, out dirs
+   cleared first.
+4. **Untouched and still open, unchanged:** D249.2 / D249.4, D253.2 (`BENCHMAXX_MIN_COMPARISONS = 6`),
+   D254.1 (the two-family reviewer pool), R9.1's two arms under the written-permission hold, and the
+   Coolify host alias (patched, not fixed).
+
+**`ALL-ACCEPTED` is not appended.**
