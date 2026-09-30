@@ -17,9 +17,10 @@ class RenderTests(unittest.TestCase):
         base=subprocess.check_output(['git','-C',str(REPO),'rev-parse','HEAD'],text=True).strip()
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory);plans={};artifacts={}
-            for benchmark,prior,path in (
-                ('jevbench','v1.5.2','data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.2-results.json'),
-                ('imagejevbench','v0.1.4','data/raw/benchmarks/jevbench/multimodal-preview/preview.json')):
+            live_prior = {}
+            for benchmark in ('jevbench', 'imagejevbench'):
+                prior, path = ap.latest_artifact_path(REPO, benchmark, base)
+                live_prior[benchmark] = prior
                 new=prior.rsplit('.',1)[0]+'.'+str(int(prior.rsplit('.',1)[1])+1)
                 data=json.loads(subprocess.check_output(['git','-C',str(REPO),'show',base+':'+path]))
                 data['revision']=new
@@ -43,7 +44,7 @@ for(const p of JSON.parse(process.argv[1])) {
             self.assertEqual(proc.returncode,0,proc.stderr)
             component=outputs['components/JevBenchV15ReleasePage.tsx'].read_text()
             self.assertIn('<JevBenchV15 ',component)
-            self.assertIn("'/jev-models/v1.5.2'",component)
+            self.assertIn("'/jev-models/" + live_prior['jevbench'] + "'", component)
             image=outputs['lib/jevbench-multimodal-preview.mjs'].read_text()
             self.assertIn('assertFastlaneAggregateOnly(a);',image)
             self.assertIn("'item_id'",image)
