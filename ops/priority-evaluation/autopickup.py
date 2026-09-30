@@ -25,6 +25,7 @@ import public_artifacts
 import measurement_dispatch
 import static_agent
 import release_render
+import refusal_approval
 import os
 import pwd
 import re
@@ -292,7 +293,7 @@ ROW_FIELDS = (
     "result_delivered_at", "notification_status", "confirmation_status", "board_status",
     "pickup_status", "pickup_owner", "pickup_job_dir", "pickup_attempts", "evaluation_status",
     "evaluation_attempts", "release_status", "delivery_email_status", "customer_hold_started_at",
-    "sla_paused_seconds", "refund_reason", "refund_status", "refunded_at", "result_url", "review_email_status", "refusal_email_status",
+    "sla_paused_seconds", "refund_reason", "refund_status", "refund_id", "refunded_at", "result_url", "review_email_status", "refusal_email_status",
 )
 
 
@@ -2566,10 +2567,9 @@ def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, 
         finish_ok(state, "finalize", now, outcome=summary["outcome"])
         if summary["outcome"] == "refused":
             update_row(rid, "release_status='refused'")
-            alert(state, "refused", effects, text=(
-                f"🧑 DU BIST DRAN\n\n🧑 Für dich\n- Decide the refusal email for fast-lane order {order_ref(rid)}.\n"
-                "  Why: The code review failed; the full refund is queued automatically, but the refusal email needs your approval.\n"
-                f"  Steps:\n  1. Read {job_dir}/review/CODE-REVIEW.md.\n  2. Approve or write the short refusal email.\n  Time: 5 minutes"))
+            alert(state, "refused", effects, digest=True, text=(
+                f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: source review failed. "
+                "The full refund is queued; its exact refusal email approval follows after refund success."))
         else:
             update_row(rid, "release_status='verified'")
         row = load_row(rid) or row
@@ -3057,24 +3057,27 @@ def advance_refund_notice(row: dict[str, Any], state: dict[str, Any], effects: E
     if refund_reason not in ("sla_48h_payment", "source_review_failed"):
         update_row(rid, "pickup_status='done'")
         return
-    if refund_reason == "source_review_failed" and row.get("refusal_email_status") != "approved":
-        # A source refusal has its own exact-message approval requirement. A refund never
-        # grants permission to send this template; retain the pending disposition.
-        alert(state, "refusal_approval_pending", effects, digest=True, text=(
-            f"🧑 DU BIST DRAN\n\n🧑 Für dich\n- Review the refusal email for fast-lane order {order_ref(rid)}.\n"
-            f"  Why: The source review failed and the full refund completed.\n"
-            f"  Steps:\n  1. Read {job_directory(rid, JOB_ROOT)}/review/CODE-REVIEW.md.\n"
-            "  2. Approve the exact refusal template through the order owner.\n  Time: 3 minutes"))
+    if refund_reason == "source_review_failed":
+        recipient = str(row.get("email") or "")
+        subject = f"Benchmark Heaven evaluation order {order_ref(rid)}: source review and refund"
+        body = fill_template(read_template("autopickup-refusal-template.txt"), {"ORDER_REF": order_ref(rid)})
+        outcome = refusal_approval.advance(
+            row, recipient, subject, body, STATE_ROOT / "refusals", effects, now.timestamp())
+        if outcome == "sent":
+            finish_ok(state, "refund_notice", now)
+            update_row(rid, "refusal_email_status='sent', pickup_status='done'")
+        elif outcome == "held":
+            update_row(rid, "refusal_email_status='held', pickup_status='done'")
+        elif outcome == "unknown":
+            alert(state, "refusal_outcome_unknown", effects, digest=True, text=(
+                f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: refusal approval or email "
+                "has an uncertain outcome; held for reconciliation without another send."))
         return
     item = step(state, "refund_notice")
     if item["status"] not in ("done", "exhausted") and step_due(state, "refund_notice", now):
         recipient = str(row.get("email") or "")
-        if refund_reason == "source_review_failed":
-            subject = f"Benchmark Heaven evaluation order {order_ref(rid)}: source review and refund"
-            body = fill_template(read_template("autopickup-refusal-template.txt"), {"ORDER_REF": order_ref(rid)})
-        else:
-            subject = f"Benchmark Heaven evaluation order {order_ref(rid)}: full refund"
-            body = fill_template(read_template("autopickup-refund-template.txt"), {"ORDER_REF": order_ref(rid)})
+        subject = f"Benchmark Heaven evaluation order {order_ref(rid)}: full refund"
+        body = fill_template(read_template("autopickup-refund-template.txt"), {"ORDER_REF": order_ref(rid)})
         if not effects.dry_run and mail_already_sent(recipient, subject, parse_ts(item.get("last_attempt_at"))):
             finish_ok(state, "refund_notice", now, recovered_from_audit=True)
         else:
@@ -3087,11 +3090,7 @@ def advance_refund_notice(row: dict[str, Any], state: dict[str, Any], effects: E
                     f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)} was refunded at 48 h; the refund email failed and needs a manual send."))
     if step(state, "refund_notice")["status"] in ("done", "exhausted"):
         update_row(rid, "pickup_status='done'")
-        if refund_reason == "source_review_failed" and not state["alerts"].get("review_refund_board"):
-            if effects.board(f"Fast-lane order {order_ref(rid)}: source review failed, the full refund completed, "
-                             "and no evaluation was run.", owner_for(rid), kind="note"):
-                state["alerts"]["review_refund_board"] = iso(now)
-                save_state(state)
+
 
 
 # ---------------------------------------------------------------------------

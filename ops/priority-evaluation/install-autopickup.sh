@@ -30,8 +30,12 @@ SHARE="$HOME/.local/share/priority-evaluation"
 STATE="$HOME/.local/state/fastlane-autopickup"
 UNITS="$HOME/.config/systemd/user"
 install -d -m 700 "$SHARE" "$STATE" "$STATE/requests" "$HOME/jobs/fastlane-evaluations"
-install -d -m 700 "$SHARE/runtime" "$HOME/wt" "$HOME/.local/state/bh"
-for f in autopickup.py official_scoring.py official_score.py official-profiles.json release_render.py host_github.py public_artifacts.py measurement_dispatch.py measurement_driver.py measurement-profiles.json static_agent.py MEASUREMENT-CONTRACT.md; do
+REPLY_GUARD="$HOME/jobs/fastlane-refusal-reply-guard-20260929"
+install -d -m 700 "$REPLY_GUARD"
+install -m 600 "$SRC/refusal-reply-prompt-template.md" "$REPLY_GUARD/PROMPT.md"
+install -d -m 700 "$SHARE/runtime" "$HOME/wt" "$HOME/.local/state/bh" \
+  "$HOME/.local/state/telegram-reply-broker/callback-status.d"
+for f in autopickup.py refusal_approval.py official_scoring.py official_score.py official-profiles.json release_render.py host_github.py public_artifacts.py measurement_dispatch.py measurement_driver.py measurement-profiles.json static_agent.py MEASUREMENT-CONTRACT.md; do
   install -m 600 "$SRC/$f" "$SHARE/runtime/$f"
 done
 python3 - "$SHARE/runtime" <<'VERIFY_PROFILES'
@@ -43,7 +47,7 @@ for benchmark in ('jevbench', 'imagejevbench'):
 print('Official scorer/reference pins verified')
 VERIFY_PROFILES
 # Apply the repository's idempotent schema before either worker can see new columns.
-psql -X -q -v ON_ERROR_STOP=1 -d benchmarkheaven_accounts -f "$REPO_ROOT/db/accounts/001_init.sql" >/dev/null
+psql -X -q --single-transaction -v ON_ERROR_STOP=1 -d benchmarkheaven_accounts -f "$REPO_ROOT/db/accounts/001_init.sql" >/dev/null
 install -m 700 "$SRC/worker.py" "$BIN/jevbench-priority-worker.py"
 ln -sfn "$SHARE/runtime/autopickup.py" "$BIN/jevbench-autopickup.py"
 install -m 644 "$SRC/jevbench-priority-worker.service" "$UNITS/jevbench-priority-worker.service"
@@ -89,7 +93,7 @@ state.setdefault("jobs", {})["fastlane-autopickup"] = {
     "want": True,
     "why": ("Florian 29 Sep 2026: new paid fast-lane orders run fully autonomously (payment time, "
             "confirmation, owner handoff, evaluation, PR + bh-merge-queue release, result mail, "
-            "@airesearch12 post only on a top-five change). 15-minute pickup + 4 daily sweeps; "
+            "@airesearch12 post only on a top-five change). 5-minute pickup + 4 daily sweeps; "
             "24/36 h alerts and automatic refund 48 h after payment. Kill switch: "
             "~/.local/state/fastlane-autopickup/KILL."),
     "unit": "jevbench-priority-autopickup.timer + jevbench-priority-autopickup-health.timer",
