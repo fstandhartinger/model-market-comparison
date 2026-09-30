@@ -9,6 +9,7 @@ import { previewMetadata } from "../../lib/seo";
 // Intelligence Index that are not deprecated. 2026-09-18: glm-5.2 removed — deprecated upstream on
 // 2026-09-18 (all catalog rows carry `deprecated`), so a curated family that claims "not deprecated"
 // cannot keep it; the family stays represented by GLM 5.3 / GLM 5.3 Flash above.
+// 2026-09-30: mimo-v2.5-pro deprecated upstream (AA) — replaced by qwen3.8-flash-next (AA 39.8, open weights, EU route).
 const SOTA = [
   { key: "glm-5.3", name: "GLM 5.3" },
   { key: "kimi-k3", name: "Kimi K3" },
@@ -18,7 +19,7 @@ const SOTA = [
   { key: "deepseek-v4-pro-0813", name: "DeepSeek V4 Pro 0813" },
   { key: "kimi-k2.7-code", name: "Kimi K2.7 Coding" },
   { key: "minimax-m3", name: "MiniMax M3" },
-  { key: "mimo-v2.5-pro", name: "Xiaomi MiMo-V2.5-Pro" },
+  { key: "qwen3.8-flash-next", name: "Qwen3.8 Flash Next" },
 ];
 
 // Additional EU-sovereign providers that expose a per-token API. Most focus on
