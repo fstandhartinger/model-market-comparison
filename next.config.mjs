@@ -12,8 +12,9 @@ const nextConfig = {
   // CR-56.3: WebMCP tools may register only in this site's own top-level pages and same-origin frames
   // (a cross-origin frame never gets them; unknown to browsers without WebMCP).
   // CR-170: renamed JevBench system pages keep their old URL as a permanent redirect.
+  // The /image-jev-bench/v0.1.4 archive URL existed only during the 29-30 Sep v0.2 page (rolled back).
   async redirects() {
-    return JEV_SYSTEM_SLUG_REDIRECTS;
+    return [...JEV_SYSTEM_SLUG_REDIRECTS, { source: "/image-jev-bench/v0.1.4", destination: "/image-jev-bench", permanent: false }];
   },
   async headers() {
     return [

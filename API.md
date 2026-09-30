@@ -50,18 +50,13 @@ and supplement files are under `data/raw/benchmarks/jevbench/`. Each result endp
 ### Image JevBench
 
 [`/image-jev-bench`](https://benchmarkheaven.com/image-jev-bench) is the current public
-HTML results page for ImageJevBench v0.2. The v0.1.4 release is preserved at
-[`/image-jev-bench/v0.1.4`](https://benchmarkheaven.com/image-jev-bench/v0.1.4). There is no
-separate public JSON API for this benchmark. The v0.2 public HTML artifact is
-`data/releases/imagejev-v02.html` (SHA-256
-`5c112751431fa7d67519e790c48a4f5f77d18c8abf451bcbe5e76d23a7fdc305`). The v0.1.4
-aggregate artifact is
-`data/raw/benchmarks/jevbench/multimodal-preview/preview.json` (SHA-256
-`385aba04acb0649f73264f57b237fa6bcf481763641978d732f81b4e88ba2150`). The prior v0.1.1,
-v0.1.2 and v0.1.3 artifacts are retained as `preview-v0.1.1.json`, `preview-v0.1.2.json`
-and `preview-v0.1.3.json` in the same directory. The v0.2 page publishes system-level
-aggregates and the frozen method only; it does not redistribute image files, questions,
-answer keys or per-item predictions while the dataset redistribution licence is finalized.
+HTML results page for Image JevBench v0.1.4; there is no separate public JSON API for this
+benchmark. Its aggregate artifact is `data/raw/benchmarks/jevbench/multimodal-preview/preview.json`
+(SHA-256 `385aba04acb0649f73264f57b237fa6bcf481763641978d732f81b4e88ba2150`). The prior
+v0.1.1, v0.1.2 and v0.1.3 artifacts are retained as `preview-v0.1.1.json`,
+`preview-v0.1.2.json` and `preview-v0.1.3.json` in the same directory. The page
+publishes system-level aggregates only, not sealed images, tasks, answer keys or per-item
+predictions.
 
 ### `GET /api/benchmark-matrix`
 
