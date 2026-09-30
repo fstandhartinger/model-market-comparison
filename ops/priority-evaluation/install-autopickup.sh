@@ -30,6 +30,9 @@ SHARE="$HOME/.local/share/priority-evaluation"
 STATE="$HOME/.local/state/fastlane-autopickup"
 UNITS="$HOME/.config/systemd/user"
 install -d -m 700 "$SHARE" "$STATE" "$STATE/requests" "$HOME/jobs/fastlane-evaluations"
+REPLY_GUARD="$HOME/jobs/fastlane-refusal-reply-guard-20260929"
+install -d -m 700 "$REPLY_GUARD"
+install -m 600 "$SRC/refusal-reply-prompt-template.md" "$REPLY_GUARD/PROMPT.md"
 install -d -m 700 "$SHARE/runtime" "$HOME/wt" "$HOME/.local/state/bh" \
   "$HOME/.local/state/telegram-reply-broker/callback-status.d"
 for f in autopickup.py refusal_approval.py official_scoring.py official_score.py official-profiles.json release_render.py host_github.py public_artifacts.py measurement_dispatch.py measurement_driver.py measurement-profiles.json static_agent.py MEASUREMENT-CONTRACT.md; do
