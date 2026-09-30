@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { gunzipSync } from 'node:zlib';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { assertIdentityCoverage, assertApprovedIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, endpointIdentityDigest, identityDigest, planOpenRouterWithdrawals, selectOpenRouterEndpointApproval } from '../lib/live-source.mjs';
+import { isApprovedMeasurementWithdrawal, assertIdentityCoverage, assertApprovedIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, endpointIdentityDigest, identityDigest, planOpenRouterWithdrawals, selectOpenRouterEndpointApproval } from '../lib/live-source.mjs';
 
 test('catalog shrink, empty, malformed and duplicate identities fail before publication', () => {
   const previous = [{ id: 'one' }, { id: 'two' }];
@@ -177,6 +177,20 @@ test('lost numeric fields are not confused with published zero or already unknow
   assert.throws(() => assertMeasuredFields({}, { score: '34' }, ['score'], 'synthetic'));
   assert.doesNotThrow(() => assertMeasuredFields({ score: 34 }, { score: 0 }, ['score'], 'synthetic'));
   assert.doesNotThrow(() => assertMeasuredFields({ score: null }, {}, ['score'], 'synthetic'));
+});
+
+test('a reviewed, expiring approval tolerates exactly one named measurement withdrawal', () => {
+  const now = Date.parse('2026-09-30T12:00:00Z');
+  const a = { model_id: 'm1', field: 'score', previous_value: 34, reviewed_at: '2026-09-30T06:00:00Z', expires_at: '2026-10-02T06:00:00Z', review_basis: 'source primary shows null' };
+  const call = (over, prior = 34, opts = {}) => assertMeasuredFields({ score: prior }, { score: null }, ['score'], 'synthetic', { approvals: [{ ...a, ...over }], modelId: 'm1', now, ...opts });
+  assert.doesNotThrow(() => call({}));
+  assert.throws(() => call({ model_id: 'm2' }), /requires review/);
+  assert.throws(() => call({ field: 'other' }), /requires review/);
+  assert.throws(() => call({}, 35), /requires review/);
+  assert.throws(() => call({}, 34, { now: Date.parse('2026-10-03T00:00:00Z') }), /requires review/);
+  assert.throws(() => call({ review_basis: ' ' }), /requires review/);
+  assert.throws(() => call({ expires_at: '2026-10-09T06:00:00Z' }), /requires review/);
+  assert.equal(isApprovedMeasurementWithdrawal([], 'm1', 'score', 34, { now }), false);
 });
 
 test('actual OpenRouter collector exits nonzero and leaves good file untouched on a partial endpoint response', async () => {

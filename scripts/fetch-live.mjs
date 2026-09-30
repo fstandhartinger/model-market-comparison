@@ -104,7 +104,7 @@ async function fetchArtificialAnalysis() {
   for (const model of apiModels) {
     if (!model.evaluations || !model.pricing || typeof model.name !== 'string' || typeof model.slug !== 'string') throw new Error('AA missing model fields');
     const old = priorModels.get(model.id);
-    assertMeasuredFields(old?.evaluations, model.evaluations, [...new Set([...Object.keys(old?.evaluations || {}), ...Object.keys(model.evaluations)])], `AA ${model.id}`);
+    assertMeasuredFields(old?.evaluations, model.evaluations, [...new Set([...Object.keys(old?.evaluations || {}), ...Object.keys(model.evaluations)])], `AA ${model.id}`, { approvals: approvals.aa_measurements, modelId: model.id });
     assertMeasuredFields(old?.pricing, model.pricing, ['price_1m_input_tokens', 'price_1m_output_tokens'], `AA ${model.id}`);
   }
   const { models, missing, extraCount } = enrichArtificialAnalysis(apiModels, metadata, previous);
