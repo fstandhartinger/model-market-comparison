@@ -89,7 +89,8 @@ test('D252: each anchor records the coverage it was last measured at, and the fi
 // instead of rendering a column of dashes.
 test('D252: the score pickers offer exactly the category composites the dataset publishes', () => {
   const published = new Set((dataset.category_scores?.categories ?? []).map((c) => c.key));
-  assert.ok(published.size >= 2, 'the dataset still publishes category composites');
+  assert.deepEqual([...published].sort(), anchors.categories.map((c) => c.key).sort(),
+    'published category scores must exactly match the declared qualified anchor sets');
   const { scores } = computeCategoryScores(matrix, anchors);
   const held = new Set();
   for (const row of scores.values()) for (const key of Object.keys(row)) held.add(key);
