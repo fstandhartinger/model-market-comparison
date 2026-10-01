@@ -1,0 +1,10 @@
+export type ClassCaps = { costFactor: number; latencyFactor: number };
+export declare const DEFAULT_CAP: 2;
+export declare const MIN_CAP: 1;
+export declare const MAX_CAP: 10;
+export declare function clampCap(value: number): number;
+export declare function parseCap(value: string | null): number;
+export declare function parseCaps(params: URLSearchParams): ClassCaps;
+export declare function serialiseCaps(params: URLSearchParams, caps: ClassCaps): URLSearchParams;
+export declare function formatCap(cap: number): string;
+export declare function isOfficialCaps(caps: ClassCaps): boolean;

@@ -84,7 +84,8 @@ test('page order: Capability headline, bubble charts, then the composite chart w
   const board = page.indexOf('<JevModelsV14Board');
   assert.ok(headline > 0 && headline < bubbles && bubbles < board, 'Capability ranking, then bubbles, then the board');
   const ranking = read('../components/JevCapabilityRanking.tsx');
-  assert.match(ranking, /at most \{limits\.factor\}× \{refName\}/);
+  assert.match(ranking, /at most \{formatCap\(costFactor\)\} \{refName\}/);
+  assert.match(ranking, /at most \{formatCap\(latencyFactor\)\} \{refName\}/);
   assert.match(ranking, /data-bh-jev-class-outside/);
   const chart = read('../components/JevBoardInteractive.tsx');
   const above = chart.indexOf('<JevWeightSliders position="above"');

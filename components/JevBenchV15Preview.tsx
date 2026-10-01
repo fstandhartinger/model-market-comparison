@@ -9,7 +9,8 @@ import {
 import { jevV15SliderPresets, jevV15BoardSystem, jevV15BoardRow, jevV15CompareRow, jevV15OpenSource } from '../lib/jevbench-v15-board.mjs';
 import { JEVBENCH_REPO } from '../lib/jevbench.mjs';
 import { jevTypeVarName, JEV_TYPE_LABEL } from './jevTypes';
-import { JevCapabilityRanking, jevClassView } from './JevCapabilityRanking';
+import { JevCapabilityRanking } from './JevCapabilityRanking';
+import { jevClassView } from './jevClassView';
 import { JevBubbleCharts } from './JevBubbleChart';
 import { JevScoreChart } from './JevBoardInteractive';
 import { JevCompareV15 } from './JevCompareV15';

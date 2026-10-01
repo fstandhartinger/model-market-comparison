@@ -1,5 +1,6 @@
 import { imageJevBoardSystems, imageJevBoardRows, imageJevCompareRows, imageJevCapabilityLimits, imageJevSliderPresets } from '../../../lib/imagejev-board.mjs';
-import { JevCapabilityRanking, jevClassView } from '../../../components/JevCapabilityRanking';
+import { JevCapabilityRanking } from '../../../components/JevCapabilityRanking';
+import { jevClassView } from '../../../components/jevClassView';
 import { JevBubbleCharts } from '../../../components/JevBubbleChart';
 import { JevCapabilityLazy } from '../../../components/JevCapabilityLazy';
 import { JevScoreChart } from '../../../components/JevBoardInteractive';

@@ -1,8 +1,10 @@
-import type { CSSProperties, ReactNode } from 'react';
+'use client';
+
+import { useEffect, useId, useState, type CSSProperties, type ReactNode } from 'react';
+import { DEFAULT_CAP, clampCap, formatCap, isOfficialCaps, parseCaps, serialiseCaps, type ClassCaps } from '../lib/jevbench-class-caps.mjs';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
-import { jevClassRows, medianLatencySpeed, ratioPosition, trafficLightZone, type JevClassOptions, type JevClassResult, type JevClassRow } from '../lib/jevbench-jev-class.mjs';
+import { jevClassRows, ratioPosition, trafficLightZone, type JevClassOptions, type JevClassResult, type JevClassRow } from '../lib/jevbench-jev-class.mjs';
 import { shortName, usd } from './JevCapabilityChart';
-import type { JevBubblePoint } from './JevBubbleChart';
 import { imageJevSourceUrl } from '../lib/imagejev-system-links.mjs';
 import { jevSourceUrl } from './jevSystemLinks';
 import { JevCapabilityTip } from './JevCapabilityTip';
@@ -37,7 +39,7 @@ function TrafficLightBar({ kind, ratio, factor, referenceLabel, derived = false 
     <span className="bh-tl-green absolute inset-y-0 left-0 rounded-l-full" style={{ width: `${greenEnd}%` }} />
     {amberEnd > greenEnd && <span className="bh-tl-amber absolute inset-y-0" style={{ left: `${greenEnd}%`, width: `${amberEnd - greenEnd}%` }} />}
     {end > amberEnd && <span className="bh-tl-red absolute inset-y-0 rounded-r-full" style={{ left: `${amberEnd}%`, width: `${end - amberEnd}%` }} />}
-    {[1, factor].map((tick) => <i key={tick} className="bh-tl-tick absolute top-[-1px] h-[6px] border-l" style={{ left: `${ratioPosition(tick)}%` }} aria-hidden="true" />)}
+    {Array.from(new Set([1, factor].filter(Number.isFinite))).map((tick) => <i key={tick} className="bh-tl-tick absolute top-[-1px] h-[6px] border-l" style={{ left: `${ratioPosition(tick)}%` }} aria-hidden="true" />)}
     </span>
   </span>;
 }
@@ -46,7 +48,7 @@ function RatioDetail({ value, ratio, factor, referenceLabel, kind }: {
   value: string; ratio: number | null; factor: number; referenceLabel: string; kind: 'cost' | 'latency';
 }) {
   const zone = trafficLightZone(ratio, factor);
-  return <>{value}{zone && ratio != null && <> = {ratio.toFixed(2)}× {referenceLabel} → <span className={`bh-tl-chip bh-tl-${zone}`}>{zone}</span>: {zone === 'green' ? `as ${kind === 'cost' ? 'cheap' : 'fast'} as ${referenceLabel} or better` : zone === 'amber' ? `inside the ${factor}× cap, but ${kind === 'cost' ? 'costlier' : 'slower'} than ${referenceLabel}` : `outside the ${factor}× cap`}</>}</>;
+  return <>{value}{zone && ratio != null && <> = {ratio.toFixed(2)}× {referenceLabel} → <span className={`bh-tl-chip bh-tl-${zone}`}>{zone}</span>: {zone === 'green' ? `as ${kind === 'cost' ? 'cheap' : 'fast'} as ${referenceLabel} or better` : zone === 'amber' ? `${factor === Infinity ? 'no cap applies, but' : `inside the ${factor}× cap, but`} ${kind === 'cost' ? 'costlier' : 'slower'} than ${referenceLabel}` : `outside the ${factor}× cap`}</>}</>;
 }
 
 // Florian 1 Oct 2026: an API model whose base model we know is ranked at the developer's own list price; the composite
@@ -60,12 +62,12 @@ function basePriceCheck(row: JevV14System, reference: JevClassResult['reference'
   const fits = base <= costCap;
   referenceLabel = referenceLabel.replace(/ \([^)]*\)$/, '');
   const short = `API price · eligibility checked at the developer's list price; at base-model pricing it would ${fits ? 'still fit within' : 'exceed'} the cost cap (${ratio.toFixed(2)}× ${referenceLabel})`;
-  const detail = `Ranked at the developer's own API list price. ${alt?.note ? `Base-model reference: ${alt.note}, ` : 'At the base-model reference price we use for self-served open weights of the same base, '}USD ${base.toFixed(4)} per 1,000 decisions = ${ratio.toFixed(2)}× ${referenceLabel}, ${fits ? 'inside' : 'outside'} the cost cap (USD ${costCap.toFixed(4)}). Capability Score itself does not depend on price; latency is measured on the developer's endpoint either way.`;
+  const detail = `Ranked at the developer's own API list price. ${alt?.note ? `Base-model reference: ${alt.note}, ` : 'At the base-model reference price we use for self-served open weights of the same base, '}USD ${base.toFixed(4)} per 1,000 decisions = ${ratio.toFixed(2)}× ${referenceLabel}, ${fits ? 'inside' : 'outside'} the cost cap (${costCap === Infinity ? 'no cap' : `USD ${costCap.toFixed(4)}`}). Capability Score itself does not depend on price; latency is measured on the developer's endpoint either way.`;
   return { short, detail, fits, ratio };
 }
 
-function RankingRow({ item, rank, reference, factor, referenceLabel, classLabel, note, costCap, benchmark = 'jevbench' }: {
-  item: JevClassRow; rank: string; reference: JevClassResult['reference']; factor: number;
+function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenceLabel, classLabel, note, costCap, benchmark = 'jevbench' }: {
+  item: JevClassRow; rank: string; reference: JevClassResult['reference']; costFactor: number; latencyFactor: number;
   referenceLabel: string; classLabel: string; note?: string; costCap: number; benchmark?: BaseModelBenchmark;
 }) {
   const { row, capability, cost, latency } = item;
@@ -87,8 +89,8 @@ function RankingRow({ item, rank, reference, factor, referenceLabel, classLabel,
     <dt className="text-gray-400">Intelligence</dt><dd className="tabular">{intelligence == null ? 'unknown' : one(intelligence)}</dd>
     <dt className="text-gray-400">Calibration</dt><dd className="tabular">{calibration == null ? 'unknown' : one(calibration)}</dd>
     <dt className="text-gray-400">Cost Score</dt><dd className="tabular">{costScore == null ? 'unknown' : one(costScore)}</dd>
-    <dt className="text-gray-400">Cost vs cap</dt><dd className="tabular"><RatioDetail value={cost == null ? 'unknown' : `${usd(cost)} per 1,000 decisions`} ratio={item.costRatio} factor={factor} referenceLabel={referenceLabel} kind="cost" /></dd>
-    <dt className="text-gray-400">Latency vs cap</dt><dd className="tabular"><RatioDetail value={latency != null ? secs(latency) : latencyRatio != null ? `${secs(latencyRatio * reference.latency)} equivalent (derived from Speed axis; p50 not reported)` : 'not reported'} ratio={latencyRatio} factor={factor} referenceLabel={referenceLabel} kind="latency" /></dd>
+    <dt className="text-gray-400">Cost vs cap</dt><dd className="tabular"><RatioDetail value={cost == null ? 'unknown' : `${usd(cost)} per 1,000 decisions`} ratio={item.costRatio} factor={costFactor} referenceLabel={referenceLabel} kind="cost" /></dd>
+    <dt className="text-gray-400">Latency vs cap</dt><dd className="tabular"><RatioDetail value={latency != null ? secs(latency) : latencyRatio != null ? `${secs(latencyRatio * reference.latency)} equivalent (derived from Speed axis; p50 not reported)` : 'not reported'} ratio={latencyRatio} factor={latencyFactor} referenceLabel={referenceLabel} kind="latency" /></dd>
     {basePrice && <><dt className="text-gray-400">Pricing</dt><dd data-bh-jev-capability-base-price-tip>{basePrice.detail}</dd></>}
     <dt className="text-gray-400">Rank</dt><dd className="tabular">Capability Score {rank || `outside ${classLabel}`} · official {row.rank == null ? 'unranked' : `#${row.rank}`}</dd>
     <dt className="text-gray-400">Colours</dt><dd>Green ≤ reference; amber ≤ cap; red &gt; cap. Shorter is cheaper or faster.</dd>
@@ -106,8 +108,8 @@ function RankingRow({ item, rank, reference, factor, referenceLabel, classLabel,
     </span>
     <span className="col-start-2 col-end-7 row-start-2 mt-0.5 flex min-w-0 flex-col justify-center gap-[3px] sm:col-start-3 sm:col-end-4 sm:row-start-1 sm:mt-0">
       <span className="bh-jevc-grid flex h-[10px] rounded-sm" aria-hidden="true"><span className={'bh-jevc-bar' + (row.ranked ? '' : ' is-partial')} style={{ width: `${Math.max(0, Math.min(100, capability))}%` }} /></span>
-      <TrafficLightBar kind="cost" ratio={item.costRatio} factor={factor} referenceLabel={referenceLabel} />
-      <TrafficLightBar kind="latency" ratio={latencyRatio} factor={factor} referenceLabel={referenceLabel} derived={derived} />
+      <TrafficLightBar kind="cost" ratio={item.costRatio} factor={costFactor} referenceLabel={referenceLabel} />
+      <TrafficLightBar kind="latency" ratio={latencyRatio} factor={latencyFactor} referenceLabel={referenceLabel} derived={derived} />
     </span>
     <span className="tabular col-start-3 row-start-1 text-right sm:col-start-4">{intelligence == null ? '—' : one(intelligence)}</span>
     <span className="tabular col-start-4 row-start-1 text-right sm:col-start-5">{costScore == null ? '—' : one(costScore)}</span>
@@ -125,25 +127,38 @@ function RankingRow({ item, rank, reference, factor, referenceLabel, classLabel,
   </li>;
 }
 
-export function jevClassView(systems: JevV14System[], options?: JevClassOptions): JevClassResult & { points: JevBubblePoint[] } {
-  const result = jevClassRows(systems, options);
-  let n = 0;
-  const classRank = new Map<string, number>();
-  for (const r of result.rows) if (r.inClass && r.row.ranked) classRank.set(r.row.key, ++n);
-  const points: JevBubblePoint[] = result.rows.map((r) => ({
-    key: r.row.key, name: shortName(r.row.display), cls: r.row.class, rank: r.row.rank, ranked: !!r.row.ranked,
-    capability: r.capability, intelligence: r.row.axes?.intelligence ?? null, calibration: r.row.axes?.calibration ?? null,
-    cost: r.cost, costKind: r.row.cost?.kind ?? 'unknown', speed: r.row.axes?.speed ?? null, latency: r.latency, medianSpeed: medianLatencySpeed(r.row), score: r.row.jevbench_score ?? null,
-    inClass: r.inClass, classRank: classRank.get(r.row.key) ?? null, isReference: r.isReference, outsideBecause: r.inClass ? null : r.reasons.join(', '),
-  }));
-  return { ...result, points };
-}
-
 export function JevCapabilityRanking({ systems, revision, officialHref, benchName = 'JevBench', classLabel = 'Jev-class', referenceLabel = 'Jev', eligibilityNote, correlationReason, benchmark = 'jevbench', ...options }: {
   systems: JevV14System[]; revision: string; officialHref: string; benchName?: string; classLabel?: string;
   eligibilityNote?: ReactNode; correlationReason?: string; benchmark?: BaseModelBenchmark;
 } & JevClassOptions) {
-  const { reference, limits, rows, costLatencySpearman, n: pairedCount } = jevClassRows(systems, { ...options, referenceLabel });
+  const [caps, setCaps] = useState<ClassCaps>({ costFactor: DEFAULT_CAP, latencyFactor: DEFAULT_CAP });
+  const [copied, setCopied] = useState(false);
+  const [desktopControls, setDesktopControls] = useState(false);
+  const controlId = useId();
+  useEffect(() => {
+    const readCaps = () => setCaps(parseCaps(new URLSearchParams(window.location.search)));
+    const desktop = window.matchMedia('(min-width: 640px)');
+    const resizeControls = () => setDesktopControls(desktop.matches);
+    readCaps();
+    resizeControls();
+    desktop.addEventListener('change', resizeControls);
+    window.addEventListener('popstate', readCaps);
+    return () => {
+      desktop.removeEventListener('change', resizeControls);
+      window.removeEventListener('popstate', readCaps);
+    };
+  }, []);
+  const updateCaps = (next: ClassCaps) => {
+    setCaps(next);
+    setCopied(false);
+    const url = new URL(window.location.href);
+    // costcap / latcap only; preserve w, view, all other query parameters and the hash.
+    url.search = serialiseCaps(url.searchParams, next).toString();
+    window.history.replaceState(window.history.state, '', url);
+  };
+  const official = isOfficialCaps(caps);
+  const { costFactor, latencyFactor } = caps;
+  const { reference, limits, rows, costLatencySpearman, n: pairedCount } = jevClassRows(systems, { ...options, ...caps, referenceLabel });
   const inside = rows.filter((r) => r.inClass);
   const outside = rows.filter((r) => !r.inClass);
   const speedFallback = inside.filter((r) => r.latencyBasis === 'speed-axis');
@@ -151,9 +166,9 @@ export function JevCapabilityRanking({ systems, revision, officialHref, benchNam
   let n = 0;
   const numbered = inside.map((r) => ({ r, label: r.row.ranked ? String(++n) : '–' }));
   const [lead] = numbered;
-  const bar = ({ r, label }: { r: JevClassRow; label: string }) => <RankingRow key={r.row.key} item={r} rank={label} reference={reference} factor={limits.factor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark}
+  const bar = ({ r, label }: { r: JevClassRow; label: string }) => <RankingRow key={r.row.key} item={r} rank={label} reference={reference} costFactor={costFactor} latencyFactor={latencyFactor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark}
     note={r.isReference ? `Reference system for the ${classLabel} limits` : !r.row.ranked ? `Not ranked in the official ${benchName} Score (${r.row.listing.replace(/_/g, ' ')})` : undefined} />;
-  const outsideBar = (r: JevClassRow) => <RankingRow key={r.row.key} item={r} rank="" reference={reference} factor={limits.factor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark} note={`Outside: ${r.reasons.join(', ')}`} />;
+  const outsideBar = (r: JevClassRow) => <RankingRow key={r.row.key} item={r} rank="" reference={reference} costFactor={costFactor} latencyFactor={latencyFactor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark} note={`Outside: ${r.reasons.join(', ')}`} />;
   const types = jevLegendTypes(rows.map((r) => r.row.class));
 
   // F-197 (pass 36): mt-6 not mt-8 — with the guides nav folded out of the page head the first Capability row
@@ -161,15 +176,38 @@ export function JevCapabilityRanking({ systems, revision, officialHref, benchNam
   return <section id="jev-capability" className="mt-6 scroll-mt-6" aria-labelledby="jev-capability-title" data-bh-jev-capability-ranking>
     <p className="bh-eyebrow">{benchName} {revision} · headline</p>
     <h2 id="jev-capability-title" className="mt-1 text-2xl font-bold leading-snug sm:text-3xl">{benchName} Capability Score</h2>
-    <p className="bh-muted mt-1 text-[13px]">Capability ranking of {classLabel} systems</p>
+    <p className="bh-muted mt-1 text-[13px]">Capability ranking of {classLabel} systems{!official && <> <span className="bh-jevc-notdefault ml-1" data-bh-jev-caps-custom>Custom caps: cost {formatCap(costFactor)} · latency {formatCap(latencyFactor)} — not the official ranking</span></>}</p>
     <p className="mt-2 max-w-4xl text-[15px] leading-snug">
       Capability Score averages <b>Intelligence</b> and <b>Calibration</b>.
       {lead && <> <b>{shortName(lead.r.row.display)}</b> leads the {classLabel} systems with {one(lead.r.capability)}.</>}
     </p>
     <p className="bh-muted mt-2 text-[13px] leading-snug" data-bh-jev-class-summary>
-      {classLabel} means at most {limits.factor}× the cost and median latency of {referenceLabel}. <a className="text-accent underline" href="#jev-class-method">How we choose ↘</a>
+      {official ? <>{classLabel} means at most {limits.factor}× the cost and median latency of {referenceLabel}.</> : <>{classLabel} uses {formatCap(costFactor)} for cost and {formatCap(latencyFactor)} for median latency vs {referenceLabel}.</>} <a className="text-accent underline" href="#jev-class-method">How we choose ↘</a>
     </p>
 
+    <details className="mt-2" open={desktopControls || !official} data-bh-jev-cap-controls>
+      <summary className="cursor-pointer text-xs text-accent sm:hidden">Adjust cost / latency caps · {official ? <span className="bh-jevc-official">2× official</span> : 'custom'}</summary>
+      <div className="bh-jev-cap-controls-body mt-2 sm:mt-0">
+      <div className="grid max-w-xl grid-cols-2 gap-x-4">
+        {([['costFactor', 'Max cost'], ['latencyFactor', 'Max median latency']] as const).map(([axis, label]) => <label key={axis} htmlFor={`${controlId}-${axis}`} className="text-[11px] sm:text-xs">
+          <span className="flex flex-wrap items-baseline justify-between gap-x-2"><span>{label} vs {referenceLabel}</span><b className="tabular">{formatCap(caps[axis])}{caps[axis] === DEFAULT_CAP ? <span className="bh-muted font-normal"> · official</span> : null}</b></span>
+          <input id={`${controlId}-${axis}`} className="mt-1 block h-3 w-full accent-[rgb(var(--accent))]" type="range" min="1" max="10.1" step="0.1"
+            value={caps[axis] === Infinity ? 10.1 : caps[axis]} list={`${controlId}-official`} aria-valuetext={formatCap(caps[axis])}
+            onChange={(event) => updateCaps({ ...caps, [axis]: Number(event.target.value) > 10 ? Infinity : clampCap(Number(event.target.value)) })} />
+          <span className="bh-muted mt-1 flex justify-between text-[10px]"><span>1×</span><span>10× · then no cap</span></span>
+        </label>)}
+      </div>
+      <datalist id={`${controlId}-official`}><option value="2" label="2× official" /></datalist>
+      <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
+        <span className={official ? 'bh-jevc-official' : 'bh-jevc-notdefault'} role="status">{official ? 'Official' : 'Custom caps — not the official ranking'}</span>
+        <button type="button" className="text-accent underline disabled:opacity-50" disabled={official} onClick={() => updateCaps({ costFactor: DEFAULT_CAP, latencyFactor: DEFAULT_CAP })}>Reset to official caps</button>
+        <button type="button" className="text-accent underline" onClick={async () => {
+          try { await navigator.clipboard.writeText(window.location.href); setCopied(true); }
+          catch { setCopied(false); }
+        }}>{copied ? 'Link copied' : 'Copy link to this view'}</button>
+      </div>
+      </div>
+    </details>
     <figure className="bh-panel mt-4 p-4 sm:p-5" data-bh-jev-capability-bars aria-labelledby="jev-capability-title">
       <div className={`${grid} items-end text-[10px] sm:text-[11px]`} data-bh-jev-capability-columns>
         <span className="bh-muted text-right">#</span><span className="bh-muted">System</span>
@@ -184,25 +222,28 @@ export function JevCapabilityRanking({ systems, revision, officialHref, benchNam
         <summary className="cursor-pointer text-sm font-semibold text-accent">Show all {numbered.length} {classLabel} systems ({numbered.length - HEADLINE_TOP} more)</summary>
         <ol className="mt-2.5 space-y-2.5">{numbered.slice(HEADLINE_TOP).map(bar)}</ol>
       </details>}
-      <p className="bh-muted mt-2 text-[11.5px] leading-snug">Wide coloured bar = Capability Score (0–100). Thin bars: cost above, median latency below; shared log ratio scale 0.25× … 64× {referenceLabel}, ticks at 1× and {limits.factor}× (cap). Shorter is cheaper or faster. * = est. (estimated cost). # counts ranked {classLabel} systems; “–” marks unranked or outside systems. Tap ⓘ or hover a row or thin bar for details.</p>
+      <p className="bh-muted mt-2 text-[11.5px] leading-snug">Wide coloured bar = Capability Score (0–100). Thin bars: cost above, median latency below; shared log ratio scale 0.25× … 64× {referenceLabel}, {official ? <>ticks at 1× and {limits.factor}× (cap).</> : <>ticks at 1×{costFactor !== Infinity && costFactor !== 1 ? ` and ${formatCap(costFactor)} (cost cap)` : ''}{latencyFactor !== Infinity && latencyFactor !== 1 ? ` and ${formatCap(latencyFactor)} (latency cap)` : ''}; cost {formatCap(costFactor)}, latency {formatCap(latencyFactor)}. An uncapped axis never turns red.</>} Shorter is cheaper or faster. * = est. (estimated cost). # counts ranked {classLabel} systems; “–” marks unranked or outside systems. Tap ⓘ or hover a row or thin bar for details.</p>
       <p className="bh-muted mt-1 text-[11.5px] leading-snug" data-bh-cost-latency-correlation>{costLatencySpearman != null && Math.abs(costLatencySpearman) < 0.2 ? 'Cost and latency are shown separately because they are nearly independent across systems' : costLatencySpearman == null ? 'Cost and latency are shown separately' : 'Cost and latency correlate here'} (Spearman ρ = {costLatencySpearman == null ? 'unavailable' : costLatencySpearman.toFixed(2)}, n = {pairedCount}){correlationReason && costLatencySpearman != null && Math.abs(costLatencySpearman) >= 0.2 ? `, ${correlationReason}` : ''}.</p>
       <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11.5px]" aria-label="Ranking colour legend" data-bh-jev-capability-legend>
         {types.map((type) => <li key={type} style={{ '--jev-t': `var(${jevTypeVarName(type)})` } as CSSProperties}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[type] ?? type}</li>)}
-        {(['green', 'amber', 'red'] as const).map((zone) => <li key={zone}><span className={`bh-tl-${zone} mr-1.5 inline-block h-[4px] w-4 rounded-full align-middle`} />{zone}: {zone === 'green' ? '≤ reference' : zone === 'amber' ? `≤ cap (${limits.factor}× reference)` : '> cap'}</li>)}
+        {(['green', 'amber', 'red'] as const).map((zone) => <li key={zone}><span className={`bh-tl-${zone} mr-1.5 inline-block h-[4px] w-4 rounded-full align-middle`} />{zone}: {zone === 'green' ? '≤ reference' : zone === 'amber' ? official ? `≤ cap (${limits.factor}× reference)` : `above reference, within cost ${formatCap(costFactor)} / latency ${formatCap(latencyFactor)}` : official ? '> cap' : costFactor === Infinity && latencyFactor === Infinity ? 'disabled (no caps)' : '> the selected axis cap'}</li>)}
       </ul>
 
       <div className="bh-jev-class-divider" role="separator" data-bh-jev-class-divider>Outside the {classLabel} limits · {outside.length} systems</div>
       <details className="mt-2" data-bh-jev-class-outside>
-        <summary className="cursor-pointer text-sm font-semibold text-accent">Show general-purpose LLMs and other systems outside the limits</summary>
+        <summary className="cursor-pointer text-sm font-semibold text-accent">{official ? 'Show general-purpose LLMs and other systems outside the limits' : 'Show systems outside the selected limits'}</summary>
         <p className="bh-muted mt-2 text-[12.5px]">Sorted by Capability Score, not numbered. Each row says which limit it misses, measured against {refName} ({usd(reference.cost)} per 1,000 decisions, median {secs(reference.latency)}).</p>
         <ol className="mt-2.5 space-y-2.5">{outside.map(outsideBar)}</ol>
       </details>
     </figure>
     <p id="jev-class-method" className="bh-panel mt-3 max-w-4xl scroll-mt-6 p-3 text-[13.5px] leading-snug" data-bh-jev-class-rule>
-      {eligibilityNote ?? <><b>{classLabel}</b> = cost per decision at most {limits.factor}× {refName}&apos;s <span className="whitespace-nowrap">(≤ {usd(limits.cost)} per 1,000 decisions)</span> <b>and</b> median latency at most {limits.factor}× {refName}&apos;s <span className="whitespace-nowrap">(≤ {secs(limits.latency)})</span>, the adjusted p50 — the same median the speed chart plots, not the four-axis Speed score.
-      {' '}{inside.length} of {rows.length} systems qualify; the other {outside.length}, including the general-purpose LLMs, are listed below the divider in the ranking.
-      {speedFallback.length > 0 && <span className="bh-muted"> {speedFallback.map((r) => shortName(r.row.display)).join(', ')} {speedFallback.length === 1 ? 'has' : 'have'} no recorded median latency; for {speedFallback.length === 1 ? 'it' : 'them'} the Speed axis decides, at the {limits.factor}× latency equivalent (Speed ≥ {one(limits.speedFloor)}).</span>}
+      {eligibilityNote ?? <><b>{classLabel}</b> = cost per decision {costFactor === Infinity ? 'with no cap' : <>at most {formatCap(costFactor)} {refName}&apos;s <span className="whitespace-nowrap">(≤ {usd(limits.cost)} per 1,000 decisions)</span></>} <b>and</b> median latency {latencyFactor === Infinity ? 'with no cap' : <>at most {formatCap(latencyFactor)} {refName}&apos;s <span className="whitespace-nowrap">(≤ {secs(limits.latency)})</span></>}, the adjusted p50 — the same median the speed chart plots, not the four-axis Speed score.
+      {' '}{inside.length} of {rows.length} systems qualify; {official ? <>the other {outside.length}, including the general-purpose LLMs, are listed below the divider in the ranking.</> : <>{outside.length} systems fall outside your selected limits and are listed below the divider in the ranking.</>}
+      {speedFallback.length > 0 && <span className="bh-muted"> {speedFallback.map((r) => shortName(r.row.display)).join(', ')} {speedFallback.length === 1 ? 'has' : 'have'} no recorded median latency; for {speedFallback.length === 1 ? 'it' : 'them'} the Speed axis decides, {latencyFactor === Infinity ? '(no latency cap).' : <>at the {formatCap(latencyFactor)} latency equivalent (Speed ≥ {one(limits.speedFloor)}).</>}</span>}
       </>}
+      {eligibilityNote && !official && <span className="mt-1 block" data-bh-jev-custom-eligibility>The ranking above uses custom caps of {formatCap(costFactor)} cost / {formatCap(latencyFactor)} latency. {inside.length} of {rows.length} systems qualify; {outside.length} are outside.</span>}
+      {(costFactor === Infinity || latencyFactor === Infinity) && <span className="bh-muted mt-1 block">Reported cost and median latency (or a Speed-axis fallback) are still required when a cap is off.</span>}
+      {!official && <span className="bh-muted mt-1 block">Charts below use the official 2× caps.</span>}
       {' '}The <a className="text-accent underline" href="#jev-bubbles">charts below</a> show speed and cost beside Capability Score; the <a className="text-accent underline" href={officialHref}>official {benchName} Score</a> weighs all four axes.
     </p>
   </section>;
