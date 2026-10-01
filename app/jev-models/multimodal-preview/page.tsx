@@ -341,7 +341,8 @@ function PublicNote({ item }: { item: { label: string; value: string } }) {
 
 /** Archived v0.1.4 release, rendered as published from its byte-pinned artifact (385aba04…). */
 async function ArchivedV014Content({ versionTabs }: { versionTabs: VersionTabCounts }) {
-  const a: any = (await readArchivedMultimodalPreviewV014()).artifact;
+  // The byte-pinned archive carries no reader-added label; restore it exactly as the v0.1.4 reader set it.
+  const a: any = { ...(await readArchivedMultimodalPreviewV014()).artifact, release_version: 'v0.1.4' };
   const s = a.split;
   const djevSpark = a.ranking.find((x: any) => x.key === 'djev_spark_nvfp4');
   const photoSealed = djevSpark.tracks.everyday_photo.sealed;
