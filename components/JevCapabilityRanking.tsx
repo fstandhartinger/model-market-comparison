@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
 import { jevClassRows, medianLatencySpeed, ratioPosition, trafficLightZone, type JevClassOptions, type JevClassResult, type JevClassRow } from '../lib/jevbench-jev-class.mjs';
 import { shortName, usd } from './JevCapabilityChart';
@@ -24,7 +24,9 @@ function TrafficLightBar({ kind, ratio, factor, referenceLabel, derived = false 
   const end = ratio == null ? 0 : Math.max(1, ratioPosition(ratio));
   const greenEnd = Math.min(end, ratioPosition(1));
   const amberEnd = Math.min(end, ratioPosition(factor));
-  return <span className="bh-tl-track relative block h-[4px] rounded-full" role="img"
+  return <span className="relative block pl-3">
+    <span className="bh-muted absolute left-0 top-1/2 -translate-y-1/2 text-[9px] leading-none" aria-hidden="true">{kind === 'cost' ? '$' : '⏱'}</span>
+    <span className="bh-tl-track relative block h-[4px] rounded-full" role="img"
     aria-label={`${kind === 'cost' ? 'Cost' : 'Median latency'}: ${ratio == null ? 'unknown' : `${ratio.toFixed(2)}× ${referenceLabel}, ${zone}`}${derived ? ' (derived from Speed axis)' : ''}`}
     data-bh-tl-cost={kind === 'cost' ? zone ?? 'unknown' : undefined}
     data-bh-tl-latency={kind === 'latency' ? zone ?? 'unknown' : undefined}
@@ -33,6 +35,7 @@ function TrafficLightBar({ kind, ratio, factor, referenceLabel, derived = false 
     {amberEnd > greenEnd && <span className="bh-tl-amber absolute inset-y-0" style={{ left: `${greenEnd}%`, width: `${amberEnd - greenEnd}%` }} />}
     {end > amberEnd && <span className="bh-tl-red absolute inset-y-0 rounded-r-full" style={{ left: `${amberEnd}%`, width: `${end - amberEnd}%` }} />}
     {[1, factor].map((tick) => <i key={tick} className="bh-tl-tick absolute top-[-1px] h-[6px] border-l" style={{ left: `${ratioPosition(tick)}%` }} aria-hidden="true" />)}
+    </span>
   </span>;
 }
 
@@ -110,8 +113,9 @@ export function jevClassView(systems: JevV14System[], options?: JevClassOptions)
   return { ...result, points };
 }
 
-export function JevCapabilityRanking({ systems, revision, officialHref, benchName = 'JevBench', classLabel = 'Jev-class', referenceLabel = 'Jev', ...options }: {
+export function JevCapabilityRanking({ systems, revision, officialHref, benchName = 'JevBench', classLabel = 'Jev-class', referenceLabel = 'Jev', eligibilityNote, correlationReason, ...options }: {
   systems: JevV14System[]; revision: string; officialHref: string; benchName?: string; classLabel?: string;
+  eligibilityNote?: ReactNode; correlationReason?: string;
 } & JevClassOptions) {
   const { reference, limits, rows, costLatencySpearman, n: pairedCount } = jevClassRows(systems, { ...options, referenceLabel });
   const inside = rows.filter((r) => r.inClass);
@@ -155,10 +159,10 @@ export function JevCapabilityRanking({ systems, revision, officialHref, benchNam
         <ol className="mt-2.5 space-y-2.5">{numbered.slice(HEADLINE_TOP).map(bar)}</ol>
       </details>}
       <p className="bh-muted mt-2 text-[11.5px] leading-snug">Wide coloured bar = Capability Score (0–100). Thin bars: cost above, median latency below; shared log ratio scale 0.25× … 64× {referenceLabel}, ticks at 1× and {limits.factor}× (cap). Shorter is cheaper or faster. * = est. (estimated cost). # counts ranked {classLabel} systems; “–” marks unranked or outside systems. Tap ⓘ or hover a row or thin bar for details.</p>
-      <p className="bh-muted mt-1 text-[11.5px] leading-snug">Cost and latency are shown separately{costLatencySpearman != null && Math.abs(costLatencySpearman) < 0.2 ? ' because they are nearly independent across systems' : ''} (Spearman ρ = {costLatencySpearman == null ? 'unavailable' : costLatencySpearman.toFixed(2)}, n = {pairedCount}).</p>
+      <p className="bh-muted mt-1 text-[11.5px] leading-snug" data-bh-cost-latency-correlation>{costLatencySpearman != null && Math.abs(costLatencySpearman) < 0.2 ? 'Cost and latency are shown separately because they are nearly independent across systems' : costLatencySpearman == null ? 'Cost and latency are shown separately' : 'Cost and latency correlate here'} (Spearman ρ = {costLatencySpearman == null ? 'unavailable' : costLatencySpearman.toFixed(2)}, n = {pairedCount}){correlationReason && costLatencySpearman != null && Math.abs(costLatencySpearman) >= 0.2 ? `, ${correlationReason}` : ''}.</p>
       <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11.5px]" aria-label="Ranking colour legend" data-bh-jev-capability-legend>
         {types.map((type) => <li key={type} style={{ '--jev-t': `var(${jevTypeVarName(type)})` } as CSSProperties}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[type] ?? type}</li>)}
-        {(['green', 'amber', 'red'] as const).map((zone) => <li key={zone}><span className={`bh-tl-${zone} mr-1.5 inline-block h-[4px] w-4 rounded-full align-middle`} />{zone}: {zone === 'green' ? '≤ reference' : zone === 'amber' ? `≤ ${limits.factor}× cap` : '> cap'}</li>)}
+        {(['green', 'amber', 'red'] as const).map((zone) => <li key={zone}><span className={`bh-tl-${zone} mr-1.5 inline-block h-[4px] w-4 rounded-full align-middle`} />{zone}: {zone === 'green' ? '≤ reference' : zone === 'amber' ? `≤ cap (${limits.factor}× reference)` : '> cap'}</li>)}
       </ul>
 
       <div className="bh-jev-class-divider" role="separator" data-bh-jev-class-divider>Outside the {classLabel} limits · {outside.length} systems</div>
@@ -169,9 +173,10 @@ export function JevCapabilityRanking({ systems, revision, officialHref, benchNam
       </details>
     </figure>
     <p id="jev-class-method" className="bh-panel mt-3 max-w-4xl scroll-mt-6 p-3 text-[13.5px] leading-snug" data-bh-jev-class-rule>
-      <b>{classLabel}</b> = cost per decision at most {limits.factor}× {refName}&apos;s <span className="whitespace-nowrap">(≤ {usd(limits.cost)} per 1,000 decisions)</span> <b>and</b> median latency at most {limits.factor}× {refName}&apos;s <span className="whitespace-nowrap">(≤ {secs(limits.latency)})</span>, the adjusted p50 — the same median the speed chart plots, not the four-axis Speed score.
+      {eligibilityNote ?? <><b>{classLabel}</b> = cost per decision at most {limits.factor}× {refName}&apos;s <span className="whitespace-nowrap">(≤ {usd(limits.cost)} per 1,000 decisions)</span> <b>and</b> median latency at most {limits.factor}× {refName}&apos;s <span className="whitespace-nowrap">(≤ {secs(limits.latency)})</span>, the adjusted p50 — the same median the speed chart plots, not the four-axis Speed score.
       {' '}{inside.length} of {rows.length} systems qualify; the other {outside.length}, including the general-purpose LLMs, are listed below the divider in the ranking.
       {speedFallback.length > 0 && <span className="bh-muted"> {speedFallback.map((r) => shortName(r.row.display)).join(', ')} {speedFallback.length === 1 ? 'has' : 'have'} no recorded median latency; for {speedFallback.length === 1 ? 'it' : 'them'} the Speed axis decides, at the {limits.factor}× latency equivalent (Speed ≥ {one(limits.speedFloor)}).</span>}
+      </>}
       {' '}The <a className="text-accent underline" href="#jev-bubbles">charts below</a> show speed and cost beside Capability Score; the <a className="text-accent underline" href={officialHref}>official {benchName} Score</a> weighs all four axes.
     </p>
   </section>;

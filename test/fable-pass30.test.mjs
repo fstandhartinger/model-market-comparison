@@ -23,7 +23,8 @@ test('F-157: the CR-118.4 note is rendered inside the board, after the ranking c
 
 test('F-158: the released image page labels measured axes and the legacy preview remains noindex', () => {
   assert.match(mm, /Calibration<\/th>/, 'calibration is a measured axis');
-  assert.match(mm, /id="bars-heading"/, 'the page leads with the Composite score bars (F-198)');
+  assert.match(mm, /<JevCapabilityRanking/, 'the page leads with the Capability Score (CR-248, 1 Oct owner decision)');
+  assert.ok(mm.indexOf('<JevCapabilityRanking') < mm.indexOf('<JevScoreChart'), 'the composite follows the headline');
   assert.doesNotMatch(mm, /Results and the release decision remain under review/);
   assert.match(mm, /robots: \{ index: false, follow: false/, 'legacy preview remains noindex');
 });

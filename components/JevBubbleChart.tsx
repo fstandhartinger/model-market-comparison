@@ -53,8 +53,8 @@ function useWidth(fallback: number) {
   return { ref, width };
 }
 
-export function JevBubbleChart({ id, kind, points, costLimit, referenceName, active, setActive, pinned, setPinned, expanded, setExpanded }: {
-  id: string; kind: Kind; points: JevBubblePoint[]; costLimit: number; referenceName: string;
+export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, referenceName, active, setActive, pinned, setPinned, expanded, setExpanded }: {
+  id: string; kind: Kind; points: JevBubblePoint[]; costLimit: number; latencyCap?: number; referenceName: string;
   active: string | null; setActive: (key: string | null) => void; pinned: boolean; setPinned: (value: boolean) => void;
   expanded: boolean; setExpanded: (value: boolean) => void;
 }) {
@@ -95,7 +95,7 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
   // Plotting, the gate and the line all use the one median definition now; v1.3 carryovers with no recorded
   // median fall back to the composite Speed axis, exactly as the Jev-class rule does.
   const plotSpeed = (p: JevBubblePoint) => (p.medianSpeed != null ? p.medianSpeed : (p.speed as number));
-  const latencyLimit = reference != null ? (reference.latency != null ? speedFromLatency(2 * reference.latency) : (reference.speed != null ? reference.speed - 20 * Math.log10(2) : null)) : null;
+  const latencyLimit = latencyCap != null ? speedFromLatency(latencyCap) : reference != null ? (reference.latency != null ? speedFromLatency(2 * reference.latency) : (reference.speed != null ? reference.speed - 20 * Math.log10(2) : null)) : null;
   const xValue = (p: JevBubblePoint) => (kind === 'cost' ? Math.log10(p.cost as number) : plotSpeed(p));
   const [xMin, xMax] = useMemo(() => {
     const xs = plotted.map(xValue);
@@ -422,7 +422,7 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
   </figure>;
 }
 
-export function JevBubbleCharts({ points, costLimit, referenceName }: { points: JevBubblePoint[]; costLimit: number; referenceName: string }) {
+export function JevBubbleCharts({ points, costLimit, latencyCap, referenceName, benchName = 'JevBench' }: { points: JevBubblePoint[]; costLimit: number; latencyCap?: number; referenceName: string; benchName?: string }) {
   const [showOutside, setShowOutside] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [pinned, setPinned] = useState(false);
@@ -431,15 +431,15 @@ export function JevBubbleCharts({ points, costLimit, referenceName }: { points: 
   const types = jevLegendTypes(points.map((p) => p.cls));
   return <section id="jev-bubbles" className="mt-8 scroll-mt-6" aria-labelledby="jev-bubbles-title" data-bh-jev-bubbles>
     <h2 id="jev-bubbles-title" className="text-xl font-semibold">Capability against cost and speed</h2>
-    <p className="bh-muted mt-1 max-w-4xl text-sm">Jev-class systems are shown by default. Bubble size follows the official JevBench Score. The five most capable Jev-class systems are labelled.</p>
+    <p className="bh-muted mt-1 max-w-4xl text-sm">Jev-class systems are shown by default. Bubble size follows the official {benchName} Score. The five most capable Jev-class systems are labelled.</p>
     <label className="mt-3 flex min-h-10 w-fit cursor-pointer items-center gap-2 text-sm">
       <input type="checkbox" checked={showOutside} onChange={(e) => { setShowOutside(e.target.checked); setActive(null); setPinned(false); }} data-bh-jev-bubble-show-outside />
       Show models that don&apos;t qualify as Jev-class
     </label>
     <div className="mt-4 grid min-w-0 gap-4 lg:grid-cols-2">
-      <JevBubbleChart id="jev-bubble-cost" kind="cost" points={visible} costLimit={costLimit} referenceName={referenceName}
+      <JevBubbleChart id="jev-bubble-cost" kind="cost" points={visible} costLimit={costLimit} latencyCap={latencyCap} referenceName={referenceName}
         active={active} setActive={setActive} pinned={pinned} setPinned={setPinned} expanded={expandedKind === 'cost'} setExpanded={(value) => setExpandedKind(value ? 'cost' : null)} />
-      <JevBubbleChart id="jev-bubble-speed" kind="speed" points={visible} costLimit={costLimit} referenceName={referenceName}
+      <JevBubbleChart id="jev-bubble-speed" kind="speed" points={visible} costLimit={costLimit} latencyCap={latencyCap} referenceName={referenceName}
         active={active} setActive={setActive} pinned={pinned} setPinned={setPinned} expanded={expandedKind === 'speed'} setExpanded={(value) => setExpandedKind(value ? 'speed' : null)} />
     </div>
     <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="Bubble colours and styles" data-bh-jev-bubble-legend>

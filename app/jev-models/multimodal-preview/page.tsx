@@ -1,11 +1,18 @@
+import { imageJevBoardSystems, imageJevBoardRows, imageJevCompareRows, imageJevCapabilityLimits, imageJevSliderPresets } from '../../../lib/imagejev-board.mjs';
+import { JevCapabilityRanking, jevClassView } from '../../../components/JevCapabilityRanking';
+import { JevBubbleCharts } from '../../../components/JevBubbleChart';
+import { JevCapabilityLazy } from '../../../components/JevCapabilityLazy';
+import { JevScoreChart } from '../../../components/JevBoardInteractive';
+import { JevCompareV15 } from '../../../components/JevCompareV15';
+import { ImageJevRevisionHistory } from '../../../components/ImageJevRevisionHistory';
 import type { Metadata } from 'next';
 import { formatMatchedGapPp, readMultimodalPreview } from '../../../lib/jevbench-multimodal-preview.mjs';
 import { ImageJevExamples } from '../../../components/ImageJevExamples';
 import { ImageJevRadar } from '../../../components/ImageJevRadar';
 
 export const metadata: Metadata = {
-  title: 'Image JevBench v0.1.4',
-  description: 'Image JevBench v0.1.4 results on the frozen v0.1 scoring method.',
+  title: 'Image JevBench v0.1.5',
+  description: 'JevImageBench Capability Score leads Image JevBench v0.1.5: image decision systems inside the frozen JevBench cost and median-latency budget.',
   alternates: { canonical: '/image-jev-bench' },
   robots: { index: false, follow: false, googleBot: { index: false, follow: false } },
 };
@@ -128,6 +135,17 @@ function CandidateCoverageTable({ candidates }: { candidates: any[] }) {
 export async function MultimodalPreviewContent() {
   const a: any = await readMultimodalPreview();
   const s = a.split;
+  const chartSystems = imageJevBoardSystems(a);
+  const limits = imageJevCapabilityLimits(a);
+  const classOptions = { limits, factor: limits.factor, referenceLabel: limits.referenceLabel };
+  const capability = jevClassView(chartSystems, classOptions);
+  const qualifying = capability.rows.filter((row) => row.inClass).length;
+  const relaxed = jevClassView(chartSystems, {
+    ...classOptions, factor: 3, limits: { cost: limits.cost * 3 / limits.factor, latency: limits.latency * 3 / limits.factor },
+  });
+  const addedAtThree = relaxed.rows.filter((row) => row.inClass).length - qualifying;
+  const eligibility = <>Jev itself cannot read images, so there is no Jev row to anchor on. We use the same absolute budget as JevBench: at most {limits.factor}× Jev 1.13.0&apos;s JevBench cost (≤ USD {limits.cost.toFixed(6)} per 1,000 decisions) and at most {limits.factor}× its median latency (≤ {limits.latency.toFixed(6)} s, adjusted p50). A decision model in this class should fit the same budget whether the input is text or an image. {qualifying} of {chartSystems.length} systems qualify; loosening to 3× would add only {addedAtThree} systems, mostly decision-model configurations, so we keep {limits.factor}×.</>;
+
   const djevSpark = a.ranking.find((x: any) => x.key === 'djev_spark_nvfp4');
   const photoSealed = djevSpark.tracks.everyday_photo.sealed;
   const familyRows = Object.entries(s.family_counts) as [string, FamilyCount][];
@@ -137,18 +155,23 @@ export async function MultimodalPreviewContent() {
   return <>
     <header className="bh-page-head max-w-5xl">
       <p className="bh-eyebrow">Image benchmark · {a.release_version}</p>
-      <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">Image JevBench {a.release_version}</h1>
-      <p className="mt-3 max-w-3xl text-lg">A held-out comparison of systems that make decisions from images, from interface targets to everyday scenes.</p>
-      <p className="bh-muted mt-2 max-w-4xl">The frozen benchmark has {s.items_total} scored items: {s.items_public} public and {s.items_sealed} sealed; {s.items_retired} further items are retired and not scored. This page shows aggregate sealed results only. It contains no sealed task, image, answer key, or per-item prediction.</p>
-      {a.revision === 'v0.1.4' && <p className="mt-3 max-w-4xl rounded-lg border border-amber-600 bg-amber-50 px-4 py-2 text-sm text-amber-950 dark:bg-amber-950/40 dark:text-amber-100" role="note" data-bh-mm-author-review-summary><b>Wity-1 under author review.</b> The run used the listed production endpoint, but its response did not identify the deployed build. The author is checking the build; this score may change after a full rerun.</p>}
-      <p className="mt-3 max-w-4xl rounded-lg border border-amber-600 bg-amber-50 px-4 py-2 text-sm text-amber-950 dark:bg-amber-950/40 dark:text-amber-100" role="note" data-bh-mm-difficulty-caveat><b>Caveat:</b> {a.method.difficulty_caveat}</p>
+      <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">Image JevBench</h1>
+      <p className="mt-3 max-w-3xl text-lg">The JevImageBench Capability Score compares intelligence and calibration inside the same cost and speed budget as JevBench.</p>
     </header>
 
-    <section className="mt-10" aria-labelledby="bars-heading">
-      <h2 id="bars-heading" className="text-2xl font-semibold">Composite score</h2>
-      <p className="bh-muted mt-1 text-sm">Whole benchmark, {s.items_total} decisions. Bars include all {a.n_systems} systems. Pink bars are hosted APIs; Wity-1 and Gemma are hosted endpoints without a no-retention claim. A system whose Cost or Calibration axis falls under the gate scores 0; the row says which gate it is.</p>
-      <ScoreBars systems={a.ranking} track="all" />
-    </section>
+    <JevCapabilityRanking systems={chartSystems} revision={a.release_version} officialHref="#jev14-chart-title"
+      benchName="JevImageBench" {...classOptions} eligibilityNote={eligibility}
+      correlationReason="mostly because self-hosted cost is computed from measured GPU time; both bars are kept for consistency with JevBench" />
+    <JevBubbleCharts points={capability.points} costLimit={limits.cost} latencyCap={limits.latency} referenceName={limits.referenceLabel} benchName="Image JevBench" />
+    <details className="mt-4" data-bh-mm-3d-toggle><summary className="cursor-pointer text-sm font-semibold text-accent">Explore capability, cost and speed in 3D</summary>
+      <JevCapabilityLazy revision={a.release_version} systems={chartSystems} classOptions={classOptions} benchName="Image JevBench" only3d />
+    </details>
+    <JevScoreChart revision={a.release_version} benchName="Image JevBench" scoreLabel="Image JevBench Score" costHref="#imagejev-pricing"
+      rows={imageJevBoardRows(a)} rankedCount={a.n_systems} newLabel={null} fairness={null} capabilityHref="#jev-capability"
+      presets={imageJevSliderPresets(a)} compactMobile scoreKind="v15" methodLink={{ href: '#method-heading', label: 'Method notes ↓' }} />
+    <p className="bh-muted mt-2 max-w-5xl text-sm" data-bh-mm-wity-pricing-note>Wity-1 is ranked at Wity&apos;s own stated API price (USD 0.042 per million input tokens, output free). The striped bar shows the score at the Qwen3.6-35B-A3B base-model reference price we use for self-hosted open weights of the same base. <a className="text-accent underline" href="#imagejev-pricing">See pricing note ↓</a></p>
+    <JevCompareV15 rows={imageJevCompareRows(a)} openDecisions={s.items_public} sealedDecisions={s.items_sealed} axesOnly />
+    <ImageJevRadar systems={a.ranking} />
 
     <section className="mt-10 max-w-none" aria-labelledby="overall-heading">
       <h2 id="overall-heading" className="text-2xl font-semibold">Full ranking</h2>
@@ -156,14 +179,18 @@ export async function MultimodalPreviewContent() {
       <RankingTable systems={a.ranking} track="all" all />
     </section>
 
-    <ImageJevRadar systems={a.ranking} />
+    <div className="mt-6 max-w-5xl" data-bh-mm-review-notes>
+      <p className="bh-muted mt-2 max-w-4xl">The frozen benchmark has {s.items_total} scored items: {s.items_public} public and {s.items_sealed} sealed; {s.items_retired} further items are retired and not scored. This page shows aggregate sealed results only. It contains no sealed task, image, answer key, or per-item prediction.</p>
+      {a.ranking.some((row: any) => row.key === 'wity_1') && <p className="mt-3 max-w-4xl rounded-lg border border-amber-600 bg-amber-50 px-4 py-2 text-sm text-amber-950 dark:bg-amber-950/40 dark:text-amber-100" role="note" data-bh-mm-author-review-summary><b>Wity-1 under author review.</b> The run used the listed production endpoint, but its response did not identify the deployed build. The author is checking the build; this score may change after a full rerun.</p>}
+      <p className="mt-3 max-w-4xl rounded-lg border border-amber-600 bg-amber-50 px-4 py-2 text-sm text-amber-950 dark:bg-amber-950/40 dark:text-amber-100" role="note" data-bh-mm-difficulty-caveat><b>Caveat:</b> {a.method.difficulty_caveat}</p>
+    </div>
     <ImageJevExamples />
 
     <section className="mt-10 max-w-6xl" aria-labelledby="track-heading">
       <h2 id="track-heading" className="text-2xl font-semibold">Results by track</h2>
       <p className="bh-muted mt-2 max-w-5xl text-sm">Each track is ranked on its own public and sealed items. The licensed core and synthetic everyday-photo results remain separately visible.</p>
-      <article className="mt-6" aria-labelledby="core-heading"><h3 id="core-heading" className="text-xl font-semibold">Core · {s.core_total} items</h3><p className="bh-muted mt-1 text-sm">{s.core_public} public · {s.core_sealed} sealed: {s.licensed_core_sealed} real-source items and {s.pool_core_sealed} fresh synthetic pool items (documents, charts, inventory, safety).</p><RankingTable systems={a.ranking} track="core" /></article>
-      <article className="mt-10" aria-labelledby="photo-heading"><h3 id="photo-heading" className="text-xl font-semibold">Everyday photo decisions · {s.everyday_photo_total} synthetic items</h3><p className="bh-muted mt-1 text-sm">{s.everyday_photo_public} public images from the promo set; {s.everyday_photo_sealed} sealed: {s.everyday_photo_sealed - s.everyday_photo_sealed_fresh} variants from the reviewed v0.1 candidate pool across {s.everyday_photo_situations} matched situations and {s.everyday_photo_sealed_fresh} fresh pool photos. Ambiguous labels were dropped after visual, two-model and gold-blind human checks. No brands and no focused faces.</p><RankingTable systems={a.ranking} track="everyday_photo" /></article>
+      <article className="mt-6" aria-labelledby="core-heading"><h3 id="core-heading" className="text-xl font-semibold">Core · {s.core_total} items</h3><p className="bh-muted mt-1 text-sm">{s.core_public} public · {s.core_sealed} sealed: {s.licensed_core_sealed} real-source items and {s.pool_core_sealed} fresh synthetic pool items (documents, charts, inventory, safety).</p><RankingTable systems={a.ranking} track="core" /><details className="mt-3"><summary className="cursor-pointer text-sm font-semibold text-accent">Licensed core composite bars</summary><ScoreBars systems={a.ranking} track="core" /></details></article>
+      <article className="mt-10" aria-labelledby="photo-heading"><h3 id="photo-heading" className="text-xl font-semibold">Everyday photo decisions · {s.everyday_photo_total} synthetic items</h3><p className="bh-muted mt-1 text-sm">{s.everyday_photo_public} public images from the promo set; {s.everyday_photo_sealed} sealed: {s.everyday_photo_sealed - s.everyday_photo_sealed_fresh} variants from the reviewed v0.1 candidate pool across {s.everyday_photo_situations} matched situations and {s.everyday_photo_sealed_fresh} fresh pool photos. Ambiguous labels were dropped after visual, two-model and gold-blind human checks. No brands and no focused faces.</p><RankingTable systems={a.ranking} track="everyday_photo" /><details className="mt-3"><summary className="cursor-pointer text-sm font-semibold text-accent">Everyday photo composite bars</summary><ScoreBars systems={a.ranking} track="everyday_photo" /></details></article>
       <p className="mt-4 rounded-lg border border-line p-4 text-sm" data-bh-djev-spark-sealed-photo><b>djev-spark sealed photo result:</b> {photoSealed.correct}/{photoSealed.n} sealed decisions · {pct(photoSealed.accuracy)}. It saw the public promo images in an earlier inference-only video run, with no training; this sealed score is the independent measurement for it.</p>
     </section>
 
@@ -225,7 +252,10 @@ export async function MultimodalPreviewContent() {
         <p><b>Intelligence.</b> Accuracy counts missing, invalid and unparseable answers as wrong. Each part is chance-corrected against its own average chance rate, then combined as {a.weights.public * 100}% public and {a.weights.sealed * 100}% sealed. Calibration uses the same weights.</p>
         <p><b>Matched-family overfit penalty.</b> The gap is public accuracy minus sealed accuracy within families that have at least 10 items on both sides: ScreenSpot and Everyday photo. If that matched gap is above {a.gap_allowance_pp} percentage points, Intelligence is multiplied by max(0, 1 − (gap − {a.gap_allowance_pp})/100). The same rule applies to every system. The raw overall gap is shown in the data but does not affect the score.</p>
         <p><b>Calibration.</b> Ten-bin top-label ECE is scaled by valid probability coverage. Label-only output receives zero calibration. OpenJev's NLI entailment values select an answer but are not treated as categorical probabilities.</p>
-        <p><b>Speed and cost.</b> Speed uses whole-call p50 and p95 latency; local latency uses the v1.4 2× plus 0.15-second adjustment. Hosted unit cost uses returned per-call usage receipts; missing receipts are not zero-filled, and the Cost axis is scaled by receipt coverage. Retry costs are tracked separately. Wity-1 uses an <a className="text-accent underline" href="https://github.com/fstandhartinger/model-market-comparison/blob/main/data/raw/benchmarks/jevbench/multimodal-preview/PRICING-v0.1.4.md" target="_blank" rel="noopener noreferrer">estimated base-model price</a> of USD 0.15 per million input tokens and USD 1.00 per million output tokens, applied to its measured 120,542 input and zero output tokens. Florian chose this basis on 29 Sep because Wity&apos;s younger public tariff is below the base-model reference. The API does not quantify image or thinking work, so this estimate may understate full image-compute cost. Local cost uses measured GPU seconds at the recorded per-system GPU-hour rate and excludes loading, downloads, build, and idle time. For self-hosted systems, the original run&apos;s timings are combined with the fresh-item run on the same GPU type.</p>
+        <p><b>Speed and cost.</b> Speed uses whole-call p50 and p95 latency; local latency uses the v1.4 2× plus 0.15-second adjustment. Hosted unit cost uses returned per-call usage receipts; missing receipts are not zero-filled, and the Cost axis is scaled by receipt coverage. Retry costs are tracked separately. Local cost uses measured GPU seconds at the recorded per-system GPU-hour rate and excludes loading, downloads, build, and idle time. For self-hosted systems, the original run&apos;s timings are combined with the fresh-item run on the same GPU type.</p>
+        <p><b>Capability eligibility.</b> {eligibility}</p>
+        <p id="imagejev-pricing" className="scroll-mt-6" data-bh-mm-pricing-method><b>API pricing (1 Oct 2026).</b> API models whose base model we know are ranked at the developer&apos;s stated API price. A striped second bar shows the score and would-be rank at the base-model reference price we use for self-served open weights of the same base. Wity-1 uses USD 0.042 per million input tokens, with output free, on its measured 120,542 input and zero output tokens. Its Qwen3.6-35B-A3B reference is USD 0.15 per million input and USD 1.00 per million output tokens. The API does not quantify image or thinking work, so token pricing may understate full image-compute cost. <a className="text-accent underline" href="https://github.com/fstandhartinger/model-market-comparison/blob/main/data/raw/benchmarks/jevbench/multimodal-preview/PRICING-v0.1.5.md" target="_blank" rel="noopener noreferrer">Pricing provenance</a>.</p>
+        <p data-bh-mm-whatif><b>Presets and What-If.</b> Equal 25/25/25/25 weights reproduce the official composite ranking. Capability-only, accuracy, speed and cost presets and the weight sliders explore the same measured axes; the low Intelligence, Speed and Cost gates still apply, including at zero weight. The striped price alternative re-scores under the same selected weights; its rank is hypothetical. Capability Score and its frozen eligibility budget stay fixed.</p>
         <p><b>Composite and gates.</b> These rules are unchanged. The four axes use an equal-weight harmonic mean, followed by the Jev-class Intelligence, Speed, and Cost gates below 50. Gemini 3.8 Flash's high raw accuracy but near-zero composite reflects its measured cost and the Cost gate; label-only systems have zero Calibration under the inherited convention.</p>
         <p><b>Difficulty balance.</b> The split follows exposure, not a stratified draw, so the parts differ in family mix: browser actions (Mind2Web), chart questions (FinQA) and geometry are public-only, while ScreenSpot-Pro, Android-in-the-Wild and the fresh pool families are sealed-only. This is why the overfit penalty compares only matched families (ScreenSpot and Everyday photo).</p>
         <p><b>Fresh-item difficulty.</b> {a.method.difficulty_caveat} Scores on this split are therefore not comparable with the earlier 228/216 preview.</p>
@@ -238,6 +268,8 @@ export async function MultimodalPreviewContent() {
       <p className="bh-muted mt-3 max-w-5xl text-sm">The ranking covers {a.n_systems} measured configurations. {a.candidate_coverage.included_note} Candidates below have no score unless listed in the ranking. Requested rows remain visible with the exact access or review blocker; exclusions describe the reviewed interface, license or duplicate status.</p>
       <CandidateCoverageTable candidates={a.candidate_coverage.candidates} />
     </details>
+
+    <ImageJevRevisionHistory current={a} />
 
     <p className="bh-muted mt-9 max-w-6xl border-t border-line pt-4 text-xs">Image JevBench is a separate benchmark from the text-only JevBench Score. Sealed item-level content remains private. Public/sealed item counts, accuracy, track and score breakdowns are aggregates. Results describe these exact tested configurations and do not establish absence from model training data.</p>
   </>;

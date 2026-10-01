@@ -139,7 +139,7 @@ export type JevPreset = { name: string; weights: JevWeights };
 const sameWeights = (a: JevWeights, b: JevWeights) => { const ta = JEV_AXES.reduce((t, k) => t + a[k], 0), tb = JEV_AXES.reduce((t, k) => t + b[k], 0); return ta > 0 && tb > 0 && JEV_AXES.every((k) => Math.abs(a[k] / ta - b[k] / tb) < 1e-6); };
 const share = (w: JevWeights, axis: JevAxis) => { const total = JEV_AXES.reduce((t, k) => t + w[k], 0); return total ? Math.round((100 * w[axis]) / total) : 0; };
 
-function JevWeightSliders({ position, weights, setWeights, presets, gatesAlways = false }: { position: 'above' | 'below'; weights: JevWeights; setWeights: (w: JevWeights) => void; presets: JevPreset[]; gatesAlways?: boolean }) {
+function JevWeightSliders({ position, weights, setWeights, presets, gatesAlways = false, benchName = 'JevBench' }: { position: 'above' | 'below'; weights: JevWeights; setWeights: (w: JevWeights) => void; presets: JevPreset[]; gatesAlways?: boolean; benchName?: string }) {
   const official = isOfficialWeights(weights);
   // F-199 (pass 36): on a phone the sliders fold into a closed "Adjust weights" disclosure; a reader who set custom
   // weights (?w= on load or a non-official preset) sees them open. Desktops always show the sliders (globals.css).
@@ -165,7 +165,7 @@ function JevWeightSliders({ position, weights, setWeights, presets, gatesAlways 
         </label>)}
       </div>
     </details>
-    {position === 'below' && <p className="bh-muted mt-1 text-[11.5px] leading-snug">Weights are relative: each axis counts in proportion to its slider. The score stays a weighted harmonic mean with the low-axis gates; {gatesAlways ? 'the gates still apply when an axis sits at 0' : 'an axis at 0 drops out together with its gate'}. Only equal weights give the official JevBench Score and rank.</p>}
+    {position === 'below' && <p className="bh-muted mt-1 text-[11.5px] leading-snug">Weights are relative: each axis counts in proportion to its slider. The score stays a weighted harmonic mean with the low-axis gates; {gatesAlways ? 'the gates still apply when an axis sits at 0' : 'an axis at 0 drops out together with its gate'}. Only equal weights give the official {benchName} Score and rank.</p>}
   </div>;
 }
 
@@ -185,7 +185,7 @@ const GENERAL_LLM = 'llm-baseline';
 
 export type JevFairness = { leadName: string; topName: string; leadInt: number; topInt: number; leadsOn: string[] } | null;
 
-export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLabel, fairness, approvedNote = null, tieNote = null, capabilityHref, presets = [], compactMobile = false, scoreKind = 'v14', methodLink }: { revision: string; rows: JevBoardViewRow[]; rankedCount: number; newLabel: string | null; fairness: JevFairness; approvedNote?: string | null; tieNote?: string | null; capabilityHref: string | null; presets?: JevPreset[]; compactMobile?: boolean; scoreKind?: 'v14' | 'v15'; methodLink?: { href: string; label: string } }) {
+export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLabel, fairness, approvedNote = null, tieNote = null, capabilityHref, presets = [], compactMobile = false, scoreKind = 'v14', methodLink, benchName = 'JevBench', scoreLabel, costHref = '#jev-costs' }: { revision: string; rows: JevBoardViewRow[]; rankedCount: number; newLabel: string | null; fairness: JevFairness; approvedNote?: string | null; tieNote?: string | null; capabilityHref: string | null; presets?: JevPreset[]; compactMobile?: boolean; scoreKind?: 'v14' | 'v15'; methodLink?: { href: string; label: string }; benchName?: string; scoreLabel?: string; costHref?: string }) {
   // Florian 25 Sep 2026: weight sliders. Equal weights are the official score; any other mix re-scores every row with
   // the same formula and re-sorts by it, clearly marked as not the official ranking.
   // CR-205: scoreKind 'v15' re-scores with the v1.5 composite — its low-axis gates apply even at weight 0.
@@ -247,10 +247,10 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
 
   return <figure className="bh-panel mt-6 p-4 sm:p-5" data-bh-jev14-chart data-bh-jev14-view={view} data-bh-jev14-compact={compactMobile ? '1' : undefined} aria-labelledby="jev14-chart-title">
     {/* F-193 (main, 25 Sep): on the live board a phone hides the chart eyebrow and tightens spacing. */}
-    <p className="bh-eyebrow" data-bh-jev14-chart-eyebrow>JevBench {revision}</p>
-    <h2 id="jev14-chart-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">JevBench Composite Score: {rankedCount} ranked systems</h2>
+    <p className="bh-eyebrow" data-bh-jev14-chart-eyebrow>{benchName} {revision}</p>
+    <h2 id="jev14-chart-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">{scoreLabel ?? `${benchName} Composite Score`}: {rankedCount} ranked systems</h2>
     <p className="bh-muted mt-1 text-sm">{custom ? <span className="bh-jevc-notdefault mr-2">Custom weights</span> : <span className="bh-jevc-official mr-2">Official</span>}· four axes 0–100, {custom ? 'your weights' : 'equal-weight'} harmonic mean · <a href={changesLink.href} className="text-accent underline">{changesLink.label}</a></p>
-    <JevWeightSliders position="above" weights={weights} setWeights={setWeights} presets={presets} gatesAlways={scoreKind === 'v15'} />
+    <JevWeightSliders position="above" weights={weights} setWeights={setWeights} presets={presets} gatesAlways={scoreKind === 'v15'} benchName={benchName} />
 
     <div className="bh-jev-viewby mt-4" data-bh-jev-viewby>
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5" role="group" aria-label="View the field by">
@@ -273,7 +273,7 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
           adjacent pairs are statistical ties — sit under the leader sentence of the figure everyone reads. */}
       {tieNote && officialOverall && <p className="bh-muted mt-1 text-xs leading-snug" data-bh-jev14-ties>{tieNote}</p>}
       {!approvedNote && !fairness && <p className="bh-muted mt-2 text-[13px] leading-snug" data-bh-jev-viewby-hint>The official order weighs Intelligence, Calibration, Speed and Cost equally. Each button re-sorts the same systems by one axis<span className="hidden sm:inline">, and the column headings sort too</span>.</p>}
-      {view !== 'overall' && <p className="mt-2 text-[13px]" data-bh-jev-view-note><span className="bh-jevc-notdefault">Not the official order</span> <span className="bh-muted">Bars show {METRIC_LABEL[metric]} (0–100). The bold number stays the JevBench Score and # the official rank.</span></p>}
+      {view !== 'overall' && <p className="mt-2 text-[13px]" data-bh-jev-view-note><span className="bh-jevc-notdefault">Not the official order</span> <span className="bh-muted">Bars show {METRIC_LABEL[metric]} (0–100). The bold number stays the {benchName} Score and # the official rank.</span></p>}
       {view === 'intelligence' && llmCount > 0 && <p className="mt-2 text-[13px]" data-bh-jev-llm-toggle-row>
         <label className="bh-jev-filter-check inline-flex min-h-[32px] cursor-pointer items-center gap-2 py-1 pr-1 font-semibold"><input type="checkbox" className="h-5 w-5" checked={hideLlms} onChange={(e) => setHideLlms(e.target.checked)} data-bh-jev-hide-llms /> Hide general-purpose LLMs</label>{' '}
         <span className="bh-muted" data-bh-jev-llm-toggle-note>{hideLlms ? `Hides the ${llmCount} general-purpose LLM baselines (e.g. GPT-6 Luna, DeepSeek); the bars below leave them out.` : `Showing the ${llmCount} general-purpose LLM baselines (e.g. GPT-6 Luna, DeepSeek) too.`}</span>
@@ -306,7 +306,7 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
     <div className="mt-2 hidden grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_21rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
       <span /><span /><span className="bh-muted flex justify-between tabular"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span></span>
     </div>
-    <JevWeightSliders position="below" weights={weights} setWeights={setWeights} presets={presets} gatesAlways={scoreKind === 'v15'} />
+    <JevWeightSliders position="below" weights={weights} setWeights={setWeights} presets={presets} gatesAlways={scoreKind === 'v15'} benchName={benchName} />
     <p className="mt-3 text-center text-[13px] sm:text-sm" data-bh-jev14-formula>
       {custom
         ? <>Score = 1 / (w<sub>I</sub>/I + w<sub>C</sub>/C + w<sub>S</sub>/S + w<sub>K</sub>/K) with w = {JEV_AXES.map((a) => `${share(weights, a)}%`).join(' / ')} <span className="bh-muted">(× (axis / 50)² for {scoreKind === 'v15' ? 'Intelligence, Speed or Cost below 50 — the gates also apply at weight 0' : 'a weighted Intelligence, Speed or Cost below 50'}). # stays the official rank.</span></>
@@ -317,7 +317,7 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
       {rows.some((r) => r.alt) && <li><span className="bh-jev-alt-bar mr-1.5 inline-block h-[6px] w-4" style={typeVar(rows.find((r) => r.alt)!.class)} />Striped bar = same system priced at its base-model reference rate</li>}
       {unranked > 0 && <li><span className="bh-jevc-swatch is-partial mr-1.5" />Shown, not ranked</li>}
     </ul>
-    <figcaption className="bh-muted mt-3 text-[11.5px] leading-snug">I, C, S, K = Intelligence, Calibration, Speed, Cost; the est. pill = <a href="#jev-costs" className="text-accent underline">estimated cost</a>; ann. = announced price; API = the operator&apos;s endpoint saw sealed item text, without answers{newLabel ? <>; new = first listed in {newLabel}</> : null}; $/1k decisions = US dollars per 1,000 decisions (not heat-shaded). <span className="hidden sm:inline">Click a column heading to sort. </span>Names link to each project.</figcaption>
+    <figcaption className="bh-muted mt-3 text-[11.5px] leading-snug">I, C, S, K = Intelligence, Calibration, Speed, Cost; the est. pill = <a href={costHref} className="text-accent underline">estimated cost</a>; ann. = announced price; API = the operator&apos;s endpoint saw held-out benchmark inputs, without answers{newLabel ? <>; new = first listed in {newLabel}</> : null}; $/1k decisions = US dollars per 1,000 decisions (not heat-shaded). <span className="hidden sm:inline">Click a column heading to sort. </span>Names link to each project.</figcaption>
   </figure>;
 }
 

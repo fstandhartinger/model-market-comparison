@@ -1,3 +1,4 @@
+import { readMultimodalPreview } from '../lib/jevbench-multimodal-preview.mjs';
 import { JevBenchV15, Sha } from './JevBenchV15Preview';
 import { CustomEvaluationOffer } from './CustomEvaluationOffer';
 import { readJevbenchV1422 } from '../lib/jevbench-v1422.mjs';
@@ -21,6 +22,7 @@ export async function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '
     : artifact.revision === 'v1.5.1'
       ? (await readJevbenchV150Release()).artifact.systems.map((row: { key: string }) => row.key)
       : (await readJevbenchV1422()).artifact.systems.map((row: { key: string }) => row.key);
+  const imageRevision = (await readMultimodalPreview()).release_version;
   const canonical = `https://benchmarkheaven.com${versionPath}`;
   const structuredData = {
     '@context': 'https://schema.org',
@@ -83,7 +85,7 @@ export async function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '
         <a className="text-accent underline" href={`/api/jevbench/${artifact.revision}`}>aggregate results JSON</a> sha256 <Sha v={sha256} />
       </p>
       <p className="mt-3 max-w-3xl text-sm" data-bh-image-jev-link-row>
-        Making decisions from images? <a className="text-accent font-semibold underline" href="/image-jev-bench" data-bh-image-jev-link>Explore Image JevBench v0.1.4 and compare its systems</a>.
+        Making decisions from images? <a className="text-accent font-semibold underline" href="/image-jev-bench" data-bh-image-jev-link>Explore Image JevBench {imageRevision} and compare its systems</a>.
       </p>
       <p className="mt-3 max-w-3xl text-sm" data-bh-jev-version-share-row>
         <a className="text-accent underline" href={versionPath} data-bh-jev-version-share>Share this version</a>
