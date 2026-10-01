@@ -4,3 +4,6 @@ export declare const JEV_AXES: JevAxis[];
 export declare const OFFICIAL_WEIGHTS: JevWeights;
 export declare function isOfficialWeights(weights: JevWeights): boolean;
 export declare function weightedJevScore(axes: Partial<Record<JevAxis, number | null>> | null | undefined, weights: JevWeights): number | null;
+export type JevGate = { axis: 'intelligence' | 'speed' | 'cost'; value: number; factor: number; weighted: boolean };
+export type JevGatePenalty = { gates: JevGate[]; factor: number; ungated: number | null };
+export declare function jevGatePenalties(axes: Partial<Record<JevAxis, number | null>> | null | undefined, weights: JevWeights, opts?: { gatesAlways?: boolean }): JevGatePenalty;

@@ -10,7 +10,8 @@ import { readJevbenchV1422WithFamilies } from '../../../lib/jevbench-v1422-famil
 import { readJevbenchV1421 } from '../../../lib/jevbench-v1421.mjs';
 import { JevModelsV14Board } from '../../../components/JevModelsV14';
 import { JevCapabilityLazy } from '../../../components/JevCapabilityLazy';
-import { JevCapabilityRanking, jevClassView } from '../../../components/JevCapabilityRanking';
+import { JevCapabilityRanking } from '../../../components/JevCapabilityRanking';
+import { jevClassView } from '../../../components/jevClassView';
 import { JevBubbleCharts } from '../../../components/JevBubbleChart';
 import { JevBoardIntentLinks } from '../../../components/JevBenchSeoBlocks';
 import { withFieldNames } from '../../../components/jevFieldNames';
