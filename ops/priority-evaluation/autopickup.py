@@ -3370,6 +3370,11 @@ def sandbox_agent_command(job_dir: Path, rid: str, engine: str, stage_home: Path
             "--ro-bind", str(stage_home), "/home/flori", "--tmpfs", "/tmp", "--tmpfs", "/mnt",
             "--tmpfs", "/media", "--tmpfs", "/var/tmp", "--tmpfs", "/run", "--dir", "/run/user",
             "--dir", f"/run/user/{os.getuid()}"]
+    # /etc/resolv.conf usually links into /run (systemd-resolved); without its target the
+    # model process cannot resolve its own API host. Only the resolver file is re-exposed.
+    resolver = Path("/etc/resolv.conf").resolve()
+    if resolver.is_file() and resolver.is_relative_to("/run"):
+        args.extend(("--ro-bind", str(resolver), str(resolver)))
 
     def bind(source: Path, relative: str, *, readonly: bool = True) -> None:
         source = source.resolve(strict=True)
@@ -3424,6 +3429,11 @@ def sandbox_agent_command(job_dir: Path, rid: str, engine: str, stage_home: Path
     if (request_root / "release/base").is_dir():
         bind(request_root / "release/base", request_rel + "/release/base")
     if engine == "codex":
+        # Codex creates tmp/, its state database and installation id under CODEX_HOME at start-up,
+        # so CODEX_HOME is a per-order writable scratch; the login and binary stay read-only binds.
+        codex_home = request_root / ".agent-scratch" / ".codex_home"
+        codex_home.mkdir(mode=0o700, parents=True, exist_ok=True)
+        bind(codex_home, ".codex", readonly=False)
         bind(HOME / ".codex/auth.json", ".codex/auth.json")
         binary = (HOME / ".codex/packages/standalone/current").resolve(strict=True)
         bind(binary, ".codex/packages/standalone/current")
@@ -3536,12 +3546,14 @@ def run_agent(job_dir: Path, env: dict[str, str], timeout_hint: int, *, read_onl
             prompt_input = None
         result = None
         try:
-            with output_path.open("w", encoding="utf-8") as output:
+            # The agent's stderr goes to a private per-stage log so a failed start is diagnosable.
+            stderr_fd = os.open(job_dir / ".agent-stderr.log", os.O_WRONLY | os.O_CREAT | os.O_TRUNC | os.O_NOFOLLOW, 0o600)
+            with output_path.open("w", encoding="utf-8") as output, os.fdopen(stderr_fd, "w", encoding="utf-8") as stderr_log:
                 if prompt_input is not None:
                     proc = subprocess.Popen(sandbox, cwd="/", env={"PATH": "/usr/bin:/bin", "LANG": "C.UTF-8"},
                                             stdin=subprocess.PIPE, stdout=output if engine != "codex" else subprocess.DEVNULL,
                                             text=True,
-                                            stderr=subprocess.DEVNULL, pass_fds=tuple(fds))
+                                            stderr=stderr_log, pass_fds=tuple(fds))
                     try:
                         proc.communicate(prompt_input, timeout=timeout_hint + 180)
                     except subprocess.TimeoutExpired:
@@ -3553,7 +3565,7 @@ def run_agent(job_dir: Path, env: dict[str, str], timeout_hint: int, *, read_onl
                 else:
                     result = subprocess.run(sandbox, cwd="/", env={"PATH": "/usr/bin:/bin", "LANG": "C.UTF-8"},
                                             stdin=subprocess.DEVNULL, stdout=output if engine != "codex" else subprocess.DEVNULL,
-                                            stderr=subprocess.DEVNULL, timeout=timeout_hint + 180, check=False,
+                                            stderr=stderr_log, timeout=timeout_hint + 180, check=False,
                                             pass_fds=tuple(fds))
         except subprocess.TimeoutExpired:
             result = subprocess.CompletedProcess(sandbox, 124)

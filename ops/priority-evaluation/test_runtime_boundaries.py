@@ -97,6 +97,42 @@ print(json.dumps({'host_secrets_absent':True,'raw_absent':True,'reviewed_readonl
             self.assertTrue(json.loads(proc.stdout)['host_secrets_absent'])
             self.assertEqual((job / 'own-write.txt').read_text(), 'ok')
 
+    def test_codex_sandbox_has_writable_codex_home_readonly_login_and_resolver(self):
+        # Codex 0.160 writes tmp/, state_5.sqlite and installation_id under CODEX_HOME at start-up
+        # and exits 1 on a read-only home; the model host must also stay resolvable.
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            rid = str(uuid.uuid4())
+            job = root / 'orders' / rid / 'runner-prepare'
+            job.mkdir(parents=True)
+            stage = root / 'home'; stage.mkdir()
+            with mock.patch.object(ap, 'JOB_ROOT', root / 'orders'):
+                command, fds = ap.sandbox_agent_command(job, rid, 'codex', stage)
+            resolver = Path('/etc/resolv.conf')
+            expected = resolver.read_text() if resolver.is_file() else None
+            probe = '''import pathlib,sys
+home=pathlib.Path('/home/flori/.codex')
+(home/'tmp').mkdir()
+(home/'installation_id').write_text('probe')
+try: (home/'auth.json').write_text('changed')
+except OSError: pass
+else: raise AssertionError('login writable')
+expected=sys.argv[1]
+if expected!='-': assert pathlib.Path('/etc/resolv.conf').read_text()==expected
+print('ok')
+'''
+            try:
+                proc = subprocess.run(command + ['--', '/usr/bin/python3', '-I', '-c', probe,
+                                                 '-' if expected is None else expected],
+                                      pass_fds=tuple(fds), capture_output=True, text=True, timeout=30,
+                                      env={'PATH': '/usr/bin:/bin'})
+            finally:
+                for fd in fds: os.close(fd)
+            self.assertEqual(proc.returncode, 0, proc.stderr)
+            scratch = root / 'orders' / rid / '.agent-scratch' / '.codex_home'
+            self.assertEqual((scratch / 'installation_id').read_text(), 'probe')
+            self.assertTrue((scratch / 'tmp').is_dir())
+
     def test_api_namespace_has_only_request_credential_and_gold_free_fixture(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
