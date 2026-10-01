@@ -106,8 +106,8 @@ export function RequestPriorityEvaluationForm({ testMode }: { testMode: boolean 
     <div className="grid gap-4 sm:grid-cols-2">
       <label className="block text-sm font-medium">Email address<input className={field} name="email" type="email" autoComplete="email" maxLength={254} required /></label>
       <label className="block text-sm font-medium">Model name<input className={field} name="modelName" maxLength={120} required /></label>
-      <label className="block text-sm font-medium">Model link (Hugging Face)<input className={field} name="modelLink" type="url" placeholder="https://huggingface.co/…" /></label>
-      <label className="block text-sm font-medium">Code link (GitHub)<input className={field} name="codeLink" type="url" placeholder="https://github.com/…" /></label>
+      <label className="block text-sm font-medium">Model link (Hugging Face)<input className={field} name="modelLink" type="url" maxLength={2048} placeholder="https://huggingface.co/…" /></label>
+      <label className="block text-sm font-medium">Code link (GitHub)<input className={field} name="codeLink" type="url" maxLength={2048} placeholder="https://github.com/…" /></label>
     </div>
 
     <fieldset>
@@ -116,7 +116,8 @@ export function RequestPriorityEvaluationForm({ testMode }: { testMode: boolean 
         <label className={choice}><input className="mt-1 accent-current" type="radio" name="accessType" required checked={accessType === 'open_weights'} onChange={() => setAccessType('open_weights')} /><span><b>Open weights</b><span className="bh-muted block text-xs">We will run the submitted model.</span></span></label>
         <label className={choice}><input className="mt-1 accent-current" type="radio" name="accessType" required checked={accessType === 'api_endpoint'} onChange={() => setAccessType('api_endpoint')} /><span><b>API endpoint</b><span className="bh-muted block text-xs">Provide an endpoint URL; do not paste an API key.</span></span></label>
       </div>
-      <label className="mt-4 block text-sm font-medium">Access instructions<textarea className={field} name="accessInstructions" rows={3} maxLength={800} required placeholder="Public weights or endpoint URL, model identifier, and any setup notes. No secrets." /></label>
+      <label className="mt-4 block text-sm font-medium">Access instructions<textarea className={field} name="accessInstructions" rows={3} minLength={4} maxLength={800} required placeholder="Public weights or endpoint URL, model identifier, and any setup notes. No secrets." /></label>
+      <p className="bh-muted mt-2 text-xs">URLs, quotes, code snippets and line breaks are supported. 4–800 characters; no secrets.</p>
     </fieldset>
 
     <label className="block text-sm font-medium">Notes (optional)<textarea className={field} name="notes" rows={3} maxLength={1200} placeholder="Anything we should know about this model or request? Do not include API keys, passwords, or tokens." /></label>
