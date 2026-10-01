@@ -741,3 +741,15 @@ body.bh-fastlane-visible .bh-custom-evaluation-toast { bottom: calc(var(--bh-fas
 .bh-jev-3d-labels .bh-jev-3d-halo { border-width: 2px; border-style: solid; border-color: var(--muted); border-radius: 9999px; background: transparent; box-shadow: 0 0 0 1px rgb(var(--panel) / .9); }
 .bh-jev-3d-labels .bh-jev-3d-leader-line { height: 1px; background: var(--muted); transform-origin: 0 50%; }
 
+
+/* CR-248: separate cost/latency ratios; labels and cap ticks supplement colour. */
+:root, [data-theme="dark"] { --bh-tl-green: 74 222 128; --bh-tl-amber: 251 191 36; --bh-tl-red: 248 113 113; }
+[data-theme="light"] { --bh-tl-green: 21 128 61; --bh-tl-amber: 180 83 9; --bh-tl-red: 185 28 28; }
+.bh-tl-green { background-color: rgb(var(--bh-tl-green)); }
+.bh-tl-amber { background-color: rgb(var(--bh-tl-amber)); }
+.bh-tl-red { background-color: rgb(var(--bh-tl-red)); }
+.bh-tl-track { background-color: rgb(var(--line) / .5); }
+.bh-tl-tick { border-color: var(--text); opacity: .7; }
+.bh-tl-chip { color: #111827; border-radius: 3px; padding: 0 3px; font-weight: 600; }
+[data-theme="light"] .bh-tl-chip { color: white; }
+.bh-jev-alt-bar { background: repeating-linear-gradient(135deg, rgb(var(--jev-t)) 0 3px, transparent 3px 6px); opacity: .65; }

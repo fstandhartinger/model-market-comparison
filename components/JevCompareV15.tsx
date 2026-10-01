@@ -55,8 +55,8 @@ function parsePair(search: string, keys: Set<string>): [string, string] | null {
   return a && b && a !== b && keys.has(a) && keys.has(b) ? [a, b] : null;
 }
 
-export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading }: {
-  rows: JevCompareV15Row[]; openDecisions: number; sealedDecisions: number; heading?: string;
+export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, axesOnly = false }: {
+  rows: JevCompareV15Row[]; openDecisions: number; sealedDecisions: number; heading?: string; axesOnly?: boolean;
 }) {
   const ranked = rows.filter((r) => r.rank !== null);
   const unranked = rows.filter((r) => r.rank === null);
@@ -108,7 +108,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading }:
   ];
   return <section id="compare" className="mt-8 scroll-mt-6" aria-labelledby="jev15-compare" data-bh-jev15-compare data-bh-jev15-compare-a={A.key} data-bh-jev15-compare-b={B.key}>
     <h2 id="jev15-compare" className="text-2xl font-semibold">{heading ?? 'Compare two systems'}</h2>
-    <p className="bh-muted mt-1 max-w-3xl text-sm">Pick any two. Four radars: the score axes, chance-corrected competence per request type on the open and sealed sets, and competence per tier on each set. Further out is better on every spoke; the link keeps the pair.</p>
+    <p className="bh-muted mt-1 max-w-3xl text-sm">Pick any two. {axesOnly ? 'Compare the four score axes; request-type and tier aggregates are not published for this benchmark.' : 'Four radars: the score axes, chance-corrected competence per request type on the open and sealed sets, and competence per tier on each set.'} Further out is better on every spoke; the link keeps the pair.</p>
     <div className="bh-panel mt-3 p-3 sm:p-4">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
         <SystemCombobox id="jev15-compare-a" label="System A" value={A.key} other={B.key} ranked={ranked} unranked={unranked} onChange={setA} />
@@ -122,7 +122,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading }:
         <button type="button" className="bh-button text-xs font-semibold" onClick={copy} data-bh-jev15-compare-copy>{copied ? "Link copied" : "Copy link to this pair"}</button>
       </div>
       <div className="mt-3 grid gap-x-6 gap-y-5 lg:grid-cols-2">
-        {figures.map((f) => <figure key={f.key} className="min-w-0" data-bh-jev15-radar={f.key}>
+        {figures.filter((f) => !axesOnly || f.key === 'axes').map((f) => <figure key={f.key} className="min-w-0" data-bh-jev15-radar={f.key}>
           <h3 className="text-base font-semibold">{f.title}</h3>
           {f.missing.length > 0 && <p className="bh-muted mt-1 text-[12px]" data-bh-jev15-radar-missing={f.key}>{f.missing.join(" and ")} {f.missing.length === 1 ? "has" : "have"} no published values for this view.</p>}
           {missingFor(f.spokes).length < 2
@@ -134,7 +134,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading }:
       <details className="mt-3 text-[13px]" data-bh-jev15-compare-values><summary className="cursor-pointer text-accent">All values as a table</summary>
         <div className="bh-table-wrap mt-2"><table className="bh-table" data-bh-jev15-compare-table>
           <thead><tr><th scope="col">Spoke</th><th scope="col">A: {s[0].name}</th><th scope="col">B: {s[1].name}</th></tr></thead>
-          <tbody>{figures.flatMap((f) => [
+          <tbody>{figures.filter((f) => !axesOnly || f.key === 'axes').flatMap((f) => [
             <tr key={`${f.key}-head`} className="bg-[rgb(var(--surface-2))]"><th scope="rowgroup" colSpan={3} className="text-left font-semibold">{f.title}</th></tr>,
             ...f.spokes.map((sp) => <tr key={`${f.key}-${sp.key}`}><th scope="row" className="text-left font-normal">{sp.lines.join(" ")}</th><td className="tabular">{sp.texts[0]}</td><td className="tabular">{sp.texts[1]}</td></tr>),
           ])}</tbody>

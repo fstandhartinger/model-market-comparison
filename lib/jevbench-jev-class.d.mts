@@ -14,5 +14,11 @@ export type JevClassResult = {
   reference: { key: string; display: string; cost: number; latency: number; speed: number };
   limits: { cost: number; latency: number; speedFloor: number; factor: number };
   rows: JevClassRow[];
+  costLatencySpearman: number | null; n: number;
 };
-export declare function jevClassRows(systems: JevV14System[], options?: { referenceKey?: string; factor?: number }): JevClassResult;
+export declare function jevClassRows(systems: JevV14System[], options?: JevClassOptions): JevClassResult;
+
+export type JevClassOptions = { referenceKey?: string; factor?: number; referenceLabel?: string; limits?: { cost: number; latency: number } };
+export declare function spearman(xs: (number | null)[], ys: (number | null)[]): number | null;
+export declare function trafficLightZone(ratio: number | null, factor?: number): 'green' | 'amber' | 'red' | null;
+export declare function ratioPosition(ratio: number): number;

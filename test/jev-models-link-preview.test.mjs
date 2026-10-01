@@ -15,13 +15,13 @@ const frozenV14 = jevbenchV14View(await readJevbenchV14());
 
 test('CR-131: the changing JevBench board has evergreen Open Graph and X metadata', () => {
   const metadata = page.slice(page.indexOf('export async function generateMetadata'), page.indexOf('\nexport default async function'));
-  assert.match(metadata, /JevBench by Benchmark Heaven/);
+  assert.match(metadata, /JevBench Capability Score by Benchmark Heaven/);
   assert.match(metadata, /Jev-class model benchmark/);
   assert.match(metadata, /intelligence, calibration, speed, and cost/);
   assert.match(metadata, /alternates: \{ canonical: '\/jev-models' \}/);
   assert.match(metadata, /card: 'summary_large_image'/);
   assert.match(metadata, /width: 1200, height: 630/);
-  assert.doesNotMatch(metadata, /rank|score|\bleads at\b|systems tested|decisions/i);
+  assert.doesNotMatch(metadata, /row\.rank|score of|\bleads at\b|systems tested|decisions/i);
   assert.match(page, /const OG_ART_REVISION = 'og4'/);
   assert.match(metadata, /twitter:[\s\S]*title, description/);
   assert.match(page, /versionPath="\/jev-models\/v1\.5\.4"/);

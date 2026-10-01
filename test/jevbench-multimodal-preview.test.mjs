@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { access, readFile } from 'node:fs/promises';
-import { formatMatchedGapPp, readArchivedMultimodalPreviewV011, readArchivedMultimodalPreviewV012, readArchivedMultimodalPreviewV013, readMultimodalPreview, validatePreviewTracks } from '../lib/jevbench-multimodal-preview.mjs';
+import { formatMatchedGapPp, readArchivedMultimodalPreviewV011, readArchivedMultimodalPreviewV012, readArchivedMultimodalPreviewV013, readArchivedMultimodalPreviewV014, readMultimodalPreview, validatePreviewTracks } from '../lib/jevbench-multimodal-preview.mjs';
 
 const expectedTopFive = [
   'Imajev-4B',
@@ -28,7 +28,7 @@ function longArrays(value, path = 'root') {
 }
 
 test('Image JevBench v0.1.4 preserves the frozen method and prices Wity-1 at its base-model estimate', async () => {
-  const a = await readMultimodalPreview();
+  const { artifact: a } = await readArchivedMultimodalPreviewV014();
   assert.equal(a.benchmark, 'Image JevBench v0.1.4');
   assert.equal(a.revision, 'v0.1.4');
   assert.equal(a.sealed_item_details_included, false);
@@ -127,6 +127,13 @@ test('Image JevBench v0.1.4 preserves the frozen method and prices Wity-1 at its
   assert.deepEqual(longArrays(a), ['root.ranking', 'root.candidate_coverage.candidates']);
 });
 
+test('Image JevBench v0.1.4 archive is byte-pinned separately from the live preview', async () => {
+  const archived = await readArchivedMultimodalPreviewV014();
+  assert.equal(archived.sha256, '385aba04acb0649f73264f57b237fa6bcf481763641978d732f81b4e88ba2150');
+  assert.equal(archived.artifact.revision, 'v0.1.4');
+  assert.equal(archived.artifact.n_systems, 50);
+});
+
 test('Image JevBench v0.1.1 is preserved as the exact parent release artifact', async () => {
   const archived = await readArchivedMultimodalPreviewV011();
   assert.equal(archived.sha256, '749aae5c79b52e41eb691c50e4de2de65188bda8943e24afd8ad71434ac88140');
@@ -179,19 +186,18 @@ test('public Image JevBench route leads with the ranking and preserves aggregate
     readFile(new URL('../scripts/build-jevbench-multimodal-preview.mjs', import.meta.url), 'utf8'),
   ]);
   assert.match(page, /robots: \{ index: false, follow: false/);
-  assert.match(page, /Image JevBench v0\.1\.4/);
+  assert.match(page, /Image JevBench v0\.1\.5/);
   assert.match(page, /data-bh-mm-author-review/);
   assert.match(page, /data-bh-mm-author-review-summary/);
   assert.match(publicPage, /canonical: '\/image-jev-bench'/);
-  assert.match(publicPage, /Image JevBench v0\.1\.4/);
+  assert.match(publicPage, /Image JevBench v0\.1\.5/);
   assert.match(publicPage, /openGraph:/);
-  // F-198 (pass 36, iter235): the page is its results. Order: head → Composite score → Full ranking →
-  // Compare two systems → Examples → Results by track → Split → preview tracks → Method → closed candidates.
+  // CR-248: capability → bubbles → composite → comparison → full ranking, with existing track content preserved.
   assert.doesNotMatch(page, /Top five by composite score/, 'the top-five panel is gone');
   assert.doesNotMatch(page, /Clean split/, 'the clean-split alert is gone');
   assert.doesNotMatch(page, /approved/i, 'no review-trail wording in the copy');
-  assert.ok(page.indexOf('id="bars-heading"') < page.indexOf('id="overall-heading"'));
-  assert.ok(page.indexOf('id="overall-heading"') < page.indexOf('<ImageJevRadar systems={a.ranking} />'));
+  assert.ok(page.indexOf('<JevScoreChart') < page.indexOf('id="overall-heading"'));
+  assert.ok(page.indexOf('<ImageJevRadar systems={a.ranking} />') < page.indexOf('id="overall-heading"'));
   assert.ok(page.indexOf('<ImageJevExamples />') < page.indexOf('id="track-heading"'));
   assert.ok(page.indexOf('id="track-heading"') < page.indexOf('id="split-heading"'));
   assert.ok(page.indexOf('id="split-heading"') < page.indexOf('id="preview-tracks-heading"'));

@@ -18,7 +18,10 @@ export type JevBoardRow = {
   endpoint_kind?: string; endpoint_condition?: string;
   // F-223: the headline option's paired-bootstrap 95% interval, when the release publishes one (v1.5 onwards).
   ci?: [number, number] | null;
+  alt?: { axes: { cost: number }; label: string; note: string };
 };
+
+export type JevBoardAlternative = { score: number; rank: number; label: string; note: string };
 
 /** A board row plus what the interactive views need: the row note, open code/weights, new in this release. */
 export type JevBoardViewRow = JevBoardRow & { note: string | null; openSource: boolean; isNew: boolean };
@@ -100,7 +103,7 @@ function AxisValue({ level, children, title }: { level: number | null; children:
   return <span className={level == null ? 'bh-heat-cell sm:block' : 'bh-heat-cell bh-heat sm:block'} style={heatStyle(level)} title={title}>{children}</span>;
 }
 
-export function JevScoreBar({ row, reference = false, metric = 'score', heat, isNew = false, name, ci = null }: { row: JevBoardRow; reference?: boolean; metric?: BarMetric; heat?: HeatScales; isNew?: boolean; name?: string; ci?: [number, number] | null }) {
+export function JevScoreBar({ row, reference = false, metric = 'score', heat, isNew = false, name, ci = null, alternative = null }: { row: JevBoardRow; reference?: boolean; metric?: BarMetric; heat?: HeatScales; isNew?: boolean; name?: string; ci?: [number, number] | null; alternative?: JevBoardAlternative | null }) {
   const s = row.jevbench_score;
   const value = metricValue(row, metric);
   // F-223 (Fable pass 42): the official score's 95% interval is drawn on the bar's own 0-100 scale, so the figure
@@ -110,7 +113,7 @@ export function JevScoreBar({ row, reference = false, metric = 'score', heat, is
   const usd = row.cost?.usd_per_1000;
   const kind = row.cost?.kind;
   const level = (column: HeatColumn) => heat ? heatLevel(heat, column, row) : null;
-  const label = `${row.display}: ${one(s)}${row.rank ? `, rank ${row.rank}` : `, ${NOT_RANKED[row.listing] ?? row.listing}, not ranked`}. Intelligence ${one(row.axes?.intelligence)}, calibration ${row.axes?.calibration == null ? 'none' : one(row.axes.calibration)}, speed ${one(row.axes?.speed)}, cost ${one(row.axes?.cost)}.${ciLo != null && ciHi != null ? ` 95% interval ${one(ciLo)} to ${one(ciHi)}.` : ''}`;
+  const label = `${row.display}: ${one(s)}${row.rank ? `, rank ${row.rank}` : `, ${NOT_RANKED[row.listing] ?? row.listing}, not ranked`}. Intelligence ${one(row.axes?.intelligence)}, calibration ${row.axes?.calibration == null ? 'none' : one(row.axes.calibration)}, speed ${one(row.axes?.speed)}, cost ${one(row.axes?.cost)}.${ciLo != null && ciHi != null ? ` 95% interval ${one(ciLo)} to ${one(ciHi)}.` : ''}${alternative ? ` ${alternative.label}: ${one(alternative.score)} (would be #${alternative.rank}). ${alternative.note}` : ''}`;
   return <li style={typeVar(row.class)} className="grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_21rem]"
     data-bh-jev14-bar={row.key} data-bh-jev14-bar-score={s == null ? '' : s.toFixed(3)} data-bh-jev14-bar-metric={metric === 'score' ? undefined : metric} data-bh-jev14-reference={reference ? '1' : undefined} aria-label={label}>
     <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs">{row.rank ?? ''}</span>
@@ -128,8 +131,14 @@ export function JevScoreBar({ row, reference = false, metric = 'score', heat, is
       {value != null && <span className={`bh-jevc-bar ${row.ranked ? '' : 'is-partial'} ${reference ? 'is-reference' : ''}`} style={{ width: `${Math.max(0, Math.min(100, value)).toFixed(4)}%` }} />}
       {ciLo != null && ciHi != null && <span className="bh-jevc-ci" data-bh-jev14-ci={row.key} data-bh-jev14-ci-lo={ciLo.toFixed(3)} data-bh-jev14-ci-hi={ciHi.toFixed(3)} style={{ left: `${ciLo.toFixed(3)}%`, width: `${(ciHi - ciLo).toFixed(3)}%` }} />}
     </span>
+    {alternative && <>
+      <span className="col-start-2 row-start-3 mt-1 block h-[6px] sm:col-start-3 sm:row-start-2" aria-hidden="true" data-bh-jev-alt={row.key} data-bh-jev-alt-score={alternative.score.toFixed(3)} data-bh-jev-alt-rank={alternative.rank}>
+        <span className="bh-jev-alt-bar block h-full rounded-sm" style={{ width: `${clampPct(alternative.score)}%` }} />
+      </span>
+      <span className="bh-muted col-start-2 row-start-4 mt-0.5 min-w-0 text-[11px] leading-snug sm:col-start-3 sm:col-end-6 sm:row-start-3" title={alternative.note}>{alternative.label}: {one(alternative.score)} (would be #{alternative.rank})</span>
+    </>}
     <b className={`tabular col-start-3 row-span-2 row-start-1 self-center text-right text-base sm:col-start-4 sm:row-span-1 sm:text-lg ${row.ranked ? '' : 'bh-muted font-normal'}`} data-bh-jev14-bar-value title={row.ranked ? undefined : 'Not ranked: this score is shown for reference only'}>{one(s)}</b>
-    <span className="bh-muted col-start-2 row-start-3 mt-0.5 flex min-w-0 flex-wrap gap-x-2 font-mono text-[10.5px] sm:col-start-5 sm:row-start-1 sm:mt-0 sm:grid sm:grid-cols-[1fr_1fr_1fr_1fr_2.1fr] sm:gap-x-1 sm:whitespace-nowrap sm:text-right sm:text-[12px]" data-bh-jev14-bar-axes>
+    <span className={`bh-muted col-start-2 ${alternative ? 'row-start-5' : 'row-start-3'} mt-0.5 flex min-w-0 flex-wrap gap-x-2 font-mono text-[10.5px] sm:col-start-5 sm:row-start-1 sm:mt-0 sm:grid sm:grid-cols-[1fr_1fr_1fr_1fr_2.1fr] sm:gap-x-1 sm:whitespace-nowrap sm:text-right sm:text-[12px]`} data-bh-jev14-bar-axes>
       {(['intelligence', 'calibration', 'speed', 'cost'] as const).map((axis) => <span key={axis} className="whitespace-nowrap sm:block"><span className="sm:hidden">{AXIS_LETTER[axis]} </span><AxisValue level={level(axis)}>{f0(row.axes?.[axis])}</AxisValue></span>)}
       {/* CR-176.4: the $/1k cell is not heat-shaded, and est./ann. are left-of-the-number pills (no `~` prefix). */}
       <span className="whitespace-nowrap sm:block" title={row.cost?.basis ?? undefined} data-bh-jev14-cost-cell>

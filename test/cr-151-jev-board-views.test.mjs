@@ -26,7 +26,8 @@ test('the chart offers View by and sortable, keyboard-reachable headings; the ta
   assert.match(client, /aria-sort=\{active \? \(sort\.dir === 'asc' \? 'ascending' : 'descending'\) : 'none'\}/);
   assert.match(client, /usd: 'asc'/, '$/1k sorts cheapest first');
   assert.match(client, /Not the official order/);
-  assert.match(client, /The bold number stays the JevBench Score and # the official rank/);
+  assert.match(client, /The bold number stays the \{benchName\} Score and # the official rank/);
+  assert.match(client, /benchName = 'JevBench'/, 'shared chart retains the JevBench default label');
 });
 
 test('both views filter by name, type, openness, API flag and new-in-release', () => {
