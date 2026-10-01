@@ -6,9 +6,15 @@ import { JevScoreChart } from '../../../components/JevBoardInteractive';
 import { JevCompareV15 } from '../../../components/JevCompareV15';
 import { ImageJevRevisionHistory } from '../../../components/ImageJevRevisionHistory';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { formatMatchedGapPp, readMultimodalPreview } from '../../../lib/jevbench-multimodal-preview.mjs';
 import { ImageJevExamples } from '../../../components/ImageJevExamples';
 import { ImageJevRadar } from '../../../components/ImageJevRadar';
+import { BaseModelDisplay } from '../../../components/BaseModelDisplay';
+import { imageJevSystemPath as imageSystemPath, imageJevSourceUrl } from '../../../lib/imagejev-system-links.mjs';
+
+// CR-254 (2026-10-01): each ImageJevBench system gets its own detail page under /image-jev-bench/<key>.
+// Image keys are already URL-safe (lowercase, digits and underscores); encode defensively anyway.
 
 export const metadata: Metadata = {
   title: 'Image JevBench v0.1.5',
@@ -75,11 +81,15 @@ function RankingTable({ systems, track, all = false }: { systems: any[]; track: 
         return <tr key={s.key} id={all ? `imagejev-system-${s.key}` : undefined} className="scroll-mt-6 border-t border-line">
           <td className="sticky left-0 z-[1] w-14 min-w-14 bg-[var(--surface)] p-3 font-bold tabular-nums shadow-[inset_-1px_0_0_rgb(var(--line))]">{i + 1}</td>
           <th scope="row" className="sticky left-14 z-[1] w-52 min-w-52 bg-[var(--surface)] p-3 text-left font-semibold shadow-[inset_-1px_0_0_rgb(var(--line))]">
-            <SystemName name={s.name} gate={gate} />
+            {imageJevSourceUrl(s.key, s.repo)
+              ? <a href={imageJevSourceUrl(s.key, s.repo)!} target="_blank" rel="noopener noreferrer" className="underline" data-bh-jev-source={s.key}><SystemName name={s.name} gate={gate} /></a>
+              : <SystemName name={s.name} gate={gate} />}
             {s.key === 'wity_1' && <p className="mt-1 text-xs font-semibold text-amber-700 dark:text-amber-300" data-bh-mm-author-review>Under author review: server build ID was not recorded; this score may change after verification.</p>}
             {s.inference_setting && <p className="bh-muted mt-1 text-xs">Setting: {s.inference_setting}</p>}
             {t.cost.coverage < 0.9995 && <p className="bh-muted mt-1 text-xs">Cost receipts cover {pct(t.cost.coverage)} of calls</p>}
             {s.api_flag && <span className="mt-1 inline-block rounded-full border border-accent px-2 py-0.5 text-[0.68rem] font-bold text-accent">API</span>}
+            <BaseModelDisplay benchmark="imagejevbench" systemKey={s.key} className="mt-1 block text-[11px] font-normal leading-tight" />
+            <Link href={imageSystemPath(s.key)} className="mt-0.5 inline-block text-[11px] font-normal text-accent underline decoration-[rgb(var(--line))] underline-offset-2 hover:decoration-current" data-bh-mm-system-details={s.key}>details</Link>
           </th>
           <td className="p-3 text-right font-bold tabular-nums">{score(t.composite.score)}</td>
           <td className="p-3 text-right tabular-nums">{score(t.axes.intelligence)}</td>
@@ -104,7 +114,14 @@ function ScoreBars({ systems, track }: { systems: any[]; track: Track }) {
     const gate = gateOf(s.tracks[track], s);
     const color = i === 0 ? 'bg-amber-400' : s.api_flag ? 'bg-pink-400' : 'bg-teal-400';
     return <li key={s.key} className="grid grid-cols-[minmax(0,11rem)_1fr_3.2rem] items-center gap-3 sm:grid-cols-[minmax(0,17rem)_1fr_3.5rem]">
-      <span className="min-w-0 break-words text-sm font-semibold leading-tight" title={s.name}>{i + 1}. <SystemName name={s.name} gate={gate} />{s.api_flag && <span className="ml-1 whitespace-nowrap text-[0.68rem] font-bold text-accent">API</span>}</span>
+      <span className="min-w-0 break-words text-sm font-semibold leading-tight" title={s.name}>
+        {i + 1}. {imageJevSourceUrl(s.key, s.repo)
+          ? <a href={imageJevSourceUrl(s.key, s.repo)!} target="_blank" rel="noopener noreferrer" className="underline" data-bh-jev-source={s.key}><SystemName name={s.name} gate={gate} /></a>
+          : <Link href={imageSystemPath(s.key)}><SystemName name={s.name} gate={gate} /></Link>}
+        {s.api_flag && <span className="ml-1 whitespace-nowrap text-[0.68rem] font-bold text-accent">API</span>}
+        <BaseModelDisplay benchmark="imagejevbench" systemKey={s.key} className="mt-1 block text-[11px] font-normal leading-tight" />
+        {imageJevSourceUrl(s.key, s.repo) && <Link href={imageSystemPath(s.key)} className="text-[11px] font-normal text-accent underline">details</Link>}
+      </span>
       <span className="h-5 rounded-md bg-black/10 dark:bg-white/10"><span className={`block h-full rounded-md ${color}`} style={{ width: `${Math.max(0.5, v)}%` }} /></span>
       <span className="text-right font-bold tabular-nums">{score(v)}</span>
     </li>;
@@ -160,7 +177,7 @@ export async function MultimodalPreviewContent() {
     </header>
 
     <JevCapabilityRanking systems={chartSystems} revision={a.release_version} officialHref="#jev14-chart-title"
-      benchName="JevImageBench" {...classOptions} eligibilityNote={eligibility}
+      benchName="JevImageBench" benchmark="imagejevbench" {...classOptions} eligibilityNote={eligibility}
       correlationReason="mostly because self-hosted cost is computed from measured GPU time; both bars are kept for consistency with JevBench" />
     <JevBubbleCharts points={capability.points} costLimit={limits.cost} latencyCap={limits.latency} referenceName={limits.referenceLabel} benchName="Image JevBench" />
     <details className="mt-4" data-bh-mm-3d-toggle><summary className="cursor-pointer text-sm font-semibold text-accent">Explore capability, cost and speed in 3D</summary>
@@ -168,8 +185,7 @@ export async function MultimodalPreviewContent() {
     </details>
     <JevScoreChart revision={a.release_version} benchName="Image JevBench" scoreLabel="Image JevBench Score" costHref="#imagejev-pricing"
       rows={imageJevBoardRows(a)} rankedCount={a.n_systems} newLabel={null} fairness={null} capabilityHref="#jev-capability"
-      presets={imageJevSliderPresets(a)} compactMobile scoreKind="v15" methodLink={{ href: '#method-heading', label: 'Method notes ↓' }}
-      systemAnchorPrefix="#imagejev-system-" />
+      presets={imageJevSliderPresets(a)} compactMobile scoreKind="v15" methodLink={{ href: '#method-heading', label: 'Method notes ↓' }} benchmark="imagejevbench" />
     <p className="bh-muted mt-2 max-w-5xl text-sm" data-bh-mm-wity-pricing-note>Wity-1 is ranked at Wity&apos;s own stated API price (USD 0.042 per million input tokens, output free). The striped bar shows the score at the Qwen3.6-35B-A3B base-model reference price we use for self-hosted open weights of the same base. <a className="text-accent underline" href="#imagejev-pricing">See pricing note ↓</a></p>
     <JevCompareV15 rows={imageJevCompareRows(a)} openDecisions={s.items_public} sealedDecisions={s.items_sealed} axesOnly />
     <ImageJevRadar systems={a.ranking} />

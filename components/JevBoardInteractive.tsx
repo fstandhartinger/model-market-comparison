@@ -9,7 +9,10 @@ import { JEV_TYPE_LABEL, jevLegendTypes } from './jevTypes';
 import { JEV_AXES, OFFICIAL_WEIGHTS, isOfficialWeights, weightedJevScore, type JevAxis, type JevWeights } from '../lib/jevbench-axis-weights.mjs';
 import { jevV15BoardScore, jevBoardAlternative } from '../lib/jevbench-v15-board.mjs';
 import { withFieldNames } from './jevFieldNames';
+import { imageJevSystemPath, imageJevSourceUrl } from '../lib/imagejev-system-links.mjs';
+import { jevSourceUrl } from './jevSystemLinks';
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
+import { BaseModelDisplay, type BaseModelBenchmark } from './BaseModelDisplay';
 
 // CR-151 (Florian 25 Sep 2026): the score chart and the axes table become readable in more than one way. Axis cells are
 // shaded by their standing within the column, both views sort and filter, and a "View by" switch above the chart says
@@ -185,7 +188,7 @@ const GENERAL_LLM = 'llm-baseline';
 
 export type JevFairness = { leadName: string; topName: string; leadInt: number; topInt: number; leadsOn: string[] } | null;
 
-export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLabel, fairness, approvedNote = null, tieNote = null, capabilityHref, presets = [], compactMobile = false, scoreKind = 'v14', methodLink, benchName = 'JevBench', scoreLabel, costHref = '#jev-costs', systemAnchorPrefix }: { revision: string; rows: JevBoardViewRow[]; rankedCount: number; newLabel: string | null; fairness: JevFairness; approvedNote?: string | null; tieNote?: string | null; capabilityHref: string | null; presets?: JevPreset[]; compactMobile?: boolean; scoreKind?: 'v14' | 'v15'; methodLink?: { href: string; label: string }; benchName?: string; scoreLabel?: string; costHref?: string; systemAnchorPrefix?: string }) {
+export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLabel, fairness, approvedNote = null, tieNote = null, capabilityHref, presets = [], compactMobile = false, scoreKind = 'v14', methodLink, benchName = 'JevBench', scoreLabel, costHref = '#jev-costs', systemAnchorPrefix, benchmark = 'jevbench' }: { revision: string; rows: JevBoardViewRow[]; rankedCount: number; newLabel: string | null; fairness: JevFairness; approvedNote?: string | null; tieNote?: string | null; capabilityHref: string | null; presets?: JevPreset[]; compactMobile?: boolean; scoreKind?: 'v14' | 'v15'; methodLink?: { href: string; label: string }; benchName?: string; scoreLabel?: string; costHref?: string; systemAnchorPrefix?: string; benchmark?: BaseModelBenchmark }) {
   // Florian 25 Sep 2026: weight sliders. Equal weights are the official score; any other mix re-scores every row with
   // the same formula and re-sorts by it, clearly marked as not the official ranking.
   // CR-205: scoreKind 'v15' re-scores with the v1.5 composite — its low-axis gates apply even at weight 0.
@@ -242,9 +245,7 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
   // F-223 (Fable pass 42): one ranking, one figure. The official score's 95% interval is drawn here — on the official
   // weights and the Overall view only, because the published interval belongs to the official score, not to a re-scored one.
   const officialOverall = !custom && view === 'overall';
-  const bar = (row: JevBoardViewRow) => <JevScoreBar key={row.key} row={row} metric={metric} heat={heat} isNew={row.isNew} name={(collide.get(shortName(row.display)) ?? 0) > 1 ? row.display : undefined} ci={officialOverall ? row.ci ?? null : null} alternative={jevBoardAlternative(row, rows, weights, rescore)}
-    // CR-252: pages without per-system detail pages (ImageJevBench) link names to their own ranking rows instead.
-    pageHref={systemAnchorPrefix ? `${systemAnchorPrefix}${row.key}` : undefined} />;
+  const bar = (row: JevBoardViewRow) => <JevScoreBar key={row.key} row={row} metric={metric} heat={heat} isNew={row.isNew} name={(collide.get(shortName(row.display)) ?? 0) > 1 ? row.display : undefined} ci={officialOverall ? row.ci ?? null : null} alternative={jevBoardAlternative(row, rows, weights, rescore)} benchmark={benchmark} pageHref={systemAnchorPrefix ? `${systemAnchorPrefix}${row.key}` : undefined} />;
   const status = `${shown.length} of ${rows.length} systems, sorted by ${SORT_LABEL[sort.key]}, ${dirWords(sort)}.`;
 
   return <figure className="bh-panel mt-6 p-4 sm:p-5" data-bh-jev14-chart data-bh-jev14-view={view} data-bh-jev14-compact={compactMobile ? '1' : undefined} aria-labelledby="jev14-chart-title">
@@ -334,15 +335,16 @@ function NoteMarker({ row, note }: { row: JevBoardViewRow; note: string }) {
   </details>;
 }
 
-function SystemName({ row }: { row: JevBoardViewRow }) {
+function SystemName({ row, benchmark = 'jevbench' }: { row: JevBoardViewRow; benchmark?: BaseModelBenchmark }) {
   const name = shortName(row.display);
   const rawVariant = row.display.startsWith(name) ? row.display.slice(name.length).replace(/^[ ,]*\(?|\)$/g, '') : '';
   const variant = rawVariant && !row.author.includes(rawVariant) ? rawVariant : '';
-  const page = jevSystemPath(row.key);
+  const page = benchmark === 'imagejevbench' ? imageJevSystemPath(row.key) : jevSystemPath(row.key);
+  const source = benchmark === 'imagejevbench' ? imageJevSourceUrl(row.key, row.repo) : jevSourceUrl(row.key, row.repo);
   // Florian 25 Sep 2026: the name opens the model's best source; the system page stays one click away ("details").
-  const href = row.repo ?? page;
-  const NameLink = ({ children }: { children: ReactNode }) => row.repo
-    ? <a href={row.repo} target="_blank" rel="noopener noreferrer" title={row.display} data-bh-jev-source={row.key}>{children}</a>
+  const href = source ?? page;
+  const NameLink = ({ children }: { children: ReactNode }) => source
+    ? <a href={source!} target="_blank" rel="noopener noreferrer" title={row.display} data-bh-jev-source={row.key}>{children}</a>
     : <Link href={page} title={row.display}>{children}</Link>;
   const cut = name.lastIndexOf(' ');
   // The † stays outside the link but shares a no-wrap box with the final word.
@@ -358,6 +360,8 @@ function SystemName({ row }: { row: JevBoardViewRow }) {
     {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-2 align-middle" data-bh-jev14-api-flag={row.key} title={row.api_exposure_note ?? apiExplanation} aria-label={apiExplanation}>API</span>}
     {row.isNew && <span className="bh-new-tag ml-2 align-middle" data-bh-jev14-new={row.key}>new</span>}
     <span className="bh-muted block text-[11px] leading-tight">by {row.author}{variant ? ` · ${variant}` : ''}{href !== page && <> · <Link href={page} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-details={row.key}>details</Link></>}</span>
+    {/* CR-254 (2026-10-01): the cited base-model overlay, presentation only; every row keeps it, ranked or not. */}
+    <BaseModelDisplay benchmark={benchmark} systemKey={row.key} className="block text-[11px] leading-tight" />
   </div>;
 }
 
@@ -379,10 +383,10 @@ function HeatTd({ heat, column, row, children, className = '' }: { heat: HeatSca
 
 const endpointLabel = (kind: string | undefined) => kind === 'api' ? 'API' : kind === 'gpu' ? 'RunPod GPU' : kind === 'demo' ? 'author demo' : kind === 'cpu' ? 'CPU' : kind ?? '—';
 
-function Row({ row, heat }: { row: JevBoardViewRow; heat: HeatScales }) {
+function Row({ row, heat, benchmark = 'jevbench' }: { row: JevBoardViewRow; heat: HeatScales; benchmark?: BaseModelBenchmark }) {
   return <tr id={`jev14-row-${row.key}`} data-bh-jev14-row={row.key} data-bh-jev14-ranked={row.ranked ? '1' : '0'} className={row.ranked ? '' : 'bh-jev11-partial'}>
     <td className="bh-muted tabular">{row.rank ?? '—'}</td>
-    <th scope="row" className="bh-jev-sticky text-left font-normal"><SystemName row={row} />
+    <th scope="row" className="bh-jev-sticky text-left font-normal"><SystemName row={row} benchmark={benchmark} />
       {!row.ranked && <span className="bh-thin-tag bh-partial-tag mt-1 inline-block" title={row.not_ranked_because ?? undefined} data-bh-jev14-partial={row.key}>{row.listing.replace(/_/g, ' ')} · not ranked</span>}
     </th>
     <HeatTd heat={heat} column="score" row={row}><b className="text-lg" data-bh-jev14-score>{one(row.jevbench_score)}</b></HeatTd>
@@ -407,7 +411,7 @@ function Th({ k, sort, toggle, children, sticky = false }: { k: SortKey; sort: S
   </th>;
 }
 
-export function JevAxesTable({ rows, publicDecisions, sealedDecisions, newLabel }: { rows: JevBoardViewRow[]; publicDecisions: number; sealedDecisions: number; newLabel: string | null }) {
+export function JevAxesTable({ rows, publicDecisions, sealedDecisions, newLabel, benchmark = 'jevbench' }: { rows: JevBoardViewRow[]; publicDecisions: number; sealedDecisions: number; newLabel: string | null; benchmark?: BaseModelBenchmark }) {
   const heat = useMemo(() => heatScales(rows), [rows]);
   const official = useMemo(() => new Map(rows.map((r, i) => [r.key, i])), [rows]);
   const [filters, setFilters] = useState<Filters>(NO_FILTERS);
@@ -426,7 +430,7 @@ export function JevAxesTable({ rows, publicDecisions, sealedDecisions, newLabel 
           <Th k="sealed" sort={sort} toggle={toggle}><>Sealed accuracy<br /><span className="bh-muted text-[11px]">n = {sealedDecisions}</span></></Th>
           <Th k="gap" sort={sort} toggle={toggle}>Public − sealed gap</Th><Th k="usd" sort={sort} toggle={toggle}>$/1k decisions</Th><Th k="latency" sort={sort} toggle={toggle}>p50 latency</Th><Th k="endpoint" sort={sort} toggle={toggle}>Endpoint</Th>
         </tr></thead>
-        <tbody>{shown.map((row) => <Row key={row.key} row={row} heat={heat} />)}</tbody>
+        <tbody>{shown.map((row) => <Row key={row.key} row={row} heat={heat} benchmark={benchmark} />)}</tbody>
       </table>
       {shown.length === 0 && <p className="bh-muted p-4 text-sm">No system matches these filters.</p>}
     </div>
