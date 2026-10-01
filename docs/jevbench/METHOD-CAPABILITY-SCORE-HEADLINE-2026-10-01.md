@@ -49,7 +49,7 @@ Every Capability row shows two thin bars on a shared log scale of the ratio to t
 
 We checked whether one bar could stand in for both. On JevBench v1.5.4, log cost and log median latency are almost
 uncorrelated across the 109 systems that report both (Spearman ρ = 0.09), so one bar would mislead and each axis gets
-its own. On ImageJevBench they correlate strongly (ρ = 0.94, n = 50), but mostly mechanically: self-hosted cost there
+its own. On ImageJevBench they correlate strongly (Spearman ρ = 0.90 on v0.1.5, n = 50), but mostly mechanically: self-hosted cost there
 is measured GPU time × a GPU-hour rate. Both bars are kept for consistency.
 
 ## 4. API models with a known base model: ranked at their own API price
