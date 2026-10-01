@@ -85,7 +85,7 @@ def contact_label(row) -> str:
 
 def intake_line(row) -> str:
     marker = f"bh-submit:{row['id']}"
-    ref = row["id"][:8]
+    ref = (row.get("submission_id") or row["id"])[:8].upper()  # the reference the site showed
     req = [f"**{cell(row.get('model_name'), 120) or 'Unnamed model'}**", f"benchmarks: {benchmarks_label(row)}"]
     if row.get("followup_name"):
         rank = f" (#{row['followup_rank']} on {BENCH_LABEL.get(row.get('followup_benchmark'), cell(row.get('followup_benchmark'), 40))})" \
@@ -235,7 +235,7 @@ def render_confirmation(row, position: int) -> tuple[str, str]:
                 "so the new version may take a while. We apologise — otherwise we couldn't keep up with the number of "
                 "submissions and our short release cycles.\n")
     values = {"MODEL": re.sub(r"\s+", " ", row.get("model_name") or "your model").strip()[:120],
-              "REFERENCE": row["id"][:8], "BENCHMARKS": benchmarks_label(row), "POSITION": str(position),
+              "REFERENCE": (row.get("submission_id") or row["id"])[:8].upper(), "BENCHMARKS": benchmarks_label(row), "POSITION": str(position),
               "FOLLOWUP_NOTE": note}
     def fill(text):
         return re.sub(r"\{\{([A-Z_]+)\}\}", lambda m: values[m.group(1)], text)
@@ -245,7 +245,7 @@ def render_confirmation(row, position: int) -> tuple[str, str]:
 
 # ------------------------------------------------------------------------------------ steps
 def step_intake(db: Db, dry: bool, counts: dict) -> list[dict]:
-    rows = db.rows("""SELECT id::text, model_name, github_url, huggingface_url, api_url, description, contact_email, contact_x,
+    rows = db.rows("""SELECT id::text, submission_id::text, model_name, github_url, huggingface_url, api_url, description, contact_email, contact_x,
         benchmarks, followup_benchmark, followup_name, followup_rank, api_key_present, api_key_deleted_at, fast_lane,
         priority_request_id::text, queued_at::text, created_at::text FROM bh_model_submissions
         WHERE status='queued' AND intake_synced_at IS NULL ORDER BY queued_at, created_at""")
@@ -272,7 +272,7 @@ def step_confirmations(db: Db, dry: bool, counts: dict) -> None:
     else:
         counts["confirm_fast_lane_would_skip"] = len(db.rows(
             "SELECT 1 FROM bh_model_submissions WHERE status='queued' AND fast_lane AND confirmation_status='pending'"))
-    rows = db.rows("""SELECT s.id::text, s.model_name, s.contact_email, s.benchmarks, s.followup_rank, s.confirmation_attempts,
+    rows = db.rows("""SELECT s.id::text, s.submission_id::text, s.model_name, s.contact_email, s.benchmarks, s.followup_rank, s.confirmation_attempts,
         (SELECT count(*) + 1 FROM bh_model_submissions o WHERE o.status='queued' AND NOT o.fast_lane
            AND (o.queued_at, o.id) < (s.queued_at, s.id)) AS position,
         EXISTS (SELECT 1 FROM bh_model_submissions o WHERE lower(o.contact_email)=lower(s.contact_email) AND o.id<>s.id

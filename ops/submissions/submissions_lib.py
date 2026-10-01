@@ -73,12 +73,13 @@ class RefError(ValueError):
 
 
 def resolve_ref(db: Db, ref: str) -> dict:
-    """ref = first 8 hex chars of the id (any case) or a full uuid. Returns the row (without ciphertext)."""
+    """ref = the 8-hex reference shown to the submitter (first 8 chars of submission_id), the first 8 chars of the
+    DB id, or either full uuid. Returns the row (without ciphertext)."""
     ref = (ref or "").strip().lower()
     if re.fullmatch(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", ref):
-        found = db.rows("SELECT id::text FROM bh_model_submissions WHERE id=(:'ref')::uuid", ref=ref)
+        found = db.rows("SELECT id::text FROM bh_model_submissions WHERE id=(:'ref')::uuid OR submission_id=(:'ref')::uuid", ref=ref)
     elif re.fullmatch(r"[0-9a-f]{8}", ref):
-        found = db.rows("SELECT id::text FROM bh_model_submissions WHERE id::text LIKE :'ref' || '%' LIMIT 3", ref=ref)
+        found = db.rows("SELECT id::text FROM bh_model_submissions WHERE id::text LIKE :'ref' || '%' OR submission_id::text LIKE :'ref' || '%' LIMIT 3", ref=ref)
     else:
         raise RefError("reference must be 8 hex characters or a full uuid")
     if not found:

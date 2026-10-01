@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { SubmitCancelAction } from '../../../components/SubmitCancelAction';
 
 export const metadata: Metadata = {
-  title: 'Payment cancelled | Benchmark Heaven',
+  title: 'Payment cancelled',
   robots: { index: false, follow: false, googleBot: { index: false, follow: false } },
 };
 export const dynamic = 'force-dynamic';
