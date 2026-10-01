@@ -103,7 +103,7 @@ function AxisValue({ level, children, title }: { level: number | null; children:
   return <span className={level == null ? 'bh-heat-cell sm:block' : 'bh-heat-cell bh-heat sm:block'} style={heatStyle(level)} title={title}>{children}</span>;
 }
 
-export function JevScoreBar({ row, reference = false, metric = 'score', heat, isNew = false, name, ci = null, alternative = null }: { row: JevBoardRow; reference?: boolean; metric?: BarMetric; heat?: HeatScales; isNew?: boolean; name?: string; ci?: [number, number] | null; alternative?: JevBoardAlternative | null }) {
+export function JevScoreBar({ row, reference = false, metric = 'score', heat, isNew = false, name, ci = null, alternative = null, pageHref }: { row: JevBoardRow; reference?: boolean; metric?: BarMetric; heat?: HeatScales; isNew?: boolean; name?: string; ci?: [number, number] | null; alternative?: JevBoardAlternative | null; pageHref?: string }) {
   const s = row.jevbench_score;
   const value = metricValue(row, metric);
   // F-223 (Fable pass 42): the official score's 95% interval is drawn on the bar's own 0-100 scale, so the figure
@@ -121,7 +121,7 @@ export function JevScoreBar({ row, reference = false, metric = 'score', heat, is
       {/* Florian 25 Sep 2026: the name opens the model's best source (repo, Hugging Face or vendor docs); rows without one keep the system page. */}
       {row.repo
         ? <a href={row.repo} target="_blank" rel="noopener noreferrer" title={`${row.display} — opens ${row.repo.replace(/^https:\/\/(www\.)?/, '').split('/')[0]}`} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current" data-bh-jev-source={row.key}>{name ?? shortName(row.display)}</a>
-        : <Link href={jevSystemPath(row.key)} title={row.display} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{name ?? shortName(row.display)}</Link>}
+        : <Link href={pageHref ?? jevSystemPath(row.key)} title={row.display} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{name ?? shortName(row.display)}</Link>}
       {row.priority_run === true && <span className="bh-thin-tag ml-1.5 align-middle" data-bh-jev14-priority-run={row.key}>priority run</span>}
       {!row.ranked && <span className="bh-muted whitespace-nowrap" title={row.not_ranked_because ?? undefined}> ({NOT_RANKED[row.listing] ?? row.listing})</span>}
       {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1.5 align-middle" title={row.api_exposure_note ?? apiExplanation}>API</span>}

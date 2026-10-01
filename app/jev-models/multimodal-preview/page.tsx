@@ -72,7 +72,7 @@ function RankingTable({ systems, track, all = false }: { systems: any[]; track: 
         const gate = gateOf(t, s);
         // F-198 (pass 36): "Cost coverage" is no longer a column — rows under 100% receipt coverage fold it into the
         // System cell. The "Penalty" column is gone (×1.000 on every row; the intro keeps the allowance sentence).
-        return <tr key={s.key} className="border-t border-line">
+        return <tr key={s.key} id={all ? `imagejev-system-${s.key}` : undefined} className="scroll-mt-6 border-t border-line">
           <td className="sticky left-0 z-[1] w-14 min-w-14 bg-[var(--surface)] p-3 font-bold tabular-nums shadow-[inset_-1px_0_0_rgb(var(--line))]">{i + 1}</td>
           <th scope="row" className="sticky left-14 z-[1] w-52 min-w-52 bg-[var(--surface)] p-3 text-left font-semibold shadow-[inset_-1px_0_0_rgb(var(--line))]">
             <SystemName name={s.name} gate={gate} />
@@ -168,7 +168,8 @@ export async function MultimodalPreviewContent() {
     </details>
     <JevScoreChart revision={a.release_version} benchName="Image JevBench" scoreLabel="Image JevBench Score" costHref="#imagejev-pricing"
       rows={imageJevBoardRows(a)} rankedCount={a.n_systems} newLabel={null} fairness={null} capabilityHref="#jev-capability"
-      presets={imageJevSliderPresets(a)} compactMobile scoreKind="v15" methodLink={{ href: '#method-heading', label: 'Method notes ↓' }} />
+      presets={imageJevSliderPresets(a)} compactMobile scoreKind="v15" methodLink={{ href: '#method-heading', label: 'Method notes ↓' }}
+      systemAnchorPrefix="#imagejev-system-" />
     <p className="bh-muted mt-2 max-w-5xl text-sm" data-bh-mm-wity-pricing-note>Wity-1 is ranked at Wity&apos;s own stated API price (USD 0.042 per million input tokens, output free). The striped bar shows the score at the Qwen3.6-35B-A3B base-model reference price we use for self-hosted open weights of the same base. <a className="text-accent underline" href="#imagejev-pricing">See pricing note ↓</a></p>
     <JevCompareV15 rows={imageJevCompareRows(a)} openDecisions={s.items_public} sealedDecisions={s.items_sealed} axesOnly />
     <ImageJevRadar systems={a.ranking} />
