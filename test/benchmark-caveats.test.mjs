@@ -185,7 +185,7 @@ test('CR-38.3: no selectable category score rests on a judged benchmark', () => 
   const ds = read('../data/dataset.json');
   const matrix = buildBenchmarkMatrix(buildBenchmarkView(ds), ds, taxonomy, caveats);
   const resolved = resolveAnchors(matrix, anchors);
-  assert.ok(resolved.length >= 2, 'the anchor categories still resolve');
+  assert.equal(resolved.length, anchors.categories.length, 'every offered category resolves; withdrawn categories may leave none');
   assert.doesNotThrow(() => assertNoJudgedAnchors(resolved));
   // The guard is real: a judged anchor must fail the build, not silently change a published score.
   assert.throws(() => assertNoJudgedAnchors([{ label: 'Coding', rows: [{ name: 'X', judged: true }] }]), /CR-38.3/);
@@ -214,9 +214,13 @@ test('CR-38.2: the live dataset\'s saturated benchmarks are the ones at their ce
 test('CR-38.2: category scores weigh a saturated anchor half', () => {
   const ds = read('../data/dataset.json');
   const matrix = buildBenchmarkMatrix(buildBenchmarkView(ds), ds, taxonomy, caveats);
-  const { scores, resolved } = computeCategoryScores(matrix, anchors);
+  // Keep the weighting guard independent of whether this category is currently offered.
+  // This explicit calculation fixture cannot restore a withdrawn public category.
+  const weightingFixture = { ...anchors, categories: [{ id: 'science', key: 'cat_science', label: 'Science', group: 'science',
+    anchors: [{ key: 'aa-critpt' }, { key: 'aa-gpqa-diamond' }] }] };
+  const { scores, resolved } = computeCategoryScores(matrix, weightingFixture);
   const science = resolved.find((c) => c.key === 'cat_science');
-  assert.ok(science, 'the Science category still resolves');
+  assert.ok(science, 'the explicit Science weighting fixture resolves on retained benchmark rows');
   const saturatedAnchors = science.rows.filter((r) => r.saturation?.saturated);
   assert.ok(saturatedAnchors.length >= 1, 'GPQA Diamond is the saturated Science anchor today');
   // Recompute one model by hand from the matrix values, with the documented weights.
