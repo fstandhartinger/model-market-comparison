@@ -34,8 +34,10 @@ so the caps are USD 0.0646 and 1.233 s. 60 of the 106 ranked v1.5.4 systems qual
 envelope** as JevBench: ≤ USD 0.0646 per 1,000 decisions and ≤ 1.233 s median latency, frozen in the v0.1.5 artifact
 (`capability_eligibility`) so a later JevBench release does not move it silently. Reasoning: a decision model in this
 class should fit the same per-decision budget whether its input is text or an image. With these caps 38 of the 50
-v0.1.5 systems qualify. Loosening to 3× would add only 7 systems, mostly general-purpose hosted LLMs and the slowest
-large self-hosted models, so 2× is kept, identical to JevBench.
+v0.1.5 systems qualify (76 %, a larger share than JevBench's 60 of 106), so 2× does not disqualify too many and is kept,
+identical to JevBench. Loosening to 3× would add 7 Jev-compatible fine-tunes that sit just above the 2× cost line
+(2.1–2.9× cost); the general-purpose hosted LLMs (GPT-6 Luna, GPT-5.6 Luna, Gemini 3.1 Flash Lite, Gemini 3.8 Flash)
+stay outside even at 3× (6.7–64× cost).
 
 ## 3. Traffic-light bars
 
