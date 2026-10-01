@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { JevBenchRelatedLinks } from './JevBenchRelatedLinks';
+import { BaseModelDisplay } from './BaseModelDisplay';
 import { JevCompareV14, type JevCompareRow } from './JevCompareV14';
 import { jevSourceUrl } from './jevSystemLinks';
 import { JevAxisBand, typeColour } from './JevSystemCharts';
@@ -77,6 +78,7 @@ export function JevV141SystemDetail({ row, revision, generated, ranked, note = n
       <div className="bh-eyebrow">JevBench by Benchmark Heaven · {revision} · individual system</div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">{row.display}</h1>
       <p className="bh-muted mt-2 max-w-3xl" data-bh-jev-system-subline>{classLabel ? `${classLabel} · ` : null}{classKey && <><code title={`Class named in the ${revision} artifact; description pending`}>{classKey}</code>{' · '}</>}{subLineTail}{row.api_flag && <> · <span title={row.api_exposure_note ?? "The operator's endpoint received sealed item text, without answers."}>API endpoint saw sealed item text</span></>}</p>
+      <BaseModelDisplay systemKey={row.key} className="mt-2 block text-sm" />
       <JevBenchRelatedLinks systemKey={row.key} />
     </header>
 

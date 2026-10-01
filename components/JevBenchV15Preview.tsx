@@ -1,3 +1,5 @@
+import { jevSystemPath } from '../lib/jev-system-slug.mjs';
+import Link from 'next/link';
 import type { CSSProperties, ReactNode } from 'react';
 import {
   JEVBENCH_V15_METHOD_LINKS, JEVBENCH_V15_METHOD_URL, JEVBENCH_V15_HEADLINE_METHOD_URL, JEVBENCH_V15_PRICING_URL, JEVBENCH_V15_OPTIONS, JEVBENCH_V15_TYPES,
@@ -17,6 +19,7 @@ import { JevCapabilityLazy } from './JevCapabilityLazy';
 import { JevContextLazy } from './JevContextLazy';
 import { JevCostsDisclosure } from './JevCostsDisclosure';
 import { jevSourceUrl } from './jevSystemLinks';
+import { BaseModelDisplay } from './BaseModelDisplay';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
 
 // JevBench v1.5 board. Server-rendered from the aggregate-only v1.5
@@ -75,7 +78,12 @@ function NameCell({ row, rank }: { row: JevV15System; rank: ReactNode }) {
     <td className="sticky left-0 z-[1] w-10 min-w-10 bg-[var(--surface)] p-2 text-right font-bold tabular-nums shadow-[inset_-1px_0_0_rgb(var(--line))]">{rank}</td>
     <th scope="row" className="sticky left-10 z-[1] w-44 min-w-44 bg-[var(--surface)] p-2 text-left font-semibold shadow-[inset_-1px_0_0_rgb(var(--line))] sm:w-60 sm:min-w-60" style={typeVar(row.class)}>
       <span className="mr-1.5 inline-block h-2.5 w-2.5 rounded-full bg-[rgb(var(--jev-t))] align-middle" aria-hidden="true" />
-      <span title={row.display}>{short(row.display)}</span><Tags row={row} />
+      {jevSourceUrl(row.key, row.repo)
+        ? <a href={jevSourceUrl(row.key, row.repo)!} target="_blank" rel="noopener noreferrer" className="underline" title={row.display}>{short(row.display)}</a>
+        : <Link href={jevSystemPath(row.key)} title={row.display}>{short(row.display)}</Link>}<Tags row={row} />
+      {jevSourceUrl(row.key, row.repo) && <Link href={jevSystemPath(row.key)} className="ml-2 text-[11px] font-normal text-accent underline">details</Link>}
+      {/* CR-254 (2026-10-01): cited base-model overlay, presentation only; every listed row keeps it. */}
+      <BaseModelDisplay systemKey={row.key} className="mt-1 block text-[11px] font-normal leading-tight" />
     </th>
   </>;
 }
@@ -129,7 +137,10 @@ function HeadlineBars({ a, ranked }: { a: JevV15Artifact; ranked: JevV15System[]
       return <li key={row.key} style={typeVar(row.class)} className="grid grid-cols-[1.5rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.8rem_15rem_minmax(0,1fr)_3.4rem_24rem]" data-bh-jev15-bar={row.key}
         aria-label={`${row.display}: JevBench Score ${one(s)}, rank ${row.ranks[headline]}. Intelligence ${one(row.axes.intelligence)}, calibration ${one(row.axes.calibration)}, speed ${one(row.axes.speed)}, cost ${one(row.axes.cost)}.${ci ? ` 95% interval ${one(lo)} to ${one(hi)}.` : ''}${tieBelow.has(row.key) ? ' Statistical tie with the next row.' : ''}`}>
         <span className="bh-muted tabular-nums col-start-1 row-start-1 text-right text-xs">{row.ranks[headline]}</span>
-        <span className="col-start-2 row-start-1 min-w-0 sm:truncate sm:text-right" title={row.display}>{short(row.display)}<Tags row={row} /></span>
+        <span className="col-start-2 row-start-1 min-w-0 sm:text-right" title={row.display}>
+          <span className="block truncate sm:text-right">{short(row.display)}<Tags row={row} /></span>
+          <BaseModelDisplay systemKey={row.key} className="mt-0.5 block text-[10.5px] font-normal leading-tight sm:text-right" />
+        </span>
         <span className="bh-jevc-grid relative col-start-2 row-start-2 mt-1 flex h-4 sm:col-start-3 sm:row-start-1 sm:mt-0 sm:h-6" aria-hidden="true">
           {s != null && <span className="bh-jevc-bar" style={{ width: `${Math.max(0, Math.min(100, s)).toFixed(3)}%` }} />}
           {lo != null && hi != null && <span className="bh-jevc-ci" data-bh-jev15-ci={row.key} style={{ left: `${lo.toFixed(3)}%`, width: `${(hi - lo).toFixed(3)}%` }} />}
@@ -313,7 +324,7 @@ function NotRanked({ a, partial, unpriced }: { a: JevV15Artifact; partial: JevV1
     {unpriced.length > 0 && <><h3 className="mt-4 font-semibold">Measured, unpriced ({unpriced.length})</h3>
       <ul className="bh-muted mt-1 space-y-1 text-sm">{unpriced.map((r) => <li key={r.key} data-bh-jev15-unpriced={r.key}><b>{r.display}</b><Tags row={r} />: {r.not_scored_reason}. No Cost axis and no score until a price qualifies under the v1.5 price rules.</li>)}</ul></>}
     {a.not_measured.length > 0 && <><h3 className="mt-4 font-semibold">Incomplete or not measured in v1.5 ({a.not_measured.length})</h3>
-      <ul className="bh-muted mt-1 space-y-1 text-sm" data-bh-jev15-not-measured>{a.not_measured.map((r) => <li key={r.key} data-bh-jev15-unmeasured-row={r.key}><b>{r.display}</b>{r.addendum ? <span className="bh-thin-tag ml-1">{r.addendum.label}</span> : null}: {r.reason ?? r.status}{r.rows != null && r.missing != null ? ` (${r.rows.toLocaleString('en-US')}/${a.sample.total.toLocaleString('en-US')} rows; ${r.missing.toLocaleString('en-US')} missing)` : ''}.</li>)}</ul>
+      <ul className="bh-muted mt-1 space-y-1 text-sm" data-bh-jev15-not-measured>{a.not_measured.map((r) => <li key={r.key} data-bh-jev15-unmeasured-row={r.key}><b>{r.display}</b>{r.addendum ? <span className="bh-thin-tag ml-1">{r.addendum.label}</span> : null}: {r.reason ?? r.status}{r.rows != null && r.missing != null ? ` (${r.rows.toLocaleString('en-US')}/${a.sample.total.toLocaleString('en-US')} rows; ${r.missing.toLocaleString('en-US')} missing)` : ''}. <BaseModelDisplay systemKey={r.key} className="ml-1 text-xs" /></li>)}</ul>
       <p className="bh-muted mt-1 text-xs">Incomplete and unmeasured systems receive no official rank. Existing results from earlier benchmark versions remain on their frozen version pages.</p></>}
   </section>;
 }

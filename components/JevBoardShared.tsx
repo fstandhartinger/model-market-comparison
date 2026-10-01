@@ -1,7 +1,10 @@
 import type { CSSProperties, ReactNode } from 'react';
 import Link from 'next/link';
 import { jevTypeVarName } from './jevTypes';
+import { imageJevSystemPath, imageJevSourceUrl } from '../lib/imagejev-system-links.mjs';
+import { jevSourceUrl } from './jevSystemLinks';
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
+import { BaseModelDisplay, type BaseModelBenchmark } from './BaseModelDisplay';
 
 // CR-151 (Florian 25 Sep 2026): the pieces the score chart and the axes table share. This module has no Node imports and
 // no client directive, so both the server board and the interactive client views can use it.
@@ -103,7 +106,9 @@ function AxisValue({ level, children, title }: { level: number | null; children:
   return <span className={level == null ? 'bh-heat-cell sm:block' : 'bh-heat-cell bh-heat sm:block'} style={heatStyle(level)} title={title}>{children}</span>;
 }
 
-export function JevScoreBar({ row, reference = false, metric = 'score', heat, isNew = false, name, ci = null, alternative = null, pageHref }: { row: JevBoardRow; reference?: boolean; metric?: BarMetric; heat?: HeatScales; isNew?: boolean; name?: string; ci?: [number, number] | null; alternative?: JevBoardAlternative | null; pageHref?: string }) {
+export function JevScoreBar({ row, reference = false, metric = 'score', heat, isNew = false, name, ci = null, alternative = null, pageHref, benchmark = 'jevbench' }: { row: JevBoardRow; reference?: boolean; metric?: BarMetric; heat?: HeatScales; isNew?: boolean; name?: string; ci?: [number, number] | null; alternative?: JevBoardAlternative | null; pageHref?: string; benchmark?: BaseModelBenchmark }) {
+  const source = benchmark === 'imagejevbench' ? imageJevSourceUrl(row.key, row.repo) : jevSourceUrl(row.key, row.repo);
+  const page = benchmark === 'imagejevbench' ? imageJevSystemPath(row.key) : jevSystemPath(row.key);
   const s = row.jevbench_score;
   const value = metricValue(row, metric);
   // F-223 (Fable pass 42): the official score's 95% interval is drawn on the bar's own 0-100 scale, so the figure
@@ -117,15 +122,20 @@ export function JevScoreBar({ row, reference = false, metric = 'score', heat, is
   return <li style={typeVar(row.class)} className="grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_21rem]"
     data-bh-jev14-bar={row.key} data-bh-jev14-bar-score={s == null ? '' : s.toFixed(3)} data-bh-jev14-bar-metric={metric === 'score' ? undefined : metric} data-bh-jev14-reference={reference ? '1' : undefined} aria-label={label}>
     <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs">{row.rank ?? ''}</span>
-    <span className="col-start-2 row-start-1 min-w-0 sm:truncate sm:text-right" title={row.display}>
-      {/* Florian 25 Sep 2026: the name opens the model's best source (repo, Hugging Face or vendor docs); rows without one keep the system page. */}
-      {row.repo
-        ? <a href={row.repo} target="_blank" rel="noopener noreferrer" title={`${row.display} — opens ${row.repo.replace(/^https:\/\/(www\.)?/, '').split('/')[0]}`} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current" data-bh-jev-source={row.key}>{name ?? shortName(row.display)}</a>
-        : <Link href={pageHref ?? jevSystemPath(row.key)} title={row.display} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{name ?? shortName(row.display)}</Link>}
-      {row.priority_run === true && <span className="bh-thin-tag ml-1.5 align-middle" data-bh-jev14-priority-run={row.key}>priority run</span>}
-      {!row.ranked && <span className="bh-muted whitespace-nowrap" title={row.not_ranked_because ?? undefined}> ({NOT_RANKED[row.listing] ?? row.listing})</span>}
-      {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1.5 align-middle" title={row.api_exposure_note ?? apiExplanation}>API</span>}
-      {isNew && <span className="bh-new-tag ml-1.5 align-middle" data-bh-jev14-new={row.key}>new</span>}
+    <span className="col-start-2 row-start-1 min-w-0 sm:text-right" title={row.display}>
+      <span className="block truncate sm:text-right">
+        {/* Florian 25 Sep 2026: the name opens the model's best source (repo, Hugging Face or vendor docs); rows without one keep the system page. */}
+        {source
+          ? <a href={source} target="_blank" rel="noopener noreferrer" title={`${row.display} — opens ${source.replace(/^https:\/\/(www\.)?/, '').split('/')[0]}`} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current" data-bh-jev-source={row.key}>{name ?? shortName(row.display)}</a>
+          : <Link href={pageHref ?? page} title={row.display} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{name ?? shortName(row.display)}</Link>}
+        {row.priority_run === true && <span className="bh-thin-tag ml-1.5 align-middle" data-bh-jev14-priority-run={row.key}>priority run</span>}
+        {!row.ranked && <span className="bh-muted whitespace-nowrap" title={row.not_ranked_because ?? undefined}> ({NOT_RANKED[row.listing] ?? row.listing})</span>}
+        {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1.5 align-middle" title={row.api_exposure_note ?? apiExplanation}>API</span>}
+        {isNew && <span className="bh-new-tag ml-1.5 align-middle" data-bh-jev14-new={row.key}>new</span>}
+      </span>
+      {benchmark === 'imagejevbench' && source && <Link href={page} className="block text-[10.5px] text-accent underline" data-bh-mm-system-details={row.key}>details</Link>}
+      {/* CR-254 (2026-10-01): the cited base-model overlay, presentation only. Every row shows it, ranked, unranked or wrapper. */}
+      <BaseModelDisplay benchmark={benchmark} systemKey={row.key} className="mt-0.5 block text-[10.5px] leading-tight sm:text-right" />
     </span>
     <span className="bh-jevc-grid relative col-start-2 row-start-2 mt-1 flex h-4 sm:col-start-3 sm:row-start-1 sm:mt-0 sm:h-6" aria-hidden="true">
       {value != null && <span className={`bh-jevc-bar ${row.ranked ? '' : 'is-partial'} ${reference ? 'is-reference' : ''}`} style={{ width: `${Math.max(0, Math.min(100, value)).toFixed(4)}%` }} />}

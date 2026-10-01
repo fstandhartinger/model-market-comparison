@@ -3,10 +3,12 @@ import type { JevV14System } from '../lib/jevbench-v14.mjs';
 import { jevClassRows, medianLatencySpeed, ratioPosition, trafficLightZone, type JevClassOptions, type JevClassResult, type JevClassRow } from '../lib/jevbench-jev-class.mjs';
 import { shortName, usd } from './JevCapabilityChart';
 import type { JevBubblePoint } from './JevBubbleChart';
+import { imageJevSourceUrl } from '../lib/imagejev-system-links.mjs';
 import { jevSourceUrl } from './jevSystemLinks';
 import { JevCapabilityTip } from './JevCapabilityTip';
 import { JEV_TYPE_LABEL, jevLegendTypes, jevTypeVarName } from './jevTypes';
 import { apiExplanation } from './JevBoardShared';
+import { BaseModelDisplay, type BaseModelBenchmark } from './BaseModelDisplay';
 
 // Florian 25 Sep 2026 (DECISIONS.md): the page headline is the Capability ranking — the mean of Intelligence and
 // Calibration — of Jev-class systems. Jev-class = cost per decision at most 2x Jev 1.13.0's AND median latency at most
@@ -62,9 +64,9 @@ function basePriceCheck(row: JevV14System, reference: JevClassResult['reference'
   return { short, detail, fits, ratio };
 }
 
-function RankingRow({ item, rank, reference, factor, referenceLabel, classLabel, note, costCap }: {
+function RankingRow({ item, rank, reference, factor, referenceLabel, classLabel, note, costCap, benchmark = 'jevbench' }: {
   item: JevClassRow; rank: string; reference: JevClassResult['reference']; factor: number;
-  referenceLabel: string; classLabel: string; note?: string; costCap: number;
+  referenceLabel: string; classLabel: string; note?: string; costCap: number; benchmark?: BaseModelBenchmark;
 }) {
   const { row, capability, cost, latency } = item;
   const basePrice = basePriceCheck(row, reference, costCap, referenceLabel);
@@ -78,6 +80,9 @@ function RankingRow({ item, rank, reference, factor, referenceLabel, classLabel,
   // the row is gone, the ⓘ is the way in (desktop hover/focus panel, touch modal in JevCapabilityTip).
   const tipTitle = `${row.display} · ${JEV_TYPE_LABEL[row.class] ?? row.class}`;
   const tipBody = <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1" data-bh-jev-capability-tip-dl>
+    <dt className="text-gray-400">Base model</dt><dd data-bh-base-model-tip={row.key}>
+      <BaseModelDisplay benchmark={benchmark} systemKey={row.key} prefix="" />
+    </dd>
     <dt className="text-gray-400">Capability Score</dt><dd className="tabular font-semibold">{one(capability)}</dd>
     <dt className="text-gray-400">Intelligence</dt><dd className="tabular">{intelligence == null ? 'unknown' : one(intelligence)}</dd>
     <dt className="text-gray-400">Calibration</dt><dd className="tabular">{calibration == null ? 'unknown' : one(calibration)}</dd>
@@ -89,7 +94,7 @@ function RankingRow({ item, rank, reference, factor, referenceLabel, classLabel,
     <dt className="text-gray-400">Colours</dt><dd>Green ≤ reference; amber ≤ cap; red &gt; cap. Shorter is cheaper or faster.</dd>
   </dl>;
   const style = { '--jev-t': `var(${jevTypeVarName(row.class)})` } as CSSProperties;
-  const link = jevSourceUrl(row.key, row.repo);
+  const link = benchmark === 'imagejevbench' ? imageJevSourceUrl(row.key, row.repo) : jevSourceUrl(row.key, row.repo);
   return <li className={`group relative ${grid} min-h-[43px] items-center text-[11px] sm:text-sm`} style={style}
     data-bh-jev14-capability-row={row.key} data-bh-jev14-capability-value={capability.toFixed(3)} data-bh-jev14-cost={cost ?? ''}>
     <span className="bh-muted tabular col-start-1 row-start-1 text-right">{rank || '–'}</span>
@@ -134,9 +139,9 @@ export function jevClassView(systems: JevV14System[], options?: JevClassOptions)
   return { ...result, points };
 }
 
-export function JevCapabilityRanking({ systems, revision, officialHref, benchName = 'JevBench', classLabel = 'Jev-class', referenceLabel = 'Jev', eligibilityNote, correlationReason, ...options }: {
+export function JevCapabilityRanking({ systems, revision, officialHref, benchName = 'JevBench', classLabel = 'Jev-class', referenceLabel = 'Jev', eligibilityNote, correlationReason, benchmark = 'jevbench', ...options }: {
   systems: JevV14System[]; revision: string; officialHref: string; benchName?: string; classLabel?: string;
-  eligibilityNote?: ReactNode; correlationReason?: string;
+  eligibilityNote?: ReactNode; correlationReason?: string; benchmark?: BaseModelBenchmark;
 } & JevClassOptions) {
   const { reference, limits, rows, costLatencySpearman, n: pairedCount } = jevClassRows(systems, { ...options, referenceLabel });
   const inside = rows.filter((r) => r.inClass);
@@ -146,9 +151,9 @@ export function JevCapabilityRanking({ systems, revision, officialHref, benchNam
   let n = 0;
   const numbered = inside.map((r) => ({ r, label: r.row.ranked ? String(++n) : '–' }));
   const [lead] = numbered;
-  const bar = ({ r, label }: { r: JevClassRow; label: string }) => <RankingRow key={r.row.key} item={r} rank={label} reference={reference} factor={limits.factor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost}
+  const bar = ({ r, label }: { r: JevClassRow; label: string }) => <RankingRow key={r.row.key} item={r} rank={label} reference={reference} factor={limits.factor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark}
     note={r.isReference ? `Reference system for the ${classLabel} limits` : !r.row.ranked ? `Not ranked in the official ${benchName} Score (${r.row.listing.replace(/_/g, ' ')})` : undefined} />;
-  const outsideBar = (r: JevClassRow) => <RankingRow key={r.row.key} item={r} rank="" reference={reference} factor={limits.factor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} note={`Outside: ${r.reasons.join(', ')}`} />;
+  const outsideBar = (r: JevClassRow) => <RankingRow key={r.row.key} item={r} rank="" reference={reference} factor={limits.factor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark} note={`Outside: ${r.reasons.join(', ')}`} />;
   const types = jevLegendTypes(rows.map((r) => r.row.class));
 
   // F-197 (pass 36): mt-6 not mt-8 — with the guides nav folded out of the page head the first Capability row

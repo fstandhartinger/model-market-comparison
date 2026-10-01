@@ -1,3 +1,4 @@
+import { BaseModelDisplay } from './BaseModelDisplay';
 import Link from 'next/link';
 import { JevBenchRelatedLinks } from './JevBenchRelatedLinks';
 import { JevAxisBand, typeColour } from './JevSystemCharts';
@@ -39,6 +40,7 @@ export function JevV15SystemDetail({ artifact, row }: { artifact: JevV15Artifact
       <p className="bh-muted mt-2 max-w-3xl" data-bh-jev-system-subline>
         {classLabel} · {row.author === 'unknown' ? 'Author not recorded' : `by ${row.author}`} · {openness}
       </p>
+      <BaseModelDisplay systemKey={row.key} className="mt-2 block text-sm" />
       <JevBenchRelatedLinks systemKey={row.key} />
       {row.addendum && <p className="bh-muted mt-1 text-sm" data-bh-jev-v15-addendum>{row.addendum.label}</p>}
       <p className="bh-muted mt-1 text-sm">{row.licence || 'License not recorded in the published row.'}</p>

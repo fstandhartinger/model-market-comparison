@@ -1,3 +1,4 @@
+import { BaseModelDisplay } from '../../../components/BaseModelDisplay';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -167,6 +168,7 @@ export default async function JevSystemPage({ params }: { params: Promise<{ syst
         {row.author} · {row.licence} · {openLabel(row.open)} · <span data-bh-jev-system-cls={row.cls}>{typeLabel(row.cls)}</span>
       </p>
     </header>
+    <BaseModelDisplay systemKey={row.key} className="mt-2 block text-sm" />
     <JevBenchRelatedLinks systemKey={row.key} />
 
     {/* F-167 (Fable pass 32): two columns at lg+ — the number, its place on the board's scale and the four
