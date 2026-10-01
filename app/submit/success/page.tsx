@@ -4,7 +4,7 @@ import { submissionForPage } from '../../../lib/model-submission-db';
 import { submissionReference } from '../../../lib/model-submission.mjs';
 
 export const metadata: Metadata = {
-  title: 'Submission received | Benchmark Heaven',
+  title: 'Submission received',
   robots: { index: false, follow: false, googleBot: { index: false, follow: false } },
 };
 export const dynamic = 'force-dynamic';

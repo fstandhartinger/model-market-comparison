@@ -6,7 +6,7 @@ import { followupOptions } from '../../lib/submission-leaderboards.mjs';
 import { issueFormToken, submissionSecret } from '../../lib/submission-guard.mjs';
 
 export const metadata: Metadata = {
-  title: 'Submit a model | Benchmark Heaven',
+  title: 'Submit a model',
   description: 'Submit your model for evaluation on JevBench, ImageJevBench or AudioJevBench. The regular queue is free; the fast lane delivers results within 48 hours.',
   alternates: { canonical: '/submit' },
 };

@@ -112,6 +112,12 @@ def cli(env, *args):
     return subprocess.run([sys.executable, str(HERE / "bh-submission"), "--db", env["db"], *args], text=True, capture_output=True, env=env["env"])
 
 
+
+def site_ref(db, sid):
+    """The reference the site shows the submitter: first 8 chars of submission_id, upper case."""
+    return sql(db, f"SELECT submission_id::text FROM bh_model_submissions WHERE id='{sid}'").strip()[:8].upper()
+
+
 def insert(db, **kw):
     cols = {"model_name": "Test Model", "contact_email": "owner@example.invalid", "benchmarks": ["jevbench"], "status": "queued",
             "queued_at": "now()", **kw}
@@ -144,7 +150,7 @@ def test_intake_appends_once_bumps_flag_and_digests(env):
     assert f"bh-submit:{a}" in text and f"bh-submit:{b}" in text
     assert "follow-up of Old Alpha (#14 on JevBench)" in text
     assert "FAST LANE — paid, owned by the priority worker" in text
-    assert f"bh-submission key-export {b[:8]}" in text
+    assert f"bh-submission key-export {site_ref(env['db'], b)}" in text
     assert "v1.a.b.c.d" not in text and "d" * 301 not in text
     assert "Alpha / Pipe Newline" in text and "@alpha_x" in text
     assert all(len(line.split(" | ")) == 4 for line in text.splitlines() if line.startswith("| **"))
@@ -223,13 +229,13 @@ def test_confirmation_sent_once_per_recipient_and_template(env):
     assert sent[0][1] == "We received your model submission: Mine"
     # Body checks through the module directly.
     import intake_bridge as ib
-    subject, body = ib.render_confirmation({"id": a, "model_name": "Mine", "benchmarks": ["jevbench", "audiojevbench"], "followup_rank": 14}, 3)
-    assert f"Reference: {a[:8]}" in body and "Benchmarks: JevBench, AudioJevBench" in body and "Position in the regular queue: 3" in body
+    subject, body = ib.render_confirmation({"id": a, "submission_id": sql(env["db"], f"SELECT submission_id FROM bh_model_submissions WHERE id='{a}'"), "model_name": "Mine", "benchmarks": ["jevbench", "audiojevbench"], "followup_rank": 14}, 3)
+    assert f"Reference: {site_ref(env['db'], a)}" in body and "Benchmarks: JevBench, AudioJevBench" in body and "Position in the regular queue: 3" in body
     assert "The top 10 are re-evaluated with every release; other models on a slower schedule." in body
     assert "We apologise" in body and "ranked #14" in body
     assert "https://benchmarkheaven.com/submit" in body and "If you did not submit this, ignore this email." in body
     assert body.rstrip().endswith("— Florian, Benchmark Heaven") and "{{" not in body
-    _, body2 = ib.render_confirmation({"id": a, "model_name": "Mine", "benchmarks": ["jevbench"], "followup_rank": 4}, 1)
+    _, body2 = ib.render_confirmation({"id": a, "submission_id": sql(env["db"], f"SELECT submission_id FROM bh_model_submissions WHERE id='{a}'"), "model_name": "Mine", "benchmarks": ["jevbench"], "followup_rank": 4}, 1)
     assert "apologise" not in body2
 
 
