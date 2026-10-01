@@ -10,6 +10,19 @@ A release must keep the complete section structure, in this order, on `/jev-mode
 2. **Synchronized Capability vs Speed and Capability vs Cost charts** (`JevBubbleCharts`), including the 3D capability/cost/latency view (`JevCapabilityLazy`, `only3d`).
 3. **Main composite score chart** (`JevScoreChart`): the interactive board with weight sliders, published weight presets, the View-by switch and the official-order restore.
 4. **Direct comparison** (`JevCompareV15` or its successor): the two-system picker with the radar views and a copyable pair link.
+   It **always** includes the two category radars (CR-257, Florian 1 Oct 2026), right after the score axes:
+   - **Capability**: JevBench subject topics (Math & numbers incl. dates, Coding, Rules & law, Finance & commerce, Support & ops,
+     Everyday language, Safety & security); ImageJevBench image types (photos, documents, charts, inventory, safety inspection,
+     screens, web tasks, financial tables, geometry).
+   - **Use cases**: the TypeSafe use-case map categories (docs.typesafe.ai/concepts/use-case-map) + Other; 1–2 per item.
+   - Values for **every ranked system**, computed from the release's stored per-item results (the run files that reproduce the
+     published cells exactly) — never estimated. Categories under `min_n` items are listed as low n, not plotted. Tooltip + key
+     with definition and item counts per category.
+   - Per release: label the new items (Jev-class model on our own infrastructure — never a third-party endpoint for sealed items;
+     never bulk-load production System1 Models), hand-check ~5 % of public items, build the category artifact next to the
+     results artifact, register its revision in `lib/jevbench-categories.mjs`. Scripts and method: job folder
+     `bench-radars-usecases-20261001/work/` (`peritem.py`, `label.py`/`pod/`, `aggregate.py`). `test/cr-257-category-radars.test.mjs`
+     fails a release whose page or any ranked system lacks the category data.
 5. **Full table**: every listed system with its axes and per-type competence.
 6. **Everything else v1.4.2.2 carried**: "What the run says" findings, the alternatives/self-hosting guide, the cost disclosures and price rules (`JevCostsDisclosure`), unranked/partial/addendum/not-measured listings, method notes, limits, credits, the What-If link to the weight sliders, `JevContextLazy`, the lazy revision history (`JevHistoryLazy`), the ImageJevBench link (`data-bh-image-jev-link`), and the link to the previous frozen release.
 

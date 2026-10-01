@@ -14,6 +14,7 @@ import { jevClassView } from './jevClassView';
 import { JevBubbleCharts } from './JevBubbleChart';
 import { JevScoreChart } from './JevBoardInteractive';
 import { JevCompareV15 } from './JevCompareV15';
+import { jevbenchCategoryView } from '../lib/jevbench-categories.mjs';
 import { JevAxesViews } from './JevAxesViews';
 import { JevBoardIntentLinks } from './JevBenchSeoBlocks';
 import { JevCapabilityLazy } from './JevCapabilityLazy';
@@ -501,7 +502,7 @@ export function JevBenchV15({ artifact: a, sha256, previousKeys = [] }: { artifa
     </p>
     <JevScoreChart revision={a.revision} rows={viewRows} rankedCount={ranked.length} newLabel={newLabel} fairness={null} approvedNote={leader} tieNote={tieSentence(a)} capabilityHref="#jev-capability" presets={jevV15SliderPresets(a)} compactMobile scoreKind="v15" methodLink={{ href: '#jev15-method', label: 'Method notes ↓' }} />
     {(a.revision === 'v1.5.1' || a.revision === 'v1.5.2' || a.revision === 'v1.5.3' || a.revision === 'v1.5.4') && <Honorable a={a} rows={honorable} />}
-    <JevCompareV15 rows={compareRows} openDecisions={a.sample.open} sealedDecisions={a.sample.sealed} />
+    <JevCompareV15 rows={compareRows} openDecisions={a.sample.open} sealedDecisions={a.sample.sealed} categories={jevbenchCategoryView(a.revision, compareRows.map((r) => r.key))} />
     <AxesTable a={a} rows={[...new Map([...ranked, ...honorable, ...addendum, ...partial, ...unpriced].map((row) => [row.key, row])).values()]} />
     <HeadlineBars a={a} ranked={ranked} />
     <p className="bh-muted mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs" aria-label="System types">{classes.map((c) => <span key={c} style={typeVar(c)} className="whitespace-nowrap"><span className="mr-1 inline-block h-2.5 w-2.5 rounded-full bg-[rgb(var(--jev-t))] align-middle" aria-hidden="true" />{JEV_TYPE_LABEL[c] ?? c}</span>)}</p>

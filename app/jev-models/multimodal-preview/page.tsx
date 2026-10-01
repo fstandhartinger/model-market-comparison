@@ -5,6 +5,7 @@ import { JevBubbleCharts } from '../../../components/JevBubbleChart';
 import { JevCapabilityLazy } from '../../../components/JevCapabilityLazy';
 import { JevScoreChart } from '../../../components/JevBoardInteractive';
 import { JevCompareV15 } from '../../../components/JevCompareV15';
+import { imageJevCategoryView } from '../../../lib/jevbench-categories.mjs';
 import { ImageJevRevisionHistory } from '../../../components/ImageJevRevisionHistory';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -167,6 +168,7 @@ export async function MultimodalPreviewContent() {
   const djevSpark = a.ranking.find((x: any) => x.key === 'djev_spark_nvfp4');
   const photoSealed = djevSpark.tracks.everyday_photo.sealed;
   const familyRows = Object.entries(s.family_counts) as [string, FamilyCount][];
+  const compareRows = imageJevCompareRows(a);
   const systemsOverAllowance = a.ranking.filter((row: any) => row.tracks.all.matched_gap_pp > a.gap_allowance_pp).length;
   const reasons = s.public_reason_counts;
 
@@ -188,7 +190,7 @@ export async function MultimodalPreviewContent() {
       rows={imageJevBoardRows(a)} rankedCount={a.n_systems} newLabel={null} fairness={null} capabilityHref="#jev-capability"
       presets={imageJevSliderPresets(a)} compactMobile scoreKind="v15" methodLink={{ href: '#method-heading', label: 'Method notes ↓' }} benchmark="imagejevbench" />
     <p className="bh-muted mt-2 max-w-5xl text-sm" data-bh-mm-wity-pricing-note>Wity-1 is ranked at Wity&apos;s own stated API price (USD 0.042 per million input tokens, output free). The striped bar shows the score at the Qwen3.6-35B-A3B base-model reference price we use for self-hosted open weights of the same base. <a className="text-accent underline" href="#imagejev-pricing">See pricing note ↓</a></p>
-    <JevCompareV15 rows={imageJevCompareRows(a)} openDecisions={s.items_public} sealedDecisions={s.items_sealed} axesOnly />
+    <JevCompareV15 rows={compareRows} openDecisions={s.items_public} sealedDecisions={s.items_sealed} axesOnly categories={imageJevCategoryView(a.revision, compareRows.map((r: { key: string }) => r.key))} />
     <ImageJevRadar systems={a.ranking} />
 
     <section className="mt-10 max-w-none" aria-labelledby="overall-heading">

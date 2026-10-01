@@ -1,0 +1,5310 @@
+{
+ "benchmark": "ImageJevBench",
+ "revision": "v0.1.5",
+ "kind": "category-aggregates",
+ "built_utc": "2026-10-01",
+ "source_preview_sha256": "42f47c9bb172997089ed61b994b3cb8f2cb1b20cd73bef4e8b47271f0697f41c",
+ "metric": "Chance-corrected accuracy (0 = chance, 100 = perfect) over the category's items, public and sealed pooled. Not part of the score; compare systems within a category.",
+ "min_n": 15,
+ "labelling": "Capabilities are the item source families (fixed, no model). Use cases: each item's question and options (not the image) were labelled with one or two TypeSafe use-case categories by Winnow-12B Q8 on our own GPU pod; about 5 % of public items were checked by hand.",
+ "rules": [
+  "A second use case is kept when the labeller gave it probability >= 0.15 and it is not Other."
+ ],
+ "capabilities": [
+  {
+   "key": "everyday_photo",
+   "label": "Everyday photos",
+   "covers": "yes/no and counting questions about ordinary photos: damage, safety, shelves, signs",
+   "families": [
+    "Everyday photo"
+   ],
+   "n": 184,
+   "public": 89,
+   "sealed": 95,
+   "low_n": false
+  },
+  {
+   "key": "documents",
+   "label": "Documents",
+   "covers": "reading fields and facts from scanned or rendered business documents",
+   "families": [
+    "Pool: documents"
+   ],
+   "n": 102,
+   "public": 0,
+   "sealed": 102,
+   "low_n": false
+  },
+  {
+   "key": "charts",
+   "label": "Charts",
+   "covers": "reading values and trends from charts",
+   "families": [
+    "Pool: charts"
+   ],
+   "n": 79,
+   "public": 0,
+   "sealed": 79,
+   "low_n": false
+  },
+  {
+   "key": "inventory",
+   "label": "Inventory",
+   "covers": "counting and checking stock on shelves and in storage",
+   "families": [
+    "Pool: inventory"
+   ],
+   "n": 61,
+   "public": 0,
+   "sealed": 61,
+   "low_n": false
+  },
+  {
+   "key": "safety_inspection",
+   "label": "Safety inspection",
+   "covers": "spotting hazards and missing protective equipment",
+   "families": [
+    "Pool: safety inspection"
+   ],
+   "n": 57,
+   "public": 0,
+   "sealed": 57,
+   "low_n": false
+  },
+  {
+   "key": "screens",
+   "label": "Screens & apps",
+   "covers": "finding the right element on desktop, web and phone screenshots",
+   "families": [
+    "ScreenSpot",
+    "ScreenSpot-Pro",
+    "Android-in-the-Wild (AITW_Single mirror)"
+   ],
+   "n": 83,
+   "public": 21,
+   "sealed": 62,
+   "low_n": false
+  },
+  {
+   "key": "web_tasks",
+   "label": "Web tasks",
+   "covers": "choosing the next element for a multi-step browser goal",
+   "families": [
+    "Multimodal-Mind2Web"
+   ],
+   "n": 79,
+   "public": 79,
+   "sealed": 0,
+   "low_n": false
+  },
+  {
+   "key": "financial_tables",
+   "label": "Financial tables",
+   "covers": "numeric questions over financial report tables",
+   "families": [
+    "FinQA"
+   ],
+   "n": 20,
+   "public": 20,
+   "sealed": 0,
+   "low_n": false
+  },
+  {
+   "key": "geometry",
+   "label": "Geometry",
+   "covers": "geometry diagrams: angles, lengths, areas",
+   "families": [
+    "Geometry3K"
+   ],
+   "n": 19,
+   "public": 19,
+   "sealed": 0,
+   "low_n": false
+  }
+ ],
+ "usecases": [
+  {
+   "key": "search_retrieval",
+   "label": "Search and retrieval",
+   "covers": "scoring query-to-candidate relevance, reranking results, selecting useful context for RAG",
+   "n": 19,
+   "public": 14,
+   "sealed": 5,
+   "low_n": false
+  },
+  {
+   "key": "scientific_discovery",
+   "label": "Scientific discovery",
+   "covers": "screening papers, labelling research passages or survey answers, checking that citations support claims, methodology checks",
+   "n": 0,
+   "public": 0,
+   "sealed": 0,
+   "low_n": true
+  },
+  {
+   "key": "model_routing",
+   "label": "Model routing",
+   "covers": "deciding which LLM or model tier should handle a prompt; classifying a request's intent, domain, difficulty or risk to pick a model",
+   "n": 0,
+   "public": 0,
+   "sealed": 0,
+   "low_n": true
+  },
+  {
+   "key": "llm_guardrails",
+   "label": "LLM guardrails",
+   "covers": "checking LLM inputs, outputs and tool calls: prompt injection, jailbreaks, policy violations, tool-call errors, answer quality",
+   "n": 0,
+   "public": 0,
+   "sealed": 0,
+   "low_n": true
+  },
+  {
+   "key": "code_linting",
+   "label": "Semantic code linting",
+   "covers": "checking code or writing against conventions and guidelines, as in CI review of code",
+   "n": 1,
+   "public": 0,
+   "sealed": 1,
+   "low_n": true
+  },
+  {
+   "key": "feature_extraction",
+   "label": "Feature extraction for predictive modeling",
+   "covers": "turning natural-language data into probabilistic features or estimates for a downstream prediction",
+   "n": 2,
+   "public": 0,
+   "sealed": 2,
+   "low_n": true
+  },
+  {
+   "key": "recruiting",
+   "label": "Recruiting",
+   "covers": "resumes, applications, interview feedback, matching candidates to roles",
+   "n": 1,
+   "public": 1,
+   "sealed": 0,
+   "low_n": true
+  },
+  {
+   "key": "lead_generation",
+   "label": "Lead generation",
+   "covers": "matching companies or inbound messages to an ideal customer profile, buyer intent, prioritising and routing sales leads",
+   "n": 0,
+   "public": 0,
+   "sealed": 0,
+   "low_n": true
+  },
+  {
+   "key": "customer_support",
+   "label": "Customer support",
+   "covers": "classifying tickets and customer intents, urgency, refunds, routing cases to a team, checking support replies",
+   "n": 78,
+   "public": 19,
+   "sealed": 59,
+   "low_n": false
+  },
+  {
+   "key": "insurance_claims",
+   "label": "Insurance claims",
+   "covers": "first-notice-of-loss reports, claim complexity, missing information, claim triage",
+   "n": 64,
+   "public": 20,
+   "sealed": 44,
+   "low_n": false
+  },
+  {
+   "key": "financial_crime",
+   "label": "Financial crime",
+   "covers": "suspicious transactions, KYC, fraud alerts, entity matching for investigations",
+   "n": 5,
+   "public": 3,
+   "sealed": 2,
+   "low_n": true
+  },
+  {
+   "key": "legal_compliance",
+   "label": "Legal and compliance",
+   "covers": "contracts, policies, regulations, eligibility rules, checking documents against written requirements",
+   "n": 138,
+   "public": 28,
+   "sealed": 110,
+   "low_n": false
+  },
+  {
+   "key": "ecommerce_marketplaces",
+   "label": "E-commerce marketplaces",
+   "covers": "product listings, product attributes, orders and deliveries, seller catalog policy",
+   "n": 128,
+   "public": 36,
+   "sealed": 92,
+   "low_n": false
+  },
+  {
+   "key": "moderation_trust_safety",
+   "label": "Moderation and trust and safety",
+   "covers": "user content moderation: toxicity, harassment, spam, unsafe advice, personal data exposure",
+   "n": 12,
+   "public": 8,
+   "sealed": 4,
+   "low_n": true
+  },
+  {
+   "key": "advertising",
+   "label": "Advertising",
+   "covers": "ad creatives, campaign copy, brand safety, prohibited claims in ads",
+   "n": 4,
+   "public": 0,
+   "sealed": 4,
+   "low_n": true
+  },
+  {
+   "key": "gaming",
+   "label": "Gaming",
+   "covers": "player reports, in-game chat, game support",
+   "n": 0,
+   "public": 0,
+   "sealed": 0,
+   "low_n": true
+  },
+  {
+   "key": "risk_assessment",
+   "label": "Risk assessment",
+   "covers": "estimating probabilities and severity of risks, incidents, vendor or underwriting risk",
+   "n": 106,
+   "public": 27,
+   "sealed": 79,
+   "low_n": false
+  },
+  {
+   "key": "demand_forecasting",
+   "label": "Demand forecasting",
+   "covers": "purchase intent, product interest, demand and supply signals for forecasting",
+   "n": 41,
+   "public": 0,
+   "sealed": 41,
+   "low_n": false
+  },
+  {
+   "key": "knowledge_graphs",
+   "label": "Graphs and knowledge graphs",
+   "covers": "entity types, relationships between records, contradictions between facts, multi-step lookups across linked facts",
+   "n": 1,
+   "public": 1,
+   "sealed": 0,
+   "low_n": true
+  },
+  {
+   "key": "other",
+   "label": "Other",
+   "covers": "none of the above: general reasoning, arithmetic or date puzzles, everyday assistant requests without a business workflow",
+   "n": 307,
+   "public": 141,
+   "sealed": 166,
+   "low_n": false
+  }
+ ],
+ "systems": {
+  "wity_1": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 79.43
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 90.62
+    },
+    "screens": {
+     "n": 83,
+     "competence": 78.92
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 51.72
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 85.96
+    },
+    "charts": {
+     "n": 79,
+     "competence": 96.41
+    },
+    "documents": {
+     "n": 102,
+     "competence": 83.52
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 76.69
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 82.52
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 82.38
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 84.01
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 76.29
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 94.44
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 90.17
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 73.55
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 93.42
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 96.75
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "imajev_4b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 69.94
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 86.46
+    },
+    "screens": {
+     "n": 83,
+     "competence": 71.39
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 37.93
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 78.95
+    },
+    "charts": {
+     "n": 79,
+     "competence": 87.44
+    },
+    "documents": {
+     "n": 102,
+     "competence": 49.06
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 83.68
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 76.7
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 74.7
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 78.3
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 48.28
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 97.22
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 73.78
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 68.51
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 66.67
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 86.84
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 20.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 93.5
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "jev_omni": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 41.46
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 89.58
+    },
+    "screens": {
+     "n": 83,
+     "competence": 32.23
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 17.24
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 22.81
+    },
+    "charts": {
+     "n": 79,
+     "competence": 85.65
+    },
+    "documents": {
+     "n": 102,
+     "competence": 59.55
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 83.68
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 82.52
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 53.92
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 73.73
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 48.28
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 88.89
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 70.51
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 78.59
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 83.33
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 40.79
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": -33.33
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 90.24
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "neohorse_jev_4b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 77.85
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 84.38
+    },
+    "screens": {
+     "n": 83,
+     "competence": 77.41
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 17.24
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 50.88
+    },
+    "charts": {
+     "n": 79,
+     "competence": 85.65
+    },
+    "documents": {
+     "n": 102,
+     "competence": 49.06
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 72.03
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 82.52
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 76.06
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 72.59
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 41.81
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 83.33
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 72.15
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 73.55
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 86.84
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": -33.33
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 93.5
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "visual_jev_4b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 76.27
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 78.13
+    },
+    "screens": {
+     "n": 83,
+     "competence": 75.9
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": -3.45
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 57.89
+    },
+    "charts": {
+     "n": 79,
+     "competence": 64.13
+    },
+    "documents": {
+     "n": 102,
+     "competence": 47.57
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 58.04
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 67.96
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 70.63
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 65.73
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 59.05
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 83.33
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 62.32
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 53.4
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 33.33
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 93.42
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": -33.33
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 67.48
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "jpt_4b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 60.44
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 89.58
+    },
+    "screens": {
+     "n": 83,
+     "competence": 68.37
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": -3.45
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 36.84
+    },
+    "charts": {
+     "n": 79,
+     "competence": 85.65
+    },
+    "documents": {
+     "n": 102,
+     "competence": 49.06
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 55.71
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 73.79
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 67.92
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 61.17
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 50.43
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 91.67
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 75.42
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 67.25
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 80.26
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": -33.33
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 93.5
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 0.0
+    }
+   }
+  },
+  "imajev_2b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 63.61
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 79.17
+    },
+    "screens": {
+     "n": 83,
+     "competence": 65.36
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": -17.24
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 50.88
+    },
+    "charts": {
+     "n": 79,
+     "competence": 74.89
+    },
+    "documents": {
+     "n": 102,
+     "competence": 28.09
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 30.07
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 70.87
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 62.5
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 44.03
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 50.43
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 75.0
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 67.23
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 47.1
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 66.67
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 73.68
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 73.98
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 0.0
+    }
+   }
+  },
+  "glance_qwen3vl_4b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 71.52
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 76.04
+    },
+    "screens": {
+     "n": 83,
+     "competence": 71.39
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 17.24
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 64.91
+    },
+    "charts": {
+     "n": 79,
+     "competence": 53.36
+    },
+    "documents": {
+     "n": 102,
+     "competence": 35.58
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 46.39
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 53.4
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 66.57
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 58.88
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 41.81
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 80.56
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 54.12
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 44.58
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 50.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 93.42
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 60.98
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 13.04
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "autojev_27b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 57.28
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 93.75
+    },
+    "screens": {
+     "n": 83,
+     "competence": 39.76
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 17.24
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 78.95
+    },
+    "charts": {
+     "n": 79,
+     "competence": 83.86
+    },
+    "documents": {
+     "n": 102,
+     "competence": 58.05
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 76.69
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 88.35
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 63.86
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 72.59
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 50.43
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 88.89
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 81.98
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 76.07
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 73.68
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 90.24
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "decider_2b_vision": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 49.37
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 76.04
+    },
+    "screens": {
+     "n": 83,
+     "competence": 62.35
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": -3.45
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 29.82
+    },
+    "charts": {
+     "n": 79,
+     "competence": 60.54
+    },
+    "documents": {
+     "n": 102,
+     "competence": 19.1
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 46.39
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 70.87
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 57.53
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 50.89
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 37.5
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 61.11
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 54.12
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 47.1
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 0.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 67.11
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 20.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": -33.33
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 64.23
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 13.04
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "jev_spatial": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 55.7
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 89.58
+    },
+    "screens": {
+     "n": 83,
+     "competence": 42.77
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": -3.45
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 15.79
+    },
+    "charts": {
+     "n": 79,
+     "competence": 51.57
+    },
+    "documents": {
+     "n": 102,
+     "competence": 25.09
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 44.06
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 59.22
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 55.73
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 49.74
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 41.81
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 88.89
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 59.04
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 43.32
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 83.33
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 73.68
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 51.22
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 13.04
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "jpt_9b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 65.19
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 95.83
+    },
+    "screens": {
+     "n": 83,
+     "competence": 77.41
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 31.03
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 71.93
+    },
+    "charts": {
+     "n": 79,
+     "competence": 89.24
+    },
+    "documents": {
+     "n": 102,
+     "competence": 47.57
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 81.35
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 82.52
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 74.25
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 78.3
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 54.74
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 88.89
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 85.25
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 72.29
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 86.84
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 93.5
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "omnijev_4b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 52.53
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 80.21
+    },
+    "screens": {
+     "n": 83,
+     "competence": 68.37
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 24.14
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 43.86
+    },
+    "charts": {
+     "n": 79,
+     "competence": 69.51
+    },
+    "documents": {
+     "n": 102,
+     "competence": 25.09
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 37.06
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 62.14
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 64.76
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 47.46
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 35.34
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 72.22
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 63.95
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 45.84
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 73.68
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": -33.33
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 64.23
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "reflex_4b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 82.59
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 80.21
+    },
+    "screens": {
+     "n": 83,
+     "competence": 66.87
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 24.14
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 50.88
+    },
+    "charts": {
+     "n": 79,
+     "competence": 56.95
+    },
+    "documents": {
+     "n": 102,
+     "competence": 29.59
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 62.7
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 70.87
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 68.38
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 69.16
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 37.5
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 66.67
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 67.23
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 44.58
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 100.0
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": -33.33
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 57.72
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 100.0
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "omnijev_9b_v4_tzcfly": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 22.47
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 91.67
+    },
+    "screens": {
+     "n": 83,
+     "competence": 27.71
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": -3.45
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 85.96
+    },
+    "charts": {
+     "n": 79,
+     "competence": 71.3
+    },
+    "documents": {
+     "n": 102,
+     "competence": 25.09
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 58.04
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 67.96
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 51.66
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 49.74
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 37.5
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 80.56
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 67.23
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 53.4
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 83.33
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 14.47
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 80.49
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "jevify_gemma4_26b_a4b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 74.68
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 89.58
+    },
+    "screens": {
+     "n": 83,
+     "competence": 60.84
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 37.93
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 71.93
+    },
+    "charts": {
+     "n": 79,
+     "competence": 91.03
+    },
+    "documents": {
+     "n": 102,
+     "competence": 47.57
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 67.37
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 70.87
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 71.54
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 69.16
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 54.74
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 94.44
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 77.06
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 72.29
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 83.33
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 80.26
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 60.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 96.75
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 100.0
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "surogate_rune_26b_v3": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 65.19
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 89.58
+    },
+    "screens": {
+     "n": 83,
+     "competence": 59.34
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 65.52
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 85.96
+    },
+    "charts": {
+     "n": 79,
+     "competence": 94.62
+    },
+    "documents": {
+     "n": 102,
+     "competence": 58.05
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 76.69
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 79.61
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 68.83
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 76.01
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 61.21
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 100.0
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 90.17
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 81.11
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 83.33
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 80.26
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 60.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 96.75
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 100.0
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "jevany_27b_sft": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 46.2
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 95.83
+    },
+    "screens": {
+     "n": 83,
+     "competence": 41.27
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 44.83
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 92.98
+    },
+    "charts": {
+     "n": 79,
+     "competence": 89.24
+    },
+    "documents": {
+     "n": 102,
+     "competence": 52.06
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 76.69
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 88.35
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 61.15
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 73.73
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 41.81
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 91.67
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 86.89
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 79.85
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 47.37
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 96.75
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "jevany_27b_rlcr": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 46.2
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 95.83
+    },
+    "screens": {
+     "n": 83,
+     "competence": 42.77
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 51.72
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 92.98
+    },
+    "charts": {
+     "n": 79,
+     "competence": 87.44
+    },
+    "documents": {
+     "n": 102,
+     "competence": 53.56
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 79.02
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 88.35
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 62.95
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 73.73
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 43.97
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 91.67
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 86.89
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 79.85
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 47.37
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 96.75
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 13.04
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "seanliu_jev_vision_8b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 73.1
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 88.54
+    },
+    "screens": {
+     "n": 83,
+     "competence": 71.39
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 3.45
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 57.89
+    },
+    "charts": {
+     "n": 79,
+     "competence": 65.92
+    },
+    "documents": {
+     "n": 102,
+     "competence": 28.09
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 58.04
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 67.96
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 67.47
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 66.88
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 35.34
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 97.22
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 67.23
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 52.14
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 83.33
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 86.84
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 60.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": -33.33
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 64.23
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "shisa_de_1": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 63.61
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 86.46
+    },
+    "screens": {
+     "n": 83,
+     "competence": 62.35
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 37.93
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 64.91
+    },
+    "charts": {
+     "n": 79,
+     "competence": 91.03
+    },
+    "documents": {
+     "n": 102,
+     "competence": 59.55
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 79.02
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 73.79
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 68.83
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 74.87
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 61.21
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 91.67
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 73.78
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 74.81
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 80.26
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 93.5
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 100.0
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "omnijev_2b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 71.52
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 64.58
+    },
+    "screens": {
+     "n": 83,
+     "competence": 59.34
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 3.45
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 43.86
+    },
+    "charts": {
+     "n": 79,
+     "competence": 55.16
+    },
+    "documents": {
+     "n": 102,
+     "competence": 17.6
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 30.07
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 44.66
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 57.99
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 50.89
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 31.03
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 69.44
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 47.57
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 34.51
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 0.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 80.26
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": -20.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": -33.33
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 54.47
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 13.04
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "cua_s1_4b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 66.77
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 82.29
+    },
+    "screens": {
+     "n": 83,
+     "competence": 68.37
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": -3.45
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 29.82
+    },
+    "charts": {
+     "n": 79,
+     "competence": 65.92
+    },
+    "documents": {
+     "n": 102,
+     "competence": 23.6
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 51.05
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 82.52
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 63.41
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 58.88
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 31.03
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 83.33
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 72.15
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 53.4
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 83.33
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 73.68
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 60.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": -33.33
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 60.98
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 13.04
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 0.0
+    }
+   }
+  },
+  "standard_one_8b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 69.94
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 66.67
+    },
+    "screens": {
+     "n": 83,
+     "competence": 41.27
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 51.72
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 43.86
+    },
+    "charts": {
+     "n": 79,
+     "competence": 60.54
+    },
+    "documents": {
+     "n": 102,
+     "competence": 37.08
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 51.05
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 27.18
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 55.27
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 64.59
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 37.5
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 72.22
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 41.02
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 49.62
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 16.67
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 67.11
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": -20.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 57.72
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 0.0
+    }
+   }
+  },
+  "jevify_qwen3vl_2b_t2": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 71.52
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 69.79
+    },
+    "screens": {
+     "n": 83,
+     "competence": 62.35
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": -24.14
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 29.82
+    },
+    "charts": {
+     "n": 79,
+     "competence": 37.22
+    },
+    "documents": {
+     "n": 102,
+     "competence": 20.6
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 20.75
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 47.57
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 56.63
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 42.89
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 41.81
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 88.89
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 42.65
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 33.25
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 16.67
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 93.42
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 60.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": -33.33
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 28.46
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "imajev_9b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 74.68
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 93.75
+    },
+    "screens": {
+     "n": 83,
+     "competence": 74.4
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 51.72
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 85.96
+    },
+    "charts": {
+     "n": 79,
+     "competence": 82.06
+    },
+    "documents": {
+     "n": 102,
+     "competence": 34.08
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 86.01
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 79.61
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 76.06
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 76.01
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 50.43
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 86.11
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 80.34
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 65.99
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 100.0
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 86.99
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 100.0
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "visual_jev_generic_baseline": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 69.94
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 81.25
+    },
+    "screens": {
+     "n": 83,
+     "competence": 68.37
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 24.14
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 50.88
+    },
+    "charts": {
+     "n": 79,
+     "competence": 65.92
+    },
+    "documents": {
+     "n": 102,
+     "competence": 25.09
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 44.06
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 65.05
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 69.28
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 49.74
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 35.34
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 69.44
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 63.95
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 49.62
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 80.26
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": -33.33
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 60.98
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 13.04
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "djev_distill_v4": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 27.22
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 79.17
+    },
+    "screens": {
+     "n": 83,
+     "competence": 51.81
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": -3.45
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 1.75
+    },
+    "charts": {
+     "n": 79,
+     "competence": 58.74
+    },
+    "documents": {
+     "n": 102,
+     "competence": 47.57
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 62.7
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 59.22
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 47.59
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 54.31
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 52.59
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 83.33
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 70.51
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 59.7
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 34.21
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 41.46
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 100.0
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "djev_spark_nvfp4": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 30.38
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 77.08
+    },
+    "screens": {
+     "n": 83,
+     "competence": 39.76
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 37.93
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 8.77
+    },
+    "charts": {
+     "n": 79,
+     "competence": 53.36
+    },
+    "documents": {
+     "n": 102,
+     "competence": 37.08
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 51.05
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 59.22
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 43.98
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 47.46
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 41.81
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 72.22
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 67.23
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 59.7
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 47.37
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 51.22
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 100.0
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "djev_v10_step160_snowicarus": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 39.87
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 80.21
+    },
+    "screens": {
+     "n": 83,
+     "competence": 51.81
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 17.24
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 15.79
+    },
+    "charts": {
+     "n": 79,
+     "competence": 62.33
+    },
+    "documents": {
+     "n": 102,
+     "competence": 55.06
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 65.03
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 56.31
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 52.11
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 57.74
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 56.9
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 88.89
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 67.23
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 68.51
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 67.11
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 51.22
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "vjev_vision": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 27.22
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 68.75
+    },
+    "screens": {
+     "n": 83,
+     "competence": 20.18
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 58.62
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 50.88
+    },
+    "charts": {
+     "n": 79,
+     "competence": 65.92
+    },
+    "documents": {
+     "n": 102,
+     "competence": 23.6
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 41.72
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 38.83
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 46.24
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 39.46
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 39.66
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 63.89
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 54.12
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 38.29
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 66.67
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 40.79
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 73.98
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 100.0
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "kushal_gemma4_31b_it_autoloops": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 74.68
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 93.75
+    },
+    "screens": {
+     "n": 83,
+     "competence": 72.89
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 31.03
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 85.96
+    },
+    "charts": {
+     "n": 79,
+     "competence": 87.44
+    },
+    "documents": {
+     "n": 102,
+     "competence": 61.05
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 90.68
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 85.44
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 75.6
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 89.72
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 56.9
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 97.22
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 85.25
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 79.85
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 93.42
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 93.5
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "djev_dev_bf16": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 36.71
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 79.17
+    },
+    "screens": {
+     "n": 83,
+     "competence": 45.78
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 31.03
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 8.77
+    },
+    "charts": {
+     "n": 79,
+     "competence": 56.95
+    },
+    "documents": {
+     "n": 102,
+     "competence": 40.07
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 41.72
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 38.83
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 46.24
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 42.89
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 48.28
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 80.56
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 62.32
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 62.22
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 47.37
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": -33.33
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 54.47
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "jpt_0p8b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 22.47
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 59.37
+    },
+    "screens": {
+     "n": 83,
+     "competence": 41.27
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": -10.34
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 1.75
+    },
+    "charts": {
+     "n": 79,
+     "competence": 53.36
+    },
+    "documents": {
+     "n": 102,
+     "competence": 17.6
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 18.41
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 53.4
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 40.37
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 28.04
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 33.19
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 55.56
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 49.21
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 24.43
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 33.33
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 21.05
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": -33.33
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 51.22
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "jevify_gemma4_e4b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 33.54
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 60.42
+    },
+    "screens": {
+     "n": 83,
+     "competence": 26.2
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 3.45
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 8.77
+    },
+    "charts": {
+     "n": 79,
+     "competence": 37.22
+    },
+    "documents": {
+     "n": 102,
+     "competence": 26.59
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 25.41
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 41.75
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 39.91
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 29.18
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 33.19
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 61.11
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 41.02
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 35.77
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 16.67
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 40.79
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 60.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 31.71
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 0.0
+    }
+   }
+  },
+  "standard_one_3b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 39.87
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 45.83
+    },
+    "screens": {
+     "n": 83,
+     "competence": 30.72
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 37.93
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 43.86
+    },
+    "charts": {
+     "n": 79,
+     "competence": 42.6
+    },
+    "documents": {
+     "n": 102,
+     "competence": 14.61
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 32.4
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 38.83
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 38.11
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 34.89
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 26.72
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 52.78
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 37.74
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 35.77
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": -33.33
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 40.79
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": -60.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 41.46
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 13.04
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": -100.0
+    }
+   }
+  },
+  "gevva_e4b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 36.71
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 60.42
+    },
+    "screens": {
+     "n": 83,
+     "competence": 29.22
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": -17.24
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 29.82
+    },
+    "charts": {
+     "n": 79,
+     "competence": 35.43
+    },
+    "documents": {
+     "n": 102,
+     "competence": 25.09
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 32.4
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 30.1
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 39.46
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 37.18
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 22.41
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 69.44
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 41.02
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 31.99
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 50.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 47.37
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 60.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": -33.33
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 34.96
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 13.04
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 0.0
+    }
+   }
+  },
+  "omnijev_0p8b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 58.86
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 59.37
+    },
+    "screens": {
+     "n": 83,
+     "competence": 18.67
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 3.45
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 29.82
+    },
+    "charts": {
+     "n": 79,
+     "competence": 40.81
+    },
+    "documents": {
+     "n": 102,
+     "competence": 16.1
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 6.76
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 24.27
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 35.85
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 31.47
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 39.66
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 66.67
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 42.65
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 23.17
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 53.95
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": -33.33
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 38.21
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 13.04
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "gevva_e2b_multimodal": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 16.14
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 44.79
+    },
+    "screens": {
+     "n": 83,
+     "competence": 39.76
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 3.45
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 29.82
+    },
+    "charts": {
+     "n": 79,
+     "competence": 40.81
+    },
+    "documents": {
+     "n": 102,
+     "competence": 23.6
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 18.41
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 44.66
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 35.4
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 30.33
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 28.88
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 52.78
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 45.93
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 28.21
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 16.67
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 21.05
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 20.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 34.96
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "jevision": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 30.38
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 61.46
+    },
+    "screens": {
+     "n": 83,
+     "competence": 36.75
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": -24.14
+    },
+    "geometry": {
+     "n": 19,
+     "competence": -5.26
+    },
+    "charts": {
+     "n": 79,
+     "competence": 44.39
+    },
+    "documents": {
+     "n": 102,
+     "competence": 13.11
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 30.07
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 47.57
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 36.3
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 42.89
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 33.19
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 55.56
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 44.29
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 24.43
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 16.67
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 7.89
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 20.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": -33.33
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 44.72
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "bonsai_2_27b_pq2_0": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 79.43
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 96.88
+    },
+    "screens": {
+     "n": 83,
+     "competence": 78.92
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 10.34
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 50.88
+    },
+    "charts": {
+     "n": 79,
+     "competence": 78.48
+    },
+    "documents": {
+     "n": 102,
+     "competence": 46.07
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 76.69
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 82.52
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 73.8
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 79.44
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 46.12
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 94.44
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 81.98
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 72.29
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 86.84
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 83.74
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 100.0
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "qevi_2b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 68.35
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 40.62
+    },
+    "screens": {
+     "n": 83,
+     "competence": 17.17
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": -17.24
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 57.89
+    },
+    "charts": {
+     "n": 79,
+     "competence": 15.7
+    },
+    "documents": {
+     "n": 102,
+     "competence": 14.61
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 9.09
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 33.01
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 35.4
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 32.61
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 22.41
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 61.11
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 21.35
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 19.4
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 33.33
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 60.53
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": -33.33
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 5.69
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 13.04
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "gpt6_luna": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 81.01
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 89.58
+    },
+    "screens": {
+     "n": 83,
+     "competence": 74.4
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 44.83
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 78.95
+    },
+    "charts": {
+     "n": 79,
+     "competence": 89.24
+    },
+    "documents": {
+     "n": 102,
+     "competence": 82.02
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 69.7
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 85.44
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 76.96
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 79.44
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 71.98
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 91.67
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 88.53
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 83.63
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 67.11
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 90.24
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 100.0
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "gpt56_luna": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 85.76
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 98.96
+    },
+    "screens": {
+     "n": 83,
+     "competence": 86.45
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 72.41
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 92.98
+    },
+    "charts": {
+     "n": 79,
+     "competence": 85.65
+    },
+    "documents": {
+     "n": 102,
+     "competence": 95.51
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 97.67
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 97.09
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 89.61
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 94.29
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 97.84
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 97.22
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 98.36
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 94.96
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 93.42
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 80.49
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "gemini31_flash_lite": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 84.18
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 100.0
+    },
+    "screens": {
+     "n": 83,
+     "competence": 86.45
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 24.14
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 29.82
+    },
+    "charts": {
+     "n": 79,
+     "competence": 92.83
+    },
+    "documents": {
+     "n": 102,
+     "competence": 73.03
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 86.01
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 91.26
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 80.57
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 90.86
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 61.21
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 100.0
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 90.17
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 89.92
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 93.42
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 93.5
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "playjev_0p8b": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 1.9
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 9.37
+    },
+    "screens": {
+     "n": 83,
+     "competence": 3.61
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 10.34
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 1.75
+    },
+    "charts": {
+     "n": 79,
+     "competence": 3.14
+    },
+    "documents": {
+     "n": 102,
+     "competence": 5.62
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 6.76
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": -7.77
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 1.06
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 9.77
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 5.17
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 16.67
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 0.05
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 4.28
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 50.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 1.32
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": -33.33
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": -25.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 5.69
+    },
+    "advertising": {
+     "n": 4,
+     "competence": -30.43
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "gemini38_flash": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 76.27
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 98.96
+    },
+    "screens": {
+     "n": 83,
+     "competence": 95.48
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 44.83
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 78.95
+    },
+    "charts": {
+     "n": 79,
+     "competence": 78.48
+    },
+    "documents": {
+     "n": 102,
+     "competence": 95.51
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 88.34
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 94.17
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 86.45
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 87.44
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 84.91
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 97.22
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 85.25
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 94.96
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 100.0
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 80.26
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 100.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 86.99
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "openjev_4b_nli": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 82.59
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 78.13
+    },
+    "screens": {
+     "n": 83,
+     "competence": 59.34
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 24.14
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 71.93
+    },
+    "charts": {
+     "n": 79,
+     "competence": 67.71
+    },
+    "documents": {
+     "n": 102,
+     "competence": 43.07
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 55.71
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 50.49
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 67.47
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 65.73
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 46.12
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 83.33
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 60.68
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 52.14
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 83.33
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 80.26
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 60.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 70.73
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 13.04
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  },
+  "openjev_4b_v5": {
+   "capabilities": {
+    "web_tasks": {
+     "n": 79,
+     "competence": 62.03
+    },
+    "everyday_photo": {
+     "n": 184,
+     "competence": 88.54
+    },
+    "screens": {
+     "n": 83,
+     "competence": 66.87
+    },
+    "financial_tables": {
+     "n": 20,
+     "competence": 31.03
+    },
+    "geometry": {
+     "n": 19,
+     "competence": 71.93
+    },
+    "charts": {
+     "n": 79,
+     "competence": 71.3
+    },
+    "documents": {
+     "n": 102,
+     "competence": 38.58
+    },
+    "inventory": {
+     "n": 61,
+     "competence": 72.03
+    },
+    "safety_inspection": {
+     "n": 57,
+     "competence": 73.79
+    }
+   },
+   "usecases": {
+    "other": {
+     "n": 307,
+     "competence": 67.47
+    },
+    "ecommerce_marketplaces": {
+     "n": 128,
+     "competence": 66.88
+    },
+    "customer_support": {
+     "n": 78,
+     "competence": 31.03
+    },
+    "insurance_claims": {
+     "n": 64,
+     "competence": 94.44
+    },
+    "risk_assessment": {
+     "n": 106,
+     "competence": 78.7
+    },
+    "legal_compliance": {
+     "n": 138,
+     "competence": 62.22
+    },
+    "moderation_trust_safety": {
+     "n": 12,
+     "competence": 83.33
+    },
+    "search_retrieval": {
+     "n": 19,
+     "competence": 73.68
+    },
+    "financial_crime": {
+     "n": 5,
+     "competence": 60.0
+    },
+    "knowledge_graphs": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "recruiting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "code_linting": {
+     "n": 1,
+     "competence": 100.0
+    },
+    "demand_forecasting": {
+     "n": 41,
+     "competence": 77.24
+    },
+    "advertising": {
+     "n": 4,
+     "competence": 56.52
+    },
+    "feature_extraction": {
+     "n": 2,
+     "competence": 100.0
+    }
+   }
+  }
+ },
+ "unavailable": {
+  "winnow_12b_q8": "Per-item outputs of this run were never retrieved from its GPU pod (aggregate-only run); category values need a re-run."
+ }
+}

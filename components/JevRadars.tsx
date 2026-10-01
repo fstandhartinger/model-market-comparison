@@ -21,7 +21,7 @@ const pct = (v: number | null) => (v === null ? "—" : `${(v * 100).toFixed(1)}
 const short = (d: string) => d.split(" (")[0].split(", formerly")[0];
 
 export type Series = { name: string; stroke: string; dashed: boolean; square: boolean };
-export type Spoke = { key: string; lines: string[]; values: (number | null)[]; texts: string[]; thin: boolean[] };
+export type Spoke = { key: string; lines: string[]; values: (number | null)[]; texts: string[]; thin: boolean[]; tip?: string };
 
 export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke[]; series: Series[]; size: { w: number; h: number; r: number }; id: string; title: string; desc: string }) {
   const cx = size.w / 2, cy = size.h / 2 + 4, R = size.r;
@@ -53,7 +53,8 @@ export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke
       const anchor = Math.abs(cos) < 0.2 ? "middle" : cos > 0 ? "start" : "end";
       const n = s.lines.length + 1;
       const y = r3(sin < -0.2 ? y0 - (n - 1) * 14 - 2 : sin > 0.2 ? y0 + 12 : y0 - ((n - 1) * 14) / 2 + 5);
-      return <text key={s.key} x={x} y={y} textAnchor={anchor} fontSize={13.5} fill="var(--text)" data-bh-jev12-radar-spoke={s.key}>
+      return <text key={s.key} x={x} y={y} textAnchor={anchor} fontSize={13.5} fill="var(--text)" data-bh-jev12-radar-spoke={s.key} style={s.tip ? { cursor: "help" } : undefined}>
+        {s.tip && <title>{s.tip}</title>}
         {s.lines.map((l, j) => <tspan key={j} x={x} dy={j === 0 ? 0 : 14} fontWeight={600}>{l}</tspan>)}
         {/* F-216 (Fable pass 40): the separator sits between two printed values; a spoke whose A is unpublished prints B alone, not "· 74%". */}
         <tspan x={x} dy={14} fontSize={13}>{series.map((se, k) => s.values[k] === null ? null : <tspan key={k} fill={s.thin[k] ? "var(--muted)" : se.stroke} fontWeight={700} data-bh-jev12-radar-value={`${k === 0 ? "a" : "b"}:${s.key}`}>{k > 0 && s.values[k - 1] !== null ? <tspan fill="var(--muted)" fontWeight={400}> · </tspan> : null}{s.texts[k]}</tspan>)}</tspan>
