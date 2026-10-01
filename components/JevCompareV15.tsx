@@ -66,7 +66,7 @@ function CategoryKey({ dim, cats }: { dim: CategoryDim; cats: CompareCategories 
   return <details className="mt-1 text-[12px]" data-bh-jev15-category-key={dim.key}>
     <summary className="cursor-pointer text-accent">What each category means · items per category</summary>
     <ul className="mt-1 space-y-0.5">{dim.cats.filter((c) => c.plotted).map((c) => <li key={c.key} data-bh-jev15-category={`${dim.key}:${c.key}`} data-bh-jev15-category-n={c.n}><b>{c.label}</b> — {c.covers}. <span className="bh-muted tabular">{c.n} items ({c.split.a} {cats.splitNames[0]} / {c.split.b} {cats.splitNames[1]})</span></li>)}</ul>
-    {unplotted.map((c) => <p key={c.key} className="bh-muted mt-1" data-bh-jev15-category-unplotted={`${dim.key}:${c.key}`}>Not drawn: <b>{c.label}</b> — {c.covers}. {c.n} items ({c.split.a} {cats.splitNames[0]} / {c.split.b} {cats.splitNames[1]}); its values are in the table below.</p>)}
+    {unplotted.map((c) => <p key={c.key} className="bh-muted mt-1" data-bh-jev15-category-unplotted={`${dim.key}:${c.key}`}>Not drawn: <b>{c.label}</b> — {c.covers}. {c.n} items ({c.split.a} {cats.splitNames[0]} / {c.split.b} {cats.splitNames[1]}) — not a use case of its own, so it is counted but not drawn.</p>)}
     {low.length > 0 && <p className="bh-muted mt-1" data-bh-jev15-category-low-n={dim.key}>Low n (under {cats.minN} items, not plotted): {low.map((c) => `${c.label} (${c.n})`).join(", ")}.</p>}
   </details>;
 }
