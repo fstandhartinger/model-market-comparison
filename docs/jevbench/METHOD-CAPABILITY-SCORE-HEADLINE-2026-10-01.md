@@ -66,5 +66,12 @@ output, thinking and images free. That gives USD 0.0074 per 1,000 decisions on t
 per 1,000 decisions, Cost 57.33 and composite 74.36 (#2), shown as the striped bar. Details:
 `data/raw/benchmarks/jevbench/multimodal-preview/PRICING-v0.1.5.md`.
 
+**In the Capability Score (CR-250, Florian 1 Oct 2026):** eligibility for the Jev-class cost cap is also checked at the
+developer's own API list price. Such a row carries the **API** tag and a short note saying whether it would still fit
+within, or exceed, the cost cap at the base-model reference price; the tooltip gives both prices and the ratio. Only cost
+moves; latency is measured on the developer's endpoint either way, and the Capability Score itself does not depend on
+price. Wity-1: USD 0.0264 per 1,000 decisions at the base-model reference = 0.82× Jev 1.13.0, so it would **still fit
+within** the 2× cost cap (USD 0.0646); its eligibility does not depend on the low API tariff.
+
 JevBench rows that today are priced at a base-model reference because their operator tariff was excluded by the
 30-day rule are not re-scored in this presentation release. Any change there comes with the next JevBench version.

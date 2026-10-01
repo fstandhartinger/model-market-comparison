@@ -81,6 +81,7 @@ test('ImageJevBench adapter maps v0.1.5 board, comparison, presets and frozen ca
   });
   assert.deepEqual(board.find((row) => row.key === 'wity_1').alt, {
     axes: { cost: 57.334793493313725 },
+    usd_per_1000: 0.026434649122807023,
     label: 'Base-model price',
     note: 'Qwen3.6-35B-A3B base-model market reference (USD 0.15/M input, USD 1.00/M output)',
   });
