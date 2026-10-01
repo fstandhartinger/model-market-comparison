@@ -78,7 +78,10 @@ test('legacy preview stays noindex and the unlisted route redirects to the publi
 
 test('the preview presents a bar ranking before the detail table and keeps identity visible on narrow screens', () => {
   const preview = readFileSync(path.join(root, 'app/jev-models/multimodal-preview/page.tsx'), 'utf8');
-  assert.ok(preview.indexOf('<ScoreBars systems={a.ranking} track="all" />') < preview.indexOf('<RankingTable systems={a.ranking} track="all" all />'));
+  // The full-benchmark bar ranking now lives in the archived v0.1.4 view; it must still precede that view's table.
+  const archived = preview.slice(preview.indexOf('async function ArchivedV014Content'));
+  assert.ok(archived.indexOf('<ScoreBars systems={a.ranking} track="all" />') >= 0);
+  assert.ok(archived.indexOf('<ScoreBars systems={a.ranking} track="all" />') < archived.indexOf('<RankingTable systems={a.ranking} track="all" all />'));
   assert.match(preview, /all: 'Full benchmark', core: 'CORE', everyday_photo: 'Everyday photo'/);
   assert.match(preview, /aria-label=\{`\$\{trackLabel\[track\]\}/);
   assert.match(preview, /sticky left-0 z-\[1\].*shadow-\[inset_-1px_0_0_rgb\(var\(--line\)\)\]/);

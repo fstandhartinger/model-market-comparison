@@ -186,6 +186,7 @@ function CandidateCoverageTable({ candidates }: { candidates: any[] }) {
   </div>;
 }
 
+
 export async function MultimodalPreviewContent({ versionTabs }: { versionTabs?: VersionTabCounts } = {}) {
   const a: any = await readMultimodalPreview();
   const s = a.split;
@@ -357,6 +358,7 @@ function PublicNote({ item }: { item: { label: string; value: string } }) {
     {plain !== item.value && <details className="mt-2" data-bh-imagejev-v02-technical-provenance><summary className="cursor-pointer text-accent">Technical provenance</summary><p className="bh-muted mt-2">{item.value}</p></details>}
   </div>;
 }
+
 
 /** Archived v0.1.4 release, rendered as published from its byte-pinned artifact (385aba04…). */
 async function ArchivedV014Content({ versionTabs }: { versionTabs: VersionTabCounts }) {

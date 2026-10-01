@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
   multimodalPreviewV02VisibleKeys,
+  readArchivedMultimodalPreviewV014,
   readMultimodalPreview,
   validateMultimodalPreviewV02HistoricalAdditionReceipt,
   validateMultimodalPreviewV02ReferenceBindings,
@@ -11,7 +12,10 @@ import {
 const HISTORICAL_KEY = 'imajev_4b_20260926';
 
 test('v0.2 references must be exact rows from the pinned v0.1.4 roster', async () => {
-  const prior = await readMultimodalPreview();
+  // The live artifact is now v0.1.5; v0.2 references stay explicitly anchored to the archived v0.1.4 bytes.
+  assert.equal((await readMultimodalPreview()).revision, 'v0.1.5');
+  const { artifact: prior, sha256 } = await readArchivedMultimodalPreviewV014();
+  assert.equal(sha256, '385aba04acb0649f73264f57b237fa6bcf481763641978d732f81b4e88ba2150');
   assert.equal(prior.revision, 'v0.1.4');
   assert.equal(prior.ranking.length, 50, 'the existing v0.1.4 roster remains complete');
   const row = prior.ranking.find((candidate) => candidate.key === 'wity_1');
@@ -56,7 +60,7 @@ test('the historical addition needs a measured or measured-unrankable receipt', 
 });
 
 test('visible configuration count includes the fresh unrankable historical addition and page has no fake reference cell', async () => {
-  const prior = await readMultimodalPreview();
+  const { artifact: prior } = await readArchivedMultimodalPreviewV014();
   const artifact = {
     ranking: [],
     reference_rows: prior.ranking.map(({ key }) => ({ key })),
