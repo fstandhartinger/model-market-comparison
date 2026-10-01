@@ -766,6 +766,10 @@ class AgentToolBoundaryTests(unittest.TestCase):
             self.assertIn("--tools", agent_command)
             self.assertEqual(agent_command[agent_command.index("--tools") + 1], "Read,Glob,Grep,Write")
             self.assertNotIn("--dangerously-skip-permissions", agent_command)
+            stderr_log = job_dir / ".agent-stderr.log"
+            self.assertNotEqual(popen.call_args.kwargs["stderr"], subprocess.DEVNULL)
+            self.assertTrue(stderr_log.is_file())
+            self.assertEqual(stderr_log.stat().st_mode & 0o777, 0o600)
         finally:
             shutil.rmtree(job_dir.parent, ignore_errors=True)
 
