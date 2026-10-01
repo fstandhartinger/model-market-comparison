@@ -22,7 +22,8 @@ test('a † marker appears only for row-specific notes, never for shared provena
   for (const note of notes.filter(Boolean)) assert.doesNotMatch(note, /already on the live v1\.3\.0 board|^re-run on a throwaway RunPod pod/i);
   assert.doesNotMatch(board, /† note<\/a>/);
   // CR-153 (Florian 25 Sep 2026): the name opens the model's best source; the system page is the "details" link.
-  assert.match(board, /const page = jevSystemPath\(row\.key\)/);
+  // CR-254: the shared table also serves Image; text retains its original details route.
+  assert.match(board, /const page = benchmark === 'imagejevbench' \? imageJevSystemPath\(row\.key\) : jevSystemPath\(row\.key\)/);
   assert.match(board, /<NameLink>\{cut > 0 \? name\.slice\(cut \+ 1\) : name\}<\/NameLink>\s*\{row\.note && <NoteMarker/);
   assert.match(board, /data-bh-jev-details=\{row\.key\}>details<\/Link>/);
   assert.match(css, /\.bh-jev14-note-body \{[^}]*white-space: normal/);
