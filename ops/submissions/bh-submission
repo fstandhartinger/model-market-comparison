@@ -1,0 +1,115 @@
+#!/usr/bin/env python3
+"""bh-submission: operator CLI for models submitted through benchmarkheaven.com/submit (CR-251).
+
+Never prints API-key ciphertext or plaintext. `key-export` writes the plaintext only into a new 0600 file.
+"""
+import argparse
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
+import submissions_lib as lib  # noqa: E402
+from submissions_lib import Db, DbError, RefError  # noqa: E402
+
+
+def short(value, width):
+    text = " ".join(str(value or "").split())
+    return text if len(text) <= width else text[: width - 1] + "…"
+
+
+def cmd_list(db, args):
+    where, params = "", {}
+    if args.status:
+        where, params = "WHERE status=:'st'", {"st": args.status}
+    rows = db.rows(f"SELECT left(id::text,8) AS ref, status, fast_lane, model_name, benchmarks, queued_at::text AS queued_at, "
+                   f"created_at::text AS created_at FROM bh_model_submissions {where} "
+                   f"ORDER BY created_at DESC LIMIT {int(args.limit)}", **params)
+    for r in rows:
+        lane = "FAST" if r["fast_lane"] else "reg "
+        print(f"{r['ref']}  {r['status']:<16} {lane}  {short(r['model_name'], 40):<40} {','.join(r['benchmarks'] or [])}  "
+              f"{(r['queued_at'] or r['created_at'] or '')[:16]}")
+    if not rows:
+        print("(none)")
+
+
+def cmd_show(db, args):
+    sid = lib.resolve_ref(db, args.ref)["id"]
+    r = db.rows("""SELECT id::text, submission_id::text, status, fast_lane, created_at::text, updated_at::text, queued_at::text,
+        model_name, github_url, huggingface_url, api_url, description, contact_email, contact_x, benchmarks,
+        followup_benchmark, followup_key, followup_name, followup_rank, api_key_present, api_key_deleted_at::text,
+        (api_key_ciphertext IS NOT NULL) AS key_stored, priority_request_id::text, stripe_mode, intake_synced_at::text,
+        confirmation_status, confirmation_attempts, admin_note
+        FROM bh_model_submissions WHERE id=(:'id')::uuid""", id=sid)[0]
+    for key, value in r.items():
+        print(f"{key:>22}: {value if value is not None else '-'}")
+
+
+def cmd_set_status(db, args):
+    sid = lib.resolve_ref(db, args.ref)["id"]
+    if args.status not in lib.STATUSES:
+        raise RefError(f"status must be one of {', '.join(lib.STATUSES)}")
+    db.execute("UPDATE bh_model_submissions SET status=:'st', updated_at=now(), "
+               "queued_at=CASE WHEN :'st'='queued' AND queued_at IS NULL THEN now() ELSE queued_at END, "
+               "admin_note=CASE WHEN :'note'<>'' THEN :'note' ELSE admin_note END WHERE id=(:'id')::uuid",
+               id=sid, st=args.status, note=args.note or "")
+    print(f"{sid[:8]} -> {args.status}")
+
+
+def cmd_queue(db, args):
+    for title, flag in (("Regular queue (order received)", "false"), ("Fast lane (paid; owned by the priority worker)", "true")):
+        rows = db.rows(f"SELECT left(id::text,8) AS ref, status, model_name, benchmarks, queued_at::text AS queued_at "
+                       f"FROM bh_model_submissions WHERE status IN ('queued','in_evaluation') AND fast_lane={flag} "
+                       f"ORDER BY queued_at, id")
+        print(f"{title}: {len(rows)}")
+        for i, r in enumerate(rows, 1):
+            print(f"  {i:>3}. {r['ref']}  {r['status']:<13} {short(r['model_name'], 40):<40} {','.join(r['benchmarks'] or [])}  {(r['queued_at'] or '')[:16]}")
+
+
+def cmd_key_export(db, args):
+    try:
+        lib.export_key(db, args.ref, args.dest)
+    except (PermissionError, FileExistsError, LookupError, FileNotFoundError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+    except Exception as exc:  # decryption failures must not echo key material
+        print(f"error: could not decrypt ({type(exc).__name__})", file=sys.stderr)
+        return 1
+    print("written")
+
+
+def cmd_purge_key(db, args):
+    sid = lib.resolve_ref(db, args.ref)["id"]
+    db.execute("UPDATE bh_model_submissions SET api_key_ciphertext=NULL, api_key_deleted_at=COALESCE(api_key_deleted_at, now()), "
+               "updated_at=now() WHERE id=(:'id')::uuid", id=sid)
+    print(f"{sid[:8]} key purged")
+
+
+def cmd_keygen(db, args):
+    try:
+        print(lib.keygen(), end="")
+    except FileExistsError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+
+
+def main(argv=None):
+    p = argparse.ArgumentParser(prog="bh-submission")
+    p.add_argument("--db", help=argparse.SUPPRESS)
+    sub = p.add_subparsers(dest="cmd", required=True)
+    c = sub.add_parser("list"); c.add_argument("--status", choices=lib.STATUSES); c.add_argument("--limit", type=int, default=50); c.set_defaults(fn=cmd_list)
+    c = sub.add_parser("show"); c.add_argument("ref"); c.set_defaults(fn=cmd_show)
+    c = sub.add_parser("set-status"); c.add_argument("ref"); c.add_argument("status", choices=lib.STATUSES); c.add_argument("--note"); c.set_defaults(fn=cmd_set_status)
+    c = sub.add_parser("queue"); c.set_defaults(fn=cmd_queue)
+    c = sub.add_parser("key-export"); c.add_argument("ref"); c.add_argument("dest"); c.set_defaults(fn=cmd_key_export)
+    c = sub.add_parser("purge-key"); c.add_argument("ref"); c.set_defaults(fn=cmd_purge_key)
+    c = sub.add_parser("keygen", help="create the RSA-3072 key pair once; prints only the public PEM"); c.set_defaults(fn=cmd_keygen)
+    args = p.parse_args(argv)
+    try:
+        return args.fn(Db(args.db), args) or 0
+    except (RefError, DbError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

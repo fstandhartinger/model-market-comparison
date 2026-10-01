@@ -30,3 +30,5 @@ export function startPriorityCheckout(input: {
 >;
 export function verifyStripeSignature(payload: Buffer, header: string | null, secret: string | null, nowSeconds?: number, toleranceSeconds?: number): boolean;
 export function paidAtFromStripeEvent(created: unknown, nowSeconds?: number): string | null;
+export const PRIORITY_PRICES_CENTS: Readonly<Record<PriorityTier, number>>;
+export const PRIORITY_BENCHMARKS: readonly PriorityBenchmark[];

@@ -260,6 +260,7 @@ export async function MultimodalPreviewContent() {
         <p><b>Composite and gates.</b> These rules are unchanged. The four axes use an equal-weight harmonic mean, followed by the Jev-class Intelligence, Speed, and Cost gates below 50. Gemini 3.8 Flash's high raw accuracy but near-zero composite reflects its measured cost and the Cost gate; label-only systems have zero Calibration under the inherited convention.</p>
         <p><b>Difficulty balance.</b> The split follows exposure, not a stratified draw, so the parts differ in family mix: browser actions (Mind2Web), chart questions (FinQA) and geometry are public-only, while ScreenSpot-Pro, Android-in-the-Wild and the fresh pool families are sealed-only. This is why the overfit penalty compares only matched families (ScreenSpot and Everyday photo).</p>
         <p><b>Fresh-item difficulty.</b> {a.method.difficulty_caveat} Scores on this split are therefore not comparable with the earlier 228/216 preview.</p>
+        <p data-bh-reevaluation-policy><b>Re-evaluation policy.</b> Every release re-evaluates the current top 10 on the composite score. Models ranked #11 and below are re-evaluated on a slower cadence — at least monthly, or with every third scheduled refresh release, whichever comes first — and their score is shown as last measured on its release. A material method change re-evaluates every model. Paid fast-lane runs are evaluated within 48 hours of payment, and new submissions are evaluated in the order received.</p>
         <p><b>Exposure.</b> GPT-6 Luna and Gemini 3.8 Flash previously saw public promo-photo candidates and sealed-photo candidates in stateless label-check calls, including candidates later dropped. The checks showed no gold; human gold-blind adjudication decided inclusion. GPT-6 Luna is the saved low-reasoning-effort setting. {a.exposure.hosted} {a.exposure.gemma} {a.exposure.djev_spark} Local systems ran without network, credentials, or gold maps. {a.exposure.fresh_pool}</p>
       </div>
     </section>
@@ -272,7 +273,7 @@ export async function MultimodalPreviewContent() {
 
     <ImageJevRevisionHistory current={a} />
 
-    <p className="bh-muted mt-9 max-w-6xl border-t border-line pt-4 text-xs">Image JevBench is a separate benchmark from the text-only JevBench Score. Sealed item-level content remains private. Public/sealed item counts, accuracy, track and score breakdowns are aggregates. Results describe these exact tested configurations and do not establish absence from model training data.</p>
+    <p className="bh-muted mt-9 max-w-6xl border-t border-line pt-4 text-xs">Image JevBench is a separate benchmark from the text-only JevBench Score. <a className="text-accent underline" href="/submit" data-bh-submit-link>Submit a model for evaluation →</a> Sealed item-level content remains private. Public/sealed item counts, accuracy, track and score breakdowns are aggregates. Results describe these exact tested configurations and do not establish absence from model training data.</p>
   </>;
 }
 
