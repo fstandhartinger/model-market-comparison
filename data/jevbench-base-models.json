@@ -1,0 +1,1679 @@
+{
+  "schema_version": 1,
+  "checked_utc": "2026-10-01T17:52:40Z",
+  "benchmarks": {
+    "jevbench": {
+      "cygnet": {
+        "label": "google/gemma-4-12B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/blockbrain-ai/cygnet-recipe/blob/main/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "winnow-12b": {
+        "label": "google/gemma-4-12B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/EldanRing/Winnow-12B/blob/b6ac22b0d51b69b18200acacb3fbdd98073fffe8/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata."
+          }
+        ]
+      },
+      "jev-1.13.0": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "jev-omni": {
+        "label": "google/gemma-4-12B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/akhilaaa3/Jev-Omni/blob/5addda86ddee081a68fb067477ea100c221b8917/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata."
+          }
+        ]
+      },
+      "decider-4b-v2": {
+        "label": "Qwen/Qwen3.5-4B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/Mapika/decider/blob/main/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "semif-qwen3.5-4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/TheoLeeCJ/openjev/blob/master/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "spark-s1-4b-v6": {
+        "label": "Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/abhishek085/open-spark-jev/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "metask-jev-4b": {
+        "label": "Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/metask-ai/metask-jev/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "hopper": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/HopitAI/hopper/blob/5d7ff514240655a07fb2ee4e59d0dcb5982314cf/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata."
+          }
+        ]
+      },
+      "malkuth-4b": {
+        "label": "Qwen/Qwen3.5-4B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/dhtocks/malkuth-4b/blob/ba9221fcb1ff450fc51dcefffc8e034ed479630d/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "reflex-4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/kshetrajna12/reflex-qwen3.5-4b-lora/blob/9df1cbbbc1837ba494530a59d3d9d345688ed250/README.md",
+            "title": "Author model card metadata",
+            "evidence": "The author model card metadata identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "jev-local": {
+        "label": "Qwen/Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/us/jev-local/blob/main/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "djev": {
+        "label": "google/diffusiongemma-26B-A4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/Davipar/djev-dev/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "raw-qwen3-4b-instruct-2507": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507/blob/cdbee75f17c01a7cc42f958dc650907174af0554/README.md",
+            "title": "Reviewed model card",
+            "evidence": "No verified base-model identity is recorded from this source."
+          }
+        ],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "jqv": {
+        "label": "Qwen3-32B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/Octalab-Inc/jqv/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "jevk5-v02": {
+        "label": "Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/allebee/jevk5/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "qwen35-9b-jev-data-mix-v2": {
+        "label": "Qwen/Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/jsaurabh/qwen3.5-9b-jev-data-mix-v2/blob/af0d51022410a72218f0ddc7414f877d0556e82d/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata."
+          }
+        ]
+      },
+      "standardone-8b": {
+        "label": "mistralai/Ministral-3-8B-Instruct-2512-BF16",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/StandardThinking/StandardOne-8B/blob/36d7999c63403acc1fd5861d5b139eee275e26d8/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata."
+          }
+        ]
+      },
+      "ninfer-qwen3.8-flash-next": {
+        "label": "Qwen3.8-Flash-Next",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/igorls/ninfer/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The README names this base checkpoint for the corresponding serving artifact."
+          }
+        ]
+      },
+      "swanone": {
+        "label": "Mia-AiLab/Qwen3.8-Flash-Next-NVFP4",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/blockbrain-ai/swanone-recipe/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The README names this base checkpoint for the corresponding serving artifact."
+          }
+        ]
+      },
+      "raw-qwen3-8b": {
+        "label": "Qwen/Qwen3-8B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-8B/blob/b968826d9c46dd6066d109eabc6255188de91218/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata."
+          }
+        ]
+      },
+      "decider-2b": {
+        "label": "Qwen/Qwen3.5-2B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Mapika/decider-2b/blob/533964dae8be954c5b5e19fa4948e48408094c1e/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata."
+          }
+        ]
+      },
+      "system-one-sg": {
+        "label": "Qwen3-8B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/sgoedecke/system-one/blob/main/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "system-one-open": {
+        "label": "Gemma 4 E2B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/mithalouni/system-one-open/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "kushal-gemma4-31b-it-autoloops": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "gpt-6-luna-low": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "gpt-6-luna": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "jevone": {
+        "label": "Qwen/Qwen3.6-35B-A3B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/juspay/jev-one/blob/a286a461e6daedee1e2400bdbe81cbb741cd592f/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata."
+          }
+        ]
+      },
+      "kev-4b": {
+        "label": "Qwen/Qwen3-4B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/jaredpalmer/kev-4b/blob/qwen3/README.md",
+            "title": "Historical Qwen3 model card",
+            "evidence": "The qwen3 historical release identifies the base used by the evaluated older Kev-4B row."
+          }
+        ],
+        "note": "Evaluated Qwen3 variant; later releases use a different base."
+      },
+      "kev-8b": {
+        "label": "Qwen/Qwen3-8B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/jaredpalmer/kev-8b/blob/c80773da7f383f93c4dbff0c0b008e0463f9145a/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "open-alternative-jev": {
+        "label": "Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/ikermoel/open-alternative-jev/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "nimble-9b": {
+        "label": "Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/bespokelabsai/nimble/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "malkuth-2b": {
+        "label": "empero-ai/Qwen3.8-2B-Distill",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/dhtocks/malkuth-2b/blob/37ae1672eebcf9ee5417418bd0be49f2e53d9087/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "openjev-sglang": {
+        "label": "Qwen/Qwen3.6-35B-A3B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/ekzhang/openjev-sglang/blob/main/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "decider-35b-a3b": {
+        "label": "Qwen/Qwen3.5-35B-A3B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Mapika/decider-35b-a3b/blob/91470e65478656eb68fde8c0ccdfe575d69d0309/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata."
+          }
+        ]
+      },
+      "localjev-qwen3.5-4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/amithgc/local-jev/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The model selection section maps this serving configuration to Qwen/Qwen3.5-4B."
+          }
+        ]
+      },
+      "open-jev-zefan-9b": {
+        "label": "Qwen/Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/ZefanCai/Open-Jev-9B/blob/47e966881e489511c0c7f5633a9e1960a676a551/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "decision-2b": {
+        "label": "openbmb/MiniCPM5-2B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/flymy-ai/decision-2b-preview/blob/df57b75db927acc9ad91ec8115508c1e487086eb/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata."
+          }
+        ]
+      },
+      "gpt-5.6-luna": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "typecastlm": {
+        "label": "Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/mihail-gribov/typecastlm/blob/main/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "jev-qwen3.5-9b-base-nvfp4": {
+        "label": "ig1/Qwen3.5-9B-NVFP4",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/WIlfLin/JEV-Qwen3.5-9B-Base-NVFP4/blob/1b545cf7d0ce626e6b0fc574d8d82459b66f8335/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata."
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "ninfer-qwen3.8-27b": {
+        "label": "Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/igorls/ninfer/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The README names this base checkpoint for the corresponding serving artifact."
+          }
+        ]
+      },
+      "ninfer-qwen3.8-27b-t1.5": {
+        "label": "Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/igorls/ninfer/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The README names this base checkpoint for the corresponding serving artifact."
+          }
+        ]
+      },
+      "instinct": {
+        "label": "Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/fstandhartinger/jevbench/issues/69",
+            "title": "Operator statement",
+            "evidence": "The operator identifies this base in the submission for this specific hosted model ID."
+          }
+        ],
+        "note": "Operator-reported; weights not publicly verifiable."
+      },
+      "openjev-thinking": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/razorback16/openjev/HEAD/README.md",
+            "title": "Reviewed author README",
+            "evidence": "No verified base-model identity for this evaluated variant is recorded from this source."
+          }
+        ],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "djev-thinking": {
+        "label": "google/diffusiongemma-26B-A4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/Davipar/djev-dev/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "litjev": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/zhengxuyu/litjev/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "raw-phi-4-mini": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/microsoft/Phi-4-mini-instruct/blob/cfbefacb99257ffa30c83adab238a50856ac3083/README.md",
+            "title": "Reviewed model card",
+            "evidence": "No verified base-model identity is recorded from this source."
+          }
+        ],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "opensourcejev-qwen35-4b-q4km": {
+        "label": "Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/sabeel111/OpenSourceJev/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "reflex-27b": {
+        "label": "Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/kshetrajna12/reflex/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "open-jev-zefan-2b": {
+        "label": "Qwen/Qwen3.5-2B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/ZefanCai/Open-Jev-2B/blob/0c7aa498b1627be8da4acf34c863ff0ee0a92785/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "gliner2-large": {
+        "label": "microsoft/deberta-v3-large",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/fastino/gliner2-large-v1/blob/main/config.json",
+            "title": "Author config.json",
+            "evidence": "The published configuration names this checkpoint in model_name."
+          }
+        ]
+      },
+      "qwen3-reranker-4b": {
+        "label": "Qwen/Qwen3-4B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-Reranker-4B/blob/22e683669bc0f0bd69640a1354a6d0aebcfeede5/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata."
+          }
+        ]
+      },
+      "deepseek-flash": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "simplejev-qwen3.5-0.8b": {
+        "label": "Qwen/Qwen3.5-0.8B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/featherless-ai/simple-jev/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "simplejev-qwen3.8-27b": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/featherless-ai/simple-jev/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "decision-machine-1": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "gliner2.5-multi": {
+        "label": "mDeBERTa-v3-base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/fastino/gliner2.5-multi-v1/blob/2ca71aafb3446d9014e1c55c7ff51c9bc7209c47/README.md",
+            "title": "Author model card",
+            "evidence": "The model card names this backbone for the corresponding checkpoint variant."
+          }
+        ]
+      },
+      "gliner2": {
+        "label": "DeBERTa-v3-base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/fastino-ai/GLiNER2/blob/main/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "jevact": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/jevbench/HEAD/README.md",
+            "title": "Reviewed author README",
+            "evidence": "No verified base-model identity for this evaluated variant is recorded from this source."
+          }
+        ],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "clm-8b": {
+        "label": "Qwen/Qwen3-8B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/Contrastive-LM/CLM/blob/main/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "kev-0.6b": {
+        "label": "Qwen/Qwen3-0.6B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/jaredpalmer/kev-0.6b/blob/dece6dba8d43f0f7ded45e9f5b9df12474d90843/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "raw-qwen3-0.6b": {
+        "label": "Qwen/Qwen3-0.6B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-0.6B/blob/c1899de289a04d12100db370d81485cdf75e47ca/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata."
+          }
+        ]
+      },
+      "gliner2.5-small": {
+        "label": "microsoft/deberta-v3-xsmall",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/fastino/gliner2.5-small-v1/blob/7132dc4561c3f94563c6147e75ffa8ef34c4964a/README.md",
+            "title": "Author model card",
+            "evidence": "The model card names this backbone for the corresponding checkpoint variant."
+          }
+        ]
+      },
+      "raw-qwen3-1.7b": {
+        "label": "Qwen/Qwen3-1.7B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-1.7B/blob/70d244cc86ccca08cf5af4e1e306ecf908b1ad5e/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata."
+          }
+        ]
+      },
+      "mirror": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "zerank-2": {
+        "label": "Qwen/Qwen3-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/zeroentropy/zerank-2-reranker/blob/5eae30d5ee3c6b2df2ef6d723bde45172d761c4c/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata."
+          }
+        ]
+      },
+      "jeff": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/logan-markewich/jeff/HEAD/README.md",
+            "title": "Reviewed author README",
+            "evidence": "No verified base-model identity for this evaluated variant is recorded from this source."
+          }
+        ],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "smalljev": {
+        "label": "openbmb/MiniCPM5-2B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/isHeSatoshi/smalljev/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "opendecision": {
+        "label": "MoritzLaurer/ModernBERT-large-zeroshot-v2.0",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/deepanwadhwa/OpenDecision/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "bge-reranker-v2-m3": {
+        "label": "BAAI/bge-m3",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/BAAI/bge-reranker-v2-m3/blob/main/config.json",
+            "title": "Author config.json",
+            "evidence": "The published configuration names this checkpoint in _name_or_path."
+          }
+        ]
+      },
+      "certo": {
+        "label": "ModernBERT-large",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/altslate/certo-decision-model/blob/7628c0da918c5fce96a6629c548630ac6bed8c58/README.md",
+            "title": "Author model card",
+            "evidence": "The model card names this backbone for the corresponding checkpoint variant."
+          }
+        ]
+      },
+      "decision-fast": {
+        "label": "Qwen/Qwen3-0.6B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/flymy-ai/decision-fast-preview/blob/4225d41c66119fe28e95a2631bb0103decae6d56/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata."
+          }
+        ]
+      },
+      "gte-reranker-modernbert-base": {
+        "label": "answerdotai/ModernBERT-base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Alibaba-NLP/gte-reranker-modernbert-base/blob/f7481e6055501a30fb19d090657df9ec1f79ab2c/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata."
+          }
+        ]
+      },
+      "kev-0.5b": {
+        "label": "Qwen/Qwen2.5-0.5B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/jaredpalmer/kev-0.5b/blob/9ce2fd39db3a397c89733f94af948e3d1fdfffcd/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "laya": {
+        "label": "ModernBERT-large",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/convaiinnovations/laya/blob/55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851/README.md",
+            "title": "Author model card",
+            "evidence": "The model card names this backbone for the corresponding checkpoint variant."
+          }
+        ]
+      },
+      "lev-350m": {
+        "label": "LiquidAI/LFM2.5-350M",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/franckverrot/lev/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "mghafiri-qwen3.5-0.8b-decision-model": {
+        "label": "Qwen/Qwen3.5-0.8B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/mghafiri/qwen3.5-0.8B-decision-model/blob/4a9939034a27006b4b62ad5aed65a90b82d0d350/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata."
+          }
+        ]
+      },
+      "mxbai-rerank-base-v2": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/mixedbread-ai/mxbai-rerank-base-v2/blob/3ea9d4dffa7d12a4f366be8e275c349de9fc9865/README.md",
+            "title": "Reviewed model card",
+            "evidence": "No verified base-model identity is recorded from this source."
+          }
+        ],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "needle-3": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/cactus-compute/needle/main/README.md",
+            "title": "Reviewed author README",
+            "evidence": "No verified base-model identity for this evaluated variant is recorded from this source."
+          }
+        ],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "needle-3-tools": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/cactus-compute/needle/master/README.md",
+            "title": "Reviewed author README",
+            "evidence": "No verified base-model identity for this evaluated variant is recorded from this source."
+          }
+        ],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "open-jev-deberta-v3-large": {
+        "label": "microsoft/deberta-v3-large",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/com-kotobalabs/open-jev-deberta-v3-large/blob/188ee67a5c93122b916e5acd5bdb0cb3623e380a/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this upstream base checkpoint."
+          }
+        ]
+      },
+      "open-jev-json-canvas-joshuasp": {
+        "label": "google/diffusiongemma-26B-A4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/JoshuaSP/open-jev/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "openjev-verdict": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/Heman10x-NGU/openJev-verdict-2.0/main/README.md",
+            "title": "Reviewed author README",
+            "evidence": "No verified base-model identity for this evaluated variant is recorded from this source."
+          }
+        ],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "openjev-verdict-1.4": {
+        "label": "knowledgator/gliclass-modern-base-v2.0",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/heman10x/rlcd-modernbert-151m/blob/8af2496eb63c7fa66d7d234e1f62629380030eb4/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly names this upstream checkpoint in its base_model metadata."
+          }
+        ]
+      },
+      "qwen3.8-27b": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "verdict-small": {
+        "label": "intfloat/multilingual-e5-small",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/Manavarya09/verdict/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "von-395m": {
+        "label": "answerdotai/ModernBERT-large",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/wfzyx/von/blob/52dd1845eb625fbaf67e26596df3f347f96a69a2/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this upstream base checkpoint."
+          }
+        ]
+      },
+      "classifier-dev-fast": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "jevk5-v0.3-4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/alibiserikbay/JevK5/blob/c4f7fdb3aeab5582336406e78d3bef11bf98833d/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "plumb-4b": {
+        "label": "alibiserikbay/JevK5",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/crh225/plumb-4b/blob/24f7bf77e7ee258a2d158c61ea2dce2b60321010/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this upstream base checkpoint."
+          }
+        ]
+      },
+      "decision-4b-v12": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "imajev-4b-rtx5090-a2": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/fstandhartinger/jevbench/issues/110",
+            "title": "Author submission",
+            "evidence": "The submission pins the 4B adapter to Qwen/Qwen3.5-4B."
+          }
+        ]
+      },
+      "decision-4b-v11": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "surogate-rune-26b-a4b-v3-rtxpro6000-a2": {
+        "label": "google/gemma-4-26B-A4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/api/models/surogate/rune-26b-a4b-GGUF",
+            "title": "Author model card metadata",
+            "evidence": "The author model card metadata identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "autojev-27b": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/denis-pplx/autojev-27b/blob/6f5b557e037f5edb25c7dc92dbc6553e5a19c015/README.md",
+            "title": "Author model card metadata",
+            "evidence": "The author model card metadata identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "autojev-27b-rtxpro6000-a2": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/denis-pplx/autojev-27b/blob/6f5b557e037f5edb25c7dc92dbc6553e5a19c015/README.md",
+            "title": "Author model card metadata",
+            "evidence": "The author model card metadata identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "eikos-27b": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/caiovicentino1/eikos-27b/blob/103a5647c0131fd00abc165675fcee243d33a789/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this upstream base checkpoint."
+          }
+        ]
+      },
+      "simplejev-qwen3.6-35b-a3b": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/featherless-ai/simple-jev/main/README.md",
+            "title": "Reviewed author README",
+            "evidence": "No verified base-model identity for this evaluated variant is recorded from this source."
+          }
+        ],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "nemotron-diffusion-8b": {
+        "label": "nvidia/Nemotron-Labs-Diffusion-8B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/pst2154/Nemotron_Jev/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "bev-bonsai-27b": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Reza2kn/Bev/blob/f01edf952e3f2da8147aa08ec6d6229c863d5d19/README.md",
+            "title": "Model card at evaluated revision",
+            "evidence": "The evaluated revision explicitly identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "deem-0.8-v1": {
+        "label": "Qwen/Qwen3.5-0.8B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/LibertAIDAI/deem-0.8-v1/blob/8cbabbb2c4a7ef13c6b43f0ef3ae4157983c6d21/README.md",
+            "title": "Model card at evaluated revision",
+            "evidence": "The evaluated revision explicitly identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "evalengine-decision-4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/evalengine/decision-4b/blob/facac5a59ae44c94edc8d75e135a4fd278c85dc9/README.md",
+            "title": "Model card at evaluated revision",
+            "evidence": "The evaluated revision explicitly identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "instinct-dual-4b": {
+        "label": "Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/fstandhartinger/jevbench/issues/123",
+            "title": "Operator statement",
+            "evidence": "The operator identifies this base in the submission for this specific hosted model ID."
+          }
+        ],
+        "note": "Operator-reported; weights not publicly verifiable."
+      },
+      "bosun-v31-0.6b": {
+        "label": "Qwen/Qwen3-0.6B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Hanno-Labs/bosun-v3.1-0.6b/blob/1d8b6f9611f9b64b514ce8b57cd86398fbc31a3b/README.md",
+            "title": "Model card at evaluated revision",
+            "evidence": "The evaluated revision explicitly identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "laya-multilingual": {
+        "label": "mmBERT-base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/convaiinnovations/laya/blob/55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851/README.md",
+            "title": "Author model card",
+            "evidence": "The model card names this backbone for the corresponding checkpoint variant."
+          }
+        ]
+      },
+      "laya-typed-decisions": {
+        "label": "ModernBERT-large",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/convaiinnovations/laya/blob/55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851/README.md",
+            "title": "Author model card",
+            "evidence": "The model card names this backbone for the corresponding checkpoint variant."
+          }
+        ]
+      },
+      "manchego-v21-v15": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/fstandhartinger/jevbench/issues/56",
+            "title": "Author submission",
+            "evidence": "The v2.1 author submission identifies the merged weights as Qwen3.5-4B with a LoRA update."
+          }
+        ]
+      },
+      "jobe-qwen3.5-4b": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded for this unmeasured evaluated variant."
+      },
+      "mica-v01-4b": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded for this unmeasured evaluated variant."
+      },
+      "openjev-razorback16": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded for this unmeasured evaluated variant."
+      }
+    },
+    "imagejevbench": {
+      "wity_1": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "imajev_4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/fstandhartinger/jevbench/issues/80",
+            "title": "Author submission",
+            "evidence": "The submission gives the base checkpoint for each of the 2B, 4B and 9B adapters."
+          }
+        ]
+      },
+      "jev_omni": {
+        "label": "Gemma 4 12B IT",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/akhilaaa3/Jev-Omni",
+            "title": "Author model card",
+            "evidence": "The author describes this decision classifier as built on Gemma 4 12B IT."
+          }
+        ]
+      },
+      "neohorse_jev_4b": {
+        "label": "NeoHorse-1-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/fstandhartinger/jevbench/issues/131",
+            "title": "Author submission",
+            "evidence": "The author explicitly identifies NeoHorse-1-4B as the model this decision checkpoint builds on."
+          }
+        ]
+      },
+      "visual_jev_4b": {
+        "label": "Qwen/Qwen3-VL-4B-Instruct",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/guanxuyu/visual-jev-4b-answer-sft/blob/7a3f1bb0d8f7bfbbd8514d968ab7de3518849c8d/README.md",
+            "title": "Author model card metadata",
+            "evidence": "The author model card metadata identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "jpt_4b": {
+        "label": "Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/fstandhartinger/jevbench/issues/78",
+            "title": "Author submission",
+            "evidence": "The submitted model table identifies the Qwen3.5 base for this JPT size."
+          }
+        ]
+      },
+      "imajev_2b": {
+        "label": "Qwen/Qwen3.5-2B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/fstandhartinger/jevbench/issues/80",
+            "title": "Author submission",
+            "evidence": "The submission gives the base checkpoint for each of the 2B, 4B and 9B adapters."
+          }
+        ]
+      },
+      "glance_qwen3vl_4b": {
+        "label": "Qwen3-VL-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/yoheinakajima/glance/master/README.md",
+            "title": "Author README",
+            "evidence": "The author describes the default 4B image configuration as frozen Qwen3-VL-4B."
+          }
+        ]
+      },
+      "autojev_27b": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/denis-pplx/autojev-27b/blob/6f5b557e037f5edb25c7dc92dbc6553e5a19c015/README.md",
+            "title": "Author model card metadata",
+            "evidence": "The author model card metadata identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "decider_2b_vision": {
+        "label": "Qwen/Qwen3.5-2B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Mapika/decider-2b-vision/blob/863e290863655f1d6b69324d77d09ac972d21609/README.md",
+            "title": "Author model card metadata",
+            "evidence": "The author model card metadata identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "jev_spatial": {
+        "label": "allenai/Molmo2-ER",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Fr0zencr4nE/jev-spatial/blob/5727eade6e1af2750ff852b1b1e90bb1f41a0602/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base checkpoint for the evaluated size or visual route."
+          }
+        ]
+      },
+      "jpt_9b": {
+        "label": "Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/fstandhartinger/jevbench/issues/78",
+            "title": "Author submission",
+            "evidence": "The submitted model table identifies the Qwen3.5 base for this JPT size."
+          }
+        ]
+      },
+      "omnijev_4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/tinnel123/OmniJev/blob/91248107b7f5230bd5715db2e62e83c9a72fcd81/README.md",
+            "title": "Author model card metadata",
+            "evidence": "The author model card metadata identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "reflex_4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/kshetrajna12/reflex-qwen3.5-4b-lora/blob/9df1cbbbc1837ba494530a59d3d9d345688ed250/README.md",
+            "title": "Author model card metadata",
+            "evidence": "The author model card metadata identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "omnijev_9b_v4_tzcfly": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "jevify_gemma4_26b_a4b": {
+        "label": "google/gemma-4-26B-A4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/kushalpatil/jevify-gemma4-26b-a4b/blob/d4c0d1d455892957d274f68ec64e9fc0881011c8/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base checkpoint for the evaluated size or visual route."
+          }
+        ]
+      },
+      "surogate_rune_26b_v3": {
+        "label": "google/gemma-4-26B-A4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/api/models/surogate/rune-26b-a4b-GGUF",
+            "title": "Author model card metadata",
+            "evidence": "The author model card metadata identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "jevany_27b_sft": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "jevany_27b_rlcr": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "seanliu_jev_vision_8b": {
+        "label": "Qwen/Qwen3-VL-8B-Instruct",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/SeanLiu/Jev-Vision/blob/dc2d645b9d019e66b8f63def5c8a8be842448f4c/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "shisa_de_1": {
+        "label": "Gemma 4 26B-A4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/fstandhartinger/jevbench/issues/55",
+            "title": "Author submission",
+            "evidence": "The author identifies shisa-de-1 as a fine-tune of Gemma 4 26B-A4B."
+          }
+        ]
+      },
+      "omnijev_2b": {
+        "label": "Qwen/Qwen3.5-2B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/tinnel123/OmniJev-2B/blob/37659c000df592edaf201590a622326ce60484d4/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base checkpoint for the evaluated size or visual route."
+          }
+        ]
+      },
+      "cua_s1_4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/cua-ai/cua-s1-4b-0.2/blob/16818868b0cc7813808aae4e87b417657046ab79/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base checkpoint for the evaluated size or visual route."
+          }
+        ]
+      },
+      "standard_one_8b": {
+        "label": "mistralai/Ministral-3-8B-Instruct-2512-BF16",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/fstandhartinger/jevbench/issues/74",
+            "title": "Author submission",
+            "evidence": "The author identifies the frozen Ministral 3 instruction checkpoint used by this adapter."
+          }
+        ]
+      },
+      "jevify_qwen3vl_2b_t2": {
+        "label": "Qwen/Qwen3-VL-2B-Instruct",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Praveenrajus/jevify-qwen3-vl-2b-t2/blob/1593ab894637b342bb20700b5af0ee17ce28d5d7/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base checkpoint for the evaluated size or visual route."
+          }
+        ]
+      },
+      "imajev_9b": {
+        "label": "Qwen/Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/fstandhartinger/jevbench/issues/80",
+            "title": "Author submission",
+            "evidence": "The submission gives the base checkpoint for each of the 2B, 4B and 9B adapters."
+          }
+        ]
+      },
+      "visual_jev_generic_baseline": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "djev_distill_v4": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "djev_spark_nvfp4": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/Davipar/djev-dev/HEAD/README.md",
+            "title": "Reviewed author README",
+            "evidence": "No verified base-model identity for this specific evaluated variant is recorded from this source."
+          }
+        ],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "djev_v10_step160_snowicarus": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/Davipar/djev-dev/main/README.md",
+            "title": "Reviewed author README",
+            "evidence": "No verified base-model identity for this specific evaluated variant is recorded from this source."
+          }
+        ],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "vjev_vision": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/yah01/vjev-vision/blob/2fa8b58e40e5bc351a7d6dd39b953469a8f3ded2/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "kushal_gemma4_31b_it_autoloops": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "djev_dev_bf16": {
+        "label": "google/diffusiongemma-26B-A4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/Davipar/djev-dev/blob/HEAD/README.md",
+            "title": "Author README",
+            "evidence": "The author README explicitly identifies this checkpoint for the evaluated model size or serving configuration."
+          }
+        ]
+      },
+      "winnow_12b_q8": {
+        "label": "google/gemma-4-12B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/EldanRing/Winnow-12B",
+            "title": "Author model card",
+            "evidence": "The training section names Gemma 4 12B IT as the checkpoint used for the LoRA fine-tune."
+          }
+        ]
+      },
+      "jpt_0p8b": {
+        "label": "Qwen3.5-0.8B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/fstandhartinger/jevbench/issues/78",
+            "title": "Author submission",
+            "evidence": "The submitted model table identifies the Qwen3.5 base for this JPT size."
+          }
+        ]
+      },
+      "jevify_gemma4_e4b": {
+        "label": "google/gemma-4-E4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/kushalpatil/jevify-gemma4-e4b-lora/blob/cca1f55e19f59dd493928459c4551131d10fdff9/README.md",
+            "title": "Author model card metadata",
+            "evidence": "The author model card metadata identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "standard_one_3b": {
+        "label": "mistralai/Ministral-3-3B-Instruct-2512-BF16",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/fstandhartinger/jevbench/issues/74",
+            "title": "Author submission",
+            "evidence": "The author identifies the frozen Ministral 3 instruction checkpoint used by this adapter."
+          }
+        ]
+      },
+      "gevva_e4b": {
+        "label": "Gemma 4 E4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/fstandhartinger/jevbench/issues/94",
+            "title": "Author submission",
+            "evidence": "The author describes the matching Gevva size as built on this Gemma 4 model."
+          }
+        ]
+      },
+      "omnijev_0p8b": {
+        "label": "Qwen/Qwen3.5-0.8B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/tinnel123/OmniJev-SFT-0.8B/blob/4d0752d353d21eac324213180752317a7e027737/README.md",
+            "title": "Author model card metadata",
+            "evidence": "The author model card metadata identifies this base_model checkpoint."
+          }
+        ]
+      },
+      "gevva_e2b_multimodal": {
+        "label": "Gemma 4 E2B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/fstandhartinger/jevbench/issues/94",
+            "title": "Author submission",
+            "evidence": "The author describes the matching Gevva size as built on this Gemma 4 model."
+          }
+        ]
+      },
+      "jevision": {
+        "label": "Qwen/Qwen3.5-0.8B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/divyanshx11/JEVision/blob/e1cfde19bfae6548a46812c64a9a6f1a67459c95/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base checkpoint for the evaluated size or visual route."
+          }
+        ]
+      },
+      "bonsai_2_27b_pq2_0": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [
+          {
+            "url": "https://raw.githubusercontent.com/kyr0/Bonsai-Llama-Jev/HEAD/README.md",
+            "title": "Reviewed author README",
+            "evidence": "No verified base-model identity for this specific evaluated variant is recorded from this source."
+          }
+        ],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "qevi_2b": {
+        "label": "Qwen/Qwen3-VL-2B-Instruct",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/MeerDevelopment/Qevi-2B/blob/9a0f5ec8654598ed0c5a819daf6b4ecce749a190/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base checkpoint for the evaluated size or visual route."
+          }
+        ]
+      },
+      "gpt6_luna": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "gpt56_luna": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "gemini31_flash_lite": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "playjev_0p8b": {
+        "label": "Qwen/Qwen3.5-0.8B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/OmniJev/PlayJev-0.8B/blob/a7348002b1e159add7037d6d50812cd4db2d96e9/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base checkpoint for the evaluated size or visual route."
+          }
+        ]
+      },
+      "gemini38_flash": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "No verified public base-model disclosure recorded."
+      },
+      "openjev_4b_nli": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/AlexWortega/openjev/blob/a20448012c213128955ca0c693e7c943865cab77/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base checkpoint for the evaluated size or visual route."
+          }
+        ]
+      },
+      "openjev_4b_v5": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/AlexWortega/openjev/blob/a20448012c213128955ca0c693e7c943865cab77/README.md",
+            "title": "Author model card",
+            "evidence": "The model card explicitly identifies this base checkpoint for the evaluated size or visual route."
+          }
+        ]
+      },
+      "imajev_4b_20260926": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "Historical Imajev checkpoint; no revision-specific base-model source verified. Kept distinct from current Imajev."
+      }
+    }
+  }
+}

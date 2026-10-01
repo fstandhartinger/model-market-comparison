@@ -79,7 +79,7 @@ test('CR-254 rendered citations survive undisclosed status, and author notes rem
 test('CR-254 metadata covers current text and Image rosters, with citations on every disclosed base', async () => {
   const { artifact } = await readJevbenchV154Release();
   const image = await readMultimodalPreview();
-  for (const [benchmark, rows] of [['jevbench', artifact.systems], ['imagejevbench', image.ranking]]) {
+  for (const [benchmark, rows] of [['jevbench', [...artifact.systems, ...artifact.not_measured]], ['imagejevbench', image.ranking]]) {
     for (const row of rows) {
       assert.ok(Object.hasOwn(BASE_MODEL_METADATA.benchmarks[benchmark], row.key), `${benchmark}/${row.key}`);
       const base = baseModelFor(benchmark, row.key);
