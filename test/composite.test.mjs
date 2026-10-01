@@ -409,7 +409,9 @@ test("GLM-5.2 stays above sparse open contenders; fully-measured Kimi K3 may lea
     "minimax-m3::default",
     "deepseek-v4-pro::max",
     "kimi-k2.7-code::default",
-    "mimo-v2.5-pro::reasoning", // 2026-10-01: AA renamed "MiMo-V2.5-Pro" to "MiMo-V2.5-Pro (Reasoning)", so the row id moved off ::default
+    // 2026-10-01: AA renamed "MiMo-V2.5-Pro" to "MiMo-V2.5-Pro (Reasoning)", so a fresh capture moves the row
+    // from ::default to ::reasoning; guard whichever id this dataset carries.
+    dataset.models.some((model) => model.id === "mimo-v2.5-pro::reasoning") ? "mimo-v2.5-pro::reasoning" : "mimo-v2.5-pro::default",
   ];
   for (const id of contenders) {
     assert.ok(
