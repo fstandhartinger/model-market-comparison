@@ -1,0 +1,10 @@
+export type FollowupBenchmark = 'jevbench' | 'imagejevbench' | 'audiojevbench';
+export type FollowupOption = { benchmark: FollowupBenchmark; key: string; name: string; rank: number };
+export const FOLLOWUP_BENCHMARKS: readonly FollowupBenchmark[];
+export const BENCHMARK_LABELS: Readonly<Record<FollowupBenchmark, string>>;
+export const FAST_LANE_BENCHMARKS: readonly ('jevbench' | 'imagejevbench')[];
+export const TOP_RANK_CUTOFF: number;
+export function fastLaneSubset(benchmarks: readonly string[]): ('jevbench' | 'imagejevbench')[];
+export function followupValue(o: { benchmark: string; key: string }): string;
+export function outsideTopTen(rank: unknown): boolean;
+export function slowScheduleNotice(rank: unknown): string | null;

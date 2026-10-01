@@ -1,0 +1,10 @@
+{
+  "top_n": 10,
+  "rank_basis": "composite",
+  "slow_cadence": { "every_nth_refresh": 3, "max_age_days": 30 },
+  "release_kinds": {
+    "addendum": "measure only new entrants and paid fast-lane runs",
+    "refresh": "re-measure top_n + paid + due slow-cadence rows; carry the rest forward with last-measured marker",
+    "method_change": "re-measure every row"
+  }
+}

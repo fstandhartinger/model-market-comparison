@@ -1,5 +1,5 @@
 import { Pool, type PoolClient } from 'pg';
-import { ACCOUNTS_SCHEMA_SQL } from './accounts-schema.mjs';
+import { ACCOUNTS_SCHEMA_SQL, MODEL_SUBMISSIONS_SCHEMA_SQL } from './accounts-schema.mjs';
 
 type Submission = {
   submissionId: string; email: string; modelName: string; modelLink: string; codeLink: string;
@@ -15,7 +15,7 @@ function privateHost(host: string): boolean {
   return host === 'localhost' || host === '127.0.0.1' || /^10\./.test(host) || /^192\.168\./.test(host) || /^172\.(1[6-9]|2\d|3[01])\./.test(host);
 }
 
-async function db(): Promise<Pool> {
+export async function accountsDb(): Promise<Pool> {
   const url = process.env.ACCOUNTS_DATABASE_URL;
   if (!url) throw new Error('Accounts database is not configured');
   if (!pool) {
@@ -27,7 +27,7 @@ async function db(): Promise<Pool> {
       connectionTimeoutMillis: 5_000,
     });
   }
-  ready ??= pool.query(ACCOUNTS_SCHEMA_SQL).then(() => undefined).catch((err) => { ready = null; throw err; });
+  ready ??= pool.query(ACCOUNTS_SCHEMA_SQL).then(() => pool!.query(MODEL_SUBMISSIONS_SCHEMA_SQL)).then(() => undefined).catch((err) => { ready = null; throw err; });
   await ready;
   return pool;
 }
@@ -42,7 +42,7 @@ const sameSubmission = (row: Record<string, unknown>, input: Submission) =>
 export class PrioritySubmissionConflict extends Error {}
 
 export async function preparePriorityRequest(input: Submission, stripeMode: 'test' | 'live') {
-  const p = await db();
+  const p = await accountsDb();
   const inserted = await p.query(
     `INSERT INTO bh_priority_evaluation_requests
       (submission_id, email, model_name, model_link, code_link, access_type, access_instructions, notes,
@@ -66,7 +66,7 @@ export async function preparePriorityRequest(input: Submission, stripeMode: 'tes
 }
 
 export async function saveCheckoutSession(requestId: string, sessionId: string, checkoutUrl: string) {
-  const p = await db();
+  const p = await accountsDb();
   await p.query(
     `UPDATE bh_priority_evaluation_requests SET checkout_session_id=$2, checkout_url=$3, updated_at=now()
      WHERE id=$1 AND status='checkout_pending'`,
@@ -75,7 +75,7 @@ export async function saveCheckoutSession(requestId: string, sessionId: string, 
 }
 
 export async function markCheckoutFailed(requestId: string) {
-  const p = await db();
+  const p = await accountsDb();
   await p.query(
     `UPDATE bh_priority_evaluation_requests SET status='checkout_failed', updated_at=now()
      WHERE id=$1 AND status='checkout_pending' AND checkout_session_id IS NULL`,
@@ -107,7 +107,7 @@ export async function recordPaidCheckout(input: CheckoutEvent): Promise<'recorde
   if (typeof session.id !== 'string' || !session.id.startsWith('cs_')) throw new Error('Checkout session reference is invalid');
   if (typeof input.paidAt !== 'string' || Number.isNaN(Date.parse(input.paidAt))) throw new Error('Checkout payment time is invalid');
 
-  const p = await db();
+  const p = await accountsDb();
   const client: PoolClient = await p.connect();
   try {
     await client.query('BEGIN');
@@ -141,6 +141,15 @@ export async function recordPaidCheckout(input: CheckoutEvent): Promise<'recorde
        amount_total=$4, notification_status='pending', paid_at=COALESCE(paid_at, $5::timestamptz), updated_at=now()
        WHERE id=$1`,
       [requestId, session.id, paymentIntent, session.amount_total, input.paidAt],
+    );
+    // CR-251: a /submit submission waiting on this payment joins the queue in the same transaction. If the visitor
+    // already switched to the regular queue but still paid, the submission is marked as fast lane instead.
+    await client.query(
+      `UPDATE bh_model_submissions SET
+         status=CASE WHEN status='awaiting_payment' THEN 'queued' ELSE status END,
+         fast_lane=true, queued_at=COALESCE(queued_at, now()), updated_at=now()
+       WHERE priority_request_id=$1 AND status IN ('awaiting_payment','queued')`,
+      [requestId],
     );
     await client.query('COMMIT');
     return 'recorded';

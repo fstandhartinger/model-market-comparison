@@ -1,0 +1,15 @@
+[Unit]
+Description=Benchmark Heaven /submit intake bridge (ADD-REQUESTS, confirmation mail, key purge)
+After=network-online.target postgresql.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStartPre=/usr/bin/mkdir -p %h/.locks %h/.local/state/bh-submissions
+ExecStart=/usr/bin/flock -n %h/.locks/bh-submission-intake.service.lock /usr/bin/python3 %h/.local/share/bh-submissions/intake_bridge.py
+TimeoutStartSec=300
+MemoryMax=512M
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+Environment=GH_NO_UPDATE_NOTIFIER=1

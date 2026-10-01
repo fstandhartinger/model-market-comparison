@@ -18,6 +18,7 @@ export default function RequestPriorityEvaluationPage() {
       <p className="bh-eyebrow">JevBench · priority evaluation requests</p>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">Request a priority evaluation</h1>
       <p className="bh-muted mt-3 max-w-3xl text-lg">JevBench is independent, volunteer-run and open source. We do this in our spare time, and GPU and token costs have become a real problem. A priority request helps cover those costs and moves a model earlier in our evaluation queue.</p>
+      <p className="mt-3 max-w-3xl text-sm" data-bh-submit-pointer>New: submit any model (free regular queue or fast lane) at <Link className="text-accent underline" href="/submit">/submit</Link>.</p>
       <p className="bh-muted mt-3 max-w-3xl">The regular benchmark remains free. We continue to re-score models on our own schedule, including weekly batches, at no cost.</p>
     </header>
 
