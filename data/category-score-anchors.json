@@ -1,71 +1,10 @@
 {
-  "version": "1.1",
-  "recorded_at": "2026-09-28",
-  "note": "CR-25.6: category composite scores that can be selected like any other score. A category is only offered when at least two benchmarks in it are on a 0-100-style, higher-is-better scale AND are measured for at least 60 % of the featured model families (measured with ops/ux-2026-09-12/bin/cr-25-6-coverage.mjs). The anchor set is fixed here, not derived per model: a model gets the category score only when it has a result on EVERY anchor, so two models' category scores are always an average over the same benchmarks. Where a benchmark exists in several versions, the build picks the newest version (Terminal-Bench v4.0 over v2.1; newestRow in lib/category-scores.mjs), never a retired version that happens to cover more models; within one version the wider row wins (CR-65.16: this note said 'widest coverage' until 17 Sep). Reasoning and Vision have only one qualifying benchmark each (Humanity's Last Exam, MMMU Pro) and therefore get no category score. 2026-09-16 (CR-38.2/38.3, F-98): anchors are weighted, not averaged flat — a benchmark whose top five independently measured results average at least 90 % of its ceiling counts at half weight (SATURATED_WEIGHT in lib/benchmark-matrix.mjs), because it no longer separates the best models. Today that applies to GPQA Diamond in Science, so cat_science is (CritPt + 0.5 x GPQA Diamond) / 1.5. A preference or judge score may not be an anchor at all: computeCategoryScores throws rather than silently redefining a published score if one is ever reclassified (assertNoJudgedAnchors). 2026-09-28 (D252): the 60 % bar is a standing requirement on EVERY anchor, not a one-off gate on the category — that is how the sets were originally chosen (each anchor was recorded at >= 0.65 on 2026-09-15) and it is what makes the fixed set useful: a model is scored only with a result on every anchor, so one thin anchor decides the whole category's coverage. Nothing re-measured it, and four anchors had fallen below the bar: DeepSWE 65 % -> 35 %, EnterpriseOps-Gym-AA 65 % -> 35 %, MLCR-AA 90 % -> 55 %, and GDP.pdf (AA), whose current identity (snapshot-2026-09-21, a new LiteParse/OCR document pipeline) covers 15 % where the September 10 snapshot covered 65 %. The result was that Coding scored 50 of 868 model rows, Agentic 45, and Long context exactly one (gpt-6-astra::max). The anchors below the bar are withdrawn to `withdrawn` with their measured coverage; Coding and Agentic keep two anchors each and now score 148 model rows each. Long context is withdrawn entirely: only AA-LCR v1.1 clears the bar, so it falls under the same rule as Reasoning and Vision. test/d252-anchor-coverage.test.mjs re-measures every anchor from the built dataset on every run, so this cannot rot silently again, and pins that the score pickers offer exactly the categories the dataset publishes.",
+  "version": "1.2",
+  "recorded_at": "2026-09-30",
+  "note": "CR-25.6: category composite scores that can be selected like any other score. A category is only offered when at least two benchmarks in it are on a 0-100-style, higher-is-better scale AND are measured for at least 60 % of the featured model families (measured with ops/ux-2026-09-12/bin/cr-25-6-coverage.mjs). The anchor set is fixed here, not derived per model: a model gets the category score only when it has a result on EVERY anchor, so two models' category scores are always an average over the same benchmarks. Where a benchmark exists in several versions, the build picks the newest version (Terminal-Bench v4.0 over v2.1; newestRow in lib/category-scores.mjs), never a retired version that happens to cover more models; within one version the wider row wins (CR-65.16: this note said 'widest coverage' until 17 Sep). Reasoning and Vision have only one qualifying benchmark each (Humanity's Last Exam, MMMU Pro) and therefore get no category score. 2026-09-16 (CR-38.2/38.3, F-98): anchors are weighted, not averaged flat — a benchmark whose top five independently measured results average at least 90 % of its ceiling counts at half weight (SATURATED_WEIGHT in lib/benchmark-matrix.mjs), because it no longer separates the best models. On 16 September 2026 that applied to GPQA Diamond in Science, so the recorded cat_science formula was (CritPt + 0.5 x GPQA Diamond) / 1.5. A preference or judge score may not be an anchor at all: computeCategoryScores throws rather than silently redefining a published score if one is ever reclassified (assertNoJudgedAnchors). 2026-09-28 (D252): the 60 % bar is a standing requirement on EVERY anchor, not a one-off gate on the category — that is how the sets were originally chosen (each anchor was recorded at >= 0.65 on 2026-09-15) and it is what makes the fixed set useful: a model is scored only with a result on every anchor, so one thin anchor decides the whole category's coverage. Nothing re-measured it, and four anchors had fallen below the bar: DeepSWE 65 % -> 35 %, EnterpriseOps-Gym-AA 65 % -> 35 %, MLCR-AA 90 % -> 55 %, and GDP.pdf (AA), whose current identity (snapshot-2026-09-21, a new LiteParse/OCR document pipeline) covers 15 % where the September 10 snapshot covered 65 %. The result was that Coding scored 50 of 868 model rows, Agentic 45, and Long context exactly one (gpt-6-astra::max). The anchors below the bar are withdrawn to `withdrawn` with their measured coverage; Coding and Agentic keep two anchors each and now score 148 model rows each. Long context is withdrawn entirely: only AA-LCR v1.1 clears the bar, so it falls under the same rule as Reasoning and Vision. test/d252-anchor-coverage.test.mjs re-measures every anchor from the built dataset on every run, so this cannot rot silently again, and pins that the score pickers offer exactly the categories the dataset publishes. 2026-09-30 (CR-243): the latest installed daily candidate leaves Coding, Agentic and Science with one qualifying anchor each. Terminal-Bench is 11/20 (55%), tau3 Banking and GPQA Diamond each 10/20 (50%); the other anchor in each category is 13/20 (65%). All three selectable composites are withdrawn under the same unchanged min_anchors=2 and min_coverage=0.6 rules. This changes no benchmark/model row, main composite or source measurement; coverage evidence is frozen in ops/quality-20260930/category-coverage.json.",
   "min_coverage": 0.6,
   "min_anchors": 2,
-  "categories": [
-    {
-      "id": "coding",
-      "key": "cat_coding",
-      "label": "Coding",
-      "group": "coding",
-      "anchors": [
-        {
-          "key": "aa-terminal-bench",
-          "name": "Terminal-Bench (AA)",
-          "coverage_2026_09_15": 1.0,
-          "coverage_2026_09_28": 0.65
-        },
-        {
-          "key": "aa-scicode",
-          "name": "SciCode (AA subproblems)",
-          "coverage_2026_09_15": 1.0,
-          "coverage_2026_09_28": 0.75
-        }
-      ]
-    },
-    {
-      "id": "agentic",
-      "key": "cat_agentic",
-      "label": "Agentic & tool use",
-      "group": "agentic",
-      "anchors": [
-        {
-          "key": "aa-automationbench",
-          "name": "AutomationBench-AA",
-          "coverage_2026_09_15": 1.0,
-          "coverage_2026_09_28": 0.75
-        },
-        {
-          "key": "aa-tau3-banking",
-          "name": "τ³-Banking (AA)",
-          "coverage_2026_09_15": 0.95,
-          "coverage_2026_09_28": 0.6
-        }
-      ]
-    },
-    {
-      "id": "science",
-      "key": "cat_science",
-      "label": "Science",
-      "group": "science",
-      "anchors": [
-        {
-          "key": "aa-critpt",
-          "name": "CritPt (AA)",
-          "coverage_2026_09_15": 1.0,
-          "coverage_2026_09_28": 0.75
-        },
-        {
-          "key": "aa-gpqa-diamond",
-          "name": "GPQA Diamond (AA)",
-          "coverage_2026_09_15": 0.95,
-          "coverage_2026_09_28": 0.6
-        }
-      ]
-    }
-  ],
+  "categories": [],
   "saturation_weight": 0.5,
   "withdrawn": {
     "note": "Anchors and categories removed because their measured coverage of the featured model families fell below `min_coverage`. Kept here so restoring one is a documented edit, never a guess: an anchor returns when it is measured for at least `min_coverage` of the featured families again, a category returns when at least `min_anchors` of its boards clear the bar.",
@@ -110,6 +49,84 @@
         "coverage_2026_09_15": 1.0,
         "coverage_2026_09_28": 0.75,
         "why": "Clears the bar at 75 %, but it is the only long-context board that does, and one anchor is below min_anchors. It returns as an anchor the day a second long-context board reaches 60 %; the nearest candidates today are MLCR-AA (55 %) and Context Arena MRCR v2 (25 %)."
+      },
+      {
+        "category": "coding",
+        "key": "aa-terminal-bench",
+        "name": "Terminal-Bench (AA)",
+        "coverage_2026_09_15": 1.0,
+        "coverage_2026_09_28": 0.65,
+        "coverage_2026_09_30": 0.55,
+        "measured_families": 11,
+        "featured_families": 20,
+        "withdrawn_at": "2026-09-30",
+        "evidence": "ops/quality-20260930/category-coverage.json",
+        "why": "The 30 September captured daily dataset measures Terminal-Bench (AA) v4.0 for 11 of 20 featured families (55%). It falls below the unchanged 60% coverage requirement."
+      },
+      {
+        "category": "coding",
+        "key": "aa-scicode",
+        "name": "SciCode (AA subproblems)",
+        "coverage_2026_09_15": 1.0,
+        "coverage_2026_09_28": 0.75,
+        "coverage_2026_09_30": 0.65,
+        "measured_families": 13,
+        "featured_families": 20,
+        "withdrawn_at": "2026-09-30",
+        "evidence": "ops/quality-20260930/category-coverage.json",
+        "why": "The 30 September captured daily dataset measures SciCode (AA subproblems) v1.0.1 for 13 of 20 featured families (65%). It clears the coverage requirement, but the category has only one qualifying anchor, below min_anchors=2."
+      },
+      {
+        "category": "agentic",
+        "key": "aa-automationbench",
+        "name": "AutomationBench-AA",
+        "coverage_2026_09_15": 1.0,
+        "coverage_2026_09_28": 0.75,
+        "coverage_2026_09_30": 0.65,
+        "measured_families": 13,
+        "featured_families": 20,
+        "withdrawn_at": "2026-09-30",
+        "evidence": "ops/quality-20260930/category-coverage.json",
+        "why": "The 30 September captured daily dataset measures AutomationBench-AA v1.0.6 for 13 of 20 featured families (65%). It clears the coverage requirement, but the category has only one qualifying anchor, below min_anchors=2."
+      },
+      {
+        "category": "agentic",
+        "key": "aa-tau3-banking",
+        "name": "τ³-Banking (AA)",
+        "coverage_2026_09_15": 0.95,
+        "coverage_2026_09_28": 0.6,
+        "coverage_2026_09_30": 0.5,
+        "measured_families": 10,
+        "featured_families": 20,
+        "withdrawn_at": "2026-09-30",
+        "evidence": "ops/quality-20260930/category-coverage.json",
+        "why": "The 30 September captured daily dataset measures τ³-Banking (AA) v1.0.1 for 10 of 20 featured families (50%). It falls below the unchanged 60% coverage requirement."
+      },
+      {
+        "category": "science",
+        "key": "aa-critpt",
+        "name": "CritPt (AA)",
+        "coverage_2026_09_15": 1.0,
+        "coverage_2026_09_28": 0.75,
+        "coverage_2026_09_30": 0.65,
+        "measured_families": 13,
+        "featured_families": 20,
+        "withdrawn_at": "2026-09-30",
+        "evidence": "ops/quality-20260930/category-coverage.json",
+        "why": "The 30 September captured daily dataset measures CritPt (AA) vsnapshot-2026-09-10 for 13 of 20 featured families (65%). It clears the coverage requirement, but the category has only one qualifying anchor, below min_anchors=2."
+      },
+      {
+        "category": "science",
+        "key": "aa-gpqa-diamond",
+        "name": "GPQA Diamond (AA)",
+        "coverage_2026_09_15": 0.95,
+        "coverage_2026_09_28": 0.6,
+        "coverage_2026_09_30": 0.5,
+        "measured_families": 10,
+        "featured_families": 20,
+        "withdrawn_at": "2026-09-30",
+        "evidence": "ops/quality-20260930/category-coverage.json",
+        "why": "The 30 September captured daily dataset measures GPQA Diamond (AA) vsnapshot-2026-09-10 for 10 of 20 featured families (50%). It falls below the unchanged 60% coverage requirement."
       }
     ],
     "categories": [
@@ -121,6 +138,33 @@
         "withdrawn_at": "2026-09-28",
         "why": "Only one of its boards (AA-LCR v1.1, 75 %) clears the 60 % coverage bar, so the category falls under the rule that already leaves Reasoning and Vision without a category score. Before withdrawal it scored exactly one model row of 868 (gpt-6-astra::max), because it required a result on all three of AA-LCR (533 rows), GDP.pdf (AA) snapshot-2026-09-21 (22) and MLCR-AA (84).",
         "returns_when": "A second long-context board is measured for at least 60 % of the featured families. GDP.pdf (AA) cannot be that board while it is classified judged (CR-38.3)."
+      },
+      {
+        "id": "coding",
+        "key": "cat_coding",
+        "label": "Coding",
+        "group": "coding",
+        "withdrawn_at": "2026-09-30",
+        "why": "The latest captured daily dataset leaves only one qualifying anchor in Coding: Terminal-Bench (AA) is below the unchanged 60% coverage requirement. Fewer than two qualifying anchors cannot provide the selectable category score. All benchmark rows stay available.",
+        "returns_when": "At least two reviewed newest-version anchors are independently measured for at least 60% of featured model families. Restore the declared set and every score picker together."
+      },
+      {
+        "id": "agentic",
+        "key": "cat_agentic",
+        "label": "Agentic & tool use",
+        "group": "agentic",
+        "withdrawn_at": "2026-09-30",
+        "why": "The latest captured daily dataset leaves only one qualifying anchor in Agentic & tool use: τ³-Banking (AA) is below the unchanged 60% coverage requirement. Fewer than two qualifying anchors cannot provide the selectable category score. All benchmark rows stay available.",
+        "returns_when": "At least two reviewed newest-version anchors are independently measured for at least 60% of featured model families. Restore the declared set and every score picker together."
+      },
+      {
+        "id": "science",
+        "key": "cat_science",
+        "label": "Science",
+        "group": "science",
+        "withdrawn_at": "2026-09-30",
+        "why": "The latest captured daily dataset leaves only one qualifying anchor in Science: GPQA Diamond (AA) is below the unchanged 60% coverage requirement. Fewer than two qualifying anchors cannot provide the selectable category score. All benchmark rows stay available.",
+        "returns_when": "At least two reviewed newest-version anchors are independently measured for at least 60% of featured model families. Restore the declared set and every score picker together."
       }
     ]
   }
