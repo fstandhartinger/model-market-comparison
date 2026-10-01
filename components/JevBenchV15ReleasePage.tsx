@@ -1,4 +1,4 @@
-import { readMultimodalPreview } from '../lib/jevbench-multimodal-preview.mjs';
+import { defaultMultimodalPreviewVersion, readMultimodalPreview } from '../lib/jevbench-multimodal-preview.mjs';
 import { JevBenchV15, Sha } from './JevBenchV15Preview';
 import { CustomEvaluationOffer } from './CustomEvaluationOffer';
 import { readJevbenchV1422 } from '../lib/jevbench-v1422.mjs';
@@ -22,7 +22,8 @@ export async function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '
     : artifact.revision === 'v1.5.1'
       ? (await readJevbenchV150Release()).artifact.systems.map((row: { key: string }) => row.key)
       : (await readJevbenchV1422()).artifact.systems.map((row: { key: string }) => row.key);
-  const imageRevision = (await readMultimodalPreview()).release_version;
+  // The Image JevBench link names the version that /image-jev-bench opens by default (v0.2 once its preview is pinned).
+  const imageRevision = await defaultMultimodalPreviewVersion() === 'v0.2.0' ? 'v0.2' : (await readMultimodalPreview()).release_version;
   const canonical = `https://benchmarkheaven.com${versionPath}`;
   const structuredData = {
     '@context': 'https://schema.org',
