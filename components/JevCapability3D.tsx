@@ -117,13 +117,15 @@ function declump<T extends { x: number; y: number; w: number; h: number }>(label
   return out;
 }
 
-function Projected3D({ points, costBounds, jevClassOnly, tipRef, resetViewRef, rankedPoints }: {
+function Projected3D({ points, costBounds, jevClassOnly, tipRef, resetViewRef, rankedPoints, fitLabels, speedLabel = 'Speed' }: {
   points: Point[];
   costBounds: [number, number];
   jevClassOnly: boolean;
   tipRef: { current: HTMLDivElement | null };
   resetViewRef: { current: () => void };
   rankedPoints: { point: Point; score: number }[];
+  fitLabels: boolean;
+  speedLabel?: string;
 }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -191,7 +193,7 @@ function Projected3D({ points, costBounds, jevClassOnly, tipRef, resetViewRef, r
     const host = hostRef.current;
     if (!tip || !host) return;
     const rect = host.getBoundingClientRect();
-    tip.textContent = `${point.name}\nCapability ${point.capability.toFixed(1)} · ${describeCost(point.cost)} / 1,000 decisions · Speed ${point.speed?.toFixed(1) ?? '—'}${point.rank == null ? '' : ` · Official rank ${point.rank}`}`;
+    tip.textContent = `${point.name}\nCapability ${point.capability.toFixed(1)} · ${describeCost(point.cost)} / 1,000 decisions · ${speedLabel} ${point.speed?.toFixed(1) ?? '—'}${point.rank == null ? '' : ` · Official rank ${point.rank}`}`;
     tip.hidden = false;
     tip.style.left = `${clamp(clientX - rect.left + 12, 8, Math.max(8, rect.width - 235))}px`;
     tip.style.top = `${clamp(clientY - rect.top + 12, 8, Math.max(8, rect.height - 70))}px`;
@@ -236,16 +238,17 @@ function Projected3D({ points, costBounds, jevClassOnly, tipRef, resetViewRef, r
         {[
           { name: 'cost', text: 'Cost · $/1k decisions · cheaper →', at: project(5.8, -5, 4.2) },
           { name: 'capability', text: 'Capability 0–100', at: project(0, 6.3, 0) },
-          { name: 'speed', text: 'Speed · faster →', at: project(0, -5, 7.2) },
+          { name: 'speed', text: speedLabel === 'Speed' ? 'Speed · faster →' : `${speedLabel} · faster →`, at: project(0, -5, 7.2) },
         ].map((label) => {
           // The cost caption is the longest axis label. Right-anchor it within the plot so its
           // full text remains visible when the phone layout projects its endpoint at the edge.
-          const estimatedTextWidth = label.name === 'cost' ? label.text.length * 7 : 0;
+          const estimatedTextWidth = label.text.length * 7;
           const x = label.name === 'cost'
             ? Math.min(Math.max(label.at.x, estimatedTextWidth + 4), size.width - 4)
-            : label.at.x;
+            : fitLabels ? clamp(label.at.x, estimatedTextWidth / 2 + 4, size.width - estimatedTextWidth / 2 - 4) : label.at.x;
+          const y = fitLabels ? clamp(label.at.y, 16, size.height - 12) : label.at.y;
           return <text key={label.name} data-bh-jev14-3d-axis-label={label.name} className="bh-jev-3d-axis-label"
-            textAnchor={label.name === 'cost' ? 'end' : 'middle'} x={x} y={label.at.y}>{label.text}</text>;
+            textAnchor={label.name === 'cost' ? 'end' : 'middle'} x={x} y={y}>{label.text}</text>;
         })}
       </g>
       <g aria-hidden="true" className="bh-jev-3d-model-labels" data-bh-jev14-3d-model-labels="true" pointerEvents="none" textAnchor="start" fill="var(--muted)" fontSize="11" fontFamily="inherit">
@@ -255,7 +258,9 @@ function Projected3D({ points, costBounds, jevClassOnly, tipRef, resetViewRef, r
           .map((entry, index) => {
             const at = coord(entry.point);
             const text = `#${index + 1} ${entry.point.name}`;
-            return { entry, text, x: at.x + 8, y: at.y - 8, w: text.length * 11 * 0.6, h: 13 };
+            const w = text.length * 11 * 0.6;
+            const x = fitLabels ? clamp(at.x + 8, 4, Math.max(4, size.width - w - 4)) : at.x + 8;
+            return { entry, text, x, y: at.y - 8, w, h: 13 };
           }), size.height).map(({ entry, text, x, y, w, h }) => {
           // F-207(b): the same ring and leader as the WebGL overlay. The sphere radius is the one this
           // path draws below, so the ring always sits 4 px outside the mark a reader can see.
@@ -275,7 +280,7 @@ function Projected3D({ points, costBounds, jevClassOnly, tipRef, resetViewRef, r
       </g>
       {plotted.map(({ point, at }) => {
         const radius = clamp((3 + (point.jevbenchScore ?? 0) / 25) * at.perspective * view.zoom ** 0.25, 3, 9);
-        const label = `${point.name}, Capability ${point.capability.toFixed(1)}, cost ${describeCost(point.cost)} per 1,000 decisions, Speed ${point.speed?.toFixed(1) ?? 'not reported'}`;
+        const label = `${point.name}, Capability ${point.capability.toFixed(1)}, cost ${describeCost(point.cost)} per 1,000 decisions, ${speedLabel} ${point.speed?.toFixed(1) ?? 'not reported'}`;
         return <g key={point.key} tabIndex={0} role="button" aria-label={label} data-bh-jev14-3d-point={point.key}
           onPointerEnter={(event) => showTip(point, event.clientX, event.clientY)}
           onPointerMove={(event) => { if (!pointers.current.size) showTip(point, event.clientX, event.clientY); }}
@@ -293,7 +298,11 @@ function Projected3D({ points, costBounds, jevClassOnly, tipRef, resetViewRef, r
 }
 
 // CR-214: `benchmarkName` lets AudioJevBench reuse this view without JevBench wording; default unchanged.
-export function JevCapability3D({ points, costBounds, benchmarkName = 'JevBench' }: { points: Point[]; costBounds: [number, number]; benchmarkName?: string }) {
+export function JevCapability3D({ points, costBounds, benchmarkName = 'JevBench', classificationLabel = 'Jev-class', showClassificationFilter = true, fitLabels = false, speedLabel = 'Speed' }: {
+  points: Point[]; costBounds: [number, number]; benchmarkName?: string; classificationLabel?: string; showClassificationFilter?: boolean; fitLabels?: boolean;
+  // ImageJevBench v0.2 plots median-latency speed (adjusted p50) here; JevBench keeps the default wording.
+  speedLabel?: string;
+}) {
   const boxRef = useRef<HTMLDivElement>(null);
   const tipRef = useRef<HTMLDivElement>(null);
   const resetViewRef = useRef<() => void>(() => {});
@@ -490,7 +499,7 @@ export function JevCapability3D({ points, costBounds, benchmarkName = 'JevBench'
         const axisDefs: Array<{ name: 'cost' | 'capability' | 'speed'; text: string; anchor: [number, number, number] }> = [
           { name: 'cost', text: 'Cost · $/1k decisions · cheaper →', anchor: [half * 1.16, -half, half * 0.84] },
           { name: 'capability', text: 'Capability 0–100', anchor: [0, half * 1.26, 0] },
-          { name: 'speed', text: 'Speed · faster →', anchor: [0, -half, half * 1.44] },
+          { name: 'speed', text: speedLabel === 'Speed' ? 'Speed · faster →' : `${speedLabel} · faster →`, anchor: [0, -half, half * 1.44] },
         ];
         for (const def of axisDefs) {
           const el = document.createElement('div');
@@ -649,7 +658,7 @@ export function JevCapability3D({ points, costBounds, benchmarkName = 'JevBench'
           const hit = raycaster.intersectObjects(objects, false)[0];
           if (!hit) { tooltip.hidden = true; return; }
           const point = hit.object.userData.point as Point;
-          tooltip.textContent = `${point.name}\nCapability ${point.capability.toFixed(1)} · ${describeCost(point.cost)} / 1,000 decisions · Speed ${point.speed?.toFixed(1) ?? '—'}`;
+          tooltip.textContent = `${point.name}\nCapability ${point.capability.toFixed(1)} · ${describeCost(point.cost)} / 1,000 decisions · ${speedLabel} ${point.speed?.toFixed(1) ?? '—'}`;
           tooltip.hidden = false;
           tooltip.style.left = `${Math.max(8, Math.min(rect.width - 240, event.clientX - rect.left + 12))}px`;
           tooltip.style.top = `${Math.max(8, Math.min(rect.height - 60, event.clientY - rect.top + 12))}px`;
@@ -696,22 +705,22 @@ export function JevCapability3D({ points, costBounds, benchmarkName = 'JevBench'
 
   return <div className={expanded ? 'fixed inset-0 z-[100] overflow-y-auto bg-panel p-3 shadow-2xl sm:p-6' : 'mt-4'} role={expanded ? 'dialog' : undefined} aria-modal={expanded ? true : undefined} aria-label={expanded ? 'Expanded Capability, cost and speed in 3D' : undefined} data-bh-jev14-3d-expanded={expanded ? 'true' : 'false'}>
     <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-      <label className="flex cursor-pointer items-center gap-2 text-xs sm:text-sm"><input type="checkbox" checked={jevClassOnly} onChange={(event) => setJevClassOnly(event.target.checked)} data-bh-jev14-3d-jev-class-only />Jev-class only <span className="bh-muted text-[11px]">(others faded)</span></label>
+      {showClassificationFilter && <label className="flex cursor-pointer items-center gap-2 text-xs sm:text-sm"><input type="checkbox" checked={jevClassOnly} onChange={(event) => setJevClassOnly(event.target.checked)} data-bh-jev14-3d-jev-class-only />{classificationLabel} only <span className="bh-muted text-[11px]">(others faded)</span></label>}
       <div className="flex gap-2">
         <button type="button" className="bh-jev-preset" onClick={() => resetViewRef.current()} data-bh-jev14-3d-reset>Reset view</button>
         <button type="button" className="bh-jev-preset" onClick={() => setExpanded((value) => !value)} data-bh-jev14-3d-expand>{expanded ? 'Close expanded view' : 'Expand / Show fullscreen'}</button>
       </div>
     </div>
     <div ref={boxRef} className={`relative overflow-hidden rounded-lg border border-line bg-black/[.02] dark:bg-white/[.02] ${expanded ? 'h-[min(72vh,850px)] min-h-[350px]' : 'h-[350px] sm:h-[460px]'}`} data-bh-jev14-capability-3d-view>
-      {fallback && <Projected3D points={points} costBounds={costBounds} jevClassOnly={jevClassOnly} tipRef={tipRef} resetViewRef={resetViewRef} rankedPoints={ranked} />}
+      {fallback && <Projected3D points={points} costBounds={costBounds} jevClassOnly={jevClassOnly} tipRef={tipRef} resetViewRef={resetViewRef} rankedPoints={ranked} fitLabels={fitLabels} speedLabel={speedLabel} />}
       <div ref={tipRef} hidden role="status" className="pointer-events-none absolute z-10 max-w-[230px] whitespace-pre-line rounded-lg border border-line bg-panel px-3 py-2 text-xs shadow-xl" />
       {!visible && <p className="bh-muted absolute inset-x-4 top-1/2 -translate-y-1/2 text-center text-sm">Scroll here to load the interactive 3D view.</p>}
     </div>
-    <p className="bh-muted mt-2 text-xs">Top five {jevClassOnly ? 'Jev-class ' : ''}systems by {officialWeights ? `official ${benchmarkName} Composite Score` : 'Composite Score with the selected weights (unofficial)'}.</p>
-    <ol className="mt-2 grid gap-x-4 gap-y-2 text-xs sm:grid-cols-2" aria-label={`Top five ${jevClassOnly ? 'Jev-class ' : ''}systems by ${officialWeights ? 'official' : 'custom'} composite score in the 3D view`} data-bh-jev14-3d-top-five>
+    <p className="bh-muted mt-2 text-xs">Top five {showClassificationFilter && jevClassOnly ? `${classificationLabel} ` : ''}systems by {officialWeights ? `official ${benchmarkName} Composite Score` : 'Composite Score with the selected weights (unofficial)'}.</p>
+    <ol className="mt-2 grid gap-x-4 gap-y-2 text-xs sm:grid-cols-2" aria-label={`Top five ${showClassificationFilter && jevClassOnly ? `${classificationLabel} ` : ''}systems by ${officialWeights ? 'official' : 'custom'} composite score in the 3D view`} data-bh-jev14-3d-top-five>
       {ranked.map(({ point, score }, index) => <li key={point.key} className="flex min-w-0 items-start gap-2" data-bh-jev14-3d-leader={point.key}>
         <span className="mt-1 inline-block h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: `rgb(var(${point.colorVariable}))` }} aria-hidden="true" />
-        <span className="min-w-0"><b>Composite #{index + 1} · {point.name}</b><br /><span className="bh-muted">Score {score.toFixed(1)} · Capability {point.capability.toFixed(1)} · Cost {describeCost(point.cost)} / 1,000 decisions · Speed {point.speed?.toFixed(1) ?? '—'}{point.rank == null ? '' : ` · Official ${benchmarkName} #${point.rank}`}</span></span>
+        <span className="min-w-0"><b>Composite #{index + 1} · {point.name}</b><br /><span className="bh-muted">Score {score.toFixed(1)} · Capability {point.capability.toFixed(1)} · Cost {describeCost(point.cost)} / 1,000 decisions · {speedLabel} {point.speed?.toFixed(1) ?? '—'}{point.rank == null ? '' : ` · Official ${benchmarkName} #${point.rank}`}</span></span>
       </li>)}
     </ol>
     <p className="bh-muted mt-1 text-center text-xs" role="status" aria-live="polite" data-bh-jev14-capability-3d-status>{status}</p>

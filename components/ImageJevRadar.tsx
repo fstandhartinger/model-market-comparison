@@ -6,14 +6,14 @@ import { Radar, Swatch, type Series, type Spoke } from "./JevRadars";
 type ImageSystem = {
   key: string;
   name: string;
-  tracks: { all: { composite: { score: number }; axes: Record<"intelligence" | "calibration" | "speed" | "cost", number> } };
+  tracks: Record<string, { composite: { score: number }; axes: Record<"intelligence" | "calibration" | "speed" | "cost", number> }>;
 };
 
 const axes = ["intelligence", "calibration", "speed", "cost"] as const;
 const title = (axis: string) => axis[0].toUpperCase() + axis.slice(1);
 
-function SystemPicker({ label, systems, value, other, onPick }: {
-  label: string; systems: ImageSystem[]; value: string; other: string; onPick: (key: string) => void;
+function SystemPicker({ label, systems, value, other, track, onPick }: {
+  label: string; systems: ImageSystem[]; value: string; other: string; track: string; onPick: (key: string) => void;
 }) {
   const inputId = useId();
   const listId = useId();
@@ -40,7 +40,7 @@ function SystemPicker({ label, systems, value, other, onPick }: {
       {matches.map((system, index) => <li key={system.key} id={`${listId}-${system.key}`} role="option" aria-selected={index === active}>
         <button type="button" className="w-full rounded px-2 py-2 text-left text-sm hover:bg-accent/10 focus:bg-accent/10"
           onMouseDown={(event) => event.preventDefault()} onClick={() => choose(system)}>
-          {system.name} <span className="bh-muted float-right tabular-nums">{system.tracks.all.composite.score.toFixed(2)}</span>
+          {system.name} <span className="bh-muted float-right tabular-nums">{system.tracks[track].composite.score.toFixed(2)}</span>
         </button>
       </li>)}
       {matches.length === 0 && <li className="bh-muted px-2 py-2 text-sm">No matching system</li>}
@@ -48,8 +48,8 @@ function SystemPicker({ label, systems, value, other, onPick }: {
   </div>;
 }
 
-export function ImageJevRadar({ systems }: { systems: ImageSystem[] }) {
-  const ranked = [...systems].sort((a, b) => b.tracks.all.composite.score - a.tracks.all.composite.score);
+export function ImageJevRadar({ systems, track = 'all' }: { systems: ImageSystem[]; track?: string }) {
+  const ranked = [...systems].sort((a, b) => b.tracks[track].composite.score - a.tracks[track].composite.score);
   const [aKey, setA] = useState(ranked[0].key);
   const [bKey, setB] = useState(ranked[1].key);
   const pair = [systems.find((system) => system.key === aKey) ?? ranked[0], systems.find((system) => system.key === bKey) ?? ranked[1]];
@@ -59,22 +59,22 @@ export function ImageJevRadar({ systems }: { systems: ImageSystem[] }) {
   ];
   const spokes: Spoke[] = axes.map((axis) => ({
     key: axis, lines: [title(axis)], thin: [false, false],
-    values: pair.map((system) => system.tracks.all.axes[axis]),
-    texts: pair.map((system) => system.tracks.all.axes[axis].toFixed(1)),
+    values: pair.map((system) => system.tracks[track].axes[axis]),
+    texts: pair.map((system) => system.tracks[track].axes[axis].toFixed(1)),
   }));
   const desc = `${pair[0].name} versus ${pair[1].name}. ${spokes.map((spoke) => `${spoke.lines[0]}: ${spoke.texts[0]} versus ${spoke.texts[1]}`).join("; ")}.`;
-  return <section className="mt-10 max-w-6xl" aria-labelledby="image-jev-compare" data-bh-mm-compare>
+  return <section className="mt-10 max-w-6xl" aria-labelledby="image-jev-compare" data-bh-mm-compare={track}>
     <h2 id="image-jev-compare" className="text-2xl font-semibold">Compare two systems</h2>
-    <p className="bh-muted mt-1 text-sm">Search any two measured systems. The radar uses the same four 0–100 score axes as the ranking; further out is better.</p>
+    <p className="bh-muted mt-1 text-sm">Search any two measured systems. The radar uses the same four 0–100 {track === 'all' ? 'score' : `${track} score`} axes as the ranking; further out is better.</p>
     <div className="bh-panel mt-4 p-4">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
-        <SystemPicker label="System A" systems={ranked} value={pair[0].key} other={pair[1].key} onPick={setA} />
+        <SystemPicker label="System A" systems={ranked} value={pair[0].key} other={pair[1].key} track={track} onPick={setA} />
         <button type="button" className="bh-button shrink-0 self-end text-sm sm:self-auto" onClick={() => { setA(pair[1].key); setB(pair[0].key); }} aria-label="Swap systems">⇄ Swap</button>
-        <SystemPicker label="System B" systems={ranked} value={pair[1].key} other={pair[0].key} onPick={setB} />
+        <SystemPicker label="System B" systems={ranked} value={pair[1].key} other={pair[0].key} track={track} onPick={setB} />
       </div>
-      <ul className="mt-3 space-y-1 text-sm" aria-label="Legend">{pair.map((system, index) => <li key={system.key}><Swatch s={series[index]} />{index ? "B" : "A"}: <b>{system.name}</b> · composite {system.tracks.all.composite.score.toFixed(2)}</li>)}</ul>
+      <ul className="mt-3 space-y-1 text-sm" aria-label="Legend">{pair.map((system, index) => <li key={system.key}><Swatch s={series[index]} />{index ? "B" : "A"}: <b>{system.name}</b> · {track === 'core' ? 'CORE' : 'Full benchmark'} composite {system.tracks[track].composite.score.toFixed(2)}</li>)}</ul>
       <figure className="mx-auto mt-2 max-w-xl">
-        <Radar spokes={spokes} series={series} size={{ w: 420, h: 320, r: 96 }} id="image-jev-radar" title="Image JevBench four-axis comparison" desc={desc} />
+        <Radar spokes={spokes} series={series} size={{ w: 420, h: 320, r: 96 }} id={`image-jev-radar-${track}`} title={`Image JevBench ${track} four-axis comparison`} desc={desc} />
         <figcaption className="bh-muted text-xs">Scores are from the frozen Image JevBench aggregate; no item-level results are shown.</figcaption>
       </figure>
       <details className="mt-3 text-sm"><summary className="cursor-pointer text-accent">Values as a table</summary>
