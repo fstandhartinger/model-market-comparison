@@ -668,6 +668,7 @@ body.bh-fastlane-visible .bh-custom-evaluation-toast { bottom: calc(var(--bh-fas
 .bh-new-tag { display: inline-flex; align-items: center; border-radius: 999px; padding: 0 6px; font-size: 10px; font-weight: 700; line-height: 14px; color: rgb(var(--accent2)); border: 1px solid rgb(var(--accent2) / .6); background: rgb(var(--accent2) / .1); }
 .bh-thin-tag.bh-flag-tag { border-style: solid; border-color: rgb(var(--warn) / .7); color: rgb(var(--warn)); background: rgb(var(--warn) / .08); }
 .bh-thin-tag.bh-est-tag { border-color: rgb(var(--accent) / .6); color: rgb(var(--accent)); }
+.bh-thin-tag.bh-gate-tag { border-style: dotted; border-color: rgb(var(--warn) / .55); color: rgb(var(--warn)); }
 .bh-inline-btn { display: inline; min-height: 0; padding: 0; border: 0; background: none; font: inherit; cursor: pointer; }
 [data-bh-jev14-chart-sort] .bh-sort-btn { min-height: 0; }
 @media (max-width: 639px) { .bh-viewby-btn { min-height: 44px; } }
