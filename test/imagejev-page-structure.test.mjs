@@ -23,7 +23,8 @@ test('ImageJevBench production page keeps the shared section order, full roster,
     for (let i = 0; i < 100; i++) {
       if (server.exitCode !== null) throw new Error(`Production server exited: ${log}`);
       try {
-        const response = await fetch(`http://127.0.0.1:${port}/image-jev-bench`);
+        // v0.2 is the default tab; the CR-248 v0.1.5 release keeps its full page under its archived tab.
+        const response = await fetch(`http://127.0.0.1:${port}/image-jev-bench?version=v0.1.5`);
         if (response.ok) { html = await response.text(); break; }
       } catch { /* Wait for Next's listener. */ }
       await pause(200);
@@ -56,8 +57,14 @@ test('ImageJevBench production page keeps the shared section order, full roster,
       assert.equal((history?.match(/scope="row"/g) ?? []).length, count, `${revision} contains its frozen roster`);
       assert.ok(history.includes(frozen.ranking[0].name), `${revision} contains its recorded winner`);
     }
+    assert.match(html, /data-bh-imagejev-version-tab="v0\.1\.5"[^>]*aria-current="page"|aria-current="page"[^>]*data-bh-imagejev-version-tab="v0\.1\.5"/);
+    const defaultHtml = await (await fetch(`http://127.0.0.1:${port}/image-jev-bench`)).text();
+    assert.match(defaultHtml, /data-bh-imagejev-v02-page/, 'the normal page opens on v0.2');
+    for (const version of ['v0.2.0', 'v0.1.5', 'v0.1.4']) assert.match(defaultHtml, new RegExp(`data-bh-imagejev-version-tab="${version.replaceAll('.', '\\.')}"`));
+    const archived = await (await fetch(`http://127.0.0.1:${port}/image-jev-bench?version=v0.1.4`)).text();
+    assert.equal((archived.match(/<table\b[^>]*data-bh-mm-ranking="all"[\s\S]*?<\/table>/)?.[0].match(/scope="row"/g) ?? []).length, 50, 'v0.1.4 archive keeps 50 rows');
     const linked = (await (await fetch(`http://127.0.0.1:${port}/jev-models`)).text()).replace(/<!--[\s\S]*?-->/g, '');
-    assert.match(linked, /Explore Image JevBench v0\.1\.5/);
+    assert.match(linked, /Explore Image JevBench v0\.2 and compare/, 'the JevBench link names the default Image JevBench version');
   } finally {
     server.kill('SIGTERM');
     if (server.exitCode === null) await new Promise((resolve) => server.once('exit', resolve));
