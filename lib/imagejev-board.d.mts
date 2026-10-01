@@ -5,6 +5,7 @@ import type { JevCompareV15Row } from '../components/JevCompareV15';
 
 export type ImageJevPricingAlternative = {
   axes: { cost: number | null };
+  usd_per_1000: number | null;
   label: 'Base-model price';
   note: string;
 };

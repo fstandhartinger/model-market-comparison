@@ -6,6 +6,7 @@ import type { JevBubblePoint } from './JevBubbleChart';
 import { jevSourceUrl } from './jevSystemLinks';
 import { JevCapabilityTip } from './JevCapabilityTip';
 import { JEV_TYPE_LABEL, jevLegendTypes, jevTypeVarName } from './jevTypes';
+import { apiExplanation } from './JevBoardShared';
 
 // Florian 25 Sep 2026 (DECISIONS.md): the page headline is the Capability ranking — the mean of Intelligence and
 // Calibration — of Jev-class systems. Jev-class = cost per decision at most 2x Jev 1.13.0's AND median latency at most
@@ -46,11 +47,27 @@ function RatioDetail({ value, ratio, factor, referenceLabel, kind }: {
   return <>{value}{zone && ratio != null && <> = {ratio.toFixed(2)}× {referenceLabel} → <span className={`bh-tl-chip bh-tl-${zone}`}>{zone}</span>: {zone === 'green' ? `as ${kind === 'cost' ? 'cheap' : 'fast'} as ${referenceLabel} or better` : zone === 'amber' ? `inside the ${factor}× cap, but ${kind === 'cost' ? 'costlier' : 'slower'} than ${referenceLabel}` : `outside the ${factor}× cap`}</>}</>;
 }
 
-function RankingRow({ item, rank, reference, factor, referenceLabel, classLabel, note }: {
+// Florian 1 Oct 2026: an API model whose base model we know is ranked at the developer's own list price; the composite
+// shows a striped base-model bar. Here the matching note says whether the Capability eligibility would change at the
+// base-model price (only cost moves; latency is measured on the developer's endpoint either way).
+function basePriceCheck(row: JevV14System, reference: JevClassResult['reference'], costCap: number, referenceLabel: string) {
+  const alt = (row as JevV14System & { alt?: { usd_per_1000?: number | null; note?: string } }).alt;
+  const base = alt?.usd_per_1000;
+  if (!row.api_flag || base == null || !Number.isFinite(base) || !(reference.cost > 0)) return null;
+  const ratio = base / reference.cost;
+  const fits = base <= costCap;
+  referenceLabel = referenceLabel.replace(/ \([^)]*\)$/, '');
+  const short = `API price · eligibility checked at the developer's list price; at base-model pricing it would ${fits ? 'still fit within' : 'exceed'} the cost cap (${ratio.toFixed(2)}× ${referenceLabel})`;
+  const detail = `Ranked at the developer's own API list price. ${alt?.note ? `Base-model reference: ${alt.note}, ` : 'At the base-model reference price we use for self-served open weights of the same base, '}USD ${base.toFixed(4)} per 1,000 decisions = ${ratio.toFixed(2)}× ${referenceLabel}, ${fits ? 'inside' : 'outside'} the cost cap (USD ${costCap.toFixed(4)}). Capability Score itself does not depend on price; latency is measured on the developer's endpoint either way.`;
+  return { short, detail, fits, ratio };
+}
+
+function RankingRow({ item, rank, reference, factor, referenceLabel, classLabel, note, costCap }: {
   item: JevClassRow; rank: string; reference: JevClassResult['reference']; factor: number;
-  referenceLabel: string; classLabel: string; note?: string;
+  referenceLabel: string; classLabel: string; note?: string; costCap: number;
 }) {
   const { row, capability, cost, latency } = item;
+  const basePrice = basePriceCheck(row, reference, costCap, referenceLabel);
   const intelligence = row.axes?.intelligence;
   const calibration = row.axes?.calibration;
   const costScore = row.axes?.cost;
@@ -67,6 +84,7 @@ function RankingRow({ item, rank, reference, factor, referenceLabel, classLabel,
     <dt className="text-gray-400">Cost Score</dt><dd className="tabular">{costScore == null ? 'unknown' : one(costScore)}</dd>
     <dt className="text-gray-400">Cost vs cap</dt><dd className="tabular"><RatioDetail value={cost == null ? 'unknown' : `${usd(cost)} per 1,000 decisions`} ratio={item.costRatio} factor={factor} referenceLabel={referenceLabel} kind="cost" /></dd>
     <dt className="text-gray-400">Latency vs cap</dt><dd className="tabular"><RatioDetail value={latency != null ? secs(latency) : latencyRatio != null ? `${secs(latencyRatio * reference.latency)} equivalent (derived from Speed axis; p50 not reported)` : 'not reported'} ratio={latencyRatio} factor={factor} referenceLabel={referenceLabel} kind="latency" /></dd>
+    {basePrice && <><dt className="text-gray-400">Pricing</dt><dd data-bh-jev-capability-base-price-tip>{basePrice.detail}</dd></>}
     <dt className="text-gray-400">Rank</dt><dd className="tabular">Capability Score {rank || `outside ${classLabel}`} · official {row.rank == null ? 'unranked' : `#${row.rank}`}</dd>
     <dt className="text-gray-400">Colours</dt><dd>Green ≤ reference; amber ≤ cap; red &gt; cap. Shorter is cheaper or faster.</dd>
   </dl>;
@@ -79,6 +97,7 @@ function RankingRow({ item, rank, reference, factor, referenceLabel, classLabel,
       <span className="min-w-0 truncate">{link ? <a href={link} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-source={row.key}>{name}</a> : name}</span>
       {/* The ⓘ sits outside the truncated name so long names keep their tap target. */}
       <JevCapabilityTip label={`Details for ${row.display}`} title={tipTitle}>{tipBody}</JevCapabilityTip>
+      {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1 shrink-0 align-middle" data-bh-jev-capability-api={row.key} title={row.api_exposure_note ?? apiExplanation}>API</span>}
     </span>
     <span className="col-start-2 col-end-7 row-start-2 mt-0.5 flex min-w-0 flex-col justify-center gap-[3px] sm:col-start-3 sm:col-end-4 sm:row-start-1 sm:mt-0">
       <span className="bh-jevc-grid flex h-[10px] rounded-sm" aria-hidden="true"><span className={'bh-jevc-bar' + (row.ranked ? '' : ' is-partial')} style={{ width: `${Math.max(0, Math.min(100, capability))}%` }} /></span>
@@ -90,6 +109,8 @@ function RankingRow({ item, rank, reference, factor, referenceLabel, classLabel,
     <b className="tabular col-start-5 row-start-1 text-right sm:col-start-6 sm:text-base">{one(capability)}</b>
     <span className="tabular col-start-6 row-start-1 text-right font-mono sm:col-start-7">{cost == null ? '—' : usd(cost)}{row.cost?.kind === 'estimate' ? '*' : ''}</span>
     {note && <span className="bh-muted col-start-2 col-end-7 row-start-3 mt-0.5 text-[11px] leading-snug sm:col-start-3 sm:col-end-8 sm:row-start-2" data-bh-jev-capability-note>{note}</span>}
+    {basePrice && <span className={`bh-muted col-start-2 col-end-7 ${note ? 'row-start-4 sm:row-start-3' : 'row-start-3 sm:row-start-2'} mt-0.5 text-[11px] leading-snug sm:col-start-3 sm:col-end-8`}
+      title={basePrice.detail} data-bh-jev-capability-base-price={basePrice.fits ? 'within-cap' : 'exceeds-cap'} data-bh-jev-capability-base-price-ratio={basePrice.ratio.toFixed(3)}>{basePrice.short}</span>}
     {/* Desktop hover/focus panel (touch gets JevCapabilityTip's modal; globals.css scopes .bh-jev-cap-tip
         to precise pointers so a tapped row never shows the floating panel). The name and class head it. */}
     <div role="tooltip" className="bh-panel bh-jev-cap-tip pointer-events-none absolute left-0 right-0 top-full z-20 hidden max-w-[560px] p-3 text-left text-xs leading-relaxed shadow-xl group-hover:block group-focus-within:block" data-bh-jev-capability-tooltip>
@@ -125,9 +146,9 @@ export function JevCapabilityRanking({ systems, revision, officialHref, benchNam
   let n = 0;
   const numbered = inside.map((r) => ({ r, label: r.row.ranked ? String(++n) : '–' }));
   const [lead] = numbered;
-  const bar = ({ r, label }: { r: JevClassRow; label: string }) => <RankingRow key={r.row.key} item={r} rank={label} reference={reference} factor={limits.factor} referenceLabel={referenceLabel} classLabel={classLabel}
+  const bar = ({ r, label }: { r: JevClassRow; label: string }) => <RankingRow key={r.row.key} item={r} rank={label} reference={reference} factor={limits.factor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost}
     note={r.isReference ? `Reference system for the ${classLabel} limits` : !r.row.ranked ? `Not ranked in the official ${benchName} Score (${r.row.listing.replace(/_/g, ' ')})` : undefined} />;
-  const outsideBar = (r: JevClassRow) => <RankingRow key={r.row.key} item={r} rank="" reference={reference} factor={limits.factor} referenceLabel={referenceLabel} classLabel={classLabel} note={`Outside: ${r.reasons.join(', ')}`} />;
+  const outsideBar = (r: JevClassRow) => <RankingRow key={r.row.key} item={r} rank="" reference={reference} factor={limits.factor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} note={`Outside: ${r.reasons.join(', ')}`} />;
   const types = jevLegendTypes(rows.map((r) => r.row.class));
 
   // F-197 (pass 36): mt-6 not mt-8 — with the guides nav folded out of the page head the first Capability row
