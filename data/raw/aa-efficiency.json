@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-09-28T11:23:54.338Z",
+  "collected_at": "2026-10-01T10:36:23.071Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-09-28T11:23:53.561Z",
+      "fetched_at": "2026-10-01T10:36:22.826Z",
       "http_status": 200,
-      "bytes": 3841987,
-      "sha256": "be7ef77f78bef88abd7e1644255c4337fbc43267e411ddaa173a2caf3219d0cc"
+      "bytes": 3987038,
+      "sha256": "3ec9a9f6c60faf0511e88a2cc79aa15435404b57bf672945545fb7ec933143e0"
     }
   ],
   "coverage": {
-    "published_rows": 171,
-    "scored_denominator": 665,
+    "published_rows": 191,
+    "scored_denominator": 678,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 171,
+  "count": 191,
   "rows": [
     {
       "source_id": "08242385-ee91-4de6-be7f-271a6d9780ce",
@@ -533,6 +533,94 @@
       }
     },
     {
+      "source_id": "b171d979-5ec1-45de-b8b9-db1ee65e77ec",
+      "slug": "claude-sonnet-5-5",
+      "name": "Claude Sonnet 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",
+      "variant": "max",
+      "tokens_per_task": {
+        "reasoning": 143216.42914680945,
+        "answer": 50310.44050887164,
+        "output": 193526.86965568108
+      },
+      "canonical_token_counts": {
+        "input": 18631710749,
+        "output": 412092659,
+        "answer": 57378202,
+        "reasoning": 354714457
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 45.21243060774834,
+        "reasoning_output_share": 0.7400338227018145
+      }
+    },
+    {
+      "source_id": "268525e2-f873-4178-bc07-e6a0ee1f002d",
+      "slug": "claude-sonnet-5-5-high",
+      "name": "Claude Sonnet 5.5 (Adaptive Reasoning, High Effort, Default Fallback)",
+      "variant": "high",
+      "tokens_per_task": {
+        "reasoning": 18154.74369972493,
+        "answer": 16312.42422579014,
+        "output": 34467.167925515074
+      },
+      "canonical_token_counts": {
+        "input": 1963552783,
+        "output": 49509779,
+        "answer": 23165906,
+        "reasoning": 26343873
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 39.65989795672487,
+        "reasoning_output_share": 0.5267257158742504
+      }
+    },
+    {
+      "source_id": "042e8a37-fcd0-40f4-8f41-99215fb68eda",
+      "slug": "claude-sonnet-5-5-medium",
+      "name": "Claude Sonnet 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)",
+      "variant": "medium",
+      "tokens_per_task": {
+        "reasoning": 8203.98807980181,
+        "answer": 11284.347723097197,
+        "output": 19488.335802899004
+      },
+      "canonical_token_counts": {
+        "input": 997504812,
+        "output": 29490528,
+        "answer": 19651606,
+        "reasoning": 9838922
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 33.82458299831051,
+        "reasoning_output_share": 0.42096914599457064
+      }
+    },
+    {
+      "source_id": "975aeaef-50bd-4a65-9c73-f1015adcd4d4",
+      "slug": "claude-sonnet-5-5-xhigh",
+      "name": "Claude Sonnet 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",
+      "variant": "xhigh",
+      "tokens_per_task": {
+        "reasoning": 47663.92137598299,
+        "answer": 26060.461649651344,
+        "output": 73724.38302563434
+      },
+      "canonical_token_counts": {
+        "input": 5950268382,
+        "output": 104142365,
+        "answer": 33475389,
+        "reasoning": 70666976
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 57.1359060455368,
+        "reasoning_output_share": 0.6465150255568772
+      }
+    },
+    {
       "source_id": "ba0224cf-0351-4f56-8508-b3f1a740ae4a",
       "slug": "claude-sonnet-5-high",
       "name": "Claude Sonnet 5 (Adaptive Reasoning, High Effort)",
@@ -711,7 +799,7 @@
     {
       "source_id": "dbe7c625-3100-4463-b479-a228c41f75dd",
       "slug": "deepseek-v4-1-flash",
-      "name": "DeepSeek V4.1 Flash (Reasoning, Max Effort)",
+      "name": "DeepSeek V4.1 Flash (Max)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 62669.56218734425,
@@ -733,7 +821,7 @@
     {
       "source_id": "73c96f99-0de3-4668-a4bd-b106a0fe18f2",
       "slug": "deepseek-v4-1-flash-non-reasoning",
-      "name": "DeepSeek V4.1 Flash (Non-Reasoning)",
+      "name": "DeepSeek V4.1 Flash (Non-reasoning)",
       "variant": null,
       "tokens_per_task": {
         "reasoning": 0,
@@ -755,7 +843,7 @@
     {
       "source_id": "fe4c0848-e284-4e52-a79d-cdc28392f1a9",
       "slug": "deepseek-v4-flash",
-      "name": "DeepSeek V4 Flash 0731 (Reasoning, Max Effort)",
+      "name": "DeepSeek V4 Flash 0731 (Max)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 45478.944924421885,
@@ -777,7 +865,7 @@
     {
       "source_id": "d8ddb241-b3e4-4c25-a6a3-72eb1b30c541",
       "slug": "deepseek-v4-flash-0420",
-      "name": "DeepSeek V4 Flash 0420 (Reasoning, Max Effort)",
+      "name": "DeepSeek V4 Flash 0420 (Max)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 40555.079938171075,
@@ -797,9 +885,31 @@
       }
     },
     {
+      "source_id": "89a2c945-1fab-4ee4-9f45-83a9f46cb221",
+      "slug": "deepseek-v4-flash-0420-high",
+      "name": "DeepSeek V4 Flash 0420 (High)",
+      "variant": "high",
+      "tokens_per_task": {
+        "reasoning": 26378.58633168231,
+        "answer": 16025.600199113178,
+        "output": 42404.18653079549
+      },
+      "canonical_token_counts": {
+        "input": 2941694337,
+        "output": 128002521,
+        "answer": 21294075,
+        "reasoning": 106708446
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 22.98153437931117,
+        "reasoning_output_share": 0.6220750470599219
+      }
+    },
+    {
       "source_id": "7707a46f-895f-4247-b7a8-ddab87c9a11d",
       "slug": "deepseek-v4-flash-vision",
-      "name": "DeepSeek V4 Flash Vision (Reasoning, Max Effort)",
+      "name": "DeepSeek V4 Flash Vision (Max)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 45903.93874192563,
@@ -821,7 +931,7 @@
     {
       "source_id": "83173329-c09a-41f1-a028-a282a5f908d7",
       "slug": "deepseek-v4-pro",
-      "name": "DeepSeek V4 Pro 0813 (Reasoning, Max Effort)",
+      "name": "DeepSeek V4 Pro 0813 (Max)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 38163.72070972756,
@@ -843,7 +953,7 @@
     {
       "source_id": "bf220674-68bd-43cc-a1b8-ce5ed4d2f18d",
       "slug": "deepseek-v4-pro-0424",
-      "name": "DeepSeek V4 Pro 0424 (Reasoning, Max Effort)",
+      "name": "DeepSeek V4 Pro 0424 (Max)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 32731.610839445308,
@@ -860,6 +970,28 @@
         "basis": "derived",
         "input_output_ratio": 21.78958161894473,
         "reasoning_output_share": 0.6694083002051447
+      }
+    },
+    {
+      "source_id": "d4f5b250-be37-4801-85e6-32fda4179337",
+      "slug": "deepseek-v4-pro-non-reasoning",
+      "name": "DeepSeek V4 Pro 0813 (Non-reasoning)",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 0,
+        "answer": 29149.471989101257,
+        "output": 29149.471989101257
+      },
+      "canonical_token_counts": {
+        "input": 3030251053,
+        "output": 40243606,
+        "answer": 40243606,
+        "reasoning": 0
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 75.29770202501237,
+        "reasoning_output_share": 0
       }
     },
     {
@@ -975,7 +1107,7 @@
     {
       "source_id": "0097ebf5-124f-42f6-9463-33b00e711f03",
       "slug": "gemini-3-5-flash",
-      "name": "Gemini 3.5 Flash (high)",
+      "name": "Gemini 3.5 Flash (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 36312.349377173494,
@@ -1019,7 +1151,7 @@
     {
       "source_id": "78332c88-fe60-42c8-af9d-3617e44cf1f5",
       "slug": "gemini-3-6-flash",
-      "name": "Gemini 3.6 Flash (high)",
+      "name": "Gemini 3.6 Flash (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 20061.01488750788,
@@ -1041,7 +1173,7 @@
     {
       "source_id": "b2331108-72ed-415a-82d1-188633875bbc",
       "slug": "gemini-3-7-flash",
-      "name": "Gemini 3.7 Flash (high)",
+      "name": "Gemini 3.7 Flash (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 21227.944166280493,
@@ -1063,7 +1195,7 @@
     {
       "source_id": "8a999846-4c1d-4ce7-a8b7-1310a7166fd7",
       "slug": "gemini-3-8-flash",
-      "name": "Gemini 3.8 Flash (high)",
+      "name": "Gemini 3.8 Flash (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 42727.142245899406,
@@ -1085,7 +1217,7 @@
     {
       "source_id": "744fa3c1-42a7-4995-b138-fb6be11f463c",
       "slug": "gemini-3-8-flash-medium",
-      "name": "Gemini 3.8 Flash (medium)",
+      "name": "Gemini 3.8 Flash (Medium)",
       "variant": "medium",
       "tokens_per_task": {
         "reasoning": 26955.82820005126,
@@ -1102,6 +1234,28 @@
         "basis": "derived",
         "input_output_ratio": 47.134043781881054,
         "reasoning_output_share": 0.512479890734034
+      }
+    },
+    {
+      "source_id": "d366dfa1-d940-4788-aa73-d298c45699b3",
+      "slug": "gemini-4-argon",
+      "name": "Gemini 4 Argon (High)",
+      "variant": "high",
+      "tokens_per_task": {
+        "reasoning": 35546.44081471556,
+        "answer": 26011.185392932435,
+        "output": 61557.626207648
+      },
+      "canonical_token_counts": {
+        "input": 3146068939,
+        "output": 112847057,
+        "answer": 31335093,
+        "reasoning": 81511964
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 27.87905172396299,
+        "reasoning_output_share": 0.5774498304208363
       }
     },
     {
@@ -1149,6 +1303,28 @@
       }
     },
     {
+      "source_id": "cd26a386-4873-46ff-b853-d239050025a2",
+      "slug": "gemma-4-31b",
+      "name": "Gemma 4 31B (Reasoning)",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 7886.632082636706,
+        "answer": 4695.042333946847,
+        "output": 12581.674416583553
+      },
+      "canonical_token_counts": {
+        "input": 895081362,
+        "output": 48607603,
+        "answer": 9633980,
+        "reasoning": 38973623
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 18.414431215626905,
+        "reasoning_output_share": 0.6268348569123325
+      }
+    },
+    {
       "source_id": "5aa1c578-af76-4b91-8699-cdd43582b3af",
       "slug": "glm-5-1",
       "name": "GLM-5.1 (Reasoning)",
@@ -1173,7 +1349,7 @@
     {
       "source_id": "f7a4ea75-e548-4069-80d4-9be8bc7c009b",
       "slug": "glm-5-2",
-      "name": "GLM-5.2 (max)",
+      "name": "GLM-5.2 (Max)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 50734.846447808704,
@@ -1195,7 +1371,7 @@
     {
       "source_id": "cd684ea4-b475-4269-b001-d469d06d8a7a",
       "slug": "glm-5-3",
-      "name": "GLM-5.3 (max)",
+      "name": "GLM-5.3 (Max)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 48729.52069683591,
@@ -1239,7 +1415,7 @@
     {
       "source_id": "cc1e488b-8ba4-464d-875d-690166b15ad3",
       "slug": "glm-5-3-low",
-      "name": "GLM-5.3 (low)",
+      "name": "GLM-5.3 (Low)",
       "variant": "low",
       "tokens_per_task": {
         "reasoning": 20919.107903812885,
@@ -1261,7 +1437,7 @@
     {
       "source_id": "ba242e40-83b7-4cd3-a0e0-b56237984914",
       "slug": "gpt-5-4-mini",
-      "name": "GPT-5.4 mini (xhigh)",
+      "name": "GPT-5.4 mini (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
         "reasoning": 44868.67070042957,
@@ -1283,7 +1459,7 @@
     {
       "source_id": "d4fc3f33-f2b0-4da1-88ee-f1f82bd4de31",
       "slug": "gpt-5-4-nano",
-      "name": "GPT-5.4 nano (xhigh)",
+      "name": "GPT-5.4 nano (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
         "reasoning": 56947.044736702264,
@@ -1305,7 +1481,7 @@
     {
       "source_id": "1f054429-397e-4fdb-9e71-67bc92c1735e",
       "slug": "gpt-5-5",
-      "name": "GPT-5.5 (xhigh)",
+      "name": "GPT-5.5 (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
         "reasoning": 15427.589289989548,
@@ -1327,7 +1503,7 @@
     {
       "source_id": "b13c1257-d746-4027-8fc8-4892dc14701c",
       "slug": "gpt-5-5-high",
-      "name": "GPT-5.5 (high)",
+      "name": "GPT-5.5 (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 8892.942330487938,
@@ -1371,7 +1547,7 @@
     {
       "source_id": "6b79f899-e3c0-45f6-923c-243faccdb2fc",
       "slug": "gpt-5-5-medium",
-      "name": "GPT-5.5 (medium)",
+      "name": "GPT-5.5 (Medium)",
       "variant": "medium",
       "tokens_per_task": {
         "reasoning": 3594.827492526628,
@@ -1393,7 +1569,7 @@
     {
       "source_id": "426d24c8-49ae-482a-b4a8-20f1c53f21c1",
       "slug": "gpt-5-6-luna",
-      "name": "GPT-5.6 Luna (max)",
+      "name": "GPT-5.6 Luna (Max)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 28098.251960992493,
@@ -1415,7 +1591,7 @@
     {
       "source_id": "aa55297e-8fbf-4372-b4ab-9b068dc6396c",
       "slug": "gpt-5-6-luna-high",
-      "name": "GPT-5.6 Luna (high)",
+      "name": "GPT-5.6 Luna (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 7231.444625076305,
@@ -1437,7 +1613,7 @@
     {
       "source_id": "050c61cd-cddc-463a-a30a-a82aaa37be59",
       "slug": "gpt-5-6-luna-low",
-      "name": "GPT-5.6 Luna (low)",
+      "name": "GPT-5.6 Luna (Low)",
       "variant": "low",
       "tokens_per_task": {
         "reasoning": 558.7452576637828,
@@ -1459,7 +1635,7 @@
     {
       "source_id": "58b812bf-8498-46db-b834-f43ccc614b61",
       "slug": "gpt-5-6-luna-medium",
-      "name": "GPT-5.6 Luna (medium)",
+      "name": "GPT-5.6 Luna (Medium)",
       "variant": "medium",
       "tokens_per_task": {
         "reasoning": 1549.1132301487414,
@@ -1503,7 +1679,7 @@
     {
       "source_id": "87110ff0-1f79-41b4-9976-eda250597317",
       "slug": "gpt-5-6-luna-xhigh",
-      "name": "GPT-5.6 Luna (xhigh)",
+      "name": "GPT-5.6 Luna (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
         "reasoning": 14723.232356740027,
@@ -1525,7 +1701,7 @@
     {
       "source_id": "d93edfe8-bf35-49ad-b56e-b18116142a1c",
       "slug": "gpt-5-6-sol",
-      "name": "GPT-5.6 Sol (max)",
+      "name": "GPT-5.6 Sol (Max)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 17280.445013860917,
@@ -1547,7 +1723,7 @@
     {
       "source_id": "8afc250d-b538-45a2-812a-4605f4ffd87e",
       "slug": "gpt-5-6-sol-high",
-      "name": "GPT-5.6 Sol (high)",
+      "name": "GPT-5.6 Sol (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 5875.322060305272,
@@ -1569,7 +1745,7 @@
     {
       "source_id": "0904b596-8932-43bd-9b21-324f128e1723",
       "slug": "gpt-5-6-sol-low",
-      "name": "GPT-5.6 Sol (low)",
+      "name": "GPT-5.6 Sol (Low)",
       "variant": "low",
       "tokens_per_task": {
         "reasoning": 837.2365865043852,
@@ -1591,7 +1767,7 @@
     {
       "source_id": "6f174934-5b7d-4333-86cb-f5ebf4a862e3",
       "slug": "gpt-5-6-sol-medium",
-      "name": "GPT-5.6 Sol (medium)",
+      "name": "GPT-5.6 Sol (Medium)",
       "variant": "medium",
       "tokens_per_task": {
         "reasoning": 2662.1995967613157,
@@ -1613,7 +1789,7 @@
     {
       "source_id": "d998db47-9b67-4727-a2bb-2e1261020ac0",
       "slug": "gpt-5-6-sol-xhigh",
-      "name": "GPT-5.6 Sol (xhigh)",
+      "name": "GPT-5.6 Sol (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
         "reasoning": 10125.92665766193,
@@ -1635,7 +1811,7 @@
     {
       "source_id": "bcf8db0a-3bb6-4d82-9516-0f57370c85a6",
       "slug": "gpt-5-6-terra",
-      "name": "GPT-5.6 Terra (max)",
+      "name": "GPT-5.6 Terra (Max)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 26043.92167327328,
@@ -1657,7 +1833,7 @@
     {
       "source_id": "81972fba-1219-477e-bbfb-18c656a63ff7",
       "slug": "gpt-5-6-terra-high",
-      "name": "GPT-5.6 Terra (high)",
+      "name": "GPT-5.6 Terra (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 5441.443327078267,
@@ -1679,7 +1855,7 @@
     {
       "source_id": "cc4a20cd-09fe-4962-a430-119c815e85fa",
       "slug": "gpt-5-6-terra-low",
-      "name": "GPT-5.6 Terra (low)",
+      "name": "GPT-5.6 Terra (Low)",
       "variant": "low",
       "tokens_per_task": {
         "reasoning": 1023.5965077221342,
@@ -1701,7 +1877,7 @@
     {
       "source_id": "26e0f83a-ca98-4f34-94ac-7c5e251ee410",
       "slug": "gpt-5-6-terra-medium",
-      "name": "GPT-5.6 Terra (medium)",
+      "name": "GPT-5.6 Terra (Medium)",
       "variant": "medium",
       "tokens_per_task": {
         "reasoning": 1877.1238117201892,
@@ -1745,7 +1921,7 @@
     {
       "source_id": "9e30696f-16fa-4b4f-ba53-161895a85fed",
       "slug": "gpt-5-6-terra-xhigh",
-      "name": "GPT-5.6 Terra (xhigh)",
+      "name": "GPT-5.6 Terra (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
         "reasoning": 11511.650051749408,
@@ -1767,7 +1943,7 @@
     {
       "source_id": "29855680-7469-43eb-8b88-cd3fb1d99da3",
       "slug": "gpt-5-mini",
-      "name": "GPT-5 mini (high)",
+      "name": "GPT-5 mini (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 11522.83689649851,
@@ -1787,9 +1963,119 @@
       }
     },
     {
+      "source_id": "b25ac058-1e33-4c31-bbc9-a20c3ad0717a",
+      "slug": "gpt-6-1-sol",
+      "name": "GPT-6.1 Sol (Max)",
+      "variant": "max",
+      "tokens_per_task": {
+        "reasoning": 25189.980723580382,
+        "answer": 12938.448190853393,
+        "output": 38128.428914433774
+      },
+      "canonical_token_counts": {
+        "input": 1383452045,
+        "output": 67198855,
+        "answer": 17360658,
+        "reasoning": 49838197
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 20.587434785905206,
+        "reasoning_output_share": 0.6606613868122047
+      }
+    },
+    {
+      "source_id": "3b84fee3-b70a-41bc-819e-5fbdef9a0042",
+      "slug": "gpt-6-1-sol-high",
+      "name": "GPT-6.1 Sol (High)",
+      "variant": "high",
+      "tokens_per_task": {
+        "reasoning": 5723.233188942028,
+        "answer": 7468.637030879253,
+        "output": 13191.870219821281
+      },
+      "canonical_token_counts": {
+        "input": 782097221,
+        "output": 25376903,
+        "answer": 12446594,
+        "reasoning": 12930309
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 30.819254067369844,
+        "reasoning_output_share": 0.4338454740361723
+      }
+    },
+    {
+      "source_id": "e76e0fe5-93ca-4272-9359-2eb1740467d1",
+      "slug": "gpt-6-1-sol-low",
+      "name": "GPT-6.1 Sol (Low)",
+      "variant": "low",
+      "tokens_per_task": {
+        "reasoning": 1157.745645693312,
+        "answer": 2818.9553289838973,
+        "output": 3976.700974677209
+      },
+      "canonical_token_counts": {
+        "input": 369938580,
+        "output": 9014298,
+        "answer": 6563441,
+        "reasoning": 2450857
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 41.039089233570934,
+        "reasoning_output_share": 0.2911321854636774
+      }
+    },
+    {
+      "source_id": "a2e51d62-ea4e-4f15-8be0-be9dc1fb489d",
+      "slug": "gpt-6-1-sol-medium",
+      "name": "GPT-6.1 Sol (Medium)",
+      "variant": "medium",
+      "tokens_per_task": {
+        "reasoning": 2894.894080277142,
+        "answer": 5174.948477214529,
+        "output": 8069.842557491671
+      },
+      "canonical_token_counts": {
+        "input": 546325961,
+        "output": 15265677,
+        "answer": 9731609,
+        "reasoning": 5534068
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 35.787863256899776,
+        "reasoning_output_share": 0.358729933038118
+      }
+    },
+    {
+      "source_id": "092a3b0e-c5c8-45dc-bf1b-53673c8ff352",
+      "slug": "gpt-6-1-sol-xhigh",
+      "name": "GPT-6.1 Sol (Xhigh)",
+      "variant": "xhigh",
+      "tokens_per_task": {
+        "reasoning": 9080.0312918106,
+        "answer": 8538.802498574274,
+        "output": 17618.833790384873
+      },
+      "canonical_token_counts": {
+        "input": 934466155,
+        "output": 36005814,
+        "answer": 13725359,
+        "reasoning": 22280455
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 25.953201752361437,
+        "reasoning_output_share": 0.5153593818885926
+      }
+    },
+    {
       "source_id": "2f339a97-9a0d-499a-9cb5-e0db665bfa25",
       "slug": "gpt-6-astra",
-      "name": "GPT-6 Astra (max)",
+      "name": "GPT-6 Astra (Max)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 16691.238044704474,
@@ -1811,7 +2097,7 @@
     {
       "source_id": "e05a4828-0536-4876-870d-a235023f992b",
       "slug": "gpt-6-astra-high",
-      "name": "GPT-6 Astra (high)",
+      "name": "GPT-6 Astra (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 4712.29138992191,
@@ -1833,7 +2119,7 @@
     {
       "source_id": "a3f8100d-e38f-408b-b0fa-0085dae18dc1",
       "slug": "gpt-6-astra-low",
-      "name": "GPT-6 Astra (low)",
+      "name": "GPT-6 Astra (Low)",
       "variant": "low",
       "tokens_per_task": {
         "reasoning": 937.6860175531208,
@@ -1855,7 +2141,7 @@
     {
       "source_id": "e97a4ef5-e817-480e-9595-12f81dc4974f",
       "slug": "gpt-6-astra-medium",
-      "name": "GPT-6 Astra (medium)",
+      "name": "GPT-6 Astra (Medium)",
       "variant": "medium",
       "tokens_per_task": {
         "reasoning": 3421.700771671087,
@@ -1877,7 +2163,7 @@
     {
       "source_id": "1f541ef3-913f-4eb2-9d07-0e93c7a9a5e3",
       "slug": "gpt-6-astra-xhigh",
-      "name": "GPT-6 Astra (xhigh)",
+      "name": "GPT-6 Astra (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
         "reasoning": 8582.48703099872,
@@ -1899,89 +2185,89 @@
     {
       "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
       "slug": "gpt-6-luna",
-      "name": "GPT-6 Luna (max)",
+      "name": "GPT-6 Luna (Max)",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 39300.266611129686,
-        "answer": 11236.769990239749,
-        "output": 50537.03660136944
+        "reasoning": 38851.32000473608,
+        "answer": 11104.67588034964,
+        "output": 49955.99588508572
       },
       "canonical_token_counts": {
-        "input": 3133100768,
-        "output": 145021668,
-        "answer": 16315244,
-        "reasoning": 128706424
+        "input": 3125212501,
+        "output": 144258466,
+        "answer": 16106242,
+        "reasoning": 128152224
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 21.604363066628085,
-        "reasoning_output_share": 0.7776527721861859
+        "input_output_ratio": 21.66397985266251,
+        "reasoning_output_share": 0.7777108496466802
       }
     },
     {
       "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
       "slug": "gpt-6-luna-high",
-      "name": "GPT-6 Luna (high)",
+      "name": "GPT-6 Luna (High)",
       "variant": "high",
       "tokens_per_task": {
-        "reasoning": 12800.233510622893,
-        "answer": 6970.838179045675,
-        "output": 19771.07168966857
+        "reasoning": 12737.698962171346,
+        "answer": 6955.022392831889,
+        "output": 19692.721355003236
       },
       "canonical_token_counts": {
-        "input": 1335412150,
-        "output": 46947199,
-        "answer": 11853850,
-        "reasoning": 35093349
+        "input": 1360055720,
+        "output": 46806300,
+        "answer": 11764165,
+        "reasoning": 35042135
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 28.444980285192308,
-        "reasoning_output_share": 0.6474223406570162
+        "input_output_ratio": 29.05710812433369,
+        "reasoning_output_share": 0.6468226880656665
       }
     },
     {
       "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
       "slug": "gpt-6-luna-low",
-      "name": "GPT-6 Luna (low)",
+      "name": "GPT-6 Luna (Low)",
       "variant": "low",
       "tokens_per_task": {
-        "reasoning": 514.9441302130821,
-        "answer": 1538.9312493273987,
-        "output": 2053.875379540481
+        "reasoning": 513.8865457974975,
+        "answer": 1572.0200275491773,
+        "output": 2085.906573346675
       },
       "canonical_token_counts": {
-        "input": 194793004,
-        "output": 8129067,
-        "answer": 3757726,
-        "reasoning": 4371341
+        "input": 194136798,
+        "output": 8157793,
+        "answer": 3788334,
+        "reasoning": 4369459
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 23.962529033159647,
-        "reasoning_output_share": 0.2507182934966054
+        "input_output_ratio": 23.79771072886993,
+        "reasoning_output_share": 0.24636124760516312
       }
     },
     {
       "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
       "slug": "gpt-6-luna-medium",
-      "name": "GPT-6 Luna (medium)",
+      "name": "GPT-6 Luna (Medium)",
       "variant": "medium",
       "tokens_per_task": {
-        "reasoning": 6222.294135012362,
-        "answer": 5004.975178562384,
-        "output": 11227.269313574747
+        "reasoning": 6329.116297849525,
+        "answer": 5127.339478262683,
+        "output": 11456.455776112209
       },
       "canonical_token_counts": {
-        "input": 850506601,
-        "output": 28447041,
-        "answer": 9776874,
-        "reasoning": 18670167
+        "input": 847464770,
+        "output": 28532183,
+        "answer": 9806193,
+        "reasoning": 18725990
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 29.897893457530433,
-        "reasoning_output_share": 0.554212601588622
+        "input_output_ratio": 29.702065558741158,
+        "reasoning_output_share": 0.5524497647035246
       }
     },
     {
@@ -1991,129 +2277,129 @@
       "variant": null,
       "tokens_per_task": {
         "reasoning": 0,
-        "answer": 3665.1343472261233,
-        "output": 3665.1343472261233
+        "answer": 3756.501776796553,
+        "output": 3756.501776796553
       },
       "canonical_token_counts": {
-        "input": 908117293,
-        "output": 6882998,
-        "answer": 6882998,
+        "input": 903227168,
+        "output": 6917761,
+        "answer": 6917761,
         "reasoning": 0
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 131.9363005771613,
+        "input_output_ratio": 130.56640262651456,
         "reasoning_output_share": 0
       }
     },
     {
       "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
       "slug": "gpt-6-luna-xhigh",
-      "name": "GPT-6 Luna (xhigh)",
+      "name": "GPT-6 Luna (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 18653.77356093282,
-        "answer": 8534.890607968291,
-        "output": 27188.66416890111
+        "reasoning": 18757.343458035717,
+        "answer": 8729.75266690935,
+        "output": 27487.096124945067
       },
       "canonical_token_counts": {
-        "input": 1960270772,
-        "output": 68351665,
-        "answer": 13162289,
-        "reasoning": 55189376
+        "input": 1995518108,
+        "output": 68515556,
+        "answer": 13273577,
+        "reasoning": 55241979
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 28.679195627494956,
-        "reasoning_output_share": 0.6860864309129739
+        "input_output_ratio": 29.125037064575526,
+        "reasoning_output_share": 0.6824054229945763
       }
     },
     {
       "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
       "slug": "gpt-6-sol",
-      "name": "GPT-6 Sol (max)",
+      "name": "GPT-6 Sol (Max)",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 21023.570912006136,
-        "answer": 10214.117618168617,
-        "output": 31237.688530174753
+        "reasoning": 20844.546131786356,
+        "answer": 10155.099907878906,
+        "output": 30999.646039665262
       },
       "canonical_token_counts": {
-        "input": 2551222824,
-        "output": 76941371,
-        "answer": 14230403,
-        "reasoning": 62710968
+        "input": 2494962325,
+        "output": 76751405,
+        "answer": 14183887,
+        "reasoning": 62567518
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 33.158010974356046,
-        "reasoning_output_share": 0.673019416647872
+        "input_output_ratio": 32.50705736266326,
+        "reasoning_output_share": 0.6724123915839214
       }
     },
     {
       "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
       "slug": "gpt-6-sol-high",
-      "name": "GPT-6 Sol (high)",
+      "name": "GPT-6 Sol (High)",
       "variant": "high",
       "tokens_per_task": {
-        "reasoning": 4988.562388472668,
-        "answer": 5243.879033068356,
-        "output": 10232.441421541025
+        "reasoning": 4993.811224636504,
+        "answer": 5298.247035066358,
+        "output": 10292.058259702862
       },
       "canonical_token_counts": {
-        "input": 938877531,
-        "output": 25283626,
-        "answer": 9598056,
-        "reasoning": 15685570
+        "input": 916617805,
+        "output": 25285300,
+        "answer": 9619187,
+        "reasoning": 15666113
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 37.133816605260655,
-        "reasoning_output_share": 0.4875241580148114
+        "input_output_ratio": 36.251015609860275,
+        "reasoning_output_share": 0.4852101590008565
       }
     },
     {
       "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
       "slug": "gpt-6-sol-low",
-      "name": "GPT-6 Sol (low)",
+      "name": "GPT-6 Sol (Low)",
       "variant": "low",
       "tokens_per_task": {
-        "reasoning": 696.8563159920149,
-        "answer": 2661.129451300584,
-        "output": 3357.985767292599
+        "reasoning": 699.6557735344724,
+        "answer": 2673.1805322196647,
+        "output": 3372.836305754137
       },
       "canonical_token_counts": {
-        "input": 337864127,
-        "output": 8906355,
-        "answer": 6222454,
-        "reasoning": 2683901
+        "input": 339713652,
+        "output": 8916608,
+        "answer": 6228000,
+        "reasoning": 2688608
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 37.93517404145692,
-        "reasoning_output_share": 0.2075221172107172
+        "input_output_ratio": 38.09897799701411,
+        "reasoning_output_share": 0.20743840201816002
       }
     },
     {
       "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
       "slug": "gpt-6-sol-medium",
-      "name": "GPT-6 Sol (medium)",
+      "name": "GPT-6 Sol (Medium)",
       "variant": "medium",
       "tokens_per_task": {
-        "reasoning": 2354.9801610398354,
-        "answer": 4123.399325450569,
-        "output": 6478.379486490405
+        "reasoning": 2336.8040811197557,
+        "answer": 4160.861325450569,
+        "output": 6497.665406570324
       },
       "canonical_token_counts": {
-        "input": 598190085,
-        "output": 15792138,
-        "answer": 8116577,
-        "reasoning": 7675561
+        "input": 592256635,
+        "output": 15901072,
+        "answer": 8231817,
+        "reasoning": 7669255
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 37.8789803508556,
-        "reasoning_output_share": 0.36351377160766196
+        "input_output_ratio": 37.24633376919493,
+        "reasoning_output_share": 0.35963749052957095
       }
     },
     {
@@ -2123,47 +2409,47 @@
       "variant": null,
       "tokens_per_task": {
         "reasoning": 0,
-        "answer": 4912.460193383309,
-        "output": 4912.460193383309
+        "answer": 4974.907322254438,
+        "output": 4974.907322254438
       },
       "canonical_token_counts": {
-        "input": 1097070665,
-        "output": 8276096,
-        "answer": 8276096,
+        "input": 1101112727,
+        "output": 8311056,
+        "answer": 8311056,
         "reasoning": 0
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 132.5589583542772,
+        "input_output_ratio": 132.48770396926696,
         "reasoning_output_share": 0
       }
     },
     {
       "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
       "slug": "gpt-6-sol-xhigh",
-      "name": "GPT-6 Sol (xhigh)",
+      "name": "GPT-6 Sol (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 9299.825851500813,
-        "answer": 6712.95796218151,
-        "output": 16012.783813682323
+        "reasoning": 9193.303119233082,
+        "answer": 6644.5515535901,
+        "output": 15837.854672823181
       },
       "canonical_token_counts": {
-        "input": 1305425345,
-        "output": 40331917,
-        "answer": 11195990,
-        "reasoning": 29135927
+        "input": 1266205391,
+        "output": 40159799,
+        "answer": 11146945,
+        "reasoning": 29012854
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 32.3670542364748,
-        "reasoning_output_share": 0.5807750831903732
+        "input_output_ratio": 31.52917650309953,
+        "reasoning_output_share": 0.5804639144093325
       }
     },
     {
       "source_id": "f0083258-8646-45b8-8082-7aaf6c2ea82a",
       "slug": "gpt-oss-120b",
-      "name": "gpt-oss-120b (high)",
+      "name": "gpt-oss-120b (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 15084.472343612117,
@@ -2185,7 +2471,7 @@
     {
       "source_id": "36f73aaf-d38a-4b56-a2b3-d04d17186910",
       "slug": "gpt-oss-20b",
-      "name": "gpt-oss-20b (high)",
+      "name": "gpt-oss-20b (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 16108.126631449428,
@@ -2251,7 +2537,7 @@
     {
       "source_id": "948892b5-db03-4118-a4a8-ccd51ed871ea",
       "slug": "grok-4-3",
-      "name": "Grok 4.3 (high)",
+      "name": "Grok 4.3 (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 11347.37684195656,
@@ -2295,7 +2581,7 @@
     {
       "source_id": "794f69b5-cede-482b-b1cc-d769478497cd",
       "slug": "grok-4-5",
-      "name": "Grok 4.5 (high)",
+      "name": "Grok 4.5 (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 9781.15881445639,
@@ -2317,7 +2603,7 @@
     {
       "source_id": "c8adc5cf-fd5a-407b-af51-dc3bede3e49c",
       "slug": "grok-4-6",
-      "name": "Grok 4.6 (high)",
+      "name": "Grok 4.6 (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 18781.562301591235,
@@ -2339,7 +2625,7 @@
     {
       "source_id": "c07e65e6-32fc-451e-938d-7477a1c3ffcc",
       "slug": "grok-4-6-low",
-      "name": "Grok 4.6 (low)",
+      "name": "Grok 4.6 (Low)",
       "variant": "low",
       "tokens_per_task": {
         "reasoning": 2460.8077250036104,
@@ -2361,7 +2647,7 @@
     {
       "source_id": "26614164-6840-4e17-a65a-2deb2fe7e87b",
       "slug": "grok-4-6-medium",
-      "name": "Grok 4.6 (medium)",
+      "name": "Grok 4.6 (Medium)",
       "variant": "medium",
       "tokens_per_task": {
         "reasoning": 13758.04273213306,
@@ -2383,7 +2669,7 @@
     {
       "source_id": "d6f43d0a-e8c4-447c-9ff7-5cf0a9d59aa3",
       "slug": "grok-4-6-xhigh",
-      "name": "Grok 4.6 (xhigh)",
+      "name": "Grok 4.6 (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
         "reasoning": 19801.67585008191,
@@ -2405,7 +2691,7 @@
     {
       "source_id": "59627802-1546-422c-9a65-65b61c022d36",
       "slug": "grok-4-7",
-      "name": "Grok 4.7 (xhigh)",
+      "name": "Grok 4.7 (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
         "reasoning": 58543.633141273924,
@@ -2427,7 +2713,7 @@
     {
       "source_id": "272f5f03-aea9-4675-a244-2b753b618cdf",
       "slug": "grok-4-7-high",
-      "name": "Grok 4.7 (high)",
+      "name": "Grok 4.7 (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 46633.30527496027,
@@ -2471,7 +2757,7 @@
     {
       "source_id": "0de09623-2b1a-4c8d-86ef-7f5245d4e24b",
       "slug": "inkling",
-      "name": "Inkling (xhigh)",
+      "name": "Inkling (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
         "reasoning": 23399.155079379572,
@@ -2488,6 +2774,50 @@
         "basis": "derived",
         "input_output_ratio": 16.242745860302385,
         "reasoning_output_share": 0.6751838290910164
+      }
+    },
+    {
+      "source_id": "7261504e-503c-4a66-a9d3-a3272cdf9ad6",
+      "slug": "inkling-small",
+      "name": "Inkling Small",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 22885.84916952913,
+        "answer": 7273.831872711327,
+        "output": 30159.68104224046
+      },
+      "canonical_token_counts": {
+        "input": 962617758,
+        "output": 137277565,
+        "answer": 9722921,
+        "reasoning": 127554644
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 7.0122001217023335,
+        "reasoning_output_share": 0.7588226525829671
+      }
+    },
+    {
+      "source_id": "46f11cdf-1725-4abb-b39b-bd6bd948149c",
+      "slug": "jt236b",
+      "name": "JT-4.1 Flash 236B A21B (Reasoning)",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 54087.33877322922,
+        "answer": 31707.07015260061,
+        "output": 85794.40892582983
+      },
+      "canonical_token_counts": {
+        "input": 6110043660,
+        "output": 184566355,
+        "answer": 42603734,
+        "reasoning": 141962621
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 33.104861717619116,
+        "reasoning_output_share": 0.6304296451297694
       }
     },
     {
@@ -2603,7 +2933,7 @@
     {
       "source_id": "0de67206-4d36-4d10-b8f6-cf37fa747a03",
       "slug": "kimi-k2-6",
-      "name": "Kimi K2.6",
+      "name": "Kimi K2.6 (Reasoning)",
       "variant": null,
       "tokens_per_task": {
         "reasoning": 36844.89079060351,
@@ -2647,7 +2977,7 @@
     {
       "source_id": "f7d2fc3e-1f7b-405f-818c-07952a4af78f",
       "slug": "kimi-k3",
-      "name": "Kimi K3 (max)",
+      "name": "Kimi K3 (Max)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 32453.12751268007,
@@ -2664,6 +2994,50 @@
         "basis": "derived",
         "input_output_ratio": 15.941289880899355,
         "reasoning_output_share": 0.6697548666104121
+      }
+    },
+    {
+      "source_id": "512d17ef-13d2-4f65-bf9b-154b0dec7e8d",
+      "slug": "kimi-k3-low",
+      "name": "Kimi K3 (Low)",
+      "variant": "low",
+      "tokens_per_task": {
+        "reasoning": 5891.506417923906,
+        "answer": 6330.173973735501,
+        "output": 12221.680391659407
+      },
+      "canonical_token_counts": {
+        "input": 1516936640,
+        "output": 21666644,
+        "answer": 11574636,
+        "reasoning": 10092008
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 70.01253355157357,
+        "reasoning_output_share": 0.4820537134929923
+      }
+    },
+    {
+      "source_id": "e33dc369-ae81-40e0-8c4e-28b002d02197",
+      "slug": "ling-3-0-flash",
+      "name": "Ling 3.0 Flash",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 33207.0669421994,
+        "answer": 15489.914338358092,
+        "output": 48696.98128055749
+      },
+      "canonical_token_counts": {
+        "input": 1476271560,
+        "output": 261278745,
+        "answer": 35978177,
+        "reasoning": 225300568
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 5.650178547818729,
+        "reasoning_output_share": 0.6819122267740544
       }
     },
     {
@@ -2708,6 +3082,28 @@
         "basis": "derived",
         "input_output_ratio": 25.844096746695314,
         "reasoning_output_share": 0.5852315694542378
+      }
+    },
+    {
+      "source_id": "7eaf926c-5f39-4e58-ae50-c38b5fc630fc",
+      "slug": "ling-3-0-tiny",
+      "name": "Ling 3.0 Tiny",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 39935.0719889828,
+        "answer": 30352.390728791637,
+        "output": 70287.46271777444
+      },
+      "canonical_token_counts": {
+        "input": 2607178931,
+        "output": 231700870,
+        "answer": 41770799,
+        "reasoning": 189930071
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 11.252348474133912,
+        "reasoning_output_share": 0.5681677847631842
       }
     },
     {
@@ -2757,7 +3153,7 @@
     {
       "source_id": "00f1248e-78e3-4230-8dc8-5e13ba8645e2",
       "slug": "mimo-v2-5-pro",
-      "name": "MiMo-V2.5-Pro",
+      "name": "MiMo-V2.5-Pro (Reasoning)",
       "variant": null,
       "tokens_per_task": {
         "reasoning": 17907.43917664586,
@@ -3065,7 +3461,7 @@
     {
       "source_id": "583f98fb-c4b8-4df3-8d40-60ac0ed69882",
       "slug": "muse-glimmer",
-      "name": "Muse Glimmer (high)",
+      "name": "Muse Glimmer (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 9547.864287008168,
@@ -3087,7 +3483,7 @@
     {
       "source_id": "d61493e2-43ff-460c-9054-eaf6ba317360",
       "slug": "muse-spark-1-1",
-      "name": "Muse Spark 1.1 (xhigh)",
+      "name": "Muse Spark 1.1 (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
         "reasoning": 29866.08715551922,
@@ -3109,7 +3505,7 @@
     {
       "source_id": "04ee6719-0327-463b-a1a1-70a6a78254f9",
       "slug": "muse-spark-1-2",
-      "name": "Muse Spark 1.2 (xhigh)",
+      "name": "Muse Spark 1.2 (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
         "reasoning": 22660.411329538983,
@@ -3131,7 +3527,7 @@
     {
       "source_id": "9999672c-b687-4026-9c15-5cef02ff53bb",
       "slug": "muse-spark-1-3",
-      "name": "Muse Spark 1.3 (max)",
+      "name": "Muse Spark 1.3 (Max)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 34125.929031308246,
@@ -3153,7 +3549,7 @@
     {
       "source_id": "d5170215-69be-4129-849b-26d8d8825bfc",
       "slug": "muse-spark-1-3-xhigh",
-      "name": "Muse Spark 1.3 (xhigh)",
+      "name": "Muse Spark 1.3 (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
         "reasoning": 32533.534814547762,
@@ -3285,7 +3681,7 @@
     {
       "source_id": "076f2674-bc4b-4925-be59-50832eb8c090",
       "slug": "o3-mini-high",
-      "name": "o3-mini (high)",
+      "name": "o3-mini (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 14188.545062275443,
@@ -3307,7 +3703,7 @@
     {
       "source_id": "f9739750-6d42-450f-ba1e-2f76c869b4fe",
       "slug": "quasar-438b",
-      "name": "Quasar 438B (max, based on GLM-5.2)",
+      "name": "Quasar 438B (Max, Based on GLM-5.2)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 53379.13260879439,
@@ -3412,6 +3808,28 @@
         "basis": "derived",
         "input_output_ratio": 10.495071209602962,
         "reasoning_output_share": 0.4683205209325653
+      }
+    },
+    {
+      "source_id": "2d28a13a-096e-475a-beb8-26bbd1c7d51c",
+      "slug": "qwen3-5-9b",
+      "name": "Qwen3.5 9B (Reasoning)",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 19844.71431545256,
+        "answer": 15050.061702356767,
+        "output": 34894.77601780932
+      },
+      "canonical_token_counts": {
+        "input": 2117050845,
+        "output": 215276742,
+        "answer": 23773189,
+        "reasoning": 191503553
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 9.834089950134976,
+        "reasoning_output_share": 0.568701581730296
       }
     },
     {
@@ -3527,7 +3945,7 @@
     {
       "source_id": "b01dee41-c62b-48ed-8d16-984adc405e5c",
       "slug": "qwen3-8-27b",
-      "name": "Qwen3.8 27B (xhigh)",
+      "name": "Qwen3.8 27B (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
         "reasoning": 47710.90773287412,
@@ -3549,7 +3967,7 @@
     {
       "source_id": "7e30585f-fad7-40df-a8cb-03c1d96df38a",
       "slug": "qwen3-8-27b-low",
-      "name": "Qwen3.8 27B (low)",
+      "name": "Qwen3.8 27B (Low)",
       "variant": "low",
       "tokens_per_task": {
         "reasoning": 25859.126023110635,
@@ -3571,7 +3989,7 @@
     {
       "source_id": "6657d7de-a2a9-40bc-a32f-86e80ad63698",
       "slug": "qwen3-8-27b-medium",
-      "name": "Qwen3.8 27B (medium)",
+      "name": "Qwen3.8 27B (Medium)",
       "variant": "medium",
       "tokens_per_task": {
         "reasoning": 32211.394284360205,
@@ -3720,6 +4138,28 @@
         "basis": "derived",
         "input_output_ratio": 7.772001827372862,
         "reasoning_output_share": 0.596356778333558
+      }
+    },
+    {
+      "source_id": "62ea3198-9866-4d9f-8406-a79ee78c7164",
+      "slug": "solar-mini4",
+      "name": "Solar Mini 4",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 71617.0831052309,
+        "answer": 16683.478650262932,
+        "output": 88300.56175549382
+      },
+      "canonical_token_counts": {
+        "input": 6081476672,
+        "output": 365015396,
+        "answer": 23322073,
+        "reasoning": 341693323
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 16.660877153795454,
+        "reasoning_output_share": 0.8110603339482727
       }
     },
     {

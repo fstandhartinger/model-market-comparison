@@ -1,9 +1,9 @@
 {
   "source": "IONOS AI Model Hub",
   "region": "eu (Germany)",
-  "collected_at": "2026-09-29",
+  "collected_at": "2026-10-01",
   "currency_note": "USD fields use IONOS' official localized USD price table at https://cloud.ionos.com/prices; EUR source prices are preserved in notes and are not converted locally.",
-  "method": "scripts/fetch-ionos-catalog.mjs (2026-09-29): one GET each of the server-rendered IONOS Cloud price pages https://cloud.ionos.com/prices (official localized USD, used for the price fields) and https://cloud.ionos.de/preise (original EUR, recorded as \"€in/€out\" at the start of each row's notes); every AI Model Hub table with an input- and an output-token price is included (Large language models, Vision-Language Models, Code Models); embedding, reranker and image tables are out of scope. Curated rows kept by catalog_name, normalized name or the page name in the notes; new rows mapping=derived; rows no longer listed are dropped. OpenAI-compatible pay-per-use, EU-sovereign (DE). See ionos.method.md.",
+  "method": "scripts/fetch-ionos-catalog.mjs (2026-10-01): one GET each of the server-rendered IONOS Cloud price pages https://cloud.ionos.com/prices (official localized USD, used for the price fields) and https://cloud.ionos.de/preise (original EUR, recorded as \"€in/€out\" at the start of each row's notes); every AI Model Hub table with an input- and an output-token price is included (Large language models, Vision-Language Models, Code Models); embedding, reranker and image tables are out of scope. Curated rows kept by catalog_name, normalized name or the page name in the notes; new rows mapping=derived; rows no longer listed are dropped. OpenAI-compatible pay-per-use, EU-sovereign (DE). See ionos.method.md.",
   "models": [
     {
       "model_name": "Qwen3.5 9B",
@@ -21,7 +21,7 @@
       "input_per_1m_usd": 0.45,
       "output_per_1m_usd": 2.7,
       "region": "eu",
-      "notes": "€0.40/€2.70; Qwen3.8-27B; marked New on the USD price page; new vs prior snapshot (2026-09-08)",
+      "notes": "EUR price not listed on cloud.ionos.de/preise at collection time; Qwen3.8-27B; marked New on the USD price page; new vs prior snapshot (2026-09-08)",
       "catalog_name": "Qwen3.8-27B",
       "catalog_section": "Large language models"
     },
@@ -98,9 +98,11 @@
   ],
   "response_sha256": {
     "usd": "bb301bee72c71155eeacbcd498e2cb32f38568ea288712913c7cd1c4cbc1d493",
-    "eur": "3264fd5289dbbc68f8d7bd19fbd4d809aef59ed6257cd9c75a07054621c1e2cc"
+    "eur": "74556db3c658b3c7897bcad558fa4636a9ec7b4198d87cbc15153eb4115eaa48"
   },
-  "eur_missing": [],
+  "eur_missing": [
+    "Qwen3.8-27B"
+  ],
   "diff": {
     "added": [],
     "removed": [],

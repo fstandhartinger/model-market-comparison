@@ -1,7 +1,7 @@
 {
   "source": "Mistral AI (La Plateforme) — mistral.ai/pricing/api (first-party, public)",
   "region": "eu (France)",
-  "collected_at": "2026-09-29",
+  "collected_at": "2026-10-01",
   "method": "scripts/fetch-mistral-catalog.mjs: one GET of the server-rendered pricing page; every <mistral-block-card-model> with both an 'Input (/M tokens)' and an 'Output (/M tokens)' USD price is a chat/text model (OCR per 1000 pages, embeddings, classifiers, TTS/transcription and unpriced Labs endpoints drop out); duplicate cards must agree; identity is the card's normalized model name against the curated snapshot, because the page dropped its copy-to-clipboard API id on ~16 Sep 2026 — a model the snapshot does not name has its id read from the docs model page the card links ('Click to copy: <id>'), recorded in docs_sources, mapping=derived. The same redesign made cached input a client-side toggle, so a row that already published one has it re-read from its docs page (docs_sources reason=cache_read) and diff.cache_read_dropped names any row that lost it anyway; rows that never had a cached price are not resolved, so cached-input coverage is not complete. A resolved docs page must state the same list prices as the pricing card or the refresh fails closed. Region eu (Mistral hosts in the EU unless the US endpoint is chosen). See mistral.method.md.",
   "models": [
     {
@@ -48,7 +48,6 @@
       "output_per_1m_usd": 4.4,
       "region": "eu",
       "notes": "Added 2026-08-26: mistral.ai/pricing/api third-party zai-glm-5-2, cached 0.14",
-      "cache_read_per_1m_usd": 0.14,
       "api_model_id": "zai-glm-5-2"
     },
     {
@@ -97,27 +96,29 @@
       "api_model_id": "ministral-14b-latest"
     }
   ],
-  "response_sha256": "4a2006f0586c0e3ae22742b58465c3b0275b511ea3cdb35474f57910c022140c",
+  "response_sha256": "42d7b3e2037d13390e5fea0b74a40880aaf74c3225ef6c0f3a1f48fe46a6e249",
   "diff": {
     "added": [
       "zai-glm-5-3"
     ],
     "removed": [],
     "price_changed": [],
-    "cache_read_dropped": []
+    "cache_read_dropped": [
+      "GLM 5.2"
+    ]
   },
   "docs_sources": [
     {
       "model_name": "GLM 5.3",
       "reason": "cache_read",
       "url": "https://docs.mistral.ai/models/zai-glm-5-3",
-      "response_sha256": "a5aa8c3daf297dff1861b8780131e1361e78c34ed34c911429718445fda60768"
+      "response_sha256": "2a0b35cdfda0c5c8e21dee0653be08eacf46c67d7e5990934801112be2a6792c"
     },
     {
       "model_name": "GLM 5.2",
       "reason": "cache_read",
       "url": "https://docs.mistral.ai/models/zai-glm-5-2",
-      "response_sha256": "8ec82606492d3d9571df36385b82afca592e4b96578f763aa0159ea36720ba2c"
+      "response_sha256": "cbc5a9e338410d2381f7724cb82cf199e6ba0d702edee340bb451a9e4fe692fc"
     }
   ]
 }

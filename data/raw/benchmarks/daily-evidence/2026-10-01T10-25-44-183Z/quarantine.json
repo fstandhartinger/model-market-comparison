@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-01T11:06:26.994Z",
+  "day": "2026-10-01",
+  "arms": [
+    {
+      "id": "vulcanbench-frontier::4",
+      "reason": "vulcanbench-frontier::4: the board publishes protocol revision(s) code-quality-maintenance-v3.17 outside the reviewed set {code-quality-maintenance-v3.15, code-quality-maintenance-v3.16, code-quality-maintenance-v3.4, code-quality-maintenance-v3.5, code-quality-maintenance-v3.6, code-quality-maintenance-v3.7}; row 16 (GPT-6 Sol [max]) states it. The arm is quarantined: its published rows are unchanged and every other source still publishes, until the revision is reviewed into the registry (version_guard and scoring.notes) or given its own version identity.",
+      "unreviewed_protocols": [
+        "code-quality-maintenance-v3.17"
+      ],
+      "reviewed_protocols": [
+        "code-quality-maintenance-v3.15",
+        "code-quality-maintenance-v3.16",
+        "code-quality-maintenance-v3.4",
+        "code-quality-maintenance-v3.5",
+        "code-quality-maintenance-v3.6",
+        "code-quality-maintenance-v3.7"
+      ],
+      "captures": [
+        "https://vulcanbench.com/assets/data/swe-v4-board.csv"
+      ]
+    }
+  ]
+}

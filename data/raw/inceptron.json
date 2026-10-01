@@ -1,16 +1,16 @@
 {
   "source": "Inceptron",
   "region": "eu (Finland; HQ Sweden)",
-  "collected_at": "2026-09-29",
+  "collected_at": "2026-10-01",
   "listing_url": "https://www.inceptron.io/models",
-  "method": "scripts/fetch-inceptron-catalog.mjs (2026-09-29): one GET of Inceptron's unauthenticated OpenAI-compatible catalog https://api.inceptron.io/v1/models, the live billing meter; pricing.prompt / pricing.completion / input_cache_reads are USD per token, stored per 1M tokens with four decimals. Models with text output, the chat feature and both token prices are included; curated rows kept by api_model_id, the id in their notes, or name; new ids mapping=derived; ids no longer listed are dropped. The marketing page www.inceptron.io/models is a client-rendered list that has shown different list prices; the API is canonical. HQ Sweden (SE), datacenter Finland (FI) per OpenRouter provider metadata. See inceptron.method.md.",
+  "method": "scripts/fetch-inceptron-catalog.mjs (2026-10-01): one GET of Inceptron's unauthenticated OpenAI-compatible catalog https://api.inceptron.io/v1/models, the live billing meter; pricing.prompt / pricing.completion / input_cache_reads are USD per token, stored per 1M tokens with four decimals. Models with text output, the chat feature and both token prices are included; curated rows kept by api_model_id, the id in their notes, or name; new ids mapping=derived; ids no longer listed are dropped. The marketing page www.inceptron.io/models is a client-rendered list that has shown different list prices; the API is canonical. HQ Sweden (SE), datacenter Finland (FI) per OpenRouter provider metadata. See inceptron.method.md.",
   "models": [
     {
       "model_name": "GLM 5.2",
       "provider_org": "Z.ai",
-      "input_per_1m_usd": 0.3933,
-      "output_per_1m_usd": 2.95,
-      "cache_read_per_1m_usd": 0.191,
+      "input_per_1m_usd": 1.39,
+      "output_per_1m_usd": 4.39,
+      "cache_read_per_1m_usd": 0.25,
       "region": "eu",
       "notes": "fp4 quant, 1,048,576 context. Inceptron model id zai-org/GLM-5.2. Native API and OpenRouter Inceptron endpoint agree at $0.95/$3.04 on 2026-07-12. | Re-verified 2026-07-13 vs native API: 0.85/2.50. | 2026-07-14: 0.94/2.90 (native API; volatile pricing). | 2026-07-22: 0.94/2.90 unchanged, cache read dropped 0.18 -> 0.17 (native API + OpenRouter agree). | 2026-08-26: native API 0.75/2.40 (cache 0.17); web page lists 1.20/4.20 | 2026-09-08: native API 1.25/2.99 (cache 0.17->0.22); web page still lists 1.20/4.20",
       "api_model_id": "zai-org/GLM-5.2",
@@ -20,9 +20,9 @@
     {
       "model_name": "GLM 5.3",
       "provider_org": "Z.ai",
-      "input_per_1m_usd": 0.329,
-      "output_per_1m_usd": 3.14,
-      "cache_read_per_1m_usd": 0.1893,
+      "input_per_1m_usd": 0.6,
+      "output_per_1m_usd": 3.39,
+      "cache_read_per_1m_usd": 0.1836,
       "region": "eu",
       "notes": "Added 2026-09-08: api.inceptron.io zai-org/GLM-5.3, fp4 quant, 1,048,576 context, text-only, reasoning (effort low/high/max), tools/json_mode/structured_outputs. Native API 1.25/4.40 (cache 0.26); web page lists 1.40/4.40 (cache 0.26)",
       "api_model_id": "zai-org/GLM-5.3",
@@ -32,9 +32,9 @@
     {
       "model_name": "Kimi K2.6",
       "provider_org": "Moonshot AI",
-      "input_per_1m_usd": 0.475,
+      "input_per_1m_usd": 0.4344,
       "output_per_1m_usd": 2.45,
-      "cache_read_per_1m_usd": 0.0975,
+      "cache_read_per_1m_usd": 0.12,
       "region": "eu",
       "notes": "int4 quant, 262,144 context, multimodal (text+image input). Inceptron model id moonshotai/Kimi-K2.6. Native API and OpenRouter Inceptron endpoint agree at $0.66/$3.41 on 2026-07-12; unchanged 2026-07-22. | 2026-07-30: input 0.66->0.60, cache-read 0.20 (native API). | 2026-08-26: native API 0.56/3.39 (cache 0.20->0.17); web page lists 0.73/3.50 | 2026-09-08: native API 0.62/3.39 (cache 0.17 unchanged); web page still lists 0.73/3.50 (cache 0.25)",
       "api_model_id": "moonshotai/Kimi-K2.6",
@@ -44,8 +44,8 @@
     {
       "model_name": "Kimi K2.7 Code",
       "provider_org": "Moonshot AI",
-      "input_per_1m_usd": 0.6562,
-      "output_per_1m_usd": 3.3,
+      "input_per_1m_usd": 0.6712,
+      "output_per_1m_usd": 3.35,
       "cache_read_per_1m_usd": 0.18,
       "region": "eu",
       "notes": "int4 quant, 262,144 context, multimodal (text+image input). Inceptron model id moonshotai/Kimi-K2.7-Code. Native API and OpenRouter Inceptron endpoint agree at $0.72/$3.50 on 2026-07-12; unchanged 2026-07-22. | 2026-08-26: native API 0.67/3.40 (cache 0.15->0.19); web page lists 0.75/3.50 | 2026-09-08: native API 0.66/3.40 (cache 0.19->0.18); web page still lists 0.75/3.50 (cache 0.20)",
@@ -56,8 +56,8 @@
     {
       "model_name": "DeepSeek V4 Flash 0731",
       "provider_org": "DeepSeek",
-      "input_per_1m_usd": 0.056,
-      "output_per_1m_usd": 0.3634,
+      "input_per_1m_usd": 0.05,
+      "output_per_1m_usd": 0.65,
       "region": "eu",
       "notes": "Added 2026-08-26: api.inceptron.io deepseek-ai/DeepSeek-V4-Flash-0731, cache 0.03, 1M ctx; web page agrees 0.13/0.28. | 2026-09-08: unchanged 0.13/0.28 (cache 0.03)",
       "cache_read_per_1m_usd": 0.027,
@@ -69,9 +69,9 @@
       "model_name": "GLM 5.3 Flash",
       "api_model_id": "zai-org/GLM-5.3-Flash",
       "provider_org": "Z.ai",
-      "input_per_1m_usd": 0.12,
+      "input_per_1m_usd": 0.225,
       "output_per_1m_usd": 0.45,
-      "cache_read_per_1m_usd": 0.04,
+      "cache_read_per_1m_usd": 0.08,
       "context_length": 1048576,
       "quantization": "fp8",
       "region": "eu",
@@ -79,17 +79,18 @@
       "notes": "Listed by api.inceptron.io/v1/models as zai-org/GLM-5.3-Flash; fp8 quant; 1,048,576 context; text"
     }
   ],
-  "response_sha256": "faef9cd138378ea78379105422525f82a5d1794a87c5b537000b0d07991f7228",
+  "response_sha256": "c27680bbf12bf850b7de23f0978b46e8f9fd4fd9bc4034a8c00995f0abd1ac6a",
   "skipped": [],
   "diff": {
     "added": [],
     "removed": [],
     "price_changed": [
-      "GLM 5.2: 0.5107/3.3333 (cache 0.235) -> 0.3933/2.95 (cache 0.191)",
-      "GLM 5.3: 0.3368/2.5425 (cache 0.1637) -> 0.329/3.14 (cache 0.1893)",
-      "Kimi K2.6: 0.475/2.39 (cache 0.0975) -> 0.475/2.45 (cache 0.0975)",
-      "DeepSeek V4 Flash 0731: 0.039/0.3795 (cache 0.027) -> 0.056/0.3634 (cache 0.027)",
-      "GLM 5.3 Flash: 0.13/0.45 (cache 0.07) -> 0.12/0.45 (cache 0.04)"
+      "GLM 5.2: 0.3933/2.95 (cache 0.191) -> 1.39/4.39 (cache 0.25)",
+      "GLM 5.3: 0.329/3.14 (cache 0.1893) -> 0.6/3.39 (cache 0.1836)",
+      "Kimi K2.6: 0.475/2.45 (cache 0.0975) -> 0.4344/2.45 (cache 0.12)",
+      "Kimi K2.7 Code: 0.6562/3.3 (cache 0.18) -> 0.6712/3.35 (cache 0.18)",
+      "DeepSeek V4 Flash 0731: 0.056/0.3634 (cache 0.027) -> 0.05/0.65 (cache 0.027)",
+      "GLM 5.3 Flash: 0.12/0.45 (cache 0.04) -> 0.225/0.45 (cache 0.08)"
     ]
   }
 }
