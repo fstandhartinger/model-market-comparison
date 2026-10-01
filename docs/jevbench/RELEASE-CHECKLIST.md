@@ -15,6 +15,21 @@ A release must keep the complete section structure, in this order, on `/jev-mode
 
 Release-specific additions (for v1.5: the official headline order with bootstrap intervals, the A/B/C options table, the per-type axes table, the addendum table, the sealed-intelligence method section) stay — restoring the shared structure never removes a release's own sections.
 
+## Capability Score headline and pricing rule (Florian, 1 Oct 2026; CR-248)
+
+- The section-1 headline is named **"JevBench Capability Score"** (ImageJevBench: **"JevImageBench Capability Score"**): the mean of
+  Intelligence and Calibration, ranking only systems inside the cost + median-latency cap. JevBench: 2× Jev 1.13.0. ImageJevBench:
+  the same absolute envelope (2× Jev 1.13.0's JevBench v1.5.4 cost and median latency), frozen in the image artifact's
+  `capability_eligibility`. The composite stays as the secondary section 3. Rationale and numbers:
+  `docs/jevbench/METHOD-CAPABILITY-SCORE-HEADLINE-2026-10-01.md`.
+- Each Capability row shows two traffic-light thin bars, cost and median latency, on a shared log ratio scale: green ≤ 1× the reference,
+  amber up to the cap, red beyond. The legend reports the measured cost–latency Spearman correlation.
+- **API models whose base model we know** are ranked in the composite at the developer's own stated API price; a striped second bar
+  shows the score and would-be rank at the base-model reference price (row field `alt`).
+- **ImageJevBench follows the same section structure** as `/jev-models` (sections 1–6 above) inside the normal site layout, with ≥ 50
+  systems listed (`test/cr-241-benchmark-page-layout.test.mjs`).
+- Version tweets list the Capability Score winners of both benchmarks.
+
 ## Scoring consistency
 
 - The interactive chart re-scores rows with the release's own composite semantics. For v1.5 that is `jevV15BoardScore` (`lib/jevbench-v15-board.mjs`): axes at weight 0 drop out of the harmonic mean, while the Intelligence/Speed/Cost low-axis gates still apply — the same rule the published `views` use.
