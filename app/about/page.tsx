@@ -326,7 +326,8 @@ export default async function AboutPage() {
       {/* CR-25.6: the category composites offered as selectable scores. */}
       <h4 id="category-scores" className="mt-4 mb-2 font-semibold">Category scores</h4>
       <p className="text-sm text-gray-400">
-        Besides the composite you can pick a <b>category score</b> &mdash; the categories listed below.
+        Category scores are currently unavailable: each category has fewer than two anchors that meet the coverage rule.
+        The individual benchmarks remain in the benchmark table. When a category qualifies, you can pick its score alongside the Main Composite.
         Each is the <b>weighted average</b> of that category&apos;s <b>anchor benchmarks</b>, on a 0–100 scale:
         a saturated anchor counts at half the weight of the others (see Saturated below).
         The anchor set is fixed and published here, so two models&apos; category scores always cover the same
@@ -337,7 +338,8 @@ export default async function AboutPage() {
         one qualifying benchmark each today, have no category score. That bar applies to every anchor and is
         re-measured on each build: when a board&apos;s coverage falls below it the board leaves the anchor set, and a
         category left with one qualifying board leaves the list. Long context left it on 28 September 2026 for
-        exactly that reason, and the boards that have left are recorded with their measured coverage in
+        exactly that reason. Coding, Agentic and Science followed on 30 September when their newest anchors
+        fell below the same bar. The boards that have left are recorded with their measured coverage in
         data/category-score-anchors.json. Category scores are raw benchmark results, not
         percentiles, and every category has its own anchors — compare models within one category, not a Coding score
         with a Science score.
@@ -436,9 +438,9 @@ export default async function AboutPage() {
         Both tags change how a <strong>category composite</strong> is built. A preference or judge score never
         averages with task accuracy: when a category shows both kinds, only the task-accuracy rows make its
         composite (a category whose qualifying rows are all judged gets a composite of those, and says so). A
-        saturated benchmark still counts, at half the weight of an unsaturated one — today that applies to GPQA
-        Diamond inside the Science category score, which is therefore a weighted mean of CritPt and GPQA Diamond
-        rather than a plain average. The same rule governs the selectable category scores in
+        saturated benchmark still counts, at half the weight of an unsaturated one. When the Science
+        category score qualifies, this makes its CritPt and GPQA Diamond average weighted rather than flat.
+        The same rule governs the selectable category scores in
         <code> data/category-score-anchors.json</code>; a judged benchmark may not be an anchor at all, and the
         build fails rather than silently changing a published score if one is ever reclassified. None of the seven
         slots of the Benchmark Heaven Main Composite is saturated today; two of them (DesignArena Web Apps and
