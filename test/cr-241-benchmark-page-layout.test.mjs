@@ -163,7 +163,7 @@ test('CR-242: after CR-248 the page keeps v0.2 default plus separate archived v0
   assert.match(content, /<VersionTabs selected="v0\.1\.4" \{\.\.\.versionTabs\} \/>/);
   const legacy = content.slice(content.indexOf('async function ArchivedV014Content'), content.indexOf('type ImageJevTabVersion'));
   assert.ok(content.indexOf('export async function MultimodalPreviewContent') < content.indexOf('async function ArchivedV014Content'));
-  assert.match(legacy, /const a: any = \(await readArchivedMultimodalPreviewV014\(\)\)\.artifact;/, 'the v0.1.4 tab reads the byte-pinned archive, not the live artifact');
+  assert.match(legacy, /const a: any = \{ \.\.\.\(await readArchivedMultimodalPreviewV014\(\)\)\.artifact, release_version: 'v0\.1\.4' \};/, 'the v0.1.4 tab reads the byte-pinned archive, not the live artifact');
   assert.ok(legacy.indexOf('<ScoreBars systems={a.ranking} track="all" />') < legacy.indexOf('<RankingTable systems={a.ranking} track="all" all />'));
   assert.match(legacy, /PRICING-v0\.1\.4\.md/, 'v0.1.4 keeps its original base-model pricing disclosure');
   assert.match(content, /selected === 'v0\.1\.4' \? <ArchivedV014Content versionTabs=\{versionTabs\} \/> : <MultimodalPreviewContent versionTabs=\{versionTabs\} \/>/);
