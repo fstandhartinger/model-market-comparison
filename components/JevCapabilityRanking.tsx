@@ -24,9 +24,9 @@ function TrafficLightBar({ kind, ratio, factor, referenceLabel, derived = false 
   const end = ratio == null ? 0 : Math.max(1, ratioPosition(ratio));
   const greenEnd = Math.min(end, ratioPosition(1));
   const amberEnd = Math.min(end, ratioPosition(factor));
-  return <span className="relative block pl-3">
-    <span className="bh-muted absolute left-0 top-1/2 -translate-y-1/2 text-[9px] leading-none" aria-hidden="true">{kind === 'cost' ? '$' : '⏱'}</span>
-    <span className="bh-tl-track relative block h-[4px] rounded-full" role="img"
+  return <span className="flex h-[9px] items-center gap-1">
+    <span className="bh-muted w-2.5 shrink-0 text-center text-[9px] leading-[9px]" aria-hidden="true">{kind === 'cost' ? '$' : '⏱'}</span>
+    <span className="bh-tl-track relative block h-[4px] min-w-0 flex-1 rounded-full" role="img"
     aria-label={`${kind === 'cost' ? 'Cost' : 'Median latency'}: ${ratio == null ? 'unknown' : `${ratio.toFixed(2)}× ${referenceLabel}, ${zone}`}${derived ? ' (derived from Speed axis)' : ''}`}
     data-bh-tl-cost={kind === 'cost' ? zone ?? 'unknown' : undefined}
     data-bh-tl-latency={kind === 'latency' ? zone ?? 'unknown' : undefined}
@@ -141,7 +141,7 @@ export function JevCapabilityRanking({ systems, revision, officialHref, benchNam
       {lead && <> <b>{shortName(lead.r.row.display)}</b> leads the {classLabel} systems with {one(lead.r.capability)}.</>}
     </p>
     <p className="bh-muted mt-2 text-[13px] leading-snug" data-bh-jev-class-summary>
-      {classLabel} means at most {limits.factor}× {referenceLabel}&apos;s cost and median latency. <a className="text-accent underline" href="#jev-class-method">How we choose ↘</a>
+      {classLabel} means at most {limits.factor}× the cost and median latency of {referenceLabel}. <a className="text-accent underline" href="#jev-class-method">How we choose ↘</a>
     </p>
 
     <figure className="bh-panel mt-4 p-4 sm:p-5" data-bh-jev-capability-bars aria-labelledby="jev-capability-title">
