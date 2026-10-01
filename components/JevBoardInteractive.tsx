@@ -184,7 +184,11 @@ function summariseGates(rows: JevBoardViewRow[], gates: Map<string, JevGatePenal
   for (const axis of ['intelligence', 'speed', 'cost'] as const) {
     const hit = rows.filter((r) => gates.get(r.key)?.gates.some((g) => g.axis === axis));
     if (!hit.length) continue;
-    const worst = hit.reduce((a, b) => (gates.get(a.key)!.factor <= gates.get(b.key)!.factor ? a : b));
+    // The example is the row the gate moves furthest from where its weighted axes alone would put it (e.g. GPT-6 Luna); a
+    // gate of 0 (an axis at 0) only says the row has no measurement there, so a partial gate is the better example.
+    const lost = (r: JevBoardViewRow) => (gates.get(r.key)!.ungated ?? 0) - (r.jevbench_score ?? 0);
+    const partial = hit.filter((r) => gates.get(r.key)!.factor > 0);
+    const worst = (partial.length ? partial : hit).reduce((a, b) => (lost(a) >= lost(b) ? a : b));
     const g = gates.get(worst.key)!;
     out.push({ axis, count: hit.length, atZero: g.gates.some((x) => x.axis === axis && !x.weighted), example: `${shortName(worst.display)} ${one(g.ungated)} → ${one(worst.jevbench_score)}` });
   }
