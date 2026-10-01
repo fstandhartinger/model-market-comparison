@@ -6,8 +6,8 @@ import { JevHistoryLazy } from '../../components/JevHistoryLazy';
 const OG_ART_REVISION = 'og4'; // Keep the live board share card evergreen across releases.
 
 export async function generateMetadata(): Promise<Metadata> {
-  const title = 'JevBench by Benchmark Heaven — Jev-class model benchmark';
-  const description = 'Compare Jev-class decision models across intelligence, calibration, speed, and cost with JevBench.';
+  const title = 'JevBench Capability Score by Benchmark Heaven — Jev-class model benchmark';
+  const description = 'JevBench Capability Score ranks decision models within cost and latency caps. Compare intelligence, calibration, speed, and cost.';
   const imageAlt = 'JevBench by Benchmark Heaven: a benchmark for Jev-class decision models across intelligence, calibration, speed, and cost.';
   const image = `https://benchmarkheaven.com/jev-models/opengraph-image?v=${OG_ART_REVISION}`;
   return {

@@ -7,7 +7,7 @@ import {
 } from './JevBoardShared';
 import { JEV_TYPE_LABEL, jevLegendTypes } from './jevTypes';
 import { JEV_AXES, OFFICIAL_WEIGHTS, isOfficialWeights, weightedJevScore, type JevAxis, type JevWeights } from '../lib/jevbench-axis-weights.mjs';
-import { jevV15BoardScore } from '../lib/jevbench-v15-board.mjs';
+import { jevV15BoardScore, jevBoardAlternative } from '../lib/jevbench-v15-board.mjs';
 import { withFieldNames } from './jevFieldNames';
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 
@@ -242,7 +242,7 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
   // F-223 (Fable pass 42): one ranking, one figure. The official score's 95% interval is drawn here — on the official
   // weights and the Overall view only, because the published interval belongs to the official score, not to a re-scored one.
   const officialOverall = !custom && view === 'overall';
-  const bar = (row: JevBoardViewRow) => <JevScoreBar key={row.key} row={row} metric={metric} heat={heat} isNew={row.isNew} name={(collide.get(shortName(row.display)) ?? 0) > 1 ? row.display : undefined} ci={officialOverall ? row.ci ?? null : null} />;
+  const bar = (row: JevBoardViewRow) => <JevScoreBar key={row.key} row={row} metric={metric} heat={heat} isNew={row.isNew} name={(collide.get(shortName(row.display)) ?? 0) > 1 ? row.display : undefined} ci={officialOverall ? row.ci ?? null : null} alternative={jevBoardAlternative(row, rows, weights, rescore)} />;
   const status = `${shown.length} of ${rows.length} systems, sorted by ${SORT_LABEL[sort.key]}, ${dirWords(sort)}.`;
 
   return <figure className="bh-panel mt-6 p-4 sm:p-5" data-bh-jev14-chart data-bh-jev14-view={view} data-bh-jev14-compact={compactMobile ? '1' : undefined} aria-labelledby="jev14-chart-title">
@@ -314,6 +314,7 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
     </p>
     <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="Legend" data-bh-jev14-legend>
       {types.map((t) => <li key={t} style={typeVar(t)} data-bh-jev14-class={t} data-bh-jev14-class-labelled={JEV_TYPE_LABEL[t] ? '1' : '0'}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[t] ?? <code title="Class named in the artifact; description pending">{t}</code>}</li>)}
+      {rows.some((r) => r.alt) && <li><span className="bh-jev-alt-bar mr-1.5 inline-block h-[6px] w-4" style={typeVar(rows.find((r) => r.alt)!.class)} />Striped bar = same system priced at its base-model reference rate</li>}
       {unranked > 0 && <li><span className="bh-jevc-swatch is-partial mr-1.5" />Shown, not ranked</li>}
     </ul>
     <figcaption className="bh-muted mt-3 text-[11.5px] leading-snug">I, C, S, K = Intelligence, Calibration, Speed, Cost; the est. pill = <a href="#jev-costs" className="text-accent underline">estimated cost</a>; ann. = announced price; API = the operator&apos;s endpoint saw sealed item text, without answers{newLabel ? <>; new = first listed in {newLabel}</> : null}; $/1k decisions = US dollars per 1,000 decisions (not heat-shaded). <span className="hidden sm:inline">Click a column heading to sort. </span>Names link to each project.</figcaption>

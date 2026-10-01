@@ -52,7 +52,7 @@ test('F-204: one name per axis, "decisions" as the unit, one arrow per direction
     assert.doesNotMatch(src, /per 1,000 tasks/);
   }
   assert.match(ranking, /\$\/1k decisions/);
-  assert.match(ranking, /Thin red line = cost per 1,000 decisions;/);
+  assert.match(ranking, /Thin bars: cost above, median latency below;/);
   assert.match(ranking, /\* = est\. \(estimated cost\)\./, 'the marker legend uses the same word as the tables’ pill');
   // The flat charts state the direction once, in Florian's top hints.
   assert.match(bubble, /'\$ per 1,000 decisions \(log\)' : 'Median-latency speed'/);
