@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { access, readFile } from 'node:fs/promises';
-import { defaultMultimodalPreviewVersion, readMultimodalPreview, readMultimodalPreviewV02PageData } from '../lib/jevbench-multimodal-preview.mjs';
+import { defaultMultimodalPreviewVersion, readArchivedMultimodalPreviewV014, readMultimodalPreview, readMultimodalPreviewV02PageData } from '../lib/jevbench-multimodal-preview.mjs';
 import { OFFICIAL_WEIGHTS, weightedJevScore } from '../lib/jevbench-axis-weights.mjs';
 
 // CR-241 (Florian 30 Sep 2026): PR #105 replaced /image-jev-bench with a standalone route.ts that returned a raw HTML
@@ -48,7 +48,9 @@ test('CR-242: the public ImageJevBench page stages v0.2 in version tabs with agg
   for (const marker of ['<ScoreBars', 'id="overall-heading"', '<RankingTable', '<ImageJevRadar']) {
     assert.ok(content.includes(marker), `ImageJevBench keeps the v0.1.4 ${marker}`);
   }
-  const artifact = await readMultimodalPreview();
+  // v0.2 references and the v0.1.4 tab are anchored to the archived v0.1.4 bytes; the live artifact is v0.1.5.
+  const { artifact } = await readArchivedMultimodalPreviewV014();
+  assert.equal(artifact.revision, 'v0.1.4');
   assert.ok(artifact.ranking.length >= IMAGEJEV_MIN_RANKED_SYSTEMS,
     `the v0.1.4 tab retains at least ${IMAGEJEV_MIN_RANKED_SYSTEMS} systems`);
 
@@ -125,7 +127,7 @@ test('CR-242: the public ImageJevBench page stages v0.2 in version tabs with agg
       assert.ok(Number.isFinite(reproduced) && Math.abs(reproduced - row.score) < 0.005, `${row.key} official score matches the What-If formula`);
     }
   }
-  assert.equal(await defaultMultimodalPreviewVersion(), v02Bundle.artifact.status === 'preview' && v02Bundle.artifact.ranking.length > 0 ? 'v0.2.0' : 'v0.1.4');
+  assert.equal(await defaultMultimodalPreviewVersion(), v02Bundle.artifact.status === 'preview' && v02Bundle.artifact.ranking.length > 0 ? 'v0.2.0' : 'v0.1.5');
   assert.match(content, /<ImageJevV02RankingTable systems=\{systems\} \/>/);
   assert.match(content, /data-bh-imagejev-v02-unrankable-table/);
   for (const marker of ['data-bh-imagejev-v02-table-controls', 'Search measured systems', 'data-bh-imagejev-v02-filter', 'aria-sort={ariaSort}', 'data-bh-imagejev-v02-columns="compact"', 'data-bh-imagejev-v02-measured-row']) {
@@ -145,4 +147,25 @@ test('CR-241: the legacy v0.2 preview stays noindex and the prior archive path s
   assert.match(normalPage, /searchParams/);
   assert.match(content, /data-bh-imagejev-version-tabs/);
   assert.match(content, /data-bh-imagejev-version-tab=\{version\}/);
+});
+
+test('CR-242: after CR-248 the page keeps v0.2 default plus separate archived v0.1.5 and v0.1.4 tabs', async () => {
+  const [content, publicPage, live, archived] = await Promise.all([
+    read('../app/jev-models/multimodal-preview/page.tsx'), read('../app/image-jev-bench/page.tsx'),
+    readMultimodalPreview(), readArchivedMultimodalPreviewV014(),
+  ]);
+  assert.equal(live.revision, 'v0.1.5');
+  assert.equal(live.ranking.length, 50);
+  assert.equal(archived.sha256, '385aba04acb0649f73264f57b237fa6bcf481763641978d732f81b4e88ba2150');
+  assert.equal(archived.artifact.ranking.length, 50);
+  assert.match(content, /\(\['v0\.2\.0', 'v0\.1\.5', 'v0\.1\.4'\] as const\)/, 'three version tabs in a fixed order');
+  assert.match(content, /<VersionTabs selected="v0\.1\.5" \{\.\.\.versionTabs\} \/>/);
+  assert.match(content, /<VersionTabs selected="v0\.1\.4" \{\.\.\.versionTabs\} \/>/);
+  const legacy = content.slice(content.indexOf('async function ArchivedV014Content'), content.indexOf('type ImageJevTabVersion'));
+  assert.ok(content.indexOf('export async function MultimodalPreviewContent') < content.indexOf('async function ArchivedV014Content'));
+  assert.match(legacy, /const a: any = \(await readArchivedMultimodalPreviewV014\(\)\)\.artifact;/, 'the v0.1.4 tab reads the byte-pinned archive, not the live artifact');
+  assert.ok(legacy.indexOf('<ScoreBars systems={a.ranking} track="all" />') < legacy.indexOf('<RankingTable systems={a.ranking} track="all" all />'));
+  assert.match(legacy, /PRICING-v0\.1\.4\.md/, 'v0.1.4 keeps its original base-model pricing disclosure');
+  assert.match(content, /selected === 'v0\.1\.4' \? <ArchivedV014Content versionTabs=\{versionTabs\} \/> : <MultimodalPreviewContent versionTabs=\{versionTabs\} \/>/);
+  assert.match(publicPage, /requested === 'v0\.1\.4' \|\| requested === 'v0\.1\.5' \|\| requested === 'v0\.2\.0'/);
 });

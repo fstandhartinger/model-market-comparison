@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import {
+  readArchivedMultimodalPreviewV014,
   readMultimodalPreview, readMultimodalPreviewV02, multimodalPreviewV02VisibleKeys,
   validateMultimodalPreviewV02PresentationDerivation,
 } from '../lib/jevbench-multimodal-preview.mjs';
@@ -28,7 +29,8 @@ test('v0.2 page data keeps 51 distinct entries: 45 composites, 3 measured NULL, 
   const unrankable = new Set(artifact.measured_unrankable_rows.map((row) => row.key));
   assert.equal(artifact.reference_rows.filter((row) => !unrankable.has(row.key)).length, 3);
   assert.equal(multimodalPreviewV02VisibleKeys(artifact).size, 51);
-  const prior = await readMultimodalPreview();
+  const { artifact: prior } = await readArchivedMultimodalPreviewV014();
+  assert.equal(prior.revision, 'v0.1.4');
   assert.equal(prior.ranking.length, 50, 'archive v0.1.4 keeps all 50 rows');
 });
 
