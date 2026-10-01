@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { access, readFile } from 'node:fs/promises';
-import { formatMatchedGapPp, readArchivedMultimodalPreviewV011, readArchivedMultimodalPreviewV012, readArchivedMultimodalPreviewV013, readMultimodalPreview, validatePreviewTracks } from '../lib/jevbench-multimodal-preview.mjs';
+import { formatMatchedGapPp, readArchivedMultimodalPreviewV011, readArchivedMultimodalPreviewV012, readArchivedMultimodalPreviewV013, readArchivedMultimodalPreviewV014, readMultimodalPreview, validatePreviewTracks } from '../lib/jevbench-multimodal-preview.mjs';
 
 const expectedTopFive = [
   'Imajev-4B',
@@ -28,7 +28,7 @@ function longArrays(value, path = 'root') {
 }
 
 test('Image JevBench v0.1.4 preserves the frozen method and prices Wity-1 at its base-model estimate', async () => {
-  const a = await readMultimodalPreview();
+  const { artifact: a } = await readArchivedMultimodalPreviewV014();
   assert.equal(a.benchmark, 'Image JevBench v0.1.4');
   assert.equal(a.revision, 'v0.1.4');
   assert.equal(a.sealed_item_details_included, false);
@@ -125,6 +125,13 @@ test('Image JevBench v0.1.4 preserves the frozen method and prices Wity-1 at its
   // The release candidate-coverage roster is metadata, not per-item output.
   // Reject every other unexpectedly long array in the validated artifact.
   assert.deepEqual(longArrays(a), ['root.ranking', 'root.candidate_coverage.candidates']);
+});
+
+test('Image JevBench v0.1.4 archive is byte-pinned separately from the live preview', async () => {
+  const archived = await readArchivedMultimodalPreviewV014();
+  assert.equal(archived.sha256, '385aba04acb0649f73264f57b237fa6bcf481763641978d732f81b4e88ba2150');
+  assert.equal(archived.artifact.revision, 'v0.1.4');
+  assert.equal(archived.artifact.n_systems, 50);
 });
 
 test('Image JevBench v0.1.1 is preserved as the exact parent release artifact', async () => {
