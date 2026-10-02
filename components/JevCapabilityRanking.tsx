@@ -85,7 +85,7 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
     <dt className="text-gray-400">Base model</dt><dd data-bh-base-model-tip={row.key}>
       <BaseModelDisplay benchmark={benchmark} systemKey={row.key} prefix="" />
     </dd>
-    {benchmark === 'imagejevbench' && <><dt className="text-gray-400">Image release</dt><dd>{row.image_revision ?? 'v0.2.0'} · {(row.image_revision ?? 'v0.2.0') === 'v0.2.0' ? 'CORE ranking' : 'full benchmark'} · <a href={imageJevSystemPath(row.key, row.image_revision)} className="underline" data-bh-mm-system-details={row.key}>details</a></dd></>}
+    {benchmark === 'imagejevbench' && row.image_revision && <><dt className="text-gray-400">Image release</dt><dd>{row.image_revision} · {row.image_revision === 'v0.2.0' ? 'CORE ranking' : 'full benchmark'} · <a href={imageJevSystemPath(row.key, row.image_revision)} className="underline" data-bh-mm-system-details={row.key}>details</a></dd></>}
     <dt className="text-gray-400">Capability Score</dt><dd className="tabular font-semibold">{one(capability)}</dd>
     <dt className="text-gray-400">Intelligence</dt><dd className="tabular">{intelligence == null ? 'unknown' : one(intelligence)}</dd>
     <dt className="text-gray-400">Calibration</dt><dd className="tabular">{calibration == null ? 'unknown' : one(calibration)}</dd>

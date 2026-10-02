@@ -333,6 +333,29 @@ test('CR-254 v02 detail Wity shows both exact tariff scores, costs and provenanc
   assert.doesNotMatch(html,/data-bh-mm-author-review/);
 });
 
+test('CR-254 archived Wity detail preserves the flat v015 base-price score and hypothetical rank', async () => {
+  const route = await detailRoute('v0.1.5');
+  const html = renderToStaticMarkup(await route.default({ params: Promise.resolve({ system: 'wity_1' }) }));
+  assert.match(html, /<h2[^>]*>Base-model price<\/h2>/);
+  assert.match(html, /Composite 74\.364/);
+  assert.match(html, /would be #2/);
+  assert.match(html, /data-bh-mm-author-review/);
+  const archived = await detailRoute('v0.1.4');
+  const original = renderToStaticMarkup(await archived.default({ params: Promise.resolve({ system: 'wity_1' }) }));
+  assert.doesNotMatch(original, /data-bh-mm-detail-pricing-alternative/);
+});
+
+test('CR-254 historical references show provenance without a current measurement block', async () => {
+  const { systems } = await readImageJevDetails();
+  const route = await detailRoute('v0.2.0');
+  for (const row of systems.filter(r => r.status === 'historical-reference')) {
+    const html = renderToStaticMarkup(await route.default({ params: Promise.resolve({ system: row.key }) }));
+    assert.match(html, /data-bh-mm-detail-reference/);
+    assert.doesNotMatch(html, /data-bh-mm-system-measurement|Not measured s/);
+    assert.ok(html.includes(row.reason));
+  }
+});
+
 test('CR-254 v02 shared bars/table/tooltips and local ranked/NULL/reference cells link selected identities', async () => {
   const {artifact}=await readMultimodalPreviewV02();
   const {systems}=await readImageJevDetails();

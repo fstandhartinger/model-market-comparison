@@ -26,6 +26,8 @@ export async function ImageJevSystemDetail({ system, revision = 'v0.2.0' }: { sy
   const source = row.source_url;
   const board = imageJevBoardPath(found.revision);
   const alternative = row.pricing_alternative?.tracks[row.track];
+  const alternativeScore = typeof alternative?.composite === 'number' ? alternative.composite : alternative?.composite?.score;
+  const alternativeRank = row.pricing_alternative?.rank_if_applied ?? row.pricing_alternative?.would_rank;
   return <>
     <nav className="text-sm"><Link href={board} className="text-accent underline">← Back to the full Image JevBench leaderboard</Link></nav>
     <header className="bh-page-head mt-3">
@@ -63,12 +65,12 @@ export async function ImageJevSystemDetail({ system, revision = 'v0.2.0' }: { sy
       {row.previous && <p className="mt-2">Previous release: {row.previous.rank == null ? 'no rank' : `#${row.previous.rank}`} · {number(row.previous.score)}</p>}
     </section>}
     {alternative && <section className="bh-panel mt-8 p-5" data-bh-mm-detail-pricing-alternative>
-      <h2 className="text-xl font-semibold">{row.pricing_alternative!.label}</h2>
+      <h2 className="text-xl font-semibold">{row.pricing_alternative!.label ?? 'Base-model price'}</h2>
       <p className="mt-2">{row.pricing_alternative!.basis}</p>
-      <p className="mt-2">Composite {number(alternative.composite?.score)} · Cost axis {number(alternative.cost_score, 1)} · USD {number(alternative.cost?.usd_per_1000 ?? alternative.usd_per_1000, 6)} per 1,000 decisions{row.pricing_alternative!.rank_if_applied != null ? ` · would be #${row.pricing_alternative!.rank_if_applied}` : ''}.</p>
+      <p className="mt-2">Composite {number(alternativeScore)} · Cost axis {number(alternative.cost_score, 1)} · USD {number(alternative.cost?.usd_per_1000 ?? alternative.usd_per_1000, 6)} per 1,000 decisions{alternativeRank != null ? ` · would be #${alternativeRank}` : ''}.</p>
       {row.pricing_alternative!.source && <p className="bh-muted mt-2">{row.pricing_alternative!.source}</p>}
     </section>}
-    <section className="bh-panel mt-8 p-5" aria-labelledby="imagejev-system-measurement" data-bh-mm-system-measurement>
+    {row.status !== 'historical-reference' && <section className="bh-panel mt-8 p-5" aria-labelledby="imagejev-system-measurement" data-bh-mm-system-measurement>
       <h2 id="imagejev-system-measurement" className="text-xl font-semibold">Cost and speed evidence</h2>
       <dl className="mt-3 grid gap-4 text-sm sm:grid-cols-2">
         <div><dt className="font-semibold">Cost per 1,000 decisions</dt><dd className="tabular-nums">{row.cost?.usd_per_1000 == null ? 'Unavailable' : `USD ${number(row.cost.usd_per_1000, 6)}`}</dd></div>
@@ -82,7 +84,7 @@ export async function ImageJevSystemDetail({ system, revision = 'v0.2.0' }: { sy
         {row.prior_exposure && <div><dt className="font-semibold">Exposure / timing context</dt><dd className="bh-muted">{row.prior_exposure}</dd></div>}
         {typeof row.note === 'string' && row.note && <div><dt className="font-semibold">Measurement note</dt><dd className="bh-muted">{row.note}</dd></div>}
       </dl>
-      <p className="bh-muted mt-4 text-sm">Artifact built {artifact.built_utc}. Scores and ranks can change in a later release. See the <Link href={`${board}#${found.revision === 'v0.2.0' ? 'imagejev-v02-method-heading' : 'method-heading'}`} className="text-accent underline">method notes</Link>.</p>
-    </section>
+    </section>}
+    <p className="bh-muted mt-4 text-sm">Artifact built {artifact.built_utc}. Scores and ranks can change in a later release. See the <Link href={`${board}#${found.revision === 'v0.2.0' ? 'imagejev-v02-method-heading' : 'method-heading'}`} className="text-accent underline">method notes</Link>.</p>
   </>;
 }
