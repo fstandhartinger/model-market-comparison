@@ -4,6 +4,7 @@ import { Radar, Swatch, type Series, type Spoke } from "./JevRadars";
 import { JEV_TYPE_LABEL, JEV_TYPE_VAR } from "./jevTypes";
 import { SystemCombobox } from "./JevCompareV14";
 import { jevSourceUrl } from "./jevSystemLinks";
+import { imageJevSourceUrl } from "../lib/imagejev-system-links.mjs";
 import type { CompareCategories, CategoryDim } from "../lib/jevbench-categories.mjs";
 
 // CR-205: the v1.4 board's two-system compare, on v1.5 data. Four radars per pair — the four score axes,
@@ -86,8 +87,8 @@ function parsePair(search: string, keys: Set<string>): [string, string] | null {
   return a && b && a !== b && keys.has(a) && keys.has(b) ? [a, b] : null;
 }
 
-export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, axesOnly = false, categories = null }: {
-  rows: JevCompareV15Row[]; openDecisions: number; sealedDecisions: number; heading?: string; axesOnly?: boolean; categories?: CompareCategories | null;
+export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, axesOnly = false, categories = null, imageRevision }: {
+  rows: JevCompareV15Row[]; openDecisions: number; sealedDecisions: number; heading?: string; axesOnly?: boolean; categories?: CompareCategories | null; imageRevision?: string;
 }) {
   const ranked = rows.filter((r) => r.rank !== null);
   const unranked = rows.filter((r) => r.rank === null);
@@ -114,9 +115,9 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
   const A = rows.find((r) => r.key === a) ?? first, B = rows.find((r) => r.key === b) ?? second;
   const pair = [A, B], s = series(A, B);
   const axisSpokes: Spoke[] = AXES.map(([k, label]) => ({
-    key: k, lines: [label], thin: [false, false],
-    values: pair.map((r) => r.axes?.[k] ?? 0),
-    texts: pair.map((r) => (r.axes == null ? "not scored" : r.axes[k] == null ? "none (0)" : one(r.axes[k]))),
+    key: k, lines: [label], thin: pair.map((r) => Boolean(imageRevision) && r.axes?.[k] == null),
+    values: pair.map((r) => imageRevision ? r.axes?.[k] ?? null : r.axes?.[k] ?? 0),
+    texts: pair.map((r) => imageRevision ? one(r.axes?.[k] ?? null) : (r.axes == null ? "not scored" : r.axes[k] == null ? "none (0)" : one(r.axes[k]))),
   }));
   const typeSpokes = ccSpokes(pair, TYPE_SPOKES, (r, k) => {
     const [set, t] = k.split("|");
@@ -126,6 +127,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
   const sealedTierSpokes = ccSpokes(pair, TIERS, (r, k) => r.tierCc.sealed[k as "easy"] ?? null);
   const missingFor = (spokes: Spoke[]) => pair.filter((_, k) => spokes.every((sp) => sp.values[k] === null)).map((r) => r.name);
   const status = (r: JevCompareV15Row) => r.rank !== null ? `#${r.rank}` : ({ honorable_mention: "honorable mention", partial: "partial run", unpriced: "unpriced", addendum: "roster addendum", unranked: "not ranked" } as Record<string, string>)[r.listing] ?? `${r.listing}, not ranked`;
+  const sourceUrl = (r: JevCompareV15Row) => imageRevision ? imageJevSourceUrl(r.key, r.repo, imageRevision) : jevSourceUrl(r.key, r.repo);
   const desc = (title: string, spokes: Spoke[]) => `${title}, ${s[0].name} vs ${s[1].name}. ` + spokes.map((sp) => `${sp.lines.join(" ")}: ${sp.texts[0]} vs ${sp.texts[1]}`).join("; ") + ".";
   const copy = async () => {
     const u = new URL(window.location.href); u.searchParams.set("compare", `${A.key},${B.key}`); u.hash = "compare";
@@ -139,7 +141,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
       spokes, missing: absent.map((r) => `${r.name}: ${categories!.missing[r.key] ?? "no per-category values"}`), size: { w: 500, h: 400, r: 112 } };
   });
   const figures: { key: string; title: string; note: string; spokes: Spoke[]; missing: string[]; size: { w: number; h: number; r: number }; dim?: CategoryDim }[] = [
-    { key: "axes", title: "The four score axes", note: "0–100, the values in the table. A system with no published axis draws at 0 and says so.", spokes: axisSpokes, missing: [], size: { w: 420, h: 320, r: 96 } },
+    { key: "axes", title: "The four score axes", note: imageRevision ? "0–100, the values in the selected release's table. Missing axes are shown as — and are not plotted." : "0–100, the values in the table. A system with no published axis draws at 0 and says so.", spokes: axisSpokes, missing: imageRevision ? missingFor(axisSpokes) : [], size: { w: 420, h: 320, r: 96 } },
     { key: "types", title: "Competence per request type, open / sealed", note: `Chance-corrected competence (0 = chance) for Choice, Noul and Score on the ${openDecisions} open and ${sealedDecisions} sealed decisions.`, spokes: typeSpokes, missing: missingFor(typeSpokes), size: { w: 440, h: 340, r: 100 } },
     { key: "tiers-open", title: "Competence per tier — open set", note: "Per-tier competence, the three request types pooled by their published decision counts.", spokes: openTierSpokes, missing: missingFor(openTierSpokes), size: { w: 440, h: 340, r: 100 } },
     { key: "tiers-sealed", title: "Competence per tier — sealed set", note: "Per-tier competence on the sealed decisions, types pooled the same way; item text stays private.", spokes: sealedTierSpokes, missing: missingFor(sealedTierSpokes), size: { w: 440, h: 340, r: 100 } },
@@ -157,7 +159,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
       </div>
       <div className="mt-3 flex flex-wrap items-start justify-between gap-2">
         <ul className="space-y-1 text-[13px]" aria-label="Legend" data-bh-jev15-compare-legend>
-          {pair.map((r, k) => <li key={k}><Swatch s={s[k]} /><b>{k === 0 ? "A" : "B"}: {r.repo ? <a href={jevSourceUrl(r.key, r.repo) ?? undefined} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-source={r.key}>{r.name}</a> : r.name}</b> <span className="bh-muted" data-bh-jev15-class={r.cls}>— {JEV_TYPE_LABEL[r.cls] ?? <code title="Class named in the artifact; description pending">{r.cls}</code>} · </span><span className="whitespace-nowrap">Score {one(r.score)} ({status(r)})</span></li>)}
+          {pair.map((r, k) => <li key={k}><Swatch s={s[k]} /><b>{k === 0 ? "A" : "B"}: {r.repo && sourceUrl(r) ? <a href={sourceUrl(r)!} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-source={r.key}>{r.name}</a> : r.name}</b> <span className="bh-muted" data-bh-jev15-class={r.cls}>— {JEV_TYPE_LABEL[r.cls] ?? <code title="Class named in the artifact; description pending">{r.cls}</code>} · </span><span className="whitespace-nowrap">Score {one(r.score)} ({status(r)})</span></li>)}
         </ul>
         <button type="button" className="bh-button text-xs font-semibold" onClick={copy} data-bh-jev15-compare-copy>{copied ? "Link copied" : "Copy link to this pair"}</button>
       </div>
