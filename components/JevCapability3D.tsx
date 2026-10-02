@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import { isOfficialWeights, OFFICIAL_WEIGHTS, weightedJevScore, type JevWeights } from '../lib/jevbench-axis-weights.mjs';
 import { haloDiameter, leaderTo } from '../lib/jev-3d-halo.mjs';
+import { imageJevV02CompositePoints, imageJevV02WeightsFromUrl } from '../lib/imagejev-v02-explorer.mjs';
 
 type Point = {
   key: string;
@@ -298,10 +299,11 @@ function Projected3D({ points, costBounds, jevClassOnly, tipRef, resetViewRef, r
 }
 
 // CR-214: `benchmarkName` lets AudioJevBench reuse this view without JevBench wording; default unchanged.
-export function JevCapability3D({ points, costBounds, benchmarkName = 'JevBench', classificationLabel = 'Jev-class', showClassificationFilter = true, fitLabels = false, speedLabel = 'Speed' }: {
+export function JevCapability3D({ points, costBounds, benchmarkName = 'JevBench', classificationLabel = 'Jev-class', showClassificationFilter = true, fitLabels = false, speedLabel = 'Speed', compositeMode = 'legacy' }: {
   points: Point[]; costBounds: [number, number]; benchmarkName?: string; classificationLabel?: string; showClassificationFilter?: boolean; fitLabels?: boolean;
   // ImageJevBench v0.2 plots median-latency speed (adjusted p50) here; JevBench keeps the default wording.
   speedLabel?: string;
+  compositeMode?: 'legacy' | 'image-v02';
 }) {
   const boxRef = useRef<HTMLDivElement>(null);
   const tipRef = useRef<HTMLDivElement>(null);
@@ -318,14 +320,19 @@ export function JevCapability3D({ points, costBounds, benchmarkName = 'JevBench'
   const [status, setStatus] = useState('The interactive 3D view loads when this panel scrolls into view.');
 
   useEffect(() => {
-    setWeights(weightsFromUrl(new URLSearchParams(window.location.search).get('w')) ?? OFFICIAL_WEIGHTS);
+    const readWeights = () => setWeights(compositeMode === 'image-v02' ? imageJevV02WeightsFromUrl(window.location.href) : weightsFromUrl(new URLSearchParams(window.location.search).get('w')) ?? OFFICIAL_WEIGHTS);
+    readWeights();
     const onWeightsChange = (event: Event) => {
       const next = (event as CustomEvent<{ weights?: JevWeights }>).detail?.weights;
       if (isWeights(next)) setWeights(next);
     };
     window.addEventListener('jevbench-weights-change', onWeightsChange);
-    return () => window.removeEventListener('jevbench-weights-change', onWeightsChange);
-  }, []);
+    if (compositeMode === 'image-v02') window.addEventListener('popstate', readWeights);
+    return () => {
+      window.removeEventListener('jevbench-weights-change', onWeightsChange);
+      if (compositeMode === 'image-v02') window.removeEventListener('popstate', readWeights);
+    };
+  }, [compositeMode]);
 
   useEffect(() => { updateOpacityRef.current(jevClassOnly); }, [jevClassOnly]);
 
@@ -344,11 +351,11 @@ export function JevCapability3D({ points, costBounds, benchmarkName = 'JevBench'
   }, [expanded]);
 
   const officialWeights = isOfficialWeights(weights);
-  const ranked = points
-    .filter((point) => point.rank != null && (!jevClassOnly || point.inClass))
-    .map((point) => ({ point, score: officialWeights ? point.jevbenchScore ?? weightedJevScore(point.axes, weights) : weightedJevScore(point.axes, weights) }))
-    .filter((entry): entry is { point: Point; score: number } => entry.score != null)
-    .sort((a, b) => b.score - a.score || (a.point.rank ?? Infinity) - (b.point.rank ?? Infinity) || a.point.name.localeCompare(b.point.name))
+  const candidates = points.filter((point) => point.rank != null && (!jevClassOnly || point.inClass));
+  const ranked = (compositeMode === 'image-v02' ? imageJevV02CompositePoints(candidates, weights) : candidates
+    .map((point) => ({ point, score: officialWeights ? point.jevbenchScore ?? weightedJevScore(point.axes, weights) : weightedJevScore(point.axes, weights), penalties: undefined }))
+    .filter((entry): entry is { point: Point; score: number; penalties: undefined } => entry.score != null)
+    .sort((a, b) => b.score - a.score || (a.point.rank ?? Infinity) - (b.point.rank ?? Infinity) || a.point.name.localeCompare(b.point.name)))
     .slice(0, 5);
   const rankedKey = ranked.map((entry) => `${entry.point.key}:${entry.score.toFixed(2)}`).join('|');
 
@@ -718,9 +725,11 @@ export function JevCapability3D({ points, costBounds, benchmarkName = 'JevBench'
     </div>
     <p className="bh-muted mt-2 text-xs">Top five {showClassificationFilter && jevClassOnly ? `${classificationLabel} ` : ''}systems by {officialWeights ? `official ${benchmarkName} Composite Score` : 'Composite Score with the selected weights (unofficial)'}.</p>
     <ol className="mt-2 grid gap-x-4 gap-y-2 text-xs sm:grid-cols-2" aria-label={`Top five ${showClassificationFilter && jevClassOnly ? `${classificationLabel} ` : ''}systems by ${officialWeights ? 'official' : 'custom'} composite score in the 3D view`} data-bh-jev14-3d-top-five>
-      {ranked.map(({ point, score }, index) => <li key={point.key} className="flex min-w-0 items-start gap-2" data-bh-jev14-3d-leader={point.key}>
+      {ranked.map(({ point, score, penalties }, index) => <li key={point.key} className="flex min-w-0 items-start gap-2" data-bh-jev14-3d-leader={point.key}>
         <span className="mt-1 inline-block h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: `rgb(var(${point.colorVariable}))` }} aria-hidden="true" />
-        <span className="min-w-0"><b>Composite #{index + 1} · {point.name}</b><br /><span className="bh-muted">Score {score.toFixed(1)} · Capability {point.capability.toFixed(1)} · Cost {describeCost(point.cost)} / 1,000 decisions · {speedLabel} {point.speed?.toFixed(1) ?? '—'}{point.rank == null ? '' : ` · Official ${benchmarkName} #${point.rank}`}</span></span>
+        <span className="min-w-0"><b>Composite #{index + 1} · {point.name}</b><br /><span className="bh-muted">Score {score.toFixed(1)} · Capability {point.capability.toFixed(1)} · Cost {describeCost(point.cost)} / 1,000 decisions · {speedLabel} {point.speed?.toFixed(1) ?? '—'}{point.rank == null ? '' : ` · Official ${benchmarkName} #${point.rank}`}</span>
+          {penalties && penalties.gates.length > 0 && <span className="bh-muted mt-1 block" data-bh-imagejev-v02-3d-gate={point.key}>Before penalties {penalties.ungated?.toFixed(2)} · gate ×{penalties.factor.toFixed(3)}: {penalties.gates.map((gate) => `${gate.axis} ${gate.value.toFixed(2)} ×${gate.factor.toFixed(3)}${gate.weighted ? '' : ' (applies although its weight is 0)'}`).join(' · ')}</span>}
+        </span>
       </li>)}
     </ol>
     <p className="bh-muted mt-1 text-center text-xs" role="status" aria-live="polite" data-bh-jev14-capability-3d-status>{status}</p>

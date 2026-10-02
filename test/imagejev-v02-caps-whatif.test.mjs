@@ -7,7 +7,7 @@ import { jevClassRows, speedFromLatency } from '../lib/jevbench-jev-class.mjs';
 import { capsFromUrl, capsToUrl } from '../lib/jevbench-class-caps.mjs';
 import { OFFICIAL_WEIGHTS, weightedJevScore } from '../lib/jevbench-axis-weights.mjs';
 import { jevV15BoardScore } from '../lib/jevbench-v15-board.mjs';
-import { imageJevV02WhatIfRows, imageJevV02WeightsFromUrl, imageJevV02WeightsToUrl, imageJevV02ScatterScale } from '../lib/imagejev-v02-explorer.mjs';
+import { imageJevV02WhatIfRows, imageJevV02CompositePoints, imageJevV02WeightsFromUrl, imageJevV02WeightsToUrl, imageJevV02ScatterScale } from '../lib/imagejev-v02-explorer.mjs';
 
 const { artifact } = await readMultimodalPreviewV02();
 const systems = imageJevBoardSystems(artifact);
@@ -103,6 +103,26 @@ test('NULLs and reference-only rows cannot acquire a custom WhatIf rank, includi
   const nullRank = { ...artifact.ranking[0], rank: null };
   assert.deepEqual(imageJevV02WhatIfRows([clone, nullScore, nullRank, ...artifact.measured_unrankable_rows, ...artifact.reference_rows], intelligenceOnly), []);
   assert.deepEqual(imageJevV02WhatIfRows(artifact.ranking, { intelligence: 0, calibration: 0, speed: 0, cost: 0 }), []);
+});
+
+test('Image-only 3D composite adapter matches the WhatIf order and gates without using median speed as a composite axis', () => {
+  const points = artifact.ranking.map((row) => ({ key: row.key, name: row.name, rank: row.rank, jevbenchScore: row.score, speed: speedFromLatency(row.tracks.core.speed.adjusted_p50_s), axes: row.tracks.core.axes }));
+  for (const weights of [OFFICIAL_WEIGHTS, intelligenceOnly, { intelligence: 0, calibration: 100, speed: 0, cost: 0 }, { intelligence: 20, calibration: 20, speed: 40, cost: 20 }]) {
+    const three = imageJevV02CompositePoints(points, weights);
+    const whatif = imageJevV02WhatIfRows(artifact.ranking, weights);
+    assert.deepEqual(three.map(({ point, score, penalties }) => [point.key, score, penalties]), whatif.map(({ system, score, penalties }) => [system.key, score, penalties]));
+    assert.ok(three.every(({ point }) => points.includes(point)), '3D point coordinates retained');
+  }
+  assert.equal(imageJevV02CompositePoints(points, intelligenceOnly)[0].point.key, 'wity_1');
+  const broken = { ...points[0], axes: { ...points[0].axes, cost: null } };
+  assert.deepEqual(imageJevV02CompositePoints([broken, { ...points[0], jevbenchScore: null }, { ...points[0], rank: null }], intelligenceOnly), []);
+  const source = read('../components/JevCapability3D.tsx');
+  assert.match(source, /compositeMode = 'legacy'/);
+  assert.match(source, /compositeMode === 'image-v02' \? imageJevV02CompositePoints\(candidates, weights\)/);
+  assert.match(source, /compositeMode === 'image-v02'\) window.addEventListener\('popstate', readWeights\)/);
+  assert.match(source, /data-bh-imagejev-v02-3d-gate=\{point.key\}/);
+  assert.match(source, /applies although its weight is 0/);
+  assert.match(read('../components/ImageJevV02Charts.tsx'), /compositeMode="image-v02"/);
 });
 
 test('actual scatter scale puts adjusted-p50 and cost boundaries on the frozen official lines', () => {

@@ -185,7 +185,7 @@ export function ImageJevV02Charts({ systems, references, showCapabilityBars = tr
         <h3 id="imagejev-v02-3d-heading" className="text-xl font-semibold">CORE capability, cost and speed in 3D</h3>
         <p className="bh-muted mt-1 text-sm">The 3D view uses the same CORE measured systems: capability vertically, lower cost to the right, and higher median-latency speed (from the adjusted p50) toward you. The selected 2D system remains selected when you switch back.</p>
         <ImageJevV02Legend />
-        <JevCapability3D points={points3d} costBounds={costBounds} benchmarkName="Image JevBench" classificationLabel="measured" showClassificationFilter={false} fitLabels speedLabel="Median speed" />
+        <JevCapability3D points={points3d} costBounds={costBounds} benchmarkName="Image JevBench" classificationLabel="measured" showClassificationFilter={false} fitLabels speedLabel="Median speed" compositeMode="image-v02" />
         <p className="bh-muted mt-2 text-xs">{points3d.length} measured CORE systems plotted; systems without cost or median latency are omitted.</p>
       </section>}
     </>}
