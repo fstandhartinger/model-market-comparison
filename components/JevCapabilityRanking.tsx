@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useId, useState, type CSSProperties, type ReactNode } from 'react';
-import { DEFAULT_CAP, clampCap, formatCap, isOfficialCaps, parseCaps, serialiseCaps, type ClassCaps } from '../lib/jevbench-class-caps.mjs';
+import { DEFAULT_CAP, clampCap, formatCap, isOfficialCaps, capsFromUrl, capsToUrl, type ClassCaps } from '../lib/jevbench-class-caps.mjs';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
 import { jevClassRows, ratioPosition, trafficLightZone, type JevClassOptions, type JevClassResult, type JevClassRow } from '../lib/jevbench-jev-class.mjs';
 import { shortName, usd } from './JevCapabilityChart';
@@ -136,7 +136,7 @@ export function JevCapabilityRanking({ systems, revision, officialHref, benchNam
   const [desktopControls, setDesktopControls] = useState(false);
   const controlId = useId();
   useEffect(() => {
-    const readCaps = () => setCaps(parseCaps(new URLSearchParams(window.location.search)));
+    const readCaps = () => setCaps(capsFromUrl(window.location.href));
     const desktop = window.matchMedia('(min-width: 640px)');
     const resizeControls = () => setDesktopControls(desktop.matches);
     readCaps();
@@ -151,9 +151,8 @@ export function JevCapabilityRanking({ systems, revision, officialHref, benchNam
   const updateCaps = (next: ClassCaps) => {
     setCaps(next);
     setCopied(false);
-    const url = new URL(window.location.href);
     // costcap / latcap only; preserve w, view, all other query parameters and the hash.
-    url.search = serialiseCaps(url.searchParams, next).toString();
+    const url = capsToUrl(window.location.href, next);
     window.history.replaceState(window.history.state, '', url);
   };
   const official = isOfficialCaps(caps);

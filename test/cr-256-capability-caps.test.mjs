@@ -145,8 +145,8 @@ test('CR-256: client ranking exposes caps, custom notes, and URL reads/writes; s
   assert.match(source, /The ranking above uses custom caps of/);
   assert.match(source, /Charts below use the official 2× caps/);
   assert.match(source, /Reset to official caps/);
-  assert.match(source, /parseCaps\(new URLSearchParams\(window.location.search\)\)/);
-  assert.match(source, /serialiseCaps\(url.searchParams, next\)/);
+  assert.match(source, /capsFromUrl\(window.location.href\)/);
+  assert.match(source, /capsToUrl\(window.location.href, next\)/);
   assert.match(source, /history.replaceState\(window.history.state, '', url\)/);
   const helpers = read('../lib/jevbench-class-caps.mjs');
   assert.match(helpers, /params.get\('costcap'\)/); assert.match(helpers, /params.get\('latcap'\)/);

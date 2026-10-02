@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { isOfficialWeights, OFFICIAL_WEIGHTS, weightedJevScore, type JevWeights } from '../lib/jevbench-axis-weights.mjs';
+import { imageJevV02WhatIfRows, imageJevV02WeightsFromUrl, imageJevV02WeightsToUrl } from '../lib/imagejev-v02-explorer.mjs';
 
 type ImageV02System = {
   key: string;
@@ -16,6 +17,7 @@ type Axis = typeof axes[number];
 const labels: Record<Axis, string> = { intelligence: 'Intelligence', calibration: 'Calibration', speed: 'Speed', cost: 'Cost' };
 const presets: Array<{ name: string; weights: JevWeights }> = [
   { name: 'Balanced · official', weights: OFFICIAL_WEIGHTS },
+  { name: 'Intelligence only', weights: { intelligence: 100, calibration: 0, speed: 0, cost: 0 } },
   { name: 'Intelligence focus', weights: { intelligence: 40, calibration: 20, speed: 20, cost: 20 } },
   { name: 'Calibration focus', weights: { intelligence: 20, calibration: 40, speed: 20, cost: 20 } },
   { name: 'Speed focus', weights: { intelligence: 20, calibration: 20, speed: 40, cost: 20 } },
@@ -32,21 +34,28 @@ export function ImageJevV02WhatIf({ systems }: { systems: ImageV02System[] }) {
     return Number.isFinite(calculated) && Math.abs((calculated as number) - system.score) < 0.005;
   });
   const presetName = presets.find((preset) => weightKey(preset.weights) === weightKey(weights))?.name ?? 'Custom weights';
-  const rescored = useMemo(() => systems.map((system) => ({
-    system,
-    score: official ? system.score : weightedJevScore(system.tracks.core.axes, weights),
-  })).filter((item): item is { system: ImageV02System; score: number } => Number.isFinite(item.score))
-    .sort((a, b) => b.score - a.score || (official ? a.system.rank - b.system.rank : a.system.name.localeCompare(b.system.name))), [systems, weights, official]);
+  const rescored = useMemo(() => imageJevV02WhatIfRows(systems, weights), [systems, weights]);
 
   useEffect(() => {
-    window.dispatchEvent(new CustomEvent('jevbench-weights-change', { detail: { weights } }));
-  }, [weights]);
+    const readWeights = () => {
+      const next = imageJevV02WeightsFromUrl(window.location.href);
+      setWeights(next);
+      window.dispatchEvent(new CustomEvent('jevbench-weights-change', { detail: { weights: next } }));
+    };
+    readWeights();
+    window.addEventListener('popstate', readWeights);
+    return () => window.removeEventListener('popstate', readWeights);
+  }, []);
 
-  const choose = (next: JevWeights) => setWeights({ ...next });
-  const change = (axis: Axis, value: number) => setWeights((previous) => {
-    const next = { ...previous, [axis]: value };
-    return axes.some((item) => next[item] > 0) ? next : previous;
-  });
+  const choose = (next: JevWeights) => {
+    setWeights({ ...next });
+    window.history.replaceState(window.history.state, '', imageJevV02WeightsToUrl(window.location.href, next));
+    window.dispatchEvent(new CustomEvent('jevbench-weights-change', { detail: { weights: next } }));
+  };
+  const change = (axis: Axis, value: number) => {
+    const next = { ...weights, [axis]: value };
+    if (axes.some((item) => next[item] > 0)) choose(next);
+  };
   if (!officialFormulaMatches) return <section className="mt-10 max-w-6xl" aria-labelledby="imagejev-v02-whatif-heading" data-bh-imagejev-v02-whatif data-bh-imagejev-v02-whatif-disabled>
     <h2 id="imagejev-v02-whatif-heading" className="text-2xl font-semibold">Presets and What-If</h2>
     <p className="bh-panel mt-4 p-4 text-sm" role="note">Weight controls are unavailable because the official CORE scores do not reproduce from the published axis aggregates within 0.005 points.</p>
@@ -72,11 +81,16 @@ export function ImageJevV02WhatIf({ systems }: { systems: ImageV02System[] }) {
       <p className="bh-muted mt-3 text-xs" aria-live="polite" data-bh-imagejev-v02-weight-summary>
         {presetName}: {axes.map((axis) => `${labels[axis]} ${weights[axis]}%`).join(' · ')}. Weights are normalized to their sum for the exploratory composite.
       </p>
+      <p className="bh-muted mt-2 text-xs" data-bh-imagejev-v02-gates-method>Penalties applied: Intelligence, Speed and Cost below 50 each multiply the weighted harmonic mean by (axis / 50)², including when that axis has weight 0. Intelligence only can therefore sort differently from the Intelligence column. Capability eligibility caps are separate from these composite penalties.</p>
       <div className="mt-5 overflow-x-auto rounded-lg border border-line">
         <table className="w-full min-w-[540px] text-left text-sm" data-bh-imagejev-v02-whatif-ranking>
           <thead><tr><th scope="col" className="p-3">What-If rank</th><th scope="col" className="p-3">System</th><th scope="col" className="p-3 text-right">{official ? 'Published CORE composite' : 'Exploratory composite'}</th><th scope="col" className="p-3 text-right">Published rank</th></tr></thead>
-          <tbody>{rescored.map(({ system, score }, index) => <tr key={system.key} className="border-t border-line" data-bh-imagejev-v02-whatif-row={system.key}>
-            <td className="p-3 tabular-nums">{index + 1}</td><th scope="row" className="p-3 text-left font-semibold">{system.name}</th>
+          <tbody>{rescored.map(({ system, score, penalties }, index) => <tr key={system.key} className="border-t border-line" data-bh-imagejev-v02-whatif-row={system.key}>
+            <td className="p-3 tabular-nums">{index + 1}</td><th scope="row" className="p-3 text-left font-semibold">{system.name}
+              {penalties.gates.length > 0 && <span className="bh-muted mt-1 block text-xs font-normal" data-bh-imagejev-v02-gate={system.key}>
+                Before penalties {penalties.ungated?.toFixed(2)} · gate ×{penalties.factor.toFixed(3)}: {penalties.gates.map((gate) => `${labels[gate.axis]} ${gate.value.toFixed(2)} ×${gate.factor.toFixed(3)}${gate.weighted ? '' : ' (applies although its weight is 0)'}`).join(' · ')}
+              </span>}
+            </th>
             <td className="p-3 text-right font-bold tabular-nums">{score.toFixed(2)}</td><td className="p-3 text-right tabular-nums">{system.rank ?? '—'}</td>
           </tr>)}</tbody>
         </table>

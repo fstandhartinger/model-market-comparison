@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic';
 import { useMemo, useState, type CSSProperties } from 'react';
 import { speedFromLatency } from '../lib/jevbench-jev-class.mjs';
+import { imageJevV02ScatterScale } from '../lib/imagejev-v02-explorer.mjs';
 
 const JevCapability3D = dynamic(
   () => import('./JevCapability3D').then((module) => module.JevCapability3D),
@@ -72,29 +73,17 @@ function ImageScatter({ kind, points, activeKey, setActiveKey, pinned, setPinned
   kind: 'cost' | 'speed'; points: Point[]; activeKey: string | null; pinned: boolean; caps?: Caps;
   setActiveKey: (key: string | null) => void; setPinned: (value: boolean) => void;
 }) {
-  const plotted = points.filter((point) => kind === 'cost' ? point.cost != null && point.cost > 0 : point.speed != null);
-  const costs = [...plotted.flatMap((point) => point.cost != null && point.cost > 0 ? [point.cost] : []), ...(caps && plotted.length ? [caps.cost] : [])];
-  const costLow = costs.length ? Math.log10(Math.min(...costs)) : -3;
-  const costHigh = costs.length ? Math.log10(Math.max(...costs)) : 0;
-  const sameCost = costLow === costHigh;
-  const minCost = sameCost ? costLow - 0.5 : costLow;
-  const maxCost = sameCost ? costHigh + 0.5 : costHigh;
+  const { plotted, minCost, maxCost, capX, xAt } = imageJevV02ScatterScale(kind, points, caps);
   const W = 360, H = 320, L = 44, R = 22, T = 18, B = 36;
-  const xAt = (point: Point) => kind === 'cost'
-    ? L + (W - L - R) * (maxCost - Math.log10(point.cost ?? 1)) / (maxCost - minCost)
-    : L + (W - L - R) * (point.speed ?? 0) / 100;
   const yAt = (point: Point) => T + (H - T - B) * (1 - point.capability / 100);
   const title = kind === 'cost' ? 'CORE Capability vs cost' : 'CORE Capability vs median latency';
   const xLabel = kind === 'cost' ? 'Cost per 1,000 decisions · lower is cheaper →' : 'Median-latency speed (adjusted p50) · higher is faster →';
-  const capX = !caps ? null : kind === 'cost'
-    ? L + (W - L - R) * (maxCost - Math.log10(caps.cost)) / (maxCost - minCost)
-    : L + (W - L - R) * speedFromLatency(caps.latency) / 100;
   const ticks = kind === 'cost'
     ? Array.from({ length: 5 }, (_, index) => index === 4 ? maxCost : minCost + (maxCost - minCost) * index / 4)
     : [0, 20, 40, 60, 80, 100];
 
   const select = (key: string) => { setActiveKey(key); setPinned(true); };
-  return <figure className="bh-panel min-w-0 p-4 sm:p-5" data-bh-imagejev-v02-scatter={kind}>
+  return <figure className="bh-panel min-w-0 p-4 sm:p-5" data-bh-imagejev-v02-scatter={kind} data-bh-imagejev-v02-cap-mode={caps ? 'official' : 'unavailable'}>
     <h3 className="text-lg font-semibold">{title}</h3>
     <p className="bh-muted mt-1 text-sm">Each panel uses the same measured CORE systems. Focus or select a point to highlight that system in both charts.</p>
     <p className="mt-3 text-sm font-medium" data-bh-imagejev-v02-y-label>CORE Capability · higher ↑</p>
@@ -125,7 +114,7 @@ function ImageScatter({ kind, points, activeKey, setActiveKey, pinned, setPinned
     </svg>
     <p className="mt-1 text-center text-sm font-medium" data-bh-imagejev-v02-x-label>{xLabel}</p>
     <ImageJevV02Legend selected />
-    <figcaption className="bh-muted mt-2 text-xs">{plotted.length} measured CORE systems plotted{plotted.length < points.length ? `; ${points.length - plotted.length} without a usable ${kind === 'cost' ? 'positive cost' : 'Speed value'} omitted` : ''}.{capX != null ? ` Dashed line: the frozen Capability Score ${kind === 'cost' ? 'cost' : 'median-latency'} cap.` : ''}</figcaption>
+    <figcaption className="bh-muted mt-2 text-xs">{plotted.length} measured CORE systems plotted{plotted.length < points.length ? `; ${points.length - plotted.length} without a usable ${kind === 'cost' ? 'positive cost' : 'Speed value'} omitted` : ''}.{capX != null ? ` Dashed line: the frozen official 2× Capability Score ${kind === 'cost' ? 'cost' : 'median-latency'} cap. Custom caps in the headline ranking do not move this line or filter these points.` : ''}</figcaption>
   </figure>;
 }
 
@@ -135,7 +124,7 @@ export function ImageJevV02Charts({ systems, references, showCapabilityBars = tr
   const [pinned, setPinned] = useState(false);
   const [view, setView] = useState<'2d' | '3d'>('2d');
   const active = points.find((point) => point.key === activeKey) ?? points[0];
-  const costs = points.flatMap((point) => point.cost != null ? [point.cost] : []);
+  const costs = points.flatMap((point) => point.cost != null && point.cost > 0 ? [point.cost] : []);
   const costBounds: [number, number] = costs.length
     ? [Math.log10(Math.max(Number.MIN_VALUE, Math.min(...costs))), Math.log10(Math.max(Number.MIN_VALUE, Math.max(...costs)))]
     : [-3, 0];

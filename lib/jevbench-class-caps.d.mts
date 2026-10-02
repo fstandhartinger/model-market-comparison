@@ -8,3 +8,5 @@ export declare function parseCaps(params: URLSearchParams): ClassCaps;
 export declare function serialiseCaps(params: URLSearchParams, caps: ClassCaps): URLSearchParams;
 export declare function formatCap(cap: number): string;
 export declare function isOfficialCaps(caps: ClassCaps): boolean;
+export declare function capsFromUrl(href: string): ClassCaps;
+export declare function capsToUrl(href: string, caps: ClassCaps): string;
