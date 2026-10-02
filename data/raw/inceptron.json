@@ -1,9 +1,9 @@
 {
   "source": "Inceptron",
   "region": "eu (Finland; HQ Sweden)",
-  "collected_at": "2026-10-01",
+  "collected_at": "2026-10-02",
   "listing_url": "https://www.inceptron.io/models",
-  "method": "scripts/fetch-inceptron-catalog.mjs (2026-10-01): one GET of Inceptron's unauthenticated OpenAI-compatible catalog https://api.inceptron.io/v1/models, the live billing meter; pricing.prompt / pricing.completion / input_cache_reads are USD per token, stored per 1M tokens with four decimals. Models with text output, the chat feature and both token prices are included; curated rows kept by api_model_id, the id in their notes, or name; new ids mapping=derived; ids no longer listed are dropped. The marketing page www.inceptron.io/models is a client-rendered list that has shown different list prices; the API is canonical. HQ Sweden (SE), datacenter Finland (FI) per OpenRouter provider metadata. See inceptron.method.md.",
+  "method": "scripts/fetch-inceptron-catalog.mjs (2026-10-02): one GET of Inceptron's unauthenticated OpenAI-compatible catalog https://api.inceptron.io/v1/models, the live billing meter; pricing.prompt / pricing.completion / input_cache_reads are USD per token, stored per 1M tokens with four decimals. Models with text output, the chat feature and both token prices are included; curated rows kept by api_model_id, the id in their notes, or name; new ids mapping=derived; ids no longer listed are dropped. The marketing page www.inceptron.io/models is a client-rendered list that has shown different list prices; the API is canonical. HQ Sweden (SE), datacenter Finland (FI) per OpenRouter provider metadata. See inceptron.method.md.",
   "models": [
     {
       "model_name": "GLM 5.2",
@@ -79,18 +79,11 @@
       "notes": "Listed by api.inceptron.io/v1/models as zai-org/GLM-5.3-Flash; fp8 quant; 1,048,576 context; text"
     }
   ],
-  "response_sha256": "c27680bbf12bf850b7de23f0978b46e8f9fd4fd9bc4034a8c00995f0abd1ac6a",
+  "response_sha256": "0b4751447dbd7092a914419c2d3fbb9ba47623a5c24aaa963c0d4613a61702d2",
   "skipped": [],
   "diff": {
     "added": [],
     "removed": [],
-    "price_changed": [
-      "GLM 5.2: 0.3933/2.95 (cache 0.191) -> 1.39/4.39 (cache 0.25)",
-      "GLM 5.3: 0.329/3.14 (cache 0.1893) -> 0.6/3.39 (cache 0.1836)",
-      "Kimi K2.6: 0.475/2.45 (cache 0.0975) -> 0.4344/2.45 (cache 0.12)",
-      "Kimi K2.7 Code: 0.6562/3.3 (cache 0.18) -> 0.6712/3.35 (cache 0.18)",
-      "DeepSeek V4 Flash 0731: 0.056/0.3634 (cache 0.027) -> 0.05/0.65 (cache 0.027)",
-      "GLM 5.3 Flash: 0.12/0.45 (cache 0.04) -> 0.225/0.45 (cache 0.08)"
-    ]
+    "price_changed": []
   }
 }
