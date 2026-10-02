@@ -122,6 +122,11 @@ except PermissionError: masked=''
 assert 'ann@example.com' not in masked and masked==''
 assert (p/'notes.txt').read_text()=='visible control'
 import os
+def target(n):
+ try: return os.readlink(f'/proc/self/fd/{{n}}')
+ except OSError: return '/proc/'
+extra=[n for n in os.listdir('/proc/self/fd') if n not in ('0','1','2') and not target(n).startswith('/proc/')]
+assert not extra, 'inherited descriptors: '+repr([target(n) for n in extra])
 for n in os.listdir('/proc/self/fd'):
  try: entries=os.listdir(f'/proc/self/fd/{{n}}/')
  except OSError: continue
