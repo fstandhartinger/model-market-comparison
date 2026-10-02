@@ -21,7 +21,6 @@ TABLE = "bh_priority_evaluation_requests"
 EVENTS = "bh_priority_eval_customer_mail_events"
 SECRET_FILE = HOME / ".config/dev-secrets.env"
 ACCOUNT = "florian.standhartinger@gmail.com"
-GMAIL_SEARCH_URL = "https://mail.google.com/mail/u/0/#search/"
 EMAIL_RE = re.compile(r"^[^\s@<>]{1,64}@[A-Za-z0-9.-]{1,190}$")
 
 
@@ -117,9 +116,15 @@ def plain_body(message: email.message.Message) -> tuple[str, bool]:
 
 
 CREDENTIAL_RE = re.compile(
-    r"(api[_ -]?key|secret|token|bearer|passw|authori[sz]ation|\bsk-|\bkey\b|[A-Za-z0-9+/=._\-]{24,})", re.I)
+    r"(api[_ -]?key|secret|token|bearer|passw|\bpw\b|\bpwd\b|\bpass\b|login|cred|authori[sz]ation|\bsk-|\bkey\b"
+    r"|[A-Za-z0-9+/=._\-]{24,})", re.I)
 ACCESS_SUMMARY = ("Customer access reply received (may contain credentials). Content withheld; private 0600 copy "
                   "only. Agent-owned access reconciliation: route through private host-only key intake.")
+# Default-withhold: customer free text never leaves the private copy. CREDENTIAL_RE is only a routing hint
+# (access reply vs. other reply), not a claim of complete secret detection.
+REPLY_SUMMARY = "Customer reply received. Content withheld; private 0600 copy only."
+WITHHELD_SUBJECT = "(withheld)"
+FIXED_SUMMARIES = (ACCESS_SUMMARY, REPLY_SUMMARY)
 
 
 def is_access_reply(body: str, subject: str) -> bool:
@@ -127,20 +132,48 @@ def is_access_reply(body: str, subject: str) -> bool:
 
 
 def is_access_event(event: dict) -> bool:
-    """Pending rows written before this fix may still hold a raw excerpt; treat them by content too."""
-    return event["summary"] == ACCESS_SUMMARY or bool(CREDENTIAL_RE.search(event["summary"] or ""))
+    """Rows written before this fix may hold a raw excerpt; any non-fixed summary is treated as access."""
+    return event["summary"] != REPLY_SUMMARY
 
 
 def safe_summary(body: str, subject: str) -> str:
-    """Fixed factual text for credential-bearing mail; never a body excerpt that may hold a key."""
-    if is_access_reply(body, subject):
-        return ACCESS_SUMMARY
-    lines = [line.strip() for line in body.splitlines() if line.strip()]
-    content = " ".join(lines)
-    if content.startswith("(No plain-text"):
-        content = subject
-    content = re.sub(r"\s+", " ", content)
-    return content[:600]
+    """Fixed factual text only; never a body or subject excerpt."""
+    return ACCESS_SUMMARY if is_access_reply(body, subject) else REPLY_SUMMARY
+
+
+def sanitize_legacy_event(event: dict) -> dict:
+    """Rewrite a pre-fix row's stored summary/subject to fixed text before any delivery uses it."""
+    if event["summary"] in FIXED_SUMMARIES and event.get("subject") == WITHHELD_SUBJECT:
+        return event
+    summary = event["summary"] if event["summary"] in FIXED_SUMMARIES else ACCESS_SUMMARY
+    sql(f"UPDATE {EVENTS} SET summary={literal(summary)}, subject={literal(WITHHELD_SUBJECT)} "
+        f"WHERE gmail_message_id={literal(event['gmail_message_id'])}")
+    return {**event, "summary": summary, "subject": WITHHELD_SUBJECT}
+
+
+def run_delivery(argv: list[str], **kwargs) -> int | None:
+    """Return the exit code, or None when the outcome is unknown (timeout: the message may have gone out)."""
+    try:
+        return subprocess.run(argv, text=True, capture_output=True, **kwargs).returncode
+    except subprocess.TimeoutExpired:
+        return None
+
+
+def record_delivery(gmail_message_id: str, column: str, returncode: int | None) -> bool:
+    """sent on success, failed (retried) on a clean failure; unknown outcomes stay 'sending' so they are
+    never retried into a duplicate nor reported as sent (stale_sending() surfaces them)."""
+    if returncode is None:
+        return False
+    status = "sent" if returncode == 0 else "failed"
+    stamp = ", notified_at=now()" if column == "notification_status" and returncode == 0 else ""
+    sql(f"UPDATE {EVENTS} SET {column}={literal(status)}{stamp} WHERE gmail_message_id={literal(gmail_message_id)}")
+    return returncode == 0
+
+
+def stale_sending() -> int:
+    """Count of events whose delivery outcome is unknown; reported by count only, no content."""
+    output = sql(f"SELECT count(*) FROM {EVENTS} WHERE notification_status='sending' OR board_status='sending'")
+    return int(output or 0)
 
 
 def event_value(fetch_items: list, key: str) -> str | None:
@@ -326,7 +359,7 @@ def save_event(row: dict, metadata: dict, body: str, truncated: bool) -> dict | 
       INSERT INTO {EVENTS}
         (gmail_message_id,gmail_thread_id,request_id,sender_email,subject,received_at,summary,body_file,notification_status,board_status)
       VALUES ({literal(gm_id)},{literal(str(metadata.get('gmail_thread_id') or ''))},{literal(request_id)}::uuid,
-        {literal(metadata['sender_email'])},{literal(metadata['subject'])},
+        {literal(metadata['sender_email'])},{literal(WITHHELD_SUBJECT)},
         {literal(metadata['received_at'].strftime('%Y-%m-%d %H:%M:%S+00'))}::timestamptz,
         {literal(summary)},{literal(str(body_path))},'pending','pending')
       ON CONFLICT (gmail_message_id) DO NOTHING
@@ -352,69 +385,37 @@ def notify_florian(event: dict, row: dict, metadata: dict) -> bool:
     if is_access_event(event):
         # Agent-owned: the board entry routes it to the paid order's owner. Florian only gets a
         # fixed digest line (no sender, subject or body); status is 'sent' only on real delivery.
-        result = subprocess.run(
+        code = run_delivery(
             [str(HOME / "bin/notify"), "digest", "fastlane-customer-mail",
              f"🤖 LÄUFT\nCustomer access reply recorded for paid order {event['request_id'][:8]}; "
-             "agents reconcile it via private host-only intake."],
-            text=True, capture_output=True, timeout=45,
-        )
-        sql(f"UPDATE {EVENTS} SET notification_status={literal('sent' if result.returncode == 0 else 'failed')}, "
-            f"notified_at=CASE WHEN {str(result.returncode == 0).upper()} THEN now() ELSE notified_at END "
-            f"WHERE gmail_message_id={literal(event['gmail_message_id'])}")
-        return result.returncode == 0
-    sender = metadata["sender_email"]
+             "agents reconcile it via private host-only intake."], timeout=45)
+        return record_delivery(event["gmail_message_id"], "notification_status", code)
     model = str(row.get("model_name", "this evaluation"))
-    summary = event["summary"][:180]
-    if re.search(r"\b(publish|publish it|go ahead|yes,? publish|release)\b", summary, re.I):
-        proposal = "The author appears to be discussing publication; read the full message and confirm the next step."
-    elif re.search(r"\b(wrong|incorrect|different|rerun|revision|setting|checkpoint|pin)\b", summary, re.I):
-        proposal = "The author may be requesting a run or pin change; review it before the release step continues."
-    else:
-        proposal = "Read the message and decide whether to rerun, publish, or keep the request on hold."
-    query = f"from:{sender}"
-    link = GMAIL_SEARCH_URL + __import__("urllib.parse", fromlist=["quote_plus"]).quote_plus(query)
     received = metadata["received_at"].strftime("%Y-%m-%d %H:%M UTC")
+    # No sender, subject or body excerpt: the private 0600 copy is the only place the content lives.
     message = (
         "🧑 DU BIST DRAN\n"
-        f"New customer email for {model} from {sender} ({received}): {summary}\n"
-        f"🧑 Für dich\n- Review the author's reply\n  Why: It affects the paid evaluation's publication or rerun.\n"
-        f"  Steps:\n  1. Open the Gmail search {link} and read {event['body_file']}.\n"
-        f"  2. {proposal}\n  Time: 5 min"
+        f"New customer email for {model} on paid order {event['request_id'][:8]} ({received}).\n"
+        f"🧑 Für dich\n- Review the author's reply\n  Why: It may affect the paid evaluation's publication or rerun.\n"
+        f"  Steps:\n  1. Read the private copy {event['body_file']} on Sandy.\n"
+        f"  2. Decide whether to rerun, publish, or keep the request on hold.\n  Time: 5 min"
     )
     env = dict(os.environ)
     env["NOTIFY_SOURCE"] = "fastlane-customer-mail"
-    result = subprocess.run(
-        [str(HOME / "bin/notify"), "now", "--text-stdin"], input=message,
-        text=True, capture_output=True, timeout=45, env=env,
-    )
-    sql(
-        f"UPDATE {EVENTS} SET notification_status={literal('sent' if result.returncode == 0 else 'failed')}, "
-        f"notified_at=CASE WHEN {str(result.returncode == 0).upper()} THEN now() ELSE notified_at END "
-        f"WHERE gmail_message_id={literal(event['gmail_message_id'])}"
-    )
-    return result.returncode == 0
+    code = run_delivery([str(HOME / "bin/notify"), "now", "--text-stdin"], input=message, timeout=45, env=env)
+    return record_delivery(event["gmail_message_id"], "notification_status", code)
 
 
 def post_board(event: dict, row: dict, metadata: dict) -> bool:
     owner = event["owner"]
-    if is_access_event(event):
-        body = (f"Customer access reply recorded for paid request {event['request_id']}. {ACCESS_SUMMARY}\n"
-                f"Private copy: {event['body_file']}\n")
-    else:
-        body = (
-            f"New customer email for {row.get('model_name')} from {metadata['sender_email']} "
-            f"at {metadata['received_at'].strftime('%Y-%m-%d %H:%M UTC')}.\n\n"
-            f"Subject: {metadata['subject']}\nSummary: {event['summary']}\n"
-            f"Private copy: {event['body_file']}\nGmail search: "
-            f"{GMAIL_SEARCH_URL}{__import__('urllib.parse', fromlist=['quote_plus']).quote_plus('from:' + metadata['sender_email'])}\n"
-            f"Request ID: {event['request_id']}\n"
-        )
-    result = subprocess.run(
+    summary = ACCESS_SUMMARY if is_access_event(event) else REPLY_SUMMARY
+    kind = "access reply" if is_access_event(event) else "reply"
+    body = (f"Customer {kind} recorded for paid request {event['request_id']}. {summary}\n"
+            f"Private copy: {event['body_file']}\n")
+    code = run_delivery(
         [str(HOME / "bin/agent-board"), "--as", "fastlane-pickup", "post", "9", "-", "--to", owner, "--kind", "question"],
-        input=body, text=True, capture_output=True, timeout=30,
-    )
-    sql(f"UPDATE {EVENTS} SET board_status={literal('sent' if result.returncode == 0 else 'failed')} WHERE gmail_message_id={literal(event['gmail_message_id'])}")
-    return result.returncode == 0
+        input=body, timeout=30)
+    return record_delivery(event["gmail_message_id"], "board_status", code)
 
 
 def pending_events() -> list[dict]:
@@ -439,6 +440,7 @@ def pending_events() -> list[dict]:
 def deliver_pending() -> int:
     count = 0
     for event in pending_events():
+        event = sanitize_legacy_event(event)
         metadata = {
             "sender_email": event["sender_email"], "subject": event["subject"],
             "received_at": datetime.fromisoformat(str(event["received_at"]).replace("Z", "+00:00")),
@@ -449,6 +451,10 @@ def deliver_pending() -> int:
         if event.get("board_status") in ("pending", "failed") and claim_event(event["gmail_message_id"], "board_status"):
             post_board(event, row, metadata)
         count += 1
+    unknown = stale_sending()
+    if unknown:
+        print(f"priority mail watcher: {unknown} event(s) with unknown delivery outcome stay 'sending'; "
+              "reconcile manually (never auto-retried).", file=sys.stderr)
     return count
 
 

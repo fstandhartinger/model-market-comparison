@@ -53,6 +53,14 @@ ln -sfn "$SHARE/runtime/autopickup.py" "$BIN/jevbench-autopickup.py"
 install -m 644 "$SRC/jevbench-priority-worker.service" "$UNITS/jevbench-priority-worker.service"
 install -m 644 "$SRC/jevbench-priority-worker.timer" "$UNITS/jevbench-priority-worker.timer"
 install -m 755 "$SRC/jevbench-autopickup" "$BIN/jevbench-autopickup"
+# Tracked mail watcher: keep the previous copy for rollback, install mode 0700, prove the binding by hash.
+WATCH="$BIN/jevbench-priority-mail-watch.py"
+if [ -f "$WATCH" ] && ! cmp -s "$SRC/jevbench-priority-mail-watch.py" "$WATCH"; then
+  install -m 600 "$WATCH" "$WATCH.rollback-$(date -u +%Y%m%dT%H%M%SZ)"
+fi
+install -m 700 "$SRC/jevbench-priority-mail-watch.py" "$WATCH"
+[ "$(sha256sum < "$SRC/jevbench-priority-mail-watch.py")" = "$(sha256sum < "$WATCH")" ] \
+  || { echo "mail watcher install binding mismatch" >&2; exit 1; }
 for f in autopickup-prompt-template.md autopickup-review-prompt-template.md autopickup-confirmation-template.txt \
          autopickup-result-public-template.txt autopickup-result-private-template.txt autopickup-refund-template.txt autopickup-refusal-template.txt autopickup-review-passed-template.txt; do
   install -m 600 "$SRC/$f" "$SHARE/$f"

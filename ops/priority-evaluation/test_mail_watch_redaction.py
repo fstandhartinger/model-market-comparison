@@ -26,8 +26,54 @@ class MailWatchRedactionTest(unittest.TestCase):
         for body in ("here: Ab3+xY9/Qz8.Lm2_Pk7-Rt5=Wn4Vd6", "the key is abc123XYZ"):
             self.assertEqual(mw.safe_summary(body, "Re"), mw.ACCESS_SUMMARY, body)
 
-    def test_ordinary_reply_keeps_excerpt(self):
-        self.assertEqual(mw.safe_summary("Please publish it.", "Re: result"), "Please publish it.")
+    def test_ordinary_reply_withheld_by_default(self):
+        self.assertEqual(mw.safe_summary("Please publish it.", "Re: result"), mw.REPLY_SUMMARY)
+        for body in ("login demo, pw Xk9mQ2vLp7", "credentials: demo / Xk9!aa"):
+            self.assertNotIn("Xk9", mw.safe_summary(body, "Re"))
+
+    def test_legacy_event_sanitized_through_delivery(self):
+        legacy = {**EVENT, "summary": f"here pw Xk9mQ2vLp7", "subject": f"Re: key {SYNTH}",
+                  "sender_email": "ann@example.com", "received_at": "2026-10-01T23:00:00+00:00",
+                  "notification_status": "pending", "board_status": "pending", "model_name": "M"}
+        statements, sent = [], []
+        def fake_sql(statement):
+            statements.append(statement)
+            return "1" if "RETURNING" in statement else ("0" if "count(*)" in statement else "")
+        def fake_run(argv, **kw):
+            sent.append((argv, kw.get("input")))
+            return mock.Mock(returncode=0)
+        with mock.patch.object(mw, "sql", fake_sql), mock.patch.object(mw, "pending_events", return_value=[legacy]), \
+                mock.patch.object(mw.subprocess, "run", fake_run):
+            mw.deliver_pending()
+        self.assertIn(mw.ACCESS_SUMMARY.replace("'", "''"), statements[0])
+        self.assertIn(mw.WITHHELD_SUBJECT, statements[0])
+        outbound = repr(sent)
+        for secret in (SYNTH, "Xk9mQ2vLp7", "ann@example.com"):
+            self.assertNotIn(secret, outbound)
+        self.assertEqual(len(sent), 2)
+        self.assertTrue(any("notification_status='sent'" in s for s in statements))
+        self.assertTrue(any("board_status='sent'" in s for s in statements))
+
+    def test_timeout_is_not_sent_and_not_retried(self):
+        statements = []
+        def fake_sql(statement):
+            statements.append(statement)
+            return ""
+        def boom(argv, **kw):
+            raise mw.subprocess.TimeoutExpired(argv, 45)
+        event = {**EVENT, "summary": mw.REPLY_SUMMARY, "subject": mw.WITHHELD_SUBJECT}
+        with mock.patch.object(mw, "sql", fake_sql), mock.patch.object(mw.subprocess, "run", boom):
+            self.assertFalse(mw.notify_florian(event, {"model_name": "M"}, META))
+            self.assertFalse(mw.post_board(event, {"model_name": "M"}, META))
+        # No status write at all: the row stays 'sending', so claim_event never re-sends it and it is never 'sent'.
+        self.assertEqual(statements, [])
+
+    def test_clean_failure_is_retried(self):
+        statements = []
+        with mock.patch.object(mw, "sql", lambda s: statements.append(s) or ""), \
+                mock.patch.object(mw.subprocess, "run", lambda argv, **kw: mock.Mock(returncode=1)):
+            mw.post_board({**EVENT, "summary": mw.REPLY_SUMMARY}, {}, META)
+        self.assertIn("board_status='failed'", statements[0])
 
     def run_delivery(self, fn, summary, rc=0):
         calls, sqls = [], []

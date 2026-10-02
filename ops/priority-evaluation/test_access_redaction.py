@@ -53,8 +53,10 @@ class AccessRedactionTest(unittest.TestCase):
         self.assertNotIn("ann@example.com", autopickup.request_data_json(row))
         row["notes"] = "my token abc"
         self.assertNotIn(SYNTH, autopickup.request_data_json(row))
-        row["notes"] = "Please run the default benchmarks."
-        self.assertIn("default benchmarks", autopickup.request_data_json(row))
+        # Default-withhold: even harmless-looking free text and keyword-free short passwords stay host-side.
+        for notes in ("Please run the default benchmarks.", "login demo, pw Xk9mQ2vLp7", "credentials: demo / Xk9!aa"):
+            row["notes"] = notes
+            self.assertNotIn(notes, autopickup.request_data_json(row))
 
     def test_missing_access(self):
         access = json.loads(autopickup.request_data_json(self.row(None)))["access"]
@@ -63,3 +65,58 @@ class AccessRedactionTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class LinkAndLegacyTest(unittest.TestCase):
+    ROW = {"id": "00000000-0000-4000-8000-000000000001", "model_name": "M", "access_type": "api",
+           "notes": "", "benchmarks": ["jevbench"], "visibility": "public"}
+
+    def test_public_links_kept_and_credential_links_withheld(self):
+        good = ("https://huggingface.co/Meta/Llama-3.1-8B-Instruct-GGUF",
+                "https://github.com/org/repo/tree/0123456789abcdef0123456789abcdef01234567")
+        for url in good:
+            self.assertEqual(autopickup.public_link(url), url)
+        bad = (f"https://huggingface.co/org/m?token={SYNTH}", f"https://user:{SYNTH}@github.com/org/repo",
+               "http://github.com/org/repo", "https://github.com/org/repo#frag",
+               "https://github.com/org/Ab3xY9Qz8Lm2Pk7Rt5Wn4Vd6Ee", f"https://x.ai/{SYNTH}",
+               "https://github.com:8443/org/repo")
+        for url in bad:
+            self.assertIsNone(autopickup.public_link(url), url)
+            row = {**self.ROW, "model_link": url, "code_link": url}
+            for text in (autopickup.request_data_json(row), autopickup.review_request_json(row)):
+                self.assertNotIn(SYNTH, text)
+                self.assertNotIn("Ab3xY9Qz8", text)
+
+    def legacy_dir(self, tmp, tail):
+        old = {**self.ROW, "access_instructions": f'api_key: "{SYNTH}"', "notes": "pw Xk9mQ2vLp7"}
+        old_data = json.dumps(old, ensure_ascii=True, indent=2)
+        job = autopickup.Path(tmp) / "job"
+        job.mkdir()
+        (job / "request.json").write_text(old_data + "\n")
+        (job / "PROMPT.md").write_text(f"# Order\n```json\n{old_data}\n```\n{tail}")
+        return job, {**self.ROW, "access_instructions": f'api_key: "{SYNTH}"', "notes": "pw Xk9mQ2vLp7"}
+
+    def test_legacy_export_regenerated_and_on_reply_kept(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            tail = "## On reply\nResume owner fastlane-eval-x; continue the durable action.\n"
+            job, row = self.legacy_dir(tmp, tail)
+            autopickup.write_job_files(row, job)
+            for name in ("request.json", "PROMPT.md"):
+                text = (job / name).read_text()
+                self.assertNotIn(SYNTH, text, name)
+                self.assertNotIn("Xk9mQ2vLp7", text, name)
+                self.assertNotIn("access_instructions", text, name)
+            self.assertIn(tail, (job / "PROMPT.md").read_text())
+            before = (job / "PROMPT.md").read_text()
+            autopickup.write_job_files(row, job)  # idempotent
+            self.assertEqual(before, (job / "PROMPT.md").read_text())
+
+    def test_legacy_prompt_without_exact_block_fails_closed(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            job, row = self.legacy_dir(tmp, "")
+            (job / "PROMPT.md").write_text('edited "access_instructions": "' + SYNTH + '"\n')
+            with self.assertRaises(autopickup.PickupError):
+                autopickup.write_job_files(row, job)
+            self.assertIn(SYNTH, (job / "PROMPT.md").read_text())  # untouched, but pickup refuses to proceed

@@ -794,6 +794,52 @@ def public_endpoint(value: object) -> str | None:
     return f"https://{host}{path.rstrip('/') or ''}"
 
 
+LINK_SEGMENT_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9._+-]{0,99}")
+LINK_SECRET_RE = re.compile(r"(api[_ -]?key|secret|token|bearer|passw|authori[sz]ation|\bsk-)", re.I)
+
+
+def public_link(value: object) -> str | None:
+    """Public model/code URL (https, no userinfo/query/fragment/port, plain path) or None.
+
+    Repository and model names keep their case and length; a segment that looks like a credential
+    (keyword, or a long mixed token that is not a commit hash) rejects the whole link."""
+    if not isinstance(value, str) or not value.strip():
+        return None
+    try:
+        parsed = urllib.parse.urlsplit(value.strip())
+        port = parsed.port
+    except ValueError:
+        return None
+    host = (parsed.hostname or "").lower()
+    if (parsed.scheme != "https" or parsed.username or parsed.password or parsed.query or parsed.fragment
+            or port is not None or "@" in parsed.netloc
+            or not re.fullmatch(r"(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}", host)):
+        return None
+    segments = [seg for seg in parsed.path.split("/") if seg]
+    if len(segments) > 12:
+        return None
+    for segment in segments:
+        if segment in (".", "..") or not LINK_SEGMENT_RE.fullmatch(segment) or LINK_SECRET_RE.search(segment):
+            return None
+        compact = re.sub(r"[._+-]", "", segment)
+        if (len(segment) >= 24 and not re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", segment)
+                and re.search(r"[0-9]", segment) and re.search(r"[A-Z]", segment) and re.search(r"[a-z]", segment)
+                and len(compact) >= 0.9 * len(segment)):
+            return None
+    return f"https://{host}{'/' + '/'.join(segments) if segments else ''}"
+
+
+def safe_links(row: dict[str, Any]) -> dict[str, Any]:
+    out: dict[str, Any] = {}
+    for name in ("model_link", "code_link"):
+        raw = row.get(name)
+        if raw in (None, ""):
+            out[name] = None
+        else:
+            out[name] = public_link(raw) or "withheld: failed public URL validation"
+    return out
+
+
 def redacted_access(raw: object) -> dict[str, Any]:
     """Nonsecret view of access_instructions for request.json/PROMPT/agents: never the raw text or key."""
     endpoint = None
@@ -824,10 +870,12 @@ def request_data_json(row: dict[str, Any]) -> str:
     fields = ("id", "model_name", "model_link", "code_link", "access_type",
               "notes", "benchmarks", "visibility")
     payload = {name: row.get(name) for name in fields}
+    payload.update(safe_links(row))
     payload["access"] = redacted_access(row.get("access_instructions"))
+    # Default-withhold: customer free text stays host-side; no regex claims to find every secret.
     notes = payload.get("notes")
-    if isinstance(notes, str) and CREDENTIAL_TEXT_RE.search(notes):
-        payload["notes"] = "withheld: may contain credentials or contact details"
+    if isinstance(notes, str) and notes.strip():
+        payload["notes"] = "withheld: customer free text kept host-side"
     # ensure_ascii escapes every non-ASCII character; also escape characters that could close
     # or disguise the fenced block or read as markup, so the data cannot leave its quotes.
     text = json.dumps(payload, ensure_ascii=True, indent=2)
@@ -847,6 +895,7 @@ def write_job_files(row: dict[str, Any], job_dir: Path) -> None:
             raise PickupError("existing request file is unreadable") from exc
         if existing.get("id") != rid:
             raise PickupError("existing job folder belongs to a different request")
+        migrate_legacy_export(job_dir, request_file.read_text(encoding="utf-8").rstrip("\n"), data)
     else:
         atomic_write(request_file, data + "\n")
     prompt_file = job_dir / "PROMPT.md"
@@ -865,9 +914,40 @@ def write_job_files(row: dict[str, Any], job_dir: Path) -> None:
         atomic_write(state_file, f"# Order {order_ref(rid)} — evaluation state\n\nCreated by the fast-lane pickup at {iso(utcnow())}. Nothing has run yet.\n")
 
 
+LEGACY_EXPORT_KEYS = ("access_instructions",)
+
+
+def migrate_legacy_export(job_dir: Path, old_data: str, data: str) -> None:
+    """Replace a pre-redaction request export in request.json and PROMPT.md, in place.
+
+    Only the exact old request-data block is swapped, so durable on-reply/owner instructions appended
+    to PROMPT.md stay intact. If the old block cannot be found verbatim while the prompt still holds a
+    legacy field, fail closed: no agent may start on a prompt that may carry raw access text."""
+    if old_data == data:
+        return
+    try:
+        legacy = json.loads(old_data)
+    except json.JSONDecodeError as exc:
+        raise PickupError("existing request file is unreadable") from exc
+    stale = any(key in legacy for key in LEGACY_EXPORT_KEYS) or legacy.get("notes") != json.loads(data).get("notes") \
+        or any(legacy.get(k) != json.loads(data).get(k) for k in ("model_link", "code_link"))
+    if not stale:
+        return
+    prompt_file = job_dir / "PROMPT.md"
+    if prompt_file.exists():
+        prompt = prompt_file.read_text(encoding="utf-8")
+        if old_data in prompt:
+            atomic_write(prompt_file, prompt.replace(old_data, data))
+        elif any(f'"{key}"' in prompt for key in LEGACY_EXPORT_KEYS):
+            raise PickupError("legacy PROMPT.md holds an unredacted request export; scoped migration needed")
+    atomic_write(job_dir / "request.json", data + "\n")
+
+
 def review_request_json(row: dict[str, Any]) -> str:
-    fields = ("id", "model_name", "model_link", "code_link", "access_type", "benchmarks", "visibility")
-    text = json.dumps({name: row.get(name) for name in fields}, ensure_ascii=True, indent=2)
+    fields = ("id", "model_name", "access_type", "benchmarks", "visibility")
+    payload = {name: row.get(name) for name in fields}
+    payload.update(safe_links(row))
+    text = json.dumps(payload, ensure_ascii=True, indent=2)
     return text.replace("`", "\\u0060").replace("<", "\\u003c").replace(">", "\\u003e")
 
 
