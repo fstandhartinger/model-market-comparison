@@ -8,8 +8,8 @@ import { readFile } from 'node:fs/promises';
 const src = await readFile(new URL('../components/JevRadars.tsx', import.meta.url), 'utf8');
 
 test('F-136: ring labels sit at the half-step between spoke 0 and 1, inside the ring, with the F-70 halo', () => {
-  const ring = src.match(/\{\[50, 100\]\.map\([\s\S]*?data-radar-ring>/)?.[0];
-  assert.ok(ring, 'the two ring labels are drawn from the [50, 100] list and carry data-radar-ring');
+  const ring = src.match(/\{\(signed \? \[-50, 0, 50, 100\] : \[50, 100\]\)\.map\([\s\S]*?data-radar-ring>/)?.[0];
+  assert.ok(ring, 'legacy ring labels remain [50, 100]; the optional signed scale has its own labels');
   assert.match(ring, /Math\.PI \/ spokes\.length/, 'the label angle is the half-step, not the top spoke');
   assert.match(ring, /Math\.cos\(Math\.PI \/ spokes\.length\)/, 'the label radius is the polygon apothem, so it stays inside the ring');
   assert.match(ring, /paintOrder: "stroke"/, 'the F-70 halo');

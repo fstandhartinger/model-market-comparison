@@ -129,5 +129,11 @@ test('signed radar bounds invalid geometry defensively and never plots a thin or
   const legacy = renderToStaticMarkup(React.createElement(Radar, { ...props, spokes: spokes.map(s => ({ ...s, values: [50], thin: [false] })) }));
   assert.match(legacy, /points="250,148 306,204 250,260 194,204" fill="#000"/);
   assert.equal((legacy.match(/data-radar-ring="true"/g) ?? []).length, 2);
+  const ringLabels = [...legacy.matchAll(/<text([^>]*) data-radar-ring="true">(\d+)<\/text>/g)];
+  assert.deepEqual(ringLabels.map(m => m[2]), ['50', '100']);
+  for (const [i, match] of ringLabels.entries()) {
+    assert.match(match[1], new RegExp(`x="${[275.879, 303.879][i]}" y="${[178.121, 150.121][i]}"`), 'legacy half-step apothem placement');
+    assert.match(match[1], /paint-order:stroke;stroke:var\(--surface\);stroke-width:3px;stroke-linejoin:round/, 'legacy label halo');
+  }
   assert.doesNotMatch(legacy, /data-bh-imagejev-v02-(?:radar-scale|chance-ring)/);
 });
