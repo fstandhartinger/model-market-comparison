@@ -151,6 +151,15 @@ def sanitize_legacy_event(event: dict) -> dict:
     return {**event, "summary": summary, "subject": WITHHELD_SUBJECT}
 
 
+def scrub_legacy_rows() -> None:
+    """Scrub pre-fix summaries/subjects in every row, including 'sent' and 'sending' ones that delivery never
+    revisits. Content is never read back; delivery status columns are left untouched."""
+    fixed = ", ".join(literal(text) for text in FIXED_SUMMARIES)
+    sql(f"UPDATE {EVENTS} SET summary=CASE WHEN summary IN ({fixed}) THEN summary ELSE {literal(ACCESS_SUMMARY)} END, "
+        f"subject={literal(WITHHELD_SUBJECT)} "
+        f"WHERE summary NOT IN ({fixed}) OR subject IS DISTINCT FROM {literal(WITHHELD_SUBJECT)}")
+
+
 def run_delivery(argv: list[str], **kwargs) -> int | None:
     """Return the exit code, or None when the outcome is unknown (timeout: the message may have gone out)."""
     try:
@@ -439,6 +448,7 @@ def pending_events() -> list[dict]:
 
 def deliver_pending() -> int:
     count = 0
+    scrub_legacy_rows()
     for event in pending_events():
         event = sanitize_legacy_event(event)
         metadata = {

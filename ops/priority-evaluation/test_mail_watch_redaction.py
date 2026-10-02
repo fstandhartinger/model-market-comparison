@@ -111,5 +111,52 @@ class MailWatchRedactionTest(unittest.TestCase):
         self.assertIn(SYNTH, kw["input"])
 
 
+    def test_scrub_covers_sent_and_sending_rows_without_status_change(self):
+        # R2-F3: one content-blind UPDATE over every row; delivery statuses are never written.
+        statements = []
+        with mock.patch.object(mw, "sql", lambda s: statements.append(s) or ""):
+            mw.scrub_legacy_rows()
+        self.assertEqual(len(statements), 1)
+        stmt = statements[0]
+        self.assertNotIn("_status", stmt)
+        self.assertNotIn("SELECT", stmt.upper().replace("UPDATE", ""))
+        self.assertIn(mw.WITHHELD_SUBJECT, stmt)
+
+    def test_scrub_against_real_postgres(self):
+        import os, shutil, subprocess, tempfile
+        initdb = "/usr/lib/postgresql/16/bin/initdb"
+        if not os.path.exists(initdb) or not shutil.which("psql"):
+            self.skipTest("no local postgres binaries")
+        bindir = os.path.dirname(initdb)
+        with tempfile.TemporaryDirectory() as tmp:
+            data, sock = os.path.join(tmp, "d"), tmp
+            subprocess.run([initdb, "-D", data, "-A", "trust", "-U", "t"], check=True, capture_output=True)
+            # Server output to a log file: an inherited pipe would keep run() waiting for EOF forever.
+            subprocess.run([os.path.join(bindir, "pg_ctl"), "-D", data, "-l", os.path.join(tmp, "log"),
+                            "-o", f"-k {sock} -c listen_addresses=", "-w", "start"],
+                           check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=60)
+            try:
+                def q(stmt):
+                    r = subprocess.run(["psql", "-X", "-qAt", "-v", "ON_ERROR_STOP=1", "-h", sock, "-U", "t", "-d",
+                                        "postgres", "-f", "-"], input=stmt, text=True, capture_output=True, check=True)
+                    return r.stdout.strip()
+                q("CREATE TABLE ev (gmail_message_id text, summary text, subject text, "
+                  "notification_status text, board_status text)")
+                q(f"INSERT INTO ev VALUES ('1','api_key {SYNTH}','Re: {SYNTH}','sent','sent'),"
+                  f"('2','pw Xk9mQ2vLp7',NULL,'sending','failed'),"
+                  f"({mw.literal('3')},{mw.literal(mw.REPLY_SUMMARY)},'Re: hello','pending','pending')")
+                with mock.patch.object(mw, "EVENTS", "ev"), mock.patch.object(mw, "sql", q):
+                    mw.scrub_legacy_rows()
+                    mw.scrub_legacy_rows()  # idempotent
+                dump = q("SELECT gmail_message_id, summary, subject, notification_status, board_status FROM ev ORDER BY 1")
+            finally:
+                subprocess.run([os.path.join(bindir, "pg_ctl"), "-D", data, "-m", "immediate", "stop"],
+                               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=60)
+        for secret in (SYNTH, "Xk9mQ2vLp7", "hello"):
+            self.assertNotIn(secret, dump)
+        rows = [line.split("|") for line in dump.splitlines()]
+        self.assertEqual([r[3:] for r in rows], [["sent", "sent"], ["sending", "failed"], ["pending", "pending"]])
+        self.assertEqual([r[1] for r in rows], [mw.ACCESS_SUMMARY, mw.ACCESS_SUMMARY, mw.REPLY_SUMMARY])
+
 if __name__ == "__main__":
     unittest.main()

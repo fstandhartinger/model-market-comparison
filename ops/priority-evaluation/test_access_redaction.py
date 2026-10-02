@@ -63,8 +63,6 @@ class AccessRedactionTest(unittest.TestCase):
         self.assertEqual(access, {"endpoint": None, "credential": "not_on_file", "raw_text": "withheld"})
 
 
-if __name__ == "__main__":
-    unittest.main()
 
 
 class LinkAndLegacyTest(unittest.TestCase):
@@ -120,3 +118,41 @@ class LinkAndLegacyTest(unittest.TestCase):
             with self.assertRaises(autopickup.PickupError):
                 autopickup.write_job_files(row, job)
             self.assertIn(SYNTH, (job / "PROMPT.md").read_text())  # untouched, but pickup refuses to proceed
+
+    def test_legacy_notes_without_exact_block_fail_closed(self):
+        # R2-F1: stale export without the access key (only raw notes), block re-indented -> must not proceed.
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            job = autopickup.Path(tmp) / "job"
+            job.mkdir()
+            old = {**self.ROW, "notes": "pw FAKEsyn9Xk"}
+            old_data = json.dumps(old, ensure_ascii=True, indent=2)
+            (job / "request.json").write_text(old_data + "\n")
+            (job / "PROMPT.md").write_text("# Order\n" + json.dumps(old, ensure_ascii=True, indent=4) + "\n")
+            with self.assertRaises(autopickup.PickupError):
+                autopickup.write_job_files(old, job)
+            self.assertIn("FAKEsyn9Xk", (job / "request.json").read_text())  # nothing half-migrated
+
+    def test_current_export_untouched_by_migration(self):
+        # Negative control: an already-redacted job folder is a no-op, even if the prompt was edited.
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            job = autopickup.Path(tmp) / "job"
+            job.mkdir()
+            row = {**self.ROW, "notes": "pw FAKEsyn9Xk"}
+            data = autopickup.request_data_json(row)
+            (job / "request.json").write_text(data + "\n")
+            (job / "PROMPT.md").write_text("hand-edited prompt\n")
+            autopickup.write_job_files(row, job)
+            self.assertEqual((job / "PROMPT.md").read_text(), "hand-edited prompt\n")
+
+    def test_token_word_part_names_allowed(self):
+        # R2-F2: "tokenizers" is a name, "hf_token"/"token-..." still reject.
+        self.assertEqual(autopickup.public_link("https://github.com/huggingface/tokenizers"),
+                         "https://github.com/huggingface/tokenizers")
+        for url in ("https://x.ai/hf_token", "https://x.ai/token-abc", "https://x.ai/Tokens"):
+            self.assertIsNone(autopickup.public_link(url), url)
+
+
+if __name__ == "__main__":
+    unittest.main()

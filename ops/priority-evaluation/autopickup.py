@@ -795,7 +795,8 @@ def public_endpoint(value: object) -> str | None:
 
 
 LINK_SEGMENT_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9._+-]{0,99}")
-LINK_SECRET_RE = re.compile(r"(api[_ -]?key|secret|token|bearer|passw|authori[sz]ation|\bsk-)", re.I)
+# "token" only as a word part of its own (hf_token, token-abc), so names like "tokenizers" stay usable.
+LINK_SECRET_RE = re.compile(r"(api[_ -]?key|secret|(?<![a-z])tokens?(?![a-z])|bearer|passw|authori[sz]ation|\bsk-)", re.I)
 
 
 def public_link(value: object) -> str | None:
@@ -922,7 +923,7 @@ def migrate_legacy_export(job_dir: Path, old_data: str, data: str) -> None:
 
     Only the exact old request-data block is swapped, so durable on-reply/owner instructions appended
     to PROMPT.md stay intact. If the old block cannot be found verbatim while the prompt still holds a
-    legacy field, fail closed: no agent may start on a prompt that may carry raw access text."""
+    stale export, fail closed: no agent may start on a prompt that may carry raw customer text."""
     if old_data == data:
         return
     try:
@@ -936,10 +937,11 @@ def migrate_legacy_export(job_dir: Path, old_data: str, data: str) -> None:
     prompt_file = job_dir / "PROMPT.md"
     if prompt_file.exists():
         prompt = prompt_file.read_text(encoding="utf-8")
-        if old_data in prompt:
-            atomic_write(prompt_file, prompt.replace(old_data, data))
-        elif any(f'"{key}"' in prompt for key in LEGACY_EXPORT_KEYS):
+        if old_data not in prompt:
+            # Any stale export (raw notes/links, not only the access key) without the exact removable
+            # block fails closed: the prompt may still carry raw customer text in an altered form.
             raise PickupError("legacy PROMPT.md holds an unredacted request export; scoped migration needed")
+        atomic_write(prompt_file, prompt.replace(old_data, data))
     atomic_write(job_dir / "request.json", data + "\n")
 
 
