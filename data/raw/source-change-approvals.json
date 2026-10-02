@@ -516,6 +516,19 @@
       "primary_url": "https://artificialanalysis.ai/leaderboards/models",
       "review_basis": "Daily runs at 05:17Z and 05:48Z on 2026-09-30 failed closed because AA's API v2 returns artificial_analysis_intelligence_index=null for this one model (was 35.8 in the committed snapshot). The response is complete (HTTP 200, identity set unchanged apart from the already-approved changes). Independently corroborated at the primary: AA's own leaderboard page payload lists slug claude-sonnet-5-5-low with intelligenceIndex null, so this is a real upstream withdrawal, not a truncated API response. All other evaluation and pricing fields for the model are unchanged. Approves only this one field on this one model; the score is published as unknown, not carried forward.",
       "owner_acceptance": "Operator: Benchmark Heaven self-heal repair agent (engine claude-sonnet-5-5), 2026-09-30, following the precedent of the reviewed aa_models withdrawal approvals. Bounded to one field, one model, three days."
+    },
+    {
+      "model_id": "d80eb0f1-f62e-4d31-99d2-7a925eb126b0",
+      "model_name": "Gemma 4 E4B (Reasoning)",
+      "field": "artificial_analysis_coding_index",
+      "previous_value": 9.4,
+      "reviewed_at": "2026-10-02T06:05:00Z",
+      "expires_at": "2026-10-05T06:00:00Z",
+      "primary_url": "https://artificialanalysis.ai/api/v2/data/llms/models",
+      "primary_sha256": "12994e0589f4938846bdc01a692e17656550d31414ce92df51c5d6978c08fa71",
+      "evidence_file": "ops/daily-repair-2026-10-02/aa-measurement/evidence/12994e0589f4938846bdc01a692e17656550d31414ce92df51c5d6978c08fa71.gz",
+      "review_basis": "Daily runs at 05:17Z and 05:48Z on 2026-10-02 failed closed because AA's API v2 returns artificial_analysis_coding_index=null for this one model (was 9.4 in the committed 2026-10-01 snapshot). Both runs received the byte-identical HTTP 200 body (sha256 12994e05...); it is complete: 689 models, all 688 prior identities present plus one new (Grok 4.7 Low), and this is the only prior numeric evaluation that became null across all models. In the same response AA newly reports scicode=0.244 for this model (null before), a coding-index component, so this is AA re-scoring the model rather than a truncated response; intelligence index 8.9 and pricing are unchanged. AA's leaderboard page payload does not expose a coding index for any model, so the API is the only primary for this field. Approves only this one field on this one model; the coding index is published as unknown until AA reports it again, not carried forward.",
+      "owner_acceptance": "Operator: Benchmark Heaven self-heal repair agent (engine claude-opus-5-5), 2026-10-02, CR-261, following the 2026-09-30 aa_measurements precedent. Bounded to one field, one model, three days."
     }
   ]
 }

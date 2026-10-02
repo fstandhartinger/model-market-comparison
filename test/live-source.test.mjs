@@ -193,6 +193,27 @@ test('a reviewed, expiring approval tolerates exactly one named measurement with
   assert.equal(isApprovedMeasurementWithdrawal([], 'm1', 'score', 34, { now }), false);
 });
 
+test('CR-261: committed evidenced measurement approvals replay against their captured primary response only', async () => {
+  const approvals = JSON.parse(await readFile(new URL('../data/raw/source-change-approvals.json', import.meta.url), 'utf8')).aa_measurements.filter((a) => a.evidence_file);
+  assert.ok(approvals.length);
+  for (const a of approvals) {
+    const body = gunzipSync(await readFile(new URL(`../${a.evidence_file}`, import.meta.url)));
+    assert.equal(createHash('sha256').update(body).digest('hex'), a.primary_sha256);
+    const model = JSON.parse(body).data.find((m) => m.id === a.model_id);
+    assert.ok(model && model.evaluations[a.field] === null, 'primary must show the field withdrawn');
+    const prior = { ...model.evaluations, [a.field]: a.previous_value };
+    const fields = Object.keys(prior);
+    const now = Date.parse(a.reviewed_at);
+    assert.ok(Date.parse(a.expires_at) - now <= 3 * 86400000 && a.review_basis && a.owner_acceptance);
+    assert.doesNotThrow(() => assertMeasuredFields(prior, model.evaluations, fields, 'replay', { approvals: [a], modelId: a.model_id, now }));
+    assert.throws(() => assertMeasuredFields(prior, model.evaluations, fields, 'replay', { modelId: a.model_id, now }), /requires review/);
+    assert.throws(() => assertMeasuredFields(prior, model.evaluations, fields, 'replay', { approvals: [a], modelId: a.model_id, now: Date.parse(a.expires_at) }), /requires review/);
+    // A second withdrawn field on the same model cannot inherit the approval.
+    const other = fields.find((f) => f !== a.field && typeof model.evaluations[f] === 'number');
+    assert.throws(() => assertMeasuredFields(prior, { ...model.evaluations, [other]: null }, fields, 'replay', { approvals: [a], modelId: a.model_id, now }), new RegExp(other));
+  }
+});
+
 test('actual OpenRouter collector exits nonzero and leaves good file untouched on a partial endpoint response', async () => {
   const directory = await mkdtemp(join(tmpdir(), 'bh-partial-collector-'));
   try {
