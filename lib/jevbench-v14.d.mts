@@ -1,4 +1,5 @@
 export interface JevV14System {
+  image_revision?: string;
   key: string;
   display: string;
   class: string;

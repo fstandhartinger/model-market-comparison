@@ -5,7 +5,7 @@ import { DEFAULT_CAP, clampCap, formatCap, isOfficialCaps, capsFromUrl, capsToUr
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
 import { jevClassRows, ratioPosition, trafficLightZone, type JevClassOptions, type JevClassResult, type JevClassRow } from '../lib/jevbench-jev-class.mjs';
 import { shortName, usd } from './JevCapabilityChart';
-import { imageJevSourceUrl } from '../lib/imagejev-system-links.mjs';
+import { imageJevSourceUrl, imageJevSystemPath } from '../lib/imagejev-system-links.mjs';
 import { jevSourceUrl } from './jevSystemLinks';
 import { JevCapabilityTip } from './JevCapabilityTip';
 import { JEV_TYPE_LABEL, jevLegendTypes, jevTypeVarName } from './jevTypes';
@@ -85,6 +85,7 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
     <dt className="text-gray-400">Base model</dt><dd data-bh-base-model-tip={row.key}>
       <BaseModelDisplay benchmark={benchmark} systemKey={row.key} prefix="" />
     </dd>
+    {benchmark === 'imagejevbench' && <><dt className="text-gray-400">Image release</dt><dd>{row.image_revision ?? 'v0.2.0'} · {(row.image_revision ?? 'v0.2.0') === 'v0.2.0' ? 'CORE ranking' : 'full benchmark'} · <a href={imageJevSystemPath(row.key, row.image_revision)} className="underline" data-bh-mm-system-details={row.key}>details</a></dd></>}
     <dt className="text-gray-400">Capability Score</dt><dd className="tabular font-semibold">{one(capability)}</dd>
     <dt className="text-gray-400">Intelligence</dt><dd className="tabular">{intelligence == null ? 'unknown' : one(intelligence)}</dd>
     <dt className="text-gray-400">Calibration</dt><dd className="tabular">{calibration == null ? 'unknown' : one(calibration)}</dd>
@@ -96,7 +97,7 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
     <dt className="text-gray-400">Colours</dt><dd>Green ≤ reference; amber ≤ cap; red &gt; cap. Shorter is cheaper or faster.</dd>
   </dl>;
   const style = { '--jev-t': `var(${jevTypeVarName(row.class)})` } as CSSProperties;
-  const link = benchmark === 'imagejevbench' ? imageJevSourceUrl(row.key, row.repo) : jevSourceUrl(row.key, row.repo);
+  const link = benchmark === 'imagejevbench' ? imageJevSourceUrl(row.key, row.repo, row.image_revision) : jevSourceUrl(row.key, row.repo);
   return <li className={`group relative ${grid} min-h-[43px] items-center text-[11px] sm:text-sm`} style={style}
     data-bh-jev14-capability-row={row.key} data-bh-jev14-capability-value={capability.toFixed(3)} data-bh-jev14-cost={cost ?? ''}>
     <span className="bh-muted tabular col-start-1 row-start-1 text-right">{rank || '–'}</span>

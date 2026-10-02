@@ -104,8 +104,8 @@ function RankingTable({ systems, track, all = false, showPrevious = true, diagno
         return <tr key={s.key} id={all ? `imagejev-system-${s.key}` : undefined} className="scroll-mt-6 border-t border-line">
           <td className="sticky left-0 z-[1] w-14 min-w-14 bg-[var(--surface)] p-3 font-bold tabular-nums shadow-[inset_-1px_0_0_rgb(var(--line))]">{i + 1}</td>
           <th scope="row" className="sticky left-14 z-[1] w-52 min-w-52 bg-[var(--surface)] p-3 text-left font-semibold shadow-[inset_-1px_0_0_rgb(var(--line))]">
-            {imageJevSourceUrl(s.key, s.repo)
-              ? <a href={imageJevSourceUrl(s.key, s.repo)!} target="_blank" rel="noopener noreferrer" className="underline" data-bh-jev-source={s.key}><SystemName name={s.name} gate={gate} /></a>
+            {imageJevSourceUrl(s.key, s.repo, version)
+              ? <a href={imageJevSourceUrl(s.key, s.repo, version)!} target="_blank" rel="noopener noreferrer" className="underline" data-bh-jev-source={s.key}><SystemName name={s.name} gate={gate} /></a>
               : <SystemName name={s.name} gate={gate} />}
             {version !== 'v0.2.0' && s.key === 'wity_1' && <p className="mt-1 text-xs font-semibold text-amber-700 dark:text-amber-300" data-bh-mm-author-review>Under author review: server build ID was not recorded; this score may change after verification.</p>}
             {s.inference_setting && (version === 'v0.2.0'
@@ -114,7 +114,7 @@ function RankingTable({ systems, track, all = false, showPrevious = true, diagno
             {t.cost.coverage < 0.9995 && <p className="bh-muted mt-1 text-xs">Cost receipts cover {pct(t.cost.coverage)} of calls</p>}
             {s.api_flag && <span className="mt-1 inline-block rounded-full border border-accent px-2 py-0.5 text-[0.68rem] font-bold text-accent">API</span>}
             <BaseModelDisplay benchmark="imagejevbench" systemKey={s.key} className="mt-1 block text-[11px] font-normal leading-tight" />
-            <Link href={imageSystemPath(s.key)} className="mt-0.5 inline-block text-[11px] font-normal text-accent underline decoration-[rgb(var(--line))] underline-offset-2 hover:decoration-current" data-bh-mm-system-details={s.key}>details</Link>
+            <Link href={imageSystemPath(s.key, version)} className="mt-0.5 inline-block text-[11px] font-normal text-accent underline decoration-[rgb(var(--line))] underline-offset-2 hover:decoration-current" data-bh-mm-system-details={s.key}>details</Link>
           </th>
           <td className="p-3 text-right font-bold tabular-nums">{score(t.composite.score)}</td>
           <td className="p-3 text-right tabular-nums">{score(t.axes.intelligence)}</td>
@@ -133,7 +133,7 @@ function RankingTable({ systems, track, all = false, showPrevious = true, diagno
   </div>;
 }
 
-function ScoreBars({ systems, track, version = 'v0.1.4' }: { systems: any[]; track: Track; version?: 'v0.1.4' | 'v0.2.0' }) {
+function ScoreBars({ systems, track, version = 'v0.1.4' }: { systems: any[]; track: Track; version?: 'v0.1.4' | 'v0.1.5' | 'v0.2.0' }) {
   const rows = [...systems].sort((x, y) => y.tracks[track].composite.score - x.tracks[track].composite.score);
   return <ol className="mt-4 grid gap-2" data-bh-mm-bars={track}>{rows.map((s, i) => {
     const v = s.tracks[track].composite.score;
@@ -145,12 +145,12 @@ function ScoreBars({ systems, track, version = 'v0.1.4' }: { systems: any[]; tra
     const altRank = altScore == null ? null : 1 + rows.filter((other) => other.key !== s.key && other.tracks[track].composite.score > altScore).length;
     return <li key={s.key} className="grid grid-cols-[minmax(0,11rem)_1fr_3.2rem] items-center gap-x-3 gap-y-1 sm:grid-cols-[minmax(0,17rem)_1fr_3.5rem]" data-bh-imagejev-v02-bar={version === 'v0.2.0' ? s.key : undefined}>
       <span className="min-w-0 break-words text-sm font-semibold leading-tight" title={s.name}>
-        {i + 1}. {imageJevSourceUrl(s.key, s.repo)
-          ? <a href={imageJevSourceUrl(s.key, s.repo)!} target="_blank" rel="noopener noreferrer" className="underline" data-bh-jev-source={s.key}><SystemName name={s.name} gate={gate} /></a>
-          : <Link href={imageSystemPath(s.key)}><SystemName name={s.name} gate={gate} /></Link>}
+        {i + 1}. {imageJevSourceUrl(s.key, s.repo, version)
+          ? <a href={imageJevSourceUrl(s.key, s.repo, version)!} target="_blank" rel="noopener noreferrer" className="underline" data-bh-jev-source={s.key}><SystemName name={s.name} gate={gate} /></a>
+          : <Link href={imageSystemPath(s.key, version)}><SystemName name={s.name} gate={gate} /></Link>}
         {s.api_flag && <span className="ml-1 whitespace-nowrap text-[0.68rem] font-bold text-accent">API</span>}
         <BaseModelDisplay benchmark="imagejevbench" systemKey={s.key} className="mt-1 block text-[11px] font-normal leading-tight" />
-        {imageJevSourceUrl(s.key, s.repo) && <Link href={imageSystemPath(s.key)} className="text-[11px] font-normal text-accent underline">details</Link>}
+        {imageJevSourceUrl(s.key, s.repo, version) && <Link href={imageSystemPath(s.key, version)} className="text-[11px] font-normal text-accent underline">details</Link>}
       </span>
       <span className="h-5 rounded-md bg-black/10 dark:bg-white/10"><span className={`block h-full rounded-md ${color}`} style={{ width: `${Math.max(0.5, v)}%` }} /></span>
       <span className="text-right font-bold tabular-nums">{score(v)}</span>
@@ -233,7 +233,7 @@ export async function MultimodalPreviewContent({ versionTabs }: { versionTabs?: 
     <section className="mt-10 max-w-none" aria-labelledby="overall-heading">
       <h2 id="overall-heading" className="text-2xl font-semibold">Full ranking</h2>
       <p className="bh-muted mt-2 max-w-5xl text-sm">Ranked by the composite score: equal-weight Intelligence, Calibration, Speed and Cost axes, then the unchanged Jev-class gates. Matched gap is signed public-minus-sealed accuracy within the matched families. {systemsOverAllowance === 0 ? `No system currently exceeds the ${a.gap_allowance_pp} pp allowance.` : `${systemsOverAllowance} systems currently exceed the ${a.gap_allowance_pp} pp allowance.`} Hosted systems are marked API because their providers received sealed images and questions; the Gemma 4 endpoint is identified separately in the exposure note.</p>
-      <RankingTable systems={a.ranking} track="all" all />
+      <RankingTable systems={a.ranking} track="all" all version="v0.1.5" />
     </section>
 
     <div className="mt-6 max-w-5xl" data-bh-mm-review-notes>
@@ -246,8 +246,8 @@ export async function MultimodalPreviewContent({ versionTabs }: { versionTabs?: 
     <section className="mt-10 max-w-6xl" aria-labelledby="track-heading">
       <h2 id="track-heading" className="text-2xl font-semibold">Results by track</h2>
       <p className="bh-muted mt-2 max-w-5xl text-sm">Each track is ranked on its own public and sealed items. The licensed core and synthetic everyday-photo results remain separately visible.</p>
-      <article className="mt-6" aria-labelledby="core-heading"><h3 id="core-heading" className="text-xl font-semibold">Core · {s.core_total} items</h3><p className="bh-muted mt-1 text-sm">{s.core_public} public · {s.core_sealed} sealed: {s.licensed_core_sealed} real-source items and {s.pool_core_sealed} fresh synthetic pool items (documents, charts, inventory, safety).</p><RankingTable systems={a.ranking} track="core" /><details className="mt-3"><summary className="cursor-pointer text-sm font-semibold text-accent">Licensed core composite bars</summary><ScoreBars systems={a.ranking} track="core" /></details></article>
-      <article className="mt-10" aria-labelledby="photo-heading"><h3 id="photo-heading" className="text-xl font-semibold">Everyday photo decisions · {s.everyday_photo_total} synthetic items</h3><p className="bh-muted mt-1 text-sm">{s.everyday_photo_public} public images from the promo set; {s.everyday_photo_sealed} sealed: {s.everyday_photo_sealed - s.everyday_photo_sealed_fresh} variants from the reviewed v0.1 candidate pool across {s.everyday_photo_situations} matched situations and {s.everyday_photo_sealed_fresh} fresh pool photos. Ambiguous labels were dropped after visual, two-model and gold-blind human checks. No brands and no focused faces.</p><RankingTable systems={a.ranking} track="everyday_photo" /><details className="mt-3"><summary className="cursor-pointer text-sm font-semibold text-accent">Everyday photo composite bars</summary><ScoreBars systems={a.ranking} track="everyday_photo" /></details></article>
+      <article className="mt-6" aria-labelledby="core-heading"><h3 id="core-heading" className="text-xl font-semibold">Core · {s.core_total} items</h3><p className="bh-muted mt-1 text-sm">{s.core_public} public · {s.core_sealed} sealed: {s.licensed_core_sealed} real-source items and {s.pool_core_sealed} fresh synthetic pool items (documents, charts, inventory, safety).</p><RankingTable systems={a.ranking} track="core" version="v0.1.5" /><details className="mt-3"><summary className="cursor-pointer text-sm font-semibold text-accent">Licensed core composite bars</summary><ScoreBars systems={a.ranking} track="core" version="v0.1.5" /></details></article>
+      <article className="mt-10" aria-labelledby="photo-heading"><h3 id="photo-heading" className="text-xl font-semibold">Everyday photo decisions · {s.everyday_photo_total} synthetic items</h3><p className="bh-muted mt-1 text-sm">{s.everyday_photo_public} public images from the promo set; {s.everyday_photo_sealed} sealed: {s.everyday_photo_sealed - s.everyday_photo_sealed_fresh} variants from the reviewed v0.1 candidate pool across {s.everyday_photo_situations} matched situations and {s.everyday_photo_sealed_fresh} fresh pool photos. Ambiguous labels were dropped after visual, two-model and gold-blind human checks. No brands and no focused faces.</p><RankingTable systems={a.ranking} track="everyday_photo" version="v0.1.5" /><details className="mt-3"><summary className="cursor-pointer text-sm font-semibold text-accent">Everyday photo composite bars</summary><ScoreBars systems={a.ranking} track="everyday_photo" version="v0.1.5" /></details></article>
       <p className="mt-4 rounded-lg border border-line p-4 text-sm" data-bh-djev-spark-sealed-photo><b>djev-spark sealed photo result:</b> {photoSealed.correct}/{photoSealed.n} sealed decisions · {pct(photoSealed.accuracy)}. It saw the public promo images in an earlier inference-only video run, with no training; this sealed score is the independent measurement for it.</p>
     </section>
 
@@ -512,7 +512,7 @@ function ReferenceRows({ rows }: { rows: any[] }) {
       <table className="w-full min-w-[760px] text-left text-sm" data-bh-imagejev-v02-reference-table>
         <thead><tr><th scope="col" className="p-3">System</th><th scope="col" className="p-3">Status</th><th scope="col" className="p-3 text-right">v0.1.4 score · reference</th><th scope="col" className="p-3">Reason</th></tr></thead>
         <tbody>{rows.map((row) => <tr key={row.key} className="border-t border-line" data-bh-imagejev-v02-reference-row={row.key}>
-          <th scope="row" className="p-3 font-semibold">{row.name}{row.kind === 'api' && <span className="bh-thin-tag ml-1.5">API</span>}</th>
+          <th scope="row" className="p-3 font-semibold">{row.name}<BaseModelDisplay benchmark="imagejevbench" systemKey={row.key} className="mt-1 block text-[11px] font-normal" /><Link href={imageSystemPath(row.key, 'v0.2.0')} className="block text-[11px] font-normal text-accent underline" data-bh-mm-system-details={row.key}>details</Link>{row.kind === 'api' && <span className="bh-thin-tag ml-1.5">API</span>}</th>
           <td className="p-3">Reference only</td><td className="p-3 text-right tabular-nums">{Number(row.reference_score).toFixed(2)}</td><td className="p-3">{row.reason}</td>
         </tr>)}</tbody>
       </table>
@@ -535,7 +535,7 @@ function MeasuredWithoutCompositeRows({ rows, references }: { rows: any[]; refer
           const core = row.tracks.core;
           const reference = referenceByKey.get(row.key);
           return <tr key={row.key} className="border-t border-line align-top" data-bh-imagejev-v02-unrankable-row={row.key}>
-            <th scope="row" className="p-3 text-left font-semibold">{row.name}{row.api_flag && <span className="bh-thin-tag ml-1.5">API</span>}<span className="bh-muted mt-0.5 block text-xs font-normal">Measured on v0.2 · no rank</span></th>
+            <th scope="row" className="p-3 text-left font-semibold">{row.name}<BaseModelDisplay benchmark="imagejevbench" systemKey={row.key} className="mt-1 block text-[11px] font-normal" /><Link href={imageSystemPath(row.key, 'v0.2.0')} className="block text-[11px] font-normal text-accent underline" data-bh-mm-system-details={row.key}>details</Link>{row.api_flag && <span className="bh-thin-tag ml-1.5">API</span>}<span className="bh-muted mt-0.5 block text-xs font-normal">Measured on v0.2 · no rank</span></th>
             <td className="p-3 text-right tabular-nums">{axis(core.axes.intelligence)}</td><td className="p-3 text-right tabular-nums">{axis(core.axes.calibration)}</td><td className="p-3 text-right tabular-nums">{axis(core.axes.speed)}</td><td className="p-3 text-right tabular-nums">{axis(core.axes.cost)}</td><td className="p-3 text-right tabular-nums">—</td>
             <td className="p-3 text-right tabular-nums">{reference
               ? <><span className="bh-thin-tag">REFERENCE v0.1.4</span><b className="mt-1 block">{Number(reference.reference_score).toFixed(2)}</b></>

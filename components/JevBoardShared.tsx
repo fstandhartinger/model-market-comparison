@@ -11,6 +11,7 @@ import type { JevGate, JevGatePenalty } from '../lib/jevbench-axis-weights.mjs';
 // no client directive, so both the server board and the interactive client views can use it.
 
 export type JevBoardRow = {
+  image_revision?: string;
   key: string; display: string; author: string; repo: string | null; class: string;
   rank: number | null; ranked: boolean; listing: string; not_ranked_because: string | null;
   priority_run?: boolean; api_flag: boolean; api_exposure_note: string | null;
@@ -18,7 +19,7 @@ export type JevBoardRow = {
   axes: { intelligence: number | null; calibration: number | null; speed: number | null; cost: number | null };
   public_accuracy: number | null; sealed_accuracy: number | null; public_minus_sealed_gap_pp: number | null;
   cost: { kind: string; usd_per_1000: number | null; basis: string };
-  speed: { p50_s_raw: number | null; adjustment?: string };
+  speed: { p50_s_raw: number | null; p95_s_raw?: number | null; p50_s_adjusted?: number | null; p95_s_adjusted?: number | null; adjustment?: string };
   endpoint_kind?: string; endpoint_condition?: string;
   // F-223: the headline option's paired-bootstrap 95% interval, when the release publishes one (v1.5 onwards).
   ci?: [number, number] | null;
@@ -116,8 +117,8 @@ export function gateSentence(gate: JevGatePenalty, score: number | null | undefi
 }
 
 export function JevScoreBar({ row, reference = false, metric = 'score', heat, isNew = false, name, ci = null, alternative = null, pageHref, benchmark = 'jevbench', gate = null }: { row: JevBoardRow; reference?: boolean; metric?: BarMetric; heat?: HeatScales; isNew?: boolean; name?: string; ci?: [number, number] | null; alternative?: JevBoardAlternative | null; pageHref?: string; benchmark?: BaseModelBenchmark; gate?: JevGatePenalty | null }) {
-  const source = benchmark === 'imagejevbench' ? imageJevSourceUrl(row.key, row.repo) : jevSourceUrl(row.key, row.repo);
-  const page = benchmark === 'imagejevbench' ? imageJevSystemPath(row.key) : jevSystemPath(row.key);
+  const source = benchmark === 'imagejevbench' ? imageJevSourceUrl(row.key, row.repo, row.image_revision) : jevSourceUrl(row.key, row.repo);
+  const page = benchmark === 'imagejevbench' ? imageJevSystemPath(row.key, row.image_revision) : jevSystemPath(row.key);
   const s = row.jevbench_score;
   const value = metricValue(row, metric);
   // F-223 (Fable pass 42): the official score's 95% interval is drawn on the bar's own 0-100 scale, so the figure

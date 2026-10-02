@@ -1,6 +1,9 @@
 "use client";
 
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
+import { BaseModelDisplay } from './BaseModelDisplay';
+import { imageJevSystemPath } from '../lib/imagejev-system-links.mjs';
 
 type Row = {
   key: string;
@@ -67,6 +70,8 @@ function SystemCell({ row, compactMobile }: { row: Row; compactMobile: boolean }
   const gateNames = ['intelligence', 'speed', 'cost'].filter((axis) => Number.isFinite(gates[axis]) && gates[axis] < 1);
   return <th scope="row" className="sticky left-10 z-[1] w-40 min-w-40 max-w-40 break-words sm:left-14 sm:w-72 sm:min-w-52 sm:max-w-72 bg-[var(--surface)] px-3 py-2 text-left font-semibold shadow-[inset_-1px_0_0_rgb(var(--line))]">
     <span className="block">{row.name}{row.api_flag && <span className="bh-thin-tag ml-1.5">API</span>}</span>
+    <BaseModelDisplay benchmark="imagejevbench" systemKey={row.key} className="mt-1 block text-[11px] font-normal leading-tight" />
+    <Link href={imageJevSystemPath(row.key, 'v0.2.0')} className="block text-[11px] font-normal text-accent underline" data-bh-mm-system-details={row.key}>details</Link>
     <span className={`${detailClass} bh-muted mt-0.5 text-xs font-normal`}>{settingLabel}</span>
     <details className={`${detailClass} bh-muted mt-1 text-xs font-normal`} data-bh-imagejev-v02-configuration-details>
       <summary className="cursor-pointer text-accent">Configuration details</summary>

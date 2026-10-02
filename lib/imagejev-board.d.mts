@@ -9,7 +9,8 @@ export type ImageJevPricingAlternative = {
   label: 'Base-model price';
   note: string;
 };
-export type ImageJevBoardRow = JevBoardViewRow & { alt?: ImageJevPricingAlternative };
+export type ImageJevBoardSystem = JevV14System & { image_revision: string; alt: ImageJevPricingAlternative | null };
+export type ImageJevBoardRow = JevBoardViewRow & { image_revision: string; alt?: ImageJevPricingAlternative };
 export type ImageJevCompareRow = JevCompareV15Row & { alt?: ImageJevPricingAlternative };
 export type ImageJevCapabilityLimits = {
   cost: number;
@@ -19,7 +20,7 @@ export type ImageJevCapabilityLimits = {
 };
 
 /** Convert ImageJev v0.1.x (`all`) or v0.2 (`headline_track`) rows to Jev V1.4 capability/bubble rows. */
-export declare function imageJevBoardSystems(artifact: unknown): JevV14System[];
+export declare function imageJevBoardSystems(artifact: unknown): ImageJevBoardSystem[];
 /** Convert to the shared composite chart rows, including Wity-1's optional base-model price `alt`. */
 export declare function imageJevBoardRows(artifact: unknown): ImageJevBoardRow[];
 /** Convert to the shared two-system comparison rows, including Wity-1's optional base-model price `alt`. */

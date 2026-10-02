@@ -370,8 +370,8 @@ function SystemName({ row, benchmark = 'jevbench' }: { row: JevBoardViewRow; ben
   const name = shortName(row.display);
   const rawVariant = row.display.startsWith(name) ? row.display.slice(name.length).replace(/^[ ,]*\(?|\)$/g, '') : '';
   const variant = rawVariant && !row.author.includes(rawVariant) ? rawVariant : '';
-  const page = benchmark === 'imagejevbench' ? imageJevSystemPath(row.key) : jevSystemPath(row.key);
-  const source = benchmark === 'imagejevbench' ? imageJevSourceUrl(row.key, row.repo) : jevSourceUrl(row.key, row.repo);
+  const page = benchmark === 'imagejevbench' ? imageJevSystemPath(row.key, row.image_revision) : jevSystemPath(row.key);
+  const source = benchmark === 'imagejevbench' ? imageJevSourceUrl(row.key, row.repo, row.image_revision) : jevSourceUrl(row.key, row.repo);
   // Florian 25 Sep 2026: the name opens the model's best source; the system page stays one click away ("details").
   const href = source ?? page;
   const NameLink = ({ children }: { children: ReactNode }) => source
