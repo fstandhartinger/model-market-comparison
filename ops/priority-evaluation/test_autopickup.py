@@ -1011,6 +1011,7 @@ class FinalizeTests(DatabaseTestCase):
                        "receipt_hashes": receipt_hashes,
                        "review_sha256": gate["review_sha256"]},
             "receipt_hashes": receipt_hashes,
+            "official_inputs": {"raw_hashes": {"jevbench": ap.sha256_file(job / "results/raw/jevbench.jsonl")}},
             "output_sha256": "a" * 64,
         }
         if visibility == "public":
@@ -1161,6 +1162,37 @@ class FinalizeTests(DatabaseTestCase):
         (job / "release/RESULT.json").write_text(json.dumps(result))
         with self.assertRaises(ap.PickupError):
             ap.trusted_recompute(rid, job)
+
+    def test_host_binds_raw_receipts_the_sandboxed_agent_cannot_see(self):
+        # Order a35a4546 (2 Oct 2026): results/raw is masked in the agent sandbox, so the release agent
+        # cited only OFFICIAL-SCORES.json and trusted_recompute refused the delivered result.
+        rid, fx, job = self.prepare(visibility="private")
+        result = json.loads((job / "release/RESULT.json").read_text())
+        result["receipts"] = [item for item in result["receipts"] if not item["path"].startswith("results/raw/")]
+        (job / "release/RESULT.json").write_text(json.dumps(result))
+        raw_digest = ap.sha256_file(job / "results/raw/jevbench.jsonl")
+        output = {"system_key": "evil_model", "score": 71.23456,
+                  "aggregate": {"axes": dict.fromkeys(("intelligence", "calibration", "speed", "cost"), 71.23456),
+                                "scores": dict.fromkeys(("A", "B", "C"), 71.23456)}}
+        with mock.patch.object(ap.official_scoring, "run", return_value=output):
+            recomputed = ap.trusted_recompute(rid, job)
+        self.assertEqual(recomputed["receipt_hashes"]["results/raw/jevbench.jsonl"], raw_digest)
+        verified = ap.verify_result(ap.load_row(rid), job, ap.load_state(rid), fx)
+        self.assertEqual(verified["outcome"], "delivered")
+        self.assertNotIn("results/raw/jevbench.jsonl", [pin["path"] for pin in verified["receipts"]])
+        # Raw input that drifts after recomputation, or a recompute record without host raw hashes, fails closed.
+        (job / "results/raw/jevbench.jsonl").write_text('{"task_id":"changed"}\n')
+        with self.assertRaisesRegex(ap.PickupError, "changed after"):
+            ap.verify_result(ap.load_row(rid), job, ap.load_state(rid), fx)
+        state = ap.load_state(rid)
+        state["independent_recompute"].pop("official_inputs")
+        with self.assertRaisesRegex(ap.PickupError, "missing or stale"):
+            ap.verify_result(ap.load_row(rid), job, state, fx)
+        # A raw receipt the agent does cite must match the host measurement exactly.
+        with self.assertRaisesRegex(ap.PickupError, "differs from the host measurement"):
+            ap.bind_raw_receipts({"results/raw/jevbench.jsonl": "0" * 64}, {"jevbench": raw_digest})
+        self.assertEqual(ap.bind_raw_receipts({"results/raw/jevbench.jsonl": raw_digest}, {"jevbench": raw_digest}),
+                         {"results/raw/jevbench.jsonl": raw_digest})
 
     def test_result_symlinks_are_rejected_before_host_verification(self):
         rid, _fx, job = self.prepare()
