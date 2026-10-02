@@ -768,7 +768,7 @@ ENDPOINT_PATH_RE = re.compile(r"/[A-Za-z0-9._~/-]{0,200}")
 ENDPOINT_TEXT_RE = re.compile(r"https://[^\s\"'<>`]{1,300}")
 ENDPOINT_SEGMENT_RE = re.compile(r"[a-z0-9][a-z0-9._-]{0,23}")
 CREDENTIAL_TEXT_RE = re.compile(
-    r"(api[_ -]?key|secret|token|bearer|passw|authori[sz]ation|\bsk-|\bkey\b|@|[A-Za-z0-9+/=._-]{24,})", re.I)
+    r"(api[_ -]?key|secret|token|bearer|passw|authori[sz]ation|\bsk-|\bkey\b|[^\s@]+@[^\s@]+\.[a-z]{2,}|[A-Za-z0-9+/=._-]{24,})", re.I)
 
 
 def public_endpoint(value: object) -> str | None:

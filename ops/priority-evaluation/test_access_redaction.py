@@ -49,6 +49,10 @@ class AccessRedactionTest(unittest.TestCase):
         row = self.row(None)
         row["notes"] = f"my key is {SYNTH}"
         self.assertNotIn(SYNTH, autopickup.request_data_json(row))
+        row["notes"] = "reach me at ann@example.com"
+        self.assertNotIn("ann@example.com", autopickup.request_data_json(row))
+        row["notes"] = "my token abc"
+        self.assertNotIn(SYNTH, autopickup.request_data_json(row))
         row["notes"] = "Please run the default benchmarks."
         self.assertIn("default benchmarks", autopickup.request_data_json(row))
 
