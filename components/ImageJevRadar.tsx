@@ -36,7 +36,7 @@ function SystemPicker({ label, systems, value, other, onPick }: {
         if (event.key === "Enter" && open && matches[active]) { event.preventDefault(); choose(matches[active]); }
         if (event.key === "Escape") { setOpen(false); }
       }} data-bh-mm-picker={label.endsWith("A") ? "a" : "b"} />
-    {open && <ul id={listId} role="listbox" aria-label={`${label} matches`} className="absolute z-20 mt-1 max-h-64 w-full overflow-y-auto rounded-lg border border-line bg-[var(--surface)] p-1 shadow-xl">
+    {open && <ul id={listId} role="listbox" aria-label={`${label} matches`} className="absolute z-50 mt-1 max-h-64 w-full overflow-y-auto rounded-lg border border-line bg-[var(--surface)] p-1 shadow-xl">
       {matches.map((system, index) => <li key={system.key} id={`${listId}-${system.key}`} role="option" aria-selected={index === active}>
         <button type="button" className="w-full rounded px-2 py-2 text-left text-sm hover:bg-accent/10 focus:bg-accent/10"
           onMouseDown={(event) => event.preventDefault()} onClick={() => choose(system)}>

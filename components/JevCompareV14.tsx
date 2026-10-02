@@ -127,9 +127,9 @@ export function SystemCombobox({ id, label, value, other, ranked, unranked, onCh
       <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--muted)]" aria-hidden="true">⌄</span>
     </div>
     {open && <div ref={list} id={`${id}-options`} role="listbox" aria-label={`${label} systems`}
-      className="absolute z-30 mt-1 max-h-64 w-full overflow-y-auto overscroll-contain rounded-md border border-[rgb(var(--line))] bg-[rgb(var(--surface))] p-1 shadow-lg">
+      className="absolute z-50 mt-1 max-h-64 w-full overflow-y-auto overscroll-contain rounded-md border border-[rgb(var(--line))] bg-[var(--surface)] p-1 shadow-lg">
       {filtered.length ? filtered.map((row, index) => <div key={row.key} id={`${id}-option-${index}`} role="option" aria-selected={row.key === value}
-        data-option-index={index} className={`cursor-pointer rounded px-3 py-2.5 ${index === activeIndex ? 'bg-[rgb(var(--surface-2))]' : ''}`}
+        data-option-index={index} className={`cursor-pointer rounded px-3 py-2.5 ${index === activeIndex ? 'bg-accent/10' : ''}`}
         onMouseEnter={() => setActive(index)} onMouseDown={(event) => event.preventDefault()} onClick={() => choose(row)}>
         <span className="font-medium">{row.name}</span><span className="bh-muted ml-2 text-xs">{row.rank === null ? row.listing === 'honorable_mention' ? 'Honorable mention' : 'Partial run' : `#${row.rank}`}</span>
       </div>) : <p className="bh-muted px-3 py-2.5">No matching systems</p>}
