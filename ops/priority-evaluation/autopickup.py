@@ -766,6 +766,9 @@ def job_directory(rid: str, job_root: Path) -> Path:
 
 ENDPOINT_PATH_RE = re.compile(r"/[A-Za-z0-9._~/-]{0,200}")
 ENDPOINT_TEXT_RE = re.compile(r"https://[^\s\"'<>`]{1,300}")
+ENDPOINT_SEGMENT_RE = re.compile(r"[a-z0-9][a-z0-9._-]{0,23}")
+CREDENTIAL_TEXT_RE = re.compile(
+    r"(api[_ -]?key|secret|token|bearer|passw|authori[sz]ation|\bsk-|\bkey\b|@|[A-Za-z0-9+/=._-]{24,})", re.I)
 
 
 def public_endpoint(value: object) -> str | None:
@@ -784,6 +787,10 @@ def public_endpoint(value: object) -> str | None:
     path = parsed.path or "/"
     if not ENDPOINT_PATH_RE.fullmatch(path):
         return None
+    # Short lowercase segments only: a key smuggled into the path must not survive as "endpoint".
+    for segment in filter(None, path.split("/")):
+        if segment in (".", "..") or not ENDPOINT_SEGMENT_RE.fullmatch(segment) or CREDENTIAL_TEXT_RE.search(segment):
+            return None
     return f"https://{host}{path.rstrip('/') or ''}"
 
 
@@ -791,6 +798,7 @@ def redacted_access(raw: object) -> dict[str, Any]:
     """Nonsecret view of access_instructions for request.json/PROMPT/agents: never the raw text or key."""
     endpoint = None
     has_key = False
+    unstructured = False
     if isinstance(raw, str) and raw.strip():
         try:
             parsed = json.loads(raw)
@@ -801,11 +809,14 @@ def redacted_access(raw: object) -> dict[str, Any]:
                 endpoint = endpoint or public_endpoint(parsed.get(name))
             has_key = isinstance(parsed.get("api_key"), str) and bool(parsed["api_key"])
         else:
+            unstructured = True
             for match in ENDPOINT_TEXT_RE.findall(raw):
                 endpoint = public_endpoint(match)
                 if endpoint:
                     break
-    return {"endpoint": endpoint, "credential": "held_privately_host_only" if has_key else "not_on_file",
+    credential = "held_privately_host_only" if has_key else (
+        "unstructured_needs_private_intake" if unstructured else "not_on_file")
+    return {"endpoint": endpoint, "credential": credential,
             "raw_text": "withheld"}
 
 
@@ -814,6 +825,9 @@ def request_data_json(row: dict[str, Any]) -> str:
               "notes", "benchmarks", "visibility")
     payload = {name: row.get(name) for name in fields}
     payload["access"] = redacted_access(row.get("access_instructions"))
+    notes = payload.get("notes")
+    if isinstance(notes, str) and CREDENTIAL_TEXT_RE.search(notes):
+        payload["notes"] = "withheld: may contain credentials or contact details"
     # ensure_ascii escapes every non-ASCII character; also escape characters that could close
     # or disguise the fenced block or read as markup, so the data cannot leave its quotes.
     text = json.dumps(payload, ensure_ascii=True, indent=2)

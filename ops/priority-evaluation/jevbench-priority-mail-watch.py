@@ -117,7 +117,7 @@ def plain_body(message: email.message.Message) -> tuple[str, bool]:
 
 
 CREDENTIAL_RE = re.compile(
-    r"(api[_ -]?key|secret|token|bearer|password|authorization|\bsk-[A-Za-z0-9]|[A-Za-z0-9_\-]{32,})", re.I)
+    r"(api[_ -]?key|secret|token|bearer|passw|authori[sz]ation|\bsk-|\bkey\b|[A-Za-z0-9+/=._\-]{24,})", re.I)
 ACCESS_SUMMARY = ("Customer access reply received (may contain credentials). Content withheld; private 0600 copy "
                   "only. Agent-owned access reconciliation: route through private host-only key intake.")
 
@@ -358,7 +358,8 @@ def notify_florian(event: dict, row: dict, metadata: dict) -> bool:
              "agents reconcile it via private host-only intake."],
             text=True, capture_output=True, timeout=45,
         )
-        sql(f"UPDATE {EVENTS} SET notification_status={literal('sent' if result.returncode == 0 else 'failed')} "
+        sql(f"UPDATE {EVENTS} SET notification_status={literal('sent' if result.returncode == 0 else 'failed')}, "
+            f"notified_at=CASE WHEN {str(result.returncode == 0).upper()} THEN now() ELSE notified_at END "
             f"WHERE gmail_message_id={literal(event['gmail_message_id'])}")
         return result.returncode == 0
     sender = metadata["sender_email"]

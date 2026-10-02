@@ -22,6 +22,10 @@ class MailWatchRedactionTest(unittest.TestCase):
         self.assertEqual(summary, mw.ACCESS_SUMMARY)
         self.assertNotIn(SYNTH, summary)
 
+    def test_short_or_split_tokens_redacted(self):
+        for body in ("here: Ab3+xY9/Qz8.Lm2_Pk7-Rt5=Wn4Vd6", "the key is abc123XYZ"):
+            self.assertEqual(mw.safe_summary(body, "Re"), mw.ACCESS_SUMMARY, body)
+
     def test_ordinary_reply_keeps_excerpt(self):
         self.assertEqual(mw.safe_summary("Please publish it.", "Re: result"), "Please publish it.")
 
