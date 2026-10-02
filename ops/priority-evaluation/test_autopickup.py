@@ -1011,6 +1011,7 @@ class FinalizeTests(DatabaseTestCase):
                        "receipt_hashes": receipt_hashes,
                        "review_sha256": gate["review_sha256"]},
             "receipt_hashes": receipt_hashes,
+            "official_inputs": {"raw_hashes": {"jevbench": ap.sha256_file(job / "results/raw/jevbench.jsonl")}},
             "output_sha256": "a" * 64,
         }
         if visibility == "public":
@@ -1179,6 +1180,14 @@ class FinalizeTests(DatabaseTestCase):
         verified = ap.verify_result(ap.load_row(rid), job, ap.load_state(rid), fx)
         self.assertEqual(verified["outcome"], "delivered")
         self.assertNotIn("results/raw/jevbench.jsonl", [pin["path"] for pin in verified["receipts"]])
+        # Raw input that drifts after recomputation, or a recompute record without host raw hashes, fails closed.
+        (job / "results/raw/jevbench.jsonl").write_text('{"task_id":"changed"}\n')
+        with self.assertRaisesRegex(ap.PickupError, "changed after"):
+            ap.verify_result(ap.load_row(rid), job, ap.load_state(rid), fx)
+        state = ap.load_state(rid)
+        state["independent_recompute"].pop("official_inputs")
+        with self.assertRaisesRegex(ap.PickupError, "missing or stale"):
+            ap.verify_result(ap.load_row(rid), job, state, fx)
         # A raw receipt the agent does cite must match the host measurement exactly.
         with self.assertRaisesRegex(ap.PickupError, "differs from the host measurement"):
             ap.bind_raw_receipts({"results/raw/jevbench.jsonl": "0" * 64}, {"jevbench": raw_digest})

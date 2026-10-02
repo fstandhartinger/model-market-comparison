@@ -1864,8 +1864,15 @@ def verify_result(row: dict[str, Any], job_dir: Path, state: dict[str, Any], eff
         receipt_pins.append({"path": relative, "sha256": entry["sha256"]})
     recompute = state.get("independent_recompute")
     if isinstance(recompute, dict):
-        current_receipt_hashes = bind_raw_receipts(
-            current_receipt_hashes, (recompute.get("official_inputs") or {}).get("raw_hashes") or {})
+        official_inputs = recompute.get("official_inputs")
+        raw_hashes = official_inputs.get("raw_hashes") if isinstance(official_inputs, dict) else None
+        if not isinstance(raw_hashes, dict) or not raw_hashes:
+            raise PickupError("host-run independent recomputation is missing or stale")
+        for name, digest in raw_hashes.items():
+            raw_path = within(job_dir, f"results/raw/{name}.jsonl")
+            if not raw_path.is_file() or raw_path.is_symlink() or sha256_file(raw_path) != digest:
+                raise PickupError("raw scorer input changed after the independent recomputation")
+        current_receipt_hashes = bind_raw_receipts(current_receipt_hashes, raw_hashes)
     result_sha = sha256_file(job_dir / "release" / "RESULT.json")
     if not isinstance(recompute, dict) or recompute.get("verdict") != "PASS" \
             or recompute.get("request_id") != rid \
