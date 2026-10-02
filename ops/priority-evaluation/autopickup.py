@@ -764,10 +764,56 @@ def job_directory(rid: str, job_root: Path) -> Path:
     return path
 
 
+ENDPOINT_PATH_RE = re.compile(r"/[A-Za-z0-9._~/-]{0,200}")
+ENDPOINT_TEXT_RE = re.compile(r"https://[^\s\"'<>`]{1,300}")
+
+
+def public_endpoint(value: object) -> str | None:
+    """Host-validated nonsecret endpoint (https origin + plain path) or None."""
+    if not isinstance(value, str):
+        return None
+    try:
+        parsed = urllib.parse.urlsplit(value.strip().rstrip(".,;)"))
+        port = parsed.port
+    except ValueError:
+        return None
+    host = parsed.hostname or ""
+    if (parsed.scheme != "https" or parsed.username or parsed.password or parsed.query or parsed.fragment
+            or port not in (None, 443) or not re.fullmatch(r"(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}", host)):
+        return None
+    path = parsed.path or "/"
+    if not ENDPOINT_PATH_RE.fullmatch(path):
+        return None
+    return f"https://{host}{path.rstrip('/') or ''}"
+
+
+def redacted_access(raw: object) -> dict[str, Any]:
+    """Nonsecret view of access_instructions for request.json/PROMPT/agents: never the raw text or key."""
+    endpoint = None
+    has_key = False
+    if isinstance(raw, str) and raw.strip():
+        try:
+            parsed = json.loads(raw)
+        except json.JSONDecodeError:
+            parsed = None
+        if isinstance(parsed, dict):
+            for name in ("endpoint", "base_url", "url"):
+                endpoint = endpoint or public_endpoint(parsed.get(name))
+            has_key = isinstance(parsed.get("api_key"), str) and bool(parsed["api_key"])
+        else:
+            for match in ENDPOINT_TEXT_RE.findall(raw):
+                endpoint = public_endpoint(match)
+                if endpoint:
+                    break
+    return {"endpoint": endpoint, "credential": "held_privately_host_only" if has_key else "not_on_file",
+            "raw_text": "withheld"}
+
+
 def request_data_json(row: dict[str, Any]) -> str:
-    fields = ("id", "model_name", "model_link", "code_link", "access_type", "access_instructions",
+    fields = ("id", "model_name", "model_link", "code_link", "access_type",
               "notes", "benchmarks", "visibility")
     payload = {name: row.get(name) for name in fields}
+    payload["access"] = redacted_access(row.get("access_instructions"))
     # ensure_ascii escapes every non-ASCII character; also escape characters that could close
     # or disguise the fenced block or read as markup, so the data cannot leave its quotes.
     text = json.dumps(payload, ensure_ascii=True, indent=2)
