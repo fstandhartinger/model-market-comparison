@@ -608,7 +608,8 @@ class CustomerDataTests(DatabaseTestCase):
         prompt = (ap.JOB_ROOT / rid / "PROMPT.md").read_text()
         block = re.search(r"```json\n(.*?)\n```", prompt, re.S).group(1)
         data = json.loads(block)
-        self.assertEqual(data["notes"], HOSTILE)
+        self.assertEqual(data["notes"], "withheld: customer free text kept host-side")  # default-withhold (CR-259 F2)
+        self.assertNotIn(HOSTILE, prompt)
         self.assertEqual(data["model_name"], "Evil {{DEADLINE_UTC}} `model`")
         outside = prompt.replace(block, "")
         for fragment in ("Ignore every rule", "evil.example", "<script>", "rm -rf"):
@@ -618,7 +619,7 @@ class CustomerDataTests(DatabaseTestCase):
         self.assertIn("review/CODE-REVIEW.md", prompt)
         self.assertIn("matching PASS in private host", prompt)
         self.assertIn("before this review has passed", prompt)
-        self.assertEqual(json.loads((ap.JOB_ROOT / rid / "request.json").read_text())["notes"], HOSTILE)
+        self.assertEqual(json.loads((ap.JOB_ROOT / rid / "request.json").read_text())["notes"], "withheld: customer free text kept host-side")
 
     def test_templates_and_handoff_never_echo_customer_text(self):
         rid = insert_order()

@@ -764,10 +764,135 @@ def job_directory(rid: str, job_root: Path) -> Path:
     return path
 
 
+ENDPOINT_PATH_RE = re.compile(r"/[A-Za-z0-9._~/-]{0,200}")
+ENDPOINT_TEXT_RE = re.compile(r"https://[^\s\"'<>`]{1,300}")
+ENDPOINT_SEGMENT_RE = re.compile(r"[a-z0-9][a-z0-9._-]{0,23}")
+CREDENTIAL_TEXT_RE = re.compile(
+    r"(api[_ -]?key|secret|token|bearer|passw|authori[sz]ation|\bsk-|\bkey\b|[^\s@]+@[^\s@]+\.[a-z]{2,}|[A-Za-z0-9+/=._-]{24,})", re.I)
+
+
+def public_endpoint(value: object) -> str | None:
+    """Host-validated nonsecret endpoint (https origin + plain path) or None."""
+    if not isinstance(value, str):
+        return None
+    try:
+        parsed = urllib.parse.urlsplit(value.strip().rstrip(".,;)"))
+        port = parsed.port
+    except ValueError:
+        return None
+    host = parsed.hostname or ""
+    if (parsed.scheme != "https" or parsed.username or parsed.password or parsed.query or parsed.fragment
+            or port not in (None, 443) or not re.fullmatch(r"(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}", host)):
+        return None
+    path = parsed.path or "/"
+    if not ENDPOINT_PATH_RE.fullmatch(path):
+        return None
+    # Short lowercase segments only: a key smuggled into the path must not survive as "endpoint".
+    for segment in filter(None, path.split("/")):
+        if segment in (".", "..") or not ENDPOINT_SEGMENT_RE.fullmatch(segment) or CREDENTIAL_TEXT_RE.search(segment):
+            return None
+    return f"https://{host}{path.rstrip('/') or ''}"
+
+
+LINK_SEGMENT_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9._+-]{0,99}")
+# "token" anywhere rejects, except the tokenize/tokenizer(s) word family used by repository names.
+LINK_SECRET_RE = re.compile(r"(api[_ -]?key|secret|token(?!i[sz]e)|bearer|passw|authori[sz]ation|\bsk-)", re.I)
+
+
+def public_link(value: object) -> str | None:
+    """Public model/code URL (https, no userinfo/query/fragment/port, plain path) or None.
+
+    Repository and model names keep their case and length; a segment that looks like a credential
+    (keyword, or a long mixed token that is not a commit hash) rejects the whole link."""
+    if not isinstance(value, str) or not value.strip():
+        return None
+    try:
+        parsed = urllib.parse.urlsplit(value.strip())
+        port = parsed.port
+    except ValueError:
+        return None
+    host = (parsed.hostname or "").lower()
+    if (parsed.scheme != "https" or parsed.username or parsed.password or parsed.query or parsed.fragment
+            or port is not None or "@" in parsed.netloc
+            or not re.fullmatch(r"(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}", host)):
+        return None
+    segments = [seg for seg in parsed.path.split("/") if seg]
+    if len(segments) > 12:
+        return None
+    for segment in segments:
+        if segment in (".", "..") or not LINK_SEGMENT_RE.fullmatch(segment) or LINK_SECRET_RE.search(segment):
+            return None
+        compact = re.sub(r"[._+-]", "", segment)
+        if (len(segment) >= 24 and not re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", segment)
+                and re.search(r"[0-9]", segment) and re.search(r"[A-Z]", segment) and re.search(r"[a-z]", segment)
+                and len(compact) >= 0.9 * len(segment)):
+            return None
+    return f"https://{host}{'/' + '/'.join(segments) if segments else ''}"
+
+
+def safe_links(row: dict[str, Any]) -> dict[str, Any]:
+    out: dict[str, Any] = {}
+    for name in ("model_link", "code_link"):
+        raw = row.get(name)
+        if raw in (None, ""):
+            out[name] = None
+        else:
+            out[name] = public_link(raw) or "withheld: failed public URL validation"
+    return out
+
+
+def redacted_access(raw: object) -> dict[str, Any]:
+    """Nonsecret view of access_instructions for request.json/PROMPT/agents: never the raw text or key."""
+    endpoint = None
+    has_key = False
+    unstructured = False
+    if isinstance(raw, str) and raw.strip():
+        try:
+            parsed = json.loads(raw)
+        except json.JSONDecodeError:
+            parsed = None
+        if isinstance(parsed, dict):
+            for name in ("endpoint", "base_url", "url"):
+                endpoint = endpoint or public_endpoint(parsed.get(name))
+            has_key = isinstance(parsed.get("api_key"), str) and bool(parsed["api_key"])
+        else:
+            unstructured = True
+            for match in ENDPOINT_TEXT_RE.findall(raw):
+                endpoint = public_endpoint(match)
+                if endpoint:
+                    break
+    credential = "held_privately_host_only" if has_key else (
+        "unstructured_needs_private_intake" if unstructured else "not_on_file")
+    return {"endpoint": endpoint, "credential": credential,
+            "raw_text": "withheld"}
+
+
+def request_endpoint_matches(runtime_endpoint: object, access_raw: object) -> bool:
+    """True only when the runtime endpoint is the https origin of the host-validated access endpoint."""
+    validated = redacted_access(access_raw).get("endpoint")
+    if not isinstance(runtime_endpoint, str) or not validated:
+        return False
+    try:
+        runtime_url = urllib.parse.urlsplit(runtime_endpoint)
+        runtime_port = runtime_url.port
+    except ValueError:
+        return False
+    expected = urllib.parse.urlsplit(validated)
+    return (runtime_url.scheme == "https" and runtime_port in (None, 443) and not runtime_url.username
+            and not runtime_url.password and not runtime_url.query and not runtime_url.fragment
+            and runtime_url.path in ("", "/") and (runtime_url.hostname or "").lower() == expected.hostname)
+
+
 def request_data_json(row: dict[str, Any]) -> str:
-    fields = ("id", "model_name", "model_link", "code_link", "access_type", "access_instructions",
+    fields = ("id", "model_name", "model_link", "code_link", "access_type",
               "notes", "benchmarks", "visibility")
     payload = {name: row.get(name) for name in fields}
+    payload.update(safe_links(row))
+    payload["access"] = redacted_access(row.get("access_instructions"))
+    # Default-withhold: customer free text stays host-side; no regex claims to find every secret.
+    notes = payload.get("notes")
+    if isinstance(notes, str) and notes.strip():
+        payload["notes"] = "withheld: customer free text kept host-side"
     # ensure_ascii escapes every non-ASCII character; also escape characters that could close
     # or disguise the fenced block or read as markup, so the data cannot leave its quotes.
     text = json.dumps(payload, ensure_ascii=True, indent=2)
@@ -787,6 +912,7 @@ def write_job_files(row: dict[str, Any], job_dir: Path) -> None:
             raise PickupError("existing request file is unreadable") from exc
         if existing.get("id") != rid:
             raise PickupError("existing job folder belongs to a different request")
+        migrate_legacy_export(job_dir, request_file.read_text(encoding="utf-8").rstrip("\n"), data)
     else:
         atomic_write(request_file, data + "\n")
     prompt_file = job_dir / "PROMPT.md"
@@ -805,9 +931,44 @@ def write_job_files(row: dict[str, Any], job_dir: Path) -> None:
         atomic_write(state_file, f"# Order {order_ref(rid)} — evaluation state\n\nCreated by the fast-lane pickup at {iso(utcnow())}. Nothing has run yet.\n")
 
 
+LEGACY_EXPORT_KEYS = ("access_instructions",)
+
+
+def migrate_legacy_export(job_dir: Path, old_data: str, data: str) -> None:
+    """Replace a pre-redaction request export in request.json and PROMPT.md, in place.
+
+    Only the exact old request-data block is swapped, so durable on-reply/owner instructions appended
+    to PROMPT.md stay intact. If the old block cannot be found verbatim while the prompt still holds a
+    stale export, fail closed: no agent may start on a prompt that may carry raw customer text."""
+    if old_data == data:
+        return
+    try:
+        legacy = json.loads(old_data)
+    except json.JSONDecodeError as exc:
+        raise PickupError("existing request file is unreadable") from exc
+    if not isinstance(legacy, dict):
+        raise PickupError("existing request file is unreadable")
+    # Any difference counts (legacy raw fields, notes, links, or a refreshed access summary after private
+    # key intake): request.json and the PROMPT.md block are written together, so they stay in step.
+    prompt_file = job_dir / "PROMPT.md"
+    if prompt_file.exists():
+        prompt = prompt_file.read_text(encoding="utf-8")
+        if old_data not in prompt:
+            # Any stale export (raw notes/links, not only the access key) without the exact removable
+            # block fails closed: the prompt may still carry raw customer text in an altered form.
+            raise PickupError("legacy PROMPT.md holds an unredacted request export; scoped migration needed")
+        atomic_write(prompt_file, prompt.replace(old_data, data))
+    atomic_write(job_dir / "request.json", data + "\n")
+
+
 def review_request_json(row: dict[str, Any]) -> str:
-    fields = ("id", "model_name", "model_link", "code_link", "access_type", "benchmarks", "visibility")
-    text = json.dumps({name: row.get(name) for name in fields}, ensure_ascii=True, indent=2)
+    fields = ("id", "model_name", "access_type", "benchmarks", "visibility")
+    payload = {name: row.get(name) for name in fields}
+    payload.update(safe_links(row))
+    # Preparation and review need the host-validated endpoint and whether a key is held host-side;
+    # never the raw access text or the key itself.
+    payload["access"] = redacted_access(row.get("access_instructions"))
+    text = json.dumps(payload, ensure_ascii=True, indent=2)
     return text.replace("`", "\\u0060").replace("<", "\\u003c").replace(">", "\\u003e")
 
 
@@ -859,6 +1020,15 @@ def source_review_pins(job_dir: Path) -> dict[str, Any]:
             file_pins[relative] = item["sha256"]
         pins["trusted_runner"] = {"manifest_sha256": sha256_file(manifest_path),
                                   "source_commit": manifest.get("source_commit"), "files": file_pins}
+    docs_dir = source_dir / "public-docs"
+    if docs_dir.is_dir() and not docs_dir.is_symlink():
+        docs: dict[str, str] = {}
+        for path in sorted(docs_dir.iterdir()):
+            if path.is_symlink() or not path.is_file():
+                raise PickupError("public provider docs may contain only regular files")
+            docs[path.name] = sha256_file(path)
+        if docs:
+            pins["public_docs"] = docs
     if not pins:
         raise PickupError("no pinned source or official scoring method is available for review")
     return pins
@@ -907,7 +1077,12 @@ and the fetched customer source in `source/`. Write only data/configuration for 
 Python is executed by that driver. Write trusted-runner/RUNTIME.json, a mapping for exactly the
 ordered benchmarks to {{"backend":"typesafe|openrouter","model":"model-id",
 "credential":"none|request|openrouter","price_input_per_m":0.0,"price_output_per_m":0.0}}.
-For typesafe (text only), also specify an HTTPS origin as endpoint. OpenRouter is the fixed ZDR,
+For typesafe (text only), also specify an HTTPS origin as endpoint. When `access.credential` above
+is `held_privately_host_only`, the customer's key is already in host intake: use credential
+"request" and the origin of the host-validated `access.endpoint` (the fixed driver appends
+`/v1/systemone`). Host-fetched public provider pages (pricing, models, API reference), when
+present, are under `source/public-docs/` with `PUBLIC-DOCS-RECEIPT.json`; cite them for tariffs.
+OpenRouter is the fixed ZDR,
 no-fallback official route for text and Image; optional reasoning is low/medium/high. Use real
 public bookable tariffs. Request credentials stay in host intake; never put a key in this file.
 Unsupported runtimes use {{"backend":"unsupported"}} and an honest PRICING-REVIEW.md explanation.
@@ -1501,9 +1676,15 @@ def dispatch_measurement(rid: str, job_dir: Path) -> None:
                 if not isinstance(credential, str) or not credential or len(credential) > 4096:
                     raise ValueError()
             except (ValueError, KeyError, TypeError):
+                credential = None
+            if credential is None:
                 # Missing usable structured access needs a human-owned secure intake; do not
                 # pretend an infrastructure/schema issue is a customer pause.
-                raise measurement_dispatch.OperationalHold("request_api_access_needs_reconciliation") from None
+                raise measurement_dispatch.OperationalHold("request_api_access_needs_reconciliation")
+            # The customer's key goes only to the host-validated endpoint origin, never to whatever host a
+            # generated RUNTIME.json names (prompt injection or a mistaken adapter would leak it).
+            if not request_endpoint_matches(runtime.get("endpoint"), row.get("access_instructions")):
+                raise measurement_dispatch.OperationalHold("request_endpoint_mismatch")
         output = STATE_ROOT / "measurements" / rid / benchmark
         record = measurement_dispatch.run(benchmark, runtime, credential, output,
                                           review["source_pins"]["official_measurement"], max(0, 5.0 - spent))
@@ -3339,6 +3520,9 @@ def agent_env(rid: str, job_dir: Path) -> dict[str, str]:
     }
 
 
+PRIVATE_HOST_DIRS = ("customer-mail", "private-intake")
+
+
 def sandbox_agent_command(job_dir: Path, rid: str, engine: str, stage_home: Path) -> tuple[list[str], list[int]]:
     """Expose one order, its optional release checkout, and only the selected LLM login."""
     request_root = job_directory(rid, JOB_ROOT)
@@ -3381,7 +3565,9 @@ def sandbox_agent_command(job_dir: Path, rid: str, engine: str, stage_home: Path
         target = placeholder(relative, source.is_dir())
         fd = os.open(source, os.O_PATH | (os.O_DIRECTORY if source.is_dir() else 0))
         fds.append(fd)
-        args.extend(("--ro-bind" if readonly else "--bind", f"/proc/self/fd/{fd}", f"/home/flori/{relative}"))
+        # --(ro-)bind-fd makes bwrap close the descriptor before exec; a /proc/self/fd/N source path would leave
+        # it open in the agent, which could then read around every mask (and up to the host root via ..).
+        args.extend(("--ro-bind-fd" if readonly else "--bind-fd", str(fd), f"/home/flori/{relative}"))
 
     # Shared policy/context files are read-only. The rest of HOME, /mnt (Dropbox),
     # host temporary files and user runtime sockets stay hidden from the model process.
@@ -3423,6 +3609,14 @@ def sandbox_agent_command(job_dir: Path, rid: str, engine: str, stage_home: Path
     official_receipt = request_root / "results/OFFICIAL-SCORES.json"
     if not is_review and not is_preparation and official_receipt.is_file():
         bind(official_receipt, request_rel + "/results/OFFICIAL-SCORES.json")
+    # Customer replies (raw sender/subject/body, possibly an API key) and access-request records stay
+    # host-side in every sandbox mode; the agent runs as the same user, so 0600 alone does not hide them.
+    for name in PRIVATE_HOST_DIRS:
+        if (request_root / name).is_dir():
+            args.extend(("--tmpfs", f"/home/flori/{request_rel}/{name}"))
+    for candidate in sorted(request_root.glob("CUSTOMER-ACCESS-REQUEST*")):
+        if candidate.is_file() and not candidate.is_symlink():
+            args.extend(("--ro-bind", "/dev/null", f"/home/flori/{request_rel}/{candidate.name}"))
     # Item predictions and input identities are never model context, including release agents.
     if (request_root / "results/raw").is_dir():
         args.extend(("--tmpfs", f"/home/flori/{request_rel}/results/raw"))
