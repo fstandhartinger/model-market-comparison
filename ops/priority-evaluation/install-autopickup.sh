@@ -35,7 +35,7 @@ install -d -m 700 "$REPLY_GUARD"
 install -m 600 "$SRC/refusal-reply-prompt-template.md" "$REPLY_GUARD/PROMPT.md"
 install -d -m 700 "$SHARE/runtime" "$HOME/wt" "$HOME/.local/state/bh" \
   "$HOME/.local/state/telegram-reply-broker/callback-status.d"
-for f in autopickup.py refusal_approval.py official_scoring.py official_score.py official-profiles.json release_render.py host_github.py public_artifacts.py measurement_dispatch.py measurement_driver.py measurement-profiles.json static_agent.py MEASUREMENT-CONTRACT.md; do
+for f in autopickup.py refusal_approval.py official_scoring.py official_score.py official-profiles.json release_render.py host_github.py public_artifacts.py measurement_dispatch.py measurement_driver.py measurement-profiles.json static_agent.py MEASUREMENT-CONTRACT.md METHOD-v1.5-ADDENDUM-PRICING.md METHOD-v1.5-ADDENDUM-PRICING-INTERPRETATION-1.md; do
   install -m 600 "$SRC/$f" "$SHARE/runtime/$f"
 done
 python3 - "$SHARE/runtime" <<'VERIFY_PROFILES'

@@ -171,7 +171,8 @@ print('ok')
                 probe = f'''import pathlib
 m=pathlib.Path('/home/flori/official/measurement')
 seen=(m/'run_v15.py').is_file() and (m/'jevbench/adapters/typesafe.py').read_text()=='# adapter fixture' \\
- and (m/'measurement_driver.py').is_file() and (m/'MEASUREMENT-CONTRACT.md').is_file()
+ and (m/'measurement_driver.py').is_file() and (m/'MEASUREMENT-CONTRACT.md').is_file() \\
+ and 'launch list price' in pathlib.Path('/home/flori/official/method/METHOD-v1.5-ADDENDUM-PRICING-INTERPRETATION-1.md').read_text()
 assert str(seen)=='{expect}', seen
 assert not pathlib.Path('{sealed}').exists()
 for f in (m.rglob('*') if m.exists() else []):

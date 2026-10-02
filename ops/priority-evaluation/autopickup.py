@@ -1073,8 +1073,10 @@ commit message or public text.
 ```
 
 Read `/home/flori/AGENTS.md`, `/home/flori/DECISIONS.md`, the pinned official scoring methods,
-the fixed host measurement code under `/home/flori/official/measurement/` (read-only), and the
-fetched customer source in `source/`. Write only data/configuration for the fixed host measurement driver. No customer or generated
+the fixed host measurement code under `/home/flori/official/measurement/` (read-only), the frozen
+JevBench v1.5 price rules under `/home/flori/official/method/` (the base addendum and
+INTERPRETATION-1: a manufacturer's standard launch list price counts from day 1; only younger price
+cuts wait 30 days), and the fetched customer source in `source/`. Write only data/configuration for the fixed host measurement driver. No customer or generated
 Python is executed by that driver. Write trusted-runner/RUNTIME.json, a mapping for exactly the
 ordered benchmarks to {{"backend":"typesafe|openrouter","model":"model-id",
 "credential":"none|request|openrouter","price_input_per_m":0.0,"price_output_per_m":0.0}}.
@@ -3522,6 +3524,10 @@ def agent_env(rid: str, job_dir: Path) -> dict[str, str]:
 
 
 PRIVATE_HOST_DIRS = ("customer-mail", "private-intake")
+PRICING_METHOD_DOCS = {
+    "METHOD-v1.5-ADDENDUM-PRICING.md": "2fc44459ef801d0627062f7eefd973df40772e8ac117727479748e4be4c220cc",
+    "METHOD-v1.5-ADDENDUM-PRICING-INTERPRETATION-1.md": "5905a93cecf510623f1e9a08f1e71bec5cf423dd3a2b896f72092ae1fb7017a9",
+}
 
 
 def sandbox_agent_command(job_dir: Path, rid: str, engine: str, stage_home: Path) -> tuple[list[str], list[int]]:
@@ -3590,6 +3596,11 @@ def sandbox_agent_command(job_dir: Path, rid: str, engine: str, stage_home: Path
         measurement_root = Path(measurement_dispatch.__file__).resolve().parent
         for name in ("measurement_driver.py", "measurement_dispatch.py", "MEASUREMENT-CONTRACT.md"):
             bind(measurement_root / name, f"official/measurement/{name}")
+        # Florian's hash-frozen JevBench v1.5 price rules (30-day rule and the day-1 launch-price interpretation).
+        for name, digest in PRICING_METHOD_DOCS.items():
+            if sha256_file(measurement_root / name) != digest:
+                raise PickupError("frozen pricing method document changed")
+            bind(measurement_root / name, f"official/method/{name}")
         try:
             measurement_code = measurement_dispatch.pins()["profile"]["code"]
             for relative, pin in measurement_code.items():
@@ -3894,6 +3905,11 @@ def evaluate(rid: str) -> int:
                 # adapter within the existing preparation budget. Never blame the customer.
                 attempt = state.get("stage_attempts", {}).get("preparation", 0)
                 history = job_dir / "preparation-history" / str(attempt)
+                suffix = 1
+                while history.exists() or history.is_symlink():
+                    # A host-recovered retry budget can repeat an attempt number; never collide with history.
+                    suffix += 1
+                    history = job_dir / "preparation-history" / f"{attempt}-{suffix}"
                 history.mkdir(parents=True, exist_ok=False, mode=0o700)
                 for name in ("trusted-runner", "runner-prepare", "review"):
                     path = job_dir / name

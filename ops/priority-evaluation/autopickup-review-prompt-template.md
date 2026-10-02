@@ -29,7 +29,10 @@ and `jevbench/adapters/typesafe.py`) is mounted read-only at `/home/flori/offici
 the same relative names; verify it against the pins and review how it uses the generated runner data.
 An API-only order with no `model_link`/`code_link` has no customer source to fetch: that absence alone
 is not a finding; review the runner data, the endpoint/model identity and tariff evidence, and the
-fixed measurement path instead. The order folder and source are read-only during this stage except for
+fixed measurement path instead. Judge tariff eligibility only by the frozen JevBench v1.5 price
+rules mounted at `/home/flori/official/method/` (base addendum plus INTERPRETATION-1): a
+manufacturer's standard launch list price counts from day 1; a price cut younger than 30 days does
+not; promotions, credits and free tiers never count. The order folder and source are read-only during this stage except for
 this `review/` directory.
 
 Inspect the reviewed source, adapter, dependency manifests, licence and documented run path.
