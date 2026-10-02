@@ -109,6 +109,7 @@ export function JevV15AllDataGrid({
   const [pageState, setPageState] = useState(0);
   const [copied, setCopied] = useState<'' | 'csv' | 'json'>('');
   const [draft, setDraft] = useState<DraftState>({ columnId: '', text: '', min: '', max: '' });
+  const [hasOpened, setHasOpened] = useState(false);
 
   // Reset user state when the supplied data actually changes (new revision/columns), not on every render.
   useEffect(() => {
@@ -262,10 +263,12 @@ export function JevV15AllDataGrid({
   };
 
   return (
-    <details className="bh-panel mt-10 p-4 sm:p-5" data-bh-jev15-all-data data-bh-jev15-all-data-revision={model.revision}>
+    <details className="bh-panel mt-10 p-4 sm:p-5" data-bh-jev15-all-data data-bh-jev15-all-data-revision={model.revision}
+      onToggle={(event) => { if (event.currentTarget.open) setHasOpened(true); }}>
       <summary className="cursor-pointer text-lg font-semibold text-accent" data-bh-jev15-all-data-summary>
         All data ({globallyTotal} systems)
       </summary>
+      {hasOpened && <>
       <p className="bh-muted mt-2 max-w-4xl text-sm">
         Every published value of JevBench {model.revision} in one table: official scores and ranks under all three weight
         options, Capability Score and Jev-class eligibility (where eligibility metadata is supplied), the four axes,
@@ -474,6 +477,7 @@ export function JevV15AllDataGrid({
             className="rounded-md border border-line px-3 py-1.5 text-sm hover:border-accent/60 disabled:opacity-40">Next →</button>
         </span>
       </div>
+      </>}
     </details>
   );
 }
