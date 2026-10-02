@@ -5,7 +5,7 @@ export type ImageJevDetailRow = ImageJevBoardRow & {
   reason: string | null; inference_setting: string | null; prior_exposure: string | null; measurement_source: string | null;
   reference: { revision: string; score: number; reason: string } | null;
   previous: { rank: number | null; score: number | null } | null;
-  pricing_alternative: { label: string; basis: string; source?: string; rank_if_applied?: number; tracks: Record<string, any> } | null;
+  pricing_alternative: { label: string; basis: string; source?: string; rank_if_applied?: number; would_rank?: number; tracks: Record<string, any> } | null;
   source_url: string | null; source_note: string;
 };
 export type ImageJevDetailBundle = { artifact: any; revision: ImageJevDetailVersion; systems: ImageJevDetailRow[] };
