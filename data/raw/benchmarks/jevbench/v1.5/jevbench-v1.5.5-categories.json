@@ -3,7 +3,7 @@
  "revision": "v1.5.5",
  "kind": "category-aggregates",
  "built_utc": "2026-10-02",
- "source_results_sha256": "1927b274333fa736dab1c781ba512247c0a6af0e1d2aad8dc55d158929c08c32",
+ "source_results_sha256": "591e56fe98b5122f1a47ed8c0945c4ba2e848e5d0dcc09ffbfc5967bedeafd25",
  "metric": "Chance-corrected competence (0 = chance, 100 = perfect) over the category's items, open and sealed pooled, all tiers: per request type the method's competence cell (Choice and Noul accuracy above chance, Score 1 - error / chance error), then averaged over types weighted by item count. Not part of the JevBench Score; compare systems within a category, not categories with each other. Values can be negative (below chance).",
  "min_n": 15,
  "labelling": "Every one of the 1,624 decisions was labelled with one subject topic (the v1.2 topic list, unchanged) and one or two TypeSafe use-case categories (docs.typesafe.ai/concepts/use-case-map, plus Other) by Winnow-12B Q8 (the model behind System1 Models s1-pro) on our own GPU pod; 1,118 of the 3,248 calls were first made on s1-pro itself and agree 98.2 % with the pod run. Sealed items stayed on our own infrastructure. About 5 % of public items were checked by hand (Claude Opus 5.5); the item-group rules below fix the systematic misses found.",
