@@ -3750,8 +3750,10 @@ def run_agent(job_dir: Path, env: dict[str, str], timeout_hint: int, *, read_onl
         elif engine == "claude":
             sandbox.extend(("--setenv", "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC", "1", "--",
                             "/home/flori/.local/bin/claude", "-p", "--model", "opus", "--effort", "medium",
-                            "--tools", "Read,Glob,Grep,Write" if file_authoring else "Read,Glob,Grep",
-                            *( ("--permission-mode", "acceptEdits" if file_authoring else "plan")
+                            # The tool allowlist bounds only preparation/review; the evaluation/release stage
+                            # must write its release files and is bounded by the bubblewrap sandbox instead.
+                            *( ("--tools", "Read,Glob,Grep,Write" if file_authoring else "Read,Glob,Grep",
+                                "--permission-mode", "acceptEdits" if file_authoring else "plan")
                                if requires_claude_tools else ("--dangerously-skip-permissions",) ),
                             "--no-session-persistence", "--output-format", "text"))
             prompt_input = prompt

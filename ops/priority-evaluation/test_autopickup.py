@@ -736,6 +736,37 @@ class SyntheticGuardTests(DatabaseTestCase):
 
 class AgentToolBoundaryTests(unittest.TestCase):
     @unittest.skipUnless(Path("/usr/bin/bwrap").is_file(), "bubblewrap is required")
+    def test_evaluation_stage_claude_is_not_restricted_to_read_tools(self):
+        # Order a35a4546 (2 Oct 2026): the release agent got only Read,Glob,Grep and could not write RESULT.json.
+        for kwargs, expect_tools in (({}, None), ({"read_only": True}, "Read,Glob,Grep"),
+                                     ({"file_authoring": True}, "Read,Glob,Grep,Write")):
+            rid = str(uuid.uuid4())
+            job_dir = ap.JOB_ROOT / rid
+            stage = job_dir / ("review" if kwargs.get("read_only") else "runner-prepare" if kwargs else "")
+            stage.mkdir(parents=True, exist_ok=True)
+            (stage / "PROMPT.md").write_text("stage prompt", encoding="utf-8")
+            responses = {
+                "status": subprocess.CompletedProcess([], 0, stdout="usage status", stderr=""),
+                "pick": subprocess.CompletedProcess([], 0, stdout="claude\n", stderr=""),
+                "allow": subprocess.CompletedProcess([], 0, stdout="allowed", stderr=""),
+            }
+            try:
+                with mock.patch.object(ap, "sandbox_agent_command", return_value=(["/usr/bin/bwrap", "--"], [])), \
+                        mock.patch.object(ap.subprocess, "run", side_effect=lambda c, **k: responses[c[1]]), \
+                        mock.patch.object(ap.subprocess, "Popen", return_value=mock.Mock(returncode=0)) as popen:
+                    ap.run_agent(stage, {"FASTLANE_REQUEST_ID": rid}, 60, **kwargs)
+                command = popen.call_args.args[0]
+                if expect_tools is None:
+                    self.assertNotIn("--tools", command)
+                    self.assertNotIn("--permission-mode", command)
+                    self.assertIn("--dangerously-skip-permissions", command)
+                else:
+                    self.assertEqual(command[command.index("--tools") + 1], expect_tools)
+                    self.assertNotIn("--dangerously-skip-permissions", command)
+            finally:
+                shutil.rmtree(job_dir, ignore_errors=True)
+
+    @unittest.skipUnless(Path("/usr/bin/bwrap").is_file(), "bubblewrap is required")
     def test_runner_preparation_uses_quota_picked_claude_with_file_tools_only(self):
         rid = str(uuid.uuid4())
         job_dir = ap.JOB_ROOT / rid / "runner-prepare"
