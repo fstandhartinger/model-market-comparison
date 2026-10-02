@@ -1073,7 +1073,8 @@ commit message or public text.
 ```
 
 Read `/home/flori/AGENTS.md`, `/home/flori/DECISIONS.md`, the pinned official scoring methods,
-and the fetched customer source in `source/`. Write only data/configuration for the fixed host measurement driver. No customer or generated
+the fixed host measurement code under `/home/flori/official/measurement/` (read-only), and the
+fetched customer source in `source/`. Write only data/configuration for the fixed host measurement driver. No customer or generated
 Python is executed by that driver. Write trusted-runner/RUNTIME.json, a mapping for exactly the
 ordered benchmarks to {{"backend":"typesafe|openrouter","model":"model-id",
 "credential":"none|request|openrouter","price_input_per_m":0.0,"price_output_per_m":0.0}}.
@@ -3582,6 +3583,21 @@ def sandbox_agent_command(job_dir: Path, rid: str, engine: str, stage_home: Path
     bind(official_dir / "official-profiles.json", "official/official-profiles.json")
     for benchmark, spec in json.loads((official_dir / "official-profiles.json").read_text())["profiles"].items():
         bind(Path(spec["files"]["scorer.py"]["path"]), f"official/{benchmark}-scorer.py")
+
+    if is_review or is_preparation:
+        # The fixed host measurement code that consumes the generated runner data, read-only and hash-checked,
+        # so preparation can follow it and review can audit it. Only the pinned code: never its sealed inputs.
+        measurement_root = Path(measurement_dispatch.__file__).resolve().parent
+        for name in ("measurement_driver.py", "measurement_dispatch.py", "MEASUREMENT-CONTRACT.md"):
+            bind(measurement_root / name, f"official/measurement/{name}")
+        try:
+            measurement_code = measurement_dispatch.pins()["profile"]["code"]
+            for relative, pin in measurement_code.items():
+                if not re.fullmatch(r"[A-Za-z0-9_]+(?:/[A-Za-z0-9_]+)*\.py", relative):
+                    raise PickupError("official measurement code pin has an invalid name")
+                bind(measurement_dispatch.checked(pin), f"official/measurement/{relative}")
+        except measurement_dispatch.OperationalHold as exc:
+            raise PickupError("official measurement code changed since it was pinned") from exc
 
     request_rel = f"jobs/fastlane-evaluations/{rid}"
     if is_review or is_preparation:

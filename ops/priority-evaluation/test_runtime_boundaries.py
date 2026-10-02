@@ -145,6 +145,65 @@ print('ok')
                 self.assertEqual(proc.stdout.strip(), 'ok')
                 self.assertTrue((job / 'customer-mail' / '1.txt').read_text().startswith('api_key'))  # host copy kept
 
+    def test_review_and_preparation_see_pinned_measurement_code_but_not_its_inputs(self):
+        for stage_name in ('review', 'runner-prepare', None):
+            with self.subTest(stage=stage_name), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                code = root / 'harness'; (code / 'vendor/jevbench/adapters').mkdir(parents=True)
+                (code / 'run_v15.py').write_text('# fixed driver fixture')
+                (code / 'vendor/jevbench/adapters/typesafe.py').write_text('# adapter fixture')
+                sealed = root / 'sealed-inputs.jsonl'; sealed.write_text('{"item":"sealed fixture"}')
+                def pin(path):
+                    return {'path': str(path), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
+                profile = {'schema_version': 1, 'code': {'run_v15.py': pin(code / 'run_v15.py'),
+                           'jevbench/adapters/typesafe.py': pin(code / 'vendor/jevbench/adapters/typesafe.py')},
+                           'inputs': {'jevbench': {'items': pin(sealed)}}}
+                rid = str(uuid.uuid4())
+                job = root / 'orders' / rid
+                job.mkdir(parents=True)
+                stage_dir = job / stage_name if stage_name else job
+                stage_dir.mkdir(exist_ok=True)
+                stage = root / 'home'; stage.mkdir()
+                with mock.patch.object(ap, 'JOB_ROOT', root / 'orders'), \
+                        mock.patch.object(ap.measurement_dispatch, 'pins', return_value={'profile': profile}):
+                    command, fds = ap.sandbox_agent_command(stage_dir, rid, 'claude', stage)
+                expect = 'True' if stage_name else 'False'
+                probe = f'''import pathlib
+m=pathlib.Path('/home/flori/official/measurement')
+seen=(m/'run_v15.py').is_file() and (m/'jevbench/adapters/typesafe.py').read_text()=='# adapter fixture' \\
+ and (m/'measurement_driver.py').is_file() and (m/'MEASUREMENT-CONTRACT.md').is_file()
+assert str(seen)=='{expect}', seen
+assert not pathlib.Path('{sealed}').exists()
+for f in (m.rglob('*') if m.exists() else []):
+ assert 'sealed fixture' not in (f.read_text() if f.is_file() else '')
+if seen:
+ try: (m/'run_v15.py').write_text('x')
+ except OSError: pass
+ else: raise AssertionError('measurement code writable')
+print('ok')
+'''
+                try:
+                    proc = subprocess.run(command + ['--', '/usr/bin/python3', '-I', '-c', probe],
+                                          pass_fds=tuple(fds), capture_output=True, text=True, timeout=30,
+                                          env={'PATH': '/usr/bin:/bin'})
+                finally:
+                    for fd in fds: os.close(fd)
+                self.assertEqual(proc.returncode, 0, proc.stderr)
+
+    def test_changed_measurement_code_refuses_review_sandbox(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'run_v15.py').write_text('changed')
+            profile = {'schema_version': 1, 'code': {'run_v15.py': {'path': str(root / 'run_v15.py'), 'sha256': '0' * 64}}}
+            rid = str(uuid.uuid4())
+            job = root / 'orders' / rid
+            (job / 'review').mkdir(parents=True)
+            stage = root / 'home'; stage.mkdir()
+            with mock.patch.object(ap, 'JOB_ROOT', root / 'orders'), \
+                    mock.patch.object(ap.measurement_dispatch, 'pins', return_value={'profile': profile}):
+                with self.assertRaises(ap.PickupError):
+                    ap.sandbox_agent_command(job / 'review', rid, 'claude', stage)
+
     def test_codex_sandbox_has_writable_codex_home_readonly_login_and_resolver(self):
         # Codex 0.160 writes tmp/, state_5.sqlite and installation_id under CODEX_HOME at start-up
         # and exits 1 on a read-only home; the model host must also stay resolvable.
