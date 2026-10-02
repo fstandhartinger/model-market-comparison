@@ -1,0 +1,58 @@
+{
+  "v1.5.4": {
+    "capability": [
+      "jev-1.13.0",
+      "winnow-12b",
+      "cygnet",
+      "surogate-rune-26b-a4b-v3-rtxpro6000-a2",
+      "jev-omni"
+    ],
+    "composite": [
+      "cygnet",
+      "winnow-12b",
+      "jev-1.13.0",
+      "jevk5-v0.3-4b",
+      "plumb-4b"
+    ],
+    "newRows": []
+  },
+  "v1.5.5": {
+    "capability": [
+      "jev-1.13.0",
+      "winnow-12b",
+      "cygnet",
+      "surogate-rune-26b-a4b-v3-rtxpro6000-a2",
+      "jev-omni"
+    ],
+    "composite": [
+      "cygnet",
+      "winnow-12b",
+      "jev-1.13.0",
+      "jevk5-v0.3-4b",
+      "plumb-4b"
+    ],
+    "newRows": [
+      {
+        "key": "clef",
+        "capability": 77.32056168809498,
+        "inClass": false,
+        "costRatio": 7.716638773892363,
+        "latencyRatio": 1.405108889517534
+      },
+      {
+        "key": "clef-flash",
+        "capability": 70.31748946579475,
+        "inClass": true,
+        "costRatio": 1.8372949461648485,
+        "latencyRatio": 0.8914974686865045
+      },
+      {
+        "key": "lev",
+        "capability": 67.77845359706143,
+        "inClass": true,
+        "costRatio": 0.5810358495551836,
+        "latencyRatio": 0.6532842549059795
+      }
+    ]
+  }
+}
