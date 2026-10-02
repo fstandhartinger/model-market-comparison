@@ -146,11 +146,37 @@ class LinkAndLegacyTest(unittest.TestCase):
             autopickup.write_job_files(row, job)
             self.assertEqual((job / "PROMPT.md").read_text(), "hand-edited prompt\n")
 
+    def test_access_change_refreshes_request_and_prompt_block(self):
+        # After private key intake the redacted access summary changes; both exports must follow.
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            job = autopickup.Path(tmp) / "job"
+            job.mkdir()
+            row = {**self.ROW, "access_instructions": "reach out if you need a key",
+                   "paid_at": "2026-10-01T21:30:00+00:00"}
+            from unittest import mock
+            share = mock.patch.object(autopickup, "SHARE_ROOT", autopickup.Path(__file__).resolve().parent)
+            share.start()
+            self.addCleanup(share.stop)
+            autopickup.write_job_files(row, job)
+            tail = "## On reply\nkeep me\n"
+            with open(job / "PROMPT.md", "a") as handle:
+                handle.write(tail)
+            row["access_instructions"] = json.dumps({"endpoint": "https://drex.example.ai/v1/systemone", "api_key": SYNTH})
+            autopickup.write_job_files(row, job)
+            for name in ("request.json", "PROMPT.md"):
+                text = (job / name).read_text()
+                self.assertIn("held_privately_host_only", text, name)
+                self.assertIn("https://drex.example.ai/v1/systemone", text, name)
+                self.assertNotIn(SYNTH, text, name)
+            self.assertTrue((job / "PROMPT.md").read_text().endswith(tail))
+
     def test_token_word_part_names_allowed(self):
         # R2-F2: "tokenizers" is a name, "hf_token"/"token-..." still reject.
         self.assertEqual(autopickup.public_link("https://github.com/huggingface/tokenizers"),
                          "https://github.com/huggingface/tokenizers")
-        for url in ("https://x.ai/hf_token", "https://x.ai/token-abc", "https://x.ai/Tokens"):
+        for url in ("https://x.ai/hf_token", "https://x.ai/token-abc", "https://x.ai/Tokens", "https://x.ai/accessToken",
+                    "https://x.ai/mytoken"):
             self.assertIsNone(autopickup.public_link(url), url)
 
 

@@ -795,8 +795,8 @@ def public_endpoint(value: object) -> str | None:
 
 
 LINK_SEGMENT_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9._+-]{0,99}")
-# "token" only as a word part of its own (hf_token, token-abc), so names like "tokenizers" stay usable.
-LINK_SECRET_RE = re.compile(r"(api[_ -]?key|secret|(?<![a-z])tokens?(?![a-z])|bearer|passw|authori[sz]ation|\bsk-)", re.I)
+# "token" anywhere rejects, except the tokenize/tokenizer(s) word family used by repository names.
+LINK_SECRET_RE = re.compile(r"(api[_ -]?key|secret|token(?!i[sz]e)|bearer|passw|authori[sz]ation|\bsk-)", re.I)
 
 
 def public_link(value: object) -> str | None:
@@ -930,10 +930,10 @@ def migrate_legacy_export(job_dir: Path, old_data: str, data: str) -> None:
         legacy = json.loads(old_data)
     except json.JSONDecodeError as exc:
         raise PickupError("existing request file is unreadable") from exc
-    stale = any(key in legacy for key in LEGACY_EXPORT_KEYS) or legacy.get("notes") != json.loads(data).get("notes") \
-        or any(legacy.get(k) != json.loads(data).get(k) for k in ("model_link", "code_link"))
-    if not stale:
-        return
+    if not isinstance(legacy, dict):
+        raise PickupError("existing request file is unreadable")
+    # Any difference counts (legacy raw fields, notes, links, or a refreshed access summary after private
+    # key intake): request.json and the PROMPT.md block are written together, so they stay in step.
     prompt_file = job_dir / "PROMPT.md"
     if prompt_file.exists():
         prompt = prompt_file.read_text(encoding="utf-8")
@@ -3481,6 +3481,9 @@ def agent_env(rid: str, job_dir: Path) -> dict[str, str]:
     }
 
 
+PRIVATE_HOST_DIRS = ("customer-mail", "private-intake")
+
+
 def sandbox_agent_command(job_dir: Path, rid: str, engine: str, stage_home: Path) -> tuple[list[str], list[int]]:
     """Expose one order, its optional release checkout, and only the selected LLM login."""
     request_root = job_directory(rid, JOB_ROOT)
@@ -3565,6 +3568,14 @@ def sandbox_agent_command(job_dir: Path, rid: str, engine: str, stage_home: Path
     official_receipt = request_root / "results/OFFICIAL-SCORES.json"
     if not is_review and not is_preparation and official_receipt.is_file():
         bind(official_receipt, request_rel + "/results/OFFICIAL-SCORES.json")
+    # Customer replies (raw sender/subject/body, possibly an API key) and access-request records stay
+    # host-side in every sandbox mode; the agent runs as the same user, so 0600 alone does not hide them.
+    for name in PRIVATE_HOST_DIRS:
+        if (request_root / name).is_dir():
+            args.extend(("--tmpfs", f"/home/flori/{request_rel}/{name}"))
+    for candidate in sorted(request_root.glob("CUSTOMER-ACCESS-REQUEST*")):
+        if candidate.is_file() and not candidate.is_symlink():
+            args.extend(("--ro-bind", "/dev/null", f"/home/flori/{request_rel}/{candidate.name}"))
     # Item predictions and input identities are never model context, including release agents.
     if (request_root / "results/raw").is_dir():
         args.extend(("--tmpfs", f"/home/flori/{request_rel}/results/raw"))

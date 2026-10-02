@@ -97,6 +97,42 @@ print(json.dumps({'host_secrets_absent':True,'raw_absent':True,'reviewed_readonl
             self.assertTrue(json.loads(proc.stdout)['host_secrets_absent'])
             self.assertEqual((job / 'own-write.txt').read_text(), 'ok')
 
+    def test_customer_mail_and_access_records_hidden_in_every_sandbox_mode(self):
+        for stage_name in (None, 'review', 'runner-prepare'):
+            with self.subTest(stage=stage_name), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                rid = str(uuid.uuid4())
+                job = root / 'orders' / rid
+                (job / 'customer-mail').mkdir(parents=True)
+                (job / 'customer-mail' / '1.txt').write_text('api_key: "sk-SYNTHETIC-test-only-0123456789"')
+                (job / 'private-intake').mkdir()
+                (job / 'private-intake' / 'k').write_text('sk-SYNTHETIC-test-only-0123456789')
+                (job / 'CUSTOMER-ACCESS-REQUEST-20261001.json').write_text('{"to":"ann@example.com"}')
+                (job / 'notes.txt').write_text('visible control')
+                stage_dir = job / stage_name if stage_name else job
+                stage_dir.mkdir(exist_ok=True)
+                stage = root / 'home'; stage.mkdir()
+                with mock.patch.object(ap, 'JOB_ROOT', root / 'orders'):
+                    command, fds = ap.sandbox_agent_command(stage_dir, rid, 'claude', stage)
+                probe = f'''import pathlib
+p=pathlib.Path('/home/flori/jobs/fastlane-evaluations/{rid}')
+assert not list((p/'customer-mail').iterdir()) and not list((p/'private-intake').iterdir())
+try: masked=(p/'CUSTOMER-ACCESS-REQUEST-20261001.json').read_text()
+except PermissionError: masked=''
+assert 'ann@example.com' not in masked and masked==''
+assert (p/'notes.txt').read_text()=='visible control'
+print('ok')
+'''
+                try:
+                    proc = subprocess.run(command + ['--', '/usr/bin/python3', '-I', '-c', probe],
+                                          pass_fds=tuple(fds), capture_output=True, text=True, timeout=30,
+                                          env={'PATH': '/usr/bin:/bin'})
+                finally:
+                    for fd in fds: os.close(fd)
+                self.assertEqual(proc.returncode, 0, proc.stderr)
+                self.assertEqual(proc.stdout.strip(), 'ok')
+                self.assertTrue((job / 'customer-mail' / '1.txt').read_text().startswith('api_key'))  # host copy kept
+
     def test_codex_sandbox_has_writable_codex_home_readonly_login_and_resolver(self):
         # Codex 0.160 writes tmp/, state_5.sqlite and installation_id under CODEX_HOME at start-up
         # and exits 1 on a read-only home; the model host must also stay resolvable.
