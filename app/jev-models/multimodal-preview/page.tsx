@@ -6,6 +6,7 @@ import { JevCapabilityLazy } from '../../../components/JevCapabilityLazy';
 import { JevScoreChart } from '../../../components/JevBoardInteractive';
 import { JevCompareV15 } from '../../../components/JevCompareV15';
 import { imageJevCategoryView } from '../../../lib/jevbench-categories.mjs';
+import { imageJevReleaseCompareRows } from '../../../lib/imagejev-compare.mjs';
 import { ImageJevRevisionHistory } from '../../../components/ImageJevRevisionHistory';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -526,7 +527,7 @@ function MeasuredWithoutCompositeRows({ rows, references }: { rows: any[]; refer
   return <section id="imagejev-v02-measured-unrankable" className="mt-10 max-w-6xl scroll-mt-6" aria-labelledby="imagejev-v02-measured-unrankable-heading" data-bh-imagejev-v02-measured-unrankable>
     <h2 id="imagejev-v02-measured-unrankable-heading" className="text-2xl font-semibold">Measured without a CORE composite</h2>
     <p className="bh-muted mt-2 text-xs">Scroll or swipe for missing-cost details, reasons and any labelled v0.1.4 reference score.</p>
-    <p className="bh-muted mt-2 max-w-5xl text-sm">These complete v0.2 runs retain their measured CORE Intelligence, Calibration and Speed axes. Missing Cost prevents a CORE composite under the frozen method, so they have no rank and do not enter charts, comparisons or the ranking table. Available v0.1.4 scores are labeled as references; historical additions without a v0.1.4 row are identified separately.</p>
+    <p className="bh-muted mt-2 max-w-5xl text-sm">These complete v0.2 runs retain their measured CORE Intelligence, Calibration and Speed axes. Missing Cost prevents a CORE composite under the frozen method, so they have no rank and do not enter ranking charts or the ranking table. Their measured axes and categories remain available in the comparison. Available v0.1.4 scores are labeled as references; historical additions without a v0.1.4 row are identified separately.</p>
     <div className="mt-4 overflow-x-auto rounded-xl border border-line">
       <table className="w-full min-w-[880px] text-left text-sm" data-bh-imagejev-v02-unrankable-table>
         <thead><tr className="border-b border-line"><th scope="col" className="p-3">System</th><th scope="col" className="p-3 text-right">Intelligence</th><th scope="col" className="p-3 text-right">Calibration</th><th scope="col" className="p-3 text-right">Speed</th><th scope="col" className="p-3 text-right">Cost</th><th scope="col" className="p-3 text-right">CORE composite</th><th scope="col" className="p-3 text-right">v0.1.4 score · reference</th><th scope="col" className="p-3">Reason</th></tr></thead>
@@ -568,7 +569,9 @@ function CapabilityStatusRows({ measured, references }: { measured: any[]; refer
   </div>;
 }
 
-function ImageJevV02Page({ artifact, staging, archiveCounts }: { artifact: any; staging: boolean; archiveCounts: { v015: number; v014: number } }) {
+async function ImageJevV02Page({ artifact, staging, archiveCounts }: { artifact: any; staging: boolean; archiveCounts: { v015: number; v014: number } }) {
+  const compareRows = imageJevReleaseCompareRows(artifact);
+  const categories = await imageJevCategoryView('v0.2.0', compareRows.map((row) => row.key));
   const systems: any[] = artifact.ranking;
   const measuredWithoutComposite: any[] = artifact.measured_unrankable_rows ?? [];
   const allReferences: any[] = artifact.reference_rows;
@@ -643,12 +646,9 @@ function ImageJevV02Page({ artifact, staging, archiveCounts }: { artifact: any; 
       {systems.length ? <ScoreBars systems={systems} track="core" version="v0.2.0" /> : <p className="bh-panel mt-4 p-4 text-sm" data-bh-imagejev-v02-composite-empty>No v0.2 composite scores are available yet.</p>}
     </section>
 
-    {systems.length >= 2
-      ? <ImageJevRadar systems={systems} track="core" />
-      : <section className="mt-10 max-w-6xl" aria-labelledby="imagejev-v02-compare-heading" data-bh-imagejev-v02-compare>
-        <h2 id="imagejev-v02-compare-heading" className="text-2xl font-semibold">Compare two CORE systems</h2>
-        <p className="bh-panel mt-4 p-4 text-sm">The four-axis comparison will appear after at least two CORE systems have measured results.</p>
-      </section>}
+    <div id="image-jev-compare" className="mt-10 max-w-6xl scroll-mt-6" data-bh-imagejev-v02-compare>
+      <JevCompareV15 rows={compareRows} openDecisions={corePublic} sealedDecisions={coreSealed} axesOnly imageRevision="v0.2.0" heading="Compare two CORE systems" categories={categories} />
+    </div>
 
     <section id="imagejev-v02-ranking" className="mt-10 max-w-6xl scroll-mt-6" aria-labelledby="imagejev-v02-ranking-heading" data-bh-imagejev-v02-ranking>
       <h2 id="imagejev-v02-ranking-heading" className="text-2xl font-semibold">Full CORE ranking</h2>

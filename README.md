@@ -38,6 +38,8 @@ Explore [benchmark rankings](https://benchmarkheaven.com/benchmarks), compare up
 
 Training on JevBench's public split is allowed and should be declared with each submission. Rankings continue to use all benchmark items. We report held-out results separately so that specialisation on public tasks is visible. Held-out means not publicly released, not guaranteed unseen: hosted systems receive these tasks during evaluation. We periodically issue fresh tasks to reduce the value of prior exposure.
 
+ImageJevBench v0.2 category wiring is source preparation only. Server callers await `imageJevCategoryView('v0.2.0', keys)`; v0.1.5 stays synchronous. `lib/imagejev-category-bundles.mjs` declares the eventual `categories-v0.2.0.json` / `acceptance-v0.2.0.json` bundle and leaves both independent SHA256 trust pins null. Registration does not prove data exists. After authentic model/source acceptance and final independent aggregate review, the release owner must install the real bundle and fill the two approved hashes. The loader checks both exact byte hashes before parsing, then applies the strict release/coverage/acceptance contract. Missing files or pins, changed bytes and wrong-release receipts throw; v0.2 rendering and the actual-release CR-257 gate remain blocked until that dependency is fulfilled. Synthetic fixtures live under `test/` only.
+
 
 ## Features
 

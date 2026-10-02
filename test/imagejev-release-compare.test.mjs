@@ -7,6 +7,9 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { imageJevReleaseCompareRows } from '../lib/imagejev-compare.mjs';
 import { readMultimodalPreviewV02, readMultimodalPreview, readArchivedMultimodalPreviewV014 } from '../lib/jevbench-multimodal-preview.mjs';
+import { parseImageJevV02CategoryBundleBytes } from '../lib/imagejev-v02-category-loader.mjs';
+import { fixture, receipt } from './helpers/imagejev-v02-category-fixture.mjs';
+import { createHash } from 'node:crypto';
 
 const require = createRequire(import.meta.url);
 const cache = new Map();
@@ -34,7 +37,8 @@ async function compile(url) {
   const result = dataUrl(code); cache.set(url.href, result); return result;
 }
 const { JevCompareV15 } = await import(await compile(new URL('../components/JevCompareV15.tsx', import.meta.url)));
-const { artifact } = await readMultimodalPreviewV02();
+const selectedRelease = await readMultimodalPreviewV02();
+const { artifact } = selectedRelease;
 const rows = imageJevReleaseCompareRows(artifact);
 const render = (pair, imageRevision = 'v0.2.0') => renderToStaticMarkup(React.createElement(JevCompareV15,
   { rows: pair, openDecisions: 157, sealedDecisions: 261, axesOnly: true, imageRevision }));
@@ -136,4 +140,34 @@ test('signed radar bounds invalid geometry defensively and never plots a thin or
     assert.match(match[1], /paint-order:stroke;stroke:var\(--surface\);stroke-width:3px;stroke-linejoin:round/, 'legacy label halo');
   }
   assert.doesNotMatch(legacy, /data-bh-imagejev-v02-(?:radar-scale|chance-ring)/);
+});
+
+test('both loader-supplied signed category dimensions preserve negatives, NULL, low n and Other exclusions', () => {
+  // TEST ONLY aggregate. Give Other n >= 15 to distinguish the Other exclusion
+  // from the independent low-n rule, without changing the production validator.
+  const a = fixture(), other = a.usecases.find((c) => c.key === 'other');
+  other.n = 20; other.public = 8; other.sealed = 12;
+  for (const row of Object.values(a.systems)) row.usecases.other.n = 20;
+  const artifactBytes = Buffer.from(JSON.stringify(a)), acceptanceBytes = Buffer.from(JSON.stringify(receipt(a)));
+  const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
+  const categories = parseImageJevV02CategoryBundleBytes(artifactBytes, acceptanceBytes,
+    { artifactSha256: hash(artifactBytes), acceptanceSha256: hash(acceptanceBytes) }, selectedRelease, rows.map((r) => r.key));
+  const pair = [rows.find((r) => r.key === 'winnow_12b_q8'), rows.find((r) => r.listing === 'historical-reference')];
+  const html = renderToStaticMarkup(React.createElement(JevCompareV15,
+    { rows: pair, openDecisions: 157, sealedDecisions: 261, axesOnly: true, imageRevision: 'v0.2.0', categories }));
+  assert.equal((html.match(/data-bh-imagejev-v02-radar-scale="-100\.\.100"/g) ?? []).length, 2);
+  for (const dim of ['capabilities', 'usecases']) {
+    const figure = html.match(new RegExp(`<figure[^>]+data-bh-jev15-radar="cat-${dim}"[\\s\\S]*?<\\/figure>`))?.[0];
+    assert.ok(figure);
+    assert.match(figure, /-20\.0 vs —/);
+    assert.match(figure, /data-bh-imagejev-v02-chance-ring="true"/);
+    assert.doesNotMatch(figure, /data-bh-jev12-radar-value="b:/);
+  }
+  const usecaseFigure = html.match(/<figure[^>]+data-bh-jev15-radar="cat-usecases"[\s\S]*?<\/figure>/)[0];
+  assert.match(usecaseFigure, /TEST ONLY scientific_discovery/); // listed with n=14
+  assert.match(usecaseFigure, /TEST ONLY other/); // listed with n=20, never plotted
+  assert.doesNotMatch(usecaseFigure, /data-bh-jev12-radar-value="[ab]:(?:scientific_discovery|other)"/);
+  assert.equal(categories.dims[1].cats.find((c) => c.key === 'other').lowN, false);
+  assert.equal(categories.dims[1].cats.find((c) => c.key === 'other').plotted, false);
+  assert.equal(categories.dims[1].cats.find((c) => c.key === 'scientific_discovery').lowN, true);
 });
