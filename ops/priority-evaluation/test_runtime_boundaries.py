@@ -43,6 +43,18 @@ class BoundaryTests(unittest.TestCase):
             self.assertIn('AGENTS.md',packet)
             self.assertNotIn('gold.jsonl":',packet)
             self.assertIn('shell_tool',static_agent.codex_flags())
+            # The static (Codex) route must see the same fixed measurement code and frozen price rules as the
+            # mounted route, keyed by the mount paths the prompts name; never the profile inputs.
+            context=json.loads(packet.split('contract:\n',1)[1].split('\n',1)[0])
+            for key in ('/home/flori/official/measurement/run_v15.py', '/home/flori/official/measurement/jevbench/adapters/typesafe.py',
+                        '/home/flori/official/measurement/measurement_driver.py',
+                        '/home/flori/official/method/METHOD-v1.5-ADDENDUM-PRICING-INTERPRETATION-1.md'):
+                self.assertIn(key, context)
+            self.assertIn('launch list price', context['/home/flori/official/method/METHOD-v1.5-ADDENDUM-PRICING-INTERPRETATION-1.md'])
+            for pin in ap.measurement_dispatch.pins()['profile']['inputs'].values():
+                for item in (pin.values() if isinstance(pin, dict) else []):
+                    if isinstance(item, dict) and 'path' in item:
+                        self.assertNotIn(item['path'] + '"', ''.join(context))
 
     def test_real_driver_text_image_parsers_raw_receipts_and_no_duplicate_api_dispatch(self):
         from measurement_fixtures import create, inert_transport_command

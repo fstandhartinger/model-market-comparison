@@ -27,6 +27,22 @@ def packet(job, preparation):
                 if official_scoring.digest(path) != pin['sha256']:
                     raise CapacityHold('public_method_source_pin_changed')
                 context[benchmark + '/' + name] = path.read_text()
+    # The same fixed measurement code and frozen price rules the tool-using route sees mounted read-only
+    # (hash-checked; only code and method text, never the profile inputs).
+    import measurement_dispatch
+    here = Path(measurement_dispatch.__file__).resolve().parent
+    for name in ('measurement_driver.py', 'measurement_dispatch.py'):
+        context['/home/flori/official/measurement/' + name] = (here / name).read_text()
+    try:
+        for relative, pin in measurement_dispatch.pins()['profile']['code'].items():
+            context['/home/flori/official/measurement/' + relative] = measurement_dispatch.checked(pin).read_text()
+    except measurement_dispatch.OperationalHold:
+        raise CapacityHold('official_measurement_code_pin_changed') from None
+    for name, digest in measurement_dispatch.PRICING_METHOD_DOCS.items():
+        path = here / name
+        if official_scoring.digest(path) != digest:
+            raise CapacityHold('frozen_pricing_method_changed')
+        context['/home/flori/official/method/' + name] = path.read_text()
     for folder in ('source', 'trusted-runner'):
         for path in sorted((root / folder).rglob('*')):
             if '.git' in path.parts or not path.is_file():

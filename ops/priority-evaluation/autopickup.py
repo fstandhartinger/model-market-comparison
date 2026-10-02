@@ -3524,10 +3524,7 @@ def agent_env(rid: str, job_dir: Path) -> dict[str, str]:
 
 
 PRIVATE_HOST_DIRS = ("customer-mail", "private-intake")
-PRICING_METHOD_DOCS = {
-    "METHOD-v1.5-ADDENDUM-PRICING.md": "2fc44459ef801d0627062f7eefd973df40772e8ac117727479748e4be4c220cc",
-    "METHOD-v1.5-ADDENDUM-PRICING-INTERPRETATION-1.md": "5905a93cecf510623f1e9a08f1e71bec5cf423dd3a2b896f72092ae1fb7017a9",
-}
+PRICING_METHOD_DOCS = measurement_dispatch.PRICING_METHOD_DOCS
 
 
 def sandbox_agent_command(job_dir: Path, rid: str, engine: str, stage_home: Path) -> tuple[list[str], list[int]]:
