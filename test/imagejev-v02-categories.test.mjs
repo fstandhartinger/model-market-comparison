@@ -39,8 +39,8 @@ function fixture() {
     labelling: 'TEST ONLY synthetic labels: no actual classification or review performed', rules: ['TEST ONLY synthetic category values'],
     ...track(caps, { search_retrieval: [300, 110], model_routing: [118, 47], scientific_discovery: [14, 5], other: [10, 4] }),
     unavailable: { ...missing }, track_diagnostics: {
-      'computer-use': track([descriptor('dense_ui', 86, 19)], { search_retrieval: [86, 19] }),
-      'browser-use': track([descriptor('dense_ui', 69, 15)], { search_retrieval: [69, 15] }),
+      'computer-use': track([descriptor('dense_ui', 24, 5), descriptor('multilingual', 62, 14)], { search_retrieval: [86, 19] }),
+      'browser-use': track([descriptor('dense_ui', 24, 5), descriptor('multilingual', 45, 10)], { search_retrieval: [69, 15] }),
     },
     provenance: { ...pins, ...Object.fromEntries(['labels_sha256', 'prompt_sha256', 'request_template_sha256', 'handcheck_receipt_sha256', 'sample_sha256', 'reproduction_math_sha256', 'runtime_receipt_sha256', 'label_run_receipt_sha256'].map((k) => [k, syntheticHash])),
       runs: Object.fromEntries(native.map((k) => [k, { prediction_sha256: syntheticHash, receipt_sha256: syntheticHash, aggregate_sha256: syntheticHash,
@@ -193,4 +193,46 @@ test('a receipt for earlier category bytes cannot accept a later structurally va
   cell(a).competence = 10;
   validate(a, release);
   assert.throws(() => view(a, release, native, accepted, digest(a)), /acceptance verdict\/hash/);
+});
+
+test('diagnostic family identities and counts cannot be changed while preserving track totals and cells', () => {
+  for (const name of ['computer-use', 'browser-use']) {
+    const changedKey = fixture(), t = changedKey.track_diagnostics[name];
+    t.capabilities[0].key = 'counting';
+    for (const row of Object.values(t.systems)) {
+      row.capabilities.counting = row.capabilities.dense_ui;
+      delete row.capabilities.dense_ui;
+    }
+    assert.throws(() => validate(changedKey, release), /diagnostic family keys/);
+    const changedCount = fixture(), counts = changedCount.track_diagnostics[name];
+    counts.capabilities[0].n++; counts.capabilities[0].sealed++;
+    counts.capabilities[1].n--; counts.capabilities[1].sealed--;
+    for (const row of Object.values(counts.systems)) {
+      row.capabilities.dense_ui.n++; row.capabilities.multilingual.n--;
+    }
+    assert.throws(() => validate(changedCount, release), /diagnostic family count/);
+  }
+});
+
+test('CORE family counts remain binding after coordinated transfers preserve totals and every native cell', () => {
+  const a = fixture();
+  a.capabilities[0].n++; a.capabilities[0].sealed++;
+  a.capabilities[1].n--; a.capabilities[1].sealed--;
+  for (const row of Object.values(a.systems)) {
+    row.capabilities.multilingual.n++; row.capabilities.agent_safety.n--;
+  }
+  assert.throws(() => validate(a, release), /CORE family count/);
+});
+
+test('taxonomy and Other drawing rules survive coordinated descriptor and native-cell changes', () => {
+  const a = fixture();
+  a.usecases[0].key = 'invented';
+  for (const row of Object.values(a.systems)) {
+    row.usecases.invented = row.usecases.search_retrieval;
+    delete row.usecases.search_retrieval;
+  }
+  assert.throws(() => validate(a, release), /usecase taxonomy keys/);
+  const b = fixture(); cat(b, 'other').drawable = true;
+  for (const row of Object.values(b.systems)) row.usecases.other.drawable = true;
+  assert.throws(() => validate(b, release), /category drawable/);
 });
