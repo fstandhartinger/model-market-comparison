@@ -13,6 +13,7 @@ import { imageJevSystemPath, imageJevSourceUrl } from '../lib/imagejev-system-li
 import { jevSourceUrl } from './jevSystemLinks';
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 import { BaseModelDisplay, type BaseModelBenchmark } from './BaseModelDisplay';
+import { useJevV15VisibleKeys } from './useJevV15VisibleKeys';
 
 // CR-151 (Florian 25 Sep 2026): the score chart and the axes table become readable in more than one way. Axis cells are
 // shaded by their standing within the column, both views sort and filter, and a "View by" switch above the chart says
@@ -140,7 +141,18 @@ function SortButton({ k, label, sort, toggle, className = '', title }: { k: Sort
 const AXIS_NAME: Record<JevAxis, string> = { intelligence: 'Intelligence', calibration: 'Calibration', speed: 'Speed', cost: 'Cost' };
 export type JevPreset = { name: string; weights: JevWeights };
 const sameWeights = (a: JevWeights, b: JevWeights) => { const ta = JEV_AXES.reduce((t, k) => t + a[k], 0), tb = JEV_AXES.reduce((t, k) => t + b[k], 0); return ta > 0 && tb > 0 && JEV_AXES.every((k) => Math.abs(a[k] / ta - b[k] / tb) < 1e-6); };
-const share = (w: JevWeights, axis: JevAxis) => { const total = JEV_AXES.reduce((t, k) => t + w[k], 0); return total ? Math.round((100 * w[axis]) / total) : 0; };
+// Preserve scoring ratios while distributing rounding remainders so displayed shares total 100%.
+const share = (w: JevWeights, axis: JevAxis) => {
+  const total = JEV_AXES.reduce((t, k) => t + w[k], 0);
+  if (!total) return 0;
+  const exact = JEV_AXES.map((k) => 100 * w[k] / total);
+  const rounded = exact.map(Math.floor);
+  const order = exact.map((value, i) => ({ i, remainder: value - rounded[i] })).sort((a, b) => b.remainder - a.remainder || a.i - b.i);
+  const left = 100 - rounded.reduce((sum, value) => sum + value, 0);
+  for (let i = 0; i < left; i++) rounded[order[i].i]++;
+  return rounded[JEV_AXES.indexOf(axis)];
+};
+const ZERO_WEIGHT_MESSAGE = 'At least one axis must remain above zero. Your last valid weights have been kept.';
 
 function JevWeightSliders({ position, weights, setWeights, presets, gatesAlways = false, benchName = 'JevBench', gateSummary = [] }: { position: 'above' | 'below'; weights: JevWeights; setWeights: (w: JevWeights) => void; presets: JevPreset[]; gatesAlways?: boolean; benchName?: string; gateSummary?: GateSummary }) {
   const official = isOfficialWeights(weights);
@@ -157,6 +169,7 @@ function JevWeightSliders({ position, weights, setWeights, presets, gatesAlways 
       {presets.map((p) => <button key={p.name} type="button" className="bh-jev-preset shrink-0 snap-start" aria-pressed={sameWeights(weights, p.weights)} onClick={() => setWeights(p.weights)} data-bh-jev-preset={p.name}>{p.name}</button>)}
       {/* F-196 (Fable pass 36): the official state is already said by the pressed preset and the badge under the h2; only the custom state needs a label here. */}
       {!official && <span className="bh-jevc-notdefault ml-1 shrink-0">Custom — not the official ranking</span>}
+      {!official && <button type="button" className="bh-jev-preset shrink-0" onClick={() => setWeights(OFFICIAL_WEIGHTS)} data-bh-jev-weight-reset>Reset to official weights</button>}
     </div>
     <details className="bh-jev-weights-more mt-2 sm:mt-0" data-bh-jev-weights-more open={moreOpen} onToggle={(e) => setMoreOpen(e.currentTarget.open)}>
       <summary className="cursor-pointer text-sm font-semibold text-accent sm:hidden">Adjust weights ↓</summary>
@@ -211,25 +224,28 @@ const GENERAL_LLM = 'llm-baseline';
 
 export type JevFairness = { leadName: string; topName: string; leadInt: number; topInt: number; leadsOn: string[] } | null;
 
-export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLabel, fairness, approvedNote = null, tieNote = null, capabilityHref, presets = [], compactMobile = false, scoreKind = 'v14', methodLink, benchName = 'JevBench', scoreLabel, costHref = '#jev-costs', systemAnchorPrefix, benchmark = 'jevbench' }: { revision: string; rows: JevBoardViewRow[]; rankedCount: number; newLabel: string | null; fairness: JevFairness; approvedNote?: string | null; tieNote?: string | null; capabilityHref: string | null; presets?: JevPreset[]; compactMobile?: boolean; scoreKind?: 'v14' | 'v15'; methodLink?: { href: string; label: string }; benchName?: string; scoreLabel?: string; costHref?: string; systemAnchorPrefix?: string; benchmark?: BaseModelBenchmark }) {
+export function JevScoreChart({ revision, rows: officialRows, newLabel, fairness, approvedNote = null, tieNote = null, capabilityHref, presets = [], compactMobile = false, scoreKind = 'v14', methodLink, benchName = 'JevBench', scoreLabel, costHref = '#jev-costs', systemAnchorPrefix, benchmark = 'jevbench' }: { revision: string; rows: JevBoardViewRow[]; rankedCount: number; newLabel: string | null; fairness: JevFairness; approvedNote?: string | null; tieNote?: string | null; capabilityHref: string | null; presets?: JevPreset[]; compactMobile?: boolean; scoreKind?: 'v14' | 'v15'; methodLink?: { href: string; label: string }; benchName?: string; scoreLabel?: string; costHref?: string; systemAnchorPrefix?: string; benchmark?: BaseModelBenchmark }) {
   // Florian 25 Sep 2026: weight sliders. Equal weights are the official score; any other mix re-scores every row with
   // the same formula and re-sorts by it, clearly marked as not the official ranking.
   // CR-205: scoreKind 'v15' re-scores with the v1.5 composite — its low-axis gates apply even at weight 0.
   const rescore = scoreKind === 'v15' ? jevV15BoardScore : weightedJevScore;
   const changesLink = methodLink ?? { href: '#jev14-changes', label: 'What changed in v1.4 ↓' };
   const [weights, setWeightsState] = useState<JevWeights>(OFFICIAL_WEIGHTS);
+  const [weightMessage, setWeightMessage] = useState('');
   const custom = !isOfficialWeights(weights);
-  const rows = useMemo(() => custom ? officialRows.map((r) => ({ ...r, jevbench_score: rescore(r.axes, weights) })) : officialRows, [officialRows, weights, custom, rescore]);
+  const globalVisibleKeys = useJevV15VisibleKeys(officialRows.map((row) => row.key));
+  const globallyVisibleRows = useMemo(() => officialRows.filter((row) => globalVisibleKeys.has(row.key)), [officialRows, globalVisibleKeys]);
+  const rows = useMemo(() => custom ? globallyVisibleRows.map((r) => ({ ...r, jevbench_score: rescore(r.axes, weights) })) : globallyVisibleRows, [globallyVisibleRows, weights, custom, rescore]);
   // CR-256: under custom weights each row names the low-axis gates that move it (v1.5: even on an axis at weight 0).
   const gates = useMemo(() => {
     const out = new Map<string, JevGatePenalty>();
     if (!custom) return out;
-    for (const r of officialRows) { const g = jevGatePenalties(r.axes, weights, { gatesAlways: scoreKind === 'v15' }); if (g.gates.length) out.set(r.key, g); }
+    for (const r of globallyVisibleRows) { const g = jevGatePenalties(r.axes, weights, { gatesAlways: scoreKind === 'v15' }); if (g.gates.length) out.set(r.key, g); }
     return out;
-  }, [officialRows, weights, custom, scoreKind]);
+  }, [globallyVisibleRows, weights, custom, scoreKind]);
   const gateSummary = useMemo(() => summariseGates(rows, gates), [rows, gates]);
   const heat = useMemo(() => heatScales(rows), [rows]);
-  const official = useMemo(() => new Map(officialRows.map((r, i) => [r.key, i])), [officialRows]);
+  const official = useMemo(() => new Map(globallyVisibleRows.map((r, i) => [r.key, i])), [globallyVisibleRows]);
   const [filters, setFilters] = useState<Filters>(NO_FILTERS);
   const { sort, setSort, toggle } = useSort(OFFICIAL);
   const view = viewOf(sort);
@@ -241,9 +257,15 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
   const hidingLlms = view === 'intelligence' && hideLlms && llmCount > 0;
   const shown = useMemo(() => sortRows(applyFilters(rows, filters), sort, official).filter((r) => !hidingLlms || r.class !== GENERAL_LLM), [rows, filters, sort, official, hidingLlms]);
   const unranked = rows.filter((r) => !r.ranked).length;
+  const visibleRankedCount = globallyVisibleRows.filter((row) => row.ranked).length;
   const types = jevLegendTypes(rows.map((r) => r.class));
 
   const setWeights = (next: JevWeights) => {
+    if (JEV_AXES.every((axis) => next[axis] === 0)) {
+      setWeightMessage(ZERO_WEIGHT_MESSAGE);
+      return;
+    }
+    setWeightMessage('');
     const nextCustom = !isOfficialWeights(next);
     setWeightsState(next);
     if (nextCustom && sort.key === 'rank') setSort({ key: 'score', dir: 'desc' });
@@ -255,12 +277,19 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
   };
   // ?view=intelligence opens that view, so a reader can share it; ?w=40-20-20-20 restores custom weights.
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const wanted = params.get('view');
-    const w = weightsFromUrl(params.get('w'));
-    if (w && !isOfficialWeights(w)) { setWeightsState(w); setSort({ key: 'score', dir: 'desc' }); }
-    window.dispatchEvent(new CustomEvent('jevbench-weights-change', { detail: { weights: w ?? OFFICIAL_WEIGHTS } }));
-    if (wanted && VIEWS.some(([v]) => v === wanted) && wanted !== 'overall') setSort({ key: wanted as SortKey, dir: 'desc' });
+    const restore = () => {
+      const params = new URLSearchParams(window.location.search);
+      const wanted = params.get('view');
+      const w = weightsFromUrl(params.get('w')) ?? OFFICIAL_WEIGHTS;
+      setWeightsState(w);
+      setWeightMessage('');
+      setSort(wanted && VIEWS.some(([v]) => v === wanted) && wanted !== 'overall'
+        ? { key: wanted as SortKey, dir: 'desc' } : isOfficialWeights(w) ? OFFICIAL : { key: 'score', dir: 'desc' });
+      window.dispatchEvent(new CustomEvent('jevbench-weights-change', { detail: { weights: w } }));
+    };
+    restore();
+    window.addEventListener('popstate', restore);
+    return () => window.removeEventListener('popstate', restore);
   }, [setSort]);
   const choose = (next: View) => {
     setSort(next === 'overall' ? (custom ? { key: 'score', dir: 'desc' } : OFFICIAL) : { key: next, dir: 'desc' });
@@ -276,15 +305,18 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
   // F-223 (Fable pass 42): one ranking, one figure. The official score's 95% interval is drawn here — on the official
   // weights and the Overall view only, because the published interval belongs to the official score, not to a re-scored one.
   const officialOverall = !custom && view === 'overall';
-  const bar = (row: JevBoardViewRow) => <JevScoreBar key={row.key} row={row} metric={metric} heat={heat} isNew={row.isNew} name={(collide.get(shortName(row.display)) ?? 0) > 1 ? row.display : undefined} ci={officialOverall ? row.ci ?? null : null} alternative={jevBoardAlternative(row, rows, weights, rescore)} benchmark={benchmark} pageHref={systemAnchorPrefix ? `${systemAnchorPrefix}${row.key}` : undefined} gate={gates.get(row.key) ?? null} />;
+  const showViewRank = !officialOverall || sort.key !== 'rank' || sort.dir !== 'asc';
+  const viewRanks = new Map(shown.map((row, index) => [row.key, index + 1]));
+  const bar = (row: JevBoardViewRow) => <JevScoreBar key={row.key} row={row} viewRank={showViewRank ? viewRanks.get(row.key) : undefined} metric={metric} heat={heat} isNew={row.isNew} name={(collide.get(shortName(row.display)) ?? 0) > 1 ? row.display : undefined} ci={officialOverall ? row.ci ?? null : null} alternative={jevBoardAlternative(row, rows, weights, rescore)} benchmark={benchmark} pageHref={systemAnchorPrefix ? `${systemAnchorPrefix}${row.key}` : undefined} gate={gates.get(row.key) ?? null} />;
   const status = `${shown.length} of ${rows.length} systems, sorted by ${SORT_LABEL[sort.key]}, ${dirWords(sort)}.`;
 
   return <figure className="bh-panel mt-6 p-4 sm:p-5" data-bh-jev14-chart data-bh-jev14-view={view} data-bh-jev14-compact={compactMobile ? '1' : undefined} aria-labelledby="jev14-chart-title">
     {/* F-193 (main, 25 Sep): on the live board a phone hides the chart eyebrow and tightens spacing. */}
     <p className="bh-eyebrow" data-bh-jev14-chart-eyebrow>{benchName} {revision}</p>
-    <h2 id="jev14-chart-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">{scoreLabel ?? `${benchName} Composite Score`}: {rankedCount} ranked systems</h2>
+    <h2 id="jev14-chart-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">{scoreLabel ?? `${benchName} Composite Score`}: {visibleRankedCount} ranked systems</h2>
     <p className="bh-muted mt-1 text-sm">{custom ? <span className="bh-jevc-notdefault mr-2">Custom weights</span> : <span className="bh-jevc-official mr-2">Official</span>}· four axes 0–100, {custom ? 'your weights' : 'equal-weight'} harmonic mean · <a href={changesLink.href} className="text-accent underline">{changesLink.label}</a></p>
     <JevWeightSliders position="above" weights={weights} setWeights={setWeights} presets={presets} gatesAlways={scoreKind === 'v15'} benchName={benchName} gateSummary={gateSummary} />
+    <p role="status" aria-live="polite" className="mt-1 text-sm" data-bh-jev-weight-status>{weightMessage}</p>
 
     <div className="bh-jev-viewby mt-4" data-bh-jev-viewby>
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5" role="group" aria-label="View the field by">
@@ -307,7 +339,7 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
           adjacent pairs are statistical ties — sit under the leader sentence of the figure everyone reads. */}
       {tieNote && officialOverall && <p className="bh-muted mt-1 text-xs leading-snug" data-bh-jev14-ties>{tieNote}</p>}
       {!approvedNote && !fairness && <p className="bh-muted mt-2 text-[13px] leading-snug" data-bh-jev-viewby-hint>The official order weighs Intelligence, Calibration, Speed and Cost equally. Each button re-sorts the same systems by one axis<span className="hidden sm:inline">, and the column headings sort too</span>.</p>}
-      {view !== 'overall' && <p className="mt-2 text-[13px]" data-bh-jev-view-note><span className="bh-jevc-notdefault">Not the official order</span> <span className="bh-muted">Bars show {METRIC_LABEL[metric]} (0–100). The bold number stays the {benchName} Score and # the official rank.</span></p>}
+      {view !== 'overall' && <p className="mt-2 text-[13px]" data-bh-jev-view-note><span className="bh-jevc-notdefault">Not the official order</span> <span className="bh-muted">Bars show {METRIC_LABEL[metric]} (0–100). The bold number stays the {custom ? 'custom composite' : benchName} Score. Row numbers follow this view; official ranks are labelled beside each system.</span></p>}
       {view === 'intelligence' && llmCount > 0 && <p className="mt-2 text-[13px]" data-bh-jev-llm-toggle-row>
         <label className="bh-jev-filter-check inline-flex min-h-[32px] cursor-pointer items-center gap-2 py-1 pr-1 font-semibold"><input type="checkbox" className="h-5 w-5" checked={hideLlms} onChange={(e) => setHideLlms(e.target.checked)} data-bh-jev-hide-llms /> Hide general-purpose LLMs</label>{' '}
         <span className="bh-muted" data-bh-jev-llm-toggle-note>{hideLlms ? `Hides the ${llmCount} general-purpose LLM baselines (e.g. GPT-6 Luna, DeepSeek); the bars below leave them out.` : `Showing the ${llmCount} general-purpose LLM baselines (e.g. GPT-6 Luna, DeepSeek) too.`}</span>
@@ -318,7 +350,7 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
     <p className="bh-muted mt-2 text-[11.5px] leading-snug"><HeatLegend /></p>
 
     <div className="mt-3 hidden grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_21rem] items-end gap-x-2 text-[11px] sm:grid" role="group" aria-label="Sort the chart" data-bh-jev14-chart-sort>
-      <SortButton k="rank" label="#" sort={sort} toggle={toggle} className="justify-end" />
+      <SortButton k="rank" label="#" sort={sort} toggle={toggle} className="justify-end" title="Sort by official rank; row numbers follow the current view" />
       <SortButton k="name" label="System" sort={sort} toggle={toggle} className="justify-end" />
       <span />
       <SortButton k="score" label="Score" sort={sort} toggle={toggle} className="justify-end" />
@@ -343,7 +375,7 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
     <JevWeightSliders position="below" weights={weights} setWeights={setWeights} presets={presets} gatesAlways={scoreKind === 'v15'} benchName={benchName} />
     <p className="mt-3 text-center text-[13px] sm:text-sm" data-bh-jev14-formula>
       {custom
-        ? <>Score = 1 / (w<sub>I</sub>/I + w<sub>C</sub>/C + w<sub>S</sub>/S + w<sub>K</sub>/K) with w = {JEV_AXES.map((a) => `${share(weights, a)}%`).join(' / ')} <span className="bh-muted">(× (axis / 50)² for {scoreKind === 'v15' ? 'Intelligence, Speed or Cost below 50 — the gates also apply at weight 0, so “Intelligence only” follows the Intelligence column except for gated rows' : 'a weighted Intelligence, Speed or Cost below 50'}). # stays the official rank.</span></>
+        ? <>Score = 1 / (w<sub>I</sub>/I + w<sub>C</sub>/C + w<sub>S</sub>/S + w<sub>K</sub>/K) with w = {JEV_AXES.map((a) => `${share(weights, a)}%`).join(' / ')} <span className="bh-muted">(× (axis / 50)² for {scoreKind === 'v15' ? 'Intelligence, Speed or Cost below 50 — the gates also apply at weight 0, so “Intelligence only” follows the Intelligence column except for gated rows' : 'a weighted Intelligence, Speed or Cost below 50'}). Percentages are rounded; row numbers follow this view and official ranks are labelled separately.</span></>
         : <>Score = 4 / (1/I + 1/C + 1/S + 1/K) <span className="bh-muted">(each 0–100; × (axis / 50)² for Intelligence, Speed or Cost below 50)</span></>}
     </p>
     <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="Legend" data-bh-jev14-legend>

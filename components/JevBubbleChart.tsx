@@ -2,6 +2,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { JEV_TYPE_LABEL, jevLegendTypes, jevTypeVarName } from './jevTypes';
 import { speedFromLatency } from '../lib/jevbench-jev-class.mjs';
+import { useJevV15VisibleKeys } from './useJevV15VisibleKeys';
+import { OFFICIAL_WEIGHTS, isOfficialWeights, type JevWeights } from '../lib/jevbench-axis-weights.mjs';
+import { jevV15BoardScore } from '../lib/jevbench-v15-board.mjs';
 
 // Florian 25 Sep 2026: right under the Capability ranking, two bubble charts — Capability vs cost and Capability vs
 // speed. Hover, focus or tap a bubble for its name and values; the top five Jev-class systems carry permanent labels.
@@ -11,6 +14,8 @@ export type JevBubblePoint = {
   key: string; name: string; cls: string; rank: number | null; ranked: boolean;
   capability: number; intelligence: number | null; calibration: number | null;
   cost: number | null; costKind: string; speed: number | null; latency: number | null; medianSpeed: number | null; score: number | null;
+  officialScore?: number | null;
+  scoreAxes?: { intelligence: number | null; calibration: number | null; speed: number | null; cost: number | null };
   inClass: boolean; classRank: number | null; isReference: boolean; outsideBecause: string | null;
 };
 
@@ -53,8 +58,8 @@ function useWidth(fallback: number) {
   return { ref, width };
 }
 
-export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, referenceName, active, setActive, pinned, setPinned, expanded, setExpanded }: {
-  id: string; kind: Kind; points: JevBubblePoint[]; costLimit: number; latencyCap?: number; referenceName: string;
+export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, referenceName, scoreLabel = 'JevBench Score', customScore = false, active, setActive, pinned, setPinned, expanded, setExpanded }: {
+  id: string; kind: Kind; points: JevBubblePoint[]; costLimit: number; latencyCap?: number; referenceName: string; scoreLabel?: string; customScore?: boolean;
   active: string | null; setActive: (key: string | null) => void; pinned: boolean; setPinned: (value: boolean) => void;
   expanded: boolean; setExpanded: (value: boolean) => void;
 }) {
@@ -414,7 +419,7 @@ export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, refere
         <span className="block">Capability <b>{one(activeDot.p.capability)}</b> <span className="bh-muted">(I {one(activeDot.p.intelligence)} · C {one(activeDot.p.calibration)})</span></span>
         <span className="block">Cost {activeDot.p.cost == null ? '—' : `${usd(activeDot.p.cost)}${activeDot.p.costKind === 'estimate' ? ' est.' : ''}`} <span className="bh-muted">/ 1,000 decisions</span></span>
         <span className="block">Speed {kind === 'speed' ? one(plotSpeed(activeDot.p)) : one(activeDot.p.speed)}{kind === 'speed' && activeDot.p.medianSpeed != null && <span className="bh-muted"> (median)</span>}{kind === 'speed' && activeDot.p.medianSpeed == null && <span className="bh-muted"> (Speed-axis fallback)</span>}{activeDot.p.latency != null && <span className="bh-muted"> · median {secs(activeDot.p.latency)}</span>}</span>
-        <span className="block">JevBench Score {one(activeDot.p.score)}{activeDot.p.rank != null ? <span className="bh-muted"> · official #{activeDot.p.rank}</span> : <span className="bh-muted"> · not ranked</span>}</span>
+        <span className="block">{scoreLabel} {one(activeDot.p.score)}{customScore && activeDot.p.officialScore != null && <span className="bh-muted"> · official {one(activeDot.p.officialScore)}</span>}{activeDot.p.rank != null ? <span className="bh-muted"> · official #{activeDot.p.rank}</span> : <span className="bh-muted"> · not ranked</span>}</span>
         <span className="block">{activeDot.p.inClass ? <>Jev-class{activeDot.p.classRank != null ? ` · Capability #${activeDot.p.classRank}` : ''}</> : <span className="bh-muted">Outside Jev-class: {activeDot.p.outsideBecause}</span>}</span>
       </div>}
     </div>
@@ -422,24 +427,45 @@ export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, refere
   </figure>;
 }
 
-export function JevBubbleCharts({ points, costLimit, latencyCap, referenceName, benchName = 'JevBench' }: { points: JevBubblePoint[]; costLimit: number; latencyCap?: number; referenceName: string; benchName?: string }) {
+export function JevBubbleCharts({ points, costLimit, latencyCap, referenceName, benchName = 'JevBench', scoreKind = 'official' }: { points: JevBubblePoint[]; costLimit: number; latencyCap?: number; referenceName: string; benchName?: string; scoreKind?: 'v15' | 'official' }) {
+  const visibleKeys = useJevV15VisibleKeys(points.map((point) => point.key));
+  const [weights, setWeights] = useState<JevWeights>(OFFICIAL_WEIGHTS);
   const [showOutside, setShowOutside] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [pinned, setPinned] = useState(false);
   const [expandedKind, setExpandedKind] = useState<Kind | null>(null);
-  const visible = useMemo(() => showOutside ? points : points.filter((p) => p.inClass), [points, showOutside]);
-  const types = jevLegendTypes(points.map((p) => p.cls));
+  useEffect(() => {
+    if (scoreKind !== 'v15') return;
+    const onWeights = (event: Event) => {
+      const next = (event as CustomEvent<{ weights?: JevWeights }>).detail?.weights;
+      if (!next || ![next.intelligence, next.calibration, next.speed, next.cost].every((weight) => Number.isFinite(weight) && weight >= 0)
+        || next.intelligence + next.calibration + next.speed + next.cost === 0) return;
+      setWeights(next);
+    };
+    window.addEventListener('jevbench-weights-change', onWeights);
+    return () => window.removeEventListener('jevbench-weights-change', onWeights);
+  }, [scoreKind]);
+  const customScore = scoreKind === 'v15' && !isOfficialWeights(weights);
+  const scoreLabel = customScore ? 'Custom composite' : `${benchName} Score`;
+  const scoredPoints = useMemo(() => points.map((point) => {
+    const officialScore = point.officialScore ?? point.score;
+    if (!customScore || !point.scoreAxes) return { ...point, score: officialScore, officialScore };
+    return { ...point, score: jevV15BoardScore(point.scoreAxes, weights), officialScore };
+  }), [points, customScore, weights]);
+  const filteredPoints = useMemo(() => scoredPoints.filter((point) => visibleKeys.has(point.key)), [scoredPoints, visibleKeys]);
+  const visible = useMemo(() => showOutside ? filteredPoints : filteredPoints.filter((p) => p.inClass), [filteredPoints, showOutside]);
+  const types = jevLegendTypes(filteredPoints.map((p) => p.cls));
   return <section id="jev-bubbles" className="mt-8 scroll-mt-6" aria-labelledby="jev-bubbles-title" data-bh-jev-bubbles>
     <h2 id="jev-bubbles-title" className="text-xl font-semibold">Capability against cost and speed</h2>
-    <p className="bh-muted mt-1 max-w-4xl text-sm">Jev-class systems are shown by default. Bubble size follows the official {benchName} Score. The five most capable Jev-class systems are labelled.</p>
+    <p className="bh-muted mt-1 max-w-4xl text-sm">Jev-class systems are shown by default. Bubble size follows {customScore ? 'the custom composite from the weight sliders' : `the official ${benchName} Score`}; official rank stays unchanged. The five most capable Jev-class systems are labelled.</p>
     <label className="mt-3 flex min-h-10 w-fit cursor-pointer items-center gap-2 text-sm">
       <input type="checkbox" checked={showOutside} onChange={(e) => { setShowOutside(e.target.checked); setActive(null); setPinned(false); }} data-bh-jev-bubble-show-outside />
       Show models that don&apos;t qualify as Jev-class
     </label>
     <div className="mt-4 grid min-w-0 gap-4 lg:grid-cols-2">
-      <JevBubbleChart id="jev-bubble-cost" kind="cost" points={visible} costLimit={costLimit} latencyCap={latencyCap} referenceName={referenceName}
+      <JevBubbleChart id="jev-bubble-cost" kind="cost" points={visible} costLimit={costLimit} latencyCap={latencyCap} referenceName={referenceName} scoreLabel={scoreLabel} customScore={customScore}
         active={active} setActive={setActive} pinned={pinned} setPinned={setPinned} expanded={expandedKind === 'cost'} setExpanded={(value) => setExpandedKind(value ? 'cost' : null)} />
-      <JevBubbleChart id="jev-bubble-speed" kind="speed" points={visible} costLimit={costLimit} latencyCap={latencyCap} referenceName={referenceName}
+      <JevBubbleChart id="jev-bubble-speed" kind="speed" points={visible} costLimit={costLimit} latencyCap={latencyCap} referenceName={referenceName} scoreLabel={scoreLabel} customScore={customScore}
         active={active} setActive={setActive} pinned={pinned} setPinned={setPinned} expanded={expandedKind === 'speed'} setExpanded={(value) => setExpandedKind(value ? 'speed' : null)} />
     </div>
     <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="Bubble colours and styles" data-bh-jev-bubble-legend>

@@ -115,7 +115,7 @@ export function gateSentence(gate: JevGatePenalty, score: number | null | undefi
   return `Low-axis gate: ${parts.join('; ')}. Score before the gate ${one(gate.ungated)} → ${one(score)}.`;
 }
 
-export function JevScoreBar({ row, reference = false, metric = 'score', heat, isNew = false, name, ci = null, alternative = null, pageHref, benchmark = 'jevbench', gate = null }: { row: JevBoardRow; reference?: boolean; metric?: BarMetric; heat?: HeatScales; isNew?: boolean; name?: string; ci?: [number, number] | null; alternative?: JevBoardAlternative | null; pageHref?: string; benchmark?: BaseModelBenchmark; gate?: JevGatePenalty | null }) {
+export function JevScoreBar({ row, viewRank, reference = false, metric = 'score', heat, isNew = false, name, ci = null, alternative = null, pageHref, benchmark = 'jevbench', gate = null }: { row: JevBoardRow; viewRank?: number; reference?: boolean; metric?: BarMetric; heat?: HeatScales; isNew?: boolean; name?: string; ci?: [number, number] | null; alternative?: JevBoardAlternative | null; pageHref?: string; benchmark?: BaseModelBenchmark; gate?: JevGatePenalty | null }) {
   const source = benchmark === 'imagejevbench' ? imageJevSourceUrl(row.key, row.repo) : jevSourceUrl(row.key, row.repo);
   const page = benchmark === 'imagejevbench' ? imageJevSystemPath(row.key) : jevSystemPath(row.key);
   const s = row.jevbench_score;
@@ -127,10 +127,10 @@ export function JevScoreBar({ row, reference = false, metric = 'score', heat, is
   const usd = row.cost?.usd_per_1000;
   const kind = row.cost?.kind;
   const level = (column: HeatColumn) => heat ? heatLevel(heat, column, row) : null;
-  const label = `${row.display}: ${one(s)}${row.rank ? `, rank ${row.rank}` : `, ${NOT_RANKED[row.listing] ?? row.listing}, not ranked`}. Intelligence ${one(row.axes?.intelligence)}, calibration ${row.axes?.calibration == null ? 'none' : one(row.axes.calibration)}, speed ${one(row.axes?.speed)}, cost ${one(row.axes?.cost)}.${ciLo != null && ciHi != null ? ` 95% interval ${one(ciLo)} to ${one(ciHi)}.` : ''}${alternative ? ` ${alternative.label}: ${one(alternative.score)} (would be #${alternative.rank}). ${alternative.note}` : ''}${gate?.gates.length ? ` ${gateSentence(gate, s)}` : ''}`;
+  const label = `${row.display}: ${one(s)}${viewRank != null ? `, view position ${viewRank}` : ''}${row.rank ? `, official rank ${row.rank}` : `, ${NOT_RANKED[row.listing] ?? row.listing}, not ranked`}. Intelligence ${one(row.axes?.intelligence)}, calibration ${row.axes?.calibration == null ? 'none' : one(row.axes.calibration)}, speed ${one(row.axes?.speed)}, cost ${one(row.axes?.cost)}.${ciLo != null && ciHi != null ? ` 95% interval ${one(ciLo)} to ${one(ciHi)}.` : ''}${alternative ? ` ${alternative.label}: ${one(alternative.score)} (would be #${alternative.rank}). ${alternative.note}` : ''}${gate?.gates.length ? ` ${gateSentence(gate, s)}` : ''}`;
   return <li style={typeVar(row.class)} className="grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_21rem]"
     data-bh-jev14-bar={row.key} data-bh-jev14-bar-score={s == null ? '' : s.toFixed(3)} data-bh-jev14-bar-metric={metric === 'score' ? undefined : metric} data-bh-jev14-reference={reference ? '1' : undefined} aria-label={label}>
-    <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs">{row.rank ?? ''}</span>
+    <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs" data-bh-jev-row-number title={viewRank != null ? 'Position in the current view' : 'Official rank'}>{viewRank ?? row.rank ?? ''}</span>
     <span className="col-start-2 row-start-1 min-w-0 sm:text-right" title={row.display}>
       <span className="block truncate sm:text-right">
         {/* Florian 25 Sep 2026: the name opens the model's best source (repo, Hugging Face or vendor docs); rows without one keep the system page. */}
@@ -142,6 +142,7 @@ export function JevScoreBar({ row, reference = false, metric = 'score', heat, is
         {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1.5 align-middle" title={row.api_exposure_note ?? apiExplanation}>API</span>}
         {isNew && <span className="bh-new-tag ml-1.5 align-middle" data-bh-jev14-new={row.key}>new</span>}
       </span>
+      {viewRank != null && <span className="bh-muted mt-0.5 block text-[10.5px] sm:text-right" data-bh-jev-view-rank={viewRank} data-bh-jev-official-rank={row.rank ?? undefined}>view #{viewRank} · {row.rank != null ? `official #${row.rank}` : 'not officially ranked'}</span>}
       {/* CR-256: outside the truncated name so a long name never hides the gate. */}
       {gate && gate.gates.length > 0 && <span className="mt-0.5 block sm:text-right"><span className="bh-thin-tag bh-gate-tag whitespace-nowrap" title={gateSentence(gate, s)} data-bh-jev-gate={row.key} data-bh-jev-gate-factor={gate.factor.toFixed(4)} data-bh-jev-gate-axes={gate.gates.map((g) => g.axis).join(' ')}>{gate.gates.length === 1 ? `${GATE_AXIS[gate.gates[0].axis]} gate` : 'gates'} ×{gate.factor.toFixed(2)}</span></span>}
       {benchmark === 'imagejevbench' && source && <Link href={page} className="block text-[10.5px] text-accent underline" data-bh-mm-system-details={row.key}>details</Link>}

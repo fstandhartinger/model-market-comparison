@@ -1,10 +1,11 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Radar, Swatch, type Series, type Spoke } from "./JevRadars";
 import { JEV_TYPE_LABEL, JEV_TYPE_VAR } from "./jevTypes";
 import { SystemCombobox } from "./JevCompareV14";
 import { jevSourceUrl } from "./jevSystemLinks";
 import type { CompareCategories, CategoryDim } from "../lib/jevbench-categories.mjs";
+import { useJevV15VisibleKeys } from "./useJevV15VisibleKeys";
 
 // CR-205: the v1.4 board's two-system compare, on v1.5 data. Four radars per pair — the four score axes,
 // chance-corrected competence per request type (open and sealed), and competence per tier on the open and
@@ -89,29 +90,33 @@ function parsePair(search: string, keys: Set<string>): [string, string] | null {
 export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, axesOnly = false, categories = null }: {
   rows: JevCompareV15Row[]; openDecisions: number; sealedDecisions: number; heading?: string; axesOnly?: boolean; categories?: CompareCategories | null;
 }) {
-  const ranked = rows.filter((r) => r.rank !== null);
-  const unranked = rows.filter((r) => r.rank === null);
-  const first = ranked.find((r) => r.key === "jev-1.13.0") ?? ranked[0] ?? rows[0];
-  const second = ranked.find((r) => r.key !== first?.key) ?? ranked[1] ?? rows.find((r) => r.key !== first?.key) ?? first;
+  const visibleKeys = useJevV15VisibleKeys(rows.map((row) => row.key));
+  const visibleRows = useMemo(() => rows.filter((row) => visibleKeys.has(row.key)), [rows, visibleKeys]);
+  const ranked = visibleRows.filter((r) => r.rank !== null);
+  const unranked = visibleRows.filter((r) => r.rank === null);
+  const first = ranked.find((r) => r.key === "jev-1.13.0") ?? ranked[0] ?? visibleRows[0];
+  const second = ranked.find((r) => r.key !== first?.key) ?? ranked[1] ?? visibleRows.find((r) => r.key !== first?.key) ?? first;
   const [a, setA] = useState(first?.key ?? "");
   const [b, setB] = useState(second?.key ?? "");
   const [ready, setReady] = useState(false);
   const [copied, setCopied] = useState(false);
   const copiedTimer = useRef<number | null>(null);
   useEffect(() => {
-    const pair = parsePair(window.location.search, new Set(rows.map((r) => r.key)));
+    const pair = parsePair(window.location.search, new Set(visibleRows.map((r) => r.key)));
     if (pair) { setA(pair[0]); setB(pair[1]); }
+    else if (first && second) { setA(first.key); setB(second.key); }
     setReady(true);
-  }, [rows]);
+  }, [visibleRows, first?.key, second?.key]);
   useEffect(() => {
     if (!ready || !first || !second) return;
     const u = new URL(window.location.href);
     if (a === first.key && b === second.key) u.searchParams.delete("compare"); else u.searchParams.set("compare", `${a},${b}`);
     if (u.href !== window.location.href) window.history.replaceState(window.history.state, "", u.href);
   }, [a, b, ready, first, second]);
-  if (!first || !second) return <p className="bh-muted text-sm">Comparison data is not published for this board.</p>;
+  if (visibleRows.length < 2 || !first || !second) return <p className="bh-muted text-sm">Fewer than two systems match these filters; adjust them to compare two systems.</p>;
 
-  const A = rows.find((r) => r.key === a) ?? first, B = rows.find((r) => r.key === b) ?? second;
+  const A = visibleRows.find((r) => r.key === a) ?? first;
+  const B = visibleRows.find((r) => r.key === b && r.key !== A.key) ?? visibleRows.find((r) => r.key !== A.key) ?? second;
   const pair = [A, B], s = series(A, B);
   const axisSpokes: Spoke[] = AXES.map(([k, label]) => ({
     key: k, lines: [label], thin: [false, false],
