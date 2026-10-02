@@ -108,14 +108,21 @@ test('explicit read adapter refuses either missing bundle member and never subst
   assert.equal(view.revision, 'v0.2.0');
 });
 
-test('registered public v02 recipe remains unavailable; fixtures cannot override the public release gate', async () => {
+test('public v02 recipe requires configured trust; fixtures cannot override the public release gate', async () => {
   const recipe = IMAGEJEV_CATEGORY_BUNDLES['v0.2.0'];
   assert.ok(IMAGEJEV_CATEGORY_REVISIONS.includes('v0.2.0'));
-  assert.equal(recipe.artifactSha256, null); assert.equal(recipe.acceptanceSha256, null);
   assert.ok(Object.isFrozen(recipe)); assert.ok(Object.isFrozen(IMAGEJEV_CATEGORY_BUNDLES));
-  await assert.rejects(imageJevCategoryView('v0.2.0', keys), /independently approved .* is unconfigured/);
-  // Extra fixture options are ignored by the public API, which has no injection argument.
-  await assert.rejects(imageJevCategoryView('v0.2.0', keys, bundle()), /independently approved .* is unconfigured/);
+  const configured = [recipe.artifactSha256, recipe.acceptanceSha256].every((pin) => typeof pin === 'string' && /^[a-f0-9]{64}$/.test(pin));
+  if (!configured) {
+    await assert.rejects(imageJevCategoryView('v0.2.0', keys), /independently approved .* is unconfigured/);
+    await assert.rejects(imageJevCategoryView('v0.2.0', keys, bundle()), /independently approved .* is unconfigured/);
+  } else {
+    // Final independently reviewed data must still pass the public loader. Extra
+    // fixture options cannot replace its real files or trusted byte bindings.
+    const actual = await imageJevCategoryView('v0.2.0', keys);
+    assert.equal(actual.revision, 'v0.2.0');
+    assert.deepEqual(await imageJevCategoryView('v0.2.0', keys, bundle()), actual);
+  }
   const legacy = imageJevCategoryView('v0.1.5', ['wity_1']);
   assert.equal(legacy.revision, 'v0.1.5'); assert.equal(typeof legacy.then, 'undefined');
   assert.equal(imageJevCategoryView('unknown', keys), null);
