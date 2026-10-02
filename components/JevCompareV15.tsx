@@ -45,16 +45,15 @@ function series(A: JevCompareV15Row, B: JevCompareV15Row): Series[] {
     { name: B.name, stroke: same ? `color-mix(in srgb, ${colour(B.cls)} 55%, var(--text))` : colour(B.cls), dashed: same, square: true }];
 }
 
-/** CR-257: one radar per category dimension. Categories under the artifact's min_n are listed, not plotted; a value below
- *  chance draws at the centre and prints its real (negative) number; a system that answered fewer than min_n items of a
- *  category is printed as n=… and not plotted, like the v1.2 topic radar. */
-function categorySpokes(pair: JevCompareV15Row[], dim: CategoryDim, cats: CompareCategories): Spoke[] {
+/** CR-257: categories under min_n are listed, not plotted. Image v0.2 preserves
+ * negative competence on its signed scale; legacy views print it at the centre. */
+function categorySpokes(pair: JevCompareV15Row[], dim: CategoryDim, cats: CompareCategories, signed = false): Spoke[] {
   return dim.cats.filter((c) => c.plotted).map((c) => {
     const cells = pair.map((r) => cats.systems[r.key]?.[dim.key]?.[c.key] ?? null);
     return {
       key: c.key, lines: lines(c.short),
       thin: cells.map((v) => v !== null && v[1] < cats.minN),
-      values: cells.map((v) => (v === null ? null : Math.max(0, Math.min(100, v[0])))),
+      values: cells.map((v) => (v === null ? null : signed ? v[0] : Math.max(0, Math.min(100, v[0])))),
       texts: cells.map((v) => (v === null ? "—" : v[1] < cats.minN ? `n=${v[1]}` : one(v[0]))),
       tip: `${c.label}: ${c.covers}. ${c.n} items (${c.split.a} ${cats.splitNames[0]}, ${c.split.b} ${cats.splitNames[1]}).`,
     };
@@ -133,11 +132,12 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
     const u = new URL(window.location.href); u.searchParams.set("compare", `${A.key},${B.key}`); u.hash = "compare";
     try { await navigator.clipboard.writeText(u.href); setCopied(true); copiedTimer.current = window.setTimeout(() => setCopied(false), 2000); } catch { window.location.hash = "compare"; }
   };
+  const signedCategories = imageRevision === 'v0.2.0' && categories?.revision === 'v0.2.0';
   const categoryFigures = (categories?.dims ?? []).map((dim) => {
-    const spokes = categorySpokes(pair, dim, categories!);
+    const spokes = categorySpokes(pair, dim, categories!, signedCategories);
     const absent = pair.filter((r) => !categories!.systems[r.key]);
     return { key: `cat-${dim.key}`, title: dim.title, dim,
-      note: `${dim.note} Chance-corrected competence per category (0 = chance, 100 = perfect), ${categories!.splitNames.join(" and ")} items pooled; hover a category for its definition and item count.`,
+      note: `${dim.note} Chance-corrected competence per category (0 = chance, 100 = perfect), ${categories!.splitNames.join(" and ")} items pooled; hover a category for its definition and item count.${signedCategories ? ' Scale −100 to 100: the centre is −100, the dashed middle ring is chance (0), and the outer ring is perfect (100). Negative values mean below chance.' : ''}`,
       spokes, missing: absent.map((r) => `${r.name}: ${categories!.missing[r.key] ?? "no per-category values"}`), size: { w: 500, h: 400, r: 112 } };
   });
   const figures: { key: string; title: string; note: string; spokes: Spoke[]; missing: string[]; size: { w: number; h: number; r: number }; dim?: CategoryDim }[] = [
@@ -168,7 +168,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
           <h3 className="text-base font-semibold">{f.title}</h3>
           {f.missing.length > 0 && <p className="bh-muted mt-1 text-[12px]" data-bh-jev15-radar-missing={f.key}>{f.dim ? f.missing.join(" ") : `${f.missing.join(" and ")} ${f.missing.length === 1 ? "has" : "have"} no published values for this view.`}</p>}
           {missingFor(f.spokes).length < 2
-            ? <Radar spokes={f.spokes} series={s} size={f.size} id={`jev15-radar-${f.key}`} title={`Radar: ${f.title.toLowerCase()}, two systems`} desc={desc(f.title, f.spokes)} />
+            ? <Radar spokes={f.spokes} series={s} size={f.size} id={`jev15-radar-${f.key}`} title={`Radar: ${f.title.toLowerCase()}, two systems`} desc={desc(f.title, f.spokes) + (f.dim && signedCategories ? ' Scale minus 100 to 100; zero is chance on the dashed middle ring.' : '')} signed={Boolean(f.dim && signedCategories)} />
             : <p className="bh-muted mt-3 text-[12px]">Neither selected system has a published series for this view.</p>}
           <figcaption className="bh-muted text-[12px]">{f.note}</figcaption>
           {f.dim && categories && <CategoryKey dim={f.dim} cats={categories} />}

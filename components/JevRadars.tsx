@@ -23,21 +23,26 @@ const short = (d: string) => d.split(" (")[0].split(", formerly")[0];
 export type Series = { name: string; stroke: string; dashed: boolean; square: boolean };
 export type Spoke = { key: string; lines: string[]; values: (number | null)[]; texts: string[]; thin: boolean[]; tip?: string };
 
-export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke[]; series: Series[]; size: { w: number; h: number; r: number }; id: string; title: string; desc: string }) {
+export function Radar({ spokes, series, size, id, title, desc, signed = false }: { spokes: Spoke[]; series: Series[]; size: { w: number; h: number; r: number }; id: string; title: string; desc: string; signed?: boolean }) {
   const cx = size.w / 2, cy = size.h / 2 + 4, R = size.r;
   // D245: Math.sin/Math.cos may differ in the last ULP between the Node that server-renders and the
   // browser's V8 (spoke 10 of an 11-spoke radar: 172.17492934337636 vs 172.1749293433764), so every
   // ring polygon failed hydration as an attribute mismatch. Three decimals of an SVG user unit is far
   // below a device pixel here and is the precision `BenchmarkRadar` already uses for the same reason.
   const r3 = (n: number) => Number(n.toFixed(3));
-  const at = (i: number, v: number) => { const a = -Math.PI / 2 + (2 * Math.PI * i) / spokes.length; return [r3(cx + (R * v / 100) * Math.cos(a)), r3(cy + (R * v / 100) * Math.sin(a))]; };
+  // Image v0.2 category competence can be below chance. Keep its negative values
+  // on their own spoke; zero is the middle ring, not the centre. Legacy radars
+  // retain their exact 0–100 geometry.
+  const radius = (v: number) => signed ? R * (Math.max(-100, Math.min(100, v)) + 100) / 200 : R * v / 100;
+  const at = (i: number, v: number) => { const a = -Math.PI / 2 + (2 * Math.PI * i) / spokes.length; return [r3(cx + radius(v) * Math.cos(a)), r3(cy + radius(v) * Math.sin(a))]; };
   const ring = (v: number) => spokes.map((_, i) => at(i, v).join(",")).join(" ");
-  return <svg viewBox={`0 0 ${size.w} ${size.h}`} className="h-auto w-full" role="img" aria-labelledby={`${id}-t ${id}-d`} data-bh-jev12-radar-svg>
+  return <svg viewBox={`0 0 ${size.w} ${size.h}`} className="h-auto w-full" role="img" aria-labelledby={`${id}-t ${id}-d`} data-bh-jev12-radar-svg data-bh-imagejev-v02-radar-scale={signed ? '-100..100' : undefined}>
     <title id={`${id}-t`}>{title}</title><desc id={`${id}-d`}>{desc}</desc>
-    {[20, 40, 60, 80, 100].map((v) => <polygon key={v} points={ring(v)} fill="none" stroke="rgb(var(--line))" strokeOpacity={v === 100 ? 0.9 : 0.5} strokeWidth={1} />)}
+    {(signed ? [-50, 0, 50, 100] : [20, 40, 60, 80, 100]).map((v) => <polygon key={v} points={ring(v)} fill="none" stroke="rgb(var(--line))" strokeOpacity={signed && v === 0 ? 0.85 : v === 100 ? 0.9 : 0.5} strokeWidth={1} strokeDasharray={signed && v === 0 ? '3 3' : undefined} data-bh-imagejev-v02-chance-ring={signed && v === 0 ? true : undefined} />)}
     {/* F-136 (Fable pass 25, = F-113/F-117 for these radars): ring labels sit at the half-step between spoke 0 and spoke 1, inside their
         ring (on the polygon's apothem), with the F-70 halo, so the top spoke's own point never strikes them. */}
-    {[50, 100].map((v) => { const a = -Math.PI / 2 + Math.PI / spokes.length; const d = (R * v / 100) * Math.cos(Math.PI / spokes.length) - 3; return <text key={v} x={r3(cx + d * Math.cos(a))} y={r3(cy + d * Math.sin(a))} textAnchor="start" dominantBaseline="hanging" fontSize={11} fill="currentColor" opacity={0.7} style={{ paintOrder: "stroke", stroke: "var(--surface)", strokeWidth: "3px", strokeLinejoin: "round" }} data-radar-ring>{v}</text>; })}
+    {(signed ? [-50, 0, 50, 100] : [50, 100]).map((v) => { const a = -Math.PI / 2 + Math.PI / spokes.length; const d = radius(v) * Math.cos(Math.PI / spokes.length) - 3; return <text key={v} x={r3(cx + d * Math.cos(a))} y={r3(cy + d * Math.sin(a))} textAnchor="start" dominantBaseline="hanging" fontSize={11} fill="currentColor" opacity={0.7} style={{ paintOrder: "stroke", stroke: "var(--surface)", strokeWidth: "3px", strokeLinejoin: "round" }} data-radar-ring>{v}</text>; })}
+    {signed && <text x={cx} y={cy + 17} textAnchor="middle" fontSize={9} fill="currentColor" opacity={0.7}>−100</text>}
     {spokes.map((s, i) => { const [x, y] = at(i, 100); return <line key={s.key} x1={cx} y1={cy} x2={x} y2={y} stroke="rgb(var(--line))" strokeOpacity={0.6} />; })}
     {series.map((se, k) => {
       const pts = spokes.map((s, i) => (s.values[k] === null || s.thin[k] ? null : at(i, s.values[k] as number))).filter((p): p is number[] => p !== null);

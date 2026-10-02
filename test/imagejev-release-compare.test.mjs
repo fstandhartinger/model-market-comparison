@@ -87,3 +87,47 @@ test('every unavailable exact v02 source stays unlinked in the comparison legend
     assert.match(html, /Score —/);
   }
 });
+
+test('v02 category radar plots below-chance values on the correct signed spoke and keeps NULL absent', () => {
+  const pair = [rows.find(r => r.key === 'wity_1'), rows.find(r => r.listing === 'historical-reference')];
+  const cats = ['minimum', 'below_chance', 'chance', 'perfect'].map(key => ({
+    key, label: key, short: key, covers: key, n: 20, split: { a: 10, b: 10 }, lowN: false, plotted: true,
+  }));
+  const categories = { revision: 'v0.2.0', minN: 15, metric: 'Synthetic signed geometry only', labelling: 'Test fixture', rules: [],
+    splitNames: ['public', 'sealed'], dims: [{ key: 'capabilities', title: 'Category geometry', note: 'Diagnostic', cats }],
+    systems: { [pair[0].key]: { capabilities: Object.fromEntries(cats.map((c, i) => [c.key, [[-100, -50, 0, 100][i], 20]])) } },
+    missing: { [pair[1].key]: 'No native category results' } };
+  const draw = (revision, data) => renderToStaticMarkup(React.createElement(JevCompareV15,
+    { rows: pair, openDecisions: 157, sealedDecisions: 261, axesOnly: true, imageRevision: revision, categories: data }));
+  const html = draw('v0.2.0', categories);
+  const figure = html.match(/<figure[^>]+data-bh-jev15-radar="cat-capabilities"[\s\S]*?<\/figure>/)?.[0];
+  assert.ok(figure);
+  assert.match(figure, /data-bh-imagejev-v02-radar-scale="-100\.\.100"/);
+  assert.match(figure, /points="250,204 278,204 250,260 138,204"/);
+  assert.match(figure, /minimum: -100\.0 vs —; below_chance: -50\.0 vs —; chance: 0\.0 vs —/);
+  assert.match(figure, /middle ring is chance \(0\)/);
+  assert.match(figure, /stroke-dasharray="3 3" data-bh-imagejev-v02-chance-ring="true"/);
+  assert.doesNotMatch(figure, /data-bh-jev12-radar-value="b:/);
+  const axes = html.match(/<figure[^>]+data-bh-jev15-radar="axes"[\s\S]*?<\/figure>/)?.[0];
+  assert.doesNotMatch(axes, /data-bh-imagejev-v02-radar-scale/);
+  const legacy = draw('v0.1.5', { ...categories, revision: 'v0.1.5' });
+  assert.doesNotMatch(legacy, /data-bh-imagejev-v02-radar-scale/);
+  assert.match(legacy, /points="250,204 250,204 250,204 138,204"/);
+  assert.doesNotMatch(legacy, /data-bh-imagejev-v02-chance-ring/);
+});
+
+test('signed radar bounds invalid geometry defensively and never plots a thin or NULL cell', async () => {
+  const { Radar } = await import(await compile(new URL('../components/JevRadars.tsx', import.meta.url)));
+  const spokes = [-999, 999, 0, null].map((v, i) => ({ key: `c${i}`, lines: [`c${i}`],
+    values: [v], texts: [v === null ? '—' : String(v)], thin: [i === 2] }));
+  const props = { spokes, series: [{ name: 'TESTONLY', stroke: '#000', dashed: false, square: false }],
+    size: { w: 500, h: 400, r: 112 }, id: 'TESTONLY', title: 'Synthetic invalid geometry', desc: 'No release data' };
+  const html = renderToStaticMarkup(React.createElement(Radar, { ...props, signed: true }));
+  assert.match(html, /points="250,204 362,204" fill="#000"/);
+  assert.equal((html.match(/<circle /g) ?? []).length, 2);
+  assert.doesNotMatch(html, /data-bh-jev12-radar-value="a:c3"/);
+  const legacy = renderToStaticMarkup(React.createElement(Radar, { ...props, spokes: spokes.map(s => ({ ...s, values: [50], thin: [false] })) }));
+  assert.match(legacy, /points="250,148 306,204 250,260 194,204" fill="#000"/);
+  assert.equal((legacy.match(/data-radar-ring="true"/g) ?? []).length, 2);
+  assert.doesNotMatch(legacy, /data-bh-imagejev-v02-(?:radar-scale|chance-ring)/);
+});
