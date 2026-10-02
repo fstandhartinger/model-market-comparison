@@ -348,7 +348,7 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
     </p>
     <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="Legend" data-bh-jev14-legend>
       {types.map((t) => <li key={t} style={typeVar(t)} data-bh-jev14-class={t} data-bh-jev14-class-labelled={JEV_TYPE_LABEL[t] ? '1' : '0'}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[t] ?? <code title="Class named in the artifact; description pending">{t}</code>}</li>)}
-      {rows.some((r) => r.alt) && <li><span className="bh-jev-alt-bar mr-1.5 inline-block h-[6px] w-4" style={typeVar(rows.find((r) => r.alt)!.class)} />Striped bar = same system priced at its base-model reference rate</li>}
+      {rows.some((r) => r.alt) && <li><span className="bh-jev-alt-bar mr-1.5 inline-block h-[6px] w-4" style={typeVar(rows.find((r) => r.alt)!.class)} />Striped bar = same system under the labelled alternative price assumption</li>}
       {unranked > 0 && <li><span className="bh-jevc-swatch is-partial mr-1.5" />Shown, not ranked</li>}
     </ul>
     <figcaption className="bh-muted mt-3 text-[11.5px] leading-snug">I, C, S, K = Intelligence, Calibration, Speed, Cost; the est. pill = <a href={costHref} className="text-accent underline">estimated cost</a>; ann. = announced price; API = the operator&apos;s endpoint saw held-out benchmark inputs, without answers{newLabel ? <>; new = first listed in {newLabel}</> : null}; $/1k decisions = US dollars per 1,000 decisions (not heat-shaded). <span className="hidden sm:inline">Click a column heading to sort. </span>Names link to each project.</figcaption>
