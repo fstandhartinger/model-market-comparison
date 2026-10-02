@@ -23,6 +23,10 @@ import { JevCostsDisclosure } from './JevCostsDisclosure';
 import { jevSourceUrl } from './jevSystemLinks';
 import { BaseModelDisplay } from './BaseModelDisplay';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
+import { jevV15FilterRows } from '../lib/jevbench-v15-filter-rows.mjs';
+import { JevV15FilterProvider, JevV15FilterPanel, type JevV15RowMeta } from './JevV15Filters';
+import { JevV15FilterVisibilityBridge } from './JevV15FilterVisibilityBridge';
+import { JevV15AllDataGrid } from './JevV15AllDataGrid';
 
 // JevBench v1.5 board. Server-rendered from the aggregate-only v1.5
 // artifact; it follows the v1.4.2 board's look (bars, sticky-name tables, thin tags) but shows the v1.5 fields:
@@ -136,7 +140,7 @@ function HeadlineBars({ a, ranked }: { a: JevV15Artifact; ranked: JevV15System[]
       const ci = row.composite_ci95?.[headline] ?? null;
       const clamp = (v: number) => Math.max(0, Math.min(100, v));
       const lo = ci ? clamp(Math.min(ci[0], ci[1])) : null, hi = ci ? clamp(Math.max(ci[0], ci[1])) : null;
-      return <li key={row.key} style={typeVar(row.class)} className="grid grid-cols-[1.5rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.8rem_15rem_minmax(0,1fr)_3.4rem_24rem]" data-bh-jev15-bar={row.key}
+      return <li key={row.key} style={typeVar(row.class)} className="grid grid-cols-[1.5rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.8rem_15rem_minmax(0,1fr)_3.4rem_24rem]" data-bh-jev15-bar={row.key} data-bh-jev15-global-filter-row={row.key}
         aria-label={`${row.display}: JevBench Score ${one(s)}, rank ${row.ranks[headline]}. Intelligence ${one(row.axes.intelligence)}, calibration ${one(row.axes.calibration)}, speed ${one(row.axes.speed)}, cost ${one(row.axes.cost)}.${ci ? ` 95% interval ${one(lo)} to ${one(hi)}.` : ''}${tieBelow.has(row.key) ? ' Statistical tie with the next row.' : ''}`}>
         <span className="bh-muted tabular-nums col-start-1 row-start-1 text-right text-xs">{row.ranks[headline]}</span>
         <span className="col-start-2 row-start-1 min-w-0 sm:text-right" title={row.display}>
@@ -174,7 +178,7 @@ function OptionsTable({ a, ranked }: { a: JevV15Artifact; ranked: JevV15System[]
         <thead><tr className="bg-[var(--surface)]"><Th right>#{a.headline}</Th><Th right={false}>System</Th>
           {JEVBENCH_V15_OPTIONS.map((o) => <Th key={o} title={`Weights ${Object.values(a.options[o].weights).join('/')}, Intelligence floor ${a.options[o].intelligence_floor}`}>{OPTION_LABEL[o]}</Th>)}
           <Th>#{secondary[0]}</Th><Th>#{secondary[1]}</Th><Th>{a.headline} 95% CI</Th></tr></thead>
-        <tbody>{ranked.map((row) => <tr key={row.key} className="border-t border-line" data-bh-jev15-option-row={row.key}>
+        <tbody>{ranked.map((row) => <tr key={row.key} className="border-t border-line" data-bh-jev15-option-row={row.key} data-bh-jev15-global-filter-row={row.key}>
           <NameCell row={row} rank={row.ranks[a.headline]} />
           {JEVBENCH_V15_OPTIONS.map((o) => <td key={o} className={`p-2 text-right tabular-nums ${o === a.headline ? 'font-bold' : ''}`}>{one(row.scores[o])}</td>)}
           <td className="p-2 text-right tabular-nums">{row.ranks[secondary[0]]}</td><td className="p-2 text-right tabular-nums">{row.ranks[secondary[1]]}</td>
@@ -216,7 +220,7 @@ function AxesView({ a, rows, view }: { a: JevV15Artifact; rows: JevV15System[]; 
         </tr></thead>
         <tbody>{rows.map((row) => {
           const i = row.intelligence;
-          return <tr key={row.key} className={`border-t border-line ${row.ranked ? '' : 'opacity-80'}`} data-bh-jev15-row={row.key} data-bh-jev15-listing={row.listing}>
+          return <tr key={row.key} className={`border-t border-line ${row.ranked ? '' : 'opacity-80'}`} data-bh-jev15-row={row.key} data-bh-jev15-listing={row.listing} data-bh-jev15-global-filter-row={row.key}>
             <NameCell row={row} rank={row.ranks[a.headline] ?? <span className="bh-muted text-xs font-normal">–</span>} />
             {isAxes ? <>
               <td className="p-2 text-right font-bold tabular-nums">{row.ranked ? one(row.jevbench_score) : <span className="bh-muted font-normal" title={row.not_ranked_because ?? undefined}>—</span>}</td>
@@ -249,7 +253,7 @@ function Honorable({ a, rows }: { a: JevV15Artifact; rows: JevV15System[] }) {
   return <section className="bh-panel mt-10 max-w-5xl p-5" aria-labelledby="jev15-honorable" data-bh-jev15-honorable>
     <h2 id="jev15-honorable" className="text-lg font-semibold">Honorable mentions and Jev wrappers — listed separately, not ranked ({rows.length})</h2>
     <p className="bh-muted mt-1 text-sm">Eligibility rule: services that run on Jev itself may be measured and shown as honorable mentions, but are not competitors ranked against Jev and do not enter the field median gap (G_med) or tie markers. classifier.dev (TypeSafe) runs on Jev, so it stays unranked under this rule.</p>
-    <ul className="bh-muted mt-2 space-y-1 text-sm">{rows.map((r) => <li key={r.key} data-bh-jev15-honorable-row={r.key}><b>{r.display}</b><Tags row={r} />: {r.not_ranked_because}. Official ({a.headline}) score {r.scores?.[a.headline] != null ? r.scores[a.headline]!.toFixed(1) : '–'}.</li>)}</ul>
+    <ul className="bh-muted mt-2 space-y-1 text-sm">{rows.map((r) => <li key={r.key} data-bh-jev15-honorable-row={r.key} data-bh-jev15-global-filter-row={r.key}><b>{r.display}</b><Tags row={r} />: {r.not_ranked_because}. Official ({a.headline}) score {r.scores?.[a.headline] != null ? r.scores[a.headline]!.toFixed(1) : '–'}.</li>)}</ul>
   </section>;
 }
 
@@ -271,7 +275,7 @@ function Addendum({ a, rows }: { a: JevV15Artifact; rows: JevV15System[] }) {
           <Th>Rank (B)</Th><Th title="Individual 95% bootstrap interval">B score · 95% CI</Th>
           <Th>Rank (C)</Th><Th title="Individual 95% bootstrap interval">C score · 95% CI</Th>
         </tr></thead>
-        <tbody>{rows.map((r) => <tr key={r.key} className="border-t border-line" data-bh-jev15-addendum-row={r.key}>
+        <tbody>{rows.map((r) => <tr key={r.key} className="border-t border-line" data-bh-jev15-addendum-row={r.key} data-bh-jev15-global-filter-row={r.key}>
           <th scope="row" className="whitespace-nowrap p-2 text-left font-semibold" style={typeVar(r.class)}>
             <span className="mr-1.5 inline-block h-2.5 w-2.5 rounded-full bg-[rgb(var(--jev-t))] align-middle" aria-hidden="true" />
             <span title={r.display}>{short(r.display)}</span><Tags row={r} />
@@ -301,7 +305,7 @@ function Addendum({ a, rows }: { a: JevV15Artifact; rows: JevV15System[] }) {
           <Th title={PLACE_TITLE('A')}>Would place (A)</Th><Th title={CI_TITLE}>A score · 95% CI</Th>
           <Th title={PLACE_TITLE('B')}>Would place (B)</Th><Th title={CI_TITLE}>B score · 95% CI</Th>
         </tr></thead>
-        <tbody>{rows.map((r) => <tr key={r.key} className="border-t border-line" data-bh-jev15-addendum-row={r.key}>
+        <tbody>{rows.map((r) => <tr key={r.key} className="border-t border-line" data-bh-jev15-addendum-row={r.key} data-bh-jev15-global-filter-row={r.key}>
           <th scope="row" className="whitespace-nowrap p-2 text-left font-semibold" style={typeVar(r.class)} title={r.not_ranked_because ?? undefined}>
             <span className="mr-1.5 inline-block h-2.5 w-2.5 rounded-full bg-[rgb(var(--jev-t))] align-middle" aria-hidden="true" />
             <span title={r.display}>{short(r.display)}</span><Tags row={r} />
@@ -322,11 +326,11 @@ function NotRanked({ a, partial, unpriced }: { a: JevV15Artifact; partial: JevV1
     <h2 id="jev15-unranked" className="text-lg font-semibold">Not ranked: partial, unpriced and unmeasured systems</h2>
     <p className="bh-muted mt-1 text-sm">These systems are part of the {a.roster_count}-system v1.5 roster but have no rank. Their numbers are never shown as zero or free.</p>
     {partial.length > 0 && <><h3 className="mt-4 font-semibold">Partial runs ({partial.length})</h3>
-      <ul className="bh-muted mt-1 space-y-1 text-sm">{partial.map((r) => <li key={r.key} data-bh-jev15-partial={r.key}><b>{r.display}</b><Tags row={r} />: {r.not_ranked_because}</li>)}</ul></>}
+      <ul className="bh-muted mt-1 space-y-1 text-sm">{partial.map((r) => <li key={r.key} data-bh-jev15-partial={r.key} data-bh-jev15-global-filter-row={r.key}><b>{r.display}</b><Tags row={r} />: {r.not_ranked_because}</li>)}</ul></>}
     {unpriced.length > 0 && <><h3 className="mt-4 font-semibold">Measured, unpriced ({unpriced.length})</h3>
-      <ul className="bh-muted mt-1 space-y-1 text-sm">{unpriced.map((r) => <li key={r.key} data-bh-jev15-unpriced={r.key}><b>{r.display}</b><Tags row={r} />: {r.not_scored_reason}. No Cost axis and no score until a price qualifies under the v1.5 price rules.</li>)}</ul></>}
+      <ul className="bh-muted mt-1 space-y-1 text-sm">{unpriced.map((r) => <li key={r.key} data-bh-jev15-unpriced={r.key} data-bh-jev15-global-filter-row={r.key}><b>{r.display}</b><Tags row={r} />: {r.not_scored_reason}. No Cost axis and no score until a price qualifies under the v1.5 price rules.</li>)}</ul></>}
     {a.not_measured.length > 0 && <><h3 className="mt-4 font-semibold">Incomplete or not measured in v1.5 ({a.not_measured.length})</h3>
-      <ul className="bh-muted mt-1 space-y-1 text-sm" data-bh-jev15-not-measured>{a.not_measured.map((r) => <li key={r.key} data-bh-jev15-unmeasured-row={r.key}><b>{r.display}</b>{r.addendum ? <span className="bh-thin-tag ml-1">{r.addendum.label}</span> : null}: {r.reason ?? r.status}{r.rows != null && r.missing != null ? ` (${r.rows.toLocaleString('en-US')}/${a.sample.total.toLocaleString('en-US')} rows; ${r.missing.toLocaleString('en-US')} missing)` : ''}. <BaseModelDisplay systemKey={r.key} className="ml-1 text-xs" /></li>)}</ul>
+      <ul className="bh-muted mt-1 space-y-1 text-sm" data-bh-jev15-not-measured>{a.not_measured.map((r) => <li key={r.key} data-bh-jev15-unmeasured-row={r.key} data-bh-jev15-global-filter-row={r.key}><b>{r.display}</b>{r.addendum ? <span className="bh-thin-tag ml-1">{r.addendum.label}</span> : null}: {r.reason ?? r.status}{r.rows != null && r.missing != null ? ` (${r.rows.toLocaleString('en-US')}/${a.sample.total.toLocaleString('en-US')} rows; ${r.missing.toLocaleString('en-US')} missing)` : ''}. <BaseModelDisplay systemKey={r.key} className="ml-1 text-xs" /></li>)}</ul>
       <p className="bh-muted mt-1 text-xs">Incomplete and unmeasured systems receive no official rank. Existing results from earlier benchmark versions remain on their frozen version pages.</p></>}
   </section>;
 }
@@ -485,18 +489,72 @@ export function JevBenchV15({ artifact: a, sha256, previousKeys = [] }: { artifa
   collisions = new Set([...seen].filter(([, n]) => n > 1).map(([name]) => name));
   // CR-205: the complete v1.4.2.2 section order, on v1.5 data — capability ranking, the two bubble charts,
   // the interactive composite chart, the compare view and the full table, then the evergreen disclosures.
+  const allChartSystems = a.systems.map((s) => jevV15BoardSystem(s) as JevV14System);
+  const allClassEligibility = jevClassView(allChartSystems);
   const chartSystems = chartData.map((s) => jevV15BoardSystem(s) as JevV14System);
   const jevClass = jevClassView(chartSystems);
+  const eligibilityByKey = new Map(allClassEligibility.rows.map((row) => [row.row.key, {
+    status: (row.inClass ? 'eligible' : 'outside') as 'eligible' | 'outside',
+    reason: row.reasons.length ? row.reasons.join('; ') : 'within the official Jev-class caps',
+  }]));
+  const filterProjection = jevV15FilterRows(a, { previousKeys, eligibilityByKey, revisionHref: `/jev-models/${a.revision}` });
+  const filterRows: JevV15RowMeta[] = filterProjection.map((row) => ({
+    key: row.key,
+    display: row.display,
+    provider: row.provider,
+    family: row.family,
+    modelClass: row.modelType,
+    open: row.openStatus === 'yes' || row.openStatus === 'weights' || row.openStatus === 'no' ? row.openStatus : 'unknown',
+    api: row.api,
+    newInVersion: row.newInVersion,
+    parameters: row.parametersB,
+    licence: row.licence,
+    developerPrice: row.apiPricePer1000,
+    basePrice: row.basePricePer1000,
+    officialCost: row.costPer1000,
+    alternativePrice: row.alternativePricePer1000,
+    p50: row.p50,
+    p95: row.p95,
+    jevClass: { status: row.eligibility, reason: row.eligibilityReason },
+  }));
+  const allDataKeys = [...new Set([...a.systems, ...(a.not_measured ?? [])].map((row) => row.key))];
+  const allDataCategories = jevbenchCategoryView(a.revision, allDataKeys);
+  const numericMetadata = (select: (row: typeof filterProjection[number]) => number | null) => Object.fromEntries(
+    filterProjection.flatMap((row) => {
+      const value = select(row);
+      return value != null && Number.isFinite(value) ? [[row.key, value]] : [];
+    }),
+  );
+  const stringMetadata = (select: (row: typeof filterProjection[number]) => string | null) => Object.fromEntries(
+    filterProjection.flatMap((row) => {
+      const value = select(row);
+      return typeof value === 'string' && value.trim() ? [[row.key, value]] : [];
+    }),
+  );
+  const allDataMetadata = {
+    params: numericMetadata((row) => row.parametersB),
+    families: stringMetadata((row) => row.family),
+    firstAdded: stringMetadata((row) => row.versionAdded),
+    apiPriceUsdPer1000: numericMetadata((row) => row.apiPricePer1000),
+    basePriceUsdPer1000: numericMetadata((row) => row.basePricePer1000),
+    alternativePriceUsdPer1000: numericMetadata((row) => row.alternativePricePer1000),
+    revisionNotesHref: stringMetadata((row) => row.revisionNotesHref),
+  };
+  const addendumLinks = Object.fromEntries(a.systems.flatMap((row) => row.addendum?.id
+    ? [[row.addendum.id, `/jev-models/${a.revision}#jev15-addendum`]] : []));
   const previous = new Set(previousKeys);
   const viewRows = chartData.map((s) => jevV15BoardRow(s, { isNew: previous.size > 0 && !previous.has(s.key), headline: a.headline }));
   const compareRows = chartData.map(jevV15CompareRow);
   const named = new Map(a.systems.map((s) => [s.key, short(s.display)]));
   const leader = jevV15LeaderSentence(a.board[a.headline], (key) => named.get(key) ?? key);
   const newLabel = previous.size > 0 && viewRows.some((r) => r.isNew) ? a.revision : null;
-  return <section data-bh-jevbench-v15 data-bh-jev15-run-kind={a.run_kind}>
-    <JevCapabilityRanking systems={chartSystems} revision={a.revision} officialHref="#jev14-chart-title" />
+  return <JevV15FilterProvider rows={filterRows}>
+  <section data-bh-jevbench-v15 data-bh-jev15-run-kind={a.run_kind}>
+    <JevV15FilterVisibilityBridge />
+    <JevCapabilityRanking systems={chartSystems} eligibilitySystems={allChartSystems} revision={a.revision} officialHref="#jev14-chart-title" />
     <JevBoardIntentLinks />
-    <JevBubbleCharts points={jevClass.points} costLimit={jevClass.limits.cost} referenceName="Jev" />
+    <JevBubbleCharts points={jevClass.points} costLimit={jevClass.limits.cost} referenceName="Jev" scoreKind="v15" />
+    <JevV15FilterPanel />
     <p className="bh-muted mt-3 max-w-4xl text-sm" data-bh-jev15-whatif>
       What-If: the <a className="text-accent underline" href="#jev14-chart-title">weight sliders below</a> re-score every system under other axis weights — only the equal 25/25/25/25 weights give the official option-{a.headline} ranking. The 3D view of capability, cost and speed loads <a className="text-accent underline" href="#jev14-capability-views">further down</a>.
     </p>
@@ -507,6 +565,14 @@ export function JevBenchV15({ artifact: a, sha256, previousKeys = [] }: { artifa
     <HeadlineBars a={a} ranked={ranked} />
     <p className="bh-muted mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs" aria-label="System types">{classes.map((c) => <span key={c} style={typeVar(c)} className="whitespace-nowrap"><span className="mr-1 inline-block h-2.5 w-2.5 rounded-full bg-[rgb(var(--jev-t))] align-middle" aria-hidden="true" />{JEV_TYPE_LABEL[c] ?? c}</span>)}</p>
     <OptionsTable a={a} ranked={ranked} />
+    <JevV15AllDataGrid
+      artifact={a}
+      categoryView={allDataCategories}
+      previousKeys={previousKeys}
+      eligibility={allClassEligibility}
+      metadata={allDataMetadata}
+      links={{ method: '#jev15-method', pricing: JEVBENCH_V15_PRICING_URL, revisionNotes: `/jev-models/${a.revision}#jev15-method`, addenda: addendumLinks }}
+    />
     <Findings a={a} jevClass={jevClass} ranked={ranked} honorable={honorable} partial={partial} addendum={addendum} />
     <Guide a={a} ranked={ranked} />
     <Costs a={a} />
@@ -519,7 +585,8 @@ export function JevBenchV15({ artifact: a, sha256, previousKeys = [] }: { artifa
     <JevCapabilityLazy revision={a.revision} only3d />
     <JevContextLazy />
     <p className="bh-muted mt-4 text-xs">Previous release: <a className="text-accent underline" href={a.revision === 'v1.5.5' ? '/jev-models/v1.5.4' : a.revision === 'v1.5.4' ? '/jev-models/v1.5.3' : a.revision === 'v1.5.3' ? '/jev-models/v1.5.2' : a.revision === 'v1.5.2' ? '/jev-models/v1.5.1' : a.revision === 'v1.5.1' ? '/jev-models/v1.5.0' : '/jev-models/v1.4.2.2'}>{a.revision === 'v1.5.5' ? 'JevBench v1.5.4' : a.revision === 'v1.5.4' ? 'JevBench v1.5.3' : a.revision === 'v1.5.3' ? 'JevBench v1.5.2' : a.revision === 'v1.5.2' ? 'JevBench v1.5.1' : a.revision === 'v1.5.1' ? 'JevBench v1.5.0' : 'JevBench v1.4.2.2'} (frozen results)</a>.</p>
-  </section>;
+  </section>
+  </JevV15FilterProvider>;
 }
 
 // Keep the old export name available for local preview tooling and screenshot scripts.

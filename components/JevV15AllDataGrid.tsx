@@ -12,6 +12,7 @@ import {
 } from '../lib/jevbench-all-data-grid.mjs';
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 import { jevSourceUrl } from './jevSystemLinks';
+import { useJevV15Filters } from './JevV15Filters';
 
 // CR-269: the collapsed "All data" grid. Standalone presentation component — every cell prints a value that exists in
 // the supplied artifact / category view / eligibility metadata / explicit metadata, or "Not reported"; nothing is
@@ -38,11 +39,11 @@ const numOrNull = (s: string) => {
 
 function formatCell(column: JevV15AllDataColumn, v: number | string | boolean | null): ReactNode {
   if (v == null) {
-    if (column.id === 'params' || column.id === 'apiPrice' || column.id === 'basePrice' || column.id === 'eligible') return <span className="bh-muted">Not reported</span>;
+    if (column.id === 'params' || column.id === 'apiPrice' || column.id === 'basePrice' || column.id === 'alternativePrice' || column.id === 'eligible') return <span className="bh-muted">Not reported</span>;
     return <span className="bh-muted">—</span>;
   }
   if (column.kind === 'boolean') {
-    if (column.id === 'api') return v ? 'API' : '—';
+    if (column.id === 'api') return v ? 'API' : 'No';
     if (column.id === 'eligible') return v ? 'Eligible' : 'Not eligible';
     return v ? 'yes' : 'no';
   }
@@ -75,12 +76,32 @@ export function JevV15AllDataGrid({
   /** Revision links (method, pricing, per-addendum notes) rendered on the addendum column. */
   links?: JevV15RevisionLinks | null;
 }) {
+  const {
+    rows: globalFilterRows,
+    visibleKeys: globallyVisibleKeys,
+    visible: globallyVisibleCount,
+    total: globallyTotal,
+    active: globalFiltersActive,
+  } = useJevV15Filters();
   const model = useMemo(
     () => buildAllDataModel({ artifact, categoryView, previousKeys, eligibility, metadata }),
     [artifact, categoryView, previousKeys, eligibility, metadata],
   );
   const modelKey = `${model.revision}:${model.columns.length}:${model.rows.length}`;
   const lastModelKey = useRef(modelKey);
+
+  // The page-level eligibility control changes with the selected cost/latency
+  // caps. Keep the grid's eligibility cells in step with that shared state.
+  const globalRowByKey = useMemo(() => new Map(globalFilterRows.map((row) => [row.key, row])), [globalFilterRows]);
+  const currentRows = useMemo(() => model.rows.map((row) => {
+    const globalRow = globalRowByKey.get(row.key);
+    if (!globalRow) return row;
+    const status = globalRow.jevClass.status;
+    const eligible = status === 'unknown' ? null : status === 'eligible';
+    const reason = globalRow.jevClass.reason;
+    if (row.values.eligible === eligible && row.values.eligibilityReason === reason) return row;
+    return { ...row, values: { ...row.values, eligible, eligibilityReason: reason } };
+  }), [model.rows, globalRowByKey]);
 
   const [sorts, setSorts] = useState<JevV15AllDataSort[]>([]);
   const [filters, setFilters] = useState<FilterState[]>([]);
@@ -109,7 +130,11 @@ export function JevV15AllDataGrid({
     () => filters.map((f) => ({ id: f.id, text: f.text.trim() !== '' ? f.text : null, min: numOrNull(f.min), max: numOrNull(f.max) })),
     [filters],
   );
-  const filtered = useMemo(() => applyFilters(model.rows, model.columns, parsedFilters), [model, parsedFilters]);
+  const globallyFilteredRows = useMemo(
+    () => currentRows.filter((row) => globallyVisibleKeys.has(row.key)),
+    [currentRows, globallyVisibleKeys],
+  );
+  const filtered = useMemo(() => applyFilters(globallyFilteredRows, model.columns, parsedFilters), [globallyFilteredRows, model.columns, parsedFilters]);
   const sorted = useMemo(() => sortRows(filtered, model.columns, sorts), [filtered, model, sorts]);
 
   const pageCount = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
@@ -224,6 +249,8 @@ export function JevV15AllDataGrid({
       content = href
         ? <a className="underline" href={href} target="_blank" rel="noopener noreferrer" title={`Roster addendum notes: ${sys.addendum?.id}`}>{value}</a>
         : value;
+    } else if (column.id === 'revisionNotes' && value != null) {
+      content = <Link href={String(value)} className="text-accent underline">Notes</Link>;
     } else if (column.kind === 'text' && value != null && String(value).length > 24) {
       content = <span className="block max-w-[16rem] truncate" title={String(value)}>{value}</span>;
     }
@@ -237,7 +264,7 @@ export function JevV15AllDataGrid({
   return (
     <details className="bh-panel mt-10 p-4 sm:p-5" data-bh-jev15-all-data data-bh-jev15-all-data-revision={model.revision}>
       <summary className="cursor-pointer text-lg font-semibold text-accent" data-bh-jev15-all-data-summary>
-        All data ({model.rows.length} systems)
+        All data ({globallyTotal} systems)
       </summary>
       <p className="bh-muted mt-2 max-w-4xl text-sm">
         Every published value of JevBench {model.revision} in one table: official scores and ranks under all three weight
@@ -251,7 +278,7 @@ export function JevV15AllDataGrid({
           <summary className="cursor-pointer list-none rounded-md border border-line px-3 py-1.5 text-sm hover:border-accent/60">
             Columns ({visibleColumns.length}/{model.columns.length})
           </summary>
-          <div className="absolute z-30 mt-1 max-h-96 w-80 overflow-auto rounded-lg border border-line bg-[var(--surface)] p-3 shadow-xl">
+          <div className="absolute z-30 mt-1 max-h-96 w-80 max-w-[calc(100vw-2rem)] overflow-auto rounded-lg border border-line bg-[var(--surface)] p-3 shadow-xl">
             <div className="mb-2 flex gap-2 text-xs">
               <button type="button" className="rounded border border-line px-2 py-1 hover:border-accent/60" onClick={showAllColumns}>All</button>
               <button type="button" className="rounded border border-line px-2 py-1 hover:border-accent/60" onClick={hideOptionalColumns}>Core only</button>
@@ -385,7 +412,9 @@ export function JevV15AllDataGrid({
       )}
 
       <p className="bh-muted mt-3 text-sm" aria-live="polite" data-bh-jev15-all-data-matches>
-        {sorted.length.toLocaleString('en-US')} of {model.rows.length.toLocaleString('en-US')} rows match
+        {sorted.length.toLocaleString('en-US')} of {globallyVisibleCount.toLocaleString('en-US')} rows match the grid filters
+        {globalFiltersActive && <> after the page filters</>}
+        {globallyTotal !== globallyVisibleCount && <> · {globallyTotal.toLocaleString('en-US')} total</>}
         {sorts.length > 0 && <> · sorted by {sorts.map((s, i) => `${model.columns.find((c) => c.id === s.id)?.label ?? s.id} ${s.dir === 'asc' ? '↑' : '↓'}${i === 0 ? '' : ` (${i + 1})`}`).join(', ')}</>}
         {sorts.length > 0 && <span className="bh-muted"> · click a header to reset, shift-click to add a secondary sort</span>}
       </p>

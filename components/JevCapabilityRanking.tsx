@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useId, useState, type CSSProperties, type ReactNode } from 'react';
+import { useEffect, useId, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
 import { DEFAULT_CAP, clampCap, formatCap, isOfficialCaps, parseCaps, serialiseCaps, type ClassCaps } from '../lib/jevbench-class-caps.mjs';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
 import { jevClassRows, ratioPosition, trafficLightZone, type JevClassOptions, type JevClassResult, type JevClassRow } from '../lib/jevbench-jev-class.mjs';
@@ -11,6 +11,8 @@ import { JevCapabilityTip } from './JevCapabilityTip';
 import { JEV_TYPE_LABEL, jevLegendTypes, jevTypeVarName } from './jevTypes';
 import { apiExplanation } from './JevBoardShared';
 import { BaseModelDisplay, type BaseModelBenchmark } from './BaseModelDisplay';
+import { useJevV15VisibleKeys } from './useJevV15VisibleKeys';
+import { JEV_V15_ELIGIBILITY_CHANGE_EVENT } from '../lib/jevbench-global-filter-events.mjs';
 
 // Florian 25 Sep 2026 (DECISIONS.md): the page headline is the Capability ranking — the mean of Intelligence and
 // Calibration — of Jev-class systems. Jev-class = cost per decision at most 2x Jev 1.13.0's AND median latency at most
@@ -127,10 +129,13 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
   </li>;
 }
 
-export function JevCapabilityRanking({ systems, revision, officialHref, benchName = 'JevBench', classLabel = 'Jev-class', referenceLabel = 'Jev', eligibilityNote, correlationReason, benchmark = 'jevbench', ...options }: {
+export function JevCapabilityRanking({ systems, eligibilitySystems = systems, revision, officialHref, benchName = 'JevBench', classLabel = 'Jev-class', referenceLabel = 'Jev', eligibilityNote, correlationReason, benchmark = 'jevbench', ...options }: {
   systems: JevV14System[]; revision: string; officialHref: string; benchName?: string; classLabel?: string;
+  /** Include disclosure rows for filter status while keeping the headline chart's published row set unchanged. */
+  eligibilitySystems?: JevV14System[];
   eligibilityNote?: ReactNode; correlationReason?: string; benchmark?: BaseModelBenchmark;
 } & JevClassOptions) {
+  const visibleKeys = useJevV15VisibleKeys(systems.map((row) => row.key));
   const [caps, setCaps] = useState<ClassCaps>({ costFactor: DEFAULT_CAP, latencyFactor: DEFAULT_CAP });
   const [copied, setCopied] = useState(false);
   const [desktopControls, setDesktopControls] = useState(false);
@@ -158,9 +163,26 @@ export function JevCapabilityRanking({ systems, revision, officialHref, benchNam
   };
   const official = isOfficialCaps(caps);
   const { costFactor, latencyFactor } = caps;
-  const { reference, limits, rows, costLatencySpearman, n: pairedCount } = jevClassRows(systems, { ...options, ...caps, referenceLabel });
-  const inside = rows.filter((r) => r.inClass);
-  const outside = rows.filter((r) => !r.inClass);
+  const capOptionsKey = JSON.stringify({ ...options, ...caps, referenceLabel });
+  const capOptions = useMemo(() => ({ ...options, ...caps, referenceLabel }), [capOptionsKey]);
+  const result = useMemo(() => jevClassRows(systems, capOptions), [systems, capOptions]);
+  const eligibilityResult = useMemo(
+    () => eligibilitySystems === systems ? result : jevClassRows(eligibilitySystems, capOptions),
+    [eligibilitySystems, systems, capOptions, result],
+  );
+  const { reference, limits, rows, costLatencySpearman, n: pairedCount } = result;
+  useEffect(() => {
+    if (benchmark !== 'jevbench') return;
+    const eligibilityByKey = Object.fromEntries(eligibilityResult.rows.map((row) => [row.row.key, {
+      status: row.inClass ? 'eligible' : 'outside',
+      reason: row.reasons.length ? row.reasons.join('; ') : 'within the selected cost and latency caps',
+    }]));
+    const timer = window.setTimeout(() => window.dispatchEvent(new CustomEvent(JEV_V15_ELIGIBILITY_CHANGE_EVENT, { detail: { eligibilityByKey } })), 0);
+    return () => window.clearTimeout(timer);
+  }, [benchmark, eligibilityResult]);
+  const filteredRows = rows.filter((r) => visibleKeys.has(r.row.key));
+  const inside = filteredRows.filter((r) => r.inClass);
+  const outside = filteredRows.filter((r) => !r.inClass);
   const speedFallback = inside.filter((r) => r.latencyBasis === 'speed-axis');
   const refName = shortName(reference.display);
   let n = 0;
@@ -169,7 +191,7 @@ export function JevCapabilityRanking({ systems, revision, officialHref, benchNam
   const bar = ({ r, label }: { r: JevClassRow; label: string }) => <RankingRow key={r.row.key} item={r} rank={label} reference={reference} costFactor={costFactor} latencyFactor={latencyFactor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark}
     note={r.isReference ? `Reference system for the ${classLabel} limits` : !r.row.ranked ? `Not ranked in the official ${benchName} Score (${r.row.listing.replace(/_/g, ' ')})` : undefined} />;
   const outsideBar = (r: JevClassRow) => <RankingRow key={r.row.key} item={r} rank="" reference={reference} costFactor={costFactor} latencyFactor={latencyFactor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark} note={`Outside: ${r.reasons.join(', ')}`} />;
-  const types = jevLegendTypes(rows.map((r) => r.row.class));
+  const types = jevLegendTypes(filteredRows.map((r) => r.row.class));
 
   // F-197 (pass 36): mt-6 not mt-8 — with the guides nav folded out of the page head the first Capability row
   // must sit inside the tightened 590/660 px budgets; the smaller gap is the remaining headroom.

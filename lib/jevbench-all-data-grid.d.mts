@@ -32,9 +32,12 @@ export type JevV15AllDataModel = {
 
 export type JevV15AllDataMetadata = {
   params?: Record<string, number>;
+  families?: Record<string, string>;
   firstAdded?: Record<string, string>;
   apiPriceUsdPer1000?: Record<string, number>;
   basePriceUsdPer1000?: Record<string, number>;
+  alternativePriceUsdPer1000?: Record<string, number>;
+  revisionNotesHref?: Record<string, string>;
 };
 
 export type JevV15RevisionLinks = {

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readJevbenchV155Release } from '../lib/jevbench-v15-release.mjs';
 import { jevbenchCategoryView } from '../lib/jevbench-categories.mjs';
 import { jevClassRows } from '../lib/jevbench-jev-class.mjs';
+import { jevV15CompareRow } from '../lib/jevbench-v15-board.mjs';
 import {
   buildAllDataModel, applyFilters, sortRows, matchesFilters, columnHasValues, toCsv, toJson,
 } from '../lib/jevbench-all-data-grid.mjs';
@@ -27,13 +28,14 @@ test('CR-269: the grid maps one row per artifact system plus not-measured roster
   // Required column set from the brief: identity, official score/rank, A/B/C, capability + eligibility,
   // axes, intelligence detail, per-type, latency, cost, categories (dynamic), prices as metadata-only.
   const ids = colIds(model);
-  for (const id of ['rank', 'system', 'author', 'class', 'open', 'api', 'licence', 'params', 'firstAdded', 'addendum',
+  for (const id of ['rank', 'system', 'author', 'family', 'class', 'open', 'api', 'licence', 'params', 'newInVersion', 'firstAdded', 'addendum', 'revisionNotes',
     'score', 'scoreA', 'scoreB', 'scoreC', 'rankA', 'rankB', 'rankC',
     'capability', 'eligible', 'eligibilityReason',
     'intelligence', 'calibration', 'speed', 'cost',
     'iOpen', 'iSealed', 'gap', 'excess', 'penalty',
     'ccOpen:choice', 'ccSealed:choice', 'ccOpen:noul', 'ccSealed:noul', 'ccOpen:score', 'ccSealed:score',
     'nOpen:choice', 'nSealed:choice', 'nOpen:noul', 'nSealed:noul', 'nOpen:score', 'nSealed:score',
+    'tierCcOpen:easy', 'tierNOpen:easy', 'tierCcSealed:hard', 'tierNSealed:hard',
     'p50Raw', 'p95Raw', 'p50Adj', 'p95Adj', 'adjustment',
     'costUsd', 'costKind', 'costBasis', 'apiPrice', 'basePrice', 'categoryNote']) {
     assert.ok(ids.includes(id), `missing column ${id}`);
@@ -51,6 +53,7 @@ test('CR-269: cells carry the exact published values for a known ranked row', ()
   assert.equal(row.values.rankB, sys.ranks.B);
   assert.equal(row.values.system, sys.display);
   assert.equal(row.values.author, sys.author);
+  assert.equal(row.values.family, sys.underlying ?? sys.family ?? sys.base_model ?? null);
   assert.equal(row.values.class, sys.class);
   assert.equal(row.values.open, String(sys.open));
   assert.equal(row.values.api, sys.api_flag);
@@ -70,6 +73,11 @@ test('CR-269: cells carry the exact published values for a known ranked row', ()
     assert.equal(row.values[`ccSealed:${t}`], sys.intelligence.per_type_split[`sealed|${t}`].cc);
     assert.equal(row.values[`nOpen:${t}`], Object.values(sys.intelligence.per_type_split[`open|${t}`].n).reduce((a, b) => a + b, 0));
     assert.equal(row.values[`nSealed:${t}`], Object.values(sys.intelligence.per_type_split[`sealed|${t}`].n).reduce((a, b) => a + b, 0));
+  }
+  const compare = jevV15CompareRow(sys);
+  for (const tier of ['easy', 'standard', 'judge', 'hard']) {
+    assert.equal(row.values[`tierCcOpen:${tier}`], compare.tierCc.open[tier]);
+    assert.equal(row.values[`tierCcSealed:${tier}`], compare.tierCc.sealed[tier]);
   }
   assert.equal(row.values.p50Adj, sys.speed.p50_s_adjusted);
   assert.equal(row.values.adjustment, sys.speed.adjustment);
@@ -197,11 +205,24 @@ test('CR-269: first added comes from explicit metadata or previous-release keys,
   }
   const cygnet = artifact.systems[0];
   const withPrevious = buildAllDataModel({ artifact, categoryView: view, previousKeys: allKeys.filter((k) => k !== cygnet.key) });
+  assert.equal(rowOf(withPrevious, cygnet.key).values.newInVersion, true);
+  assert.equal(rowOf(withPrevious, artifact.systems[1].key).values.newInVersion, false);
   assert.equal(rowOf(withPrevious, cygnet.key).values.firstAdded, artifact.revision);
   assert.equal(rowOf(withPrevious, artifact.systems[1].key).values.firstAdded, null);
   const metadata = { firstAdded: { [cygnet.key]: 'v1.4.2.2' } };
   const withMeta = buildAllDataModel({ artifact, categoryView: view, previousKeys: allKeys, metadata });
   assert.equal(rowOf(withMeta, cygnet.key).values.firstAdded, 'v1.4.2.2', 'explicit metadata wins');
+});
+
+test('CR-269: family and row-level notes links require explicit metadata', () => {
+  const model = buildAllDataModel({ artifact, metadata: {
+    families: { cygnet: 'Cygnet base' },
+    revisionNotesHref: { cygnet: '/jev-models/v1.5.5#jev15-addendum' },
+  } });
+  assert.equal(rowOf(model, 'cygnet').values.family, 'Cygnet base');
+  assert.equal(rowOf(model, 'cygnet').values.revisionNotes, '/jev-models/v1.5.5#jev15-addendum');
+  const other = artifact.systems.find((s) => s.key !== 'cygnet');
+  assert.equal(rowOf(model, other.key).values.revisionNotes, null);
 });
 
 test('CR-269: metadata-driven price and parameter columns stay null without explicit values', () => {

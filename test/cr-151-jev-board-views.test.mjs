@@ -26,7 +26,8 @@ test('the chart offers View by and sortable, keyboard-reachable headings; the ta
   assert.match(client, /aria-sort=\{active \? \(sort\.dir === 'asc' \? 'ascending' : 'descending'\) : 'none'\}/);
   assert.match(client, /usd: 'asc'/, '$/1k sorts cheapest first');
   assert.match(client, /Not the official order/);
-  assert.match(client, /The bold number stays the \{benchName\} Score and # the official rank/);
+  // CR-269: row numbers follow the current view; the official rank is labelled beside each system instead.
+  assert.match(client, /The bold number stays the \{custom \? 'custom composite' : benchName\} Score\. Row numbers follow this view; official ranks are labelled beside each system\./);
   assert.match(client, /benchName = 'JevBench'/, 'shared chart retains the JevBench default label');
 });
 
