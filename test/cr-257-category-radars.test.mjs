@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import * as releases from '../lib/jevbench-v15-release.mjs';
-import { readMultimodalPreview } from '../lib/jevbench-multimodal-preview.mjs';
+import { readMultimodalPreview, readMultimodalPreviewV02 } from '../lib/jevbench-multimodal-preview.mjs';
 import {
   JEVBENCH_CATEGORY_REVISIONS, IMAGEJEV_CATEGORY_REVISIONS, jevbenchCategoryView, imageJevCategoryView, validateCategoryArtifact,
 } from '../lib/jevbench-categories.mjs';
@@ -52,7 +52,7 @@ test('CR-257: the live JevBench release has category values for every ranked sys
   }
 });
 
-test('CR-257: the live ImageJevBench release has category values for every ranked system', async () => {
+test('CR-257: the archived ImageJevBench v0.1.5 release has category values for every ranked system', async () => {
   const a = await readMultimodalPreview();
   assert.ok(IMAGEJEV_CATEGORY_REVISIONS.includes(a.revision), `ImageJevBench ${a.revision} has no category artifact`);
   const keys = a.ranking.map((r) => r.key);
@@ -64,6 +64,34 @@ test('CR-257: the live ImageJevBench release has category values for every ranke
     for (const dim of view.dims) for (const c of dim.cats.filter((x) => x.plotted)) assert.ok(view.systems[key][dim.key][c.key], `${key}: no value for ${dim.key}.${c.key}`);
   }
   for (const key of Object.keys(EXEMPT.imagejevbench)) assert.ok(keys.includes(key), `stale exemption ${key}`);
+});
+
+test('CR-257: ImageJevBench v0.2 covers all 48 measured systems and keeps its three references missing', async () => {
+  const { artifact } = await readMultimodalPreviewV02();
+  assert.equal(artifact.version, 'v0.2.0');
+  assert.ok(IMAGEJEV_CATEGORY_REVISIONS.includes(artifact.version), 'v0.2 needs its own independently reviewed 573-item category artifact; v0.1.5 cannot substitute');
+  const native = [...artifact.ranking, ...artifact.measured_unrankable_rows].map(r => r.key);
+  const refs = artifact.release_provenance['Configuration receipts'].filter(r => r.status === 'source-unavailable').map(r => r.key);
+  assert.equal(native.length, 48); assert.equal(refs.length, 3);
+  const view = await imageJevCategoryView(artifact.version, [...native, ...refs]);
+  assert.ok(view); assert.equal(view.revision, artifact.version);
+  assert.deepEqual(view.dims.map(d => d.key), ['capabilities', 'usecases']);
+  assert.deepEqual(Object.keys(view.systems).sort(), [...native].sort());
+  assert.deepEqual(Object.keys(view.missing).sort(), [...refs].sort());
+  for (const key of native) {
+    // Winnow has retained v0.2 per-item results; the archive-only exemption does not apply.
+    for (const dim of view.dims) for (const cat of dim.cats.filter(c => c.n > 0)) {
+      const cell = view.systems[key][dim.key][cat.key];
+      assert.ok(cell, `${key}: missing ${dim.key}.${cat.key}`);
+      assert.equal(cell[1], cat.n);
+      assert.ok(Number.isFinite(cell[0]) && cell[0] >= -100 && cell[0] <= 100);
+    }
+  }
+  assert.equal(view.dims[0].cats.reduce((sum, c) => sum + c.n, 0), 418);
+  for (const key of refs) {
+    assert.equal(view.systems[key], undefined);
+    assert.equal(view.missing[key], artifact.reference_rows.find(r => r.key === key).reason);
+  }
 });
 
 test('CR-257: both compare views receive the categories and draw the two category radars', async () => {
