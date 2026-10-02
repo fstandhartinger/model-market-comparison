@@ -6,10 +6,15 @@ import { setTimeout as pause } from 'node:timers/promises';
 
 // CR-252 (1 Oct 2026): every model name in the ImageJevBench overall ranking linked to /jev-models/<imagejev key>,
 // a JevBench system page that does not exist for image-only systems, so 49 of 51 names opened a 404.
-// CR-254 adds real Image detail pages; retain the 404/anchor crawl and require all 50 detail links.
-// This crawls every internal link on the three benchmark pages of the production build: each path must answer
+// CR-254 adds versioned Image detail pages; require all 51 current and both 50-row archive detail sets.
+// This crawls every internal link on the benchmark pages and Image archives: each path must answer
 // 200 (after redirects), and each in-page anchor must name an element on that page. Runs after the production build.
-const PAGES = ['/image-jev-bench', '/jev-models', '/audio-jev-bench'];
+const IMAGE_PAGES = new Map([
+  ['/image-jev-bench', ['v0.2.0', 51]],
+  ['/image-jev-bench?version=v0.1.5', ['v0.1.5', 50]],
+  ['/image-jev-bench?version=v0.1.4', ['v0.1.4', 50]],
+]);
+const PAGES = [...IMAGE_PAGES.keys(), '/jev-models', '/audio-jev-bench'];
 // Ids that only exist after hydration: JevCapabilityLazy renders JevCapabilityChart with ssr: false.
 const CLIENT_ONLY_IDS = new Set(['jev14-capability-views']);
 
@@ -34,7 +39,6 @@ test('every internal link on the benchmark pages opens a page or an element that
     const broken = [];
     const checked = new Map();
     let modelLinks = 0;
-    let imageSystemDetails = 0;
     for (const page of PAGES) {
       const response = await fetch(`${base}${page}`);
       assert.equal(response.status, 200, `${page} must render`);
@@ -42,7 +46,7 @@ test('every internal link on the benchmark pages opens a page or an element that
       const ids = new Set([...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]));
       const anchors = [...html.matchAll(/<a\b[^>]*\shref="([^"]+)"/g)].map((m) => m[1].replaceAll('&amp;', '&'));
       for (const href of new Set(anchors)) {
-        if (/^\/(?:jev-models|image-jev-bench)\/[^/?#]+$/.test(href) || href.startsWith('#imagejev-system-')) modelLinks += 1;
+        if (/^\/jev-models\/[^/?#]+$/.test(href) || /^\/image-jev-bench\/v0\.[^/]+\/[^/?#]+$/.test(href) || href.startsWith('#imagejev-system-')) modelLinks += 1;
         if (href.startsWith('#')) {
           if (href.length > 1 && !ids.has(decodeURIComponent(href.slice(1))) && !CLIENT_ONLY_IDS.has(href.slice(1))) broken.push(`${page} → ${href} (no such element)`);
           continue;
@@ -52,11 +56,19 @@ test('every internal link on the benchmark pages opens a page or an element that
         if (!checked.has(path)) checked.set(path, (await fetch(`${base}${path}`, { redirect: 'follow' })).status);
         if (checked.get(path) !== 200) broken.push(`${page} → ${href} (${checked.get(path)})`);
       }
-      if (page === '/image-jev-bench') imageSystemDetails = new Set(anchors.filter((href) => /^\/image-jev-bench\/[^/?#]+$/.test(href))).size;
+      if (IMAGE_PAGES.has(page)) {
+        const [revision, expectedCount] = IMAGE_PAGES.get(page);
+        const pattern = new RegExp(`^/image-jev-bench/${revision.replaceAll('.', '\\.')}/[^/?#]+$`);
+        const details = new Set(anchors.filter((href) => pattern.test(href)));
+        assert.equal(details.size, expectedCount, `CR-254: ${revision} has every version-specific detail link`);
+        if (revision === 'v0.1.5') {
+          assert.equal((html.match(/data-bh-jev15-compare(?:\s|=|>)/g) ?? []).length, 1, 'archive has one selector for all comparison radars');
+          assert.doesNotMatch(html, /data-bh-mm-compare="all"/, 'archive has no second independent comparison');
+        }
+      }
     }
     assert.deepEqual(broken, [], `broken links:\n${broken.join('\n')}`);
     assert.ok(modelLinks >= 50, `the crawl must see the model links (found ${modelLinks})`);
-    assert.equal(imageSystemDetails, 50, `CR-254: every ImageJev system has a working detail page (found ${imageSystemDetails})`);
   } finally {
     server.kill('SIGTERM');
   }
