@@ -23,7 +23,13 @@ under `trusted-runner/`. Host-fetched public provider pages (pricing, models, AP
 under `source/public-docs/` (pinned as `public_docs`, see `PUBLIC-DOCS-RECEIPT.json`); they are
 public tariff/API evidence, not customer source. `access` in the metadata is host-validated: a
 `held_privately_host_only` credential means the key is in host intake and `credential: "request"`
-is correct; the key itself is never shown to you. The order folder and source are read-only during this stage except for
+is correct; the key itself is never shown to you. The fixed host measurement code pinned under
+`official_measurement` (driver, dispatcher, contract, and each `profile.code` file such as `run_v15.py`
+and `jevbench/adapters/typesafe.py`) is mounted read-only at `/home/flori/official/measurement/` under
+the same relative names; verify it against the pins and review how it uses the generated runner data.
+An API-only order with no `model_link`/`code_link` has no customer source to fetch: that absence alone
+is not a finding; review the runner data, the endpoint/model identity and tariff evidence, and the
+fixed measurement path instead. The order folder and source are read-only during this stage except for
 this `review/` directory.
 
 Inspect the reviewed source, adapter, dependency manifests, licence and documented run path.
