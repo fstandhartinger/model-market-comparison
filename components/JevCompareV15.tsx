@@ -126,7 +126,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
   const openTierSpokes = ccSpokes(pair, TIERS, (r, k) => r.tierCc.open[k as "easy"] ?? null);
   const sealedTierSpokes = ccSpokes(pair, TIERS, (r, k) => r.tierCc.sealed[k as "easy"] ?? null);
   const missingFor = (spokes: Spoke[]) => pair.filter((_, k) => spokes.every((sp) => sp.values[k] === null)).map((r) => r.name);
-  const status = (r: JevCompareV15Row) => r.rank !== null ? `#${r.rank}` : ({ honorable_mention: "honorable mention", partial: "partial run", unpriced: "unpriced", addendum: "roster addendum", unranked: "not ranked" } as Record<string, string>)[r.listing] ?? `${r.listing}, not ranked`;
+  const status = (r: JevCompareV15Row) => r.rank !== null ? `#${r.rank}` : ({ honorable_mention: "honorable mention", partial: "partial run", unpriced: "unpriced", addendum: "roster addendum", unranked: "not ranked", "measured-unrankable": "measured, no composite rank", "historical-reference": "archive reference only" } as Record<string, string>)[r.listing] ?? `${r.listing}, not ranked`;
   const sourceUrl = (r: JevCompareV15Row) => imageRevision ? imageJevSourceUrl(r.key, r.repo, imageRevision) : jevSourceUrl(r.key, r.repo);
   const desc = (title: string, spokes: Spoke[]) => `${title}, ${s[0].name} vs ${s[1].name}. ` + spokes.map((sp) => `${sp.lines.join(" ")}: ${sp.texts[0]} vs ${sp.texts[1]}`).join("; ") + ".";
   const copy = async () => {

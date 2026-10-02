@@ -58,6 +58,9 @@ test('Image comparison plots measured zero axes and keeps missing reference axes
   assert.match(html, /Intelligence: 0\.0 vs —/);
   assert.match(html, /Cost: — vs —/);
   assert.match(html, /Missing axes are shown as — and are not plotted/);
+  assert.match(html, /measured, no composite rank/);
+  assert.match(html, /archive reference only/);
+  assert.doesNotMatch(html, /historical-reference, not ranked|measured-unrankable, not ranked/);
   assert.doesNotMatch(html, /none \(0\)|href="[^"]+"[^>]*data-bh-jev-source/);
   assert.equal(reference.score, null); assert.deepEqual(Object.values(reference.axes), [null, null, null, null]);
   const legacy = renderToStaticMarkup(React.createElement(JevCompareV15, { rows: [zero, reference], openDecisions: 157, sealedDecisions: 261, axesOnly: true }));
@@ -71,4 +74,16 @@ test('Image legend uses the selected Image release source rather than colliding 
   assert.match(html, /data-bh-jev-source="imajev_4b"/);
   assert.ok(html.includes(imajev.repo));
   assert.match(html, /Score 69\.6/);
+});
+
+test('every unavailable exact v02 source stays unlinked in the comparison legend', () => {
+  const measured = rows.find(r => r.key === 'wity_1');
+  for (const key of ['neohorse_jev_4b', 'jevany_27b_sft', 'jevany_27b_rlcr']) {
+    const reference = rows.find(r => r.key === key);
+    assert.ok(reference);
+    const html = render([measured, reference]);
+    assert.doesNotMatch(html, new RegExp(`data-bh-jev-source="${key}"`));
+    assert.match(html, /archive reference only/);
+    assert.match(html, /Score —/);
+  }
 });
