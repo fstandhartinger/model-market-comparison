@@ -19,7 +19,11 @@ change the order record.
 ```
 
 The exact source files for review are under `source/`; API-only runner files, when present, are
-under `trusted-runner/`. The order folder and source are read-only during this stage except for
+under `trusted-runner/`. Host-fetched public provider pages (pricing, models, API reference) may be
+under `source/public-docs/` (pinned as `public_docs`, see `PUBLIC-DOCS-RECEIPT.json`); they are
+public tariff/API evidence, not customer source. `access` in the metadata is host-validated: a
+`held_privately_host_only` credential means the key is in host intake and `credential: "request"`
+is correct; the key itself is never shown to you. The order folder and source are read-only during this stage except for
 this `review/` directory.
 
 Inspect the reviewed source, adapter, dependency manifests, licence and documented run path.

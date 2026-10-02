@@ -949,6 +949,9 @@ def review_request_json(row: dict[str, Any]) -> str:
     fields = ("id", "model_name", "access_type", "benchmarks", "visibility")
     payload = {name: row.get(name) for name in fields}
     payload.update(safe_links(row))
+    # Preparation and review need the host-validated endpoint and whether a key is held host-side;
+    # never the raw access text or the key itself.
+    payload["access"] = redacted_access(row.get("access_instructions"))
     text = json.dumps(payload, ensure_ascii=True, indent=2)
     return text.replace("`", "\\u0060").replace("<", "\\u003c").replace(">", "\\u003e")
 
@@ -1001,6 +1004,15 @@ def source_review_pins(job_dir: Path) -> dict[str, Any]:
             file_pins[relative] = item["sha256"]
         pins["trusted_runner"] = {"manifest_sha256": sha256_file(manifest_path),
                                   "source_commit": manifest.get("source_commit"), "files": file_pins}
+    docs_dir = source_dir / "public-docs"
+    if docs_dir.is_dir() and not docs_dir.is_symlink():
+        docs: dict[str, str] = {}
+        for path in sorted(docs_dir.iterdir()):
+            if path.is_symlink() or not path.is_file():
+                raise PickupError("public provider docs may contain only regular files")
+            docs[path.name] = sha256_file(path)
+        if docs:
+            pins["public_docs"] = docs
     if not pins:
         raise PickupError("no pinned source or official scoring method is available for review")
     return pins
@@ -1049,7 +1061,12 @@ and the fetched customer source in `source/`. Write only data/configuration for 
 Python is executed by that driver. Write trusted-runner/RUNTIME.json, a mapping for exactly the
 ordered benchmarks to {{"backend":"typesafe|openrouter","model":"model-id",
 "credential":"none|request|openrouter","price_input_per_m":0.0,"price_output_per_m":0.0}}.
-For typesafe (text only), also specify an HTTPS origin as endpoint. OpenRouter is the fixed ZDR,
+For typesafe (text only), also specify an HTTPS origin as endpoint. When `access.credential` above
+is `held_privately_host_only`, the customer's key is already in host intake: use credential
+"request" and the origin of the host-validated `access.endpoint` (the fixed driver appends
+`/v1/systemone`). Host-fetched public provider pages (pricing, models, API reference), when
+present, are under `source/public-docs/` with `PUBLIC-DOCS-RECEIPT.json`; cite them for tariffs.
+OpenRouter is the fixed ZDR,
 no-fallback official route for text and Image; optional reasoning is low/medium/high. Use real
 public bookable tariffs. Request credentials stay in host intake; never put a key in this file.
 Unsupported runtimes use {{"backend":"unsupported"}} and an honest PRICING-REVIEW.md explanation.

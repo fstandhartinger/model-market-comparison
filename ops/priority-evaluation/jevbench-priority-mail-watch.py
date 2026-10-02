@@ -258,7 +258,7 @@ def read_open_requests() -> list[dict]:
           'id',id::text,'email',lower(email),'model_name',model_name,'benchmarks',benchmarks,
           'paid_at',paid_at,'created_at',created_at,'pickup_job_dir',pickup_job_dir,
           'pickup_owner',pickup_owner,'access_type',access_type,'model_link',model_link,
-          'code_link',code_link,'access_instructions',access_instructions,'notes',notes,
+          'code_link',code_link,'notes',notes,
           'visibility',visibility,'amount_total',amount_total,'base_amount',base_amount,
           'stripe_mode',stripe_mode,'review_basis',review_basis,'synthetic_test',synthetic_test
           ,'mail_last_checked_at',mail_last_checked_at

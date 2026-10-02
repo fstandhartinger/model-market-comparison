@@ -180,5 +180,33 @@ class LinkAndLegacyTest(unittest.TestCase):
             self.assertIsNone(autopickup.public_link(url), url)
 
 
+    def test_review_and_preparation_metadata_carry_endpoint_but_never_key(self):
+        row = {**self.ROW, "access_instructions": json.dumps(
+            {"endpoint": "https://drex.example.ai/v1/systemone", "api_key": SYNTH, "note": "pw Xk9mQ2vLp7"})}
+        data = json.loads(autopickup.review_request_json(row))
+        self.assertEqual(data["access"], {"endpoint": "https://drex.example.ai/v1/systemone",
+                                          "credential": "held_privately_host_only", "raw_text": "withheld"})
+        text = autopickup.review_request_json(row)
+        for secret in (SYNTH, "Xk9mQ2vLp7", "access_instructions"):
+            self.assertNotIn(secret, text)
+        bad = {**self.ROW, "access_instructions": json.dumps({"endpoint": f"https://x.ai/{SYNTH}", "api_key": SYNTH})}
+        self.assertIsNone(json.loads(autopickup.review_request_json(bad))["access"]["endpoint"])
+
+    def test_public_docs_are_pinned_but_not_customer_source(self):
+        import tempfile
+        from unittest import mock
+        with tempfile.TemporaryDirectory() as tmp, \
+                mock.patch.object(autopickup, "load_row", return_value={"benchmarks": ["jevbench"]}), \
+                mock.patch.object(autopickup.official_scoring, "pins", return_value={"m": 1}), \
+                mock.patch.object(autopickup.measurement_dispatch, "pins", return_value={"d": 1}):
+            job = autopickup.Path(tmp) / self.ROW["id"]
+            (job / "source/public-docs").mkdir(parents=True)
+            (job / "source/public-docs/pricing.txt").write_text("40 nUSD per input token")
+            pins = autopickup.source_review_pins(job)
+            self.assertEqual(set(pins["public_docs"]), {"pricing.txt"})
+            self.assertFalse(autopickup.customer_source_review_failed(pins))
+            (job / "source/public-docs/pricing.txt").write_text("changed")
+            self.assertNotEqual(autopickup.source_review_pins(job), pins)
+
 if __name__ == "__main__":
     unittest.main()
