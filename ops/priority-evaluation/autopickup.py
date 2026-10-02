@@ -867,6 +867,22 @@ def redacted_access(raw: object) -> dict[str, Any]:
             "raw_text": "withheld"}
 
 
+def request_endpoint_matches(runtime_endpoint: object, access_raw: object) -> bool:
+    """True only when the runtime endpoint is the https origin of the host-validated access endpoint."""
+    validated = redacted_access(access_raw).get("endpoint")
+    if not isinstance(runtime_endpoint, str) or not validated:
+        return False
+    try:
+        runtime_url = urllib.parse.urlsplit(runtime_endpoint)
+        runtime_port = runtime_url.port
+    except ValueError:
+        return False
+    expected = urllib.parse.urlsplit(validated)
+    return (runtime_url.scheme == "https" and runtime_port in (None, 443) and not runtime_url.username
+            and not runtime_url.password and not runtime_url.query and not runtime_url.fragment
+            and runtime_url.path in ("", "/") and (runtime_url.hostname or "").lower() == expected.hostname)
+
+
 def request_data_json(row: dict[str, Any]) -> str:
     fields = ("id", "model_name", "model_link", "code_link", "access_type",
               "notes", "benchmarks", "visibility")
@@ -1660,9 +1676,15 @@ def dispatch_measurement(rid: str, job_dir: Path) -> None:
                 if not isinstance(credential, str) or not credential or len(credential) > 4096:
                     raise ValueError()
             except (ValueError, KeyError, TypeError):
+                credential = None
+            if credential is None:
                 # Missing usable structured access needs a human-owned secure intake; do not
                 # pretend an infrastructure/schema issue is a customer pause.
-                raise measurement_dispatch.OperationalHold("request_api_access_needs_reconciliation") from None
+                raise measurement_dispatch.OperationalHold("request_api_access_needs_reconciliation")
+            # The customer's key goes only to the host-validated endpoint origin, never to whatever host a
+            # generated RUNTIME.json names (prompt injection or a mistaken adapter would leak it).
+            if not request_endpoint_matches(runtime.get("endpoint"), row.get("access_instructions")):
+                raise measurement_dispatch.OperationalHold("request_endpoint_mismatch")
         output = STATE_ROOT / "measurements" / rid / benchmark
         record = measurement_dispatch.run(benchmark, runtime, credential, output,
                                           review["source_pins"]["official_measurement"], max(0, 5.0 - spent))
@@ -3543,7 +3565,9 @@ def sandbox_agent_command(job_dir: Path, rid: str, engine: str, stage_home: Path
         target = placeholder(relative, source.is_dir())
         fd = os.open(source, os.O_PATH | (os.O_DIRECTORY if source.is_dir() else 0))
         fds.append(fd)
-        args.extend(("--ro-bind" if readonly else "--bind", f"/proc/self/fd/{fd}", f"/home/flori/{relative}"))
+        # --(ro-)bind-fd makes bwrap close the descriptor before exec; a /proc/self/fd/N source path would leave
+        # it open in the agent, which could then read around every mask (and up to the host root via ..).
+        args.extend(("--ro-bind-fd" if readonly else "--bind-fd", str(fd), f"/home/flori/{relative}"))
 
     # Shared policy/context files are read-only. The rest of HOME, /mnt (Dropbox),
     # host temporary files and user runtime sockets stay hidden from the model process.

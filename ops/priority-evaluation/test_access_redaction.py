@@ -208,5 +208,16 @@ class LinkAndLegacyTest(unittest.TestCase):
             (job / "source/public-docs/pricing.txt").write_text("changed")
             self.assertNotEqual(autopickup.source_review_pins(job), pins)
 
+    def test_request_credential_only_to_validated_origin(self):
+        access = json.dumps({"endpoint": "https://drex.example.ai/v1/systemone", "api_key": SYNTH})
+        self.assertTrue(autopickup.request_endpoint_matches("https://drex.example.ai", access))
+        self.assertTrue(autopickup.request_endpoint_matches("https://DREX.example.ai/", access))
+        for runtime in ("https://evil.example", "http://drex.example.ai", "https://drex.example.ai.evil.example",
+                        "https://drex.example.ai:8443", "https://u:p@drex.example.ai", "https://drex.example.ai/x",
+                        None, 7):
+            self.assertFalse(autopickup.request_endpoint_matches(runtime, access), runtime)
+        self.assertFalse(autopickup.request_endpoint_matches("https://drex.example.ai", "free text key " + SYNTH))
+        self.assertFalse(autopickup.request_endpoint_matches("https://drex.example.ai", json.dumps({"api_key": SYNTH})))
+
 if __name__ == "__main__":
     unittest.main()

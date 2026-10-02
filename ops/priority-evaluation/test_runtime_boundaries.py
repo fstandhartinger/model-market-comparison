@@ -121,6 +121,13 @@ try: masked=(p/'CUSTOMER-ACCESS-REQUEST-20261001.json').read_text()
 except PermissionError: masked=''
 assert 'ann@example.com' not in masked and masked==''
 assert (p/'notes.txt').read_text()=='visible control'
+import os
+for n in os.listdir('/proc/self/fd'):
+ try: entries=os.listdir(f'/proc/self/fd/{{n}}/')
+ except OSError: continue
+ assert 'customer-mail' not in entries and 'private-intake' not in entries, 'inherited host directory handle'
+ for sub in ('customer-mail','private-intake'):
+  assert not os.path.exists(f'/proc/self/fd/{{n}}/{{sub}}')
 print('ok')
 '''
                 try:
