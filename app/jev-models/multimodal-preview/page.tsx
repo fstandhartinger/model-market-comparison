@@ -626,7 +626,7 @@ function ImageJevV02Page({ artifact, staging, archiveCounts }: { artifact: any; 
 
     {classOptions && <div data-bh-imagejev-v02-capability-headline>
       <JevCapabilityRanking systems={chartSystems} revision="v0.2.0 · CORE" officialHref="#imagejev-v02-composite-heading"
-        benchName="JevImageBench" {...classOptions} eligibilityNote={eligibility}
+        benchName="JevImageBench" benchmark="imagejevbench" {...classOptions} eligibilityNote={eligibility}
         correlationReason="mostly because self-hosted cost is computed from measured GPU time; both bars are kept for consistency with JevBench" />
       <CapabilityStatusRows measured={measuredWithoutComposite} references={referenceOnlyRows} />
     </div>}
