@@ -51,6 +51,7 @@ test('CR-275 Vansa row carries the delivered paid fast-lane aggregate exactly', 
 test('CR-275 Vansa is priced at its stated API price with a labelled base-reference alternative', () => {
   assert.match(vansa.cost.basis, /USD 0\.034 per 1M input tokens/);
   assert.doesNotMatch(vansa.cost.basis, /undisclosed/i);
+  assert.doesNotMatch(read('../ops/jevbench-v156-cr275/RESCORE-RECEIPT.json'), /undisclosed/i);
   assert.equal(vansa.alt.label, 'Qwen3.5-4B base-model reference price');
   assert.equal(vansa.alt.usd_per_1000, 0.01701689039408867);
   assert.equal(vansa.alt.axes.intelligence, vansa.axes.intelligence);

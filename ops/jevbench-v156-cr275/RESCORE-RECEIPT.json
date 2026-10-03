@@ -31,209 +31,6 @@
  "rows": 1624,
  "input_tokens": 921181,
  "output_tokens": 0,
- "official": {
-  "axes": {
-   "calibration": 87.62340118994128,
-   "cost": 61.44286408313903,
-   "intelligence": 58.038138517840565,
-   "speed": 91.27886810559414
-  },
-  "calibration": {
-   "parts": {
-    "choice": {
-     "ece_hard": 0.05566137184115488,
-     "ece_score": 88.86772563176902,
-     "mean_tvd": 0.26134716655000156,
-     "n": 799,
-     "n_ece_hard": 277,
-     "n_tvd": 50,
-     "score": 81.36650448838444
-    },
-    "noul": {
-     "abstention_rate": 0.2828282828282829,
-     "brier": 0.09454375068686874,
-     "ece": 0.037300404040404085,
-     "n": 495,
-     "score": 92.53991919191918
-    },
-    "score": {
-     "interval90_coverage": 0.9545454545454546,
-     "interval90_width": 0.4027777777777777,
-     "n": 330,
-     "nrps": 0.08777470523989898,
-     "score": 88.96377988952023,
-     "top_ece": 0.06647484848484837
-    }
-   },
-   "score": 87.62340118994128
-  },
-  "composite_ci95": {
-   "A": [
-    69.69685121205671,
-    72.64149201912215
-   ],
-   "B": [
-    66.07200544985702,
-    70.10409938323643
-   ],
-   "C": [
-    57.5656322313634,
-    72.62975287265112
-   ]
-  },
-  "cost": {
-   "basis": "Vansa's published standard rate, USD 0.034 per 1M input tokens, no output-token charge (docs.vansa.org/pricing, read 1 Oct 2026), x measured usage.input_tokens. Applied under v1.5 pricing interpretation I-1 (a manufacturer's standard launch list price counts from day 1); the closed-beta 'no charges today' is treated as a promotion and NOT used. Base model undisclosed, so no base-model floor applies.",
-   "kind": "estimate",
-   "usd_per_1000": 0.019285809113300495
-  },
-  "full_coverage": true,
-  "intelligence": {
-   "I_open": 61.50594230751663,
-   "I_sealed": 54.5703347281645,
-   "base": 58.038138517840565,
-   "excess": 1.7489800792728873,
-   "gap": 6.93560757935213,
-   "penalty": 1.0,
-   "per_type_split": {
-    "open|choice": {
-     "cc": 78.99819844461413,
-     "n": {
-      "easy": 72,
-      "hard": 169,
-      "judge": 114,
-      "standard": 84
-     },
-     "tiers": {
-      "easy": 96.38227313837805,
-      "hard": 66.31414022718371,
-      "judge": 87.55186721991701,
-      "standard": 82.84377436963868
-     }
-    },
-    "open|noul": {
-     "cc": 41.81865505655199,
-     "n": {
-      "easy": 34,
-      "hard": 113,
-      "judge": 102,
-      "standard": 66
-     },
-     "tiers": {
-      "easy": 64.70588235294117,
-      "hard": 18.584070796460182,
-      "judge": 62.745098039215684,
-      "standard": 45.45454545454546
-     }
-    },
-    "open|score": {
-     "cc": 63.700973421383765,
-     "n": {
-      "easy": 16,
-      "hard": 50,
-      "judge": 34,
-      "standard": 50
-     },
-     "tiers": {
-      "easy": 32.27903225806451,
-      "hard": 62.30639894086496,
-      "judge": 65.51186107470512,
-      "standard": 79.48476148409894
-     }
-    },
-    "sealed|choice": {
-     "cc": 74.68758126528958,
-     "n": {
-      "easy": 50,
-      "hard": 108,
-      "judge": 101,
-      "standard": 101
-     },
-     "tiers": {
-      "easy": 79.4921875,
-      "hard": 73.2685297691373,
-      "judge": 73.49823321554771,
-      "standard": 76.9074032148517
-     }
-    },
-    "sealed|noul": {
-     "cc": 24.0,
-     "n": {
-      "easy": 25,
-      "hard": 55,
-      "judge": 50,
-      "standard": 50
-     },
-     "tiers": {
-      "easy": 68.0,
-      "hard": 19.999999999999996,
-      "judge": 28.000000000000004,
-      "standard": 4.0000000000000036
-     }
-    },
-    "sealed|score": {
-     "cc": 65.02342291920394,
-     "n": {
-      "easy": 25,
-      "hard": 55,
-      "judge": 50,
-      "standard": 50
-     },
-     "tiers": {
-      "easy": 81.32336956521739,
-      "hard": 59.50790285273712,
-      "judge": 63.57788542544229,
-      "standard": 70.0727959697733
-     }
-    }
-   }
-  },
-  "planned_weight_denominator": 1.0,
-  "scores": {
-   "A": 71.59061278658044,
-   "B": 68.39636829472916,
-   "C": 66.98545758056677
-  },
-  "speed": {
-   "adjustment": "none (production API)",
-   "n": 450,
-   "p50_s_adjusted": 0.14382775500416756,
-   "p50_s_raw": 0.14382775500416756,
-   "p95_s_adjusted": 0.517929308861494,
-   "p95_s_raw": 0.517929308861494
-  },
-  "status": {
-   "answered_ok": 1624,
-   "missing": 0,
-   "rows": 1624,
-   "status": "complete"
-  },
-  "support": {
-   "choice": "native",
-   "noul": "native",
-   "score": "native"
-  },
-  "validity": {
-   "choice": {
-    "invalid_rate": 0.0,
-    "n": 799
-   },
-   "noul": {
-    "invalid_rate": 0.0,
-    "n": 495
-   },
-   "score": {
-    "invalid_rate": 0.0,
-    "n": 330
-   }
-  },
-  "views": {
-   "Balanced 33:33:33": 67.47521359938013,
-   "Emphasis on Accuracy 60:20:20": 63.35459831871784,
-   "Emphasis on Cost 20:20:60": 64.92550599367537,
-   "Emphasis on Speed 20:60:20": 75.33337224153641,
-   "Intelligence only": 58.038138517840565
-  }
- },
  "base_reference": {
   "rates_usd_per_m": [
    0.03,
@@ -252,5 +49,16 @@
    "B": 68.79234180013289,
    "C": 67.49376062630884
   }
+ },
+ "official": {
+  "note": "Public projection. The private delivered aggregate (result-vansa-3.4.json, sha256 9616f8e433bbcc5f1d06ea8bb5b031cdeb81e1acea1f024c1be610f98bcbae5d) was reproduced exactly; its numbers are the vansa-3.4 row in jevbench-v1.5.6-results.json. Its historical cost-basis prose predates the developer base-model report and is superseded by the row cost basis.",
+  "score_A": 71.59061278658044,
+  "axes": {
+   "calibration": 87.62340118994128,
+   "cost": 61.44286408313903,
+   "intelligence": 58.038138517840565,
+   "speed": 91.27886810559414
+  },
+  "usd_per_1000": 0.019285809113300495
  }
 }
