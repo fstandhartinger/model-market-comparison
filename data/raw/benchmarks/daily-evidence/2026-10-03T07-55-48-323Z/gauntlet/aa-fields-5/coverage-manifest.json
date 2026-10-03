@@ -1,0 +1,212 @@
+{
+  "artifact_id": "aa-fields-5",
+  "rounds_used": 1,
+  "rows": {
+    "total": 60,
+    "accepted": [
+      "783a0ea2-1eef-422a-8c3d-f6d40d943f54",
+      "78452c64-7303-4192-bca5-2d9ec5c623d4",
+      "794f69b5-cede-482b-b1cc-d769478497cd",
+      "7ae943a9-9310-4472-a834-c61f0ab68485",
+      "7c045ca0-b331-488d-af31-df0fd331dfd1",
+      "7c4d1e30-6ecb-46cf-880c-41446d7b51f1",
+      "7c73c3be-7f51-4d14-bec8-d5789488df25",
+      "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+      "7d73161f-002f-4c9c-b4f8-6c4d91f2ba8e",
+      "7e30585f-fad7-40df-a8cb-03c1d96df38a",
+      "7eabd8ca-bf43-4d56-b3df-efd1c4eebfb0",
+      "7eaf926c-5f39-4e58-ae50-c38b5fc630fc",
+      "7ec1065a-c90e-41e4-bd17-abb7042eed76",
+      "7f3c9423-3ee3-4369-a6d9-3f2a40aff00e",
+      "8014c311-fa23-4a4b-8485-8a864db8a113",
+      "806032ff-6252-4c22-ba99-a126e411b7a4",
+      "80f7860a-7665-4658-9f05-15bccf5f832f",
+      "81444bc8-72f9-4a2d-ad43-27e3f0d2f461",
+      "81972fba-1219-477e-bbfb-18c656a63ff7",
+      "81b6ddfc-111e-4422-bd44-42ee6165b699",
+      "8215372b-66ff-457b-855e-e8abeafc9571",
+      "8273650d-40e5-45ee-aeda-df71de784164",
+      "82879bb8-89fb-4adc-b519-315b8ef30b77",
+      "82b207dd-d285-4a52-b2fc-2cbd27543899",
+      "82b36b4d-84dd-4bc0-ad32-e3aee9442789",
+      "82ed9bd2-c97b-4c35-9312-94bb72001e36",
+      "83173329-c09a-41f1-a028-a282a5f908d7",
+      "84922739-425f-46e1-87ac-bb4268dcacbb",
+      "84b49308-6b93-47aa-a4f6-776ee1a1e8cd",
+      "84e3f11e-d659-4941-8988-1dbfabbaf538",
+      "864da2a5-156c-45fd-873c-8923be91914f",
+      "8665ca00-c687-44c7-875c-22618cb31c4f",
+      "87110ff0-1f79-41b4-9976-eda250597317",
+      "877fdfc9-2026-477a-af96-e4fd602c0131",
+      "882a5da3-94ca-4602-8693-c45970df17e2",
+      "8869f28a-a6ff-487f-8d32-93fe335fdda5",
+      "891bcdf2-8dd2-4dc3-829b-d963fde25876",
+      "89a2c945-1fab-4ee4-9f45-83a9f46cb221",
+      "8a999846-4c1d-4ce7-a8b7-1310a7166fd7",
+      "8afc250d-b538-45a2-812a-4605f4ffd87e",
+      "8c1be908-67b6-4cf4-ba08-83ddbe44fde3",
+      "8c29d66d-bf98-4ea3-8572-5409353ecc66",
+      "8c748e53-61ae-48b8-af8d-eb8298b1e9db",
+      "8ca48626-ff5e-48b3-8401-38081376d706",
+      "8d0cb231-7303-452c-9923-a9620b948475",
+      "8df710d3-9dae-4498-9b4e-9818238e6f31",
+      "8eb02396-f231-4189-ae15-05f7facebd9b",
+      "8f74a6ed-f82f-4a2f-a96b-4914993e47da",
+      "901ec71b-51ec-4f53-b807-06ee17b890b4",
+      "90c2a9cf-ad7e-4332-9be2-2fd1309833e2",
+      "90e078f2-051b-4c63-8919-76618971cb3f",
+      "91cb6144-4937-4e4e-aeda-b4341d355c10",
+      "91e3b45f-3f52-4511-8c15-8948854bebc5",
+      "91f3a4c8-b000-4513-942c-bfe283375c35",
+      "922c69c7-9037-43c6-8bcf-a1c555e7f3eb",
+      "92f245a7-43b4-4ffd-8bfb-866746bf824d",
+      "946e7aab-db1c-4c3f-b0b3-7720d0cff187",
+      "948892b5-db03-4118-a4a8-ccd51ed871ea",
+      "94a6d26e-a903-47f3-8323-ae422d237bb9",
+      "94d09368-9035-47cf-963a-b4310b433a16"
+    ],
+    "quarantined": []
+  },
+  "producer_flagged": [],
+  "criteria": [
+    "c1"
+  ],
+  "coverage": {
+    "producer": {
+      "complete": true,
+      "model": "z-ai/glm-5.3-flash",
+      "rows_covered": 60
+    },
+    "critic": [
+      {
+        "round": 1,
+        "verdict": "pass",
+        "coverage_complete": true,
+        "missing_rows": [],
+        "missing_criteria": []
+      }
+    ],
+    "final": {
+      "rows_covered": 60,
+      "criteria_covered": 1,
+      "complete": true
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.00758967858,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/gauntlet/aa-fields-5/producer-r1.json",
+      "output_sha256": "6c6aba6adc69c2807a678c0fee25d0bc34c7ec314a9d055c2d9b3bdb13ea05f6",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.5,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 65587,
+        "completion_tokens": 8187,
+        "total_tokens": 73774,
+        "cost": 0.00758967858,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 256,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.007666342,
+          "upstream_inference_prompt_cost": 0.002754142,
+          "upstream_inference_completions_cost": 0.0049122
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 4627,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 1,
+      "role": "critic",
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.00258369012,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/gauntlet/aa-fields-5/review-r1.json",
+      "output_sha256": "c6725f0706df0f1d835925030420611ab6078ad78de450952238cfcf9e3e4e65",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.0171,
+        "output_per_1m": 1.28,
+        "context": 1048576,
+        "aa_intelligence_index": 34.3,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 34.3
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 57392,
+        "completion_tokens": 5073,
+        "total_tokens": 62465,
+        "cost": 0.00258369012,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 512,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.002609788,
+          "upstream_inference_prompt_cost": 0.001087888,
+          "upstream_inference_completions_cost": 0.0015219
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 3518,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

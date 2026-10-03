@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-ugi-snapshot-2026-09-10",
+  "artifact_sha256": "cb5f335a12b0dc44746d36113a8843c9e3b8fc406c7b3d0f88a9a4a17abb19b9",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["ugi::snapshot-2026-09-10", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute the owner's hash/transport/qualification checks (row sha 350f45b5..., source shas, producer receipt) or browse live; those are outside my read-only scope and I treat the packet's hash bindings as given.",
+    "Sources 3 and 4 are generated summaries of this run's own payload read, not maintainer text. I used source 4 only for the row's unit/range scale judgement (values 0.64–70, unit 'score', range null-null → unbounded bounds never contradicted) and source 3 only as affirmative evidence for status:'active' (9 added values). Neither settles methodology/composition.",
+    "The protocol text publishes no release identifier for this board, consistent with version_status:'snapshot' and the version_guard wording; absence of the literal words snapshot/published is not treated as missing evidence."
+  ],
+  "missing_evidence": []
+}

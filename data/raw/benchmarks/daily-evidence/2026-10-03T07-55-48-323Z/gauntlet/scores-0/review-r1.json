@@ -1,0 +1,33 @@
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "bf45d0d492ad6d52897460f8ae3d1603490ecea9e6ba99918308b7b6365d1c60",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:ac2701df1b904c1424cf6321",
+    "public:13c8e2581a80c625d93ba4a0",
+    "public:974bab58b3ad7ec9d9cb972e",
+    "public:2023fcd144db25c8e6ae58d8",
+    "public:6545239519ae4c7b1deeceb4",
+    "public:10694a0372178fd44e7d2a04",
+    "public:8ee2db0f92a4725c2f7b780e",
+    "public:88d6fa304168f380453f9afb",
+    "public:df9d65cae62858d19bd3a353",
+    "public:1eae2eacffb42ccb9b546c48",
+    "public:159ba8a48f33fb34a939a513",
+    "public:4223823f243c5ba2492eba23",
+    "public:9fd7e86be3df78d6a061d442",
+    "public:6b2479a1957599cad2d68090",
+    "public:ec8f09a0f3ae7ff2a7f17674",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot recompute artifact/source SHA-256 or verify transport/hash checks; those are owner-executed and outside this read-only review's capability.",
+    "source_basis is labeled 'self_reported' even though ARC Prize policy describes its own verified testing; the protocol explicitly notes evaluation independence is not assumed, so this conservative classification is not contradicted by the supplied evidence.",
+    "Reasoning effort/harness is not encoded in subject.variant/harness (both null); it is only present via modelId suffix and modelType=CoT. comparison_key is null, consistent with the acceptance criterion."
+  ],
+  "missing_evidence": []
+}

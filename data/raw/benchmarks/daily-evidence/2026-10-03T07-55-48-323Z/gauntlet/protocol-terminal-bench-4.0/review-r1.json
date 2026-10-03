@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-terminal-bench-4.0",
+  "artifact_sha256": "0bfce44f6bf34ef729d65953412db0eb357464e80f1c92a021b1a13d667071b4",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "terminal-bench::4.0",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "无法执行哈希或传输/资格检查；主证据被视为给定。这是执行限制，不是缺失的证据。",
+    "观察到的服务值摘要（最低11.21，最高58.18）用于c1；两个值都在声明的[0,100]范围内，且单位为percent，因此一致。",
+    "协议文本将度量的比例显示为0-100（JSON模式中的最小/最大值），而未明确使用'percent'一词；但其行为符合标准。"
+  ],
+  "missing_evidence": []
+}

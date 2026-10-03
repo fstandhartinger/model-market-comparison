@@ -1,0 +1,17 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-glm52-fused-moe-rtx-pro-6000",
+  "artifact_sha256": "6aafe8f39bf09b836a09a197e283d2d81bad768a70baedba626edb70633514b9",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["kernelbench-cuda-glm52-fused-moe::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute row or source SHA-256 hashes or execute transport/qualification checks; I rely on the owner-provided bindings (row sha 69efa028..., sources as listed).",
+    "version_status 'published' is a judgment call: the protocol publishes the board identifier 'RTX PRO 6000' (leaderboard.json hardware.name 'RTX PRO 6000 Blackwell Workstation', site SOURCE 4 listing) and the row version 'rtx-pro-6000' copies it, so I accept 'published' over 'snapshot'; the page publishes no alternate semantic release number for this board, which does not contradict the field.",
+    "The scoring.metric text states a geomean over the frozen shape sweep, but the payload serves only one per-problem peak_fraction per model (e.g., 0.113 for problem 01); the geomean aggregation is not independently visible per shape, so I treat it as a methodology claim consistent with SPEC.md rather than a per-cell verifiable number.",
+    "The metric note's procedural assertions (validity rule versus ranked-list cross-check) are consistent with the payload, but whether the ranked list is the sole/authoritative cross-check is protocol-interpretation, not independently executable."
+  ],
+  "missing_evidence": []
+}

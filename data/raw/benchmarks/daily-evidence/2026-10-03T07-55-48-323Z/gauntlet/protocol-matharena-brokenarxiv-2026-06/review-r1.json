@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-matharena-brokenarxiv-2026-06",
+  "artifact_sha256": "ff7bae1c7cace5fd8fa9c1a405b0a402cba8212e48a98c6fae979041e5d964ab",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["matharena-brokenarxiv::2026-06", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Reviewer did not execute hash/transport/qualification checks; those are owned separately by the artifact owner.",
+    "The generated value-scale summary (Source 6) is this run's own read and was used only to confirm unit/range scale per criterion c1, not to establish metric meaning.",
+    "Version_status 'published' is judged from the maintainer publishing the monthly edition identifier '06/2026'; the criterion treats that as a release identifier sufficient for 'published'."
+  ],
+  "missing_evidence": []
+}

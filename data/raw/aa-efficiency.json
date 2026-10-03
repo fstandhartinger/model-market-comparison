@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-10-02T06:36:25.421Z",
+  "collected_at": "2026-10-03T08:06:12.911Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-10-02T06:36:25.220Z",
+      "fetched_at": "2026-10-03T08:06:12.398Z",
       "http_status": 200,
-      "bytes": 4012304,
-      "sha256": "90ec14a0f7865f9185ed7ae78c48081f83662e78767b80480d35b466a7b10b95"
+      "bytes": 4035095,
+      "sha256": "16c6b9327a3228a971a7bab82bd16be916ca9595735b6ea9768d84b65cab7ac1"
     }
   ],
   "coverage": {
-    "published_rows": 192,
-    "scored_denominator": 679,
+    "published_rows": 194,
+    "scored_denominator": 680,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 192,
+  "count": 194,
   "rows": [
     {
       "source_id": "08242385-ee91-4de6-be7f-271a6d9780ce",
@@ -117,7 +117,7 @@
     {
       "source_id": "cd55210d-358e-4df1-ba9c-9acb5f186cc9",
       "slug": "claude-fable-5",
-      "name": "Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback)",
+      "name": "Claude Fable 5 (Max, Opus 4.8 Fallback)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 45041.401509187875,
@@ -139,7 +139,7 @@
     {
       "source_id": "3e87c73e-a257-495e-9730-367a66229811",
       "slug": "claude-fable-5-1",
-      "name": "Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback)",
+      "name": "Claude Fable 5.1 (Max, Default Fallback)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 47239.81546124743,
@@ -161,7 +161,7 @@
     {
       "source_id": "9d7d72cd-d95d-45a0-b109-4ad292c9aabd",
       "slug": "claude-fable-5-1-high",
-      "name": "Claude Fable 5.1 (Adaptive Reasoning, High Effort, Default Fallback)",
+      "name": "Claude Fable 5.1 (High, Default Fallback)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 18622.54895818041,
@@ -183,7 +183,7 @@
     {
       "source_id": "05776db7-f5c0-40f7-b824-079160f8cfa8",
       "slug": "claude-fable-5-1-low",
-      "name": "Claude Fable 5.1 (Adaptive Reasoning, Low Effort, Default Fallback)",
+      "name": "Claude Fable 5.1 (Low, Default Fallback)",
       "variant": "low",
       "tokens_per_task": {
         "reasoning": 8289.274270012003,
@@ -205,7 +205,7 @@
     {
       "source_id": "3b7de71c-e034-4591-8ca6-6b6be2fa471f",
       "slug": "claude-fable-5-1-medium",
-      "name": "Claude Fable 5.1 (Adaptive Reasoning, Medium Effort, Default Fallback)",
+      "name": "Claude Fable 5.1 (Medium, Default Fallback)",
       "variant": "medium",
       "tokens_per_task": {
         "reasoning": 12081.522329392306,
@@ -227,7 +227,7 @@
     {
       "source_id": "9b166bf3-42db-4f63-8338-1c4a1244ffe8",
       "slug": "claude-fable-5-1-xhigh",
-      "name": "Claude Fable 5.1 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",
+      "name": "Claude Fable 5.1 (Xhigh, Default Fallback)",
       "variant": "xhigh",
       "tokens_per_task": {
         "reasoning": 34067.40516593828,
@@ -249,7 +249,7 @@
     {
       "source_id": "992b7b84-5069-4c6a-9295-834252553d50",
       "slug": "claude-opus-4-8",
-      "name": "Claude Opus 4.8 (Adaptive Reasoning, Max Effort)",
+      "name": "Claude Opus 4.8 (Max)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 51815.3344482068,
@@ -271,7 +271,7 @@
     {
       "source_id": "b8fc61f7-5e9a-49e6-8547-6ac56db24627",
       "slug": "claude-opus-5",
-      "name": "Claude Opus 5 (Adaptive Reasoning, Max Effort)",
+      "name": "Claude Opus 5 (Max)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 42792.72413667888,
@@ -293,7 +293,7 @@
     {
       "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
       "slug": "claude-opus-5-5",
-      "name": "Claude Opus 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",
+      "name": "Claude Opus 5.5 (Max, Default Fallback)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 83929.08191267242,
@@ -315,7 +315,7 @@
     {
       "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
       "slug": "claude-opus-5-5-high",
-      "name": "Claude Opus 5.5 (Adaptive Reasoning, High Effort, Default Fallback)",
+      "name": "Claude Opus 5.5 (High, Default Fallback)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 18236.5871060743,
@@ -337,7 +337,7 @@
     {
       "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
       "slug": "claude-opus-5-5-low",
-      "name": "Claude Opus 5.5 (Adaptive Reasoning, Low Effort, Default Fallback)",
+      "name": "Claude Opus 5.5 (Low, Default Fallback)",
       "variant": "low",
       "tokens_per_task": {
         "reasoning": 3376.0272567172387,
@@ -359,7 +359,7 @@
     {
       "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
       "slug": "claude-opus-5-5-medium",
-      "name": "Claude Opus 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)",
+      "name": "Claude Opus 5.5 (Medium, Default Fallback)",
       "variant": "medium",
       "tokens_per_task": {
         "reasoning": 11695.71199538513,
@@ -381,7 +381,7 @@
     {
       "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
       "slug": "claude-opus-5-5-xhigh",
-      "name": "Claude Opus 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",
+      "name": "Claude Opus 5.5 (Xhigh, Default Fallback)",
       "variant": "xhigh",
       "tokens_per_task": {
         "reasoning": 40314.73065457981,
@@ -403,7 +403,7 @@
     {
       "source_id": "712be54a-77ae-41b2-9a58-21181479d6ee",
       "slug": "claude-opus-5-high",
-      "name": "Claude Opus 5 (Adaptive Reasoning, High Effort)",
+      "name": "Claude Opus 5 (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 25407.832479970297,
@@ -425,7 +425,7 @@
     {
       "source_id": "20928ba9-3a3f-415f-9519-b84ff64ecf34",
       "slug": "claude-opus-5-low",
-      "name": "Claude Opus 5 (Adaptive Reasoning, Low Effort)",
+      "name": "Claude Opus 5 (Low)",
       "variant": "low",
       "tokens_per_task": {
         "reasoning": 6543.850165278829,
@@ -447,7 +447,7 @@
     {
       "source_id": "ff51be8f-e362-4a7e-9043-687ba15de207",
       "slug": "claude-opus-5-medium",
-      "name": "Claude Opus 5 (Adaptive Reasoning, Medium Effort)",
+      "name": "Claude Opus 5 (Medium)",
       "variant": "medium",
       "tokens_per_task": {
         "reasoning": 14868.897240976565,
@@ -469,7 +469,7 @@
     {
       "source_id": "1305c921-7aaa-4d6d-99b5-99b3acf15e19",
       "slug": "claude-opus-5-xhigh",
-      "name": "Claude Opus 5 (Adaptive Reasoning, Xhigh Effort)",
+      "name": "Claude Opus 5 (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
         "reasoning": 34995.05810024947,
@@ -491,7 +491,7 @@
     {
       "source_id": "df8d14e0-3997-4e4d-b4ad-9c047acc9c69",
       "slug": "claude-sonnet-4-6-adaptive",
-      "name": "Claude Sonnet 4.6 (Adaptive Reasoning, Max Effort)",
+      "name": "Claude Sonnet 4.6 (Max)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 56209.76459281355,
@@ -513,7 +513,7 @@
     {
       "source_id": "23c86e4a-c769-43c0-a056-79e3cd15834f",
       "slug": "claude-sonnet-5",
-      "name": "Claude Sonnet 5 (Adaptive Reasoning, Max Effort)",
+      "name": "Claude Sonnet 5 (Max)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 88392.29202190228,
@@ -535,95 +535,117 @@
     {
       "source_id": "b171d979-5ec1-45de-b8b9-db1ee65e77ec",
       "slug": "claude-sonnet-5-5",
-      "name": "Claude Sonnet 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",
+      "name": "Claude Sonnet 5.5 (Max, Default Fallback)",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 143216.42914680945,
-        "answer": 50310.44050887164,
-        "output": 193526.86965568108
+        "reasoning": 146633.4888002458,
+        "answer": 50796.88280987353,
+        "output": 197430.37161011933
       },
       "canonical_token_counts": {
-        "input": 18631710749,
-        "output": 412092659,
-        "answer": 57378202,
-        "reasoning": 354714457
+        "input": 18668251191,
+        "output": 415769956,
+        "answer": 57824089,
+        "reasoning": 357945867
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 45.21243060774834,
-        "reasoning_output_share": 0.7400338227018145
+        "input_output_ratio": 44.90043333241712,
+        "reasoning_output_share": 0.7427098860443521
       }
     },
     {
       "source_id": "268525e2-f873-4178-bc07-e6a0ee1f002d",
       "slug": "claude-sonnet-5-5-high",
-      "name": "Claude Sonnet 5.5 (Adaptive Reasoning, High Effort, Default Fallback)",
+      "name": "Claude Sonnet 5.5 (High, Default Fallback)",
       "variant": "high",
       "tokens_per_task": {
-        "reasoning": 18154.74369972493,
-        "answer": 16312.42422579014,
-        "output": 34467.167925515074
+        "reasoning": 18725.78874258922,
+        "answer": 18601.604271041695,
+        "output": 37327.39301363091
       },
       "canonical_token_counts": {
-        "input": 1963552783,
-        "output": 49509779,
-        "answer": 23165906,
-        "reasoning": 26343873
+        "input": 2010820239,
+        "output": 52052234,
+        "answer": 25216935,
+        "reasoning": 26835299
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 39.65989795672487,
-        "reasoning_output_share": 0.5267257158742504
+        "input_output_ratio": 38.63081532677349,
+        "reasoning_output_share": 0.5016634495677501
+      }
+    },
+    {
+      "source_id": "bbc2ffea-cf6b-43be-8c41-1769347e234d",
+      "slug": "claude-sonnet-5-5-low",
+      "name": "Claude Sonnet 5.5 (Low, Default Fallback)",
+      "variant": "low",
+      "tokens_per_task": {
+        "reasoning": 4588.167154662398,
+        "answer": 9665.055699466615,
+        "output": 14253.222854129013
+      },
+      "canonical_token_counts": {
+        "input": 717194126,
+        "output": 22674620,
+        "answer": 18075159,
+        "reasoning": 4599461
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 31.62981897822323,
+        "reasoning_output_share": 0.32190383898566866
       }
     },
     {
       "source_id": "042e8a37-fcd0-40f4-8f41-99215fb68eda",
       "slug": "claude-sonnet-5-5-medium",
-      "name": "Claude Sonnet 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)",
+      "name": "Claude Sonnet 5.5 (Medium, Default Fallback)",
       "variant": "medium",
       "tokens_per_task": {
-        "reasoning": 8203.98807980181,
-        "answer": 11284.347723097197,
-        "output": 19488.335802899004
+        "reasoning": 8190.173061281517,
+        "answer": 12747.454553298958,
+        "output": 20937.627614580473
       },
       "canonical_token_counts": {
-        "input": 997504812,
-        "output": 29490528,
-        "answer": 19651606,
-        "reasoning": 9838922
+        "input": 974370320,
+        "output": 31078790,
+        "answer": 21277013,
+        "reasoning": 9801777
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 33.82458299831051,
-        "reasoning_output_share": 0.42096914599457064
+        "input_output_ratio": 31.35161697093098,
+        "reasoning_output_share": 0.39117006052672715
       }
     },
     {
       "source_id": "975aeaef-50bd-4a65-9c73-f1015adcd4d4",
       "slug": "claude-sonnet-5-5-xhigh",
-      "name": "Claude Sonnet 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",
+      "name": "Claude Sonnet 5.5 (Xhigh, Default Fallback)",
       "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 47663.92137598299,
-        "answer": 26060.461649651344,
-        "output": 73724.38302563434
+        "reasoning": 47953.30350339135,
+        "answer": 26856.34490468398,
+        "output": 74809.64840807533
       },
       "canonical_token_counts": {
-        "input": 5950268382,
-        "output": 104142365,
-        "answer": 33475389,
-        "reasoning": 70666976
+        "input": 5939402192,
+        "output": 105144665,
+        "answer": 34186602,
+        "reasoning": 70958063
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 57.1359060455368,
-        "reasoning_output_share": 0.6465150255568772
+        "input_output_ratio": 56.48790827380543,
+        "reasoning_output_share": 0.6410042624691046
       }
     },
     {
       "source_id": "ba0224cf-0351-4f56-8508-b3f1a740ae4a",
       "slug": "claude-sonnet-5-high",
-      "name": "Claude Sonnet 5 (Adaptive Reasoning, High Effort)",
+      "name": "Claude Sonnet 5 (High)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 28015.136450183745,
@@ -645,7 +667,7 @@
     {
       "source_id": "142b93bf-09c4-42dc-9c3a-50b1a222cbd4",
       "slug": "claude-sonnet-5-low",
-      "name": "Claude Sonnet 5 (Adaptive Reasoning, Low Effort)",
+      "name": "Claude Sonnet 5 (Low)",
       "variant": "low",
       "tokens_per_task": {
         "reasoning": 7100.177147120431,
@@ -667,7 +689,7 @@
     {
       "source_id": "effcd151-7c31-4437-af3d-e88daeae9385",
       "slug": "claude-sonnet-5-medium",
-      "name": "Claude Sonnet 5 (Adaptive Reasoning, Medium Effort)",
+      "name": "Claude Sonnet 5 (Medium)",
       "variant": "medium",
       "tokens_per_task": {
         "reasoning": 15441.265439863024,
@@ -689,7 +711,7 @@
     {
       "source_id": "99f376bf-cbcb-4124-bf3e-6b0a4e6e9bea",
       "slug": "claude-sonnet-5-xhigh",
-      "name": "Claude Sonnet 5 (Adaptive Reasoning, Xhigh Effort)",
+      "name": "Claude Sonnet 5 (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
         "reasoning": 43958.72513700623,
@@ -2188,20 +2210,20 @@
       "name": "GPT-6 Luna (Max)",
       "variant": "max",
       "tokens_per_task": {
-        "reasoning": 38851.32000473608,
-        "answer": 11104.67588034964,
-        "output": 49955.99588508572
+        "reasoning": 38889.68045928154,
+        "answer": 11122.009971258729,
+        "output": 50011.69043054027
       },
       "canonical_token_counts": {
-        "input": 3125212501,
-        "output": 144258466,
-        "answer": 16106242,
-        "reasoning": 128152224
+        "input": 3146391012,
+        "output": 144380994,
+        "answer": 16144377,
+        "reasoning": 128236617
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 21.66397985266251,
-        "reasoning_output_share": 0.7777108496466802
+        "input_output_ratio": 21.792279751170017,
+        "reasoning_output_share": 0.7776117968516629
       }
     },
     {
@@ -2210,20 +2232,20 @@
       "name": "GPT-6 Luna (High)",
       "variant": "high",
       "tokens_per_task": {
-        "reasoning": 12737.698962171346,
-        "answer": 6955.022392831889,
-        "output": 19692.721355003236
+        "reasoning": 12744.489871262254,
+        "answer": 6958.744211013708,
+        "output": 19703.23408227596
       },
       "canonical_token_counts": {
-        "input": 1360055720,
-        "output": 46806300,
-        "answer": 11764165,
-        "reasoning": 35042135
+        "input": 1360228474,
+        "output": 46829428,
+        "answer": 11772353,
+        "reasoning": 35057075
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 29.05710812433369,
-        "reasoning_output_share": 0.6468226880656665
+        "input_output_ratio": 29.04644647805649,
+        "reasoning_output_share": 0.6468222332457876
       }
     },
     {
@@ -2232,20 +2254,20 @@
       "name": "GPT-6 Luna (Low)",
       "variant": "low",
       "tokens_per_task": {
-        "reasoning": 513.8865457974975,
-        "answer": 1572.0200275491773,
-        "output": 2085.906573346675
+        "reasoning": 513.9529094338612,
+        "answer": 1573.2668457309953,
+        "output": 2087.2197551648565
       },
       "canonical_token_counts": {
-        "input": 194136798,
-        "output": 8157793,
-        "answer": 3788334,
-        "reasoning": 4369459
+        "input": 194196096,
+        "output": 8160682,
+        "answer": 3791077,
+        "reasoning": 4369605
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 23.79771072886993,
-        "reasoning_output_share": 0.24636124760516312
+        "input_output_ratio": 23.79655229795745,
+        "reasoning_output_share": 0.2462380437719014
       }
     },
     {
@@ -2277,18 +2299,18 @@
       "variant": null,
       "tokens_per_task": {
         "reasoning": 0,
-        "answer": 3756.501776796553,
-        "output": 3756.501776796553
+        "answer": 3758.0195040692806,
+        "output": 3758.0195040692806
       },
       "canonical_token_counts": {
-        "input": 903227168,
-        "output": 6917761,
-        "answer": 6917761,
+        "input": 903282818,
+        "output": 6921100,
+        "answer": 6921100,
         "reasoning": 0
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 130.56640262651456,
+        "input_output_ratio": 130.51145309271647,
         "reasoning_output_share": 0
       }
     },
@@ -2496,20 +2518,20 @@
       "name": "Granite 4.2 3B",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 11204.357447953187,
-        "answer": 7421.051285459595,
-        "output": 18625.408733412783
+        "reasoning": 11209.258357044097,
+        "answer": 7431.842649095959,
+        "output": 18641.101006140056
       },
       "canonical_token_counts": {
-        "input": 391477160,
-        "output": 92027794,
-        "answer": 12844147,
-        "reasoning": 79183647
+        "input": 392253757,
+        "output": 92062317,
+        "answer": 12867888,
+        "reasoning": 79194429
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 4.253901381141441,
-        "reasoning_output_share": 0.6015630372638906
+        "input_output_ratio": 4.260741743008706,
+        "reasoning_output_share": 0.6013195440200642
       }
     },
     {
@@ -2822,7 +2844,7 @@
     },
     {
       "source_id": "46f11cdf-1725-4abb-b39b-bd6bd948149c",
-      "slug": "jt236b",
+      "slug": "jt-4-1-flash-236b-a21b",
       "name": "JT-4.1 Flash 236B A21B (Reasoning)",
       "variant": null,
       "tokens_per_task": {
@@ -3200,20 +3222,20 @@
       "name": "MiMo-V2.6-Flash",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 57876.70596054659,
-        "answer": 19759.868935495033,
-        "output": 77636.57489604162
+        "reasoning": 57972.333233273865,
+        "answer": 19819.35984458594,
+        "output": 77791.6930778598
       },
       "canonical_token_counts": {
-        "input": 5493260886,
-        "output": 244206097,
-        "answer": 25991927,
-        "reasoning": 218214170
+        "input": 5520302056,
+        "output": 244547357,
+        "answer": 26122807,
+        "reasoning": 218424550
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 22.494364200906908,
-        "reasoning_output_share": 0.7454824744399884
+        "input_output_ratio": 22.57355026740281,
+        "reasoning_output_share": 0.7452252411481876
       }
     },
     {
@@ -3654,6 +3676,28 @@
         "basis": "derived",
         "input_output_ratio": 3.1422616840692528,
         "reasoning_output_share": 0.8885748317017301
+      }
+    },
+    {
+      "source_id": "9ee13921-62a4-425a-a22b-df3302198d93",
+      "slug": "nvidia-nemotron-3-nano-4b",
+      "name": "NVIDIA Nemotron 3 Nano 4B",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 5816.208750632103,
+        "answer": 1122.2305423166338,
+        "output": 6938.439292948737
+      },
+      "canonical_token_counts": {
+        "input": 743724688,
+        "output": 25864665,
+        "answer": 2186943,
+        "reasoning": 23677722
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 28.754468229145825,
+        "reasoning_output_share": 0.8382589376465234
       }
     },
     {

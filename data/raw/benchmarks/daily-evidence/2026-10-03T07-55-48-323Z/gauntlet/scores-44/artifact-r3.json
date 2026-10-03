@@ -1,0 +1,125 @@
+[
+  {
+    "id": "public:f284dfd060a4429949a0d3e1",
+    "benchmark_id": "frontiercode-extended::1.1",
+    "subject": {
+      "source_id": "GPT-6.1 Sol|high",
+      "name": "GPT-6.1 Sol · high",
+      "model_id": null,
+      "variant": null,
+      "harness": "codex"
+    },
+    "value": 59.27,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-03T07:58:04.470225+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e609a8f3c134b3747ed3.gz",
+      "sha256": "e609a8f3c134b3747ed323f72475bcc7d3012588a880f598123e03cea738b54e",
+      "locator": "effort_runs_json; source row 122; GPT-6.1 Sol|high; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Extended (150 tasks, the full set); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"GPT-6.1 Sol\",\"effort\":\"high\",\"subset\":\"extended\",\"harness\":\"codex\",\"new_score\":0.5927,\"correct\":0.652,\"flagged_rate\":0.0,\"cost\":0.4327,\"tokens\":13920.0}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.5927
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/d5dfe41d2ccf102dc013.gz",
+        "sha256": "d5dfe41d2ccf102dc013c38dd682e9d879402a831df3abb038017b8cc6469748",
+        "retrieved_at": "2026-10-03T07:57:13.278466+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:a7f31d242330109ca2240a7b",
+    "benchmark_id": "frontiercode-extended::1.1",
+    "subject": {
+      "source_id": "GPT-6.1 Sol|xhigh",
+      "name": "GPT-6.1 Sol · xhigh",
+      "model_id": null,
+      "variant": null,
+      "harness": "codex"
+    },
+    "value": 60.370000000000005,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-03T07:58:04.470225+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e609a8f3c134b3747ed3.gz",
+      "sha256": "e609a8f3c134b3747ed323f72475bcc7d3012588a880f598123e03cea738b54e",
+      "locator": "effort_runs_json; source row 123; GPT-6.1 Sol|xhigh; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Extended (150 tasks, the full set); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"GPT-6.1 Sol\",\"effort\":\"xhigh\",\"subset\":\"extended\",\"harness\":\"codex\",\"new_score\":0.6037,\"correct\":0.6643,\"flagged_rate\":0.004,\"cost\":0.4862,\"tokens\":16403.0}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.6037
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/d5dfe41d2ccf102dc013.gz",
+        "sha256": "d5dfe41d2ccf102dc013c38dd682e9d879402a831df3abb038017b8cc6469748",
+        "retrieved_at": "2026-10-03T07:57:13.278466+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:22a7b36cd30a053e02dc0ac1",
+    "benchmark_id": "frontiercode-extended::1.1",
+    "subject": {
+      "source_id": "GPT-6.1 Sol|max",
+      "name": "GPT-6.1 Sol · max",
+      "model_id": null,
+      "variant": null,
+      "harness": "codex"
+    },
+    "value": 59.809999999999995,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-03T07:58:04.470225+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e609a8f3c134b3747ed3.gz",
+      "sha256": "e609a8f3c134b3747ed323f72475bcc7d3012588a880f598123e03cea738b54e",
+      "locator": "effort_runs_json; source row 124; GPT-6.1 Sol|max; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Extended (150 tasks, the full set); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"GPT-6.1 Sol\",\"effort\":\"max\",\"subset\":\"extended\",\"harness\":\"codex\",\"new_score\":0.5981,\"correct\":0.6587,\"flagged_rate\":0.0013,\"cost\":0.7207,\"tokens\":29501.0}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.5981
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/d5dfe41d2ccf102dc013.gz",
+        "sha256": "d5dfe41d2ccf102dc013c38dd682e9d879402a831df3abb038017b8cc6469748",
+        "retrieved_at": "2026-10-03T07:57:13.278466+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  }
+]

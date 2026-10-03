@@ -1,0 +1,64 @@
+[
+  {
+    "id": "public:2a6fd6710f5023230727579c",
+    "benchmark_id": "arc-agi::1",
+    "subject": {
+      "source_id": "alibaba-qwen3-8-27b-low",
+      "name": "Qwen3.8-27B (Low)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 69.16666666666666,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v1.json",
+      "retrieved_at": "2026-10-03T08:04:14.328938+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/d5615b981ca6bc6eafdf.gz",
+      "sha256": "d5615b981ca6bc6eafdfb79f2081525bc0f6ff6d64e86f11759b6628797db5fd",
+      "locator": "json; source row 260; alibaba-qwen3-8-27b-low; field score"
+    },
+    "protocol": "ARC-AGI 1; v1_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=alibaba-qwen3-8-27b; providerId=Alibaba; display=True; resultsUrl=/results/alibaba-qwen3-8-27b; costPerTask=0.11966541400000001; modelReleaseDate=2026-08-14T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.6916666666666665
+      ]
+    }
+  },
+  {
+    "id": "public:3583b616896aa83657e81fc3",
+    "benchmark_id": "arc-agi::1",
+    "subject": {
+      "source_id": "alibaba-qwen3-8-27b-none",
+      "name": "Qwen3.8-27B (None)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 34,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v1.json",
+      "retrieved_at": "2026-10-03T08:04:14.328938+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/d5615b981ca6bc6eafdf.gz",
+      "sha256": "d5615b981ca6bc6eafdfb79f2081525bc0f6ff6d64e86f11759b6628797db5fd",
+      "locator": "json; source row 261; alibaba-qwen3-8-27b-none; field score"
+    },
+    "protocol": "ARC-AGI 1; v1_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=alibaba-qwen3-8-27b; providerId=Alibaba; display=True; resultsUrl=/results/alibaba-qwen3-8-27b; costPerTask=0.04125527700000001; modelReleaseDate=2026-08-14T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.34
+      ]
+    }
+  }
+]

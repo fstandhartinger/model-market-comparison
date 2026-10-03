@@ -2,13 +2,14 @@
   "source": "ArtificialAnalysis API v2",
   "endpoint": "https://artificialanalysis.ai/api/v2/data/llms/models",
   "metadata_endpoint": "https://artificialanalysis.ai/leaderboards/models",
-  "collected_at": "2026-10-02",
+  "collected_at": "2026-10-03",
   "count": 689,
   "metadata_sync": {
     "api_count": 689,
     "leaderboard_count": 688,
     "missing_model_ids": [
-      "208c16f0-8c5b-4524-ac8a-ac74c02e80a9"
+      "901ec71b-51ec-4f53-b807-06ee17b890b4",
+      "da9fe224-8af3-46d7-a8c4-6220779c3f35"
     ],
     "max_allowed_rollout_lag": 4,
     "note": "Missing leaderboard metadata is explicit and remains null; only a bounded publication lag is tolerated."
@@ -16,7 +17,7 @@
   "models": [
     {
       "id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
-      "name": "Claude Opus 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",
+      "name": "Claude Opus 5.5 (Max, Default Fallback)",
       "slug": "claude-opus-5-5",
       "release_date": "2026-09-22",
       "model_creator": {
@@ -49,59 +50,9 @@
         "price_1m_input_tokens": 4,
         "price_1m_output_tokens": 20
       },
-      "median_output_tokens_per_second": 97.011,
-      "median_time_to_first_token_seconds": 477.23,
-      "median_time_to_first_answer_token": 477.23,
-      "metadata": {
-        "deprecated": false,
-        "is_reasoning": true,
-        "is_open_weights": false,
-        "commercial_allowed": null,
-        "license_name": null,
-        "license_url": null,
-        "huggingface_url": null,
-        "openrouter_api_id": null,
-        "context_window_tokens": 1000000
-      }
-    },
-    {
-      "id": "df5bf99d-d228-4715-b41b-19ca86118777",
-      "name": "Claude Opus 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",
-      "slug": "claude-opus-5-5-xhigh",
-      "release_date": "2026-09-22",
-      "model_creator": {
-        "id": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
-        "name": "Anthropic",
-        "slug": "anthropic"
-      },
-      "evaluations": {
-        "artificial_analysis_intelligence_index": 56,
-        "artificial_analysis_coding_index": null,
-        "artificial_analysis_math_index": null,
-        "mmlu_pro": null,
-        "gpqa": null,
-        "hle": 0.575,
-        "livecodebench": null,
-        "scicode": 0.65,
-        "math_500": null,
-        "aime": null,
-        "aime_25": null,
-        "ifbench": null,
-        "lcr": 0.846666666666667,
-        "terminalbench_hard": null,
-        "terminalbench_v2_1": null,
-        "terminalbench_v4_0": 0.595959595959596,
-        "tau2": null,
-        "tau_banking": null
-      },
-      "pricing": {
-        "price_1m_blended_3_to_1": 8,
-        "price_1m_input_tokens": 4,
-        "price_1m_output_tokens": 20
-      },
-      "median_output_tokens_per_second": 81.109,
-      "median_time_to_first_token_seconds": 50.457,
-      "median_time_to_first_answer_token": 50.457,
+      "median_output_tokens_per_second": 97.574,
+      "median_time_to_first_token_seconds": 588.957,
+      "median_time_to_first_answer_token": 588.957,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -116,7 +67,7 @@
     },
     {
       "id": "b171d979-5ec1-45de-b8b9-db1ee65e77ec",
-      "name": "Claude Sonnet 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",
+      "name": "Claude Sonnet 5.5 (Max, Default Fallback)",
       "slug": "claude-sonnet-5-5",
       "release_date": "2026-09-28",
       "model_creator": {
@@ -149,9 +100,59 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 145.398,
-      "median_time_to_first_token_seconds": 265.2,
-      "median_time_to_first_answer_token": 265.2,
+      "median_output_tokens_per_second": 137.548,
+      "median_time_to_first_token_seconds": 263.184,
+      "median_time_to_first_answer_token": 263.184,
+      "metadata": {
+        "deprecated": false,
+        "is_reasoning": true,
+        "is_open_weights": false,
+        "commercial_allowed": null,
+        "license_name": null,
+        "license_url": null,
+        "huggingface_url": null,
+        "openrouter_api_id": null,
+        "context_window_tokens": 1000000
+      }
+    },
+    {
+      "id": "df5bf99d-d228-4715-b41b-19ca86118777",
+      "name": "Claude Opus 5.5 (Xhigh, Default Fallback)",
+      "slug": "claude-opus-5-5-xhigh",
+      "release_date": "2026-09-22",
+      "model_creator": {
+        "id": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
+        "name": "Anthropic",
+        "slug": "anthropic"
+      },
+      "evaluations": {
+        "artificial_analysis_intelligence_index": 56,
+        "artificial_analysis_coding_index": null,
+        "artificial_analysis_math_index": null,
+        "mmlu_pro": null,
+        "gpqa": null,
+        "hle": 0.575,
+        "livecodebench": null,
+        "scicode": 0.65,
+        "math_500": null,
+        "aime": null,
+        "aime_25": null,
+        "ifbench": null,
+        "lcr": 0.846666666666667,
+        "terminalbench_hard": null,
+        "terminalbench_v2_1": null,
+        "terminalbench_v4_0": 0.595959595959596,
+        "tau2": null,
+        "tau_banking": null
+      },
+      "pricing": {
+        "price_1m_blended_3_to_1": 8,
+        "price_1m_input_tokens": 4,
+        "price_1m_output_tokens": 20
+      },
+      "median_output_tokens_per_second": 78.732,
+      "median_time_to_first_token_seconds": 51.722,
+      "median_time_to_first_answer_token": 51.722,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -166,7 +167,7 @@
     },
     {
       "id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
-      "name": "Claude Opus 5.5 (Adaptive Reasoning, High Effort, Default Fallback)",
+      "name": "Claude Opus 5.5 (High, Default Fallback)",
       "slug": "claude-opus-5-5-high",
       "release_date": "2026-09-22",
       "model_creator": {
@@ -199,9 +200,9 @@
         "price_1m_input_tokens": 4,
         "price_1m_output_tokens": 20
       },
-      "median_output_tokens_per_second": 81.263,
-      "median_time_to_first_token_seconds": 17.342,
-      "median_time_to_first_answer_token": 17.342,
+      "median_output_tokens_per_second": 78.288,
+      "median_time_to_first_token_seconds": 19.518,
+      "median_time_to_first_answer_token": 19.518,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -216,7 +217,7 @@
     },
     {
       "id": "3e87c73e-a257-495e-9730-367a66229811",
-      "name": "Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback)",
+      "name": "Claude Fable 5.1 (Max, Default Fallback)",
       "slug": "claude-fable-5-1",
       "release_date": "2026-09-01",
       "model_creator": {
@@ -249,9 +250,9 @@
         "price_1m_input_tokens": 10,
         "price_1m_output_tokens": 50
       },
-      "median_output_tokens_per_second": 70.155,
-      "median_time_to_first_token_seconds": 134.538,
-      "median_time_to_first_answer_token": 134.538,
+      "median_output_tokens_per_second": 70.69,
+      "median_time_to_first_token_seconds": 142.756,
+      "median_time_to_first_answer_token": 142.756,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -273,7 +274,7 @@
     },
     {
       "id": "9b166bf3-42db-4f63-8338-1c4a1244ffe8",
-      "name": "Claude Fable 5.1 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",
+      "name": "Claude Fable 5.1 (Xhigh, Default Fallback)",
       "slug": "claude-fable-5-1-xhigh",
       "release_date": "2026-09-01",
       "model_creator": {
@@ -306,9 +307,9 @@
         "price_1m_input_tokens": 10,
         "price_1m_output_tokens": 50
       },
-      "median_output_tokens_per_second": 62.866,
-      "median_time_to_first_token_seconds": 34.758,
-      "median_time_to_first_answer_token": 34.758,
+      "median_output_tokens_per_second": 60.789,
+      "median_time_to_first_token_seconds": 37.157,
+      "median_time_to_first_answer_token": 37.157,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -356,9 +357,9 @@
         "price_1m_input_tokens": 10,
         "price_1m_output_tokens": 50
       },
-      "median_output_tokens_per_second": 55.811,
-      "median_time_to_first_token_seconds": 192.954,
-      "median_time_to_first_answer_token": 192.954,
+      "median_output_tokens_per_second": 56.131,
+      "median_time_to_first_token_seconds": 202.532,
+      "median_time_to_first_answer_token": 202.532,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -456,9 +457,9 @@
         "price_1m_input_tokens": 10,
         "price_1m_output_tokens": 50
       },
-      "median_output_tokens_per_second": 51.839,
-      "median_time_to_first_token_seconds": 74.33,
-      "median_time_to_first_answer_token": 74.33,
+      "median_output_tokens_per_second": 52.27,
+      "median_time_to_first_token_seconds": 73.391,
+      "median_time_to_first_answer_token": 73.391,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -473,7 +474,7 @@
     },
     {
       "id": "975aeaef-50bd-4a65-9c73-f1015adcd4d4",
-      "name": "Claude Sonnet 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",
+      "name": "Claude Sonnet 5.5 (Xhigh, Default Fallback)",
       "slug": "claude-sonnet-5-5-xhigh",
       "release_date": "2026-09-28",
       "model_creator": {
@@ -506,9 +507,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 112.626,
-      "median_time_to_first_token_seconds": 15.676,
-      "median_time_to_first_answer_token": 15.676,
+      "median_output_tokens_per_second": 110.532,
+      "median_time_to_first_token_seconds": 16.397,
+      "median_time_to_first_answer_token": 16.397,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -556,9 +557,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 62.79,
-      "median_time_to_first_token_seconds": 139.976,
-      "median_time_to_first_answer_token": 139.976,
+      "median_output_tokens_per_second": 58.555,
+      "median_time_to_first_token_seconds": 185.59,
+      "median_time_to_first_answer_token": 185.59,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -573,7 +574,7 @@
     },
     {
       "id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
-      "name": "Claude Opus 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)",
+      "name": "Claude Opus 5.5 (Medium, Default Fallback)",
       "slug": "claude-opus-5-5-medium",
       "release_date": "2026-09-22",
       "model_creator": {
@@ -607,8 +608,8 @@
         "price_1m_output_tokens": 20
       },
       "median_output_tokens_per_second": 77.944,
-      "median_time_to_first_token_seconds": 13.763,
-      "median_time_to_first_answer_token": 13.763,
+      "median_time_to_first_token_seconds": 13.099,
+      "median_time_to_first_answer_token": 13.099,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -623,7 +624,7 @@
     },
     {
       "id": "9d7d72cd-d95d-45a0-b109-4ad292c9aabd",
-      "name": "Claude Fable 5.1 (Adaptive Reasoning, High Effort, Default Fallback)",
+      "name": "Claude Fable 5.1 (High, Default Fallback)",
       "slug": "claude-fable-5-1-high",
       "release_date": "2026-09-01",
       "model_creator": {
@@ -656,9 +657,9 @@
         "price_1m_input_tokens": 10,
         "price_1m_output_tokens": 50
       },
-      "median_output_tokens_per_second": 56.008,
-      "median_time_to_first_token_seconds": 6.8,
-      "median_time_to_first_answer_token": 6.8,
+      "median_output_tokens_per_second": 56.047,
+      "median_time_to_first_token_seconds": 8.941,
+      "median_time_to_first_answer_token": 8.941,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -706,9 +707,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 61.475,
-      "median_time_to_first_token_seconds": 57.999,
-      "median_time_to_first_answer_token": 57.999,
+      "median_output_tokens_per_second": 52.329,
+      "median_time_to_first_token_seconds": 76.145,
+      "median_time_to_first_answer_token": 76.145,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -756,9 +757,9 @@
         "price_1m_input_tokens": 10,
         "price_1m_output_tokens": 50
       },
-      "median_output_tokens_per_second": 52.151,
-      "median_time_to_first_token_seconds": 29.184,
-      "median_time_to_first_answer_token": 29.184,
+      "median_output_tokens_per_second": 52.779,
+      "median_time_to_first_token_seconds": 31.407,
+      "median_time_to_first_answer_token": 31.407,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -773,7 +774,7 @@
     },
     {
       "id": "b8fc61f7-5e9a-49e6-8547-6ac56db24627",
-      "name": "Claude Opus 5 (Adaptive Reasoning, Max Effort)",
+      "name": "Claude Opus 5 (Max)",
       "slug": "claude-opus-5",
       "release_date": "2026-07-24",
       "model_creator": {
@@ -863,9 +864,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 59.138,
-      "median_time_to_first_token_seconds": 20.787,
-      "median_time_to_first_answer_token": 20.787,
+      "median_output_tokens_per_second": 52.438,
+      "median_time_to_first_token_seconds": 28.905,
+      "median_time_to_first_answer_token": 28.905,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -880,7 +881,7 @@
     },
     {
       "id": "1305c921-7aaa-4d6d-99b5-99b3acf15e19",
-      "name": "Claude Opus 5 (Adaptive Reasoning, Xhigh Effort)",
+      "name": "Claude Opus 5 (Xhigh)",
       "slug": "claude-opus-5-xhigh",
       "release_date": "2026-07-24",
       "model_creator": {
@@ -930,7 +931,7 @@
     },
     {
       "id": "cd55210d-358e-4df1-ba9c-9acb5f186cc9",
-      "name": "Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback)",
+      "name": "Claude Fable 5 (Max, Opus 4.8 Fallback)",
       "slug": "claude-fable-5",
       "release_date": "2026-06-09",
       "model_creator": {
@@ -1020,7 +1021,7 @@
         "price_1m_input_tokens": 10,
         "price_1m_output_tokens": 50
       },
-      "median_output_tokens_per_second": 51.763,
+      "median_output_tokens_per_second": 51.26,
       "median_time_to_first_token_seconds": 4.544,
       "median_time_to_first_answer_token": 4.544,
       "metadata": {
@@ -1037,7 +1038,7 @@
     },
     {
       "id": "3b7de71c-e034-4591-8ca6-6b6be2fa471f",
-      "name": "Claude Fable 5.1 (Adaptive Reasoning, Medium Effort, Default Fallback)",
+      "name": "Claude Fable 5.1 (Medium, Default Fallback)",
       "slug": "claude-fable-5-1-medium",
       "release_date": "2026-09-01",
       "model_creator": {
@@ -1070,9 +1071,9 @@
         "price_1m_input_tokens": 10,
         "price_1m_output_tokens": 50
       },
-      "median_output_tokens_per_second": 53.279,
-      "median_time_to_first_token_seconds": 5.9,
-      "median_time_to_first_answer_token": 5.9,
+      "median_output_tokens_per_second": 56.022,
+      "median_time_to_first_token_seconds": 7.37,
+      "median_time_to_first_answer_token": 7.37,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1087,7 +1088,7 @@
     },
     {
       "id": "712be54a-77ae-41b2-9a58-21181479d6ee",
-      "name": "Claude Opus 5 (Adaptive Reasoning, High Effort)",
+      "name": "Claude Opus 5 (High)",
       "slug": "claude-opus-5-high",
       "release_date": "2026-07-24",
       "model_creator": {
@@ -1170,9 +1171,9 @@
         "price_1m_input_tokens": 1.25,
         "price_1m_output_tokens": 4.25
       },
-      "median_output_tokens_per_second": 168.397,
-      "median_time_to_first_token_seconds": 43.349,
-      "median_time_to_first_answer_token": 55.226,
+      "median_output_tokens_per_second": 157.499,
+      "median_time_to_first_token_seconds": 42.148,
+      "median_time_to_first_answer_token": 54.847,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1220,9 +1221,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 61.861,
-      "median_time_to_first_token_seconds": 3.69,
-      "median_time_to_first_answer_token": 3.69,
+      "median_output_tokens_per_second": 54.751,
+      "median_time_to_first_token_seconds": 3.741,
+      "median_time_to_first_answer_token": 3.741,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1270,11 +1271,11 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 92.122,
-      "median_time_to_first_token_seconds": 107.514,
-      "median_time_to_first_answer_token": 107.514,
+      "median_output_tokens_per_second": 111.184,
+      "median_time_to_first_token_seconds": 104.258,
+      "median_time_to_first_answer_token": 104.258,
       "metadata": {
-        "deprecated": false,
+        "deprecated": true,
         "is_reasoning": true,
         "is_open_weights": false,
         "commercial_allowed": null,
@@ -1282,7 +1283,7 @@
         "license_url": null,
         "huggingface_url": null,
         "openrouter_api_id": null,
-        "context_window_tokens": 872000
+        "context_window_tokens": 1050000
       }
     },
     {
@@ -1344,7 +1345,7 @@
     },
     {
       "id": "05776db7-f5c0-40f7-b824-079160f8cfa8",
-      "name": "Claude Fable 5.1 (Adaptive Reasoning, Low Effort, Default Fallback)",
+      "name": "Claude Fable 5.1 (Low, Default Fallback)",
       "slug": "claude-fable-5-1-low",
       "release_date": "2026-09-01",
       "model_creator": {
@@ -1378,8 +1379,8 @@
         "price_1m_output_tokens": 50
       },
       "median_output_tokens_per_second": 54.648,
-      "median_time_to_first_token_seconds": 3.339,
-      "median_time_to_first_answer_token": 3.339,
+      "median_time_to_first_token_seconds": 3.641,
+      "median_time_to_first_answer_token": 3.641,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1394,7 +1395,7 @@
     },
     {
       "id": "268525e2-f873-4178-bc07-e6a0ee1f002d",
-      "name": "Claude Sonnet 5.5 (Adaptive Reasoning, High Effort, Default Fallback)",
+      "name": "Claude Sonnet 5.5 (High, Default Fallback)",
       "slug": "claude-sonnet-5-5-high",
       "release_date": "2026-09-28",
       "model_creator": {
@@ -1403,7 +1404,7 @@
         "slug": "anthropic"
       },
       "evaluations": {
-        "artificial_analysis_intelligence_index": 46.7,
+        "artificial_analysis_intelligence_index": 46.8,
         "artificial_analysis_coding_index": null,
         "artificial_analysis_math_index": null,
         "mmlu_pro": null,
@@ -1427,9 +1428,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 110.532,
-      "median_time_to_first_token_seconds": 7.581,
-      "median_time_to_first_answer_token": 7.581,
+      "median_output_tokens_per_second": 108.854,
+      "median_time_to_first_token_seconds": 9.123,
+      "median_time_to_first_answer_token": 9.123,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1477,9 +1478,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 6
       },
-      "median_output_tokens_per_second": 82.71,
-      "median_time_to_first_token_seconds": 19.289,
-      "median_time_to_first_answer_token": 19.289,
+      "median_output_tokens_per_second": 80.156,
+      "median_time_to_first_token_seconds": 22.446,
+      "median_time_to_first_answer_token": 22.446,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1527,9 +1528,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 6
       },
-      "median_output_tokens_per_second": 83.388,
-      "median_time_to_first_token_seconds": 18.893,
-      "median_time_to_first_answer_token": 18.893,
+      "median_output_tokens_per_second": 76.142,
+      "median_time_to_first_token_seconds": 17.538,
+      "median_time_to_first_answer_token": 17.538,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1577,9 +1578,9 @@
         "price_1m_input_tokens": 0.435,
         "price_1m_output_tokens": 0.87
       },
-      "median_output_tokens_per_second": 46.231,
-      "median_time_to_first_token_seconds": 3.118,
-      "median_time_to_first_answer_token": 46.379,
+      "median_output_tokens_per_second": 44.34,
+      "median_time_to_first_token_seconds": 3.643,
+      "median_time_to_first_answer_token": 48.749,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1628,8 +1629,8 @@
         "price_1m_output_tokens": 50
       },
       "median_output_tokens_per_second": 46.656,
-      "median_time_to_first_token_seconds": 1.664,
-      "median_time_to_first_answer_token": 1.664,
+      "median_time_to_first_token_seconds": 1.666,
+      "median_time_to_first_answer_token": 1.666,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1677,9 +1678,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 6
       },
-      "median_output_tokens_per_second": 39.338,
+      "median_output_tokens_per_second": 37.37,
       "median_time_to_first_token_seconds": 1.766,
-      "median_time_to_first_answer_token": 52.608,
+      "median_time_to_first_answer_token": 55.286,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1727,9 +1728,9 @@
         "price_1m_input_tokens": 1.25,
         "price_1m_output_tokens": 4.25
       },
-      "median_output_tokens_per_second": 194.525,
+      "median_output_tokens_per_second": 167.351,
       "median_time_to_first_token_seconds": 31.646,
-      "median_time_to_first_answer_token": 41.927,
+      "median_time_to_first_answer_token": 43.597,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1751,7 +1752,7 @@
     },
     {
       "id": "ff51be8f-e362-4a7e-9043-687ba15de207",
-      "name": "Claude Opus 5 (Adaptive Reasoning, Medium Effort)",
+      "name": "Claude Opus 5 (Medium)",
       "slug": "claude-opus-5-medium",
       "release_date": "2026-07-24",
       "model_creator": {
@@ -1834,9 +1835,9 @@
         "price_1m_input_tokens": 1.4,
         "price_1m_output_tokens": 4.4
       },
-      "median_output_tokens_per_second": 71.131,
+      "median_output_tokens_per_second": 75.206,
       "median_time_to_first_token_seconds": 2.691,
-      "median_time_to_first_answer_token": 30.808,
+      "median_time_to_first_answer_token": 29.285,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1963,11 +1964,11 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 92.639,
-      "median_time_to_first_token_seconds": 28.14,
-      "median_time_to_first_answer_token": 28.14,
+      "median_output_tokens_per_second": 104.352,
+      "median_time_to_first_token_seconds": 25.669,
+      "median_time_to_first_answer_token": 25.669,
       "metadata": {
-        "deprecated": false,
+        "deprecated": true,
         "is_reasoning": true,
         "is_open_weights": false,
         "commercial_allowed": null,
@@ -1975,7 +1976,7 @@
         "license_url": null,
         "huggingface_url": null,
         "openrouter_api_id": null,
-        "context_window_tokens": 872000
+        "context_window_tokens": 1050000
       }
     },
     {
@@ -2120,9 +2121,9 @@
         "price_1m_input_tokens": 1,
         "price_1m_output_tokens": 2.7
       },
-      "median_output_tokens_per_second": 84.74,
-      "median_time_to_first_token_seconds": 2.08,
-      "median_time_to_first_answer_token": 25.681,
+      "median_output_tokens_per_second": 84.069,
+      "median_time_to_first_token_seconds": 1.959,
+      "median_time_to_first_answer_token": 25.749,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2170,9 +2171,9 @@
         "price_1m_input_tokens": 3,
         "price_1m_output_tokens": 15
       },
-      "median_output_tokens_per_second": 37.355,
-      "median_time_to_first_token_seconds": 3.121,
-      "median_time_to_first_answer_token": 56.661,
+      "median_output_tokens_per_second": 36.875,
+      "median_time_to_first_token_seconds": 2.618,
+      "median_time_to_first_answer_token": 56.856,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2242,9 +2243,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 6
       },
-      "median_output_tokens_per_second": 98.679,
-      "median_time_to_first_token_seconds": 18.384,
-      "median_time_to_first_answer_token": 18.384,
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
       "metadata": {
         "deprecated": true,
         "is_reasoning": true,
@@ -2299,11 +2300,11 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 80.679,
-      "median_time_to_first_token_seconds": 16.162,
-      "median_time_to_first_answer_token": 16.162,
+      "median_output_tokens_per_second": 90.685,
+      "median_time_to_first_token_seconds": 14.413,
+      "median_time_to_first_answer_token": 14.413,
       "metadata": {
-        "deprecated": false,
+        "deprecated": true,
         "is_reasoning": true,
         "is_open_weights": false,
         "commercial_allowed": null,
@@ -2311,7 +2312,7 @@
         "license_url": null,
         "huggingface_url": null,
         "openrouter_api_id": null,
-        "context_window_tokens": 872000
+        "context_window_tokens": 1050000
       }
     },
     {
@@ -2366,7 +2367,7 @@
     },
     {
       "id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
-      "name": "Claude Opus 5.5 (Adaptive Reasoning, Low Effort, Default Fallback)",
+      "name": "Claude Opus 5.5 (Low, Default Fallback)",
       "slug": "claude-opus-5-5-low",
       "release_date": "2026-09-22",
       "model_creator": {
@@ -2399,9 +2400,9 @@
         "price_1m_input_tokens": 4,
         "price_1m_output_tokens": 20
       },
-      "median_output_tokens_per_second": 76.983,
-      "median_time_to_first_token_seconds": 6.565,
-      "median_time_to_first_answer_token": 6.565,
+      "median_output_tokens_per_second": 73.672,
+      "median_time_to_first_token_seconds": 6.521,
+      "median_time_to_first_answer_token": 6.521,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2449,19 +2450,19 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 6
       },
-      "median_output_tokens_per_second": 67.099,
-      "median_time_to_first_token_seconds": 3.689,
-      "median_time_to_first_answer_token": 3.689,
+      "median_output_tokens_per_second": 67.584,
+      "median_time_to_first_token_seconds": 6.278,
+      "median_time_to_first_answer_token": 6.278,
       "metadata": {
-        "deprecated": null,
-        "is_reasoning": null,
-        "is_open_weights": null,
+        "deprecated": false,
+        "is_reasoning": true,
+        "is_open_weights": false,
         "commercial_allowed": null,
         "license_name": null,
         "license_url": null,
         "huggingface_url": null,
         "openrouter_api_id": null,
-        "context_window_tokens": null
+        "context_window_tokens": 500000
       }
     },
     {
@@ -2499,9 +2500,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 53.62,
-      "median_time_to_first_token_seconds": 1.996,
-      "median_time_to_first_answer_token": 1.996,
+      "median_output_tokens_per_second": 49.537,
+      "median_time_to_first_token_seconds": 2.43,
+      "median_time_to_first_answer_token": 2.43,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2549,9 +2550,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 12
       },
-      "median_output_tokens_per_second": 110.849,
-      "median_time_to_first_token_seconds": 115.347,
-      "median_time_to_first_answer_token": 115.347,
+      "median_output_tokens_per_second": 110.063,
+      "median_time_to_first_token_seconds": 94.607,
+      "median_time_to_first_answer_token": 94.607,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2606,9 +2607,9 @@
         "price_1m_input_tokens": 0.15,
         "price_1m_output_tokens": 0.5
       },
-      "median_output_tokens_per_second": 50.997,
-      "median_time_to_first_token_seconds": 3.189,
-      "median_time_to_first_answer_token": 42.407,
+      "median_output_tokens_per_second": 51.663,
+      "median_time_to_first_token_seconds": 3.043,
+      "median_time_to_first_answer_token": 41.755,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2645,7 +2646,7 @@
     },
     {
       "id": "992b7b84-5069-4c6a-9295-834252553d50",
-      "name": "Claude Opus 4.8 (Adaptive Reasoning, Max Effort)",
+      "name": "Claude Opus 4.8 (Max)",
       "slug": "claude-opus-4-8",
       "release_date": "2026-05-28",
       "model_creator": {
@@ -2735,9 +2736,9 @@
         "price_1m_input_tokens": 0.75,
         "price_1m_output_tokens": 3.75
       },
-      "median_output_tokens_per_second": 261.454,
-      "median_time_to_first_token_seconds": 13.317,
-      "median_time_to_first_answer_token": 13.317,
+      "median_output_tokens_per_second": 255.648,
+      "median_time_to_first_token_seconds": 12.487,
+      "median_time_to_first_answer_token": 12.487,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2759,7 +2760,7 @@
     },
     {
       "id": "042e8a37-fcd0-40f4-8f41-99215fb68eda",
-      "name": "Claude Sonnet 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)",
+      "name": "Claude Sonnet 5.5 (Medium, Default Fallback)",
       "slug": "claude-sonnet-5-5-medium",
       "release_date": "2026-09-28",
       "model_creator": {
@@ -2768,7 +2769,7 @@
         "slug": "anthropic"
       },
       "evaluations": {
-        "artificial_analysis_intelligence_index": 40.7,
+        "artificial_analysis_intelligence_index": 40.8,
         "artificial_analysis_coding_index": null,
         "artificial_analysis_math_index": null,
         "mmlu_pro": null,
@@ -2792,9 +2793,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 111.866,
-      "median_time_to_first_token_seconds": 1.285,
-      "median_time_to_first_answer_token": 1.285,
+      "median_output_tokens_per_second": 109.442,
+      "median_time_to_first_token_seconds": 1.825,
+      "median_time_to_first_answer_token": 1.825,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2809,7 +2810,7 @@
     },
     {
       "id": "e9a09db3-8fd6-41dd-ba2f-20e0a2bff7f2",
-      "name": "Claude Opus 4.7 (Adaptive Reasoning, Max Effort)",
+      "name": "Claude Opus 4.7 (Max)",
       "slug": "claude-opus-4-7",
       "release_date": "2026-04-16",
       "model_creator": {
@@ -2942,9 +2943,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 6
       },
-      "median_output_tokens_per_second": 39.474,
-      "median_time_to_first_token_seconds": 1.757,
-      "median_time_to_first_answer_token": 52.424,
+      "median_output_tokens_per_second": 38.601,
+      "median_time_to_first_token_seconds": 1.752,
+      "median_time_to_first_answer_token": 53.564,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -3009,9 +3010,9 @@
         "price_1m_input_tokens": 0.15,
         "price_1m_output_tokens": 0.47
       },
-      "median_output_tokens_per_second": 52.688,
-      "median_time_to_first_token_seconds": 1.459,
-      "median_time_to_first_answer_token": 39.419,
+      "median_output_tokens_per_second": 52.111,
+      "median_time_to_first_token_seconds": 1.475,
+      "median_time_to_first_answer_token": 39.855,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -3075,7 +3076,7 @@
       "median_time_to_first_token_seconds": 0,
       "median_time_to_first_answer_token": 0,
       "metadata": {
-        "deprecated": false,
+        "deprecated": true,
         "is_reasoning": true,
         "is_open_weights": false,
         "commercial_allowed": null,
@@ -3083,7 +3084,7 @@
         "license_url": null,
         "huggingface_url": null,
         "openrouter_api_id": null,
-        "context_window_tokens": 872000
+        "context_window_tokens": 1050000
       }
     },
     {
@@ -3278,9 +3279,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 1.2
       },
-      "median_output_tokens_per_second": 226.5,
-      "median_time_to_first_token_seconds": 0.78,
-      "median_time_to_first_answer_token": 9.61,
+      "median_output_tokens_per_second": 214.866,
+      "median_time_to_first_token_seconds": 0.804,
+      "median_time_to_first_answer_token": 10.112,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -3295,7 +3296,7 @@
     },
     {
       "id": "20928ba9-3a3f-415f-9519-b84ff64ecf34",
-      "name": "Claude Opus 5 (Adaptive Reasoning, Low Effort)",
+      "name": "Claude Opus 5 (Low)",
       "slug": "claude-opus-5-low",
       "release_date": "2026-07-24",
       "model_creator": {
@@ -3623,7 +3624,7 @@
     },
     {
       "id": "23c86e4a-c769-43c0-a056-79e3cd15834f",
-      "name": "Claude Sonnet 5 (Adaptive Reasoning, Max Effort)",
+      "name": "Claude Sonnet 5 (Max)",
       "slug": "claude-sonnet-5",
       "release_date": "2026-06-30",
       "model_creator": {
@@ -3656,9 +3657,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 94.143,
-      "median_time_to_first_token_seconds": 162.437,
-      "median_time_to_first_answer_token": 162.437,
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
       "metadata": {
         "deprecated": true,
         "is_reasoning": true,
@@ -3713,9 +3714,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.5
       },
-      "median_output_tokens_per_second": 138.803,
-      "median_time_to_first_token_seconds": 83.996,
-      "median_time_to_first_answer_token": 83.996,
+      "median_output_tokens_per_second": 137.613,
+      "median_time_to_first_token_seconds": 84.827,
+      "median_time_to_first_answer_token": 84.827,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -3763,9 +3764,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 12
       },
-      "median_output_tokens_per_second": 99.383,
-      "median_time_to_first_token_seconds": 19.048,
-      "median_time_to_first_answer_token": 19.048,
+      "median_output_tokens_per_second": 105.011,
+      "median_time_to_first_token_seconds": 26.038,
+      "median_time_to_first_answer_token": 26.038,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -3813,9 +3814,9 @@
         "price_1m_input_tokens": 0.14,
         "price_1m_output_tokens": 0.28
       },
-      "median_output_tokens_per_second": 58.456,
-      "median_time_to_first_token_seconds": 3.38,
-      "median_time_to_first_answer_token": 37.594,
+      "median_output_tokens_per_second": 53.285,
+      "median_time_to_first_token_seconds": 4.244,
+      "median_time_to_first_answer_token": 41.778,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -4020,9 +4021,9 @@
         "price_1m_input_tokens": 1.32,
         "price_1m_output_tokens": 3.96
       },
-      "median_output_tokens_per_second": 104.703,
-      "median_time_to_first_token_seconds": 1.174,
-      "median_time_to_first_answer_token": 20.276,
+      "median_output_tokens_per_second": 110.467,
+      "median_time_to_first_token_seconds": 1.089,
+      "median_time_to_first_answer_token": 19.194,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -4050,6 +4051,56 @@
             "reason": "Field absent from current AA leaderboard; retained from last published metadata."
           }
         }
+      }
+    },
+    {
+      "id": "bbc2ffea-cf6b-43be-8c41-1769347e234d",
+      "name": "Claude Sonnet 5.5 (Low, Default Fallback)",
+      "slug": "claude-sonnet-5-5-low",
+      "release_date": "2026-09-28",
+      "model_creator": {
+        "id": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
+        "name": "Anthropic",
+        "slug": "anthropic"
+      },
+      "evaluations": {
+        "artificial_analysis_intelligence_index": 35.9,
+        "artificial_analysis_coding_index": null,
+        "artificial_analysis_math_index": null,
+        "mmlu_pro": null,
+        "gpqa": null,
+        "hle": 0.362,
+        "livecodebench": null,
+        "scicode": 0.491,
+        "math_500": null,
+        "aime": null,
+        "aime_25": null,
+        "ifbench": null,
+        "lcr": 0.76,
+        "terminalbench_hard": null,
+        "terminalbench_v2_1": null,
+        "terminalbench_v4_0": 0.207070707070707,
+        "tau2": null,
+        "tau_banking": null
+      },
+      "pricing": {
+        "price_1m_blended_3_to_1": 4,
+        "price_1m_input_tokens": 2,
+        "price_1m_output_tokens": 10
+      },
+      "median_output_tokens_per_second": 105.173,
+      "median_time_to_first_token_seconds": 0.844,
+      "median_time_to_first_answer_token": 0.844,
+      "metadata": {
+        "deprecated": false,
+        "is_reasoning": true,
+        "is_open_weights": false,
+        "commercial_allowed": null,
+        "license_name": null,
+        "license_url": null,
+        "huggingface_url": null,
+        "openrouter_api_id": null,
+        "context_window_tokens": 1000000
       }
     },
     {
@@ -4087,9 +4138,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 6
       },
-      "median_output_tokens_per_second": 75.072,
-      "median_time_to_first_token_seconds": 2.341,
-      "median_time_to_first_answer_token": 2.341,
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
       "metadata": {
         "deprecated": true,
         "is_reasoning": true,
@@ -4144,9 +4195,9 @@
         "price_1m_input_tokens": 0.44,
         "price_1m_output_tokens": 1.32
       },
-      "median_output_tokens_per_second": 223.706,
-      "median_time_to_first_token_seconds": 0.714,
-      "median_time_to_first_answer_token": 9.654,
+      "median_output_tokens_per_second": 221.641,
+      "median_time_to_first_token_seconds": 0.759,
+      "median_time_to_first_answer_token": 9.783,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -4194,9 +4245,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.5
       },
-      "median_output_tokens_per_second": 131.692,
-      "median_time_to_first_token_seconds": 26.343,
-      "median_time_to_first_answer_token": 26.343,
+      "median_output_tokens_per_second": 138.896,
+      "median_time_to_first_token_seconds": 26.376,
+      "median_time_to_first_answer_token": 26.376,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -4261,7 +4312,7 @@
     },
     {
       "id": "99f376bf-cbcb-4124-bf3e-6b0a4e6e9bea",
-      "name": "Claude Sonnet 5 (Adaptive Reasoning, Xhigh Effort)",
+      "name": "Claude Sonnet 5 (Xhigh)",
       "slug": "claude-sonnet-5-xhigh",
       "release_date": "2026-06-30",
       "model_creator": {
@@ -4294,9 +4345,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 79.816,
-      "median_time_to_first_token_seconds": 16.189,
-      "median_time_to_first_answer_token": 16.189,
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
       "metadata": {
         "deprecated": true,
         "is_reasoning": true,
@@ -4416,9 +4467,9 @@
         "price_1m_input_tokens": 1.4,
         "price_1m_output_tokens": 4.4
       },
-      "median_output_tokens_per_second": 74.73,
-      "median_time_to_first_token_seconds": 3.316,
-      "median_time_to_first_answer_token": 30.079,
+      "median_output_tokens_per_second": 72.857,
+      "median_time_to_first_token_seconds": 3.041,
+      "median_time_to_first_answer_token": 30.492,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -4466,9 +4517,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 12
       },
-      "median_output_tokens_per_second": 90.88,
-      "median_time_to_first_token_seconds": 2.628,
-      "median_time_to_first_answer_token": 2.628,
+      "median_output_tokens_per_second": 94.478,
+      "median_time_to_first_token_seconds": 2.576,
+      "median_time_to_first_answer_token": 2.576,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -4516,11 +4567,11 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 84.73,
-      "median_time_to_first_token_seconds": 1.768,
-      "median_time_to_first_answer_token": 1.768,
+      "median_output_tokens_per_second": 94.525,
+      "median_time_to_first_token_seconds": 1.742,
+      "median_time_to_first_answer_token": 1.742,
       "metadata": {
-        "deprecated": false,
+        "deprecated": true,
         "is_reasoning": true,
         "is_open_weights": false,
         "commercial_allowed": null,
@@ -4528,7 +4579,7 @@
         "license_url": null,
         "huggingface_url": null,
         "openrouter_api_id": null,
-        "context_window_tokens": 872000
+        "context_window_tokens": 1050000
       }
     },
     {
@@ -4591,7 +4642,7 @@
     {
       "id": "46f11cdf-1725-4abb-b39b-bd6bd948149c",
       "name": "JT-4.1 Flash 236B A21B (Reasoning)",
-      "slug": "jt236b",
+      "slug": "jt-4-1-flash-236b-a21b",
       "release_date": "2026-07-09",
       "model_creator": {
         "id": "7e7b7290-eacc-420e-a35f-7c8eb4e5205d",
@@ -4628,14 +4679,14 @@
       "median_time_to_first_answer_token": 0,
       "metadata": {
         "deprecated": false,
-        "is_reasoning": true,
+        "is_reasoning": false,
         "is_open_weights": false,
         "commercial_allowed": null,
         "license_name": null,
         "license_url": null,
         "huggingface_url": null,
         "openrouter_api_id": null,
-        "context_window_tokens": 262144
+        "context_window_tokens": 256000
       }
     },
     {
@@ -4852,9 +4903,9 @@
         "price_1m_input_tokens": 0.5,
         "price_1m_output_tokens": 3
       },
-      "median_output_tokens_per_second": 45.887,
-      "median_time_to_first_token_seconds": 1.228,
-      "median_time_to_first_answer_token": 44.813,
+      "median_output_tokens_per_second": 46.566,
+      "median_time_to_first_token_seconds": 1.182,
+      "median_time_to_first_answer_token": 44.132,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -5131,9 +5182,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.5
       },
-      "median_output_tokens_per_second": 131.134,
-      "median_time_to_first_token_seconds": 8.035,
-      "median_time_to_first_answer_token": 8.035,
+      "median_output_tokens_per_second": 128.535,
+      "median_time_to_first_token_seconds": 10.447,
+      "median_time_to_first_answer_token": 10.447,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -5238,9 +5289,9 @@
         "price_1m_input_tokens": 1.75,
         "price_1m_output_tokens": 14
       },
-      "median_output_tokens_per_second": 97.734,
-      "median_time_to_first_token_seconds": 54.486,
-      "median_time_to_first_answer_token": 54.486,
+      "median_output_tokens_per_second": 98.54,
+      "median_time_to_first_token_seconds": 47.472,
+      "median_time_to_first_answer_token": 47.472,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -5362,7 +5413,7 @@
     },
     {
       "id": "53c98840-47af-49aa-94e6-469fb17e9a1b",
-      "name": "Claude Opus 4.6 (Adaptive Reasoning, Max Effort)",
+      "name": "Claude Opus 4.6 (Max)",
       "slug": "claude-opus-4-6-adaptive",
       "release_date": "2026-02-05",
       "model_creator": {
@@ -5419,7 +5470,7 @@
     },
     {
       "id": "ba0224cf-0351-4f56-8508-b3f1a740ae4a",
-      "name": "Claude Sonnet 5 (Adaptive Reasoning, High Effort)",
+      "name": "Claude Sonnet 5 (High)",
       "slug": "claude-sonnet-5-high",
       "release_date": "2026-06-30",
       "model_creator": {
@@ -5452,9 +5503,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 74.136,
-      "median_time_to_first_token_seconds": 6.572,
-      "median_time_to_first_answer_token": 6.572,
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
       "metadata": {
         "deprecated": true,
         "is_reasoning": true,
@@ -5519,7 +5570,7 @@
     },
     {
       "id": "2fa8e143-77a8-4d05-bfa8-d3b54634c00f",
-      "name": "Claude Opus 4.7 (Non-reasoning, High Effort)",
+      "name": "Claude Opus 4.7 (Non-reasoning, High)",
       "slug": "claude-opus-4-7-non-reasoning",
       "release_date": "2026-04-16",
       "model_creator": {
@@ -5659,9 +5710,9 @@
         "price_1m_input_tokens": 0,
         "price_1m_output_tokens": 0
       },
-      "median_output_tokens_per_second": 113.534,
-      "median_time_to_first_token_seconds": 23.34,
-      "median_time_to_first_answer_token": 40.956,
+      "median_output_tokens_per_second": 119.542,
+      "median_time_to_first_token_seconds": 13.675,
+      "median_time_to_first_answer_token": 30.405,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -5927,9 +5978,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 12
       },
-      "median_output_tokens_per_second": 94.889,
-      "median_time_to_first_token_seconds": 1.924,
-      "median_time_to_first_answer_token": 1.924,
+      "median_output_tokens_per_second": 95.106,
+      "median_time_to_first_token_seconds": 1.864,
+      "median_time_to_first_answer_token": 1.864,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -5977,9 +6028,9 @@
         "price_1m_input_tokens": 3,
         "price_1m_output_tokens": 15
       },
-      "median_output_tokens_per_second": 35.685,
-      "median_time_to_first_token_seconds": 3.624,
-      "median_time_to_first_answer_token": 59.671,
+      "median_output_tokens_per_second": 35.663,
+      "median_time_to_first_token_seconds": 4.11,
+      "median_time_to_first_answer_token": 60.191,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -6016,7 +6067,7 @@
     },
     {
       "id": "df8d14e0-3997-4e4d-b4ad-9c047acc9c69",
-      "name": "Claude Sonnet 4.6 (Adaptive Reasoning, Max Effort)",
+      "name": "Claude Sonnet 4.6 (Max)",
       "slug": "claude-sonnet-4-6-adaptive",
       "release_date": "2026-02-17",
       "model_creator": {
@@ -6156,9 +6207,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 12
       },
-      "median_output_tokens_per_second": 129.627,
-      "median_time_to_first_token_seconds": 26.238,
-      "median_time_to_first_answer_token": 26.238,
+      "median_output_tokens_per_second": 124.808,
+      "median_time_to_first_token_seconds": 26.718,
+      "median_time_to_first_answer_token": 26.718,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -6270,9 +6321,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 1.2
       },
-      "median_output_tokens_per_second": 91.177,
-      "median_time_to_first_token_seconds": 0.781,
-      "median_time_to_first_answer_token": 22.717,
+      "median_output_tokens_per_second": 74.309,
+      "median_time_to_first_token_seconds": 1.198,
+      "median_time_to_first_answer_token": 28.113,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -6456,11 +6507,11 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 82.254,
-      "median_time_to_first_token_seconds": 0.986,
-      "median_time_to_first_answer_token": 0.986,
+      "median_output_tokens_per_second": 91.783,
+      "median_time_to_first_token_seconds": 1.19,
+      "median_time_to_first_answer_token": 1.19,
       "metadata": {
-        "deprecated": false,
+        "deprecated": true,
         "is_reasoning": false,
         "is_open_weights": false,
         "commercial_allowed": null,
@@ -6468,7 +6519,7 @@
         "license_url": null,
         "huggingface_url": null,
         "openrouter_api_id": null,
-        "context_window_tokens": 872000
+        "context_window_tokens": 1050000
       }
     },
     {
@@ -6735,9 +6786,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 1.2
       },
-      "median_output_tokens_per_second": 90.613,
-      "median_time_to_first_token_seconds": 1.067,
-      "median_time_to_first_answer_token": 23.139,
+      "median_output_tokens_per_second": 90.999,
+      "median_time_to_first_token_seconds": 1.07,
+      "median_time_to_first_answer_token": 23.048,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -6752,7 +6803,7 @@
     },
     {
       "id": "effcd151-7c31-4437-af3d-e88daeae9385",
-      "name": "Claude Sonnet 5 (Adaptive Reasoning, Medium Effort)",
+      "name": "Claude Sonnet 5 (Medium)",
       "slug": "claude-sonnet-5-medium",
       "release_date": "2026-06-30",
       "model_creator": {
@@ -6785,9 +6836,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 77.947,
-      "median_time_to_first_token_seconds": 1.729,
-      "median_time_to_first_answer_token": 1.729,
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
       "metadata": {
         "deprecated": true,
         "is_reasoning": true,
@@ -7015,8 +7066,8 @@
         "price_1m_output_tokens": 3
       },
       "median_output_tokens_per_second": 53.544,
-      "median_time_to_first_token_seconds": 1.205,
-      "median_time_to_first_answer_token": 38.558,
+      "median_time_to_first_token_seconds": 1.173,
+      "median_time_to_first_answer_token": 38.526,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -7081,7 +7132,7 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 12
       },
-      "median_output_tokens_per_second": 92.706,
+      "median_output_tokens_per_second": 93.096,
       "median_time_to_first_token_seconds": 1.582,
       "median_time_to_first_answer_token": 1.582,
       "metadata": {
@@ -7099,7 +7150,7 @@
     {
       "id": "901ec71b-51ec-4f53-b807-06ee17b890b4",
       "name": "JT-4.1 Flash 236B A21B (Non-reasoning)",
-      "slug": "jt-4-1-flash-236b-a21b",
+      "slug": "jt-4-1-flash-236b-a21b-non-reasoning",
       "release_date": "2026-07-09",
       "model_creator": {
         "id": "7e7b7290-eacc-420e-a35f-7c8eb4e5205d",
@@ -7135,15 +7186,15 @@
       "median_time_to_first_token_seconds": 0,
       "median_time_to_first_answer_token": 0,
       "metadata": {
-        "deprecated": false,
-        "is_reasoning": false,
-        "is_open_weights": false,
+        "deprecated": null,
+        "is_reasoning": null,
+        "is_open_weights": null,
         "commercial_allowed": null,
         "license_name": null,
         "license_url": null,
         "huggingface_url": null,
         "openrouter_api_id": null,
-        "context_window_tokens": 256000
+        "context_window_tokens": null
       }
     },
     {
@@ -7367,9 +7418,9 @@
         "price_1m_input_tokens": 0.6,
         "price_1m_output_tokens": 1.8
       },
-      "median_output_tokens_per_second": 156.329,
-      "median_time_to_first_token_seconds": 0.47,
-      "median_time_to_first_answer_token": 13.264,
+      "median_output_tokens_per_second": 152.496,
+      "median_time_to_first_token_seconds": 0.548,
+      "median_time_to_first_answer_token": 13.663,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -7548,7 +7599,7 @@
     },
     {
       "id": "4386585e-71b4-4a0c-8a63-afb333419cd6",
-      "name": "Claude Opus 4.6 (Non-reasoning, High Effort)",
+      "name": "Claude Opus 4.6 (Non-reasoning, High)",
       "slug": "claude-opus-4-6",
       "release_date": "2026-02-05",
       "model_creator": {
@@ -7695,9 +7746,9 @@
         "price_1m_input_tokens": 0.5,
         "price_1m_output_tokens": 3
       },
-      "median_output_tokens_per_second": 53.509,
+      "median_output_tokens_per_second": 54.821,
       "median_time_to_first_token_seconds": 1.209,
-      "median_time_to_first_answer_token": 38.587,
+      "median_time_to_first_answer_token": 37.692,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -7834,9 +7885,9 @@
         "price_1m_input_tokens": 5,
         "price_1m_output_tokens": 30
       },
-      "median_output_tokens_per_second": 140.839,
-      "median_time_to_first_token_seconds": 0.84,
-      "median_time_to_first_answer_token": 15.041,
+      "median_output_tokens_per_second": 135.332,
+      "median_time_to_first_token_seconds": 0.938,
+      "median_time_to_first_answer_token": 15.717,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -7956,9 +8007,9 @@
         "price_1m_input_tokens": 0.95,
         "price_1m_output_tokens": 4
       },
-      "median_output_tokens_per_second": 78.639,
-      "median_time_to_first_token_seconds": 1.175,
-      "median_time_to_first_answer_token": 29.52,
+      "median_output_tokens_per_second": 85.4,
+      "median_time_to_first_token_seconds": 1.233,
+      "median_time_to_first_answer_token": 27.333,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -8028,9 +8079,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 1.2
       },
-      "median_output_tokens_per_second": 135.057,
+      "median_output_tokens_per_second": 168.73,
       "median_time_to_first_token_seconds": 1.871,
-      "median_time_to_first_answer_token": 16.68,
+      "median_time_to_first_answer_token": 13.724,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -8195,9 +8246,9 @@
         "price_1m_input_tokens": 0.136,
         "price_1m_output_tokens": 0.555
       },
-      "median_output_tokens_per_second": 87.035,
-      "median_time_to_first_token_seconds": 2.125,
-      "median_time_to_first_answer_token": 25.105,
+      "median_output_tokens_per_second": 88.664,
+      "median_time_to_first_token_seconds": 2.077,
+      "median_time_to_first_answer_token": 24.634,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -8324,9 +8375,9 @@
         "price_1m_input_tokens": 0.14,
         "price_1m_output_tokens": 0.28
       },
-      "median_output_tokens_per_second": 49.473,
-      "median_time_to_first_token_seconds": 2.154,
-      "median_time_to_first_answer_token": 42.58,
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
       "metadata": {
         "deprecated": true,
         "is_reasoning": true,
@@ -8396,9 +8447,9 @@
         "price_1m_input_tokens": 0.4,
         "price_1m_output_tokens": 1.6
       },
-      "median_output_tokens_per_second": 55.572,
-      "median_time_to_first_token_seconds": 1.67,
-      "median_time_to_first_answer_token": 37.66,
+      "median_output_tokens_per_second": 55.737,
+      "median_time_to_first_token_seconds": 1.694,
+      "median_time_to_first_answer_token": 37.577,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -8553,9 +8604,9 @@
         "price_1m_input_tokens": 1,
         "price_1m_output_tokens": 4.05
       },
-      "median_output_tokens_per_second": 176.51,
-      "median_time_to_first_token_seconds": 2.381,
-      "median_time_to_first_answer_token": 13.711,
+      "median_output_tokens_per_second": 167.429,
+      "median_time_to_first_token_seconds": 2.314,
+      "median_time_to_first_answer_token": 14.26,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -8880,7 +8931,7 @@
     },
     {
       "id": "2e40e695-3cec-43da-83f9-615af30b8e91",
-      "name": "Claude Sonnet 4.6 (Non-reasoning, High Effort)",
+      "name": "Claude Sonnet 4.6 (Non-reasoning, High)",
       "slug": "claude-sonnet-4-6",
       "release_date": "2026-02-17",
       "model_creator": {
@@ -8970,9 +9021,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 1.2
       },
-      "median_output_tokens_per_second": 247.779,
-      "median_time_to_first_token_seconds": 0.756,
-      "median_time_to_first_answer_token": 0.756,
+      "median_output_tokens_per_second": 234.567,
+      "median_time_to_first_token_seconds": 0.778,
+      "median_time_to_first_answer_token": 0.778,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -9166,7 +9217,7 @@
     },
     {
       "id": "142b93bf-09c4-42dc-9c3a-50b1a222cbd4",
-      "name": "Claude Sonnet 5 (Adaptive Reasoning, Low Effort)",
+      "name": "Claude Sonnet 5 (Low)",
       "slug": "claude-sonnet-5-low",
       "release_date": "2026-06-30",
       "model_creator": {
@@ -9199,9 +9250,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 68.313,
-      "median_time_to_first_token_seconds": 1.688,
-      "median_time_to_first_answer_token": 1.688,
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
       "metadata": {
         "deprecated": true,
         "is_reasoning": true,
@@ -9450,9 +9501,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.4
       },
-      "median_output_tokens_per_second": 200.68,
-      "median_time_to_first_token_seconds": 1.125,
-      "median_time_to_first_answer_token": 11.091,
+      "median_output_tokens_per_second": 190.312,
+      "median_time_to_first_token_seconds": 1.065,
+      "median_time_to_first_answer_token": 11.574,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -9884,7 +9935,7 @@
     },
     {
       "id": "f2e21112-192e-4aed-ae82-68ca3b38e667",
-      "name": "Claude Sonnet 4.6 (Non-reasoning, Low Effort)",
+      "name": "Claude Sonnet 4.6 (Non-reasoning, Low)",
       "slug": "claude-sonnet-4-6-non-reasoning-low-effort",
       "release_date": "2026-02-17",
       "model_creator": {
@@ -9941,7 +9992,7 @@
     },
     {
       "id": "d58b9ada-fd9d-4fff-a086-242034657963",
-      "name": "Claude Sonnet 5 (Non-reasoning, High Effort)",
+      "name": "Claude Sonnet 5 (Non-reasoning, High)",
       "slug": "claude-sonnet-5-non-reasoning",
       "release_date": "2026-06-30",
       "model_creator": {
@@ -9974,9 +10025,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 72.555,
-      "median_time_to_first_token_seconds": 1.469,
-      "median_time_to_first_answer_token": 1.469,
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
       "metadata": {
         "deprecated": true,
         "is_reasoning": false,
@@ -10131,9 +10182,9 @@
         "price_1m_input_tokens": 0.6,
         "price_1m_output_tokens": 2.5
       },
-      "median_output_tokens_per_second": 172.677,
-      "median_time_to_first_token_seconds": 0.847,
-      "median_time_to_first_answer_token": 14.021,
+      "median_output_tokens_per_second": 162.892,
+      "median_time_to_first_token_seconds": 0.903,
+      "median_time_to_first_answer_token": 14.869,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -10591,7 +10642,7 @@
         "lcr": 0.7,
         "terminalbench_hard": null,
         "terminalbench_v2_1": 0.389513108614232,
-        "terminalbench_v4_0": null,
+        "terminalbench_v4_0": 0,
         "tau2": null,
         "tau_banking": 0.160824742268041
       },
@@ -10717,9 +10768,9 @@
         "price_1m_input_tokens": 0.075,
         "price_1m_output_tokens": 0.22
       },
-      "median_output_tokens_per_second": 331.676,
-      "median_time_to_first_token_seconds": 1.194,
-      "median_time_to_first_answer_token": 7.224,
+      "median_output_tokens_per_second": 361.649,
+      "median_time_to_first_token_seconds": 1.186,
+      "median_time_to_first_answer_token": 6.716,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -11092,9 +11143,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 2.5
       },
-      "median_output_tokens_per_second": 343.46,
-      "median_time_to_first_token_seconds": 6.972,
-      "median_time_to_first_answer_token": 6.972,
+      "median_output_tokens_per_second": 334.865,
+      "median_time_to_first_token_seconds": 7.174,
+      "median_time_to_first_answer_token": 7.174,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -11474,7 +11525,7 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.5
       },
-      "median_output_tokens_per_second": 128.731,
+      "median_output_tokens_per_second": 124.805,
       "median_time_to_first_token_seconds": 2.093,
       "median_time_to_first_answer_token": 2.093,
       "metadata": {
@@ -11596,9 +11647,9 @@
         "price_1m_input_tokens": 0.6,
         "price_1m_output_tokens": 3.6
       },
-      "median_output_tokens_per_second": 85.789,
-      "median_time_to_first_token_seconds": 1.629,
-      "median_time_to_first_answer_token": 1.629,
+      "median_output_tokens_per_second": 86.212,
+      "median_time_to_first_token_seconds": 1.622,
+      "median_time_to_first_answer_token": 1.622,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -12115,9 +12166,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 12
       },
-      "median_output_tokens_per_second": 88.446,
-      "median_time_to_first_token_seconds": 0.764,
-      "median_time_to_first_answer_token": 0.764,
+      "median_output_tokens_per_second": 99.368,
+      "median_time_to_first_token_seconds": 0.762,
+      "median_time_to_first_answer_token": 0.762,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -12443,9 +12494,9 @@
         "price_1m_input_tokens": 0.4,
         "price_1m_output_tokens": 4.8
       },
-      "median_output_tokens_per_second": 99.108,
-      "median_time_to_first_token_seconds": 1.143,
-      "median_time_to_first_answer_token": 1.143,
+      "median_output_tokens_per_second": 124.412,
+      "median_time_to_first_token_seconds": 1.11,
+      "median_time_to_first_answer_token": 1.11,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -12603,13 +12654,13 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 1.98,
-        "price_1m_input_tokens": 1.32,
-        "price_1m_output_tokens": 3.96
+        "price_1m_blended_3_to_1": 1.427,
+        "price_1m_input_tokens": 0.91,
+        "price_1m_output_tokens": 2.98
       },
-      "median_output_tokens_per_second": 154.714,
-      "median_time_to_first_token_seconds": 1.045,
-      "median_time_to_first_answer_token": 1.045,
+      "median_output_tokens_per_second": 118.779,
+      "median_time_to_first_token_seconds": 1.048,
+      "median_time_to_first_answer_token": 1.048,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -12657,9 +12708,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 8
       },
-      "median_output_tokens_per_second": 111.73,
-      "median_time_to_first_token_seconds": 8.557,
-      "median_time_to_first_answer_token": 8.557,
+      "median_output_tokens_per_second": 113.629,
+      "median_time_to_first_token_seconds": 7.653,
+      "median_time_to_first_answer_token": 7.653,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -12714,9 +12765,9 @@
         "price_1m_input_tokens": 0.5,
         "price_1m_output_tokens": 3
       },
-      "median_output_tokens_per_second": 53.967,
-      "median_time_to_first_token_seconds": 1.2,
-      "median_time_to_first_answer_token": 1.2,
+      "median_output_tokens_per_second": 54.608,
+      "median_time_to_first_token_seconds": 1.199,
+      "median_time_to_first_answer_token": 1.199,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -12781,9 +12832,9 @@
         "price_1m_input_tokens": 0.075,
         "price_1m_output_tokens": 0.22
       },
-      "median_output_tokens_per_second": 322.584,
-      "median_time_to_first_token_seconds": 1.772,
-      "median_time_to_first_answer_token": 7.972,
+      "median_output_tokens_per_second": 360.189,
+      "median_time_to_first_token_seconds": 1.804,
+      "median_time_to_first_answer_token": 7.357,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -13074,9 +13125,9 @@
         "price_1m_input_tokens": 0.2,
         "price_1m_output_tokens": 1.15
       },
-      "median_output_tokens_per_second": 209.289,
-      "median_time_to_first_token_seconds": 1.358,
-      "median_time_to_first_answer_token": 10.914,
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
       "metadata": {
         "deprecated": true,
         "is_reasoning": true,
@@ -13907,8 +13958,8 @@
         "price_1m_output_tokens": 0.5
       },
       "median_output_tokens_per_second": 133.599,
-      "median_time_to_first_token_seconds": 0.862,
-      "median_time_to_first_answer_token": 0.862,
+      "median_time_to_first_token_seconds": 0.823,
+      "median_time_to_first_answer_token": 0.823,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -13956,9 +14007,9 @@
         "price_1m_input_tokens": 0.6,
         "price_1m_output_tokens": 3.6
       },
-      "median_output_tokens_per_second": 87.717,
-      "median_time_to_first_token_seconds": 1.72,
-      "median_time_to_first_answer_token": 38.041,
+      "median_output_tokens_per_second": 88.332,
+      "median_time_to_first_token_seconds": 1.71,
+      "median_time_to_first_answer_token": 37.779,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -14028,9 +14079,9 @@
         "price_1m_input_tokens": 0.435,
         "price_1m_output_tokens": 0.87
       },
-      "median_output_tokens_per_second": 23.717,
-      "median_time_to_first_token_seconds": 1.205,
-      "median_time_to_first_answer_token": 1.205,
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
       "metadata": {
         "deprecated": true,
         "is_reasoning": false,
@@ -14095,9 +14146,9 @@
         "price_1m_input_tokens": 0.375,
         "price_1m_output_tokens": 2.25
       },
-      "median_output_tokens_per_second": 144.886,
-      "median_time_to_first_token_seconds": 1.129,
-      "median_time_to_first_answer_token": 38.366,
+      "median_output_tokens_per_second": 140.458,
+      "median_time_to_first_token_seconds": 1.106,
+      "median_time_to_first_answer_token": 39.517,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -14333,9 +14384,9 @@
         "price_1m_input_tokens": 0.4,
         "price_1m_output_tokens": 3.2
       },
-      "median_output_tokens_per_second": 143.338,
-      "median_time_to_first_token_seconds": 1.087,
-      "median_time_to_first_answer_token": 1.087,
+      "median_output_tokens_per_second": 143.658,
+      "median_time_to_first_token_seconds": 1.015,
+      "median_time_to_first_answer_token": 1.015,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -14462,9 +14513,9 @@
         "price_1m_input_tokens": 0.325,
         "price_1m_output_tokens": 1.35
       },
-      "median_output_tokens_per_second": 149.832,
-      "median_time_to_first_token_seconds": 0.594,
-      "median_time_to_first_answer_token": 13.943,
+      "median_output_tokens_per_second": 144.908,
+      "median_time_to_first_token_seconds": 0.521,
+      "median_time_to_first_answer_token": 14.323,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -14897,9 +14948,9 @@
         "price_1m_input_tokens": 1,
         "price_1m_output_tokens": 5
       },
-      "median_output_tokens_per_second": 126.021,
-      "median_time_to_first_token_seconds": 13.494,
-      "median_time_to_first_answer_token": 13.494,
+      "median_output_tokens_per_second": 115.257,
+      "median_time_to_first_token_seconds": 14.969,
+      "median_time_to_first_answer_token": 14.969,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -15140,9 +15191,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 2.5
       },
-      "median_output_tokens_per_second": 122.27,
-      "median_time_to_first_token_seconds": 1.875,
-      "median_time_to_first_answer_token": 18.233,
+      "median_output_tokens_per_second": 128.715,
+      "median_time_to_first_token_seconds": 2.021,
+      "median_time_to_first_answer_token": 17.559,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -15828,9 +15879,9 @@
         "price_1m_input_tokens": 0.4,
         "price_1m_output_tokens": 3.2
       },
-      "median_output_tokens_per_second": 131.336,
-      "median_time_to_first_token_seconds": 1.021,
-      "median_time_to_first_answer_token": 16.25,
+      "median_output_tokens_per_second": 131.778,
+      "median_time_to_first_token_seconds": 1.007,
+      "median_time_to_first_answer_token": 16.184,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -16057,9 +16108,9 @@
         "price_1m_input_tokens": 1,
         "price_1m_output_tokens": 5
       },
-      "median_output_tokens_per_second": 107.348,
-      "median_time_to_first_token_seconds": 0.456,
-      "median_time_to_first_answer_token": 0.456,
+      "median_output_tokens_per_second": 107.529,
+      "median_time_to_first_token_seconds": 0.44,
+      "median_time_to_first_answer_token": 0.44,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -16243,9 +16294,9 @@
         "price_1m_input_tokens": 0.375,
         "price_1m_output_tokens": 2.25
       },
-      "median_output_tokens_per_second": 151.553,
-      "median_time_to_first_token_seconds": 1.1,
-      "median_time_to_first_answer_token": 1.1,
+      "median_output_tokens_per_second": 156.782,
+      "median_time_to_first_token_seconds": 1.103,
+      "median_time_to_first_answer_token": 1.103,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -16633,9 +16684,9 @@
         "price_1m_input_tokens": 0.16,
         "price_1m_output_tokens": 0.65
       },
-      "median_output_tokens_per_second": 77.89,
-      "median_time_to_first_token_seconds": 0.291,
-      "median_time_to_first_answer_token": 25.968,
+      "median_output_tokens_per_second": 77.943,
+      "median_time_to_first_token_seconds": 0.275,
+      "median_time_to_first_answer_token": 25.935,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -16772,9 +16823,9 @@
         "price_1m_input_tokens": 0,
         "price_1m_output_tokens": 0
       },
-      "median_output_tokens_per_second": 34.905,
-      "median_time_to_first_token_seconds": 0.974,
-      "median_time_to_first_answer_token": 50.71,
+      "median_output_tokens_per_second": 35.359,
+      "median_time_to_first_token_seconds": 0.986,
+      "median_time_to_first_answer_token": 50.083,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -17247,9 +17298,9 @@
         "price_1m_input_tokens": 1.5,
         "price_1m_output_tokens": 7.5
       },
-      "median_output_tokens_per_second": 168.676,
-      "median_time_to_first_token_seconds": 0.578,
-      "median_time_to_first_answer_token": 12.435,
+      "median_output_tokens_per_second": 169.484,
+      "median_time_to_first_token_seconds": 0.583,
+      "median_time_to_first_answer_token": 12.384,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -17319,9 +17370,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.3
       },
-      "median_output_tokens_per_second": 149.398,
-      "median_time_to_first_token_seconds": 1.376,
-      "median_time_to_first_answer_token": 14.763,
+      "median_output_tokens_per_second": 144.183,
+      "median_time_to_first_token_seconds": 1.405,
+      "median_time_to_first_answer_token": 15.277,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -17386,9 +17437,9 @@
         "price_1m_input_tokens": 1.25,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 129.817,
-      "median_time_to_first_token_seconds": 19.301,
-      "median_time_to_first_answer_token": 34.708,
+      "median_output_tokens_per_second": 123.957,
+      "median_time_to_first_token_seconds": 17.145,
+      "median_time_to_first_answer_token": 33.279,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -17615,7 +17666,7 @@
         "price_1m_input_tokens": 0.14,
         "price_1m_output_tokens": 0.4
       },
-      "median_output_tokens_per_second": 35.8,
+      "median_output_tokens_per_second": 39.237,
       "median_time_to_first_token_seconds": 0.917,
       "median_time_to_first_answer_token": 0.917,
       "metadata": {
@@ -18216,9 +18267,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 2.5
       },
-      "median_output_tokens_per_second": 216.074,
-      "median_time_to_first_token_seconds": 10.349,
-      "median_time_to_first_answer_token": 19.605,
+      "median_output_tokens_per_second": 214.522,
+      "median_time_to_first_token_seconds": 10.789,
+      "median_time_to_first_answer_token": 20.112,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -18323,9 +18374,9 @@
         "price_1m_input_tokens": 0.17,
         "price_1m_output_tokens": 0.25
       },
-      "median_output_tokens_per_second": 81.389,
-      "median_time_to_first_token_seconds": 0.389,
-      "median_time_to_first_answer_token": 0.389,
+      "median_output_tokens_per_second": 85.082,
+      "median_time_to_first_token_seconds": 0.391,
+      "median_time_to_first_answer_token": 0.391,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -18457,9 +18508,9 @@
         "price_1m_input_tokens": 0,
         "price_1m_output_tokens": 0
       },
-      "median_output_tokens_per_second": 220.424,
-      "median_time_to_first_token_seconds": 0.211,
-      "median_time_to_first_answer_token": 9.284,
+      "median_output_tokens_per_second": 198.165,
+      "median_time_to_first_token_seconds": 0.223,
+      "median_time_to_first_answer_token": 10.316,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -18524,9 +18575,9 @@
         "price_1m_input_tokens": 0.13,
         "price_1m_output_tokens": 0.4
       },
-      "median_output_tokens_per_second": 119.816,
-      "median_time_to_first_token_seconds": 0.686,
-      "median_time_to_first_answer_token": 0.686,
+      "median_output_tokens_per_second": 111.657,
+      "median_time_to_first_token_seconds": 0.672,
+      "median_time_to_first_answer_token": 0.672,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -18596,9 +18647,9 @@
         "price_1m_input_tokens": 0.03,
         "price_1m_output_tokens": 0.15
       },
-      "median_output_tokens_per_second": 14.652,
+      "median_output_tokens_per_second": 16.011,
       "median_time_to_first_token_seconds": 0.578,
-      "median_time_to_first_answer_token": 137.08,
+      "median_time_to_first_answer_token": 125.494,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -18849,9 +18900,9 @@
         "price_1m_input_tokens": 0.06,
         "price_1m_output_tokens": 0.2
       },
-      "median_output_tokens_per_second": 292.171,
-      "median_time_to_first_token_seconds": 0.409,
-      "median_time_to_first_answer_token": 7.254,
+      "median_output_tokens_per_second": 284.385,
+      "median_time_to_first_token_seconds": 0.4,
+      "median_time_to_first_answer_token": 7.433,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -18911,9 +18962,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 0.9
       },
-      "median_output_tokens_per_second": 159.689,
-      "median_time_to_first_token_seconds": 0.858,
-      "median_time_to_first_answer_token": 13.382,
+      "median_output_tokens_per_second": 154.483,
+      "median_time_to_first_token_seconds": 0.85,
+      "median_time_to_first_answer_token": 13.797,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -18978,9 +19029,9 @@
         "price_1m_input_tokens": 1.25,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 137.72,
-      "median_time_to_first_token_seconds": 4.518,
-      "median_time_to_first_answer_token": 19.04,
+      "median_output_tokens_per_second": 141.442,
+      "median_time_to_first_token_seconds": 3.62,
+      "median_time_to_first_answer_token": 17.76,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -19358,9 +19409,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 2.5
       },
-      "median_output_tokens_per_second": 194.163,
-      "median_time_to_first_token_seconds": 12.332,
-      "median_time_to_first_answer_token": 22.633,
+      "median_output_tokens_per_second": 226.558,
+      "median_time_to_first_token_seconds": 13.355,
+      "median_time_to_first_answer_token": 22.183,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -19472,9 +19523,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.8
       },
-      "median_output_tokens_per_second": 232.838,
-      "median_time_to_first_token_seconds": 0.934,
-      "median_time_to_first_answer_token": 0.934,
+      "median_output_tokens_per_second": 231.914,
+      "median_time_to_first_token_seconds": 0.959,
+      "median_time_to_first_answer_token": 0.959,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -19753,9 +19804,9 @@
         "price_1m_input_tokens": 0.25,
         "price_1m_output_tokens": 0.75
       },
-      "median_output_tokens_per_second": 825.509,
-      "median_time_to_first_token_seconds": 2.863,
-      "median_time_to_first_answer_token": 2.863,
+      "median_output_tokens_per_second": 841.966,
+      "median_time_to_first_token_seconds": 2.807,
+      "median_time_to_first_answer_token": 2.807,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -20300,9 +20351,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 2.5
       },
-      "median_output_tokens_per_second": 205.977,
-      "median_time_to_first_token_seconds": 5.056,
-      "median_time_to_first_answer_token": 14.766,
+      "median_output_tokens_per_second": 202.158,
+      "median_time_to_first_token_seconds": 4.103,
+      "median_time_to_first_answer_token": 13.996,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -20672,9 +20723,9 @@
         "price_1m_input_tokens": 0.15,
         "price_1m_output_tokens": 0.595
       },
-      "median_output_tokens_per_second": 154.951,
-      "median_time_to_first_token_seconds": 0.53,
-      "median_time_to_first_answer_token": 13.438,
+      "median_output_tokens_per_second": 161.877,
+      "median_time_to_first_token_seconds": 0.517,
+      "median_time_to_first_answer_token": 12.872,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -21181,9 +21232,9 @@
         "price_1m_input_tokens": 0.15,
         "price_1m_output_tokens": 0.6
       },
-      "median_output_tokens_per_second": 173.192,
-      "median_time_to_first_token_seconds": 0.668,
-      "median_time_to_first_answer_token": 12.216,
+      "median_output_tokens_per_second": 173.831,
+      "median_time_to_first_token_seconds": 0.632,
+      "median_time_to_first_answer_token": 12.137,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -21392,9 +21443,9 @@
         "price_1m_input_tokens": 0.15,
         "price_1m_output_tokens": 1.2
       },
-      "median_output_tokens_per_second": 169.803,
-      "median_time_to_first_token_seconds": 1.146,
-      "median_time_to_first_answer_token": 12.924,
+      "median_output_tokens_per_second": 171.714,
+      "median_time_to_first_token_seconds": 1.187,
+      "median_time_to_first_answer_token": 12.834,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -21464,9 +21515,9 @@
         "price_1m_input_tokens": 0.135,
         "price_1m_output_tokens": 0.2
       },
-      "median_output_tokens_per_second": 34.917,
-      "median_time_to_first_token_seconds": 1.048,
-      "median_time_to_first_answer_token": 58.326,
+      "median_output_tokens_per_second": 53.125,
+      "median_time_to_first_token_seconds": 1.044,
+      "median_time_to_first_answer_token": 38.691,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -21710,9 +21761,9 @@
         "price_1m_input_tokens": 0.06,
         "price_1m_output_tokens": 0.25
       },
-      "median_output_tokens_per_second": 59.346,
-      "median_time_to_first_token_seconds": 0.337,
-      "median_time_to_first_answer_token": 34.038,
+      "median_output_tokens_per_second": 54.947,
+      "median_time_to_first_token_seconds": 0.434,
+      "median_time_to_first_answer_token": 36.833,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -21834,9 +21885,9 @@
         "price_1m_input_tokens": 0,
         "price_1m_output_tokens": 0
       },
-      "median_output_tokens_per_second": 58.514,
+      "median_output_tokens_per_second": 55.911,
       "median_time_to_first_token_seconds": 1.636,
-      "median_time_to_first_answer_token": 35.816,
+      "median_time_to_first_answer_token": 37.407,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -22142,9 +22193,9 @@
         "price_1m_input_tokens": 0.25,
         "price_1m_output_tokens": 0.8
       },
-      "median_output_tokens_per_second": 361.067,
-      "median_time_to_first_token_seconds": 1.028,
-      "median_time_to_first_answer_token": 6.567,
+      "median_output_tokens_per_second": 371.23,
+      "median_time_to_first_token_seconds": 1.014,
+      "median_time_to_first_answer_token": 6.401,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -22214,9 +22265,9 @@
         "price_1m_input_tokens": 0.03,
         "price_1m_output_tokens": 0.15
       },
-      "median_output_tokens_per_second": 14.397,
-      "median_time_to_first_token_seconds": 0.757,
-      "median_time_to_first_answer_token": 0.757,
+      "median_output_tokens_per_second": 14.286,
+      "median_time_to_first_token_seconds": 0.799,
+      "median_time_to_first_answer_token": 0.799,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -22656,9 +22707,9 @@
         "price_1m_input_tokens": 0.195,
         "price_1m_output_tokens": 1.095
       },
-      "median_output_tokens_per_second": 261.649,
-      "median_time_to_first_token_seconds": 0.242,
-      "median_time_to_first_answer_token": 7.886,
+      "median_output_tokens_per_second": 262.664,
+      "median_time_to_first_token_seconds": 0.247,
+      "median_time_to_first_answer_token": 7.862,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -22728,9 +22779,9 @@
         "price_1m_input_tokens": 0.15,
         "price_1m_output_tokens": 0.545
       },
-      "median_output_tokens_per_second": 157.912,
-      "median_time_to_first_token_seconds": 0.537,
-      "median_time_to_first_answer_token": 13.202,
+      "median_output_tokens_per_second": 155.929,
+      "median_time_to_first_token_seconds": 0.511,
+      "median_time_to_first_answer_token": 13.337,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -22857,9 +22908,9 @@
         "price_1m_input_tokens": 0.26,
         "price_1m_output_tokens": 0.91
       },
-      "median_output_tokens_per_second": 83.632,
-      "median_time_to_first_token_seconds": 0.594,
-      "median_time_to_first_answer_token": 0.594,
+      "median_output_tokens_per_second": 77.341,
+      "median_time_to_first_token_seconds": 0.604,
+      "median_time_to_first_answer_token": 0.604,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -23001,9 +23052,9 @@
         "price_1m_input_tokens": 1.25,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 120.708,
-      "median_time_to_first_token_seconds": 0.704,
-      "median_time_to_first_answer_token": 0.704,
+      "median_output_tokens_per_second": 126.736,
+      "median_time_to_first_token_seconds": 0.731,
+      "median_time_to_first_answer_token": 0.731,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -23051,9 +23102,9 @@
         "price_1m_input_tokens": 0.07,
         "price_1m_output_tokens": 0.215
       },
-      "median_output_tokens_per_second": 217.167,
-      "median_time_to_first_token_seconds": 0.485,
-      "median_time_to_first_answer_token": 9.694,
+      "median_output_tokens_per_second": 215.106,
+      "median_time_to_first_token_seconds": 0.542,
+      "median_time_to_first_answer_token": 9.839,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -23195,9 +23246,9 @@
         "price_1m_input_tokens": 0,
         "price_1m_output_tokens": 0
       },
-      "median_output_tokens_per_second": 76.298,
+      "median_output_tokens_per_second": 83.749,
       "median_time_to_first_token_seconds": 0.269,
-      "median_time_to_first_answer_token": 26.482,
+      "median_time_to_first_answer_token": 24.15,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -23714,9 +23765,9 @@
         "price_1m_input_tokens": 0.15,
         "price_1m_output_tokens": 1.2
       },
-      "median_output_tokens_per_second": 164.157,
-      "median_time_to_first_token_seconds": 1.032,
-      "median_time_to_first_answer_token": 1.032,
+      "median_output_tokens_per_second": 173.617,
+      "median_time_to_first_token_seconds": 1.022,
+      "median_time_to_first_answer_token": 1.022,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -23867,6 +23918,21 @@
         "openrouter_api_id": "qwen/qwen3-coder-30b-a3b-instruct",
         "context_window_tokens": 262144,
         "retained_fields": {
+          "deprecated": {
+            "source": "https://artificialanalysis.ai/leaderboards/models",
+            "collected_at": "2026-10-02",
+            "reason": "Field absent from current AA leaderboard; retained from last published metadata."
+          },
+          "is_reasoning": {
+            "source": "https://artificialanalysis.ai/leaderboards/models",
+            "collected_at": "2026-10-02",
+            "reason": "Field absent from current AA leaderboard; retained from last published metadata."
+          },
+          "is_open_weights": {
+            "source": "https://artificialanalysis.ai/leaderboards/models",
+            "collected_at": "2026-10-02",
+            "reason": "Field absent from current AA leaderboard; retained from last published metadata."
+          },
           "license_name": {
             "source": "https://artificialanalysis.ai/leaderboards/models",
             "collected_at": "2026-09-09",
@@ -23885,6 +23951,11 @@
           "openrouter_api_id": {
             "source": "https://artificialanalysis.ai/leaderboards/models",
             "collected_at": "2026-09-09",
+            "reason": "Field absent from current AA leaderboard; retained from last published metadata."
+          },
+          "context_window_tokens": {
+            "source": "https://artificialanalysis.ai/leaderboards/models",
+            "collected_at": "2026-10-02",
             "reason": "Field absent from current AA leaderboard; retained from last published metadata."
           }
         }
@@ -24308,9 +24379,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.3
       },
-      "median_output_tokens_per_second": 153.275,
-      "median_time_to_first_token_seconds": 1.39,
-      "median_time_to_first_answer_token": 1.39,
+      "median_output_tokens_per_second": 148.067,
+      "median_time_to_first_token_seconds": 1.396,
+      "median_time_to_first_answer_token": 1.396,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -24432,9 +24503,9 @@
         "price_1m_input_tokens": 0.5,
         "price_1m_output_tokens": 1.5
       },
-      "median_output_tokens_per_second": 77.233,
-      "median_time_to_first_token_seconds": 0.705,
-      "median_time_to_first_answer_token": 0.705,
+      "median_output_tokens_per_second": 80.64,
+      "median_time_to_first_token_seconds": 0.753,
+      "median_time_to_first_answer_token": 0.753,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -24504,9 +24575,9 @@
         "price_1m_input_tokens": 0.35,
         "price_1m_output_tokens": 1.2
       },
-      "median_output_tokens_per_second": 87.345,
-      "median_time_to_first_token_seconds": 0.859,
-      "median_time_to_first_answer_token": 0.859,
+      "median_output_tokens_per_second": 92.468,
+      "median_time_to_first_token_seconds": 0.901,
+      "median_time_to_first_answer_token": 0.901,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -24857,9 +24928,9 @@
         "price_1m_input_tokens": 0.03,
         "price_1m_output_tokens": 0.12
       },
-      "median_output_tokens_per_second": 231.496,
-      "median_time_to_first_token_seconds": 0.233,
-      "median_time_to_first_answer_token": 8.873,
+      "median_output_tokens_per_second": 230.791,
+      "median_time_to_first_token_seconds": 0.24,
+      "median_time_to_first_answer_token": 8.906,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -25234,9 +25305,9 @@
         "price_1m_input_tokens": 0.15,
         "price_1m_output_tokens": 0.6
       },
-      "median_output_tokens_per_second": 154.338,
-      "median_time_to_first_token_seconds": 0.526,
-      "median_time_to_first_answer_token": 0.526,
+      "median_output_tokens_per_second": 164.23,
+      "median_time_to_first_token_seconds": 0.523,
+      "median_time_to_first_answer_token": 0.523,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -25373,9 +25444,9 @@
         "price_1m_input_tokens": 0.07,
         "price_1m_output_tokens": 0.18
       },
-      "median_output_tokens_per_second": 195.352,
-      "median_time_to_first_token_seconds": 0.415,
-      "median_time_to_first_answer_token": 10.652,
+      "median_output_tokens_per_second": 196.13,
+      "median_time_to_first_token_seconds": 0.424,
+      "median_time_to_first_answer_token": 10.621,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -25669,9 +25740,9 @@
         "price_1m_input_tokens": 0.02,
         "price_1m_output_tokens": 0.1
       },
-      "median_output_tokens_per_second": 82.811,
-      "median_time_to_first_token_seconds": 0.351,
-      "median_time_to_first_answer_token": 24.502,
+      "median_output_tokens_per_second": 78.167,
+      "median_time_to_first_token_seconds": 0.393,
+      "median_time_to_first_answer_token": 25.979,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -25736,9 +25807,9 @@
         "price_1m_input_tokens": 0.05,
         "price_1m_output_tokens": 0.2
       },
-      "median_output_tokens_per_second": 151.276,
-      "median_time_to_first_token_seconds": 0.605,
-      "median_time_to_first_answer_token": 13.826,
+      "median_output_tokens_per_second": 199.364,
+      "median_time_to_first_token_seconds": 0.577,
+      "median_time_to_first_answer_token": 10.609,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -26059,9 +26130,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 2.5
       },
-      "median_output_tokens_per_second": 217.023,
-      "median_time_to_first_token_seconds": 0.884,
-      "median_time_to_first_answer_token": 0.884,
+      "median_output_tokens_per_second": 221.778,
+      "median_time_to_first_token_seconds": 0.886,
+      "median_time_to_first_answer_token": 0.886,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -27739,9 +27810,9 @@
         "price_1m_input_tokens": 0.19,
         "price_1m_output_tokens": 0.68
       },
-      "median_output_tokens_per_second": 108.637,
-      "median_time_to_first_token_seconds": 0.655,
-      "median_time_to_first_answer_token": 0.655,
+      "median_output_tokens_per_second": 84.635,
+      "median_time_to_first_token_seconds": 0.682,
+      "median_time_to_first_answer_token": 0.682,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -28604,9 +28675,9 @@
         "price_1m_input_tokens": 0.25,
         "price_1m_output_tokens": 0.97
       },
-      "median_output_tokens_per_second": 109.737,
-      "median_time_to_first_token_seconds": 0.922,
-      "median_time_to_first_answer_token": 19.147,
+      "median_output_tokens_per_second": 109.967,
+      "median_time_to_first_token_seconds": 0.936,
+      "median_time_to_first_answer_token": 19.123,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -28924,9 +28995,9 @@
         "price_1m_input_tokens": 0.71,
         "price_1m_output_tokens": 0.72
       },
-      "median_output_tokens_per_second": 80.239,
-      "median_time_to_first_token_seconds": 0.627,
-      "median_time_to_first_answer_token": 0.627,
+      "median_output_tokens_per_second": 80.531,
+      "median_time_to_first_token_seconds": 0.614,
+      "median_time_to_first_answer_token": 0.614,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -29686,9 +29757,9 @@
         "price_1m_input_tokens": 1,
         "price_1m_output_tokens": 3
       },
-      "median_output_tokens_per_second": 36.891,
-      "median_time_to_first_token_seconds": 0.751,
-      "median_time_to_first_answer_token": 54.965,
+      "median_output_tokens_per_second": 38.998,
+      "median_time_to_first_token_seconds": 0.699,
+      "median_time_to_first_answer_token": 51.985,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -29875,9 +29946,9 @@
         "price_1m_input_tokens": 0.02,
         "price_1m_output_tokens": 0.1
       },
-      "median_output_tokens_per_second": 79.759,
-      "median_time_to_first_token_seconds": 0.28,
-      "median_time_to_first_answer_token": 0.28,
+      "median_output_tokens_per_second": 72.18,
+      "median_time_to_first_token_seconds": 0.295,
+      "median_time_to_first_answer_token": 0.295,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -30009,9 +30080,9 @@
         "price_1m_input_tokens": 0.04,
         "price_1m_output_tokens": 0.16
       },
-      "median_output_tokens_per_second": 100.118,
-      "median_time_to_first_token_seconds": 4.747,
-      "median_time_to_first_answer_token": 24.723,
+      "median_output_tokens_per_second": 71.595,
+      "median_time_to_first_token_seconds": 9.817,
+      "median_time_to_first_answer_token": 37.752,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -30081,9 +30152,9 @@
         "price_1m_input_tokens": 1,
         "price_1m_output_tokens": 3
       },
-      "median_output_tokens_per_second": 37.282,
-      "median_time_to_first_token_seconds": 0.744,
-      "median_time_to_first_answer_token": 0.744,
+      "median_output_tokens_per_second": 39.13,
+      "median_time_to_first_token_seconds": 0.738,
+      "median_time_to_first_answer_token": 0.738,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -30161,73 +30232,6 @@
         "huggingface_url": null,
         "openrouter_api_id": null,
         "context_window_tokens": 1000000
-      }
-    },
-    {
-      "id": "9ee13921-62a4-425a-a22b-df3302198d93",
-      "name": "NVIDIA Nemotron 3 Nano 4B",
-      "slug": "nvidia-nemotron-3-nano-4b",
-      "release_date": "2026-03-16",
-      "model_creator": {
-        "id": "0c303112-430d-4367-a484-51defaa2e166",
-        "name": "NVIDIA",
-        "slug": "nvidia"
-      },
-      "evaluations": {
-        "artificial_analysis_intelligence_index": 7.4,
-        "artificial_analysis_coding_index": 8,
-        "artificial_analysis_math_index": null,
-        "mmlu_pro": null,
-        "gpqa": 0.513,
-        "hle": 0.049,
-        "livecodebench": null,
-        "scicode": 0.161,
-        "math_500": null,
-        "aime": null,
-        "aime_25": null,
-        "ifbench": 0.582312925170068,
-        "lcr": 0.216666666666667,
-        "terminalbench_hard": 0.0681818181818182,
-        "terminalbench_v2_1": 0.0374531835205993,
-        "terminalbench_v4_0": 0,
-        "tau2": 0.280701754385965,
-        "tau_banking": null
-      },
-      "pricing": {
-        "price_1m_blended_3_to_1": 0,
-        "price_1m_input_tokens": 0,
-        "price_1m_output_tokens": 0
-      },
-      "median_output_tokens_per_second": 0,
-      "median_time_to_first_token_seconds": 0,
-      "median_time_to_first_answer_token": 0,
-      "metadata": {
-        "deprecated": false,
-        "is_reasoning": true,
-        "is_open_weights": true,
-        "commercial_allowed": null,
-        "license_name": "Nvidia Nemotron Open Model License",
-        "license_url": "https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/",
-        "huggingface_url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16",
-        "openrouter_api_id": null,
-        "context_window_tokens": 262000,
-        "retained_fields": {
-          "license_name": {
-            "source": "https://artificialanalysis.ai/leaderboards/models",
-            "collected_at": "2026-09-09",
-            "reason": "Field absent from current AA leaderboard; retained from last published metadata."
-          },
-          "license_url": {
-            "source": "https://artificialanalysis.ai/leaderboards/models",
-            "collected_at": "2026-09-09",
-            "reason": "Field absent from current AA leaderboard; retained from last published metadata."
-          },
-          "huggingface_url": {
-            "source": "https://artificialanalysis.ai/leaderboards/models",
-            "collected_at": "2026-09-09",
-            "reason": "Field absent from current AA leaderboard; retained from last published metadata."
-          }
-        }
       }
     },
     {
@@ -32002,8 +32006,8 @@
         "price_1m_output_tokens": 10
       },
       "median_output_tokens_per_second": 66.572,
-      "median_time_to_first_token_seconds": 0.413,
-      "median_time_to_first_answer_token": 0.413,
+      "median_time_to_first_token_seconds": 0.468,
+      "median_time_to_first_answer_token": 0.468,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -32401,9 +32405,9 @@
         "price_1m_input_tokens": 0.05,
         "price_1m_output_tokens": 0.2
       },
-      "median_output_tokens_per_second": 221.323,
-      "median_time_to_first_token_seconds": 0.34,
-      "median_time_to_first_answer_token": 0.34,
+      "median_output_tokens_per_second": 240.771,
+      "median_time_to_first_token_seconds": 0.369,
+      "median_time_to_first_answer_token": 0.369,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -32473,9 +32477,9 @@
         "price_1m_input_tokens": 0.05,
         "price_1m_output_tokens": 0.195
       },
-      "median_output_tokens_per_second": 158.167,
-      "median_time_to_first_token_seconds": 1.435,
-      "median_time_to_first_answer_token": 1.435,
+      "median_output_tokens_per_second": 157.725,
+      "median_time_to_first_token_seconds": 1.393,
+      "median_time_to_first_answer_token": 1.393,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -34478,9 +34482,9 @@
         "price_1m_input_tokens": 0.2,
         "price_1m_output_tokens": 0.7
       },
-      "median_output_tokens_per_second": 2356.613,
-      "median_time_to_first_token_seconds": 0.49,
-      "median_time_to_first_answer_token": 0.49,
+      "median_output_tokens_per_second": 2430.154,
+      "median_time_to_first_token_seconds": 0.487,
+      "median_time_to_first_answer_token": 0.487,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -34662,9 +34666,9 @@
         "price_1m_input_tokens": 0,
         "price_1m_output_tokens": 0
       },
-      "median_output_tokens_per_second": 44.85,
-      "median_time_to_first_token_seconds": 0.33,
-      "median_time_to_first_answer_token": 0.33,
+      "median_output_tokens_per_second": 45.31,
+      "median_time_to_first_token_seconds": 0.334,
+      "median_time_to_first_answer_token": 0.334,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -35114,9 +35118,9 @@
         "price_1m_input_tokens": 0.06,
         "price_1m_output_tokens": 0.25
       },
-      "median_output_tokens_per_second": 32.843,
-      "median_time_to_first_token_seconds": 26.749,
-      "median_time_to_first_answer_token": 26.749,
+      "median_output_tokens_per_second": 54.18,
+      "median_time_to_first_token_seconds": 9.431,
+      "median_time_to_first_answer_token": 9.431,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -35181,9 +35185,9 @@
         "price_1m_input_tokens": 0.2,
         "price_1m_output_tokens": 0.2
       },
-      "median_output_tokens_per_second": 75.954,
-      "median_time_to_first_token_seconds": 0.669,
-      "median_time_to_first_answer_token": 0.669,
+      "median_output_tokens_per_second": 90.25,
+      "median_time_to_first_token_seconds": 0.61,
+      "median_time_to_first_answer_token": 0.61,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -35320,9 +35324,9 @@
         "price_1m_input_tokens": 0.25,
         "price_1m_output_tokens": 0.97
       },
-      "median_output_tokens_per_second": 107.46,
-      "median_time_to_first_token_seconds": 0.887,
-      "median_time_to_first_answer_token": 0.887,
+      "median_output_tokens_per_second": 108.088,
+      "median_time_to_first_token_seconds": 0.889,
+      "median_time_to_first_answer_token": 0.889,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -35854,9 +35858,9 @@
         "price_1m_input_tokens": 0.125,
         "price_1m_output_tokens": 0.5
       },
-      "median_output_tokens_per_second": 34.85,
-      "median_time_to_first_token_seconds": 1.103,
-      "median_time_to_first_answer_token": 1.103,
+      "median_output_tokens_per_second": 31.733,
+      "median_time_to_first_token_seconds": 1.107,
+      "median_time_to_first_answer_token": 1.107,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -35976,9 +35980,9 @@
         "price_1m_input_tokens": 0.035,
         "price_1m_output_tokens": 0.14
       },
-      "median_output_tokens_per_second": 242.493,
-      "median_time_to_first_token_seconds": 0.546,
-      "median_time_to_first_answer_token": 0.546,
+      "median_output_tokens_per_second": 270.29,
+      "median_time_to_first_token_seconds": 0.605,
+      "median_time_to_first_answer_token": 0.605,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -36284,9 +36288,9 @@
         "price_1m_input_tokens": 0.2,
         "price_1m_output_tokens": 0.6
       },
-      "median_output_tokens_per_second": 194.963,
-      "median_time_to_first_token_seconds": 0.781,
-      "median_time_to_first_answer_token": 0.781,
+      "median_output_tokens_per_second": 185.856,
+      "median_time_to_first_token_seconds": 0.797,
+      "median_time_to_first_answer_token": 0.797,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -36428,9 +36432,9 @@
         "price_1m_input_tokens": 0,
         "price_1m_output_tokens": 0
       },
-      "median_output_tokens_per_second": 17.23,
-      "median_time_to_first_token_seconds": 0.352,
-      "median_time_to_first_answer_token": 0.352,
+      "median_output_tokens_per_second": 17.25,
+      "median_time_to_first_token_seconds": 0.339,
+      "median_time_to_first_answer_token": 0.339,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -37098,9 +37102,9 @@
         "price_1m_input_tokens": 0.2,
         "price_1m_output_tokens": 0.8
       },
-      "median_output_tokens_per_second": 94.426,
-      "median_time_to_first_token_seconds": 0.838,
-      "median_time_to_first_answer_token": 22.019,
+      "median_output_tokens_per_second": 95.419,
+      "median_time_to_first_token_seconds": 0.816,
+      "median_time_to_first_answer_token": 21.777,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -37886,9 +37890,9 @@
         "price_1m_input_tokens": 0.15,
         "price_1m_output_tokens": 0.15
       },
-      "median_output_tokens_per_second": 100.566,
-      "median_time_to_first_token_seconds": 0.491,
-      "median_time_to_first_answer_token": 0.491,
+      "median_output_tokens_per_second": 108.195,
+      "median_time_to_first_token_seconds": 0.469,
+      "median_time_to_first_answer_token": 0.469,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -38219,9 +38223,9 @@
         "price_1m_input_tokens": 0.345,
         "price_1m_output_tokens": 0.345
       },
-      "median_output_tokens_per_second": 14.014,
-      "median_time_to_first_token_seconds": 1.339,
-      "median_time_to_first_answer_token": 1.339,
+      "median_output_tokens_per_second": 13.941,
+      "median_time_to_first_token_seconds": 1.618,
+      "median_time_to_first_answer_token": 1.618,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -40841,9 +40845,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.1
       },
-      "median_output_tokens_per_second": 223.989,
-      "median_time_to_first_token_seconds": 0.494,
-      "median_time_to_first_answer_token": 0.494,
+      "median_output_tokens_per_second": 227.136,
+      "median_time_to_first_token_seconds": 0.46,
+      "median_time_to_first_answer_token": 0.46,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -41804,9 +41808,9 @@
         "price_1m_input_tokens": 0,
         "price_1m_output_tokens": 0
       },
-      "median_output_tokens_per_second": 130.511,
-      "median_time_to_first_token_seconds": 0.215,
-      "median_time_to_first_answer_token": 0.215,
+      "median_output_tokens_per_second": 129.334,
+      "median_time_to_first_token_seconds": 0.214,
+      "median_time_to_first_answer_token": 0.214,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -41817,6 +41821,73 @@
         "huggingface_url": "https://huggingface.co/CohereLabs/tiny-aya-global",
         "openrouter_api_id": null,
         "context_window_tokens": 8192,
+        "retained_fields": {
+          "license_name": {
+            "source": "https://artificialanalysis.ai/leaderboards/models",
+            "collected_at": "2026-09-09",
+            "reason": "Field absent from current AA leaderboard; retained from last published metadata."
+          },
+          "license_url": {
+            "source": "https://artificialanalysis.ai/leaderboards/models",
+            "collected_at": "2026-09-09",
+            "reason": "Field absent from current AA leaderboard; retained from last published metadata."
+          },
+          "huggingface_url": {
+            "source": "https://artificialanalysis.ai/leaderboards/models",
+            "collected_at": "2026-09-09",
+            "reason": "Field absent from current AA leaderboard; retained from last published metadata."
+          }
+        }
+      }
+    },
+    {
+      "id": "9ee13921-62a4-425a-a22b-df3302198d93",
+      "name": "NVIDIA Nemotron 3 Nano 4B",
+      "slug": "nvidia-nemotron-3-nano-4b",
+      "release_date": "2026-03-16",
+      "model_creator": {
+        "id": "0c303112-430d-4367-a484-51defaa2e166",
+        "name": "NVIDIA",
+        "slug": "nvidia"
+      },
+      "evaluations": {
+        "artificial_analysis_intelligence_index": 4.8,
+        "artificial_analysis_coding_index": 8,
+        "artificial_analysis_math_index": null,
+        "mmlu_pro": null,
+        "gpqa": 0.513,
+        "hle": 0.049,
+        "livecodebench": null,
+        "scicode": 0.161,
+        "math_500": null,
+        "aime": null,
+        "aime_25": null,
+        "ifbench": 0.582312925170068,
+        "lcr": 0.216666666666667,
+        "terminalbench_hard": 0.0681818181818182,
+        "terminalbench_v2_1": 0.0374531835205993,
+        "terminalbench_v4_0": 0,
+        "tau2": 0.280701754385965,
+        "tau_banking": null
+      },
+      "pricing": {
+        "price_1m_blended_3_to_1": 0,
+        "price_1m_input_tokens": 0,
+        "price_1m_output_tokens": 0
+      },
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
+      "metadata": {
+        "deprecated": false,
+        "is_reasoning": true,
+        "is_open_weights": true,
+        "commercial_allowed": null,
+        "license_name": "Nvidia Nemotron Open Model License",
+        "license_url": "https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/",
+        "huggingface_url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16",
+        "openrouter_api_id": null,
+        "context_window_tokens": 262000,
         "retained_fields": {
           "license_name": {
             "source": "https://artificialanalysis.ai/leaderboards/models",
@@ -41956,56 +42027,6 @@
         "huggingface_url": null,
         "openrouter_api_id": null,
         "context_window_tokens": 131072
-      }
-    },
-    {
-      "id": "bbc2ffea-cf6b-43be-8c41-1769347e234d",
-      "name": "Claude Sonnet 5.5 (Adaptive Reasoning, Low Effort, Default Fallback)",
-      "slug": "claude-sonnet-5-5-low",
-      "release_date": "2026-09-28",
-      "model_creator": {
-        "id": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
-        "name": "Anthropic",
-        "slug": "anthropic"
-      },
-      "evaluations": {
-        "artificial_analysis_intelligence_index": null,
-        "artificial_analysis_coding_index": null,
-        "artificial_analysis_math_index": null,
-        "mmlu_pro": null,
-        "gpqa": null,
-        "hle": 0.362,
-        "livecodebench": null,
-        "scicode": 0.491,
-        "math_500": null,
-        "aime": null,
-        "aime_25": null,
-        "ifbench": null,
-        "lcr": 0.76,
-        "terminalbench_hard": null,
-        "terminalbench_v2_1": null,
-        "terminalbench_v4_0": 0.207070707070707,
-        "tau2": null,
-        "tau_banking": null
-      },
-      "pricing": {
-        "price_1m_blended_3_to_1": 4,
-        "price_1m_input_tokens": 2,
-        "price_1m_output_tokens": 10
-      },
-      "median_output_tokens_per_second": 110.722,
-      "median_time_to_first_token_seconds": 0.917,
-      "median_time_to_first_answer_token": 0.917,
-      "metadata": {
-        "deprecated": false,
-        "is_reasoning": true,
-        "is_open_weights": false,
-        "commercial_allowed": null,
-        "license_name": null,
-        "license_url": null,
-        "huggingface_url": null,
-        "openrouter_api_id": null,
-        "context_window_tokens": 1000000
       }
     },
     {

@@ -1,0 +1,522 @@
+[
+  {
+    "id": "public:81ab4a6e286bc5e0acfb0487",
+    "benchmark_id": "rsi-exam::0.1",
+    "subject": {
+      "source_id": "Opus 5.5 [claude code · max]",
+      "name": "Opus 5.5 [claude code · max]",
+      "model_id": null,
+      "variant": null,
+      "harness": "claude code"
+    },
+    "value": 0.5357,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://rsi-exam.ai/",
+      "retrieved_at": "2026-10-03T08:01:35.136445+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/71692ce73242c8db8540.gz",
+      "sha256": "71692ce73242c8db85402b36a4ef580cf2d3775336facd596f55ed1548665073",
+      "locator": "rsi_exam_leaderboard; source row 0; Opus 5.5 [claude code · max]; field score"
+    },
+    "protocol": "RSI-Exam 0.1 (aiming-lab), Full board: the mean frozen normalised hidden-set score over all 88 active tasks (35 public + 53 private) in six domains. Per task the agent inherits a working but weak executable method or harness, experiments against a visible split inside a sealed container under the task's budget (12 h agent timeout in the published harness commands), and submits one executable artifact that a fresh verifier container re-runs once on the hidden split; that single hidden-set number is the task score, normalised against anchors frozen before the release (inherited starter 0.00, optional frontier-calibrated reference 0.60, upper bound 1.00 where a finite one exists, exponential tail otherwise). One rollout per model x harness per task, so the board estimates no run-to-run variance; container egress is restricted to the model provider API. Each row is one model x agent-harness pair as the source labels it; the Public 35 / Private 53 restrictions of the same runs stay in the row context. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Opus 5.5\",\"harness\":\"claude code\",\"stated_effort\":\"max\",\"rank\":1,\"scope_scores\":{\"full\":0.5357,\"private\":0.5199,\"public\":0.5596},\"scope_tasks\":{\"full\":88,\"public\":35,\"private\":53},\"mean_spend_usd\":null,\"mean_run_time_min\":null,\"mean_output_tokens\":null,\"resource_row_id\":null,\"resource_task_counts\":null}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://rsi-exam.ai/blog.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e09c91b5a221f4221351.gz",
+        "sha256": "e09c91b5a221f42213515c89ed8059d28382eec3594ecb7e6c8546a16f2eef4f",
+        "retrieved_at": "2026-10-03T08:01:38.885591+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:42d30b88ea8c33cee7753a3c",
+    "benchmark_id": "rsi-exam::0.1",
+    "subject": {
+      "source_id": "GPT-6-astra [codex · max]",
+      "name": "GPT-6-astra [codex · max]",
+      "model_id": "gpt-6-astra::max",
+      "variant": null,
+      "harness": "codex"
+    },
+    "value": 0.5126,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://rsi-exam.ai/",
+      "retrieved_at": "2026-10-03T08:01:35.136445+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/71692ce73242c8db8540.gz",
+      "sha256": "71692ce73242c8db85402b36a4ef580cf2d3775336facd596f55ed1548665073",
+      "locator": "rsi_exam_leaderboard; source row 1; GPT-6-astra [codex · max]; field score"
+    },
+    "protocol": "RSI-Exam 0.1 (aiming-lab), Full board: the mean frozen normalised hidden-set score over all 88 active tasks (35 public + 53 private) in six domains. Per task the agent inherits a working but weak executable method or harness, experiments against a visible split inside a sealed container under the task's budget (12 h agent timeout in the published harness commands), and submits one executable artifact that a fresh verifier container re-runs once on the hidden split; that single hidden-set number is the task score, normalised against anchors frozen before the release (inherited starter 0.00, optional frontier-calibrated reference 0.60, upper bound 1.00 where a finite one exists, exponential tail otherwise). One rollout per model x harness per task, so the board estimates no run-to-run variance; container egress is restricted to the model provider API. Each row is one model x agent-harness pair as the source labels it; the Public 35 / Private 53 restrictions of the same runs stay in the row context. Secondary benchmark, never a Composite input.; source row: {\"model\":\"GPT-6-astra\",\"harness\":\"codex\",\"stated_effort\":\"max\",\"rank\":2,\"scope_scores\":{\"full\":0.5126,\"private\":0.5002,\"public\":0.5314},\"scope_tasks\":{\"full\":88,\"public\":35,\"private\":53},\"mean_spend_usd\":null,\"mean_run_time_min\":null,\"mean_output_tokens\":null,\"resource_row_id\":null,\"resource_task_counts\":null}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://rsi-exam.ai/blog.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e09c91b5a221f4221351.gz",
+        "sha256": "e09c91b5a221f42213515c89ed8059d28382eec3594ecb7e6c8546a16f2eef4f",
+        "retrieved_at": "2026-10-03T08:01:38.885591+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ],
+    "join_note": "Reviewed identity map 2026-09-20: label states model gpt-6-astra and setting max; exact catalog configuration gpt-6-astra::max"
+  },
+  {
+    "id": "public:ad6246156062e1e2b09cb828",
+    "benchmark_id": "rsi-exam::0.1",
+    "subject": {
+      "source_id": "Fable 5.1 [claude code · max]",
+      "name": "Fable 5.1 [claude code · max]",
+      "model_id": "claude-fable-5.1::max",
+      "variant": null,
+      "harness": "claude code"
+    },
+    "value": 0.4813,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://rsi-exam.ai/",
+      "retrieved_at": "2026-10-03T08:01:35.136445+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/71692ce73242c8db8540.gz",
+      "sha256": "71692ce73242c8db85402b36a4ef580cf2d3775336facd596f55ed1548665073",
+      "locator": "rsi_exam_leaderboard; source row 2; Fable 5.1 [claude code · max]; field score"
+    },
+    "protocol": "RSI-Exam 0.1 (aiming-lab), Full board: the mean frozen normalised hidden-set score over all 88 active tasks (35 public + 53 private) in six domains. Per task the agent inherits a working but weak executable method or harness, experiments against a visible split inside a sealed container under the task's budget (12 h agent timeout in the published harness commands), and submits one executable artifact that a fresh verifier container re-runs once on the hidden split; that single hidden-set number is the task score, normalised against anchors frozen before the release (inherited starter 0.00, optional frontier-calibrated reference 0.60, upper bound 1.00 where a finite one exists, exponential tail otherwise). One rollout per model x harness per task, so the board estimates no run-to-run variance; container egress is restricted to the model provider API. Each row is one model x agent-harness pair as the source labels it; the Public 35 / Private 53 restrictions of the same runs stay in the row context. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Fable 5.1\",\"harness\":\"claude code\",\"stated_effort\":\"max\",\"rank\":3,\"scope_scores\":{\"full\":0.4813,\"private\":0.4854,\"public\":0.475},\"scope_tasks\":{\"full\":88,\"public\":35,\"private\":53},\"mean_spend_usd\":null,\"mean_run_time_min\":null,\"mean_output_tokens\":null,\"resource_row_id\":null,\"resource_task_counts\":null}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://rsi-exam.ai/blog.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e09c91b5a221f4221351.gz",
+        "sha256": "e09c91b5a221f42213515c89ed8059d28382eec3594ecb7e6c8546a16f2eef4f",
+        "retrieved_at": "2026-10-03T08:01:38.885591+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ],
+    "join_note": "Reviewed identity map 2026-09-20: label states model claude-fable-5.1 and setting max; exact catalog configuration claude-fable-5.1::max"
+  },
+  {
+    "id": "public:fa65039533a31ac2fe4fdf63",
+    "benchmark_id": "rsi-exam::0.1",
+    "subject": {
+      "source_id": "Opus 5 [claude code · max]",
+      "name": "Opus 5 [claude code · max]",
+      "model_id": "claude-opus-5::max",
+      "variant": null,
+      "harness": "claude code"
+    },
+    "value": 0.464,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://rsi-exam.ai/",
+      "retrieved_at": "2026-10-03T08:01:35.136445+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/71692ce73242c8db8540.gz",
+      "sha256": "71692ce73242c8db85402b36a4ef580cf2d3775336facd596f55ed1548665073",
+      "locator": "rsi_exam_leaderboard; source row 3; Opus 5 [claude code · max]; field score"
+    },
+    "protocol": "RSI-Exam 0.1 (aiming-lab), Full board: the mean frozen normalised hidden-set score over all 88 active tasks (35 public + 53 private) in six domains. Per task the agent inherits a working but weak executable method or harness, experiments against a visible split inside a sealed container under the task's budget (12 h agent timeout in the published harness commands), and submits one executable artifact that a fresh verifier container re-runs once on the hidden split; that single hidden-set number is the task score, normalised against anchors frozen before the release (inherited starter 0.00, optional frontier-calibrated reference 0.60, upper bound 1.00 where a finite one exists, exponential tail otherwise). One rollout per model x harness per task, so the board estimates no run-to-run variance; container egress is restricted to the model provider API. Each row is one model x agent-harness pair as the source labels it; the Public 35 / Private 53 restrictions of the same runs stay in the row context. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Opus 5\",\"harness\":\"claude code\",\"stated_effort\":\"max\",\"rank\":4,\"scope_scores\":{\"full\":0.464,\"private\":0.4657,\"public\":0.4613},\"scope_tasks\":{\"full\":88,\"public\":35,\"private\":53},\"mean_spend_usd\":42.33,\"mean_run_time_min\":333.4,\"mean_output_tokens\":287844,\"resource_row_id\":\"claude-code-opus-5-max\",\"resource_task_counts\":[89,89,85]}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://rsi-exam.ai/blog.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e09c91b5a221f4221351.gz",
+        "sha256": "e09c91b5a221f42213515c89ed8059d28382eec3594ecb7e6c8546a16f2eef4f",
+        "retrieved_at": "2026-10-03T08:01:38.885591+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ],
+    "join_note": "Reviewed identity map 2026-09-20: label states model claude-opus-5 and setting max; exact catalog configuration claude-opus-5::max"
+  },
+  {
+    "id": "public:af501707e39f504de42432d0",
+    "benchmark_id": "rsi-exam::0.1",
+    "subject": {
+      "source_id": "GPT-5.6-sol [codex · max]",
+      "name": "GPT-5.6-sol [codex · max]",
+      "model_id": "gpt-5.6-sol::max",
+      "variant": null,
+      "harness": "codex"
+    },
+    "value": 0.4331,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://rsi-exam.ai/",
+      "retrieved_at": "2026-10-03T08:01:35.136445+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/71692ce73242c8db8540.gz",
+      "sha256": "71692ce73242c8db85402b36a4ef580cf2d3775336facd596f55ed1548665073",
+      "locator": "rsi_exam_leaderboard; source row 4; GPT-5.6-sol [codex · max]; field score"
+    },
+    "protocol": "RSI-Exam 0.1 (aiming-lab), Full board: the mean frozen normalised hidden-set score over all 88 active tasks (35 public + 53 private) in six domains. Per task the agent inherits a working but weak executable method or harness, experiments against a visible split inside a sealed container under the task's budget (12 h agent timeout in the published harness commands), and submits one executable artifact that a fresh verifier container re-runs once on the hidden split; that single hidden-set number is the task score, normalised against anchors frozen before the release (inherited starter 0.00, optional frontier-calibrated reference 0.60, upper bound 1.00 where a finite one exists, exponential tail otherwise). One rollout per model x harness per task, so the board estimates no run-to-run variance; container egress is restricted to the model provider API. Each row is one model x agent-harness pair as the source labels it; the Public 35 / Private 53 restrictions of the same runs stay in the row context. Secondary benchmark, never a Composite input.; source row: {\"model\":\"GPT-5.6-sol\",\"harness\":\"codex\",\"stated_effort\":\"max\",\"rank\":5,\"scope_scores\":{\"full\":0.4331,\"private\":0.435,\"public\":0.4303},\"scope_tasks\":{\"full\":88,\"public\":35,\"private\":53},\"mean_spend_usd\":53.39,\"mean_run_time_min\":274.1,\"mean_output_tokens\":233916,\"resource_row_id\":\"codex-gpt-5.6-sol-max\",\"resource_task_counts\":[86,84,84]}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://rsi-exam.ai/blog.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e09c91b5a221f4221351.gz",
+        "sha256": "e09c91b5a221f42213515c89ed8059d28382eec3594ecb7e6c8546a16f2eef4f",
+        "retrieved_at": "2026-10-03T08:01:38.885591+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ],
+    "join_note": "Reviewed identity map 2026-09-20: label states model gpt-5.6-sol and setting max; exact catalog configuration gpt-5.6-sol::max"
+  },
+  {
+    "id": "public:89775e957a3f7e55b63364d8",
+    "benchmark_id": "rsi-exam::0.1",
+    "subject": {
+      "source_id": "GLM 5.3 [claude code · max]",
+      "name": "GLM 5.3 [claude code · max]",
+      "model_id": "glm-5.3::max",
+      "variant": null,
+      "harness": "claude code"
+    },
+    "value": 0.4029,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://rsi-exam.ai/",
+      "retrieved_at": "2026-10-03T08:01:35.136445+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/71692ce73242c8db8540.gz",
+      "sha256": "71692ce73242c8db85402b36a4ef580cf2d3775336facd596f55ed1548665073",
+      "locator": "rsi_exam_leaderboard; source row 5; GLM 5.3 [claude code · max]; field score"
+    },
+    "protocol": "RSI-Exam 0.1 (aiming-lab), Full board: the mean frozen normalised hidden-set score over all 88 active tasks (35 public + 53 private) in six domains. Per task the agent inherits a working but weak executable method or harness, experiments against a visible split inside a sealed container under the task's budget (12 h agent timeout in the published harness commands), and submits one executable artifact that a fresh verifier container re-runs once on the hidden split; that single hidden-set number is the task score, normalised against anchors frozen before the release (inherited starter 0.00, optional frontier-calibrated reference 0.60, upper bound 1.00 where a finite one exists, exponential tail otherwise). One rollout per model x harness per task, so the board estimates no run-to-run variance; container egress is restricted to the model provider API. Each row is one model x agent-harness pair as the source labels it; the Public 35 / Private 53 restrictions of the same runs stay in the row context. Secondary benchmark, never a Composite input.; source row: {\"model\":\"GLM 5.3\",\"harness\":\"claude code\",\"stated_effort\":\"max\",\"rank\":6,\"scope_scores\":{\"full\":0.4029,\"private\":0.4195,\"public\":0.3776},\"scope_tasks\":{\"full\":88,\"public\":35,\"private\":53},\"mean_spend_usd\":18.27,\"mean_run_time_min\":342.2,\"mean_output_tokens\":273129,\"resource_row_id\":\"claude-code-glm-5.3-1m-max\",\"resource_task_counts\":[85,87,84]}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://rsi-exam.ai/blog.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e09c91b5a221f4221351.gz",
+        "sha256": "e09c91b5a221f42213515c89ed8059d28382eec3594ecb7e6c8546a16f2eef4f",
+        "retrieved_at": "2026-10-03T08:01:38.885591+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ],
+    "join_note": "Reviewed identity map 2026-09-20: label states model glm-5.3 and setting max; exact catalog configuration glm-5.3::max"
+  },
+  {
+    "id": "public:d8c0160a1dda83e1160db0bf",
+    "benchmark_id": "rsi-exam::0.1",
+    "subject": {
+      "source_id": "Qwen3.8 Max-0902 [claude code · xhigh]",
+      "name": "Qwen3.8 Max-0902 [claude code · xhigh]",
+      "model_id": null,
+      "variant": null,
+      "harness": "claude code"
+    },
+    "value": 0.3923,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://rsi-exam.ai/",
+      "retrieved_at": "2026-10-03T08:01:35.136445+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/71692ce73242c8db8540.gz",
+      "sha256": "71692ce73242c8db85402b36a4ef580cf2d3775336facd596f55ed1548665073",
+      "locator": "rsi_exam_leaderboard; source row 6; Qwen3.8 Max-0902 [claude code · xhigh]; field score"
+    },
+    "protocol": "RSI-Exam 0.1 (aiming-lab), Full board: the mean frozen normalised hidden-set score over all 88 active tasks (35 public + 53 private) in six domains. Per task the agent inherits a working but weak executable method or harness, experiments against a visible split inside a sealed container under the task's budget (12 h agent timeout in the published harness commands), and submits one executable artifact that a fresh verifier container re-runs once on the hidden split; that single hidden-set number is the task score, normalised against anchors frozen before the release (inherited starter 0.00, optional frontier-calibrated reference 0.60, upper bound 1.00 where a finite one exists, exponential tail otherwise). One rollout per model x harness per task, so the board estimates no run-to-run variance; container egress is restricted to the model provider API. Each row is one model x agent-harness pair as the source labels it; the Public 35 / Private 53 restrictions of the same runs stay in the row context. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Qwen3.8 Max-0902\",\"harness\":\"claude code\",\"stated_effort\":\"xhigh\",\"rank\":7,\"scope_scores\":{\"full\":0.3923,\"private\":0.3751,\"public\":0.4184},\"scope_tasks\":{\"full\":88,\"public\":35,\"private\":53},\"mean_spend_usd\":null,\"mean_run_time_min\":null,\"mean_output_tokens\":null,\"resource_row_id\":null,\"resource_task_counts\":null}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://rsi-exam.ai/blog.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e09c91b5a221f4221351.gz",
+        "sha256": "e09c91b5a221f42213515c89ed8059d28382eec3594ecb7e6c8546a16f2eef4f",
+        "retrieved_at": "2026-10-03T08:01:38.885591+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:c44aa884aa550b99578b9637",
+    "benchmark_id": "rsi-exam::0.1",
+    "subject": {
+      "source_id": "Muse Spark 1.3 [musecode · max]",
+      "name": "Muse Spark 1.3 [musecode · max]",
+      "model_id": "muse-spark-1.3::max",
+      "variant": null,
+      "harness": "musecode"
+    },
+    "value": 0.3907,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://rsi-exam.ai/",
+      "retrieved_at": "2026-10-03T08:01:35.136445+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/71692ce73242c8db8540.gz",
+      "sha256": "71692ce73242c8db85402b36a4ef580cf2d3775336facd596f55ed1548665073",
+      "locator": "rsi_exam_leaderboard; source row 7; Muse Spark 1.3 [musecode · max]; field score"
+    },
+    "protocol": "RSI-Exam 0.1 (aiming-lab), Full board: the mean frozen normalised hidden-set score over all 88 active tasks (35 public + 53 private) in six domains. Per task the agent inherits a working but weak executable method or harness, experiments against a visible split inside a sealed container under the task's budget (12 h agent timeout in the published harness commands), and submits one executable artifact that a fresh verifier container re-runs once on the hidden split; that single hidden-set number is the task score, normalised against anchors frozen before the release (inherited starter 0.00, optional frontier-calibrated reference 0.60, upper bound 1.00 where a finite one exists, exponential tail otherwise). One rollout per model x harness per task, so the board estimates no run-to-run variance; container egress is restricted to the model provider API. Each row is one model x agent-harness pair as the source labels it; the Public 35 / Private 53 restrictions of the same runs stay in the row context. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Muse Spark 1.3\",\"harness\":\"musecode\",\"stated_effort\":\"max\",\"rank\":8,\"scope_scores\":{\"full\":0.3907,\"private\":0.3968,\"public\":0.3815},\"scope_tasks\":{\"full\":88,\"public\":35,\"private\":53},\"mean_spend_usd\":null,\"mean_run_time_min\":null,\"mean_output_tokens\":null,\"resource_row_id\":null,\"resource_task_counts\":null}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://rsi-exam.ai/blog.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e09c91b5a221f4221351.gz",
+        "sha256": "e09c91b5a221f42213515c89ed8059d28382eec3594ecb7e6c8546a16f2eef4f",
+        "retrieved_at": "2026-10-03T08:01:38.885591+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ],
+    "join_note": "Reviewed identity map 2026-09-20: label states model muse-spark-1.3 and setting max; exact catalog configuration muse-spark-1.3::max"
+  },
+  {
+    "id": "public:737e54b34681f11ead487ad8",
+    "benchmark_id": "rsi-exam::0.1",
+    "subject": {
+      "source_id": "Grok 4.7 [grok · xhigh]",
+      "name": "Grok 4.7 [grok · xhigh]",
+      "model_id": null,
+      "variant": null,
+      "harness": "grok"
+    },
+    "value": 0.3842,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://rsi-exam.ai/",
+      "retrieved_at": "2026-10-03T08:01:35.136445+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/71692ce73242c8db8540.gz",
+      "sha256": "71692ce73242c8db85402b36a4ef580cf2d3775336facd596f55ed1548665073",
+      "locator": "rsi_exam_leaderboard; source row 8; Grok 4.7 [grok · xhigh]; field score"
+    },
+    "protocol": "RSI-Exam 0.1 (aiming-lab), Full board: the mean frozen normalised hidden-set score over all 88 active tasks (35 public + 53 private) in six domains. Per task the agent inherits a working but weak executable method or harness, experiments against a visible split inside a sealed container under the task's budget (12 h agent timeout in the published harness commands), and submits one executable artifact that a fresh verifier container re-runs once on the hidden split; that single hidden-set number is the task score, normalised against anchors frozen before the release (inherited starter 0.00, optional frontier-calibrated reference 0.60, upper bound 1.00 where a finite one exists, exponential tail otherwise). One rollout per model x harness per task, so the board estimates no run-to-run variance; container egress is restricted to the model provider API. Each row is one model x agent-harness pair as the source labels it; the Public 35 / Private 53 restrictions of the same runs stay in the row context. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Grok 4.7\",\"harness\":\"grok\",\"stated_effort\":\"xhigh\",\"rank\":9,\"scope_scores\":{\"full\":0.3842,\"private\":0.3821,\"public\":0.3874},\"scope_tasks\":{\"full\":88,\"public\":35,\"private\":53},\"mean_spend_usd\":null,\"mean_run_time_min\":null,\"mean_output_tokens\":null,\"resource_row_id\":null,\"resource_task_counts\":null}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://rsi-exam.ai/blog.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e09c91b5a221f4221351.gz",
+        "sha256": "e09c91b5a221f42213515c89ed8059d28382eec3594ecb7e6c8546a16f2eef4f",
+        "retrieved_at": "2026-10-03T08:01:38.885591+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:4ba56d0c461b00da8aed3c75",
+    "benchmark_id": "rsi-exam::0.1",
+    "subject": {
+      "source_id": "Kimi K3 [kimi cli · max]",
+      "name": "Kimi K3 [kimi cli · max]",
+      "model_id": null,
+      "variant": null,
+      "harness": "kimi cli"
+    },
+    "value": 0.382,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://rsi-exam.ai/",
+      "retrieved_at": "2026-10-03T08:01:35.136445+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/71692ce73242c8db8540.gz",
+      "sha256": "71692ce73242c8db85402b36a4ef580cf2d3775336facd596f55ed1548665073",
+      "locator": "rsi_exam_leaderboard; source row 9; Kimi K3 [kimi cli · max]; field score"
+    },
+    "protocol": "RSI-Exam 0.1 (aiming-lab), Full board: the mean frozen normalised hidden-set score over all 88 active tasks (35 public + 53 private) in six domains. Per task the agent inherits a working but weak executable method or harness, experiments against a visible split inside a sealed container under the task's budget (12 h agent timeout in the published harness commands), and submits one executable artifact that a fresh verifier container re-runs once on the hidden split; that single hidden-set number is the task score, normalised against anchors frozen before the release (inherited starter 0.00, optional frontier-calibrated reference 0.60, upper bound 1.00 where a finite one exists, exponential tail otherwise). One rollout per model x harness per task, so the board estimates no run-to-run variance; container egress is restricted to the model provider API. Each row is one model x agent-harness pair as the source labels it; the Public 35 / Private 53 restrictions of the same runs stay in the row context. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Kimi K3\",\"harness\":\"kimi cli\",\"stated_effort\":\"max\",\"rank\":10,\"scope_scores\":{\"full\":0.382,\"private\":0.4029,\"public\":0.3503},\"scope_tasks\":{\"full\":88,\"public\":35,\"private\":53},\"mean_spend_usd\":10.32,\"mean_run_time_min\":288.9,\"mean_output_tokens\":133843,\"resource_row_id\":\"kimi-cli-k3\",\"resource_task_counts\":[80,79,80]}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://rsi-exam.ai/blog.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e09c91b5a221f4221351.gz",
+        "sha256": "e09c91b5a221f42213515c89ed8059d28382eec3594ecb7e6c8546a16f2eef4f",
+        "retrieved_at": "2026-10-03T08:01:38.885591+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:5f2c4340682bc9fc5a21119b",
+    "benchmark_id": "rsi-exam::0.1",
+    "subject": {
+      "source_id": "Grok 4.6 [grok · xhigh]",
+      "name": "Grok 4.6 [grok · xhigh]",
+      "model_id": "grok-4.6::xhigh",
+      "variant": null,
+      "harness": "grok"
+    },
+    "value": 0.3671,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://rsi-exam.ai/",
+      "retrieved_at": "2026-10-03T08:01:35.136445+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/71692ce73242c8db8540.gz",
+      "sha256": "71692ce73242c8db85402b36a4ef580cf2d3775336facd596f55ed1548665073",
+      "locator": "rsi_exam_leaderboard; source row 10; Grok 4.6 [grok · xhigh]; field score"
+    },
+    "protocol": "RSI-Exam 0.1 (aiming-lab), Full board: the mean frozen normalised hidden-set score over all 88 active tasks (35 public + 53 private) in six domains. Per task the agent inherits a working but weak executable method or harness, experiments against a visible split inside a sealed container under the task's budget (12 h agent timeout in the published harness commands), and submits one executable artifact that a fresh verifier container re-runs once on the hidden split; that single hidden-set number is the task score, normalised against anchors frozen before the release (inherited starter 0.00, optional frontier-calibrated reference 0.60, upper bound 1.00 where a finite one exists, exponential tail otherwise). One rollout per model x harness per task, so the board estimates no run-to-run variance; container egress is restricted to the model provider API. Each row is one model x agent-harness pair as the source labels it; the Public 35 / Private 53 restrictions of the same runs stay in the row context. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Grok 4.6\",\"harness\":\"grok\",\"stated_effort\":\"xhigh\",\"rank\":11,\"scope_scores\":{\"full\":0.3671,\"private\":0.3672,\"public\":0.3669},\"scope_tasks\":{\"full\":88,\"public\":35,\"private\":53},\"mean_spend_usd\":13.71,\"mean_run_time_min\":115.9,\"mean_output_tokens\":251550,\"resource_row_id\":\"grok-build-grok-4.6-xhigh\",\"resource_task_counts\":[88,84,88]}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://rsi-exam.ai/blog.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e09c91b5a221f4221351.gz",
+        "sha256": "e09c91b5a221f42213515c89ed8059d28382eec3594ecb7e6c8546a16f2eef4f",
+        "retrieved_at": "2026-10-03T08:01:38.885591+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ],
+    "join_note": "Reviewed identity map 2026-09-20: label states model grok-4.6 and setting xhigh; exact catalog configuration grok-4.6::xhigh"
+  },
+  {
+    "id": "public:afbf9295cee819c5f267af56",
+    "benchmark_id": "rsi-exam::0.1",
+    "subject": {
+      "source_id": "Gemini 3.8 Flash [antigravity · high]",
+      "name": "Gemini 3.8 Flash [antigravity · high]",
+      "model_id": "gemini-3.8-flash::high",
+      "variant": null,
+      "harness": "antigravity"
+    },
+    "value": 0.3406,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://rsi-exam.ai/",
+      "retrieved_at": "2026-10-03T08:01:35.136445+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/71692ce73242c8db8540.gz",
+      "sha256": "71692ce73242c8db85402b36a4ef580cf2d3775336facd596f55ed1548665073",
+      "locator": "rsi_exam_leaderboard; source row 11; Gemini 3.8 Flash [antigravity · high]; field score"
+    },
+    "protocol": "RSI-Exam 0.1 (aiming-lab), Full board: the mean frozen normalised hidden-set score over all 88 active tasks (35 public + 53 private) in six domains. Per task the agent inherits a working but weak executable method or harness, experiments against a visible split inside a sealed container under the task's budget (12 h agent timeout in the published harness commands), and submits one executable artifact that a fresh verifier container re-runs once on the hidden split; that single hidden-set number is the task score, normalised against anchors frozen before the release (inherited starter 0.00, optional frontier-calibrated reference 0.60, upper bound 1.00 where a finite one exists, exponential tail otherwise). One rollout per model x harness per task, so the board estimates no run-to-run variance; container egress is restricted to the model provider API. Each row is one model x agent-harness pair as the source labels it; the Public 35 / Private 53 restrictions of the same runs stay in the row context. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Gemini 3.8 Flash\",\"harness\":\"antigravity\",\"stated_effort\":\"high\",\"rank\":12,\"scope_scores\":{\"full\":0.3406,\"private\":0.3662,\"public\":0.3018},\"scope_tasks\":{\"full\":88,\"public\":35,\"private\":53},\"mean_spend_usd\":null,\"mean_run_time_min\":null,\"mean_output_tokens\":null,\"resource_row_id\":null,\"resource_task_counts\":null}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://rsi-exam.ai/blog.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e09c91b5a221f4221351.gz",
+        "sha256": "e09c91b5a221f42213515c89ed8059d28382eec3594ecb7e6c8546a16f2eef4f",
+        "retrieved_at": "2026-10-03T08:01:38.885591+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ],
+    "join_note": "Reviewed identity map 2026-09-20: label states model gemini-3.8-flash and setting high; exact catalog configuration gemini-3.8-flash::high"
+  },
+  {
+    "id": "public:b18e716180b8b240a330c1d7",
+    "benchmark_id": "rsi-exam::0.1",
+    "subject": {
+      "source_id": "GPT-5.5 [codex · xhigh]",
+      "name": "GPT-5.5 [codex · xhigh]",
+      "model_id": "gpt-5.5::xhigh",
+      "variant": null,
+      "harness": "codex"
+    },
+    "value": 0.3312,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://rsi-exam.ai/",
+      "retrieved_at": "2026-10-03T08:01:35.136445+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/71692ce73242c8db8540.gz",
+      "sha256": "71692ce73242c8db85402b36a4ef580cf2d3775336facd596f55ed1548665073",
+      "locator": "rsi_exam_leaderboard; source row 12; GPT-5.5 [codex · xhigh]; field score"
+    },
+    "protocol": "RSI-Exam 0.1 (aiming-lab), Full board: the mean frozen normalised hidden-set score over all 88 active tasks (35 public + 53 private) in six domains. Per task the agent inherits a working but weak executable method or harness, experiments against a visible split inside a sealed container under the task's budget (12 h agent timeout in the published harness commands), and submits one executable artifact that a fresh verifier container re-runs once on the hidden split; that single hidden-set number is the task score, normalised against anchors frozen before the release (inherited starter 0.00, optional frontier-calibrated reference 0.60, upper bound 1.00 where a finite one exists, exponential tail otherwise). One rollout per model x harness per task, so the board estimates no run-to-run variance; container egress is restricted to the model provider API. Each row is one model x agent-harness pair as the source labels it; the Public 35 / Private 53 restrictions of the same runs stay in the row context. Secondary benchmark, never a Composite input.; source row: {\"model\":\"GPT-5.5\",\"harness\":\"codex\",\"stated_effort\":\"xhigh\",\"rank\":13,\"scope_scores\":{\"full\":0.3312,\"private\":0.3372,\"public\":0.3221},\"scope_tasks\":{\"full\":88,\"public\":35,\"private\":53},\"mean_spend_usd\":12.96,\"mean_run_time_min\":100.6,\"mean_output_tokens\":69741,\"resource_row_id\":\"codex-gpt-5.5-xhigh\",\"resource_task_counts\":[88,84,88]}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://rsi-exam.ai/blog.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e09c91b5a221f4221351.gz",
+        "sha256": "e09c91b5a221f42213515c89ed8059d28382eec3594ecb7e6c8546a16f2eef4f",
+        "retrieved_at": "2026-10-03T08:01:38.885591+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ],
+    "join_note": "Reviewed identity map 2026-09-20: label states model gpt-5.5 and setting xhigh; exact catalog configuration gpt-5.5::xhigh"
+  },
+  {
+    "id": "public:5eeac1010323f7ce73cc5cb2",
+    "benchmark_id": "rsi-exam::0.1",
+    "subject": {
+      "source_id": "Seed Evolving-0909 [claude code · max]",
+      "name": "Seed Evolving-0909 [claude code · max]",
+      "model_id": null,
+      "variant": null,
+      "harness": "claude code"
+    },
+    "value": 0.3243,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://rsi-exam.ai/",
+      "retrieved_at": "2026-10-03T08:01:35.136445+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/71692ce73242c8db8540.gz",
+      "sha256": "71692ce73242c8db85402b36a4ef580cf2d3775336facd596f55ed1548665073",
+      "locator": "rsi_exam_leaderboard; source row 13; Seed Evolving-0909 [claude code · max]; field score"
+    },
+    "protocol": "RSI-Exam 0.1 (aiming-lab), Full board: the mean frozen normalised hidden-set score over all 88 active tasks (35 public + 53 private) in six domains. Per task the agent inherits a working but weak executable method or harness, experiments against a visible split inside a sealed container under the task's budget (12 h agent timeout in the published harness commands), and submits one executable artifact that a fresh verifier container re-runs once on the hidden split; that single hidden-set number is the task score, normalised against anchors frozen before the release (inherited starter 0.00, optional frontier-calibrated reference 0.60, upper bound 1.00 where a finite one exists, exponential tail otherwise). One rollout per model x harness per task, so the board estimates no run-to-run variance; container egress is restricted to the model provider API. Each row is one model x agent-harness pair as the source labels it; the Public 35 / Private 53 restrictions of the same runs stay in the row context. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Seed Evolving-0909\",\"harness\":\"claude code\",\"stated_effort\":\"max\",\"rank\":14,\"scope_scores\":{\"full\":0.3243,\"private\":0.3171,\"public\":0.3353},\"scope_tasks\":{\"full\":88,\"public\":35,\"private\":53},\"mean_spend_usd\":null,\"mean_run_time_min\":null,\"mean_output_tokens\":null,\"resource_row_id\":null,\"resource_task_counts\":null}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://rsi-exam.ai/blog.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e09c91b5a221f4221351.gz",
+        "sha256": "e09c91b5a221f42213515c89ed8059d28382eec3594ecb7e6c8546a16f2eef4f",
+        "retrieved_at": "2026-10-03T08:01:38.885591+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:f7090682617c02583f16da31",
+    "benchmark_id": "rsi-exam::0.1",
+    "subject": {
+      "source_id": "DeepSeek V4 Pro [claude code · max]",
+      "name": "DeepSeek V4 Pro [claude code · max]",
+      "model_id": "deepseek-v4-pro::max",
+      "variant": null,
+      "harness": "claude code"
+    },
+    "value": 0.3225,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://rsi-exam.ai/",
+      "retrieved_at": "2026-10-03T08:01:35.136445+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/71692ce73242c8db8540.gz",
+      "sha256": "71692ce73242c8db85402b36a4ef580cf2d3775336facd596f55ed1548665073",
+      "locator": "rsi_exam_leaderboard; source row 14; DeepSeek V4 Pro [claude code · max]; field score"
+    },
+    "protocol": "RSI-Exam 0.1 (aiming-lab), Full board: the mean frozen normalised hidden-set score over all 88 active tasks (35 public + 53 private) in six domains. Per task the agent inherits a working but weak executable method or harness, experiments against a visible split inside a sealed container under the task's budget (12 h agent timeout in the published harness commands), and submits one executable artifact that a fresh verifier container re-runs once on the hidden split; that single hidden-set number is the task score, normalised against anchors frozen before the release (inherited starter 0.00, optional frontier-calibrated reference 0.60, upper bound 1.00 where a finite one exists, exponential tail otherwise). One rollout per model x harness per task, so the board estimates no run-to-run variance; container egress is restricted to the model provider API. Each row is one model x agent-harness pair as the source labels it; the Public 35 / Private 53 restrictions of the same runs stay in the row context. Secondary benchmark, never a Composite input.; source row: {\"model\":\"DeepSeek V4 Pro\",\"harness\":\"claude code\",\"stated_effort\":\"max\",\"rank\":15,\"scope_scores\":{\"full\":0.3225,\"private\":0.3458,\"public\":0.2871},\"scope_tasks\":{\"full\":88,\"public\":35,\"private\":53},\"mean_spend_usd\":6.66,\"mean_run_time_min\":282.0,\"mean_output_tokens\":507998,\"resource_row_id\":\"claude-code-deepseek-v4-pro-max\",\"resource_task_counts\":[88,88,84]}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://rsi-exam.ai/blog.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e09c91b5a221f4221351.gz",
+        "sha256": "e09c91b5a221f42213515c89ed8059d28382eec3594ecb7e6c8546a16f2eef4f",
+        "retrieved_at": "2026-10-03T08:01:38.885591+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ],
+    "join_note": "Reviewed identity map 2026-09-20: label states model deepseek-v4-pro and setting max; exact catalog configuration deepseek-v4-pro::max"
+  }
+]

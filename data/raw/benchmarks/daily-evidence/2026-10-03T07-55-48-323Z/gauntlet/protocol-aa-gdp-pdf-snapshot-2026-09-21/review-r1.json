@@ -1,0 +1,19 @@
+{
+  "artifact_id": "protocol-aa-gdp-pdf-snapshot-2026-09-21",
+  "artifact_sha256": "a6c3c2dfefaccbb7f66bf92fc5971b903bd5375e426f34caf89f65f15ee13a1f",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "aa-gdp-pdf::snapshot-2026-09-21",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-executed hash and transport checks are not independently executable in this read-only review; relied on supplied sha256 bindings and receipt.",
+    "Snapshot date 2026-09-21 is asserted in the version label; the packet does not separately timestamp that observation, accepted as retained context and not treated as missing evidence."
+  ],
+  "missing_evidence": []
+}

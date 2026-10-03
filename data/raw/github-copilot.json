@@ -1,7 +1,7 @@
 {
   "source": "GitHub Copilot (current usage-based billing plus annual-plan legacy request billing)",
-  "collected_at": "2026-10-02",
-  "method": "scripts/fetch-github-copilot-catalog.mjs (2026-10-02): current_models[] = the intersection of the supported-models catalog table (https://docs.github.com/en/copilot/reference/ai-models/supported-models) and the per-token pricing tables (https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing), matched by exact name after footnote markers are removed; Default and Long context tiers are folded into one row (long_context carries the threshold and higher price); promotion end dates come from the pricing footnotes. models[] = the legacy annual-plan multiplier table (https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans) with effective USD per request = multiplier × per_premium_request_usd; the page's \"subject to change\" list sets the note. Plan allowances (plans[]) are documented on separate billing pages and keep plans_checked_at. See github-copilot.method.md.",
+  "collected_at": "2026-10-03",
+  "method": "scripts/fetch-github-copilot-catalog.mjs (2026-10-03): current_models[] = the intersection of the supported-models catalog table (https://docs.github.com/en/copilot/reference/ai-models/supported-models) and the per-token pricing tables (https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing), matched by exact name after footnote markers are removed; Default and Long context tiers are folded into one row (long_context carries the threshold and higher price); promotion end dates come from the pricing footnotes. models[] = the legacy annual-plan multiplier table (https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans) with effective USD per request = multiplier × per_premium_request_usd; the page's \"subject to change\" list sets the note. Plan allowances (plans[]) are documented on separate billing pages and keep plans_checked_at. See github-copilot.method.md.",
   "pricing_model": "ai_credits_per_token_with_legacy_per_premium_request",
   "ai_credit_usd": 0.01,
   "per_premium_request_usd": 0.04,
@@ -276,16 +276,6 @@
       "output_per_1m_usd": 5
     },
     {
-      "model_name": "Claude Opus 4.7",
-      "provider_org": "Anthropic",
-      "release_status": "GA",
-      "category": "Powerful",
-      "input_per_1m_usd": 5,
-      "cached_input_per_1m_usd": 0.5,
-      "cache_write_per_1m_usd": 6.25,
-      "output_per_1m_usd": 25
-    },
-    {
       "model_name": "Claude Opus 4.8",
       "provider_org": "Anthropic",
       "release_status": "GA",
@@ -359,26 +349,6 @@
       "mapping": "derived"
     },
     {
-      "model_name": "Gemini 3.5 Flash",
-      "provider_org": "Google",
-      "release_status": "GA",
-      "category": "Lightweight",
-      "input_per_1m_usd": 1.5,
-      "cached_input_per_1m_usd": 0.15,
-      "output_per_1m_usd": 9
-    },
-    {
-      "model_name": "Gemini 3.6 Flash",
-      "provider_org": "Google",
-      "release_status": "GA",
-      "category": "Versatile",
-      "input_per_1m_usd": 0.75,
-      "cached_input_per_1m_usd": 0.075,
-      "output_per_1m_usd": 3.75,
-      "promotion_ends_at": "2026-12-31",
-      "notes": "Official promotional token rates through December 31, 2026; no post-promotion rate inferred."
-    },
-    {
       "model_name": "Gemini 3.7 Flash",
       "provider_org": "Google",
       "release_status": "GA",
@@ -408,15 +378,6 @@
       "input_per_1m_usd": 0.2,
       "cached_input_per_1m_usd": 0.02,
       "output_per_1m_usd": 1.2
-    },
-    {
-      "model_name": "Kimi K2.7 Code",
-      "provider_org": "Moonshot AI",
-      "release_status": "GA",
-      "category": "Versatile",
-      "input_per_1m_usd": 0.95,
-      "cached_input_per_1m_usd": 0.19,
-      "output_per_1m_usd": 4
     },
     {
       "model_name": "Kimi K3",
@@ -485,13 +446,6 @@
       "notes": "Legacy annual-plan multiplier."
     },
     {
-      "model_name": "Claude Opus 4.7",
-      "provider_org": "Anthropic",
-      "premium_request_multiplier": 27,
-      "effective_usd_per_request": 1.08,
-      "notes": "Legacy annual-plan multiplier."
-    },
-    {
       "model_name": "Claude Opus 4.8",
       "provider_org": "Anthropic",
       "premium_request_multiplier": 27,
@@ -511,13 +465,6 @@
       "premium_request_multiplier": 6,
       "effective_usd_per_request": 0.24,
       "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
-    },
-    {
-      "model_name": "Gemini 3.5 Flash",
-      "provider_org": "Google",
-      "premium_request_multiplier": 14,
-      "effective_usd_per_request": 0.56,
-      "notes": "Legacy annual-plan multiplier."
     },
     {
       "model_name": "GPT-4o",
@@ -617,182 +564,182 @@
     {
       "name": "Claude Opus 4.7",
       "retirement_date": "2026-10-02",
-      "alternative": "Claude Opus 5"
+      "alternative": "Latest Claude Opus model"
     },
     {
       "name": "Gemini 3.5 Flash",
       "retirement_date": "2026-10-02",
-      "alternative": "Gemini 3.8 Flash"
+      "alternative": "Latest Gemini Flash model"
     },
     {
       "name": "Gemini 3.6 Flash",
       "retirement_date": "2026-10-02",
-      "alternative": "Gemini 3.8 Flash"
+      "alternative": "Latest Gemini Flash model"
     },
     {
       "name": "Kimi K2.7 Code",
       "retirement_date": "2026-10-02",
-      "alternative": "Kimi K3"
+      "alternative": "Latest Kimi model"
     },
     {
       "name": "MAI-Code-1-Flash",
       "retirement_date": "2026-09-10",
-      "alternative": "MAI-Code-1.1-Flash"
+      "alternative": "Latest MAI-Code model"
     },
     {
       "name": "Claude Opus 4.5",
       "retirement_date": "2026-09-01",
-      "alternative": "Claude Opus 5"
+      "alternative": "Latest Claude Opus model"
     },
     {
       "name": "Claude Opus 4.6",
       "retirement_date": "2026-09-01",
-      "alternative": "Claude Opus 5"
+      "alternative": "Latest Claude Opus model"
     },
     {
       "name": "Claude Sonnet 4.5",
       "retirement_date": "2026-09-01",
-      "alternative": "Claude Sonnet 5"
+      "alternative": "Latest Claude Sonnet model"
     },
     {
       "name": "Claude Sonnet 4.6",
       "retirement_date": "2026-09-01",
-      "alternative": "Claude Sonnet 5"
+      "alternative": "Latest Claude Sonnet model"
     },
     {
       "name": "Gemini 3.1 Pro",
       "retirement_date": "2026-09-01",
-      "alternative": "Gemini 3.6 Flash"
+      "alternative": "Latest Gemini Flash model"
     },
     {
       "name": "Raptor mini",
       "retirement_date": "2026-09-01",
-      "alternative": "MAI-Code-1.1-Flash"
+      "alternative": "Latest MAI-Code model"
     },
     {
       "name": "Gemini 2.5 Pro",
       "retirement_date": "2026-07-31",
-      "alternative": "Gemini 3.8 Flash"
+      "alternative": "Latest Gemini Flash model"
     },
     {
       "name": "Gemini 3 Flash",
       "retirement_date": "2026-07-31",
-      "alternative": "Gemini 3.6 Flash"
+      "alternative": "Latest Gemini Flash model"
     },
     {
       "name": "Claude Opus 4.6 (fast mode) (preview)",
       "retirement_date": "2026-06-29",
-      "alternative": "Claude Opus 4.8 (fast mode) (preview)"
+      "alternative": "Latest Claude Opus model in fast mode"
     },
     {
       "name": "GPT-5.2",
       "retirement_date": "2026-06-05",
-      "alternative": "GPT-5.5"
+      "alternative": "Latest GPT model"
     },
     {
       "name": "GPT-5.2-Codex",
       "retirement_date": "2026-06-05",
-      "alternative": "GPT-5.3-Codex"
+      "alternative": "Latest GPT Codex model"
     },
     {
       "name": "GPT-4.1",
       "retirement_date": "2026-06-01",
-      "alternative": "GPT-5.5"
+      "alternative": "Latest GPT model"
     },
     {
       "name": "Grok Code Fast 1",
       "retirement_date": "2026-05-15",
-      "alternative": "GPT-5 mini"
+      "alternative": "Latest GPT mini model"
     },
     {
       "name": "Claude Sonnet 4",
       "retirement_date": "2026-05-01",
-      "alternative": "Claude Sonnet 4.6"
+      "alternative": "Latest Claude Sonnet model"
     },
     {
       "name": "GPT-5.1",
       "retirement_date": "2026-04-15",
-      "alternative": "GPT-5.3-Codex"
+      "alternative": "Latest GPT Codex model"
     },
     {
       "name": "GPT-5.1-Codex",
       "retirement_date": "2026-04-01",
-      "alternative": "GPT-5.3-Codex"
+      "alternative": "Latest GPT Codex model"
     },
     {
       "name": "GPT-5.1-Codex-Max",
       "retirement_date": "2026-04-01",
-      "alternative": "GPT-5.3-Codex"
+      "alternative": "Latest GPT Codex model"
     },
     {
       "name": "GPT-5.1-Codex-Mini",
       "retirement_date": "2026-04-01",
-      "alternative": "GPT-5.3-Codex"
+      "alternative": "Latest GPT Codex model"
     },
     {
       "name": "Gemini 3 Pro",
       "retirement_date": "2026-03-26",
-      "alternative": "Gemini 3.8 Flash"
+      "alternative": "Latest Gemini Flash model"
     },
     {
       "name": "Claude Opus 4.1",
       "retirement_date": "2026-02-17",
-      "alternative": "Claude Opus 5"
+      "alternative": "Latest Claude Opus model"
     },
     {
       "name": "GPT-5",
       "retirement_date": "2026-02-17",
-      "alternative": "GPT-5.5"
+      "alternative": "Latest GPT model"
     },
     {
       "name": "GPT-5-Codex",
       "retirement_date": "2026-02-17",
-      "alternative": "GPT-5.3-Codex"
+      "alternative": "Latest GPT Codex model"
     },
     {
       "name": "Claude Sonnet 3.5",
       "retirement_date": "2025-11-06",
-      "alternative": "Claude Haiku 4.5"
+      "alternative": "Latest Claude Haiku model"
     },
     {
       "name": "Claude Opus 4",
       "retirement_date": "2025-10-23",
-      "alternative": "Claude Opus 5"
+      "alternative": "Latest Claude Opus model"
     },
     {
       "name": "Claude Sonnet 3.7",
       "retirement_date": "2025-10-23",
-      "alternative": "Claude Sonnet 4.6"
+      "alternative": "Latest Claude Sonnet model"
     },
     {
       "name": "Claude Sonnet 3.7 Thinking",
       "retirement_date": "2025-10-23",
-      "alternative": "Claude Sonnet 4.6"
+      "alternative": "Latest Claude Sonnet model"
     },
     {
       "name": "Gemini 2.0 Flash",
       "retirement_date": "2025-10-23",
-      "alternative": "Gemini 3.8 Flash"
+      "alternative": "Latest Gemini Flash model"
     },
     {
       "name": "o1-mini",
       "retirement_date": "2025-10-23",
-      "alternative": "GPT-5 mini"
+      "alternative": "Latest GPT mini model"
     },
     {
       "name": "o3",
       "retirement_date": "2025-10-23",
-      "alternative": "GPT-5.5"
+      "alternative": "Latest GPT model"
     },
     {
       "name": "o3-mini",
       "retirement_date": "2025-10-23",
-      "alternative": "GPT-5 mini"
+      "alternative": "Latest GPT mini model"
     },
     {
       "name": "o4-mini",
       "retirement_date": "2025-10-23",
-      "alternative": "GPT-5 mini"
+      "alternative": "Latest GPT mini model"
     }
   ],
   "supported_without_price": [],
@@ -800,23 +747,27 @@
     "Claude Sonnet 4"
   ],
   "retirement_overlap": [
-    "Claude Opus 4.7 (2026-10-02)",
-    "Gemini 3.5 Flash (2026-10-02)",
-    "Gemini 3.6 Flash (2026-10-02)",
-    "Kimi K2.7 Code (2026-10-02)",
     "Claude Sonnet 4.6 (2026-09-01)"
   ],
   "response_sha256": {
-    "supported": "129f0b6765dfc232dc4d4101742a427d88fc389bb748d269702c02457963529f",
-    "pricing": "3e91f097729c283c59f5ceef9bcfa847bb9a2a3b3ffe1e9bd0a90934570fe380",
-    "multipliers": "efcf5fa5ec455f701b6a1ad021680cb6ca8d117ad3ad27391381e1c993b0bcec"
+    "supported": "04fdb2b49d58e908eab50c8011142c575bafe78e184ed090c4c514a3eca78758",
+    "pricing": "de78c6a50e2e520d8c0dd473b1b19c37e5430a2955507cf2d42ed4ce7a870dfe",
+    "multipliers": "b00999686a4653090b8a59b5225c1dcb57b6fcfd7fb262d5bbce697d6b06edaa"
   },
   "diff": {
     "current_added": [],
-    "current_removed": [],
+    "current_removed": [
+      "Claude Opus 4.7",
+      "Gemini 3.5 Flash",
+      "Gemini 3.6 Flash",
+      "Kimi K2.7 Code"
+    ],
     "current_price_changed": [],
     "legacy_added": [],
-    "legacy_removed": [],
+    "legacy_removed": [
+      "Claude Opus 4.7",
+      "Gemini 3.5 Flash"
+    ],
     "legacy_multiplier_changed": []
   },
   "plans_source_url": "https://github.com/features/copilot/plans",

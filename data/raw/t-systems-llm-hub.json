@@ -1,12 +1,12 @@
 {
   "source": "T-Systems AI Foundation Services / LLM Hub",
   "region": "eu",
-  "collected_at": "2026-10-02",
+  "collected_at": "2026-10-03",
   "listing_url": "https://docs.llmhub.t-systems.net/models/llms/",
   "coding_listing_url": "https://docs.llmhub.t-systems.net/models/coding/",
   "pricing_url": "https://docs.llmhub.t-systems.net/plans/",
   "currency": "EUR",
-  "method": "scripts/fetch-t-systems-catalog.mjs (2026-10-02): official /models/llms/ and /models/coding/ tables, columns located by header; native EUR In/Out/Cached €/M ('—'/'n/a' = no price; plan 'Test' = preview); both tables merged by model name and must agree; audited hosting fields kept for known models, new models derive them from the Cloud column; USD = EUR × ECB daily reference rate, rounded to cents; rows no longer listed are dropped. See t-systems-llm-hub.method.md.",
+  "method": "scripts/fetch-t-systems-catalog.mjs (2026-10-03): official /models/llms/ and /models/coding/ tables, columns located by header; native EUR In/Out/Cached €/M ('—'/'n/a' = no price; plan 'Test' = preview); both tables merged by model name and must agree; audited hosting fields kept for known models, new models derive them from the Cloud column; USD = EUR × ECB daily reference rate, rounded to cents; rows no longer listed are dropped. See t-systems-llm-hub.method.md.",
   "minimum_monthly_commitment_eur": {
     "essential": 1000,
     "professional": 3000,
@@ -20,8 +20,8 @@
       "provider_org": "Google",
       "input_per_1m_eur": 0.6,
       "output_per_1m_eur": 1.2,
-      "input_per_1m_usd": 0.68,
-      "output_per_1m_usd": 1.36,
+      "input_per_1m_usd": 0.67,
+      "output_per_1m_usd": 1.35,
       "hosting_class": "sovereign_germany",
       "region": "eu",
       "server_location": "Germany",
@@ -29,7 +29,7 @@
       "is_externally_hosted": false,
       "status": "active",
       "context_length_label": "102,400",
-      "notes": "Official active model table (llms) checked 2026-10-02. Telekom Hosted on T-Cloud Public — Telekom's sovereign infrastructure in Germany.; Text, Image input / Text output. Plans: Essential Professional Agentic.",
+      "notes": "Official active model table (llms) checked 2026-10-03. Telekom Hosted on T-Cloud Public — Telekom's sovereign infrastructure in Germany.; Text, Image input / Text output. Plans: Essential Professional Agentic.",
       "cache_read_per_1m_eur": 0.09,
       "cache_read_per_1m_usd": 0.1
     },
@@ -38,8 +38,8 @@
       "provider_org": "Z.ai",
       "input_per_1m_eur": 1.5,
       "output_per_1m_eur": 3.5,
-      "input_per_1m_usd": 1.69,
-      "output_per_1m_usd": 3.95,
+      "input_per_1m_usd": 1.68,
+      "output_per_1m_usd": 3.93,
       "hosting_class": "sovereign_germany",
       "region": "eu",
       "server_location": "Germany",
@@ -47,7 +47,7 @@
       "is_externally_hosted": false,
       "status": "active",
       "context_length_label": "1M",
-      "notes": "Official active model table (llms) checked 2026-10-02. Telekom Hosted on T-Cloud Public — Telekom's sovereign infrastructure in Germany.; Text input / Text output. Plans: Essential Professional Agentic.",
+      "notes": "Official active model table (llms) checked 2026-10-03. Telekom Hosted on T-Cloud Public — Telekom's sovereign infrastructure in Germany.; Text input / Text output. Plans: Essential Professional Agentic.",
       "cache_read_per_1m_eur": 0.225,
       "cache_read_per_1m_usd": 0.25
     },
@@ -56,8 +56,8 @@
       "provider_org": "Z.ai",
       "input_per_1m_eur": 0.2,
       "output_per_1m_eur": 0.6,
-      "input_per_1m_usd": 0.23,
-      "output_per_1m_usd": 0.68,
+      "input_per_1m_usd": 0.22,
+      "output_per_1m_usd": 0.67,
       "hosting_class": "sovereign_germany",
       "server_location": "Germany",
       "is_externally_hosted": false,
@@ -66,7 +66,7 @@
       "mapping": "derived",
       "status": "active",
       "context_length_label": "1M",
-      "notes": "Official active model table (llms) checked 2026-10-02. Telekom Hosted on T-Cloud Public — Telekom's sovereign infrastructure in Germany.; Text, Image input / Text output. Plans: Essential Professional Agentic.",
+      "notes": "Official active model table (llms) checked 2026-10-03. Telekom Hosted on T-Cloud Public — Telekom's sovereign infrastructure in Germany.; Text, Image input / Text output. Plans: Essential Professional Agentic.",
       "cache_read_per_1m_eur": 0.03,
       "cache_read_per_1m_usd": 0.03
     },
@@ -75,7 +75,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_eur": 0.2,
       "output_per_1m_eur": 0.65,
-      "input_per_1m_usd": 0.23,
+      "input_per_1m_usd": 0.22,
       "output_per_1m_usd": 0.73,
       "hosting_class": "sovereign_germany",
       "region": "eu",
@@ -84,7 +84,7 @@
       "is_externally_hosted": false,
       "status": "active",
       "context_length_label": "128K",
-      "notes": "Official active model table (llms) checked 2026-10-02. Telekom Hosted on T-Cloud Public — Telekom's sovereign infrastructure in Germany.; Text input / Text output. Plans: Essential Professional Agentic.",
+      "notes": "Official active model table (llms) checked 2026-10-03. Telekom Hosted on T-Cloud Public — Telekom's sovereign infrastructure in Germany.; Text input / Text output. Plans: Essential Professional Agentic.",
       "cache_read_per_1m_eur": 0.03,
       "cache_read_per_1m_usd": 0.03
     },
@@ -93,8 +93,8 @@
       "provider_org": "Mistral",
       "input_per_1m_eur": 0.6,
       "output_per_1m_eur": 1.2,
-      "input_per_1m_usd": 0.68,
-      "output_per_1m_usd": 1.36,
+      "input_per_1m_usd": 0.67,
+      "output_per_1m_usd": 1.35,
       "hosting_class": "sovereign_germany",
       "region": "eu",
       "server_location": "Germany",
@@ -102,7 +102,7 @@
       "is_externally_hosted": false,
       "status": "active",
       "context_length_label": "256K",
-      "notes": "Official active model table (llms) checked 2026-10-02. Telekom Hosted on T-Cloud Public — Telekom's sovereign infrastructure in Germany.; Text, Image input / Text output. Plans: Essential Professional Agentic.",
+      "notes": "Official active model table (llms) checked 2026-10-03. Telekom Hosted on T-Cloud Public — Telekom's sovereign infrastructure in Germany.; Text, Image input / Text output. Plans: Essential Professional Agentic.",
       "cache_read_per_1m_eur": 0.09,
       "cache_read_per_1m_usd": 0.1
     },
@@ -111,8 +111,8 @@
       "provider_org": "NVIDIA",
       "input_per_1m_eur": 0.6,
       "output_per_1m_eur": 1.2,
-      "input_per_1m_usd": 0.68,
-      "output_per_1m_usd": 1.36,
+      "input_per_1m_usd": 0.67,
+      "output_per_1m_usd": 1.35,
       "hosting_class": "sovereign_germany",
       "region": "eu",
       "server_location": "Germany",
@@ -120,7 +120,7 @@
       "is_externally_hosted": false,
       "status": "active",
       "context_length_label": "1M",
-      "notes": "Official active model table (llms) checked 2026-10-02. Telekom Hosted on T-Cloud Public — Telekom's sovereign infrastructure in Germany.; Text input / Text output. Plans: Essential Professional Agentic.",
+      "notes": "Official active model table (llms) checked 2026-10-03. Telekom Hosted on T-Cloud Public — Telekom's sovereign infrastructure in Germany.; Text input / Text output. Plans: Essential Professional Agentic.",
       "cache_read_per_1m_eur": 0.09,
       "cache_read_per_1m_usd": 0.1
     },
@@ -129,8 +129,8 @@
       "provider_org": "Alibaba",
       "input_per_1m_eur": 0.6,
       "output_per_1m_eur": 1.2,
-      "input_per_1m_usd": 0.68,
-      "output_per_1m_usd": 1.36,
+      "input_per_1m_usd": 0.67,
+      "output_per_1m_usd": 1.35,
       "hosting_class": "sovereign_germany",
       "region": "eu",
       "server_location": "Germany",
@@ -138,7 +138,7 @@
       "is_externally_hosted": false,
       "status": "active",
       "context_length_label": "256K",
-      "notes": "Official active model table (llms) checked 2026-10-02. Telekom Hosted on T-Cloud Public — Telekom's sovereign infrastructure in Germany.; Text, Image input / Text output. Plans: Essential Professional Agentic.",
+      "notes": "Official active model table (llms) checked 2026-10-03. Telekom Hosted on T-Cloud Public — Telekom's sovereign infrastructure in Germany.; Text, Image input / Text output. Plans: Essential Professional Agentic.",
       "cache_read_per_1m_eur": 0.09,
       "cache_read_per_1m_usd": 0.1
     },
@@ -148,7 +148,7 @@
       "input_per_1m_eur": 0.5,
       "output_per_1m_eur": 2.5,
       "input_per_1m_usd": 0.56,
-      "output_per_1m_usd": 2.82,
+      "output_per_1m_usd": 2.81,
       "hosting_class": "sovereign_germany",
       "region": "eu",
       "server_location": "Germany",
@@ -156,7 +156,7 @@
       "is_externally_hosted": false,
       "status": "active",
       "context_length_label": "256K",
-      "notes": "Official active model table (llms) checked 2026-10-02. Telekom Hosted on T-Cloud Public — Telekom's sovereign infrastructure in Germany.; Text, Image input / Text output. Plans: Essential Professional Agentic.",
+      "notes": "Official active model table (llms) checked 2026-10-03. Telekom Hosted on T-Cloud Public — Telekom's sovereign infrastructure in Germany.; Text, Image input / Text output. Plans: Essential Professional Agentic.",
       "cache_read_per_1m_eur": 0.075,
       "cache_read_per_1m_usd": 0.08
     },
@@ -165,8 +165,8 @@
       "provider_org": "OpenAI",
       "input_per_1m_eur": 2.42,
       "output_per_1m_eur": 14.49,
-      "input_per_1m_usd": 2.73,
-      "output_per_1m_usd": 16.37,
+      "input_per_1m_usd": 2.72,
+      "output_per_1m_usd": 16.27,
       "hosting_class": "routed_azure_eu",
       "region": "eu",
       "server_location": "Azure EU regions",
@@ -174,15 +174,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "400K",
-      "notes": "Official active model table (llms) checked 2026-10-02. Azure Hosted on Microsoft Azure (EU regions).; Text input / Text output. Plans: Essential Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. Azure Hosted on Microsoft Azure (EU regions).; Text input / Text output. Plans: Essential Professional Agentic."
     },
     {
       "model_name": "GPT 5.4 mini",
       "provider_org": "OpenAI",
       "input_per_1m_eur": 0.66,
       "output_per_1m_eur": 3.95,
-      "input_per_1m_usd": 0.75,
-      "output_per_1m_usd": 4.46,
+      "input_per_1m_usd": 0.74,
+      "output_per_1m_usd": 4.43,
       "hosting_class": "routed_azure_eu",
       "region": "eu",
       "server_location": "Azure EU regions",
@@ -190,15 +190,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "400K",
-      "notes": "Official active model table (llms) checked 2026-10-02. Azure Hosted on Microsoft Azure (EU regions).; Text input / Text output. Plans: Essential Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. Azure Hosted on Microsoft Azure (EU regions).; Text input / Text output. Plans: Essential Professional Agentic."
     },
     {
       "model_name": "GPT 5.5",
       "provider_org": "OpenAI",
       "input_per_1m_eur": 4.83,
       "output_per_1m_eur": 28.97,
-      "input_per_1m_usd": 5.46,
-      "output_per_1m_usd": 32.73,
+      "input_per_1m_usd": 5.42,
+      "output_per_1m_usd": 32.52,
       "hosting_class": "routed_azure_eu",
       "region": "eu",
       "server_location": "Azure EU regions",
@@ -206,15 +206,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "400K",
-      "notes": "Official active model table (llms) checked 2026-10-02. Azure Hosted on Microsoft Azure (EU regions).; Text input / Text output. Plans: Essential Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. Azure Hosted on Microsoft Azure (EU regions).; Text input / Text output. Plans: Essential Professional Agentic."
     },
     {
       "model_name": "GPT-5",
       "provider_org": "OpenAI",
       "input_per_1m_eur": 1.2,
       "output_per_1m_eur": 9.55,
-      "input_per_1m_usd": 1.36,
-      "output_per_1m_usd": 10.79,
+      "input_per_1m_usd": 1.35,
+      "output_per_1m_usd": 10.72,
       "hosting_class": "routed_azure_eu",
       "region": "eu",
       "server_location": "Azure EU regions",
@@ -222,7 +222,7 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "400K",
-      "notes": "Official active model table (llms) checked 2026-10-02. Azure Hosted on Microsoft Azure (EU regions).; Text, Image input / Text output. Plans: Essential Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. Azure Hosted on Microsoft Azure (EU regions).; Text, Image input / Text output. Plans: Essential Professional Agentic."
     },
     {
       "model_name": "GPT-5 mini",
@@ -230,7 +230,7 @@
       "input_per_1m_eur": 0.24,
       "output_per_1m_eur": 1.91,
       "input_per_1m_usd": 0.27,
-      "output_per_1m_usd": 2.16,
+      "output_per_1m_usd": 2.14,
       "hosting_class": "routed_azure_eu",
       "region": "eu",
       "server_location": "Azure EU regions",
@@ -238,15 +238,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "400K",
-      "notes": "Official active model table (llms) checked 2026-10-02. Azure Hosted on Microsoft Azure (EU regions).; Text, Image input / Text output. Plans: Essential Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. Azure Hosted on Microsoft Azure (EU regions).; Text, Image input / Text output. Plans: Essential Professional Agentic."
     },
     {
       "model_name": "GPT-5.6 Luna",
       "provider_org": "OpenAI",
       "input_per_1m_eur": 0.2,
       "output_per_1m_eur": 1.2,
-      "input_per_1m_usd": 0.23,
-      "output_per_1m_usd": 1.36,
+      "input_per_1m_usd": 0.22,
+      "output_per_1m_usd": 1.35,
       "hosting_class": "routed_azure_eu",
       "region": "eu",
       "server_location": "Azure EU regions",
@@ -254,15 +254,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "1050K",
-      "notes": "Official active model table (llms) checked 2026-10-02. Azure Hosted on Microsoft Azure (EU regions).; Text input / Text output. Plans: Essential Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. Azure Hosted on Microsoft Azure (EU regions).; Text input / Text output. Plans: Essential Professional Agentic."
     },
     {
       "model_name": "GPT-5.6 Sol",
       "provider_org": "OpenAI",
       "input_per_1m_eur": 4.5,
       "output_per_1m_eur": 27,
-      "input_per_1m_usd": 5.08,
-      "output_per_1m_usd": 30.5,
+      "input_per_1m_usd": 5.05,
+      "output_per_1m_usd": 30.31,
       "hosting_class": "routed_azure_eu",
       "region": "eu",
       "server_location": "Azure EU regions",
@@ -270,15 +270,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "1050K",
-      "notes": "Official active model table (llms) checked 2026-10-02. Azure Hosted on Microsoft Azure (EU regions).; Text input / Text output. Plans: Essential Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. Azure Hosted on Microsoft Azure (EU regions).; Text input / Text output. Plans: Essential Professional Agentic."
     },
     {
       "model_name": "GPT-5.6 Terra",
       "provider_org": "OpenAI",
       "input_per_1m_eur": 3.52,
       "output_per_1m_eur": 15.82,
-      "input_per_1m_usd": 3.98,
-      "output_per_1m_usd": 17.87,
+      "input_per_1m_usd": 3.95,
+      "output_per_1m_usd": 17.76,
       "hosting_class": "routed_azure_eu",
       "region": "eu",
       "server_location": "Azure EU regions",
@@ -286,15 +286,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "1050K",
-      "notes": "Official active model table (llms) checked 2026-10-02. Azure Hosted on Microsoft Azure (EU regions).; Text input / Text output. Plans: Essential Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. Azure Hosted on Microsoft Azure (EU regions).; Text input / Text output. Plans: Essential Professional Agentic."
     },
     {
       "model_name": "Claude 4.5 Haiku",
       "provider_org": "Anthropic",
       "input_per_1m_eur": 0.99,
       "output_per_1m_eur": 4.95,
-      "input_per_1m_usd": 1.12,
-      "output_per_1m_usd": 5.59,
+      "input_per_1m_usd": 1.11,
+      "output_per_1m_usd": 5.56,
       "hosting_class": "routed_gcp_eu",
       "region": "eu",
       "server_location": "GCP EU regions",
@@ -302,15 +302,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "200K",
-      "notes": "Official active model table (llms) checked 2026-10-02. GCP / Azure Google Cloud Platform & Microsoft Azure; Text, Image input / Text output. Plans: Essential Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. GCP / Azure Google Cloud Platform & Microsoft Azure; Text, Image input / Text output. Plans: Essential Professional Agentic."
     },
     {
       "model_name": "Claude 4.6 Opus",
       "provider_org": "Anthropic",
       "input_per_1m_eur": 4.95,
       "output_per_1m_eur": 24.75,
-      "input_per_1m_usd": 5.59,
-      "output_per_1m_usd": 27.96,
+      "input_per_1m_usd": 5.56,
+      "output_per_1m_usd": 27.78,
       "hosting_class": "routed_gcp_eu",
       "region": "eu",
       "server_location": "GCP EU regions",
@@ -318,15 +318,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "200K",
-      "notes": "Official active model table (llms) checked 2026-10-02. GCP / Azure Google Cloud Platform & Microsoft Azure; Text, Image input / Text output. Plans: Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. GCP / Azure Google Cloud Platform & Microsoft Azure; Text, Image input / Text output. Plans: Professional Agentic."
     },
     {
       "model_name": "Claude 4.6 Sonnet",
       "provider_org": "Anthropic",
       "input_per_1m_eur": 2.97,
       "output_per_1m_eur": 14.85,
-      "input_per_1m_usd": 3.36,
-      "output_per_1m_usd": 16.78,
+      "input_per_1m_usd": 3.33,
+      "output_per_1m_usd": 16.67,
       "hosting_class": "routed_gcp_eu",
       "region": "eu",
       "server_location": "GCP EU regions",
@@ -334,15 +334,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "200K",
-      "notes": "Official active model table (llms) checked 2026-10-02. GCP / Azure Google Cloud Platform & Microsoft Azure; Text, Image input / Text output. Plans: Essential Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. GCP / Azure Google Cloud Platform & Microsoft Azure; Text, Image input / Text output. Plans: Essential Professional Agentic."
     },
     {
       "model_name": "Claude Fable 5",
       "provider_org": "Anthropic",
       "input_per_1m_eur": 9.9,
       "output_per_1m_eur": 49.5,
-      "input_per_1m_usd": 11.19,
-      "output_per_1m_usd": 55.93,
+      "input_per_1m_usd": 11.11,
+      "output_per_1m_usd": 55.56,
       "hosting_class": "routed_gcp_eu",
       "region": "eu",
       "server_location": "GCP EU regions",
@@ -350,15 +350,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "1M",
-      "notes": "Official active model table (llms) checked 2026-10-02. GCP / Azure Google Cloud Platform & Microsoft Azure; Text input / Text output. Plans: Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. GCP / Azure Google Cloud Platform & Microsoft Azure; Text input / Text output. Plans: Professional Agentic."
     },
     {
       "model_name": "Claude Opus 4.8",
       "provider_org": "Anthropic",
       "input_per_1m_eur": 4.95,
       "output_per_1m_eur": 24.75,
-      "input_per_1m_usd": 5.59,
-      "output_per_1m_usd": 27.96,
+      "input_per_1m_usd": 5.56,
+      "output_per_1m_usd": 27.78,
       "hosting_class": "routed_gcp_eu",
       "region": "eu",
       "server_location": "GCP EU regions",
@@ -366,15 +366,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "200K",
-      "notes": "Official active model table (llms) checked 2026-10-02. GCP / Azure Google Cloud Platform & Microsoft Azure; Text input / Text output. Plans: Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. GCP / Azure Google Cloud Platform & Microsoft Azure; Text input / Text output. Plans: Professional Agentic."
     },
     {
       "model_name": "Claude Opus 5",
       "provider_org": "Anthropic",
       "input_per_1m_eur": 4.95,
       "output_per_1m_eur": 24.75,
-      "input_per_1m_usd": 5.59,
-      "output_per_1m_usd": 27.96,
+      "input_per_1m_usd": 5.56,
+      "output_per_1m_usd": 27.78,
       "hosting_class": "routed_gcp_eu",
       "region": "eu",
       "server_location": "GCP EU regions",
@@ -382,15 +382,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "1M",
-      "notes": "Official active model table (llms) checked 2026-10-02. GCP / Azure Google Cloud Platform & Microsoft Azure; Text input / Text output. Plans: Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. GCP / Azure Google Cloud Platform & Microsoft Azure; Text input / Text output. Plans: Professional Agentic."
     },
     {
       "model_name": "Claude Sonnet 5",
       "provider_org": "Anthropic",
       "input_per_1m_eur": 2.97,
       "output_per_1m_eur": 14.85,
-      "input_per_1m_usd": 3.36,
-      "output_per_1m_usd": 16.78,
+      "input_per_1m_usd": 3.33,
+      "output_per_1m_usd": 16.67,
       "hosting_class": "routed_gcp_eu",
       "region": "eu",
       "server_location": "GCP EU regions",
@@ -398,7 +398,7 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "1M",
-      "notes": "Official active model table (llms) checked 2026-10-02. GCP / Azure Google Cloud Platform & Microsoft Azure; Text input / Text output. Plans: Essential Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. GCP / Azure Google Cloud Platform & Microsoft Azure; Text input / Text output. Plans: Essential Professional Agentic."
     },
     {
       "model_name": "Gemini 3 Flash",
@@ -406,7 +406,7 @@
       "input_per_1m_eur": 0.45,
       "output_per_1m_eur": 2.7,
       "input_per_1m_usd": 0.51,
-      "output_per_1m_usd": 3.05,
+      "output_per_1m_usd": 3.03,
       "hosting_class": "routed_gcp_eu",
       "region": "eu",
       "server_location": "GCP EU regions",
@@ -414,15 +414,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "1M",
-      "notes": "Official active model table (llms) checked 2026-10-02. GCP Hosted on Google Cloud Platform (EU regions).; Text, Image, Audio input / Text output. Plans: Essential Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. GCP Hosted on Google Cloud Platform (EU regions).; Text, Image, Audio input / Text output. Plans: Essential Professional Agentic."
     },
     {
       "model_name": "Gemini 3 Pro (>200k)",
       "provider_org": "Google",
       "input_per_1m_eur": 3.6,
       "output_per_1m_eur": 16.2,
-      "input_per_1m_usd": 4.07,
-      "output_per_1m_usd": 18.3,
+      "input_per_1m_usd": 4.04,
+      "output_per_1m_usd": 18.18,
       "hosting_class": "routed_gcp_eu",
       "region": "eu",
       "server_location": "GCP EU regions",
@@ -430,15 +430,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "1M",
-      "notes": "Official active model table (llms) checked 2026-10-02. GCP Hosted on Google Cloud Platform (EU regions).; Text, Image, Audio input / Text output. Plans: Essential Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. GCP Hosted on Google Cloud Platform (EU regions).; Text, Image, Audio input / Text output. Plans: Essential Professional Agentic."
     },
     {
       "model_name": "Gemini 3 Pro (≤200k)",
       "provider_org": "Google",
       "input_per_1m_eur": 1.8,
       "output_per_1m_eur": 10.8,
-      "input_per_1m_usd": 2.03,
-      "output_per_1m_usd": 12.2,
+      "input_per_1m_usd": 2.02,
+      "output_per_1m_usd": 12.12,
       "hosting_class": "routed_gcp_eu",
       "region": "eu",
       "server_location": "GCP EU regions",
@@ -446,15 +446,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "200K",
-      "notes": "Official active model table (llms) checked 2026-10-02. GCP Hosted on Google Cloud Platform (EU regions).; Text, Image, Audio input / Text output. Plans: Essential Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. GCP Hosted on Google Cloud Platform (EU regions).; Text, Image, Audio input / Text output. Plans: Essential Professional Agentic."
     },
     {
       "model_name": "Gemini 3.1 Pro (>200k)",
       "provider_org": "Google",
       "input_per_1m_eur": 3.6,
       "output_per_1m_eur": 16.2,
-      "input_per_1m_usd": 4.07,
-      "output_per_1m_usd": 18.3,
+      "input_per_1m_usd": 4.04,
+      "output_per_1m_usd": 18.18,
       "hosting_class": "routed_gcp_eu",
       "region": "eu",
       "server_location": "GCP EU regions",
@@ -462,15 +462,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "1M",
-      "notes": "Official active model table (llms) checked 2026-10-02. GCP Hosted on Google Cloud Platform (EU regions).; Text input / Text output. Plans: Essential Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. GCP Hosted on Google Cloud Platform (EU regions).; Text input / Text output. Plans: Essential Professional Agentic."
     },
     {
       "model_name": "Gemini 3.1 Pro (≤200k)",
       "provider_org": "Google",
       "input_per_1m_eur": 1.8,
       "output_per_1m_eur": 10.8,
-      "input_per_1m_usd": 2.03,
-      "output_per_1m_usd": 12.2,
+      "input_per_1m_usd": 2.02,
+      "output_per_1m_usd": 12.12,
       "hosting_class": "routed_gcp_eu",
       "region": "eu",
       "server_location": "GCP EU regions",
@@ -478,15 +478,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "200K",
-      "notes": "Official active model table (llms) checked 2026-10-02. GCP Hosted on Google Cloud Platform (EU regions).; Text input / Text output. Plans: Essential Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. GCP Hosted on Google Cloud Platform (EU regions).; Text input / Text output. Plans: Essential Professional Agentic."
     },
     {
       "model_name": "Gemini 3.5 Flash",
       "provider_org": "Google",
       "input_per_1m_eur": 1.49,
       "output_per_1m_eur": 8.91,
-      "input_per_1m_usd": 1.68,
-      "output_per_1m_usd": 10.07,
+      "input_per_1m_usd": 1.67,
+      "output_per_1m_usd": 10,
       "hosting_class": "routed_gcp_eu",
       "region": "eu",
       "server_location": "GCP EU regions",
@@ -494,15 +494,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "1M",
-      "notes": "Official active model table (llms) checked 2026-10-02. GCP Hosted on Google Cloud Platform (EU regions).; Text input / Text output. Plans: Essential Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. GCP Hosted on Google Cloud Platform (EU regions).; Text input / Text output. Plans: Essential Professional Agentic."
     },
     {
       "model_name": "Mistral Medium 3",
       "provider_org": "Mistral",
       "input_per_1m_eur": 0.36,
       "output_per_1m_eur": 1.8,
-      "input_per_1m_usd": 0.41,
-      "output_per_1m_usd": 2.03,
+      "input_per_1m_usd": 0.4,
+      "output_per_1m_usd": 2.02,
       "hosting_class": "routed_gcp_eu",
       "region": "eu",
       "server_location": "GCP EU regions",
@@ -510,15 +510,15 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "128K",
-      "notes": "Official active model table (llms) checked 2026-10-02. GCP Hosted on Google Cloud Platform (EU regions).; Text, Image input / Text output. Plans: Essential Professional Agentic."
+      "notes": "Official active model table (llms) checked 2026-10-03. GCP Hosted on Google Cloud Platform (EU regions).; Text, Image input / Text output. Plans: Essential Professional Agentic."
     },
     {
       "model_name": "GPT-5 Codex",
       "provider_org": "OpenAI",
       "input_per_1m_eur": 1.1,
       "output_per_1m_eur": 8.7,
-      "input_per_1m_usd": 1.24,
-      "output_per_1m_usd": 9.83,
+      "input_per_1m_usd": 1.23,
+      "output_per_1m_usd": 9.77,
       "hosting_class": "routed_azure_eu",
       "region": "eu",
       "server_location": "Azure EU regions",
@@ -526,14 +526,14 @@
       "is_externally_hosted": true,
       "status": "active",
       "context_length_label": "400K",
-      "notes": "Official active model table (coding) checked 2026-10-02. Azure Hosted on Microsoft Azure (EU regions).; Text, Image input / Text output. Plans: Essential Professional Agentic."
+      "notes": "Official active model table (coding) checked 2026-10-03. Azure Hosted on Microsoft Azure (EU regions).; Text, Image input / Text output. Plans: Essential Professional Agentic."
     }
   ],
-  "currency_note": "EUR converted at ECB 2026-10-01: 1 EUR = 1.1298 USD; rounded to nearest cent.",
+  "currency_note": "EUR converted at ECB 2026-10-02: 1 EUR = 1.1225 USD; rounded to nearest cent.",
   "usd_normalization": {
     "status": "applied",
-    "eur_to_usd": 1.1298,
-    "fx_rate_date": "2026-10-01",
+    "eur_to_usd": 1.1225,
+    "fx_rate_date": "2026-10-02",
     "source": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
     "rounding": "nearest USD cent"
   },

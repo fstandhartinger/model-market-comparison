@@ -1,0 +1,27 @@
+[
+  {
+    "id": "public:f7283ea1be47a99c2dfd5f4d",
+    "benchmark_id": "blueprint-bench::2",
+    "subject": {
+      "source_id": "Grok 4.20 Reasoning",
+      "name": "Grok 4.20 Reasoning",
+      "model_id": "grok-4.20-reasoning::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 0,
+    "unit": "normalized score",
+    "basis": "measured",
+    "source": {
+      "url": "https://andonlabs.com/evals/blueprint-bench-2",
+      "retrieved_at": "2026-10-03T07:56:25.088405+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/363db916fb24ec521c4f.gz",
+      "sha256": "363db916fb24ec521c4f2ad0fc3da3937fa0ccdb789372c13ee7d0b65b9ee0b2",
+      "locator": "html_table; source row 32; Grok 4.20 Reasoning; field value"
+    },
+    "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"32\",\"Grok 4.20 Reasoning\",\"0.000\"],\"configuration\":null,\"value_column\":2,\"marker\":\"at or below the random baseline (printed as 0.000**)\"}",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-21: label names grok-4.20-reasoning without a setting; the catalog has exactly one configuration, the default (grok-4.20-reasoning::default)"
+  }
+]

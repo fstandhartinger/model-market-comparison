@@ -1,0 +1,17 @@
+{
+  "artifact_id": "protocol-matharena-brokenarxiv-2026-08",
+  "artifact_sha256": "9b60473e1d9efbf3b3e613c17052dda58560573c0301c1faf10fa2ca146987f4",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["matharena-brokenarxiv::2026-08", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute row hashes or execute transport/hash qualification checks; I relied on the owner-provided row sha256 (ff5f5ad12819fda5a3b71d5213c680ba85fa99e8733f598cea688b5f3f7bcb4f) and source shas.",
+    "version_status 'published' rests on treating MathArena's monthly edition label (08/2026) as the maintainer-published release identifier for this board; the copied version '2026-08' matches that edition.",
+    "The version_guard's 'exactly 56 problems in its per-problem grid' is supported only by the competitions card reading '56 problems'; the per-problem grid itself is not present in the excerpts, so I could not independently inspect the grid columns/count beyond the card.",
+    "The 0-3 vs 0-2 grading discrepancy flagged in scoring.notes matches SOURCE 1 (edition card: 0-3) and SOURCE 3 (methodology: 0-2); row records the edition's own statement, which is the correct identity-specific treatment."
+  ],
+  "missing_evidence": []
+}

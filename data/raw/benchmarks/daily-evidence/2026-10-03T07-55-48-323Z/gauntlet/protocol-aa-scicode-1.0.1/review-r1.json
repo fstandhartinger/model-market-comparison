@@ -1,0 +1,32 @@
+{
+  "artifact_id": "protocol-aa-scicode-1.0.1",
+  "artifact_sha256": "5c8bb6535e6cf3151e9c13db0501ea60c9de3f4906338ed5c8f737a70fb6998a",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "aa-scicode::1.0.1",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row aa-scicode::1.0.1, scoring.metric",
+      "evidence": "Protocol (SOURCE 1) states 'sub-problem level scoring Pass@1' and 'SciCode step scripts are graded on isolated executors' but does not mention 'unit-test' or 'three repeats'. The row's metric 'Subproblem-level unit-test pass@1 over three repeats' adds both. No other source in the packet references repeats or unit-test, so the excerpt cannot establish continuity for these details.",
+      "repair": "Align the metric to the protocol, e.g. 'Subproblem-level pass@1 (SciCode step scripts graded on isolated executors)', or provide explicit protocol/paper evidence for the 'unit-test' and 'three repeats' specification."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "We cannot recompute SHA-256 hashes or execute transport/qualification checks; we rely on the supplied hashes and the owner's execution of those checks.",
+    "The protocol page excerpt is bounded as stated; we assume it contains the complete relevant text for this board.",
+    "The value-scale summary (SOURCE 3) is used only to judge unit and range, per criterion c1, and does not establish metric meaning or computation.",
+    "The activity summary (SOURCE 2) is used only to support status active, per criterion c2, and does not establish methodology or version."
+  ],
+  "missing_evidence": [
+    "Protocol text stating that SciCode evaluation uses three repeats",
+    "Protocol text stating that SciCode evaluation is based on unit tests"
+  ]
+}

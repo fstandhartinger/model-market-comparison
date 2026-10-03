@@ -1,0 +1,19 @@
+{
+  "artifact_id": "protocol-aa-terminal-bench-4.0-upstream-timeouts",
+  "artifact_sha256": "06b545eea85fac10c54832e2641dd986af48b1d4523a98cd5d5055e292b39aad",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "aa-terminal-bench::4.0-upstream-timeouts",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "The version_guard mentions a date 2026-09-21 not present in the protocol excerpt, but the protocol excerpt does not contradict it and the date is not part of the row's required fields. This does not affect c1 or c2.",
+    "I cannot independently recompute hashes, verify transport, or execute the owner's checks; this is a review limitation, not missing numeric evidence."
+  ],
+  "missing_evidence": []
+}

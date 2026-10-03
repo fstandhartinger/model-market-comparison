@@ -1,0 +1,95 @@
+[
+  {
+    "id": "public:608aee179d488785f7be1334",
+    "benchmark_id": "arc-agi::2",
+    "subject": {
+      "source_id": "alibaba-qwen3-8-27b-medium",
+      "name": "Qwen3.8-27B (Medium)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 13.194444444444445,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v2.json",
+      "retrieved_at": "2026-10-03T08:04:34.982612+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/8b1385616f496fb2c79a.gz",
+      "sha256": "8b1385616f496fb2c79a46cf9872781dd0fb32f63668e3ac20ec673ddfd264fc",
+      "locator": "json; source row 262; alibaba-qwen3-8-27b-medium; field score"
+    },
+    "protocol": "ARC-AGI 2; v2_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=alibaba-qwen3-8-27b; providerId=Alibaba; display=True; resultsUrl=/results/alibaba-qwen3-8-27b; costPerTask=0.2862669347916667; modelReleaseDate=2026-08-14T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.13194444444444445
+      ]
+    }
+  },
+  {
+    "id": "public:f481f22405901e8365bb73c6",
+    "benchmark_id": "arc-agi::2",
+    "subject": {
+      "source_id": "alibaba-qwen3-8-27b-low",
+      "name": "Qwen3.8-27B (Low)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 22.77777777777778,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v2.json",
+      "retrieved_at": "2026-10-03T08:04:34.982612+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/8b1385616f496fb2c79a.gz",
+      "sha256": "8b1385616f496fb2c79a46cf9872781dd0fb32f63668e3ac20ec673ddfd264fc",
+      "locator": "json; source row 263; alibaba-qwen3-8-27b-low; field score"
+    },
+    "protocol": "ARC-AGI 2; v2_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=alibaba-qwen3-8-27b; providerId=Alibaba; display=True; resultsUrl=/results/alibaba-qwen3-8-27b; costPerTask=0.2380080077083332; modelReleaseDate=2026-08-14T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.22777777777777777
+      ]
+    }
+  },
+  {
+    "id": "public:5d7b1403482424607186e7c2",
+    "benchmark_id": "arc-agi::2",
+    "subject": {
+      "source_id": "alibaba-qwen3-8-27b-none",
+      "name": "Qwen3.8-27B (None)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1.5277777777777777,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v2.json",
+      "retrieved_at": "2026-10-03T08:04:34.982612+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/8b1385616f496fb2c79a.gz",
+      "sha256": "8b1385616f496fb2c79a46cf9872781dd0fb32f63668e3ac20ec673ddfd264fc",
+      "locator": "json; source row 264; alibaba-qwen3-8-27b-none; field score"
+    },
+    "protocol": "ARC-AGI 2; v2_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=alibaba-qwen3-8-27b; providerId=Alibaba; display=True; resultsUrl=/results/alibaba-qwen3-8-27b; costPerTask=0.05891859291666669; modelReleaseDate=2026-08-14T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.015277777777777777
+      ]
+    }
+  }
+]

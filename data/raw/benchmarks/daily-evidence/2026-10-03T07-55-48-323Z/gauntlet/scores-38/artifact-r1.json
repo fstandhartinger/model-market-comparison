@@ -1,0 +1,71 @@
+[
+  {
+    "id": "public:da783de1183f07911b689915",
+    "benchmark_id": "rsi-exam::0.1",
+    "subject": {
+      "source_id": "Qwen3.8 Max [qwen coder · xhigh]",
+      "name": "Qwen3.8 Max [qwen coder · xhigh]",
+      "model_id": null,
+      "variant": null,
+      "harness": "qwen coder"
+    },
+    "value": 0.3218,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://rsi-exam.ai/",
+      "retrieved_at": "2026-10-03T08:01:35.136445+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/71692ce73242c8db8540.gz",
+      "sha256": "71692ce73242c8db85402b36a4ef580cf2d3775336facd596f55ed1548665073",
+      "locator": "rsi_exam_leaderboard; source row 15; Qwen3.8 Max [qwen coder · xhigh]; field score"
+    },
+    "protocol": "RSI-Exam 0.1 (aiming-lab), Full board: the mean frozen normalised hidden-set score over all 88 active tasks (35 public + 53 private) in six domains. Per task the agent inherits a working but weak executable method or harness, experiments against a visible split inside a sealed container under the task's budget (12 h agent timeout in the published harness commands), and submits one executable artifact that a fresh verifier container re-runs once on the hidden split; that single hidden-set number is the task score, normalised against anchors frozen before the release (inherited starter 0.00, optional frontier-calibrated reference 0.60, upper bound 1.00 where a finite one exists, exponential tail otherwise). One rollout per model x harness per task, so the board estimates no run-to-run variance; container egress is restricted to the model provider API. Each row is one model x agent-harness pair as the source labels it; the Public 35 / Private 53 restrictions of the same runs stay in the row context. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Qwen3.8 Max\",\"harness\":\"qwen coder\",\"stated_effort\":\"xhigh\",\"rank\":16,\"scope_scores\":{\"full\":0.3218,\"private\":0.3337,\"public\":0.3039},\"scope_tasks\":{\"full\":88,\"public\":35,\"private\":53},\"mean_spend_usd\":20.23,\"mean_run_time_min\":201.4,\"mean_output_tokens\":229019,\"resource_row_id\":\"qwen-coder-qwen3.8-max-xhigh\",\"resource_task_counts\":[88,88,84]}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://rsi-exam.ai/blog.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e09c91b5a221f4221351.gz",
+        "sha256": "e09c91b5a221f42213515c89ed8059d28382eec3594ecb7e6c8546a16f2eef4f",
+        "retrieved_at": "2026-10-03T08:01:38.885591+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:6f42c047fc98d93feb4b562a",
+    "benchmark_id": "rsi-exam::0.1",
+    "subject": {
+      "source_id": "Gemini 3.7 Flash [antigravity · high]",
+      "name": "Gemini 3.7 Flash [antigravity · high]",
+      "model_id": "gemini-3.7-flash::high",
+      "variant": null,
+      "harness": "antigravity"
+    },
+    "value": 0.3088,
+    "unit": "points",
+    "basis": "measured",
+    "source": {
+      "url": "https://rsi-exam.ai/",
+      "retrieved_at": "2026-10-03T08:01:35.136445+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/71692ce73242c8db8540.gz",
+      "sha256": "71692ce73242c8db85402b36a4ef580cf2d3775336facd596f55ed1548665073",
+      "locator": "rsi_exam_leaderboard; source row 16; Gemini 3.7 Flash [antigravity · high]; field score"
+    },
+    "protocol": "RSI-Exam 0.1 (aiming-lab), Full board: the mean frozen normalised hidden-set score over all 88 active tasks (35 public + 53 private) in six domains. Per task the agent inherits a working but weak executable method or harness, experiments against a visible split inside a sealed container under the task's budget (12 h agent timeout in the published harness commands), and submits one executable artifact that a fresh verifier container re-runs once on the hidden split; that single hidden-set number is the task score, normalised against anchors frozen before the release (inherited starter 0.00, optional frontier-calibrated reference 0.60, upper bound 1.00 where a finite one exists, exponential tail otherwise). One rollout per model x harness per task, so the board estimates no run-to-run variance; container egress is restricted to the model provider API. Each row is one model x agent-harness pair as the source labels it; the Public 35 / Private 53 restrictions of the same runs stay in the row context. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Gemini 3.7 Flash\",\"harness\":\"antigravity\",\"stated_effort\":\"high\",\"rank\":17,\"scope_scores\":{\"full\":0.3088,\"private\":0.3305,\"public\":0.2759},\"scope_tasks\":{\"full\":88,\"public\":35,\"private\":53},\"mean_spend_usd\":9.34,\"mean_run_time_min\":160.8,\"mean_output_tokens\":395387,\"resource_row_id\":\"antigravity-cli-gemini-3.7-flash-high\",\"resource_task_counts\":[86,84,81]}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://rsi-exam.ai/blog.html",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-03T07-55-48-323Z/e09c91b5a221f4221351.gz",
+        "sha256": "e09c91b5a221f42213515c89ed8059d28382eec3594ecb7e6c8546a16f2eef4f",
+        "retrieved_at": "2026-10-03T08:01:38.885591+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ],
+    "join_note": "Reviewed identity map 2026-09-20: label states model gemini-3.7-flash and setting high; exact catalog configuration gemini-3.7-flash::high"
+  }
+]

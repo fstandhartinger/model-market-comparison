@@ -1,0 +1,177 @@
+{
+  "type": "object",
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "enum": [
+        "aa-fields-1"
+      ]
+    },
+    "artifact_sha256": {
+      "type": "string",
+      "enum": [
+        "7e7d51fbeeab572ecc3ff3e4661b3d04832e2bb4e699f4316066d19714fbfc8a"
+      ]
+    },
+    "round": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "revise",
+        "blocked"
+      ]
+    },
+    "coverage_checked": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "19496b81-9f41-4214-a77a-1df803b3c5ae",
+          "19813eb2-460a-475c-af65-810bb8660fec",
+          "198b717f-42c8-4ab7-a699-ae9373d669d3",
+          "1a8ba535-df18-459b-ad40-3199191296d7",
+          "1aa3694e-b656-4dbe-8f84-0c65d8897abb",
+          "1b64aa81-c223-4b8f-909b-82185a234765",
+          "1cf439b8-0cfd-47b2-9de2-9a2157e6762b",
+          "1d81aa1c-64c8-442a-9c41-81b37e407b91",
+          "1dcea4f7-7e8b-49f8-abe2-5860ff9f349e",
+          "1e9907e0-ffac-4595-b006-962e4f1da7cf",
+          "1f054429-397e-4fdb-9e71-67bc92c1735e",
+          "1f05af98-1ec6-4506-a0b8-57a8c9b63878",
+          "1f541ef3-913f-4eb2-9d07-0e93c7a9a5e3",
+          "1f6478c9-3e22-4586-adbe-841782859677",
+          "1fc32894-1060-493b-af94-62bb1068555e",
+          "1fc54cef-d179-48b1-a27d-046874e9b208",
+          "208c16f0-8c5b-4524-ac8a-ac74c02e80a9",
+          "20928ba9-3a3f-415f-9519-b84ff64ecf34",
+          "20da3b31-fc0a-4359-abec-d59367bf1d9f",
+          "217b34ec-5920-4fc1-8886-6a70a324837d",
+          "219ed587-60c5-4a48-9517-8480e08d0ca1",
+          "222fb320-6e55-4672-846a-b6d5a24a45f4",
+          "2236df45-0699-40d1-b5cc-69ee345d2257",
+          "22d09131-343b-4adf-8760-533e20a2155f",
+          "23149f9b-c904-43e2-9ec4-afa2bf843941",
+          "235060f4-057d-4bd1-8b8e-4a92908c770e",
+          "23b379f7-18df-492a-9fc1-a56c5a5b9cfc",
+          "23c86e4a-c769-43c0-a056-79e3cd15834f",
+          "2443ac9e-a3db-423d-accb-8963f6fb0a53",
+          "248deb0d-426c-4fa9-86fa-bc60aa9c3719",
+          "24ac5b00-5f03-4c47-8e37-522d1195383e",
+          "24d8fdfe-6241-424e-b7b7-1b6efb06e4fb",
+          "2660d74f-ce79-48a8-8b53-6e668e2071a2",
+          "26614164-6840-4e17-a65a-2deb2fe7e87b",
+          "268525e2-f873-4178-bc07-e6a0ee1f002d",
+          "2698f6c6-e436-47ce-a583-dbc25596c571",
+          "26c0b5df-efa7-470f-a65e-2d883329e493",
+          "26e0f83a-ca98-4f34-94ac-7c5e251ee410",
+          "27202e5f-c82d-4710-92e9-4317877d4883",
+          "272f5f03-aea9-4675-a244-2b753b618cdf",
+          "272ff333-442f-4169-a804-ac9177bc99d7",
+          "277f939a-985b-4b37-859d-b3eabc7c0b26",
+          "296ace9b-0815-43b2-bafa-fd6cec5cce36",
+          "29855680-7469-43eb-8b88-cd3fb1d99da3",
+          "29976311-665a-4b2f-ac72-557c33e0758e",
+          "2aacdc07-5f4e-4ab9-8ea5-5f7ab93f9eeb",
+          "2bb84433-f38e-4edc-9b65-4d7b1f473db9",
+          "2bfdd17a-e027-4068-a54e-b0e90a6df118",
+          "2c4394a2-b443-470a-908e-5c4a271b780c",
+          "2cd04201-2b6e-47ef-853e-7601f705f2a8",
+          "2cff73da-4855-403c-afc9-5540feadcc15",
+          "2d28a13a-096e-475a-beb8-26bbd1c7d51c",
+          "2dad8957-4c16-4e74-bf2d-8b21514e0ae9",
+          "2dbb6dc7-8c40-4b6d-af9c-cf805f83b79a",
+          "2e40e695-3cec-43da-83f9-615af30b8e91",
+          "2e46d2fd-eb2b-42b9-9fe4-be50630fe870",
+          "2e6400f5-85ca-4ebc-ba8f-c2811a631138",
+          "2e8694f9-7782-47a6-a6ba-fdce89d939c8",
+          "2e9ff877-fd2c-4ce7-b631-7ca1bdb6d13e",
+          "2f339a97-9a0d-499a-9cb5-e0db665bfa25",
+          "c1"
+        ]
+      }
+    },
+    "errors_found": {
+      "type": "integer"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 2048
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "blocker",
+              "major",
+              "minor"
+            ]
+          },
+          "location": {
+            "type": "string",
+            "maxLength": 2048
+          },
+          "evidence": {
+            "type": "string",
+            "maxLength": 2048
+          },
+          "repair": {
+            "type": "string",
+            "maxLength": 2048
+          }
+        },
+        "required": [
+          "id",
+          "severity",
+          "location",
+          "evidence",
+          "repair"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "fixed": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 2048
+      }
+    },
+    "uncertainties": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 2048
+      }
+    },
+    "missing_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 2048
+      }
+    }
+  },
+  "required": [
+    "artifact_id",
+    "artifact_sha256",
+    "round",
+    "verdict",
+    "coverage_checked",
+    "errors_found",
+    "findings",
+    "fixed",
+    "uncertainties",
+    "missing_evidence"
+  ],
+  "additionalProperties": false
+}

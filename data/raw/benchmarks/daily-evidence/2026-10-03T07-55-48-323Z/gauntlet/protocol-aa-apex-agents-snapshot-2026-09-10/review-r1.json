@@ -1,0 +1,21 @@
+{
+  "artifact_id": "protocol-aa-apex-agents-snapshot-2026-09-10",
+  "artifact_sha256": "ed015caa0cf961062828ce8256454a7d2810194909bca9bb6d00b65f5844e59a",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "aa-apex-agents::snapshot-2026-09-10",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Snapshot date snapshot-2026-09-10 precedes the source retrieval date 2026-10-03; the protocol excerpt shows no change, but I cannot independently verify version continuity between those dates.",
+    "Owner-executed hash, transport, and capture-qualification checks are outside my read-only review and were not independently verified here.",
+    "The protocol excerpt is bounded; only the stated excerpt was used, though it appears to contain all fields needed for c1 and c2.",
+    "Activity summary notes 3 added and 43 newly null values; the nonzero added count is treated as affirmative for status active per criterion c2, but I cannot recompute the summary."
+  ],
+  "missing_evidence": []
+}

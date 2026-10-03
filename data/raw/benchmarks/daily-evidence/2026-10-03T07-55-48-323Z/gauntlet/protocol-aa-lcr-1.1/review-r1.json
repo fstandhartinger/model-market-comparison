@@ -1,0 +1,24 @@
+{
+  "artifact_id": "protocol-aa-lcr-1.1",
+  "artifact_sha256": "eab2aec227d37e88e0fffe56c8f3b2910a32a7e32f5fab9f986458531f09df48",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["aa-lcr::1.1", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "aa-lcr::1.1",
+      "severity": "major",
+      "location": "scoring.metric",
+      "evidence": "Primary protocol excerpt for AA-LCR v1.1 states model responses are evaluated using GPT-5.6 Luna (medium) as an equality checker with pass@1 scoring; it does not state 'three repeats'. The candidate metric adds 'over three repeats' with no source support in the packet.",
+      "repair": "Remove 'over three repeats' from the metric, or add a primary source that establishes the repeat count."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Review is read-only; hash, transport, and qualification checks are owner-executed and cannot be independently verified here.",
+    "Source 1 is a bounded excerpt; the AA-LCR v1.1 passage appears complete, but the full page was not reviewed beyond the excerpt.",
+    "'Three repeats' may describe Benchmark Heaven's own harness rather than the maintainer's protocol, but no evidence in the packet supports that interpretation."
+  ],
+  "missing_evidence": []
+}
