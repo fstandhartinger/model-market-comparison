@@ -35,9 +35,12 @@ export default function TermsPage() {
       or USD 99 per selected benchmark for larger open models that we run on our GPUs. Selecting both JevBench and
       ImageJevBench incurs the selected fee twice. Applicable taxes are calculated at checkout. Payment is completed
       through Stripe Checkout; Stripe sends the payment receipt to the email address provided at checkout.</p>
-    <p className="mt-2">Every submission is reviewed before evaluation. We may refuse a submission that is unsafe or cannot be
-      evaluated fairly, and we will issue a full refund. We provide results within 48 hours of payment. If we miss that
-      deadline, we automatically issue a full refund. The 48-hour clock pauses while we wait for information requested
+    <p className="mt-2">Every submission is reviewed before evaluation. If the review finds something you need to change before we
+      can evaluate the model fairly, for example a link we cannot open or files we cannot find, we tell you exactly what to
+      change. Your order stays open, the 48-hour clock pauses while we wait, and the full 48 hours start again when you send
+      the update. If a submission is unsafe, or cannot be evaluated fairly even after changes, we refuse it and refund the
+      payment in full. We provide results within 48 hours of payment. If we miss that deadline, you can ask for a full
+      refund, or let us finish the evaluation. The 48-hour clock also pauses while we wait for other information requested
       from you.</p>
     <p className="mt-2">For a public request, you authorize us to publish the resulting aggregate leaderboard row, marked
       “priority run”. A private request produces a report for your team and is not published without your consent. We may
