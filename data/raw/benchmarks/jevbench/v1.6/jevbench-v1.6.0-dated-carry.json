@@ -2,14 +2,14 @@
  "benchmark": "JevBench",
  "revision": "v1.6.0",
  "kind": "dated-carry",
- "provisional": true,
+ "provisional": false,
  "carried_from": {
-  "revision": "v1.5.5",
-  "path": "data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.5-results.json",
-  "sha256": "591e56fe98b5122f1a47ed8c0945c4ba2e848e5d0dcc09ffbfc5967bedeafd25"
+  "revision": "v1.5.6",
+  "path": "data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.6-results.json",
+  "sha256": "2a0adbfa3b78996042cbc8a4fe9a140af68934951f13088396b9c33a36a63583"
  },
  "method": "v1.5 protocol (1,624 decisions: 904 open + 720 sealed); scores are on the v1.5 scale and are not comparable with v1.6-measured rows.",
- "rule": "Every ranked system of the live v1.5.5 board that is not measured on the v1.6.0 pool keeps its last published score, marked with the release that first published that measurement and that release's publication day. Carried rows are listed separately and never ranked together with v1.6-measured rows.",
+ "rule": "Every ranked system of the live v1.5.6 board that is not measured on the v1.6.0 pool keeps its last published score, marked with the release that first published that measurement and that release's publication day. Carried rows are listed separately and never ranked together with v1.6-measured rows.",
  "releases": [
   {
    "revision": "v1.5.0",
@@ -52,6 +52,13 @@
    "main_commit": "dda0c5a2f29dad5a0b96d3f0a714e923a2b1c587",
    "path": "data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.5-results.json",
    "sha256": "591e56fe98b5122f1a47ed8c0945c4ba2e848e5d0dcc09ffbfc5967bedeafd25"
+  },
+  {
+   "revision": "v1.5.6",
+   "published_on": "2026-10-03",
+   "main_commit": "bfd1a42116bdfd703845d1b28b70bf64b7ac4de6",
+   "path": "data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.6-results.json",
+   "sha256": "2a0adbfa3b78996042cbc8a4fe9a140af68934951f13088396b9c33a36a63583"
   }
  ],
  "rows": [
@@ -88,8 +95,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 107
   },
   {
    "key": "gpt-6-luna",
@@ -124,8 +132,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 38
   },
   {
    "key": "deepseek-flash",
@@ -160,8 +169,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 72
   },
   {
    "key": "gpt-6-luna-low",
@@ -196,8 +206,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 37
   },
   {
    "key": "gpt-5.6-luna",
@@ -232,8 +243,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 51
   },
   {
    "key": "openjev-thinking",
@@ -268,8 +280,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 61
   },
   {
    "key": "kushal-gemma4-31b-it-autoloops",
@@ -304,8 +317,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 36
   },
   {
    "key": "eikos-27b",
@@ -340,8 +354,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 58
   },
   {
    "key": "autojev-27b",
@@ -376,8 +391,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 55
   },
   {
    "key": "simplejev-qwen3.8-27b",
@@ -412,8 +428,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 74
   },
   {
    "key": "autojev-27b-rtxpro6000-a2",
@@ -448,8 +465,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 56
   },
   {
    "key": "swanone",
@@ -484,8 +502,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 31
   },
   {
    "key": "surogate-rune-26b-a4b-v3-rtxpro6000-a2",
@@ -520,8 +539,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": "Not yet measured on the v1.6 pool."
+   "carried_from": "v1.5.6",
+   "note": "Not yet measured on the v1.6 pool.",
+   "v156_rank": 19
   },
   {
    "key": "ninfer-qwen3.8-flash-next",
@@ -556,8 +576,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 29
   },
   {
    "key": "clef",
@@ -592,8 +613,9 @@
    "measured_revision": "v1.5.5",
    "measured_label": "measured on v1.5.5 (2026-10-02)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 63
   },
   {
    "key": "gemini-3.1-flash-lite",
@@ -628,8 +650,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 54
   },
   {
    "key": "ninfer-qwen3.8-27b",
@@ -664,8 +687,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 57
   },
   {
    "key": "reflex-27b",
@@ -700,8 +724,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 68
   },
   {
    "key": "instinct",
@@ -736,8 +761,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 60
   },
   {
    "key": "ninfer-qwen3.8-27b-t1.5",
@@ -772,8 +798,45 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 59
+  },
+  {
+   "key": "vansa-3.4",
+   "display": "Vansa-3.4 (Vansa, hosted System One API)",
+   "author": "Vansa",
+   "class": "decision-api",
+   "open": "no",
+   "licence": "proprietary hosted API",
+   "repo": "https://vansa.org",
+   "endpoint_kind": "api",
+   "api_flag": true,
+   "axes": {
+    "intelligence": 58.038138517840565,
+    "calibration": 87.62340118994128,
+    "speed": 91.27886810559414,
+    "cost": 61.44286408313903
+   },
+   "capability": 72.83076985389093,
+   "composite_v15": 71.59061278658044,
+   "v156_rank": 5,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.019285809113300495,
+    "basis": "Developer's own stated API price: USD 0.034 per 1M input tokens, no output-token charge (docs.vansa.org/pricing, read 1 Oct 2026), x measured input tokens (921,181 over 1,624 decisions). Standard launch list price counted from day 1 (interpretation I-1); the closed-beta 'no charges today' is a promotion and is not used. API model with a developer-reported base: ranked at its own API price (1 Oct 2026 rule); the striped bar shows the Qwen3.5-4B base-model reference."
+   },
+   "speed": {
+    "p50_s_adjusted": 0.14382775500416756,
+    "p95_s_adjusted": 0.517929308861494,
+    "n": 450,
+    "adjustment": "none (hosted API, measured as is)"
+   },
+   "measured_revision": "v1.5.6",
+   "measured_label": "measured on v1.5.6 (2026-10-03)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.6",
+   "note": "Hosted API retained at its v1.5.6 score; it was not sent the v1.6.0 API subset under the three-refresh exposure cadence."
   },
   {
    "key": "open-jev-zefan-9b",
@@ -808,8 +871,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 49
   },
   {
    "key": "litjev",
@@ -844,8 +908,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 64
   },
   {
    "key": "standardone-8b",
@@ -880,8 +945,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 28
   },
   {
    "key": "decider-35b-a3b",
@@ -916,8 +982,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 46
   },
   {
    "key": "openjev-sglang",
@@ -952,8 +1019,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 45
   },
   {
    "key": "qwen35-9b-jev-data-mix-v2",
@@ -988,8 +1056,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 27
   },
   {
    "key": "nimble-9b",
@@ -1024,8 +1093,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 43
   },
   {
    "key": "clef-flash",
@@ -1060,8 +1130,9 @@
    "measured_revision": "v1.5.5",
    "measured_label": "measured on v1.5.5 (2026-10-02)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 26
   },
   {
    "key": "jevone",
@@ -1096,8 +1167,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 39
   },
   {
    "key": "reflex-4b",
@@ -1132,8 +1204,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 20
   },
   {
    "key": "hopper",
@@ -1168,8 +1241,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 17
   },
   {
    "key": "malkuth-4b",
@@ -1204,8 +1278,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 18
   },
   {
    "key": "metask-jev-4b",
@@ -1240,8 +1315,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 16
   },
   {
    "key": "manchego-v21-v15",
@@ -1276,8 +1352,9 @@
    "measured_revision": "v1.5.4",
    "measured_label": "measured on v1.5.4 (2026-09-29)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 13
   },
   {
    "key": "jqv",
@@ -1312,8 +1389,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 24
   },
   {
    "key": "lev",
@@ -1348,8 +1426,9 @@
    "measured_revision": "v1.5.5",
    "measured_label": "measured on v1.5.5 (2026-10-02)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 12
   },
   {
    "key": "semif-qwen3.5-4b",
@@ -1384,8 +1463,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 14
   },
   {
    "key": "jev-local",
@@ -1420,8 +1500,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 21
   },
   {
    "key": "spark-s1-4b-v6",
@@ -1456,8 +1537,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 15
   },
   {
    "key": "jevk5-v02",
@@ -1492,8 +1574,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 25
   },
   {
    "key": "instinct-dual-4b",
@@ -1528,8 +1611,9 @@
    "measured_revision": "v1.5.3",
    "measured_label": "measured on v1.5.3 (2026-09-29)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 30
   },
   {
    "key": "bev-bonsai-27b",
@@ -1564,8 +1648,9 @@
    "measured_revision": "v1.5.3",
    "measured_label": "measured on v1.5.3 (2026-09-29)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 65
   },
   {
    "key": "kev-8b",
@@ -1600,8 +1685,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 41
   },
   {
    "key": "decision-2b",
@@ -1636,8 +1722,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 50
   },
   {
    "key": "localjev-qwen3.5-4b",
@@ -1672,8 +1759,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 47
   },
   {
    "key": "open-alternative-jev",
@@ -1708,8 +1796,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 42
   },
   {
    "key": "decider-2b",
@@ -1744,8 +1833,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 33
   },
   {
    "key": "system-one-open",
@@ -1780,8 +1870,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 35
   },
   {
    "key": "jev-qwen3.5-9b-base-nvfp4",
@@ -1816,8 +1907,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 53
   },
   {
    "key": "malkuth-2b",
@@ -1852,8 +1944,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 44
   },
   {
    "key": "nemotron-diffusion-8b",
@@ -1888,8 +1981,9 @@
    "measured_revision": "v1.5.2",
    "measured_label": "measured on v1.5.2 (2026-09-29)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 48
   },
   {
    "key": "typecastlm",
@@ -1924,8 +2018,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 52
   },
   {
    "key": "kev-4b",
@@ -1960,8 +2055,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 40
   },
   {
    "key": "open-jev-zefan-2b",
@@ -1996,8 +2092,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 69
   },
   {
    "key": "raw-qwen3-4b-instruct-2507",
@@ -2032,8 +2129,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 23
   },
   {
    "key": "opensourcejev-qwen35-4b-q4km",
@@ -2068,8 +2166,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 67
   },
   {
    "key": "raw-qwen3-8b",
@@ -2104,8 +2203,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 32
   },
   {
    "key": "system-one-sg",
@@ -2140,8 +2240,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 34
   },
   {
    "key": "raw-phi-4-mini",
@@ -2176,8 +2277,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 66
   },
   {
    "key": "qwen3-reranker-4b",
@@ -2212,8 +2314,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 71
   },
   {
    "key": "decision-machine-1",
@@ -2248,8 +2351,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 75
   },
   {
    "key": "certo",
@@ -2284,8 +2388,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 93
   },
   {
    "key": "mxbai-rerank-base-v2",
@@ -2320,8 +2425,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 100
   },
   {
    "key": "zerank-2",
@@ -2356,8 +2462,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 87
   },
   {
    "key": "jeff",
@@ -2392,8 +2499,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 88
   },
   {
    "key": "von-395m",
@@ -2428,8 +2536,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 109
   },
   {
    "key": "laya-typed-decisions",
@@ -2464,8 +2573,9 @@
    "measured_revision": "v1.5.3",
    "measured_label": "measured on v1.5.3 (2026-09-29)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 110
   },
   {
    "key": "bge-reranker-v2-m3",
@@ -2500,8 +2610,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 92
   },
   {
    "key": "openjev-verdict-1.4",
@@ -2536,8 +2647,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 106
   },
   {
    "key": "bosun-v31-0.6b",
@@ -2572,8 +2684,9 @@
    "measured_revision": "v1.5.3",
    "measured_label": "measured on v1.5.3 (2026-09-29)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 77
   },
   {
    "key": "kev-0.6b",
@@ -2608,8 +2721,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 82
   },
   {
    "key": "lev-350m",
@@ -2644,8 +2758,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 98
   },
   {
    "key": "open-jev-json-canvas-joshuasp",
@@ -2680,8 +2795,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 104
   },
   {
    "key": "open-jev-deberta-v3-large",
@@ -2716,8 +2832,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 103
   },
   {
    "key": "smalljev",
@@ -2752,8 +2869,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 89
   },
   {
    "key": "decision-fast",
@@ -2788,8 +2906,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 94
   },
   {
    "key": "gte-reranker-modernbert-base",
@@ -2824,8 +2943,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 95
   },
   {
    "key": "opendecision",
@@ -2860,8 +2980,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 91
   },
   {
    "key": "jevact",
@@ -2896,8 +3017,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 80
   },
   {
    "key": "laya",
@@ -2932,8 +3054,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 97
   },
   {
    "key": "mghafiri-qwen3.5-0.8b-decision-model",
@@ -2968,8 +3091,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 99
   },
   {
    "key": "gliner2.5-multi",
@@ -3004,8 +3128,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 76
   },
   {
    "key": "gliner2.5-small",
@@ -3040,8 +3165,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 84
   },
   {
    "key": "kev-0.5b",
@@ -3076,8 +3202,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 96
   },
   {
    "key": "gliner2-large",
@@ -3112,8 +3239,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 70
   },
   {
    "key": "simplejev-qwen3.5-0.8b",
@@ -3148,8 +3276,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 73
   },
   {
    "key": "clm-8b",
@@ -3184,8 +3313,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 81
   },
   {
    "key": "verdict-small",
@@ -3220,8 +3350,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 108
   },
   {
    "key": "openjev-verdict",
@@ -3256,8 +3387,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 105
   },
   {
    "key": "deem-0.8-v1",
@@ -3292,8 +3424,9 @@
    "measured_revision": "v1.5.3",
    "measured_label": "measured on v1.5.3 (2026-09-29)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 79
   },
   {
    "key": "gliner2",
@@ -3328,8 +3461,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 78
   },
   {
    "key": "mirror",
@@ -3364,8 +3498,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 86
   },
   {
    "key": "laya-multilingual",
@@ -3400,8 +3535,9 @@
    "measured_revision": "v1.5.3",
    "measured_label": "measured on v1.5.3 (2026-09-29)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 90
   },
   {
    "key": "raw-qwen3-0.6b",
@@ -3436,8 +3572,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 83
   },
   {
    "key": "raw-qwen3-1.7b",
@@ -3472,8 +3609,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 85
   },
   {
    "key": "needle-3",
@@ -3508,8 +3646,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 101
   },
   {
    "key": "needle-3-tools",
@@ -3544,8 +3683,9 @@
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.5",
-   "note": null
+   "carried_from": "v1.5.6",
+   "note": null,
+   "v156_rank": 102
   }
  ]
 }

@@ -23,13 +23,13 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'data/raw/benchmarks/jevbench/v1.6')
-V15 = ['1.5.0', '1.5.1', '1.5.2', '1.5.3', '1.5.4', '1.5.5']
+V15 = ['1.5.0', '1.5.1', '1.5.2', '1.5.3', '1.5.4', '1.5.5', '1.5.6']
 # Standing exclusion: a private fine-tune (and its thinking-mode variant) and private-only systems are listed nowhere.
 # Private-only names are matched by the SHA-256 of a lower-case alphanumeric token, so the names themselves are not published.
 EXCLUDED = {'djev', 'djev-thinking'}
 EXCLUDED_TOKEN_SHA256 = {'5abd15f81ff200ebeb028ff68a02ff55ea2867ea3ea8173e605aa01bb7858c4f'}
 ITEM_LEVEL = re.compile(r'^(item_id|item_ids|item_text|question|question_text|expected|gold|golds|prediction|predicted|per_item|item_results|prompt|task_id)$', re.I)
-# Per-system metadata that the v1.6 scorer output does not carry; joined from the same key's last published v1.5.5 row.
+# Per-system metadata that the v1.6 scorer output does not carry; joined from the latest published v1.5 row.
 JOIN_FIELDS = ['class', 'open', 'licence', 'repo', 'gpu', 'endpoint_condition', 'underlying', 'adapter_id', 'api_exposure_note', 'alt']
 
 
@@ -107,6 +107,11 @@ def main(prov, out_dir='out'):
     src_results = os.path.join(prov, out_dir, 'jevbench-v1.6.0-results.json')
     src_categories = os.path.join(prov, out_dir, 'categories-with-topics.json')
     src_label = f'{os.path.basename(os.path.normpath(prov))}/{out_dir}'
+    current = os.path.join(OUT, 'jevbench-v1.6.0-results.json')
+    if os.path.exists(current):
+        existing = json.load(open(current))
+        if existing.get('provisional') is False or existing.get('status') == 'published':
+            raise SystemExit('refusing to overwrite a published v1.6.0 release')
     res = json.load(open(src_results))
     cats = json.load(open(src_categories))
     # Noul decisive-rate diagnostic (method addendum B), written by the job's harness/decisive_v16.py next to the results.
@@ -114,7 +119,7 @@ def main(prov, out_dir='out'):
     decisive = json.load(open(src_decisive)) if os.path.exists(src_decisive) else {}
     noul_method = ((res.get('v16') or {}).get('scoring_parameters') or {}).get('noul_method', 'O0')
     v15 = {rev: json.load(open(os.path.join(ROOT, f'data/raw/benchmarks/jevbench/v1.5/jevbench-v{rev}-results.json'))) for rev in V15}
-    live = v15['1.5.5']
+    live = v15[V15[-1]]
     live_rows = {s['key']: s for s in live['systems']}
     assert res['revision'] == 'v1.6.0' and res['protocol'] == 'jevbench::v1.6'
 
@@ -146,7 +151,7 @@ def main(prov, out_dir='out'):
         d = decisive.get(s['key'])
         row['noul_decisive'] = None if d is None else {k: d.get(k) for k in ['supported', 'decisive_rate', 'acc_among_decisive', 'valid']}
         row['not_ranked_because'] = None if row.get('ranked') else row.get('not_ranked_because')
-        row['provenance'] = {'kind': f'v1.6.0 provisional scorer output ({src_label})', 'carried_metadata_from': 'v1.5.5' if prior else None}
+        row['provenance'] = {'kind': f'v1.6.0 provisional scorer output ({src_label})', 'carried_metadata_from': 'v1.5.6' if prior else None}
         systems.append(row)
 
     # Ranks and board orders recomputed on the published (exclusion-applied) roster; scores are unchanged.
@@ -221,7 +226,7 @@ def main(prov, out_dir='out'):
     categories['lanes'] = {k: ('api' if (next((s for s in systems if s['key'] == k), {}).get('v16') or {}).get('lane') == 'api' else 'selfhosted') for k in categories['systems']}
     categories['lane_note'] = 'Self-hosted cells pool S 1,200 + P 300 (1,500 items); hosted-API cells pool A 300 + P 300 (600 items). Raw and unequated: compare systems of the same lane within a category.'
 
-    # ---- dated carry: ranked live v1.5.5 rows not measured on v1.6 --------------------------------------------------
+    # ---- dated carry: ranked live v1.5.6 rows not measured on v1.6 --------------------------------------------------
     pubs = {rev: release_publication(rev) for rev in V15}
     measured_keys = {s['key'] for s in res['systems']}
     carry_rows = []
@@ -242,24 +247,48 @@ def main(prov, out_dir='out'):
         carry_rows.append({
             'key': row['key'], 'display': row['display'], 'author': row.get('author'), 'class': row.get('class'), 'open': row.get('open'),
             'licence': row.get('licence'), 'repo': row.get('repo'), 'endpoint_kind': row.get('endpoint_kind'), 'api_flag': row.get('api_flag'),
-            'axes': axes, 'capability': cap, 'composite_v15': row['jevbench_score'], 'v155_rank': row.get('rank'),
+            'axes': axes, 'capability': cap, 'composite_v15': row['jevbench_score'], 'v156_rank': row.get('rank'),
             'cost': row.get('cost'), 'speed': {k: (row.get('speed') or {}).get(k) for k in ['p50_s_adjusted', 'p95_s_adjusted', 'n', 'adjustment']},
             'measured_revision': pub['revision'], 'measured_label': f"measured on {pub['revision']} ({pub['published_on']})",
             'date_basis': 'publication day of the release that first published this measurement (merge into main)',
-            'carried_from': 'v1.5.5',
+            'carried_from': 'v1.5.6',
             'note': 'Not yet measured on the v1.6 pool.' if row['key'].startswith('surogate-rune') else None,
         })
     carry_rows.sort(key=lambda r: (-r['capability'], r['key']))
     carry = {
         'benchmark': 'JevBench', 'revision': 'v1.6.0', 'kind': 'dated-carry', 'provisional': True,
-        'carried_from': {'revision': 'v1.5.5', 'path': pubs['1.5.5']['path'], 'sha256': pubs['1.5.5']['sha256']},
+        'carried_from': {'revision': 'v1.5.6', 'path': pubs['1.5.6']['path'], 'sha256': pubs['1.5.6']['sha256']},
         'method': 'v1.5 protocol (1,624 decisions: 904 open + 720 sealed); scores are on the v1.5 scale and are not comparable with v1.6-measured rows.',
-        'rule': 'Every ranked system of the live v1.5.5 board that is not measured on the v1.6.0 pool keeps its last published score, '
+        'rule': 'Every ranked system of the live v1.5.6 board that is not measured on the v1.6.0 pool keeps its last published score, '
                 'marked with the release that first published that measurement and that release\'s publication day. Carried rows are listed '
                 'separately and never ranked together with v1.6-measured rows.',
         'releases': [pubs[r] for r in V15],
         'rows': carry_rows,
     }
+
+    # Preserve the complete live catalogue in the main data grid, including rows whose only
+    # published score is shown in the separate dated-carry table and rows with no official score.
+    roster = {row['key'] for row in artifact['systems']} | {row['key'] for row in artifact['not_measured']}
+    for row in live.get('not_measured', []):
+        if excluded(row['key']) or row['key'] in roster:
+            continue
+        artifact['not_measured'].append({
+            'key': row['key'], 'display': row.get('display', row['key']), 'author': row.get('author'),
+            'addendum': row.get('addendum'), 'status': 'not measured',
+            'reason': 'No v1.6.0 score. Prior v1.5.6 catalogue: ' + (row.get('reason') or 'no official score was published.'),
+        })
+        roster.add(row['key'])
+    for row in carry_rows:
+        if row['key'] in roster:
+            continue
+        artifact['not_measured'].append({
+            'key': row['key'], 'display': row['display'], 'author': row.get('author'),
+            'addendum': None, 'status': 'not measured',
+            'reason': 'Not measured on v1.6.0; the latest published score is shown separately with its date.',
+        })
+        roster.add(row['key'])
+    artifact['not_measured'].sort(key=lambda row: row['key'])
+    artifact['roster_count'] = len(artifact['systems']) + len(artifact['not_measured'])
 
     for name, value in [('results', artifact), ('categories', categories), ('carry', carry)]:
         check_aggregate_only(value, name)

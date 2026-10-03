@@ -2,24 +2,21 @@ import type { CSSProperties } from 'react';
 import type { JevV15Artifact } from '../lib/jevbench-v15-preview.mjs';
 import { jevV15LeaderSentence } from '../lib/jevbench-v15-preview.mjs';
 import { jevV15SliderPresets, jevV15BoardSystem, jevV15BoardRow, jevV15CompareRow } from '../lib/jevbench-v15-board.mjs';
-import type { JevV16PreviewArtifact, JevV16Categories, JevV16Carry } from '../lib/jevbench-v16-preview.mjs';
+import type { JevV16ReleaseArtifact, JevV16Categories, JevV16Carry } from '../lib/jevbench-v16-release.mjs';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
 import { jevbenchCategoryView } from '../lib/jevbench-categories.mjs';
 import { jevV15FilterRows } from '../lib/jevbench-v15-filter-rows.mjs';
-import { JevCapabilityRanking } from './JevCapabilityRanking';
+import { JevBenchV16Charts } from './JevBenchV16Charts';
 import { jevClassView } from './jevClassView';
-import { JevBubbleCharts } from './JevBubbleChart';
 import { JevScoreChart } from './JevBoardInteractive';
 import { JevCompareV15 } from './JevCompareV15';
-import { JevCapabilityLazy } from './JevCapabilityLazy';
 import { JevV15FilterProvider, JevV15FilterPanel, type JevV15RowMeta } from './JevV15Filters';
 import { JevV15FilterVisibilityBridge } from './JevV15FilterVisibilityBridge';
 import { JevV15AllDataGrid } from './JevV15AllDataGrid';
 
-// JevBench v1.6.0 PROVISIONAL preview (unlisted, noindex). Reuses the live board's interactive pieces (Capability with
-// cost/latency caps and traffic lights, bubble charts, composite with What-If, compare radars, full grid) on the v1.6
-// aggregate file, and adds the v1.6-only sections: language view, dated carry and the rotation / API-exposure method.
-// Carried v1.5.x rows never enter the v1.6 charts or rankings.
+// JevBench v1.6.0 release board. Reuses the established interactive charts on the
+// v1.6 aggregate artifact, and adds the main-pool language view, dated carry and the
+// rotation / API-exposure method. Carried v1.5.x rows never enter v1.6 rankings.
 
 const one = (v: number | null | undefined) => v == null ? '—' : v.toFixed(1);
 const usd = (v: number | null | undefined) => v == null ? '—' : `$${v.toFixed(4)}`;
@@ -32,27 +29,30 @@ function heat(competence: number, lowN: boolean): CSSProperties {
   return { ['--h' as string]: t.toFixed(3), opacity: lowN ? 0.6 : 1 } as CSSProperties;
 }
 
-function LanguageView({ a, categories }: { a: JevV16PreviewArtifact; categories: JevV16Categories }) {
+function LanguageView({ a, categories }: { a: JevV16ReleaseArtifact; categories: JevV16Categories }) {
   const systems = a.systems.filter((s) => s.ranked && categories.systems[s.key]);
   const langs = categories.languages.filter((l) => l.key !== 'en').sort((x, y) => y.n - x.n);
   const en = categories.languages.find((l) => l.key === 'en');
   return <section className="mt-10" aria-labelledby="jev16-languages" data-bh-jev16-language-view>
     <h2 id="jev16-languages" className="text-2xl font-bold">Languages</h2>
     <p className="bh-muted mt-1 max-w-4xl text-sm">Raw chance-corrected competence per item language (0 = chance, 100 = perfect; can be negative), from each system&apos;s own measured items:
-      self-hosted systems over S 1,200 + P 300, hosted APIs over A 300 + P 300. Unequated and outside the Composite. Cells under {categories.min_n} items are left empty; cells under 30 items are faded.
+      self-hosted systems over S 1,200 + P 300, hosted APIs over A 300 + P 300. Unequated and outside the Composite. Cells under {categories.min_n} items are left empty. A dagger (†) marks every displayed cell with fewer than 30 answered items.
       {en ? ` English (${en.n.toLocaleString('en-US')} items) is listed first; the other ${langs.filter((l) => l.key !== 'mixed').length} languages${langs.some((l) => l.key === 'mixed') ? ' and the mixed-language column' : ''} share ${langs.reduce((s, l) => s + l.n, 0)} items.` : ''}
-      {' '}This is the main-pool language breakdown, not the separately planned uc1.1 multilingual supplement.</p>
+      {' '}This is the v1.6.0 main-pool breakdown. The expanded uc1.1 multilingual pool is a candidate for a later release and is not part of v1.6.0.</p>
     <div className="mt-3 overflow-x-auto"><table className="text-left text-xs tabular" data-bh-jev16-language-table>
-      <caption className="sr-only">JevBench v1.6.0 preview competence by item language and system</caption>
+      <caption className="sr-only">JevBench v1.6.0 competence by item language and system</caption>
       <thead><tr><th scope="col" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5">System</th>
-        {[...(en ? [en] : []), ...langs].map((l) => <th key={l.key} scope="col" className="p-1.5 text-center" title={`${l.label}: ${l.n} items (${l.open} public, ${l.sealed} sealed)`}>{l.key}<span className="bh-muted block font-normal">{l.n}</span></th>)}</tr></thead>
+        {[...(en ? [en] : []), ...langs].map((l) => <th key={l.key} scope="col" className="p-1.5 text-center" title={`${l.label}: ${l.n} items (${l.open} public, ${l.sealed} sealed)`}>{l.key}{l.n < 30 && <sup aria-label="low n">†</sup>}<span className="bh-muted block font-normal">{l.n}</span></th>)}</tr></thead>
       <tbody>{systems.map((s) => <tr key={s.key} className="border-t border-line">
         <th scope="row" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5 font-normal whitespace-nowrap">{short(s.display)}<span className="bh-muted"> · {s.v16.lane === 'api' ? 'API' : 'self-hosted'}</span></th>
         {[...(en ? [en] : []), ...langs].map((l) => {
           const c = categories.systems[s.key].languages?.[l.key];
-          if (!c || c.n < categories.min_n) return <td key={l.key} className="p-1.5 text-center bh-muted" title={c ? `${c.n} items, below ${categories.min_n}` : 'no items'}>·</td>;
+          if (!c || c.n < categories.min_n) {
+            const status = c ? `${c.n} answered items; below the ${categories.min_n}-item reporting minimum` : `Not plotted; fewer than ${categories.min_n} answered items`;
+            return <td key={l.key} className="p-1.5 text-center bh-muted" title={`${l.label}: ${status}`} aria-label={`${l.label}: ${status}`} data-bh-jev16-language-suppressed>{!c ? '—' : '·'}</td>;
+          }
           const lowN = c.n < 30;
-          return <td key={l.key} className="bh-heat p-1.5 text-center" style={heat(c.competence, lowN)} title={`${l.label}: ${c.competence.toFixed(1)} over ${c.n} items${lowN ? ' (low n)' : ''}`}>{c.competence.toFixed(0)}</td>;
+          return <td key={l.key} className="bh-heat p-1.5 text-center" style={heat(c.competence, lowN)} title={`${l.label}: ${c.competence.toFixed(1)} over ${c.n} items${lowN ? ' (low n)' : ''}`}>{c.competence.toFixed(0)}{lowN && <sup className="ml-0.5 text-[10px]" aria-label="low n: fewer than 30 answered items">†</sup>}</td>;
         })}
       </tr>)}</tbody>
     </table></div>
@@ -72,7 +72,7 @@ function DatedCarry({ carry }: { carry: JevV16Carry }) {
         <th scope="row" className="p-2 font-normal">{r.display}{r.note && <span className="bh-muted block text-xs">{r.note}</span>}</th>
         <td className="p-2 whitespace-nowrap">{r.measured_label}</td>
         <td className="p-2">{one(r.capability)}</td>
-        <td className="p-2">{one(r.composite_v15)}{r.v155_rank != null && <span className="bh-muted"> · was #{r.v155_rank} on v1.5.5</span>}</td>
+        <td className="p-2">{one(r.composite_v15)}{r.v156_rank != null && <span className="bh-muted"> · was #{r.v156_rank} on v1.5.6</span>}</td>
         <td className="p-2">{usd(r.cost?.usd_per_1000)}<span className="bh-muted block text-xs">{r.cost?.kind ?? ''}</span></td>
         <td className="p-2">{sec(r.speed.p50_s_adjusted)}</td>
       </tr>)}</tbody>
@@ -80,7 +80,7 @@ function DatedCarry({ carry }: { carry: JevV16Carry }) {
   </section>;
 }
 
-function Method({ a, sha256, categoriesSha256, carrySha256 }: { a: JevV16PreviewArtifact; sha256: string; categoriesSha256: string; carrySha256: string }) {
+function Method({ a, sha256, categoriesSha256, carrySha256 }: { a: JevV16ReleaseArtifact; sha256: string; categoriesSha256: string; carrySha256: string }) {
   const sets = a.v16.item_sets;
   const off = a.v16.equating.offsets;
   const byDay = new Map<string, string[]>();
@@ -92,7 +92,7 @@ function Method({ a, sha256, categoriesSha256, carrySha256 }: { a: JevV16Preview
   });
   const confidenceOnly = a.systems.filter((s) => { const sup = Object.values((s as unknown as { support?: Record<string, string> }).support ?? {}); return sup.length > 0 && sup.every((x) => x === 'confidence'); }).map((s) => short(s.display));
   return <section className="mt-10 max-w-4xl" aria-labelledby="jev16-method" id="jev16-method" data-bh-jev16-method>
-    <h2 id="jev16-method" className="text-2xl font-bold">Method · v1.6.0 preview</h2>
+    <h2 id="jev16-method" className="text-2xl font-bold">Method · v1.6.0</h2>
     <h3 className="mt-4 text-lg font-semibold">Rotating item sets</h3>
     <p className="bh-muted mt-1 text-sm">Each release draws fresh sealed decisions from a larger reserve. Self-hosted open-weights models (run offline on our own GPU pods or Sandy) answer S and P; externally hosted models answer only the API subset A and P.</p>
     <div className="mt-2 overflow-x-auto"><table className="text-left text-sm tabular" data-bh-jev16-rotation>
@@ -120,7 +120,7 @@ function Method({ a, sha256, categoriesSha256, carrySha256 }: { a: JevV16Preview
     <p className="bh-muted mt-1 text-sm">Costs of v1.6-measured systems carry each system&apos;s published v1.5.4 cost per 1,000 decisions (pricing rules unchanged; v1.6 item lengths differ) unless the row says otherwise; Fastino&apos;s is an estimate from its published tariff and measured tokens.</p>
     {a.noul_method?.applied === 'O1S' && <>
     <h3 className="mt-4 text-lg font-semibold">Noul decisiveness and Score baseline (addendum B)</h3>
-    <p className="bh-muted mt-1 text-sm" data-bh-jev16-noul-method>Scored with method option B (scorer setting {a.noul_method?.applied ?? 'O0'}), chosen on 3 Oct 2026 after the provisional v1.6 results were known and disclosed as a post-results change. Each split × type competence is clipped at 0 before the type weighting, so a type answered no better than chance counts as chance instead of negative. The Score chance baseline is the error of always predicting the mid-scale level, so a flat know-nothing distribution earns about 0. A Score cell whose golds all sit at mid-scale keeps the v1.5 random-level baseline; this only occurs in small breakdown and bootstrap cells. Calibration is unchanged. This run: G_med = {a.G_med == null ? "—" : a.G_med.toFixed(2)} points; hosted-API offsets Intelligence {off.I >= 0 ? '+' : ''}{off.I.toFixed(2)}, Calibration {off.C >= 0 ? '+' : ''}{off.C.toFixed(2)}.</p>
+    <p className="bh-muted mt-1 text-sm" data-bh-jev16-noul-method>Scored with method option B (scorer setting {a.noul_method?.applied ?? 'O0'}), selected on 3 Oct 2026 after the v1.6 scores were known and disclosed as a post-results change. Each split × type competence is clipped at 0 before the type weighting, so a type answered no better than chance counts as chance instead of negative. The Score chance baseline is the error of always predicting the mid-scale level, so a flat know-nothing distribution earns about 0. A Score cell whose golds all sit at mid-scale keeps the v1.5 random-level baseline; this only occurs in small breakdown and bootstrap cells. Calibration is unchanged. This run: G_med = {a.G_med == null ? "—" : a.G_med.toFixed(2)} points; hosted-API offsets Intelligence {off.I >= 0 ? '+' : ''}{off.I.toFixed(2)}, Calibration {off.C >= 0 ? '+' : ''}{off.C.toFixed(2)}.</p>
     </>}
     <h3 className="mt-4 text-lg font-semibold">Failed requests and very long items</h3>
     <p className="bh-muted mt-1 text-sm" data-bh-jev16-failures>{a.v16.long_items_note} A failed, refused or unparseable answer counts as wrong for Intelligence and stays in the denominator; it does not enter Calibration (the v1.5 rule, applied to every system).
@@ -130,7 +130,7 @@ function Method({ a, sha256, categoriesSha256, carrySha256 }: { a: JevV16Preview
       {confidenceOnly.length > 0 ? ` ${confidenceOnly.join(', ')} return${confidenceOnly.length === 1 ? 's' : ''} a single confidence value, so ${confidenceOnly.length === 1 ? 'its' : 'their'} Calibration is the top-label error only and is not like-for-like with full-distribution systems.` : ''}</p>
     <h3 className="mt-4 text-lg font-semibold">Provenance</h3>
     {measuredDays.length > 0 && <p className="bh-muted mt-1 text-sm" data-bh-jev16-measured-days>Measured on the v1.6 pool (run completion day, UTC): {measuredDays.map(([day, names]) => `${day}: ${names.join(', ')}`).join(' · ')}.</p>}
-    <p className="bh-muted mt-1 break-all text-xs">Provisional aggregate files: results sha256 {sha256} · categories sha256 {categoriesSha256} · dated carry sha256 {carrySha256}. Built by scripts/build-jevbench-v16-preview.py from {a.source_note.replace(/\.$/, '')} (source sha256 {a.source_sha256}).</p>
+    <p className="bh-muted mt-1 break-all text-xs">Aggregate files: results sha256 {sha256} · categories sha256 {categoriesSha256} · dated carry sha256 {carrySha256}. Scoring source sha256 {a.source_sha256}. The method, release data and carry artifact are independently hashable.</p>
   </section>;
 }
 
@@ -139,7 +139,7 @@ const TYPES = ['choice', 'noul', 'score'] as const;
 
 // Display rules of the adopted method addendum B: decisive rate per row, "not supported" instead of a number for an
 // unsupported request type, and Intelligence values under the gate shown with a "below gate" label instead of 0.
-function NoulAndGate({ a }: { a: JevV16PreviewArtifact }) {
+function NoulAndGate({ a }: { a: JevV16ReleaseArtifact }) {
   const rows = a.systems.filter((s) => s.ranked).sort((x, y) => (x.rank ?? 999) - (y.rank ?? 999));
   return <section className="mt-10" aria-labelledby="jev16-noul" data-bh-jev16-noul-gate>
     <h2 id="jev16-noul" className="text-2xl font-bold">Intelligence gate and Noul decisiveness</h2>
@@ -162,20 +162,19 @@ function NoulAndGate({ a }: { a: JevV16PreviewArtifact }) {
   </section>;
 }
 
-export function JevBenchV16Preview({ artifact: a, sha256, categories, categoriesSha256, carry, carrySha256, previousKeys }: {
-  artifact: JevV16PreviewArtifact; sha256: string; categories: JevV16Categories; categoriesSha256: string; carry: JevV16Carry; carrySha256: string; previousKeys: string[];
+export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSha256, carry, carrySha256, previousKeys }: {
+  artifact: JevV16ReleaseArtifact; sha256: string; categories: JevV16Categories; categoriesSha256: string; carry: JevV16Carry; carrySha256: string; previousKeys: string[];
 }) {
   const v15 = a as unknown as JevV15Artifact; // same per-system aggregate schema (score_v16 extends score_v15)
   const ranked = a.systems.filter((s) => s.ranked).sort((x, y) => (x.rank ?? 999) - (y.rank ?? 999));
   const chartSystems = ranked.map((s) => jevV15BoardSystem(s) as JevV14System);
   const allChartSystems = a.systems.map((s) => jevV15BoardSystem(s) as JevV14System);
-  const jevClass = jevClassView(chartSystems);
   const allClass = jevClassView(allChartSystems);
   const eligibilityByKey = new Map(allClass.rows.map((row) => [row.row.key, {
     status: (row.inClass ? 'eligible' : 'outside') as 'eligible' | 'outside',
     reason: row.reasons.length ? row.reasons.join('; ') : 'within the official Jev-class caps',
   }]));
-  const filterProjection = jevV15FilterRows(v15, { previousKeys, eligibilityByKey, revisionHref: '/wip-jevbench-v16-7c3e9a' });
+  const filterProjection = jevV15FilterRows(v15, { previousKeys, eligibilityByKey, revisionHref: '/jev-models' });
   const filterRows: JevV15RowMeta[] = filterProjection.map((row) => ({
     key: row.key, display: row.display, provider: row.provider, family: row.family, modelClass: row.modelType,
     open: row.openStatus === 'yes' || row.openStatus === 'weights' || row.openStatus === 'no' ? row.openStatus : 'unknown',
@@ -190,10 +189,9 @@ export function JevBenchV16Preview({ artifact: a, sha256, categories, categories
   const named = new Map(a.systems.map((s) => [s.key, short(s.display)]));
   const leader = jevV15LeaderSentence(v15.board[a.headline], (key) => named.get(key) ?? key);
   return <JevV15FilterProvider rows={filterRows}>
-    <section data-bh-jevbench-v16-preview data-bh-provisional="true">
+    <section data-bh-jevbench-v16-release>
       <JevV15FilterVisibilityBridge />
-      <JevCapabilityRanking systems={chartSystems} eligibilitySystems={allChartSystems} revision={a.revision} officialHref="#jev14-chart-title" />
-      <JevBubbleCharts points={jevClass.points} costLimit={jevClass.limits.cost} referenceName="Jev" scoreKind="v15" />
+      <JevBenchV16Charts systems={chartSystems} eligibilitySystems={allChartSystems} revision={a.revision} officialHref="#jev16-method" />
       <JevV15FilterPanel />
       <JevScoreChart revision={a.revision} rows={viewRows} rankedCount={ranked.length} newLabel={null} fairness={null} approvedNote={leader} tieNote={null} capabilityHref="#jev-capability" presets={jevV15SliderPresets(v15)} compactMobile scoreKind="v15" methodLink={{ href: '#jev16-method', label: 'Method notes ↓' }} />
       <JevCompareV15 rows={compareRows} openDecisions={a.v16.counts.P} sealedDecisions={a.v16.counts.S} categories={jevbenchCategoryView(a.revision, compareRows.map((r) => r.key))} />
@@ -210,7 +208,6 @@ export function JevBenchV16Preview({ artifact: a, sha256, categories, categories
       />
       <DatedCarry carry={carry} />
       <Method a={a} sha256={sha256} categoriesSha256={categoriesSha256} carrySha256={carrySha256} />
-      <JevCapabilityLazy revision={a.revision} systems={chartSystems} only3d />
     </section>
   </JevV15FilterProvider>;
 }

@@ -2,12 +2,12 @@
  "benchmark": "JevBench",
  "revision": "v1.6.0",
  "protocol": "jevbench::v1.6",
- "provisional": true,
- "status": "preview-not-published",
- "run_kind": "diagnostic",
- "label": "v1.6.0 preview, provisional",
+ "provisional": false,
+ "status": "published",
+ "run_kind": "scheduled-refresh",
+ "label": "JevBench v1.6.0",
  "source_sha256": "9ac0853fc8ee333f232eccc62930639eb37226198d06580ce717de8cb7cbc7ec",
- "source_note": "Provisional scorer output score-provisional-3/out-O1S (3 Oct 2026). Not a release; numbers can change before GO.",
+ "source_note": "Official v1.6.0 scorer output from 3 Oct 2026, measured with method option B (O1S); source SHA-256 is listed.",
  "sample": {
   "open": 300,
   "sealed": 1200,
@@ -576,7 +576,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
+    "kind": "v1.6.0 scorer output (method option B, 3 Oct 2026)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -931,7 +931,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
+    "kind": "v1.6.0 scorer output (method option B, 3 Oct 2026)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -1286,7 +1286,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
+    "kind": "v1.6.0 scorer output (method option B, 3 Oct 2026)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -1641,7 +1641,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
+    "kind": "v1.6.0 scorer output (method option B, 3 Oct 2026)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -1996,7 +1996,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
+    "kind": "v1.6.0 scorer output (method option B, 3 Oct 2026)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -2351,7 +2351,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
+    "kind": "v1.6.0 scorer output (method option B, 3 Oct 2026)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -2706,7 +2706,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
+    "kind": "v1.6.0 scorer output (method option B, 3 Oct 2026)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -3061,7 +3061,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
+    "kind": "v1.6.0 scorer output (method option B, 3 Oct 2026)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -3416,7 +3416,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
+    "kind": "v1.6.0 scorer output (method option B, 3 Oct 2026)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -3771,7 +3771,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
+    "kind": "v1.6.0 scorer output (method option B, 3 Oct 2026)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -4137,7 +4137,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
+    "kind": "v1.6.0 scorer output (method option B, 3 Oct 2026)",
     "carried_metadata_from": null
    }
   }
@@ -4149,7 +4149,7 @@
    "author": "unknown",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "autojev-27b-rtxpro6000-a2",
@@ -4157,7 +4157,7 @@
    "author": "unknown",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "bev-bonsai-27b",
@@ -4165,7 +4165,7 @@
    "author": "Reza Sayar",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "bge-reranker-v2-m3",
@@ -4173,7 +4173,7 @@
    "author": "BAAI",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "bosun-v31-0.6b",
@@ -4181,7 +4181,7 @@
    "author": "Clause Logic",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "certo",
@@ -4189,7 +4189,7 @@
    "author": "AltSlate Labs",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "classifier-dev-fast",
@@ -4197,7 +4197,23 @@
    "author": "mrmps (@michael_chomsky)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; no official previous-release score is available to carry."
+  },
+  {
+   "key": "clef",
+   "display": "Clef (Cloudflare, Qwen3.8-27B post-train with a joint schema head, multimodal, measured on text)",
+   "author": "Cloudflare",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
+  },
+  {
+   "key": "clef-flash",
+   "display": "Clef-Flash (Cloudflare, Qwen3.5-9B post-train with a joint schema head, multimodal, measured on text)",
+   "author": "Cloudflare",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "clm-8b",
@@ -4205,7 +4221,7 @@
    "author": "Contrastive-LM (Kwok, Kang, Suresh, Saad-Falcon, Pavone, Ré, Mirhoseini)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "decider-2b",
@@ -4213,7 +4229,7 @@
    "author": "Mapika",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "decider-35b-a3b",
@@ -4221,7 +4237,7 @@
    "author": "Mapika",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "decision-2b",
@@ -4229,7 +4245,7 @@
    "author": "FlyMy.AI (@denti)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "decision-fast",
@@ -4237,7 +4253,7 @@
    "author": "FlyMy.AI (@denti)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "decision-machine-1",
@@ -4245,7 +4261,7 @@
    "author": "milliseconds.ai (Baptiste Laget)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "deem-0.8-v1",
@@ -4253,7 +4269,7 @@
    "author": "LibertAI",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "deepseek-flash",
@@ -4261,7 +4277,7 @@
    "author": "DeepSeek",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "eikos-27b",
@@ -4269,7 +4285,7 @@
    "author": "unknown",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "evalengine-decision-4b",
@@ -4277,7 +4293,7 @@
    "author": "Eval Engine / Chromia",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; no official previous-release score is available to carry."
   },
   {
    "key": "gemini-3.1-flash-lite",
@@ -4285,7 +4301,7 @@
    "author": "Google",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "gliner2",
@@ -4293,7 +4309,7 @@
    "author": "Fastino",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "gliner2-large",
@@ -4301,7 +4317,7 @@
    "author": "Fastino",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "gliner2.5-multi",
@@ -4309,7 +4325,7 @@
    "author": "Fastino",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "gliner2.5-small",
@@ -4317,7 +4333,7 @@
    "author": "Fastino",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "gpt-5.6-luna",
@@ -4325,7 +4341,7 @@
    "author": "OpenAI",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "gpt-6-luna",
@@ -4333,7 +4349,7 @@
    "author": "OpenAI",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "gpt-6-luna-low",
@@ -4341,7 +4357,7 @@
    "author": "OpenAI",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "gte-reranker-modernbert-base",
@@ -4349,7 +4365,7 @@
    "author": "Alibaba-NLP",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "hopper",
@@ -4357,7 +4373,7 @@
    "author": "HopitAI",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "instinct",
@@ -4365,7 +4381,7 @@
    "author": "rayrain-srp (ZooWork)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "instinct-dual-4b",
@@ -4373,7 +4389,7 @@
    "author": "ZooWork / pierre-srp",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "jeff",
@@ -4381,7 +4397,7 @@
    "author": "Logan Markewich",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "jev-local",
@@ -4389,7 +4405,7 @@
    "author": "us (GitHub)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "jev-qwen3.5-9b-base-nvfp4",
@@ -4397,7 +4413,7 @@
    "author": "WilfLin",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "jevact",
@@ -4405,7 +4421,7 @@
    "author": "einptein",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "jevk5-v02",
@@ -4413,7 +4429,7 @@
    "author": "allebee",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "jevone",
@@ -4421,7 +4437,15 @@
    "author": "Juspay",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
+  },
+  {
+   "key": "jobe-qwen3.5-4b",
+   "display": "Jobe Qwen3.5-4B (frozen)",
+   "author": "MantisShrimpdev",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "No v1.6.0 score. Prior v1.5.6 catalogue: No official score was published on v1.5.6."
   },
   {
    "key": "jqv",
@@ -4429,7 +4453,7 @@
    "author": "hjmurmur (Octalab)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "kev-0.5b",
@@ -4437,7 +4461,7 @@
    "author": "Jared Palmer",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "kev-0.6b",
@@ -4445,7 +4469,7 @@
    "author": "Jared Palmer",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "kev-4b",
@@ -4453,7 +4477,7 @@
    "author": "Jared Palmer",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "kev-8b",
@@ -4461,7 +4485,7 @@
    "author": "Jared Palmer",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "kushal-gemma4-31b-it-autoloops",
@@ -4469,7 +4493,7 @@
    "author": "Autoloops",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "laya",
@@ -4477,7 +4501,7 @@
    "author": "Convai Innovations",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "laya-multilingual",
@@ -4485,7 +4509,7 @@
    "author": "Convai Innovations",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "laya-typed-decisions",
@@ -4493,7 +4517,15 @@
    "author": "Convai Innovations",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
+  },
+  {
+   "key": "lev",
+   "display": "lev (Interfaze AI, Qwen3.5-4B + LoRA r32, label-token readout + candidate-path head, per-bucket temperatures)",
+   "author": "Interfaze",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "lev-350m",
@@ -4501,7 +4533,7 @@
    "author": "Franck Verrot (franckverrot)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "litjev",
@@ -4509,7 +4541,7 @@
    "author": "Zhengxu Yu",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "localjev-qwen3.5-4b",
@@ -4517,7 +4549,7 @@
    "author": "Amith Chandrappa (amithgc)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "malkuth-2b",
@@ -4525,7 +4557,7 @@
    "author": "newfull5 (dhtocks)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "malkuth-4b",
@@ -4533,7 +4565,7 @@
    "author": "newfull5 (dhtocks)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "manchego-v21-v15",
@@ -4541,7 +4573,7 @@
    "author": "oraculumai",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "metask-jev-4b",
@@ -4549,7 +4581,7 @@
    "author": "Wayfind (metask-ai)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "mghafiri-qwen3.5-0.8b-decision-model",
@@ -4557,7 +4589,19 @@
    "author": "Mourad Ghafiri",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
+  },
+  {
+   "key": "mica-v01-4b",
+   "display": "mica-v01-4b",
+   "author": "unknown",
+   "addendum": {
+    "id": "A1",
+    "release": "v1.5",
+    "label": "v1.5 roster addendum A1"
+   },
+   "status": "not measured",
+   "reason": "No v1.6.0 score. Prior v1.5.6 catalogue: The frozen refusal policy stopped the run after 1,088 of 1,624 rows: 27 documented refusals were mapped to HTTP 422, then three consecutive passthrough HTTP 400 refusals triggered exit 6. The remaining 536 rows have no scores, so this system is not eligible for an official rank."
   },
   {
    "key": "mirror",
@@ -4565,7 +4609,7 @@
    "author": "Bluusun",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "mxbai-rerank-base-v2",
@@ -4573,7 +4617,7 @@
    "author": "Mixedbread",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "needle-3",
@@ -4581,7 +4625,7 @@
    "author": "Cactus Compute",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "needle-3-tools",
@@ -4589,7 +4633,7 @@
    "author": "Cactus Compute",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "nemotron-diffusion-8b",
@@ -4597,7 +4641,7 @@
    "author": "pst2154",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "nimble-9b",
@@ -4605,7 +4649,7 @@
    "author": "Bespoke Labs",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "ninfer-qwen3.8-27b",
@@ -4613,7 +4657,7 @@
    "author": "Igor L. / NInfer contributors",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "ninfer-qwen3.8-27b-t1.5",
@@ -4621,7 +4665,7 @@
    "author": "Igor L. / NInfer contributors",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "ninfer-qwen3.8-flash-next",
@@ -4629,7 +4673,7 @@
    "author": "Igor L. / NInfer contributors",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "open-alternative-jev",
@@ -4637,7 +4681,7 @@
    "author": "IkerMoel",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "open-jev-deberta-v3-large",
@@ -4645,7 +4689,7 @@
    "author": "Kotoba Labs",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "open-jev-json-canvas-joshuasp",
@@ -4653,7 +4697,7 @@
    "author": "JoshuaSP",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "open-jev-zefan-2b",
@@ -4661,7 +4705,7 @@
    "author": "Zefan Cai (@Zefan_Cai)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "open-jev-zefan-9b",
@@ -4669,7 +4713,7 @@
    "author": "Zefan Cai (@Zefan_Cai)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "opendecision",
@@ -4677,7 +4721,15 @@
    "author": "Deepan Wadhwa",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
+  },
+  {
+   "key": "openjev-razorback16",
+   "display": "OpenJev (DiffusionGemma 26B-A4B NVFP4, razorback16)",
+   "author": "razorback16 / Codiv",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "No v1.6.0 score. Prior v1.5.6 catalogue: No official score was published on v1.5.6."
   },
   {
    "key": "openjev-sglang",
@@ -4685,7 +4737,7 @@
    "author": "ekzhang",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "openjev-thinking",
@@ -4693,7 +4745,7 @@
    "author": "razorback16",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "openjev-verdict",
@@ -4701,7 +4753,7 @@
    "author": "Hemant (heman10x)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "openjev-verdict-1.4",
@@ -4709,7 +4761,7 @@
    "author": "Hemant (heman10x)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "opensourcejev-qwen35-4b-q4km",
@@ -4717,7 +4769,7 @@
    "author": "sabeel111",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "qwen3-reranker-4b",
@@ -4725,7 +4777,7 @@
    "author": "Qwen",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "qwen3.8-27b",
@@ -4733,7 +4785,7 @@
    "author": "Qwen / Chutes",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "qwen35-9b-jev-data-mix-v2",
@@ -4741,7 +4793,7 @@
    "author": "jsaurabh",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "raw-phi-4-mini",
@@ -4749,7 +4801,7 @@
    "author": "Microsoft / neutral reproduction",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "raw-qwen3-0.6b",
@@ -4757,7 +4809,7 @@
    "author": "Alibaba Qwen / neutral reproduction",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "raw-qwen3-1.7b",
@@ -4765,7 +4817,7 @@
    "author": "Alibaba Qwen / neutral reproduction",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "raw-qwen3-4b-instruct-2507",
@@ -4773,7 +4825,7 @@
    "author": "Alibaba Qwen / neutral reproduction",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "raw-qwen3-8b",
@@ -4781,7 +4833,7 @@
    "author": "Alibaba Qwen / neutral reproduction",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "reflex-27b",
@@ -4789,7 +4841,7 @@
    "author": "kshetrajna12",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "reflex-4b",
@@ -4797,7 +4849,7 @@
    "author": "kshetrajna12",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "semif-qwen3.5-4b",
@@ -4805,7 +4857,7 @@
    "author": "Theodore Lee (TheoLeeCJ)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "simplejev-qwen3.5-0.8b",
@@ -4813,7 +4865,7 @@
    "author": "sabeel111 / Featherless AI",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "simplejev-qwen3.6-35b-a3b",
@@ -4821,7 +4873,7 @@
    "author": "Featherless AI",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; no official previous-release score is available to carry."
   },
   {
    "key": "simplejev-qwen3.8-27b",
@@ -4829,7 +4881,7 @@
    "author": "Featherless AI",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "smalljev",
@@ -4837,7 +4889,7 @@
    "author": "Aditya (isHeSatoshi)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "spark-s1-4b-v6",
@@ -4845,7 +4897,7 @@
    "author": "Abhishek Rai (abhishek085)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "standardone-8b",
@@ -4853,7 +4905,7 @@
    "author": "Standard Thinking (myeongho12)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "surogate-rune-26b-a4b-v3-rtxpro6000-a2",
@@ -4861,7 +4913,7 @@
    "author": "unknown",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "swanone",
@@ -4869,7 +4921,7 @@
    "author": "blockbrain",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "system-one-open",
@@ -4877,7 +4929,7 @@
    "author": "mithalouni",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "system-one-sg",
@@ -4885,7 +4937,7 @@
    "author": "Sean Goedecke",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "typecastlm",
@@ -4893,7 +4945,15 @@
    "author": "Mikhail Gribov",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
+  },
+  {
+   "key": "vansa-3.4",
+   "display": "Vansa-3.4 (Vansa, hosted System One API)",
+   "author": "Vansa",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not sent the v1.6.0 API subset under the three-refresh exposure cadence; its v1.5.6 score is shown separately with its date."
   },
   {
    "key": "verdict-small",
@@ -4901,7 +4961,7 @@
    "author": "Manavarya09 (Manav)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "von-395m",
@@ -4909,7 +4969,7 @@
    "author": "wfzyx (Victor Hugo)",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   },
   {
    "key": "zerank-2",
@@ -4917,8 +4977,9 @@
    "author": "ZeroEntropy",
    "addendum": null,
    "status": "not measured",
-   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+   "reason": "Not measured on v1.6.0; the latest published score is listed separately with its original date."
   }
  ],
- "roster_count": 108
+ "roster_count": 115,
+ "release_note": "The language breakdown describes the main v1.6 pool. Low-count cells are flagged. Expanded uc1.1 coverage is not included and would require a separate release decision."
 }
