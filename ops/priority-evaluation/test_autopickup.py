@@ -735,13 +735,21 @@ class SyntheticGuardTests(DatabaseTestCase):
 
 
 class RefundTransitionTests(DatabaseTestCase):
-    def test_update_row_single_updated_at_assignment(self):
+    def test_update_row_default_stamp_ignores_quoted_updated_at_text(self):
         rid = insert_order()
-        self.assertTrue(ap.update_row(rid, "refund_reason='x', updated_at=now()-interval '5 minutes'"))
+        ap.update_row(rid, "refund_reason='x'", updated_at_sql="now()-interval '1 day'")
+        self.assertTrue(ap.update_row(rid, "refund_reason='see updated_at=1 note'"))
+        self.assertEqual(ap.load_row(rid)["refund_reason"], "see updated_at=1 note")
+        fresh = ap.sql(f"SELECT updated_at > now()-interval '1 hour' FROM {ap.TABLE} WHERE id='{rid}'::uuid")
+        self.assertEqual(fresh.strip(), "t")
+
+    def test_update_row_explicit_updated_at_expression(self):
+        rid = insert_order()
+        self.assertTrue(ap.update_row(rid, "refund_reason='x'", updated_at_sql="now()-interval '5 minutes'"))
         self.assertTrue(ap.update_row(rid, "refund_reason='y'"))
         self.assertEqual(ap.load_row(rid)["refund_reason"], "y")
 
-    def fail(self, rid, guard_ok=True):
+    def queue_source_failure(self, rid):
         job = ap.JOB_ROOT / rid
         (job / "review").mkdir(parents=True)
         (job / "review" / "CODE-REVIEW.md").write_text("x")
@@ -755,7 +763,7 @@ class RefundTransitionTests(DatabaseTestCase):
 
     def test_source_review_fail_queues_refund_then_writes_state(self):
         rid = insert_order()
-        job = self.fail(rid)
+        job = self.queue_source_failure(rid)
         row = ap.load_row(rid)
         self.assertEqual((row["status"], row["refund_reason"], row["release_status"]),
                          ("refund_due", "source_review_failed", "refused"))
@@ -766,7 +774,7 @@ class RefundTransitionTests(DatabaseTestCase):
         ap.update_row(rid, "status='refunded'")
         job = ap.JOB_ROOT / rid
         with self.assertRaises(ap.PickupError):
-            self.fail(rid)
+            self.queue_source_failure(rid)
         self.assertNotIn("refund queued", (job / "STATE.md").read_text())
 
 
