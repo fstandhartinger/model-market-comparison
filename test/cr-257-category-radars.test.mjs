@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
-import * as releases from '../lib/jevbench-v15-release.mjs';
+import { readCurrentJevbench } from '../lib/jevbench-current.mjs';
 import { readMultimodalPreview } from '../lib/jevbench-multimodal-preview.mjs';
 import {
   JEVBENCH_CATEGORY_REVISIONS, IMAGEJEV_CATEGORY_REVISIONS, jevbenchCategoryView, imageJevCategoryView, validateCategoryArtifact,
@@ -34,9 +34,8 @@ test('CR-257: every JevBench release page from v1.5.0 on is covered by a categor
 
 test('CR-257: the live JevBench release has category values for every ranked system', async () => {
   const live = await read('../app/jev-models/page.tsx');
-  const loader = live.match(/(readJevbenchV\d+Release)\(\)/)?.[1];
-  assert.ok(loader && typeof releases[loader] === 'function', 'live /jev-models reads a known release loader');
-  const { artifact } = await releases[loader]();
+  assert.match(live, /readCurrentJevbench\(\)/, 'live page uses the explicit current release pointer');
+  const { artifact } = await readCurrentJevbench();
   assert.ok(JEVBENCH_CATEGORY_REVISIONS.includes(artifact.revision), `live revision ${artifact.revision} has a category artifact`);
   const ranked = artifact.systems.filter((s) => s.listing === 'ranked' || s.ranked).map((s) => s.key);
   const view = jevbenchCategoryView(artifact.revision, ranked);

@@ -52,7 +52,7 @@ const ordered = (source, markers, where) => {
 
 test('CR-205: the live board and all frozen v1.5 pages render the complete release page', () => {
   for (const [name, source, loader] of [
-    ['/jev-models', page, 'readJevbenchV156Release'],
+    ['/jev-models', page, 'readCurrentJevbench'],
     ['/jev-models/v1.5.0', v150Page, 'readJevbenchV150Release'],
     ['/jev-models/v1.5.1', v151Page, 'readJevbenchV151Release'],
     ['/jev-models/v1.5.2', v152Page, 'readJevbenchV152Release'],
@@ -65,9 +65,9 @@ test('CR-205: the live board and all frozen v1.5 pages render the complete relea
     assert.match(source, /<JevBenchV15ReleasePage artifact=\{artifact\} sha256=\{sha256\}/, `${name} renders the full release page`);
     assert.ok(source.indexOf('<JevBenchV15ReleasePage') < source.indexOf('<JevHistoryLazy />'), `${name} ends with the lazy revision history`);
   }
-  assert.match(page, /versionPath="\/jev-models\/v1\.5\.6"/);
-  assert.match(page, /readJevbenchV156Release/);
-  assert.match(page, /versionPath="\/jev-models\/v1\.5\.6"/);
+  assert.match(page, /versionPath=\{CURRENT_JEVBENCH_PAGE\}/);
+  assert.match(page, /readCurrentJevbench/);
+  assert.match(page, /versionPath=\{CURRENT_JEVBENCH_PAGE\}/);
   assert.match(page, /canonical: '\/jev-models'/);
   assert.match(v151Page, /canonical: '\/jev-models\/v1\.5\.1'/);
   assert.match(v151Page, /versionPath="\/jev-models\/v1\.5\.1"/);

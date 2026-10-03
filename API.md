@@ -27,6 +27,44 @@ The data is served from Postgres when `DATABASE_URL` is configured, otherwise fr
 All exact versioned registry entries, source/metric definitions, collection status and
 per-benchmark coverage. No family-only version aliases are accepted.
 
+### `GET /api/jevbench/latest` — current public JevBench leaderboard
+
+This feed uses the same explicit released artifact as the live `/jev-models` page
+(currently v1.5.6). It returns measured/listed result rows already published in that
+artifact, including unranked disclosures; unmeasured request-queue entries are omitted.
+It does not discover newer files or publish drafts, sealed items, answers or predictions.
+
+The JSON contains `schema_version`, `revision`, `source` (live/frozen page, pinned
+artifact URL and artifact SHA-256), `headline`, `composite_option`, `weights`,
+`capability_policy`, and `systems`. Each system contains:
+
+- `key`, `name`, `source_url` (project source link, or null).
+- `axes`: Intelligence, Calibration, Speed and Cost, all higher-is-better scores.
+- `capability`: arithmetic mean of Intelligence and Calibration, official rank,
+  `eligible`, `within_caps`, and cap exclusion reasons. Only ranked systems within
+  both official cost and median-latency caps receive a Capability rank. Eligibility
+  uses the same adjusted median/fallback policy and tie ordering as the page.
+- `composite_score`, `rank` (official Composite rank), `ranked`, `listing`, and
+  `not_ranked_because`. Capability rank and Composite rank are separate.
+- `price`: `kind`, `usd_per_1000_decisions`, and the published `basis` disclosure.
+  Prices are per thousand decisions, not token prices; consult the basis for the
+  pricing scenario. `latency` includes raw/adjusted median seconds and adjustment.
+
+Missing measurements and ineligible ranks are `null`, never invented zeroes.
+The response is CORS-enabled, cached for five minutes, with `X-Content-SHA256`
+covering the feed bytes. `source.artifact_sha256` covers the original release bytes.
+For custom weights, the Composite is the weighted harmonic mean of active axes,
+with squared penalties for Intelligence, Speed and Cost below the floor of 50,
+even if an axis has zero weight. These exploratory scores do not replace official
+ranks; see the page method notes and `lib/jevbench-v15-board.mjs`.
+
+Example: `curl -fsS https://benchmarkheaven.com/api/jevbench/latest`.
+Compare ranked keys at `/jev-models?compare=a,b#compare`; submit at `/submit`.
+
+`GET /api/jevbench` remains the **legacy frozen v1** byte-exact aggregate for
+existing clients. Its `X-JevBench-Status: legacy-frozen-v1` and successor `Link`
+header identify it as historical. Use `/api/jevbench/latest` for current results.
+
 ### JevBench release APIs
 
 Immutable, version-pinned JevBench result artifacts. The v1.4.2.x `/families` suffix returns the
@@ -43,7 +81,7 @@ have version-pinned results routes and no separate family-supplement route.
 | v1.5.1 | `6f2fa547454b1108fad701ef302f48450742562393d532d45eccd048f736a9e2` | — | [`/jev-models/v1.5.1`](https://benchmarkheaven.com/jev-models/v1.5.1) |
 | v1.5.2 | `01e1f0019ca3bd3b1183f5b701f069ba0c7bf52462d1103f88a03e01339c968b` | — | [`/jev-models/v1.5.2`](https://benchmarkheaven.com/jev-models/v1.5.2) |
 
-The live `/jev-models` page uses v1.5.2; the versioned pages remain frozen. The result
+The live `/jev-models` page and `/api/jevbench/latest` share one explicit reviewed release pointer; the versioned pages remain frozen. The result
 and supplement files are under `data/raw/benchmarks/jevbench/`. Each result endpoint is
 `GET /api/jevbench/<release>` (for example `/api/jevbench/v1.5.2`).
 
