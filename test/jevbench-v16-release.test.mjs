@@ -144,10 +144,14 @@ test('the live and archived pages use the approved full-page route and keep vers
   const route = await read('components/JevBenchV16ReleaseRoute.tsx');
   const board = await read('components/JevBenchV16Board.tsx');
   const charts = await read('components/JevBenchV16Charts.tsx');
-  assert.match(live, /<JevBenchV16ReleaseRoute live \/>/);
+  assert.match(live, /const release = await readCurrentJevbench\(\)/);
+  assert.match(live, /<JevBenchV16ReleaseRoute live release=\{release\} versionPath=\{CURRENT_JEVBENCH_PAGE\} \/>/);
   assert.match(archive, /canonical: '\/jev-models\/v1\.6\.0'/);
   assert.match(route, /readJevbenchV156Release/);
   assert.match(route, /missingPrevious/);
+  const current = await read('lib/jevbench-current.mjs');
+  assert.match(current, /CURRENT_JEVBENCH_PAGE = '\/jev-models\/v1\.6\.0'/);
+  assert.match(current, /readCurrentJevbench = readJevbenchV16Release/);
   for (const marker of ['<JevBenchV16Charts', '<JevScoreChart', '<JevCompareV15', '<LanguageView', '<NoulAndGate', '<JevV15AllDataGrid', '<DatedCarry', '<Method']) assert.ok(board.includes(marker), marker);
   assert.match(board, /aria-label="low n: fewer than 30 answered items"/);
   assert.match(board, /Not plotted; fewer than \$\{categories\.min_n\} answered items/);

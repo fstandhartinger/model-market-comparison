@@ -260,7 +260,7 @@ test('CR-205: every versioned JevBench route is covered by this test', async () 
   const entries = await readdir(new URL('../app/jev-models', import.meta.url), { withFileTypes: true });
   const versionDirs = entries.filter((e) => e.isDirectory() && /^v[\d.]+$/.test(e.name)).map((e) => e.name).sort();
   // A new versioned page must be added to the structure assertions above — not silently reduced.
-  assert.deepEqual(versionDirs, ['v1', 'v1.4', 'v1.4.1', 'v1.4.2', 'v1.4.2.1', 'v1.4.2.2', 'v1.5.0', 'v1.5.1', 'v1.5.2', 'v1.5.3', 'v1.5.4', 'v1.5.5', 'v1.5.6'].sort());
+  assert.deepEqual(versionDirs, ['v1', 'v1.4', 'v1.4.1', 'v1.4.2', 'v1.4.2.1', 'v1.4.2.2', 'v1.5.0', 'v1.5.1', 'v1.5.2', 'v1.5.3', 'v1.5.4', 'v1.5.5', 'v1.5.6', 'v1.6.0'].sort());
 });
 
 test('CR-205: the board sections are fed by the pinned v1.5 release artifact', async () => {

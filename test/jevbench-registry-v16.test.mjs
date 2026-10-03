@@ -95,7 +95,7 @@ for (const [label, mutate] of [
   ['ranked incomplete', p => { p.systems[0].status.status = 'partial'; p.systems[0].v16.complete = false; }],
   ['estimate lacks admission', p => { p.rows['synthetic-a'].cost_admission_sha256 = null; }],
   ['reference no cost', p => { p.ref.usd_per_1000 = 0; }],
-  
+
   ['reference arbitrary cap', p => { p.ref.cost_factor = 10; }],
   ['catalogue removal', p => { delete p.registry.catalogue['unmeasured-2']; }],
   ['invented fourth support', p => { p.registry.pending_scorer_metadata_keys.pop(); }],
