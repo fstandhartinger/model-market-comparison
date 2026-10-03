@@ -102,7 +102,7 @@ state.setdefault("jobs", {})["fastlane-autopickup"] = {
     "why": ("Florian 29 Sep 2026: new paid fast-lane orders run fully autonomously (payment time, "
             "confirmation, owner handoff, evaluation, PR + bh-merge-queue release, result mail, "
             "@airesearch12 post only on a top-five change). 5-minute pickup + 4 daily sweeps; "
-            "24/36 h alerts and automatic refund 48 h after payment. Kill switch: "
+            "24/36 h alerts; at 48 h a refund decision card for Florian (no automatic refund). Kill switch: "
             "~/.local/state/fastlane-autopickup/KILL."),
     "unit": "jevbench-priority-autopickup.timer + jevbench-priority-autopickup-health.timer",
     "cwd": os.path.expanduser("~/jobs/fastlane-evaluations"),

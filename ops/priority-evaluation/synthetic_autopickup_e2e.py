@@ -286,10 +286,11 @@ def exercise(scratch: Path, pg_env: dict, rid: str, log: dict) -> None:
     ap.sla_sweep(None, ap.JOB_ROOT, fx)
     assert ap.load_row(rid)["status"] == "review_passed"
     ap.resume(rid)
-    ap.sla_sweep(None, ap.JOB_ROOT, fx)
-    assert ap.load_row(rid)["status"] == "refund_due"
+    # CR-276: a missed deadline only asks Florian; nothing becomes refundable without his button.
+    assert ap.sla_sweep(None, ap.JOB_ROOT, fx)["missed48"] == 1
+    assert ap.load_row(rid)["status"] == "review_passed"
     log["sla"] = {"clock": "payment", "alerts_24h_36h": True, "hold_pauses": True,
-                  "refund_due_at_48h": True, "refund_called": False, "legacy_review_passed": True}
+                  "refund_decision_card_at_48h": True, "refund_called": False, "legacy_review_passed": True}
     log["isolation"] = {"database": "owned scratch cluster with Unix socket only", "production_mutations": 0,
                         "real_charge": False, "real_refund": False, "customer_mail_sent": False, "x_post": False}
 

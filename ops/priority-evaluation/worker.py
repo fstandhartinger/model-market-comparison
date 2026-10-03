@@ -597,7 +597,8 @@ def main() -> int:
                         "if no refund exists, rerun with --confirmed-no-refund.",
                         file=sys.stderr,
                     )
-                elif status and status.get("refund_decision") != "approved":
+                elif status and status.get("status") in ("refund_due", "refund_pending") \
+                        and status.get("refund_decision") != "approved":
                     print("No refund without Florian's approval button (refund approval card).", file=sys.stderr)
                 elif status:
                     print(f"Cannot refund this request in its current state: {status.get('status')}.", file=sys.stderr)

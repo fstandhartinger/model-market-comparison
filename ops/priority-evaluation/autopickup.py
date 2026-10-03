@@ -3274,7 +3274,7 @@ def publish_fastlane_xpost(rid: str, text: str, state: dict[str, Any], xdir: Pat
 
 
 def advance_refund_notice(row: dict[str, Any], state: dict[str, Any], effects: Effects, now: datetime) -> None:
-    """After an automatic 48-hour refund succeeds, tell the customer once (fixed template)."""
+    """After a Florian-approved 48-hour refund succeeds, tell the customer once (fixed template)."""
     rid = request_id(row.get("id"))
     if row.get("status") != "refunded":
         return
@@ -3319,7 +3319,7 @@ def advance_refund_notice(row: dict[str, Any], state: dict[str, Any], effects: E
 
 
 # ---------------------------------------------------------------------------
-# SLA sweep: 24 h and 36 h warnings, automatic refund at 48 h (holds pause the clock)
+# SLA sweep: 24 h and 36 h warnings; at 48 h only a refund decision card (holds pause the clock)
 # ---------------------------------------------------------------------------
 
 def sla_elapsed_sql(alias: str = "r") -> str:
@@ -3367,7 +3367,7 @@ def sla_sweep(synthetic_id: str | None, job_root: Path, effects: Effects) -> dic
     base = (f"{predicate} AND r.status IN ('paid','review_passed') AND r.result_delivered_at IS NULL "
             f"AND r.paid_at IS NOT NULL AND r.customer_hold_started_at IS NULL "
             f"AND COALESCE(r.delivery_email_status,'not_due') NOT IN ('sending','sent')")
-    counts = {"alert24": 0, "alert36": 0, "refund48": 0}
+    counts = {"alert24": 0, "alert36": 0, "missed48": 0}
     for hours, column, key in ((24, "sla_24h", "alert24"), (36, "sla_36h", "alert36")):
         for _ in range(50):
             if effects.dry_run:
