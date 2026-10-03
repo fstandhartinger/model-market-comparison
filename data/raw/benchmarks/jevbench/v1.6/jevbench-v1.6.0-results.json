@@ -1,0 +1,4840 @@
+{
+ "benchmark": "JevBench",
+ "revision": "v1.6.0",
+ "protocol": "jevbench::v1.6",
+ "provisional": true,
+ "status": "preview-not-published",
+ "run_kind": "diagnostic",
+ "label": "v1.6.0 preview, provisional",
+ "source_sha256": "c41219ca1b5d1ded53aaf2c75199dd0fd7a613a710976328931de373c7f4ad43",
+ "source_note": "Provisional scorer output score-provisional-2 (3 Oct 2026). Not a release; numbers can change before GO.",
+ "sample": {
+  "open": 300,
+  "sealed": 1200,
+  "total": 1500,
+  "published_open": 300
+ },
+ "types": {
+  "choice": 0.3333333333333333,
+  "noul": 0.3333333333333333,
+  "score": 0.3333333333333333
+ },
+ "tier_weights": {
+  "easy": 0.1,
+  "hard": 0.4,
+  "judge": 0.3,
+  "standard": 0.2
+ },
+ "sealed_share_of_intelligence": 0.5,
+ "G_med": 3.7792143102695803,
+ "G_med_api_basis_P_vs_A": -0.7664902348218625,
+ "G_med_flag_gt10": false,
+ "headline": "A",
+ "options": {
+  "A": {
+   "intelligence_floor": 50.0,
+   "weights": {
+    "calibration": 25,
+    "cost": 25,
+    "intelligence": 25,
+    "speed": 25
+   }
+  },
+  "B": {
+   "intelligence_floor": 50.0,
+   "weights": {
+    "calibration": 20,
+    "cost": 20,
+    "intelligence": 40,
+    "speed": 20
+   }
+  },
+  "C": {
+   "intelligence_floor": 60.0,
+   "weights": {
+    "calibration": 25,
+    "cost": 25,
+    "intelligence": 25,
+    "speed": 25
+   }
+  }
+ },
+ "views": [
+  "Balanced 33:33:33",
+  "Emphasis on Accuracy 60:20:20",
+  "Emphasis on Cost 20:20:60",
+  "Emphasis on Speed 20:60:20",
+  "Intelligence only"
+ ],
+ "bootstrap": {
+  "B": 1000,
+  "bootstrap_seed": 16,
+  "g_med_fixed": true
+ },
+ "n_ranked": 11,
+ "board": {
+  "A": {
+   "order": [
+    "jev-1.13.0",
+    "cygnet",
+    "winnow-12b",
+    "jev-omni",
+    "plumb-4b",
+    "decider-4b-v2",
+    "jevk5-v0.3-4b",
+    "imajev-4b-rtx5090-a2",
+    "decision-4b-v12",
+    "decision-4b-v11",
+    "fastino-gliner-2-5-decide"
+   ],
+   "leader_wording": null,
+   "markers": []
+  },
+  "B": {
+   "order": [
+    "jev-1.13.0",
+    "winnow-12b",
+    "cygnet",
+    "jev-omni",
+    "plumb-4b",
+    "decider-4b-v2",
+    "jevk5-v0.3-4b",
+    "imajev-4b-rtx5090-a2",
+    "decision-4b-v12",
+    "decision-4b-v11",
+    "fastino-gliner-2-5-decide"
+   ],
+   "leader_wording": null,
+   "markers": []
+  },
+  "C": {
+   "order": [
+    "jev-1.13.0",
+    "cygnet",
+    "winnow-12b",
+    "jev-omni",
+    "plumb-4b",
+    "decider-4b-v2",
+    "jevk5-v0.3-4b",
+    "imajev-4b-rtx5090-a2",
+    "decision-4b-v12",
+    "decision-4b-v11",
+    "fastino-gliner-2-5-decide"
+   ],
+   "leader_wording": null,
+   "markers": []
+  }
+ },
+ "v16": {
+  "capability_formula": "mean(Intelligence, Calibration)",
+  "counts": {
+   "A": 300,
+   "P": 300,
+   "S": 1200,
+   "api_input": 600,
+   "api_smoke_public": 5,
+   "core": 900,
+   "selfhosted_input": 1500
+  },
+  "equating": {
+   "equating_flag": null,
+   "min_pool": 5,
+   "offsets": {
+    "C": 2.3092996764360123,
+    "I": -2.5480033599559917
+   },
+   "rule": "median over complete full-coverage self-hosted systems of metric(S u P) - metric(A u P), per metric (Intelligence, Calibration); API value = clip(raw_A + offset)",
+   "pool_note": "Median over the complete full-coverage self-hosted systems of this run (at least five required)."
+  },
+  "g_med_rule": "median gap over ranked self-hosted systems; API systems use the same systems' P-vs-A gap",
+  "offset_bootstrap_B": 200,
+  "release": "v1.6.0",
+  "scorer_sources_sha256": {
+   "score_v15.py": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+   "score_v15_headlineA.py": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+   "score_v16.py": "a88c8882979f7c96de03f06306ad911b6ed235080c5b370aa1f9fb6c797de599"
+  },
+  "scoring_parameters": {
+   "B": 1000,
+   "g_med_fixed": null,
+   "only": null,
+   "seed": 16,
+   "test_allow_partial": false,
+   "workers": 6
+  },
+  "set_manifest_sha256": {
+   "A": "19b196a71d58da260cd83069ffcd64bb323e158c24a5fcabeffbb5bee7c1eabb",
+   "P": "6b2321f8359d87769a95c8e52135542d95ccdc353197e1e5c96abb9b616ce5ba",
+   "S": "f13557a141fba12efc6bf6d39a0dd8e3bf803d4cacd6eab516d4f4f87045539a"
+  },
+  "item_sets": [
+   {
+    "set": "S",
+    "name": "Sealed release draw",
+    "items": 1200,
+    "by_type": {
+     "choice": 600,
+     "noul": 300,
+     "score": 300
+    },
+    "answered_by": "self-hosted systems only (run offline on our own GPU pods or Sandy)"
+   },
+   {
+    "set": "A",
+    "name": "API subset (part of S)",
+    "items": 300,
+    "by_type": {
+     "choice": 150,
+     "noul": 75,
+     "score": 75
+    },
+    "answered_by": "self-hosted systems and externally hosted APIs"
+   },
+   {
+    "set": "P",
+    "name": "Public set",
+    "items": 300,
+    "by_type": {
+     "choice": 150,
+     "noul": 75,
+     "score": 75
+    },
+    "answered_by": "every system"
+   }
+  ]
+ },
+ "systems": [
+  {
+   "addendum": null,
+   "api_flag": true,
+   "api_subset": true,
+   "author": "TypeSafe AI",
+   "axes": {
+    "calibration": 90.53319490310537,
+    "cost": 54.72500234484654,
+    "intelligence": 66.92111275009336,
+    "speed": 91.49989299046987
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.06289890777695657,
+      "ece_score": 87.4202184446087,
+      "mean_tvd": null,
+      "n": 293,
+      "n_ece_hard": 123,
+      "n_tvd": 0,
+      "score": 87.4202184446087
+     },
+     "noul": {
+      "abstention_rate": 0.17333333333333334,
+      "brier": 0.06017133333333333,
+      "ece": 0.0599333333333333,
+      "n": 150,
+      "score": 88.01333333333335
+     },
+     "score": {
+      "interval90_coverage": 0.9523809523809523,
+      "interval90_width": 0.2335600907029478,
+      "n": 147,
+      "nrps": 0.05879122836972765,
+      "score": 89.23813390206607,
+      "top_ece": 0.07822304679447543
+     }
+    },
+    "score": 88.22389522666936
+   },
+   "capability": 78.72715382659936,
+   "composite_ci95": {
+    "A": [
+     69.47432027088024,
+     74.32448635092973
+    ],
+    "B": [
+     67.22041638863354,
+     74.14270707432867
+    ],
+    "C": [
+     67.34008322747964,
+     74.32448635092973
+    ]
+   },
+   "cost": {
+    "basis": "v1.5.4 published cost per 1,000 decisions carried (pricing rules unchanged; v1.6 item lengths differ): operator standard launch list price (interpretation I-1); no exact base-model floor applies",
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.032297327586206896
+   },
+   "display": "Jev 1.13.0 (TypeSafe AI)",
+   "endpoint_kind": "api",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 70.06596714588416,
+    "I_sealed": 68.87226507421454,
+    "base": 69.46911611004936,
+    "excess": 1.9601923064914821,
+    "gap": 1.1937020716696196,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 79.0195653974535,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 96.10810810810811,
+       "hard": 71.68921044353571,
+       "judge": 84.17930125247197,
+       "standard": 77.39640016743407
+      }
+     },
+     "open|noul": {
+      "cc": 54.46376811594203,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 100.0,
+       "hard": 47.82608695652173,
+       "judge": 39.99999999999999,
+       "standard": 66.66666666666667
+      }
+     },
+     "open|score": {
+      "cc": 76.71456792425695,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 81.7605633802817,
+       "hard": 73.19270289097875,
+       "judge": 79.57683741648106,
+       "standard": 76.94189602446482
+      }
+     },
+     "sealed|choice": {
+      "cc": 72.90953748043711,
+      "n": {
+       "easy": 21,
+       "hard": 62,
+       "judge": 42,
+       "standard": 25
+      },
+      "tiers": {
+       "easy": 87.97996661101837,
+       "hard": 58.69191049913941,
+       "judge": 82.02396804260984,
+       "standard": 80.13793103448276
+      }
+     },
+     "sealed|noul": {
+      "cc": 59.6027149321267,
+      "n": {
+       "easy": 13,
+       "hard": 25,
+       "judge": 20,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 84.61538461538463,
+       "hard": 28.000000000000004,
+       "judge": 89.99999999999999,
+       "standard": 64.70588235294117
+      }
+     },
+     "sealed|score": {
+      "cc": 74.1045428100798,
+      "n": {
+       "easy": 13,
+       "hard": 33,
+       "judge": 10,
+       "standard": 19
+      },
+      "tiers": {
+       "easy": 85.80645161290322,
+       "hard": 59.65101150004196,
+       "judge": 95.96837944664031,
+       "standard": 64.36489607390298
+      }
+     }
+    }
+   },
+   "jevbench_score": 72.47585080945147,
+   "key": "jev-1.13.0",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 1,
+   "ranked": true,
+   "ranks": {
+    "A": 1,
+    "B": 1,
+    "C": 1,
+    "capability": 1
+   },
+   "scores": {
+    "A": 72.47585080945147,
+    "B": 71.29233714035585,
+    "C": 72.47585080945147
+   },
+   "speed": {
+    "adjustment": "none (API)",
+    "n": 124,
+    "p50_s_adjusted": 0.23910215869545937,
+    "p50_s_raw": 0.23910215869545937,
+    "p95_s_adjusted": 0.29609236158430574,
+    "p95_s_raw": 0.29609236158430574
+   },
+   "status": {
+    "answered_ok": 590,
+    "missing": 0,
+    "rows": 600,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": true,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      83.80130350363709,
+      93.47721449800868
+     ],
+     "I": [
+      59.078324648112336,
+      73.38739794030612
+     ],
+     "capability": [
+      72.80574075885622,
+      82.32269670763898
+     ],
+     "composite": {
+      "A": [
+       69.47432027088024,
+       74.32448635092973
+      ],
+      "B": [
+       67.22041638863354,
+       74.14270707432867
+      ],
+      "C": [
+       67.34008322747964,
+       74.32448635092973
+      ]
+     },
+     "seed": 23
+    },
+    "ci95_basis": "bootstrap over the API system's items (n = A sealed items) AND over the equating offset (pool systems resampled with replacement, items resampled; B_offset = 200)",
+    "ci95_n": 300,
+    "complete": true,
+    "equated": {
+     "calibration": 90.53319490310537,
+     "capability": 78.72715382659936,
+     "intelligence": 66.92111275009336
+    },
+    "equating_flag": null,
+    "equating_offset": {
+     "C": 2.3092996764360123,
+     "I": -2.5480033599559917
+    },
+    "g_med_used": -0.7664902348218625,
+    "lane": "api",
+    "metric_basis": "A u P (sealed side = A, n=300)",
+    "n_items": 600,
+    "n_public": 300,
+    "n_sealed_side": 300,
+    "offset_ci95": {
+     "C": [
+      1.0660173959005041,
+      7.664080862725964
+     ],
+     "I": [
+      -6.572510602312845,
+      1.3851470446807652
+     ]
+    },
+    "on_S": null,
+    "per_type": {
+     "choice": {
+      "accuracy": 0.8166666666666667,
+      "calibration": 87.4202184446087,
+      "cc": 76.67569796206854,
+      "cc_by_type": {
+       "choice": 76.67569796206854
+      },
+      "cc_tiered": 75.9645514389453,
+      "cc_tiered_open": 79.0195653974535,
+      "cc_tiered_sealed": 72.90953748043711,
+      "low_n": false,
+      "n": 300,
+      "n_by_type": {
+       "choice": 300
+      },
+      "score": 76.67569796206854
+     },
+     "noul": {
+      "accuracy": 0.8066666666666666,
+      "calibration": 88.01333333333335,
+      "cc": 61.33333333333333,
+      "cc_by_type": {
+       "noul": 61.33333333333333
+      },
+      "cc_tiered": 57.033241524034366,
+      "cc_tiered_open": 54.46376811594203,
+      "cc_tiered_sealed": 59.6027149321267,
+      "low_n": false,
+      "n": 150,
+      "n_by_type": {
+       "noul": 150
+      },
+      "score": 61.33333333333333
+     },
+     "score": {
+      "accuracy": 0.74,
+      "calibration": 89.23813390206607,
+      "cc": 73.77759374526933,
+      "cc_by_type": {
+       "score": 73.77759374526933
+      },
+      "cc_tiered": 75.40955536716838,
+      "cc_tiered_open": 76.71456792425695,
+      "cc_tiered_sealed": 74.1045428100798,
+      "low_n": false,
+      "n": 150,
+      "n_by_type": {
+       "score": 150
+      },
+      "score": 73.77759374526933
+     }
+    },
+    "raw_on_A": {
+     "calibration": 88.22389522666936,
+     "capability": 78.84650566835936,
+     "intelligence": 69.46911611004936
+    },
+    "set": "A+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.023333333333333317,
+     "n": 300
+    },
+    "noul": {
+     "invalid_rate": 0.0,
+     "n": 150
+    },
+    "score": {
+     "invalid_rate": 0.020000000000000018,
+     "n": 150
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 67.95767345407117,
+    "Emphasis on Accuracy 60:20:20": 67.53921955757279,
+    "Emphasis on Cost 20:20:60": 61.96440155878345,
+    "Emphasis on Speed 20:60:20": 75.75404720627472,
+    "Intelligence only": 66.92111275009336
+   },
+   "class": "jev",
+   "open": "no",
+   "licence": "proprietary API",
+   "repo": "https://docs.typesafe.ai",
+   "gpu": null,
+   "endpoint_condition": "the operator's hosted API",
+   "underlying": "closed",
+   "adapter_id": "harness/specs/jev-1.13.0.json:jevbench.adapters.typesafe.TypeSafeAdapter",
+   "api_exposure_note": "API measurement: the operator's endpoint received sealed item text, without answers.",
+   "model_pin": null,
+   "last_measured_on": null,
+   "measured_in": "v1.6.0",
+   "not_ranked_because": null,
+   "provenance": {
+    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "carried_metadata_from": "v1.5.5"
+   }
+  },
+  {
+   "addendum": null,
+   "api_flag": false,
+   "api_subset": false,
+   "author": "blockbrain",
+   "axes": {
+    "calibration": 86.96753988280044,
+    "cost": 56.42912569481113,
+    "intelligence": 60.854884322554724,
+    "speed": 91.77283664982562
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.08631856803856107,
+      "ece_score": 82.73628639228778,
+      "mean_tvd": null,
+      "n": 737,
+      "n_ece_hard": 307,
+      "n_tvd": 0,
+      "score": 82.73628639228778
+     },
+     "noul": {
+      "abstention_rate": 0.18867924528301883,
+      "brier": 0.1059190859395021,
+      "ece": 0.061302788041812155,
+      "n": 371,
+      "score": 87.73944239163757
+     },
+     "score": {
+      "interval90_coverage": 0.978319783197832,
+      "interval90_width": 0.46589882565492324,
+      "n": 369,
+      "nrps": 0.07366857377747793,
+      "score": 90.42689086447598,
+      "top_ece": 0.05889680446650118
+     }
+    },
+    "score": 86.96753988280044
+   },
+   "capability": 73.91121210267758,
+   "composite_ci95": {
+    "A": [
+     68.60411204169068,
+     71.84684774900572
+    ],
+    "B": [
+     65.69890630611741,
+     70.18198429392262
+    ],
+    "C": [
+     60.41052734905268,
+     71.84684774900572
+    ]
+   },
+   "cost": {
+    "basis": "v1.5.4 published cost per 1,000 decisions carried (pricing rules unchanged; v1.6 item lengths differ): documented hosted-model estimate; no exact base-model floor applies",
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.028337561576354687
+   },
+   "display": "Cygnet (blockbrain, frozen Gemma-4-12B-it)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 64.73540791730781,
+    "I_sealed": 56.97436072780164,
+    "base": 60.854884322554724,
+    "excess": 3.981832879236592,
+    "gap": 7.761047189506172,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 72.62577711735155,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 88.32432432432431,
+       "hard": 67.9144385026738,
+       "judge": 60.44825313117996,
+       "standard": 92.46546672247803
+      }
+     },
+     "open|noul": {
+      "cc": 57.7536231884058,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 100.0,
+       "hard": 65.21739130434783,
+       "judge": 50.0,
+       "standard": 33.33333333333333
+      }
+     },
+     "open|score": {
+      "cc": 63.82682344616612,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 62.65303084589129,
+       "hard": 58.36199979792451,
+       "judge": 66.19624992688532,
+       "standard": 71.78922732170795
+      }
+     },
+     "sealed|choice": {
+      "cc": 65.49755292537436,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 84.03665656640308,
+       "hard": 56.730769230769226,
+       "judge": 66.4804469273743,
+       "standard": 72.28722749107035
+      }
+     },
+     "sealed|noul": {
+      "cc": 39.63579350399792,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 68.0,
+       "hard": 12.621359223300965,
+       "judge": 44.736842105263165,
+       "standard": 71.83098591549295
+      }
+     },
+     "sealed|score": {
+      "cc": 65.78973575403265,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 77.5971890381146,
+       "hard": 57.63623036016076,
+       "judge": 70.57302958756935,
+       "standard": 69.01807914943039
+      }
+     }
+    }
+   },
+   "jevbench_score": 70.73524839122327,
+   "key": "cygnet",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 2,
+   "ranked": true,
+   "ranks": {
+    "A": 2,
+    "B": 3,
+    "C": 2,
+    "capability": 2
+   },
+   "scores": {
+    "A": 70.73524839122327,
+    "B": 68.51058068457985,
+    "C": 70.73524839122327
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.22363614114001393,
+    "p50_s_raw": 0.03681807057000697,
+    "p95_s_adjusted": 0.29728592303581536,
+    "p95_s_raw": 0.07364296151790768
+   },
+   "status": {
+    "answered_ok": 1477,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      82.04651836733596,
+      88.71728133464546
+     ],
+     "I": [
+      56.314769523781564,
+      64.3148002508752
+     ],
+     "capability": [
+      69.87404610465994,
+      75.7759315773931
+     ],
+     "composite": {
+      "A": [
+       68.60411204169068,
+       71.84684774900572
+      ],
+      "B": [
+       65.69890630611741,
+       70.18198429392262
+      ],
+      "C": [
+       60.41052734905268,
+       71.84684774900572
+      ]
+     },
+     "seed": 16
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "g_med_used": 3.7792143102695803,
+    "lane": "selfhosted",
+    "metric_basis": "S u P",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 86.96753988280044,
+     "capability": 73.91121210267758,
+     "intelligence": 60.854884322554724
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.748,
+      "calibration": 82.73628639228778,
+      "cc": 67.7727991815314,
+      "cc_by_type": {
+       "choice": 67.7727991815314
+      },
+      "cc_tiered": 69.06166502136296,
+      "cc_tiered_open": 72.62577711735155,
+      "cc_tiered_sealed": 65.49755292537436,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 67.7727991815314
+     },
+     "noul": {
+      "accuracy": 0.736,
+      "calibration": 87.73944239163757,
+      "cc": 47.199999999999996,
+      "cc_by_type": {
+       "noul": 47.199999999999996
+      },
+      "cc_tiered": 48.69470834620186,
+      "cc_tiered_open": 57.7536231884058,
+      "cc_tiered_sealed": 39.63579350399792,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 47.199999999999996
+     },
+     "score": {
+      "accuracy": 0.6133333333333333,
+      "calibration": 90.42689086447598,
+      "cc": 65.28304581120936,
+      "cc_by_type": {
+       "score": 65.28304581120936
+      },
+      "cc_tiered": 64.80827960009938,
+      "cc_tiered_open": 63.82682344616612,
+      "cc_tiered_sealed": 65.78973575403265,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 65.28304581120936
+     }
+    },
+    "raw_on_A": {
+     "calibration": 83.24254074674259,
+     "capability": 72.60878463794523,
+     "intelligence": 61.97502852914786
+    },
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.01733333333333331,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.010666666666666713,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.016000000000000014,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 66.5921573389541,
+    "Emphasis on Accuracy 60:20:20": 64.17215013985877,
+    "Emphasis on Cost 20:20:60": 62.11717193887047,
+    "Emphasis on Speed 20:60:20": 74.80182276832207,
+    "Intelligence only": 60.85488432255473
+   },
+   "class": "system-one-open",
+   "open": "yes",
+   "licence": "shim MIT; weights Apache-2.0 with Google's Gemma Prohibited Use Policy",
+   "repo": "https://github.com/blockbrain-ai/cygnet-recipe",
+   "gpu": "RTXPRO6000",
+   "endpoint_condition": "evaluator-owned Lium GPU pod (RTXPRO6000), offline read-only container",
+   "underlying": null,
+   "adapter_id": "images/cygnet/spec.json:jevbench.adapters.typesafe.TypeSafeAdapter",
+   "api_exposure_note": null,
+   "model_pin": null,
+   "last_measured_on": null,
+   "measured_in": "v1.6.0",
+   "not_ranked_because": null,
+   "provenance": {
+    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "carried_metadata_from": "v1.5.5"
+   }
+  },
+  {
+   "addendum": null,
+   "api_flag": false,
+   "api_subset": false,
+   "author": "Eldan Ring",
+   "axes": {
+    "calibration": 82.95806123333315,
+    "cost": 56.556023424877196,
+    "intelligence": 64.3684892609522,
+    "speed": 86.69753831262085
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.11234009752278087,
+      "ece_score": 77.53198049544383,
+      "mean_tvd": null,
+      "n": 737,
+      "n_ece_hard": 307,
+      "n_tvd": 0,
+      "score": 77.53198049544383
+     },
+     "noul": {
+      "abstention_rate": 0.14016172506738545,
+      "brier": 0.09737227728287662,
+      "ece": 0.07944785238178745,
+      "n": 371,
+      "score": 84.11042952364252
+     },
+     "score": {
+      "interval90_coverage": 0.9214092140921409,
+      "interval90_width": 0.2443541102077688,
+      "n": 369,
+      "nrps": 0.06941649910523198,
+      "score": 87.23177368091314,
+      "top_ece": 0.09297401363825267
+     }
+    },
+    "score": 82.95806123333315
+   },
+   "capability": 73.66327524714268,
+   "composite_ci95": {
+    "A": [
+     68.49246085963402,
+     71.62039344721437
+    ],
+    "B": [
+     66.61029656112254,
+     70.97848284219052
+    ],
+    "C": [
+     68.17932144826769,
+     71.62039344721437
+    ]
+   },
+   "cost": {
+    "basis": "v1.5.4 published cost per 1,000 decisions carried (pricing rules unchanged; v1.6 item lengths differ): documented hosted-model estimate; no exact base-model floor applies",
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.028062900246305422
+   },
+   "display": "Winnow-12B Q8",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 64.5419721808051,
+    "I_sealed": 64.19500634109929,
+    "base": 64.3684892609522,
+    "excess": -3.4322484705637635,
+    "gap": 0.34696583970581685,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 70.47816196296756,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 88.32432432432431,
+       "hard": 67.9144385026738,
+       "judge": 68.35860250494396,
+       "standard": 69.8618668899121
+      }
+     },
+     "open|noul": {
+      "cc": 50.49758454106281,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 100.0,
+       "hard": 56.52173913043479,
+       "judge": 30.000000000000004,
+       "standard": 44.44444444444444
+      }
+     },
+     "open|score": {
+      "cc": 72.65017003838497,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 70.02932267039755,
+       "hard": 73.10941372547562,
+       "judge": 66.12549322937068,
+       "standard": 82.82912156171884
+      }
+     },
+     "sealed|choice": {
+      "cc": 69.74580750216904,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 80.04582070800384,
+       "hard": 62.33031674208144,
+       "judge": 76.72253258845438,
+       "standard": 68.96169478999877
+      }
+     },
+     "sealed|noul": {
+      "cc": 52.512988405651086,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 76.0,
+       "hard": 28.155339805825253,
+       "judge": 60.52631578947369,
+       "standard": 77.46478873239437
+      }
+     },
+     "sealed|score": {
+      "cc": 70.32622311547773,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 80.40189476049136,
+       "hard": 66.22581033423567,
+       "judge": 72.55185457297459,
+       "standard": 70.15076566920975
+      }
+     }
+    }
+   },
+   "jevbench_score": 70.41538095264903,
+   "key": "winnow-12b",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 3,
+   "ranked": true,
+   "ranks": {
+    "A": 3,
+    "B": 2,
+    "C": 3,
+    "capability": 4
+   },
+   "scores": {
+    "A": 70.41538095264903,
+    "B": 69.11678983452356,
+    "C": 70.41538095264903
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.38378054890781643,
+    "p50_s_raw": 0.1168902744539082,
+    "p95_s_adjusted": 0.5573951802216469,
+    "p95_s_raw": 0.20369759011082347
+   },
+   "status": {
+    "answered_ok": 1477,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      78.29818127330059,
+      85.12674179336896
+     ],
+     "I": [
+      59.92191222254513,
+      68.54524981439366
+     ],
+     "capability": [
+      69.70568391648285,
+      75.98661805170863
+     ],
+     "composite": {
+      "A": [
+       68.49246085963402,
+       71.62039344721437
+      ],
+      "B": [
+       66.61029656112254,
+       70.97848284219052
+      ],
+      "C": [
+       68.17932144826769,
+       71.62039344721437
+      ]
+     },
+     "seed": 27
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "g_med_used": 3.7792143102695803,
+    "lane": "selfhosted",
+    "metric_basis": "S u P",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 82.95806123333315,
+     "capability": 73.66327524714268,
+     "intelligence": 64.3684892609522
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.768,
+      "calibration": 77.53198049544383,
+      "cc": 70.33051353220351,
+      "cc_by_type": {
+       "choice": 70.33051353220351
+      },
+      "cc_tiered": 70.1119847325683,
+      "cc_tiered_open": 70.47816196296756,
+      "cc_tiered_sealed": 69.74580750216904,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 70.33051353220351
+     },
+     "noul": {
+      "accuracy": 0.7786666666666666,
+      "calibration": 84.11042952364252,
+      "cc": 55.73333333333332,
+      "cc_by_type": {
+       "noul": 55.73333333333332
+      },
+      "cc_tiered": 51.505286473356946,
+      "cc_tiered_open": 50.49758454106281,
+      "cc_tiered_sealed": 52.512988405651086,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 55.73333333333332
+     },
+     "score": {
+      "accuracy": 0.704,
+      "calibration": 87.23177368091314,
+      "cc": 70.87391433311245,
+      "cc_by_type": {
+       "score": 70.87391433311245
+      },
+      "cc_tiered": 71.48819657693136,
+      "cc_tiered_open": 72.65017003838497,
+      "cc_tiered_sealed": 70.32622311547773,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 70.87391433311245
+     }
+    },
+    "raw_on_A": {
+     "calibration": 80.53670554364732,
+     "capability": 72.60926608932684,
+     "intelligence": 64.68182663500636
+    },
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.01733333333333331,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.010666666666666713,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.016000000000000014,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 67.03687814038628,
+    "Emphasis on Accuracy 60:20:20": 65.94340736360495,
+    "Emphasis on Cost 20:20:60": 62.41055592234616,
+    "Emphasis on Speed 20:60:20": 73.7243551874557,
+    "Intelligence only": 64.3684892609522
+   },
+   "class": "jev-rebuild",
+   "open": "yes",
+   "licence": "Apache-2.0, including the applicable Gemma 4 base/derivative licence terms",
+   "repo": "https://huggingface.co/EldanRing/Winnow-12B",
+   "gpu": "RTX6000",
+   "endpoint_condition": "evaluator-owned Lium GPU pod (RTX6000), offline read-only container",
+   "underlying": "google/gemma-4-12B-it LoRA fine-tune, merged and exported as Q8_0 GGUF",
+   "adapter_id": "images/winnow-12b/spec.json:jevbench.adapters.typesafe.TypeSafeAdapter",
+   "api_exposure_note": null,
+   "model_pin": null,
+   "last_measured_on": null,
+   "measured_in": "v1.6.0",
+   "not_ranked_because": null,
+   "provenance": {
+    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "carried_metadata_from": "v1.5.5"
+   }
+  },
+  {
+   "addendum": null,
+   "api_flag": false,
+   "api_subset": false,
+   "author": "akhilaaa3",
+   "axes": {
+    "calibration": 87.04450672835743,
+    "cost": 56.05113155939739,
+    "intelligence": 60.39751501275147,
+    "speed": 85.43173201875288
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.10691343524556984,
+      "ece_score": 78.61731295088603,
+      "mean_tvd": null,
+      "n": 737,
+      "n_ece_hard": 307,
+      "n_tvd": 0,
+      "score": 78.61731295088603
+     },
+     "noul": {
+      "abstention_rate": 0.25876010781671155,
+      "brier": 0.09426879548573859,
+      "ece": 0.04284927173453476,
+      "n": 371,
+      "score": 91.43014565309304
+     },
+     "score": {
+      "interval90_coverage": 0.94579945799458,
+      "interval90_width": 0.32836495031616986,
+      "n": 369,
+      "nrps": 0.06732883113404022,
+      "score": 91.08606158109325,
+      "top_ece": 0.0554749686220474
+     }
+    },
+    "score": 87.04450672835743
+   },
+   "capability": 73.72101087055445,
+   "composite_ci95": {
+    "A": [
+     67.4007126912183,
+     70.53041716597043
+    ],
+    "B": [
+     64.80472928008246,
+     69.10303217950347
+    ],
+    "C": [
+     59.04418202718906,
+     70.53041716597043
+    ]
+   },
+   "cost": {
+    "basis": "v1.5.4 published cost per 1,000 decisions carried (pricing rules unchanged; v1.6 item lengths differ): documented hosted-model estimate; no exact base-model floor applies",
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.02917173645320197
+   },
+   "display": "Jev-Omni (akhilaaa3, Gemma-4-12B merged)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 63.83558002643446,
+    "I_sealed": 56.959449999068475,
+    "base": 60.39751501275147,
+    "excess": 3.096915717096401,
+    "gap": 6.876130027365981,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 75.02831016136747,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 96.10810810810811,
+       "hard": 73.57659641396666,
+       "judge": 68.35860250494396,
+       "standard": 77.39640016743407
+      }
+     },
+     "open|noul": {
+      "cc": 45.118702553485164,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 71.42857142857142,
+       "hard": 65.21739130434783,
+       "judge": 10.000000000000009,
+       "standard": 44.44444444444444
+      }
+     },
+     "open|score": {
+      "cc": 71.35972736445073,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 67.92305693273026,
+       "hard": 62.947941486299364,
+       "judge": 76.8566802696764,
+       "standard": 81.65620497877522
+      }
+     },
+     "sealed|choice": {
+      "cc": 68.8767390165768,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 74.72470623013821,
+       "hard": 62.33031674208144,
+       "judge": 74.86033519553072,
+       "standard": 70.07020569035596
+      }
+     },
+     "sealed|noul": {
+      "cc": 32.45047104291564,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 48.0,
+       "hard": 12.621359223300965,
+       "judge": 36.8421052631579,
+       "standard": 57.746478873239425
+      }
+     },
+     "sealed|score": {
+      "cc": 69.55113993771299,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 81.91063357187544,
+       "hard": 63.820947806039996,
+       "judge": 72.22245394690556,
+       "standard": 70.82480637018888
+      }
+     }
+    }
+   },
+   "jevbench_score": 69.4547494157247,
+   "key": "jev-omni",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 4,
+   "ranked": true,
+   "ranks": {
+    "A": 4,
+    "B": 4,
+    "C": 4,
+    "capability": 3
+   },
+   "scores": {
+    "A": 69.4547494157247,
+    "B": 67.43231429797916,
+    "C": 69.4547494157247
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.45938353668898346,
+    "p50_s_raw": 0.15469176834449172,
+    "p95_s_adjusted": 0.6232343347743153,
+    "p95_s_raw": 0.23661716738715766
+   },
+   "status": {
+    "answered_ok": 1477,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      81.87899867440292,
+      88.50321488568522
+     ],
+     "I": [
+      56.170297092452124,
+      64.15227506973191
+     ],
+     "capability": [
+      69.58441897959413,
+      75.46508330837311
+     ],
+     "composite": {
+      "A": [
+       67.4007126912183,
+       70.53041716597043
+      ],
+      "B": [
+       64.80472928008246,
+       69.10303217950347
+      ],
+      "C": [
+       59.04418202718906,
+       70.53041716597043
+      ]
+     },
+     "seed": 24
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "g_med_used": 3.7792143102695803,
+    "lane": "selfhosted",
+    "metric_basis": "S u P",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 87.04450672835743,
+     "capability": 73.72101087055445,
+     "intelligence": 60.39751501275147
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.7693333333333333,
+      "calibration": 78.61731295088603,
+      "cc": 70.5010278222483,
+      "cc_by_type": {
+       "choice": 70.5010278222483
+      },
+      "cc_tiered": 71.95252458897214,
+      "cc_tiered_open": 75.02831016136747,
+      "cc_tiered_sealed": 68.8767390165768,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 70.5010278222483
+     },
+     "noul": {
+      "accuracy": 0.688,
+      "calibration": 91.43014565309304,
+      "cc": 37.59999999999999,
+      "cc_by_type": {
+       "noul": 37.59999999999999
+      },
+      "cc_tiered": 38.7845867982004,
+      "cc_tiered_open": 45.118702553485164,
+      "cc_tiered_sealed": 32.45047104291564,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 37.59999999999999
+     },
+     "score": {
+      "accuracy": 0.6906666666666667,
+      "calibration": 91.08606158109325,
+      "cc": 69.9475666458352,
+      "cc_by_type": {
+       "score": 69.9475666458352
+      },
+      "cc_tiered": 70.45543365108186,
+      "cc_tiered_open": 71.35972736445073,
+      "cc_tiered_sealed": 69.55113993771299,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 69.9475666458352
+     }
+    },
+    "raw_on_A": {
+     "calibration": 85.06452164862384,
+     "capability": 73.50655222954862,
+     "intelligence": 61.9485828104734
+    },
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.01733333333333331,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.010666666666666713,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.016000000000000014,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 65.07157698247727,
+    "Emphasis on Accuracy 60:20:20": 63.11774653991856,
+    "Emphasis on Cost 20:20:60": 61.13606642136529,
+    "Emphasis on Speed 20:60:20": 71.9283881439236,
+    "Intelligence only": 60.39751501275147
+   },
+   "class": "jev-rebuild",
+   "open": "yes",
+   "licence": "Apache-2.0, following Gemma 4; dataset rights stated separately by the author",
+   "repo": "https://huggingface.co/akhilaaa3/Jev-Omni",
+   "gpu": "RTX6000",
+   "endpoint_condition": "evaluator-owned Lium GPU pod (RTX6000), offline read-only container",
+   "underlying": "google/gemma-4-12B-it fine-tuned and merged, with a trained 256-way decision head",
+   "adapter_id": "images/jev-omni/spec.json:omni_v15.JevOmni",
+   "api_exposure_note": null,
+   "model_pin": null,
+   "last_measured_on": null,
+   "measured_in": "v1.6.0",
+   "not_ranked_because": null,
+   "provenance": {
+    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "carried_metadata_from": "v1.5.5"
+   }
+  },
+  {
+   "addendum": null,
+   "api_flag": false,
+   "api_subset": false,
+   "author": "unknown",
+   "axes": {
+    "calibration": 87.88101858186977,
+    "cost": 63.07359395281681,
+    "intelligence": 49.94926917715007,
+    "speed": 93.83356539601934
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.061775972135365,
+      "ece_score": 87.644805572927,
+      "mean_tvd": null,
+      "n": 750,
+      "n_ece_hard": 320,
+      "n_tvd": 0,
+      "score": 87.644805572927
+     },
+     "noul": {
+      "abstention_rate": 0.29333333333333333,
+      "brier": 0.12494153723477718,
+      "ece": 0.06617846187638739,
+      "n": 375,
+      "score": 86.76430762472252
+     },
+     "score": {
+      "interval90_coverage": 0.9573333333333334,
+      "interval90_width": 0.49066666666666664,
+      "n": 375,
+      "nrps": 0.09744572815253887,
+      "score": 89.2339425479598,
+      "top_ece": 0.058937710444132485
+     }
+    },
+    "score": 87.88101858186977
+   },
+   "capability": 68.91514387950991,
+   "composite_ci95": {
+    "A": [
+     53.16736238395387,
+     70.80586310143676
+    ],
+    "B": [
+     48.55446405750271,
+     66.75626936202248
+    ],
+    "C": [
+     36.9217794333013,
+     58.056926027421994
+    ]
+   },
+   "cost": {
+    "basis": "v1.5.4 published cost per 1,000 decisions carried (pricing rules unchanged; v1.6 item lengths differ): documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)",
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.01701689039408867
+   },
+   "display": "Plumb-4B (crh225, JevK5 v0.2 + LoRA)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 52.52266731743627,
+    "I_sealed": 47.37587103686388,
+    "base": 49.94926917715007,
+    "excess": 1.3675819703028154,
+    "gap": 5.146796280572396,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 63.70555942875353,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 76.64864864864865,
+       "hard": 54.70273670965714,
+       "judge": 72.31377719182596,
+       "standard": 62.32733361239012
+      }
+     },
+     "open|noul": {
+      "cc": 36.11249137336094,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 85.71428571428572,
+       "hard": 39.13043478260869,
+       "judge": 10.000000000000009,
+       "standard": 44.44444444444444
+      }
+     },
+     "open|score": {
+      "cc": 57.74995115019435,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 69.31247308876523,
+       "hard": 45.80957151269646,
+       "judge": 63.17831638117708,
+       "standard": 67.70690160943053
+      }
+     },
+     "sealed|choice": {
+      "cc": 58.16335833730948,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 65.41275589387332,
+       "hard": 57.239819004524875,
+       "judge": 57.16945996275605,
+       "standard": 57.876585786426915
+      }
+     },
+     "sealed|noul": {
+      "cc": 23.383111546129097,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 56.00000000000001,
+       "hard": 4.854368932038833,
+       "judge": 36.8421052631579,
+       "standard": 23.943661971830977
+      }
+     },
+     "sealed|score": {
+      "cc": 60.581143227153056,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 75.79170877715593,
+       "hard": 58.55457131780688,
+       "judge": 57.79040747929093,
+       "standard": 61.215107892637135
+      }
+     }
+    }
+   },
+   "jevbench_score": 68.93141877077262,
+   "key": "plumb-4b",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 5,
+   "ranked": true,
+   "ranks": {
+    "A": 5,
+    "B": 5,
+    "C": 5,
+    "capability": 5
+   },
+   "scores": {
+    "A": 68.93141877077262,
+    "B": 64.02893761331987,
+    "C": 47.86904081303654
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.18999176411889493,
+    "p50_s_raw": 0.019995882059447467,
+    "p95_s_adjusted": 0.21772519345395266,
+    "p95_s_raw": 0.033862596726976335
+   },
+   "status": {
+    "answered_ok": 1500,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      81.12587449088865,
+      88.17806515626197
+     ],
+     "I": [
+      44.89707013811471,
+      54.385761798364065
+     ],
+     "capability": [
+      64.0109867680435,
+      70.4203069628519
+     ],
+     "composite": {
+      "A": [
+       53.16736238395387,
+       70.80586310143676
+      ],
+      "B": [
+       48.55446405750271,
+       66.75626936202248
+      ],
+      "C": [
+       36.9217794333013,
+       58.056926027421994
+      ]
+     },
+     "seed": 26
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "g_med_used": 3.7792143102695803,
+    "lane": "selfhosted",
+    "metric_basis": "S u P",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 87.88101858186977,
+     "capability": 68.91514387950991,
+     "intelligence": 49.94926917715007
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.6853333333333333,
+      "calibration": 87.644805572927,
+      "cc": 59.758627549425455,
+      "cc_by_type": {
+       "choice": 59.758627549425455
+      },
+      "cc_tiered": 60.93445888303151,
+      "cc_tiered_open": 63.70555942875353,
+      "cc_tiered_sealed": 58.16335833730948,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 59.758627549425455
+     },
+     "noul": {
+      "accuracy": 0.6453333333333333,
+      "calibration": 86.76430762472252,
+      "cc": 29.066666666666663,
+      "cc_by_type": {
+       "noul": 29.066666666666663
+      },
+      "cc_tiered": 29.74780145974502,
+      "cc_tiered_open": 36.11249137336094,
+      "cc_tiered_sealed": 23.383111546129097,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 29.066666666666663
+     },
+     "score": {
+      "accuracy": 0.576,
+      "calibration": 89.2339425479598,
+      "cc": 60.79520756920622,
+      "cc_by_type": {
+       "score": 60.79520756920622
+      },
+      "cc_tiered": 59.1655471886737,
+      "cc_tiered_open": 57.74995115019435,
+      "cc_tiered_sealed": 60.581143227153056,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 60.79520756920622
+     }
+    },
+    "raw_on_A": {
+     "calibration": 82.25783080586818,
+     "capability": 69.14922165988236,
+     "intelligence": 56.040612513896534
+    },
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.0,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.0,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.0,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 64.341033387337,
+    "Emphasis on Accuracy 60:20:20": 57.63785427381599,
+    "Emphasis on Cost 20:20:60": 63.77552871277467,
+    "Emphasis on Speed 20:60:20": 73.54650506970461,
+    "Intelligence only": 49.847961896208766
+   },
+   "class": "unclassified",
+   "open": "unknown",
+   "licence": "not recorded",
+   "repo": null,
+   "gpu": "H100",
+   "endpoint_condition": "evaluator-owned Lium GPU pod (H100), offline read-only container",
+   "underlying": null,
+   "adapter_id": "images/plumb-4b/spec.json:jevbench.adapters.typesafe.TypeSafeAdapter",
+   "api_exposure_note": null,
+   "model_pin": null,
+   "last_measured_on": null,
+   "measured_in": "v1.6.0",
+   "not_ranked_because": null,
+   "provenance": {
+    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "carried_metadata_from": "v1.5.5"
+   }
+  },
+  {
+   "addendum": null,
+   "api_flag": false,
+   "api_subset": false,
+   "author": "Mapika",
+   "axes": {
+    "calibration": 89.63735637833331,
+    "cost": 64.54376873042901,
+    "intelligence": 47.303937121082235,
+    "speed": 91.78549329698745
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.04618531250000016,
+      "ece_score": 90.76293749999998,
+      "mean_tvd": null,
+      "n": 750,
+      "n_ece_hard": 320,
+      "n_tvd": 0,
+      "score": 90.76293749999998
+     },
+     "noul": {
+      "abstention_rate": 0.3573333333333333,
+      "brier": 0.1263556454400002,
+      "ece": 0.05272693333333338,
+      "n": 375,
+      "score": 89.45461333333333
+     },
+     "score": {
+      "interval90_coverage": 0.9733333333333334,
+      "interval90_width": 0.5584444444444441,
+      "n": 375,
+      "nrps": 0.09968243396666672,
+      "score": 88.69451830166665,
+      "top_ece": 0.06321360000000002
+     }
+    },
+    "score": 89.63735637833331
+   },
+   "capability": 68.47064674970777,
+   "composite_ci95": {
+    "A": [
+     46.69004504918286,
+     69.56145989624562
+    ],
+    "B": [
+     42.23489655706371,
+     64.67319529903232
+    ],
+    "C": [
+     32.42364239526587,
+     49.196217723721986
+    ]
+   },
+   "cost": {
+    "basis": "v1.5.4 published cost per 1,000 decisions carried (pricing rules unchanged; v1.6 item lengths differ): documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)",
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.015201077586206898
+   },
+   "display": "decider-4b v2 (Mapika)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 52.58086212188769,
+    "I_sealed": 42.02701212027678,
+    "base": 47.303937121082235,
+    "excess": 6.774635691341331,
+    "gap": 10.553850001610911,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 73.21703197407996,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 84.43243243243244,
+       "hard": 69.80182447310474,
+       "judge": 76.26895187870797,
+       "standard": 69.8618668899121
+      }
+     },
+     "open|noul": {
+      "cc": 26.461697722567287,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 71.42857142857142,
+       "hard": 39.13043478260869,
+       "judge": -9.999999999999998,
+       "standard": 33.33333333333333
+      }
+     },
+     "open|score": {
+      "cc": 58.06385666901582,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 60.12089201877935,
+       "hard": 50.92198275862068,
+       "judge": 59.68585746102448,
+       "standard": 68.88608562691132
+      }
+     },
+     "sealed|choice": {
+      "cc": 56.802191819905744,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 69.40359175227256,
+       "hard": 50.62217194570135,
+       "judge": 57.16945996275605,
+       "standard": 62.31062938785566
+      }
+     },
+     "sealed|noul": {
+      "cc": 11.645451862940547,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 48.0,
+       "hard": -12.621359223300976,
+       "judge": 23.684210526315795,
+       "standard": 23.943661971830977
+      }
+     },
+     "sealed|score": {
+      "cc": 57.63339267798405,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 67.35302114803623,
+       "hard": 52.001323024055026,
+       "judge": 60.637847498014295,
+       "standard": 59.531035520770615
+      }
+     }
+    }
+   },
+   "jevbench_score": 61.00883881671579,
+   "key": "decider-4b-v2",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 6,
+   "ranked": true,
+   "ranks": {
+    "A": 6,
+    "B": 6,
+    "C": 6,
+    "capability": 6
+   },
+   "scores": {
+    "A": 61.00883881671579,
+    "B": 56.06478354142076,
+    "C": 42.36724917827485
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.19992743488401174,
+    "p50_s_raw": 0.024963717442005873,
+    "p95_s_adjusted": 0.3315723263658583,
+    "p95_s_raw": 0.09078616318292916
+   },
+   "status": {
+    "answered_ok": 1500,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      83.74772973054999,
+      89.97927303856018
+     ],
+     "I": [
+      42.43204282532835,
+      50.487758980151284
+     ],
+     "capability": [
+      63.94180406430119,
+      69.60062074444134
+     ],
+     "composite": {
+      "A": [
+       46.69004504918286,
+       69.56145989624562
+      ],
+      "B": [
+       42.23489655706371,
+       64.67319529903232
+      ],
+      "C": [
+       32.42364239526587,
+       49.196217723721986
+      ]
+     },
+     "seed": 17
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "g_med_used": 3.7792143102695803,
+    "lane": "selfhosted",
+    "metric_basis": "S u P",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 89.63735637833331,
+     "capability": 68.47064674970777,
+     "intelligence": 47.303937121082235
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.6933333333333334,
+      "calibration": 90.76293749999998,
+      "cc": 60.781713289694295,
+      "cc_by_type": {
+       "choice": 60.781713289694295
+      },
+      "cc_tiered": 65.00961189699285,
+      "cc_tiered_open": 73.21703197407996,
+      "cc_tiered_sealed": 56.802191819905744,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 60.781713289694295
+     },
+     "noul": {
+      "accuracy": 0.592,
+      "calibration": 89.45461333333333,
+      "cc": 18.399999999999995,
+      "cc_by_type": {
+       "noul": 18.399999999999995
+      },
+      "cc_tiered": 19.053574792753917,
+      "cc_tiered_open": 26.461697722567287,
+      "cc_tiered_sealed": 11.645451862940547,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 18.399999999999995
+     },
+     "score": {
+      "accuracy": 0.512,
+      "calibration": 88.69451830166665,
+      "cc": 57.710584156088295,
+      "cc_by_type": {
+       "score": 57.710584156088295
+      },
+      "cc_tiered": 57.848624673499934,
+      "cc_tiered_open": 58.06385666901582,
+      "cc_tiered_sealed": 57.63339267798405,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 57.710584156088295
+     }
+    },
+    "raw_on_A": {
+     "calibration": 88.78997857788461,
+     "capability": 69.59480436989391,
+     "intelligence": 50.399630161903204
+    },
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.0,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.0,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.0,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 56.49685550700874,
+    "Emphasis on Accuracy 60:20:20": 49.83214198140074,
+    "Emphasis on Cost 20:20:60": 56.9996573572166,
+    "Emphasis on Speed 20:60:20": 64.56208920771276,
+    "Intelligence only": 42.34009785780806
+   },
+   "class": "system-one-open",
+   "open": "yes",
+   "licence": "Apache-2.0 (package and weights)",
+   "repo": "https://github.com/Mapika/decider",
+   "gpu": "RTX5090",
+   "endpoint_condition": "evaluator-owned Lium GPU pod (RTX5090), offline read-only container",
+   "underlying": null,
+   "adapter_id": "images/decider-4b-v2/spec.json:jevbench.adapters.typesafe.TypeSafeAdapter",
+   "api_exposure_note": null,
+   "model_pin": null,
+   "last_measured_on": null,
+   "measured_in": "v1.6.0",
+   "not_ranked_because": null,
+   "provenance": {
+    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "carried_metadata_from": "v1.5.5"
+   }
+  },
+  {
+   "addendum": null,
+   "api_flag": false,
+   "api_subset": false,
+   "author": "unknown",
+   "axes": {
+    "calibration": 89.88230801873149,
+    "cost": 63.07359395281681,
+    "intelligence": 45.984874018717065,
+    "speed": 93.9472917853559
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.05458773337668626,
+      "ece_score": 89.08245332466275,
+      "mean_tvd": null,
+      "n": 737,
+      "n_ece_hard": 307,
+      "n_tvd": 0,
+      "score": 89.08245332466275
+     },
+     "noul": {
+      "abstention_rate": 0.33692722371967654,
+      "brier": 0.11477714806826486,
+      "ece": 0.053786553580231086,
+      "n": 371,
+      "score": 89.24268928395378
+     },
+     "score": {
+      "interval90_coverage": 0.9566395663956639,
+      "interval90_width": 0.4780939476061429,
+      "n": 369,
+      "nrps": 0.09977232020092458,
+      "score": 91.32178144757796,
+      "top_ece": 0.03689602542375804
+     }
+    },
+    "score": 89.88230801873149
+   },
+   "capability": 67.93359101872429,
+   "composite_ci95": {
+    "A": [
+     42.9497160761469,
+     69.48587839043402
+    ],
+    "B": [
+     38.5760104632031,
+     64.75398332983423
+    ],
+    "C": [
+     29.82619171954645,
+     49.93482296835595
+    ]
+   },
+   "cost": {
+    "basis": "v1.5.4 published cost per 1,000 decisions carried (pricing rules unchanged; v1.6 item lengths differ): documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)",
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.01701689039408867
+   },
+   "display": "JevK5 v0.3 (4B)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 45.982064461274575,
+    "I_sealed": 45.987683576159554,
+    "base": 45.984874018717065,
+    "excess": -3.7848334251545594,
+    "gap": -0.005619114884979126,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 60.58350447013268,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 76.64864864864865,
+       "hard": 60.36489462094999,
+       "judge": 64.40342781806196,
+       "standard": 47.25826705734617
+      }
+     },
+     "open|noul": {
+      "cc": 20.41614906832298,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 42.85714285714286,
+       "hard": 47.82608695652173,
+       "judge": -9.999999999999998,
+       "standard": 0.0
+      }
+     },
+     "open|score": {
+      "cc": 56.946539845368065,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 63.73671074966275,
+       "hard": 48.87418617513136,
+       "judge": 59.242906579841126,
+       "standard": 66.2516116319845
+      }
+     },
+     "sealed|choice": {
+      "cc": 58.82061791071595,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 68.07331313280615,
+       "hard": 55.712669683257914,
+       "judge": 59.031657355679705,
+       "standard": 60.09360758714129
+      }
+     },
+     "sealed|noul": {
+      "cc": 22.94594773546748,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 48.0,
+       "hard": 0.9708737864077666,
+       "judge": 39.47368421052631,
+       "standard": 29.5774647887324
+      }
+     },
+     "sealed|score": {
+      "cc": 56.19648508229524,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 75.85015484256552,
+       "hard": 49.05859672159295,
+       "judge": 56.58319572325592,
+       "standard": 60.06536096212366
+      }
+     }
+    }
+   },
+   "jevbench_score": 56.98726235705661,
+   "key": "jevk5-v0.3-4b",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 7,
+   "ranked": true,
+   "ranks": {
+    "A": 7,
+    "B": 7,
+    "C": 7,
+    "capability": 7
+   },
+   "scores": {
+    "A": 56.98726235705661,
+    "B": 52.13725986341647,
+    "C": 39.57448774795598
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.18763320203870534,
+    "p50_s_raw": 0.018816601019352674,
+    "p95_s_adjusted": 0.21476382557302715,
+    "p95_s_raw": 0.03238191278651357
+   },
+   "status": {
+    "answered_ok": 1477,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      83.72064867466165,
+      89.87350762628282
+     ],
+     "I": [
+      40.901380519870216,
+      50.857477339078685
+     ],
+     "capability": [
+      63.30053560255882,
+      69.52826193842563
+     ],
+     "composite": {
+      "A": [
+       42.9497160761469,
+       69.48587839043402
+      ],
+      "B": [
+       38.5760104632031,
+       64.75398332983423
+      ],
+      "C": [
+       29.82619171954645,
+       49.93482296835595
+      ]
+     },
+     "seed": 25
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "g_med_used": 3.7792143102695803,
+    "lane": "selfhosted",
+    "metric_basis": "S u P",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 89.88230801873149,
+     "capability": 67.93359101872429,
+     "intelligence": 45.984874018717065
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.688,
+      "calibration": 89.08245332466275,
+      "cc": 60.099656129515054,
+      "cc_by_type": {
+       "choice": 60.099656129515054
+      },
+      "cc_tiered": 59.70206119042432,
+      "cc_tiered_open": 60.58350447013268,
+      "cc_tiered_sealed": 58.82061791071595,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 60.099656129515054
+     },
+     "noul": {
+      "accuracy": 0.6213333333333333,
+      "calibration": 89.24268928395378,
+      "cc": 24.26666666666666,
+      "cc_by_type": {
+       "noul": 24.26666666666666
+      },
+      "cc_tiered": 21.681048401895232,
+      "cc_tiered_open": 20.41614906832298,
+      "cc_tiered_sealed": 22.94594773546748,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 24.26666666666666
+     },
+     "score": {
+      "accuracy": 0.552,
+      "calibration": 91.32178144757796,
+      "cc": 56.998498262546526,
+      "cc_by_type": {
+       "score": 56.998498262546526
+      },
+      "cc_tiered": 56.57151246383165,
+      "cc_tiered_open": 56.946539845368065,
+      "cc_tiered_sealed": 56.19648508229524,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 56.998498262546526
+     }
+    },
+    "raw_on_A": {
+     "calibration": 87.1680130057895,
+     "capability": 68.45647820305064,
+     "intelligence": 49.744943400311755
+    },
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.01733333333333331,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.010666666666666713,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.016000000000000014,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 52.59670662618102,
+    "Emphasis on Accuracy 60:20:20": 46.1012391496008,
+    "Emphasis on Cost 20:20:60": 52.895608781515875,
+    "Emphasis on Speed 20:60:20": 60.8226635512521,
+    "Intelligence only": 38.89600473644317
+   },
+   "class": "unclassified",
+   "open": "unknown",
+   "licence": "not recorded",
+   "repo": null,
+   "gpu": "H100",
+   "endpoint_condition": "evaluator-owned Lium GPU pod (H100), offline read-only container",
+   "underlying": null,
+   "adapter_id": "images/jevk5-v0.3-4b/spec.json:jevk5_v15.JevK5Warm",
+   "api_exposure_note": null,
+   "model_pin": null,
+   "last_measured_on": null,
+   "measured_in": "v1.6.0",
+   "not_ranked_because": null,
+   "provenance": {
+    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "carried_metadata_from": "v1.5.5"
+   }
+  },
+  {
+   "addendum": null,
+   "api_flag": false,
+   "api_subset": false,
+   "author": "unknown",
+   "axes": {
+    "calibration": 89.1627567462182,
+    "cost": 63.26458220826236,
+    "intelligence": 40.46590346487343,
+    "speed": 90.51878000442085
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.04836725385924713,
+      "ece_score": 90.32654922815058,
+      "mean_tvd": null,
+      "n": 737,
+      "n_ece_hard": 307,
+      "n_tvd": 0,
+      "score": 90.32654922815058
+     },
+     "noul": {
+      "abstention_rate": 0.477088948787062,
+      "brier": 0.12273935128941174,
+      "ece": 0.06563823281458846,
+      "n": 371,
+      "score": 86.87235343708231
+     },
+     "score": {
+      "interval90_coverage": 0.967479674796748,
+      "interval90_width": 0.43699186991869926,
+      "n": 369,
+      "nrps": 0.08429976663999325,
+      "score": 90.28936757342169,
+      "top_ece": 0.054956440945786535
+     }
+    },
+    "score": 89.1627567462182
+   },
+   "capability": 64.8143301055458,
+   "composite_ci95": {
+    "A": [
+     30.89579746297672,
+     53.66716456370088
+    ],
+    "B": [
+     27.157954815868663,
+     49.00421665624004
+    ],
+    "C": [
+     21.45541490484494,
+     37.268864280347834
+    ]
+   },
+   "cost": {
+    "basis": "v1.5.4 published cost per 1,000 decisions carried (pricing rules unchanged; v1.6 item lengths differ): ESTIMATE (I-2): measured input tokens; zero generated output tokens for signed logits readout. M2 floor uses the 25 Sep 2026 DeepInfra Qwen3.5-4B snapshot rates (USD 0.03/M input, USD 0.15/M output); the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen3.5-9B.",
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.016769261083743846
+   },
+   "display": "Imajev-4B (RTX 5090)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 42.277264514558865,
+    "I_sealed": 38.65454241518799,
+    "base": 40.46590346487343,
+    "excess": -0.1564922108987048,
+    "gap": 3.6227220993708755,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 66.47085555091229,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 80.54054054054055,
+       "hard": 58.47750865051904,
+       "judge": 80.22412656558997,
+       "standard": 54.79280033486815
+      }
+     },
+     "open|noul": {
+      "cc": 0.6756383712905452,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 57.14285714285714,
+       "hard": 4.347826086956519,
+       "judge": -30.000000000000004,
+       "standard": 11.111111111111116
+      }
+     },
+     "open|score": {
+      "cc": 59.68529962147376,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 63.170259206782035,
+       "hard": 56.492084741426815,
+       "judge": 56.57491365852122,
+       "standard": 68.99482853334233
+      }
+     },
+     "sealed|choice": {
+      "cc": 62.38689563101728,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 70.73387037173899,
+       "hard": 53.676470588235276,
+       "judge": 64.61824953445065,
+       "standard": 72.28722749107035
+      }
+     },
+     "sealed|noul": {
+      "cc": -6.63038424723096,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 39.99999999999999,
+       "hard": -30.097087378640776,
+       "judge": 0.0,
+       "standard": 7.042253521126751
+      }
+     },
+     "sealed|score": {
+      "cc": 60.20711586177765,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 73.85675135247207,
+       "hard": 54.444825278398866,
+       "judge": 64.42820596829183,
+       "standard": 58.5752441234167
+      }
+     }
+    }
+   },
+   "jevbench_score": 41.73165314406023,
+   "key": "imajev-4b-rtx5090-a2",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 8,
+   "ranked": true,
+   "ranks": {
+    "A": 8,
+    "B": 8,
+    "C": 8,
+    "capability": 8
+   },
+   "scores": {
+    "A": 41.73165314406023,
+    "B": 37.430965257172836,
+    "C": 28.980314683375163
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.29240404299926015,
+    "p50_s_raw": 0.07120202149963006,
+    "p95_s_adjusted": 0.3034859753679484,
+    "p95_s_raw": 0.07674298768397421
+   },
+   "status": {
+    "answered_ok": 1477,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      83.80962418035293,
+      89.41909730342248
+     ],
+     "I": [
+      35.766354371581,
+      45.0399367760099
+     ],
+     "capability": [
+      60.798879090589566,
+      66.21497760330557
+     ],
+     "composite": {
+      "A": [
+       30.89579746297672,
+       53.66716456370088
+      ],
+      "B": [
+       27.157954815868663,
+       49.00421665624004
+      ],
+      "C": [
+       21.45541490484494,
+       37.268864280347834
+      ]
+     },
+     "seed": 22
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "g_med_used": 3.7792143102695803,
+    "lane": "selfhosted",
+    "metric_basis": "S u P",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 89.1627567462182,
+     "capability": 64.8143301055458,
+     "intelligence": 40.46590346487343
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.7146666666666667,
+      "calibration": 90.32654922815058,
+      "cc": 63.50994193041121,
+      "cc_by_type": {
+       "choice": 63.50994193041121
+      },
+      "cc_tiered": 64.4288755909648,
+      "cc_tiered_open": 66.47085555091229,
+      "cc_tiered_sealed": 62.38689563101728,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 63.50994193041121
+     },
+     "noul": {
+      "accuracy": 0.49866666666666665,
+      "calibration": 86.87235343708231,
+      "cc": -0.2666666666666706,
+      "cc_by_type": {
+       "noul": -0.2666666666666706
+      },
+      "cc_tiered": -2.9773729379702076,
+      "cc_tiered_open": 0.6756383712905452,
+      "cc_tiered_sealed": -6.63038424723096,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 0.0
+     },
+     "score": {
+      "accuracy": 0.56,
+      "calibration": 90.28936757342169,
+      "cc": 60.05171471678137,
+      "cc_by_type": {
+       "score": 60.05171471678137
+      },
+      "cc_tiered": 59.946207741625706,
+      "cc_tiered_open": 59.68529962147376,
+      "cc_tiered_sealed": 60.20711586177765,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 60.05171471678137
+     }
+    },
+    "raw_on_A": {
+     "calibration": 87.91523763851959,
+     "capability": 64.77736222283457,
+     "intelligence": 41.63948680714956
+    },
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.01733333333333331,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.010666666666666713,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.016000000000000014,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 38.10608877631654,
+    "Emphasis on Accuracy 60:20:20": 32.428564882716685,
+    "Emphasis on Cost 20:20:60": 39.37242969022135,
+    "Emphasis on Speed 20:60:20": 44.460090418088186,
+    "Intelligence only": 26.504994275136664
+   },
+   "class": "unclassified",
+   "open": "unknown",
+   "licence": "not recorded",
+   "repo": null,
+   "gpu": "RTX 5090",
+   "endpoint_condition": "evaluator-owned Lium GPU pod (RTX 5090), offline read-only container",
+   "underlying": null,
+   "adapter_id": "A2 reviewed bundle",
+   "api_exposure_note": null,
+   "model_pin": null,
+   "last_measured_on": null,
+   "measured_in": "v1.6.0",
+   "not_ranked_because": null,
+   "provenance": {
+    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "carried_metadata_from": "v1.5.5"
+   }
+  },
+  {
+   "addendum": null,
+   "api_flag": false,
+   "api_subset": false,
+   "author": "unknown",
+   "axes": {
+    "calibration": 88.42488519968094,
+    "cost": 63.07359395281681,
+    "intelligence": 40.366827812373224,
+    "speed": 93.92936299294371
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.0672265434886423,
+      "ece_score": 86.55469130227154,
+      "mean_tvd": null,
+      "n": 737,
+      "n_ece_hard": 307,
+      "n_tvd": 0,
+      "score": 86.55469130227154
+     },
+     "noul": {
+      "abstention_rate": 0.41239892183288407,
+      "brier": 0.12038668872149434,
+      "ece": 0.03739565815349834,
+      "n": 371,
+      "score": 92.52086836930033
+     },
+     "score": {
+      "interval90_coverage": 0.975609756097561,
+      "interval90_width": 0.5718157181571816,
+      "n": 369,
+      "nrps": 0.10515132123479526,
+      "score": 86.19909592747098,
+      "top_ece": 0.08543338010789257
+     }
+    },
+    "score": 88.42488519968094
+   },
+   "capability": 64.39585650602709,
+   "composite_ci95": {
+    "A": [
+     30.603411753333635,
+     54.26735256312873
+    ],
+    "B": [
+     26.87407758414336,
+     49.718141485642526
+    ],
+    "C": [
+     21.25236927314835,
+     37.68566150217272
+    ]
+   },
+   "cost": {
+    "basis": "v1.5.4 published cost per 1,000 decisions carried (pricing rules unchanged; v1.6 item lengths differ): documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)",
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.01701689039408867
+   },
+   "display": "Decision 4B v1.2 (FlyMyJev, Qwen3.5-4B + LoRA)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 40.99826149180754,
+    "I_sealed": 39.73539413293891,
+    "base": 40.366827812373224,
+    "excess": -2.5163469514009478,
+    "gap": 1.2628673588686326,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 61.39828743553336,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 80.54054054054055,
+       "hard": 50.92796476879523,
+       "judge": 68.35860250494396,
+       "standard": 62.32733361239012
+      }
+     },
+     "open|noul": {
+      "cc": 6.031055900621121,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 28.57142857142858,
+       "hard": 30.434782608695656,
+       "judge": -30.000000000000004,
+       "standard": 0.0
+      }
+     },
+     "open|score": {
+      "cc": 55.56544113926813,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 61.09091346053748,
+       "hard": 52.4601714059325,
+       "judge": 51.04842181867173,
+       "standard": 65.78877342619936
+      }
+     },
+     "sealed|choice": {
+      "cc": 58.83327326304771,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 68.07331313280615,
+       "hard": 56.730769230769226,
+       "judge": 56.238361266294234,
+       "standard": 62.31062938785566
+      }
+     },
+     "sealed|noul": {
+      "cc": 8.040955184350867,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 28.000000000000004,
+       "hard": -8.737864077669899,
+       "judge": 13.157894736842103,
+       "standard": 23.943661971830977
+      }
+     },
+     "sealed|score": {
+      "cc": 52.33195395141817,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 70.88502778540142,
+       "hard": 46.63075814729712,
+       "judge": 51.45932315479642,
+       "standard": 55.766754837601276
+      }
+     }
+    }
+   },
+   "jevbench_score": 41.65962207319855,
+   "key": "decision-4b-v12",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 9,
+   "ranked": true,
+   "ranks": {
+    "A": 9,
+    "B": 9,
+    "C": 9,
+    "capability": 9
+   },
+   "scores": {
+    "A": 41.65962207319855,
+    "B": 37.30690224297939,
+    "C": 28.93029310638787
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.18829862689599394,
+    "p50_s_raw": 0.019149313447996974,
+    "p95_s_adjusted": 0.2148901690961793,
+    "p95_s_raw": 0.032445084548089656
+   },
+   "status": {
+    "answered_ok": 1477,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      82.06406916545386,
+      88.52198480659733
+     ],
+     "I": [
+      35.61367848467475,
+      45.3074033357949
+     ],
+     "capability": [
+      59.79551341243609,
+      65.83747248895851
+     ],
+     "composite": {
+      "A": [
+       30.603411753333635,
+       54.26735256312873
+      ],
+      "B": [
+       26.87407758414336,
+       49.718141485642526
+      ],
+      "C": [
+       21.25236927314835,
+       37.68566150217272
+      ]
+     },
+     "seed": 19
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "g_med_used": 3.7792143102695803,
+    "lane": "selfhosted",
+    "metric_basis": "S u P",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 88.42488519968094,
+     "capability": 64.39585650602709,
+     "intelligence": 40.366827812373224
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.688,
+      "calibration": 86.55469130227154,
+      "cc": 60.099656129515054,
+      "cc_by_type": {
+       "choice": 60.099656129515054
+      },
+      "cc_tiered": 60.11578034929053,
+      "cc_tiered_open": 61.39828743553336,
+      "cc_tiered_sealed": 58.83327326304771,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 60.099656129515054
+     },
+     "noul": {
+      "accuracy": 0.5493333333333333,
+      "calibration": 92.52086836930033,
+      "cc": 9.866666666666667,
+      "cc_by_type": {
+       "noul": 9.866666666666667
+      },
+      "cc_tiered": 7.036005542485994,
+      "cc_tiered_open": 6.031055900621121,
+      "cc_tiered_sealed": 8.040955184350867,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 9.866666666666667
+     },
+     "score": {
+      "accuracy": 0.5173333333333333,
+      "calibration": 86.19909592747098,
+      "cc": 53.76804426530979,
+      "cc_by_type": {
+       "score": 53.76804426530979
+      },
+      "cc_tiered": 53.94869754534315,
+      "cc_tiered_open": 55.56544113926813,
+      "cc_tiered_sealed": 52.33195395141817,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 53.76804426530979
+     }
+    },
+    "raw_on_A": {
+     "calibration": 81.8292718059759,
+     "capability": 62.34880864852818,
+     "intelligence": 42.868345491080454
+    },
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.01733333333333331,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.010666666666666713,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.016000000000000014,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 38.13612821252713,
+    "Emphasis on Accuracy 60:20:20": 32.324797568081884,
+    "Emphasis on Cost 20:20:60": 39.272830335687914,
+    "Emphasis on Speed 20:60:20": 44.91018296211673,
+    "Intelligence only": 26.31078815119338
+   },
+   "class": "unclassified",
+   "open": "unknown",
+   "licence": "not recorded",
+   "repo": null,
+   "gpu": "H100",
+   "endpoint_condition": "evaluator-owned Lium GPU pod (H100), offline read-only container",
+   "underlying": null,
+   "adapter_id": "images/decision-4b-v12/spec.json:jevbench.adapters.typesafe.TypeSafeAdapter",
+   "api_exposure_note": null,
+   "model_pin": null,
+   "last_measured_on": null,
+   "measured_in": "v1.6.0",
+   "not_ranked_because": null,
+   "provenance": {
+    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "carried_metadata_from": "v1.5.5"
+   }
+  },
+  {
+   "addendum": null,
+   "api_flag": false,
+   "api_subset": false,
+   "author": "unknown",
+   "axes": {
+    "calibration": 85.23934158755043,
+    "cost": 63.07359395281681,
+    "intelligence": 37.44692985746022,
+    "speed": 93.95641941218838
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.10557670546665254,
+      "ece_score": 78.88465890666949,
+      "mean_tvd": null,
+      "n": 737,
+      "n_ece_hard": 307,
+      "n_tvd": 0,
+      "score": 78.88465890666949
+     },
+     "noul": {
+      "abstention_rate": 0.4339622641509434,
+      "brier": 0.11841873108613687,
+      "ece": 0.04782018815907789,
+      "n": 371,
+      "score": 90.43596236818442
+     },
+     "score": {
+      "interval90_coverage": 0.9701897018970189,
+      "interval90_width": 0.5756549232158987,
+      "n": 369,
+      "nrps": 0.11671345785768895,
+      "score": 86.39740348779742,
+      "top_ece": 0.07766923619318136
+     }
+    },
+    "score": 85.23934158755043
+   },
+   "capability": 61.34313572250532,
+   "composite_ci95": {
+    "A": [
+     24.7002534516557,
+     45.18588945486384
+    ],
+    "B": [
+     21.44589758236207,
+     40.805740419840824
+    ],
+    "C": [
+     17.152953785872015,
+     31.379089899210996
+    ]
+   },
+   "cost": {
+    "basis": "v1.5.4 published cost per 1,000 decisions carried (pricing rules unchanged; v1.6 item lengths differ): documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3)",
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.01701689039408867
+   },
+   "display": "Decision 4B v1.1 (FlyMyJev, Qwen3.5-4B + LoRA)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 38.708157044804366,
+    "I_sealed": 36.185702670116065,
+    "base": 37.44692985746022,
+    "excess": -1.2567599355812789,
+    "gap": 2.5224543746883015,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 60.19131316010312,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 72.75675675675674,
+       "hard": 56.59012268008808,
+       "judge": 64.40342781806196,
+       "standard": 54.79280033486815
+      }
+     },
+     "open|noul": {
+      "cc": 1.1380262249827418,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 71.42857142857142,
+       "hard": 13.043478260869556,
+       "judge": -30.000000000000004,
+       "standard": -11.111111111111116
+      }
+     },
+     "open|score": {
+      "cc": 54.79513174932724,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 65.07761327406618,
+       "hard": 47.194033036083404,
+       "judge": 54.20300219838562,
+       "standard": 65.74428273985782
+      }
+     },
+     "sealed|choice": {
+      "cc": 57.815173715536396,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 68.07331313280615,
+       "hard": 54.185520361990946,
+       "judge": 56.238361266294234,
+       "standard": 62.31062938785566
+      }
+     },
+     "sealed|noul": {
+      "cc": 2.4545445385650666,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 28.000000000000004,
+       "hard": -16.504854368932044,
+       "judge": 10.526315789473696,
+       "standard": 15.492957746478876
+      }
+     },
+     "sealed|score": {
+      "cc": 48.28738975624674,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 68.35436254723581,
+       "hard": 44.59302505390056,
+       "judge": 43.79228199155287,
+       "standard": 52.385294412485365
+      }
+     }
+    }
+   },
+   "jevbench_score": 34.55263768058792,
+   "key": "decision-4b-v11",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 10,
+   "ranked": true,
+   "ranks": {
+    "A": 10,
+    "B": 10,
+    "C": 10,
+    "capability": 10
+   },
+   "scores": {
+    "A": 34.55263768058792,
+    "B": 30.604502435568143,
+    "C": 23.994887278186045
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.188053295109421,
+    "p50_s_raw": 0.019026647554710507,
+    "p95_s_adjusted": 0.21383417290635406,
+    "p95_s_raw": 0.031917086453177035
+   },
+   "status": {
+    "answered_ok": 1477,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      79.82101630896668,
+      86.16301423292039
+     ],
+     "I": [
+      32.745145982218624,
+      41.95025544657314
+     ],
+     "capability": [
+      57.0629322530882,
+      63.042662220394035
+     ],
+     "composite": {
+      "A": [
+       24.7002534516557,
+       45.18588945486384
+      ],
+      "B": [
+       21.44589758236207,
+       40.805740419840824
+      ],
+      "C": [
+       17.152953785872015,
+       31.379089899210996
+      ]
+     },
+     "seed": 18
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "g_med_used": 3.7792143102695803,
+    "lane": "selfhosted",
+    "metric_basis": "S u P",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 85.23934158755043,
+     "capability": 61.34313572250532,
+     "intelligence": 37.44692985746022
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.68,
+      "calibration": 78.88465890666949,
+      "cc": 59.07657038924623,
+      "cc_by_type": {
+       "choice": 59.07657038924623
+      },
+      "cc_tiered": 59.00324343781976,
+      "cc_tiered_open": 60.19131316010312,
+      "cc_tiered_sealed": 57.815173715536396,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 59.07657038924623
+     },
+     "noul": {
+      "accuracy": 0.528,
+      "calibration": 90.43596236818442,
+      "cc": 5.600000000000005,
+      "cc_by_type": {
+       "noul": 5.600000000000005
+      },
+      "cc_tiered": 1.7962853817739042,
+      "cc_tiered_open": 1.1380262249827418,
+      "cc_tiered_sealed": 2.4545445385650666,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 5.600000000000005
+     },
+     "score": {
+      "accuracy": 0.47733333333333333,
+      "calibration": 86.39740348779742,
+      "cc": 50.814780092413784,
+      "cc_by_type": {
+       "score": 50.814780092413784
+      },
+      "cc_tiered": 51.54126075278699,
+      "cc_tiered_open": 54.79513174932724,
+      "cc_tiered_sealed": 48.28738975624674,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 50.814780092413784
+     }
+    },
+    "raw_on_A": {
+     "calibration": 85.6538943241602,
+     "capability": 64.45589830905388,
+     "intelligence": 43.25790229394756
+    },
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.01733333333333331,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.010666666666666713,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.016000000000000014,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 31.628908053256435,
+    "Emphasis on Accuracy 60:20:20": 26.306313281320254,
+    "Emphasis on Cost 20:20:60": 33.02916299324326,
+    "Emphasis on Speed 20:60:20": 37.6506362536011,
+    "Intelligence only": 21.004320814477886
+   },
+   "class": "unclassified",
+   "open": "unknown",
+   "licence": "not recorded",
+   "repo": null,
+   "gpu": "H100",
+   "endpoint_condition": "evaluator-owned Lium GPU pod (H100), offline read-only container",
+   "underlying": null,
+   "adapter_id": "images/decision-4b-v11/spec.json:jevbench.adapters.typesafe.TypeSafeAdapter",
+   "api_exposure_note": null,
+   "model_pin": null,
+   "last_measured_on": null,
+   "measured_in": "v1.6.0",
+   "not_ranked_because": null,
+   "provenance": {
+    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "carried_metadata_from": "v1.5.5"
+   }
+  },
+  {
+   "addendum": null,
+   "api_flag": true,
+   "api_subset": true,
+   "author": "Fastino",
+   "axes": {
+    "calibration": 68.80407943329136,
+    "cost": 46.59842351525712,
+    "intelligence": 9.849852577804803,
+    "speed": 84.7052606179839
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "basis": "provider_confidence_only",
+      "ece_score": 37.74599383685215,
+      "n": 121,
+      "n_ece": 121,
+      "score": 37.74599383685215,
+      "top_label_ece": 0.31127003081573923
+     },
+     "noul": {
+      "basis": "provider_confidence_only",
+      "ece_score": 73.62788227580538,
+      "n": 149,
+      "n_ece": 149,
+      "score": 73.62788227580538,
+      "top_label_ece": 0.1318605886209731
+     },
+     "score": {
+      "basis": "provider_confidence_only",
+      "ece_score": 88.11046315790855,
+      "n": 146,
+      "n_ece": 146,
+      "score": 88.11046315790855,
+      "top_label_ece": 0.05944768421045723
+     }
+    },
+    "score": 66.49477975685535
+   },
+   "capability": 39.32696600554809,
+   "composite_ci95": {
+    "A": [
+     0.004373608539533909,
+     4.333426311566177
+    ],
+    "B": [
+     0.0028299130999478003,
+     3.5329064142173
+    ],
+    "C": [
+     0.003037228152454104,
+     3.009323827476512
+    ]
+   },
+   "cost": {
+    "basis": "ESTIMATE: published Fastino sources conflict (USD 0.03/M vs 0.15/M input); conservative higher USD 0.15/M input, 0/M output x measured tokens; no invoice",
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.06026325
+   },
+   "display": "Fastino GLiNER-2.5-Decide (hosted API)",
+   "endpoint_kind": "api",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 7.444047465042489,
+    "I_sealed": 17.351664410479103,
+    "base": 12.397855937760795,
+    "excess": -9.141126710614751,
+    "gap": -9.907616945436613,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 18.73361063349411,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 18.270270270270274,
+       "hard": 15.06763133060712,
+       "judge": 24.851680949241928,
+       "standard": 17.120133947258267
+      }
+     },
+     "open|noul": {
+      "cc": -6.330572808833674,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": -28.57142857142857,
+       "hard": -21.739130434782606,
+       "judge": 10.000000000000009,
+       "standard": 11.111111111111116
+      }
+     },
+     "open|score": {
+      "cc": 9.929104570467032,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": -5.633802816901423,
+       "hard": 0.1436781609195137,
+       "judge": 23.162583518930923,
+       "standard": 17.431192660550465
+      }
+     },
+     "sealed|choice": {
+      "cc": 24.622840131922217,
+      "n": {
+       "easy": 21,
+       "hard": 62,
+       "judge": 42,
+       "standard": 25
+      },
+      "tiers": {
+       "easy": 15.859766277128548,
+       "hard": 21.514629948364895,
+       "judge": 31.09187749667111,
+       "standard": 25.51724137931035
+      }
+     },
+     "sealed|noul": {
+      "cc": 8.542986425339368,
+      "n": {
+       "easy": 13,
+       "hard": 25,
+       "judge": 20,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 23.076923076923084,
+       "hard": -19.999999999999996,
+       "judge": 19.999999999999996,
+       "standard": 41.176470588235304
+      }
+     },
+     "sealed|score": {
+      "cc": 18.889166674175726,
+      "n": {
+       "easy": 13,
+       "hard": 33,
+       "judge": 10,
+       "standard": 19
+      },
+      "tiers": {
+       "easy": -6.451612903225823,
+       "hard": 12.742382271468134,
+       "judge": 26.877470355731237,
+       "standard": 31.870669745958423
+      }
+     }
+    }
+   },
+   "jevbench_score": 0.9029263501750215,
+   "key": "fastino-gliner-2-5-decide",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 11,
+   "ranked": true,
+   "ranks": {
+    "A": 11,
+    "B": 11,
+    "C": 11,
+    "capability": 11
+   },
+   "scores": {
+    "A": 0.9029263501750215,
+    "B": 0.671862902377872,
+    "C": 0.6270321876215427
+   },
+   "speed": {
+    "adjustment": "none (API)",
+    "n": 124,
+    "p50_s_adjusted": 0.4409300498664379,
+    "p50_s_raw": 0.4409300498664379,
+    "p95_s_adjusted": 0.7675456959754229,
+    "p95_s_raw": 0.7675456959754229
+   },
+   "status": {
+    "answered_ok": 584,
+    "missing": 0,
+    "rows": 600,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "confidence",
+    "noul": "confidence",
+    "score": "confidence"
+   },
+   "v16": {
+    "api_subset": true,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      58.20726765131016,
+      75.6317431119072
+     ],
+     "I": [
+      1.5002875336782695,
+      17.979920847082138
+     ],
+     "capability": [
+      30.764442548305922,
+      45.38603644005107
+     ],
+     "composite": {
+      "A": [
+       0.004373608539533909,
+       4.333426311566177
+      ],
+      "B": [
+       0.0028299130999478003,
+       3.5329064142173
+      ],
+      "C": [
+       0.003037228152454104,
+       3.009323827476512
+      ]
+     },
+     "seed": 21
+    },
+    "ci95_basis": "bootstrap over the API system's items (n = A sealed items) AND over the equating offset (pool systems resampled with replacement, items resampled; B_offset = 200)",
+    "ci95_n": 300,
+    "complete": true,
+    "equated": {
+     "calibration": 68.80407943329136,
+     "capability": 39.32696600554809,
+     "intelligence": 9.849852577804803
+    },
+    "equating_flag": null,
+    "equating_offset": {
+     "C": 2.3092996764360123,
+     "I": -2.5480033599559917
+    },
+    "g_med_used": -0.7664902348218625,
+    "lane": "api",
+    "metric_basis": "A u P (sealed side = A, n=300)",
+    "n_items": 600,
+    "n_public": 300,
+    "n_sealed_side": 300,
+    "offset_ci95": {
+     "C": [
+      1.0660173959005041,
+      7.664080862725964
+     ],
+     "I": [
+      -6.572510602312845,
+      1.3851470446807652
+     ]
+    },
+    "on_S": null,
+    "per_type": {
+     "choice": {
+      "accuracy": 0.38,
+      "calibration": 37.74599383685215,
+      "cc": 21.121451289904538,
+      "cc_by_type": {
+       "choice": 21.121451289904538
+      },
+      "cc_tiered": 21.678225382708163,
+      "cc_tiered_open": 18.73361063349411,
+      "cc_tiered_sealed": 24.622840131922217,
+      "low_n": false,
+      "n": 300,
+      "n_by_type": {
+       "choice": 300
+      },
+      "score": 21.121451289904538
+     },
+     "noul": {
+      "accuracy": 0.5133333333333333,
+      "calibration": 73.62788227580538,
+      "cc": 2.6666666666666616,
+      "cc_by_type": {
+       "noul": 2.6666666666666616
+      },
+      "cc_tiered": 1.1062068082528471,
+      "cc_tiered_open": -6.330572808833674,
+      "cc_tiered_sealed": 8.542986425339368,
+      "low_n": false,
+      "n": 150,
+      "n_by_type": {
+       "noul": 150
+      },
+      "score": 2.6666666666666616
+     },
+     "score": {
+      "accuracy": 0.2866666666666667,
+      "calibration": 88.11046315790855,
+      "cc": 12.577137819571027,
+      "cc_by_type": {
+       "score": 12.577137819571027
+      },
+      "cc_tiered": 14.40913562232138,
+      "cc_tiered_open": 9.929104570467032,
+      "cc_tiered_sealed": 18.889166674175726,
+      "low_n": false,
+      "n": 150,
+      "n_by_type": {
+       "score": 150
+      },
+      "score": 12.577137819571027
+     }
+    },
+    "raw_on_A": {
+     "calibration": 66.49477975685535,
+     "capability": 39.44631784730807,
+     "intelligence": 12.397855937760795
+    },
+    "set": "A+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.036666666666666625,
+     "n": 300
+    },
+    "noul": {
+     "invalid_rate": 0.00666666666666671,
+     "n": 150
+    },
+    "score": {
+     "invalid_rate": 0.026666666666666616,
+     "n": 150
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 0.7502147687078368,
+    "Emphasis on Accuracy 60:20:20": 0.4988644106642432,
+    "Emphasis on Cost 20:20:60": 0.9483755743506542,
+    "Emphasis on Speed 20:60:20": 1.0639796296183524,
+    "Intelligence only": 0.3320103500081353
+   },
+   "class": "decision-api",
+   "open": "no",
+   "licence": "proprietary hosted API",
+   "repo": null,
+   "endpoint_condition": "external hosted API (Fastino); received the 300-item API subset and the 300 public items",
+   "api_exposure_note": "API measurement: the operator's endpoint received sealed item text, without answers.",
+   "model_pin": null,
+   "last_measured_on": null,
+   "measured_in": "v1.6.0",
+   "not_ranked_because": null,
+   "provenance": {
+    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "carried_metadata_from": null
+   }
+  }
+ ],
+ "not_measured": [
+  {
+   "key": "autojev-27b",
+   "display": "AutoJev-27B (denis-pplx, Qwen3.8-27B)",
+   "author": "unknown",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "autojev-27b-rtxpro6000-a2",
+   "display": "AutoJev-27B (RTX PRO 6000)",
+   "author": "unknown",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "bev-bonsai-27b",
+   "display": "Bev / Bonsai 27B",
+   "author": "Reza Sayar",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "bge-reranker-v2-m3",
+   "display": "BAAI bge-reranker-v2-m3",
+   "author": "BAAI",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "bosun-v31-0.6b",
+   "display": "Bosun v3.1 0.6B",
+   "author": "Clause Logic",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "certo",
+   "display": "Certo v1 (AltSlate Labs)",
+   "author": "AltSlate Labs",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "classifier-dev-fast",
+   "display": "classifier.dev (fast tier)",
+   "author": "mrmps (@michael_chomsky)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "clm-8b",
+   "display": "CLM-8B (Contrastive-LM, clm-latest)",
+   "author": "Contrastive-LM (Kwok, Kang, Suresh, Saad-Falcon, Pavone, Ré, Mirhoseini)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "decider-2b",
+   "display": "decider-2b (Mapika)",
+   "author": "Mapika",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "decider-35b-a3b",
+   "display": "decider-35b-a3b (Mapika)",
+   "author": "Mapika",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "decision-2b",
+   "display": "Decision 2B (FlyMy.AI, v59)",
+   "author": "FlyMy.AI (@denti)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "decision-fast",
+   "display": "Decision Fast (FlyMy.AI, v53a)",
+   "author": "FlyMy.AI (@denti)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "decision-machine-1",
+   "display": "decision-machine-1 (milliseconds.ai)",
+   "author": "milliseconds.ai (Baptiste Laget)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "deem-0.8-v1",
+   "display": "Deem 0.8B v1",
+   "author": "LibertAI",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "deepseek-flash",
+   "display": "DeepSeek V4.1 Flash (thinking default)",
+   "author": "DeepSeek",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "eikos-27b",
+   "display": "Eikos-27B (caiovicentino1, Qwen3.8-27B)",
+   "author": "unknown",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "evalengine-decision-4b",
+   "display": "Decision-4B (Eval Engine / Chromia)",
+   "author": "Eval Engine / Chromia",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "gemini-3.1-flash-lite",
+   "display": "Gemini 3.1 Flash-Lite",
+   "author": "Google",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "gliner2",
+   "display": "GLiNER2 (Fastino, gliner2.5-base)",
+   "author": "Fastino",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "gliner2-large",
+   "display": "GLiNER2 large (Fastino)",
+   "author": "Fastino",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "gliner2.5-multi",
+   "display": "GLiNER2.5 multi (Fastino, 287M)",
+   "author": "Fastino",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "gliner2.5-small",
+   "display": "GLiNER2.5 small (Fastino, 74M)",
+   "author": "Fastino",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "gpt-5.6-luna",
+   "display": "GPT-5.6 Luna (low reasoning effort)",
+   "author": "OpenAI",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "gpt-6-luna",
+   "display": "GPT-6 Luna (default medium reasoning effort)",
+   "author": "OpenAI",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "gpt-6-luna-low",
+   "display": "GPT-6 Luna (low reasoning effort)",
+   "author": "OpenAI",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "gte-reranker-modernbert-base",
+   "display": "Alibaba GTE Reranker ModernBERT-base",
+   "author": "Alibaba-NLP",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "hopper",
+   "display": "Hopper",
+   "author": "HopitAI",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "instinct",
+   "display": "Instinct (ZooWork, Qwen3.8-27B)",
+   "author": "rayrain-srp (ZooWork)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "instinct-dual-4b",
+   "display": "Instinct Dual 4B",
+   "author": "ZooWork / pierre-srp",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "jeff",
+   "display": "jeff (Logan Markewich, GLiFormer 400M)",
+   "author": "Logan Markewich",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "jev-local",
+   "display": "jev-local (Qwen3.5-9B)",
+   "author": "us (GitHub)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "jev-qwen3.5-9b-base-nvfp4",
+   "display": "JEV Qwen3.5-9B Base NVFP4",
+   "author": "WilfLin",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "jevact",
+   "display": "JevAct (einptein, jev1-2b-v2)",
+   "author": "einptein",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "jevk5-v02",
+   "display": "JevK5 v0.2.0",
+   "author": "allebee",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "jevone",
+   "display": "JevOne",
+   "author": "Juspay",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "jqv",
+   "display": "jqv (Qwen3-32B zero-shot)",
+   "author": "hjmurmur (Octalab)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "kev-0.5b",
+   "display": "kev 0.5B",
+   "author": "Jared Palmer",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "kev-0.6b",
+   "display": "kev 0.6B (research preview)",
+   "author": "Jared Palmer",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "kev-4b",
+   "display": "kev 4B (research preview)",
+   "author": "Jared Palmer",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "kev-8b",
+   "display": "kev 8B (research preview)",
+   "author": "Jared Palmer",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "kushal-gemma4-31b-it-autoloops",
+   "display": "Autoloops – Gemma 4 31B IT",
+   "author": "Autoloops",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "laya",
+   "display": "Laya (Convai Innovations, ModernBERT-large 421M)",
+   "author": "Convai Innovations",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "laya-multilingual",
+   "display": "Laya multilingual",
+   "author": "Convai Innovations",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "laya-typed-decisions",
+   "display": "Laya typed-decisions",
+   "author": "Convai Innovations",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "lev-350m",
+   "display": "lev-350m (Franck Verrot, LFM2.5-350M)",
+   "author": "Franck Verrot (franckverrot)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "litjev",
+   "display": "LitJev (Qwen3.8-27B)",
+   "author": "Zhengxu Yu",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "localjev-qwen3.5-4b",
+   "display": "local-jev Qwen3.5-4B",
+   "author": "Amith Chandrappa (amithgc)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "malkuth-2b",
+   "display": "Malkuth-2B (newfull5, Kev post-train)",
+   "author": "newfull5 (dhtocks)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "malkuth-4b",
+   "display": "Malkuth-4B (newfull5, Kev post-train)",
+   "author": "newfull5 (dhtocks)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "manchego-v21-v15",
+   "display": "Manchego v2.1",
+   "author": "oraculumai",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "metask-jev-4b",
+   "display": "metask-jev-4b",
+   "author": "Wayfind (metask-ai)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "mghafiri-qwen3.5-0.8b-decision-model",
+   "display": "Qwen3.5-0.8B Decision Model (Mourad Ghafiri)",
+   "author": "Mourad Ghafiri",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "mirror",
+   "display": "Mirror",
+   "author": "Bluusun",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "mxbai-rerank-base-v2",
+   "display": "Mixedbread mxbai-rerank-base-v2",
+   "author": "Mixedbread",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "needle-3",
+   "display": "Needle 3 (Cactus, 2-bit, local CPU)",
+   "author": "Cactus Compute",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "needle-3-tools",
+   "display": "Needle 3, options as tools (post-hoc adapter mode)",
+   "author": "Cactus Compute",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "nemotron-diffusion-8b",
+   "display": "Nemotron Diffusion 8B (pst2154, optimized vLLM)",
+   "author": "pst2154",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "nimble-9b",
+   "display": "Bespoke Nimble 9B (Bespoke Labs)",
+   "author": "Bespoke Labs",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "ninfer-qwen3.8-27b",
+   "display": "NInfer Qwen3.8-27B NVFP4",
+   "author": "Igor L. / NInfer contributors",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "ninfer-qwen3.8-27b-t1.5",
+   "display": "NInfer Qwen3.8-27B NVFP4 (T=1.5)",
+   "author": "Igor L. / NInfer contributors",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "ninfer-qwen3.8-flash-next",
+   "display": "NInfer Qwen3.8-Flash-Next mixed",
+   "author": "Igor L. / NInfer contributors",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "open-alternative-jev",
+   "display": "open-alternative-jev (Qwen3.5-4B, IkerMoel)",
+   "author": "IkerMoel",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "open-jev-deberta-v3-large",
+   "display": "open-jev-deberta-v3-large (local CPU)",
+   "author": "Kotoba Labs",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "open-jev-json-canvas-joshuasp",
+   "display": "Open Jev JSON Canvas (JoshuaSP)",
+   "author": "JoshuaSP",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "open-jev-zefan-2b",
+   "display": "Open-Jev 2B (Zefan Cai)",
+   "author": "Zefan Cai (@Zefan_Cai)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "open-jev-zefan-9b",
+   "display": "Open-Jev 9B (Zefan Cai)",
+   "author": "Zefan Cai (@Zefan_Cai)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "opendecision",
+   "display": "OpenDecision (ModernBERT-large zero-shot)",
+   "author": "Deepan Wadhwa",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "openjev-sglang",
+   "display": "openjev-sglang (Qwen3.6-35B-A3B on SGLang)",
+   "author": "ekzhang",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "openjev-thinking",
+   "display": "OpenJev (thinking, BF16)",
+   "author": "razorback16",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "openjev-verdict",
+   "display": "openJev Verdict (heman10x, ModernBERT-base 151M)",
+   "author": "Hemant (heman10x)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "openjev-verdict-1.4",
+   "display": "openJev Verdict 1.4",
+   "author": "Hemant (heman10x)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "opensourcejev-qwen35-4b-q4km",
+   "display": "OpenSourceJev (Qwen3.5-4B Q4_K_M, native llama.cpp)",
+   "author": "sabeel111",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "qwen3-reranker-4b",
+   "display": "Qwen3-Reranker-4B",
+   "author": "Qwen",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "qwen3.8-27b",
+   "display": "Qwen3.8 27B (Chutes TEE)",
+   "author": "Qwen / Chutes",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "qwen35-9b-jev-data-mix-v2",
+   "display": "Qwen3.5-9B Jev-like data-mix v2",
+   "author": "jsaurabh",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "raw-phi-4-mini",
+   "display": "Raw Phi-4 mini direct logits",
+   "author": "Microsoft / neutral reproduction",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "raw-qwen3-0.6b",
+   "display": "Raw Qwen3 0.6B direct logits",
+   "author": "Alibaba Qwen / neutral reproduction",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "raw-qwen3-1.7b",
+   "display": "Raw Qwen3 1.7B direct logits",
+   "author": "Alibaba Qwen / neutral reproduction",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "raw-qwen3-4b-instruct-2507",
+   "display": "Raw Qwen3 4B Instruct 2507 direct logits",
+   "author": "Alibaba Qwen / neutral reproduction",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "raw-qwen3-8b",
+   "display": "Raw Qwen3 8B direct logits",
+   "author": "Alibaba Qwen / neutral reproduction",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "reflex-27b",
+   "display": "reflex-27b (Qwen3.8-27B)",
+   "author": "kshetrajna12",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "reflex-4b",
+   "display": "reflex 4B (kshetrajna12)",
+   "author": "kshetrajna12",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "semif-qwen3.5-4b",
+   "display": "SemIf, formerly OpenJev (Qwen3.5-4B, TheoLeeCJ)",
+   "author": "Theodore Lee (TheoLeeCJ)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "simplejev-qwen3.5-0.8b",
+   "display": "SimpleJev (Qwen3.5-0.8B, CPU)",
+   "author": "sabeel111 / Featherless AI",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "simplejev-qwen3.6-35b-a3b",
+   "display": "SimpleJev Qwen3.6-35B-A3B",
+   "author": "Featherless AI",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "simplejev-qwen3.8-27b",
+   "display": "SimpleJev Qwen3.8-27B",
+   "author": "Featherless AI",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "smalljev",
+   "display": "smalljev semantic-v9",
+   "author": "Aditya (isHeSatoshi)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "spark-s1-4b-v6",
+   "display": "spark-s1-4b-v6 (Open Spark Jev, abhishek085)",
+   "author": "Abhishek Rai (abhishek085)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "standardone-8b",
+   "display": "Standard One 8B (Standard Thinking)",
+   "author": "Standard Thinking (myeongho12)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "surogate-rune-26b-a4b-v3-rtxpro6000-a2",
+   "display": "Surogate Rune 26B-A4B v3 (RTX PRO 6000)",
+   "author": "unknown",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "swanone",
+   "display": "swanOne (blockbrain, Qwen3.8-Flash-Next NVFP4)",
+   "author": "blockbrain",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "system-one-open",
+   "display": "system-one-open (Gemma 4 E2B LoRA on an L4)",
+   "author": "mithalouni",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "system-one-sg",
+   "display": "system-one (Qwen3-8B, Sean Goedecke)",
+   "author": "Sean Goedecke",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "typecastlm",
+   "display": "typecastlm (Mikhail Gribov, Qwen3.5-4B computed head)",
+   "author": "Mikhail Gribov",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "verdict-small",
+   "display": "verdict-small (Manavarya09, multilingual-e5-small 118M)",
+   "author": "Manavarya09 (Manav)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "von-395m",
+   "display": "Von (wfzyx, Option-Marker 395M)",
+   "author": "wfzyx (Victor Hugo)",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  },
+  {
+   "key": "zerank-2",
+   "display": "ZeroEntropy zerank-2",
+   "author": "ZeroEntropy",
+   "addendum": null,
+   "status": "not measured",
+   "reason": "Not measured on the v1.6.0 pool in this provisional run."
+  }
+ ],
+ "roster_count": 108
+}
