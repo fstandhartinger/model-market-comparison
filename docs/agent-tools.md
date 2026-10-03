@@ -1,6 +1,6 @@
 # Read-only agent tools — CR-279 design
 
-Status: prepared design, not deployed WebMCP or MCP tools. Agents can use the
+Status: prepared JevBench tool design; these JevBench WebMCP/MCP tools are not deployed. Agents can use the
 current public JSON at `/api/jevbench/latest` now. This PR deploys that feed and
 `llms.txt` guidance; it creates no hosted service or new dependency.
 
@@ -31,7 +31,11 @@ The [primary WebMCP draft](https://webmachinelearning.github.io/webmcp/) is a
 Community Group draft, not a W3C standard. The 2 October 2026 draft exposes
 `document.modelContext`; check the current spec and browser implementation when
 building the follow-up. Feature-detect it and register the three tools only when
-supported. Ordinary page rendering and JSON access continue without browser support.
+supported. Reuse the existing `components/WebMcpTools.tsx` and
+`lib/webmcp-tools.mjs` registration/GET abstraction rather than creating a second
+registration component. The existing general catalog tools use the older
+`navigator.modelContext` feature check; compatibility with the current draft
+must be reviewed in that follow-up. Ordinary page rendering and JSON access continue without browser support.
 Use read-only/untrusted-content annotations from the current specification.
 Register once, unregister on teardown, abort cancelled fetches, bound response sizes
 and timeouts, and expose structured errors rather than partial success.
