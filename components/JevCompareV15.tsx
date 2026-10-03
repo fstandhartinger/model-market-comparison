@@ -6,6 +6,10 @@ import { SystemCombobox } from "./JevCompareV14";
 import { jevSourceUrl } from "./jevSystemLinks";
 import type { CompareCategories, CategoryDim } from "../lib/jevbench-categories.mjs";
 import { useJevV15VisibleKeys } from "./useJevV15VisibleKeys";
+import { JevCategoryProfilesV16 } from "./JevCategoryProfilesV16";
+import { currentCategoryView, type CurrentCategoryArtifact, type CurrentCategoryView } from "../lib/jevbench-categories-v16.mjs";
+import { JevLanguageComparisonV16 } from "./JevLanguageComparisonV16";
+import { languageComparisonView, type LanguageArtifact, type LanguageComparisonView } from "../lib/jevbench-languages-v16.mjs";
 
 // CR-205: the v1.4 board's two-system compare, on v1.5 data. Four radars per pair — the four score axes,
 // chance-corrected competence per request type (open and sealed), and competence per tier on the open and
@@ -87,8 +91,11 @@ function parsePair(search: string, keys: Set<string>): [string, string] | null {
   return a && b && a !== b && keys.has(a) && keys.has(b) ? [a, b] : null;
 }
 
-export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, axesOnly = false, categories = null }: {
+export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, axesOnly = false, categories = null, languageDiagnostics = null, currentCategories = null }: {
   rows: JevCompareV15Row[]; openDecisions: number; sealedDecisions: number; heading?: string; axesOnly?: boolean; categories?: CompareCategories | null;
+  /** Optional reviewed supplement; historic releases omit this field. */
+  languageDiagnostics?: LanguageArtifact | null;
+  currentCategories?: CurrentCategoryArtifact | null;
 }) {
   const visibleKeys = useJevV15VisibleKeys(rows.map((row) => row.key));
   const visibleRows = useMemo(() => rows.filter((row) => visibleKeys.has(row.key)), [rows, visibleKeys]);
@@ -100,6 +107,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
   const [b, setB] = useState(second?.key ?? "");
   const [ready, setReady] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [languageSplit, setLanguageSplit] = useState<"public" | "sealed">("public");
   const copiedTimer = useRef<number | null>(null);
   useEffect(() => {
     const pair = parsePair(window.location.search, new Set(visibleRows.map((r) => r.key)));
@@ -118,6 +126,16 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
   const A = visibleRows.find((r) => r.key === a) ?? first;
   const B = visibleRows.find((r) => r.key === b && r.key !== A.key) ?? visibleRows.find((r) => r.key !== A.key) ?? second;
   const pair = [A, B], s = series(A, B);
+  let categoryView: CurrentCategoryView | null = null;
+  if (currentCategories) {
+    try { categoryView = currentCategoryView(currentCategories, [A.key, B.key]); }
+    catch { /* Invalid current aggregates never fall back to historic category values. */ }
+  }
+  let languageView: LanguageComparisonView | null = null;
+  if (languageDiagnostics) {
+    try { languageView = languageComparisonView(languageDiagnostics, [A.key, B.key], languageSplit); }
+    catch { /* An invalid supplement supplies no language values. */ }
+  }
   const axisSpokes: Spoke[] = AXES.map(([k, label]) => ({
     key: k, lines: [label], thin: [false, false],
     values: pair.map((r) => r.axes?.[k] ?? 0),
@@ -192,6 +210,10 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
           ])}</tbody>
         </table></div>
       </details>
+      {categoryView && <JevCategoryProfilesV16 view={categoryView} names={{ [A.key]: A.name, [B.key]: B.name }} />}
+      {currentCategories && !categoryView && <p className="bh-muted mt-3 text-sm" data-bh-jev16-category-unavailable>Current category diagnostics are unavailable for this pair.</p>}
+      {languageView && <JevLanguageComparisonV16 view={languageView} pair={[A.key, B.key]} onSplitChange={setLanguageSplit} />}
+      {languageDiagnostics && !languageView && <p className="bh-muted mt-3 text-sm" data-bh-jev16-language-unavailable>Language diagnostics are unavailable for this pair.</p>}
     </div>
   </section>;
 }

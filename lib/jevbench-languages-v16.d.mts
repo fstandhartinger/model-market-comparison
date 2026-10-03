@@ -1,0 +1,15 @@
+export type LanguageCell = { status: 'measured' | 'unavailable'; n: number; expected_n: number; non_ok_n: number;
+  cc: number | null; accuracy: number | null; measured_on: string | null; reason: string | null;
+  n_by_type: { choice?: number }; low_n: boolean };
+export type LanguageDescriptor = { key: string; label: string; public_n: number; sealed_n: number; native_review_basis: string };
+export type LanguageSystem = { name: string; deployment: 'owned' | 'api'; model_version: string;
+  public_scope_sha256: string | null; sealed_scope_sha256: string | null; public: Record<string, LanguageCell>; sealed: Record<string, LanguageCell>;
+  carried_base: { revision: string; method_version: string; measured_on: string; basis: string; n: number; source_sha256: string } | null };
+export type LanguageArtifact = { kind: 'language-diagnostics'; schema_version: 1; benchmark: 'jevbench'; revision: 'v1.6.0';
+  supplement_id: 'v1.6.0-uc1.1'; basis: 'uc1.1 Choice only'; fixture: boolean; generated_utc: string; pool_manifest_sha256: string;
+  method: { version: string; source_sha256: string; description: string }; languages: LanguageDescriptor[]; systems: Record<string, LanguageSystem> };
+export type LanguageComparisonView = { revision: string; generated_utc: string; basis: string; split: 'public' | 'sealed'; method: LanguageArtifact['method'];
+  languages: LanguageDescriptor[]; systems: Record<string, LanguageSystem>; comparable: boolean; reason: string | null; minN: number };
+export const LANGUAGE_DIAGNOSTIC_MIN_N: number;
+export function validateLanguageArtifact(a: unknown, options?: { allowFixture?: boolean }): LanguageArtifact;
+export function languageComparisonView(a: unknown, keys: [string, string] | string[], split?: 'public' | 'sealed', options?: { allowFixture?: boolean }): LanguageComparisonView;

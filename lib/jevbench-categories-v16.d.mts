@@ -1,0 +1,13 @@
+export type CategoryDescriptor = { key: string; label: string; covers: string; n: number; public: number; sealed: number; low_n: boolean };
+export type CategoryCell = { n: number; public: number; sealed: number; low_n: boolean; competence: number | null; score: number | null;
+  n_by_type?: Partial<Record<'choice' | 'noul' | 'score', number>>; failed?: number; accuracy?: number; unavailable?: string };
+export type CurrentCategoryMeasurement = { lane: 'api' | 'selfhosted'; cohort: 'A300+P300' | 'S1200+P300'; measured_on: string; equated: false;
+  topics: Record<string, CategoryCell>; usecases: Record<string, CategoryCell>; languages: Record<string, CategoryCell> };
+export type CurrentCategoryArtifact = { kind: 'category-aggregates'; benchmark: 'jevbench'; revision: 'v1.6.0'; min_n: number; metric: string; rules: string[];
+  provenance: Record<'scorer_sha256' | 'cohort_sha256' | 'labels_sha256' | 'label_runtime_sha256', string>;
+  topics: CategoryDescriptor[]; usecases: CategoryDescriptor[]; languages: CategoryDescriptor[];
+  systems: Record<string, CurrentCategoryMeasurement>; plotted_coverage_complete: boolean };
+export type CurrentCategoryView = { revision: 'v1.6.0'; minN: number; metric: string; rules: string[]; provenance: CurrentCategoryArtifact['provenance'];
+  topics: CategoryDescriptor[]; usecases: CategoryDescriptor[]; systems: { key: string; measurement: CurrentCategoryMeasurement | null }[] };
+export function validateCurrentCategoryArtifact(value: unknown): CurrentCategoryArtifact;
+export function currentCategoryView(value: unknown, pair: [string, string]): CurrentCategoryView;
