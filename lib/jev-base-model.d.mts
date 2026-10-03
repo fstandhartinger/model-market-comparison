@@ -1,5 +1,5 @@
 export type BaseModelBenchmark = 'jevbench' | 'imagejevbench';
-export type BaseModelStatus = 'disclosed' | 'undisclosed';
+export type BaseModelStatus = 'disclosed' | 'self-reported' | 'undisclosed';
 
 export type BaseModelSource = { url: string; title: string; evidence: string };
 
