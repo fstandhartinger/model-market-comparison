@@ -26,6 +26,7 @@ import measurement_dispatch
 import static_agent
 import release_render
 import refusal_approval
+import refund_approval
 import os
 import pwd
 import re
@@ -85,6 +86,10 @@ SOURCE_URL_RE = re.compile(
     r"(?:\.git)?(?:/(?:tree|commit)/(?P<ref>[0-9a-f]{40}))?/?$"
 )
 HOLD_REASONS = ("customer_access", "customer_reply", "customer_request")
+# Florian, 3 Oct 2026: a fixable customer-source review failure keeps the order and its payment.
+# The order waits on this hold (the 48-hour clock is paused) until the customer resubmits.
+CHANGE_HOLD_REASON = refusal_approval.CHANGE_HOLD_REASON
+MAX_CHANGE_FINDINGS = 8
 BENCHMARK_NAMES = {"jevbench": "JevBench", "imagejevbench": "ImageJevBench"}
 SCORE_FIELDS = ("jevbench_score", "score", "composite")
 PRIVATE_PUBLIC_FIELDS = frozenset({
@@ -105,6 +110,9 @@ REVIEW_GIT_PATTERNS = (
     "*.hpp", "*.cs", "*.rb", "*.php", "*.html", "*.css", "*.xml", "*.yaml", "*.yml", "*.toml",
     "*.ini", "*.cfg", "*.conf", "Dockerfile", "Makefile", "LICENSE*", "package.json",
     "pyproject.toml", "requirements*.txt", "Pipfile*", "environment.yml", "Cargo.toml", "go.mod", "pom.xml",
+    # Model metadata (3 Oct 2026: order dc725ad4 was wrongly failed for a "missing" adapter_config.json
+    # that this checkout had excluded). Small config files only; weights and tokenizer.json stay out.
+    "*config.json", "*.jinja", "*.safetensors.index.json",
 )
 CLAIM_LEASE_MINUTES = 4
 MAX_ROWS_PER_CYCLE = 25
@@ -294,6 +302,8 @@ ROW_FIELDS = (
     "pickup_status", "pickup_owner", "pickup_job_dir", "pickup_attempts", "evaluation_status",
     "evaluation_attempts", "release_status", "delivery_email_status", "customer_hold_started_at",
     "sla_paused_seconds", "refund_reason", "refund_status", "refund_id", "refunded_at", "result_url", "review_email_status", "refusal_email_status",
+    "customer_hold_reason", "amount_total", "refund_decision", "refund_decided_at", "change_request_email_status",
+    "resubmission_count",
 )
 
 
@@ -1379,7 +1389,16 @@ def advance_intake(row: dict[str, Any], state: dict[str, Any], job_dir: Path, ef
 
     # 5. A customer reply recorded by the mail watcher after a hold started ends the hold.
     row = load_row(rid) or row
-    if active_hold(row) and customer_replied_since_hold(rid):
+    if active_hold(row) and row.get("customer_hold_reason") == CHANGE_HOLD_REASON:
+        # The reply may carry new links; an owner checks it and runs `resubmit` (never automatic).
+        if customer_replied_since_hold(rid) and not step_done(state, "change_reply_handoff"):
+            if effects.board(f"Fast-lane order {order_ref(rid)}: the customer replied to the change request. "
+                             f"Owner: read the reply in {job_dir}/mail/, then run "
+                             f"`~/bin/jevbench-autopickup resubmit {rid} [--model-link URL] [--code-link URL]` "
+                             "to restart the review and the 48-hour clock. No refund.",
+                             owner_for(rid), kind="handoff"):
+                finish_ok(state, "change_reply_handoff", now)
+    elif active_hold(row) and customer_replied_since_hold(rid):
         with contextlib.suppress(PickupError):
             resume(rid)
             (job_dir / "release" / "WAITING.json").unlink(missing_ok=True)
@@ -1457,9 +1476,9 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
             update_row(rid, "evaluation_status='exhausted'", "evaluation_status='failed'")
             alert(state, "evaluation_exhausted", effects, urgent=True, text=(
                 f"🚨 DRINGEND\n\n🧑 Für dich\n- Rescue fast-lane order {order_ref(rid)}.\n"
-                f"  Why: The evaluation failed {MAX_EVALUATION_ATTEMPTS} times; the 48-hour refund deadline is {deadline_for(row).strftime('%d %b %H:%M UTC')}.\n"
+                f"  Why: The evaluation failed {MAX_EVALUATION_ATTEMPTS} times; the 48-hour deadline is {deadline_for(row).strftime('%d %b %H:%M UTC')}.\n"
                 f"  Steps:\n  1. Read STATE.md and OUTPUT.md in {job_directory(rid, JOB_ROOT)}.\n"
-                "  2. Start a manual evaluation job or let the automatic refund run.\n  Time: 15 minutes"))
+                "  2. Start a manual evaluation job. No refund happens without your approval card.\n  Time: 15 minutes"))
             return
         if step(state, "evaluation_start")["status"] == "done":
             # A finished start step belongs to an earlier attempt; allow the next bounded retry.
@@ -3376,29 +3395,84 @@ def sla_sweep(synthetic_id: str | None, job_root: Path, effects: Effects) -> dic
             else:
                 update_row(rid, f"{column}_alert_claimed_at=NULL")
                 break
-    # 48 h: hand the order to the deployed refund worker (status refund_due, reason recorded).
-    guard = f"{base} AND {sla_elapsed_sql()} >= interval '48 hours' AND r.refund_id IS NULL"
+    # 48 h: never refund automatically (Florian, 3 Oct 2026). refund_decisions() asks him per order.
+    guard = f"{base} AND {sla_elapsed_sql()} >= interval '48 hours' AND r.refund_id IS NULL AND r.refund_decision IS NULL"
+    counts["missed48"] = int(sql(f"SELECT count(*) FROM {TABLE} AS r WHERE {guard}") or 0)
     if effects.dry_run:
-        due = sql_rows(f"SELECT json_build_object('id',r.id::text)::text FROM {TABLE} AS r WHERE {guard}")
-        counts["refund48"] = len(due)
-        for item in due:
-            effects.record("refund_due", id=item["id"], dry_run=True)
-        return counts
-    for _ in range(50):
-        row = sql_json(f"""
-          UPDATE {TABLE} AS r SET status='refund_due', refund_status=NULL, refund_reason='sla_48h_payment',
-                 updated_at=now()-interval '5 minutes'
-          WHERE r.id=(SELECT r.id FROM {TABLE} AS r WHERE {guard} ORDER BY r.paid_at FOR UPDATE SKIP LOCKED LIMIT 1)
-          RETURNING {row_json_sql('r')}
-        """)
-        if not row:
-            break
-        rid = request_id(row["id"])
-        counts["refund48"] += 1
-        effects.stop_unit(EVAL_UNIT.format(rid))
-        effects.notify(f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)} missed the 48-hour deadline; the full refund is queued and its evaluation was stopped.",
-                       mode="digest")
+        for item in sql_rows(f"SELECT json_build_object('id',r.id::text)::text FROM {TABLE} AS r WHERE {guard}"):
+            effects.record("refund_approval_required", id=item["id"], dry_run=True)
     return counts
+
+
+def refund_decision_rows(synthetic_id: str | None, job_root: Path) -> list[dict[str, Any]]:
+    """Orders that need Florian's refund decision: a missed deadline or a queued refund without approval."""
+    predicate = managed_predicate("r", synthetic_id, job_root)
+    missed = (f"r.status IN ('paid','review_passed') AND r.result_delivered_at IS NULL AND r.paid_at IS NOT NULL "
+              f"AND r.customer_hold_started_at IS NULL AND COALESCE(r.delivery_email_status,'not_due') NOT IN ('sending','sent') "
+              f"AND {sla_elapsed_sql()} >= interval '48 hours'")
+    queued = "r.status IN ('refund_due','refund_pending')"
+    return sql_rows(f"""
+      SELECT {row_json_sql('r')} FROM {TABLE} AS r
+      WHERE {predicate} AND r.refund_id IS NULL AND r.refund_decision IS NULL AND (({missed}) OR ({queued}))
+      ORDER BY r.paid_at LIMIT 20
+    """)
+
+
+def apply_refund_decision(row: dict[str, Any], decision: str, ref: str, effects: Effects) -> bool:
+    """Write Florian's exact button decision. Only 'approved' lets the refund worker claim the order."""
+    rid = request_id(row["id"])
+    if not re.fullmatch(r"telegram:\d{1,12}:\d{1,15}", ref) or decision not in ("approved", "declined"):
+        raise PickupError("invalid refund decision reference")
+    decided = f"refund_decision='{decision}', refund_decided_at=now(), refund_decision_ref={sql_text(ref)}"
+    if row.get("status") in ("paid", "review_passed"):
+        if decision == "approved":
+            changed = update_row(rid, f"status='refund_due', refund_status=NULL, refund_reason='sla_48h_payment', {decided}",
+                                 f"status IN ('paid','review_passed') AND result_delivered_at IS NULL AND refund_id IS NULL "
+                                 f"AND refund_decision IS NULL AND customer_hold_started_at IS NULL "
+                                 f"AND COALESCE(delivery_email_status,'not_due') NOT IN ('sending','sent')",
+                                 updated_at_sql="now()-interval '5 minutes'")
+            if changed:
+                effects.stop_unit(EVAL_UNIT.format(rid))
+        else:
+            changed = update_row(rid, decided, "status IN ('paid','review_passed') AND refund_decision IS NULL")
+    else:
+        changed = update_row(rid, decided, "status IN ('refund_due','refund_pending') AND refund_id IS NULL "
+                                           "AND refund_decision IS NULL",
+                             updated_at_sql="now()-interval '5 minutes'")
+    return changed
+
+
+def refund_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) -> int:
+    """Ask Florian (exact Telegram button) before any refund; record his decision on the row."""
+    if effects.dry_run:
+        return 0
+    asked = 0
+    root = STATE_ROOT / "refund-approvals"
+    for row in refund_decision_rows(synthetic_id, job_root):
+        rid = request_id(row["id"])
+        state = load_state(rid)
+        try:
+            outcome = refund_approval.advance(row, root, effects, utcnow().timestamp(),
+                                              deadline_for(row).strftime("%d %b %H:%M UTC"))
+        except Exception as exc:
+            print(f"fast-lane refund approval: order {order_ref(rid)}: {type(exc).__name__}", file=sys.stderr)
+            continue
+        asked += 1
+        if outcome in ("refund", "decline"):
+            decision = "approved" if outcome == "refund" else "declined"
+            if apply_refund_decision(row, decision, refund_approval.reference(root, rid), effects):
+                verb = "approved; the refund worker pays it back now" if decision == "approved" else \
+                    "declined; no refund. Owner: contact the customer about next steps"
+                effects.board(f"Fast-lane order {order_ref(rid)}: Florian {verb}.", owner_for(rid), kind="note")
+        elif outcome == "exhausted":
+            alert(state, "refund_approval_exhausted", effects, digest=True, text=(
+                f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: three refund approval cards expired "
+                "unanswered; nothing was refunded. An operator follows up."))
+        elif outcome == "unknown":
+            alert(state, "refund_approval_unknown", effects, digest=True, text=(
+                f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: the refund approval card has an uncertain "
+                "delivery; held for reconciliation, nothing refunded."))
+    return asked
 
 
 def sla_message(row: dict[str, Any], hours: int) -> str:
@@ -3407,10 +3481,10 @@ def sla_message(row: dict[str, Any], hours: int) -> str:
     folder = job_directory(rid, JOB_ROOT)
     if hours >= 36:
         return (f"🚨 DRINGEND\n\n🧑 Für dich\n- Check fast-lane order {order_ref(rid)}.\n"
-                f"  Why: No result 36 hours after payment; the automatic full refund runs at {due}.\n"
+                f"  Why: No result 36 hours after payment; the deadline is {due}. No automatic refund: you will get a refund decision card then.\n"
                 f"  Steps:\n  1. Open {folder}/STATE.md.\n  2. Decide whether to intervene.\n  Time: 10 minutes")
     return (f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: 24 hours since payment, no result yet. "
-            f"Refund deadline {due}. Progress: {folder}/STATE.md")
+            f"Deadline {due}. Progress: {folder}/STATE.md")
 
 
 # ---------------------------------------------------------------------------
@@ -3431,6 +3505,7 @@ def process_row(row: dict[str, Any], effects: Effects, job_root: Path, now: date
             state["baseline_page_ids"] = structural_ids(page)
             save_state(state)
     row = advance_intake(row, state, job_dir, effects, now)
+    advance_change_request(row, state, job_dir, effects, now)
     advance_delivery(row, state, job_dir, effects, now)
     row = load_row(rid) or row
     advance_refund_notice(row, state, effects, now)
@@ -3447,6 +3522,7 @@ def cycle(effects: Effects, synthetic_id: str | None = None, job_root: Path | No
     kill = (STATE_ROOT / "KILL").exists()
     # Expire late work before claiming rows for delivery. This closes the 48-hour race.
     counts["sla"] = sla_sweep(synthetic_id, root, effects)
+    counts["refund_cards"] = refund_decisions(synthetic_id, root, effects)
     if not kill:
         for row in claim_rows(synthetic_id, root):
             counts["claimed"] += 1
@@ -3921,7 +3997,7 @@ def evaluate(rid: str) -> int:
                 scope = review_result.get("failure_scope")
                 if scope == "customer_source" and customer_source_review_failed(review_pins):
                     fail_source_review(rid, job_dir, review_result["summary"])
-                    return 1
+                    return 0  # handled: the order waits for customer changes (not a unit failure)
                 # Preserve the rejected adapter and review; the next cycle authors a fresh
                 # adapter within the existing preparation budget. Never blame the customer.
                 attempt = state.get("stage_attempts", {}).get("preparation", 0)
@@ -4009,25 +4085,82 @@ def evaluate(rid: str) -> int:
 
 
 def fail_source_review(rid: str, job_dir: Path, reason: str) -> None:
+    """A customer-source FAIL keeps the order and payment; the customer is told what to change.
+
+    Florian, 3 Oct 2026: no refund here. The order goes on the change-request hold (the 48-hour
+    clock is paused); a Florian-approved email lists the findings; `resubmit` restarts the clock.
+    """
     review_dir = job_dir / "review"
     review_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
     review_path = review_dir / "CODE-REVIEW.md"
     try:
         review_result = parse_review_output(review_path.read_text(encoding="utf-8", errors="strict"))
     except (OSError, UnicodeError, PickupError) as exc:
-        raise PickupError("a refund requires an explicit machine-readable source-review FAIL") from exc
+        raise PickupError("a change request requires an explicit machine-readable source-review FAIL") from exc
     if review_result.get("verdict") != "FAIL" or review_result.get("failure_scope") != "customer_source" \
             or not customer_source_review_failed(review_result.get("source_pins")) \
             or review_result.get("source_pins") != source_review_pins(job_dir):
-        raise PickupError("a refund requires an explicit machine-readable source-review FAIL")
-    queued = update_row(rid, "status='refund_due', refund_status=NULL, refund_reason='source_review_failed', "
-                             "evaluation_status='failed', release_status='refused'",
-                        "status IN ('paid','review_passed') AND result_delivered_at IS NULL",
-                        updated_at_sql="now()-interval '5 minutes'")
-    if not queued:
-        raise PickupError("source-review refund was not queued: no row matched the guard")
+        raise PickupError("a change request requires an explicit machine-readable source-review FAIL")
+    findings = [clean_finding(item) for item in review_result["findings"]][:MAX_CHANGE_FINDINGS]
+    atomic_write(review_dir / "CHANGES-REQUESTED.json", json.dumps({
+        "review_sha256": sha256_file(review_path), "summary": clean_finding(review_result["summary"]),
+        "findings": [item for item in findings if item], "requested_at": iso(utcnow())}, indent=2) + "\n")
+    held = update_row(rid, f"customer_hold_started_at=now(), customer_hold_reason={sql_text(CHANGE_HOLD_REASON)}, "
+                           "evaluation_status='pending', change_request_email_status='approval_required'",
+                      "status IN ('paid','review_passed') AND result_delivered_at IS NULL AND refund_id IS NULL "
+                      "AND customer_hold_started_at IS NULL")
+    if not held:
+        raise PickupError("change request was not recorded: no row matched the guard")
     atomic_write(job_dir / "STATE.md", (job_dir / "STATE.md").read_text(encoding="utf-8", errors="replace")
-                 + f"\n\nSource review failed at {iso(utcnow())}: {reason}. Full refund queued.\n")
+                 + f"\n\nSource review failed (customer source) at {iso(utcnow())}: {reason}. "
+                   "No refund: the order waits for the customer's changes (48-hour clock paused). "
+                   "The change-request email goes out after Florian's Send button.\n")
+
+
+def clean_finding(text: object) -> str:
+    """One printable line of at most 400 characters for the customer email draft."""
+    value = " ".join("".join(ch if ch.isprintable() else " " for ch in str(text)).split())
+    return value if len(value) <= 400 else value[:397].rstrip() + "..."
+
+
+def change_request_message(rid: str, job_dir: Path) -> tuple[str, str]:
+    data = load_json_file(job_dir / "review" / "CHANGES-REQUESTED.json", 64_000)
+    findings = [clean_finding(item) for item in data.get("findings", []) if clean_finding(item)]
+    if not findings:
+        raise PickupError("the change request has no findings")
+    subject = f"Benchmark Heaven evaluation order {order_ref(rid)}: please update your submission"
+    body = fill_template(read_template("autopickup-change-request-template.txt"), {
+        "ORDER_REF": order_ref(rid),
+        "FINDINGS": "\n".join(f"- {item}" for item in findings[:MAX_CHANGE_FINDINGS]),
+    })
+    return subject, body
+
+
+def advance_change_request(row: dict[str, Any], state: dict[str, Any], job_dir: Path, effects: Effects,
+                           now: datetime) -> None:
+    """Hold the exact change-request email behind Florian's Send/Keep button."""
+    rid = request_id(row.get("id"))
+    if row.get("customer_hold_reason") != CHANGE_HOLD_REASON or not active_hold(row) \
+            or row.get("change_request_email_status") != "approval_required":
+        return
+    subject, body = change_request_message(rid, job_dir)
+    try:
+        outcome = refusal_approval.advance(row, str(row.get("email") or ""), subject, body,
+                                           STATE_ROOT / "change-requests" / str(int(row.get("resubmission_count") or 0)),
+                                           effects, now.timestamp(), kind="change_request")
+    except ValueError as exc:
+        raise PickupError(f"change-request approval refused: {exc}") from exc
+    if outcome == "sent":
+        update_row(rid, "change_request_email_status='sent'", "change_request_email_status='approval_required'")
+    elif outcome == "held":
+        update_row(rid, "change_request_email_status='held'", "change_request_email_status='approval_required'")
+        alert(state, f"change_request_held_{int(row.get('resubmission_count') or 0)}", effects, digest=True, text=(
+            f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: the change-request email was kept unsent; "
+            "the order stays open on hold, no refund. An owner contacts the customer another way."))
+    elif outcome == "unknown":
+        alert(state, "change_request_outcome_unknown", effects, digest=True, text=(
+            f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: change-request approval or email "
+            "has an uncertain outcome; held for reconciliation without another send."))
 
 
 def consume_stage_attempt(state: dict[str, Any], name: str, limit: int) -> bool:
@@ -4118,12 +4251,80 @@ def hold(rid: str, reason: str) -> str:
 
 def resume(rid: str) -> str:
     rid = request_id(rid)
+    row = load_row(rid) or {}
+    if row.get("customer_hold_reason") == CHANGE_HOLD_REASON:
+        raise PickupError("this order waits for customer changes; use `resubmit` instead")
     if not update_row(rid, "sla_paused_seconds=COALESCE(sla_paused_seconds,0) + GREATEST(0, "
                            "extract(epoch FROM now()-customer_hold_started_at))::int, "
                            "customer_hold_started_at=NULL, customer_hold_reason=NULL",
                       "customer_hold_started_at IS NOT NULL"):
         raise PickupError("the order is not on hold")
     return f"Order {order_ref(rid)} resumed; the 48-hour clock runs again."
+
+
+def resubmit(rid: str, model_link: str | None = None, code_link: str | None = None) -> str:
+    """Restart an order after the customer answered a change request (Florian, 3 Oct 2026).
+
+    New links are validated like intake links. Earlier review material moves to
+    resubmission-history/, the review and preparation budgets start fresh and the
+    48-hour clock restarts now (deadline = now + 48 h). Nothing is refunded.
+    """
+    rid = request_id(rid)
+    row = load_row(rid)
+    if not row or row.get("stripe_mode") != "live" or row.get("synthetic_test") is not False:
+        raise PickupError("only a real live order can be resubmitted")
+    if row.get("status") not in ("paid", "review_passed") or row.get("customer_hold_reason") != CHANGE_HOLD_REASON \
+            or not active_hold(row) or row.get("refund_id") or row.get("result_delivered_at"):
+        raise PickupError("the order is not waiting for customer changes")
+    assignments = []
+    for column, value in (("model_link", model_link), ("code_link", code_link)):
+        if value is None:
+            continue
+        if not SOURCE_URL_RE.fullmatch(value) or len(value) > 500:
+            raise PickupError(f"--{column.replace('_', '-')} is not a supported public repository URL")
+        assignments.append(f"{column}={sql_text(value)}")
+    job_dir = job_directory(rid, JOB_ROOT)
+    count = int(row.get("resubmission_count") or 0) + 1
+    history = job_dir / "resubmission-history" / str(count)
+    if history.exists() or history.is_symlink():
+        raise PickupError("resubmission history already exists; reconcile by hand")
+    history.mkdir(parents=True, exist_ok=False, mode=0o700)
+    for name in ("source", "trusted-runner", "runner-prepare", "review", "preparation-history"):
+        path = job_dir / name
+        if path.is_symlink():
+            raise PickupError("refusing unsafe resubmission path")
+        if path.exists():
+            shutil.move(str(path), str(history / name))
+    state = load_state(rid)
+    state.setdefault("resubmissions", []).append({
+        "at": iso(utcnow()), "count": count, "stage_attempts": state.get("stage_attempts", {}),
+        "model_link_changed": model_link is not None, "code_link_changed": code_link is not None})
+    state["stage_attempts"] = {}
+    for key in ("source_review_gate", "runner_review_failure", "operational_hold"):
+        state.pop(key, None)
+    for name in ("evaluation_start", "change_reply_handoff"):
+        state["steps"].pop(name, None)
+    save_state(state)
+    assignments += [
+        "customer_hold_started_at=NULL", "customer_hold_reason=NULL",
+        # Deadline = paid_at + paused + 48 h, so this makes the full 48 hours start now.
+        "sla_paused_seconds=GREATEST(0, ceil(extract(epoch FROM now()-paid_at)))::int",
+        "evaluation_status='pending'", "evaluation_attempts=0", "review_passed_at=NULL",
+        f"resubmission_count={count}", "change_request_email_status='not_due'",
+        "sla_24h_alerted_at=NULL", "sla_36h_alerted_at=NULL",
+        "pickup_status=CASE WHEN pickup_status='done' THEN 'started' ELSE pickup_status END",
+    ]
+    if not update_row(rid, ", ".join(assignments),
+                      f"customer_hold_reason={sql_text(CHANGE_HOLD_REASON)} AND customer_hold_started_at IS NOT NULL "
+                      "AND status IN ('paid','review_passed') AND refund_id IS NULL AND result_delivered_at IS NULL"):
+        raise PickupError("the order changed while resubmitting; nothing was restarted")
+    row = load_row(rid) or row
+    write_job_files(row, job_dir)
+    atomic_write(job_dir / "STATE.md", (job_dir / "STATE.md").read_text(encoding="utf-8", errors="replace")
+                 + f"\n\nResubmission {count} at {iso(utcnow())}: earlier review material is in "
+                   f"resubmission-history/{count}/. Fresh source review; new 48-hour deadline "
+                   f"{deadline_for(row).strftime('%Y-%m-%d %H:%M UTC')}.\n")
+    return f"Order {order_ref(rid)} resubmitted ({count}); new deadline {deadline_for(row).strftime('%Y-%m-%d %H:%M UTC')}."
 
 
 def gate(rid: str) -> tuple[bool, str]:
@@ -4235,6 +4436,10 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("health")
     for name in ("evaluate", "xpost", "adopt", "resume", "gate", "status"):
         sub.add_parser(name).add_argument("request_id")
+    resubmit_parser = sub.add_parser("resubmit")
+    resubmit_parser.add_argument("request_id")
+    resubmit_parser.add_argument("--model-link")
+    resubmit_parser.add_argument("--code-link")
     hold_parser = sub.add_parser("hold")
     hold_parser.add_argument("request_id")
     hold_parser.add_argument("--reason", required=True, choices=HOLD_REASONS)
@@ -4288,6 +4493,8 @@ def main(argv: list[str] | None = None) -> int:
                 print(hold(args.request_id, args.reason))
             elif args.command == "resume":
                 print(resume(args.request_id))
+            elif args.command == "resubmit":
+                print(resubmit(args.request_id, args.model_link, args.code_link))
         return 0
     except PickupError as exc:
         print(f"fast-lane pickup: {exc}", file=sys.stderr)

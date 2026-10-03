@@ -370,20 +370,25 @@ def refund_idempotency_key_update_sql(new_key: str, confirm_unknown_retry: bool 
     return f"CASE WHEN {refund_claim_needs_new_attempt_sql(confirm_unknown_retry)} THEN {text_literal(new_key)} ELSE refund_idempotency_key END"
 
 
+# Florian, 3 Oct 2026: no fast-lane refund without his explicit confirmation. Every claim,
+# scheduled or operator-run, requires the exact Telegram button decision the pickup recorded.
+FLORIAN_APPROVAL_SQL = ("refund_decision='approved' AND refund_decided_at IS NOT NULL "
+                        "AND refund_decision_ref ~ '^telegram:[0-9]+:[0-9]+$'")
+
+
 def refund_claim_eligibility_sql(request_id: str | None = None, confirm_unknown_retry: bool = False) -> str:
+    return f"({FLORIAN_APPROVAL_SQL}) AND {_refund_claim_state_sql(request_id, confirm_unknown_retry)}"
+
+
+def _refund_claim_state_sql(request_id: str | None = None, confirm_unknown_retry: bool = False) -> str:
     if request_id is None:
         # Unknown outcomes reuse their timestamped key only inside Stripe's safe window.
         # Only terminal automatic failures that need a new key are capped. An uncertain
         # prior attempt without a safe key is parked for explicit payment-record review.
+        # A missed deadline is never refunded here: the pickup asks Florian, and his
+        # approval moves the order to refund_due.
         return f"""(
           (
-            status IN ('paid','review_passed') AND result_delivered_at IS NULL
-            AND paid_at IS NOT NULL AND customer_hold_started_at IS NULL
-            AND COALESCE(delivery_email_status,'not_due') NOT IN ('sending','sent')
-            AND paid_at + COALESCE(sla_paused_seconds,0) * interval '1 second' <= now()-interval '48 hours'
-            AND ({refund_claim_has_safe_retry_reference_sql()})
-          )
-          OR (
             status='refund_due' AND updated_at <= now()-interval '5 minutes'
             AND {automatic_terminal_refund_retry_eligibility_sql()}
           )
@@ -395,7 +400,7 @@ def refund_claim_eligibility_sql(request_id: str | None = None, confirm_unknown_
         )"""
     if not UUID_RE.fullmatch(request_id):
         raise WorkerError("request ID must be a UUID")
-    status_clause = "('paid','review_passed','refund_due','refund_pending','manual_review')" if confirm_unknown_retry else "('paid','review_passed','refund_due','refund_pending')"
+    status_clause = "('refund_due','refund_pending','manual_review')" if confirm_unknown_retry else "('refund_due','refund_pending')"
     manual_review_guard = "" if confirm_unknown_retry else " AND refund_status IS DISTINCT FROM 'manual_review'"
     return f"id='{request_id}'::uuid AND status IN {status_clause}{manual_review_guard} AND ({refund_claim_has_safe_retry_reference_sql()})"
 
@@ -582,7 +587,7 @@ def main() -> int:
                 return 2
             row = claim_refund(request_id, confirm_unknown_retry=confirmed_no_refund)
             if not row:
-                status = sql_json(f"SELECT json_build_object('status',status,'refund_status',refund_status)::text FROM {TABLE} WHERE id='{request_id}'::uuid")
+                status = sql_json(f"SELECT json_build_object('status',status,'refund_status',refund_status,'refund_decision',refund_decision)::text FROM {TABLE} WHERE id='{request_id}'::uuid")
                 if status and status.get("status") == "refunded":
                     print("This request has already been refunded.")
                     return 0
@@ -592,6 +597,8 @@ def main() -> int:
                         "if no refund exists, rerun with --confirmed-no-refund.",
                         file=sys.stderr,
                     )
+                elif status and status.get("refund_decision") != "approved":
+                    print("No refund without Florian's approval button (refund approval card).", file=sys.stderr)
                 elif status:
                     print(f"Cannot refund this request in its current state: {status.get('status')}.", file=sys.stderr)
                 else:

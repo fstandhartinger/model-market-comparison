@@ -113,6 +113,13 @@ ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS evaluation_
 ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS release_attempts integer NOT NULL DEFAULT 0;
 ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS sla_24h_alert_claimed_at timestamptz;
 ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS sla_36h_alert_claimed_at timestamptz;
+-- CR-276 (Florian, 3 Oct 2026): every fast-lane refund needs his recorded approval; fixable
+-- source-review failures become change requests that the customer can resubmit.
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS refund_decision text;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS refund_decided_at timestamptz;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS refund_decision_ref text;
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS change_request_email_status text NOT NULL DEFAULT 'not_due';
+ALTER TABLE bh_priority_evaluation_requests ADD COLUMN IF NOT EXISTS resubmission_count integer NOT NULL DEFAULT 0;
 CREATE TABLE IF NOT EXISTS bh_priority_eval_customer_mail_events (
   gmail_message_id text PRIMARY KEY,
   gmail_thread_id text,

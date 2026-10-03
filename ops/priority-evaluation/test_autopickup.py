@@ -30,7 +30,8 @@ HERE = Path(__file__).resolve().parent
 PG_BIN = next((p for p in sorted(Path("/usr/lib/postgresql").glob("*/bin"), reverse=True) if (p / "initdb").exists()), None)
 TEMPLATES = ("autopickup-prompt-template.md", "autopickup-review-prompt-template.md", "autopickup-confirmation-template.txt",
              "autopickup-result-public-template.txt", "autopickup-result-private-template.txt", "autopickup-refund-template.txt",
-             "autopickup-refusal-template.txt", "autopickup-review-passed-template.txt")
+             "autopickup-refusal-template.txt", "autopickup-review-passed-template.txt",
+             "autopickup-change-request-template.txt")
 
 TMP = Path(tempfile.mkdtemp(prefix="fastlane-autopickup-test-"))
 os.environ.update({
@@ -457,6 +458,8 @@ class SlaTests(DatabaseTestCase):
         for rid in (late,done):
             ap.sql(f"UPDATE {ap.TABLE} SET result_delivered_at=now(), delivery_email_status='sent', refund_reason='sla_48h_payment',updated_at=now()-interval '10 minutes' WHERE id='{rid}'")
         with mock.patch.object(worker,'sql_json',side_effect=ap.sql_json):
+            self.assertIsNone(worker.claim_refund())  # no Florian approval yet
+            self.assertTrue(ap.apply_refund_decision(row(late), 'approved', 'telegram:16300:900001', FakeEffects()))
             self.assertEqual(worker.claim_refund()['id'],late)
             self.assertIsNone(worker.claim_refund())
         self.assertEqual(row(done)['status'],'completed')
@@ -481,12 +484,12 @@ class SlaTests(DatabaseTestCase):
         ap.sql(f"UPDATE {ap.TABLE} SET customer_hold_started_at=now()-interval '5 hours', paid_at=now()-interval '50 hours' WHERE id='{rid}'")
         fx = FakeEffects()
         counts = ap.sla_sweep(None, ap.JOB_ROOT, fx)
-        self.assertEqual(counts["refund48"], 0)
+        self.assertEqual(counts["missed48"], 0)
         self.assertEqual(fx.notes, [])
         ap.resume(rid)
         self.assertGreaterEqual(row(rid)["sla_paused_seconds"], 5 * 3600 - 5)
         counts = ap.sla_sweep(None, ap.JOB_ROOT, fx)
-        self.assertEqual(counts["refund48"], 0)  # 50 h since payment minus a 5 h hold = 45 h
+        self.assertEqual(counts["missed48"], 0)  # 50 h since payment minus a 5 h hold = 45 h
         self.assertEqual(row(rid)["status"], "paid")
 
     def test_customer_reply_after_a_hold_resumes_the_clock_and_the_evaluation(self):
@@ -516,14 +519,22 @@ class SlaTests(DatabaseTestCase):
                f"received_at, summary, body_file) VALUES ('m-other', '{rid}', 'other@example.net', 's', now(), 'x', '/dev/null')")
         self.assertFalse(ap.customer_replied_since_hold(rid))
 
-    def test_48_hours_after_payment_queues_the_refund_and_stops_the_evaluation(self):
+    def test_48_hours_after_payment_asks_florian_and_never_refunds_alone(self):
+        import worker
         rid = insert_order(paid_ago="49 hours", received_ago="49 hours")
         fx = FakeEffects()
         counts = ap.sla_sweep(None, ap.JOB_ROOT, fx)
+        self.assertEqual(counts["missed48"], 1)
+        self.assertEqual((row(rid)["status"], row(rid)["refund_decision"]), ("paid", None))
+        self.assertEqual(fx.stopped, [])
+        self.assertEqual([r["id"] for r in ap.refund_decision_rows(None, ap.JOB_ROOT)], [rid])
+        with mock.patch.object(worker, "sql_json", side_effect=ap.sql_json):
+            self.assertIsNone(worker.claim_refund())
+            self.assertIsNone(worker.claim_refund(rid))  # an operator command needs the approval too
+        self.assertTrue(ap.apply_refund_decision(row(rid), "approved", "telegram:16300:900001", fx))
         current = row(rid)
-        self.assertEqual(counts["refund48"], 1)
-        self.assertEqual((current["status"], current["refund_reason"], current["refund_status"]),
-                         ("refund_due", "sla_48h_payment", None))
+        self.assertEqual((current["status"], current["refund_reason"], current["refund_status"], current["refund_decision"]),
+                         ("refund_due", "sla_48h_payment", None, "approved"))
         self.assertEqual(fx.stopped, [ap.EVAL_UNIT.format(rid)])
         # The deployed refund worker claims refund_due rows whose updated_at is at least 5 minutes old.
         self.assertTrue(ap.sql(f"SELECT 1 FROM {ap.TABLE} WHERE id='{rid}' AND updated_at <= now()-interval '5 minutes'"))
@@ -535,7 +546,7 @@ class SlaTests(DatabaseTestCase):
                 ap.sql(f"UPDATE {ap.TABLE} SET delivery_email_status='{delivery_status}' WHERE id='{rid}'")
                 fx = FakeEffects()
                 counts = ap.sla_sweep(None, ap.JOB_ROOT, fx)
-                self.assertEqual(counts["refund48"], 0)
+                self.assertEqual(counts["missed48"], 0)
                 self.assertEqual(row(rid)["status"], "paid")
 
     def test_delivered_and_unmanaged_orders_are_never_refunded(self):
@@ -543,13 +554,13 @@ class SlaTests(DatabaseTestCase):
         ap.sql(f"UPDATE {ap.TABLE} SET result_delivered_at=now() WHERE id='{delivered}'")
         old = insert_order(paid_ago="5 days", received_ago="5 days")
         fx = FakeEffects()
-        self.assertEqual(ap.sla_sweep(None, ap.JOB_ROOT, fx)["refund48"], 0)
+        self.assertEqual(ap.sla_sweep(None, ap.JOB_ROOT, fx)["missed48"], 0)
         self.assertEqual(row(old)["status"], "paid")
 
     def test_customer_gets_one_refund_notice_after_the_refund_succeeds(self):
         rid = insert_order(paid_ago="49 hours", received_ago="49 hours")
         fx = FakeEffects()
-        ap.sla_sweep(None, ap.JOB_ROOT, fx)
+        ap.apply_refund_decision(row(rid), "approved", "telegram:16300:900001", fx)
         ap.sql(f"UPDATE {ap.TABLE} SET status='refunded', refund_status='succeeded', refunded_at=now() WHERE id='{rid}'")
         for _ in range(3):
             make_due(rid)
@@ -569,8 +580,11 @@ class SlaTests(DatabaseTestCase):
             self.assertIsNone(worker.claim_refund())
             ap.resume(rid)
             ap.sql(f"UPDATE {ap.TABLE} SET delivery_email_status='sending' WHERE id='{rid}'")
+            self.assertFalse(ap.apply_refund_decision(row(rid), "approved", "telegram:16300:900001", FakeEffects()))
             self.assertIsNone(worker.claim_refund())
             ap.sql(f"UPDATE {ap.TABLE} SET delivery_email_status='not_due' WHERE id='{rid}'")
+            self.assertIsNone(worker.claim_refund())  # past 48 h alone never claims (3 Oct 2026)
+            self.assertTrue(ap.apply_refund_decision(row(rid), "approved", "telegram:16300:900001", FakeEffects()))
             self.assertEqual(worker.claim_refund()["id"], rid)
         self.assertEqual(row(rid)["status"], "refund_pending")
 
@@ -755,27 +769,209 @@ class RefundTransitionTests(DatabaseTestCase):
         (job / "review" / "CODE-REVIEW.md").write_text("x")
         (job / "STATE.md").write_text("state\n")
         pins = {"code": {"commit": "a" * 40}}
-        verdict = {"verdict": "FAIL", "failure_scope": "customer_source", "source_pins": pins}
+        verdict = {"verdict": "FAIL", "failure_scope": "customer_source", "source_pins": pins,
+                   "summary": "Model not pinned.",
+                   "findings": ["The model link is not pinned to a revision (fetch receipt pinned=false).",
+                                "README says public JevBench items were used\x07 during development."]}
         with mock.patch.object(ap, "parse_review_output", return_value=verdict), \
                 mock.patch.object(ap, "source_review_pins", return_value=pins):
             ap.fail_source_review(rid, job, "bad source")
         return job
 
-    def test_source_review_fail_queues_refund_then_writes_state(self):
-        rid = insert_order()
+    def test_source_review_fail_requests_changes_and_keeps_the_payment(self):
+        import worker
+        rid = insert_order(paid_ago="47 hours", received_ago="47 hours")
         job = self.queue_source_failure(rid)
-        row = ap.load_row(rid)
-        self.assertEqual((row["status"], row["refund_reason"], row["release_status"]),
-                         ("refund_due", "source_review_failed", "refused"))
-        self.assertIn("Full refund queued", (job / "STATE.md").read_text())
+        current = ap.load_row(rid)
+        self.assertEqual((current["status"], current["refund_reason"], current["customer_hold_reason"],
+                          current["change_request_email_status"]),
+                         ("paid", None, "customer_changes", "approval_required"))
+        self.assertIsNotNone(current["customer_hold_started_at"])
+        state_text = (job / "STATE.md").read_text()
+        self.assertIn("No refund", state_text)
+        self.assertNotIn("refund queued", state_text)
+        changes = json.loads((job / "review" / "CHANGES-REQUESTED.json").read_text())
+        self.assertEqual(len(changes["findings"]), 2)
+        self.assertNotIn("\x07", changes["findings"][1])
+        # The paused clock: hours later nothing is due, and the refund worker never claims it.
+        ap.sql(f"UPDATE {ap.TABLE} SET paid_at=now()-interval '80 hours' WHERE id='{rid}'")
+        self.assertEqual(ap.sla_sweep(None, ap.JOB_ROOT, FakeEffects())["missed48"], 0)
+        self.assertEqual(ap.refund_decision_rows(None, ap.JOB_ROOT), [])
+        with mock.patch.object(worker, "sql_json", side_effect=ap.sql_json):
+            self.assertIsNone(worker.claim_refund())
 
-    def test_zero_row_update_never_reports_queued(self):
+    def test_zero_row_update_never_reports_a_change_request(self):
         rid = insert_order()
         ap.update_row(rid, "status='refunded'")
         job = ap.JOB_ROOT / rid
         with self.assertRaises(ap.PickupError):
             self.queue_source_failure(rid)
-        self.assertNotIn("refund queued", (job / "STATE.md").read_text())
+        self.assertNotIn("No refund", (job / "STATE.md").read_text())
+
+    def test_change_request_email_waits_for_florians_button(self):
+        rid = insert_order()
+        job = self.queue_source_failure(rid)
+        fx = FakeEffects()
+        subject, body = ap.change_request_message(rid, job)
+        self.assertIn("please update your submission", subject)
+        self.assertIn("- The model link is not pinned", body)
+        self.assertIn("48-hour delivery window starts again", body)
+        self.assertNotIn("{{", body)
+        state = ap.load_state(rid)
+        with mock.patch.object(ap.refusal_approval, "advance", return_value="pending") as advance:
+            ap.advance_change_request(ap.load_row(rid), state, job, fx, ap.utcnow())
+        self.assertEqual(advance.call_args.kwargs["kind"], "change_request")
+        self.assertEqual(fx.mails, [])
+        self.assertEqual(ap.load_row(rid)["change_request_email_status"], "approval_required")
+        with mock.patch.object(ap.refusal_approval, "advance", return_value="sent"):
+            ap.advance_change_request(ap.load_row(rid), state, job, fx, ap.utcnow())
+        self.assertEqual(ap.load_row(rid)["change_request_email_status"], "sent")
+
+    def test_change_request_envelope_requires_an_open_held_order(self):
+        rid = insert_order()
+        self.queue_source_failure(rid)
+        current = ap.load_row(rid)
+        draft, _ = ap.refusal_approval.envelope(current, "author@example.com", "s", "b", "change_request")
+        self.assertEqual(draft["kind"], "change_request")
+        self.assertNotIn("refund_id", draft)
+        for change in ({"status": "refunded"}, {"customer_hold_reason": "customer_access"},
+                       {"refund_id": "re_1"}, {"stripe_mode": "test"}):
+            with self.assertRaises(ValueError):
+                ap.refusal_approval.envelope({**current, **change}, "author@example.com", "s", "b", "change_request")
+        with self.assertRaises(ValueError):  # a refusal draft still needs a succeeded refund
+            ap.refusal_approval.envelope(current, "author@example.com", "s", "b")
+
+    def test_customer_reply_does_not_resume_a_change_request(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        ap.cycle(fx)
+        job = self.queue_source_failure(rid) if not (ap.JOB_ROOT / rid / "review").exists() else None
+        ap.sql(f"INSERT INTO bh_priority_eval_customer_mail_events (gmail_message_id, request_id, sender_email, subject, "
+               f"received_at, summary, body_file) VALUES ('m-cr', '{rid}', 'author@example.com', 's', now(), 'x', '/dev/null')")
+        make_due(rid)
+        with mock.patch.object(ap.refusal_approval, "advance", return_value="pending"):
+            ap.cycle(fx)
+            make_due(rid)
+            ap.cycle(fx)
+        self.assertEqual(ap.load_row(rid)["customer_hold_reason"], "customer_changes")
+        self.assertEqual(sum("replied to the change request" in text for text in fx.boards), 1)
+        with self.assertRaises(ap.PickupError):
+            ap.resume(rid)
+
+    def test_resubmit_restarts_review_and_the_48_hour_clock(self):
+        rid = insert_order(paid_ago="30 hours", received_ago="30 hours")
+        job = self.queue_source_failure(rid)
+        state = ap.load_state(rid)
+        state["stage_attempts"] = {"source_review": 3, "preparation": 2}
+        state["source_review_gate"] = {"x": 1}
+        ap.save_state(state)
+        with self.assertRaises(ap.PickupError):
+            ap.resubmit(rid, model_link="https://evil.example/model")
+        self.assertEqual(ap.load_row(rid)["customer_hold_reason"], "customer_changes")
+        pinned = "https://huggingface.co/x/y/tree/" + "b" * 40
+        message = ap.resubmit(rid, model_link=pinned)
+        self.assertIn("resubmitted (1)", message)
+        current = ap.load_row(rid)
+        self.assertEqual((current["customer_hold_started_at"], current["customer_hold_reason"],
+                          current["resubmission_count"], current["evaluation_status"]), (None, None, 1, "pending"))
+        self.assertEqual(ap.load_row(rid)["model_link"], pinned)
+        remaining = ap.deadline_for(current) - ap.utcnow()
+        self.assertGreater(remaining, timedelta(hours=47, minutes=58))
+        self.assertLessEqual(remaining, timedelta(hours=48, seconds=2))
+        state = ap.load_state(rid)
+        self.assertEqual(state["stage_attempts"], {})
+        self.assertNotIn("source_review_gate", state)
+        self.assertTrue((job / "resubmission-history" / "1" / "review" / "CHANGES-REQUESTED.json").is_file())
+        self.assertFalse((job / "review").exists())
+        with self.assertRaises(ap.PickupError):  # only once per change request
+            ap.resubmit(rid)
+
+
+class RefundApprovalCardTests(unittest.TestCase):
+    def state(self):
+        return {"chat_id": 7, "message_id": 50, "created_at": 1000, "expires_at": 1000 + 86400,
+                "refund_key": "rf_a_refund", "decline_key": "rf_b_decline"}
+
+    def test_only_the_exact_button_from_florians_chat_in_time_decides(self):
+        import refund_approval
+        for rows, expected in (
+                ([(1, 7, 50, 7, 1500, "rf_a_refund")], "refund"),
+                ([(1, 7, 50, 7, 1500, "rf_b_decline")], "decline"),
+                ([(1, 7, 50, 8, 1500, "rf_a_refund")], None),     # another sender
+                ([(1, 7, 51, 7, 1500, "rf_a_refund")], None),     # another message
+                ([(1, 7, 50, 7, 999, "rf_a_refund")], None),      # before the card
+                ([(1, 7, 50, 7, 1500, "fr_x_send")], None)):      # another card's key
+            state = self.state()
+            refund_approval.apply_callbacks(state, rows, 2000)
+            self.assertEqual(state.get("decision"), expected)
+        state = self.state()
+        refund_approval.apply_callbacks(state, [], 1000 + 86401)
+        self.assertEqual(state["decision"], "expired")
+
+    def test_tests_and_dry_runs_never_reach_telegram(self):
+        import refund_approval
+        self.assertFalse(refund_approval.live_runtime())
+        with mock.patch.object(refund_approval.subprocess, "run") as run:
+            self.assertEqual(refund_approval.advance({"id": str(uuid.uuid4()), "stripe_mode": "live", "synthetic_test": False},
+                                                     TMP / "ra", ap.Effects(), 0, "x"), "pending")
+        run.assert_not_called()
+
+    def test_decision_reference_requires_an_exact_button(self):
+        import refund_approval
+        rid = str(uuid.uuid4())
+        root = TMP / "ra-ref"
+        root.mkdir(exist_ok=True)
+        (root / f"{rid}.json").write_text(json.dumps({"decision": "expired", "message_id": 5}))
+        with self.assertRaises(ValueError):
+            refund_approval.reference(root, rid)
+        (root / f"{rid}.json").write_text(json.dumps({"decision": "refund", "message_id": 5, "update_id": 9}))
+        self.assertEqual(refund_approval.reference(root, rid), "telegram:5:9")
+
+
+class RefundDecisionTests(DatabaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        set_cutover(datetime.now(timezone.utc) - timedelta(days=4))
+
+    def test_florians_decline_is_recorded_and_nothing_is_refunded(self):
+        import worker
+        rid = insert_order(paid_ago="49 hours", received_ago="49 hours")
+        fx = FakeEffects()
+        with mock.patch.object(ap.refund_approval, "advance", return_value="decline"), \
+                mock.patch.object(ap.refund_approval, "reference", return_value="telegram:16300:900002"), \
+                mock.patch.object(ap.refund_approval, "live_runtime", return_value=True):
+            fx.dry_run = False
+            self.assertEqual(ap.refund_decisions(None, ap.JOB_ROOT, fx), 1)
+        current = row(rid)
+        self.assertEqual((current["status"], current["refund_decision"]), ("paid", "declined"))
+        self.assertEqual(ap.refund_decision_rows(None, ap.JOB_ROOT), [])
+        with mock.patch.object(worker, "sql_json", side_effect=ap.sql_json):
+            self.assertIsNone(worker.claim_refund())
+            self.assertIsNone(worker.claim_refund(rid))
+
+    def test_florians_refund_button_queues_the_refund(self):
+        import worker
+        rid = insert_order(paid_ago="49 hours", received_ago="49 hours")
+        fx = FakeEffects()
+        with mock.patch.object(ap.refund_approval, "advance", return_value="refund"), \
+                mock.patch.object(ap.refund_approval, "reference", return_value="telegram:16300:900003"):
+            ap.refund_decisions(None, ap.JOB_ROOT, fx)
+        current = row(rid)
+        self.assertEqual((current["status"], current["refund_decision"]), ("refund_due", "approved"))
+        self.assertTrue(any("Florian approved" in text for text in fx.boards))
+        with mock.patch.object(worker, "sql_json", side_effect=ap.sql_json):
+            self.assertEqual(worker.claim_refund()["id"], rid)
+
+    def test_operator_refusal_also_needs_the_button(self):
+        import worker
+        rid = insert_order(status="refund_due")
+        ap.sql(f"UPDATE {ap.TABLE} SET updated_at=now()-interval '10 minutes' WHERE id='{rid}'")
+        self.assertEqual([r["id"] for r in ap.refund_decision_rows(None, ap.JOB_ROOT)], [rid])
+        with mock.patch.object(worker, "sql_json", side_effect=ap.sql_json):
+            self.assertIsNone(worker.claim_refund())
+            self.assertIsNone(worker.claim_refund(rid))
+        with self.assertRaises(ap.PickupError):
+            ap.apply_refund_decision(row(rid), "approved", "text reply: yes", FakeEffects())
 
 
 class AgentToolBoundaryTests(unittest.TestCase):
@@ -1309,11 +1505,12 @@ class FinalizeTests(DatabaseTestCase):
         self.assertEqual(row(rid)["status"], "paid")
         self.assertFalse(any("your result" in mail[1] for mail in fx.mails))
 
-    def test_cycle_queues_late_result_for_refund_before_delivery(self):
+    def test_cycle_holds_late_result_for_florians_refund_decision(self):
         rid, fx, _ = self.prepare()
         ap.sql(f"UPDATE {ap.TABLE} SET paid_at=now()-interval '49 hours' WHERE id='{rid}'")
         self.cycle_live_release(fx)
-        self.assertEqual(row(rid)["status"], "refund_due")
+        self.assertEqual((row(rid)["status"], row(rid)["refund_decision"]), ("paid", None))
+        self.assertIn(rid, [r["id"] for r in ap.refund_decision_rows(None, ap.JOB_ROOT)])
         self.assertEqual(row(rid)["delivery_email_status"], "not_due")
         self.assertFalse(any("your result" in mail[1] for mail in fx.mails))
 
