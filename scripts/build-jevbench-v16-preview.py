@@ -24,16 +24,21 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'data/raw/benchmarks/jevbench/v1.6')
 V15 = ['1.5.0', '1.5.1', '1.5.2', '1.5.3', '1.5.4', '1.5.5']
-# Standing exclusion: private fine-tune (and its thinking-mode variant) and private-only Weiche are listed nowhere.
+# Standing exclusion: a private fine-tune (and its thinking-mode variant) and private-only systems are listed nowhere.
+# Private-only names are matched by the SHA-256 of a lower-case alphanumeric token, so the names themselves are not published.
 EXCLUDED = {'djev', 'djev-thinking'}
-EXCLUDED_PATTERNS = [re.compile(r'weiche', re.I)]
+EXCLUDED_TOKEN_SHA256 = {'5abd15f81ff200ebeb028ff68a02ff55ea2867ea3ea8173e605aa01bb7858c4f'}
 ITEM_LEVEL = re.compile(r'^(item_id|item_ids|item_text|question|question_text|expected|gold|golds|prediction|predicted|per_item|item_results|prompt|task_id)$', re.I)
 # Per-system metadata that the v1.6 scorer output does not carry; joined from the same key's last published v1.5.5 row.
 JOIN_FIELDS = ['class', 'open', 'licence', 'repo', 'gpu', 'endpoint_condition', 'underlying', 'adapter_id', 'api_exposure_note', 'alt']
 
 
 def excluded(key):
-    return key in EXCLUDED or any(p.search(key) for p in EXCLUDED_PATTERNS)
+    return key in EXCLUDED or mentions_private(key)
+
+
+def mentions_private(text):
+    return any(hashlib.sha256(t.encode()).hexdigest() in EXCLUDED_TOKEN_SHA256 for t in set(re.findall(r'[a-z0-9]+', text.lower())))
 
 
 def sha_file(path):
@@ -56,7 +61,7 @@ def check_no_excluded(value, path='artifact'):
     for key in EXCLUDED:
         if re.search(r'"%s"' % re.escape(key), text):
             raise SystemExit(f'excluded key {key} leaked into {path}')
-    if any(p.search(text) for p in EXCLUDED_PATTERNS):
+    if mentions_private(text):
         raise SystemExit(f'excluded system leaked into {path}')
 
 
@@ -80,8 +85,17 @@ def signature(row):
     return (i.get('I_open'), i.get('I_sealed'), (row.get('calibration') or {}).get('score'), (row.get('speed') or {}).get('p50_s_raw'))
 
 
+# Hosted APIs: the model id the provider reported on successful responses (run receipts in the job's evidence folder).
+API_PINS = {'jev-1.13.0': 'jev-1.13.0 (response model id on all 590 successful rows)',
+            'fastino-gliner-2-5-decide': 'fastino/GLiNER-2.5-Decide (requested model id)'}
+
+
 def measured_on(prov, key):
-    """UTC day the system's run output file was completed (mtime of the resolved runs/<key>.jsonl), or None."""
+    """UTC completion day of the system's run output: the frozen <prov>/MEASURED-DAYS.json if present,
+    else the mtime of the resolved runs/<key>.jsonl, else None."""
+    frozen = os.path.join(prov, 'MEASURED-DAYS.json')
+    if os.path.exists(frozen):
+        return json.load(open(frozen))['days'].get(key)
     path = os.path.join(prov, 'runs', f'{key}.jsonl')
     if not os.path.exists(path):
         return None
@@ -120,7 +134,7 @@ def main(prov, out_dir='out'):
             row.setdefault('repo', None)
             row.setdefault('endpoint_condition', 'external hosted API (Fastino); received the 300-item API subset and the 300 public items')
             row.setdefault('api_exposure_note', "API measurement: the operator's endpoint received sealed item text, without answers.")
-        row['model_pin'] = prior.get('model_pin') if prior else None
+        row['model_pin'] = API_PINS.get(s['key']) or (prior.get('model_pin') if prior else None)
         # Completion day of the run output; the per-record output has no timestamps.
         row['last_measured_on'] = measured_on(prov, s['key'])
         row['measurement_date_status'] = 'run output completion day (UTC)' if row['last_measured_on'] else 'unknown'
@@ -153,12 +167,15 @@ def main(prov, out_dir='out'):
 
     v16 = json.loads(json.dumps(res['v16']))
     eq = v16.get('equating') or {}
-    # Pool membership lists are not published (one pool member is a private system under a standing exclusion).
+    # Pool membership lists are not published.
     eq.pop('pool', None)
     eq.pop('pool_n', None)
     v16.pop('ranked_selfhosted', None)
     eq['pool_note'] = 'Median over the complete full-coverage self-hosted systems of this run (at least five required).'
     v16['equating'] = eq
+    v16['long_items_note'] = ('23 items of this draw are very long (about 77,000 to 81,000 input tokens). Systems with a shorter context window refuse them; '
+                              'Jev-Omni runs out of GPU memory on them on its listed RTX 6000 (48 GB) recipe; decider-4b v2\'s server truncates them to about 32,800 tokens and answers; '
+                              'Plumb-4B reads them in full. Each outcome is the system\'s own recipe and is scored as such.')
     counts = v16['counts']
     # Type split per item set (from the published per-type item counts of a complete self-hosted row and an API row).
     def type_counts(row, side):

@@ -5,7 +5,7 @@ export type JevV16PreviewArtifact = Omit<JevV15Artifact, 'systems'> & {
   provisional: true; label: string; source_note: string; G_med_api_basis_P_vs_A: number;
   systems: JevV16PreviewSystem[];
   v16: { counts: Record<string, number>; equating: { offsets: Record<'I' | 'C', number>; rule: string; min_pool: number; pool_note: string; [k: string]: unknown };
-    g_med_rule: string; item_sets: JevV16ItemSet[]; capability_formula: string; [k: string]: unknown };
+    g_med_rule: string; item_sets: JevV16ItemSet[]; capability_formula: string; long_items_note?: string; [k: string]: unknown };
 };
 export type JevV16CategoryCell = { n: number; competence: number };
 export type JevV16CategoryDescriptor = { key: string; label: string; covers: string; n: number; open: number; sealed: number; low_n: boolean };
@@ -25,6 +25,8 @@ export const JEVBENCH_V16_PREVIEW_CATEGORIES: string;
 export const JEVBENCH_V16_PREVIEW_CARRY: string;
 export const JEVBENCH_V16_PREVIEW_ROUTE: string;
 export const JEVBENCH_V16_EXCLUDED_KEYS: string[];
+export const JEVBENCH_V16_EXCLUDED_TOKEN_SHA256: string[];
+export function mentionsPrivateSystem(text: string): boolean;
 export function validateJevbenchV16Preview(artifact: unknown): JevV16PreviewArtifact;
 export function validateJevbenchV16Carry(carry: unknown, measuredKeys: Set<string>): JevV16Carry;
 export function readJevbenchV16Preview(root?: string): Promise<{ artifact: JevV16PreviewArtifact; sha256: string;

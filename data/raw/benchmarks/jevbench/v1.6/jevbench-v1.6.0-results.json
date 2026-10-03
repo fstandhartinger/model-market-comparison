@@ -169,6 +169,7 @@
    "P": "6b2321f8359d87769a95c8e52135542d95ccdc353197e1e5c96abb9b616ce5ba",
    "S": "f13557a141fba12efc6bf6d39a0dd8e3bf803d4cacd6eab516d4f4f87045539a"
   },
+  "long_items_note": "23 items of this draw are very long (about 77,000 to 81,000 input tokens). Systems with a shorter context window refuse them; Jev-Omni runs out of GPU memory on them on its listed RTX 6000 (48 GB) recipe; decider-4b v2's server truncates them to about 32,800 tokens and answers; Plumb-4B reads them in full. Each outcome is the system's own recipe and is scored as such.",
   "item_sets": [
    {
     "set": "S",
@@ -559,7 +560,7 @@
    "underlying": "closed",
    "adapter_id": "harness/specs/jev-1.13.0.json:jevbench.adapters.typesafe.TypeSafeAdapter",
    "api_exposure_note": "API measurement: the operator's endpoint received sealed item text, without answers.",
-   "model_pin": null,
+   "model_pin": "jev-1.13.0 (response model id on all 590 successful rows)",
    "last_measured_on": "2026-10-01",
    "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
@@ -4060,7 +4061,7 @@
    "repo": null,
    "endpoint_condition": "external hosted API (Fastino); received the 300-item API subset and the 300 public items",
    "api_exposure_note": "API measurement: the operator's endpoint received sealed item text, without answers.",
-   "model_pin": null,
+   "model_pin": "fastino/GLiNER-2.5-Decide (requested model id)",
    "last_measured_on": "2026-10-03",
    "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",

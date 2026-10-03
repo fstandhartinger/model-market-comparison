@@ -86,6 +86,11 @@ function Method({ a, sha256, categoriesSha256, carrySha256 }: { a: JevV16Preview
   const byDay = new Map<string, string[]>();
   for (const s of a.systems) if (s.last_measured_on) byDay.set(s.last_measured_on, [...(byDay.get(s.last_measured_on) ?? []), short(s.display)]);
   const measuredDays = [...byDay.entries()].sort(([x], [y]) => x.localeCompare(y));
+  const failures = a.systems.map((s) => {
+    const v = Object.values((s as unknown as { validity?: Record<string, { invalid_rate: number; n: number }> }).validity ?? {});
+    return [short(s.display), Math.round(v.reduce((t, c) => t + c.invalid_rate * c.n, 0)), v.reduce((t, c) => t + c.n, 0)] as [string, number, number];
+  });
+  const confidenceOnly = a.systems.filter((s) => { const sup = Object.values((s as unknown as { support?: Record<string, string> }).support ?? {}); return sup.length > 0 && sup.every((x) => x === 'confidence'); }).map((s) => short(s.display));
   return <section className="mt-10 max-w-4xl" aria-labelledby="jev16-method" id="jev16-method" data-bh-jev16-method>
     <h2 id="jev16-method" className="text-2xl font-bold">Method · v1.6.0 preview</h2>
     <h3 className="mt-4 text-lg font-semibold">Rotating item sets</h3>
@@ -113,6 +118,12 @@ function Method({ a, sha256, categoriesSha256, carrySha256 }: { a: JevV16Preview
     <h3 className="mt-4 text-lg font-semibold">Headline and Composite</h3>
     <p className="bh-muted mt-1 text-sm">Capability = mean(Intelligence, Calibration) for systems within twice the Jev 1.13.0 cost and median latency (the official caps; the sliders change only your view). The Composite (option {a.headline}) is the equal-weight harmonic mean of Intelligence, Calibration, Speed and Cost with the v1.5 low-axis gates; it remains secondary. Request types Choice, Noul and Score weigh equally; tiers weigh easy {a.tier_weights.easy}, standard {a.tier_weights.standard}, hard {a.tier_weights.hard}, judge {a.tier_weights.judge}.</p>
     <p className="bh-muted mt-1 text-sm">Costs of v1.6-measured systems carry each system&apos;s published v1.5.4 cost per 1,000 decisions (pricing rules unchanged; v1.6 item lengths differ) unless the row says otherwise; Fastino&apos;s is an estimate from its published tariff and measured tokens.</p>
+    <h3 className="mt-4 text-lg font-semibold">Failed requests and very long items</h3>
+    <p className="bh-muted mt-1 text-sm" data-bh-jev16-failures>{a.v16.long_items_note} A failed, refused or unparseable answer counts as wrong for Intelligence and stays in the denominator; it does not enter Calibration (the v1.5 rule, applied to every system).
+      {' '}Failed answers per system: {failures.map(([name, n, total]) => `${name} ${n}/${total}`).join(' · ')}.</p>
+    <h3 className="mt-4 text-lg font-semibold">Calibration basis</h3>
+    <p className="bh-muted mt-1 text-sm" data-bh-jev16-calibration-basis>Systems that return a full probability distribution are calibrated on all components (top-label error, plus distribution distance for Choice and ranked-probability error for Score).
+      {confidenceOnly.length > 0 ? ` ${confidenceOnly.join(', ')} return${confidenceOnly.length === 1 ? 's' : ''} a single confidence value, so ${confidenceOnly.length === 1 ? 'its' : 'their'} Calibration is the top-label error only and is not like-for-like with full-distribution systems.` : ''}</p>
     <h3 className="mt-4 text-lg font-semibold">Provenance</h3>
     {measuredDays.length > 0 && <p className="bh-muted mt-1 text-sm" data-bh-jev16-measured-days>Measured on the v1.6 pool (run completion day, UTC): {measuredDays.map(([day, names]) => `${day}: ${names.join(', ')}`).join(' · ')}.</p>}
     <p className="bh-muted mt-1 break-all text-xs">Provisional aggregate files: results sha256 {sha256} · categories sha256 {categoriesSha256} · dated carry sha256 {carrySha256}. Built by scripts/build-jevbench-v16-preview.py from {a.source_note.replace(/\.$/, '')} (source sha256 {a.source_sha256}).</p>

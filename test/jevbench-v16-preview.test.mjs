@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { readJevbenchV16Preview, JEVBENCH_V16_PREVIEW_RESULTS, JEVBENCH_V16_PREVIEW_CATEGORIES, JEVBENCH_V16_PREVIEW_CARRY, JEVBENCH_V16_EXCLUDED_KEYS } from '../lib/jevbench-v16-preview.mjs';
+import { readJevbenchV16Preview, JEVBENCH_V16_PREVIEW_RESULTS, JEVBENCH_V16_PREVIEW_CATEGORIES, JEVBENCH_V16_PREVIEW_CARRY, JEVBENCH_V16_EXCLUDED_KEYS, mentionsPrivateSystem } from '../lib/jevbench-v16-preview.mjs';
 import { jevbenchCategoryView } from '../lib/jevbench-categories.mjs';
 
 const read = (p) => readFile(new URL(`../${p}`, import.meta.url), 'utf8');
@@ -15,7 +15,7 @@ test('v1.6.0 preview files are provisional and list no excluded system', async (
   for (const path of [JEVBENCH_V16_PREVIEW_RESULTS, JEVBENCH_V16_PREVIEW_CATEGORIES, JEVBENCH_V16_PREVIEW_CARRY]) {
     const text = await read(path);
     for (const key of JEVBENCH_V16_EXCLUDED_KEYS) assert.ok(!text.includes(`"${key}"`), `${path} lists ${key}`);
-    assert.doesNotMatch(text, /weiche/i, `${path} lists Weiche`);
+    assert.ok(!mentionsPrivateSystem(text), `${path} lists a private-only system`);
   }
 });
 
