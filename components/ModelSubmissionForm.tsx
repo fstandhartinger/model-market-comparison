@@ -130,7 +130,7 @@ export function ModelSubmissionForm({ followups, formToken, prices, testMode }: 
       <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm">
         <li>We&apos;ll email you a confirmation.</li>
         <li>We review the submission and evaluate it in the order received. We email you when results are published.</li>
-        {done.fastLane && <li>This submission is in the fast lane: results within 48 hours of payment, or a full automatic refund.</li>}
+        {done.fastLane && <li>This submission is in the fast lane: results within 48 hours of payment, or a full refund on request.</li>}
       </ul>
       <p className="mt-4 text-sm"><a className="text-accent underline" href="/submit">Submit another model</a> · <a className="text-accent underline" href="/jev-models">Back to JevBench</a></p>
     </div>;
@@ -186,7 +186,7 @@ export function ModelSubmissionForm({ followups, formToken, prices, testMode }: 
     <div ref={fastBox} className={`rounded-xl border p-4 ${notice ? 'border-accent ring-2 ring-accent/60' : 'border-line'} bg-panel`} data-bh-fast-lane-box>
       <label className="flex gap-3 text-sm font-semibold">
         <input className="mt-1 accent-current" type="checkbox" checked={fastActive} disabled={audioOnly} onChange={(e) => setFastLane(e.target.checked)} />
-        <span>Fast lane: results within 48 hours of payment, or a full automatic refund</span>
+        <span>Fast lane: results within 48 hours of payment, or a full refund on request</span>
       </label>
       {audioOnly && <p className="bh-muted mt-2 text-sm">{FAST_NOTE_AUDIO}.</p>}
       {fastActive && <div className="mt-4 space-y-4">

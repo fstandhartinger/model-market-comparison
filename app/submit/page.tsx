@@ -30,7 +30,7 @@ export default async function SubmitPage() {
       <ul className="mt-3 list-disc space-y-2 pl-5 text-sm">
         <li><b>The regular queue is free.</b> Submissions are evaluated in the order we receive them.</li>
         <li><b>Top-10 models are re-evaluated with every release;</b> the rest of the leaderboard is re-evaluated less often.</li>
-        <li><b>Fast lane:</b> results within 48 hours of payment, or a full automatic refund. It covers JevBench and ImageJevBench.</li>
+        <li><b>Fast lane:</b> results within 48 hours of payment, or a full refund on request. It covers JevBench and ImageJevBench.</li>
       </ul>
     </section>
 
