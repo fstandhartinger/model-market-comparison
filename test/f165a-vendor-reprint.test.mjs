@@ -95,9 +95,14 @@ test('the published dataset decides every vendor launch row, and the decision ho
   // The pending joins, as decided on 2026-09-23 against every row's own protocol text. A new one
   // appearing is not a failure of this rule, it is a launch ingest that needs the same decision
   // made for it — so this fails and someone looks, rather than the finding rotting silently.
-  assert.deepEqual(superseded.map((r) => r.benchmark_id).sort(),
-    ['anthropic-aa-briefcase-v1-1::1.1', 'anthropic-gdpval-aa-v2-1::2.1'],
+  // CR-273 (2026-10-03): AA re-scored Claude Opus 5.5 on both boards (Briefcase 1821.85 -> 1807.81, GDPval 1846.17
+  // -> 1867.05 at max), so the vendor's printed 1822 / 1846 no longer equals AA's number and the rule correctly
+  // stops treating those two rows as reprints. They are judged separate, and stay so until a number matches again.
+  assert.deepEqual(superseded.map((r) => r.benchmark_id).sort(), [],
     'the set of vendor rows joining a board\'s own identity changed; re-run verify-f165-a-rekey.mjs and record the decision');
+  assert.deepEqual(['anthropic-aa-briefcase-v1-1::1.1', 'anthropic-gdpval-aa-v2-1::2.1']
+    .filter((id) => !separate.some((r) => r.benchmark_id === id && r.model_id === 'claude-opus-5.5::max')), [],
+    'the two former reprints must now be published as separate vendor rows, not silently dropped');
   for (const row of superseded) {
     assert.equal(row.maintainer, 'Artificial Analysis');
     const measured = results.observations.find((o) => o.id === row.measured_id);
