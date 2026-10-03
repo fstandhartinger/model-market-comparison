@@ -109,6 +109,10 @@ def main(prov, out_dir='out'):
     src_label = f'{os.path.basename(os.path.normpath(prov))}/{out_dir}'
     res = json.load(open(src_results))
     cats = json.load(open(src_categories))
+    # Noul decisive-rate diagnostic (method addendum B), written by the job's harness/decisive_v16.py next to the results.
+    src_decisive = os.path.join(prov, out_dir, 'noul-decisive.json')
+    decisive = json.load(open(src_decisive)) if os.path.exists(src_decisive) else {}
+    noul_method = ((res.get('v16') or {}).get('scoring_parameters') or {}).get('noul_method', 'O0')
     v15 = {rev: json.load(open(os.path.join(ROOT, f'data/raw/benchmarks/jevbench/v1.5/jevbench-v{rev}-results.json'))) for rev in V15}
     live = v15['1.5.5']
     live_rows = {s['key']: s for s in live['systems']}
@@ -139,6 +143,8 @@ def main(prov, out_dir='out'):
         row['last_measured_on'] = measured_on(prov, s['key'])
         row['measurement_date_status'] = 'run output completion day (UTC)' if row['last_measured_on'] else 'unknown'
         row['measured_in'] = 'v1.6.0'
+        d = decisive.get(s['key'])
+        row['noul_decisive'] = None if d is None else {k: d.get(k) for k in ['supported', 'decisive_rate', 'acc_among_decisive', 'valid']}
         row['not_ranked_because'] = None if row.get('ranked') else row.get('not_ranked_because')
         row['provenance'] = {'kind': f'v1.6.0 provisional scorer output ({src_label})', 'carried_metadata_from': 'v1.5.5' if prior else None}
         systems.append(row)
@@ -201,6 +207,7 @@ def main(prov, out_dir='out'):
         'G_med': res['G_med'], 'G_med_api_basis_P_vs_A': res['G_med_api_basis_P_vs_A'], 'G_med_flag_gt10': res['G_med_flag_gt10'],
         'headline': res['headline'], 'options': res['options'], 'views': res['views'], 'bootstrap': res['bootstrap'],
         'n_ranked': len(ranked), 'board': board, 'v16': v16,
+        'noul_method': {'applied': noul_method, 'decisive_source_sha256': sha_file(src_decisive) if decisive else None},
         'systems': systems, 'not_measured': not_measured, 'roster_count': len(systems) + len(not_measured),
     }
 

@@ -51,5 +51,13 @@ test('v1.6.0 preview route is noindex and stays out of sitemap, robots and nav',
   assert.match(page, /v1\.6\.0 preview, provisional/);
   for (const p of ['app/sitemap.ts', 'app/robots.ts', 'components/Nav.tsx']) assert.doesNotMatch(await read(p), /wip-jevbench-v16/);
   const board = await read('components/JevBenchV16Preview.tsx');
-  for (const marker of ['<JevCapabilityRanking', '<JevBubbleCharts', '<JevScoreChart', '<JevCompareV15', '<LanguageView', '<JevV15AllDataGrid', '<DatedCarry', '<Method']) assert.ok(board.includes(marker), marker);
+  for (const marker of ['<JevCapabilityRanking', '<JevBubbleCharts', '<JevScoreChart', '<JevCompareV15', '<LanguageView', '<NoulAndGate', '<JevV15AllDataGrid', '<DatedCarry', '<Method']) assert.ok(board.includes(marker), marker);
+});
+
+test('v1.6.0 preview: method option B (O1S) is applied and every row has a Noul decisive diagnostic', () => {
+  assert.equal(preview.artifact.noul_method?.applied, 'O1S');
+  for (const s of preview.artifact.systems) {
+    assert.ok(s.noul_decisive, s.key);
+    if (s.noul_decisive.supported) assert.ok(s.noul_decisive.decisive_rate >= 0 && s.noul_decisive.decisive_rate <= 1, s.key);
+  }
 });

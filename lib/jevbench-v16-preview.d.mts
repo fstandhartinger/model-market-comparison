@@ -1,8 +1,10 @@
 import type { JevV15Artifact, JevV15System } from './jevbench-v15-preview.mjs';
 export type JevV16ItemSet = { set: 'S' | 'A' | 'P'; name: string; items: number; by_type: Record<'choice' | 'noul' | 'score', number>; answered_by: string };
-export type JevV16PreviewSystem = JevV15System & { capability: number; measured_in: 'v1.6.0'; last_measured_on?: string | null; v16: { lane: 'api' | 'selfhosted'; [k: string]: unknown } };
+export type JevV16PreviewSystem = JevV15System & { capability: number; measured_in: 'v1.6.0'; last_measured_on?: string | null;
+  noul_decisive?: { supported: boolean; decisive_rate?: number | null; acc_among_decisive?: number | null; valid?: number } | null; v16: { lane: 'api' | 'selfhosted'; [k: string]: unknown } };
 export type JevV16PreviewArtifact = Omit<JevV15Artifact, 'systems'> & {
   provisional: true; label: string; source_note: string; G_med_api_basis_P_vs_A: number;
+  noul_method?: { applied: 'O0' | 'O1' | 'O1S'; decisive_source_sha256: string | null };
   systems: JevV16PreviewSystem[];
   v16: { counts: Record<string, number>; equating: { offsets: Record<'I' | 'C', number>; rule: string; min_pool: number; pool_note: string; [k: string]: unknown };
     g_med_rule: string; item_sets: JevV16ItemSet[]; capability_formula: string; long_items_note?: string; [k: string]: unknown };

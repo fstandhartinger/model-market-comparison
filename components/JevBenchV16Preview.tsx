@@ -118,6 +118,8 @@ function Method({ a, sha256, categoriesSha256, carrySha256 }: { a: JevV16Preview
     <h3 className="mt-4 text-lg font-semibold">Headline and Composite</h3>
     <p className="bh-muted mt-1 text-sm">Capability = mean(Intelligence, Calibration) for systems within twice the Jev 1.13.0 cost and median latency (the official caps; the sliders change only your view). The Composite (option {a.headline}) is the equal-weight harmonic mean of Intelligence, Calibration, Speed and Cost with the v1.5 low-axis gates; it remains secondary. Request types Choice, Noul and Score weigh equally; tiers weigh easy {a.tier_weights.easy}, standard {a.tier_weights.standard}, hard {a.tier_weights.hard}, judge {a.tier_weights.judge}.</p>
     <p className="bh-muted mt-1 text-sm">Costs of v1.6-measured systems carry each system&apos;s published v1.5.4 cost per 1,000 decisions (pricing rules unchanged; v1.6 item lengths differ) unless the row says otherwise; Fastino&apos;s is an estimate from its published tariff and measured tokens.</p>
+    <h3 className="mt-4 text-lg font-semibold">Noul decisiveness and Score baseline (addendum B)</h3>
+    <p className="bh-muted mt-1 text-sm" data-bh-jev16-noul-method>Scored with method option {a.noul_method?.applied ?? 'O0'}{a.noul_method?.applied === 'O1S' ? ' (chosen on 3 Oct 2026 after the provisional v1.6 results were known, and disclosed as a post-results change)' : ''}. Each split × type competence is clipped at 0 before the type weighting, so a type answered no better than chance counts as chance instead of negative. The Score chance baseline is the error of always predicting the mid-scale level, so a flat know-nothing distribution earns about 0. A Score cell whose golds all sit at mid-scale keeps the v1.5 random-level baseline; this only occurs in small breakdown and bootstrap cells. Calibration is unchanged. This run: G_med = {a.G_med == null ? "—" : a.G_med.toFixed(2)} points; hosted-API offsets Intelligence {off.I >= 0 ? '+' : ''}{off.I.toFixed(2)}, Calibration {off.C >= 0 ? '+' : ''}{off.C.toFixed(2)}.</p>
     <h3 className="mt-4 text-lg font-semibold">Failed requests and very long items</h3>
     <p className="bh-muted mt-1 text-sm" data-bh-jev16-failures>{a.v16.long_items_note} A failed, refused or unparseable answer counts as wrong for Intelligence and stays in the denominator; it does not enter Calibration (the v1.5 rule, applied to every system).
       {' '}Failed answers per system: {failures.map(([name, n, total]) => `${name} ${n}/${total}`).join(' · ')}.</p>
@@ -127,6 +129,34 @@ function Method({ a, sha256, categoriesSha256, carrySha256 }: { a: JevV16Preview
     <h3 className="mt-4 text-lg font-semibold">Provenance</h3>
     {measuredDays.length > 0 && <p className="bh-muted mt-1 text-sm" data-bh-jev16-measured-days>Measured on the v1.6 pool (run completion day, UTC): {measuredDays.map(([day, names]) => `${day}: ${names.join(', ')}`).join(' · ')}.</p>}
     <p className="bh-muted mt-1 break-all text-xs">Provisional aggregate files: results sha256 {sha256} · categories sha256 {categoriesSha256} · dated carry sha256 {carrySha256}. Built by scripts/build-jevbench-v16-preview.py from {a.source_note.replace(/\.$/, '')} (source sha256 {a.source_sha256}).</p>
+  </section>;
+}
+
+const pct = (v: number | null | undefined) => v == null ? '—' : `${Math.round(v * 100)} %`;
+const TYPES = ['choice', 'noul', 'score'] as const;
+
+// Display rules of the adopted method addendum B: decisive rate per row, "not supported" instead of a number for an
+// unsupported request type, and Intelligence values under the gate shown with a "below gate" label instead of 0.
+function NoulAndGate({ a }: { a: JevV16PreviewArtifact }) {
+  const rows = a.systems.filter((s) => s.ranked).sort((x, y) => (x.rank ?? 999) - (y.rank ?? 999));
+  return <section className="mt-10" aria-labelledby="jev16-noul" data-bh-jev16-noul-gate>
+    <h2 id="jev16-noul" className="text-2xl font-bold">Intelligence gate and Noul decisiveness</h2>
+    <p className="bh-muted mt-1 max-w-4xl text-sm">The Composite applies a soft gate below Intelligence 50 (× (I/50)²). Rows under it show their value with a &quot;below gate&quot; label. The decisive rate is the share of valid Noul answers with P(yes) ≥ 0.80 or ≤ 0.20; only those count as answers. Accuracy among decisive answers is a diagnostic and does not enter any score.</p>
+    <div className="mt-3 overflow-x-auto"><table className="text-left text-sm tabular" data-bh-jev16-noul-table>
+      <thead><tr>{['System', 'Intelligence', 'Choice', 'Noul', 'Score', 'Noul decisive rate', 'Accuracy among decisive'].map((h) => <th key={h} scope="col" className="p-2">{h}</th>)}</tr></thead>
+      <tbody>{rows.map((s) => {
+        const I = s.axes.intelligence;
+        const support = (s as unknown as { support?: Record<string, string> }).support ?? {};
+        const d = s.noul_decisive;
+        return <tr key={s.key} className="border-t border-line">
+          <th scope="row" className="p-2 font-normal whitespace-nowrap">{short(s.display)}</th>
+          <td className="p-2">{one(I)}{I != null && I < 50 && <span className="bh-muted ml-1 text-xs" data-bh-below-gate>below gate</span>}</td>
+          {TYPES.map((t) => <td key={t} className="p-2">{(support[t] ?? 'unsupported') === 'unsupported' ? <span className="bh-muted">not supported</span> : support[t]}</td>)}
+          <td className="p-2">{d && d.supported ? pct(d.decisive_rate) : <span className="bh-muted">not supported</span>}</td>
+          <td className="p-2">{d && d.supported ? pct(d.acc_among_decisive) : '—'}</td>
+        </tr>;
+      })}</tbody>
+    </table></div>
   </section>;
 }
 
@@ -167,6 +197,7 @@ export function JevBenchV16Preview({ artifact: a, sha256, categories, categories
       <JevCompareV15 rows={compareRows} openDecisions={a.v16.counts.P} sealedDecisions={a.v16.counts.S} categories={jevbenchCategoryView(a.revision, compareRows.map((r) => r.key))} />
       <p className="bh-muted mt-2 max-w-4xl text-xs" data-bh-jev16-radar-note>{categories.lane_note} Sealed counts in the compare view refer to self-hosted systems (S {a.v16.counts.S.toLocaleString('en-US')}); hosted APIs answered A {a.v16.counts.A}.</p>
       <LanguageView a={a} categories={categories} />
+      <NoulAndGate a={a} />
       <JevV15AllDataGrid
         artifact={v15}
         categoryView={jevbenchCategoryView(a.revision, allDataKeys)}

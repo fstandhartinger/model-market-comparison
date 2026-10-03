@@ -6,8 +6,8 @@
  "status": "preview-not-published",
  "run_kind": "diagnostic",
  "label": "v1.6.0 preview, provisional",
- "source_sha256": "ce5154b082dd6d70cbc5ce7b2877f2f69ef4bf8c977d7a4c52d8d0261c9a2ffa",
- "source_note": "Provisional scorer output score-provisional-3/out-O0 (3 Oct 2026). Not a release; numbers can change before GO.",
+ "source_sha256": "9ac0853fc8ee333f232eccc62930639eb37226198d06580ce717de8cb7cbc7ec",
+ "source_note": "Provisional scorer output score-provisional-3/out-O1S (3 Oct 2026). Not a release; numbers can change before GO.",
  "sample": {
   "open": 300,
   "sealed": 1200,
@@ -26,8 +26,8 @@
   "standard": 0.2
  },
  "sealed_share_of_intelligence": 0.5,
- "G_med": 3.6227220993708755,
- "G_med_api_basis_P_vs_A": -0.2797089084024975,
+ "G_med": 3.1252636094854402,
+ "G_med_api_basis_P_vs_A": -0.40173038518089044,
  "G_med_flag_gt10": false,
  "headline": "A",
  "options": {
@@ -76,8 +76,8 @@
   "A": {
    "order": [
     "jev-1.13.0",
-    "cygnet",
     "winnow-12b",
+    "cygnet",
     "jev-omni",
     "plumb-4b",
     "decider-4b-v2",
@@ -110,9 +110,9 @@
   "C": {
    "order": [
     "jev-1.13.0",
-    "cygnet",
     "winnow-12b",
     "jev-omni",
+    "cygnet",
     "plumb-4b",
     "decider-4b-v2",
     "jevk5-v0.3-4b",
@@ -141,7 +141,7 @@
    "min_pool": 5,
    "offsets": {
     "C": 2.4213556896858393,
-    "I": -2.5015176787072306
+    "I": -3.112117025529642
    },
    "rule": "median over complete full-coverage self-hosted systems of metric(S u P) - metric(A u P), per metric (Intelligence, Calibration); API value = clip(raw_A + offset)",
    "pool_note": "Median over the complete full-coverage self-hosted systems of this run (at least five required)."
@@ -158,7 +158,7 @@
   "scoring_parameters": {
    "B": 1000,
    "g_med_fixed": null,
-   "noul_method": "O0",
+   "noul_method": "O1S",
    "only": null,
    "seed": 16,
    "test_allow_partial": false,
@@ -206,6 +206,10 @@
    }
   ]
  },
+ "noul_method": {
+  "applied": "O1S",
+  "decisive_source_sha256": "d121085e3b34a2cd4f0e479fab6b7bb8f0e1b952554f46abddd507988fca8d76"
+ },
  "systems": [
   {
    "addendum": null,
@@ -215,7 +219,7 @@
    "axes": {
     "calibration": 90.6452509163552,
     "cost": 54.72500234484654,
-    "intelligence": 66.96759843134213,
+    "intelligence": 61.49904484936329,
     "speed": 91.49989299046987
    },
    "calibration": {
@@ -247,19 +251,19 @@
     },
     "score": 88.22389522666936
    },
-   "capability": 78.80642467384865,
+   "capability": 76.07214788285924,
    "composite_ci95": {
     "A": [
-     69.51866015892863,
-     74.32144997714568
+     66.62312204711449,
+     73.20384079307104
     ],
     "B": [
-     67.29080537836174,
-     73.99535300100496
+     63.10102389498883,
+     72.30226888807472
     ],
     "C": [
-     68.36229505260906,
-     74.32144997714568
+     49.54297886414343,
+     73.20384079307104
     ]
    },
    "cost": {
@@ -272,11 +276,11 @@
    "endpoint_kind": "api",
    "full_coverage": true,
    "intelligence": {
-    "I_open": 70.06596714588416,
-    "I_sealed": 68.87226507421454,
-    "base": 69.46911611004936,
-    "excess": 1.4734109800721171,
-    "gap": 1.1937020716696196,
+    "I_open": 65.60411433522728,
+    "I_sealed": 63.61820941455857,
+    "base": 64.61116187489293,
+    "excess": 2.3876353058495994,
+    "gap": 1.985904920668709,
     "penalty": 1.0,
     "per_type_split": {
      "open|choice": {
@@ -310,7 +314,7 @@
       }
      },
      "open|score": {
-      "cc": 76.71456792425695,
+      "cc": 63.32900949228633,
       "n": {
        "easy": 9,
        "hard": 29,
@@ -318,10 +322,10 @@
        "standard": 16
       },
       "tiers": {
-       "easy": 81.7605633802817,
-       "hard": 73.19270289097875,
-       "judge": 79.57683741648106,
-       "standard": 76.94189602446482
+       "easy": 76.45454545454547,
+       "hard": 65.44837261503929,
+       "judge": 68.91525423728812,
+       "standard": 44.148148148148145
       }
      },
      "sealed|choice": {
@@ -355,7 +359,7 @@
       }
      },
      "sealed|score": {
-      "cc": 74.1045428100798,
+      "cc": 58.34237583111192,
       "n": {
        "easy": 13,
        "hard": 33,
@@ -363,15 +367,15 @@
        "standard": 19
       },
       "tiers": {
-       "easy": 85.80645161290322,
-       "hard": 59.65101150004196,
-       "judge": 95.96837944664031,
-       "standard": 64.36489607390298
+       "easy": 80.8695652173913,
+       "hard": 32.251233262861156,
+       "judge": 95.25581395348837,
+       "standard": 43.89090909090909
       }
      }
     }
    },
-   "jevbench_score": 72.50741701552661,
+   "jevbench_score": 70.80323905226244,
    "key": "jev-1.13.0",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
@@ -384,9 +388,9 @@
     "capability": 1
    },
    "scores": {
-    "A": 72.50741701552661,
-    "B": 71.32732265097476,
-    "C": 72.50741701552661
+    "A": 70.80323905226244,
+    "B": 68.72379367461535,
+    "C": 70.80323905226244
    },
    "speed": {
     "adjustment": "none (API)",
@@ -417,25 +421,25 @@
       94.0726385519778
      ],
      "I": [
-      59.41012852470565,
-      73.15228796390304
+      51.68630699601735,
+      69.15419926309146
      ],
      "capability": [
-      73.05595304040362,
-      82.5912735731182
+      69.18695249175698,
+      80.37189379428014
      ],
      "composite": {
       "A": [
-       69.51866015892863,
-       74.32144997714568
+       66.62312204711449,
+       73.20384079307104
       ],
       "B": [
-       67.29080537836174,
-       73.99535300100496
+       63.10102389498883,
+       72.30226888807472
       ],
       "C": [
-       68.36229505260906,
-       74.32144997714568
+       49.54297886414343,
+       73.20384079307104
       ]
      },
      "seed": 22
@@ -445,15 +449,15 @@
     "complete": true,
     "equated": {
      "calibration": 90.6452509163552,
-     "capability": 78.80642467384865,
-     "intelligence": 66.96759843134213
+     "capability": 76.07214788285924,
+     "intelligence": 61.49904484936329
     },
     "equating_flag": null,
     "equating_offset": {
      "C": 2.4213556896858393,
-     "I": -2.5015176787072306
+     "I": -3.112117025529642
     },
-    "g_med_used": -0.2797089084024975,
+    "g_med_used": -0.40173038518089044,
     "lane": "api",
     "metric_basis": "A u P (sealed side = A, n=300)",
     "n_items": 600,
@@ -465,8 +469,8 @@
       7.664080862725964
      ],
      "I": [
-      -6.488929122250063,
-      1.4530350277347512
+      -7.163935442378886,
+      2.7168419460360087
      ]
     },
     "on_S": null,
@@ -508,25 +512,25 @@
      "score": {
       "accuracy": 0.74,
       "calibration": 89.23813390206607,
-      "cc": 73.77759374526933,
+      "cc": 60.94754989722164,
       "cc_by_type": {
-       "score": 73.77759374526933
+       "score": 60.94754989722164
       },
-      "cc_tiered": 75.40955536716838,
-      "cc_tiered_open": 76.71456792425695,
-      "cc_tiered_sealed": 74.1045428100798,
+      "cc_tiered": 60.83569266169913,
+      "cc_tiered_open": 63.32900949228633,
+      "cc_tiered_sealed": 58.34237583111192,
       "low_n": false,
       "n": 150,
       "n_by_type": {
        "score": 150
       },
-      "score": 73.77759374526933
+      "score": 60.94754989722164
      }
     },
     "raw_on_A": {
      "calibration": 88.22389522666936,
-     "capability": 78.84650566835936,
-     "intelligence": 69.46911611004936
+     "capability": 76.41752855078114,
+     "intelligence": 64.61116187489293
     },
     "set": "A+P"
    },
@@ -545,11 +549,11 @@
     }
    },
    "views": {
-    "Balanced 33:33:33": 67.97364507994867,
-    "Emphasis on Accuracy 60:20:20": 67.56762079330434,
-    "Emphasis on Cost 20:20:60": 61.97236795068933,
-    "Emphasis on Speed 20:60:20": 75.7659541761382,
-    "Intelligence only": 66.96759843134213
+    "Balanced 33:33:33": 65.98834607659725,
+    "Emphasis on Accuracy 60:20:20": 64.1162066575961,
+    "Emphasis on Cost 20:20:60": 60.968962928102904,
+    "Emphasis on Speed 20:60:20": 74.2715571377682,
+    "Intelligence only": 61.49904484936329
    },
    "class": "jev",
    "open": "no",
@@ -564,358 +568,15 @@
    "last_measured_on": "2026-10-01",
    "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.8266666666666667,
+    "acc_among_decisive": 0.9758064516129032,
+    "valid": 150
+   },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
-    "carried_metadata_from": "v1.5.5"
-   }
-  },
-  {
-   "addendum": null,
-   "api_flag": false,
-   "api_subset": false,
-   "author": "blockbrain",
-   "axes": {
-    "calibration": 86.96753988280044,
-    "cost": 56.42912569481113,
-    "intelligence": 60.854884322554724,
-    "speed": 91.77283664982562
-   },
-   "calibration": {
-    "parts": {
-     "choice": {
-      "ece_hard": 0.08631856803856107,
-      "ece_score": 82.73628639228778,
-      "mean_tvd": null,
-      "n": 737,
-      "n_ece_hard": 307,
-      "n_tvd": 0,
-      "score": 82.73628639228778
-     },
-     "noul": {
-      "abstention_rate": 0.18867924528301883,
-      "brier": 0.1059190859395021,
-      "ece": 0.061302788041812155,
-      "n": 371,
-      "score": 87.73944239163757
-     },
-     "score": {
-      "interval90_coverage": 0.978319783197832,
-      "interval90_width": 0.46589882565492324,
-      "n": 369,
-      "nrps": 0.07366857377747793,
-      "score": 90.42689086447598,
-      "top_ece": 0.05889680446650118
-     }
-    },
-    "score": 86.96753988280044
-   },
-   "capability": 73.91121210267758,
-   "composite_ci95": {
-    "A": [
-     68.60411204169068,
-     71.82119142494663
-    ],
-    "B": [
-     65.69890630611741,
-     70.1620067063173
-    ],
-    "C": [
-     60.41052734905268,
-     71.82119142494663
-    ]
-   },
-   "cost": {
-    "basis": "v1.5.4 published cost per 1,000 decisions carried (pricing rules unchanged; v1.6 item lengths differ): documented hosted-model estimate; no exact base-model floor applies",
-    "kind": "estimate",
-    "usage_estimated_rows": 0,
-    "usd_per_1000": 0.028337561576354687
-   },
-   "display": "Cygnet (blockbrain, frozen Gemma-4-12B-it)",
-   "endpoint_kind": "gpu",
-   "full_coverage": true,
-   "intelligence": {
-    "I_open": 64.73540791730781,
-    "I_sealed": 56.97436072780164,
-    "base": 60.854884322554724,
-    "excess": 4.138325090135297,
-    "gap": 7.761047189506172,
-    "penalty": 1.0,
-    "per_type_split": {
-     "open|choice": {
-      "cc": 72.62577711735155,
-      "n": {
-       "easy": 33,
-       "hard": 68,
-       "judge": 32,
-       "standard": 17
-      },
-      "tiers": {
-       "easy": 88.32432432432431,
-       "hard": 67.9144385026738,
-       "judge": 60.44825313117996,
-       "standard": 92.46546672247803
-      }
-     },
-     "open|noul": {
-      "cc": 57.7536231884058,
-      "n": {
-       "easy": 14,
-       "hard": 23,
-       "judge": 20,
-       "standard": 18
-      },
-      "tiers": {
-       "easy": 100.0,
-       "hard": 65.21739130434783,
-       "judge": 50.0,
-       "standard": 33.33333333333333
-      }
-     },
-     "open|score": {
-      "cc": 63.82682344616612,
-      "n": {
-       "easy": 9,
-       "hard": 29,
-       "judge": 21,
-       "standard": 16
-      },
-      "tiers": {
-       "easy": 62.65303084589129,
-       "hard": 58.36199979792451,
-       "judge": 66.19624992688532,
-       "standard": 71.78922732170795
-      }
-     },
-     "sealed|choice": {
-      "cc": 65.49755292537436,
-      "n": {
-       "easy": 96,
-       "hard": 252,
-       "judge": 137,
-       "standard": 115
-      },
-      "tiers": {
-       "easy": 84.03665656640308,
-       "hard": 56.730769230769226,
-       "judge": 66.4804469273743,
-       "standard": 72.28722749107035
-      }
-     },
-     "sealed|noul": {
-      "cc": 39.63579350399792,
-      "n": {
-       "easy": 50,
-       "hard": 103,
-       "judge": 76,
-       "standard": 71
-      },
-      "tiers": {
-       "easy": 68.0,
-       "hard": 12.621359223300965,
-       "judge": 44.736842105263165,
-       "standard": 71.83098591549295
-      }
-     },
-     "sealed|score": {
-      "cc": 65.78973575403265,
-      "n": {
-       "easy": 43,
-       "hard": 125,
-       "judge": 57,
-       "standard": 75
-      },
-      "tiers": {
-       "easy": 77.5971890381146,
-       "hard": 57.63623036016076,
-       "judge": 70.57302958756935,
-       "standard": 69.01807914943039
-      }
-     }
-    }
-   },
-   "jevbench_score": 70.73524839122327,
-   "key": "cygnet",
-   "listing": "ranked",
-   "planned_weight_denominator": 1.0,
-   "rank": 2,
-   "ranked": true,
-   "ranks": {
-    "A": 2,
-    "B": 3,
-    "C": 2,
-    "capability": 2
-   },
-   "scores": {
-    "A": 70.73524839122327,
-    "B": 68.51058068457985,
-    "C": 70.73524839122327
-   },
-   "speed": {
-    "adjustment": "x2 + 0.15 s (assumption, not measured)",
-    "n": 124,
-    "p50_s_adjusted": 0.22363614114001393,
-    "p50_s_raw": 0.03681807057000697,
-    "p95_s_adjusted": 0.29728592303581536,
-    "p95_s_raw": 0.07364296151790768
-   },
-   "status": {
-    "answered_ok": 1477,
-    "missing": 0,
-    "rows": 1500,
-    "status": "complete"
-   },
-   "support": {
-    "choice": "native",
-    "noul": "native",
-    "score": "native"
-   },
-   "v16": {
-    "api_subset": false,
-    "breakdowns_equated": false,
-    "ci95": {
-     "B": 1000,
-     "C": [
-      82.04651836733596,
-      88.71728133464546
-     ],
-     "I": [
-      56.314769523781564,
-      64.23553293881979
-     ],
-     "capability": [
-      69.87385188026752,
-      75.76881897342946
-     ],
-     "composite": {
-      "A": [
-       68.60411204169068,
-       71.82119142494663
-      ],
-      "B": [
-       65.69890630611741,
-       70.1620067063173
-      ],
-      "C": [
-       60.41052734905268,
-       71.82119142494663
-      ]
-     },
-     "seed": 16
-    },
-    "ci95_n": 1200,
-    "complete": true,
-    "equated": null,
-    "equating_flag": null,
-    "equating_offset": null,
-    "g_med_used": 3.6227220993708755,
-    "lane": "selfhosted",
-    "metric_basis": "S u P",
-    "n_items": 1500,
-    "n_public": 300,
-    "n_sealed_side": 1200,
-    "on_S": {
-     "calibration": 86.96753988280044,
-     "capability": 73.91121210267758,
-     "intelligence": 60.854884322554724
-    },
-    "per_type": {
-     "choice": {
-      "accuracy": 0.748,
-      "calibration": 82.73628639228778,
-      "cc": 67.7727991815314,
-      "cc_by_type": {
-       "choice": 67.7727991815314
-      },
-      "cc_tiered": 69.06166502136296,
-      "cc_tiered_open": 72.62577711735155,
-      "cc_tiered_sealed": 65.49755292537436,
-      "low_n": false,
-      "n": 750,
-      "n_by_type": {
-       "choice": 750
-      },
-      "score": 67.7727991815314
-     },
-     "noul": {
-      "accuracy": 0.736,
-      "calibration": 87.73944239163757,
-      "cc": 47.199999999999996,
-      "cc_by_type": {
-       "noul": 47.199999999999996
-      },
-      "cc_tiered": 48.69470834620186,
-      "cc_tiered_open": 57.7536231884058,
-      "cc_tiered_sealed": 39.63579350399792,
-      "low_n": false,
-      "n": 375,
-      "n_by_type": {
-       "noul": 375
-      },
-      "score": 47.199999999999996
-     },
-     "score": {
-      "accuracy": 0.6133333333333333,
-      "calibration": 90.42689086447598,
-      "cc": 65.28304581120936,
-      "cc_by_type": {
-       "score": 65.28304581120936
-      },
-      "cc_tiered": 64.80827960009938,
-      "cc_tiered_open": 63.82682344616612,
-      "cc_tiered_sealed": 65.78973575403265,
-      "low_n": false,
-      "n": 375,
-      "n_by_type": {
-       "score": 375
-      },
-      "score": 65.28304581120936
-     }
-    },
-    "raw_on_A": {
-     "calibration": 83.24254074674259,
-     "capability": 72.60878463794523,
-     "intelligence": 61.97502852914786
-    },
-    "set": "S+P"
-   },
-   "validity": {
-    "choice": {
-     "invalid_rate": 0.01733333333333331,
-     "n": 750
-    },
-    "noul": {
-     "invalid_rate": 0.010666666666666713,
-     "n": 375
-    },
-    "score": {
-     "invalid_rate": 0.016000000000000014,
-     "n": 375
-    }
-   },
-   "views": {
-    "Balanced 33:33:33": 66.5921573389541,
-    "Emphasis on Accuracy 60:20:20": 64.17215013985877,
-    "Emphasis on Cost 20:20:60": 62.11717193887047,
-    "Emphasis on Speed 20:60:20": 74.80182276832207,
-    "Intelligence only": 60.85488432255473
-   },
-   "class": "system-one-open",
-   "open": "yes",
-   "licence": "shim MIT; weights Apache-2.0 with Google's Gemma Prohibited Use Policy",
-   "repo": "https://github.com/blockbrain-ai/cygnet-recipe",
-   "gpu": "RTXPRO6000",
-   "endpoint_condition": "evaluator-owned Lium GPU pod (RTXPRO6000), offline read-only container",
-   "underlying": null,
-   "adapter_id": "images/cygnet/spec.json:jevbench.adapters.typesafe.TypeSafeAdapter",
-   "api_exposure_note": null,
-   "model_pin": null,
-   "last_measured_on": "2026-10-02",
-   "measurement_date_status": "run output completion day (UTC)",
-   "measured_in": "v1.6.0",
-   "not_ranked_because": null,
-   "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -927,7 +588,7 @@
    "axes": {
     "calibration": 82.95806123333315,
     "cost": 56.556023424877196,
-    "intelligence": 64.3684892609522,
+    "intelligence": 59.53366229166759,
     "speed": 86.69753831262085
    },
    "calibration": {
@@ -959,19 +620,19 @@
     },
     "score": 82.95806123333315
    },
-   "capability": 73.66327524714268,
+   "capability": 71.24586176250037,
    "composite_ci95": {
     "A": [
-     68.3800857767319,
-     71.76212787864816
+     66.39053884589339,
+     70.39903436841843
     ],
     "B": [
-     66.59278148217535,
-     71.117713915187
+     63.47073129772856,
+     68.95474233352229
     ],
     "C": [
-     68.10578364836273,
-     71.76212787864816
+     53.82697093282706,
+     70.39903436841843
     ]
    },
    "cost": {
@@ -984,11 +645,11 @@
    "endpoint_kind": "gpu",
    "full_coverage": true,
    "intelligence": {
-    "I_open": 64.5419721808051,
-    "I_sealed": 64.19500634109929,
-    "base": 64.3684892609522,
-    "excess": -3.2757562596650587,
-    "gap": 0.34696583970581685,
+    "I_open": 59.81914414395652,
+    "I_sealed": 59.24818043937866,
+    "base": 59.53366229166759,
+    "excess": -2.5542999049075767,
+    "gap": 0.5709637045778635,
     "penalty": 1.0,
     "per_type_split": {
      "open|choice": {
@@ -1022,7 +683,7 @@
       }
      },
      "open|score": {
-      "cc": 72.65017003838497,
+      "cc": 58.48168592783921,
       "n": {
        "easy": 9,
        "hard": 29,
@@ -1030,10 +691,10 @@
        "standard": 16
       },
       "tiers": {
-       "easy": 70.02932267039755,
-       "hard": 73.10941372547562,
-       "judge": 66.12549322937068,
-       "standard": 82.82912156171884
+       "easy": 61.310580174513184,
+       "hard": 65.34102213505747,
+       "judge": 48.44185240673705,
+       "standard": 58.40831667171895
       }
      },
      "sealed|choice": {
@@ -1067,7 +728,7 @@
       }
      },
      "sealed|score": {
-      "cc": 70.32622311547773,
+      "cc": 55.48574541031586,
       "n": {
        "easy": 43,
        "hard": 125,
@@ -1075,30 +736,30 @@
        "standard": 75
       },
       "tiers": {
-       "easy": 80.40189476049136,
-       "hard": 66.22581033423567,
-       "judge": 72.55185457297459,
-       "standard": 70.15076566920975
+       "easy": 72.39586027967081,
+       "hard": 51.82211180030672,
+       "judge": 58.61411366152696,
+       "standard": 49.665402818839944
       }
      }
     }
    },
-   "jevbench_score": 70.41538095264903,
+   "jevbench_score": 68.88542163459404,
    "key": "winnow-12b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 3,
+   "rank": 2,
    "ranked": true,
    "ranks": {
-    "A": 3,
+    "A": 2,
     "B": 2,
-    "C": 3,
-    "capability": 4
+    "C": 2,
+    "capability": 3
    },
    "scores": {
-    "A": 70.41538095264903,
-    "B": 69.11678983452356,
-    "C": 70.41538095264903
+    "A": 68.88542163459404,
+    "B": 66.78718784915615,
+    "C": 67.81878724910808
    },
    "speed": {
     "adjustment": "x2 + 0.15 s (assumption, not measured)",
@@ -1129,25 +790,25 @@
       85.00037709032911
      ],
      "I": [
-      59.837649565671505,
-      68.71680035229829
+      54.04369980209531,
+      64.09101549427233
      ],
      "capability": [
-      69.46129290425607,
-      76.25072977441106
+      66.71872629802132,
+      73.89800656059194
      ],
      "composite": {
       "A": [
-       68.3800857767319,
-       71.76212787864816
+       66.39053884589339,
+       70.39903436841843
       ],
       "B": [
-       66.59278148217535,
-       71.117713915187
+       63.47073129772856,
+       68.95474233352229
       ],
       "C": [
-       68.10578364836273,
-       71.76212787864816
+       53.82697093282706,
+       70.39903436841843
       ]
      },
      "seed": 26
@@ -1157,7 +818,7 @@
     "equated": null,
     "equating_flag": null,
     "equating_offset": null,
-    "g_med_used": 3.6227220993708755,
+    "g_med_used": 3.1252636094854402,
     "lane": "selfhosted",
     "metric_basis": "S u P",
     "n_items": 1500,
@@ -1165,8 +826,8 @@
     "n_sealed_side": 1200,
     "on_S": {
      "calibration": 82.95806123333315,
-     "capability": 73.66327524714268,
-     "intelligence": 64.3684892609522
+     "capability": 71.24586176250037,
+     "intelligence": 59.53366229166759
     },
     "per_type": {
      "choice": {
@@ -1206,25 +867,25 @@
      "score": {
       "accuracy": 0.704,
       "calibration": 87.23177368091314,
-      "cc": 70.87391433311245,
+      "cc": 56.525484762477454,
       "cc_by_type": {
-       "score": 70.87391433311245
+       "score": 56.525484762477454
       },
-      "cc_tiered": 71.48819657693136,
-      "cc_tiered_open": 72.65017003838497,
-      "cc_tiered_sealed": 70.32622311547773,
+      "cc_tiered": 56.98371566907753,
+      "cc_tiered_open": 58.48168592783921,
+      "cc_tiered_sealed": 55.48574541031586,
       "low_n": false,
       "n": 375,
       "n_by_type": {
        "score": 375
       },
-      "score": 70.87391433311245
+      "score": 56.525484762477454
      }
     },
     "raw_on_A": {
      "calibration": 80.53670554364732,
-     "capability": 72.60926608932684,
-     "intelligence": 64.68182663500636
+     "capability": 70.27835744009714,
+     "intelligence": 60.02000933654696
     },
     "set": "S+P"
    },
@@ -1243,11 +904,11 @@
     }
    },
    "views": {
-    "Balanced 33:33:33": 67.03687814038628,
-    "Emphasis on Accuracy 60:20:20": 65.94340736360495,
-    "Emphasis on Cost 20:20:60": 62.41055592234616,
-    "Emphasis on Speed 20:60:20": 73.7243551874557,
-    "Intelligence only": 64.3684892609522
+    "Balanced 33:33:33": 65.19874575043826,
+    "Emphasis on Accuracy 60:20:20": 62.8080780809742,
+    "Emphasis on Cost 20:20:60": 61.44293550575936,
+    "Emphasis on Speed 20:60:20": 72.37789977811173,
+    "Intelligence only": 59.53366229166759
    },
    "class": "jev-rebuild",
    "open": "yes",
@@ -1262,9 +923,370 @@
    "last_measured_on": "2026-10-02",
    "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.8598382749326146,
+    "acc_among_decisive": 0.9153605015673981,
+    "valid": 371
+   },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
+    "carried_metadata_from": "v1.5.5"
+   }
+  },
+  {
+   "addendum": null,
+   "api_flag": false,
+   "api_subset": false,
+   "author": "blockbrain",
+   "axes": {
+    "calibration": 86.96753988280044,
+    "cost": 56.42912569481113,
+    "intelligence": 54.83928122751086,
+    "speed": 91.77283664982562
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.08631856803856107,
+      "ece_score": 82.73628639228778,
+      "mean_tvd": null,
+      "n": 737,
+      "n_ece_hard": 307,
+      "n_tvd": 0,
+      "score": 82.73628639228778
+     },
+     "noul": {
+      "abstention_rate": 0.18867924528301883,
+      "brier": 0.1059190859395021,
+      "ece": 0.061302788041812155,
+      "n": 371,
+      "score": 87.73944239163757
+     },
+     "score": {
+      "interval90_coverage": 0.978319783197832,
+      "interval90_width": 0.46589882565492324,
+      "n": 369,
+      "nrps": 0.07366857377747793,
+      "score": 90.42689086447598,
+      "top_ece": 0.05889680446650118
+     }
+    },
+    "score": 86.96753988280044
+   },
+   "capability": 70.90341055515565,
+   "composite_ci95": {
+    "A": [
+     63.15580140992784,
+     69.9199540044952
+    ],
+    "B": [
+     59.1637133446481,
+     67.32147391644115
+    ],
+    "C": [
+     43.858195423561,
+     66.33020481442693
+    ]
+   },
+   "cost": {
+    "basis": "v1.5.4 published cost per 1,000 decisions carried (pricing rules unchanged; v1.6 item lengths differ): documented hosted-model estimate; no exact base-model floor applies",
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.028337561576354687
+   },
+   "display": "Cygnet (blockbrain, frozen Gemma-4-12B-it)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 58.329951877214064,
+    "I_sealed": 51.348610577807655,
+    "base": 54.83928122751086,
+    "excess": 3.856077689920969,
+    "gap": 6.9813412994064095,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 72.62577711735155,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 88.32432432432431,
+       "hard": 67.9144385026738,
+       "judge": 60.44825313117996,
+       "standard": 92.46546672247803
+      }
+     },
+     "open|noul": {
+      "cc": 57.7536231884058,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 100.0,
+       "hard": 65.21739130434783,
+       "judge": 50.0,
+       "standard": 33.33333333333333
+      }
+     },
+     "open|score": {
+      "cc": 44.61045532588486,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 51.78845800105967,
+       "hard": 46.33324418399161,
+       "judge": 48.54954649888648,
+       "standard": 31.66723951258148
+      }
+     },
+     "sealed|choice": {
+      "cc": 65.49755292537436,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 84.03665656640308,
+       "hard": 56.730769230769226,
+       "judge": 66.4804469273743,
+       "standard": 72.28722749107035
+      }
+     },
+     "sealed|noul": {
+      "cc": 39.63579350399792,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 68.0,
+       "hard": 12.621359223300965,
+       "judge": 44.736842105263165,
+       "standard": 71.83098591549295
+      }
+     },
+     "sealed|score": {
+      "cc": 48.9124853040507,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 68.44540243240824,
+       "hard": 39.569328601993966,
+       "judge": 55.630472156586585,
+       "standard": 47.75535986518157
+      }
+     }
+    }
+   },
+   "jevbench_score": 68.55012424151383,
+   "key": "cygnet",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 3,
+   "ranked": true,
+   "ranks": {
+    "A": 3,
+    "B": 3,
+    "C": 4,
+    "capability": 4
+   },
+   "scores": {
+    "A": 68.55012424151383,
+    "B": 65.28560070195185,
+    "C": 57.26499844882472
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.22363614114001393,
+    "p50_s_raw": 0.03681807057000697,
+    "p95_s_adjusted": 0.29728592303581536,
+    "p95_s_raw": 0.07364296151790768
+   },
+   "status": {
+    "answered_ok": 1477,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      82.04651836733596,
+      88.71728133464546
+     ],
+     "I": [
+      48.998567048994275,
+      58.540923611554874
+     ],
+     "capability": [
+      66.36064450557973,
+      72.82555345149567
+     ],
+     "composite": {
+      "A": [
+       63.15580140992784,
+       69.9199540044952
+      ],
+      "B": [
+       59.1637133446481,
+       67.32147391644115
+      ],
+      "C": [
+       43.858195423561,
+       66.33020481442693
+      ]
+     },
+     "seed": 16
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "g_med_used": 3.1252636094854402,
+    "lane": "selfhosted",
+    "metric_basis": "S u P",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 86.96753988280044,
+     "capability": 70.90341055515565,
+     "intelligence": 54.83928122751086
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.748,
+      "calibration": 82.73628639228778,
+      "cc": 67.7727991815314,
+      "cc_by_type": {
+       "choice": 67.7727991815314
+      },
+      "cc_tiered": 69.06166502136296,
+      "cc_tiered_open": 72.62577711735155,
+      "cc_tiered_sealed": 65.49755292537436,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 67.7727991815314
+     },
+     "noul": {
+      "accuracy": 0.736,
+      "calibration": 87.73944239163757,
+      "cc": 47.199999999999996,
+      "cc_by_type": {
+       "noul": 47.199999999999996
+      },
+      "cc_tiered": 48.69470834620186,
+      "cc_tiered_open": 57.7536231884058,
+      "cc_tiered_sealed": 39.63579350399792,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 47.199999999999996
+     },
+     "score": {
+      "accuracy": 0.6133333333333333,
+      "calibration": 90.42689086447598,
+      "cc": 48.18037785294212,
+      "cc_by_type": {
+       "score": 48.18037785294212
+      },
+      "cc_tiered": 46.76147031496778,
+      "cc_tiered_open": 44.61045532588486,
+      "cc_tiered_sealed": 48.9124853040507,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 48.18037785294212
+     }
+    },
+    "raw_on_A": {
+     "calibration": 83.24254074674259,
+     "capability": 69.54334852201868,
+     "intelligence": 55.844156297294745
+    },
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.01733333333333331,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.010666666666666713,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.016000000000000014,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 64.03016157894142,
+    "Emphasis on Accuracy 60:20:20": 60.00734907512389,
+    "Emphasis on Cost 20:20:60": 60.756582833038394,
+    "Emphasis on Speed 20:60:20": 72.83760421908612,
+    "Intelligence only": 54.83928122751087
+   },
+   "class": "system-one-open",
+   "open": "yes",
+   "licence": "shim MIT; weights Apache-2.0 with Google's Gemma Prohibited Use Policy",
+   "repo": "https://github.com/blockbrain-ai/cygnet-recipe",
+   "gpu": "RTXPRO6000",
+   "endpoint_condition": "evaluator-owned Lium GPU pod (RTXPRO6000), offline read-only container",
+   "underlying": null,
+   "adapter_id": "images/cygnet/spec.json:jevbench.adapters.typesafe.TypeSafeAdapter",
+   "api_exposure_note": null,
+   "model_pin": null,
+   "last_measured_on": "2026-10-02",
+   "measurement_date_status": "run output completion day (UTC)",
+   "measured_in": "v1.6.0",
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.8113207547169812,
+    "acc_among_decisive": 0.9169435215946844,
+    "valid": 371
+   },
+   "not_ranked_because": null,
+   "provenance": {
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -1276,7 +1298,7 @@
    "axes": {
     "calibration": 87.04450672835743,
     "cost": 56.05113155939739,
-    "intelligence": 60.39751501275147,
+    "intelligence": 55.530225828826175,
     "speed": 85.43173201875288
    },
    "calibration": {
@@ -1308,19 +1330,19 @@
     },
     "score": 87.04450672835743
    },
-   "capability": 73.72101087055445,
+   "capability": 71.2873662785918,
    "composite_ci95": {
     "A": [
-     67.36871919932891,
-     70.6501588234248
+     64.9618652466948,
+     69.0092290766849
     ],
     "B": [
-     64.69440405042454,
-     69.24253387874792
+     61.392021732056456,
+     66.8225485519341
     ],
     "C": [
-     58.23202528580759,
-     70.6501588234248
+     45.60073608756204,
+     67.5902580276743
     ]
    },
    "cost": {
@@ -1333,11 +1355,11 @@
    "endpoint_kind": "gpu",
    "full_coverage": true,
    "intelligence": {
-    "I_open": 63.83558002643446,
-    "I_sealed": 56.959449999068475,
-    "base": 60.39751501275147,
-    "excess": 3.253407927995106,
-    "gap": 6.876130027365981,
+    "I_open": 59.14991720973798,
+    "I_sealed": 51.91053444791438,
+    "base": 55.530225828826175,
+    "excess": 4.114119152338159,
+    "gap": 7.239382761823599,
     "penalty": 1.0,
     "per_type_split": {
      "open|choice": {
@@ -1371,7 +1393,7 @@
       }
      },
      "open|score": {
-      "cc": 71.35972736445073,
+      "cc": 57.30273891436131,
       "n": {
        "easy": 9,
        "hard": 29,
@@ -1379,10 +1401,10 @@
        "standard": 16
       },
       "tiers": {
-       "easy": 67.92305693273026,
-       "hard": 62.947941486299364,
-       "judge": 76.8566802696764,
-       "standard": 81.65620497877522
+       "easy": 58.591582585888155,
+       "hard": 52.24401347123031,
+       "judge": 64.7750828511346,
+       "standard": 55.56725205969997
       }
      },
      "sealed|choice": {
@@ -1416,7 +1438,7 @@
       }
      },
      "sealed|score": {
-      "cc": 69.55113993771299,
+      "cc": 54.404393284250695,
       "n": {
        "easy": 43,
        "hard": 125,
@@ -1424,15 +1446,15 @@
        "standard": 75
       },
       "tiers": {
-       "easy": 81.91063357187544,
-       "hard": 63.820947806039996,
-       "judge": 72.22245394690556,
-       "standard": 70.82480637018888
+       "easy": 74.52093494591816,
+       "hard": 48.39164613508641,
+       "judge": 58.117448525933035,
+       "standard": 50.80203388922203
       }
      }
     }
    },
-   "jevbench_score": 69.4547494157247,
+   "jevbench_score": 67.74758858028281,
    "key": "jev-omni",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
@@ -1441,13 +1463,13 @@
    "ranks": {
     "A": 4,
     "B": 4,
-    "C": 4,
-    "capability": 3
+    "C": 3,
+    "capability": 2
    },
    "scores": {
-    "A": 69.4547494157247,
-    "B": 67.43231429797916,
-    "C": 69.4547494157247
+    "A": 67.74758858028281,
+    "B": 64.89216659285307,
+    "C": 58.02968592150493
    },
    "speed": {
     "adjustment": "x2 + 0.15 s (assumption, not measured)",
@@ -1478,25 +1500,25 @@
       88.44351556902285
      ],
      "I": [
-      55.88430251292241,
-      64.25623568106657
+      50.1723549319803,
+      59.38412054778462
      ],
      "capability": [
-      69.61900546237662,
-      75.55832701200146
+      66.83022814821157,
+      73.21902823356662
      ],
      "composite": {
       "A": [
-       67.36871919932891,
-       70.6501588234248
+       64.9618652466948,
+       69.0092290766849
       ],
       "B": [
-       64.69440405042454,
-       69.24253387874792
+       61.392021732056456,
+       66.8225485519341
       ],
       "C": [
-       58.23202528580759,
-       70.6501588234248
+       45.60073608756204,
+       67.5902580276743
       ]
      },
      "seed": 23
@@ -1506,7 +1528,7 @@
     "equated": null,
     "equating_flag": null,
     "equating_offset": null,
-    "g_med_used": 3.6227220993708755,
+    "g_med_used": 3.1252636094854402,
     "lane": "selfhosted",
     "metric_basis": "S u P",
     "n_items": 1500,
@@ -1514,8 +1536,8 @@
     "n_sealed_side": 1200,
     "on_S": {
      "calibration": 87.04450672835743,
-     "capability": 73.72101087055445,
-     "intelligence": 60.39751501275147
+     "capability": 71.2873662785918,
+     "intelligence": 55.530225828826175
     },
     "per_type": {
      "choice": {
@@ -1555,25 +1577,25 @@
      "score": {
       "accuracy": 0.6906666666666667,
       "calibration": 91.08606158109325,
-      "cc": 69.9475666458352,
+      "cc": 55.14278895136254,
       "cc_by_type": {
-       "score": 69.9475666458352
+       "score": 55.14278895136254
       },
-      "cc_tiered": 70.45543365108186,
-      "cc_tiered_open": 71.35972736445073,
-      "cc_tiered_sealed": 69.55113993771299,
+      "cc_tiered": 55.85356609930601,
+      "cc_tiered_open": 57.30273891436131,
+      "cc_tiered_sealed": 54.404393284250695,
       "low_n": false,
       "n": 375,
       "n_by_type": {
        "score": 375
       },
-      "score": 69.9475666458352
+      "score": 55.14278895136254
      }
     },
     "raw_on_A": {
      "calibration": 85.06452164862384,
-     "capability": 73.50655222954862,
-     "intelligence": 61.9485828104734
+     "capability": 71.04516964846138,
+     "intelligence": 57.025817648298926
     },
     "set": "S+P"
    },
@@ -1592,11 +1614,11 @@
     }
    },
    "views": {
-    "Balanced 33:33:33": 65.07157698247727,
-    "Emphasis on Accuracy 60:20:20": 63.11774653991856,
-    "Emphasis on Cost 20:20:60": 61.13606642136529,
-    "Emphasis on Speed 20:60:20": 71.9283881439236,
-    "Intelligence only": 60.39751501275147
+    "Balanced 33:33:33": 63.085756293696,
+    "Emphasis on Accuracy 60:20:20": 59.82955470935818,
+    "Emphasis on Cost 20:20:60": 60.07014592127774,
+    "Emphasis on Speed 20:60:20": 70.45744510674369,
+    "Intelligence only": 55.53022582882618
    },
    "class": "jev-rebuild",
    "open": "yes",
@@ -1611,9 +1633,15 @@
    "last_measured_on": "2026-10-02",
    "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.7412398921832885,
+    "acc_among_decisive": 0.9381818181818182,
+    "valid": 371
+   },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -1625,7 +1653,7 @@
    "axes": {
     "calibration": 87.88101858186977,
     "cost": 63.07359395281681,
-    "intelligence": 49.94926917715007,
+    "intelligence": 42.9626698747687,
     "speed": 93.83356539601934
    },
    "calibration": {
@@ -1657,19 +1685,19 @@
     },
     "score": 87.88101858186977
    },
-   "capability": 68.91514387950991,
+   "capability": 65.42184422831923,
    "composite_ci95": {
     "A": [
-     53.58128553841222,
-     70.81897217599418
+     33.33518370152902,
+     60.677434391523825
     ],
     "B": [
-     49.0139553293285,
-     66.80561512573175
+     29.47858679811554,
+     55.89639251711786
     ],
     "C": [
-     37.20922606834183,
-     58.175897318947825
+     23.149433126061822,
+     42.137107216335984
     ]
    },
    "cost": {
@@ -1682,11 +1710,11 @@
    "endpoint_kind": "gpu",
    "full_coverage": true,
    "intelligence": {
-    "I_open": 52.52266731743627,
-    "I_sealed": 47.37587103686388,
-    "base": 49.94926917715007,
-    "excess": 1.5240741812015202,
-    "gap": 5.146796280572396,
+    "I_open": 45.15367542782093,
+    "I_sealed": 40.77166432171647,
+    "base": 42.9626698747687,
+    "excess": 1.2567474966190169,
+    "gap": 4.382011106104457,
     "penalty": 1.0,
     "per_type_split": {
      "open|choice": {
@@ -1720,7 +1748,7 @@
       }
      },
      "open|score": {
-      "cc": 57.74995115019435,
+      "cc": 35.64297548134833,
       "n": {
        "easy": 9,
        "hard": 29,
@@ -1728,10 +1756,10 @@
        "standard": 16
       },
       "tiers": {
-       "easy": 69.31247308876523,
-       "hard": 45.80957151269646,
-       "judge": 63.17831638117708,
-       "standard": 67.70690160943053
+       "easy": 60.38519253276966,
+       "hard": 30.154558838586563,
+       "judge": 43.95614933948649,
+       "standard": 21.77893945395395
       }
      },
      "sealed|choice": {
@@ -1765,7 +1793,7 @@
       }
      },
      "sealed|score": {
-      "cc": 60.581143227153056,
+      "cc": 40.76852308171083,
       "n": {
        "easy": 43,
        "hard": 125,
@@ -1773,15 +1801,15 @@
        "standard": 75
       },
       "tiers": {
-       "easy": 75.79170877715593,
-       "hard": 58.55457131780688,
-       "judge": 57.79040747929093,
-       "standard": 61.215107892637135
+       "easy": 65.90236427761113,
+       "hard": 40.87931496804801,
+       "judge": 36.35703355260749,
+       "standard": 34.597253004741354
       }
      }
     }
    },
-   "jevbench_score": 68.93141877077262,
+   "jevbench_score": 48.28224126395837,
    "key": "plumb-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
@@ -1794,9 +1822,9 @@
     "capability": 5
    },
    "scores": {
-    "A": 68.93141877077262,
-    "B": 64.02893761331987,
-    "C": 47.86904081303654
+    "A": 48.28224126395837,
+    "B": 43.7169924526014,
+    "C": 33.529334211082194
    },
    "speed": {
     "adjustment": "x2 + 0.15 s (assumption, not measured)",
@@ -1827,25 +1855,25 @@
       88.09892514741215
      ],
      "I": [
-      45.042309215953026,
-      54.30828283239261
+      36.93445328411539,
+      47.37865268573689
      ],
      "capability": [
-      64.24440446665527,
-      70.46687798605421
+      60.33884312621344,
+      67.13324303857047
      ],
      "composite": {
       "A": [
-       53.58128553841222,
-       70.81897217599418
+       33.33518370152902,
+       60.677434391523825
       ],
       "B": [
-       49.0139553293285,
-       66.80561512573175
+       29.47858679811554,
+       55.89639251711786
       ],
       "C": [
-       37.20922606834183,
-       58.175897318947825
+       23.149433126061822,
+       42.137107216335984
       ]
      },
      "seed": 25
@@ -1855,7 +1883,7 @@
     "equated": null,
     "equating_flag": null,
     "equating_offset": null,
-    "g_med_used": 3.6227220993708755,
+    "g_med_used": 3.1252636094854402,
     "lane": "selfhosted",
     "metric_basis": "S u P",
     "n_items": 1500,
@@ -1863,8 +1891,8 @@
     "n_sealed_side": 1200,
     "on_S": {
      "calibration": 87.88101858186977,
-     "capability": 68.91514387950991,
-     "intelligence": 49.94926917715007
+     "capability": 65.42184422831923,
+     "intelligence": 42.9626698747687
     },
     "per_type": {
      "choice": {
@@ -1904,25 +1932,25 @@
      "score": {
       "accuracy": 0.576,
       "calibration": 89.2339425479598,
-      "cc": 60.79520756920622,
+      "cc": 41.48168877172061,
       "cc_by_type": {
-       "score": 60.79520756920622
+       "score": 41.48168877172061
       },
-      "cc_tiered": 59.1655471886737,
-      "cc_tiered_open": 57.74995115019435,
-      "cc_tiered_sealed": 60.581143227153056,
+      "cc_tiered": 38.20574928152958,
+      "cc_tiered_open": 35.64297548134833,
+      "cc_tiered_sealed": 40.76852308171083,
       "low_n": false,
       "n": 375,
       "n_by_type": {
        "score": 375
       },
-      "score": 60.79520756920622
+      "score": 41.48168877172061
      }
     },
     "raw_on_A": {
      "calibration": 82.25783080586818,
-     "capability": 69.14922165988236,
-     "intelligence": 56.040612513896534
+     "capability": 66.15973395095179,
+     "intelligence": 50.06163709603538
     },
     "set": "S+P"
    },
@@ -1941,11 +1969,11 @@
     }
    },
    "views": {
-    "Balanced 33:33:33": 64.341033387337,
-    "Emphasis on Accuracy 60:20:20": 57.63785427381599,
-    "Emphasis on Cost 20:20:60": 63.77552871277467,
-    "Emphasis on Speed 20:60:20": 73.54650506970461,
-    "Intelligence only": 49.847961896208766
+    "Balanced 33:33:33": 44.487894416524036,
+    "Emphasis on Accuracy 60:20:20": 38.31837801553863,
+    "Emphasis on Cost 20:20:60": 45.2973332743533,
+    "Emphasis on Speed 20:60:20": 51.919511056412496,
+    "Intelligence only": 31.720043803902097
    },
    "class": "unclassified",
    "open": "unknown",
@@ -1960,9 +1988,15 @@
    "last_measured_on": "2026-10-02",
    "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.7066666666666667,
+    "acc_among_decisive": 0.9132075471698113,
+    "valid": 375
+   },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -1974,7 +2008,7 @@
    "axes": {
     "calibration": 89.63735637833331,
     "cost": 64.54376873042901,
-    "intelligence": 47.303937121082235,
+    "intelligence": 40.12597268917964,
     "speed": 91.78549329698745
    },
    "calibration": {
@@ -2006,19 +2040,19 @@
     },
     "score": 89.63735637833331
    },
-   "capability": 68.47064674970777,
+   "capability": 64.88166453375648,
    "composite_ci95": {
     "A": [
-     46.6815178079257,
-     69.52536538397908
+     28.616570338455894,
+     49.6663884509753
     ],
     "B": [
-     42.215792738324815,
-     64.62285460561014
+     24.96437888280913,
+     44.99542234462165
     ],
     "C": [
-     32.41772069994841,
-     49.1319720951152
+     19.872618290594374,
+     34.49054753539951
     ]
    },
    "cost": {
@@ -2031,11 +2065,11 @@
    "endpoint_kind": "gpu",
    "full_coverage": true,
    "intelligence": {
-    "I_open": 52.58086212188769,
-    "I_sealed": 42.02701212027678,
-    "base": 47.303937121082235,
-    "excess": 6.931127902240036,
-    "gap": 10.553850001610911,
+    "I_open": 45.24914817619414,
+    "I_sealed": 35.00279720216514,
+    "base": 40.12597268917964,
+    "excess": 7.121087364543559,
+    "gap": 10.246350974029,
     "penalty": 1.0,
     "per_type_split": {
      "open|choice": {
@@ -2069,7 +2103,7 @@
       }
      },
      "open|score": {
-      "cc": 58.06385666901582,
+      "cc": 36.06871483193517,
       "n": {
        "easy": 9,
        "hard": 29,
@@ -2077,10 +2111,10 @@
        "standard": 16
       },
       "tiers": {
-       "easy": 60.12089201877935,
-       "hard": 50.92198275862068,
-       "judge": 59.68585746102448,
-       "standard": 68.88608562691132
+       "easy": 48.519696969696966,
+       "hard": 36.743888888888875,
+       "judge": 38.64050847457627,
+       "standard": 24.635185185185193
       }
      },
      "sealed|choice": {
@@ -2114,7 +2148,7 @@
       }
      },
      "sealed|score": {
-      "cc": 57.63339267798405,
+      "cc": 36.56074792364913,
       "n": {
        "easy": 43,
        "hard": 125,
@@ -2122,15 +2156,15 @@
        "standard": 75
       },
       "tiers": {
-       "easy": 67.35302114803623,
-       "hard": 52.001323024055026,
-       "judge": 60.637847498014295,
-       "standard": 59.531035520770615
+       "easy": 54.016382978723385,
+       "hard": 31.53129901960784,
+       "judge": 40.6503592814371,
+       "standard": 31.75741116751262
       }
      }
     }
    },
-   "jevbench_score": 61.00883881671579,
+   "jevbench_score": 41.240894350857424,
    "key": "decider-4b-v2",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
@@ -2143,9 +2177,9 @@
     "capability": 6
    },
    "scores": {
-    "A": 61.00883881671579,
-    "B": 56.06478354142076,
-    "C": 42.36724917827485
+    "A": 41.240894350857424,
+    "B": 36.84955227461344,
+    "C": 28.639509965873213
    },
    "speed": {
     "adjustment": "x2 + 0.15 s (assumption, not measured)",
@@ -2176,25 +2210,25 @@
       89.97927303856018
      ],
      "I": [
-      42.397784902016085,
-      50.44437804712891
+      34.578136440255506,
+      43.398719264328754
      ],
      "capability": [
-      63.94149010364352,
-      69.60062074444134
+      60.13115740430431,
+      65.92612366922903
      ],
      "composite": {
       "A": [
-       46.6815178079257,
-       69.52536538397908
+       28.616570338455894,
+       49.6663884509753
       ],
       "B": [
-       42.215792738324815,
-       64.62285460561014
+       24.96437888280913,
+       44.99542234462165
       ],
       "C": [
-       32.41772069994841,
-       49.1319720951152
+       19.872618290594374,
+       34.49054753539951
       ]
      },
      "seed": 17
@@ -2204,7 +2238,7 @@
     "equated": null,
     "equating_flag": null,
     "equating_offset": null,
-    "g_med_used": 3.6227220993708755,
+    "g_med_used": 3.1252636094854402,
     "lane": "selfhosted",
     "metric_basis": "S u P",
     "n_items": 1500,
@@ -2212,8 +2246,8 @@
     "n_sealed_side": 1200,
     "on_S": {
      "calibration": 89.63735637833331,
-     "capability": 68.47064674970777,
-     "intelligence": 47.303937121082235
+     "capability": 64.88166453375648,
+     "intelligence": 40.12597268917964
     },
     "per_type": {
      "choice": {
@@ -2253,25 +2287,25 @@
      "score": {
       "accuracy": 0.512,
       "calibration": 88.69451830166665,
-      "cc": 57.710584156088295,
+      "cc": 36.877482456140385,
       "cc_by_type": {
-       "score": 57.710584156088295
+       "score": 36.877482456140385
       },
-      "cc_tiered": 57.848624673499934,
-      "cc_tiered_open": 58.06385666901582,
-      "cc_tiered_sealed": 57.63339267798405,
+      "cc_tiered": 36.31473137779215,
+      "cc_tiered_open": 36.06871483193517,
+      "cc_tiered_sealed": 36.56074792364913,
       "low_n": false,
       "n": 375,
       "n_by_type": {
        "score": 375
       },
-      "score": 57.710584156088295
+      "score": 36.877482456140385
      }
     },
     "raw_on_A": {
      "calibration": 88.78997857788461,
-     "capability": 69.59480436989391,
-     "intelligence": 50.399630161903204
+     "capability": 66.11763148027418,
+     "intelligence": 43.44528438266377
     },
     "set": "S+P"
    },
@@ -2290,11 +2324,11 @@
     }
    },
    "views": {
-    "Balanced 33:33:33": 56.49685550700874,
-    "Emphasis on Accuracy 60:20:20": 49.83214198140074,
-    "Emphasis on Cost 20:20:60": 56.9996573572166,
-    "Emphasis on Speed 20:60:20": 64.56208920771276,
-    "Intelligence only": 42.34009785780806
+    "Balanced 33:33:33": 37.65578397809399,
+    "Emphasis on Accuracy 60:20:20": 31.83485819738892,
+    "Emphasis on Cost 20:20:60": 39.12905962819718,
+    "Emphasis on Speed 20:60:20": 44.051943214406094,
+    "Intelligence only": 25.842630080539234
    },
    "class": "system-one-open",
    "open": "yes",
@@ -2309,9 +2343,15 @@
    "last_measured_on": "2026-10-02",
    "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.6426666666666667,
+    "acc_among_decisive": 0.921161825726141,
+    "valid": 375
+   },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -2323,7 +2363,7 @@
    "axes": {
     "calibration": 89.88230801873149,
     "cost": 63.07359395281681,
-    "intelligence": 45.984874018717065,
+    "intelligence": 38.53201254374527,
     "speed": 93.9472917853559
    },
    "calibration": {
@@ -2355,19 +2395,19 @@
     },
     "score": 89.88230801873149
    },
-   "capability": 67.93359101872429,
+   "capability": 64.20716028123837,
    "composite_ci95": {
     "A": [
-     43.08879864694748,
-     69.2884371971381
+     24.487350509154453,
+     49.78934660216776
     ],
     "B": [
-     38.78118502243623,
-     64.55186956403227
+     21.156422807902988,
+     45.123880169892324
     ],
     "C": [
-     29.922776838157976,
-     49.50392283600989
+     17.00510452024615,
+     34.57593514039428
     ]
    },
    "cost": {
@@ -2380,11 +2420,11 @@
    "endpoint_kind": "gpu",
    "full_coverage": true,
    "intelligence": {
-    "I_open": 45.982064461274575,
-    "I_sealed": 45.987683576159554,
-    "base": 45.984874018717065,
-    "excess": -3.6283412142558547,
-    "gap": -0.005619114884979126,
+    "I_open": 38.333624208131226,
+    "I_sealed": 38.730400879359316,
+    "base": 38.53201254374527,
+    "excess": -3.5220402807135294,
+    "gap": -0.39677667122808913,
     "penalty": 1.0,
     "per_type_split": {
      "open|choice": {
@@ -2418,7 +2458,7 @@
       }
      },
      "open|score": {
-      "cc": 56.946539845368065,
+      "cc": 34.00121908593804,
       "n": {
        "easy": 9,
        "hard": 29,
@@ -2426,10 +2466,10 @@
        "standard": 16
       },
       "tiers": {
-       "easy": 63.73671074966275,
-       "hard": 48.87418617513136,
-       "judge": 59.242906579841126,
-       "standard": 66.2516116319845
+       "easy": 53.18739024047374,
+       "hard": 34.10450662572488,
+       "judge": 37.96632221813109,
+       "standard": 18.253903730806933
       }
      },
      "sealed|choice": {
@@ -2463,7 +2503,7 @@
       }
      },
      "sealed|score": {
-      "cc": 56.19648508229524,
+      "cc": 34.42463699189452,
       "n": {
        "easy": 43,
        "hard": 125,
@@ -2471,15 +2511,15 @@
        "standard": 75
       },
       "tiers": {
-       "easy": 75.85015484256552,
-       "hard": 49.05859672159295,
-       "judge": 56.58319572325592,
-       "standard": 60.06536096212366
+       "easy": 65.98468618250719,
+       "hard": 27.333586499919292,
+       "judge": 34.53681846177148,
+       "standard": 32.6584411757232
       }
      }
     }
    },
-   "jevbench_score": 56.98726235705661,
+   "jevbench_score": 37.36493548751909,
    "key": "jevk5-v0.3-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
@@ -2492,9 +2532,9 @@
     "capability": 7
    },
    "scores": {
-    "A": 56.98726235705661,
-    "B": 52.13725986341647,
-    "C": 39.57448774795598
+    "A": 37.36493548751909,
+    "B": 33.16714732620591,
+    "C": 25.947871866332704
    },
    "speed": {
     "adjustment": "x2 + 0.15 s (assumption, not measured)",
@@ -2525,25 +2565,25 @@
       90.00161201849515
      ],
      "I": [
-      41.03672692152259,
-      50.80606589091112
+      32.47643504749746,
+      43.50006997831153
      ],
      "capability": [
-      63.3182937180908,
-      69.3092515802753
+      59.26614631345384,
+      65.73496579296588
      ],
      "composite": {
       "A": [
-       43.08879864694748,
-       69.2884371971381
+       24.487350509154453,
+       49.78934660216776
       ],
       "B": [
-       38.78118502243623,
-       64.55186956403227
+       21.156422807902988,
+       45.123880169892324
       ],
       "C": [
-       29.922776838157976,
-       49.50392283600989
+       17.00510452024615,
+       34.57593514039428
       ]
      },
      "seed": 24
@@ -2553,7 +2593,7 @@
     "equated": null,
     "equating_flag": null,
     "equating_offset": null,
-    "g_med_used": 3.6227220993708755,
+    "g_med_used": 3.1252636094854402,
     "lane": "selfhosted",
     "metric_basis": "S u P",
     "n_items": 1500,
@@ -2561,8 +2601,8 @@
     "n_sealed_side": 1200,
     "on_S": {
      "calibration": 89.88230801873149,
-     "capability": 67.93359101872429,
-     "intelligence": 45.984874018717065
+     "capability": 64.20716028123837,
+     "intelligence": 38.53201254374527
     },
     "per_type": {
      "choice": {
@@ -2602,25 +2642,25 @@
      "score": {
       "accuracy": 0.552,
       "calibration": 91.32178144757796,
-      "cc": 56.998498262546526,
+      "cc": 35.814600564516994,
       "cc_by_type": {
-       "score": 56.998498262546526
+       "score": 35.814600564516994
       },
-      "cc_tiered": 56.57151246383165,
-      "cc_tiered_open": 56.946539845368065,
-      "cc_tiered_sealed": 56.19648508229524,
+      "cc_tiered": 34.21292803891628,
+      "cc_tiered_open": 34.00121908593804,
+      "cc_tiered_sealed": 34.42463699189452,
       "low_n": false,
       "n": 375,
       "n_by_type": {
        "score": 375
       },
-      "score": 56.998498262546526
+      "score": 35.814600564516994
      }
     },
     "raw_on_A": {
      "calibration": 87.1680130057895,
-     "capability": 68.45647820305064,
-     "intelligence": 49.744943400311755
+     "capability": 65.06324188254719,
+     "intelligence": 42.95847075930487
     },
     "set": "S+P"
    },
@@ -2639,11 +2679,11 @@
     }
    },
    "views": {
-    "Balanced 33:33:33": 52.59670662618102,
-    "Emphasis on Accuracy 60:20:20": 46.1012391496008,
-    "Emphasis on Cost 20:20:60": 52.895608781515875,
-    "Emphasis on Speed 20:60:20": 60.8226635512521,
-    "Intelligence only": 38.89600473644317
+    "Balanced 33:33:33": 33.96793409727579,
+    "Emphasis on Accuracy 60:20:20": 28.454799805414766,
+    "Emphasis on Cost 20:20:60": 35.283091257812984,
+    "Emphasis on Speed 20:60:20": 40.26908605684886,
+    "Intelligence only": 22.883638070578947
    },
    "class": "unclassified",
    "open": "unknown",
@@ -2658,9 +2698,15 @@
    "last_measured_on": "2026-10-02",
    "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.6630727762803235,
+    "acc_among_decisive": 0.9471544715447154,
+    "valid": 371
+   },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -2672,7 +2718,7 @@
    "axes": {
     "calibration": 89.1627567462182,
     "cost": 63.26458220826236,
-    "intelligence": 40.46590346487343,
+    "intelligence": 34.62714018309005,
     "speed": 90.51878000442085
    },
    "calibration": {
@@ -2704,19 +2750,19 @@
     },
     "score": 89.1627567462182
    },
-   "capability": 64.8143301055458,
+   "capability": 61.89494846465412,
    "composite_ci95": {
     "A": [
-     31.017239797989003,
-     54.40212734022296
+     21.321646064681943,
+     38.85344520885898
     ],
     "B": [
-     27.311595653564225,
-     49.797882250595364
+     18.237375029138736,
+     34.74184553324499
     ],
     "C": [
-     21.539749859714593,
-     37.77925509737706
+     14.806698656029125,
+     26.98155917281874
     ]
    },
    "cost": {
@@ -2729,11 +2775,11 @@
    "endpoint_kind": "gpu",
    "full_coverage": true,
    "intelligence": {
-    "I_open": 42.277264514558865,
-    "I_sealed": 38.65454241518799,
-    "base": 40.46590346487343,
-    "excess": 0.0,
-    "gap": 3.6227220993708755,
+    "I_open": 35.03758089292987,
+    "I_sealed": 34.21669947325023,
+    "base": 34.62714018309005,
+    "excess": -2.3043821898058034,
+    "gap": 0.8208814196796368,
     "penalty": 1.0,
     "per_type_split": {
      "open|choice": {
@@ -2767,7 +2813,7 @@
       }
      },
      "open|score": {
-      "cc": 59.68529962147376,
+      "cc": 37.966248756586765,
       "n": {
        "easy": 9,
        "hard": 29,
@@ -2775,10 +2821,10 @@
        "standard": 16
       },
       "tiers": {
-       "easy": 63.170259206782035,
-       "hard": 56.492084741426815,
-       "judge": 56.57491365852122,
-       "standard": 68.99482853334233
+       "easy": 52.45615279420953,
+       "hard": 43.92313144450569,
+       "judge": 33.905546551444175,
+       "standard": 24.898584669651413
       }
      },
      "sealed|choice": {
@@ -2797,7 +2843,7 @@
       }
      },
      "sealed|noul": {
-      "cc": -6.63038424723096,
+      "cc": 0.0,
       "n": {
        "easy": 50,
        "hard": 103,
@@ -2812,7 +2858,7 @@
       }
      },
      "sealed|score": {
-      "cc": 60.20711586177765,
+      "cc": 40.26320278873341,
       "n": {
        "easy": 43,
        "hard": 125,
@@ -2820,15 +2866,15 @@
        "standard": 75
       },
       "tiers": {
-       "easy": 73.85675135247207,
-       "hard": 54.444825278398866,
-       "judge": 64.42820596829183,
-       "standard": 58.5752441234167
+       "easy": 63.176956160290466,
+       "hard": 35.01688311771597,
+       "judge": 46.365402771352585,
+       "standard": 30.14566547106101
       }
      }
     }
    },
-   "jevbench_score": 41.73165314406023,
+   "jevbench_score": 28.655751132526984,
    "key": "imajev-4b-rtx5090-a2",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
@@ -2841,9 +2887,9 @@
     "capability": 8
    },
    "scores": {
-    "A": 41.73165314406023,
-    "B": 37.430965257172836,
-    "C": 28.980314683375163
+    "A": 28.655751132526984,
+    "B": 25.0248976556334,
+    "C": 19.899827175365957
    },
    "speed": {
     "adjustment": "x2 + 0.15 s (assumption, not measured)",
@@ -2874,25 +2920,25 @@
       89.53920000423044
      ],
      "I": [
-      35.85619191504351,
-      45.290195603399255
+      30.68346220999683,
+      39.34289296962599
      ],
      "capability": [
-      60.655603159716385,
-      66.32460192219183
+      58.31782287610858,
+      63.434988436207206
      ],
      "composite": {
       "A": [
-       31.017239797989003,
-       54.40212734022296
+       21.321646064681943,
+       38.85344520885898
       ],
       "B": [
-       27.311595653564225,
-       49.797882250595364
+       18.237375029138736,
+       34.74184553324499
       ],
       "C": [
-       21.539749859714593,
-       37.77925509737706
+       14.806698656029125,
+       26.98155917281874
       ]
      },
      "seed": 21
@@ -2902,7 +2948,7 @@
     "equated": null,
     "equating_flag": null,
     "equating_offset": null,
-    "g_med_used": 3.6227220993708755,
+    "g_med_used": 3.1252636094854402,
     "lane": "selfhosted",
     "metric_basis": "S u P",
     "n_items": 1500,
@@ -2910,8 +2956,8 @@
     "n_sealed_side": 1200,
     "on_S": {
      "calibration": 89.1627567462182,
-     "capability": 64.8143301055458,
-     "intelligence": 40.46590346487343
+     "capability": 61.89494846465412,
+     "intelligence": 34.62714018309005
     },
     "per_type": {
      "choice": {
@@ -2938,9 +2984,9 @@
       "cc_by_type": {
        "noul": -0.2666666666666706
       },
-      "cc_tiered": -2.9773729379702076,
+      "cc_tiered": 0.3378191856452726,
       "cc_tiered_open": 0.6756383712905452,
-      "cc_tiered_sealed": -6.63038424723096,
+      "cc_tiered_sealed": 0.0,
       "low_n": false,
       "n": 375,
       "n_by_type": {
@@ -2951,25 +2997,25 @@
      "score": {
       "accuracy": 0.56,
       "calibration": 90.28936757342169,
-      "cc": 60.05171471678137,
+      "cc": 40.37192786146962,
       "cc_by_type": {
-       "score": 60.05171471678137
+       "score": 40.37192786146962
       },
-      "cc_tiered": 59.946207741625706,
-      "cc_tiered_open": 59.68529962147376,
-      "cc_tiered_sealed": 60.20711586177765,
+      "cc_tiered": 39.11472577266009,
+      "cc_tiered_open": 37.966248756586765,
+      "cc_tiered_sealed": 40.26320278873341,
       "low_n": false,
       "n": 375,
       "n_by_type": {
        "score": 375
       },
-      "score": 60.05171471678137
+      "score": 40.37192786146962
      }
     },
     "raw_on_A": {
      "calibration": 87.91523763851959,
-     "capability": 64.77736222283457,
-     "intelligence": 41.63948680714956
+     "capability": 61.35771088116867,
+     "intelligence": 34.80018412381776
     },
     "set": "S+P"
    },
@@ -2988,11 +3034,11 @@
     }
    },
    "views": {
-    "Balanced 33:33:33": 38.10608877631654,
-    "Emphasis on Accuracy 60:20:20": 32.428564882716685,
-    "Emphasis on Cost 20:20:60": 39.37242969022135,
-    "Emphasis on Speed 20:60:20": 44.460090418088186,
-    "Intelligence only": 26.504994275136664
+    "Balanced 33:33:33": 25.816712856140082,
+    "Emphasis on Accuracy 60:20:20": 21.130055842968158,
+    "Emphasis on Cost 20:20:60": 27.454793753723415,
+    "Emphasis on Speed 20:60:20": 30.81252811725961,
+    "Intelligence only": 16.607714361099795
    },
    "class": "unclassified",
    "open": "unknown",
@@ -3007,9 +3053,15 @@
    "last_measured_on": "2026-10-02",
    "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.522911051212938,
+    "acc_among_decisive": 0.9639175257731959,
+    "valid": 371
+   },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -3021,7 +3073,7 @@
    "axes": {
     "calibration": 88.42488519968094,
     "cost": 63.07359395281681,
-    "intelligence": 40.366827812373224,
+    "intelligence": 32.40310972936693,
     "speed": 93.92936299294371
    },
    "calibration": {
@@ -3053,19 +3105,19 @@
     },
     "score": 88.42488519968094
    },
-   "capability": 64.39585650602709,
+   "capability": 60.41399746452394,
    "composite_ci95": {
     "A": [
-     30.603411753333635,
-     54.26735256312873
+     15.802652894768809,
+     34.8480190332121
     ],
     "B": [
-     26.87407758414336,
-     49.718141485642526
+     13.272861837097807,
+     30.846827600494542
     ],
     "C": [
-     21.25236927314835,
-     37.68566150217272
+     10.974064510256115,
+     24.2000132175084
     ]
    },
    "cost": {
@@ -3078,11 +3130,11 @@
    "endpoint_kind": "gpu",
    "full_coverage": true,
    "intelligence": {
-    "I_open": 40.99826149180754,
-    "I_sealed": 39.73539413293891,
-    "base": 40.366827812373224,
-    "excess": -2.359854740502243,
-    "gap": 1.2628673588686326,
+    "I_open": 32.99062805982875,
+    "I_sealed": 31.81559139890512,
+    "base": 32.40310972936693,
+    "excess": -1.9502269485618093,
+    "gap": 1.175036660923631,
     "penalty": 1.0,
     "per_type_split": {
      "open|choice": {
@@ -3116,7 +3168,7 @@
       }
      },
      "open|score": {
-      "cc": 55.56544113926813,
+      "cc": 31.542540843331764,
       "n": {
        "easy": 9,
        "hard": 29,
@@ -3124,10 +3176,10 @@
        "standard": 16
       },
       "tiers": {
-       "easy": 61.09091346053748,
-       "hard": 52.4601714059325,
-       "judge": 51.04842181867173,
-       "standard": 65.78877342619936
+       "easy": 49.77190646723929,
+       "hard": 38.72644314542413,
+       "judge": 25.494038632486827,
+       "standard": 17.13280674346067
       }
      },
      "sealed|choice": {
@@ -3161,7 +3213,7 @@
       }
      },
      "sealed|score": {
-      "cc": 52.33195395141817,
+      "cc": 28.5725457493168,
       "n": {
        "easy": 43,
        "hard": 125,
@@ -3169,15 +3221,15 @@
        "standard": 75
       },
       "tiers": {
-       "easy": 70.88502778540142,
-       "hard": 46.63075814729712,
-       "judge": 51.45932315479642,
-       "standard": 55.766754837601276
+       "easy": 58.99125190199095,
+       "hard": 23.870346180703184,
+       "judge": 26.811123175914563,
+       "standard": 25.409725670310312
       }
      }
     }
    },
-   "jevbench_score": 41.65962207319855,
+   "jevbench_score": 24.463556699266523,
    "key": "decision-4b-v12",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
@@ -3190,9 +3242,9 @@
     "capability": 9
    },
    "scores": {
-    "A": 41.65962207319855,
-    "B": 37.30690224297939,
-    "C": 28.93029310638787
+    "A": 24.463556699266523,
+    "B": 21.09790572169507,
+    "C": 16.988581041157314
    },
    "speed": {
     "adjustment": "x2 + 0.15 s (assumption, not measured)",
@@ -3223,25 +3275,25 @@
       88.52198480659733
      ],
      "I": [
-      35.61367848467475,
-      45.3074033357949
+      27.24790695913968,
+      37.59211663385763
      ],
      "capability": [
-      59.79551341243609,
-      65.80288716039323
+      55.51115392865377,
+      61.983179979840166
      ],
      "composite": {
       "A": [
-       30.603411753333635,
-       54.26735256312873
+       15.802652894768809,
+       34.8480190332121
       ],
       "B": [
-       26.87407758414336,
-       49.718141485642526
+       13.272861837097807,
+       30.846827600494542
       ],
       "C": [
-       21.25236927314835,
-       37.68566150217272
+       10.974064510256115,
+       24.2000132175084
       ]
      },
      "seed": 19
@@ -3251,7 +3303,7 @@
     "equated": null,
     "equating_flag": null,
     "equating_offset": null,
-    "g_med_used": 3.6227220993708755,
+    "g_med_used": 3.1252636094854402,
     "lane": "selfhosted",
     "metric_basis": "S u P",
     "n_items": 1500,
@@ -3259,8 +3311,8 @@
     "n_sealed_side": 1200,
     "on_S": {
      "calibration": 88.42488519968094,
-     "capability": 64.39585650602709,
-     "intelligence": 40.366827812373224
+     "capability": 60.41399746452394,
+     "intelligence": 32.40310972936693
     },
     "per_type": {
      "choice": {
@@ -3300,25 +3352,25 @@
      "score": {
       "accuracy": 0.5173333333333333,
       "calibration": 86.19909592747098,
-      "cc": 53.76804426530979,
+      "cc": 30.992722913904714,
       "cc_by_type": {
-       "score": 53.76804426530979
+       "score": 30.992722913904714
       },
-      "cc_tiered": 53.94869754534315,
-      "cc_tiered_open": 55.56544113926813,
-      "cc_tiered_sealed": 52.33195395141817,
+      "cc_tiered": 30.057543296324283,
+      "cc_tiered_open": 31.542540843331764,
+      "cc_tiered_sealed": 28.5725457493168,
       "low_n": false,
       "n": 375,
       "n_by_type": {
        "score": 375
       },
-      "score": 53.76804426530979
+      "score": 30.992722913904714
      }
     },
     "raw_on_A": {
      "calibration": 81.8292718059759,
-     "capability": 62.34880864852818,
-     "intelligence": 42.868345491080454
+     "capability": 58.67224928043624,
+     "intelligence": 35.515226754896574
     },
     "set": "S+P"
    },
@@ -3337,11 +3389,11 @@
     }
    },
    "views": {
-    "Balanced 33:33:33": 38.13612821252713,
-    "Emphasis on Accuracy 60:20:20": 32.324797568081884,
-    "Emphasis on Cost 20:20:60": 39.272830335687914,
-    "Emphasis on Speed 20:60:20": 44.91018296211673,
-    "Intelligence only": 26.31078815119338
+    "Balanced 33:33:33": 21.964945240595316,
+    "Emphasis on Accuracy 60:20:20": 17.633890573157025,
+    "Emphasis on Cost 20:20:60": 23.575828038111915,
+    "Emphasis on Speed 20:60:20": 26.69802362301605,
+    "Intelligence only": 13.608807339398107
    },
    "class": "unclassified",
    "open": "unknown",
@@ -3356,9 +3408,15 @@
    "last_measured_on": "2026-10-02",
    "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.5876010781671159,
+    "acc_among_decisive": 0.944954128440367,
+    "valid": 371
+   },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -3370,7 +3428,7 @@
    "axes": {
     "calibration": 85.23934158755043,
     "cost": 63.07359395281681,
-    "intelligence": 37.44692985746022,
+    "intelligence": 29.134168280172865,
     "speed": 93.95641941218838
    },
    "calibration": {
@@ -3402,19 +3460,19 @@
     },
     "score": 85.23934158755043
    },
-   "capability": 61.34313572250532,
+   "capability": 57.18675493386165,
    "composite_ci95": {
     "A": [
-     24.7002534516557,
-     45.025096960412014
+     12.686713654390406,
+     26.847825966210067
     ],
     "B": [
-     21.44589758236207,
-     40.7253075655391
+     10.512191233560458,
+     23.399309554561164
     ],
     "C": [
-     17.152953785872015,
-     31.26742844473057
+     8.810217815548892,
+     18.644323587645886
     ]
    },
    "cost": {
@@ -3427,11 +3485,11 @@
    "endpoint_kind": "gpu",
    "full_coverage": true,
    "intelligence": {
-    "I_open": 38.708157044804366,
-    "I_sealed": 36.185702670116065,
-    "base": 37.44692985746022,
-    "excess": -1.100267724682574,
-    "gap": 2.5224543746883015,
+    "I_open": 30.696800084915584,
+    "I_sealed": 27.571536475430143,
+    "base": 29.134168280172865,
+    "excess": 0.0,
+    "gap": 3.1252636094854402,
     "penalty": 1.0,
     "per_type_split": {
      "open|choice": {
@@ -3465,7 +3523,7 @@
       }
      },
      "open|score": {
-      "cc": 54.79513174932724,
+      "cc": 30.761060869660888,
       "n": {
        "easy": 9,
        "hard": 29,
@@ -3473,10 +3531,10 @@
        "standard": 16
       },
       "tiers": {
-       "easy": 65.07761327406618,
-       "hard": 47.194033036083404,
-       "judge": 54.20300219838562,
-       "standard": 65.74428273985782
+       "easy": 54.918373499249086,
+       "hard": 31.938975913174172,
+       "judge": 30.29541690533948,
+       "standard": 17.025040414322312
       }
      },
      "sealed|choice": {
@@ -3510,7 +3568,7 @@
       }
      },
      "sealed|score": {
-      "cc": 48.28738975624674,
+      "cc": 22.444891172188967,
       "n": {
        "easy": 43,
        "hard": 125,
@@ -3518,15 +3576,15 @@
        "standard": 75
       },
       "tiers": {
-       "easy": 68.35436254723581,
-       "hard": 44.59302505390056,
-       "judge": 43.79228199155287,
-       "standard": 52.385294412485365
+       "easy": 55.42678299206407,
+       "hard": 20.963579856299262,
+       "judge": 15.25087787708388,
+       "standard": 19.707587836688447
       }
      }
     }
    },
-   "jevbench_score": 34.55263768058792,
+   "jevbench_score": 18.718356274892123,
    "key": "decision-4b-v11",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
@@ -3539,9 +3597,9 @@
     "capability": 10
    },
    "scores": {
-    "A": 34.55263768058792,
-    "B": 30.604502435568143,
-    "C": 23.994887278186045
+    "A": 18.718356274892123,
+    "B": 15.883627667705545,
+    "C": 12.998858524230638
    },
    "speed": {
     "adjustment": "x2 + 0.15 s (assumption, not measured)",
@@ -3572,25 +3630,25 @@
       86.16301423292039
      ],
      "I": [
-      32.745145982218624,
-      41.95025544657314
+      24.981906940767054,
+      33.81914043941057
      ],
      "capability": [
-      57.0629322530882,
-      63.042662220394035
+      53.40625989013396,
+      59.02715521808481
      ],
      "composite": {
       "A": [
-       24.7002534516557,
-       45.025096960412014
+       12.686713654390406,
+       26.847825966210067
       ],
       "B": [
-       21.44589758236207,
-       40.7253075655391
+       10.512191233560458,
+       23.399309554561164
       ],
       "C": [
-       17.152953785872015,
-       31.26742844473057
+       8.810217815548892,
+       18.644323587645886
       ]
      },
      "seed": 18
@@ -3600,7 +3658,7 @@
     "equated": null,
     "equating_flag": null,
     "equating_offset": null,
-    "g_med_used": 3.6227220993708755,
+    "g_med_used": 3.1252636094854402,
     "lane": "selfhosted",
     "metric_basis": "S u P",
     "n_items": 1500,
@@ -3608,8 +3666,8 @@
     "n_sealed_side": 1200,
     "on_S": {
      "calibration": 85.23934158755043,
-     "capability": 61.34313572250532,
-     "intelligence": 37.44692985746022
+     "capability": 57.18675493386165,
+     "intelligence": 29.134168280172865
     },
     "per_type": {
      "choice": {
@@ -3649,25 +3707,25 @@
      "score": {
       "accuracy": 0.47733333333333333,
       "calibration": 86.39740348779742,
-      "cc": 50.814780092413784,
+      "cc": 26.584587548466242,
       "cc_by_type": {
-       "score": 50.814780092413784
+       "score": 26.584587548466242
       },
-      "cc_tiered": 51.54126075278699,
-      "cc_tiered_open": 54.79513174932724,
-      "cc_tiered_sealed": 48.28738975624674,
+      "cc_tiered": 26.602976020924928,
+      "cc_tiered_open": 30.761060869660888,
+      "cc_tiered_sealed": 22.444891172188967,
       "low_n": false,
       "n": 375,
       "n_by_type": {
        "score": 375
       },
-      "score": 50.814780092413784
+      "score": 26.584587548466242
      }
     },
     "raw_on_A": {
      "calibration": 85.6538943241602,
-     "capability": 64.45589830905388,
-     "intelligence": 43.25790229394756
+     "capability": 60.62425637183274,
+     "intelligence": 35.59461841950529
     },
     "set": "S+P"
    },
@@ -3686,11 +3744,11 @@
     }
    },
    "views": {
-    "Balanced 33:33:33": 31.628908053256435,
-    "Emphasis on Accuracy 60:20:20": 26.306313281320254,
-    "Emphasis on Cost 20:20:60": 33.02916299324326,
-    "Emphasis on Speed 20:60:20": 37.6506362536011,
-    "Intelligence only": 21.004320814477886
+    "Balanced 33:33:33": 16.746653513023,
+    "Emphasis on Accuracy 60:20:20": 13.11195414676558,
+    "Emphasis on Cost 20:20:60": 18.346342760998827,
+    "Emphasis on Speed 20:60:20": 20.675164334326784,
+    "Intelligence only": 9.891630033656257
    },
    "class": "unclassified",
    "open": "unknown",
@@ -3705,9 +3763,15 @@
    "last_measured_on": "2026-10-02",
    "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.5660377358490566,
+    "acc_among_decisive": 0.9428571428571428,
+    "valid": 371
+   },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -3719,7 +3783,7 @@
    "axes": {
     "calibration": 68.91613544654119,
     "cost": 46.59842351525712,
-    "intelligence": 9.896338259053564,
+    "intelligence": 5.5377891729296405,
     "speed": 84.7052606179839
    },
    "calibration": {
@@ -3751,19 +3815,19 @@
     },
     "score": 66.49477975685535
    },
-   "capability": 39.40623685279738,
+   "capability": 37.22696230973541,
    "composite_ci95": {
     "A": [
-     0.003645763133251293,
-     4.676632151139148
+     3.4545598386107146e-05,
+     2.297623184347632
     ],
     "B": [
-     0.002355680916687798,
-     3.813106995684604
+     2.1747303427604444e-05,
+     1.8121683909018371
     ],
     "C": [
-     0.002531779953646731,
-     3.2476612160688525
+     2.3989998879241074e-05,
+     1.5955716557969668
     ]
    },
    "cost": {
@@ -3776,11 +3840,11 @@
    "endpoint_kind": "api",
    "full_coverage": true,
    "intelligence": {
-    "I_open": 7.444047465042489,
-    "I_sealed": 17.351664410479103,
-    "base": 12.397855937760795,
-    "excess": -9.627908037034116,
-    "gap": -9.907616945436613,
+    "I_open": 6.2445368778313695,
+    "I_sealed": 11.055275519087195,
+    "base": 8.649906198459282,
+    "excess": -4.409008256074935,
+    "gap": -4.810738641255825,
     "penalty": 1.0,
     "per_type_split": {
      "open|choice": {
@@ -3799,7 +3863,7 @@
       }
      },
      "open|noul": {
-      "cc": -6.330572808833674,
+      "cc": 0.0,
       "n": {
        "easy": 14,
        "hard": 23,
@@ -3814,7 +3878,7 @@
       }
      },
      "open|score": {
-      "cc": 9.929104570467032,
+      "cc": 0.0,
       "n": {
        "easy": 9,
        "hard": 29,
@@ -3822,10 +3886,10 @@
        "standard": 16
       },
       "tiers": {
-       "easy": -5.633802816901423,
-       "hard": 0.1436781609195137,
-       "judge": 23.162583518930923,
-       "standard": 17.431192660550465
+       "easy": -36.36363636363635,
+       "hard": -28.70370370370372,
+       "judge": -16.949152542372904,
+       "standard": -99.99999999999996
       }
      },
      "sealed|choice": {
@@ -3859,7 +3923,7 @@
       }
      },
      "sealed|score": {
-      "cc": 18.889166674175726,
+      "cc": 0.0,
       "n": {
        "easy": 13,
        "hard": 33,
@@ -3867,15 +3931,15 @@
        "standard": 19
       },
       "tiers": {
-       "easy": -6.451612903225823,
-       "hard": 12.742382271468134,
-       "judge": 26.877470355731237,
-       "standard": 31.870669745958423
+       "easy": -43.47826086956523,
+       "hard": -46.51162790697674,
+       "judge": 13.953488372093037,
+       "standard": -7.272727272727275
       }
      }
     }
    },
-   "jevbench_score": 0.9145344789364577,
+   "jevbench_score": 0.18663266418583385,
    "key": "fastino-gliner-2-5-decide",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
@@ -3888,9 +3952,9 @@
     "capability": 11
    },
    "scores": {
-    "A": 0.9145344789364577,
-    "B": 0.6808724349595329,
-    "C": 0.6350933881503177
+    "A": 0.18663266418583385,
+    "B": 0.13027326549797824,
+    "C": 0.12960601679571795
    },
    "speed": {
     "adjustment": "none (API)",
@@ -3921,25 +3985,25 @@
       75.65004949225172
      ],
      "I": [
-      1.4105916735701385,
-      18.49591744506271
+      0.2932458643294869,
+      14.139532705928508
      ],
      "capability": [
-      30.916854802647002,
-      45.95028632531002
+      30.68110581738903,
+      43.293114220623224
      ],
      "composite": {
       "A": [
-       0.003645763133251293,
-       4.676632151139148
+       3.4545598386107146e-05,
+       2.297623184347632
       ],
       "B": [
-       0.002355680916687798,
-       3.813106995684604
+       2.1747303427604444e-05,
+       1.8121683909018371
       ],
       "C": [
-       0.002531779953646731,
-       3.2476612160688525
+       2.3989998879241074e-05,
+       1.5955716557969668
       ]
      },
      "seed": 20
@@ -3949,15 +4013,15 @@
     "complete": true,
     "equated": {
      "calibration": 68.91613544654119,
-     "capability": 39.40623685279738,
-     "intelligence": 9.896338259053564
+     "capability": 37.22696230973541,
+     "intelligence": 5.5377891729296405
     },
     "equating_flag": null,
     "equating_offset": {
      "C": 2.4213556896858393,
-     "I": -2.5015176787072306
+     "I": -3.112117025529642
     },
-    "g_med_used": -0.2797089084024975,
+    "g_med_used": -0.40173038518089044,
     "lane": "api",
     "metric_basis": "A u P (sealed side = A, n=300)",
     "n_items": 600,
@@ -3969,8 +4033,8 @@
       7.664080862725964
      ],
      "I": [
-      -6.488929122250063,
-      1.4530350277347512
+      -7.163935442378886,
+      2.7168419460360087
      ]
     },
     "on_S": null,
@@ -3999,8 +4063,8 @@
       "cc_by_type": {
        "noul": 2.6666666666666616
       },
-      "cc_tiered": 1.1062068082528471,
-      "cc_tiered_open": -6.330572808833674,
+      "cc_tiered": 4.271493212669684,
+      "cc_tiered_open": 0.0,
       "cc_tiered_sealed": 8.542986425339368,
       "low_n": false,
       "n": 150,
@@ -4012,25 +4076,25 @@
      "score": {
       "accuracy": 0.2866666666666667,
       "calibration": 88.11046315790855,
-      "cc": 12.577137819571027,
+      "cc": -30.19693654266962,
       "cc_by_type": {
-       "score": 12.577137819571027
+       "score": -30.19693654266962
       },
-      "cc_tiered": 14.40913562232138,
-      "cc_tiered_open": 9.929104570467032,
-      "cc_tiered_sealed": 18.889166674175726,
+      "cc_tiered": 0.0,
+      "cc_tiered_open": 0.0,
+      "cc_tiered_sealed": 0.0,
       "low_n": false,
       "n": 150,
       "n_by_type": {
        "score": 150
       },
-      "score": 12.577137819571027
+      "score": 0.0
      }
     },
     "raw_on_A": {
      "calibration": 66.49477975685535,
-     "capability": 39.44631784730807,
-     "intelligence": 12.397855937760795
+     "capability": 37.572342977657314,
+     "intelligence": 8.649906198459282
     },
     "set": "A+P"
    },
@@ -4049,11 +4113,11 @@
     }
    },
    "views": {
-    "Balanced 33:33:33": 0.7600015318988658,
-    "Emphasis on Accuracy 60:20:20": 0.5057258501674741,
-    "Emphasis on Cost 20:20:60": 0.959924247576137,
-    "Emphasis on Speed 20:60:20": 1.0772893926529572,
-    "Intelligence only": 0.33673326747724197
+    "Balanced 33:33:33": 0.1494725123712252,
+    "Emphasis on Accuracy 60:20:20": 0.09264861162758088,
+    "Emphasis on Cost 20:20:60": 0.2074783871972397,
+    "Emphasis on Speed 20:60:20": 0.22434951096439462,
+    "Intelligence only": 0.059002672686888066
    },
    "class": "decision-api",
    "open": "no",
@@ -4065,9 +4129,15 @@
    "last_measured_on": "2026-10-03",
    "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 1.0,
+    "acc_among_decisive": 0.5167785234899329,
+    "valid": 149
+   },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O1S)",
     "carried_metadata_from": null
    }
   }
