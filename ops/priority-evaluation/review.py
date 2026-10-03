@@ -52,7 +52,7 @@ def main() -> int:
     if not changed:
         print("No transition made. Check the request state with `jevbench-review list`.", file=sys.stderr)
         return 1
-    descriptions = {"pass": "Code review passed; the 48-hour delivery window has started.", "refuse": "Request refused; automatic full refund is queued.", "complete": "Result delivery recorded."}
+    descriptions = {"pass": "Code review passed; the 48-hour delivery window has started.", "refuse": "Request marked for refund; nothing is refunded until Florian taps Refund in full on the approval card.", "complete": "Result delivery recorded."}
     print(descriptions[action])
     return 0
 

@@ -52,19 +52,45 @@ def atomic(path, value):
             os.unlink(name)
 
 
-def envelope(row, to, subject, body):
+KINDS = {
+    # kind: (card title, Florian caption lines, callback-status file prefix)
+    "refusal": ("Refusal email — exact draft",
+                ("Decide the refusal email for order {ref}.",
+                 "Why: Source review failed; the full refund succeeded."),
+                "fastlane-refusal-"),
+    "change_request": ("Change-request email — exact draft",
+                       ("Decide the change-request email for order {ref}.",
+                        "Why: Source review found fixable problems; the order stays paid and open, no refund."),
+                       "fastlane-change-"),
+}
+CHANGE_HOLD_REASON = "customer_changes"
+
+
+def envelope(row, to, subject, body, kind="refusal"):
     rid = str(uuid.UUID(str(row["id"])))
-    if (row.get("stripe_mode") != "live" or row.get("synthetic_test") is not False
-            or row.get("status") != "refunded" or row.get("refund_status") != "succeeded"
-            or row.get("refund_reason") != "source_review_failed" or not row.get("refunded_at")
-            or not re.fullmatch(r"re_[A-Za-z0-9]+", str(row.get("refund_id", "")))):
-        raise ValueError("successful live source-refusal refund required")
+    if kind == "refusal":
+        if (row.get("stripe_mode") != "live" or row.get("synthetic_test") is not False
+                or row.get("status") != "refunded" or row.get("refund_status") != "succeeded"
+                or row.get("refund_reason") != "source_review_failed" or not row.get("refunded_at")
+                or not re.fullmatch(r"re_[A-Za-z0-9]+", str(row.get("refund_id", "")))):
+            raise ValueError("successful live source-refusal refund required")
+    elif kind == "change_request":
+        if (row.get("stripe_mode") != "live" or row.get("synthetic_test") is not False
+                or row.get("status") not in ("paid", "review_passed") or row.get("refund_id")
+                or row.get("result_delivered_at") or not row.get("customer_hold_started_at")
+                or row.get("customer_hold_reason") != CHANGE_HOLD_REASON):
+            raise ValueError("open live order waiting for customer changes required")
+    else:
+        raise ValueError("unknown approval kind")
     if not re.fullmatch(r"[A-Za-z0-9._%+-]{1,64}@[A-Za-z0-9.-]{1,253}", to):
         raise ValueError("invalid recipient")
     if to != row.get("email") or any(c in subject for c in "\r\n") or len(body) > 4000:
         raise ValueError("invalid exact email")
-    draft = {"request_id": rid, "to": to, "subject": subject, "body": body,
-             "refund_id": row["refund_id"], "refunded_at": str(row["refunded_at"])}
+    draft = {"request_id": rid, "to": to, "subject": subject, "body": body}
+    if kind == "refusal":
+        draft.update(refund_id=row["refund_id"], refunded_at=str(row["refunded_at"]))
+    else:
+        draft.update(kind=kind, hold_started_at=str(row["customer_hold_started_at"]))
     digest = hashlib.sha256(json.dumps(draft, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
     return draft, digest
 
@@ -190,7 +216,7 @@ def attach(state):
         raise ValueError("button attachment failed") from None
 
 
-def card(path, draft):
+def card(path, draft, title_text="Refusal email — exact draft"):
     from PIL import Image, ImageDraw, ImageFont
     font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 24)
     title = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 30)
@@ -200,14 +226,14 @@ def card(path, draft):
             lines.extend(textwrap.wrap(line, width=65, break_long_words=True) or [""])
     image = Image.new("RGB", (1100, 140 + len(lines) * 35), "#f8fafc")
     draw = ImageDraw.Draw(image)
-    draw.text((40, 30), "Refusal email — exact draft", font=title, fill="#0f172a")
+    draw.text((40, 30), title_text, font=title, fill="#0f172a")
     for index, line in enumerate(lines):
         draw.text((40, 100 + 35 * index), line, font=font, fill="#0f172a")
     image.save(path)
     os.chmod(path, 0o600)
 
 
-def notify_card(state, path, now):
+def notify_card(state, path, now, kind="refusal"):
     # Freshness evidence immediately before asking; data is never executed as instructions.
     if state.get("freshness_hold"):
         return  # an owner must reconcile it; inbox reads mark entries read
@@ -223,13 +249,14 @@ def notify_card(state, path, now):
     token, chat = telegram_config()
     del token
     state["chat_id"] = chat
+    title_text, (what, why), _ = KINDS[kind]
     caption = ("🧑 DU BIST DRAN\n\n🧑 Für dich\n"
-               f"- Decide the refusal email for order {state['draft']['request_id'][:8]}.\n"
-               "  Why: Source review failed; the full refund succeeded.\n"
+               f"- {what.format(ref=state['draft']['request_id'][:8])}\n"
+               f"  {why}\n"
                "  Steps:\n  1. Read the attached exact email.\n  2. Tap Send this email or Keep unsent.\n"
                "  Time: 1 minute. Buttons expire in 12 hours. A text reply does not authorize sending.")
     image_path = path.with_suffix(".png")
-    card(image_path, state["draft"])
+    card(image_path, state["draft"], title_text)
     # This is an explicit Florian-only approval from the 27 Sep fast-lane decision.
     # The durable text-reply action resumes only the isolated reply guard; only the
     # exact button callback below can authorize the email.
@@ -269,15 +296,15 @@ def resolve_ask(state, path, action, now):
     return result.returncode == 0
 
 
-def advance(row, to, subject, body, root, effects, now):
+def advance(row, to, subject, body, root, effects, now, kind="refusal"):
     """Return pending/held/sent/unknown. Caller holds its global pickup-cycle lock.
 
     A second per-order flock makes the persisted SMTP claim safe even if another
     host command accidentally invokes this function outside the pickup cycle.
     """
-    if effects.dry_run:
+    if effects.dry_run or os.environ.get("FASTLANE_DB") or os.environ.get("FASTLANE_STATE_ROOT"):
         return "pending"  # test fixtures never contact Telegram or approve customer email
-    draft, digest = envelope(row, to, subject, body)
+    draft, digest = envelope(row, to, subject, body, kind)
     root.mkdir(parents=True, exist_ok=True, mode=0o700)
     path = root / (draft["request_id"] + ".json")
     with path.with_suffix(".lock").open("a+") as lock:
@@ -287,16 +314,18 @@ def advance(row, to, subject, body, root, effects, now):
             "keep_key": "fr_" + secrets.token_hex(16) + "_keep", "notification": "pending"}
         if state.get("digest") != digest or state.get("draft") != draft:
             return "held"  # never migrate approval to a changed envelope or refund
+        if state.get("decision") == "withdrawn":
+            return "held"  # superseded by an operator; never send, never re-ask
         atomic(path, state)
         if state["notification"] == "pending":
-            notify_card(state, path, now)
+            notify_card(state, path, now, kind)
         if not state.get("message_id"):
             return "unknown" if state["notification"] != "pending" or state.get("freshness_hold") else "pending"
         if not state.get("buttons_attached"):
             statuses = {state[key + "_key"]: {"text": "Choice recorded; the worker will verify it.",
                         "expires_at": state["expires_at"], "expired_text": "Expired; email stays unsent."}
                         for key in ("send", "keep")}
-            atomic(CALLBACK_STATUS / ("fastlane-refusal-" + draft["request_id"] + ".json"), statuses)
+            atomic(CALLBACK_STATUS / (KINDS[kind][2] + draft["request_id"] + ".json"), statuses)
             attach(state)
             state["buttons_attached"] = True
             atomic(path, state)

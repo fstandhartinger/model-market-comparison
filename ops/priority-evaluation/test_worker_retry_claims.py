@@ -107,7 +107,9 @@ class RetryClaimTests(unittest.TestCase):
                     expected,
                 )
         normalized = " ".join(eligibility.split())
-        self.assertEqual(normalized.count("AND (" + " ".join(safe_reference.split()) + ")"), 3)
+        # CR-276: the direct paid/review_passed 48 h branch is gone; refund_due/refund_pending remain.
+        self.assertEqual(normalized.count("AND (" + " ".join(safe_reference.split()) + ")"), 2)
+        self.assertIn(worker.FLORIAN_APPROVAL_SQL, eligibility)
 
     def test_unknown_refund_reuses_its_idempotency_key(self):
         columns = ("refund_id", "refund_idempotency_key", "refund_status", "refund_attempts")
@@ -162,7 +164,8 @@ class RetryClaimTests(unittest.TestCase):
         normalized = " ".join(query.split())
 
         self.assertIn(f"id='{request_id}'::uuid", eligibility)
-        self.assertIn("status IN ('paid','review_passed','refund_due','refund_pending')", eligibility)
+        self.assertIn("status IN ('refund_due','refund_pending')", eligibility)
+        self.assertTrue(eligibility.startswith(f"({worker.FLORIAN_APPROVAL_SQL}) AND "))
         self.assertNotIn("refund_attempts <", eligibility)
         self.assertIn("refund_attempts=refund_attempts + 0", normalized)
         self.assertIn(f"refund_attempt_seq=refund_attempt_seq + {worker.refund_attempt_seq_increment_sql()}", normalized)
@@ -412,6 +415,17 @@ class RetryClaimTests(unittest.TestCase):
              redirect_stderr(error):
             self.assertEqual(worker.main(), 1)
         self.assertIn("completed", error.getvalue())
+
+    def test_manual_refund_cli_requires_florians_approval(self):
+        request_id = "8f15b2f0-3d6e-4a70-b8a3-80dbdc57107a"
+        error = io.StringIO()
+        with patch.object(worker.sys, "argv", ["worker", "refund", request_id]), \
+             patch.object(worker, "claim_refund", return_value=None), \
+             patch.object(worker, "sql_json", return_value={"status": "refund_due", "refund_status": None,
+                                                            "refund_decision": None}), \
+             redirect_stderr(error):
+            self.assertEqual(worker.main(), 1)
+        self.assertIn("Florian's approval button", error.getvalue())
 
     def test_manual_review_cli_explains_the_confirmation_step(self):
         request_id = "8f15b2f0-3d6e-4a70-b8a3-80dbdc57107a"

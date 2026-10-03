@@ -34,6 +34,14 @@ def click(**changes):
 
 class ApprovalTests(unittest.TestCase):
     def setUp(self):
+        # These tests drive the live-path state machine with every effect mocked; the
+        # scratch-runtime guard (FASTLANE_DB/FASTLANE_STATE_ROOT) must not short-circuit it.
+        env = patch.dict("os.environ")
+        env.start()
+        self.addCleanup(env.stop)
+        import os
+        os.environ.pop("FASTLANE_DB", None)
+        os.environ.pop("FASTLANE_STATE_ROOT", None)
         self.tmp = tempfile.TemporaryDirectory()
         self.root = Path(self.tmp.name)
         self.path = self.root / (RID + ".json")
