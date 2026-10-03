@@ -28,7 +28,8 @@ const short = (display: string) => display.replace(/\s*\(.*\)\s*$/, '');
 
 function heat(competence: number, lowN: boolean): CSSProperties {
   const t = Math.max(0, Math.min(1, competence / 100));
-  return { backgroundColor: `rgba(var(--bh-accent-rgb, 56 132 255), ${(0.08 + 0.5 * t).toFixed(3)})`, opacity: lowN ? 0.6 : 1 };
+  // Site heat scale (.bh-heat in globals.css reads --h in 0..1).
+  return { ['--h' as string]: t.toFixed(3), opacity: lowN ? 0.6 : 1 } as CSSProperties;
 }
 
 function LanguageView({ a, categories }: { a: JevV16PreviewArtifact; categories: JevV16Categories }) {
@@ -43,15 +44,15 @@ function LanguageView({ a, categories }: { a: JevV16PreviewArtifact; categories:
       {' '}This is the main-pool language breakdown, not the separately planned uc1.1 multilingual supplement.</p>
     <div className="mt-3 overflow-x-auto"><table className="text-left text-xs tabular" data-bh-jev16-language-table>
       <caption className="sr-only">JevBench v1.6.0 preview competence by item language and system</caption>
-      <thead><tr><th scope="col" className="sticky left-0 bg-[rgb(var(--bh-bg-rgb,255_255_255))] p-1.5">System</th>
+      <thead><tr><th scope="col" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5">System</th>
         {[...(en ? [en] : []), ...langs].map((l) => <th key={l.key} scope="col" className="p-1.5 text-center" title={`${l.label}: ${l.n} items (${l.open} public, ${l.sealed} sealed)`}>{l.key}<span className="bh-muted block font-normal">{l.n}</span></th>)}</tr></thead>
       <tbody>{systems.map((s) => <tr key={s.key} className="border-t border-line">
-        <th scope="row" className="sticky left-0 bg-[rgb(var(--bh-bg-rgb,255_255_255))] p-1.5 font-normal whitespace-nowrap">{short(s.display)}<span className="bh-muted"> · {s.v16.lane === 'api' ? 'API' : 'self-hosted'}</span></th>
+        <th scope="row" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5 font-normal whitespace-nowrap">{short(s.display)}<span className="bh-muted"> · {s.v16.lane === 'api' ? 'API' : 'self-hosted'}</span></th>
         {[...(en ? [en] : []), ...langs].map((l) => {
           const c = categories.systems[s.key].languages?.[l.key];
           if (!c || c.n < categories.min_n) return <td key={l.key} className="p-1.5 text-center bh-muted" title={c ? `${c.n} items, below ${categories.min_n}` : 'no items'}>·</td>;
           const lowN = c.n < 30;
-          return <td key={l.key} className="p-1.5 text-center" style={heat(c.competence, lowN)} title={`${l.label}: ${c.competence.toFixed(1)} over ${c.n} items${lowN ? ' (low n)' : ''}`}>{c.competence.toFixed(0)}</td>;
+          return <td key={l.key} className="bh-heat p-1.5 text-center" style={heat(c.competence, lowN)} title={`${l.label}: ${c.competence.toFixed(1)} over ${c.n} items${lowN ? ' (low n)' : ''}`}>{c.competence.toFixed(0)}</td>;
         })}
       </tr>)}</tbody>
     </table></div>
@@ -82,6 +83,9 @@ function DatedCarry({ carry }: { carry: JevV16Carry }) {
 function Method({ a, sha256, categoriesSha256, carrySha256 }: { a: JevV16PreviewArtifact; sha256: string; categoriesSha256: string; carrySha256: string }) {
   const sets = a.v16.item_sets;
   const off = a.v16.equating.offsets;
+  const byDay = new Map<string, string[]>();
+  for (const s of a.systems) if (s.last_measured_on) byDay.set(s.last_measured_on, [...(byDay.get(s.last_measured_on) ?? []), short(s.display)]);
+  const measuredDays = [...byDay.entries()].sort(([x], [y]) => x.localeCompare(y));
   return <section className="mt-10 max-w-4xl" aria-labelledby="jev16-method" id="jev16-method" data-bh-jev16-method>
     <h2 id="jev16-method" className="text-2xl font-bold">Method · v1.6.0 preview</h2>
     <h3 className="mt-4 text-lg font-semibold">Rotating item sets</h3>
@@ -110,6 +114,7 @@ function Method({ a, sha256, categoriesSha256, carrySha256 }: { a: JevV16Preview
     <p className="bh-muted mt-1 text-sm">Capability = mean(Intelligence, Calibration) for systems within twice the Jev 1.13.0 cost and median latency (the official caps; the sliders change only your view). The Composite (option {a.headline}) is the equal-weight harmonic mean of Intelligence, Calibration, Speed and Cost with the v1.5 low-axis gates; it remains secondary. Request types Choice, Noul and Score weigh equally; tiers weigh easy {a.tier_weights.easy}, standard {a.tier_weights.standard}, hard {a.tier_weights.hard}, judge {a.tier_weights.judge}.</p>
     <p className="bh-muted mt-1 text-sm">Costs of v1.6-measured systems carry each system&apos;s published v1.5.4 cost per 1,000 decisions (pricing rules unchanged; v1.6 item lengths differ) unless the row says otherwise; Fastino&apos;s is an estimate from its published tariff and measured tokens.</p>
     <h3 className="mt-4 text-lg font-semibold">Provenance</h3>
+    {measuredDays.length > 0 && <p className="bh-muted mt-1 text-sm" data-bh-jev16-measured-days>Measured on the v1.6 pool (run completion day, UTC): {measuredDays.map(([day, names]) => `${day}: ${names.join(', ')}`).join(' · ')}.</p>}
     <p className="bh-muted mt-1 break-all text-xs">Provisional aggregate files: results sha256 {sha256} · categories sha256 {categoriesSha256} · dated carry sha256 {carrySha256}. Built by scripts/build-jevbench-v16-preview.py from {a.source_note.replace(/\.$/, '')} (source sha256 {a.source_sha256}).</p>
   </section>;
 }

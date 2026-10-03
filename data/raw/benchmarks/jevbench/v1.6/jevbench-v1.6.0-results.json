@@ -6,8 +6,8 @@
  "status": "preview-not-published",
  "run_kind": "diagnostic",
  "label": "v1.6.0 preview, provisional",
- "source_sha256": "c41219ca1b5d1ded53aaf2c75199dd0fd7a613a710976328931de373c7f4ad43",
- "source_note": "Provisional scorer output score-provisional-2 (3 Oct 2026). Not a release; numbers can change before GO.",
+ "source_sha256": "ce5154b082dd6d70cbc5ce7b2877f2f69ef4bf8c977d7a4c52d8d0261c9a2ffa",
+ "source_note": "Provisional scorer output score-provisional-3/out-O0 (3 Oct 2026). Not a release; numbers can change before GO.",
  "sample": {
   "open": 300,
   "sealed": 1200,
@@ -26,8 +26,8 @@
   "standard": 0.2
  },
  "sealed_share_of_intelligence": 0.5,
- "G_med": 3.7792143102695803,
- "G_med_api_basis_P_vs_A": -0.7664902348218625,
+ "G_med": 3.6227220993708755,
+ "G_med_api_basis_P_vs_A": -0.2797089084024975,
  "G_med_flag_gt10": false,
  "headline": "A",
  "options": {
@@ -140,8 +140,8 @@
    "equating_flag": null,
    "min_pool": 5,
    "offsets": {
-    "C": 2.3092996764360123,
-    "I": -2.5480033599559917
+    "C": 2.4213556896858393,
+    "I": -2.5015176787072306
    },
    "rule": "median over complete full-coverage self-hosted systems of metric(S u P) - metric(A u P), per metric (Intelligence, Calibration); API value = clip(raw_A + offset)",
    "pool_note": "Median over the complete full-coverage self-hosted systems of this run (at least five required)."
@@ -150,13 +150,15 @@
   "offset_bootstrap_B": 200,
   "release": "v1.6.0",
   "scorer_sources_sha256": {
+   "noul_method_v16.py": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
    "score_v15.py": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
    "score_v15_headlineA.py": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
-   "score_v16.py": "a88c8882979f7c96de03f06306ad911b6ed235080c5b370aa1f9fb6c797de599"
+   "score_v16.py": "eadafed76b376e182e2ff262bcd80e6be2eb0abc924ad27ae1069f4a98e07a05"
   },
   "scoring_parameters": {
    "B": 1000,
    "g_med_fixed": null,
+   "noul_method": "O0",
    "only": null,
    "seed": 16,
    "test_allow_partial": false,
@@ -210,9 +212,9 @@
    "api_subset": true,
    "author": "TypeSafe AI",
    "axes": {
-    "calibration": 90.53319490310537,
+    "calibration": 90.6452509163552,
     "cost": 54.72500234484654,
-    "intelligence": 66.92111275009336,
+    "intelligence": 66.96759843134213,
     "speed": 91.49989299046987
    },
    "calibration": {
@@ -244,19 +246,19 @@
     },
     "score": 88.22389522666936
    },
-   "capability": 78.72715382659936,
+   "capability": 78.80642467384865,
    "composite_ci95": {
     "A": [
-     69.47432027088024,
-     74.32448635092973
+     69.51866015892863,
+     74.32144997714568
     ],
     "B": [
-     67.22041638863354,
-     74.14270707432867
+     67.29080537836174,
+     73.99535300100496
     ],
     "C": [
-     67.34008322747964,
-     74.32448635092973
+     68.36229505260906,
+     74.32144997714568
     ]
    },
    "cost": {
@@ -272,7 +274,7 @@
     "I_open": 70.06596714588416,
     "I_sealed": 68.87226507421454,
     "base": 69.46911611004936,
-    "excess": 1.9601923064914821,
+    "excess": 1.4734109800721171,
     "gap": 1.1937020716696196,
     "penalty": 1.0,
     "per_type_split": {
@@ -368,7 +370,7 @@
      }
     }
    },
-   "jevbench_score": 72.47585080945147,
+   "jevbench_score": 72.50741701552661,
    "key": "jev-1.13.0",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
@@ -381,9 +383,9 @@
     "capability": 1
    },
    "scores": {
-    "A": 72.47585080945147,
-    "B": 71.29233714035585,
-    "C": 72.47585080945147
+    "A": 72.50741701552661,
+    "B": 71.32732265097476,
+    "C": 72.50741701552661
    },
    "speed": {
     "adjustment": "none (API)",
@@ -410,47 +412,47 @@
     "ci95": {
      "B": 1000,
      "C": [
-      83.80130350363709,
-      93.47721449800868
+      83.78362920542924,
+      94.0726385519778
      ],
      "I": [
-      59.078324648112336,
-      73.38739794030612
+      59.41012852470565,
+      73.15228796390304
      ],
      "capability": [
-      72.80574075885622,
-      82.32269670763898
+      73.05595304040362,
+      82.5912735731182
      ],
      "composite": {
       "A": [
-       69.47432027088024,
-       74.32448635092973
+       69.51866015892863,
+       74.32144997714568
       ],
       "B": [
-       67.22041638863354,
-       74.14270707432867
+       67.29080537836174,
+       73.99535300100496
       ],
       "C": [
-       67.34008322747964,
-       74.32448635092973
+       68.36229505260906,
+       74.32144997714568
       ]
      },
-     "seed": 23
+     "seed": 22
     },
     "ci95_basis": "bootstrap over the API system's items (n = A sealed items) AND over the equating offset (pool systems resampled with replacement, items resampled; B_offset = 200)",
     "ci95_n": 300,
     "complete": true,
     "equated": {
-     "calibration": 90.53319490310537,
-     "capability": 78.72715382659936,
-     "intelligence": 66.92111275009336
+     "calibration": 90.6452509163552,
+     "capability": 78.80642467384865,
+     "intelligence": 66.96759843134213
     },
     "equating_flag": null,
     "equating_offset": {
-     "C": 2.3092996764360123,
-     "I": -2.5480033599559917
+     "C": 2.4213556896858393,
+     "I": -2.5015176787072306
     },
-    "g_med_used": -0.7664902348218625,
+    "g_med_used": -0.2797089084024975,
     "lane": "api",
     "metric_basis": "A u P (sealed side = A, n=300)",
     "n_items": 600,
@@ -458,12 +460,12 @@
     "n_sealed_side": 300,
     "offset_ci95": {
      "C": [
-      1.0660173959005041,
+      1.0744836216564968,
       7.664080862725964
      ],
      "I": [
-      -6.572510602312845,
-      1.3851470446807652
+      -6.488929122250063,
+      1.4530350277347512
      ]
     },
     "on_S": null,
@@ -542,11 +544,11 @@
     }
    },
    "views": {
-    "Balanced 33:33:33": 67.95767345407117,
-    "Emphasis on Accuracy 60:20:20": 67.53921955757279,
-    "Emphasis on Cost 20:20:60": 61.96440155878345,
-    "Emphasis on Speed 20:60:20": 75.75404720627472,
-    "Intelligence only": 66.92111275009336
+    "Balanced 33:33:33": 67.97364507994867,
+    "Emphasis on Accuracy 60:20:20": 67.56762079330434,
+    "Emphasis on Cost 20:20:60": 61.97236795068933,
+    "Emphasis on Speed 20:60:20": 75.7659541761382,
+    "Intelligence only": 66.96759843134213
    },
    "class": "jev",
    "open": "no",
@@ -558,11 +560,12 @@
    "adapter_id": "harness/specs/jev-1.13.0.json:jevbench.adapters.typesafe.TypeSafeAdapter",
    "api_exposure_note": "API measurement: the operator's endpoint received sealed item text, without answers.",
    "model_pin": null,
-   "last_measured_on": null,
+   "last_measured_on": "2026-10-01",
+   "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -610,15 +613,15 @@
    "composite_ci95": {
     "A": [
      68.60411204169068,
-     71.84684774900572
+     71.82119142494663
     ],
     "B": [
      65.69890630611741,
-     70.18198429392262
+     70.1620067063173
     ],
     "C": [
      60.41052734905268,
-     71.84684774900572
+     71.82119142494663
     ]
    },
    "cost": {
@@ -634,7 +637,7 @@
     "I_open": 64.73540791730781,
     "I_sealed": 56.97436072780164,
     "base": 60.854884322554724,
-    "excess": 3.981832879236592,
+    "excess": 4.138325090135297,
     "gap": 7.761047189506172,
     "penalty": 1.0,
     "per_type_split": {
@@ -777,24 +780,24 @@
      ],
      "I": [
       56.314769523781564,
-      64.3148002508752
+      64.23553293881979
      ],
      "capability": [
-      69.87404610465994,
-      75.7759315773931
+      69.87385188026752,
+      75.76881897342946
      ],
      "composite": {
       "A": [
        68.60411204169068,
-       71.84684774900572
+       71.82119142494663
       ],
       "B": [
        65.69890630611741,
-       70.18198429392262
+       70.1620067063173
       ],
       "C": [
        60.41052734905268,
-       71.84684774900572
+       71.82119142494663
       ]
      },
      "seed": 16
@@ -804,7 +807,7 @@
     "equated": null,
     "equating_flag": null,
     "equating_offset": null,
-    "g_med_used": 3.7792143102695803,
+    "g_med_used": 3.6227220993708755,
     "lane": "selfhosted",
     "metric_basis": "S u P",
     "n_items": 1500,
@@ -906,11 +909,12 @@
    "adapter_id": "images/cygnet/spec.json:jevbench.adapters.typesafe.TypeSafeAdapter",
    "api_exposure_note": null,
    "model_pin": null,
-   "last_measured_on": null,
+   "last_measured_on": "2026-10-02",
+   "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -957,16 +961,16 @@
    "capability": 73.66327524714268,
    "composite_ci95": {
     "A": [
-     68.49246085963402,
-     71.62039344721437
+     68.3800857767319,
+     71.76212787864816
     ],
     "B": [
-     66.61029656112254,
-     70.97848284219052
+     66.59278148217535,
+     71.117713915187
     ],
     "C": [
-     68.17932144826769,
-     71.62039344721437
+     68.10578364836273,
+     71.76212787864816
     ]
    },
    "cost": {
@@ -982,7 +986,7 @@
     "I_open": 64.5419721808051,
     "I_sealed": 64.19500634109929,
     "base": 64.3684892609522,
-    "excess": -3.4322484705637635,
+    "excess": -3.2757562596650587,
     "gap": 0.34696583970581685,
     "penalty": 1.0,
     "per_type_split": {
@@ -1120,39 +1124,39 @@
     "ci95": {
      "B": 1000,
      "C": [
-      78.29818127330059,
-      85.12674179336896
+      78.1656013174347,
+      85.00037709032911
      ],
      "I": [
-      59.92191222254513,
-      68.54524981439366
+      59.837649565671505,
+      68.71680035229829
      ],
      "capability": [
-      69.70568391648285,
-      75.98661805170863
+      69.46129290425607,
+      76.25072977441106
      ],
      "composite": {
       "A": [
-       68.49246085963402,
-       71.62039344721437
+       68.3800857767319,
+       71.76212787864816
       ],
       "B": [
-       66.61029656112254,
-       70.97848284219052
+       66.59278148217535,
+       71.117713915187
       ],
       "C": [
-       68.17932144826769,
-       71.62039344721437
+       68.10578364836273,
+       71.76212787864816
       ]
      },
-     "seed": 27
+     "seed": 26
     },
     "ci95_n": 1200,
     "complete": true,
     "equated": null,
     "equating_flag": null,
     "equating_offset": null,
-    "g_med_used": 3.7792143102695803,
+    "g_med_used": 3.6227220993708755,
     "lane": "selfhosted",
     "metric_basis": "S u P",
     "n_items": 1500,
@@ -1254,11 +1258,12 @@
    "adapter_id": "images/winnow-12b/spec.json:jevbench.adapters.typesafe.TypeSafeAdapter",
    "api_exposure_note": null,
    "model_pin": null,
-   "last_measured_on": null,
+   "last_measured_on": "2026-10-02",
+   "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -1305,16 +1310,16 @@
    "capability": 73.72101087055445,
    "composite_ci95": {
     "A": [
-     67.4007126912183,
-     70.53041716597043
+     67.36871919932891,
+     70.6501588234248
     ],
     "B": [
-     64.80472928008246,
-     69.10303217950347
+     64.69440405042454,
+     69.24253387874792
     ],
     "C": [
-     59.04418202718906,
-     70.53041716597043
+     58.23202528580759,
+     70.6501588234248
     ]
    },
    "cost": {
@@ -1330,7 +1335,7 @@
     "I_open": 63.83558002643446,
     "I_sealed": 56.959449999068475,
     "base": 60.39751501275147,
-    "excess": 3.096915717096401,
+    "excess": 3.253407927995106,
     "gap": 6.876130027365981,
     "penalty": 1.0,
     "per_type_split": {
@@ -1468,39 +1473,39 @@
     "ci95": {
      "B": 1000,
      "C": [
-      81.87899867440292,
-      88.50321488568522
+      81.96084954904852,
+      88.44351556902285
      ],
      "I": [
-      56.170297092452124,
-      64.15227506973191
+      55.88430251292241,
+      64.25623568106657
      ],
      "capability": [
-      69.58441897959413,
-      75.46508330837311
+      69.61900546237662,
+      75.55832701200146
      ],
      "composite": {
       "A": [
-       67.4007126912183,
-       70.53041716597043
+       67.36871919932891,
+       70.6501588234248
       ],
       "B": [
-       64.80472928008246,
-       69.10303217950347
+       64.69440405042454,
+       69.24253387874792
       ],
       "C": [
-       59.04418202718906,
-       70.53041716597043
+       58.23202528580759,
+       70.6501588234248
       ]
      },
-     "seed": 24
+     "seed": 23
     },
     "ci95_n": 1200,
     "complete": true,
     "equated": null,
     "equating_flag": null,
     "equating_offset": null,
-    "g_med_used": 3.7792143102695803,
+    "g_med_used": 3.6227220993708755,
     "lane": "selfhosted",
     "metric_basis": "S u P",
     "n_items": 1500,
@@ -1602,11 +1607,12 @@
    "adapter_id": "images/jev-omni/spec.json:omni_v15.JevOmni",
    "api_exposure_note": null,
    "model_pin": null,
-   "last_measured_on": null,
+   "last_measured_on": "2026-10-02",
+   "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -1653,16 +1659,16 @@
    "capability": 68.91514387950991,
    "composite_ci95": {
     "A": [
-     53.16736238395387,
-     70.80586310143676
+     53.58128553841222,
+     70.81897217599418
     ],
     "B": [
-     48.55446405750271,
-     66.75626936202248
+     49.0139553293285,
+     66.80561512573175
     ],
     "C": [
-     36.9217794333013,
-     58.056926027421994
+     37.20922606834183,
+     58.175897318947825
     ]
    },
    "cost": {
@@ -1678,7 +1684,7 @@
     "I_open": 52.52266731743627,
     "I_sealed": 47.37587103686388,
     "base": 49.94926917715007,
-    "excess": 1.3675819703028154,
+    "excess": 1.5240741812015202,
     "gap": 5.146796280572396,
     "penalty": 1.0,
     "per_type_split": {
@@ -1816,39 +1822,39 @@
     "ci95": {
      "B": 1000,
      "C": [
-      81.12587449088865,
-      88.17806515626197
+      81.37853894444146,
+      88.09892514741215
      ],
      "I": [
-      44.89707013811471,
-      54.385761798364065
+      45.042309215953026,
+      54.30828283239261
      ],
      "capability": [
-      64.0109867680435,
-      70.4203069628519
+      64.24440446665527,
+      70.46687798605421
      ],
      "composite": {
       "A": [
-       53.16736238395387,
-       70.80586310143676
+       53.58128553841222,
+       70.81897217599418
       ],
       "B": [
-       48.55446405750271,
-       66.75626936202248
+       49.0139553293285,
+       66.80561512573175
       ],
       "C": [
-       36.9217794333013,
-       58.056926027421994
+       37.20922606834183,
+       58.175897318947825
       ]
      },
-     "seed": 26
+     "seed": 25
     },
     "ci95_n": 1200,
     "complete": true,
     "equated": null,
     "equating_flag": null,
     "equating_offset": null,
-    "g_med_used": 3.7792143102695803,
+    "g_med_used": 3.6227220993708755,
     "lane": "selfhosted",
     "metric_basis": "S u P",
     "n_items": 1500,
@@ -1950,11 +1956,12 @@
    "adapter_id": "images/plumb-4b/spec.json:jevbench.adapters.typesafe.TypeSafeAdapter",
    "api_exposure_note": null,
    "model_pin": null,
-   "last_measured_on": null,
+   "last_measured_on": "2026-10-02",
+   "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -2001,16 +2008,16 @@
    "capability": 68.47064674970777,
    "composite_ci95": {
     "A": [
-     46.69004504918286,
-     69.56145989624562
+     46.6815178079257,
+     69.52536538397908
     ],
     "B": [
-     42.23489655706371,
-     64.67319529903232
+     42.215792738324815,
+     64.62285460561014
     ],
     "C": [
-     32.42364239526587,
-     49.196217723721986
+     32.41772069994841,
+     49.1319720951152
     ]
    },
    "cost": {
@@ -2026,7 +2033,7 @@
     "I_open": 52.58086212188769,
     "I_sealed": 42.02701212027678,
     "base": 47.303937121082235,
-    "excess": 6.774635691341331,
+    "excess": 6.931127902240036,
     "gap": 10.553850001610911,
     "penalty": 1.0,
     "per_type_split": {
@@ -2168,25 +2175,25 @@
       89.97927303856018
      ],
      "I": [
-      42.43204282532835,
-      50.487758980151284
+      42.397784902016085,
+      50.44437804712891
      ],
      "capability": [
-      63.94180406430119,
+      63.94149010364352,
       69.60062074444134
      ],
      "composite": {
       "A": [
-       46.69004504918286,
-       69.56145989624562
+       46.6815178079257,
+       69.52536538397908
       ],
       "B": [
-       42.23489655706371,
-       64.67319529903232
+       42.215792738324815,
+       64.62285460561014
       ],
       "C": [
-       32.42364239526587,
-       49.196217723721986
+       32.41772069994841,
+       49.1319720951152
       ]
      },
      "seed": 17
@@ -2196,7 +2203,7 @@
     "equated": null,
     "equating_flag": null,
     "equating_offset": null,
-    "g_med_used": 3.7792143102695803,
+    "g_med_used": 3.6227220993708755,
     "lane": "selfhosted",
     "metric_basis": "S u P",
     "n_items": 1500,
@@ -2298,11 +2305,12 @@
    "adapter_id": "images/decider-4b-v2/spec.json:jevbench.adapters.typesafe.TypeSafeAdapter",
    "api_exposure_note": null,
    "model_pin": null,
-   "last_measured_on": null,
+   "last_measured_on": "2026-10-02",
+   "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -2349,16 +2357,16 @@
    "capability": 67.93359101872429,
    "composite_ci95": {
     "A": [
-     42.9497160761469,
-     69.48587839043402
+     43.08879864694748,
+     69.2884371971381
     ],
     "B": [
-     38.5760104632031,
-     64.75398332983423
+     38.78118502243623,
+     64.55186956403227
     ],
     "C": [
-     29.82619171954645,
-     49.93482296835595
+     29.922776838157976,
+     49.50392283600989
     ]
    },
    "cost": {
@@ -2374,7 +2382,7 @@
     "I_open": 45.982064461274575,
     "I_sealed": 45.987683576159554,
     "base": 45.984874018717065,
-    "excess": -3.7848334251545594,
+    "excess": -3.6283412142558547,
     "gap": -0.005619114884979126,
     "penalty": 1.0,
     "per_type_split": {
@@ -2512,39 +2520,39 @@
     "ci95": {
      "B": 1000,
      "C": [
-      83.72064867466165,
-      89.87350762628282
+      83.91633007162113,
+      90.00161201849515
      ],
      "I": [
-      40.901380519870216,
-      50.857477339078685
+      41.03672692152259,
+      50.80606589091112
      ],
      "capability": [
-      63.30053560255882,
-      69.52826193842563
+      63.3182937180908,
+      69.3092515802753
      ],
      "composite": {
       "A": [
-       42.9497160761469,
-       69.48587839043402
+       43.08879864694748,
+       69.2884371971381
       ],
       "B": [
-       38.5760104632031,
-       64.75398332983423
+       38.78118502243623,
+       64.55186956403227
       ],
       "C": [
-       29.82619171954645,
-       49.93482296835595
+       29.922776838157976,
+       49.50392283600989
       ]
      },
-     "seed": 25
+     "seed": 24
     },
     "ci95_n": 1200,
     "complete": true,
     "equated": null,
     "equating_flag": null,
     "equating_offset": null,
-    "g_med_used": 3.7792143102695803,
+    "g_med_used": 3.6227220993708755,
     "lane": "selfhosted",
     "metric_basis": "S u P",
     "n_items": 1500,
@@ -2646,11 +2654,12 @@
    "adapter_id": "images/jevk5-v0.3-4b/spec.json:jevk5_v15.JevK5Warm",
    "api_exposure_note": null,
    "model_pin": null,
-   "last_measured_on": null,
+   "last_measured_on": "2026-10-02",
+   "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -2697,16 +2706,16 @@
    "capability": 64.8143301055458,
    "composite_ci95": {
     "A": [
-     30.89579746297672,
-     53.66716456370088
+     31.017239797989003,
+     54.40212734022296
     ],
     "B": [
-     27.157954815868663,
-     49.00421665624004
+     27.311595653564225,
+     49.797882250595364
     ],
     "C": [
-     21.45541490484494,
-     37.268864280347834
+     21.539749859714593,
+     37.77925509737706
     ]
    },
    "cost": {
@@ -2722,7 +2731,7 @@
     "I_open": 42.277264514558865,
     "I_sealed": 38.65454241518799,
     "base": 40.46590346487343,
-    "excess": -0.1564922108987048,
+    "excess": 0.0,
     "gap": 3.6227220993708755,
     "penalty": 1.0,
     "per_type_split": {
@@ -2860,39 +2869,39 @@
     "ci95": {
      "B": 1000,
      "C": [
-      83.80962418035293,
-      89.41909730342248
+      83.6192142800732,
+      89.53920000423044
      ],
      "I": [
-      35.766354371581,
-      45.0399367760099
+      35.85619191504351,
+      45.290195603399255
      ],
      "capability": [
-      60.798879090589566,
-      66.21497760330557
+      60.655603159716385,
+      66.32460192219183
      ],
      "composite": {
       "A": [
-       30.89579746297672,
-       53.66716456370088
+       31.017239797989003,
+       54.40212734022296
       ],
       "B": [
-       27.157954815868663,
-       49.00421665624004
+       27.311595653564225,
+       49.797882250595364
       ],
       "C": [
-       21.45541490484494,
-       37.268864280347834
+       21.539749859714593,
+       37.77925509737706
       ]
      },
-     "seed": 22
+     "seed": 21
     },
     "ci95_n": 1200,
     "complete": true,
     "equated": null,
     "equating_flag": null,
     "equating_offset": null,
-    "g_med_used": 3.7792143102695803,
+    "g_med_used": 3.6227220993708755,
     "lane": "selfhosted",
     "metric_basis": "S u P",
     "n_items": 1500,
@@ -2994,11 +3003,12 @@
    "adapter_id": "A2 reviewed bundle",
    "api_exposure_note": null,
    "model_pin": null,
-   "last_measured_on": null,
+   "last_measured_on": "2026-10-02",
+   "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -3070,7 +3080,7 @@
     "I_open": 40.99826149180754,
     "I_sealed": 39.73539413293891,
     "base": 40.366827812373224,
-    "excess": -2.5163469514009478,
+    "excess": -2.359854740502243,
     "gap": 1.2628673588686326,
     "penalty": 1.0,
     "per_type_split": {
@@ -3217,7 +3227,7 @@
      ],
      "capability": [
       59.79551341243609,
-      65.83747248895851
+      65.80288716039323
      ],
      "composite": {
       "A": [
@@ -3240,7 +3250,7 @@
     "equated": null,
     "equating_flag": null,
     "equating_offset": null,
-    "g_med_used": 3.7792143102695803,
+    "g_med_used": 3.6227220993708755,
     "lane": "selfhosted",
     "metric_basis": "S u P",
     "n_items": 1500,
@@ -3342,11 +3352,12 @@
    "adapter_id": "images/decision-4b-v12/spec.json:jevbench.adapters.typesafe.TypeSafeAdapter",
    "api_exposure_note": null,
    "model_pin": null,
-   "last_measured_on": null,
+   "last_measured_on": "2026-10-02",
+   "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -3394,15 +3405,15 @@
    "composite_ci95": {
     "A": [
      24.7002534516557,
-     45.18588945486384
+     45.025096960412014
     ],
     "B": [
      21.44589758236207,
-     40.805740419840824
+     40.7253075655391
     ],
     "C": [
      17.152953785872015,
-     31.379089899210996
+     31.26742844473057
     ]
    },
    "cost": {
@@ -3418,7 +3429,7 @@
     "I_open": 38.708157044804366,
     "I_sealed": 36.185702670116065,
     "base": 37.44692985746022,
-    "excess": -1.2567599355812789,
+    "excess": -1.100267724682574,
     "gap": 2.5224543746883015,
     "penalty": 1.0,
     "per_type_split": {
@@ -3570,15 +3581,15 @@
      "composite": {
       "A": [
        24.7002534516557,
-       45.18588945486384
+       45.025096960412014
       ],
       "B": [
        21.44589758236207,
-       40.805740419840824
+       40.7253075655391
       ],
       "C": [
        17.152953785872015,
-       31.379089899210996
+       31.26742844473057
       ]
      },
      "seed": 18
@@ -3588,7 +3599,7 @@
     "equated": null,
     "equating_flag": null,
     "equating_offset": null,
-    "g_med_used": 3.7792143102695803,
+    "g_med_used": 3.6227220993708755,
     "lane": "selfhosted",
     "metric_basis": "S u P",
     "n_items": 1500,
@@ -3690,11 +3701,12 @@
    "adapter_id": "images/decision-4b-v11/spec.json:jevbench.adapters.typesafe.TypeSafeAdapter",
    "api_exposure_note": null,
    "model_pin": null,
-   "last_measured_on": null,
+   "last_measured_on": "2026-10-02",
+   "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
     "carried_metadata_from": "v1.5.5"
    }
   },
@@ -3704,9 +3716,9 @@
    "api_subset": true,
    "author": "Fastino",
    "axes": {
-    "calibration": 68.80407943329136,
+    "calibration": 68.91613544654119,
     "cost": 46.59842351525712,
-    "intelligence": 9.849852577804803,
+    "intelligence": 9.896338259053564,
     "speed": 84.7052606179839
    },
    "calibration": {
@@ -3738,19 +3750,19 @@
     },
     "score": 66.49477975685535
    },
-   "capability": 39.32696600554809,
+   "capability": 39.40623685279738,
    "composite_ci95": {
     "A": [
-     0.004373608539533909,
-     4.333426311566177
+     0.003645763133251293,
+     4.676632151139148
     ],
     "B": [
-     0.0028299130999478003,
-     3.5329064142173
+     0.002355680916687798,
+     3.813106995684604
     ],
     "C": [
-     0.003037228152454104,
-     3.009323827476512
+     0.002531779953646731,
+     3.2476612160688525
     ]
    },
    "cost": {
@@ -3766,7 +3778,7 @@
     "I_open": 7.444047465042489,
     "I_sealed": 17.351664410479103,
     "base": 12.397855937760795,
-    "excess": -9.141126710614751,
+    "excess": -9.627908037034116,
     "gap": -9.907616945436613,
     "penalty": 1.0,
     "per_type_split": {
@@ -3862,7 +3874,7 @@
      }
     }
    },
-   "jevbench_score": 0.9029263501750215,
+   "jevbench_score": 0.9145344789364577,
    "key": "fastino-gliner-2-5-decide",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
@@ -3875,9 +3887,9 @@
     "capability": 11
    },
    "scores": {
-    "A": 0.9029263501750215,
-    "B": 0.671862902377872,
-    "C": 0.6270321876215427
+    "A": 0.9145344789364577,
+    "B": 0.6808724349595329,
+    "C": 0.6350933881503177
    },
    "speed": {
     "adjustment": "none (API)",
@@ -3904,47 +3916,47 @@
     "ci95": {
      "B": 1000,
      "C": [
-      58.20726765131016,
-      75.6317431119072
+      57.78438067152338,
+      75.65004949225172
      ],
      "I": [
-      1.5002875336782695,
-      17.979920847082138
+      1.4105916735701385,
+      18.49591744506271
      ],
      "capability": [
-      30.764442548305922,
-      45.38603644005107
+      30.916854802647002,
+      45.95028632531002
      ],
      "composite": {
       "A": [
-       0.004373608539533909,
-       4.333426311566177
+       0.003645763133251293,
+       4.676632151139148
       ],
       "B": [
-       0.0028299130999478003,
-       3.5329064142173
+       0.002355680916687798,
+       3.813106995684604
       ],
       "C": [
-       0.003037228152454104,
-       3.009323827476512
+       0.002531779953646731,
+       3.2476612160688525
       ]
      },
-     "seed": 21
+     "seed": 20
     },
     "ci95_basis": "bootstrap over the API system's items (n = A sealed items) AND over the equating offset (pool systems resampled with replacement, items resampled; B_offset = 200)",
     "ci95_n": 300,
     "complete": true,
     "equated": {
-     "calibration": 68.80407943329136,
-     "capability": 39.32696600554809,
-     "intelligence": 9.849852577804803
+     "calibration": 68.91613544654119,
+     "capability": 39.40623685279738,
+     "intelligence": 9.896338259053564
     },
     "equating_flag": null,
     "equating_offset": {
-     "C": 2.3092996764360123,
-     "I": -2.5480033599559917
+     "C": 2.4213556896858393,
+     "I": -2.5015176787072306
     },
-    "g_med_used": -0.7664902348218625,
+    "g_med_used": -0.2797089084024975,
     "lane": "api",
     "metric_basis": "A u P (sealed side = A, n=300)",
     "n_items": 600,
@@ -3952,12 +3964,12 @@
     "n_sealed_side": 300,
     "offset_ci95": {
      "C": [
-      1.0660173959005041,
+      1.0744836216564968,
       7.664080862725964
      ],
      "I": [
-      -6.572510602312845,
-      1.3851470446807652
+      -6.488929122250063,
+      1.4530350277347512
      ]
     },
     "on_S": null,
@@ -4036,11 +4048,11 @@
     }
    },
    "views": {
-    "Balanced 33:33:33": 0.7502147687078368,
-    "Emphasis on Accuracy 60:20:20": 0.4988644106642432,
-    "Emphasis on Cost 20:20:60": 0.9483755743506542,
-    "Emphasis on Speed 20:60:20": 1.0639796296183524,
-    "Intelligence only": 0.3320103500081353
+    "Balanced 33:33:33": 0.7600015318988658,
+    "Emphasis on Accuracy 60:20:20": 0.5057258501674741,
+    "Emphasis on Cost 20:20:60": 0.959924247576137,
+    "Emphasis on Speed 20:60:20": 1.0772893926529572,
+    "Intelligence only": 0.33673326747724197
    },
    "class": "decision-api",
    "open": "no",
@@ -4049,11 +4061,12 @@
    "endpoint_condition": "external hosted API (Fastino); received the 300-item API subset and the 300 public items",
    "api_exposure_note": "API measurement: the operator's endpoint received sealed item text, without answers.",
    "model_pin": null,
-   "last_measured_on": null,
+   "last_measured_on": "2026-10-03",
+   "measurement_date_status": "run output completion day (UTC)",
    "measured_in": "v1.6.0",
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 provisional scorer output (score-provisional-2)",
+    "kind": "v1.6.0 provisional scorer output (score-provisional-3/out-O0)",
     "carried_metadata_from": null
    }
   }

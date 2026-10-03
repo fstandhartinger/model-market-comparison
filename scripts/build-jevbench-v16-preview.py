@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the PROVISIONAL public JevBench v1.6.0 preview files from the private provisional scorer output.
 
-Reads (private, Sandy only):  <prov>/out/jevbench-v1.6.0-results.json, <prov>/out/categories-with-topics.json
+Reads (private, Sandy only):  <prov>/<out>/jevbench-v1.6.0-results.json, <prov>/<out>/categories-with-topics.json, <prov>/runs/*.jsonl (mtime only)
 Reads (public, this repo):    data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.{0..5}-results.json and their git history
 Writes (public aggregates):   data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json
                               data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-categories.json
@@ -12,7 +12,7 @@ standing exclusion are dropped from every output. Carried rows keep their last p
 publication day of the release that first published that measurement (merge day on main, from git history); no
 per-model measurement timestamp is invented. Everything is marked provisional.
 
-Usage: python3 scripts/build-jevbench-v16-preview.py <prov-dir>
+Usage: python3 scripts/build-jevbench-v16-preview.py <prov-dir> [<out-subdir>]   (default out; e.g. out-O1S)
 """
 import hashlib
 import json
@@ -80,9 +80,19 @@ def signature(row):
     return (i.get('I_open'), i.get('I_sealed'), (row.get('calibration') or {}).get('score'), (row.get('speed') or {}).get('p50_s_raw'))
 
 
-def main(prov):
-    src_results = os.path.join(prov, 'out/jevbench-v1.6.0-results.json')
-    src_categories = os.path.join(prov, 'out/categories-with-topics.json')
+def measured_on(prov, key):
+    """UTC day the system's run output file was completed (mtime of the resolved runs/<key>.jsonl), or None."""
+    path = os.path.join(prov, 'runs', f'{key}.jsonl')
+    if not os.path.exists(path):
+        return None
+    t = os.stat(os.path.realpath(path)).st_mtime
+    return subprocess.run(['date', '-u', '-d', f'@{t}', '+%Y-%m-%d'], check=True, capture_output=True, text=True).stdout.strip()
+
+
+def main(prov, out_dir='out'):
+    src_results = os.path.join(prov, out_dir, 'jevbench-v1.6.0-results.json')
+    src_categories = os.path.join(prov, out_dir, 'categories-with-topics.json')
+    src_label = f'{os.path.basename(os.path.normpath(prov))}/{out_dir}'
     res = json.load(open(src_results))
     cats = json.load(open(src_categories))
     v15 = {rev: json.load(open(os.path.join(ROOT, f'data/raw/benchmarks/jevbench/v1.5/jevbench-v{rev}-results.json'))) for rev in V15}
@@ -111,10 +121,12 @@ def main(prov):
             row.setdefault('endpoint_condition', 'external hosted API (Fastino); received the 300-item API subset and the 300 public items')
             row.setdefault('api_exposure_note', "API measurement: the operator's endpoint received sealed item text, without answers.")
         row['model_pin'] = prior.get('model_pin') if prior else None
-        row['last_measured_on'] = None  # per-row measurement day not in the provisional output; see release notes
+        # Completion day of the run output; the per-record output has no timestamps.
+        row['last_measured_on'] = measured_on(prov, s['key'])
+        row['measurement_date_status'] = 'run output completion day (UTC)' if row['last_measured_on'] else 'unknown'
         row['measured_in'] = 'v1.6.0'
         row['not_ranked_because'] = None if row.get('ranked') else row.get('not_ranked_because')
-        row['provenance'] = {'kind': 'v1.6.0 provisional scorer output (score-provisional-2)', 'carried_metadata_from': 'v1.5.5' if prior else None}
+        row['provenance'] = {'kind': f'v1.6.0 provisional scorer output ({src_label})', 'carried_metadata_from': 'v1.5.5' if prior else None}
         systems.append(row)
 
     # Ranks and board orders recomputed on the published (exclusion-applied) roster; scores are unchanged.
@@ -166,7 +178,7 @@ def main(prov):
         'status': 'preview-not-published', 'run_kind': 'diagnostic',
         'label': 'v1.6.0 preview, provisional',
         'source_sha256': sha_file(src_results),
-        'source_note': 'Provisional scorer output score-provisional-2 (3 Oct 2026). Not a release; numbers can change before GO.',
+        'source_note': f'Provisional scorer output {src_label} (3 Oct 2026). Not a release; numbers can change before GO.',
         'sample': {'open': counts['P'], 'sealed': counts['S'], 'total': counts['selfhosted_input'], 'published_open': counts['P']},
         'types': res['types'], 'tier_weights': res['tier_weights'], 'sealed_share_of_intelligence': res['sealed_share_of_intelligence'],
         'G_med': res['G_med'], 'G_med_api_basis_P_vs_A': res['G_med_api_basis_P_vs_A'], 'G_med_flag_gt10': res['G_med_flag_gt10'],
@@ -242,6 +254,6 @@ def main(prov):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
+    if len(sys.argv) not in (2, 3):
         raise SystemExit(__doc__)
-    main(sys.argv[1])
+    main(*sys.argv[1:])

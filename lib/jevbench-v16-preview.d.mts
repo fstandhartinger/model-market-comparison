@@ -1,6 +1,6 @@
 import type { JevV15Artifact, JevV15System } from './jevbench-v15-preview.mjs';
 export type JevV16ItemSet = { set: 'S' | 'A' | 'P'; name: string; items: number; by_type: Record<'choice' | 'noul' | 'score', number>; answered_by: string };
-export type JevV16PreviewSystem = JevV15System & { capability: number; measured_in: 'v1.6.0'; v16: { lane: 'api' | 'selfhosted'; [k: string]: unknown } };
+export type JevV16PreviewSystem = JevV15System & { capability: number; measured_in: 'v1.6.0'; last_measured_on?: string | null; v16: { lane: 'api' | 'selfhosted'; [k: string]: unknown } };
 export type JevV16PreviewArtifact = Omit<JevV15Artifact, 'systems'> & {
   provisional: true; label: string; source_note: string; G_med_api_basis_P_vs_A: number;
   systems: JevV16PreviewSystem[];

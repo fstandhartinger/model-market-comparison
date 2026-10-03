@@ -3,7 +3,7 @@
  "revision": "v1.6.0",
  "kind": "category-aggregates",
  "built_utc": null,
- "source_results_sha256": "c41219ca1b5d1ded53aaf2c75199dd0fd7a613a710976328931de373c7f4ad43",
+ "source_results_sha256": "ce5154b082dd6d70cbc5ce7b2877f2f69ef4bf8c977d7a4c52d8d0261c9a2ffa",
  "metric": "Chance-corrected competence (0 = chance, 100 = perfect) over the category's items the system saw, open and sealed pooled, tiers pooled: per request type the method's competence cell, then the mean over the request types present. Not part of the JevBench Score; never equated for API systems; compare systems within a category, not categories with each other. Values can be negative (below chance).",
  "min_n": 15,
  "labelling": "Family and language are authoring metadata of every item in the frozen v1.6 pool. Each of the 1,500 v1.6 items was also labelled with one subject topic (the v1.2 topic list, unchanged) and one TypeSafe use-case category by Winnow-12B Q8 on our own GPU pod (same model, questions and taxonomy as v1.5); where a uc1 item was written for a use case, that authoring use case is used instead. Sealed items stayed on our own infrastructure. 75 public items (5 %) were checked by hand; item-group rules fix the systematic misses (topic agreement before rules 93 %). All non-English uc1 items are machine-authored and not native-reviewed. Self-hosted systems saw S u P (1,500 items); hosted API systems saw only A u P (600 items), so their cells cover fewer items.",
@@ -2476,7 +2476,7 @@
  ],
  "labels_sha256": "b9fefbd3154f92ef4129bf7fb1270e0be8a19802ec9c6b6d04f13d4a12707881",
  "provisional": true,
- "source_sha256": "f6ebafcc0af47c2ca235b917329901374a10563accd6482180ffd5ea0567591a",
+ "source_sha256": "fb7ccdf52475db2fc2761ce7f9f0130795b3355401725ed10a5623c602915b69",
  "results_sha256_note": "source_results_sha256 refers to the private provisional scorer output, not to the public results file.",
  "lanes": {
   "cygnet": "selfhosted",
