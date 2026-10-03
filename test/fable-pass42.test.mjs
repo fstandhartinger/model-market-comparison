@@ -22,7 +22,7 @@ test('F-221: the release header prints the data hash through Sha (12-char prefix
 
 test('F-222: the live hub says what JevBench is first; the release facts sit on the small meta line; the release notes are not the hero', () => {
   assert.match(release, /live = false \}/, 'the component takes a live flag');
-  assert.match(livePage, /<JevBenchV15ReleasePage artifact=\{artifact\} sha256=\{sha256\} versionPath="\/jev-models\/v1\.5\.5" live \/>/, '/jev-models is the live board');
+  assert.match(livePage, /<JevBenchV15ReleasePage artifact=\{artifact\} sha256=\{sha256\} versionPath="\/jev-models\/v1\.5\.6" live \/>/, '/jev-models is the live board');
   assert.doesNotMatch(pinnedPage, /live \/>/, 'the pinned v1.5.0 page is not the live board');
   assert.match(release, /\{live \? 'JevBench by Benchmark Heaven' : `JevBench \$\{artifact\.revision\} — Jev alternatives ranking`\}/, 'the live h1 is the product name; the pinned h1 keeps the release name');
   assert.match(release, /data-bh-jev-own>JevBench is <b>Benchmark Heaven&apos;s own benchmark<\/b> for Jev-class decision models: state and a bounded rubric in, a typed answer out\.<\/p>/);

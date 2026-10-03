@@ -1,0 +1,81 @@
+{
+  "before_v1.5.5": {
+    "A": [
+      "cygnet",
+      "winnow-12b",
+      "jev-1.13.0",
+      "jevk5-v0.3-4b",
+      "plumb-4b"
+    ],
+    "B": [
+      "winnow-12b",
+      "cygnet",
+      "jev-1.13.0",
+      "jev-omni",
+      "jevk5-v0.3-4b"
+    ],
+    "C": [
+      "cygnet",
+      "winnow-12b",
+      "jev-1.13.0",
+      "jev-omni",
+      "spark-s1-4b-v6"
+    ]
+  },
+  "after_v1.5.6": {
+    "A": [
+      "cygnet",
+      "winnow-12b",
+      "jev-1.13.0",
+      "jevk5-v0.3-4b",
+      "vansa-3.4"
+    ],
+    "B": [
+      "winnow-12b",
+      "cygnet",
+      "jev-1.13.0",
+      "jev-omni",
+      "vansa-3.4"
+    ],
+    "C": [
+      "cygnet",
+      "winnow-12b",
+      "jev-1.13.0",
+      "jev-omni",
+      "spark-s1-4b-v6"
+    ]
+  },
+  "changed": {
+    "A": true,
+    "B": true,
+    "C": false
+  },
+  "vansa_ranks": {
+    "A": 5,
+    "B": 5,
+    "C": 6
+  },
+  "n_ranked": 110,
+  "rule": "Paid fast-lane top-five exception plus explicit Florian GO 3 Oct 2026 (USER-GO-20261003.json, card16014 resolved).",
+  "capability": {
+    "top5_before": [
+      "jev-1.13.0",
+      "winnow-12b",
+      "cygnet",
+      "surogate-rune-26b-a4b-v3-rtxpro6000-a2",
+      "jev-omni"
+    ],
+    "top5_after": [
+      "jev-1.13.0",
+      "winnow-12b",
+      "cygnet",
+      "surogate-rune-26b-a4b-v3-rtxpro6000-a2",
+      "jev-omni"
+    ],
+    "changed": false,
+    "vansa_capability_rank": 7,
+    "vansa_capability": 72.83076985389093,
+    "vansa_in_class": true,
+    "method": "lib/jevbench-jev-class.mjs jevClassRows over ranked rows, default 2x caps"
+  }
+}
