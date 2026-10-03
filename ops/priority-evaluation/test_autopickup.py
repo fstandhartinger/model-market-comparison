@@ -734,6 +734,42 @@ class SyntheticGuardTests(DatabaseTestCase):
             ap.Effects(dry_run=True).stripe_event("test", "evt_1")
 
 
+class RefundTransitionTests(DatabaseTestCase):
+    def test_update_row_single_updated_at_assignment(self):
+        rid = insert_order()
+        self.assertTrue(ap.update_row(rid, "refund_reason='x', updated_at=now()-interval '5 minutes'"))
+        self.assertTrue(ap.update_row(rid, "refund_reason='y'"))
+        self.assertEqual(ap.load_row(rid)["refund_reason"], "y")
+
+    def fail(self, rid, guard_ok=True):
+        job = ap.JOB_ROOT / rid
+        (job / "review").mkdir(parents=True)
+        (job / "review" / "CODE-REVIEW.md").write_text("x")
+        (job / "STATE.md").write_text("state\n")
+        pins = {"code": {"commit": "a" * 40}}
+        verdict = {"verdict": "FAIL", "failure_scope": "customer_source", "source_pins": pins}
+        with mock.patch.object(ap, "parse_review_output", return_value=verdict), \
+                mock.patch.object(ap, "source_review_pins", return_value=pins):
+            ap.fail_source_review(rid, job, "bad source")
+        return job
+
+    def test_source_review_fail_queues_refund_then_writes_state(self):
+        rid = insert_order()
+        job = self.fail(rid)
+        row = ap.load_row(rid)
+        self.assertEqual((row["status"], row["refund_reason"], row["release_status"]),
+                         ("refund_due", "source_review_failed", "refused"))
+        self.assertIn("Full refund queued", (job / "STATE.md").read_text())
+
+    def test_zero_row_update_never_reports_queued(self):
+        rid = insert_order()
+        ap.update_row(rid, "status='refunded'")
+        job = ap.JOB_ROOT / rid
+        with self.assertRaises(ap.PickupError):
+            self.fail(rid)
+        self.assertNotIn("refund queued", (job / "STATE.md").read_text())
+
+
 class AgentToolBoundaryTests(unittest.TestCase):
     @unittest.skipUnless(Path("/usr/bin/bwrap").is_file(), "bubblewrap is required")
     def test_evaluation_stage_claude_is_not_restricted_to_read_tools(self):

@@ -310,8 +310,11 @@ def load_row(rid: str) -> dict[str, Any] | None:
 
 
 def update_row(rid: str, assignments: str, guard: str = "TRUE") -> bool:
+    # Callers that backdate updated_at (refund hand-off) supply it themselves; a second
+    # assignment is a Postgres error ("multiple assignments to same column").
+    stamp = "" if re.search(r"(?<![A-Za-z0-9_])updated_at\s*=", assignments) else ", updated_at=now()"
     output = sql(
-        f"UPDATE {TABLE} SET {assignments}, updated_at=now() "
+        f"UPDATE {TABLE} SET {assignments}{stamp} "
         f"WHERE id='{request_id(rid)}'::uuid AND ({guard}) RETURNING id::text"
     )
     return bool(output)
@@ -4018,11 +4021,13 @@ def fail_source_review(rid: str, job_dir: Path, reason: str) -> None:
             or not customer_source_review_failed(review_result.get("source_pins")) \
             or review_result.get("source_pins") != source_review_pins(job_dir):
         raise PickupError("a refund requires an explicit machine-readable source-review FAIL")
+    queued = update_row(rid, "status='refund_due', refund_status=NULL, refund_reason='source_review_failed', "
+                             "evaluation_status='failed', release_status='refused', updated_at=now()-interval '5 minutes'",
+                        "status IN ('paid','review_passed') AND result_delivered_at IS NULL")
+    if not queued:
+        raise PickupError("source-review refund was not queued: no row matched the guard")
     atomic_write(job_dir / "STATE.md", (job_dir / "STATE.md").read_text(encoding="utf-8", errors="replace")
                  + f"\n\nSource review failed at {iso(utcnow())}: {reason}. Full refund queued.\n")
-    update_row(rid, "status='refund_due', refund_status=NULL, refund_reason='source_review_failed', "
-                    "evaluation_status='failed', release_status='refused', updated_at=now()-interval '5 minutes'",
-               "status IN ('paid','review_passed') AND result_delivered_at IS NULL")
 
 
 def consume_stage_attempt(state: dict[str, Any], name: str, limit: int) -> bool:
