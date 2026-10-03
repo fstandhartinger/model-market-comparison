@@ -13,7 +13,7 @@ const { artifact: v155, sha256: v155Sha } = await readJevbenchV155Release();
 const { artifact, bytes } = await readJevbenchV156Release();
 const vansa = artifact.systems.find((row) => row.key === 'vansa-3.4');
 
-test('CR-275 v1.5.6 adds only the measured Vansa-3.4 row; every v1.5.5 row keeps its numbers', () => {
+test('CR-277 v1.5.6 adds only the measured Vansa-3.4 row; every v1.5.5 row keeps its numbers', () => {
   assert.equal(artifact.revision, 'v1.5.6');
   assert.deepEqual(artifact.parent_release, { revision: 'v1.5.5', sha256: v155Sha });
   assert.deepEqual(artifact.systems.map((row) => row.key), [...v155.systems.map((row) => row.key), 'vansa-3.4']);
@@ -28,7 +28,7 @@ test('CR-275 v1.5.6 adds only the measured Vansa-3.4 row; every v1.5.5 row keeps
   assert.equal(artifact.G_med, v155.G_med);
 });
 
-test('CR-275 Vansa row carries the delivered paid fast-lane aggregate exactly', () => {
+test('CR-277 Vansa row carries the delivered paid fast-lane aggregate exactly', () => {
   assert.ok(vansa);
   assert.equal(vansa.scores.A, 71.59061278658044);
   assert.equal(vansa.axes.intelligence, 58.038138517840565);
@@ -48,10 +48,10 @@ test('CR-275 Vansa row carries the delivered paid fast-lane aggregate exactly', 
   assert.equal(createHash('sha256').update(bytes).digest('hex').length, 64);
 });
 
-test('CR-275 Vansa is priced at its stated API price with a labelled base-reference alternative', () => {
+test('CR-277 Vansa is priced at its stated API price with a labelled base-reference alternative', () => {
   assert.match(vansa.cost.basis, /USD 0\.034 per 1M input tokens/);
   assert.doesNotMatch(vansa.cost.basis, /undisclosed/i);
-  assert.doesNotMatch(read('../ops/jevbench-v156-cr275/RESCORE-RECEIPT.json'), /undisclosed/i);
+  assert.doesNotMatch(read('../ops/jevbench-v156-cr277/RESCORE-RECEIPT.json'), /undisclosed/i);
   assert.equal(vansa.alt.label, 'Qwen3.5-4B base-model reference price');
   assert.equal(vansa.alt.usd_per_1000, 0.01701689039408867);
   assert.equal(vansa.alt.axes.intelligence, vansa.axes.intelligence);
@@ -66,7 +66,7 @@ test('CR-275 Vansa is priced at its stated API price with a labelled base-refere
   assert.equal(filter.newInVersion, true);
 });
 
-test('CR-275 base model is shown as developer self-reported, never as a cited public disclosure', () => {
+test('CR-277 base model is shown as developer self-reported, never as a cited public disclosure', () => {
   const base = baseModelFor('jevbench', 'vansa-3.4');
   assert.equal(base.status, 'self-reported');
   assert.equal(base.label, 'Qwen3.5-4B (self-reported)');
@@ -79,7 +79,7 @@ test('CR-275 base model is shown as developer self-reported, never as a cited pu
   for (const key of ['noNote', 'noLabel']) assert.equal(baseModelFor('jevbench', key, fixture).label, 'undisclosed');
 });
 
-test('CR-275 both category radars include Vansa from the stored per-item aggregation', () => {
+test('CR-277 both category radars include Vansa from the stored per-item aggregation', () => {
   assert.ok(JEVBENCH_CATEGORY_REVISIONS.includes('v1.5.6'));
   const cats = JSON.parse(read('../data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.6-categories.json'));
   const old = JSON.parse(read('../data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.5-categories.json'));

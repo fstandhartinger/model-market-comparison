@@ -1,4 +1,4 @@
-"""CR-275: re-run the pinned fast-lane official scorer on the existing Vansa-3.4 v1.5 raw output.
+"""CR-277: re-run the pinned fast-lane official scorer on the existing Vansa-3.4 v1.5 raw output.
 No inference. (1) the original metadata must reproduce the delivered aggregate exactly; (2) the same raw
 output priced at the frozen 25 Sep deepinfra Qwen3.5-4B base-model reference gives the striped alternative.
 Only aggregates are written, to the private job folder."""

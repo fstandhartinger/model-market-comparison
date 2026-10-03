@@ -1,4 +1,4 @@
-# CR-275 — JevBench v1.5.6 (Vansa-3.4)
+# CR-277 — JevBench v1.5.6 (Vansa-3.4)
 
 One row added: **Vansa-3.4**, from its complete paid fast-lane run on 1 Oct 2026 (request f0ecbb92). Vansa's hosted
 API answered all 1,624 decisions. We used the frozen v1.5 sample, scorer, headline-A method and G_med. No new inference

@@ -1,4 +1,4 @@
-"""CR-275: JevBench v1.5.6 = v1.5.5 plus the existing paid fast-lane Vansa-3.4 measurement (1 Oct 2026).
+"""CR-277: JevBench v1.5.6 = v1.5.5 plus the existing paid fast-lane Vansa-3.4 measurement (1 Oct 2026).
 No inference and no new measurement: the row is projected from the delivered, hash-pinned aggregate. The striped
 alternative uses the private RESCORE-RECEIPT.json produced by rescore.py (same raw output, base-model reference)."""
 import copy, hashlib, importlib.util, json
