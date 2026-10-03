@@ -6,7 +6,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { agenticRowsFromRelay, joinAgenticRow, aaNameIndex, buildAgenticAttachment, effortSuffix, normalizeAaName } from '../lib/aa-agentic-index.mjs';
+import { agenticRowsFromRelay, joinAgenticRow, aaNameIndex, buildAgenticAttachment, effortSuffix, normalizeAaName, canonicalAaName } from '../lib/aa-agentic-index.mjs';
 import { buildHeadlineObservations, HEADLINE_REGISTRY } from '../lib/headline-history.mjs';
 
 const aaModels = [
@@ -87,4 +87,16 @@ test('the agentic board enters the headline registry and observations without br
   assert.equal(rows[0].subject.model_id, 'aa-fable');
   assert.equal(rows[0].subject.catalog_model_id, 'claude-fable-5.1::high');
   assert.match(rows[0].protocol, /relayed by OpenRouter/);
+});
+
+test('CR-273: relay rows still carrying AA\'s old Claude effort labels join the renamed AA configurations, fail-closed', () => {
+  assert.equal(canonicalAaName('Claude Opus 5 (Adaptive Reasoning, Max Effort)'), canonicalAaName('Claude Opus 5 (Max)'));
+  assert.equal(canonicalAaName('Claude Fable 5.1 (Adaptive Reasoning, High Effort, Default Fallback)'), canonicalAaName('Claude Fable 5.1 (High, Default Fallback)'));
+  assert.equal(canonicalAaName('Claude Opus 4.7 (Non-reasoning, High Effort)'), canonicalAaName('Claude Opus 4.7 (Non-reasoning, High)'));
+  const renamed = aaNameIndex([{ id: 'n1', name: 'Claude Opus 5 (Max)' }, { id: 'n2', name: 'Claude Opus 5 (High)' }]);
+  const hit = joinAgenticRow({ name: 'Claude Opus 5 (Adaptive Reasoning, Max Effort)', value: 56, permaslug: null }, renamed);
+  assert.deepEqual([hit.aaId, hit.via], ['n1', 'relabelled-name']);
+  const ambiguous = aaNameIndex([{ id: 'a', name: 'Claude Opus 5 (Max)' }, { id: 'b', name: 'Claude Opus 5 (Adaptive Reasoning, Max Effort Foo)' }, { id: 'c', name: 'Claude Opus 5 (Max Effort)' }]);
+  assert.equal(joinAgenticRow({ name: 'Claude Opus 5 (Adaptive Reasoning, Max Effort)', value: 1, permaslug: null }, ambiguous).aaId, null);
+  assert.equal(joinAgenticRow({ name: 'Claude Opus 5 (Adaptive Reasoning, Low Effort)', value: 1, permaslug: null }, renamed).aaId, null);
 });

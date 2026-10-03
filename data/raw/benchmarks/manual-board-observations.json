@@ -3,30 +3,6 @@
   "note": "CR-128 selective source observations. Each number is traceable to the hash-bound primary source in its row; vendor submissions retain self_reported basis. Rows under withdrawn_observations are retained evidence that is deliberately not published; each carries its own withdrawn_reason.",
   "observations": [
     {
-      "id": "cr128:617525c8a03cd77e35896a8a",
-      "benchmark_id": "aa-gdpval::2.1",
-      "subject": {
-        "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
-        "name": "Claude Opus 5.5 (max with fallback) [claude-opus-5-5]",
-        "model_id": "claude-opus-5.5::max",
-        "variant": "max",
-        "harness": null
-      },
-      "value": 1846.17,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
-        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
-        "published_at": null,
-        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
-        "locator": "GDPval-AA v2.1; Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; exact source excerpt: \"gdpval\":1846.17 (page payload, model slug claude-opus-5-5)"
-      },
-      "protocol": "GDPval-AA v2.1; source configuration Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; page date retrieved 2026-09-22 (model release 2026-09-22); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (max with fallback) [claude-opus-5-5]\",\"source_quote\":\"\\\"gdpval\\\":1846.17 (page payload, model slug claude-opus-5-5)\",\"source_unit\":\"Elo\",\"displayed_value\":1846.17}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:cb13be4e9422649be7a1216a",
       "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
       "subject": {
@@ -267,30 +243,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:a9d8481d0b87c449a6466f89",
-      "benchmark_id": "aa-briefcase::1.1",
-      "subject": {
-        "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
-        "name": "Claude Opus 5.5 (max with fallback) [claude-opus-5-5]",
-        "model_id": "claude-opus-5.5::max",
-        "variant": "max",
-        "harness": null
-      },
-      "value": 1821.85,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
-        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
-        "published_at": null,
-        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
-        "locator": "AA-Briefcase v1.1; Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1821.85}"
-      },
-      "protocol": "AA-Briefcase v1.1; source configuration Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (max with fallback) [claude-opus-5-5]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1821.85}\",\"source_unit\":\"Elo\",\"displayed_value\":1821.85}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:251ae38a218c78309c5a4d40",
       "benchmark_id": "aa-intelligence-index-cost::4.3.2",
       "subject": {
@@ -336,30 +288,6 @@
         "locator": "Cost per AA Intelligence Index task; Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; normalized source fields: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":5.982012019521066}}"
       },
       "protocol": "Cost per AA Intelligence Index task; source configuration Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (max with fallback) [claude-opus-5-5]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":5.982012019521066}}\",\"source_unit\":\"USD/task\",\"displayed_value\":5.982}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:0278e13b0f1d49be2170bd46",
-      "benchmark_id": "aa-gdpval::2.1",
-      "subject": {
-        "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
-        "name": "Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]",
-        "model_id": "claude-opus-5.5::high",
-        "variant": "high",
-        "harness": null
-      },
-      "value": 1691.72,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
-        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
-        "published_at": null,
-        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
-        "locator": "GDPval-AA v2.1; Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; exact source excerpt: \"gdpval\":1691.72 (page payload, model slug claude-opus-5-5-high)"
-      },
-      "protocol": "GDPval-AA v2.1; source configuration Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]\",\"source_quote\":\"\\\"gdpval\\\":1691.72 (page payload, model slug claude-opus-5-5-high)\",\"source_unit\":\"Elo\",\"displayed_value\":1691.72}",
       "comparison_key": null
     },
     {
@@ -603,30 +531,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:5003b364a168dc402e9372c0",
-      "benchmark_id": "aa-briefcase::1.1",
-      "subject": {
-        "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
-        "name": "Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]",
-        "model_id": "claude-opus-5.5::high",
-        "variant": "high",
-        "harness": null
-      },
-      "value": 1704.5,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
-        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
-        "published_at": null,
-        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
-        "locator": "AA-Briefcase v1.1; Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1704.5}"
-      },
-      "protocol": "AA-Briefcase v1.1; source configuration Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1704.5}\",\"source_unit\":\"Elo\",\"displayed_value\":1704.5}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:a240a34199eff14994c81708",
       "benchmark_id": "aa-intelligence-index-cost::4.3.2",
       "subject": {
@@ -672,30 +576,6 @@
         "locator": "Cost per AA Intelligence Index task; Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; normalized source fields: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":1.822504718771704}}"
       },
       "protocol": "Cost per AA Intelligence Index task; source configuration Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":1.822504718771704}}\",\"source_unit\":\"USD/task\",\"displayed_value\":1.8225}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:54533b7d056dfd8eceec9764",
-      "benchmark_id": "aa-gdpval::2.1",
-      "subject": {
-        "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
-        "name": "Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]",
-        "model_id": "claude-opus-5.5::low",
-        "variant": "low",
-        "harness": null
-      },
-      "value": 1223.51,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
-        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
-        "published_at": null,
-        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
-        "locator": "GDPval-AA v2.1; Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; exact source excerpt: \"gdpval\":1223.51 (page payload, model slug claude-opus-5-5-low)"
-      },
-      "protocol": "GDPval-AA v2.1; source configuration Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]\",\"source_quote\":\"\\\"gdpval\\\":1223.51 (page payload, model slug claude-opus-5-5-low)\",\"source_unit\":\"Elo\",\"displayed_value\":1223.51}",
       "comparison_key": null
     },
     {
@@ -939,30 +819,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:491185b6c3fcf040a77a486e",
-      "benchmark_id": "aa-briefcase::1.1",
-      "subject": {
-        "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
-        "name": "Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]",
-        "model_id": "claude-opus-5.5::low",
-        "variant": "low",
-        "harness": null
-      },
-      "value": 1284.93,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
-        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
-        "published_at": null,
-        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
-        "locator": "AA-Briefcase v1.1; Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1284.93}"
-      },
-      "protocol": "AA-Briefcase v1.1; source configuration Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1284.93}\",\"source_unit\":\"Elo\",\"displayed_value\":1284.93}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:2d44e37df3560ca64c1c33fc",
       "benchmark_id": "aa-intelligence-index-cost::4.3.2",
       "subject": {
@@ -1008,30 +864,6 @@
         "locator": "Cost per AA Intelligence Index task; Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; normalized source fields: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.551180473909146}}"
       },
       "protocol": "Cost per AA Intelligence Index task; source configuration Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.551180473909146}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.5512}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:5a618fe2edf3acac7f58ad46",
-      "benchmark_id": "aa-gdpval::2.1",
-      "subject": {
-        "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
-        "name": "Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]",
-        "model_id": "claude-opus-5.5::medium",
-        "variant": "medium",
-        "harness": null
-      },
-      "value": 1576.2,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
-        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
-        "published_at": null,
-        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
-        "locator": "GDPval-AA v2.1; Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; exact source excerpt: \"gdpval\":1576.2 (page payload, model slug claude-opus-5-5-medium)"
-      },
-      "protocol": "GDPval-AA v2.1; source configuration Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]\",\"source_quote\":\"\\\"gdpval\\\":1576.2 (page payload, model slug claude-opus-5-5-medium)\",\"source_unit\":\"Elo\",\"displayed_value\":1576.2}",
       "comparison_key": null
     },
     {
@@ -1275,30 +1107,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:8394c6a825be52924acf2757",
-      "benchmark_id": "aa-briefcase::1.1",
-      "subject": {
-        "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
-        "name": "Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]",
-        "model_id": "claude-opus-5.5::medium",
-        "variant": "medium",
-        "harness": null
-      },
-      "value": 1642.05,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
-        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
-        "published_at": null,
-        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
-        "locator": "AA-Briefcase v1.1; Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1642.05}"
-      },
-      "protocol": "AA-Briefcase v1.1; source configuration Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1642.05}\",\"source_unit\":\"Elo\",\"displayed_value\":1642.05}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:d1dd8ea3073e34611645ab2e",
       "benchmark_id": "aa-intelligence-index-cost::4.3.2",
       "subject": {
@@ -1344,30 +1152,6 @@
         "locator": "Cost per AA Intelligence Index task; Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; normalized source fields: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":1.3360093438976588}}"
       },
       "protocol": "Cost per AA Intelligence Index task; source configuration Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":1.3360093438976588}}\",\"source_unit\":\"USD/task\",\"displayed_value\":1.336}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:8420ec136339945f88ed7206",
-      "benchmark_id": "aa-gdpval::2.1",
-      "subject": {
-        "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
-        "name": "Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]",
-        "model_id": "claude-opus-5.5::xhigh",
-        "variant": "xhigh",
-        "harness": null
-      },
-      "value": 1820.11,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
-        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
-        "published_at": null,
-        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
-        "locator": "GDPval-AA v2.1; Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; exact source excerpt: \"gdpval\":1820.11 (page payload, model slug claude-opus-5-5-xhigh)"
-      },
-      "protocol": "GDPval-AA v2.1; source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"\\\"gdpval\\\":1820.11 (page payload, model slug claude-opus-5-5-xhigh)\",\"source_unit\":\"Elo\",\"displayed_value\":1820.11}",
       "comparison_key": null
     },
     {
@@ -1608,30 +1392,6 @@
         "locator": "Harvey LAB (AA); Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; exact source excerpt: \"harveyLab\":0.912433058329715 (page payload, model slug claude-opus-5-5-xhigh)"
       },
       "protocol": "Harvey LAB (AA); source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"\\\"harveyLab\\\":0.912433058329715 (page payload, model slug claude-opus-5-5-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":91.24}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:0a8c687d6207a950b3bdbcb4",
-      "benchmark_id": "aa-briefcase::1.1",
-      "subject": {
-        "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
-        "name": "Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]",
-        "model_id": "claude-opus-5.5::xhigh",
-        "variant": "xhigh",
-        "harness": null
-      },
-      "value": 1779.5,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
-        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
-        "published_at": null,
-        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
-        "locator": "AA-Briefcase v1.1; Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1779.5}"
-      },
-      "protocol": "AA-Briefcase v1.1; source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1779.5}\",\"source_unit\":\"Elo\",\"displayed_value\":1779.5}",
       "comparison_key": null
     },
     {
@@ -2403,30 +2163,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:6b4b5c7a197e591d0b62d088",
-      "benchmark_id": "aa-gdpval::2.1",
-      "subject": {
-        "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
-        "name": "GPT-6 Sol (max) [gpt-6-sol]",
-        "model_id": "gpt-6-sol::max",
-        "variant": "max",
-        "harness": null
-      },
-      "value": 1486.93,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
-        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
-        "published_at": null,
-        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
-        "locator": "GDPval-AA v2.1; GPT-6 Sol (max) [gpt-6-sol]; exact source excerpt: \"gdpval\":1486.93 (page payload, model slug gpt-6-sol)"
-      },
-      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"\\\"gdpval\\\":1486.93 (page payload, model slug gpt-6-sol)\",\"source_unit\":\"Elo\",\"displayed_value\":1486.93}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:84e33d54c88be7bdfe7183ee",
       "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
       "subject": {
@@ -2571,30 +2307,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:2007f758f6e8cffaf0f2b892",
-      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
-      "subject": {
-        "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
-        "name": "GPT-6 Sol (max) [gpt-6-sol]",
-        "model_id": "gpt-6-sol::max",
-        "variant": "max",
-        "harness": null
-      },
-      "value": 0.248,
-      "unit": "fraction",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
-        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
-        "published_at": null,
-        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
-        "locator": "GDP.pdf (all-pass); GPT-6 Sol (max) [gpt-6-sol]; exact source excerpt: \"gdpPdfAllPass\":0.248 (page payload, model slug gpt-6-sol)"
-      },
-      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.248 (page payload, model slug gpt-6-sol)\",\"source_unit\":\"%\",\"displayed_value\":24.8}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:40c6a07d04d0c2c505be610f",
       "benchmark_id": "aa-automationbench::1.0.6",
       "subject": {
@@ -2643,30 +2355,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:03ec8d51f72918ab1edcbdbe",
-      "benchmark_id": "aa-briefcase::1.1",
-      "subject": {
-        "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
-        "name": "GPT-6 Sol (max) [gpt-6-sol]",
-        "model_id": "gpt-6-sol::max",
-        "variant": "max",
-        "harness": null
-      },
-      "value": 1482.78,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
-        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
-        "published_at": null,
-        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
-        "locator": "AA-Briefcase v1.1; GPT-6 Sol (max) [gpt-6-sol]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1482.78}"
-      },
-      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1482.78}\",\"source_unit\":\"Elo\",\"displayed_value\":1482.78}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:d15208e9962b85bbd6c8ad38",
       "benchmark_id": "aa-intelligence-index-cost::4.3.2",
       "subject": {
@@ -2712,30 +2400,6 @@
         "locator": "Cost per AA Intelligence Index task; GPT-6 Sol (max) [gpt-6-sol]; normalized source fields: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":1.0564240894076389}}"
       },
       "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":1.0564240894076389}}\",\"source_unit\":\"USD/task\",\"displayed_value\":1.0564}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:cc00958081c813f4afbdee2c",
-      "benchmark_id": "aa-gdpval::2.1",
-      "subject": {
-        "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
-        "name": "GPT-6 Sol (high) [gpt-6-sol-high]",
-        "model_id": "gpt-6-sol::high",
-        "variant": "high",
-        "harness": null
-      },
-      "value": 1376.05,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
-        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
-        "published_at": null,
-        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
-        "locator": "GDPval-AA v2.1; GPT-6 Sol (high) [gpt-6-sol-high]; exact source excerpt: \"gdpval\":1376.05 (page payload, model slug gpt-6-sol-high)"
-      },
-      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"\\\"gdpval\\\":1376.05 (page payload, model slug gpt-6-sol-high)\",\"source_unit\":\"Elo\",\"displayed_value\":1376.05}",
       "comparison_key": null
     },
     {
@@ -2883,30 +2547,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:219e87f80b4301eb981f807f",
-      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
-      "subject": {
-        "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
-        "name": "GPT-6 Sol (high) [gpt-6-sol-high]",
-        "model_id": "gpt-6-sol::high",
-        "variant": "high",
-        "harness": null
-      },
-      "value": 0.28,
-      "unit": "fraction",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
-        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
-        "published_at": null,
-        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
-        "locator": "GDP.pdf (all-pass); GPT-6 Sol (high) [gpt-6-sol-high]; exact source excerpt: \"gdpPdfAllPass\":0.28 (page payload, model slug gpt-6-sol-high)"
-      },
-      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.28 (page payload, model slug gpt-6-sol-high)\",\"source_unit\":\"%\",\"displayed_value\":28}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:33d5779afb8f80070719a716",
       "benchmark_id": "aa-automationbench::1.0.6",
       "subject": {
@@ -2955,30 +2595,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:93e33ec27feb55eafabe6daf",
-      "benchmark_id": "aa-briefcase::1.1",
-      "subject": {
-        "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
-        "name": "GPT-6 Sol (high) [gpt-6-sol-high]",
-        "model_id": "gpt-6-sol::high",
-        "variant": "high",
-        "harness": null
-      },
-      "value": 1289.24,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
-        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
-        "published_at": null,
-        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
-        "locator": "AA-Briefcase v1.1; GPT-6 Sol (high) [gpt-6-sol-high]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1289.24}"
-      },
-      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1289.24}\",\"source_unit\":\"Elo\",\"displayed_value\":1289.24}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:0e03bb2880e62ee6b03b78c4",
       "benchmark_id": "aa-intelligence-index-cost::4.3.2",
       "subject": {
@@ -3024,30 +2640,6 @@
         "locator": "Cost per AA Intelligence Index task; GPT-6 Sol (high) [gpt-6-sol-high]; normalized source fields: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.3746326907148203}}"
       },
       "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.3746326907148203}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.3746}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:826f9a7ee7c3ad2a68a022d2",
-      "benchmark_id": "aa-gdpval::2.1",
-      "subject": {
-        "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
-        "name": "GPT-6 Sol (low) [gpt-6-sol-low]",
-        "model_id": "gpt-6-sol::low",
-        "variant": "low",
-        "harness": null
-      },
-      "value": 1175.59,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
-        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
-        "published_at": null,
-        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
-        "locator": "GDPval-AA v2.1; GPT-6 Sol (low) [gpt-6-sol-low]; exact source excerpt: \"gdpval\":1175.59 (page payload, model slug gpt-6-sol-low)"
-      },
-      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"\\\"gdpval\\\":1175.59 (page payload, model slug gpt-6-sol-low)\",\"source_unit\":\"Elo\",\"displayed_value\":1175.59}",
       "comparison_key": null
     },
     {
@@ -3195,30 +2787,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:29ab9680220a71257e09f2af",
-      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
-      "subject": {
-        "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
-        "name": "GPT-6 Sol (low) [gpt-6-sol-low]",
-        "model_id": "gpt-6-sol::low",
-        "variant": "low",
-        "harness": null
-      },
-      "value": 0.218,
-      "unit": "fraction",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
-        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
-        "published_at": null,
-        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
-        "locator": "GDP.pdf (all-pass); GPT-6 Sol (low) [gpt-6-sol-low]; exact source excerpt: \"gdpPdfAllPass\":0.218 (page payload, model slug gpt-6-sol-low)"
-      },
-      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.218 (page payload, model slug gpt-6-sol-low)\",\"source_unit\":\"%\",\"displayed_value\":21.8}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:98b304673bdab77fd37823f4",
       "benchmark_id": "aa-automationbench::1.0.6",
       "subject": {
@@ -3267,30 +2835,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:800b3589c2abbec2d62eabdd",
-      "benchmark_id": "aa-briefcase::1.1",
-      "subject": {
-        "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
-        "name": "GPT-6 Sol (low) [gpt-6-sol-low]",
-        "model_id": "gpt-6-sol::low",
-        "variant": "low",
-        "harness": null
-      },
-      "value": 905.16,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
-        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
-        "published_at": null,
-        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
-        "locator": "AA-Briefcase v1.1; GPT-6 Sol (low) [gpt-6-sol-low]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":905.16}"
-      },
-      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":905.16}\",\"source_unit\":\"Elo\",\"displayed_value\":905.16}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:9fe551daa8980ebb007dd9a6",
       "benchmark_id": "aa-intelligence-index-cost::4.3.2",
       "subject": {
@@ -3336,30 +2880,6 @@
         "locator": "Cost per AA Intelligence Index task; GPT-6 Sol (low) [gpt-6-sol-low]; normalized source fields: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.13224085088798104}}"
       },
       "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.13224085088798104}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.1322}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:82589697d2ed5e40d2819f27",
-      "benchmark_id": "aa-gdpval::2.1",
-      "subject": {
-        "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
-        "name": "GPT-6 Sol (medium) [gpt-6-sol-medium]",
-        "model_id": "gpt-6-sol::medium",
-        "variant": "medium",
-        "harness": null
-      },
-      "value": 1320.11,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
-        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
-        "published_at": null,
-        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
-        "locator": "GDPval-AA v2.1; GPT-6 Sol (medium) [gpt-6-sol-medium]; exact source excerpt: \"gdpval\":1320.11 (page payload, model slug gpt-6-sol-medium)"
-      },
-      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"\\\"gdpval\\\":1320.11 (page payload, model slug gpt-6-sol-medium)\",\"source_unit\":\"Elo\",\"displayed_value\":1320.11}",
       "comparison_key": null
     },
     {
@@ -3507,30 +3027,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:4acfcda0ae02bc100dd0a12f",
-      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
-      "subject": {
-        "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
-        "name": "GPT-6 Sol (medium) [gpt-6-sol-medium]",
-        "model_id": "gpt-6-sol::medium",
-        "variant": "medium",
-        "harness": null
-      },
-      "value": 0.254,
-      "unit": "fraction",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
-        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
-        "published_at": null,
-        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
-        "locator": "GDP.pdf (all-pass); GPT-6 Sol (medium) [gpt-6-sol-medium]; exact source excerpt: \"gdpPdfAllPass\":0.254 (page payload, model slug gpt-6-sol-medium)"
-      },
-      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.254 (page payload, model slug gpt-6-sol-medium)\",\"source_unit\":\"%\",\"displayed_value\":25.4}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:538f368611f78968df5e89c0",
       "benchmark_id": "aa-automationbench::1.0.6",
       "subject": {
@@ -3579,30 +3075,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:5b9f40a86e610042deb6141b",
-      "benchmark_id": "aa-briefcase::1.1",
-      "subject": {
-        "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
-        "name": "GPT-6 Sol (medium) [gpt-6-sol-medium]",
-        "model_id": "gpt-6-sol::medium",
-        "variant": "medium",
-        "harness": null
-      },
-      "value": 1142.18,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
-        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
-        "published_at": null,
-        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
-        "locator": "AA-Briefcase v1.1; GPT-6 Sol (medium) [gpt-6-sol-medium]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1142.18}"
-      },
-      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1142.18}\",\"source_unit\":\"Elo\",\"displayed_value\":1142.18}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:4298cb53b9d8bcf8b7d71995",
       "benchmark_id": "aa-intelligence-index-cost::4.3.2",
       "subject": {
@@ -3648,30 +3120,6 @@
         "locator": "Cost per AA Intelligence Index task; GPT-6 Sol (medium) [gpt-6-sol-medium]; normalized source fields: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.24820209578663968}}"
       },
       "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.24820209578663968}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.2482}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:6d206407bb4914185e2f21ff",
-      "benchmark_id": "aa-gdpval::2.1",
-      "subject": {
-        "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
-        "name": "GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]",
-        "model_id": "gpt-6-sol::non-reasoning",
-        "variant": "non-reasoning",
-        "harness": null
-      },
-      "value": 1225.39,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
-        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
-        "published_at": null,
-        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
-        "locator": "GDPval-AA v2.1; GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; exact source excerpt: \"gdpval\":1225.39 (page payload, model slug gpt-6-sol-non-reasoning)"
-      },
-      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"\\\"gdpval\\\":1225.39 (page payload, model slug gpt-6-sol-non-reasoning)\",\"source_unit\":\"Elo\",\"displayed_value\":1225.39}",
       "comparison_key": null
     },
     {
@@ -3819,30 +3267,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:8254216b68241969889b27ad",
-      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
-      "subject": {
-        "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
-        "name": "GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]",
-        "model_id": "gpt-6-sol::non-reasoning",
-        "variant": "non-reasoning",
-        "harness": null
-      },
-      "value": 0.156,
-      "unit": "fraction",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
-        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
-        "published_at": null,
-        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
-        "locator": "GDP.pdf (all-pass); GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; exact source excerpt: \"gdpPdfAllPass\":0.156 (page payload, model slug gpt-6-sol-non-reasoning)"
-      },
-      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.156 (page payload, model slug gpt-6-sol-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":15.6}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:cfcac4b4c826bac5c793f645",
       "benchmark_id": "aa-automationbench::1.0.6",
       "subject": {
@@ -3891,30 +3315,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:7070a0936841ec903678b3d8",
-      "benchmark_id": "aa-briefcase::1.1",
-      "subject": {
-        "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
-        "name": "GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]",
-        "model_id": "gpt-6-sol::non-reasoning",
-        "variant": "non-reasoning",
-        "harness": null
-      },
-      "value": 1085.35,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
-        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
-        "published_at": null,
-        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
-        "locator": "AA-Briefcase v1.1; GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1085.35}"
-      },
-      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1085.35}\",\"source_unit\":\"Elo\",\"displayed_value\":1085.35}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:da3a9d5c08a29facdbc59d3f",
       "benchmark_id": "aa-intelligence-index-cost::4.3.2",
       "subject": {
@@ -3960,30 +3360,6 @@
         "locator": "Cost per AA Intelligence Index task; GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; normalized source fields: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.33144507449754673}}"
       },
       "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.33144507449754673}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.3314}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:6198025ae4a34d026ae64eee",
-      "benchmark_id": "aa-gdpval::2.1",
-      "subject": {
-        "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
-        "name": "GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]",
-        "model_id": "gpt-6-sol::xhigh",
-        "variant": "xhigh",
-        "harness": null
-      },
-      "value": 1436.68,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
-        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
-        "published_at": null,
-        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
-        "locator": "GDPval-AA v2.1; GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; exact source excerpt: \"gdpval\":1436.68 (page payload, model slug gpt-6-sol-xhigh)"
-      },
-      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"\\\"gdpval\\\":1436.68 (page payload, model slug gpt-6-sol-xhigh)\",\"source_unit\":\"Elo\",\"displayed_value\":1436.68}",
       "comparison_key": null
     },
     {
@@ -4131,30 +3507,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:4af89b645c8f5a2f9402a483",
-      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
-      "subject": {
-        "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
-        "name": "GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]",
-        "model_id": "gpt-6-sol::xhigh",
-        "variant": "xhigh",
-        "harness": null
-      },
-      "value": 0.238,
-      "unit": "fraction",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
-        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
-        "published_at": null,
-        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
-        "locator": "GDP.pdf (all-pass); GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; exact source excerpt: \"gdpPdfAllPass\":0.238 (page payload, model slug gpt-6-sol-xhigh)"
-      },
-      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.238 (page payload, model slug gpt-6-sol-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":23.8}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:77c006b41b30f8a752b69ea7",
       "benchmark_id": "aa-automationbench::1.0.6",
       "subject": {
@@ -4203,30 +3555,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:93a4fa9b24325ca7eda1b10f",
-      "benchmark_id": "aa-briefcase::1.1",
-      "subject": {
-        "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
-        "name": "GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]",
-        "model_id": "gpt-6-sol::xhigh",
-        "variant": "xhigh",
-        "harness": null
-      },
-      "value": 1363.66,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
-        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
-        "published_at": null,
-        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
-        "locator": "AA-Briefcase v1.1; GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1363.66}"
-      },
-      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1363.66}\",\"source_unit\":\"Elo\",\"displayed_value\":1363.66}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:f721997661b33f759563cbdd",
       "benchmark_id": "aa-intelligence-index-cost::4.3.2",
       "subject": {
@@ -4272,30 +3600,6 @@
         "locator": "Cost per AA Intelligence Index task; GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; normalized source fields: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.5318962692390143}}"
       },
       "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.5318962692390143}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.5319}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:f97361c801f67947b8af53db",
-      "benchmark_id": "aa-gdpval::2.1",
-      "subject": {
-        "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
-        "name": "GPT-6 Luna (max) [gpt-6-luna]",
-        "model_id": "gpt-6-luna::max",
-        "variant": "max",
-        "harness": null
-      },
-      "value": 1367.09,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
-        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
-        "published_at": null,
-        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
-        "locator": "GDPval-AA v2.1; GPT-6 Luna (max) [gpt-6-luna]; exact source excerpt: \"gdpval\":1367.09 (page payload, model slug gpt-6-luna)"
-      },
-      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"\\\"gdpval\\\":1367.09 (page payload, model slug gpt-6-luna)\",\"source_unit\":\"Elo\",\"displayed_value\":1367.09}",
       "comparison_key": null
     },
     {
@@ -4443,30 +3747,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:bae1297bccd0429572a11be7",
-      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
-      "subject": {
-        "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
-        "name": "GPT-6 Luna (max) [gpt-6-luna]",
-        "model_id": "gpt-6-luna::max",
-        "variant": "max",
-        "harness": null
-      },
-      "value": 0.204,
-      "unit": "fraction",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
-        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
-        "published_at": null,
-        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
-        "locator": "GDP.pdf (all-pass); GPT-6 Luna (max) [gpt-6-luna]; exact source excerpt: \"gdpPdfAllPass\":0.204 (page payload, model slug gpt-6-luna)"
-      },
-      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.204 (page payload, model slug gpt-6-luna)\",\"source_unit\":\"%\",\"displayed_value\":20.4}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:277ad6b0f6158e376f794ded",
       "benchmark_id": "aa-automationbench::1.0.6",
       "subject": {
@@ -4515,30 +3795,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:1c483431571fb98b140faf82",
-      "benchmark_id": "aa-briefcase::1.1",
-      "subject": {
-        "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
-        "name": "GPT-6 Luna (max) [gpt-6-luna]",
-        "model_id": "gpt-6-luna::max",
-        "variant": "max",
-        "harness": null
-      },
-      "value": 1299.23,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
-        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
-        "published_at": null,
-        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
-        "locator": "AA-Briefcase v1.1; GPT-6 Luna (max) [gpt-6-luna]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1299.23}"
-      },
-      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1299.23}\",\"source_unit\":\"Elo\",\"displayed_value\":1299.23}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:e21ad2f96f063496388cc329",
       "benchmark_id": "aa-intelligence-index-cost::4.3.2",
       "subject": {
@@ -4584,30 +3840,6 @@
         "locator": "Cost per AA Intelligence Index task; GPT-6 Luna (max) [gpt-6-luna]; normalized source fields: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.06809498628701058}}"
       },
       "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.06809498628701058}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.0681}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:b61517226d5d28b6f93cc530",
-      "benchmark_id": "aa-gdpval::2.1",
-      "subject": {
-        "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
-        "name": "GPT-6 Luna (high) [gpt-6-luna-high]",
-        "model_id": "gpt-6-luna::high",
-        "variant": "high",
-        "harness": null
-      },
-      "value": 1290.37,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
-        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
-        "published_at": null,
-        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
-        "locator": "GDPval-AA v2.1; GPT-6 Luna (high) [gpt-6-luna-high]; exact source excerpt: \"gdpval\":1290.37 (page payload, model slug gpt-6-luna-high)"
-      },
-      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"\\\"gdpval\\\":1290.37 (page payload, model slug gpt-6-luna-high)\",\"source_unit\":\"Elo\",\"displayed_value\":1290.37}",
       "comparison_key": null
     },
     {
@@ -4755,30 +3987,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:dbbeb0ee0b84861a78f3d663",
-      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
-      "subject": {
-        "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
-        "name": "GPT-6 Luna (high) [gpt-6-luna-high]",
-        "model_id": "gpt-6-luna::high",
-        "variant": "high",
-        "harness": null
-      },
-      "value": 0.138,
-      "unit": "fraction",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
-        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
-        "published_at": null,
-        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
-        "locator": "GDP.pdf (all-pass); GPT-6 Luna (high) [gpt-6-luna-high]; exact source excerpt: \"gdpPdfAllPass\":0.138 (page payload, model slug gpt-6-luna-high)"
-      },
-      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.138 (page payload, model slug gpt-6-luna-high)\",\"source_unit\":\"%\",\"displayed_value\":13.8}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:12032796337803a666d9fd3c",
       "benchmark_id": "aa-automationbench::1.0.6",
       "subject": {
@@ -4827,30 +4035,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:2eb22afbe8e4e45d4079893c",
-      "benchmark_id": "aa-briefcase::1.1",
-      "subject": {
-        "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
-        "name": "GPT-6 Luna (high) [gpt-6-luna-high]",
-        "model_id": "gpt-6-luna::high",
-        "variant": "high",
-        "harness": null
-      },
-      "value": 1176.49,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
-        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
-        "published_at": null,
-        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
-        "locator": "AA-Briefcase v1.1; GPT-6 Luna (high) [gpt-6-luna-high]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1176.49}"
-      },
-      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1176.49}\",\"source_unit\":\"Elo\",\"displayed_value\":1176.49}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:2d4f8bf0df53e8b1dbe4b1c7",
       "benchmark_id": "aa-intelligence-index-cost::4.3.2",
       "subject": {
@@ -4896,30 +4080,6 @@
         "locator": "Cost per AA Intelligence Index task; GPT-6 Luna (high) [gpt-6-luna-high]; normalized source fields: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.02861964876935845}}"
       },
       "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.02861964876935845}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.0286}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:e3442f8df615bc028cb1c0e0",
-      "benchmark_id": "aa-gdpval::2.1",
-      "subject": {
-        "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
-        "name": "GPT-6 Luna (low) [gpt-6-luna-low]",
-        "model_id": "gpt-6-luna::low",
-        "variant": "low",
-        "harness": null
-      },
-      "value": 992.26,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
-        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
-        "published_at": null,
-        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
-        "locator": "GDPval-AA v2.1; GPT-6 Luna (low) [gpt-6-luna-low]; exact source excerpt: \"gdpval\":992.26 (page payload, model slug gpt-6-luna-low)"
-      },
-      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"\\\"gdpval\\\":992.26 (page payload, model slug gpt-6-luna-low)\",\"source_unit\":\"Elo\",\"displayed_value\":992.26}",
       "comparison_key": null
     },
     {
@@ -5067,30 +4227,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:e852edfa54398a57334d8252",
-      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
-      "subject": {
-        "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
-        "name": "GPT-6 Luna (low) [gpt-6-luna-low]",
-        "model_id": "gpt-6-luna::low",
-        "variant": "low",
-        "harness": null
-      },
-      "value": 0.064,
-      "unit": "fraction",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
-        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
-        "published_at": null,
-        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
-        "locator": "GDP.pdf (all-pass); GPT-6 Luna (low) [gpt-6-luna-low]; exact source excerpt: \"gdpPdfAllPass\":0.064 (page payload, model slug gpt-6-luna-low)"
-      },
-      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.064 (page payload, model slug gpt-6-luna-low)\",\"source_unit\":\"%\",\"displayed_value\":6.4}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:06652f1a2ec640d25fe4d3bf",
       "benchmark_id": "aa-automationbench::1.0.6",
       "subject": {
@@ -5139,30 +4275,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:d6f776518458e3a1245b2720",
-      "benchmark_id": "aa-briefcase::1.1",
-      "subject": {
-        "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
-        "name": "GPT-6 Luna (low) [gpt-6-luna-low]",
-        "model_id": "gpt-6-luna::low",
-        "variant": "low",
-        "harness": null
-      },
-      "value": 724.99,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
-        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
-        "published_at": null,
-        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
-        "locator": "AA-Briefcase v1.1; GPT-6 Luna (low) [gpt-6-luna-low]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":724.99}"
-      },
-      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":724.99}\",\"source_unit\":\"Elo\",\"displayed_value\":724.99}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:30a6e5fc16945499ea555ab4",
       "benchmark_id": "aa-intelligence-index-cost::4.3.2",
       "subject": {
@@ -5208,30 +4320,6 @@
         "locator": "Cost per AA Intelligence Index task; GPT-6 Luna (low) [gpt-6-luna-low]; normalized source fields: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.004483809259539013}}"
       },
       "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.004483809259539013}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.0045}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:d27199aa1dc15f7c5fc7cdfa",
-      "benchmark_id": "aa-gdpval::2.1",
-      "subject": {
-        "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
-        "name": "GPT-6 Luna (medium) [gpt-6-luna-medium]",
-        "model_id": "gpt-6-luna::medium",
-        "variant": "medium",
-        "harness": null
-      },
-      "value": 1218.31,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
-        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
-        "published_at": null,
-        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
-        "locator": "GDPval-AA v2.1; GPT-6 Luna (medium) [gpt-6-luna-medium]; exact source excerpt: \"gdpval\":1218.31 (page payload, model slug gpt-6-luna-medium)"
-      },
-      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"\\\"gdpval\\\":1218.31 (page payload, model slug gpt-6-luna-medium)\",\"source_unit\":\"Elo\",\"displayed_value\":1218.31}",
       "comparison_key": null
     },
     {
@@ -5379,30 +4467,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:2a9adc7ea8da1f8576042d3c",
-      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
-      "subject": {
-        "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
-        "name": "GPT-6 Luna (medium) [gpt-6-luna-medium]",
-        "model_id": "gpt-6-luna::medium",
-        "variant": "medium",
-        "harness": null
-      },
-      "value": 0.14,
-      "unit": "fraction",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
-        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
-        "published_at": null,
-        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
-        "locator": "GDP.pdf (all-pass); GPT-6 Luna (medium) [gpt-6-luna-medium]; exact source excerpt: \"gdpPdfAllPass\":0.14 (page payload, model slug gpt-6-luna-medium)"
-      },
-      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.14 (page payload, model slug gpt-6-luna-medium)\",\"source_unit\":\"%\",\"displayed_value\":14}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:b576b03bf5034d30fa8c8f3b",
       "benchmark_id": "aa-automationbench::1.0.6",
       "subject": {
@@ -5451,30 +4515,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:4dbbb4a4a4e53bf8bb76d080",
-      "benchmark_id": "aa-briefcase::1.1",
-      "subject": {
-        "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
-        "name": "GPT-6 Luna (medium) [gpt-6-luna-medium]",
-        "model_id": "gpt-6-luna::medium",
-        "variant": "medium",
-        "harness": null
-      },
-      "value": 1063.32,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
-        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
-        "published_at": null,
-        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
-        "locator": "AA-Briefcase v1.1; GPT-6 Luna (medium) [gpt-6-luna-medium]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1063.32}"
-      },
-      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1063.32}\",\"source_unit\":\"Elo\",\"displayed_value\":1063.32}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:55a6c4e0311df70c835e0629",
       "benchmark_id": "aa-intelligence-index-cost::4.3.2",
       "subject": {
@@ -5520,30 +4560,6 @@
         "locator": "Cost per AA Intelligence Index task; GPT-6 Luna (medium) [gpt-6-luna-medium]; normalized source fields: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.01725359419426588}}"
       },
       "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.01725359419426588}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.0173}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:0888f233a1d5602623b90960",
-      "benchmark_id": "aa-gdpval::2.1",
-      "subject": {
-        "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
-        "name": "GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]",
-        "model_id": "gpt-6-luna::non-reasoning",
-        "variant": "non-reasoning",
-        "harness": null
-      },
-      "value": 1034.03,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
-        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
-        "published_at": null,
-        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
-        "locator": "GDPval-AA v2.1; GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; exact source excerpt: \"gdpval\":1034.03 (page payload, model slug gpt-6-luna-non-reasoning)"
-      },
-      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"\\\"gdpval\\\":1034.03 (page payload, model slug gpt-6-luna-non-reasoning)\",\"source_unit\":\"Elo\",\"displayed_value\":1034.03}",
       "comparison_key": null
     },
     {
@@ -5691,30 +4707,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:de3b38e6ceffb3479ec740b4",
-      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
-      "subject": {
-        "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
-        "name": "GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]",
-        "model_id": "gpt-6-luna::non-reasoning",
-        "variant": "non-reasoning",
-        "harness": null
-      },
-      "value": 0.054,
-      "unit": "fraction",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
-        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
-        "published_at": null,
-        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
-        "locator": "GDP.pdf (all-pass); GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; exact source excerpt: \"gdpPdfAllPass\":0.054 (page payload, model slug gpt-6-luna-non-reasoning)"
-      },
-      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.054 (page payload, model slug gpt-6-luna-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":5.4}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:929fca1f50055436dbc1b30f",
       "benchmark_id": "aa-automationbench::1.0.6",
       "subject": {
@@ -5763,30 +4755,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:221a7698a0b56671ab45d2f6",
-      "benchmark_id": "aa-briefcase::1.1",
-      "subject": {
-        "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
-        "name": "GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]",
-        "model_id": "gpt-6-luna::non-reasoning",
-        "variant": "non-reasoning",
-        "harness": null
-      },
-      "value": 892.14,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
-        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
-        "published_at": null,
-        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
-        "locator": "AA-Briefcase v1.1; GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":892.14}"
-      },
-      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":892.14}\",\"source_unit\":\"Elo\",\"displayed_value\":892.14}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:89cf7d417e1a1a24317fc821",
       "benchmark_id": "aa-intelligence-index-cost::4.3.2",
       "subject": {
@@ -5832,30 +4800,6 @@
         "locator": "Cost per AA Intelligence Index task; GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; normalized source fields: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.01112449676670144}}"
       },
       "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.01112449676670144}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.0111}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:db5fcd5003fc405df18f48e5",
-      "benchmark_id": "aa-gdpval::2.1",
-      "subject": {
-        "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
-        "name": "GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]",
-        "model_id": "gpt-6-luna::xhigh",
-        "variant": "xhigh",
-        "harness": null
-      },
-      "value": 1296.78,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
-        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
-        "published_at": null,
-        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
-        "locator": "GDPval-AA v2.1; GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; exact source excerpt: \"gdpval\":1296.78 (page payload, model slug gpt-6-luna-xhigh)"
-      },
-      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"\\\"gdpval\\\":1296.78 (page payload, model slug gpt-6-luna-xhigh)\",\"source_unit\":\"Elo\",\"displayed_value\":1296.78}",
       "comparison_key": null
     },
     {
@@ -6003,30 +4947,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:04f491c758f457879458e75e",
-      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
-      "subject": {
-        "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
-        "name": "GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]",
-        "model_id": "gpt-6-luna::xhigh",
-        "variant": "xhigh",
-        "harness": null
-      },
-      "value": 0.168,
-      "unit": "fraction",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
-        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
-        "published_at": null,
-        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
-        "locator": "GDP.pdf (all-pass); GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; exact source excerpt: \"gdpPdfAllPass\":0.168 (page payload, model slug gpt-6-luna-xhigh)"
-      },
-      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.168 (page payload, model slug gpt-6-luna-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":16.8}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:5d551919ab6bde9723023124",
       "benchmark_id": "aa-automationbench::1.0.6",
       "subject": {
@@ -6072,30 +4992,6 @@
         "locator": "MMMU-Pro (AA); GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; exact source excerpt: \"mmmuPro\":0.752601156069364 (page payload, model slug gpt-6-luna-xhigh)"
       },
       "protocol": "MMMU-Pro (AA); source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"\\\"mmmuPro\\\":0.752601156069364 (page payload, model slug gpt-6-luna-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":75.26}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:434179c2b8ffaedd323760c7",
-      "benchmark_id": "aa-briefcase::1.1",
-      "subject": {
-        "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
-        "name": "GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]",
-        "model_id": "gpt-6-luna::xhigh",
-        "variant": "xhigh",
-        "harness": null
-      },
-      "value": 1216.68,
-      "unit": "Elo",
-      "basis": "measured",
-      "source": {
-        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
-        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
-        "published_at": null,
-        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
-        "locator": "AA-Briefcase v1.1; GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1216.68}"
-      },
-      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1216.68}\",\"source_unit\":\"Elo\",\"displayed_value\":1216.68}",
       "comparison_key": null
     },
     {
@@ -12812,6 +11708,1156 @@
       "protocol": "Vals: Vals Index; source configuration anthropic/claude-opus-5-5 (Vals: compute_effort max); page date page \"Updated 9/21/2026\"; source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"anthropic/claude-opus-5-5 (Vals: compute_effort max)\",\"source_quote\":\"\\\"overall\\\":{\\\"anthropic/claude-opus-5-5\\\":{\\\"accuracy\\\":66.163,...,\\\"cost_per_test\\\":19.217206}}\",\"source_unit\":\"% accuracy (overall)\",\"displayed_value\":66.163}",
       "comparison_key": null,
       "withdrawn_reason": "CR-173 (2026-09-26): withdrawn from publication. The public vals-index::2 arm now carries anthropic/claude-opus-5-5 (compute_effort max) from the 2026-09-26 capture of https://www.vals.ai/benchmarks/vals_index at 69.689 (page \"Updated 9/23/2026\"); this hand row is the 2026-09-22 page value 66.163. Vals re-scored the row within the same Index version, and one versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence."
+    },
+    {
+      "id": "cr128:617525c8a03cd77e35896a8a",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
+        "name": "Claude Opus 5.5 (max with fallback) [claude-opus-5-5]",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1846.17,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "GDPval-AA v2.1; Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; exact source excerpt: \"gdpval\":1846.17 (page payload, model slug claude-opus-5-5)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; page date retrieved 2026-09-22 (model release 2026-09-22); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (max with fallback) [claude-opus-5-5]\",\"source_quote\":\"\\\"gdpval\\\":1846.17 (page payload, model slug claude-opus-5-5)\",\"source_unit\":\"Elo\",\"displayed_value\":1846.17}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:a9d8481d0b87c449a6466f89",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
+        "name": "Claude Opus 5.5 (max with fallback) [claude-opus-5-5]",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1821.85,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-Briefcase v1.1; Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1821.85}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (max with fallback) [claude-opus-5-5]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1821.85}\",\"source_unit\":\"Elo\",\"displayed_value\":1821.85}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:0278e13b0f1d49be2170bd46",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
+        "name": "Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]",
+        "model_id": "claude-opus-5.5::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 1691.72,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "GDPval-AA v2.1; Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; exact source excerpt: \"gdpval\":1691.72 (page payload, model slug claude-opus-5-5-high)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]\",\"source_quote\":\"\\\"gdpval\\\":1691.72 (page payload, model slug claude-opus-5-5-high)\",\"source_unit\":\"Elo\",\"displayed_value\":1691.72}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:5003b364a168dc402e9372c0",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
+        "name": "Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]",
+        "model_id": "claude-opus-5.5::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 1704.5,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-Briefcase v1.1; Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1704.5}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1704.5}\",\"source_unit\":\"Elo\",\"displayed_value\":1704.5}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:54533b7d056dfd8eceec9764",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
+        "name": "Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]",
+        "model_id": "claude-opus-5.5::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 1223.51,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "GDPval-AA v2.1; Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; exact source excerpt: \"gdpval\":1223.51 (page payload, model slug claude-opus-5-5-low)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]\",\"source_quote\":\"\\\"gdpval\\\":1223.51 (page payload, model slug claude-opus-5-5-low)\",\"source_unit\":\"Elo\",\"displayed_value\":1223.51}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:491185b6c3fcf040a77a486e",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
+        "name": "Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]",
+        "model_id": "claude-opus-5.5::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 1284.93,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-Briefcase v1.1; Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1284.93}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1284.93}\",\"source_unit\":\"Elo\",\"displayed_value\":1284.93}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:5a618fe2edf3acac7f58ad46",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
+        "name": "Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]",
+        "model_id": "claude-opus-5.5::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 1576.2,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "GDPval-AA v2.1; Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; exact source excerpt: \"gdpval\":1576.2 (page payload, model slug claude-opus-5-5-medium)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]\",\"source_quote\":\"\\\"gdpval\\\":1576.2 (page payload, model slug claude-opus-5-5-medium)\",\"source_unit\":\"Elo\",\"displayed_value\":1576.2}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:8394c6a825be52924acf2757",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
+        "name": "Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]",
+        "model_id": "claude-opus-5.5::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 1642.05,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-Briefcase v1.1; Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1642.05}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1642.05}\",\"source_unit\":\"Elo\",\"displayed_value\":1642.05}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:8420ec136339945f88ed7206",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
+        "name": "Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]",
+        "model_id": "claude-opus-5.5::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 1820.11,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "GDPval-AA v2.1; Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; exact source excerpt: \"gdpval\":1820.11 (page payload, model slug claude-opus-5-5-xhigh)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"\\\"gdpval\\\":1820.11 (page payload, model slug claude-opus-5-5-xhigh)\",\"source_unit\":\"Elo\",\"displayed_value\":1820.11}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:0a8c687d6207a950b3bdbcb4",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
+        "name": "Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]",
+        "model_id": "claude-opus-5.5::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 1779.5,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-Briefcase v1.1; Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1779.5}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1779.5}\",\"source_unit\":\"Elo\",\"displayed_value\":1779.5}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:6b4b5c7a197e591d0b62d088",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+        "name": "GPT-6 Sol (max) [gpt-6-sol]",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1486.93,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Sol (max) [gpt-6-sol]; exact source excerpt: \"gdpval\":1486.93 (page payload, model slug gpt-6-sol)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"\\\"gdpval\\\":1486.93 (page payload, model slug gpt-6-sol)\",\"source_unit\":\"Elo\",\"displayed_value\":1486.93}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:2007f758f6e8cffaf0f2b892",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+        "name": "GPT-6 Sol (max) [gpt-6-sol]",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.248,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Sol (max) [gpt-6-sol]; exact source excerpt: \"gdpPdfAllPass\":0.248 (page payload, model slug gpt-6-sol)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.248 (page payload, model slug gpt-6-sol)\",\"source_unit\":\"%\",\"displayed_value\":24.8}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:03ec8d51f72918ab1edcbdbe",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+        "name": "GPT-6 Sol (max) [gpt-6-sol]",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1482.78,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Sol (max) [gpt-6-sol]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1482.78}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1482.78}\",\"source_unit\":\"Elo\",\"displayed_value\":1482.78}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:cc00958081c813f4afbdee2c",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
+        "name": "GPT-6 Sol (high) [gpt-6-sol-high]",
+        "model_id": "gpt-6-sol::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 1376.05,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Sol (high) [gpt-6-sol-high]; exact source excerpt: \"gdpval\":1376.05 (page payload, model slug gpt-6-sol-high)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"\\\"gdpval\\\":1376.05 (page payload, model slug gpt-6-sol-high)\",\"source_unit\":\"Elo\",\"displayed_value\":1376.05}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:219e87f80b4301eb981f807f",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
+        "name": "GPT-6 Sol (high) [gpt-6-sol-high]",
+        "model_id": "gpt-6-sol::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.28,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Sol (high) [gpt-6-sol-high]; exact source excerpt: \"gdpPdfAllPass\":0.28 (page payload, model slug gpt-6-sol-high)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.28 (page payload, model slug gpt-6-sol-high)\",\"source_unit\":\"%\",\"displayed_value\":28}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:93e33ec27feb55eafabe6daf",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
+        "name": "GPT-6 Sol (high) [gpt-6-sol-high]",
+        "model_id": "gpt-6-sol::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 1289.24,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Sol (high) [gpt-6-sol-high]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1289.24}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1289.24}\",\"source_unit\":\"Elo\",\"displayed_value\":1289.24}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:826f9a7ee7c3ad2a68a022d2",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
+        "name": "GPT-6 Sol (low) [gpt-6-sol-low]",
+        "model_id": "gpt-6-sol::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 1175.59,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Sol (low) [gpt-6-sol-low]; exact source excerpt: \"gdpval\":1175.59 (page payload, model slug gpt-6-sol-low)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"\\\"gdpval\\\":1175.59 (page payload, model slug gpt-6-sol-low)\",\"source_unit\":\"Elo\",\"displayed_value\":1175.59}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:29ab9680220a71257e09f2af",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
+        "name": "GPT-6 Sol (low) [gpt-6-sol-low]",
+        "model_id": "gpt-6-sol::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.218,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Sol (low) [gpt-6-sol-low]; exact source excerpt: \"gdpPdfAllPass\":0.218 (page payload, model slug gpt-6-sol-low)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.218 (page payload, model slug gpt-6-sol-low)\",\"source_unit\":\"%\",\"displayed_value\":21.8}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:800b3589c2abbec2d62eabdd",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
+        "name": "GPT-6 Sol (low) [gpt-6-sol-low]",
+        "model_id": "gpt-6-sol::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 905.16,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Sol (low) [gpt-6-sol-low]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":905.16}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":905.16}\",\"source_unit\":\"Elo\",\"displayed_value\":905.16}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:82589697d2ed5e40d2819f27",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
+        "name": "GPT-6 Sol (medium) [gpt-6-sol-medium]",
+        "model_id": "gpt-6-sol::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 1320.11,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Sol (medium) [gpt-6-sol-medium]; exact source excerpt: \"gdpval\":1320.11 (page payload, model slug gpt-6-sol-medium)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"\\\"gdpval\\\":1320.11 (page payload, model slug gpt-6-sol-medium)\",\"source_unit\":\"Elo\",\"displayed_value\":1320.11}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:4acfcda0ae02bc100dd0a12f",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
+        "name": "GPT-6 Sol (medium) [gpt-6-sol-medium]",
+        "model_id": "gpt-6-sol::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.254,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Sol (medium) [gpt-6-sol-medium]; exact source excerpt: \"gdpPdfAllPass\":0.254 (page payload, model slug gpt-6-sol-medium)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.254 (page payload, model slug gpt-6-sol-medium)\",\"source_unit\":\"%\",\"displayed_value\":25.4}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:5b9f40a86e610042deb6141b",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
+        "name": "GPT-6 Sol (medium) [gpt-6-sol-medium]",
+        "model_id": "gpt-6-sol::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 1142.18,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Sol (medium) [gpt-6-sol-medium]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1142.18}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1142.18}\",\"source_unit\":\"Elo\",\"displayed_value\":1142.18}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:6d206407bb4914185e2f21ff",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
+        "name": "GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]",
+        "model_id": "gpt-6-sol::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 1225.39,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; exact source excerpt: \"gdpval\":1225.39 (page payload, model slug gpt-6-sol-non-reasoning)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"\\\"gdpval\\\":1225.39 (page payload, model slug gpt-6-sol-non-reasoning)\",\"source_unit\":\"Elo\",\"displayed_value\":1225.39}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:8254216b68241969889b27ad",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
+        "name": "GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]",
+        "model_id": "gpt-6-sol::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.156,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; exact source excerpt: \"gdpPdfAllPass\":0.156 (page payload, model slug gpt-6-sol-non-reasoning)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.156 (page payload, model slug gpt-6-sol-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":15.6}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:7070a0936841ec903678b3d8",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
+        "name": "GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]",
+        "model_id": "gpt-6-sol::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 1085.35,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1085.35}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1085.35}\",\"source_unit\":\"Elo\",\"displayed_value\":1085.35}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:6198025ae4a34d026ae64eee",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
+        "name": "GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 1436.68,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; exact source excerpt: \"gdpval\":1436.68 (page payload, model slug gpt-6-sol-xhigh)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"\\\"gdpval\\\":1436.68 (page payload, model slug gpt-6-sol-xhigh)\",\"source_unit\":\"Elo\",\"displayed_value\":1436.68}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:4af89b645c8f5a2f9402a483",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
+        "name": "GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.238,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; exact source excerpt: \"gdpPdfAllPass\":0.238 (page payload, model slug gpt-6-sol-xhigh)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.238 (page payload, model slug gpt-6-sol-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":23.8}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:93a4fa9b24325ca7eda1b10f",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
+        "name": "GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 1363.66,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1363.66}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1363.66}\",\"source_unit\":\"Elo\",\"displayed_value\":1363.66}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:f97361c801f67947b8af53db",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
+        "name": "GPT-6 Luna (max) [gpt-6-luna]",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1367.09,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Luna (max) [gpt-6-luna]; exact source excerpt: \"gdpval\":1367.09 (page payload, model slug gpt-6-luna)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"\\\"gdpval\\\":1367.09 (page payload, model slug gpt-6-luna)\",\"source_unit\":\"Elo\",\"displayed_value\":1367.09}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:bae1297bccd0429572a11be7",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
+        "name": "GPT-6 Luna (max) [gpt-6-luna]",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.204,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Luna (max) [gpt-6-luna]; exact source excerpt: \"gdpPdfAllPass\":0.204 (page payload, model slug gpt-6-luna)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.204 (page payload, model slug gpt-6-luna)\",\"source_unit\":\"%\",\"displayed_value\":20.4}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:1c483431571fb98b140faf82",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
+        "name": "GPT-6 Luna (max) [gpt-6-luna]",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1299.23,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Luna (max) [gpt-6-luna]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1299.23}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1299.23}\",\"source_unit\":\"Elo\",\"displayed_value\":1299.23}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:b61517226d5d28b6f93cc530",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+        "name": "GPT-6 Luna (high) [gpt-6-luna-high]",
+        "model_id": "gpt-6-luna::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 1290.37,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Luna (high) [gpt-6-luna-high]; exact source excerpt: \"gdpval\":1290.37 (page payload, model slug gpt-6-luna-high)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"\\\"gdpval\\\":1290.37 (page payload, model slug gpt-6-luna-high)\",\"source_unit\":\"Elo\",\"displayed_value\":1290.37}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:dbbeb0ee0b84861a78f3d663",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+        "name": "GPT-6 Luna (high) [gpt-6-luna-high]",
+        "model_id": "gpt-6-luna::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.138,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Luna (high) [gpt-6-luna-high]; exact source excerpt: \"gdpPdfAllPass\":0.138 (page payload, model slug gpt-6-luna-high)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.138 (page payload, model slug gpt-6-luna-high)\",\"source_unit\":\"%\",\"displayed_value\":13.8}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:2eb22afbe8e4e45d4079893c",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+        "name": "GPT-6 Luna (high) [gpt-6-luna-high]",
+        "model_id": "gpt-6-luna::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 1176.49,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Luna (high) [gpt-6-luna-high]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1176.49}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1176.49}\",\"source_unit\":\"Elo\",\"displayed_value\":1176.49}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:e3442f8df615bc028cb1c0e0",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+        "name": "GPT-6 Luna (low) [gpt-6-luna-low]",
+        "model_id": "gpt-6-luna::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 992.26,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Luna (low) [gpt-6-luna-low]; exact source excerpt: \"gdpval\":992.26 (page payload, model slug gpt-6-luna-low)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"\\\"gdpval\\\":992.26 (page payload, model slug gpt-6-luna-low)\",\"source_unit\":\"Elo\",\"displayed_value\":992.26}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:e852edfa54398a57334d8252",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+        "name": "GPT-6 Luna (low) [gpt-6-luna-low]",
+        "model_id": "gpt-6-luna::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.064,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Luna (low) [gpt-6-luna-low]; exact source excerpt: \"gdpPdfAllPass\":0.064 (page payload, model slug gpt-6-luna-low)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.064 (page payload, model slug gpt-6-luna-low)\",\"source_unit\":\"%\",\"displayed_value\":6.4}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:d6f776518458e3a1245b2720",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+        "name": "GPT-6 Luna (low) [gpt-6-luna-low]",
+        "model_id": "gpt-6-luna::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 724.99,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Luna (low) [gpt-6-luna-low]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":724.99}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":724.99}\",\"source_unit\":\"Elo\",\"displayed_value\":724.99}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:d27199aa1dc15f7c5fc7cdfa",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
+        "name": "GPT-6 Luna (medium) [gpt-6-luna-medium]",
+        "model_id": "gpt-6-luna::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 1218.31,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Luna (medium) [gpt-6-luna-medium]; exact source excerpt: \"gdpval\":1218.31 (page payload, model slug gpt-6-luna-medium)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"\\\"gdpval\\\":1218.31 (page payload, model slug gpt-6-luna-medium)\",\"source_unit\":\"Elo\",\"displayed_value\":1218.31}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:2a9adc7ea8da1f8576042d3c",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
+        "name": "GPT-6 Luna (medium) [gpt-6-luna-medium]",
+        "model_id": "gpt-6-luna::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.14,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Luna (medium) [gpt-6-luna-medium]; exact source excerpt: \"gdpPdfAllPass\":0.14 (page payload, model slug gpt-6-luna-medium)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.14 (page payload, model slug gpt-6-luna-medium)\",\"source_unit\":\"%\",\"displayed_value\":14}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:4dbbb4a4a4e53bf8bb76d080",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
+        "name": "GPT-6 Luna (medium) [gpt-6-luna-medium]",
+        "model_id": "gpt-6-luna::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 1063.32,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Luna (medium) [gpt-6-luna-medium]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1063.32}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1063.32}\",\"source_unit\":\"Elo\",\"displayed_value\":1063.32}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:0888f233a1d5602623b90960",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
+        "name": "GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]",
+        "model_id": "gpt-6-luna::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 1034.03,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; exact source excerpt: \"gdpval\":1034.03 (page payload, model slug gpt-6-luna-non-reasoning)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"\\\"gdpval\\\":1034.03 (page payload, model slug gpt-6-luna-non-reasoning)\",\"source_unit\":\"Elo\",\"displayed_value\":1034.03}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:de3b38e6ceffb3479ec740b4",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
+        "name": "GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]",
+        "model_id": "gpt-6-luna::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.054,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; exact source excerpt: \"gdpPdfAllPass\":0.054 (page payload, model slug gpt-6-luna-non-reasoning)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.054 (page payload, model slug gpt-6-luna-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":5.4}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:221a7698a0b56671ab45d2f6",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
+        "name": "GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]",
+        "model_id": "gpt-6-luna::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 892.14,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":892.14}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":892.14}\",\"source_unit\":\"Elo\",\"displayed_value\":892.14}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:db5fcd5003fc405df18f48e5",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
+        "name": "GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]",
+        "model_id": "gpt-6-luna::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 1296.78,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; exact source excerpt: \"gdpval\":1296.78 (page payload, model slug gpt-6-luna-xhigh)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"\\\"gdpval\\\":1296.78 (page payload, model slug gpt-6-luna-xhigh)\",\"source_unit\":\"Elo\",\"displayed_value\":1296.78}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:04f491c758f457879458e75e",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
+        "name": "GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]",
+        "model_id": "gpt-6-luna::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.168,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; exact source excerpt: \"gdpPdfAllPass\":0.168 (page payload, model slug gpt-6-luna-xhigh)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.168 (page payload, model slug gpt-6-luna-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":16.8}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
+    },
+    {
+      "id": "cr128:434179c2b8ffaedd323760c7",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
+        "name": "GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]",
+        "model_id": "gpt-6-luna::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 1216.68,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; normalized source fields: {\"slug\":\"aa-briefcase\",\"score\":1216.68}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22; source row fields (normalized serialization): {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1216.68}\",\"source_unit\":\"Elo\",\"displayed_value\":1216.68}",
+      "comparison_key": null,
+      "withdrawn_reason": "CR-273 (2026-10-03): withdrawn from publication. Artificial Analysis's own model data, collected by the daily AA arm on 2026-10-03 (https://artificialanalysis.ai/models/gpt-5-6-sol and sibling model pages), carries a re-scored value for this exact configuration under the same board identity; this hand row is the 2026-09-22 page value. One versioned identity cannot publish two values for one configuration, so the current source value stays and this one is kept here as evidence (same rule as CR-173)."
     }
   ],
   "collections": [
