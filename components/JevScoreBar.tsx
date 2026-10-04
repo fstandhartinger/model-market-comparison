@@ -36,7 +36,7 @@ const dollars = (value: number | null | undefined) => value == null ? '—' : `$
 const shortName = (value: string) => value.split(' (')[0].split(', formerly')[0];
 const apiExplanation = "API — the operator's endpoint received sealed item text, without answers.";
 const typeVar = (cls: string) => ({ '--jev-t': `var(${jevTypeVarName(cls)})` }) as CSSProperties;
-const NOT_RANKED: Record<string, string> = { honorable_mention: 'honorable mention', partial: 'partial run' };
+const NOT_RANKED: Record<string, string> = { variant: "variant", honorable_mention: 'honorable mention', partial: 'partial run' };
 
 /** The column header that names the numbers a JevScoreBar row prints (F-188), following the active metric (F-189b). */
 export function JevScoreBarHeader({ className = 'mt-4', metric = 'score' }: { className?: string; metric?: JevBarMetric }) {

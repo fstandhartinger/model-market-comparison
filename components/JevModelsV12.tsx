@@ -136,7 +136,7 @@ function Controls({ w, raw, scope, setPreset, setRaw, reset }: { w: JevWeights4;
 
 // CR-97 (2026-09-20): three ways to be listed. Only a ranked row has a rank; an honorable mention runs another
 // entrant's model, a partial run missed a tier. Both unranked kinds keep every number and are drawn in grey.
-const NOT_RANKED: Record<string, string> = { honorable_mention: "honorable mention", partial: "partial run" };
+const NOT_RANKED: Record<string, string> = { variant: "variant", honorable_mention: "honorable mention", partial: "partial run" };
 
 function ScoreChart({ rows, honorable, partial, w, view, scope }: { rows: Row[]; honorable: Row[]; partial: Row[]; w: JevWeights4; view: JevV12View; scope: JevTaskScope }) {
   const d = stateDescription(w, scope);

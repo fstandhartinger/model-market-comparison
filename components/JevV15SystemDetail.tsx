@@ -53,7 +53,7 @@ export function JevV15SystemDetail({ artifact, row }: { artifact: JevV15Artifact
         <p className="bh-muted mt-1">
           {row.ranked && headlineRank != null
             ? `Option ${artifact.headline}: rank #${headlineRank} of ${artifact.n_ranked} ranked systems.`
-            : `${row.listing.replaceAll('_', ' ')} in Option ${artifact.headline}${row.not_ranked_because ? ` — ${row.not_ranked_because}` : ''}.`}
+            : `${row.listing.replaceAll('_', ' ')}, not ranked in Option ${artifact.headline}${row.not_ranked_because ? ` — ${row.not_ranked_because.replace(/\.$/, '')}` : ''}.`}
         </p>
         <p className="bh-muted mt-2 text-sm">The three option scores and ranks are published independently; the headline is Option {artifact.headline}.</p>
         <div className="mt-4 overflow-x-auto">

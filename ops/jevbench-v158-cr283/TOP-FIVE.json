@@ -1,0 +1,172 @@
+{
+  "before_v1.5.7": {
+    "A": [
+      "cygnet",
+      "winnow-12b",
+      "jev-1.13.0",
+      "jevk5-v0.3-4b",
+      "vansa-3.4"
+    ],
+    "B": [
+      "winnow-12b",
+      "cygnet",
+      "jev-1.13.0",
+      "jev-omni",
+      "vansa-3.4"
+    ],
+    "C": [
+      "cygnet",
+      "winnow-12b",
+      "jev-1.13.0",
+      "jev-omni",
+      "spark-s1-4b-v6"
+    ],
+    "Capability": [
+      "jev-1.13.0",
+      "winnow-12b",
+      "cygnet",
+      "surogate-rune-26b-a4b-v3-rtxpro6000-a2",
+      "jev-omni"
+    ]
+  },
+  "after_v1.5.8": {
+    "A": [
+      "wity-1",
+      "cygnet",
+      "winnow-12b",
+      "jev-1.13.0",
+      "jevk5-v0.3-4b"
+    ],
+    "B": [
+      "wity-1",
+      "winnow-12b",
+      "cygnet",
+      "jev-1.13.0",
+      "jev-omni"
+    ],
+    "C": [
+      "wity-1",
+      "cygnet",
+      "winnow-12b",
+      "jev-1.13.0",
+      "jev-omni"
+    ],
+    "Capability": [
+      "wity-1",
+      "jev-1.13.0",
+      "winnow-12b",
+      "cygnet",
+      "surogate-rune-26b-a4b-v3-rtxpro6000-a2"
+    ]
+  },
+  "changed": {
+    "A": true,
+    "B": true,
+    "C": true,
+    "Capability": true
+  },
+  "ranks": {
+    "wity-1": {
+      "A": 1,
+      "B": 1,
+      "C": 1,
+      "Capability": 1
+    },
+    "wity-1-always": {
+      "Capability": null
+    },
+    "wity-1-off": {
+      "Capability": null
+    }
+  },
+  "capability": {
+    "order": [
+      "wity-1",
+      "jev-1.13.0",
+      "winnow-12b",
+      "cygnet",
+      "surogate-rune-26b-a4b-v3-rtxpro6000-a2",
+      "jev-omni",
+      "djev",
+      "vansa-3.4",
+      "jevk5-v0.3-4b",
+      "plumb-4b",
+      "decision-4b-v12",
+      "imajev-4b-rtx5090-a2",
+      "decider-4b-v2",
+      "clef-flash",
+      "decision-4b-v11",
+      "hopper",
+      "malkuth-4b",
+      "metask-jev-4b",
+      "manchego-v21-v15",
+      "jqv",
+      "lev",
+      "semif-qwen3.5-4b",
+      "jev-local",
+      "spark-s1-4b-v6",
+      "jevk5-v02",
+      "instinct-dual-4b",
+      "decision-2b",
+      "localjev-qwen3.5-4b",
+      "open-alternative-jev",
+      "decider-2b",
+      "system-one-open",
+      "jev-qwen3.5-9b-base-nvfp4",
+      "malkuth-2b",
+      "nemotron-diffusion-8b",
+      "typecastlm",
+      "kev-4b",
+      "raw-qwen3-4b-instruct-2507",
+      "raw-phi-4-mini",
+      "qwen3-reranker-4b",
+      "decision-machine-1",
+      "certo",
+      "mxbai-rerank-base-v2",
+      "zerank-2",
+      "von-395m",
+      "bge-reranker-v2-m3",
+      "openjev-verdict-1.4",
+      "kev-0.6b",
+      "lev-350m",
+      "open-jev-json-canvas-joshuasp",
+      "smalljev",
+      "decision-fast",
+      "gte-reranker-modernbert-base",
+      "opendecision",
+      "jevact",
+      "gliner2.5-small",
+      "kev-0.5b",
+      "clm-8b",
+      "verdict-small",
+      "openjev-verdict",
+      "deem-0.8-v1",
+      "gliner2",
+      "laya-multilingual",
+      "raw-qwen3-0.6b",
+      "raw-qwen3-1.7b"
+    ],
+    "limits": {
+      "cost": 0.06459465517241379,
+      "latency": 1.2329566404223442,
+      "speedFloor": 77.79350008522667,
+      "factor": 2
+    },
+    "rows": [
+      {
+        "key": "wity-1",
+        "capability": 84.51241464650256,
+        "inClass": true,
+        "isReference": false,
+        "cost": 0.02441896551724138,
+        "latency": 0.9533328972756863,
+        "latencyBasis": "p50",
+        "costRatio": 0.7560676793478696,
+        "latencyRatio": 1.5464175560125553,
+        "reasons": []
+      }
+    ]
+  },
+  "n_ranked": 112,
+  "rule": "Top-five change. Held for Florian's GO on the screenshot preview (lead job wity-jevbench-results-20261003)."
+}

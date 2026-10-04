@@ -22,3 +22,6 @@ export function readJevbenchV156Release(root?: string): Promise<{ artifact: JevV
 
 export const JEVBENCH_V157_RELEASE_ARTIFACT: string;
 export function readJevbenchV157Release(root?: string): Promise<{ artifact: JevV15Artifact; bytes: Uint8Array; sha256: string }>;
+
+export const JEVBENCH_V158_RELEASE_ARTIFACT: string;
+export function readJevbenchV158Release(root?: string): Promise<{ artifact: JevV15Artifact; bytes: Uint8Array; sha256: string }>;

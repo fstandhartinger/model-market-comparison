@@ -124,7 +124,7 @@ export function JevRadars({ ranked, honorable, partial, topics }: { ranked: JevV
   const missingTopicRows = pair.filter((r) => !topics.systems[r.key]);
   const topicSpokes = topicSpokesFor(pair, topics);
   // CR-97: an honorable mention keeps every number, so it stays selectable here — it is simply never labelled with a rank.
-  const notRanked = (r: JevV12Row) => (r.ranked ? "" : r.listing === "honorable_mention" ? " (honorable mention)" : " (partial)");
+  const notRanked = (r: JevV12Row) => (r.ranked ? "" : r.listing === "variant" ? " (variant)" : r.listing === "honorable_mention" ? " (honorable mention)" : " (partial)");
   const option = (r: JevV12Row) => <option key={r.key} value={r.key}>{r.rank ? `${r.rank}. ` : ""}{short(r.display)}{notRanked(r)}</option>;
   // A plain render function, not a component: a component defined here would remount on every change and drop the focus.
   const pick = (id: string, label: string, value: string, set: (k: string) => void, other: string) => <label className="block min-w-0 flex-1 text-[13px]" htmlFor={id}>
@@ -134,7 +134,7 @@ export function JevRadars({ ranked, honorable, partial, topics }: { ranked: JevV
       {honorable.length > 0 && <optgroup label="Honorable mentions (not ranked)">{honorable.filter((r) => r.key !== other).map(option)}</optgroup>}
       <optgroup label="Partial runs (not ranked)">{partial.filter((r) => r.key !== other).map(option)}</optgroup>
     </select></label>;
-  const scoreText = (r: JevV12Row) => `JevBench Score ${one(r.main)}${r.rank ? ` (#${r.rank})` : r.listing === "honorable_mention" ? " (honorable mention, not ranked)" : " (partial run, not ranked)"}`;
+  const scoreText = (r: JevV12Row) => `JevBench Score ${one(r.main)}${r.rank ? ` (#${r.rank})` : r.listing === "variant" ? " (variant, not ranked)" : r.listing === "honorable_mention" ? " (honorable mention, not ranked)" : " (partial run, not ranked)"}`;
   const axisDesc = `${series[0].name} vs ${series[1].name}. ` + AXES.map((k, i) => `${AXIS_LABEL[k]}: ${axisSpokes[i].texts[0]} vs ${axisSpokes[i].texts[1]}`).join("; ") + ".";
   const topicDesc = `Accuracy by subject topic, ${series[0].name} vs ${series[1].name}. ` + topics.topics.map((t, i) => `${t.label} (${t.n} items): ${topicSpokes[i].texts[0]} vs ${topicSpokes[i].texts[1]}`).join("; ") + ".";
   const anyThin = topicSpokes.some((s) => s.thin.some(Boolean));

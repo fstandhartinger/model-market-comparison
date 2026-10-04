@@ -8,7 +8,7 @@ export const AXES: JevAxis[];
 export const TIER_WEIGHTS: Record<JevTier12, number>;
 export const VENDOR_LINKS: Record<string, string>;
 export const EP_LABEL: Record<string, string>;
-export type JevListing = 'ranked' | 'honorable_mention' | 'partial';
+export type JevListing = 'ranked' | 'honorable_mention' | 'partial' | 'variant';
 export const LISTINGS: JevListing[];
 export type JevHonorableMention = {
   runs_on: string; runs_on_key: string; short_reason: string; why_not_ranked: string; price_note: string;
