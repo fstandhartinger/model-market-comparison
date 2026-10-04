@@ -38,7 +38,7 @@ test('CR-191 v1.4.2.2 is pinned to the approved aggregate artifact and top five'
   assert.deepEqual(JEVBENCH_V1422_TOP5, ['imajev_4b', 'plumb-4b', 'decider-4b-v2', 'jev-1.13.0', 'jevk5-v02']);
 });
 
-test('CR-191 preserves pinned v1.4.2.2 and v1.4.2 routes while v1.5.6 is live', async () => {
+test('CR-191 preserves pinned v1.4.2.2 and v1.4.2 routes while v1.5.7 is live', async () => {
   const [route, page, livePage, board, sitemap, version22Page, version22Route, version22FamiliesRoute] = await Promise.all([
     read('../app/api/jevbench/v1.4.2/route.ts'),
     read('../app/jev-models/v1.4.2/page.tsx'),
