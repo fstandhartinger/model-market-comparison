@@ -31,6 +31,8 @@ def sha(path):
 
 def checked(pin):
     p = Path(pin['path'])
+    if not p.is_absolute():
+        p = ROOT / p  # packaged drivers ship inside the installed runtime directory
     if p.is_symlink() or not p.is_file() or sha(p) != pin['sha256']:
         raise OperationalHold('official_measurement_pin_changed')
     return p
@@ -48,7 +50,7 @@ def pins():
 def runtime_spec(value, benchmark):
     if not isinstance(value, dict) or set(value) - {'backend', 'model', 'endpoint', 'credential', 'reasoning', 'price_input_per_m', 'price_output_per_m'}:
         raise OperationalHold('unsupported_measurement_runtime')
-    if value.get('backend') not in ('typesafe', 'openrouter') or (benchmark == 'imagejevbench' and value['backend'] != 'openrouter'):
+    if value.get('backend') not in ('typesafe', 'openrouter', 'gpu_pod') or (benchmark == 'imagejevbench' and value['backend'] != 'openrouter'):
         raise OperationalHold('unsupported_measurement_backend')
     if not isinstance(value.get('model'), str) or not re.fullmatch(r'[A-Za-z0-9_.:/-]{1,160}', value['model']):
         raise OperationalHold('unsupported_measurement_model')
@@ -57,7 +59,12 @@ def runtime_spec(value, benchmark):
     credential = value.get('credential')
     if credential not in ('none', 'request', 'openrouter'):
         raise OperationalHold('unsupported_measurement_credential')
-    if value['backend'] == 'openrouter':
+    if value['backend'] == 'gpu_pod':
+        # Open weights run on a disposable rented pod; never a credential and never an endpoint
+        # the customer named — the pod recipe provides the loopback endpoint instead.
+        if credential != 'none' or value.get('endpoint') is not None:
+            raise OperationalHold('unsupported_gpu_pod_route')
+    elif value['backend'] == 'openrouter':
         if value.get('endpoint', 'https://openrouter.ai/api/v1') != 'https://openrouter.ai/api/v1' or credential != 'openrouter':
             raise OperationalHold('unsupported_openrouter_route')
     else:
@@ -80,7 +87,8 @@ def validate_api_meta(benchmark, meta, runtime):
             raise ValueError('Image API metadata cannot override GPU or receipt pricing')
         return
     allowed = {'support', 'endpoint_kind', 'price_in_per_m', 'price_out_per_m', 'price_kind', 'cost_basis'}
-    if set(system) - allowed or system.get('endpoint_kind') != 'api':
+    expected_kind = 'gpu' if runtime.get('backend') == 'gpu_pod' else 'api'
+    if set(system) - allowed or system.get('endpoint_kind') != expected_kind:
         raise ValueError('API scorer metadata contains unsupported fields')
     for meta_key, runtime_key in (('price_in_per_m', 'price_input_per_m'), ('price_out_per_m', 'price_output_per_m')):
         price = system.get(meta_key)

@@ -31,7 +31,7 @@ PG_BIN = next((p for p in sorted(Path("/usr/lib/postgresql").glob("*/bin"), reve
 TEMPLATES = ("autopickup-prompt-template.md", "autopickup-review-prompt-template.md", "autopickup-confirmation-template.txt",
              "autopickup-result-public-template.txt", "autopickup-result-private-template.txt", "autopickup-refund-template.txt",
              "autopickup-refusal-template.txt", "autopickup-review-passed-template.txt",
-             "autopickup-change-request-template.txt")
+             "autopickup-change-request-template.txt", "autopickup-delay-template.txt")
 
 TMP = Path(tempfile.mkdtemp(prefix="fastlane-autopickup-test-"))
 os.environ.update({
@@ -112,6 +112,7 @@ class FakeEffects(ap.Effects):
         self.mails: list[tuple[str, str, str]] = []
         self.notes: list[tuple[str, bool, str]] = []
         self.boards: list[str] = []
+        self.board_threads: list[tuple[str, str, str]] = []
         self.started: list[str] = []
         self.stopped: list[str] = []
         self.mail_ok = True
@@ -128,8 +129,9 @@ class FakeEffects(ap.Effects):
         self.notes.append((mode, requested, message))
         return True
 
-    def board(self, message, owner, kind="handoff"):
+    def board(self, message, owner, kind="handoff", thread="9"):
         self.boards.append(message)
+        self.board_threads.append((thread, owner, kind))
         return self.board_ok
 
     def mail(self, to, subject, body, **kwargs):
@@ -1058,7 +1060,12 @@ class EvaluateTests(DatabaseTestCase):
         starts=len(fx.started)
         ap.manage_evaluation(row(rid),state,fx,datetime.now(timezone.utc))
         self.assertEqual(len(fx.started),starts)
-        self.assertTrue(state['steps']['operational_handoff']['status']=='done')
+        # A capacity hold is transient: the first cycle schedules the bounded retry, no handoff yet.
+        state=ap.load_state(rid)
+        hold=state['operational_hold']
+        self.assertTrue(hold['transient'])
+        self.assertIsNotNone(hold.get('next_retry_at'))
+        self.assertNotEqual(state['steps'].get('operational_handoff',{}).get('status'),'done')
 
     def test_evaluate_loads_stage_state_before_preparation(self):
         rid = insert_order()
@@ -1632,6 +1639,1023 @@ class PureFunctionTests(unittest.TestCase):
     def test_backoff_is_bounded(self):
         self.assertEqual(ap.backoff_seconds(1), 300)
         self.assertEqual(ap.backoff_seconds(30), ap.BACKOFF_CAP_SECONDS)
+
+
+def _set_operational_hold(rid: str, reason: str, *, transient: bool = True, retries: int = 0) -> dict:
+    state = ap.load_state(rid)
+    if retries:
+        state.setdefault("hold_retries", {})[reason] = retries
+    ap.set_operational_hold(state, reason, transient=transient)
+    return ap.load_state(rid)
+
+
+class OperationalHoldRetryTests(DatabaseTestCase):
+    """PR1a: transient holds self-heal on a bounded backoff; everything else escalates once."""
+
+    def test_transient_hold_retries_then_clears_and_restarts(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        ap.cycle(fx)
+        unit = ap.EVAL_UNIT.format(rid)
+        ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='pending' WHERE id='{rid}'")
+        reason = "gpu_pod_capacity"
+        _set_operational_hold(rid, reason, transient=True)
+        now = datetime.now(timezone.utc)
+        # First cycle schedules the retry; nothing starts, nothing escalates.
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, now)
+        state = ap.load_state(rid)
+        self.assertAlmostEqual(ap.parse_ts(state["operational_hold"]["next_retry_at"]).timestamp(),
+                               (now + timedelta(minutes=15)).timestamp(), delta=1.0)
+        starts = len(fx.started)
+        # Backoff over: the hold clears and the bounded evaluation restart runs again.
+        state["operational_hold"]["next_retry_at"] = ap.iso(now)
+        ap.save_state(state)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, now)
+        self.assertIsNone(ap.load_state(rid).get("operational_hold"))
+        self.assertEqual(ap.load_state(rid)["hold_retries"][reason], 1)
+        self.assertGreater(len(fx.started), starts)
+        self.assertEqual(fx.notes, [])
+        self.assertFalse(any("operational" in b.lower() or "measurement owner" in b for b in fx.boards))
+
+    def test_transient_hold_exhaustion_sends_one_urgent_card_and_board_11(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        ap.cycle(fx)
+        ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='pending' WHERE id='{rid}'")
+        reason = "gpu_pod_run_failed"
+        _set_operational_hold(rid, reason, transient=True, retries=ap.HOLD_MAX_RETRIES)
+        boards_before = len(fx.boards)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        urgent = [note for note in fx.notes if note[0] == "urgent"]
+        self.assertEqual(len(urgent), 1)
+        self.assertIn(reason, urgent[0][2])
+        self.assertNotIn("🧑 Für dich", urgent[0][2])
+        self.assertEqual(len(fx.boards) - boards_before, 1)
+        # The escalation posts to the JevBench releases thread (#11), not the stale ops thread.
+        self.assertEqual(fx.board_threads[-1][0], "11")
+        self.assertNotIn("allout-ops-20260929", fx.boards[-1])
+        starts = len(fx.started)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(len([n for n in fx.notes if n[0] == "urgent"]), 1)  # exactly one card
+        self.assertEqual(len(fx.started), starts)
+
+    def test_non_transient_hold_escalates_immediately_and_never_idles(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        ap.cycle(fx)
+        ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='pending' WHERE id='{rid}'")
+        _set_operational_hold(rid, "some_permanent_failure", transient=False)
+        boards_before = len(fx.boards)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(len([n for n in fx.notes if n[0] == "urgent"]), 1)
+        self.assertEqual(len(fx.boards) - boards_before, 1)
+        self.assertEqual(ap.load_state(rid)["steps"]["operational_handoff"]["status"], "done")
+        starts = len(fx.started)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(len(fx.started), starts)
+
+
+class DeliveredOrderGuardTests(DatabaseTestCase):
+    """Review fix 3: a delivered order with a stale hold must never re-enter evaluation."""
+
+    def test_delivered_orders_with_stale_holds_never_restart_clear_or_escalate(self):
+        # Exactly the live state of b113eac1/3643732b: hand-delivered, status still 'paid',
+        # a delivery_email already sent and an operational hold left in the state file.
+        for reason, transient in (("official_measurement_code_pin_changed", True),
+                                  ("measured_by_sla_owner_open_weights_pod", False)):
+            with self.subTest(reason=reason):
+                rid = insert_order()
+                ap.sql(f"UPDATE {ap.TABLE} SET result_delivered_at=now(), delivery_email_status='sent', "
+                       f"evaluation_status='pending' WHERE id='{rid}'")
+                _set_operational_hold(rid, reason, transient=transient)
+                fx = FakeEffects()
+                ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+                self.assertEqual(fx.started, [])
+                self.assertEqual(fx.stopped, [])
+                self.assertEqual(fx.notes, [])
+                state = ap.load_state(rid)
+                self.assertEqual(state["operational_hold"]["reason"], reason)
+                self.assertIsNone(state["operational_hold"].get("next_retry_at"))
+                # Boards from manage_evaluation: none.
+                self.assertEqual(fx.boards, [])
+
+
+class SourceFetchPolicyTests(DatabaseTestCase):
+    """PR1b/c: fetches run outside the preparation budget; bad links and burned budgets never idle."""
+
+    def _claim(self, rid: str, fx: FakeEffects) -> None:
+        # The first cycle claims the order and leaves evaluation_status='starting'.
+        ap.cycle(fx)
+        self.assertEqual(row(rid)["evaluation_status"], "starting")
+
+    def test_bad_model_link_routes_to_change_request_without_budget(self):
+        rid = insert_order()
+        ap.sql(f"UPDATE {ap.TABLE} SET model_link='https://huggingface.co/profilepage' WHERE id='{rid}'")
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        with mock.patch.object(ap, "fetch_source") as fetch:
+            self.assertEqual(ap.evaluate(rid), 0)
+        # The valid code link fetches first; the bad model link never reaches the fetch.
+        self.assertEqual(fetch.call_count, 1)
+        self.assertEqual(ap.load_state(rid).get("stage_attempts", {}), {})
+        current = row(rid)
+        self.assertEqual(current["customer_hold_reason"], "customer_changes")
+        self.assertEqual(current["change_request_email_status"], "approval_required")
+        self.assertEqual(current["evaluation_status"], "pending")
+        changes = json.loads((ap.JOB_ROOT / rid / "review" / "CHANGES-REQUESTED.json").read_text())
+        self.assertIn("does not point to a Hugging Face model repository", changes["summary"])
+
+    def test_bad_code_link_uses_the_code_variant_of_the_fixed_summary(self):
+        rid = insert_order()
+        ap.sql(f"UPDATE {ap.TABLE} SET code_link='https://example.com/not-a-repo' WHERE id='{rid}'")
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        self.assertEqual(ap.evaluate(rid), 0)
+        changes = json.loads((ap.JOB_ROOT / rid / "review" / "CHANGES-REQUESTED.json").read_text())
+        self.assertIn("does not point to a GitHub repository", changes["summary"])
+        self.assertEqual(row(rid)["customer_hold_reason"], "customer_changes")
+
+    def test_transient_fetch_error_is_an_operational_hold_not_a_customer_hold(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        with mock.patch.object(ap, "fetch_source",
+                               side_effect=ap.FetchTransientError("model source fetch hit a transient network error")):
+            self.assertEqual(ap.evaluate(rid), 0)
+        state = ap.load_state(rid)
+        self.assertEqual(state["operational_hold"]["reason"], "fetch_source_transient")
+        self.assertTrue(state["operational_hold"]["transient"])
+        self.assertEqual(state.get("stage_attempts", {}), {})
+        self.assertIsNone(row(rid)["customer_hold_started_at"])
+        self.assertEqual(row(rid)["evaluation_status"], "pending")
+
+    def test_permanent_fetch_error_routes_to_change_request(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        with mock.patch.object(ap, "fetch_source",
+                               side_effect=ap.FetchPermanentError("model source repository could not be fetched")):
+            self.assertEqual(ap.evaluate(rid), 0)
+        self.assertEqual(row(rid)["customer_hold_reason"], "customer_changes")
+        self.assertEqual(ap.load_state(rid).get("stage_attempts", {}), {})
+
+    def test_api_order_with_null_links_is_untouched(self):
+        rid = insert_order()
+        ap.sql(f"UPDATE {ap.TABLE} SET access_type='api_endpoint', model_link='', code_link='' WHERE id='{rid}'")
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        with mock.patch.object(ap, "fetch_source") as fetch, \
+                mock.patch.object(ap, "run_agent", return_value=23):
+            self.assertEqual(ap.evaluate(rid), 23)
+        self.assertEqual(fetch.call_count, 0)
+        current = row(rid)
+        self.assertIsNone(current["customer_hold_started_at"])
+        self.assertEqual(ap.load_state(rid)["stage_attempts"]["preparation"], 1)
+        self.assertEqual(current["evaluation_status"], "failed")
+
+    def test_api_order_with_junk_code_link_skips_the_fetch_without_a_hold(self):
+        rid = insert_order()
+        ap.sql(f"UPDATE {ap.TABLE} SET access_type='api_endpoint', model_link='', "
+               f"code_link='https://example.com/not-a-repo' WHERE id='{rid}'")
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        with mock.patch.object(ap, "fetch_source") as fetch, \
+                mock.patch.object(ap, "run_agent", return_value=23):
+            self.assertEqual(ap.evaluate(rid), 23)
+        self.assertEqual(fetch.call_count, 0)
+        current = row(rid)
+        self.assertIsNone(current["customer_hold_started_at"])
+        self.assertEqual(current["change_request_email_status"], "not_due")
+        self.assertEqual(ap.load_state(rid)["stage_attempts"]["preparation"], 1)
+        state_md = (ap.JOB_ROOT / rid / "STATE.md").read_text()
+        self.assertIn("is not a supported repository URL", state_md)
+        self.assertIn("access_type api_endpoint", state_md)
+
+    def test_api_order_with_an_unfetchable_code_repo_skips_without_a_hold(self):
+        rid = insert_order()
+        ap.sql(f"UPDATE {ap.TABLE} SET access_type='api_endpoint', model_link='' WHERE id='{rid}'")
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        with mock.patch.object(ap, "fetch_source",
+                               side_effect=ap.FetchPermanentError("code source repository does not exist")), \
+                mock.patch.object(ap, "run_agent", return_value=23):
+            self.assertEqual(ap.evaluate(rid), 23)
+        current = row(rid)
+        self.assertIsNone(current["customer_hold_started_at"])
+        self.assertIn("could not be fetched", (ap.JOB_ROOT / rid / "STATE.md").read_text())
+
+    def test_infra_fetch_error_is_a_non_transient_operational_hold(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        with mock.patch.object(ap, "fetch_source",
+                               side_effect=ap.FetchInfraError("model source fetch failed: corrupt object")):
+            self.assertEqual(ap.evaluate(rid), 0)
+        state = ap.load_state(rid)
+        self.assertEqual(state["operational_hold"]["reason"], "fetch_source_failed")
+        self.assertFalse(state["operational_hold"]["transient"])
+        self.assertIsNone(row(rid)["customer_hold_started_at"])
+
+    def test_fetch_stderr_classification(self):
+        for stderr in ("fatal: repository 'https://huggingface.co/x/y' not found",
+                       "remote: HTTP 404 Not Found",
+                       "fatal: could not read Username for 'https://github.com'",
+                       "fatal: 'https://example.com/x' does not appear to be a git repository"):
+            self.assertIsNotNone(ap.CUSTOMER_FETCH_RE.search(stderr), stderr)
+            self.assertIsNone(ap.TRANSIENT_FETCH_RE.search(stderr), stderr)
+        for stderr in ("fatal: unable to access: connection timed out", "remote: HTTP 503",
+                       "error: RPC failed; curl 56 early EOF"):
+            self.assertIsNotNone(ap.TRANSIENT_FETCH_RE.search(stderr), stderr)
+        self.assertIsNone(ap.CUSTOMER_FETCH_RE.search("fatal: corrupt loose object"))
+        self.assertIsNone(ap.TRANSIENT_FETCH_RE.search("fatal: corrupt loose object"))
+
+    def test_fetch_error_classification(self):
+        self.assertIsNotNone(ap.TRANSIENT_FETCH_RE.search("fatal: unable to connect: connection timed out"))
+        self.assertIsNotNone(ap.TRANSIENT_FETCH_RE.search("remote: HTTP 503 backend unavailable"))
+        self.assertIsNone(ap.TRANSIENT_FETCH_RE.search("fatal: repository 'https://x/y' not found"))
+
+    def test_exhausted_preparation_budget_stops_the_unit_and_escalates_once(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        job_dir = ap.JOB_ROOT / rid
+        (job_dir / "source").mkdir(parents=True, exist_ok=True)
+        # Both receipts exist, so the loop reaches the consume call with a spent budget.
+        for which in ("code", "model"):
+            (job_dir / "source" / f"FETCH-RECEIPT-{which}.json").write_text("{}")
+        state = ap.load_state(rid)
+        state["stage_attempts"] = {"preparation": ap.MAX_PREPARATION_ATTEMPTS}
+        ap.save_state(state)
+        self.assertEqual(ap.evaluate(rid), 1)
+        self.assertEqual(row(rid)["evaluation_status"], "exhausted")
+        self.assertIn("preparation", ap.load_state(rid)["evaluation_exhausted"]["reason"])
+        # The cycle escalates once and never restarts the unit again.
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(len([n for n in fx.notes if n[0] == "urgent" and "Rescue" in n[2]]), 1)
+        starts = len(fx.started)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(len(fx.started), starts)
+
+
+class SlaCardsTests(DatabaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        set_cutover(datetime.now(timezone.utc) - timedelta(days=4))
+
+    def test_36h_alert_uses_the_urgent_channel_and_a_deliverable_format(self):
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        fx = FakeEffects()
+        counts = ap.sla_sweep(None, ap.JOB_ROOT, fx)
+        self.assertEqual(counts["alert36"], 1)
+        mode, _requested, text = fx.notes[-1]
+        self.assertEqual(mode, "urgent")
+        self.assertTrue(text.startswith("🚨 DRINGEND"))
+        # ~/bin/notify rejects a 🧑 Für dich ask block on the urgent channel (36 h alert regression).
+        self.assertNotIn("🧑 Für dich", text)
+        self.assertTrue(ap.sql(f"SELECT 1 FROM {ap.TABLE} WHERE id='{rid}' AND sla_36h_alerted_at IS NOT NULL"))
+
+    def test_24h_card_is_skipped_once_the_measurement_has_started(self):
+        rid = insert_order(paid_ago="25 hours", received_ago="25 hours")
+        state = ap.load_state(rid)
+        state["host_measurement"] = {"jevbench": {"raw_sha256": "x" * 64}}
+        ap.save_state(state)
+        fx = FakeEffects()
+        counts = ap.sla_sweep(None, ap.JOB_ROOT, fx)
+        self.assertEqual(counts["alert24"], 0)
+        self.assertEqual(fx.notes, [])
+        # Marked as handled so it can never fire late.
+        self.assertTrue(ap.sql(f"SELECT 1 FROM {ap.TABLE} WHERE id='{rid}' AND sla_24h_alerted_at IS NOT NULL"))
+
+    def test_24h_card_fires_when_no_measurement_started(self):
+        rid = insert_order(paid_ago="25 hours", received_ago="25 hours")
+        fx = FakeEffects()
+        counts = ap.sla_sweep(None, ap.JOB_ROOT, fx)
+        self.assertEqual(counts["alert24"], 1)
+        self.assertEqual(sum("24 hours since payment" in n[2] for n in fx.notes), 1)
+
+    def _decide(self, rid: str, decision: str) -> None:
+        root = ap.STATE_ROOT / "sla-decisions"
+        root.mkdir(parents=True, exist_ok=True)
+        (root / f"{rid}.json").write_text(json.dumps({
+            "request_id": rid, "kind": "sla_40h", "decision": decision,
+            "message_id": 777001, "update_id": 888001, "card": 1,
+            "delay_key": "sla_x_delay", "refund_key": "sla_x_refund", "noaction_key": "sla_x_noaction"}))
+
+    def test_40h_card_refund_in_full_writes_the_refund_decision_once(self):
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        self.assertEqual([r["id"] for r in ap.sla_decision_rows(None, ap.JOB_ROOT)], [rid])
+        self._decide(rid, "refund")
+        fx = FakeEffects()
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        current = row(rid)
+        self.assertEqual((current["status"], current["refund_decision"]), ("refund_due", "approved"))
+        # The 48 h refund card can never fire for this order a second time.
+        self.assertEqual(ap.refund_decision_rows(None, ap.JOB_ROOT), [])
+        self.assertEqual(ap.sla_decision_rows(None, ap.JOB_ROOT), [])
+
+    def test_40h_card_delay_note_sends_one_template_mail(self):
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        self._decide(rid, "delay_note")
+        fx = FakeEffects()
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        self.assertEqual(len(fx.mails), 1)
+        to, subject, body = fx.mails[0]
+        self.assertIn(ap.order_ref(rid), body)
+        self.assertIn("48-hour target", body)
+        self.assertIn("refund the order in full", body)
+        self.assertEqual(ap.load_state(rid)["delay_email_status"], "sent")
+        # A second pass sends no second email.
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        self.assertEqual(len(fx.mails), 1)
+        self.assertEqual(row(rid)["status"], "paid")
+
+    def test_40h_card_no_action_records_and_stays_open(self):
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        self._decide(rid, "no_action")
+        fx = FakeEffects()
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        self.assertEqual(fx.mails, [])
+        self.assertEqual(row(rid)["status"], "paid")
+        self.assertIsNone(row(rid)["refund_decision"])
+
+    def test_40h_card_never_fires_for_held_or_decided_orders(self):
+        rid = insert_order(paid_ago="49 hours", received_ago="49 hours")
+        ap.sql(f"UPDATE {ap.TABLE} SET customer_hold_started_at=now() WHERE id='{rid}'")
+        other = insert_order(paid_ago="49 hours", received_ago="49 hours")
+        ap.sql(f"UPDATE {ap.TABLE} SET refund_decision='approved' WHERE id='{other}'")
+        self.assertEqual(ap.sla_decision_rows(None, ap.JOB_ROOT), [])
+
+
+class SlaDecisionCardTests(unittest.TestCase):
+    """The 40 h card mechanics: exact callback keys, expiry, no text-reply decision."""
+
+    def test_three_buttons_resolve_to_three_distinct_decisions(self):
+        import sla_decision as sd
+        for key, expected in (("delay_key", "delay_note"), ("refund_key", "refund"),
+                              ("noaction_key", "no_action")):
+            state = {"chat_id": 42, "message_id": 99, "created_at": 100.0, "expires_at": 100.0 + sd.WINDOW,
+                     "delay_key": "k_delay", "refund_key": "k_refund", "noaction_key": "k_noaction"}
+            data = {"delay_key": "k_delay", "refund_key": "k_refund", "noaction_key": "k_noaction"}[key]
+            sd.apply_callbacks(state, [(12345, 42, 99, 42, 200.0, data)], 300.0)
+            self.assertEqual(state.get("decision"), expected, key)
+
+    def test_wrong_chat_sender_and_late_callback_never_decide(self):
+        import sla_decision as sd
+        state = {"chat_id": 42, "message_id": 99, "created_at": 100.0, "expires_at": 200.0,
+                 "delay_key": "k_delay", "refund_key": "k_refund", "noaction_key": "k_noaction"}
+        sd.apply_callbacks(state, [(1, 7, 99, 7, 150.0, "k_refund")], 160.0)   # foreign chat
+        sd.apply_callbacks(state, [(2, 42, 98, 42, 150.0, "k_refund")], 160.0)  # other message
+        sd.apply_callbacks(state, [(3, 42, 99, 42, 250.0, "k_refund")], 160.0)  # after expiry
+        self.assertIsNone(state.get("decision"))
+        sd.apply_callbacks(state, [], 300.0)
+        self.assertEqual(state.get("decision"), "expired")
+
+    def test_recorded_decision_reference_requires_an_exact_button(self):
+        import sla_decision as sd
+        root = Path(tempfile.mkdtemp())
+        rid = str(uuid.uuid4())
+        (root / f"{rid}.json").write_text(json.dumps({"decision": "refund", "message_id": "notanint",
+                                                    "update_id": 5}))
+        with self.assertRaises(ValueError):
+            sd.reference(root, rid)
+
+
+class ReviewEngineTests(unittest.TestCase):
+    """PR1e: the read_only source review always picks claude directly; capacity is a hold."""
+
+    @unittest.skipUnless(Path("/usr/bin/bwrap").is_file(), "bubblewrap is required")
+    def test_review_run_uses_claude_without_the_quota_pick(self):
+        rid = str(uuid.uuid4())
+        job_dir = ap.JOB_ROOT / rid / "review"
+        job_dir.mkdir(parents=True)
+        (job_dir / "PROMPT.md").write_text("review", encoding="utf-8")
+        calls = []
+
+        def quota_reply(command, **kwargs):
+            calls.append(command[1])
+            if command[1] == "pick":
+                raise AssertionError("the review must never quota-pick another engine")
+            return subprocess.CompletedProcess([], 0, stdout="ok", stderr="")
+        try:
+            with mock.patch.object(ap, "sandbox_agent_command", return_value=(["/usr/bin/bwrap", "--"], [])), \
+                    mock.patch.object(ap.subprocess, "run", side_effect=quota_reply), \
+                    mock.patch.object(ap.subprocess, "Popen", return_value=mock.Mock(returncode=0)) as popen:
+                code = ap.run_agent(job_dir, {"FASTLANE_REQUEST_ID": rid}, 60, read_only=True)
+            self.assertEqual(code, 0)
+            self.assertEqual(calls, ["status", "allow"])
+            self.assertIn("claude", (job_dir / ".engine").read_text())
+        finally:
+            shutil.rmtree(job_dir.parent, ignore_errors=True)
+
+    @unittest.skipUnless(Path("/usr/bin/bwrap").is_file(), "bubblewrap is required")
+    def test_review_run_at_claudes_limit_is_a_capacity_hold(self):
+        rid = str(uuid.uuid4())
+        job_dir = ap.JOB_ROOT / rid / "review"
+        job_dir.mkdir(parents=True)
+        (job_dir / "PROMPT.md").write_text("review", encoding="utf-8")
+
+        def quota_reply(command, **kwargs):
+            rc = 0 if command[1] == "status" else 1
+            return subprocess.CompletedProcess([], rc, stdout="", stderr="limit")
+        try:
+            with mock.patch.object(ap, "sandbox_agent_command", return_value=(["/usr/bin/bwrap", "--"], [])), \
+                    mock.patch.object(ap.subprocess, "run", side_effect=quota_reply), \
+                    self.assertRaises(ap.static_agent.CapacityHold):
+                ap.run_agent(job_dir, {"FASTLANE_REQUEST_ID": rid}, 60, read_only=True)
+        finally:
+            shutil.rmtree(job_dir.parent, ignore_errors=True)
+
+
+import pod_runner
+
+
+TORCHCAST_RECIPE = {
+    "schema_version": 1, "kind": "http_typesafe",
+    "image": "vllm/vllm-openai:v0.30.0@sha256:8a69ffad015f138d7170c4ddc429e230a3bc1c1719f67e14324749df200a4b90",
+    "min_vram_gb": 80,
+    "weights": [{"repo": "torchcast-ai/torchcast-decision-12b",
+                 "revision": "49107b5589bf2dc4ec3f5acd54316971dd5978b1", "dir": "torchcast",
+                 "sha256": {"model.safetensors": "f8553c9e625fa24853d57e938a1b1475975d9bce4bb79fccff2e8bfaaf6caa4e"}}],
+    "code": {"commit": "d7f84468f7c4a21c8aeed52df845d98c59afae04",
+             "tree": "cf3a3f6e2172b47a8bdbb288b7b260a5f197df89"},
+    "services": [
+        {"argv": ["vllm", "serve", "/models/torchcast", "--served-model-name", "torchcast-decision-12b",
+                  "--host", "127.0.0.1", "--port", "8890", "--max-model-len", "16384",
+                  "--gpu-memory-utilization", "0.90"],
+         "env": {}, "ready_url": "http://127.0.0.1:8890/v1/models"},
+        {"argv": ["python3", "/code/serving/torchcast_shim.py"],
+         "env": {"SHIM_VLLM": "http://127.0.0.1:8890/v1/chat/completions",
+                 "SHIM_MODEL": "torchcast-decision-12b", "SHIM_PORT": "8011"},
+         "ready_url": "http://127.0.0.1:8011/v1/models"}],
+    "endpoint": "http://127.0.0.1:8011", "model": "torchcast-decision-12b"}
+
+QUYET_RECIPE = {
+    "schema_version": 1, "kind": "python_inprocess",
+    "image": TORCHCAST_RECIPE["image"], "min_vram_gb": 80,
+    "weights": [{"repo": "chinhnc/Quyet-1.0-Large", "revision": "e1ecbbe761b12a11ab68e772a5dea9e84d147184",
+                 "dir": "Quyet-1.0-Large", "sha256": {"model-00001-of-00002.safetensors": "7e06d4a9d5f4730825c5135fda7ccac487b03c2ccd6874dba23c2698fdd999cd"}}],
+    "code": {"commit": "f9bddb97bf0e39c8c965a85c0c6c5d1295224b6a",
+             "tree": "0f488ba4f33f0c9449e8dad82a2815198051bd7e"},
+    "pythonpath": ["/code/src"], "loader": "quyet:load", "model_dir": "Quyet-1.0-Large",
+    "load_kwargs": {"device": "cuda"}, "model": "Quyet-1.0-Large"}
+
+
+def pod_job(with_receipts: bool = True) -> Path:
+    job = Path(tempfile.mkdtemp(prefix="pod-job-"))
+    (job / "source").mkdir(parents=True)
+    if with_receipts:
+        (job / "source" / "FETCH-RECEIPT-model.json").write_text(
+            json.dumps({"commit": TORCHCAST_RECIPE["weights"][0]["revision"]}))
+        (job / "source" / "FETCH-RECEIPT-code.json").write_text(
+            json.dumps({"commit": TORCHCAST_RECIPE["code"]["commit"]}))
+    return job
+
+
+class PodRecipeValidationTests(unittest.TestCase):
+    def test_golden_torchcast_recipe_validates(self):
+        self.assertEqual(pod_runner.validate_recipe(dict(TORCHCAST_RECIPE), pod_job())["kind"], "http_typesafe")
+
+    def test_golden_quyet_recipe_validates(self):
+        job = pod_job()
+        (job / "source" / "FETCH-RECEIPT-model.json").write_text(
+            json.dumps({"commit": QUYET_RECIPE["weights"][0]["revision"]}))
+        (job / "source" / "FETCH-RECEIPT-code.json").write_text(
+            json.dumps({"commit": QUYET_RECIPE["code"]["commit"]}))
+        self.assertEqual(pod_runner.validate_recipe(dict(QUYET_RECIPE), job)["kind"], "python_inprocess")
+
+    def _rejected(self, mutate):
+        recipe = json.loads(json.dumps(TORCHCAST_RECIPE))
+        mutate(recipe)
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold):
+            pod_runner.validate_recipe(recipe, pod_job())
+
+    def test_forbidden_fields_are_rejected(self):
+        self._rejected(lambda r: r.update(image="vllm/vllm-openai:v0.30.0"))               # no digest
+        self._rejected(lambda r: r["weights"][0].update(revision="0" * 40))                # != fetch receipt
+        self._rejected(lambda r: r["code"].update(commit="0" * 40))                        # != code receipt
+        self._rejected(lambda r: r["weights"][0].update(dir="../escape"))
+        self._rejected(lambda r: r["weights"][0].update(dir="a" * 65))
+        self._rejected(lambda r: r.update(services=r["services"] * 2))                     # 4 > 3 services
+        self._rejected(lambda r: r["services"][0].update(ready_url="http://169.254.1.1/x"))
+        self._rejected(lambda r: r["services"][0]["env"].update(SHIM_VLLM="http://10.0.0.1:8890/x"))
+        self._rejected(lambda r: r["services"][0]["env"].update(lowercase="x"))            # env key must be [A-Z_][A-Z0-9_]*
+        self._rejected(lambda r: r["services"][0]["argv"].append("http://evil.example"))
+        self._rejected(lambda r: r.update(min_vram_gb=81))
+        self._rejected(lambda r: r["weights"][0].update(sha256={}))
+        self._rejected(lambda r: r["weights"][0]["sha256"].update(bad="x" * 63))
+        self._rejected(lambda r: r.update(endpoint="http://10.0.0.1:8011"))
+        self._rejected(lambda r: r.update(kind="subprocess_shell"))
+        self._rejected(lambda r: r.update(unexpected_field=True))
+        self._rejected(lambda r: r["weights"][0]["sha256"].update({"a/../b": "f" * 64}))
+
+    def test_pythonpath_loader_and_model_dir_are_constrained(self):
+        job = pod_job()
+        for fixture in (QUYET_RECIPE,):
+            bad = json.loads(json.dumps(fixture))
+            bad["pythonpath"] = ["/etc"]
+            with self.assertRaises(ap.measurement_dispatch.OperationalHold):
+                pod_runner.validate_recipe(bad, job)
+            bad = json.loads(json.dumps(fixture))
+            bad["model_dir"] = "other"
+            with self.assertRaises(ap.measurement_dispatch.OperationalHold):
+                pod_runner.validate_recipe(bad, job)
+            bad = json.loads(json.dumps(fixture))
+            bad["loader"] = "quyet.load"          # must be module:function
+            with self.assertRaises(ap.measurement_dispatch.OperationalHold):
+                pod_runner.validate_recipe(bad, job)
+
+    def test_missing_fetch_receipts_are_rejected(self):
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold):
+            pod_runner.validate_recipe(dict(TORCHCAST_RECIPE), pod_job(with_receipts=False))
+
+
+class PodServicesRenderTests(unittest.TestCase):
+    def test_services_rendering_quotes_every_token(self):
+        recipe = {"services": [{"argv": ["run", "two words", "$(rm -rf /)"],
+                                "env": {"KEY": "va lue", "OTHER": "x`id`"},
+                                "ready_url": "http://127.0.0.1:9000/ready"}]}
+        script = pod_runner.render_services_sh(recipe)
+        # Plain `env K=V argv` inherits the container env (CUDA/LD_LIBRARY_PATH) — env -i broke it.
+        self.assertIn("env KEY='va lue' OTHER='x`id`' "
+                      "run 'two words' '$(rm -rf /)' > /output/service-0.log 2>&1 &", script)
+        self.assertNotIn("env -i", script)
+        self.assertIn('urlopen("http://127.0.0.1:9000/ready",timeout=5)', script)
+        self.assertIn("kill -0 $PID_0", script)
+        self.assertIn("seq 1 1200", script)
+        self.assertTrue(script.startswith("#!/bin/bash"))
+        self.assertTrue(script.endswith("\n"))
+
+    def test_empty_service_list_renders_an_inert_script(self):
+        script = pod_runner.render_services_sh({"services": []})
+        self.assertEqual(script, "#!/bin/bash\nset -u\n")
+
+
+class _FakeProvider(pod_runner.Provider):
+    """Scripted in-memory provider; every call is recorded, nothing leaves the host."""
+
+    def __init__(self, behavior=None):
+        self.calls = []
+        self.pods = {}
+        self.behavior = behavior or {}
+        self.next_pod = 0
+        self.removed = []
+        self.releases = 0
+
+    def reserve(self, job, name, hourly, cost_cap, hours):
+        self.calls.append(("reserve", job, name, hourly, cost_cap, hours))
+        return "gpu-fake-reservation"
+
+    def attach(self, reservation, job, pod_id, hourly):
+        self.calls.append(("attach", reservation, pod_id, hourly))
+
+    def release(self, job, pod_id, reservation):
+        self.releases += 1
+        self.calls.append(("release", pod_id, reservation))
+
+    def create(self, gpu, ttl_hours, budget):
+        if self.behavior.get("capacity"):
+            raise pod_runner.PodCapacityError("no nodes")
+        self.next_pod += 1
+        pod_id = f"pod-{self.next_pod}"
+        self.pods[pod_id] = True
+        self.calls.append(("create", gpu, ttl_hours, budget))
+        return {"pod_id": pod_id, "huid": f"huid-{self.next_pod}", "gpu": gpu, "hourly_usd": 1.30}
+
+    def exec(self, pod_id, command, timeout=600):
+        self.calls.append(("exec", pod_id, command[:3]))
+        out = ""
+        joined = " ".join(command)
+        if command[:2] == ["docker", "image"]:
+            out = '["x@sha256:8a69ffad015f138d7170c4ddc429e230a3bc1c1719f67e14324749df200a4b90"]'
+        elif command[:1] == ["sha256sum"]:
+            digest = "0" * 64 if self.behavior.get("sha_bad") \
+                else TORCHCAST_RECIPE['weights'][0]['sha256']['model.safetensors']
+            out = f"{digest}  x"
+            if self.behavior.get("sha_noise"):
+                out = "download warning: progress line\n" + out
+        elif command[:2] == ["docker", "inspect"]:
+            out = self.behavior.get("network_mode", "none") + "\n"
+        elif command[:2] == ["docker", "wait"]:
+            wait_rc = self.behavior.get("wait_rc", {}).get(pod_id, "0")
+            out = f"{wait_rc}\n"
+        elif command[:2] == ["docker", "logs"]:
+            out = "DRIVER_DONE\n"
+        elif "docker" in command[0] and "run" in command[:3]:
+            out = ""
+        return subprocess.CompletedProcess(command, 0, stdout=out, stderr="")
+
+    def scp_to(self, pod_id, local, remote):
+        self.calls.append(("scp_to", pod_id, remote))
+        if self.behavior.get("scp_fail"):
+            raise pod_runner.PodRunError("scp failed")
+
+    def scp_from(self, pod_id, remote, local):
+        self.calls.append(("scp_from", pod_id, remote))
+        if remote == "/work/out/raw.jsonl":
+            rows = self.behavior.get("rows", pod_runner.EXPECTED_ROWS)
+            Path(local).write_text("".join(f'{{"task_id":"t{i}"}}\n' for i in range(rows)))
+        elif remote == "/work/out/receipt.json":
+            Path(local).write_text('{"rows": 1624}')
+
+    def rm(self, pod_id):
+        self.removed.append(pod_id)
+        self.pods.pop(pod_id, None)
+        self.calls.append(("rm", pod_id))
+
+    def ps_ids(self):
+        return set(self.pods)
+
+
+def pod_test_pins(tmp: Path) -> dict:
+    """A pins() structure whose profile points at fixture files created under tmp."""
+    def pin(path: Path) -> dict:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        return {"path": str(path), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+    files = {}
+    for rel, content in (("run_v15.py", b"# harness\n"),
+                         ("jevbench/adapters/base.py", b"# base\n"),
+                         ("jevbench/adapters/typesafe.py", b"# typesafe\n"),
+                         ("pod_drivers/pod_driver.py", b"# driver\n"),
+                         ("pod_drivers/pod_entry.sh", b"#!/bin/bash\nexit 0\n")):
+        p = tmp / "src" / rel
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_bytes(content)
+        files[rel] = pin(p)
+    items = tmp / "items.jsonl"
+    items.write_text('{"task_id":"t","state":{},"question":{},"labels":[]}\n')
+    return {"manifest_sha256": "m", "driver_sha256": "d",
+            "profile": {"code": files, "inputs": {"jevbench": {"count": 1, "items": pin(items)}}}}
+
+
+def pod_git_source(job: Path, which: str = "code") -> tuple[str, str]:
+    """A real local git repo under source/<which> whose HEAD is the recipe's pinned commit."""
+    code = job / "source" / which
+    code.mkdir(parents=True, exist_ok=True)
+    (code / "app.py").write_text("print(1)\n")
+    env = {"GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@t", "GIT_COMMITTER_NAME": "t",
+           "GIT_COMMITTER_EMAIL": "t@t"}
+    git = lambda *a: subprocess.run(["git", "-C", str(code)] + list(a), env={**os.environ, **env},
+                                    capture_output=True, check=True)
+    git("init", "-q")
+    git("add", "app.py")
+    git("commit", "-q", "-m", "x")
+    commit = git("rev-parse", "HEAD").stdout.decode().strip()
+    tree = git("rev-parse", "HEAD^{tree}").stdout.decode().strip()
+    (job / "source" / f"FETCH-RECEIPT-{which}.json").write_text(
+        json.dumps({"which": which, "url": f"https://example.com/{which}", "commit": commit,
+                    "tree": tree}))
+    return commit, tree
+
+
+class PodRunnerLifecycleTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="pod-run-"))
+        self.job = pod_job()
+        self.commit, self.tree = pod_git_source(self.job)
+        self.recipe = json.loads(json.dumps(TORCHCAST_RECIPE))
+        self.recipe["code"] = {"commit": self.commit, "tree": self.tree}
+        self.pins = pod_test_pins(self.tmp)
+        (self.job / "source" / "FETCH-RECEIPT-model.json").write_text(
+            json.dumps({"which": "model", "url": "https://example.com/m",
+                        "commit": self.recipe["weights"][0]["revision"], "tree": "f" * 40}))
+        self.pods_dir = self.tmp / "pods"
+        self._pods_root = pod_runner.PODS_DIR
+        pod_runner.PODS_DIR = self.pods_dir
+        self.alerts = []
+
+    def tearDown(self):
+        pod_runner.PODS_DIR = self._pods_root
+
+    def _run(self, provider, max_usd=5.0):
+        rid = str(uuid.uuid4())
+        output = self.tmp / f"out-{rid[:8]}"
+        with mock.patch.object(pod_runner.measurement_dispatch, "pins", return_value=self.pins):
+            return pod_runner.run(rid, self.job, self.recipe, output, self.pins, max_usd,
+                                  provider=provider, alert=self.alerts.append)
+
+    def test_happy_path_receipt_and_teardown(self):
+        provider = _FakeProvider()
+        receipt = self._run(provider)
+        self.assertEqual(receipt["rows"], 1624)
+        self.assertEqual(receipt["network_mode"], "none")
+        self.assertEqual(receipt["pod_id"], "pod-1")
+        self.assertEqual(receipt["charged_or_reserved_usd"], receipt["cost_estimate_usd"])
+        self.assertLessEqual(receipt["cost_estimate_usd"], 5.0)
+        self.assertEqual(receipt["raw_sha256"],
+                         hashlib.sha256((next(self.tmp.glob("out-*")) / "raw.jsonl").read_bytes()).hexdigest())
+        self.assertEqual(provider.removed, ["pod-1"])
+        self.assertEqual(provider.releases, 1)
+        self.assertEqual(provider.pods, {})
+        # exact-id teardown verified against ps; TTL = min(3 h, 5/2.5) = 2 h
+        self.assertIn(("create", "H100", 2.0, 5.0), provider.calls)
+
+    def test_run_failure_retries_once_on_a_fresh_pod_then_reports(self):
+        provider = _FakeProvider({"wait_rc": {"pod-1": "1"}})
+        receipt = self._run(provider)
+        self.assertEqual(receipt["rows"], 1624)
+        self.assertEqual(provider.removed, ["pod-1", "pod-2"])  # first pod torn down, retry on a fresh pod
+
+    def test_two_failures_become_gpu_pod_run_failed(self):
+        provider = _FakeProvider({"wait_rc": {"pod-1": "1", "pod-2": "1"}})
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(provider)
+        self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
+        self.assertEqual(provider.removed, ["pod-1", "pod-2"])
+
+    def test_no_capacity_is_a_capacity_hold_without_retry(self):
+        provider = _FakeProvider({"capacity": True})
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(provider)
+        self.assertEqual(str(ctx.exception), "gpu_pod_capacity")
+        self.assertEqual([c[0] for c in provider.calls if c[0] == "create"], [])
+
+    def test_network_mode_other_than_none_is_rejected(self):
+        provider = _FakeProvider({"network_mode": "bridge"})
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(provider)
+        self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
+
+    def test_weight_sha_check_tolerates_leading_exec_output(self):
+        provider = _FakeProvider({"sha_noise": True})
+        receipt = self._run(provider)
+        self.assertEqual(receipt["rows"], 1624)
+
+    def test_weight_sha_mismatch_is_a_run_failure_with_the_actual_digest(self):
+        provider = _FakeProvider({"sha_bad": True})
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(provider)
+        self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
+        self.assertIn("0" * 64, str(ctx.exception.__cause__))
+        self.assertEqual(provider.removed, ["pod-1", "pod-2"])
+
+    def test_row_count_mismatch_is_rejected(self):
+        provider = _FakeProvider({"rows": 1600})
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(provider)
+        self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
+
+    def test_teardown_runs_even_when_a_step_throws(self):
+        provider = _FakeProvider({"scp_fail": True})
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold):
+            self._run(provider)
+        self.assertEqual(provider.removed, ["pod-1", "pod-2"])
+        self.assertEqual(provider.releases, 2)
+
+    def test_completed_receipt_is_idempotent(self):
+        provider = _FakeProvider()
+        first = self._run(provider)
+        calls = len(provider.calls)
+        # A second run over the same output returns the stored receipt without a pod.
+        output = next(self.tmp.glob("out-*"))
+        rid = str(uuid.uuid4())
+        with mock.patch.object(pod_runner.measurement_dispatch, "pins", return_value=self.pins):
+            again = pod_runner.run(rid, self.job, self.recipe, output, self.pins, 5.0,
+                                   provider=provider, alert=self.alerts.append)
+        self.assertEqual(again, first)
+        self.assertEqual(len(provider.calls), calls)
+
+
+class _FakeLium:
+    """Scripted fake for pod_runner._run_cli: in-memory pods behind the real LiumProvider.
+
+    `up` prints `up_output` (unparseable by default) while the `new_on_up` ids appear in
+    `ps` — this drives LiumProvider.create()'s cannot-parse-the-id fallback for real.
+    """
+
+    def __init__(self, up_output="Waiting for pod ...\nPod ready.\n", new_on_up=(), hourly=1.30,
+                 exec_banner=False):
+        self.pods = {}
+        self.up_output = up_output
+        self.new_on_up = list(new_on_up)
+        self.hourly = hourly
+        self.exec_banner = exec_banner
+        self.argv_seen = []
+        self.removed = []
+        self.releases = 0
+
+    def cli(self, argv, timeout=600, input_text=None):
+        argv = [str(a) for a in argv]
+        self.argv_seen.append(argv)
+        done = lambda out="", err="", rc=0: subprocess.CompletedProcess(argv, rc, stdout=out, stderr=err)
+        if Path(argv[0]).name == "gpu-pod-guard":
+            if argv[1] == "reserve":
+                return done("reserved gpu-" + "a" * 24 + "\n")
+            if argv[1] == "release":
+                self.releases += 1
+            return done()
+        command = argv[1] if len(argv) > 1 else ""
+        if command == "up":
+            for pid in self.new_on_up:
+                self.pods[pid] = {"id": pid, "huid": f"h-{pid[:4]}", "price_per_hour": self.hourly}
+            return done(self.up_output)
+        if command == "ps":
+            if len(argv) > 2 and argv[2] != "--format":
+                row = self.pods.get(argv[2])
+                return done(json.dumps([row] if row else []))
+            return done(json.dumps(list(self.pods.values())))
+        if command == "exec":
+            joined = argv[-1]
+            out = ""
+            if "docker image inspect" in joined:
+                out = '["x@sha256:8a69ffad015f138d7170c4ddc429e230a3bc1c1719f67e14324749df200a4b90"]'
+            elif joined.startswith("sha256sum"):
+                out = f"{TORCHCAST_RECIPE['weights'][0]['sha256']['model.safetensors']}  x"
+            elif "NetworkMode" in joined:
+                out = "none\n"
+            elif joined.startswith("docker wait"):
+                out = "0\n"
+            elif joined.startswith("docker logs"):
+                out = "DRIVER_DONE\n"
+            if self.exec_banner:
+                out = "Executing on test-node-1\n" + out
+            return done(out)
+        if command == "scp":
+            if "-d" in argv:
+                remote, local = argv[3], argv[4]
+                if remote.endswith("raw.jsonl"):
+                    Path(local).write_text("".join(f'{{"task_id":"t{i}"}}\n'
+                                                 for i in range(pod_runner.EXPECTED_ROWS)))
+                elif remote.endswith("receipt.json"):
+                    Path(local).write_text('{"rows": 1624}')
+            return done()
+        if command == "rm":
+            pod_id = argv[2]
+            self.removed.append(pod_id)
+            self.pods.pop(pod_id, None)
+            return done()
+        return done()
+
+
+class PodUnidentifiedCreateTests(unittest.TestCase):
+    """`lium up` printed nothing parseable: create() resolves ownership by the ps delta."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="pod-run-"))
+        self.job = pod_job()
+        self.commit, self.tree = pod_git_source(self.job)
+        self.recipe = json.loads(json.dumps(TORCHCAST_RECIPE))
+        self.recipe["code"] = {"commit": self.commit, "tree": self.tree}
+        self.pins = pod_test_pins(self.tmp)
+        (self.job / "source" / "FETCH-RECEIPT-model.json").write_text(
+            json.dumps({"which": "model", "url": "https://example.com/m",
+                        "commit": self.recipe["weights"][0]["revision"], "tree": "f" * 40}))
+        self.pods_dir = self.tmp / "pods"
+        self._pods_root = pod_runner.PODS_DIR
+        pod_runner.PODS_DIR = self.pods_dir
+        self.alerts = []
+
+    def tearDown(self):
+        pod_runner.PODS_DIR = self._pods_root
+
+    def _provider(self, fake):
+        patcher = mock.patch.object(pod_runner, "_run_cli", fake.cli)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        return pod_runner.LiumProvider()
+
+    def _run(self, provider, max_usd=5.0):
+        rid = str(uuid.uuid4())
+        output = self.tmp / f"out-{rid[:8]}"
+        with mock.patch.object(pod_runner.measurement_dispatch, "pins", return_value=self.pins):
+            return pod_runner.run(rid, self.job, self.recipe, output, self.pins, max_usd,
+                                  provider=provider, alert=self.alerts.append)
+
+    def test_one_new_pod_is_adopted_and_torn_down_by_exact_id(self):
+        pod_id = "33333333-3333-4333-8333-333333333333"
+        fake = _FakeLium(new_on_up=[pod_id])
+        receipt = self._run(self._provider(fake))
+        self.assertEqual(receipt["pod_id"], pod_id)
+        self.assertEqual(receipt["hourly_usd"], 1.30)
+        self.assertEqual(receipt["network_mode"], "none")
+        self.assertEqual(fake.removed, [pod_id])
+        self.assertEqual(fake.releases, 1)
+        self.assertEqual(fake.pods, {})
+
+    def test_no_new_pod_is_capacity(self):
+        fake = _FakeLium(new_on_up=[])
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(self._provider(fake))
+        self.assertEqual(str(ctx.exception), "gpu_pod_capacity")
+        self.assertEqual(fake.removed, [])
+        self.assertEqual(fake.releases, 2)  # both attempts' reservations were released
+
+    def test_several_new_pods_are_never_removed(self):
+        ids = ["11111111-1111-4111-8111-111111111111",
+               "22222222-2222-4222-8222-222222222222"]
+        fake = _FakeLium(new_on_up=ids)
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(self._provider(fake))
+        self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
+        for pid in ids:
+            self.assertIn(pid, str(ctx.exception.__cause__))
+        self.assertEqual(fake.removed, [])  # a co-created foreign pod must survive
+        self.assertEqual(set(fake.pods), set(ids))
+        self.assertEqual(fake.releases, 2)
+
+    def test_lium_exec_banner_lines_are_stripped(self):
+        pod_id = "44444444-4444-4444-8444-444444444444"
+        fake = _FakeLium(new_on_up=[pod_id], exec_banner=True)
+        receipt = self._run(self._provider(fake))
+        self.assertEqual(receipt["pod_id"], pod_id)
+        self.assertEqual(receipt["network_mode"], "none")
+        self.assertEqual(fake.removed, [pod_id])
+
+
+class PodDispatchIntegrationTests(DatabaseTestCase):
+    """gpu_pod orders run dispatch_measurement -> pod_runner -> score_measurement end to end."""
+
+    def _gate(self, rid, job, recipe, runtime, meta):
+        trusted = job / "trusted-runner"
+        trusted.mkdir(parents=True, exist_ok=True)
+        (trusted / "RUNTIME.json").write_text(json.dumps({"jevbench": runtime}))
+        (trusted / "MEASUREMENT-META.json").write_text(json.dumps({"jevbench": meta}))
+        (trusted / "POD-RECIPE.json").write_text(json.dumps(recipe))
+        manifest = {"source_commit": "a" * 64,
+                    "files": {name: {"sha256": ap.sha256_file(trusted / name)}
+                              for name in ("RUNTIME.json", "MEASUREMENT-META.json", "POD-RECIPE.json")}}
+        (trusted / "UPSTREAM-MANIFEST.json").write_text(json.dumps(manifest))
+        pins = ap.source_review_pins(job)
+        verdict = {"schema_version": 1, "verdict": "PASS", "source_pins": pins,
+                   "summary": "pinned pod recipe reviewed", "checks": ["pins"], "findings": []}
+        (job / "review").mkdir(parents=True, exist_ok=True)
+        (job / "review" / "CODE-REVIEW.md").write_text(json.dumps(verdict, sort_keys=True) + "\n")
+        gate = {"verdict": "PASS",
+                "review_sha256": ap.sha256_file(job / "review" / "CODE-REVIEW.md"),
+                "review_result": verdict, "source_pins": pins}
+        (job / "review" / "GATE.json").write_text(json.dumps(gate))
+        state = ap.load_state(rid)
+        state["source_review_gate"] = gate
+        ap.save_state(state)
+
+    def test_gpu_pod_dispatch_measures_and_scores(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        ap.cycle(fx)
+        job = ap.JOB_ROOT / rid
+        (job / "source").mkdir(parents=True, exist_ok=True)
+        commit, tree = pod_git_source(job)
+        model_commit, model_tree = pod_git_source(job, which="model")
+        recipe = json.loads(json.dumps(TORCHCAST_RECIPE))
+        recipe["code"] = {"commit": commit, "tree": tree}
+        recipe["weights"][0]["revision"] = model_commit
+        runtime = dict(PodRuntimeSpecTests.GPU_RUNTIME)
+        meta = {"system_key": "synthetic_model",
+                "system": {"support": _fixture_meta["system"]["support"], "endpoint_kind": "gpu",
+                           "price_in_per_m": 0.03, "price_out_per_m": 0.06,
+                           "price_kind": "estimate", "cost_basis": "fixture"}}
+        self._gate(rid, job, recipe, runtime, meta)
+        provider = _FakeProvider()
+        output = {"system_key": "synthetic_model", "score": 70.,
+                  "aggregate": {"axes": dict.fromkeys(("intelligence", "calibration", "speed", "cost"), 70.),
+                                "scores": dict.fromkeys(("A", "B", "C"), 70.)}}
+        with mock.patch.object(pod_runner, "LiumProvider", return_value=provider), \
+                mock.patch.object(ap.official_scoring, "run", return_value=output):
+            ap.dispatch_measurement(rid, job)
+        state = ap.load_state(rid)
+        record = state["host_measurement"]["jevbench"]
+        self.assertEqual(record["rows"], 1624)
+        self.assertEqual(record["pod_id"], "pod-1")
+        self.assertEqual(record["network_mode"], "none")
+        raw = job / "results" / "raw" / "jevbench.jsonl"
+        self.assertTrue(raw.is_file())
+        self.assertEqual(record["raw_sha256"], ap.sha256_file(raw))
+        self.assertTrue((job / "results" / "OFFICIAL-SCORES.json").is_file())
+        self.assertEqual(state["official_measurement"]["scores"]["jevbench"], 70.0)
+        self.assertEqual(provider.removed, ["pod-1"])
+        self.assertEqual(provider.releases, 1)
+
+
+class PodRuntimeSpecTests(unittest.TestCase):
+    GPU_RUNTIME = {"backend": "gpu_pod", "model": "torchcast-decision-12b", "credential": "none",
+                   "price_input_per_m": 0.03, "price_output_per_m": 0.06}
+
+    def test_gpu_pod_runtime_is_accepted_for_jevbench(self):
+        ap.measurement_dispatch.runtime_spec(dict(self.GPU_RUNTIME), "jevbench")
+
+    def test_gpu_pod_is_rejected_for_imagejevbench(self):
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold):
+            ap.measurement_dispatch.runtime_spec(dict(self.GPU_RUNTIME), "imagejevbench")
+
+    def test_gpu_pod_rejects_credentials_and_endpoints(self):
+        for mutation in ({"credential": "request"}, {"endpoint": "http://x"},):
+            value = dict(self.GPU_RUNTIME)
+            value.update(mutation)
+            with self.assertRaises(ap.measurement_dispatch.OperationalHold):
+                ap.measurement_dispatch.runtime_spec(value, "jevbench")
+
+    def test_gpu_meta_requires_endpoint_kind_gpu_and_equal_prices(self):
+        support = {"choice": "native", "noul": "native", "score": "native"}
+        meta = {"system_key": "sys", "system": {"support": support, "endpoint_kind": "gpu",
+                                              "price_in_per_m": 0.03, "price_out_per_m": 0.06,
+                                              "price_kind": "estimate", "cost_basis": "base ref"}}
+        ap.measurement_dispatch.validate_api_meta("jevbench", meta, self.GPU_RUNTIME)
+        meta["system"]["endpoint_kind"] = "api"
+        with self.assertRaises(ValueError):
+            ap.measurement_dispatch.validate_api_meta("jevbench", meta, self.GPU_RUNTIME)
+        meta["system"]["endpoint_kind"] = "gpu"
+        meta["system"]["price_in_per_m"] = 0.04
+        with self.assertRaises(ValueError):
+            ap.measurement_dispatch.validate_api_meta("jevbench", meta, self.GPU_RUNTIME)
 
 
 if __name__ == "__main__":
