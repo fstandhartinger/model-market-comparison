@@ -45,7 +45,7 @@ MAX_HOURLY_USD = 2.50
 PER_ORDER_CAP_USD = 5.0
 TTL_CAP_HOURS = 3.0
 EXPECTED_ROWS = 1624
-GPU_PREFERENCE = (("H100", 80), ("A100", 80), ("L40S", 48), ("RTX-6000-Ada", 48))
+GPU_PREFERENCE = (("H100", 80), ("A100", 80), ("L40S", 48), ("RTX6000", 48))  # lium marketplace names
 
 IMAGE_RE = re.compile(r"^[A-Za-z0-9._/-]+:[A-Za-z0-9_.-]+@sha256:[0-9a-f]{64}$")
 SHA40_RE = re.compile(r"[0-9a-f]{40}")
@@ -106,8 +106,9 @@ def validate_recipe(recipe, job_dir: Path) -> dict:
             raise measurement_dispatch.OperationalHold("pod_recipe_invalid")
         hashes = entry["sha256"]
         if not isinstance(hashes, dict) or not hashes \
-                or any(not isinstance(k, str) or not SHA64_RE.fullmatch(str(v)) or ".." in k.split("/")
-                       or k.startswith("/") for k, v in hashes.items()):
+                or any(not isinstance(k, str) or not re.fullmatch(r"[A-Za-z0-9_./-]{1,200}", k)
+                       or ".." in k.split("/") or k.startswith("/")
+                       or not SHA64_RE.fullmatch(str(v)) for k, v in hashes.items()):
             raise measurement_dispatch.OperationalHold("pod_recipe_invalid")
         dirs.add(entry["dir"])
     code = recipe.get("code")
@@ -171,8 +172,9 @@ def render_services_sh(recipe) -> str:
     for index, service in enumerate(recipe.get("services") or []):
         env_assigns = " ".join(f"{k}={shlex.quote(str(v))}" for k, v in (service.get("env") or {}).items())
         argv = " ".join(shlex.quote(a) for a in service["argv"])
-        lines.append(f"env -i PATH=/usr/local/bin:/usr/bin:/bin HOME=/tmp "
-                     f"{env_assigns}{' ' if env_assigns else ''}{argv} "
+        # Plain `env K=V argv` so the container env (CUDA, LD_LIBRARY_PATH, image PATH) is
+        # inherited and the recipe's variables are added on top — env -i broke that.
+        lines.append(f"env {env_assigns}{' ' if env_assigns else ''}{argv} "
                      f"> /output/service-{index}.log 2>&1 &")
         lines.append(f"PID_{index}=$!")
         lines.append(f"READY_{index}=0")
@@ -234,12 +236,12 @@ class LiumProvider(Provider):
 
     def reserve(self, job, name, hourly, cost_cap, hours):
         result = _run_cli([str(GUARD), "reserve", "--job", job, "--provider", "lium",
-                           "--name", name, "--hourly-price", str(hourly),
+                           "--name", name, "--hourly-price", str(MAX_HOURLY_USD),
                            "--max-hourly-price", str(MAX_HOURLY_USD), "--cost-cap", str(cost_cap),
                            "--runtime-hours", str(hours)], timeout=60)
         if result.returncode:
             raise PodCapacityError(f"guard reserve failed: {result.stderr.strip()[-200:]}")
-        match = re.search(r"gpu-[0-9a-f]{24}|reservation[^ ]*", result.stdout)
+        match = re.search(r"gpu-[0-9a-f]{24}", result.stdout)
         if not match:
             raise PodCapacityError("guard reserve returned no reservation id")
         return match.group(0)
@@ -260,38 +262,83 @@ class LiumProvider(Provider):
         _run_cli(argv, timeout=60)
 
     def create(self, gpu, ttl_hours, budget):
+        before = self.ps_ids()
         result = _run_cli([str(LIUM), "up", "--gpu", gpu, "-c", "1", "--ttl", f"{ttl_hours}h",
                            "--budget", f"{budget:.2f}", "-y", "--json"], timeout=900)
         if result.returncode:
             raise PodCapacityError(f"lium up {gpu}: {result.stderr.strip()[-200:]}")
-        try:
-            pod = json.loads(result.stdout.strip().splitlines()[-1])
-        except (json.JSONDecodeError, IndexError):
-            raise PodCapacityError("lium up returned no pod JSON") from None
-        pod_id = pod.get("id") or pod.get("pod_id")
-        if not pod_id:
-            raise PodCapacityError("lium up returned no pod id")
-        return {"pod_id": str(pod_id), "huid": pod.get("huid", ""), "gpu": gpu,
-                "hourly_usd": float(pod.get("price_per_hour") or pod.get("hourly_price") or 0)}
+        # `up -y --json` prints the pod as JSON (dict or one-item list); progress lines may
+        # surround it. The keys match `lium ps --format json` (id, huid, price_per_hour).
+        pod = None
+        # Some builds print the pod JSON to stderr behind the progress output; parse both.
+        text = result.stdout + "\n" + result.stderr
+        start = min((i for i in (text.find("{"), text.find("[")) if i >= 0), default=-1)
+        end = max(text.rfind("}"), text.rfind("]")) + 1
+        for candidate in (text, text[start:end] if 0 <= start < end else ""):
+            try:
+                value = json.loads(candidate)
+            except (json.JSONDecodeError, TypeError):
+                continue
+            if isinstance(value, list) and value and isinstance(value[0], dict):
+                value = value[0]
+            if isinstance(value, dict) and (value.get("id") or value.get("huid")):
+                pod = value
+                break
+        if pod is None:
+            # This build reports the ready pod as wrapped text:
+            # "Pod <huid> (name: <node>, id:\n<uuid>) ready" — the uuid may be on the next line.
+            match = re.search(r"Pod ([A-Za-z0-9_-]+) \(name:[^)]*?id:\s*([0-9a-f]{8}(?:-[0-9a-f]{4,})+)\)", text)
+            if match:
+                pod = {"huid": match.group(1), "id": match.group(2)}
+        if pod is None or not (pod.get("id") or pod.get("pod_id") or pod.get("huid")):
+            # `up` printed nothing parseable. Exactly one new pod in ps means it is the one
+            # this call created — adopt it by exact id (state-saved/attached/torn down as
+            # usual). Zero means nothing came up. Two or more: never remove anything, since
+            # another job's concurrently created pod would be among them; surface the ids.
+            new = self.ps_ids() - before
+            if len(new) == 1:
+                pod = {"id": next(iter(new))}
+            elif not new:
+                raise PodCapacityError("lium up returned no pod id: "
+                                       + (result.stdout + result.stderr).strip()[-300:])
+            else:
+                raise PodRunError("lium up created an unidentifiable pod and several new pods "
+                                  "appeared; removed nothing (exact-id ownership). New pod ids: "
+                                  + ", ".join(sorted(new)))
+        pod_id = pod.get("id") or pod.get("pod_id") or pod.get("huid")
+        hourly = pod.get("price_per_hour") or pod.get("hourly_price") or pod.get("price")
+        if hourly is None:
+            look = _run_cli([str(LIUM), "ps", str(pod_id), "--format", "json"], timeout=60)
+            try:
+                rows = json.loads(look.stdout)
+                row = rows[0] if isinstance(rows, list) and rows else rows
+                if isinstance(row, dict):
+                    hourly = row.get("price_per_hour") or row.get("hourly_price") or row.get("price")
+            except (json.JSONDecodeError, IndexError, TypeError):
+                pass
+        return {"pod_id": str(pod_id), "huid": str(pod.get("huid", "")), "gpu": gpu,
+                "hourly_usd": float(hourly) if hourly is not None else None}
 
     def exec(self, pod_id, command, timeout=600):
-        return _run_cli([str(LIUM), "exec", pod_id, "--"] + command, timeout=timeout + 60)
+        # `lium exec <pod> "cmd"` takes ONE command string; join the argv safely.
+        return _run_cli([str(LIUM), "exec", pod_id, shlex.join(command)], timeout=timeout + 60)
 
     def scp_to(self, pod_id, local, remote):
-        result = _run_cli([str(LIUM), "scp", local, f"{pod_id}:{remote}"], timeout=900)
+        result = _run_cli([str(LIUM), "scp", pod_id, local, remote], timeout=900)
         if result.returncode:
             raise PodRunError(f"scp upload failed: {result.stderr.strip()[-200:]}")
 
     def scp_from(self, pod_id, remote, local):
-        result = _run_cli([str(LIUM), "scp", f"{pod_id}:{remote}", local], timeout=900)
+        result = _run_cli([str(LIUM), "scp", pod_id, remote, local, "-d"], timeout=900)
         if result.returncode:
             raise PodRunError(f"scp download failed: {result.stderr.strip()[-200:]}")
 
     def rm(self, pod_id):
-        _run_cli([str(LIUM), "rm", pod_id], timeout=300)
+        # --yes is required non-interactively; without it rm asks on stdin and removes nothing.
+        _run_cli([str(LIUM), "rm", pod_id, "--yes"], timeout=300)
 
     def ps_ids(self):
-        result = _run_cli([str(LIUM), "ps", "--json"], timeout=60)
+        result = _run_cli([str(LIUM), "ps", "--format", "json"], timeout=60)
         if result.returncode:
             return set()
         try:
@@ -397,17 +444,28 @@ def _teardown(provider, job, pod_id, reservation, alert):
               + f". Pod {pod_id}. Check `lium ps` and remove it by exact id if it is still there.\n  Time: 5 minutes")
 
 
-def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, ttl, budget, alert):
+def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, ttl, budget,
+               alert, save_state):
     """One pod attempt; raises PodRunError on any step failure (teardown still runs)."""
     pod_id = None
     reservation = None
     try:
-        reservation = provider.reserve(job, "pod-measure", gpu_choice[1], budget, ttl)
+        reservation = provider.reserve(job, "pod-measure", MAX_HOURLY_USD, budget, ttl)
         pod = provider.create(gpu_choice[0], ttl, budget)
         pod_id = pod["pod_id"]
+        hourly = pod.get("hourly_usd")
         state.update(pod_id=pod_id, gpu=pod.get("gpu", gpu_choice[0]),
-                     hourly_usd=pod.get("hourly_usd", 0.0), reservation_id=reservation)
-        provider.attach(reservation, job, pod_id, pod.get("hourly_usd", 0.0))
+                     hourly_usd=hourly, reservation_id=reservation,
+                     created_at=datetime.now(timezone.utc).isoformat())
+        save_state()  # persist immediately: a crashed process must find this pod by exact id
+        try:
+            hourly = float(hourly)
+        except (TypeError, ValueError):
+            hourly = 0.0
+        if not 0 < hourly <= MAX_HOURLY_USD:
+            raise PodCapacityError(f"pod {pod_id} hourly price {pod.get('hourly_usd')} "
+                                   f"exceeds the {MAX_HOURLY_USD} cap")
+        provider.attach(reservation, job, pod_id, hourly)
         image = recipe["image"]
         _exec(provider, pod_id, ["docker", "pull", image], timeout=1800)
         inspect = _exec(provider, pod_id, ["docker", "image", "inspect", image,
@@ -417,6 +475,8 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         for entry in recipe["weights"]:
             target = f"/models/{entry['dir']}"
             _exec(provider, pod_id, ["docker", "run", "--rm", "-v", "/models:/models",
+                                     "-e", "HOME=/tmp", "--tmpfs", "/tmp",
+                                     "-e", "HF_HUB_DISABLE_TELEMETRY=1",
                                      "-e", "HF_TOKEN=", "--entrypoint", "python3", image,
                                      "-c", WEIGHTS_SNIPPET, entry["repo"], entry["revision"], target],
                   timeout=5400)
@@ -424,10 +484,9 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 check = _exec(provider, pod_id, ["sha256sum", f"{target}/{relative}"])
                 if check.stdout.split()[:1] != [digest]:
                     raise PodRunError(f"weight file {entry['dir']}/{relative} sha256 mismatch")
+        _exec(provider, pod_id, ["mkdir", "-p", "/work", "/work/out", "/work/code"])
         provider.scp_to(pod_id, str(staging_path), "/work/stage.tar")
-        _exec(provider, pod_id, ["mkdir", "-p", "/work", "/work/out"])
         _exec(provider, pod_id, ["tar", "-xf", "/work/stage.tar", "-C", "/"])
-        _exec(provider, pod_id, ["mkdir", "-p", "/work/code"])
         _exec(provider, pod_id, ["tar", "-xf", "/work/code.tar", "-C", "/work/code"])
         _exec(provider, pod_id, ["docker", "run", "-d", "--name", "jev-pod-run", "--gpus", "all",
                                  "--network", "none", "--shm-size", "16g",
@@ -451,7 +510,9 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         if rc != "0":
             raise PodRunError(f"pod driver exited {rc or 'unknown'}")
         provider.scp_from(pod_id, "/work/out/raw.jsonl", str(output / "raw.jsonl"))
-        provider.scp_from(pod_id, "/work/out/receipt.json", str(output / "receipt.json"))
+        # The pod-side driver receipt is kept as evidence; only our host receipt below owns
+        # the canonical receipt.json path.
+        provider.scp_from(pod_id, "/work/out/receipt.json", str(output / "pod-receipt.json"))
         rows = (output / "raw.jsonl").read_bytes().count(b"\n")
         if rows != EXPECTED_ROWS:
             raise PodRunError(f"raw.jsonl has {rows} rows, expected {EXPECTED_ROWS}")
@@ -459,6 +520,14 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
     finally:
         if pod_id:
             _teardown(provider, job, pod_id, reservation, alert)
+            state["torn_down_at"] = datetime.now(timezone.utc).isoformat()
+            save_state()
+        elif reservation:
+            # Create failed after the reservation succeeded — release it or the global cap leaks.
+            try:
+                provider.release(job, None, reservation)
+            except Exception:  # noqa: BLE001
+                pass
 
 
 def default_alert(text: str) -> None:
@@ -511,21 +580,24 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
     started = datetime.now(timezone.utc)
     code_tar = export_source(job_dir, recipe["code"]["commit"], recipe["code"]["tree"])
     staging_path = _stage_tarball(build_staging(recipe, current, code_tar))
-    last_error: Exception | None = None
+    state: dict = {}
+    save_state = lambda: state_path.write_text(json.dumps(state, indent=2) + "\n")
     try:
+        run_error: Exception | None = None
         for attempt in range(2):
             gpu_choice = candidates[attempt % len(candidates)]
             try:
                 state = _lifecycle(provider, job, recipe, staging_path, output, state,
-                                   gpu_choice, ttl, budget, alert)
-                last_error = None
+                                   gpu_choice, ttl, budget, alert, save_state)
                 break
-            except PodCapacityError as exc:
-                raise measurement_dispatch.OperationalHold("gpu_pod_capacity") from exc
+            except PodCapacityError:
+                continue  # try the next GPU candidate; capacity only if every attempt was capacity
             except PodRunError as exc:
-                last_error = exc
-        if last_error is not None:
-            raise measurement_dispatch.OperationalHold("gpu_pod_run_failed") from last_error
+                run_error = exc
+        else:
+            if run_error is not None:
+                raise measurement_dispatch.OperationalHold("gpu_pod_run_failed") from run_error
+            raise measurement_dispatch.OperationalHold("gpu_pod_capacity")
     finally:
         staging_path.unlink(missing_ok=True)
     ended = datetime.now(timezone.utc)

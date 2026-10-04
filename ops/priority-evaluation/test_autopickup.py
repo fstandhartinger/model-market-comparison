@@ -2175,8 +2175,10 @@ class PodServicesRenderTests(unittest.TestCase):
                                 "env": {"KEY": "va lue", "OTHER": "x`id`"},
                                 "ready_url": "http://127.0.0.1:9000/ready"}]}
         script = pod_runner.render_services_sh(recipe)
-        self.assertIn("env -i PATH=/usr/local/bin:/usr/bin:/bin HOME=/tmp KEY='va lue' OTHER='x`id`' "
+        # Plain `env K=V argv` inherits the container env (CUDA/LD_LIBRARY_PATH) — env -i broke it.
+        self.assertIn("env KEY='va lue' OTHER='x`id`' "
                       "run 'two words' '$(rm -rf /)' > /output/service-0.log 2>&1 &", script)
+        self.assertNotIn("env -i", script)
         self.assertIn('urlopen("http://127.0.0.1:9000/ready",timeout=5)', script)
         self.assertIn("kill -0 $PID_0", script)
         self.assertIn("seq 1 1200", script)
@@ -2394,6 +2396,140 @@ class PodRunnerLifecycleTests(unittest.TestCase):
                                    provider=provider, alert=self.alerts.append)
         self.assertEqual(again, first)
         self.assertEqual(len(provider.calls), calls)
+
+
+class _FakeLium:
+    """Scripted fake for pod_runner._run_cli: in-memory pods behind the real LiumProvider.
+
+    `up` prints `up_output` (unparseable by default) while the `new_on_up` ids appear in
+    `ps` — this drives LiumProvider.create()'s cannot-parse-the-id fallback for real.
+    """
+
+    def __init__(self, up_output="Waiting for pod ...\nPod ready.\n", new_on_up=(), hourly=1.30):
+        self.pods = {}
+        self.up_output = up_output
+        self.new_on_up = list(new_on_up)
+        self.hourly = hourly
+        self.argv_seen = []
+        self.removed = []
+        self.releases = 0
+
+    def cli(self, argv, timeout=600, input_text=None):
+        argv = [str(a) for a in argv]
+        self.argv_seen.append(argv)
+        done = lambda out="", err="", rc=0: subprocess.CompletedProcess(argv, rc, stdout=out, stderr=err)
+        if Path(argv[0]).name == "gpu-pod-guard":
+            if argv[1] == "reserve":
+                return done("reserved gpu-" + "a" * 24 + "\n")
+            if argv[1] == "release":
+                self.releases += 1
+            return done()
+        command = argv[1] if len(argv) > 1 else ""
+        if command == "up":
+            for pid in self.new_on_up:
+                self.pods[pid] = {"id": pid, "huid": f"h-{pid[:4]}", "price_per_hour": self.hourly}
+            return done(self.up_output)
+        if command == "ps":
+            if len(argv) > 2 and argv[2] != "--format":
+                row = self.pods.get(argv[2])
+                return done(json.dumps([row] if row else []))
+            return done(json.dumps(list(self.pods.values())))
+        if command == "exec":
+            joined = argv[-1]
+            out = ""
+            if "docker image inspect" in joined:
+                out = '["x@sha256:8a69ffad015f138d7170c4ddc429e230a3bc1c1719f67e14324749df200a4b90"]'
+            elif joined.startswith("sha256sum"):
+                out = f"{TORCHCAST_RECIPE['weights'][0]['sha256']['model.safetensors']}  x"
+            elif "NetworkMode" in joined:
+                out = "none\n"
+            elif joined.startswith("docker wait"):
+                out = "0\n"
+            elif joined.startswith("docker logs"):
+                out = "DRIVER_DONE\n"
+            return done(out)
+        if command == "scp":
+            if "-d" in argv:
+                remote, local = argv[3], argv[4]
+                if remote.endswith("raw.jsonl"):
+                    Path(local).write_text("".join(f'{{"task_id":"t{i}"}}\n'
+                                                 for i in range(pod_runner.EXPECTED_ROWS)))
+                elif remote.endswith("receipt.json"):
+                    Path(local).write_text('{"rows": 1624}')
+            return done()
+        if command == "rm":
+            pod_id = argv[2]
+            self.removed.append(pod_id)
+            self.pods.pop(pod_id, None)
+            return done()
+        return done()
+
+
+class PodUnidentifiedCreateTests(unittest.TestCase):
+    """`lium up` printed nothing parseable: create() resolves ownership by the ps delta."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="pod-run-"))
+        self.job = pod_job()
+        self.commit, self.tree = pod_git_source(self.job)
+        self.recipe = json.loads(json.dumps(TORCHCAST_RECIPE))
+        self.recipe["code"] = {"commit": self.commit, "tree": self.tree}
+        self.pins = pod_test_pins(self.tmp)
+        (self.job / "source" / "FETCH-RECEIPT-model.json").write_text(
+            json.dumps({"which": "model", "url": "https://example.com/m",
+                        "commit": self.recipe["weights"][0]["revision"], "tree": "f" * 40}))
+        self.pods_dir = self.tmp / "pods"
+        self._pods_root = pod_runner.PODS_DIR
+        pod_runner.PODS_DIR = self.pods_dir
+        self.alerts = []
+
+    def tearDown(self):
+        pod_runner.PODS_DIR = self._pods_root
+
+    def _provider(self, fake):
+        patcher = mock.patch.object(pod_runner, "_run_cli", fake.cli)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        return pod_runner.LiumProvider()
+
+    def _run(self, provider, max_usd=5.0):
+        rid = str(uuid.uuid4())
+        output = self.tmp / f"out-{rid[:8]}"
+        with mock.patch.object(pod_runner.measurement_dispatch, "pins", return_value=self.pins):
+            return pod_runner.run(rid, self.job, self.recipe, output, self.pins, max_usd,
+                                  provider=provider, alert=self.alerts.append)
+
+    def test_one_new_pod_is_adopted_and_torn_down_by_exact_id(self):
+        pod_id = "33333333-3333-4333-8333-333333333333"
+        fake = _FakeLium(new_on_up=[pod_id])
+        receipt = self._run(self._provider(fake))
+        self.assertEqual(receipt["pod_id"], pod_id)
+        self.assertEqual(receipt["hourly_usd"], 1.30)
+        self.assertEqual(receipt["network_mode"], "none")
+        self.assertEqual(fake.removed, [pod_id])
+        self.assertEqual(fake.releases, 1)
+        self.assertEqual(fake.pods, {})
+
+    def test_no_new_pod_is_capacity(self):
+        fake = _FakeLium(new_on_up=[])
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(self._provider(fake))
+        self.assertEqual(str(ctx.exception), "gpu_pod_capacity")
+        self.assertEqual(fake.removed, [])
+        self.assertEqual(fake.releases, 2)  # both attempts' reservations were released
+
+    def test_several_new_pods_are_never_removed(self):
+        ids = ["11111111-1111-4111-8111-111111111111",
+               "22222222-2222-4222-8222-222222222222"]
+        fake = _FakeLium(new_on_up=ids)
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(self._provider(fake))
+        self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
+        for pid in ids:
+            self.assertIn(pid, str(ctx.exception.__cause__))
+        self.assertEqual(fake.removed, [])  # a co-created foreign pod must survive
+        self.assertEqual(set(fake.pods), set(ids))
+        self.assertEqual(fake.releases, 2)
 
 
 class PodDispatchIntegrationTests(DatabaseTestCase):
