@@ -2066,5 +2066,433 @@ class ReviewEngineTests(unittest.TestCase):
             shutil.rmtree(job_dir.parent, ignore_errors=True)
 
 
+import pod_runner
+
+
+TORCHCAST_RECIPE = {
+    "schema_version": 1, "kind": "http_typesafe",
+    "image": "vllm/vllm-openai:v0.30.0@sha256:8a69ffad015f138d7170c4ddc429e230a3bc1c1719f67e14324749df200a4b90",
+    "min_vram_gb": 80,
+    "weights": [{"repo": "torchcast-ai/torchcast-decision-12b",
+                 "revision": "49107b5589bf2dc4ec3f5acd54316971dd5978b1", "dir": "torchcast",
+                 "sha256": {"model.safetensors": "f8553c9e625fa24853d57e938a1b1475975d9bce4bb79fccff2e8bfaaf6caa4e"}}],
+    "code": {"commit": "d7f84468f7c4a21c8aeed52df845d98c59afae04",
+             "tree": "cf3a3f6e2172b47a8bdbb288b7b260a5f197df89"},
+    "services": [
+        {"argv": ["vllm", "serve", "/models/torchcast", "--served-model-name", "torchcast-decision-12b",
+                  "--host", "127.0.0.1", "--port", "8890", "--max-model-len", "16384",
+                  "--gpu-memory-utilization", "0.90"],
+         "env": {}, "ready_url": "http://127.0.0.1:8890/v1/models"},
+        {"argv": ["python3", "/code/serving/torchcast_shim.py"],
+         "env": {"SHIM_VLLM": "http://127.0.0.1:8890/v1/chat/completions",
+                 "SHIM_MODEL": "torchcast-decision-12b", "SHIM_PORT": "8011"},
+         "ready_url": "http://127.0.0.1:8011/v1/models"}],
+    "endpoint": "http://127.0.0.1:8011", "model": "torchcast-decision-12b"}
+
+QUYET_RECIPE = {
+    "schema_version": 1, "kind": "python_inprocess",
+    "image": TORCHCAST_RECIPE["image"], "min_vram_gb": 80,
+    "weights": [{"repo": "chinhnc/Quyet-1.0-Large", "revision": "e1ecbbe761b12a11ab68e772a5dea9e84d147184",
+                 "dir": "Quyet-1.0-Large", "sha256": {"model-00001-of-00002.safetensors": "7e06d4a9d5f4730825c5135fda7ccac487b03c2ccd6874dba23c2698fdd999cd"}}],
+    "code": {"commit": "f9bddb97bf0e39c8c965a85c0c6c5d1295224b6a",
+             "tree": "0f488ba4f33f0c9449e8dad82a2815198051bd7e"},
+    "pythonpath": ["/code/src"], "loader": "quyet:load", "model_dir": "Quyet-1.0-Large",
+    "load_kwargs": {"device": "cuda"}, "model": "Quyet-1.0-Large"}
+
+
+def pod_job(with_receipts: bool = True) -> Path:
+    job = Path(tempfile.mkdtemp(prefix="pod-job-"))
+    (job / "source").mkdir(parents=True)
+    if with_receipts:
+        (job / "source" / "FETCH-RECEIPT-model.json").write_text(
+            json.dumps({"commit": TORCHCAST_RECIPE["weights"][0]["revision"]}))
+        (job / "source" / "FETCH-RECEIPT-code.json").write_text(
+            json.dumps({"commit": TORCHCAST_RECIPE["code"]["commit"]}))
+    return job
+
+
+class PodRecipeValidationTests(unittest.TestCase):
+    def test_golden_torchcast_recipe_validates(self):
+        self.assertEqual(pod_runner.validate_recipe(dict(TORCHCAST_RECIPE), pod_job())["kind"], "http_typesafe")
+
+    def test_golden_quyet_recipe_validates(self):
+        job = pod_job()
+        (job / "source" / "FETCH-RECEIPT-model.json").write_text(
+            json.dumps({"commit": QUYET_RECIPE["weights"][0]["revision"]}))
+        (job / "source" / "FETCH-RECEIPT-code.json").write_text(
+            json.dumps({"commit": QUYET_RECIPE["code"]["commit"]}))
+        self.assertEqual(pod_runner.validate_recipe(dict(QUYET_RECIPE), job)["kind"], "python_inprocess")
+
+    def _rejected(self, mutate):
+        recipe = json.loads(json.dumps(TORCHCAST_RECIPE))
+        mutate(recipe)
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold):
+            pod_runner.validate_recipe(recipe, pod_job())
+
+    def test_forbidden_fields_are_rejected(self):
+        self._rejected(lambda r: r.update(image="vllm/vllm-openai:v0.30.0"))               # no digest
+        self._rejected(lambda r: r["weights"][0].update(revision="0" * 40))                # != fetch receipt
+        self._rejected(lambda r: r["code"].update(commit="0" * 40))                        # != code receipt
+        self._rejected(lambda r: r["weights"][0].update(dir="../escape"))
+        self._rejected(lambda r: r["weights"][0].update(dir="a" * 65))
+        self._rejected(lambda r: r.update(services=r["services"] * 2))                     # 4 > 3 services
+        self._rejected(lambda r: r["services"][0].update(ready_url="http://169.254.1.1/x"))
+        self._rejected(lambda r: r["services"][0]["env"].update(SHIM_VLLM="http://10.0.0.1:8890/x"))
+        self._rejected(lambda r: r["services"][0]["env"].update(lowercase="x"))            # env key must be [A-Z_][A-Z0-9_]*
+        self._rejected(lambda r: r["services"][0]["argv"].append("http://evil.example"))
+        self._rejected(lambda r: r.update(min_vram_gb=81))
+        self._rejected(lambda r: r["weights"][0].update(sha256={}))
+        self._rejected(lambda r: r["weights"][0]["sha256"].update(bad="x" * 63))
+        self._rejected(lambda r: r.update(endpoint="http://10.0.0.1:8011"))
+        self._rejected(lambda r: r.update(kind="subprocess_shell"))
+        self._rejected(lambda r: r.update(unexpected_field=True))
+        self._rejected(lambda r: r["weights"][0]["sha256"].update({"a/../b": "f" * 64}))
+
+    def test_pythonpath_loader_and_model_dir_are_constrained(self):
+        job = pod_job()
+        for fixture in (QUYET_RECIPE,):
+            bad = json.loads(json.dumps(fixture))
+            bad["pythonpath"] = ["/etc"]
+            with self.assertRaises(ap.measurement_dispatch.OperationalHold):
+                pod_runner.validate_recipe(bad, job)
+            bad = json.loads(json.dumps(fixture))
+            bad["model_dir"] = "other"
+            with self.assertRaises(ap.measurement_dispatch.OperationalHold):
+                pod_runner.validate_recipe(bad, job)
+            bad = json.loads(json.dumps(fixture))
+            bad["loader"] = "quyet.load"          # must be module:function
+            with self.assertRaises(ap.measurement_dispatch.OperationalHold):
+                pod_runner.validate_recipe(bad, job)
+
+    def test_missing_fetch_receipts_are_rejected(self):
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold):
+            pod_runner.validate_recipe(dict(TORCHCAST_RECIPE), pod_job(with_receipts=False))
+
+
+class PodServicesRenderTests(unittest.TestCase):
+    def test_services_rendering_quotes_every_token(self):
+        recipe = {"services": [{"argv": ["run", "two words", "$(rm -rf /)"],
+                                "env": {"KEY": "va lue", "OTHER": "x`id`"},
+                                "ready_url": "http://127.0.0.1:9000/ready"}]}
+        script = pod_runner.render_services_sh(recipe)
+        self.assertIn("env -i PATH=/usr/local/bin:/usr/bin:/bin HOME=/tmp KEY='va lue' OTHER='x`id`' "
+                      "run 'two words' '$(rm -rf /)' > /output/service-0.log 2>&1 &", script)
+        self.assertIn('urlopen("http://127.0.0.1:9000/ready",timeout=5)', script)
+        self.assertIn("kill -0 $PID_0", script)
+        self.assertIn("seq 1 1200", script)
+        self.assertTrue(script.startswith("#!/bin/bash"))
+        self.assertTrue(script.endswith("\n"))
+
+    def test_empty_service_list_renders_an_inert_script(self):
+        script = pod_runner.render_services_sh({"services": []})
+        self.assertEqual(script, "#!/bin/bash\nset -u\n")
+
+
+class _FakeProvider(pod_runner.Provider):
+    """Scripted in-memory provider; every call is recorded, nothing leaves the host."""
+
+    def __init__(self, behavior=None):
+        self.calls = []
+        self.pods = {}
+        self.behavior = behavior or {}
+        self.next_pod = 0
+        self.removed = []
+        self.releases = 0
+
+    def reserve(self, job, name, hourly, cost_cap, hours):
+        self.calls.append(("reserve", job, name, hourly, cost_cap, hours))
+        return "gpu-fake-reservation"
+
+    def attach(self, reservation, job, pod_id, hourly):
+        self.calls.append(("attach", reservation, pod_id, hourly))
+
+    def release(self, job, pod_id, reservation):
+        self.releases += 1
+        self.calls.append(("release", pod_id, reservation))
+
+    def create(self, gpu, ttl_hours, budget):
+        if self.behavior.get("capacity"):
+            raise pod_runner.PodCapacityError("no nodes")
+        self.next_pod += 1
+        pod_id = f"pod-{self.next_pod}"
+        self.pods[pod_id] = True
+        self.calls.append(("create", gpu, ttl_hours, budget))
+        return {"pod_id": pod_id, "huid": f"huid-{self.next_pod}", "gpu": gpu, "hourly_usd": 1.30}
+
+    def exec(self, pod_id, command, timeout=600):
+        self.calls.append(("exec", pod_id, command[:3]))
+        out = ""
+        joined = " ".join(command)
+        if command[:2] == ["docker", "image"]:
+            out = '["x@sha256:8a69ffad015f138d7170c4ddc429e230a3bc1c1719f67e14324749df200a4b90"]'
+        elif command[:1] == ["sha256sum"]:
+            out = f"{TORCHCAST_RECIPE['weights'][0]['sha256']['model.safetensors']}  x"
+        elif command[:2] == ["docker", "inspect"]:
+            out = self.behavior.get("network_mode", "none") + "\n"
+        elif command[:2] == ["docker", "wait"]:
+            wait_rc = self.behavior.get("wait_rc", {}).get(pod_id, "0")
+            out = f"{wait_rc}\n"
+        elif command[:2] == ["docker", "logs"]:
+            out = "DRIVER_DONE\n"
+        elif "docker" in command[0] and "run" in command[:3]:
+            out = ""
+        return subprocess.CompletedProcess(command, 0, stdout=out, stderr="")
+
+    def scp_to(self, pod_id, local, remote):
+        self.calls.append(("scp_to", pod_id, remote))
+        if self.behavior.get("scp_fail"):
+            raise pod_runner.PodRunError("scp failed")
+
+    def scp_from(self, pod_id, remote, local):
+        self.calls.append(("scp_from", pod_id, remote))
+        if remote == "/work/out/raw.jsonl":
+            rows = self.behavior.get("rows", pod_runner.EXPECTED_ROWS)
+            Path(local).write_text("".join(f'{{"task_id":"t{i}"}}\n' for i in range(rows)))
+        elif remote == "/work/out/receipt.json":
+            Path(local).write_text('{"rows": 1624}')
+
+    def rm(self, pod_id):
+        self.removed.append(pod_id)
+        self.pods.pop(pod_id, None)
+        self.calls.append(("rm", pod_id))
+
+    def ps_ids(self):
+        return set(self.pods)
+
+
+def pod_test_pins(tmp: Path) -> dict:
+    """A pins() structure whose profile points at fixture files created under tmp."""
+    def pin(path: Path) -> dict:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        return {"path": str(path), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+    files = {}
+    for rel, content in (("run_v15.py", b"# harness\n"),
+                         ("jevbench/adapters/base.py", b"# base\n"),
+                         ("jevbench/adapters/typesafe.py", b"# typesafe\n"),
+                         ("pod_drivers/pod_driver.py", b"# driver\n"),
+                         ("pod_drivers/pod_entry.sh", b"#!/bin/bash\nexit 0\n")):
+        p = tmp / "src" / rel
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_bytes(content)
+        files[rel] = pin(p)
+    items = tmp / "items.jsonl"
+    items.write_text('{"task_id":"t","state":{},"question":{},"labels":[]}\n')
+    return {"manifest_sha256": "m", "driver_sha256": "d",
+            "profile": {"code": files, "inputs": {"jevbench": {"count": 1, "items": pin(items)}}}}
+
+
+def pod_git_source(job: Path, which: str = "code") -> tuple[str, str]:
+    """A real local git repo under source/<which> whose HEAD is the recipe's pinned commit."""
+    code = job / "source" / which
+    code.mkdir(parents=True, exist_ok=True)
+    (code / "app.py").write_text("print(1)\n")
+    env = {"GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@t", "GIT_COMMITTER_NAME": "t",
+           "GIT_COMMITTER_EMAIL": "t@t"}
+    git = lambda *a: subprocess.run(["git", "-C", str(code)] + list(a), env={**os.environ, **env},
+                                    capture_output=True, check=True)
+    git("init", "-q")
+    git("add", "app.py")
+    git("commit", "-q", "-m", "x")
+    commit = git("rev-parse", "HEAD").stdout.decode().strip()
+    tree = git("rev-parse", "HEAD^{tree}").stdout.decode().strip()
+    (job / "source" / f"FETCH-RECEIPT-{which}.json").write_text(
+        json.dumps({"which": which, "url": f"https://example.com/{which}", "commit": commit,
+                    "tree": tree}))
+    return commit, tree
+
+
+class PodRunnerLifecycleTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="pod-run-"))
+        self.job = pod_job()
+        self.commit, self.tree = pod_git_source(self.job)
+        self.recipe = json.loads(json.dumps(TORCHCAST_RECIPE))
+        self.recipe["code"] = {"commit": self.commit, "tree": self.tree}
+        self.pins = pod_test_pins(self.tmp)
+        (self.job / "source" / "FETCH-RECEIPT-model.json").write_text(
+            json.dumps({"which": "model", "url": "https://example.com/m",
+                        "commit": self.recipe["weights"][0]["revision"], "tree": "f" * 40}))
+        self.pods_dir = self.tmp / "pods"
+        self._pods_root = pod_runner.PODS_DIR
+        pod_runner.PODS_DIR = self.pods_dir
+        self.alerts = []
+
+    def tearDown(self):
+        pod_runner.PODS_DIR = self._pods_root
+
+    def _run(self, provider, max_usd=5.0):
+        rid = str(uuid.uuid4())
+        output = self.tmp / f"out-{rid[:8]}"
+        with mock.patch.object(pod_runner.measurement_dispatch, "pins", return_value=self.pins):
+            return pod_runner.run(rid, self.job, self.recipe, output, self.pins, max_usd,
+                                  provider=provider, alert=self.alerts.append)
+
+    def test_happy_path_receipt_and_teardown(self):
+        provider = _FakeProvider()
+        receipt = self._run(provider)
+        self.assertEqual(receipt["rows"], 1624)
+        self.assertEqual(receipt["network_mode"], "none")
+        self.assertEqual(receipt["pod_id"], "pod-1")
+        self.assertEqual(receipt["charged_or_reserved_usd"], receipt["cost_estimate_usd"])
+        self.assertLessEqual(receipt["cost_estimate_usd"], 5.0)
+        self.assertEqual(receipt["raw_sha256"],
+                         hashlib.sha256((next(self.tmp.glob("out-*")) / "raw.jsonl").read_bytes()).hexdigest())
+        self.assertEqual(provider.removed, ["pod-1"])
+        self.assertEqual(provider.releases, 1)
+        self.assertEqual(provider.pods, {})
+        # exact-id teardown verified against ps; TTL = min(3 h, 5/2.5) = 2 h
+        self.assertIn(("create", "H100", 2.0, 5.0), provider.calls)
+
+    def test_run_failure_retries_once_on_a_fresh_pod_then_reports(self):
+        provider = _FakeProvider({"wait_rc": {"pod-1": "1"}})
+        receipt = self._run(provider)
+        self.assertEqual(receipt["rows"], 1624)
+        self.assertEqual(provider.removed, ["pod-1", "pod-2"])  # first pod torn down, retry on a fresh pod
+
+    def test_two_failures_become_gpu_pod_run_failed(self):
+        provider = _FakeProvider({"wait_rc": {"pod-1": "1", "pod-2": "1"}})
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(provider)
+        self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
+        self.assertEqual(provider.removed, ["pod-1", "pod-2"])
+
+    def test_no_capacity_is_a_capacity_hold_without_retry(self):
+        provider = _FakeProvider({"capacity": True})
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(provider)
+        self.assertEqual(str(ctx.exception), "gpu_pod_capacity")
+        self.assertEqual([c[0] for c in provider.calls if c[0] == "create"], [])
+
+    def test_network_mode_other_than_none_is_rejected(self):
+        provider = _FakeProvider({"network_mode": "bridge"})
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(provider)
+        self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
+
+    def test_row_count_mismatch_is_rejected(self):
+        provider = _FakeProvider({"rows": 1600})
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(provider)
+        self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
+
+    def test_teardown_runs_even_when_a_step_throws(self):
+        provider = _FakeProvider({"scp_fail": True})
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold):
+            self._run(provider)
+        self.assertEqual(provider.removed, ["pod-1", "pod-2"])
+        self.assertEqual(provider.releases, 2)
+
+    def test_completed_receipt_is_idempotent(self):
+        provider = _FakeProvider()
+        first = self._run(provider)
+        calls = len(provider.calls)
+        rid2_out = None
+        # A second run over the same output returns the stored receipt without a pod.
+        output = next(self.tmp.glob("out-*"))
+        rid = str(uuid.uuid4())
+        with mock.patch.object(pod_runner.measurement_dispatch, "pins", return_value=self.pins):
+            again = pod_runner.run(rid, self.job, self.recipe, output, self.pins, 5.0,
+                                   provider=provider, alert=self.alerts.append)
+        self.assertEqual(again, first)
+        self.assertEqual(len(provider.calls), calls)
+
+
+class PodDispatchIntegrationTests(DatabaseTestCase):
+    """gpu_pod orders run dispatch_measurement -> pod_runner -> score_measurement end to end."""
+
+    def _gate(self, rid, job, recipe, runtime, meta):
+        trusted = job / "trusted-runner"
+        trusted.mkdir(parents=True, exist_ok=True)
+        (trusted / "RUNTIME.json").write_text(json.dumps({"jevbench": runtime}))
+        (trusted / "MEASUREMENT-META.json").write_text(json.dumps({"jevbench": meta}))
+        (trusted / "POD-RECIPE.json").write_text(json.dumps(recipe))
+        manifest = {"source_commit": "a" * 64,
+                    "files": {name: {"sha256": ap.sha256_file(trusted / name)}
+                              for name in ("RUNTIME.json", "MEASUREMENT-META.json", "POD-RECIPE.json")}}
+        (trusted / "UPSTREAM-MANIFEST.json").write_text(json.dumps(manifest))
+        pins = ap.source_review_pins(job)
+        verdict = {"schema_version": 1, "verdict": "PASS", "source_pins": pins,
+                   "summary": "pinned pod recipe reviewed", "checks": ["pins"], "findings": []}
+        (job / "review").mkdir(parents=True, exist_ok=True)
+        (job / "review" / "CODE-REVIEW.md").write_text(json.dumps(verdict, sort_keys=True) + "\n")
+        gate = {"verdict": "PASS",
+                "review_sha256": ap.sha256_file(job / "review" / "CODE-REVIEW.md"),
+                "review_result": verdict, "source_pins": pins}
+        (job / "review" / "GATE.json").write_text(json.dumps(gate))
+        state = ap.load_state(rid)
+        state["source_review_gate"] = gate
+        ap.save_state(state)
+
+    def test_gpu_pod_dispatch_measures_and_scores(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        ap.cycle(fx)
+        job = ap.JOB_ROOT / rid
+        (job / "source").mkdir(parents=True, exist_ok=True)
+        commit, tree = pod_git_source(job)
+        model_commit, model_tree = pod_git_source(job, which="model")
+        recipe = json.loads(json.dumps(TORCHCAST_RECIPE))
+        recipe["code"] = {"commit": commit, "tree": tree}
+        recipe["weights"][0]["revision"] = model_commit
+        runtime = dict(PodRuntimeSpecTests.GPU_RUNTIME)
+        meta = {"system_key": "synthetic_model",
+                "system": {"support": _fixture_meta["system"]["support"], "endpoint_kind": "gpu",
+                           "price_in_per_m": 0.03, "price_out_per_m": 0.06,
+                           "price_kind": "estimate", "cost_basis": "fixture"}}
+        self._gate(rid, job, recipe, runtime, meta)
+        provider = _FakeProvider()
+        output = {"system_key": "synthetic_model", "score": 70.,
+                  "aggregate": {"axes": dict.fromkeys(("intelligence", "calibration", "speed", "cost"), 70.),
+                                "scores": dict.fromkeys(("A", "B", "C"), 70.)}}
+        with mock.patch.object(pod_runner, "LiumProvider", return_value=provider), \
+                mock.patch.object(ap.official_scoring, "run", return_value=output):
+            ap.dispatch_measurement(rid, job)
+        state = ap.load_state(rid)
+        record = state["host_measurement"]["jevbench"]
+        self.assertEqual(record["rows"], 1624)
+        self.assertEqual(record["pod_id"], "pod-1")
+        self.assertEqual(record["network_mode"], "none")
+        raw = job / "results" / "raw" / "jevbench.jsonl"
+        self.assertTrue(raw.is_file())
+        self.assertEqual(record["raw_sha256"], ap.sha256_file(raw))
+        self.assertTrue((job / "results" / "OFFICIAL-SCORES.json").is_file())
+        self.assertEqual(state["official_measurement"]["scores"]["jevbench"], 70.0)
+        self.assertEqual(provider.removed, ["pod-1"])
+        self.assertEqual(provider.releases, 1)
+
+
+class PodRuntimeSpecTests(unittest.TestCase):
+    GPU_RUNTIME = {"backend": "gpu_pod", "model": "torchcast-decision-12b", "credential": "none",
+                   "price_input_per_m": 0.03, "price_output_per_m": 0.06}
+
+    def test_gpu_pod_runtime_is_accepted_for_jevbench(self):
+        ap.measurement_dispatch.runtime_spec(dict(self.GPU_RUNTIME), "jevbench")
+
+    def test_gpu_pod_is_rejected_for_imagejevbench(self):
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold):
+            ap.measurement_dispatch.runtime_spec(dict(self.GPU_RUNTIME), "imagejevbench")
+
+    def test_gpu_pod_rejects_credentials_and_endpoints(self):
+        for mutation in ({"credential": "request"}, {"endpoint": "http://x"},):
+            value = dict(self.GPU_RUNTIME)
+            value.update(mutation)
+            with self.assertRaises(ap.measurement_dispatch.OperationalHold):
+                ap.measurement_dispatch.runtime_spec(value, "jevbench")
+
+    def test_gpu_meta_requires_endpoint_kind_gpu_and_equal_prices(self):
+        support = {"choice": "native", "noul": "native", "score": "native"}
+        meta = {"system_key": "sys", "system": {"support": support, "endpoint_kind": "gpu",
+                                              "price_in_per_m": 0.03, "price_out_per_m": 0.06,
+                                              "price_kind": "estimate", "cost_basis": "base ref"}}
+        ap.measurement_dispatch.validate_api_meta("jevbench", meta, self.GPU_RUNTIME)
+        meta["system"]["endpoint_kind"] = "api"
+        with self.assertRaises(ValueError):
+            ap.measurement_dispatch.validate_api_meta("jevbench", meta, self.GPU_RUNTIME)
+        meta["system"]["endpoint_kind"] = "gpu"
+        meta["system"]["price_in_per_m"] = 0.04
+        with self.assertRaises(ValueError):
+            ap.measurement_dispatch.validate_api_meta("jevbench", meta, self.GPU_RUNTIME)
+
+
 if __name__ == "__main__":
     unittest.main()

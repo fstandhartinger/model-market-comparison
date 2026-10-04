@@ -28,6 +28,7 @@ import release_render
 import refusal_approval
 import refund_approval
 import sla_decision
+import pod_runner
 import os
 import pwd
 import re
@@ -1176,6 +1177,8 @@ public price/reference basis in `PRICING-REVIEW.md` for independent review. Neve
 reference path, prediction, score, or key into this metadata. The host pins it before review.
 If the official run path is not clear, write a short blocker to `OUTPUT.md`; do not guess.
 """
+    # The open-weights pod-recipe contract is appended verbatim (brief requirement).
+    text += "\n" + (Path(__file__).resolve().parent / "PREP-OPEN-WEIGHTS-PROMPT.txt").read_text(encoding="utf-8")
     atomic_write(prompt, text)
     return prompt
 
@@ -1832,8 +1835,13 @@ def dispatch_measurement(rid: str, job_dir: Path) -> None:
             if not request_endpoint_matches(runtime.get("endpoint"), row.get("access_instructions")):
                 raise measurement_dispatch.OperationalHold("request_endpoint_mismatch")
         output = STATE_ROOT / "measurements" / rid / benchmark
-        record = measurement_dispatch.run(benchmark, runtime, credential, output,
-                                          review["source_pins"]["official_measurement"], max(0, 5.0 - spent))
+        if runtime["backend"] == "gpu_pod":
+            recipe = load_json_file(job_dir / "trusted-runner" / "POD-RECIPE.json", 100_000)
+            record = pod_runner.run(rid, job_dir, recipe, output,
+                                    review["source_pins"]["official_measurement"], max(0, 5.0 - spent))
+        else:
+            record = measurement_dispatch.run(benchmark, runtime, credential, output,
+                                              review["source_pins"]["official_measurement"], max(0, 5.0 - spent))
         if benchmark not in records:
             spent += record["charged_or_reserved_usd"]
         records[benchmark] = record

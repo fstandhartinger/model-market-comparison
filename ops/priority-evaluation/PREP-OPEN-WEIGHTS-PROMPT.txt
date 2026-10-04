@@ -1,0 +1,54 @@
+## Open-weights orders (`access_type` is `open_weights`)
+
+The host runs open-weight models itself on a disposable rented GPU pod. Our fixed pod driver sends every
+JevBench item to the model from inside a container that has no network, and the pinned official scorer
+scores the result on the host. Your job is to describe how to start the model. Write it as data only.
+
+1. In `RUNTIME.json`, write `{"backend":"gpu_pod","model":"<served model id>","credential":"none",
+   "price_input_per_m":X,"price_output_per_m":Y}` for `jevbench`. ImageJevBench on a GPU pod is not
+   supported yet. For it, write `{"backend":"unsupported"}` and explain why in PRICING-REVIEW.md.
+2. In `MEASUREMENT-META.json`, use `"endpoint_kind":"gpu"`, `"price_kind":"estimate"` and the same two prices.
+   Self-hosted weights have no bookable tariff, so apply the v1.5-M2 base-model reference rule:
+   - Use the public OpenRouter list price of the exact base model.
+   - If OpenRouter does not list it, use the nearest listed sibling of the same family and size, or a
+     documented size-class reference.
+   - Precedents are in `/home/flori/official/method/` and must be followed: Gemma-4-12B rows use
+     OpenRouter google/gemma-3-12b-it; Qwen3.5-4B rows use DeepInfra Qwen/Qwen3.5-4B at USD 0.03/M input;
+     ModernBERT-large-class encoders use USD 0.01/M; base-size encoders use USD 0.005/M.
+   - Price output tokens at the reference output price. A readout that generates nothing reports 0
+     output tokens anyway.
+   - Write the exact basis and the read date in `cost_basis` and in PRICING-REVIEW.md.
+3. Write `trusted-runner/POD-RECIPE.json` (schema_version 1). Take every value from the fetched source
+   (the README's evaluation instructions and the model card). Never guess a value.
+   - `kind`: `"http_typesafe"` if the author ships a server that answers `POST /v1/systemone`.
+     `"python_inprocess"` if the author ships a Python package whose `predict(state, questions)` returns
+     the TypeSafe `/v1/systemone` response shape (`{"answers":{"decision":{...}},"usage":{...}}`).
+   - `image`: one public container image pinned by digest (`name:tag@sha256:<64 hex>`). It must contain
+     the documented runtime, for example the author's pinned vLLM image. If the author names a pip version
+     but no image, use the official upstream image of exactly that version and look up its digest in the
+     fetched docs. If no digest is documented, write a blocker.
+   - `min_vram_gb`: an integer from the documented hardware, at most 80.
+   - `weights`: a list of `{"repo":"org/name","revision":"<40-hex commit>","dir":"<short safe name>",
+     "sha256":{"<file>":"<64 hex>"}}`. The revision must equal the host's model fetch receipt. List the
+     sha256 of every weight file (`*.safetensors`). These hashes are the LFS oids in the fetched model
+     repository (`git show HEAD:<file>`), or the hashes the author published. Pickle weights
+     (`.bin`/`.pt`/`.pkl`) and repositories that need `trust_remote_code` or contain `.py` files that the
+     runtime would load are not supported. For those, write a blocker.
+   - `code`: `{"commit":"<40 hex>","tree":"<40 hex>"}`, equal to the host's code fetch receipt.
+     The host exports exactly that tree to `/code`.
+   - For `http_typesafe`: `services`, a list of at most 3 entries
+     `{"argv":["..."],"env":{"NAME":"value"},"ready_url":"http://127.0.0.1:<port>/<path>"}`, started in
+     order. Each service must be ready before the next one starts.
+     Also give `endpoint` as `"http://127.0.0.1:<port>"` (the driver appends `/v1/systemone`) and `model`
+     as the served model id.
+     Inside the container the weights are at `/models/<dir>`, read-only. Point the server at that local
+     directory instead of a Hub id, and keep the author's other flags unchanged. The source is read-only
+     at `/code`, and `/tmp` is writable.
+   - For `python_inprocess`: `pythonpath` (a list of paths below `/code`), `loader` (`"module:function"`,
+     called as `loader("/models/<dir>", **load_kwargs)`), `model_dir` (one `dir` from `weights`) and
+     `load_kwargs` (JSON scalars only, for example `{"device":"cuda"}`).
+   - One recipe measures exactly one system. If the order covers several systems, or does not identify
+     exactly one model repository, do not pick one. Write a blocker naming the systems you found.
+4. Never put a secret, a token, a network URL other than 127.0.0.1, or an instruction to download
+   anything into the recipe. The pod has no network while the model runs. The host downloads only the
+   pinned weights, before the run.
