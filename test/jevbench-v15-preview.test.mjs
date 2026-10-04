@@ -86,7 +86,7 @@ test('released route is public, versioned and listed while the former preview UR
   }
 });
 
-test('the v1.5.0 route stays pinned and the live board uses v1.5.6', async () => {
+test('the v1.5.0 route stays pinned and the live board uses v1.5.7', async () => {
   const { sha256 } = await readJevbenchV142(root);
   assert.equal(sha256, JEVBENCH_V142_SHA256);
   assert.match(read('app/jev-models/v1.4.2/page.tsx'), /readJevbenchV142WithFamilies/);
