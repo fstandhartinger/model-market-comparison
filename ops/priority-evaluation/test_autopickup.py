@@ -2422,11 +2422,13 @@ class _FakeLium:
     `ps` — this drives LiumProvider.create()'s cannot-parse-the-id fallback for real.
     """
 
-    def __init__(self, up_output="Waiting for pod ...\nPod ready.\n", new_on_up=(), hourly=1.30):
+    def __init__(self, up_output="Waiting for pod ...\nPod ready.\n", new_on_up=(), hourly=1.30,
+                 exec_banner=False):
         self.pods = {}
         self.up_output = up_output
         self.new_on_up = list(new_on_up)
         self.hourly = hourly
+        self.exec_banner = exec_banner
         self.argv_seen = []
         self.removed = []
         self.releases = 0
@@ -2464,6 +2466,8 @@ class _FakeLium:
                 out = "0\n"
             elif joined.startswith("docker logs"):
                 out = "DRIVER_DONE\n"
+            if self.exec_banner:
+                out = "Executing on test-node-1\n" + out
             return done(out)
         if command == "scp":
             if "-d" in argv:
@@ -2547,6 +2551,14 @@ class PodUnidentifiedCreateTests(unittest.TestCase):
         self.assertEqual(fake.removed, [])  # a co-created foreign pod must survive
         self.assertEqual(set(fake.pods), set(ids))
         self.assertEqual(fake.releases, 2)
+
+    def test_lium_exec_banner_lines_are_stripped(self):
+        pod_id = "44444444-4444-4444-8444-444444444444"
+        fake = _FakeLium(new_on_up=[pod_id], exec_banner=True)
+        receipt = self._run(self._provider(fake))
+        self.assertEqual(receipt["pod_id"], pod_id)
+        self.assertEqual(receipt["network_mode"], "none")
+        self.assertEqual(fake.removed, [pod_id])
 
 
 class PodDispatchIntegrationTests(DatabaseTestCase):

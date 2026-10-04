@@ -321,7 +321,11 @@ class LiumProvider(Provider):
 
     def exec(self, pod_id, command, timeout=600):
         # `lium exec <pod> "cmd"` takes ONE command string; join the argv safely.
-        return _run_cli([str(LIUM), "exec", pod_id, shlex.join(command)], timeout=timeout + 60)
+        result = _run_cli([str(LIUM), "exec", pod_id, shlex.join(command)], timeout=timeout + 60)
+        # lium exec prepends a "Executing on <node>" line to stdout; it is not pod output.
+        result.stdout = "".join(line for line in result.stdout.splitlines(keepends=True)
+                                if not line.startswith("Executing on "))
+        return result
 
     def scp_to(self, pod_id, local, remote):
         result = _run_cli([str(LIUM), "scp", pod_id, local, remote], timeout=900)
