@@ -11,29 +11,54 @@ const {artifact:old,sha256} = await readJevbenchV157Release();
 const {artifact:a} = await readJevbenchV158Release();
 const keys=['wity-1','wity-1-always','wity-1-off'];
 const rows=keys.map(k=>a.systems.find(r=>r.key===k));
-test('CR-283 adds one ranked mode and two variants; every existing value except ranks is preserved',async()=>{
+const fast=['torchcast-decision-12b','quyet-1-0-large','quyet-1-0-medium','quyet-1-0-small','quyet-1-0-small-en','quyet-1-0-tiny'];
+const fastRows=fast.map(k=>a.systems.find(r=>r.key===k));
+test('CR-283 adds one ranked Wity mode, two variants and six fast-lane rows; every existing value except ranks is preserved',async()=>{
  assert.deepEqual(a.parent_release,{revision:'v1.5.7',sha256});
- assert.deepEqual(a.systems.map(r=>r.key),[...old.systems.map(r=>r.key),...keys]);
+ assert.deepEqual(a.systems.map(r=>r.key),[...old.systems.map(r=>r.key),...keys,...fast]);
  assert.deepEqual(a.not_measured,old.not_measured);
  for(const r of old.systems){const now=a.systems.find(s=>s.key===r.key);for(const f of Object.keys(r).filter(f=>!['rank','ranks'].includes(f)))assert.deepEqual(now[f],r[f],`${r.key}.${f}`);}
- assert.equal(a.G_med,old.G_med);assert.equal(a.n_ranked,old.n_ranked+1);
+ assert.equal(a.G_med,old.G_med);assert.equal(a.n_ranked,old.n_ranked+7);
  assert.equal((await readCurrentJevbench()).artifact.revision,'v1.5.8');assert.equal(CURRENT_JEVBENCH_PAGE,'/jev-models/v1.5.8');
 });
-test('CR-283 only auto enters any ranked order and top five; held release uses actual Capability classifier',()=>{
+test('CR-283 only ranked rows enter orders; existing rows keep their relative order; variants stay out; actual Capability classifier',()=>{
  const c=jevClassRows(a.systems.filter(r=>r.ranked));
  const eligible=c.rows.filter(r=>r.inClass).map(r=>r.row.key);
  const prior=jevClassRows(old.systems.filter(r=>r.ranked)).rows.filter(r=>r.inClass).map(r=>r.row.key);
- assert.deepEqual(eligible,['wity-1',...prior]);
- for(const o of 'ABC')assert.deepEqual(a.board[o].order,['wity-1',...old.board[o].order]);
- assert.deepEqual(rows[0].ranks,{A:1,B:1,C:1});
+ const joined=new Set(['wity-1',...fast]);
+ assert.deepEqual(eligible.filter(k=>!joined.has(k)),prior);
+ for(const k of joined)assert.ok(eligible.includes(k),k);
+ for(const o of 'ABC'){
+  assert.deepEqual(a.board[o].order.filter(k=>!joined.has(k)),old.board[o].order);
+  assert.equal(a.board[o].order.length,old.board[o].order.length+7);
+ }
+ assert.deepEqual(rows[0].ranks,{A:2,B:2,C:2});
+ assert.deepEqual(fastRows[0].ranks,{A:1,B:1,C:1});
  for(const row of rows.slice(1)){
   assert.equal(row.ranked,false);assert.equal(row.listing,'variant');assert.equal(row.rank,null);assert.deepEqual(row.ranks,{});
   assert.match(row.not_ranked_because,/Configuration variant.*operator's main row/);
  }
  const top=read('../ops/jevbench-v158-cr283/TOP-FIVE.json');
  assert.deepEqual(top.changed,{A:true,B:true,C:true,Capability:true});
- for(const o of ['A','B','C','Capability'])assert.deepEqual(top['after_v1.5.8'][o],['wity-1',...top['before_v1.5.7'][o].slice(0,4)]);
- assert.equal(top.rule,"Top-five change. Held for Florian's GO on the screenshot preview (lead job wity-jevbench-results-20261003).");
+ for(const o of ['A','B','C','Capability']){
+  const after=top['after_v1.5.8'][o];
+  assert.deepEqual(after.filter(k=>!joined.has(k)),top['before_v1.5.7'][o].filter(k=>after.includes(k)));
+ }
+ assert.deepEqual(top['after_v1.5.8'].Capability.slice(0,3),['wity-1','quyet-1-0-large','torchcast-decision-12b']);
+ assert.match(top.rule,/Top-five change\. Held for Florian's GO on the combined screenshot preview/);
+});
+test('CR-283 fast-lane rows: pinned open weights, reproduced official aggregate, estimated base-reference cost, cited base',()=>{
+ const receipt=read('../ops/jevbench-v158-cr283/FASTLANE-RESCORE-RECEIPT.json');
+ for(const r of fastRows){
+  assert.equal(r.ranked,true);assert.equal(r.listing,'ranked');assert.equal(r.last_measured_on,'2026-10-04');
+  assert.equal(r.status.answered_ok,1624);assert.equal(r.endpoint_kind,'gpu');assert.equal(r.open,'open weights');
+  assert.match(r.model_pin,/@[0-9a-f]{40}/);assert.match(r.endpoint_condition,/--network none/);
+  assert.equal(r.cost.kind,'estimate');assert.match(r.cost.basis,/^ESTIMATE/);
+  assert.equal(receipt.systems[r.key].reproduced_delivered_aggregate,true);
+  assert.equal(receipt.systems[r.key].raw_sha256,r.provenance.raw_sha256);
+  assert.equal(baseModelFor('jevbench',r.key).status,'disclosed');
+  assert.doesNotMatch(JSON.stringify(r),/task_id|"prompt"|"answer"/);
+ }
 });
 test('CR-283 pinned build, reasoning, price and self-reported striped base are disclosed for each mode',()=>{
  for(const [i,mode] of ['auto','always','off'].entries()){
@@ -57,6 +82,6 @@ test('CR-283 both radars cover all three modes, reproduce 24 cells each, and pre
  const cats=read('../data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.8-categories.json');const prior=read('../data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.7-categories.json');
  for(const k of Object.keys(prior.systems))assert.deepEqual(cats.systems[k],prior.systems[k]);
  const proof=read('../ops/jevbench-v158-cr283/CATEGORY-VERIFICATION.json');
- const v=jevbenchCategoryView('v1.5.8',keys);
- for(const k of keys){assert.equal(proof[k].verified_per_type_cells,24);assert.ok(v.systems[k]);for(const d of ['topics','usecases'])assert.ok(Object.keys(cats.systems[k][d]).length>0);}
+ const v=jevbenchCategoryView('v1.5.8',[...keys,...fast]);
+ for(const k of [...keys,...fast]){assert.equal(proof[k].verified_per_type_cells,24);assert.ok(v.systems[k]);for(const d of ['topics','usecases'])assert.ok(Object.keys(cats.systems[k][d]).length>0);}
 });

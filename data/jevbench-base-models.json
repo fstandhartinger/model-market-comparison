@@ -1202,6 +1202,72 @@
         "label": "Qwen/Qwen3.6-35B-A3B",
         "sources": [],
         "note": "Operator-reported base model; not independently verified. The striped price reference uses frozen Qwen3.6-35B-A3B pricing."
+      },
+      "torchcast-decision-12b": {
+        "label": "google/gemma-4-12B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/torchcast-ai/torchcast-decision-12b/blob/49107b5589bf2dc4ec3f5acd54316971dd5978b1/README.md",
+            "title": "Author model card",
+            "evidence": "The model card at the measured revision names this upstream checkpoint in its base_model metadata (base_model_relation: finetune)."
+          }
+        ]
+      },
+      "quyet-1-0-large": {
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/chinhnc/Quyet-1.0-Large/blob/e1ecbbe761b12a11ab68e772a5dea9e84d147184/README.md",
+            "title": "Author model card",
+            "evidence": "The model card at the measured revision names this upstream checkpoint in its base_model metadata (base_model_relation: finetune)."
+          }
+        ]
+      },
+      "quyet-1-0-medium": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/chinhnc/Quyet-1.0-Medium/blob/3f8e1d9d1e85d23af1756155fc4431dd08303018/README.md",
+            "title": "Author model card",
+            "evidence": "The model card at the measured revision names this upstream checkpoint in its base_model metadata (base_model_relation: finetune)."
+          }
+        ]
+      },
+      "quyet-1-0-small": {
+        "label": "aisingapore/SEA-LION-ModernBERT-300M",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/chinhnc/Quyet-1.0-Small/blob/0d328cfecef2122310a4102bfd8dd5344106e58e/README.md",
+            "title": "Author model card",
+            "evidence": "The model card at the measured revision names this upstream checkpoint in its base_model metadata (base_model_relation: finetune)."
+          }
+        ]
+      },
+      "quyet-1-0-small-en": {
+        "label": "answerdotai/ModernBERT-base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/chinhnc/Quyet-1.0-Small-EN/blob/b98d87024e179f54fc364e4831aa17835ab06409/README.md",
+            "title": "Author model card",
+            "evidence": "The model card at the measured revision names this upstream checkpoint in its base_model metadata (base_model_relation: finetune)."
+          }
+        ]
+      },
+      "quyet-1-0-tiny": {
+        "label": "jhu-clsp/mmBERT-small",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/chinhnc/Quyet-1.0-Tiny/blob/ad8ba6abb07ebacdb306eb6f6c0ab373d5c9d4e1/README.md",
+            "title": "Author model card",
+            "evidence": "The model card at the measured revision names this upstream checkpoint in its base_model metadata (base_model_relation: finetune)."
+          }
+        ]
       }
     },
     "imagejevbench": {

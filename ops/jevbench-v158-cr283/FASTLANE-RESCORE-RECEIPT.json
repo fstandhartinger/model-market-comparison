@@ -1,0 +1,91 @@
+{
+  "scorer_pins": {
+    "manifest_sha256": "8a4f76891b119cff6c9ed88f8ed56e413163d45e14a6b5fed80c78b092c49be4",
+    "adapter_sha256": "e63de1c3aafc65ff77bea0e0dd2403f34016bc9ed283b7cbe18a46a855e5333a",
+    "profiles": {
+      "jevbench": {
+        "version_prefix": "v1.5.",
+        "files": {
+          "scorer.py": {
+            "path": "/home/flori/jobs/jevbench-v15-measure-20260925/harness/score_v15.py",
+            "sha256": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447"
+          },
+          "gold.jsonl": {
+            "path": "/home/flori/jevbench-sealed/v1.5/frozen/all-1624.jsonl",
+            "sha256": "1989d30e29c968de79192b458073eed1bd7588e46f34c2f140b1310217afb75f"
+          },
+          "baseline.json": {
+            "path": "/home/flori/jevbench-sealed/v1.5/scoring/headline-A-20260927/RESULTS-v1.5.0.json",
+            "sha256": "1cea4d6018da4c7e61132e932452b20ddea5758dcb8714a57a858e078dd6af12"
+          },
+          "headline.py": {
+            "path": "/home/flori/jobs/jevbench-v15-measure-20260925/harness/score_v15_headlineA.py",
+            "sha256": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c"
+          }
+        }
+      }
+    }
+  },
+  "systems": {
+    "torchcast-decision-12b": {
+      "raw_sha256": "6b283bd0d53deecbcd7fea94e374b8c52ae395385d77a264e64d274585a4bc61",
+      "meta_sha256": "f12a64afbce665e01b2d8ccce463ad3905db103faf94842fb0c2cb236de669fb",
+      "official_score_sha256": "fa0af35b77d28210d17d5f347d5c769466b72a4e75bef3be2e5a39dbb4ce46f5",
+      "rows": 1624,
+      "ok": 1624,
+      "reproduced_delivered_aggregate": true,
+      "input_tokens": 920404,
+      "output_tokens": 1624
+    },
+    "quyet-1-0-large": {
+      "raw_sha256": "c92f833bc0cc651efd89ea52b94364263d54e40a4a9decc2592594a548b4b002",
+      "meta_sha256": "b55922cd11b23faceef1a961ca0141486e0d7e43684999d90ccf6d3c1aeddee0",
+      "official_score_sha256": "66fc6172de77da13bbda42b3a69b140f5fb6b183a8fcc457f10d3d996a02b66a",
+      "rows": 1624,
+      "ok": 1624,
+      "reproduced_delivered_aggregate": true,
+      "input_tokens": 803169,
+      "output_tokens": 0
+    },
+    "quyet-1-0-medium": {
+      "raw_sha256": "8a02daec905618dfc216d2a6dcfa70a0cc3666eb95256ad6ab94ab2d0f21dccc",
+      "meta_sha256": "64662fd964bc195413a2f4a45c77f34711a80c5313c0f6aa49c728db6650025a",
+      "official_score_sha256": "c6d298a037de7a928d979d712396d68770c7a63d5863eedd393deeacb6fa31f4",
+      "rows": 1624,
+      "ok": 1624,
+      "reproduced_delivered_aggregate": true,
+      "input_tokens": 896009,
+      "output_tokens": 0
+    },
+    "quyet-1-0-small": {
+      "raw_sha256": "b2925facb95988c845c1f6a3cd43450a7f2fb3e15a3cde5c1c252b98dae5f465",
+      "meta_sha256": "6e95c3de9348d92d1e9a54c11abc5bd8fb5987b1b6a7f5ce994d63a991c1dfb2",
+      "official_score_sha256": "193ff6cadf6877efbf8560d973bd51975db7ff193b14cf94c91f4301920b3360",
+      "rows": 1624,
+      "ok": 1624,
+      "reproduced_delivered_aggregate": true,
+      "input_tokens": 779529,
+      "output_tokens": 0
+    },
+    "quyet-1-0-small-en": {
+      "raw_sha256": "9ac8cc7506a036d3e00870e7aa20b998f594ac5da614701203b9baeb93baa6fa",
+      "meta_sha256": "34900937c667521a90708362ded64a6a70c7dcc3e318611b96fb7af6515206a1",
+      "official_score_sha256": "37fa2e9436e533d9e38de4491ead3b63c0d459a960d55af0cd9b1090b8b5e242",
+      "rows": 1624,
+      "ok": 1624,
+      "reproduced_delivered_aggregate": true,
+      "input_tokens": 749061,
+      "output_tokens": 0
+    },
+    "quyet-1-0-tiny": {
+      "raw_sha256": "445b8724db3cb79d8ed4000aa38bce3e3a845f050aa3a872cf89d1e2a7d60caa",
+      "meta_sha256": "a1b90ebcb3f928a62d03ac127496036e9f853bd7447b411a4092fe62c3a1c037",
+      "official_score_sha256": "420a36ba963ae36996167d99f6e0d1ca6cf1da894c210420e13d5a7af9950f99",
+      "rows": 1624,
+      "ok": 1624,
+      "reproduced_delivered_aggregate": true,
+      "input_tokens": 789016,
+      "output_tokens": 0
+    }
+  }
+}
