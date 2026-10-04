@@ -12,6 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const image = `https://benchmarkheaven.com/jev-models/opengraph-image?v=${OG_ART_REVISION}`;
   return {
     title, description,
+    robots: { index: false, follow: false },
     alternates: { canonical: '/jev-models' },
     openGraph: { type: 'website', siteName: 'Benchmark Heaven', locale: 'en_US', url: '/jev-models',
       title, description,
@@ -24,6 +25,9 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function JevModelsPage() {
   const { artifact, sha256 } = await readCurrentJevbench();
   return <>
+    <div role="alert" data-bh-preview-banner style={{ background: '#b45309', color: '#fff', padding: '10px 16px', fontWeight: 600, textAlign: 'center' }}>
+      PREVIEW — not published. Includes 12 rows pending Florian&apos;s GO (wity-1, torchcast-decision-12b, 5× Quyet 1.0, decider-12b, decider-12b-v1, Xor 26B-A4B NVFP4, H2O-Lightning-4B, Janus 4B).
+    </div>
     <JevBenchV15ReleasePage artifact={artifact} sha256={sha256} versionPath={CURRENT_JEVBENCH_PAGE} live />
     <JevHistoryLazy />
   </>;

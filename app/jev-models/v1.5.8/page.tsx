@@ -15,6 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title,
     description,
+    robots: { index: false, follow: false },
     alternates: { canonical: '/jev-models/v1.5.8' },
     openGraph: { type: 'website', siteName: 'Benchmark Heaven', locale: 'en_US', url: '/jev-models/v1.5.8', title, description,
       images: [{ url: 'https://benchmarkheaven.com/jev-models/opengraph-image?v=og4', type: 'image/png', width: 1200, height: 630 }] },

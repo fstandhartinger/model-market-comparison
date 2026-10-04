@@ -1,0 +1,138 @@
+{
+  "before_v1.5.8": {
+    "A": [
+      "torchcast-decision-12b",
+      "wity-1",
+      "cygnet",
+      "winnow-12b",
+      "jev-1.13.0"
+    ],
+    "B": [
+      "torchcast-decision-12b",
+      "wity-1",
+      "winnow-12b",
+      "cygnet",
+      "quyet-1-0-large"
+    ],
+    "C": [
+      "torchcast-decision-12b",
+      "wity-1",
+      "cygnet",
+      "winnow-12b",
+      "jev-1.13.0"
+    ],
+    "Capability": [
+      "wity-1",
+      "quyet-1-0-large",
+      "torchcast-decision-12b",
+      "jev-1.13.0",
+      "winnow-12b"
+    ]
+  },
+  "after_preview": {
+    "A": [
+      "h2o-lightning-4b",
+      "decider-12b",
+      "torchcast-decision-12b",
+      "decider-12b-v1",
+      "wity-1"
+    ],
+    "B": [
+      "decider-12b",
+      "h2o-lightning-4b",
+      "torchcast-decision-12b",
+      "decider-12b-v1",
+      "wity-1"
+    ],
+    "C": [
+      "h2o-lightning-4b",
+      "decider-12b",
+      "torchcast-decision-12b",
+      "decider-12b-v1",
+      "wity-1"
+    ],
+    "Capability": [
+      "wity-1",
+      "quyet-1-0-large",
+      "decider-12b",
+      "h2o-lightning-4b",
+      "torchcast-decision-12b"
+    ]
+  },
+  "changed": {
+    "A": true,
+    "B": true,
+    "C": true,
+    "Capability": true
+  },
+  "capability_top7": [
+    [
+      "wity-1",
+      84.51
+    ],
+    [
+      "quyet-1-0-large",
+      82.89
+    ],
+    [
+      "decider-12b",
+      81.79
+    ],
+    [
+      "h2o-lightning-4b",
+      81.13
+    ],
+    [
+      "torchcast-decision-12b",
+      80.88
+    ],
+    [
+      "xor-26b-a4b-nvfp4",
+      80.84
+    ],
+    [
+      "jev-1.13.0",
+      80.01
+    ]
+  ],
+  "ranks": {
+    "decider-12b": {
+      "A": 2,
+      "B": 1,
+      "C": 2,
+      "Capability": 3
+    },
+    "decider-12b-v1": {
+      "A": 4,
+      "B": 4,
+      "C": 4,
+      "Capability": 8
+    },
+    "h2o-lightning-4b": {
+      "A": 1,
+      "B": 2,
+      "C": 1,
+      "Capability": 4
+    },
+    "janus-4b": {
+      "A": 8,
+      "B": 12,
+      "C": 8,
+      "Capability": 15
+    },
+    "xor-26b-a4b-nvfp4": {
+      "A": 15,
+      "B": 10,
+      "C": 12,
+      "Capability": 6
+    }
+  },
+  "capability_limits": {
+    "cost": 0.06459465517241379,
+    "latency": 1.2329566404223442,
+    "speedFloor": 77.79350008522667,
+    "factor": 2
+  },
+  "n_ranked": 123,
+  "rule": "PRIVATE PREVIEW only \u2014 not published, pending Florian's GO (job jevbench-next-release-review-20261004)."
+}
