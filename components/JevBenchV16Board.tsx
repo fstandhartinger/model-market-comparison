@@ -145,9 +145,9 @@ function Overnight({ o }: { o: OvernightNotes }) {
     <p className="bh-muted mt-1 text-sm">Every system with a reproducible recipe was re-run on the v1.6.0 pool overnight with the same pinned inputs and scorer (method option B). This page uses scoring round {o.round} ({o.scored_utc}). Only complete runs (1,500 items self-hosted, the full API input for hosted APIs) are ranked; partial runs are never ranked, and systems not yet re-measured keep their dated v1.5.x score in the separate table.</p>
     {o.notes && o.notes.length > 0 && <ul className="bh-muted mt-1 list-disc space-y-1 pl-5 text-sm">{o.notes.map((n, i) => <li key={i}>{n}</li>)}</ul>}
     {o.a2_note && <><h3 className="mt-4 text-lg font-semibold">Supplementary API draw A2</h3><p className="bh-muted mt-1 text-sm" data-bh-jev16-a2>{o.a2_note}</p></>}
-    {exp.length > 0 && <><h3 className="mt-4 text-lg font-semibold">Sealed items exposed per hosted system</h3>
+    {exp.length > 0 && <><h3 className="mt-4 text-lg font-semibold">Per-model exposure counts (hosted and author-hosted endpoints)</h3>
       <div className="mt-2 overflow-x-auto"><table className="text-left text-sm tabular" data-bh-jev16-exposure>
-        <thead><tr>{['System', 'Sealed items sent', 'Draws', 'Note'].map((h) => <th key={h} scope="col" className="p-2">{h}</th>)}</tr></thead>
+        <thead><tr>{['System (provider)', 'v1.6 sealed items sent', 'Scored sealed set', 'Status'].map((h) => <th key={h} scope="col" className="p-2">{h}</th>)}</tr></thead>
         <tbody>{exp.map(([k, e]) => <tr key={k} className="border-t border-line"><th scope="row" className="p-2 font-normal">{e.display ?? k}</th>
           <td className="p-2">{e.sealed_items_exposed ?? '—'}</td><td className="p-2">{e.draws ?? '—'}</td><td className="p-2 bh-muted">{e.note ?? ''}</td></tr>)}</tbody>
       </table></div></>}

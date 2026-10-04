@@ -263,80 +263,6 @@
    "note": null
   },
   {
-   "key": "wity-1",
-   "display": "wity-1 (Wity, reasoning auto)",
-   "author": "Wity (alphanimble)",
-   "class": "decision-api",
-   "open": "no",
-   "licence": "proprietary hosted API",
-   "repo": "https://wity.alphanimble.com",
-   "endpoint_kind": "api",
-   "api_flag": true,
-   "axes": {
-    "intelligence": 78.56795761907267,
-    "calibration": 90.45687167393245,
-    "speed": 75.05991709119236,
-    "cost": 58.368182152360596
-   },
-   "capability": 84.51241464650256,
-   "composite_v15": 73.74884310922342,
-   "v156_rank": 2,
-   "cost": {
-    "kind": "estimate",
-    "usd_per_1000": 0.02441896551724138,
-    "basis": "Wity's stated API tariff: USD 0.042 per 1M input tokens, output free; measured 944,200 input tokens over 1,624 decisions. API models with a known base are ranked at their own API price (1 Oct 2026 rule). The striped bar uses the frozen Qwen3.6-35B-A3B base-model reference."
-   },
-   "speed": {
-    "p50_s_adjusted": 0.9533328972756863,
-    "p95_s_adjusted": 3.271626453474163,
-    "n": 450,
-    "adjustment": "none (hosted API, measured as is)"
-   },
-   "measured_revision": "v1.5.8 (held)",
-   "measured_label": "measured 2026-10-04 on v1.5.8 (fast lane, unpublished candidate)",
-   "date_basis": "measurement day of the fast-lane run; v1.5.8 is held and not published",
-   "carried_from": "v1.5.8 (held)",
-   "unpublished_candidate": true,
-   "note": "Unpublished candidate: paid fast-lane result on the v1.5 pool, held for v1.5.8; not public yet."
-  },
-  {
-   "key": "quyet-1-0-large",
-   "display": "Quyet-1.0-Large (Chinh Nguyen, Gemma-4-31B decoder, option-letter logits)",
-   "author": "Chinh Nguyen (ncchinh)",
-   "class": "Jev-compatible decision model",
-   "open": "open weights",
-   "licence": "apache-2.0",
-   "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Large",
-   "endpoint_kind": "gpu",
-   "api_flag": false,
-   "axes": {
-    "intelligence": 77.64639990736858,
-    "calibration": 88.14306548231428,
-    "speed": 87.06059527590287,
-    "cost": 50.546097335562465
-   },
-   "capability": 82.89473269484142,
-   "composite_v15": 72.07952295102378,
-   "v156_rank": 6,
-   "cost": {
-    "kind": "estimate",
-    "usd_per_1000": 0.04451059729064039,
-    "basis": "ESTIMATE (v1.5-M2 base-model reference; self-hosted open weights, no public tariff): OpenRouter google/gemma-4-31b-it list price $0.09/M input, $0.34/M output (the exact base model google/gemma-4-31B-it; listed since Apr 2026), read 2026-10-04 x the package's own measured usage.input_tokens; one forward pass, nothing generated; run in process on 1x H100 80GB (Lium), quyet 1.0.0; estimated, not charged"
-   },
-   "speed": {
-    "p50_s_adjusted": 0.3185270890593529,
-    "p95_s_adjusted": 0.6177234661765394,
-    "n": 450,
-    "adjustment": "x2 + 0.15 s (assumption, not measured)"
-   },
-   "measured_revision": "v1.5.8 (held)",
-   "measured_label": "measured 2026-10-04 on v1.5.8 (fast lane, unpublished candidate)",
-   "date_basis": "measurement day of the fast-lane run; v1.5.8 is held and not published",
-   "carried_from": "v1.5.8 (held)",
-   "unpublished_candidate": true,
-   "note": "Unpublished candidate: paid fast-lane result on the v1.5 pool, held for v1.5.8; not public yet."
-  },
-  {
    "key": "kushal-gemma4-31b-it-autoloops",
    "display": "Autoloops – Gemma 4 31B IT",
    "author": "Autoloops",
@@ -372,43 +298,6 @@
    "carried_from": "v1.5.7",
    "unpublished_candidate": false,
    "note": null
-  },
-  {
-   "key": "torchcast-decision-12b",
-   "display": "torchcast-decision-12b (Torchcast AI, Gemma-4-12B fine-tune, option-letter logprob readout)",
-   "author": "Torchcast AI",
-   "class": "Jev-compatible decision model",
-   "open": "open weights",
-   "licence": "cc-by-nc-4.0",
-   "repo": "https://huggingface.co/torchcast-ai/torchcast-decision-12b",
-   "endpoint_kind": "gpu",
-   "api_flag": false,
-   "axes": {
-    "intelligence": 78.19014005304857,
-    "calibration": 83.57255422965954,
-    "speed": 92.8519093701264,
-    "cost": 56.36034169226667
-   },
-   "capability": 80.88134714135406,
-   "composite_v15": 75.09227310346176,
-   "v156_rank": 1,
-   "cost": {
-    "kind": "estimate",
-    "usd_per_1000": 0.02848756157635468,
-    "basis": "ESTIMATE (v1.5-M2 base-model reference; no public tariff, customer asked for the base-model reference): OpenRouter google/gemma-3-12b-it list price $0.05/M input, $0.15/M output (gemma-4-12b-it is not listed on OpenRouter, read 2026-10-04; same reference as the Cygnet and Jev-Omni Gemma-4-12B rows) x the shim's own measured usage.prompt_tokens/completion_tokens; self-hosted on 1x H100 80GB (Lium), vLLM 0.30.0 BF16; estimated, not charged"
-   },
-   "speed": {
-    "p50_s_adjusted": 0.19959257505834102,
-    "p95_s_adjusted": 0.2598152757622301,
-    "n": 450,
-    "adjustment": "x2 + 0.15 s (assumption, not measured)"
-   },
-   "measured_revision": "v1.5.8 (held)",
-   "measured_label": "measured 2026-10-04 on v1.5.8 (fast lane, unpublished candidate)",
-   "date_basis": "measurement day of the fast-lane run; v1.5.8 is held and not published",
-   "carried_from": "v1.5.8 (held)",
-   "unpublished_candidate": true,
-   "note": "Unpublished candidate: paid fast-lane result on the v1.5 pool, held for v1.5.8; not public yet."
   },
   {
    "key": "simplejev-qwen3.8-27b",
@@ -516,43 +405,6 @@
    },
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
-   "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.7",
-   "unpublished_candidate": false,
-   "note": null
-  },
-  {
-   "key": "clef",
-   "display": "Clef (Cloudflare, Qwen3.8-27B post-train with a joint schema head, multimodal, measured on text)",
-   "author": "Cloudflare",
-   "class": "Jev-compatible decision model",
-   "open": "open weights",
-   "licence": "apache-2.0",
-   "repo": "https://huggingface.co/Cloudflare/clef",
-   "endpoint_kind": "gpu",
-   "api_flag": false,
-   "axes": {
-    "intelligence": 67.9181689327805,
-    "calibration": 86.72295444340945,
-    "speed": 79.86099006822079,
-    "cost": 28.102157220114762
-   },
-   "capability": 77.32056168809498,
-   "composite_v15": 16.99242325177662,
-   "v156_rank": 63,
-   "cost": {
-    "kind": "estimate",
-    "usd_per_1000": 0.24922681034482758,
-    "basis": "price floor: base-model reference price applied; self-hosted estimate, not measured hosted billing"
-   },
-   "speed": {
-    "p50_s_adjusted": 0.8662191679235548,
-    "p95_s_adjusted": 1.191991623514331,
-    "n": 450,
-    "adjustment": "x2 + 0.15 s (assumption, not measured)"
-   },
-   "measured_revision": "v1.5.5",
-   "measured_label": "measured on v1.5.5 (2026-10-02)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
    "carried_from": "v1.5.7",
    "unpublished_candidate": false,
@@ -781,191 +633,6 @@
    "note": null
   },
   {
-   "key": "open-jev-zefan-27b-v1.1",
-   "display": "Open-Jev 27B v1.1 (Zefan Cai, LoRA + decision head on Qwen3.8-27B)",
-   "author": "Zefan Cai",
-   "class": "jev-rebuild",
-   "open": "open weights",
-   "licence": "Apache-2.0",
-   "repo": "https://huggingface.co/ZefanCai/Open-Jev-27B-v1.1",
-   "endpoint_kind": "gpu",
-   "api_flag": false,
-   "axes": {
-    "intelligence": 60.73576292754885,
-    "calibration": 80.16530526836482,
-    "speed": 70.96012175920683,
-    "cost": 14.357426070787312
-   },
-   "capability": 70.45053409795683,
-   "composite_v15": 2.926978075888752,
-   "v156_rank": 76,
-   "cost": {
-    "kind": "estimate",
-    "usd_per_1000": 0.7157353448275862,
-    "basis": "Frozen BASE_REFERENCES Qwen/Qwen3.8-27B market price (USD 0.42/M input, 3.00/M output) applied to 2,767,510 input tokens and zero output tokens over 1,624 decisions; self-hosted estimate, not measured hosted billing. Lineage verified by architecture; no pricing gate. The author method encodes each candidate independently."
-   },
-   "speed": {
-    "p50_s_adjusted": 1.5496803518384694,
-    "p95_s_adjusted": 5.1730383419431725,
-    "n": 450,
-    "adjustment": "x2 + 0.15 s (assumption, not measured)"
-   },
-   "measured_revision": "v1.5.7",
-   "measured_label": "measured on v1.5.7 (2026-10-04)",
-   "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.7",
-   "unpublished_candidate": false,
-   "note": null
-  },
-  {
-   "key": "clef-flash",
-   "display": "Clef-Flash (Cloudflare, Qwen3.5-9B post-train with a joint schema head, multimodal, measured on text)",
-   "author": "Cloudflare",
-   "class": "Jev-compatible decision model",
-   "open": "open weights",
-   "licence": "apache-2.0",
-   "repo": "https://huggingface.co/Cloudflare/clef-flash",
-   "endpoint_kind": "gpu",
-   "api_flag": false,
-   "axes": {
-    "intelligence": 53.08161490373422,
-    "calibration": 87.5533640278553,
-    "speed": 83.63107135213085,
-    "cost": 46.79963593205177
-   },
-   "capability": 70.31748946579475,
-   "composite_v15": 55.11209703961527,
-   "v156_rank": 26,
-   "cost": {
-    "kind": "estimate",
-    "usd_per_1000": 0.05933971674876847,
-    "basis": "price floor: base-model reference price applied; self-hosted estimate, not measured hosted billing"
-   },
-   "speed": {
-    "p50_s_adjusted": 0.5495888619683683,
-    "p95_s_adjusted": 0.788596675917506,
-    "n": 450,
-    "adjustment": "x2 + 0.15 s (assumption, not measured)"
-   },
-   "measured_revision": "v1.5.5",
-   "measured_label": "measured on v1.5.5 (2026-10-02)",
-   "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.7",
-   "unpublished_candidate": false,
-   "note": null
-  },
-  {
-   "key": "manchego-v21-v15",
-   "display": "Manchego v2.1",
-   "author": "oraculumai",
-   "class": "system-one-open",
-   "open": "yes",
-   "licence": "Apache-2.0 (code and weights, author-declared)",
-   "repo": "https://github.com/nschlaepfer/manchego-serve",
-   "endpoint_kind": "gpu",
-   "api_flag": false,
-   "axes": {
-    "calibration": 84.93112825268614,
-    "cost": 64.32996474661243,
-    "intelligence": 51.20184270705086,
-    "speed": 88.62537294079893
-   },
-   "capability": 68.0664854798685,
-   "composite_v15": 68.80761689677726,
-   "v156_rank": 13,
-   "cost": {
-    "kind": "estimate",
-    "usd_per_1000": 0.015452586206896551,
-    "basis": "ESTIMATE: frozen 25 Sep DeepInfra Qwen/Qwen3.5-4B market reference, already marked deprecated at that cutoff (replaced by Qwen/Qwen3.5-9B). $0.03/M input, zero generated output; 836,500 measured input tokens across 1,624 decisions. Frozen v1.5 base-model floor applied; no bookable Manchego tariff claimed. Re-score if the basis changes."
-   },
-   "speed": {
-    "p50_s_adjusted": 0.31891083074733617,
-    "p95_s_adjusted": 0.4303218883462244,
-    "n": 450,
-    "adjustment": "x2 + 0.15 s (assumption, not measured)"
-   },
-   "measured_revision": "v1.5.4",
-   "measured_label": "measured on v1.5.4 (2026-09-29)",
-   "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.7",
-   "unpublished_candidate": false,
-   "note": null
-  },
-  {
-   "key": "lev",
-   "display": "lev (Interfaze AI, Qwen3.5-4B + LoRA r32, label-token readout + candidate-path head, per-bucket temperatures)",
-   "author": "Interfaze",
-   "class": "Jev-compatible decision model",
-   "open": "open weights",
-   "licence": "apache-2.0",
-   "repo": "https://huggingface.co/interfaze-ai/lev",
-   "endpoint_kind": "gpu",
-   "api_flag": false,
-   "axes": {
-    "intelligence": 57.66943691350725,
-    "calibration": 77.88747028061562,
-    "speed": 86.51129507538255,
-    "cost": 61.79891447724963
-   },
-   "capability": 67.77845359706143,
-   "composite_v15": 69.060843509399,
-   "v156_rank": 12,
-   "cost": {
-    "kind": "estimate",
-    "usd_per_1000": 0.01876590517241379,
-    "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off; the snapshot records deprecation on 11 Jun 2026 and replacement by Qwen/Qwen3.5-9B; the frozen snapshot rates remain in use (I-3); self-hosted estimate, not measured hosted billing"
-   },
-   "speed": {
-    "p50_s_adjusted": 0.40273558008484545,
-    "p95_s_adjusted": 0.5544348144438115,
-    "n": 450,
-    "adjustment": "x2 + 0.15 s (assumption, not measured)"
-   },
-   "measured_revision": "v1.5.5",
-   "measured_label": "measured on v1.5.5 (2026-10-02)",
-   "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.7",
-   "unpublished_candidate": false,
-   "note": null
-  },
-  {
-   "key": "quyet-1-0-medium",
-   "display": "Quyet-1.0-Medium (Chinh Nguyen, Qwen3.5-4B decoder, option-letter logits)",
-   "author": "Chinh Nguyen (ncchinh)",
-   "class": "Jev-compatible decision model",
-   "open": "open weights",
-   "licence": "apache-2.0",
-   "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Medium",
-   "endpoint_kind": "gpu",
-   "api_flag": false,
-   "axes": {
-    "intelligence": 52.6585927160626,
-    "calibration": 80.29453649118824,
-    "speed": 88.52006424165945,
-    "cost": 63.43457194636937
-   },
-   "capability": 66.47656460362542,
-   "composite_v15": 68.36958342762762,
-   "v156_rank": 18,
-   "cost": {
-    "kind": "estimate",
-    "usd_per_1000": 0.01655189039408867,
-    "basis": "ESTIMATE (v1.5-M2 base-model reference; self-hosted open weights, no public tariff): DeepInfra Qwen/Qwen3.5-4B list price $0.03/M input (the exact base weights; not on OpenRouter; same reference as reflex-4b, jobe and typecastlm), read 2026-09-24 x the package's own measured usage.input_tokens; one forward pass, nothing generated; run in process on 1x H100 80GB (Lium), quyet 1.0.0; estimated, not charged"
-   },
-   "speed": {
-    "p50_s_adjusted": 0.3105650605633855,
-    "p95_s_adjusted": 0.4527317796833812,
-    "n": 450,
-    "adjustment": "x2 + 0.15 s (assumption, not measured)"
-   },
-   "measured_revision": "v1.5.8 (held)",
-   "measured_label": "measured 2026-10-04 on v1.5.8 (fast lane, unpublished candidate)",
-   "date_basis": "measurement day of the fast-lane run; v1.5.8 is held and not published",
-   "carried_from": "v1.5.8 (held)",
-   "unpublished_candidate": true,
-   "note": "Unpublished candidate: paid fast-lane result on the v1.5 pool, held for v1.5.8; not public yet."
-  },
-  {
    "key": "spark-s1-4b-v6",
    "display": "spark-s1-4b-v6 (Open Spark Jev, abhishek085)",
    "author": "Abhishek Rai (abhishek085)",
@@ -1031,43 +698,6 @@
     "p95_s_adjusted": 1.2603337831795214,
     "n": 450,
     "adjustment": "x2 (demo assumption, not measured)"
-   },
-   "measured_revision": "v1.5.3",
-   "measured_label": "measured on v1.5.3 (2026-09-29)",
-   "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.7",
-   "unpublished_candidate": false,
-   "note": null
-  },
-  {
-   "key": "bev-bonsai-27b",
-   "display": "Bev / Bonsai 27B",
-   "author": "Reza Sayar",
-   "class": "system-one-open",
-   "open": "yes",
-   "licence": "Not independently recorded",
-   "repo": "https://huggingface.co/Reza2kn/Bev",
-   "endpoint_kind": "gpu",
-   "api_flag": false,
-   "axes": {
-    "calibration": 77.68300841021404,
-    "cost": 28.231834531826323,
-    "intelligence": 53.07961797733752,
-    "speed": 72.73203087877548
-   },
-   "capability": 65.38131319377578,
-   "composite_v15": 15.76679073032579,
-   "v156_rank": 65,
-   "cost": {
-    "kind": "estimate",
-    "usd_per_1000": 0.2467585344827586,
-    "basis": "ESTIMATE: documented hosted-model estimate. Frozen market reference qwen/qwen3.8-27b."
-   },
-   "speed": {
-    "p50_s_adjusted": 2.1907600570470094,
-    "p95_s_adjusted": 2.4333360936376267,
-    "n": 450,
-    "adjustment": "x2 + 0.15 s (assumption, not measured)"
    },
    "measured_revision": "v1.5.3",
    "measured_label": "measured on v1.5.3 (2026-09-29)",
@@ -1145,43 +775,6 @@
    },
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
-   "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.7",
-   "unpublished_candidate": false,
-   "note": null
-  },
-  {
-   "key": "nemotron-diffusion-8b",
-   "display": "Nemotron Diffusion 8B (pst2154, optimized vLLM)",
-   "author": "pst2154",
-   "class": "system-one-open",
-   "open": "yes",
-   "licence": "MIT (application code); modified vLLM runtime Apache-2.0; nvidia/Nemotron-Labs-Diffusion-8B keeps its upstream licence",
-   "repo": "https://github.com/pst2154/Nemotron_Jev",
-   "endpoint_kind": "gpu",
-   "api_flag": false,
-   "axes": {
-    "calibration": 76.24688293519233,
-    "cost": 55.49170925809556,
-    "intelligence": 33.84367245974849,
-    "speed": 93.74324086172008
-   },
-   "capability": 55.04527769747041,
-   "composite_v15": 25.684702471457477,
-   "v156_rank": 48,
-   "cost": {
-    "basis": "documented hosted-model estimate; no exact base-model floor applies",
-    "kind": "estimate",
-    "usd_per_1000": 0.03045157019704434
-   },
-   "speed": {
-    "p50_s_adjusted": 0.18745839605107903,
-    "p95_s_adjusted": 0.22530509717762465,
-    "n": 450,
-    "adjustment": "x2 + 0.15 s (assumption, not measured)"
-   },
-   "measured_revision": "v1.5.2",
-   "measured_label": "measured on v1.5.2 (2026-09-29)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
    "carried_from": "v1.5.7",
    "unpublished_candidate": false,
@@ -1299,43 +892,6 @@
    "note": null
   },
   {
-   "key": "laya-typed-decisions",
-   "display": "Laya typed-decisions",
-   "author": "Convai Innovations",
-   "class": "system-one-open",
-   "open": "yes",
-   "licence": "apache-2.0, not gated",
-   "repo": "https://huggingface.co/convaiinnovations/laya/tree/1c5edc17a7acd8701df6fc341c0d179f1c62c982/typed-decisions",
-   "endpoint_kind": "cpu",
-   "api_flag": false,
-   "axes": {
-    "calibration": 83.33778364859957,
-    "cost": 82.52942826196218,
-    "intelligence": 0,
-    "speed": 63.380934368713
-   },
-   "capability": 41.668891824299784,
-   "composite_v15": 0,
-   "v156_rank": 111,
-   "cost": {
-    "kind": "estimate",
-    "usd_per_1000": 0.003822543103448276,
-    "basis": "ESTIMATE: documented hosted-model estimate; no exact base-model floor applies. $0.01/M input, $0/M output; same-class hosted-encoder estimate; no exact-base market floor."
-   },
-   "speed": {
-    "p50_s_adjusted": 3.317080819606781,
-    "p95_s_adjusted": 13.840459538251153,
-    "n": 450,
-    "adjustment": "x2 + 0.15 s (assumption, not measured)"
-   },
-   "measured_revision": "v1.5.3",
-   "measured_label": "measured on v1.5.3 (2026-09-29)",
-   "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.7",
-   "unpublished_candidate": false,
-   "note": null
-  },
-  {
    "key": "bosun-v31-0.6b",
    "display": "Bosun v3.1 0.6B",
    "author": "Clause Logic",
@@ -1410,43 +966,6 @@
    "note": null
   },
   {
-   "key": "quyet-1-0-small-en",
-   "display": "Quyet-1.0-Small-EN (Chinh Nguyen, ModernBERT-base encoder with fixed heads)",
-   "author": "Chinh Nguyen (ncchinh)",
-   "class": "Jev-compatible decision model",
-   "open": "open weights",
-   "licence": "apache-2.0",
-   "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Small-EN",
-   "endpoint_kind": "gpu",
-   "api_flag": false,
-   "axes": {
-    "intelligence": 0.0,
-    "calibration": 76.51747690221862,
-    "speed": 90.19744542616131,
-    "cost": 89.11296503596958
-   },
-   "capability": 38.25873845110931,
-   "composite_v15": 0.0,
-   "v156_rank": 117,
-   "cost": {
-    "kind": "estimate",
-    "usd_per_1000": 0.0023062222906403943,
-    "basis": "ESTIMATE (v1.5-M2 base-model reference; self-hosted open weights, no public tariff): DeepInfra base-size encoders (bge-base, e5-base, gte-base, all-mpnet-base) $0.005/M input (ModernBERT-base has no market listing; base-size encoder reference) x the package's own measured usage.input_tokens; one forward pass, nothing generated; run in process on 1x H100 80GB (Lium), quyet 1.0.0; estimated, not charged"
-   },
-   "speed": {
-    "p50_s_adjusted": 0.24599174605682492,
-    "p95_s_adjusted": 0.38844981794245537,
-    "n": 450,
-    "adjustment": "x2 + 0.15 s (assumption, not measured)"
-   },
-   "measured_revision": "v1.5.8 (held)",
-   "measured_label": "measured 2026-10-04 on v1.5.8 (fast lane, unpublished candidate)",
-   "date_basis": "measurement day of the fast-lane run; v1.5.8 is held and not published",
-   "carried_from": "v1.5.8 (held)",
-   "unpublished_candidate": true,
-   "note": "Unpublished candidate: paid fast-lane result on the v1.5 pool, held for v1.5.8; not public yet."
-  },
-  {
    "key": "decision-fast",
    "display": "Decision Fast (FlyMy.AI, v53a)",
    "author": "FlyMy.AI (@denti)",
@@ -1482,43 +1001,6 @@
    "carried_from": "v1.5.7",
    "unpublished_candidate": false,
    "note": null
-  },
-  {
-   "key": "quyet-1-0-small",
-   "display": "Quyet-1.0-Small (Chinh Nguyen, SEA-LION-ModernBERT-300M encoder with fixed heads)",
-   "author": "Chinh Nguyen (ncchinh)",
-   "class": "Jev-compatible decision model",
-   "open": "open weights",
-   "licence": "apache-2.0",
-   "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Small",
-   "endpoint_kind": "gpu",
-   "api_flag": false,
-   "axes": {
-    "intelligence": 0.0,
-    "calibration": 75.53988052442004,
-    "speed": 91.49274067094993,
-    "cost": 79.56261245432609
-   },
-   "capability": 37.76994026221002,
-   "composite_v15": 0.0,
-   "v156_rank": 116,
-   "cost": {
-    "kind": "estimate",
-    "usd_per_1000": 0.004800055418719211,
-    "basis": "ESTIMATE (v1.5-M2 base-model reference; self-hosted open weights, no public tariff): DeepInfra same-size encoders (bge-large, e5-large, Qwen3-Embedding-0.6B) $0.01/M input (SEA-LION-ModernBERT-300M has no market listing; the ModernBERT-large-class reference of the Laya/Certo/OpenDecision rows) x the package's own measured usage.input_tokens; one forward pass, nothing generated; run in process on 1x H100 80GB (Lium), quyet 1.0.0; estimated, not charged"
-   },
-   "speed": {
-    "p50_s_adjusted": 0.1809675447642803,
-    "p95_s_adjusted": 0.3918548610527067,
-    "n": 450,
-    "adjustment": "x2 + 0.15 s (assumption, not measured)"
-   },
-   "measured_revision": "v1.5.8 (held)",
-   "measured_label": "measured 2026-10-04 on v1.5.8 (fast lane, unpublished candidate)",
-   "date_basis": "measurement day of the fast-lane run; v1.5.8 is held and not published",
-   "carried_from": "v1.5.8 (held)",
-   "unpublished_candidate": true,
-   "note": "Unpublished candidate: paid fast-lane result on the v1.5 pool, held for v1.5.8; not public yet."
   },
   {
    "key": "jevact",
@@ -1595,43 +1077,6 @@
    "note": null
   },
   {
-   "key": "quyet-1-0-tiny",
-   "display": "Quyet-1.0-Tiny (Chinh Nguyen, mmBERT-small encoder (16 layers kept) with fixed heads)",
-   "author": "Chinh Nguyen (ncchinh)",
-   "class": "Jev-compatible decision model",
-   "open": "open weights",
-   "licence": "apache-2.0",
-   "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Tiny",
-   "endpoint_kind": "gpu",
-   "api_flag": false,
-   "axes": {
-    "intelligence": 0.0,
-    "calibration": 68.47025852944321,
-    "speed": 90.32304203949286,
-    "cost": 88.43590631389968
-   },
-   "capability": 34.23512926472161,
-   "composite_v15": 0.0,
-   "v156_rank": 118,
-   "cost": {
-    "kind": "estimate",
-    "usd_per_1000": 0.0024292364532019703,
-    "basis": "ESTIMATE (v1.5-M2 base-model reference; self-hosted open weights, no public tariff): DeepInfra base-size encoders (bge-base, e5-base, gte-base, all-mpnet-base) $0.005/M input (mmBERT-small 16-layer, 183M; base-size class reference, errs high vs the small-encoder $0.004 class) x the package's own measured usage.input_tokens; one forward pass, nothing generated; run in process on 1x H100 80GB (Lium), quyet 1.0.0; estimated, not charged"
-   },
-   "speed": {
-    "p50_s_adjusted": 0.24124272502958774,
-    "p95_s_adjusted": 0.3848057656083256,
-    "n": 450,
-    "adjustment": "x2 + 0.15 s (assumption, not measured)"
-   },
-   "measured_revision": "v1.5.8 (held)",
-   "measured_label": "measured 2026-10-04 on v1.5.8 (fast lane, unpublished candidate)",
-   "date_basis": "measurement day of the fast-lane run; v1.5.8 is held and not published",
-   "carried_from": "v1.5.8 (held)",
-   "unpublished_candidate": true,
-   "note": "Unpublished candidate: paid fast-lane result on the v1.5 pool, held for v1.5.8; not public yet."
-  },
-  {
    "key": "gliner2.5-small",
    "display": "GLiNER2.5 small (Fastino, 74M)",
    "author": "Fastino",
@@ -1706,43 +1151,6 @@
    "note": null
   },
   {
-   "key": "deem-0.8-v1",
-   "display": "Deem 0.8B v1",
-   "author": "LibertAI",
-   "class": "system-one-open",
-   "open": "yes",
-   "licence": "Not independently recorded",
-   "repo": "https://huggingface.co/LibertAIDAI/deem-0.8-v1",
-   "endpoint_kind": "gpu",
-   "api_flag": false,
-   "axes": {
-    "calibration": 38.88308141545836,
-    "cost": 80.28784730320886,
-    "intelligence": 13.018560520368553,
-    "speed": 84.31592206067447
-   },
-   "capability": 25.950820967913458,
-   "composite_v15": 2.1377954147719667,
-   "v156_rank": 80,
-   "cost": {
-    "kind": "estimate",
-    "usd_per_1000": 0.004540166256157636,
-    "basis": "ESTIMATE: documented hosted-model estimate. Frozen market reference deepinfra:Qwen/Qwen3.5-0.8B."
-   },
-   "speed": {
-    "p50_s_adjusted": 0.5011191620491445,
-    "p95_s_adjusted": 0.7386977634276263,
-    "n": 450,
-    "adjustment": "x2 + 0.15 s (assumption, not measured)"
-   },
-   "measured_revision": "v1.5.3",
-   "measured_label": "measured on v1.5.3 (2026-09-29)",
-   "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.7",
-   "unpublished_candidate": false,
-   "note": null
-  },
-  {
    "key": "gliner2",
    "display": "GLiNER2 (Fastino, gliner2.5-base)",
    "author": "Fastino",
@@ -1774,43 +1182,6 @@
    },
    "measured_revision": "v1.5.0",
    "measured_label": "measured on v1.5.0 (2026-09-28)",
-   "date_basis": "publication day of the release that first published this measurement (merge into main)",
-   "carried_from": "v1.5.7",
-   "unpublished_candidate": false,
-   "note": null
-  },
-  {
-   "key": "laya-multilingual",
-   "display": "Laya multilingual",
-   "author": "Convai Innovations",
-   "class": "system-one-open",
-   "open": "yes",
-   "licence": "apache-2.0, not gated",
-   "repo": "https://huggingface.co/convaiinnovations/laya/tree/1c5edc17a7acd8701df6fc341c0d179f1c62c982/multilingual",
-   "endpoint_kind": "cpu",
-   "api_flag": false,
-   "axes": {
-    "calibration": 43.57757174543102,
-    "cost": 82.1551651086044,
-    "intelligence": 2.3532902618156077,
-    "speed": 73.72350050572948
-   },
-   "capability": 22.965431003623316,
-   "composite_v15": 0.018708552536889286,
-   "v156_rank": 91,
-   "cost": {
-    "kind": "estimate",
-    "usd_per_1000": 0.003933940886699508,
-    "basis": "ESTIMATE: documented hosted-model estimate; no exact base-model floor applies. $0.01/M input, $0/M output; same-class hosted-encoder estimate; no exact-base market floor."
-   },
-   "speed": {
-    "p50_s_adjusted": 1.0356827691197394,
-    "p95_s_adjusted": 4.09659658446908,
-    "n": 450,
-    "adjustment": "x2 + 0.15 s (assumption, not measured)"
-   },
-   "measured_revision": "v1.5.3",
-   "measured_label": "measured on v1.5.3 (2026-09-29)",
    "date_basis": "publication day of the release that first published this measurement (merge into main)",
    "carried_from": "v1.5.7",
    "unpublished_candidate": false,

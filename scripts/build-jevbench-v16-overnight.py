@@ -134,7 +134,7 @@ def main(round_dir, held_path, notes_path):
         if s['key'] in public or s['key'] in approved:
             continue
         s['unpublished_candidate'] = True
-        kind = 'held for v1.5.8, unpublished' if s['key'] in held_keys else 'unpublished candidate'
+        kind = (notes.get('labels') or {}).get(s['key']) or ('held for v1.5.8, unpublished' if s['key'] in held_keys else 'unpublished candidate')
         if kind not in s['display']:
             s['display'] = f"{s['display']} [{kind}]"
 
@@ -146,6 +146,13 @@ def main(round_dir, held_path, notes_path):
     for s in results['systems']:
         s['provenance']['kind'] = f"v1.6.0 overnight re-measure ({notes['round']}/out-O1S)"
     categories['preview'] = 'overnight'
+    # Rows scored on the supplementary API subset A2 have family/language cells from the scorer but no topic/use-case
+    # cells (the topic builder reads main-pool runs only); the radar view needs every dimension, so list them as unavailable.
+    dims = [d for d in ('topics', 'usecases', 'families', 'languages') if d in categories]
+    for k in list(categories['systems']):
+        if any(d not in categories['systems'][k] for d in dims):
+            categories['systems'].pop(k)
+            categories.setdefault('unavailable', {})[k] = 'Measured on the supplementary API subset A2; per-category values are not built for A2 rows in this preview.'
 
     for name, value in [('results', results), ('categories', categories), ('carry', carry)]:
         P.check_aggregate_only(value, name)
