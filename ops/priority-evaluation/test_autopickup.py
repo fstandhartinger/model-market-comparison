@@ -2386,7 +2386,6 @@ class PodRunnerLifecycleTests(unittest.TestCase):
         provider = _FakeProvider()
         first = self._run(provider)
         calls = len(provider.calls)
-        rid2_out = None
         # A second run over the same output returns the stored receipt without a pod.
         output = next(self.tmp.glob("out-*"))
         rid = str(uuid.uuid4())
