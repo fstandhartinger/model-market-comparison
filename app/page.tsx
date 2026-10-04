@@ -1,3 +1,4 @@
+import JevModelsPage from "./jev-models/page";
 import { getDataset } from "../lib/data";
 import { getBenchmarkMatrixPage } from "../lib/benchmark-matrix-data";
 import { HomeModeLoader } from "../components/deferred/HomeModeLoader";
@@ -11,6 +12,8 @@ export const metadata = previewMetadata({ path: "/", title: "Benchmark Heaven",
   description: "The most detailed cost–capability analysis in AI. Every model. Every Benchmark. Actual Costs." });
 
 export default async function Home() {
+  // Private overnight preview export: the unguessable preview root renders the v1.6.0 board.
+  if (process.env.BH_PREVIEW_JEV_ROOT === '1') return <JevModelsPage />;
   const ds = await getDataset();
   // R3.1: the claim is quantified from the dataset it describes, so it cannot drift
   // away from what the page actually shows.

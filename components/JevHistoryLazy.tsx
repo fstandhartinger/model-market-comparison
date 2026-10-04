@@ -16,7 +16,7 @@ export function JevHistoryLazy() {
     if (payload || loading) return;
     setLoading(true);
     try {
-      const response = await fetch('/api/jevbench/v1.3/history', { headers: { Accept: 'application/json' } });
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/api/jevbench/v1.3/history`, { headers: { Accept: 'application/json' } });
       if (!response.ok) throw new Error(`Historical board request failed (${response.status})`);
       setPayload(await response.json() as JevHistoryPayload);
     } catch (cause) {

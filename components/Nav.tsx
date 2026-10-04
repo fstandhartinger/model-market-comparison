@@ -1,11 +1,14 @@
 "use client";
-import Link from "next/link";
+import NextLink from "next/link";
+import type { ComponentProps } from "react";
 import { usePathname } from "next/navigation";
 import { BrandMark } from './BrandMark';
 import { ThemeToggle } from './ThemeToggle';
 import { useSettings } from './SettingsContext';
 import { AccountButton, AccountMenuLink } from './AccountButton';
 import { useEffect, useRef, useState } from "react";
+// Private overnight preview export (basePath set): no prefetch of site pages that the preview does not include.
+const Link = (props: ComponentProps<typeof NextLink>) => <NextLink prefetch={process.env.NEXT_PUBLIC_BASE_PATH ? false : undefined} {...props} />;
 
 const BETA_NOTE = "This site is under construction; data and features change daily.";
 

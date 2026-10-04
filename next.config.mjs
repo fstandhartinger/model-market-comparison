@@ -3,6 +3,8 @@ import { JEV_SYSTEM_SLUG_REDIRECTS } from './lib/jev-system-slug.mjs';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Private overnight preview export only (served under an unguessable path); unset for every normal build.
+  ...(process.env.BH_PREVIEW_BASEPATH ? { basePath: process.env.BH_PREVIEW_BASEPATH, env: { NEXT_PUBLIC_BASE_PATH: process.env.BH_PREVIEW_BASEPATH } } : {}),
   // This app lives inside a monorepo with sibling lockfiles; pin the tracing root.
   outputFileTracingRoot: import.meta.dirname,
   // Bundle the committed dataset.json as a runtime fallback when no DB is set.

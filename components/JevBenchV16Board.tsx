@@ -72,7 +72,7 @@ function DatedCarry({ carry }: { carry: JevV16Carry }) {
         <th scope="row" className="p-2 font-normal">{r.display}{r.note && <span className="bh-muted block text-xs">{r.note}</span>}</th>
         <td className="p-2 whitespace-nowrap">{r.measured_label}</td>
         <td className="p-2">{one(r.capability)}</td>
-        <td className="p-2">{one(r.composite_v15)}{r.v156_rank != null && <span className="bh-muted"> · was #{r.v156_rank} on v1.5.6</span>}</td>
+        <td className="p-2">{one(r.composite_v15)}{r.v156_rank != null && <span className="bh-muted"> · was #{r.v156_rank} on {(r as unknown as { carried_from?: string }).carried_from ?? 'v1.5.6'}</span>}</td>
         <td className="p-2">{usd(r.cost?.usd_per_1000)}<span className="bh-muted block text-xs">{r.cost?.kind ?? ''}</span></td>
         <td className="p-2">{sec(r.speed.p50_s_adjusted)}</td>
       </tr>)}</tbody>
@@ -128,10 +128,30 @@ function Method({ a, sha256, categoriesSha256, carrySha256 }: { a: JevV16Release
     <h3 className="mt-4 text-lg font-semibold">Calibration basis</h3>
     <p className="bh-muted mt-1 text-sm" data-bh-jev16-calibration-basis>Systems that return a full probability distribution are calibrated on all components (top-label error, plus distribution distance for Choice and ranked-probability error for Score).
       {confidenceOnly.length > 0 ? ` ${confidenceOnly.join(', ')} return${confidenceOnly.length === 1 ? 's' : ''} a single confidence value, so ${confidenceOnly.length === 1 ? 'its' : 'their'} Calibration is the top-label error only and is not like-for-like with full-distribution systems.` : ''}</p>
+    {(a as unknown as { overnight?: OvernightNotes }).overnight && <Overnight o={(a as unknown as { overnight: OvernightNotes }).overnight} />}
     <h3 className="mt-4 text-lg font-semibold">Provenance</h3>
     {measuredDays.length > 0 && <p className="bh-muted mt-1 text-sm" data-bh-jev16-measured-days>Measured on the v1.6 pool (run completion day, UTC): {measuredDays.map(([day, names]) => `${day}: ${names.join(', ')}`).join(' · ')}.</p>}
     <p className="bh-muted mt-1 break-all text-xs">Aggregate files: results sha256 {sha256} · categories sha256 {categoriesSha256} · dated carry sha256 {carrySha256}. Scoring source sha256 {a.source_sha256}. The method, release data and carry artifact are independently hashable.</p>
   </section>;
+}
+
+type OvernightNotes = { round: string; scored_utc: string; a2_note?: string | null; notes?: string[];
+  exposure?: Record<string, { display?: string; sealed_items_exposed?: number; draws?: string; note?: string }> };
+
+function Overnight({ o }: { o: OvernightNotes }) {
+  const exp = Object.entries(o.exposure ?? {});
+  return <div data-bh-jev16-overnight-method>
+    <h3 className="mt-4 text-lg font-semibold">Overnight full re-measure (4–5 Oct 2026)</h3>
+    <p className="bh-muted mt-1 text-sm">Every system with a reproducible recipe was re-run on the v1.6.0 pool overnight with the same pinned inputs and scorer (method option B). This page uses scoring round {o.round} ({o.scored_utc}). Only complete runs (1,500 items self-hosted, the full API input for hosted APIs) are ranked; partial runs are never ranked, and systems not yet re-measured keep their dated v1.5.x score in the separate table.</p>
+    {o.notes && o.notes.length > 0 && <ul className="bh-muted mt-1 list-disc space-y-1 pl-5 text-sm">{o.notes.map((n, i) => <li key={i}>{n}</li>)}</ul>}
+    {o.a2_note && <><h3 className="mt-4 text-lg font-semibold">Supplementary API draw A2</h3><p className="bh-muted mt-1 text-sm" data-bh-jev16-a2>{o.a2_note}</p></>}
+    {exp.length > 0 && <><h3 className="mt-4 text-lg font-semibold">Sealed items exposed per hosted system</h3>
+      <div className="mt-2 overflow-x-auto"><table className="text-left text-sm tabular" data-bh-jev16-exposure>
+        <thead><tr>{['System', 'Sealed items sent', 'Draws', 'Note'].map((h) => <th key={h} scope="col" className="p-2">{h}</th>)}</tr></thead>
+        <tbody>{exp.map(([k, e]) => <tr key={k} className="border-t border-line"><th scope="row" className="p-2 font-normal">{e.display ?? k}</th>
+          <td className="p-2">{e.sealed_items_exposed ?? '—'}</td><td className="p-2">{e.draws ?? '—'}</td><td className="p-2 bh-muted">{e.note ?? ''}</td></tr>)}</tbody>
+      </table></div></>}
+  </div>;
 }
 
 const pct = (v: number | null | undefined) => v == null ? '—' : `${Math.round(v * 100)} %`;

@@ -23,8 +23,11 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
     <JevBenchReleaseVersionNav active="v1.6.0" />
     <header className="bh-page-head" data-bh-jev16-release-header data-bh-jev16-live={live ? 'true' : undefined}>
       <div className="bh-eyebrow flex flex-nowrap items-center" data-bh-jev-frozen-version>
-        Official JevBench v1.6.0
+        {(artifact as { status?: string }).status === 'overnight-preview' ? 'JevBench v1.6.0 · private overnight preview' : 'Official JevBench v1.6.0'}
       </div>
+      {(artifact as { status?: string }).status === 'overnight-preview' && <p className="mt-2 max-w-3xl rounded border border-amber-500 bg-amber-500/10 p-3 text-sm" data-bh-jev16-overnight-banner>
+        <b>Private preview, not published.</b> {(artifact as { label?: string }).label}. {(artifact as { source_note?: string }).source_note} Numbers can still change before a release decision.
+      </p>}
       <h1 className="mt-1 text-3xl font-bold tracking-tight">{live ? 'JevBench by Benchmark Heaven' : 'JevBench v1.6.0 — Jev alternatives ranking'}</h1>
       <p className="mt-3 max-w-3xl text-lg" data-bh-jev-own>JevBench is <b>Benchmark Heaven&apos;s own benchmark</b> for Jev-class decision models: state and a bounded rubric in, a typed answer out.</p>
       <p className="bh-muted mt-3 max-w-3xl text-xs leading-relaxed" data-bh-jev-meta>
