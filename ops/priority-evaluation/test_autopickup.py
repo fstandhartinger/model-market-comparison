@@ -31,7 +31,7 @@ PG_BIN = next((p for p in sorted(Path("/usr/lib/postgresql").glob("*/bin"), reve
 TEMPLATES = ("autopickup-prompt-template.md", "autopickup-review-prompt-template.md", "autopickup-confirmation-template.txt",
              "autopickup-result-public-template.txt", "autopickup-result-private-template.txt", "autopickup-refund-template.txt",
              "autopickup-refusal-template.txt", "autopickup-review-passed-template.txt",
-             "autopickup-change-request-template.txt")
+             "autopickup-change-request-template.txt", "autopickup-delay-template.txt")
 
 TMP = Path(tempfile.mkdtemp(prefix="fastlane-autopickup-test-"))
 os.environ.update({
@@ -112,6 +112,7 @@ class FakeEffects(ap.Effects):
         self.mails: list[tuple[str, str, str]] = []
         self.notes: list[tuple[str, bool, str]] = []
         self.boards: list[str] = []
+        self.board_threads: list[tuple[str, str, str]] = []
         self.started: list[str] = []
         self.stopped: list[str] = []
         self.mail_ok = True
@@ -128,8 +129,9 @@ class FakeEffects(ap.Effects):
         self.notes.append((mode, requested, message))
         return True
 
-    def board(self, message, owner, kind="handoff"):
+    def board(self, message, owner, kind="handoff", thread="9"):
         self.boards.append(message)
+        self.board_threads.append((thread, owner, kind))
         return self.board_ok
 
     def mail(self, to, subject, body, **kwargs):
@@ -1058,7 +1060,12 @@ class EvaluateTests(DatabaseTestCase):
         starts=len(fx.started)
         ap.manage_evaluation(row(rid),state,fx,datetime.now(timezone.utc))
         self.assertEqual(len(fx.started),starts)
-        self.assertTrue(state['steps']['operational_handoff']['status']=='done')
+        # A capacity hold is transient: the first cycle schedules the bounded retry, no handoff yet.
+        state=ap.load_state(rid)
+        hold=state['operational_hold']
+        self.assertTrue(hold['transient'])
+        self.assertIsNotNone(hold.get('next_retry_at'))
+        self.assertNotEqual(state['steps'].get('operational_handoff',{}).get('status'),'done')
 
     def test_evaluate_loads_stage_state_before_preparation(self):
         rid = insert_order()
@@ -1632,6 +1639,336 @@ class PureFunctionTests(unittest.TestCase):
     def test_backoff_is_bounded(self):
         self.assertEqual(ap.backoff_seconds(1), 300)
         self.assertEqual(ap.backoff_seconds(30), ap.BACKOFF_CAP_SECONDS)
+
+
+def _set_operational_hold(rid: str, reason: str, *, transient: bool = True, retries: int = 0) -> dict:
+    state = ap.load_state(rid)
+    if retries:
+        state.setdefault("hold_retries", {})[reason] = retries
+    ap.set_operational_hold(state, reason, transient=transient)
+    return ap.load_state(rid)
+
+
+class OperationalHoldRetryTests(DatabaseTestCase):
+    """PR1a: transient holds self-heal on a bounded backoff; everything else escalates once."""
+
+    def test_transient_hold_retries_then_clears_and_restarts(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        ap.cycle(fx)
+        unit = ap.EVAL_UNIT.format(rid)
+        ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='pending' WHERE id='{rid}'")
+        reason = "gpu_pod_capacity"
+        _set_operational_hold(rid, reason, transient=True)
+        now = datetime.now(timezone.utc)
+        # First cycle schedules the retry; nothing starts, nothing escalates.
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, now)
+        state = ap.load_state(rid)
+        self.assertAlmostEqual(ap.parse_ts(state["operational_hold"]["next_retry_at"]).timestamp(),
+                               (now + timedelta(minutes=15)).timestamp(), delta=1.0)
+        starts = len(fx.started)
+        # Backoff over: the hold clears and the bounded evaluation restart runs again.
+        state["operational_hold"]["next_retry_at"] = ap.iso(now)
+        ap.save_state(state)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, now)
+        self.assertIsNone(ap.load_state(rid).get("operational_hold"))
+        self.assertEqual(ap.load_state(rid)["hold_retries"][reason], 1)
+        self.assertGreater(len(fx.started), starts)
+        self.assertEqual(fx.notes, [])
+        self.assertFalse(any("operational" in b.lower() or "measurement owner" in b for b in fx.boards))
+
+    def test_transient_hold_exhaustion_sends_one_urgent_card_and_board_11(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        ap.cycle(fx)
+        ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='pending' WHERE id='{rid}'")
+        reason = "gpu_pod_run_failed"
+        _set_operational_hold(rid, reason, transient=True, retries=ap.HOLD_MAX_RETRIES)
+        boards_before = len(fx.boards)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        urgent = [note for note in fx.notes if note[0] == "urgent"]
+        self.assertEqual(len(urgent), 1)
+        self.assertIn(reason, urgent[0][2])
+        self.assertNotIn("🧑 Für dich", urgent[0][2])
+        self.assertEqual(len(fx.boards) - boards_before, 1)
+        # The escalation posts to the JevBench releases thread (#11), not the stale ops thread.
+        self.assertEqual(fx.board_threads[-1][0], "11")
+        self.assertNotIn("allout-ops-20260929", fx.boards[-1])
+        starts = len(fx.started)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(len([n for n in fx.notes if n[0] == "urgent"]), 1)  # exactly one card
+        self.assertEqual(len(fx.started), starts)
+
+    def test_non_transient_hold_escalates_immediately_and_never_idles(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        ap.cycle(fx)
+        ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='pending' WHERE id='{rid}'")
+        _set_operational_hold(rid, "some_permanent_failure", transient=False)
+        boards_before = len(fx.boards)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(len([n for n in fx.notes if n[0] == "urgent"]), 1)
+        self.assertEqual(len(fx.boards) - boards_before, 1)
+        self.assertEqual(ap.load_state(rid)["steps"]["operational_handoff"]["status"], "done")
+        starts = len(fx.started)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(len(fx.started), starts)
+
+
+class SourceFetchPolicyTests(DatabaseTestCase):
+    """PR1b/c: fetches run outside the preparation budget; bad links and burned budgets never idle."""
+
+    def _claim(self, rid: str, fx: FakeEffects) -> None:
+        # The first cycle claims the order and leaves evaluation_status='starting'.
+        ap.cycle(fx)
+        self.assertEqual(row(rid)["evaluation_status"], "starting")
+
+    def test_bad_model_link_routes_to_change_request_without_budget(self):
+        rid = insert_order()
+        ap.sql(f"UPDATE {ap.TABLE} SET model_link='https://huggingface.co/profilepage' WHERE id='{rid}'")
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        with mock.patch.object(ap, "fetch_source") as fetch:
+            self.assertEqual(ap.evaluate(rid), 0)
+        # The valid code link fetches first; the bad model link never reaches the fetch.
+        self.assertEqual(fetch.call_count, 1)
+        self.assertEqual(ap.load_state(rid).get("stage_attempts", {}), {})
+        current = row(rid)
+        self.assertEqual(current["customer_hold_reason"], "customer_changes")
+        self.assertEqual(current["change_request_email_status"], "approval_required")
+        self.assertEqual(current["evaluation_status"], "pending")
+        changes = json.loads((ap.JOB_ROOT / rid / "review" / "CHANGES-REQUESTED.json").read_text())
+        self.assertIn("does not point to a Hugging Face model repository", changes["summary"])
+
+    def test_bad_code_link_uses_the_code_variant_of_the_fixed_summary(self):
+        rid = insert_order()
+        ap.sql(f"UPDATE {ap.TABLE} SET code_link='https://example.com/not-a-repo' WHERE id='{rid}'")
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        self.assertEqual(ap.evaluate(rid), 0)
+        changes = json.loads((ap.JOB_ROOT / rid / "review" / "CHANGES-REQUESTED.json").read_text())
+        self.assertIn("does not point to a GitHub repository", changes["summary"])
+        self.assertEqual(row(rid)["customer_hold_reason"], "customer_changes")
+
+    def test_transient_fetch_error_is_an_operational_hold_not_a_customer_hold(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        with mock.patch.object(ap, "fetch_source",
+                               side_effect=ap.FetchTransientError("model source fetch hit a transient network error")):
+            self.assertEqual(ap.evaluate(rid), 0)
+        state = ap.load_state(rid)
+        self.assertEqual(state["operational_hold"]["reason"], "fetch_source_transient")
+        self.assertTrue(state["operational_hold"]["transient"])
+        self.assertEqual(state.get("stage_attempts", {}), {})
+        self.assertIsNone(row(rid)["customer_hold_started_at"])
+        self.assertEqual(row(rid)["evaluation_status"], "pending")
+
+    def test_permanent_fetch_error_routes_to_change_request(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        with mock.patch.object(ap, "fetch_source",
+                               side_effect=ap.FetchPermanentError("model source repository could not be fetched")):
+            self.assertEqual(ap.evaluate(rid), 0)
+        self.assertEqual(row(rid)["customer_hold_reason"], "customer_changes")
+        self.assertEqual(ap.load_state(rid).get("stage_attempts", {}), {})
+
+    def test_fetch_error_classification(self):
+        self.assertIsNotNone(ap.TRANSIENT_FETCH_RE.search("fatal: unable to connect: connection timed out"))
+        self.assertIsNotNone(ap.TRANSIENT_FETCH_RE.search("remote: HTTP 503 backend unavailable"))
+        self.assertIsNone(ap.TRANSIENT_FETCH_RE.search("fatal: repository 'https://x/y' not found"))
+
+    def test_exhausted_preparation_budget_stops_the_unit_and_escalates_once(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        job_dir = ap.JOB_ROOT / rid
+        (job_dir / "source").mkdir(parents=True, exist_ok=True)
+        # Both receipts exist, so the loop reaches the consume call with a spent budget.
+        for which in ("code", "model"):
+            (job_dir / "source" / f"FETCH-RECEIPT-{which}.json").write_text("{}")
+        state = ap.load_state(rid)
+        state["stage_attempts"] = {"preparation": ap.MAX_PREPARATION_ATTEMPTS}
+        ap.save_state(state)
+        self.assertEqual(ap.evaluate(rid), 1)
+        self.assertEqual(row(rid)["evaluation_status"], "exhausted")
+        self.assertIn("preparation", ap.load_state(rid)["evaluation_exhausted"]["reason"])
+        # The cycle escalates once and never restarts the unit again.
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(len([n for n in fx.notes if n[0] == "urgent" and "Rescue" in n[2]]), 1)
+        starts = len(fx.started)
+        ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(len(fx.started), starts)
+
+
+class SlaCardsTests(DatabaseTestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        set_cutover(datetime.now(timezone.utc) - timedelta(days=4))
+
+    def test_36h_alert_uses_the_urgent_channel_and_a_deliverable_format(self):
+        rid = insert_order(paid_ago="37 hours", received_ago="37 hours")
+        fx = FakeEffects()
+        counts = ap.sla_sweep(None, ap.JOB_ROOT, fx)
+        self.assertEqual(counts["alert36"], 1)
+        mode, _requested, text = fx.notes[-1]
+        self.assertEqual(mode, "urgent")
+        self.assertTrue(text.startswith("🚨 DRINGEND"))
+        # ~/bin/notify rejects a 🧑 Für dich ask block on the urgent channel (36 h alert regression).
+        self.assertNotIn("🧑 Für dich", text)
+        self.assertTrue(ap.sql(f"SELECT 1 FROM {ap.TABLE} WHERE id='{rid}' AND sla_36h_alerted_at IS NOT NULL"))
+
+    def test_24h_card_is_skipped_once_the_measurement_has_started(self):
+        rid = insert_order(paid_ago="25 hours", received_ago="25 hours")
+        state = ap.load_state(rid)
+        state["host_measurement"] = {"jevbench": {"raw_sha256": "x" * 64}}
+        ap.save_state(state)
+        fx = FakeEffects()
+        counts = ap.sla_sweep(None, ap.JOB_ROOT, fx)
+        self.assertEqual(counts["alert24"], 0)
+        self.assertEqual(fx.notes, [])
+        # Marked as handled so it can never fire late.
+        self.assertTrue(ap.sql(f"SELECT 1 FROM {ap.TABLE} WHERE id='{rid}' AND sla_24h_alerted_at IS NOT NULL"))
+
+    def test_24h_card_fires_when_no_measurement_started(self):
+        rid = insert_order(paid_ago="25 hours", received_ago="25 hours")
+        fx = FakeEffects()
+        counts = ap.sla_sweep(None, ap.JOB_ROOT, fx)
+        self.assertEqual(counts["alert24"], 1)
+        self.assertEqual(sum("24 hours since payment" in n[2] for n in fx.notes), 1)
+
+    def _decide(self, rid: str, decision: str) -> None:
+        root = ap.STATE_ROOT / "sla-decisions"
+        root.mkdir(parents=True, exist_ok=True)
+        (root / f"{rid}.json").write_text(json.dumps({
+            "request_id": rid, "kind": "sla_40h", "decision": decision,
+            "message_id": 777001, "update_id": 888001, "card": 1,
+            "delay_key": "sla_x_delay", "refund_key": "sla_x_refund", "noaction_key": "sla_x_noaction"}))
+
+    def test_40h_card_refund_in_full_writes_the_refund_decision_once(self):
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        self.assertEqual([r["id"] for r in ap.sla_decision_rows(None, ap.JOB_ROOT)], [rid])
+        self._decide(rid, "refund")
+        fx = FakeEffects()
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        current = row(rid)
+        self.assertEqual((current["status"], current["refund_decision"]), ("refund_due", "approved"))
+        # The 48 h refund card can never fire for this order a second time.
+        self.assertEqual(ap.refund_decision_rows(None, ap.JOB_ROOT), [])
+        self.assertEqual(ap.sla_decision_rows(None, ap.JOB_ROOT), [])
+
+    def test_40h_card_delay_note_sends_one_template_mail(self):
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        self._decide(rid, "delay_note")
+        fx = FakeEffects()
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        self.assertEqual(len(fx.mails), 1)
+        to, subject, body = fx.mails[0]
+        self.assertIn(ap.order_ref(rid), body)
+        self.assertIn("48-hour target", body)
+        self.assertIn("refund the order in full", body)
+        self.assertEqual(ap.load_state(rid)["delay_email_status"], "sent")
+        # A second pass sends no second email.
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        self.assertEqual(len(fx.mails), 1)
+        self.assertEqual(row(rid)["status"], "paid")
+
+    def test_40h_card_no_action_records_and_stays_open(self):
+        rid = insert_order(paid_ago="41 hours", received_ago="41 hours")
+        self._decide(rid, "no_action")
+        fx = FakeEffects()
+        self.assertEqual(ap.sla_decisions(None, ap.JOB_ROOT, fx), 1)
+        self.assertEqual(fx.mails, [])
+        self.assertEqual(row(rid)["status"], "paid")
+        self.assertIsNone(row(rid)["refund_decision"])
+
+    def test_40h_card_never_fires_for_held_or_decided_orders(self):
+        rid = insert_order(paid_ago="49 hours", received_ago="49 hours")
+        ap.sql(f"UPDATE {ap.TABLE} SET customer_hold_started_at=now() WHERE id='{rid}'")
+        other = insert_order(paid_ago="49 hours", received_ago="49 hours")
+        ap.sql(f"UPDATE {ap.TABLE} SET refund_decision='approved' WHERE id='{other}'")
+        self.assertEqual(ap.sla_decision_rows(None, ap.JOB_ROOT), [])
+
+
+class SlaDecisionCardTests(unittest.TestCase):
+    """The 40 h card mechanics: exact callback keys, expiry, no text-reply decision."""
+
+    def test_three_buttons_resolve_to_three_distinct_decisions(self):
+        import sla_decision as sd
+        for key, expected in (("delay_key", "delay_note"), ("refund_key", "refund"),
+                              ("noaction_key", "no_action")):
+            state = {"chat_id": 42, "message_id": 99, "created_at": 100.0, "expires_at": 100.0 + sd.WINDOW,
+                     "delay_key": "k_delay", "refund_key": "k_refund", "noaction_key": "k_noaction"}
+            data = {"delay_key": "k_delay", "refund_key": "k_refund", "noaction_key": "k_noaction"}[key]
+            sd.apply_callbacks(state, [(12345, 42, 99, 42, 200.0, data)], 300.0)
+            self.assertEqual(state.get("decision"), expected, key)
+
+    def test_wrong_chat_sender_and_late_callback_never_decide(self):
+        import sla_decision as sd
+        state = {"chat_id": 42, "message_id": 99, "created_at": 100.0, "expires_at": 200.0,
+                 "delay_key": "k_delay", "refund_key": "k_refund", "noaction_key": "k_noaction"}
+        sd.apply_callbacks(state, [(1, 7, 99, 7, 150.0, "k_refund")], 160.0)   # foreign chat
+        sd.apply_callbacks(state, [(2, 42, 98, 42, 150.0, "k_refund")], 160.0)  # other message
+        sd.apply_callbacks(state, [(3, 42, 99, 42, 250.0, "k_refund")], 160.0)  # after expiry
+        self.assertIsNone(state.get("decision"))
+        sd.apply_callbacks(state, [], 300.0)
+        self.assertEqual(state.get("decision"), "expired")
+
+    def test_recorded_decision_reference_requires_an_exact_button(self):
+        import sla_decision as sd
+        root = Path(tempfile.mkdtemp())
+        rid = str(uuid.uuid4())
+        (root / f"{rid}.json").write_text(json.dumps({"decision": "refund", "message_id": "notanint",
+                                                    "update_id": 5}))
+        with self.assertRaises(ValueError):
+            sd.reference(root, rid)
+
+
+class ReviewEngineTests(unittest.TestCase):
+    """PR1e: the read_only source review always picks claude directly; capacity is a hold."""
+
+    @unittest.skipUnless(Path("/usr/bin/bwrap").is_file(), "bubblewrap is required")
+    def test_review_run_uses_claude_without_the_quota_pick(self):
+        rid = str(uuid.uuid4())
+        job_dir = ap.JOB_ROOT / rid / "review"
+        job_dir.mkdir(parents=True)
+        (job_dir / "PROMPT.md").write_text("review", encoding="utf-8")
+        calls = []
+
+        def quota_reply(command, **kwargs):
+            calls.append(command[1])
+            if command[1] == "pick":
+                raise AssertionError("the review must never quota-pick another engine")
+            return subprocess.CompletedProcess([], 0, stdout="ok", stderr="")
+        try:
+            with mock.patch.object(ap, "sandbox_agent_command", return_value=(["/usr/bin/bwrap", "--"], [])), \
+                    mock.patch.object(ap.subprocess, "run", side_effect=quota_reply), \
+                    mock.patch.object(ap.subprocess, "Popen", return_value=mock.Mock(returncode=0)) as popen:
+                code = ap.run_agent(job_dir, {"FASTLANE_REQUEST_ID": rid}, 60, read_only=True)
+            self.assertEqual(code, 0)
+            self.assertEqual(calls, ["status", "allow"])
+            self.assertIn("claude", (job_dir / ".engine").read_text())
+        finally:
+            shutil.rmtree(job_dir.parent, ignore_errors=True)
+
+    @unittest.skipUnless(Path("/usr/bin/bwrap").is_file(), "bubblewrap is required")
+    def test_review_run_at_claudes_limit_is_a_capacity_hold(self):
+        rid = str(uuid.uuid4())
+        job_dir = ap.JOB_ROOT / rid / "review"
+        job_dir.mkdir(parents=True)
+        (job_dir / "PROMPT.md").write_text("review", encoding="utf-8")
+
+        def quota_reply(command, **kwargs):
+            rc = 0 if command[1] == "status" else 1
+            return subprocess.CompletedProcess([], rc, stdout="", stderr="limit")
+        try:
+            with mock.patch.object(ap, "sandbox_agent_command", return_value=(["/usr/bin/bwrap", "--"], [])), \
+                    mock.patch.object(ap.subprocess, "run", side_effect=quota_reply), \
+                    self.assertRaises(ap.static_agent.CapacityHold):
+                ap.run_agent(job_dir, {"FASTLANE_REQUEST_ID": rid}, 60, read_only=True)
+        finally:
+            shutil.rmtree(job_dir.parent, ignore_errors=True)
 
 
 if __name__ == "__main__":

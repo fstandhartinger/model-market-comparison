@@ -27,6 +27,7 @@ import static_agent
 import release_render
 import refusal_approval
 import refund_approval
+import sla_decision
 import os
 import pwd
 import re
@@ -126,9 +127,55 @@ BACKOFF_BASE_SECONDS = 300
 BACKOFF_CAP_SECONDS = 7200
 ALERT_REPEAT = timedelta(hours=24)
 
+# Operational holds that clear themselves: transient infrastructure causes retry the
+# evaluation with a bounded backoff; anything else (or a retry budget used up) escalates
+# once per order+reason with one urgent card and a board #11 handoff.
+TRANSIENT_HOLD_REASONS = frozenset({
+    "official_measurement_code_pin_changed",
+    "official_measurement_pin_changed",
+    "measurement_pins_differ_from_review",
+    "gpu_pod_capacity",
+    "gpu_pod_run_failed",
+    "fetch_source_transient",
+})
+HOLD_RETRY_BACKOFF_MINUTES = (15, 30, 60, 120)
+HOLD_MAX_RETRIES = len(HOLD_RETRY_BACKOFF_MINUTES)
+BOARD_HANDOFF_THREAD = "11"  # "JevBench releases" (was the stale allout-ops-20260929 thread)
+
+# git stderr patterns that mean "try again later", not "the customer's link is wrong".
+TRANSIENT_FETCH_RE = re.compile(
+    r"timed? ?out|temporary|try again|could not resolve|name or service|network (?:is )?unreachable"
+    r"|connection (?:refused|reset|timed out|closed)|early eof|rpc failed|http[s]?/?\d* ?5\d\d"
+    r"|500|502|503|504|rate.?limit|too many requests|the remote end hung up",
+    re.IGNORECASE,
+)
+
+BAD_LINK_MESSAGES = {
+    "model": "The model link does not point to a Hugging Face model repository; please send the exact "
+             "repository link (and revision) for each model to evaluate.",
+    "code": "The code link does not point to a GitHub repository; please send the exact repository "
+            "link (and revision) for the code to evaluate.",
+}
+
 
 class PickupError(RuntimeError):
     pass
+
+
+class GitFailure(PickupError):
+    """A git subprocess failed; carries stderr so callers can classify transient errors."""
+
+    def __init__(self, message: str, stderr: str = ""):
+        super().__init__(message)
+        self.stderr = stderr
+
+
+class FetchTransientError(PickupError):
+    """Timeouts, DNS, 5xx and other retryable source-fetch failures (operational hold)."""
+
+
+class FetchPermanentError(PickupError):
+    """A link that is not a usable repository, or a source that cannot be fetched as submitted."""
 
 
 # ---------------------------------------------------------------------------
@@ -469,6 +516,11 @@ class Effects:
         if mode == "digest":
             command = [str(HOME / "bin/notify"), "digest"] + (["--dry-run"] if self.dry_run else []) + ["fastlane-autopickup", message]
             stdin = None
+        elif mode == "urgent":
+            # `notify urgent` takes the text as an argument (no --text-stdin) and requires
+            # a 🚨 DRINGEND first line without a structured 🧑 Für dich ask block.
+            command = [str(HOME / "bin/notify"), "urgent"] + (["--dry-run"] if self.dry_run else []) + [message]
+            stdin = None
         else:
             command = [str(HOME / "bin/notify"), "now", "--text-stdin"]
             if requested:
@@ -482,12 +534,12 @@ class Effects:
         return result.returncode == 0
 
     # -- board #9 ------------------------------------------------------------
-    def board(self, message: str, owner: str, kind: str = "handoff") -> bool:
+    def board(self, message: str, owner: str, kind: str = "handoff", thread: str = "9") -> bool:
         if self.dry_run:
-            self.record("board", owner=owner, board_kind=kind, dry_run=True, ok=True)
+            self.record("board", owner=owner, board_kind=kind, thread=thread, dry_run=True, ok=True)
             return True
         result = subprocess.run(
-            [str(HOME / "bin/agent-board"), "--as", "fastlane-autopickup", "post", "9", "-", "--to", owner, "--kind", kind],
+            [str(HOME / "bin/agent-board"), "--as", "fastlane-autopickup", "post", thread, "-", "--to", owner, "--kind", kind],
             input=message, text=True, capture_output=True, timeout=60, check=False,
         )
         self.record("board", owner=owner, board_kind=kind, ok=result.returncode == 0)
@@ -1295,7 +1347,7 @@ def send_tracked_mail(row: dict[str, Any], state: dict[str, Any], step_name: str
     update_row(rid, f"{column}='failed'", f"{column}='sending'")
     if finish_fail(state, step_name, reason):
         alert(state, f"{step_name}_exhausted", effects, urgent=True, text=(
-            f"🚨 DRINGEND\n\n🧑 Für dich\n- Send the {step_name.replace('_', ' ')} for fast-lane order {order_ref(rid)} by hand.\n"
+            f"🚨 DRINGEND\n\n- Send the {step_name.replace('_', ' ')} for fast-lane order {order_ref(rid)} by hand.\n"
             f"  Why: The automatic email failed {STEP_LIMITS[step_name]} times ({reason}).\n"
             f"  Steps:\n  1. Open {job_directory(rid, JOB_ROOT)} and the request in `~/bin/jevbench-review list`.\n"
             "  2. Send the email and record it on board #9.\n  Time: 5 minutes"))
@@ -1319,7 +1371,7 @@ def alert(state: dict[str, Any], key: str, effects: Effects, *, text: str, urgen
     previous = parse_ts(state["alerts"].get(key))
     if previous is not None and (once or utcnow() - previous < ALERT_REPEAT):
         return False
-    sent = effects.notify(text, mode="digest" if digest else "now")
+    sent = effects.notify(text, mode="urgent" if urgent else ("digest" if digest else "now"))
     if sent:
         state["alerts"][key] = iso(utcnow())
         save_state(state)
@@ -1356,7 +1408,7 @@ def advance_intake(row: dict[str, Any], state: dict[str, Any], job_dir: Path, ef
             except PickupError as exc:
                 if finish_fail(state, "paid_at", str(exc)):
                     alert(state, "paid_at_exhausted", effects, urgent=True, text=(
-                        f"🚨 DRINGEND\n\n🧑 Für dich\n- Check the payment time of fast-lane order {order_ref(rid)}.\n"
+                        f"🚨 DRINGEND\n\n- Check the payment time of fast-lane order {order_ref(rid)}.\n"
                         "  Why: The pickup could not match the recorded signed Stripe event, so the confirmation and evaluation did not start.\n"
                         "  Steps:\n  1. Open the Stripe payment for this request.\n"
                         f"  2. If it is paid, record paid_at and rerun `~/bin/jevbench-autopickup cycle`.\n  Time: 10 minutes"))
@@ -1434,6 +1486,42 @@ def advance_intake(row: dict[str, Any], state: dict[str, Any], job_dir: Path, ef
     return load_row(rid) or row
 
 
+def hold_retries(state: dict[str, Any], reason: str) -> int:
+    value = state.setdefault("hold_retries", {}).get(reason, 0)
+    return value if isinstance(value, int) and not isinstance(value, bool) and value >= 0 else 0
+
+
+def set_operational_hold(state: dict[str, Any], reason: str, *, transient: bool, **extra: Any) -> None:
+    """Record an operational hold; a recurring same-reason hold keeps its spent retry budget."""
+    state["operational_hold"] = {"reason": reason, "transient": transient,
+                                 "retries": hold_retries(state, reason),
+                                 "at": iso(utcnow()), **extra}
+    save_state(state)
+
+
+def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Effects,
+                         now: datetime, reason: str, *, exhausted: bool) -> None:
+    """A hold that will not clear itself gets one urgent card per order+reason plus a #11 handoff."""
+    rid = request_id(row.get("id"))
+    if not step_done(state, "operational_handoff"):
+        if effects.board(f"Fast-lane order {order_ref(rid)} requires an official measurement owner: "
+                         f"{reason}. Payment deadline "
+                         f"{deadline_for(row).isoformat()} continues; customer hold is not set. "
+                         f"Request evidence: {job_directory(rid, JOB_ROOT)}/STATE.md. "
+                         "Use the pinned runtime/review contract; never reuse another order's run.",
+                         owner_for(rid), thread=BOARD_HANDOFF_THREAD):
+            finish_ok(state, "operational_handoff", now)
+    hold_key = re.sub(r"[^A-Za-z0-9_]+", "_", reason)[:48]
+    why = f"The automatic retry policy is exhausted ({HOLD_MAX_RETRIES} retries)" if exhausted else \
+        "this hold reason has no automatic retry"
+    alert(state, f"operational_hold_{hold_key}", effects, urgent=True, text=(
+        f"🚨 DRINGEND\n\n- Rescue fast-lane order {order_ref(rid)} ({reason}).\n"
+        f"  Why: An operational hold is blocking the measurement and {why}; "
+        f"the 48-hour deadline is {deadline_for(row).strftime('%d %b %H:%M UTC')}.\n"
+        f"  Steps:\n  1. Read STATE.md in {job_directory(rid, JOB_ROOT)}.\n"
+        "  2. Fix the cause and clear the operational hold. No refund happens without your approval card.\n  Time: 15 minutes"))
+
+
 def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effects, now: datetime) -> None:
     rid = request_id(row.get("id"))
     status = row.get("evaluation_status")
@@ -1458,27 +1546,45 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
             status = "failed"
         else:
             return
+    if status == "exhausted":
+        detail = (state.get("evaluation_exhausted") or {}).get("reason") or \
+            f"the evaluation failed {MAX_EVALUATION_ATTEMPTS} times"
+        alert(state, "evaluation_exhausted", effects, urgent=True, text=(
+            f"🚨 DRINGEND\n\n- Rescue fast-lane order {order_ref(rid)}.\n"
+            f"  Why: {detail}; the 48-hour deadline is {deadline_for(row).strftime('%d %b %H:%M UTC')}.\n"
+            f"  Steps:\n  1. Read STATE.md and OUTPUT.md in {job_directory(rid, JOB_ROOT)}.\n"
+            "  2. Start a manual evaluation job. No refund happens without your approval card.\n  Time: 15 minutes"))
+        return
     if status in ("pending", "failed"):
         operational = state.get("operational_hold")
         if isinstance(operational, dict):
-            if not step_done(state, "operational_handoff"):
-                if effects.board(f"Fast-lane order {order_ref(rid)} requires an official measurement owner: "
-                                 f"{operational.get('reason', 'infrastructure')}. Payment deadline "
-                                 f"{deadline_for(row).isoformat()} continues; customer hold is not set. "
-                                 f"Request evidence: {job_directory(rid, JOB_ROOT)}/STATE.md. "
-                                 "Use the pinned runtime/review contract; never reuse another order's run.",
-                                 "allout-ops-20260929"):
-                    finish_ok(state, "operational_handoff", now)
-            # Durable handoff, no repeated service starts or exhausted retry budget. Host
-            # recovery explicitly clears the infrastructure hold after fixing its cause.
-            return
+            reason = str(operational.get("reason") or "infrastructure")
+            transient = bool(operational.get("transient")) or reason in TRANSIENT_HOLD_REASONS
+            if transient:
+                retries = hold_retries(state, reason)
+                if retries < HOLD_MAX_RETRIES:
+                    retry_at = parse_ts(operational.get("next_retry_at"))
+                    if retry_at is None:
+                        operational["next_retry_at"] = iso(now + timedelta(minutes=HOLD_RETRY_BACKOFF_MINUTES[retries]))
+                        save_state(state)
+                        return
+                    if now < retry_at:
+                        return
+                    # Backoff over: drop the hold and let the bounded evaluation restart below.
+                    state["hold_retries"][reason] = retries + 1
+                    operational["retries"] = retries + 1
+                    operational["last_retry_at"] = iso(now)
+                    operational.pop("next_retry_at", None)
+                    state.pop("operational_hold", None)
+                    save_state(state)
+                else:
+                    operational_escalate(row, state, effects, now, reason, exhausted=True)
+                    return
+            else:
+                operational_escalate(row, state, effects, now, reason, exhausted=False)
+                return
         if attempts >= MAX_EVALUATION_ATTEMPTS:
             update_row(rid, "evaluation_status='exhausted'", "evaluation_status='failed'")
-            alert(state, "evaluation_exhausted", effects, urgent=True, text=(
-                f"🚨 DRINGEND\n\n🧑 Für dich\n- Rescue fast-lane order {order_ref(rid)}.\n"
-                f"  Why: The evaluation failed {MAX_EVALUATION_ATTEMPTS} times; the 48-hour deadline is {deadline_for(row).strftime('%d %b %H:%M UTC')}.\n"
-                f"  Steps:\n  1. Read STATE.md and OUTPUT.md in {job_directory(rid, JOB_ROOT)}.\n"
-                "  2. Start a manual evaluation job. No refund happens without your approval card.\n  Time: 15 minutes"))
             return
         if step(state, "evaluation_start")["status"] == "done":
             # A finished start step belongs to an earlier attempt; allow the next bounded retry.
@@ -1497,7 +1603,7 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
             update_row(rid, "evaluation_status='failed'", "evaluation_status='starting'")
             if finish_fail(state, "evaluation_start", "systemd_start_failed"):
                 alert(state, "evaluation_start_exhausted", effects, urgent=True, text=(
-                    f"🚨 DRINGEND\n\n🧑 Für dich\n- Start the evaluation of fast-lane order {order_ref(rid)} by hand.\n"
+                    f"🚨 DRINGEND\n\n- Start the evaluation of fast-lane order {order_ref(rid)} by hand.\n"
                     f"  Why: systemd refused to start {unit} {STEP_LIMITS['evaluation_start']} times.\n"
                     f"  Steps:\n  1. Run `systemctl --user status {unit}` and fix the cause.\n"
                     f"  2. Rerun `~/bin/jevbench-autopickup cycle`.\n  Time: 10 minutes"))
@@ -2713,7 +2819,7 @@ def advance_public_release(row: dict[str, Any], job_dir: Path, state: dict[str, 
             state["public_release"] = release
             save_state(state)
             alert(state, "public_release_queue_paused", effects, urgent=True, text=(
-                f"🚨 DRINGEND\n\n🧑 Für dich\n- Resume the site release PR for fast-lane order {order_ref(request_id(row.get('id')))}.\n"
+                f"🚨 DRINGEND\n\n- Resume the site release PR for fast-lane order {order_ref(request_id(row.get('id')))}.\n"
                 "  Why: The merge queue removed `bh-merge-ready`, so the site revision did not pass its gates.\n"
                 f"  Steps:\n  1. Inspect PR #{pr_number} in {REPO}.\n  2. Fix the site revision and reapply `bh-merge-ready` when ready.\n  Time: 15 minutes"))
         return False
@@ -2780,7 +2886,7 @@ def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, 
             if finish_fail(state, "finalize", reason):
                 update_row(rid, "release_status='failed'")
                 alert(state, "finalize_exhausted", effects, urgent=True, text=(
-                    f"🚨 DRINGEND\n\n🧑 Für dich\n- Check the result of fast-lane order {order_ref(rid)}.\n"
+                    f"🚨 DRINGEND\n\n- Check the result of fast-lane order {order_ref(rid)}.\n"
                     f"  Why: The result could not be verified ({reason[:120]}), so no result email went out.\n"
                     f"  Steps:\n  1. Open {job_dir}/release/RESULT.json and STATE.md.\n"
                     "  2. Fix the release or send the result by hand.\n  Time: 15 minutes"))
@@ -3361,6 +3467,14 @@ def recover_result_email_leases(synthetic_id: str | None, job_root: Path, effect
                        "delivery_email_status='sending' AND updated_at < now()-interval '10 minutes'")
 
 
+def measurement_started(rid: str, job_root: Path) -> bool:
+    """A host measurement record or a produced RESULT.json means the clock is no longer 'not started'."""
+    state = load_state(rid)
+    if isinstance(state.get("host_measurement"), dict) and state["host_measurement"]:
+        return True
+    return (job_directory(rid, job_root) / "release" / "RESULT.json").is_file()
+
+
 def sla_sweep(synthetic_id: str | None, job_root: Path, effects: Effects) -> dict[str, int]:
     recover_result_email_leases(synthetic_id, job_root, effects)
     predicate = managed_predicate("r", synthetic_id, job_root)
@@ -3373,8 +3487,8 @@ def sla_sweep(synthetic_id: str | None, job_root: Path, effects: Effects) -> dic
             if effects.dry_run:
                 row = sql_json(f"SELECT {row_json_sql('r')} FROM {TABLE} AS r WHERE {base} "
                                f"AND {sla_elapsed_sql()} >= interval '{hours} hours' AND r.{column}_alerted_at IS NULL LIMIT 1")
-                if row:
-                    effects.notify(sla_message(row, hours), mode="now")
+                if row and (hours != 24 or not measurement_started(request_id(row["id"]), job_root)):
+                    effects.notify(sla_message(row, hours), mode="urgent" if hours >= 36 else "now")
                     counts[key] += 1
                 break
             row = sql_json(f"""
@@ -3387,8 +3501,12 @@ def sla_sweep(synthetic_id: str | None, job_root: Path, effects: Effects) -> dic
             """)
             if not row:
                 break
-            sent = effects.notify(sla_message(row, hours), mode="now")
             rid = request_id(row["id"])
+            if hours == 24 and measurement_started(rid, job_root):
+                # Measuring already; the 24 h "not started" warning does not apply to this order.
+                update_row(rid, f"{column}_alerted_at=now(), {column}_alert_claimed_at=NULL")
+                continue
+            sent = effects.notify(sla_message(row, hours), mode="urgent" if hours >= 36 else "now")
             if sent:
                 update_row(rid, f"{column}_alerted_at=now(), {column}_alert_claimed_at=NULL")
                 counts[key] += 1
@@ -3402,6 +3520,81 @@ def sla_sweep(synthetic_id: str | None, job_root: Path, effects: Effects) -> dic
         for item in sql_rows(f"SELECT json_build_object('id',r.id::text)::text FROM {TABLE} AS r WHERE {guard}"):
             effects.record("refund_approval_required", id=item["id"], dry_run=True)
     return counts
+
+
+def sla_decision_rows(synthetic_id: str | None, job_root: Path) -> list[dict[str, Any]]:
+    """Open orders 40+ hours after payment with no decision yet (the 40 h card asks Florian)."""
+    predicate = managed_predicate("r", synthetic_id, job_root)
+    return sql_rows(f"""
+      SELECT {row_json_sql('r')} FROM {TABLE} AS r
+      WHERE {predicate} AND r.status IN ('paid','review_passed') AND r.result_delivered_at IS NULL
+        AND r.paid_at IS NOT NULL AND r.customer_hold_started_at IS NULL
+        AND COALESCE(r.delivery_email_status,'not_due') NOT IN ('sending','sent')
+        AND r.refund_id IS NULL AND r.refund_decision IS NULL
+        AND {sla_elapsed_sql()} >= interval '40 hours'
+      ORDER BY r.paid_at LIMIT 20
+    """)
+
+
+def delay_note_message(row: dict[str, Any]) -> tuple[str, str]:
+    new_eta = (deadline_for(row) + timedelta(hours=24)).strftime("%d %b %H:%M UTC")
+    rid = request_id(row["id"])
+    subject = f"Benchmark Heaven evaluation order {order_ref(rid)}: delayed"
+    body = fill_template(read_template("autopickup-delay-template.txt"),
+                         {"ORDER_REF": order_ref(rid), "NEW_ETA": new_eta})
+    return subject, body
+
+
+def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) -> int:
+    """Advance each open order's 40 h decision card and apply Florian's exact button.
+
+    "Refund in full" is written like the refund card (status refund_due, decision approved), so
+    the 48 h card can never fire a second refund for the same order. "Send delay note" sends the
+    fixed delay template once and records delay_email_status in the request state.
+    """
+    if effects.dry_run:
+        return 0
+    asked = 0
+    root = STATE_ROOT / "sla-decisions"
+    for row in sla_decision_rows(synthetic_id, job_root):
+        rid = request_id(row["id"])
+        state = load_state(rid)
+        try:
+            outcome = sla_decision.advance(row, root, effects, utcnow().timestamp(),
+                                           deadline_for(row).strftime("%d %b %H:%M UTC"))
+        except Exception as exc:
+            print(f"fast-lane SLA decision: order {order_ref(rid)}: {type(exc).__name__}", file=sys.stderr)
+            continue
+        asked += 1
+        if outcome == "refund":
+            if apply_refund_decision(row, "approved", sla_decision.reference(root, rid), effects):
+                effects.board(f"Fast-lane order {order_ref(rid)}: Florian approved a full refund on the "
+                              "40-hour decision card; the refund worker pays it back now.", owner_for(rid), kind="note")
+        elif outcome == "delay_note":
+            if state.get("delay_email_status") != "sent":
+                subject, body = delay_note_message(row)
+                ok, reason = effects.mail(str(row.get("email") or ""), subject, body)
+                state["delay_email_status"] = "sent" if ok else f"failed:{reason}"
+                save_state(state)
+                if not ok:
+                    alert(state, "delay_note_failed", effects, digest=True, text=(
+                        f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: Florian chose "
+                        "'Send delay note' on the 40-hour card but the delay email failed; retry next cycle."))
+            if state.get("delay_email_status") == "sent":
+                effects.board(f"Fast-lane order {order_ref(rid)}: Florian sent the delay note on the "
+                              "40-hour decision card; the customer was told the new ETA.", owner_for(rid), kind="note")
+        elif outcome == "no_action":
+            effects.board(f"Fast-lane order {order_ref(rid)}: Florian chose 'No action' on the 40-hour "
+                          "decision card; the order keeps running.", owner_for(rid), kind="note")
+        elif outcome == "exhausted":
+            alert(state, "sla40_card_exhausted", effects, digest=True, text=(
+                f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: three 40-hour decision "
+                "cards expired unanswered; nothing was decided. An operator follows up."))
+        elif outcome == "unknown":
+            alert(state, "sla40_card_unknown", effects, digest=True, text=(
+                f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: the 40-hour decision card "
+                "has an uncertain delivery; held for reconciliation, nothing decided."))
+    return asked
 
 
 def refund_decision_rows(synthetic_id: str | None, job_root: Path) -> list[dict[str, Any]]:
@@ -3480,7 +3673,7 @@ def sla_message(row: dict[str, Any], hours: int) -> str:
     due = deadline_for(row).strftime("%d %b %H:%M UTC")
     folder = job_directory(rid, JOB_ROOT)
     if hours >= 36:
-        return (f"🚨 DRINGEND\n\n🧑 Für dich\n- Check fast-lane order {order_ref(rid)}.\n"
+        return (f"🚨 DRINGEND\n\n- Check fast-lane order {order_ref(rid)}.\n"
                 f"  Why: No result 36 hours after payment; the deadline is {due}. No automatic refund: you will get a refund decision card then.\n"
                 f"  Steps:\n  1. Open {folder}/STATE.md.\n  2. Decide whether to intervene.\n  Time: 10 minutes")
     return (f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: 24 hours since payment, no result yet. "
@@ -3522,6 +3715,7 @@ def cycle(effects: Effects, synthetic_id: str | None = None, job_root: Path | No
     kill = (STATE_ROOT / "KILL").exists()
     # Expire late work before claiming rows for delivery. This closes the 48-hour race.
     counts["sla"] = sla_sweep(synthetic_id, root, effects)
+    counts["sla40_cards"] = sla_decisions(synthetic_id, root, effects)
     counts["refund_cards"] = refund_decisions(synthetic_id, root, effects)
     if not kill:
         for row in claim_rows(synthetic_id, root):
@@ -3596,7 +3790,7 @@ def health(effects: Effects) -> dict[str, Any]:
              if (parse_ts(sent_before.get(key)) is None or now - parse_ts(sent_before.get(key)) > ALERT_REPEAT)]
     if fresh:
         lines = "\n".join(f"  {index}. {text}" for index, (_, text) in enumerate(fresh[:6], 1))
-        message = ("🚨 DRINGEND\n\n🧑 Für dich\n- Fix the fast-lane pickup health problems.\n"
+        message = ("🚨 DRINGEND\n\n- Fix the fast-lane pickup health problems.\n"
                    "  Why: Paid orders may miss their 48-hour promise.\n"
                    f"  Steps:\n{lines}\n  Time: 15 minutes")
         if effects.notify(message) and not effects.dry_run:
@@ -3806,18 +4000,23 @@ def run_agent(job_dir: Path, env: dict[str, str], timeout_hint: int, *, read_onl
     if status.returncode:
         raise PickupError("quota-pace status failed; refusing an unmeasured route")
     requires_claude_tools = read_only or file_authoring
-    pick_args = [str(HOME / "bin/quota-pace"), "pick", "--kind", "judgement"]
-    if requires_claude_tools:
-        pick_args.extend(("--order", "codex,devin,claude"))
-    picked = subprocess.run(pick_args, cwd=job_dir, env=env,
-                            text=True, capture_output=True, timeout=60, check=False)
-    engine = (picked.stdout.strip().splitlines() or [""])[-1].strip().lower()
-    if picked.returncode or engine not in ("claude", "codex", "devin"):
-        atomic_write(job_dir / ".engine", f"unavailable: no paid judgement engine eligible ({engine or 'unknown'})\n")
-        raise static_agent.CapacityHold("quota picker selected no eligible paid engine")
-    if requires_claude_tools and engine not in ("claude", "codex"):
-        atomic_write(job_dir / ".engine", f"unavailable: review/preparation requires the bounded tool allowlist ({engine})\n")
-        raise static_agent.CapacityHold("no quota-eligible engine with the required static review boundary")
+    if read_only and not file_authoring:
+        # The security source review always runs on Claude (never falls back to another
+        # engine). Claude at its limit is a capacity hold, retried by the transient policy.
+        engine = "claude"
+    else:
+        pick_args = [str(HOME / "bin/quota-pace"), "pick", "--kind", "judgement"]
+        if requires_claude_tools:
+            pick_args.extend(("--order", "codex,devin,claude"))
+        picked = subprocess.run(pick_args, cwd=job_dir, env=env,
+                                text=True, capture_output=True, timeout=60, check=False)
+        engine = (picked.stdout.strip().splitlines() or [""])[-1].strip().lower()
+        if picked.returncode or engine not in ("claude", "codex", "devin"):
+            atomic_write(job_dir / ".engine", f"unavailable: no paid judgement engine eligible ({engine or 'unknown'})\n")
+            raise static_agent.CapacityHold("quota picker selected no eligible paid engine")
+        if requires_claude_tools and engine not in ("claude", "codex"):
+            atomic_write(job_dir / ".engine", f"unavailable: review/preparation requires the bounded tool allowlist ({engine})\n")
+            raise static_agent.CapacityHold("no quota-eligible engine with the required static review boundary")
     admitted = subprocess.run([str(HOME / "bin/quota-pace"), "allow", engine, "--kind", "judgement"], cwd=job_dir,
                              env=env, text=True, capture_output=True, timeout=60, check=False)
     if admitted.returncode:
@@ -3941,14 +4140,32 @@ def evaluate(rid: str) -> int:
             source_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
             trusted_manifest = job_dir / "trusted-runner" / "UPSTREAM-MANIFEST.json"
             if not trusted_manifest.is_file():
-                if not consume_stage_attempt(state, "preparation", MAX_PREPARATION_ATTEMPTS):
-                    update_row(rid, "evaluation_status='failed'", "evaluation_status='running'")
-                    raise PickupError("measurement-adapter preparation retry budget exhausted")
+                # Source fetches happen outside the preparation budget: a bad or unreachable
+                # link must never burn an adapter-authoring attempt.
                 for which, column in (("code", "code_link"), ("model", "model_link")):
-                    link = str(row.get(column) or "")
                     receipt_path = source_dir / f"FETCH-RECEIPT-{which}.json"
-                    if SOURCE_URL_RE.fullmatch(link) and not receipt_path.exists():
+                    if receipt_path.exists():
+                        continue
+                    link = str(row.get(column) or "")
+                    if not SOURCE_URL_RE.fullmatch(link):
+                        fail_source_link(rid, job_dir, which)
+                        update_row(rid, "evaluation_status='pending'", "evaluation_status IN ('starting','running')")
+                        return 0
+                    try:
                         fetch_source(rid, which)
+                    except FetchTransientError as exc:
+                        set_operational_hold(state, "fetch_source_transient", transient=True,
+                                             detail=str(exc)[:200])
+                        update_row(rid, "evaluation_status='pending'", "evaluation_status IN ('starting','running')")
+                        return 0
+                    except FetchPermanentError:
+                        fail_source_link(rid, job_dir, which)
+                        update_row(rid, "evaluation_status='pending'", "evaluation_status IN ('starting','running')")
+                        return 0
+                if not consume_stage_attempt(state, "preparation", MAX_PREPARATION_ATTEMPTS):
+                    mark_evaluation_exhausted(state, "the measurement-adapter preparation retry budget is exhausted")
+                    update_row(rid, "evaluation_status='exhausted'", "evaluation_status IN ('starting','running')")
+                    return 1
                 prepare_runner_prompt(row, job_dir)
             else:
                 review_pins = write_review_prompt(row, job_dir)
@@ -3978,8 +4195,9 @@ def evaluate(rid: str) -> int:
                 update_row(rid, "evaluation_status='pending'", "evaluation_status='running'")
                 return 0
             if not consume_stage_attempt(state, "source_review", MAX_SOURCE_REVIEW_ATTEMPTS):
-                update_row(rid, "evaluation_status='failed'", "evaluation_status='running'")
-                raise PickupError("source review retry budget exhausted; manual recovery required")
+                mark_evaluation_exhausted(state, "the source review retry budget is exhausted")
+                update_row(rid, "evaluation_status='exhausted'", "evaluation_status IN ('starting','running')")
+                return 1
             review_code = run_agent(review_dir, agent_env(rid, review_dir), 2 * 3600, read_only=True)
             output = review_dir / "OUTPUT.md"
             review_path = review_dir / "CODE-REVIEW.md"
@@ -4043,8 +4261,7 @@ def evaluate(rid: str) -> int:
                 dispatch_measurement(rid, job_dir)
             except measurement_dispatch.OperationalHold as exc:
                 state = load_state(rid)
-                state["operational_hold"] = {"reason": str(exc), "at": iso(utcnow())}
-                save_state(state)
+                set_operational_hold(state, str(exc), transient=str(exc) in TRANSIENT_HOLD_REASONS)
                 update_row(rid, "evaluation_status='pending'", "evaluation_status='running'")
                 return 0
             update_row(rid, "evaluation_status='pending'", "evaluation_status='running'")
@@ -4059,7 +4276,7 @@ def evaluate(rid: str) -> int:
         code = run_agent(job_dir, agent_env(rid, job_dir), 46 * 3600)
     except static_agent.CapacityHold as exc:
         state["stage_attempts"] = attempts_before
-        state["operational_hold"] = {"reason": str(exc), "at": iso(utcnow())}
+        set_operational_hold(state, str(exc), transient=True)
         save_state(state)
         update_row(rid, "evaluation_status='pending'", "evaluation_status='running'")
         return 0
@@ -4082,6 +4299,35 @@ def evaluate(rid: str) -> int:
         return 0
     update_row(rid, "evaluation_status='failed'", "evaluation_status='running'")
     return code or 1
+
+
+def mark_evaluation_exhausted(state: dict[str, Any], reason: str) -> None:
+    """A burned-out stage budget stops the evaluation unit for good; the cycle escalates it."""
+    state["evaluation_exhausted"] = {"reason": reason, "at": iso(utcnow())}
+    save_state(state)
+
+
+def fail_source_link(rid: str, job_dir: Path, which: str) -> None:
+    """An unusable model/code link takes the customer change-request path (hold + Send-button card).
+
+    The submitted link is not a repository the host can fetch, so no adapter can be authored.
+    The order waits for a resubmission; no refund happens here."""
+    summary = BAD_LINK_MESSAGES[which]
+    review_dir = job_dir / "review"
+    review_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
+    atomic_write(review_dir / "CHANGES-REQUESTED.json", json.dumps({
+        "reason": f"unusable_{which}_link", "summary": summary,
+        "findings": [summary], "requested_at": iso(utcnow())}, indent=2) + "\n")
+    held = update_row(rid, f"customer_hold_started_at=now(), customer_hold_reason={sql_text(CHANGE_HOLD_REASON)}, "
+                           "evaluation_status='pending', change_request_email_status='approval_required'",
+                      "status IN ('paid','review_passed') AND result_delivered_at IS NULL AND refund_id IS NULL "
+                      "AND customer_hold_started_at IS NULL")
+    if not held:
+        raise PickupError("change request was not recorded: no row matched the guard")
+    atomic_write(job_dir / "STATE.md", (job_dir / "STATE.md").read_text(encoding="utf-8", errors="replace")
+                 + f"\n\nUnusable {which} link at {iso(utcnow())}: {summary} "
+                   "No refund: the order waits for the customer's new link (48-hour clock paused). "
+                   "The change-request email goes out after Florian's Send button.\n")
 
 
 def fail_source_review(rid: str, job_dir: Path, reason: str) -> None:
@@ -4300,7 +4546,7 @@ def resubmit(rid: str, model_link: str | None = None, code_link: str | None = No
         "at": iso(utcnow()), "count": count, "stage_attempts": state.get("stage_attempts", {}),
         "model_link_changed": model_link is not None, "code_link_changed": code_link is not None})
     state["stage_attempts"] = {}
-    for key in ("source_review_gate", "runner_review_failure", "operational_hold"):
+    for key in ("source_review_gate", "runner_review_failure", "operational_hold", "hold_retries"):
         state.pop(key, None)
     for name in ("evaluation_start", "change_reply_handoff"):
         state["steps"].pop(name, None)
@@ -4354,7 +4600,7 @@ def git(dest: Path, *args: str, stdin: str | None = None, timeout: int = 600) ->
                             input=stdin, text=True, capture_output=True, timeout=timeout, env=env, check=False,
                             preexec_fn=limit_git_files)
     if result.returncode:
-        raise PickupError(f"git {args[0]} failed")
+        raise GitFailure(f"git {args[0]} failed", result.stderr[-2000:])
     if args and args[0] == "fetch" and re.search(r"filter(?:ing)? (?:is )?not supported|does not support filter", result.stderr, re.I):
         raise PickupError("the source host does not support bounded partial fetch")
     return result.stdout
@@ -4394,32 +4640,41 @@ def fetch_source(rid: str, which: str) -> dict[str, Any]:
     config = re.sub(r'\n\[remote "origin"\][^\[]*', "\n", config)
     config += f'\n[remote "origin"]\n\turl = {url}\n\tfetch = +refs/heads/*:refs/remotes/origin/*\n'
     config_path.write_text(config, encoding="utf-8")
-    remote_head = git(dest, "ls-remote", "--symref", "origin", "HEAD", timeout=120)
-    head = next((line.split("\t")[0] for line in remote_head.splitlines() if line.endswith("\tHEAD") and not line.startswith("ref:")), "")
-    target = commit or head
-    if not SHA40_RE.fullmatch(target):
-        raise PickupError("could not resolve the repository head")
-    # Fetch trees without blobs, then materialise only code, documentation and manifests.
-    # The per-file limit is a final guard if a server ignores the partial-clone filter.
-    git(dest, "fetch", "--quiet", "--depth=1", "--filter=blob:none", "--no-tags", "origin", target, timeout=1800)
-    git(dest, "cat-file", "--batch-check", stdin=target + "\n")
-    git(dest, "update-ref", "--no-deref", "--stdin", stdin=f"update HEAD {target}\n")
-    git(dest, "sparse-checkout", "init", "--no-cone")
-    git(dest, "sparse-checkout", "set", "--no-cone", *REVIEW_GIT_PATTERNS)
-    git(dest, "checkout", "--detach", "-q", target)
-    resolved = git(dest, "rev-parse", "HEAD").strip()
-    if resolved != target:
-        raise PickupError("checked-out commit does not match the requested commit")
-    tree = git(dest, "rev-parse", "HEAD^{tree}").strip()
-    source_bytes = 0
-    for relative in git(dest, "ls-files", "-z").split("\x00"):
-        if not relative:
-            continue
-        path = dest / relative
-        if path.is_file() and not path.is_symlink():
-            source_bytes += path.stat().st_size
-            if source_bytes > MAX_REVIEW_SOURCE_BYTES:
-                raise PickupError("reviewable source files exceed the size limit")
+    try:
+        remote_head = git(dest, "ls-remote", "--symref", "origin", "HEAD", timeout=120)
+        head = next((line.split("\t")[0] for line in remote_head.splitlines() if line.endswith("\tHEAD") and not line.startswith("ref:")), "")
+        target = commit or head
+        if not SHA40_RE.fullmatch(target):
+            raise PickupError("could not resolve the repository head")
+        # Fetch trees without blobs, then materialise only code, documentation and manifests.
+        # The per-file limit is a final guard if a server ignores the partial-clone filter.
+        git(dest, "fetch", "--quiet", "--depth=1", "--filter=blob:none", "--no-tags", "origin", target, timeout=1800)
+        git(dest, "cat-file", "--batch-check", stdin=target + "\n")
+        git(dest, "update-ref", "--no-deref", "--stdin", stdin=f"update HEAD {target}\n")
+        git(dest, "sparse-checkout", "init", "--no-cone")
+        git(dest, "sparse-checkout", "set", "--no-cone", *REVIEW_GIT_PATTERNS)
+        git(dest, "checkout", "--detach", "-q", target)
+        resolved = git(dest, "rev-parse", "HEAD").strip()
+        if resolved != target:
+            raise PickupError("checked-out commit does not match the requested commit")
+        tree = git(dest, "rev-parse", "HEAD^{tree}").strip()
+        source_bytes = 0
+        for relative in git(dest, "ls-files", "-z").split("\x00"):
+            if not relative:
+                continue
+            path = dest / relative
+            if path.is_file() and not path.is_symlink():
+                source_bytes += path.stat().st_size
+                if source_bytes > MAX_REVIEW_SOURCE_BYTES:
+                    raise PickupError("reviewable source files exceed the size limit")
+    except subprocess.TimeoutExpired as exc:
+        raise FetchTransientError(f"{which} source fetch timed out") from exc
+    except GitFailure as exc:
+        if TRANSIENT_FETCH_RE.search(exc.stderr or ""):
+            raise FetchTransientError(f"{which} source fetch hit a transient network error") from exc
+        raise FetchPermanentError(f"{which} source repository could not be fetched") from exc
+    except PickupError as exc:
+        raise FetchPermanentError(str(exc)) from exc
     receipt = {"which": which, "url": url, "commit": resolved, "tree": tree, "pinned": bool(commit),
                "review_source_bytes": source_bytes, "fetched_at": iso(utcnow())}
     atomic_write(job_dir / "source" / f"FETCH-RECEIPT-{which}.json", json.dumps(receipt, indent=2) + "\n")
