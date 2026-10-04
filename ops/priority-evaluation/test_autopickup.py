@@ -1715,6 +1715,31 @@ class OperationalHoldRetryTests(DatabaseTestCase):
         self.assertEqual(len(fx.started), starts)
 
 
+class DeliveredOrderGuardTests(DatabaseTestCase):
+    """Review fix 3: a delivered order with a stale hold must never re-enter evaluation."""
+
+    def test_delivered_orders_with_stale_holds_never_restart_clear_or_escalate(self):
+        # Exactly the live state of b113eac1/3643732b: hand-delivered, status still 'paid',
+        # a delivery_email already sent and an operational hold left in the state file.
+        for reason, transient in (("official_measurement_code_pin_changed", True),
+                                  ("measured_by_sla_owner_open_weights_pod", False)):
+            with self.subTest(reason=reason):
+                rid = insert_order()
+                ap.sql(f"UPDATE {ap.TABLE} SET result_delivered_at=now(), delivery_email_status='sent', "
+                       f"evaluation_status='pending' WHERE id='{rid}'")
+                _set_operational_hold(rid, reason, transient=transient)
+                fx = FakeEffects()
+                ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+                self.assertEqual(fx.started, [])
+                self.assertEqual(fx.stopped, [])
+                self.assertEqual(fx.notes, [])
+                state = ap.load_state(rid)
+                self.assertEqual(state["operational_hold"]["reason"], reason)
+                self.assertIsNone(state["operational_hold"].get("next_retry_at"))
+                # Boards from manage_evaluation: none.
+                self.assertEqual(fx.boards, [])
+
+
 class SourceFetchPolicyTests(DatabaseTestCase):
     """PR1b/c: fetches run outside the preparation budget; bad links and burned budgets never idle."""
 
@@ -1773,6 +1798,76 @@ class SourceFetchPolicyTests(DatabaseTestCase):
             self.assertEqual(ap.evaluate(rid), 0)
         self.assertEqual(row(rid)["customer_hold_reason"], "customer_changes")
         self.assertEqual(ap.load_state(rid).get("stage_attempts", {}), {})
+
+    def test_api_order_with_null_links_is_untouched(self):
+        rid = insert_order()
+        ap.sql(f"UPDATE {ap.TABLE} SET access_type='api_endpoint', model_link='', code_link='' WHERE id='{rid}'")
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        with mock.patch.object(ap, "fetch_source") as fetch, \
+                mock.patch.object(ap, "run_agent", return_value=23):
+            self.assertEqual(ap.evaluate(rid), 23)
+        self.assertEqual(fetch.call_count, 0)
+        current = row(rid)
+        self.assertIsNone(current["customer_hold_started_at"])
+        self.assertEqual(ap.load_state(rid)["stage_attempts"]["preparation"], 1)
+        self.assertEqual(current["evaluation_status"], "failed")
+
+    def test_api_order_with_junk_code_link_skips_the_fetch_without_a_hold(self):
+        rid = insert_order()
+        ap.sql(f"UPDATE {ap.TABLE} SET access_type='api_endpoint', model_link='', "
+               f"code_link='https://example.com/not-a-repo' WHERE id='{rid}'")
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        with mock.patch.object(ap, "fetch_source") as fetch, \
+                mock.patch.object(ap, "run_agent", return_value=23):
+            self.assertEqual(ap.evaluate(rid), 23)
+        self.assertEqual(fetch.call_count, 0)
+        current = row(rid)
+        self.assertIsNone(current["customer_hold_started_at"])
+        self.assertEqual(current["change_request_email_status"], "not_due")
+        self.assertEqual(ap.load_state(rid)["stage_attempts"]["preparation"], 1)
+        state_md = (ap.JOB_ROOT / rid / "STATE.md").read_text()
+        self.assertIn("is not a supported repository URL", state_md)
+        self.assertIn("access_type api_endpoint", state_md)
+
+    def test_api_order_with_an_unfetchable_code_repo_skips_without_a_hold(self):
+        rid = insert_order()
+        ap.sql(f"UPDATE {ap.TABLE} SET access_type='api_endpoint', model_link='' WHERE id='{rid}'")
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        with mock.patch.object(ap, "fetch_source",
+                               side_effect=ap.FetchPermanentError("code source repository does not exist")), \
+                mock.patch.object(ap, "run_agent", return_value=23):
+            self.assertEqual(ap.evaluate(rid), 23)
+        current = row(rid)
+        self.assertIsNone(current["customer_hold_started_at"])
+        self.assertIn("could not be fetched", (ap.JOB_ROOT / rid / "STATE.md").read_text())
+
+    def test_infra_fetch_error_is_a_non_transient_operational_hold(self):
+        rid = insert_order()
+        fx = FakeEffects()
+        self._claim(rid, fx)
+        with mock.patch.object(ap, "fetch_source",
+                               side_effect=ap.FetchInfraError("model source fetch failed: corrupt object")):
+            self.assertEqual(ap.evaluate(rid), 0)
+        state = ap.load_state(rid)
+        self.assertEqual(state["operational_hold"]["reason"], "fetch_source_failed")
+        self.assertFalse(state["operational_hold"]["transient"])
+        self.assertIsNone(row(rid)["customer_hold_started_at"])
+
+    def test_fetch_stderr_classification(self):
+        for stderr in ("fatal: repository 'https://huggingface.co/x/y' not found",
+                       "remote: HTTP 404 Not Found",
+                       "fatal: could not read Username for 'https://github.com'",
+                       "fatal: 'https://example.com/x' does not appear to be a git repository"):
+            self.assertIsNotNone(ap.CUSTOMER_FETCH_RE.search(stderr), stderr)
+            self.assertIsNone(ap.TRANSIENT_FETCH_RE.search(stderr), stderr)
+        for stderr in ("fatal: unable to access: connection timed out", "remote: HTTP 503",
+                       "error: RPC failed; curl 56 early EOF"):
+            self.assertIsNotNone(ap.TRANSIENT_FETCH_RE.search(stderr), stderr)
+        self.assertIsNone(ap.CUSTOMER_FETCH_RE.search("fatal: corrupt loose object"))
+        self.assertIsNone(ap.TRANSIENT_FETCH_RE.search("fatal: corrupt loose object"))
 
     def test_fetch_error_classification(self):
         self.assertIsNotNone(ap.TRANSIENT_FETCH_RE.search("fatal: unable to connect: connection timed out"))

@@ -150,6 +150,14 @@ TRANSIENT_FETCH_RE = re.compile(
     re.IGNORECASE,
 )
 
+# git stderr patterns where the submitted link itself is the problem (customer-cause -> change
+# request). Our own host limits and odd failures never land here: they escalate as infra holds.
+CUSTOMER_FETCH_RE = re.compile(
+    r"repository not found|not found|404|does not appear to be a git repository"
+    r"|could not read username|authentication failed|access denied|permission denied|forbidden",
+    re.IGNORECASE,
+)
+
 BAD_LINK_MESSAGES = {
     "model": "The model link does not point to a Hugging Face model repository; please send the exact "
              "repository link (and revision) for each model to evaluate.",
@@ -175,7 +183,11 @@ class FetchTransientError(PickupError):
 
 
 class FetchPermanentError(PickupError):
-    """A link that is not a usable repository, or a source that cannot be fetched as submitted."""
+    """The submitted repository does not exist or is not accessible — a customer-cause."""
+
+
+class FetchInfraError(PickupError):
+    """A non-transient host-side fetch failure (limits, unexpected stderr, ref mismatch)."""
 
 
 # ---------------------------------------------------------------------------
@@ -1524,6 +1536,10 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
 
 def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effects, now: datetime) -> None:
     rid = request_id(row.get("id"))
+    if row.get("result_delivered_at") is not None:
+        # A delivered order is done forever: never restart the unit, clear a hold or send a
+        # hold escalation — even when state still carries an operational hold from the hand run.
+        return
     status = row.get("evaluation_status")
     attempts = int(row.get("evaluation_attempts") or 0)
     unit = EVAL_UNIT.format(rid)
@@ -4142,15 +4158,23 @@ def evaluate(rid: str) -> int:
             if not trusted_manifest.is_file():
                 # Source fetches happen outside the preparation budget: a bad or unreachable
                 # link must never burn an adapter-authoring attempt.
+                open_weights = row.get("access_type") == "open_weights"
                 for which, column in (("code", "code_link"), ("model", "model_link")):
                     receipt_path = source_dir / f"FETCH-RECEIPT-{which}.json"
                     if receipt_path.exists():
                         continue
-                    link = str(row.get(column) or "")
+                    link = str(row.get(column) or "").strip()
+                    if not link:
+                        continue  # API-endpoint orders carry no repository links; nothing to fetch
                     if not SOURCE_URL_RE.fullmatch(link):
-                        fail_source_link(rid, job_dir, which)
-                        update_row(rid, "evaluation_status='pending'", "evaluation_status IN ('starting','running')")
-                        return 0
+                        if open_weights:
+                            fail_source_link(rid, job_dir, which)
+                            update_row(rid, "evaluation_status='pending'", "evaluation_status IN ('starting','running')")
+                            return 0
+                        append_state(job_dir, f"\n\n{which.capitalize()} link {link[:200]} is not a supported "
+                                              f"repository URL at {iso(utcnow())}; fetch skipped "
+                                              f"(access_type {row.get('access_type')}).\n")
+                        continue
                     try:
                         fetch_source(rid, which)
                     except FetchTransientError as exc:
@@ -4158,10 +4182,20 @@ def evaluate(rid: str) -> int:
                                              detail=str(exc)[:200])
                         update_row(rid, "evaluation_status='pending'", "evaluation_status IN ('starting','running')")
                         return 0
-                    except FetchPermanentError:
-                        fail_source_link(rid, job_dir, which)
+                    except FetchInfraError as exc:
+                        set_operational_hold(state, "fetch_source_failed", transient=False,
+                                             detail=str(exc)[:200])
                         update_row(rid, "evaluation_status='pending'", "evaluation_status IN ('starting','running')")
                         return 0
+                    except FetchPermanentError:
+                        if open_weights:
+                            fail_source_link(rid, job_dir, which)
+                            update_row(rid, "evaluation_status='pending'", "evaluation_status IN ('starting','running')")
+                            return 0
+                        append_state(job_dir, f"\n\n{which.capitalize()} source repository could not be fetched "
+                                              f"at {iso(utcnow())}; fetch skipped "
+                                              f"(access_type {row.get('access_type')}).\n")
+                        continue
                 if not consume_stage_attempt(state, "preparation", MAX_PREPARATION_ATTEMPTS):
                     mark_evaluation_exhausted(state, "the measurement-adapter preparation retry budget is exhausted")
                     update_row(rid, "evaluation_status='exhausted'", "evaluation_status IN ('starting','running')")
@@ -4299,6 +4333,11 @@ def evaluate(rid: str) -> int:
         return 0
     update_row(rid, "evaluation_status='failed'", "evaluation_status='running'")
     return code or 1
+
+
+def append_state(job_dir: Path, text: str) -> None:
+    path = job_dir / "STATE.md"
+    atomic_write(path, path.read_text(encoding="utf-8", errors="replace") + text)
 
 
 def mark_evaluation_exhausted(state: dict[str, Any], reason: str) -> None:
@@ -4672,9 +4711,13 @@ def fetch_source(rid: str, which: str) -> dict[str, Any]:
     except GitFailure as exc:
         if TRANSIENT_FETCH_RE.search(exc.stderr or ""):
             raise FetchTransientError(f"{which} source fetch hit a transient network error") from exc
-        raise FetchPermanentError(f"{which} source repository could not be fetched") from exc
+        if CUSTOMER_FETCH_RE.search(exc.stderr or ""):
+            raise FetchPermanentError(f"{which} source repository does not exist or is not accessible") from exc
+        raise FetchInfraError(f"{which} source fetch failed: {(exc.stderr or '').splitlines()[-1][:160]}") from exc
     except PickupError as exc:
-        raise FetchPermanentError(str(exc)) from exc
+        if str(exc) == "could not resolve the repository head":
+            raise FetchPermanentError(f"{which} source repository head could not be resolved") from exc
+        raise FetchInfraError(str(exc)) from exc
     receipt = {"which": which, "url": url, "commit": resolved, "tree": tree, "pinned": bool(commit),
                "review_source_bytes": source_bytes, "fetched_at": iso(utcnow())}
     atomic_write(job_dir / "source" / f"FETCH-RECEIPT-{which}.json", json.dumps(receipt, indent=2) + "\n")
