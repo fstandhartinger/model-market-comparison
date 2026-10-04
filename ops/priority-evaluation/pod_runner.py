@@ -482,8 +482,9 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                   timeout=5400)
             for relative, digest in entry["sha256"].items():
                 check = _exec(provider, pod_id, ["sha256sum", f"{target}/{relative}"])
-                if check.stdout.split()[:1] != [digest]:
-                    raise PodRunError(f"weight file {entry['dir']}/{relative} sha256 mismatch")
+                if digest not in check.stdout.split():
+                    raise PodRunError(f"weight file {entry['dir']}/{relative} sha256 mismatch: "
+                                      f"{check.stdout.strip()[-200:]}")
         _exec(provider, pod_id, ["mkdir", "-p", "/work", "/work/out", "/work/code"])
         provider.scp_to(pod_id, str(staging_path), "/work/stage.tar")
         _exec(provider, pod_id, ["tar", "-xf", "/work/stage.tar", "-C", "/"])

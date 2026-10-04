@@ -2228,7 +2228,11 @@ class _FakeProvider(pod_runner.Provider):
         if command[:2] == ["docker", "image"]:
             out = '["x@sha256:8a69ffad015f138d7170c4ddc429e230a3bc1c1719f67e14324749df200a4b90"]'
         elif command[:1] == ["sha256sum"]:
-            out = f"{TORCHCAST_RECIPE['weights'][0]['sha256']['model.safetensors']}  x"
+            digest = "0" * 64 if self.behavior.get("sha_bad") \
+                else TORCHCAST_RECIPE['weights'][0]['sha256']['model.safetensors']
+            out = f"{digest}  x"
+            if self.behavior.get("sha_noise"):
+                out = "download warning: progress line\n" + out
         elif command[:2] == ["docker", "inspect"]:
             out = self.behavior.get("network_mode", "none") + "\n"
         elif command[:2] == ["docker", "wait"]:
@@ -2370,6 +2374,19 @@ class PodRunnerLifecycleTests(unittest.TestCase):
         with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
             self._run(provider)
         self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
+
+    def test_weight_sha_check_tolerates_leading_exec_output(self):
+        provider = _FakeProvider({"sha_noise": True})
+        receipt = self._run(provider)
+        self.assertEqual(receipt["rows"], 1624)
+
+    def test_weight_sha_mismatch_is_a_run_failure_with_the_actual_digest(self):
+        provider = _FakeProvider({"sha_bad": True})
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(provider)
+        self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
+        self.assertIn("0" * 64, str(ctx.exception.__cause__))
+        self.assertEqual(provider.removed, ["pod-1", "pod-2"])
 
     def test_row_count_mismatch_is_rejected(self):
         provider = _FakeProvider({"rows": 1600})
