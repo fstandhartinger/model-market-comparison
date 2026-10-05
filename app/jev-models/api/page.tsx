@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { readCurrentJevbench } from '../../../lib/jevbench-current.mjs';
 import { JevBenchV16ReleaseRoute } from '../../../components/JevBenchV16ReleaseRoute';
+import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 
 // JevBench v1.7.0 (Florian, 5 Oct 2026): the API-provider leaderboard. Same release data as /jev-models; only the
 // ranked set differs (hosted API offerings plus Jev, ranked among themselves).
@@ -19,5 +20,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function JevModelsApiPage() {
   const release = await readCurrentJevbench();
-  return <JevBenchV16ReleaseRoute live scope="api" release={release} versionPath="/jev-models/api" />;
+  return <>
+    <JevBenchV16ReleaseRoute live scope="api" release={release} versionPath="/jev-models/api" />
+    <JevHistoryLazy />
+  </>;
 }

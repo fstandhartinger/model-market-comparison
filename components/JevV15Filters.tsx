@@ -139,7 +139,8 @@ export function JevV15FilterProvider({ rows, apiKeys = NO_KEYS, children }: { ro
 
   const value = useMemo<JevV15FilterContextValue>(() => {
     const effective = normalizeJevFilters(filters, effectiveRows);
-    const visibleRows = filterJevRows(effectiveRows, effective).filter((row) => !hiddenKeys.has(row.key));
+    const candidateRows = hiddenKeys.size ? effectiveRows.filter((row) => !hiddenKeys.has(row.key)) : effectiveRows;
+    const visibleRows = filterJevRows(candidateRows, effective);
     const visibleKeys = new Set(visibleRows.map((row) => row.key));
     return {
       rows: effectiveRows,
@@ -148,14 +149,14 @@ export function JevV15FilterProvider({ rows, apiKeys = NO_KEYS, children }: { ro
       resetFilters,
       visibleKeys,
       visibleRows,
-      total: effectiveRows.length,
+      total: candidateRows.length,
       visible: visibleKeys.size,
       active: isJevFilterActive(effective),
-      numericAvailable: Object.fromEntries(JEV_NUMERIC_FIELDS.map((field) => [field, jevFieldHasValues(effectiveRows, field)])) as Record<JevV15NumericField, boolean>,
-      newAvailable: jevHasNewRows(effectiveRows),
-      providers: distinctJevValues(effectiveRows, 'provider'),
-      families: distinctJevValues(effectiveRows, 'family'),
-      licences: distinctJevValues(effectiveRows, 'licence'),
+      numericAvailable: Object.fromEntries(JEV_NUMERIC_FIELDS.map((field) => [field, jevFieldHasValues(candidateRows, field)])) as Record<JevV15NumericField, boolean>,
+      newAvailable: jevHasNewRows(candidateRows),
+      providers: distinctJevValues(candidateRows, 'provider'),
+      families: distinctJevValues(candidateRows, 'family'),
+      licences: distinctJevValues(candidateRows, 'licence'),
       apiKeys, showApi, setShowApi,
     };
   }, [effectiveRows, filters, setFilters, resetFilters, hiddenKeys, apiKeys, showApi]);

@@ -16,7 +16,7 @@ import { JevV15FilterVisibilityBridge } from './JevV15FilterVisibilityBridge';
 import { JevV15AllDataGrid } from './JevV15AllDataGrid';
 import { JevApiOfferingsToggle } from './JevApiOfferingsToggle';
 import { JevGpuCostCalculator } from './JevGpuCostCalculator';
-import { JEV_SCOPE_LISTING, type JevScope } from '../lib/jevbench-scope.mjs';
+import { JEV_REFERENCE_KEY, JEV_SCOPE_LISTING, type JevScope } from '../lib/jevbench-scope.mjs';
 
 // JevBench v1.6.0 release board. Reuses the established interactive charts on the
 // v1.6 aggregate artifact, and adds the main-pool language view, dated carry and the
@@ -86,8 +86,8 @@ function DatedCarry({ carry, hiddenApi }: { carry: JevV16Carry; hiddenApi: Reado
   const byRelease = carry.releases.map((r) => ({ ...r, n: carry.rows.filter((row) => row.measured_revision === r.revision).length })).filter((r) => r.n > 0);
   const shownByDefault = carry.rows.filter((r) => !hiddenApi.has(r.key)).length;
   return <section className="bh-panel mt-10 p-5" aria-labelledby="jev16-carry" data-bh-jev16-dated-carry>
-    <h2 id="jev16-carry" className="text-2xl font-bold">Not yet measured on v1.6 · {shownByDefault} systems with a dated carried score</h2>
-    {shownByDefault < carry.rows.length && <p className="bh-muted mt-1 text-xs">{carry.rows.length - shownByDefault} more carried rows are hosted API offerings; switch on “Show API offerings” or see the <a className="text-accent underline" href="/jev-models/api#jev16-carry">API leaderboard</a>.</p>}
+    <h2 id="jev16-carry" className="text-2xl font-bold">Not yet measured on v1.6 · {shownByDefault < carry.rows.length ? `${shownByDefault} open-weights systems` : `${carry.rows.length} systems`} with a dated carried score</h2>
+    {shownByDefault < carry.rows.length && <p className="bh-muted mt-1 text-xs">A further {carry.rows.length - shownByDefault} carried rows are hosted API offerings; they appear here when “Show API offerings” is on and are listed on the <a className="text-accent underline" href="/jev-models/api#jev16-carry">API leaderboard</a>.</p>}
     <p className="bh-muted mt-1 max-w-4xl text-sm">{carry.rule} {carry.method}</p>
     <p className="bh-muted mt-1 text-xs">Dates: {byRelease.map((r) => `${r.revision} published ${r.published_on} (${r.n})`).join(' · ')}. The date is the publication day of the release that first published the measurement, not a per-model measurement timestamp.</p>
     <div className="mt-3 max-h-[40rem] overflow-auto"><table className="w-full text-left text-sm tabular">
@@ -115,10 +115,10 @@ function BoardSplit({ scope }: { scope: JevScope }) {
   return <div data-bh-jev-board-split>
     <h3 className="mt-4 text-lg font-semibold">Open weights and API offerings (board v1.7.0)</h3>
     <ul className="bh-muted mt-1 list-disc space-y-1 pl-5 text-sm">
-      <li>{scope === 'open' ? 'This board' : 'The main board at /jev-models'} ranks <b>open-weights systems</b>: published weights that we ran ourselves on rented GPUs or CPUs. A system we measured through an endpoint we do not run (vendor API, author-hosted or third-party-hosted endpoint) is an <b>API offering</b>, even when its base weights are open; API offerings are ranked on {scope === 'api' ? 'this board' : <a className="text-accent underline" href="/jev-models/api">the API leaderboard</a>}.</li>
+      <li>{scope === 'open' ? 'This board' : 'The main board at /jev-models'} ranks <b>open-weights systems</b>: published weights that we ran ourselves, on GPU or CPU machines we rent and operate. A system we measured through an endpoint we do not run (vendor API, author-hosted or third-party-hosted endpoint, for example Qwen3.8 27B via Chutes) is an <b>API offering</b>, even when its base weights are open; API offerings are ranked on {scope === 'api' ? 'this board' : <a className="text-accent underline" href="/jev-models/api">the API leaderboard</a>}.</li>
       <li>Why separate boards: open weights can be compared on equal hosting terms, while an API price is a vendor decision that can be subsidised or raised later and is not reproducible by readers. Every score and measurement is the same on both boards; only the set of ranked rows differs, and ranks are the published order filtered to that set.</li>
       <li>Jev 1.13.0 is a hosted API. It stays on the open-weights board as the <b>reference row</b> (it defines the Jev-class cost and latency caps) and is not ranked there; it is ranked on the API leaderboard.</li>
-      <li>Official cost basis is unchanged: the Cost axis keeps each row&apos;s documented reference price (see the cost notes below; APIs with a known base model are priced at the developer&apos;s own list price). The GPU cost calculator is a What-If for your own hosting and never changes a score or rank.</li>
+      <li>Official cost basis is unchanged: the Cost axis keeps each row&apos;s documented reference price (see the cost notes below; APIs with a known base model are priced at the developer&apos;s own list price). {scope === 'open' ? 'The GPU cost calculator above' : 'The GPU cost calculator on the main board'} is a What-If for your own hosting and never changes a score or rank.</li>
     </ul>
     <h3 className="mt-4 text-lg font-semibold">Revision history</h3>
     <ul className="bh-muted mt-1 list-disc space-y-1 pl-5 text-sm" data-bh-jev-revision-history>
@@ -128,20 +128,22 @@ function BoardSplit({ scope }: { scope: JevScope }) {
   </div>;
 }
 
-function Method({ a, sha256, categoriesSha256, carrySha256, scope }: { a: JevV16ReleaseArtifact; sha256: string; categoriesSha256: string; carrySha256: string; scope: JevScope }) {
+function Method({ a, sha256, categoriesSha256, carrySha256, scope, hiddenApi }: { a: JevV16ReleaseArtifact; sha256: string; categoriesSha256: string; carrySha256: string; scope: JevScope; hiddenApi: ReadonlySet<string> }) {
   const sets = a.v16.item_sets;
   const off = a.v16.equating.offsets;
   const byDay = new Map<string, string[]>();
-  for (const s of a.systems) if (s.last_measured_on) byDay.set(s.last_measured_on, [...(byDay.get(s.last_measured_on) ?? []), short(s.display)]);
+  const methodSystems = a.systems.filter((s) => !hiddenApi.has(s.key));
+  for (const s of methodSystems) if (s.last_measured_on) byDay.set(s.last_measured_on, [...(byDay.get(s.last_measured_on) ?? []), short(s.display)]);
   const measuredDays = [...byDay.entries()].sort(([x], [y]) => x.localeCompare(y));
-  const failures = a.systems.map((s) => {
+  const failures = methodSystems.map((s) => {
     const v = Object.values((s as unknown as { validity?: Record<string, { invalid_rate: number; n: number }> }).validity ?? {});
     return [short(s.display), Math.round(v.reduce((t, c) => t + c.invalid_rate * c.n, 0)), v.reduce((t, c) => t + c.n, 0)] as [string, number, number];
   });
-  const confidenceOnly = a.systems.filter((s) => { const sup = Object.values((s as unknown as { support?: Record<string, string> }).support ?? {}); return sup.length > 0 && sup.every((x) => x === 'confidence'); }).map((s) => short(s.display));
+  const confidenceOnly = methodSystems.filter((s) => { const sup = Object.values((s as unknown as { support?: Record<string, string> }).support ?? {}); return sup.length > 0 && sup.every((x) => x === 'confidence'); }).map((s) => short(s.display));
   return <section className="mt-10 max-w-4xl" aria-labelledby="jev16-method" id="jev16-method" data-bh-jev16-method>
     <h2 id="jev16-method" className="text-2xl font-bold">Method · {a.revision}</h2>
     {scope !== 'all' && <BoardSplit scope={scope} />}
+    {hiddenApi.size > 0 && <p className="bh-muted mt-2 text-xs" data-bh-jev-method-scope-note>Per-system method lists on this board cover the open-weights systems and the Jev reference; the hosted API offerings&apos; lists are on the <a className="text-accent underline" href="/jev-models/api#jev16-method">API leaderboard</a>.</p>}
     <h3 className="mt-4 text-lg font-semibold">Rotating item sets</h3>
     <p className="bh-muted mt-1 text-sm">Each release draws fresh sealed decisions from a larger reserve. Self-hosted open-weights models (run offline on our own GPU pods or Sandy) answer S and P; externally hosted models answer only the API subset A and P.</p>
     <div className="mt-2 overflow-x-auto"><table className="text-left text-sm tabular" data-bh-jev16-rotation>
@@ -178,7 +180,7 @@ function Method({ a, sha256, categoriesSha256, carrySha256, scope }: { a: JevV16
     <h3 className="mt-4 text-lg font-semibold">Calibration basis</h3>
     <p className="bh-muted mt-1 text-sm" data-bh-jev16-calibration-basis>Systems that return a full probability distribution are calibrated on all components (top-label error, plus distribution distance for Choice and ranked-probability error for Score).
       {confidenceOnly.length > 0 ? ` ${confidenceOnly.join(', ')} return${confidenceOnly.length === 1 ? 's' : ''} a single confidence value, so ${confidenceOnly.length === 1 ? 'its' : 'their'} Calibration is the top-label error only and is not like-for-like with full-distribution systems.` : ''}</p>
-    {(a as unknown as { overnight?: OvernightNotes }).overnight && <Overnight o={(a as unknown as { overnight: OvernightNotes }).overnight} />}
+    {(a as unknown as { overnight?: OvernightNotes }).overnight && <Overnight o={(a as unknown as { overnight: OvernightNotes }).overnight} hiddenApi={hiddenApi} />}
     <h3 className="mt-4 text-lg font-semibold">Provenance</h3>
     {measuredDays.length > 0 && <p className="bh-muted mt-1 text-sm" data-bh-jev16-measured-days>Measured on the v1.6 pool (run completion day, UTC): {measuredDays.map(([day, names]) => `${day}: ${names.join(', ')}`).join(' · ')}.</p>}
     <p className="bh-muted mt-1 break-all text-xs">Aggregate files: results sha256 {sha256} · categories sha256 {categoriesSha256} · dated carry sha256 {carrySha256}. Scoring source sha256 {a.source_sha256}. The method, release data and carry artifact are independently hashable.</p>
@@ -188,8 +190,10 @@ function Method({ a, sha256, categoriesSha256, carrySha256, scope }: { a: JevV16
 type OvernightNotes = { round: string; scored_utc: string; a2_note?: string | null; notes?: string[];
   exposure?: Record<string, { display?: string; sealed_items_exposed?: number; draws?: string; note?: string }> };
 
-function Overnight({ o }: { o: OvernightNotes }) {
-  const exp = Object.entries(o.exposure ?? {});
+function Overnight({ o, hiddenApi }: { o: OvernightNotes; hiddenApi: ReadonlySet<string> }) {
+  const exp = Object.entries(o.exposure ?? {})
+    // Every exposure entry is a hosted endpoint (keys can name a mode, e.g. wity-1-auto); the open board keeps only the Jev reference.
+    .filter(([key]) => !hiddenApi.size || key === JEV_REFERENCE_KEY);
   return <div data-bh-jev16-overnight-method>
     <h3 className="mt-4 text-lg font-semibold">Overnight full re-measure (4–5 Oct 2026)</h3>
     <p className="bh-muted mt-1 text-sm">Every system with a reproducible recipe was re-run on the v1.6.0 pool overnight with the same pinned inputs and scorer (method option B / O1S). This page uses scoring round {o.round} ({o.scored_utc}). Only complete runs (1,500 items self-hosted, the full API input for hosted APIs) are ranked; partial runs are never ranked, and systems not yet re-measured keep their dated v1.5.x score in the separate table.</p>
@@ -238,7 +242,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
   scope?: JevScope; apiKeys?: string[];
 }) {
   const v15 = a as unknown as JevV15Artifact; // same per-system aggregate schema (score_v16 extends score_v15)
-  const ranked = a.systems.filter(listedRow).sort(byBoard);
+  const ranked = (scope === 'all' ? a.systems.filter((s) => s.ranked) : a.systems.filter(listedRow)).sort(byBoard);
   const hiddenApi: ReadonlySet<string> = new Set(scope === 'open' ? apiKeys : []);
   const chartSystems = ranked.map((s) => jevV15BoardSystem(s) as JevV14System);
   const allChartSystems = a.systems.map((s) => jevV15BoardSystem(s) as JevV14System);
@@ -284,7 +288,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
         key: s.key, display: short(s.display), gpu: (s as { gpu?: string | null }).gpu ?? null, p50_s_raw: s.speed?.p50_s_raw ?? null,
         officialUsdPer1000: s.cost?.usd_per_1000 ?? null, ranked: !!s.ranked }))} /></div>}
       <DatedCarry carry={carry} hiddenApi={hiddenApi} />
-      <Method a={a} sha256={sha256} categoriesSha256={categoriesSha256} carrySha256={carrySha256} scope={scope} />
+      <Method a={a} sha256={sha256} categoriesSha256={categoriesSha256} carrySha256={carrySha256} scope={scope} hiddenApi={hiddenApi} />
     </section>
   </JevV15FilterProvider>;
 }
