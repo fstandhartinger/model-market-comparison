@@ -66,3 +66,5 @@ export declare function applyFilters(rows: JevV15AllDataRow[], columns: JevV15Al
 export declare function sortRows(rows: JevV15AllDataRow[], columns: JevV15AllDataColumn[], sorts: JevV15AllDataSort[]): JevV15AllDataRow[];
 export declare function toCsv(columns: JevV15AllDataColumn[], rows: JevV15AllDataRow[]): string;
 export declare function toJson(columns: JevV15AllDataColumn[], rows: JevV15AllDataRow[]): Array<Record<string, JevV15AllDataCell>>;
+
+export declare function baseModelFamilies(benchmark: string, systems?: { key: string; underlying?: string | null }[]): Record<string, string>;
