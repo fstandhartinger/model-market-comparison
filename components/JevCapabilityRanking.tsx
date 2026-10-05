@@ -21,6 +21,7 @@ import { JEV_V15_ELIGIBILITY_CHANGE_EVENT } from '../lib/jevbench-global-filter-
 
 const HEADLINE_TOP = 10;
 const one = (v: number) => v.toFixed(1);
+const percent = (v: number) => `${v.toFixed(3)}%`;
 const secs = (v: number) => `${v.toFixed(2)} s`;
 const grid = 'grid grid-cols-[1.25rem_minmax(3.5rem,1fr)_2.35rem_2.35rem_2.7rem_4rem] gap-x-1 sm:grid-cols-[1.6rem_12rem_minmax(5rem,1fr)_7rem_5.7rem_6.3rem_6.5rem] sm:gap-x-2';
 
@@ -38,10 +39,10 @@ function TrafficLightBar({ kind, ratio, factor, referenceLabel, derived = false 
     data-bh-tl-cost={kind === 'cost' ? zone ?? 'unknown' : undefined}
     data-bh-tl-latency={kind === 'latency' ? zone ?? 'unknown' : undefined}
     data-bh-tl-ratio={ratio ?? undefined} data-bh-tl-derived={derived ? 'speed-axis' : undefined}>
-    <span className="bh-tl-green absolute inset-y-0 left-0 rounded-l-full" style={{ width: `${greenEnd}%` }} />
-    {amberEnd > greenEnd && <span className="bh-tl-amber absolute inset-y-0" style={{ left: `${greenEnd}%`, width: `${amberEnd - greenEnd}%` }} />}
-    {end > amberEnd && <span className="bh-tl-red absolute inset-y-0 rounded-r-full" style={{ left: `${amberEnd}%`, width: `${end - amberEnd}%` }} />}
-    {Array.from(new Set([1, factor].filter(Number.isFinite))).map((tick) => <i key={tick} className="bh-tl-tick absolute top-[-1px] h-[6px] border-l" style={{ left: `${ratioPosition(tick)}%` }} aria-hidden="true" />)}
+    <span className="bh-tl-green absolute inset-y-0 left-0 rounded-l-full" style={{ width: percent(greenEnd) }} />
+    {amberEnd > greenEnd && <span className="bh-tl-amber absolute inset-y-0" style={{ left: percent(greenEnd), width: percent(amberEnd - greenEnd) }} />}
+    {end > amberEnd && <span className="bh-tl-red absolute inset-y-0 rounded-r-full" style={{ left: percent(amberEnd), width: percent(end - amberEnd) }} />}
+    {Array.from(new Set([1, factor].filter(Number.isFinite))).map((tick) => <i key={tick} className="bh-tl-tick absolute top-[-1px] h-[6px] border-l" style={{ left: percent(ratioPosition(tick)) }} aria-hidden="true" />)}
     </span>
   </span>;
 }
@@ -109,7 +110,7 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
       {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1 shrink-0 align-middle" data-bh-jev-capability-api={row.key} title={row.api_exposure_note ?? apiExplanation}>API</span>}
     </span>
     <span className="col-start-2 col-end-7 row-start-2 mt-0.5 flex min-w-0 flex-col justify-center gap-[3px] sm:col-start-3 sm:col-end-4 sm:row-start-1 sm:mt-0">
-      <span className="bh-jevc-grid flex h-[10px] rounded-sm" aria-hidden="true"><span className={'bh-jevc-bar' + (row.ranked ? '' : ' is-partial')} style={{ width: `${Math.max(0, Math.min(100, capability))}%` }} /></span>
+      <span className="bh-jevc-grid flex h-[10px] rounded-sm" aria-hidden="true"><span className={'bh-jevc-bar' + (row.ranked ? '' : ' is-partial')} style={{ width: percent(Math.max(0, Math.min(100, capability))) }} /></span>
       <TrafficLightBar kind="cost" ratio={item.costRatio} factor={costFactor} referenceLabel={referenceLabel} />
       <TrafficLightBar kind="latency" ratio={latencyRatio} factor={latencyFactor} referenceLabel={referenceLabel} derived={derived} />
     </span>
@@ -271,7 +272,7 @@ export function JevCapabilityRanking({ systems, eligibilitySystems = systems, re
       </>}
       {eligibilityNote && !official && <span className="mt-1 block" data-bh-jev-custom-eligibility>The ranking above uses custom caps of {formatCap(costFactor)} cost / {formatCap(latencyFactor)} latency. {inside.length} of {rows.length} systems qualify; {outside.length} are outside.</span>}
       {(costFactor === Infinity || latencyFactor === Infinity) && <span className="bh-muted mt-1 block">Reported cost and median latency (or a Speed-axis fallback) are still required when a cap is off.</span>}
-      {!official && <span className="bh-muted mt-1 block">Charts below use the official 2× caps.</span>}
+      {!official && !onCapsChange && <span className="bh-muted mt-1 block">Charts below use the official 2× caps.</span>}
       {' '}The <a className="text-accent underline" href="#jev-bubbles">charts below</a> show speed and cost beside Capability Score; the <a className="text-accent underline" href={officialHref}>official {benchName} Score</a> weighs all four axes.
     </p>
   </section>;

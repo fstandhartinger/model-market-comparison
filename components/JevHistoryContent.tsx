@@ -33,7 +33,7 @@ function HistoryRows({ payload }: { payload: JevHistoryPayload }) {
   const [topHonorable] = view.honorable;
 
   return <>
-    <p className="bh-muted mb-5 max-w-4xl text-sm">The following public-only tables and diagnostics preserve the earlier JevBench v1.3.0 view. The ranking above is the current v1.4.1 result.</p>
+    <p className="bh-muted mb-5 max-w-4xl text-sm">The following public-only tables and diagnostics preserve the earlier JevBench v1.3.0 view. The ranking above is the current release.</p>
     <JevModelsV12Board view={view} tasks={tasks}>
       <aside className="bh-panel mt-6 max-w-4xl p-4 text-sm" data-bh-jev-score-change>
         <h2 className="font-semibold">What changed in the score</h2>

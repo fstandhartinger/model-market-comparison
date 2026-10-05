@@ -305,9 +305,11 @@ export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, costFa
     const widthOf = sepWidthOf;
     const label = value - 5 - widthOf(fullLabel) >= L ? fullLabel : shortLabel;
     const hborder = 4;
+    const labelFitsLeft = value - 5 - widthOf(label) >= hborder;
+    const labelX = labelFitsLeft ? value - 5 : Math.min(value + 5, W - hborder - widthOf(label));
     return <g data-bh-jev-separator={marker} {...(marker === 'cost' ? { 'data-bh-jev-bubble-limit': '' } : { 'data-bh-jev-bubble-latency-limit': '' })}>
       <line x1={value} x2={value} y1={T} y2={H - B} stroke="var(--muted)" strokeDasharray="4 4" />
-      <text x={Math.max(hborder, value - 5)} y={T + 25 + sepLabelDy} textAnchor="end" fill="var(--muted)" fontSize="10"
+      <text x={Math.max(hborder, labelX)} y={T + 25 + sepLabelDy} textAnchor={labelFitsLeft ? 'end' : 'start'} fill="var(--muted)" fontSize="10"
         stroke="var(--surface)" strokeWidth="3" paintOrder="stroke" data-bh-jev-separator-label>{label}</text>
       {value - 6 - widthOf(leftArrow) >= hborder ? <text x={value - 6} y={T - 9} textAnchor="end" fill="var(--muted)" fontSize="10">{leftArrow}</text>
         : value - 6 >= hborder ? <text x={value - 4} y={T - 9} textAnchor="end" fill="var(--muted)" fontSize="10">←</text> : null}
@@ -423,7 +425,7 @@ export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, costFa
   </figure>;
 }
 
-export function JevBubbleCharts({ points, costLimit, latencyCap, costFactor = 2, latencyFactor = 2, referenceName, benchName = 'JevBench', scoreKind = 'official' }: { points: JevBubblePoint[]; costLimit: number; latencyCap?: number; costFactor?: number; latencyFactor?: number; referenceName: string; benchName?: string; scoreKind?: 'v15' | 'official' }) {
+export function JevBubbleCharts({ points, costLimit, latencyCap, costFactor = 2, latencyFactor = 2, referenceName, benchName = 'JevBench', scoreKind = 'official', officialCaps = false }: { points: JevBubblePoint[]; costLimit: number; latencyCap?: number; costFactor?: number; latencyFactor?: number; referenceName: string; benchName?: string; scoreKind?: 'v15' | 'official'; officialCaps?: boolean }) {
   const visibleKeys = useJevV15VisibleKeys(points.map((point) => point.key));
   const [weights, setWeights] = useState<JevWeights>(OFFICIAL_WEIGHTS);
   const [showOutside, setShowOutside] = useState(false);
@@ -453,7 +455,7 @@ export function JevBubbleCharts({ points, costLimit, latencyCap, costFactor = 2,
   const types = jevLegendTypes(filteredPoints.map((p) => p.cls));
   return <section id="jev-bubbles" className="mt-8 scroll-mt-6" aria-labelledby="jev-bubbles-title" data-bh-jev-bubbles>
     <h2 id="jev-bubbles-title" className="text-xl font-semibold">Capability against cost and speed</h2>
-    <p className="bh-muted mt-1 max-w-4xl text-sm">Jev-class systems are shown by default. Bubble size follows {customScore ? 'the custom composite from the weight sliders' : `the official ${benchName} Score`}; official rank stays unchanged. The five most capable Jev-class systems are labelled.</p>
+    <p className="bh-muted mt-1 max-w-4xl text-sm">Jev-class systems are shown by default. {officialCaps && <>These charts use the official 2× caps. </>}Bubble size follows {customScore ? 'the custom composite from the weight sliders' : `the official ${benchName} Score`}; official rank stays unchanged. The five most capable Jev-class systems are labelled.</p>
     <label className="mt-3 flex min-h-10 w-fit cursor-pointer items-center gap-2 text-sm">
       <input type="checkbox" checked={showOutside} onChange={(e) => { setShowOutside(e.target.checked); setActive(null); setPinned(false); }} data-bh-jev-bubble-show-outside />
       Show models that don&apos;t qualify as Jev-class
