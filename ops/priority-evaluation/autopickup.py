@@ -167,6 +167,12 @@ BAD_LINK_MESSAGES = {
 }
 
 
+# Pinned measurement code names mounted under official/measurement/. The pod stage (CR-284) pins its
+# fixed shell entrypoint pod_drivers/pod_entry.sh next to the .py files; a .py-only pattern made every
+# preparation/review fail with "invalid name" from the 4 Oct install on.
+MEASUREMENT_CODE_NAME_RE = re.compile(r"[A-Za-z0-9_]+(?:/[A-Za-z0-9_]+)*\.(?:py|sh)")
+
+
 class PickupError(RuntimeError):
     pass
 
@@ -3917,7 +3923,7 @@ def sandbox_agent_command(job_dir: Path, rid: str, engine: str, stage_home: Path
         try:
             measurement_code = measurement_dispatch.pins()["profile"]["code"]
             for relative, pin in measurement_code.items():
-                if not re.fullmatch(r"[A-Za-z0-9_]+(?:/[A-Za-z0-9_]+)*\.py", relative):
+                if not MEASUREMENT_CODE_NAME_RE.fullmatch(relative):
                     raise PickupError("official measurement code pin has an invalid name")
                 bind(measurement_dispatch.checked(pin), f"official/measurement/{relative}")
         except measurement_dispatch.OperationalHold as exc:
