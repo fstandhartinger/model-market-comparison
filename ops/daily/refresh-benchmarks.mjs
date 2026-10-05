@@ -16,7 +16,7 @@ import { aaMappingApplies } from '../../lib/benchmark-registry.mjs';
 import { retainedAaBenchmarks, reviewAaMappings, loadAaBenchmarkSnapshots } from '../../lib/aa-snapshot-locks.mjs';
 import { checkRealSweSnapshot, isRealSweEntry, REALSWE_CAPTURE_TARGET } from './realswe-check.mjs';
 import { checkFrozenVendorSources, frozenVendorEntries, frozenVendorModule } from './frozen-vendor-check.mjs';
-import { parseQuarantine, quarantineCheck } from '../../lib/source-quarantine.mjs';
+import { parseQuarantine, quarantineCheck, retainedCaptureDecisions } from '../../lib/source-quarantine.mjs';
 import { loadCaptureState, saveCaptureState } from './capture-state.mjs';
 const exec = promisify(execFile);
 const root = 'data/raw/benchmarks';
@@ -813,6 +813,12 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     for (const key of armCaptures[index]) acceptedCaptureKeys.add(key);
   }
   for (const slot of specChecks) checks.push(...slot);
+  // CR-287: hard parser failures (e.g. an unreviewed harness) can precede
+  // the protocol quarantine marker. They must not make their new captures
+  // look accepted to repository-wide checks while their old rows are retained.
+  await put(join(evidenceDir, 'capture-decisions.json'), retainedCaptureDecisions({
+    entries: plan.entries, checks: specChecks, captures: armCaptures, accepted: acceptedCaptureKeys,
+  }));
   // F-209: the quarantine record travels with the evidence directory it describes, so a reader — and
   // the repo-level continuity test — can tell which captures beside this manifest the collector did
   // not accept. A capture another arm published from is accepted evidence and is never withheld.
