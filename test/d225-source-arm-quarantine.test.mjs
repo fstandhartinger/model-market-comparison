@@ -17,7 +17,7 @@ import { join } from 'node:path';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { QUARANTINE_MARK, reviewedProtocols, parseQuarantine, quarantineCheck,
-  acceptedCaptures, newestAccepted, withheldKeys } from '../lib/source-quarantine.mjs';
+  acceptedCaptures, newestAccepted, withheldKeys, retainedCaptureDecisions } from '../lib/source-quarantine.mjs';
 import { sourceHealth, healthMarkdown, isQuarantine, QUARANTINE_ESCALATION_RUNS } from '../ops/daily/source-health.mjs';
 import { planNotifications, quarantineHumanTodo } from '../ops/daily/policy.mjs';
 
@@ -334,4 +334,30 @@ test('a quarantined capture is retained but not read as accepted evidence', asyn
     // A URL nobody ever captured still reports plainly that it is missing.
     assert.throws(() => newestAccepted(pool, 'https://example.test/other.csv'), /no retained capture/);
   } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('CR-287: a parser or review failure withholds fresh captures while shared accepted sources remain usable', async () => {
+  const url = 'https://example.test/board.csv', shared = 'https://example.test/method';
+  const record = retainedCaptureDecisions({
+    entries: [{ benchmark_id: 'parser::1' }, { benchmark_id: 'review::1' }, { benchmark_id: 'accepted::1' }],
+    checks: [[{ status: 'retained_after_failure', reason: 'unreviewed harness' }],
+      [{ status: 'retained_budget_exhausted', reason: 'no reviewer admitted' }], [{ status: 'checked_unchanged' }]],
+    captures: [new Set([url, shared]), new Set(['https://example.test/review']), new Set([shared])],
+    accepted: new Set([shared]),
+  });
+  assert.deepEqual(record.arms.map((arm) => [arm.id, arm.status, arm.captures]), [
+    ['parser::1', 'retained_after_failure', [url]],
+    ['review::1', 'retained_budget_exhausted', ['https://example.test/review']],
+  ]);
+  const files = {
+    'old/manifest.json': [{ url, status: 200, file: 'old.gz' }],
+    'new/manifest.json': [{ url, status: 200, file: 'rejected.gz' }, { url: shared, status: 200, file: 'shared.gz' }],
+    'new/capture-decisions.json': record,
+  };
+  const pool = await acceptedCaptures({ dirs: ['old', 'new'], readJson: async (path) => files[path] ?? null });
+  assert.equal(newestAccepted(pool, url).file, 'old.gz');
+  assert.equal(newestAccepted(pool, shared).file, 'shared.gz');
+  assert.equal(pool.withheld[0].file, 'rejected.gz');
+  const rejectedOnly = await acceptedCaptures({ dirs: ['new'], readJson: async (path) => files[path] ?? null });
+  assert.throws(() => newestAccepted(rejectedOnly, url), /quarantined/);
 });
