@@ -1,0 +1,2586 @@
+[
+  {
+    "id": "b13c1257-d746-4027-8fc8-4892dc14701c",
+    "source_id": "b13c1257-d746-4027-8fc8-4892dc14701c",
+    "slug": "gpt-5-5-high",
+    "name": "GPT-5.5 (High)",
+    "variant": "high",
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.4434616323216385,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 1088.35,
+          "lower95ci": 1082.08,
+          "upper95ci": 1094.98
+        },
+        "rubricPassRate": 0.30606060606060603,
+        "analyticalQuality": {
+          "elo": 1125.04,
+          "lower95ci": 1113.9,
+          "upper95ci": 1136.57
+        },
+        "presentation": {
+          "elo": 1076.29,
+          "lower95ci": 1063.58,
+          "upper95ci": 1088.76
+        }
+      },
+      "briefcaseTotalCost": 300.41491620810734,
+      "critpt": 0.254285714285714,
+      "gdpPdfAllPass": 0.226,
+      "gdpval": 1329.16,
+      "gdpvalNormalized": 0.41458000000000006,
+      "gpqa": 0.932323232323232,
+      "hle": 0.450417052826691,
+      "ifbench": 0.716326530612245,
+      "itBenchSre": null,
+      "lcr": 0.843333333333333,
+      "livecodebench": null,
+      "mmmuPro": 0.810982658959538,
+      "omniscience": 18.75,
+      "omniscienceAccuracy": 0.5703333333333334,
+      "omniscienceHallucinationRate": 0.8910007757951901,
+      "scicode": 0.561342592592593,
+      "tau2": 0.929824561403509,
+      "tauBanking": 0.36701030927835,
+      "terminalbenchHard": 0.598484848484849,
+      "terminalbenchV21": 0.794007490636704,
+      "terminalbenchV40": 0.0909090909090909,
+      "timescaleData": {
+        "medianOutputSpeed": 84.0023159202998,
+        "medianTimeToFirstChunk": 20.645922564
+      }
+    }
+  },
+  {
+    "id": "b171d979-5ec1-45de-b8b9-db1ee65e77ec",
+    "source_id": "b171d979-5ec1-45de-b8b9-db1ee65e77ec",
+    "slug": "claude-sonnet-5-5",
+    "name": "Claude Sonnet 5.5 (Max, Default Fallback)",
+    "variant": "max",
+    "fields": {
+      "aime25": null,
+      "analystAgent": 0.575,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.7176882128193995,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 1823.49,
+          "lower95ci": 1811.83,
+          "upper95ci": 1836.04
+        },
+        "rubricPassRate": 0.6515151515151515,
+        "analyticalQuality": {
+          "elo": 2132.02,
+          "lower95ci": 2109.6,
+          "upper95ci": 2156.39
+        },
+        "presentation": {
+          "elo": 1715.99,
+          "lower95ci": 1694.99,
+          "upper95ci": 1738.99
+        }
+      },
+      "briefcaseTotalCost": 2683.190858415939,
+      "critpt": 0.314285714285714,
+      "gdpPdfAllPass": 0.258,
+      "gdpval": 1839.1,
+      "gdpvalNormalized": 0.66955,
+      "gpqa": null,
+      "harveyLab": 0.930670140396584,
+      "hle": 0.549582947173309,
+      "ifbench": null,
+      "itBenchSre": null,
+      "lcr": 0.826666666666667,
+      "livecodebench": null,
+      "mlcrOverall": 0.75,
+      "mmmuPro": null,
+      "omniscience": 32.3,
+      "omniscienceAccuracy": 0.5395,
+      "omniscienceHallucinationRate": 0.47014115092290987,
+      "scicode": 0.609953703703704,
+      "tau2": null,
+      "tauBanking": null,
+      "terminalbenchHard": null,
+      "terminalbenchV21": null,
+      "terminalbenchV40": 0.636363636363636,
+      "timescaleData": {
+        "medianOutputSpeed": 127.530709852333,
+        "medianTimeToFirstChunk": 452.275889813
+      }
+    }
+  },
+  {
+    "id": "b2331108-72ed-415a-82d1-188633875bbc",
+    "source_id": "b2331108-72ed-415a-82d1-188633875bbc",
+    "slug": "gemini-3-7-flash",
+    "name": "Gemini 3.7 Flash (High)",
+    "variant": "high",
+    "fields": {
+      "aime25": null,
+      "analystAgent": 0.6,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.6202749292053469,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 1112.53,
+          "lower95ci": 1104.72,
+          "upper95ci": 1121.04
+        },
+        "rubricPassRate": 0.36363636363636365,
+        "analyticalQuality": {
+          "elo": 1005.66,
+          "lower95ci": 991.45,
+          "upper95ci": 1021.67
+        },
+        "presentation": {
+          "elo": 1178.52,
+          "lower95ci": 1163.59,
+          "upper95ci": 1193.62
+        }
+      },
+      "briefcaseTotalCost": 196.0995589255749,
+      "critpt": 0.142857142857143,
+      "gdpPdfAllPass": 0.236,
+      "gdpval": 1392.31,
+      "gdpvalNormalized": 0.44615499999999997,
+      "gpqa": 0.945454545454545,
+      "harveyLab": 0.906643508467217,
+      "hle": 0.478683966635774,
+      "ifbench": null,
+      "itBenchSre": null,
+      "lcr": 0.816666666666667,
+      "livecodebench": null,
+      "mlcrOverall": 0.15,
+      "mmmuPro": 0.854913294797688,
+      "omniscience": 26.483333333333334,
+      "omniscienceAccuracy": 0.5531666666666667,
+      "omniscienceHallucinationRate": 0.6452816113390526,
+      "scicode": 0.571759259259259,
+      "tau2": null,
+      "tauBanking": 0.327835051546392,
+      "terminalbenchHard": null,
+      "terminalbenchV21": 0.857677902621723,
+      "terminalbenchV40": 0.136363636363636,
+      "timescaleData": {
+        "medianOutputSpeed": 284.060062789352,
+        "medianTimeToFirstChunk": 10.5846688180001
+      }
+    }
+  },
+  {
+    "id": "b23e6c69-96e5-44c9-8f58-4b42e0c399d5",
+    "source_id": "b23e6c69-96e5-44c9-8f58-4b42e0c399d5",
+    "slug": "hy3",
+    "name": "Hy3",
+    "variant": null,
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.18409128371172395,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 946.71,
+          "lower95ci": 937.23,
+          "upper95ci": 955.42
+        },
+        "rubricPassRate": 0.2672858617131063,
+        "analyticalQuality": {
+          "elo": 865.29,
+          "lower95ci": 848.45,
+          "upper95ci": 882.06
+        },
+        "presentation": {
+          "elo": 975.32,
+          "lower95ci": 958.12,
+          "upper95ci": 991.67
+        }
+      },
+      "briefcaseTotalCost": 10.318991407699059,
+      "critpt": 0.0485714285714286,
+      "gdpPdfAllPass": 0.112,
+      "gdpval": 1067.29,
+      "gdpvalNormalized": 0.283645,
+      "gpqa": 0.896969696969697,
+      "hle": 0.334569045412419,
+      "ifbench": null,
+      "itBenchSre": null,
+      "lcr": 0.79,
+      "livecodebench": null,
+      "mmmuPro": null,
+      "omniscience": -18.466666666666665,
+      "omniscienceAccuracy": 0.31966666666666665,
+      "omniscienceHallucinationRate": 0.7413032827045566,
+      "scicode": 0.486111111111111,
+      "tau2": null,
+      "tauBanking": 0.228865979381443,
+      "terminalbenchHard": null,
+      "terminalbenchV21": 0.644194756554307,
+      "terminalbenchV40": 0.00505050505050505,
+      "timescaleData": {
+        "medianOutputSpeed": 88.1741288459272,
+        "medianTimeToFirstChunk": 3.07150020250002
+      }
+    }
+  },
+  {
+    "id": "b25ac058-1e33-4c31-bbc9-a20c3ad0717a",
+    "source_id": "b25ac058-1e33-4c31-bbc9-a20c3ad0717a",
+    "slug": "gpt-6-1-sol",
+    "name": "GPT-6.1 Sol (Max)",
+    "variant": "max",
+    "fields": {
+      "aime25": null,
+      "analystAgent": 0.5,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.6486844882398171,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 1564.21,
+          "lower95ci": 1555.16,
+          "upper95ci": 1573.26
+        },
+        "rubricPassRate": 0.5565656565656566,
+        "analyticalQuality": {
+          "elo": 1806.84,
+          "lower95ci": 1793.38,
+          "upper95ci": 1820.3
+        },
+        "presentation": {
+          "elo": 1437.87,
+          "lower95ci": 1420.13,
+          "upper95ci": 1455.62
+        }
+      },
+      "briefcaseTotalCost": 210.4468527351882,
+      "critpt": 0.317142857142857,
+      "gdpPdfAllPass": 0.31,
+      "gdpval": 1575.09,
+      "gdpvalNormalized": 0.5375449999999999,
+      "gpqa": null,
+      "hle": 0.529193697868397,
+      "ifbench": null,
+      "itBenchSre": null,
+      "lcr": 0.83,
+      "livecodebench": null,
+      "mlcrOverall": 0.338888888888889,
+      "mmmuPro": 0.859537572254335,
+      "omniscience": 41.53333333333333,
+      "omniscienceAccuracy": 0.621,
+      "omniscienceHallucinationRate": 0.5426561125769569,
+      "scicode": 0.541666666666667,
+      "tau2": null,
+      "tauBanking": null,
+      "terminalbenchHard": null,
+      "terminalbenchV21": null,
+      "terminalbenchV40": 0.560606060606061,
+      "timescaleData": {
+        "medianOutputSpeed": 55.6745519850091,
+        "medianTimeToFirstChunk": 273.253449627
+      }
+    }
+  },
+  {
+    "id": "b2dd592a-fbc5-458a-b26d-f3964cbab82f",
+    "source_id": "b2dd592a-fbc5-458a-b26d-f3964cbab82f",
+    "slug": "qwen3-8b-instruct",
+    "name": "Qwen3 8B (Non-reasoning)",
+    "variant": null,
+    "fields": {
+      "aime25": 0.243333333333333,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": null,
+      "gpqa": 0.451515151515152,
+      "hle": 0.0195,
+      "ifbench": 0.285714285714286,
+      "itBenchSre": null,
+      "lcr": 0,
+      "livecodebench": 0.202116402116402,
+      "mmmuPro": null,
+      "omniscience": -73.95,
+      "omniscienceAccuracy": 0.11083333333333334,
+      "omniscienceHallucinationRate": 0.9563261480787254,
+      "scicode": null,
+      "tau2": 0.248538011695906,
+      "tauBanking": null,
+      "terminalbenchHard": 0.0227272727272727,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 41.6105552418676,
+        "medianTimeToFirstChunk": 3.63300373349997
+      }
+    }
+  },
+  {
+    "id": "b2f3191f-77d6-4155-8be6-330f0baa1ae5",
+    "source_id": "b2f3191f-77d6-4155-8be6-330f0baa1ae5",
+    "slug": "gemini-3-pro-low",
+    "name": "Gemini 3 Pro Preview (Low)",
+    "variant": "low",
+    "fields": {
+      "aime25": 0.866666666666667,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": null,
+      "gpqa": 0.886868686868687,
+      "hle": 0.294717330861909,
+      "ifbench": 0.496598639455782,
+      "itBenchSre": null,
+      "lcr": 0.74,
+      "livecodebench": 0.857142857142857,
+      "mmmuPro": null,
+      "omniscience": 1.8,
+      "omniscienceAccuracy": 0.4831666666666667,
+      "omniscienceHallucinationRate": 0.9000322476620445,
+      "scicode": null,
+      "tau2": 0.681286549707602,
+      "tauBanking": null,
+      "terminalbenchHard": 0.340909090909091,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {}
+    }
+  },
+  {
+    "id": "b36ff8f3-0323-49d1-a063-ab09704fdb0c",
+    "source_id": "b36ff8f3-0323-49d1-a063-ab09704fdb0c",
+    "slug": "nova-2-0-omni-reasoning-low",
+    "name": "Nova 2.0 Omni (Low)",
+    "variant": "low",
+    "fields": {
+      "aime25": 0.56,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": null,
+      "gpqa": 0.698989898989899,
+      "hle": null,
+      "ifbench": 0.617687074829932,
+      "itBenchSre": null,
+      "lcr": 0.576666666666667,
+      "livecodebench": 0.591534391534391,
+      "mmmuPro": 0.598265895953757,
+      "omniscience": -50.31666666666667,
+      "omniscienceAccuracy": 0.18616666666666667,
+      "omniscienceHallucinationRate": 0.8470202744214622,
+      "scicode": null,
+      "tau2": 0.678362573099415,
+      "tauBanking": null,
+      "terminalbenchHard": 0.0378787878787879,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {}
+    }
+  },
+  {
+    "id": "b4f14013-37dd-4c75-bd8a-378365d9ed77",
+    "source_id": "b4f14013-37dd-4c75-bd8a-378365d9ed77",
+    "slug": "jamba-1-7-mini",
+    "name": "Jamba 1.7 Mini",
+    "variant": null,
+    "fields": {
+      "aime25": 0.00333333333333333,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": null,
+      "gpqa": 0.322222222222222,
+      "hle": 0.0444856348470806,
+      "ifbench": 0.313605442176871,
+      "itBenchSre": null,
+      "lcr": 0.16,
+      "livecodebench": 0.0613756613756614,
+      "mmmuPro": null,
+      "omniscience": -73.11666666666666,
+      "omniscienceAccuracy": 0.11266666666666666,
+      "omniscienceHallucinationRate": 0.9509767092411721,
+      "scicode": null,
+      "tau2": 0.125730994152047,
+      "tauBanking": null,
+      "terminalbenchHard": 0,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {}
+    }
+  },
+  {
+    "id": "b4f7d7a4-869a-4ee7-b17a-4046cd1e79fd",
+    "source_id": "b4f7d7a4-869a-4ee7-b17a-4046cd1e79fd",
+    "slug": "qwen2-5-72b-instruct",
+    "name": "Qwen2.5 Instruct 72B",
+    "variant": null,
+    "fields": {
+      "aime25": 0.14,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": null,
+      "gpqa": 0.490909090909091,
+      "hle": 0.0356,
+      "ifbench": 0.368707482993197,
+      "itBenchSre": null,
+      "lcr": null,
+      "livecodebench": 0.276190476190476,
+      "mmmuPro": null,
+      "omniscience": -53.06666666666667,
+      "omniscienceAccuracy": 0.17466666666666666,
+      "omniscienceHallucinationRate": 0.8546042003231018,
+      "scicode": null,
+      "tau2": 0.345029239766082,
+      "tauBanking": null,
+      "terminalbenchHard": 0.0454545454545455,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {}
+    }
+  },
+  {
+    "id": "b58b8272-cd3f-44b9-9b68-612f40779ce2",
+    "source_id": "b58b8272-cd3f-44b9-9b68-612f40779ce2",
+    "slug": "hy3-non-reasoning",
+    "name": "Hy3-preview (Non-reasoning)",
+    "variant": null,
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0.00285714285714286,
+      "gdpval": null,
+      "gpqa": 0.732323232323232,
+      "hle": 0.0695088044485635,
+      "ifbench": 0.479591836734694,
+      "itBenchSre": null,
+      "lcr": 0.42,
+      "livecodebench": null,
+      "mmmuPro": null,
+      "omniscience": -34.95,
+      "omniscienceAccuracy": 0.23183333333333334,
+      "omniscienceHallucinationRate": 0.756780212627468,
+      "scicode": null,
+      "tau2": 0.675438596491228,
+      "tauBanking": null,
+      "terminalbenchHard": 0.318181818181818,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {}
+    }
+  },
+  {
+    "id": "b5c1c91a-7474-4409-9a9c-9c2ac45d9eb6",
+    "source_id": "b5c1c91a-7474-4409-9a9c-9c2ac45d9eb6",
+    "slug": "gpt-4o-mini",
+    "name": "GPT-4o mini",
+    "variant": null,
+    "fields": {
+      "aime25": 0.146666666666667,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": null,
+      "gdpval": -19.14,
+      "gdpvalNormalized": 0,
+      "gpqa": 0.426262626262626,
+      "hle": 0.042,
+      "ifbench": 0.30952380952381,
+      "itBenchSre": null,
+      "lcr": null,
+      "livecodebench": 0.233862433862434,
+      "mlcrOverall": 0,
+      "mmmuPro": 0.415028901734104,
+      "omniscience": null,
+      "scicode": null,
+      "tau2": null,
+      "tauBanking": 0.0288659793814433,
+      "terminalbenchHard": null,
+      "terminalbenchV21": 0.0561797752808989,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 88.8515550054279,
+        "medianTimeToFirstChunk": 0.926414319500054
+      }
+    }
+  },
+  {
+    "id": "b6d2e43d-3082-43f5-9318-0f4dbcb54163",
+    "source_id": "b6d2e43d-3082-43f5-9318-0f4dbcb54163",
+    "slug": "trinity-large-thinking",
+    "name": "Trinity Large Thinking",
+    "variant": null,
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.013069234137838785,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 250.57,
+          "lower95ci": 240.56,
+          "upper95ci": 260.4
+        },
+        "rubricPassRate": 0.05761316872427984,
+        "analyticalQuality": {
+          "elo": 0,
+          "lower95ci": 0,
+          "upper95ci": 0
+        },
+        "presentation": {
+          "elo": 198.05,
+          "lower95ci": 179.36,
+          "upper95ci": 215.77
+        }
+      },
+      "briefcaseTotalCost": 13.889353797504457,
+      "critpt": 0.00857142857142857,
+      "gdpPdfAllPass": 0.012,
+      "gdpval": 339.81,
+      "gdpvalNormalized": 0,
+      "gpqa": 0.751515151515151,
+      "hle": 0.158480074142725,
+      "ifbench": 0.562585034013605,
+      "itBenchSre": null,
+      "lcr": 0.38,
+      "livecodebench": null,
+      "mmmuPro": null,
+      "omniscience": -44.06666666666667,
+      "omniscienceAccuracy": 0.225,
+      "omniscienceHallucinationRate": 0.8589247311827957,
+      "scicode": 0.40625,
+      "tau2": 0.900584795321637,
+      "tauBanking": 0.0577319587628866,
+      "terminalbenchHard": 0.227272727272727,
+      "terminalbenchV21": 0.205992509363296,
+      "terminalbenchV40": 0.00505050505050505,
+      "timescaleData": {
+        "medianOutputSpeed": 342.409943654884,
+        "medianTimeToFirstChunk": 1.26272175049999
+      }
+    }
+  },
+  {
+    "id": "b89c4faf-219e-4171-a1aa-e3bd2fd0a924",
+    "source_id": "b89c4faf-219e-4171-a1aa-e3bd2fd0a924",
+    "slug": "solar-pro-3",
+    "name": "Solar Pro 3",
+    "variant": "high",
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.004973424202262958,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 95.64,
+          "lower95ci": 85.5,
+          "upper95ci": 104.68
+        },
+        "rubricPassRate": 0.049029622063329927,
+        "analyticalQuality": {
+          "elo": 0,
+          "lower95ci": 0,
+          "upper95ci": 0
+        },
+        "presentation": {
+          "elo": 0,
+          "lower95ci": 0,
+          "upper95ci": 0
+        }
+      },
+      "briefcaseTotalCost": 12.295826075732156,
+      "critpt": 0,
+      "gdpPdfAllPass": 0.016,
+      "gdpval": 268.1,
+      "gdpvalNormalized": 0,
+      "gpqa": 0.724242424242424,
+      "hle": 0.102873030583874,
+      "ifbench": 0.712018140589569,
+      "itBenchSre": null,
+      "lcr": 0.323333333333333,
+      "livecodebench": null,
+      "mlcrOverall": 0.00555555555555556,
+      "mmmuPro": null,
+      "omniscience": -53.4,
+      "omniscienceAccuracy": 0.185,
+      "omniscienceHallucinationRate": 0.8822085889570552,
+      "scicode": 0.25462962962963,
+      "tau2": 0.862573099415205,
+      "tauBanking": 0.0865979381443299,
+      "terminalbenchHard": 0.0757575757575758,
+      "terminalbenchV21": 0.119850187265918,
+      "terminalbenchV40": 0,
+      "timescaleData": {
+        "medianOutputSpeed": 138.863719186056,
+        "medianTimeToFirstChunk": 1.2589498335
+      }
+    }
+  },
+  {
+    "id": "b8fc61f7-5e9a-49e6-8547-6ac56db24627",
+    "source_id": "b8fc61f7-5e9a-49e6-8547-6ac56db24627",
+    "slug": "claude-opus-5",
+    "name": "Claude Opus 5 (Max)",
+    "variant": "max",
+    "fields": {
+      "aime25": null,
+      "analystAgent": 0.5375,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.565735557649325,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 1661.62,
+          "lower95ci": 1652.77,
+          "upper95ci": 1671.3
+        },
+        "rubricPassRate": 0.5717171717171717,
+        "analyticalQuality": {
+          "elo": 1922.97,
+          "lower95ci": 1908.21,
+          "upper95ci": 1940.13
+        },
+        "presentation": {
+          "elo": 1565.27,
+          "lower95ci": 1550.44,
+          "upper95ci": 1581.4
+        }
+      },
+      "briefcaseTotalCost": 1619.1916826926013,
+      "critpt": 0.291428571428571,
+      "enterpriseOpsGym": 0.474783646672635,
+      "gdpPdfAllPass": 0.216,
+      "gdpval": 1723.87,
+      "gdpvalNormalized": 0.6119349999999999,
+      "gpqa": 0.932323232323232,
+      "harveyLab": 0.93457808655377,
+      "hle": 0.548656163113994,
+      "ifbench": null,
+      "itBenchSre": null,
+      "lcr": 0.793333333333333,
+      "livecodebench": null,
+      "mlcrOverall": 0.555555555555556,
+      "mmmuPro": 0.847398843930636,
+      "omniscience": 37.06666666666667,
+      "omniscienceAccuracy": 0.6086666666666667,
+      "omniscienceHallucinationRate": 0.6081771720613288,
+      "scicode": 0.563657407407407,
+      "tau2": null,
+      "tauBanking": 0.420618556701031,
+      "terminalbenchHard": null,
+      "terminalbenchV21": 0.891385767790262,
+      "terminalbenchV40": 0.48989898989899,
+      "timescaleData": {
+        "medianOutputSpeed": 56.9885780446525,
+        "medianTimeToFirstChunk": 59.160266755
+      }
+    }
+  },
+  {
+    "id": "b97ef678-2d31-4375-9416-67ea97f87204",
+    "source_id": "b97ef678-2d31-4375-9416-67ea97f87204",
+    "slug": "qwen3-omni-30b-a3b-reasoning",
+    "name": "Qwen3 Omni 30B A3B (Reasoning)",
+    "variant": null,
+    "fields": {
+      "aime25": 0.74,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": null,
+      "gpqa": 0.726262626262626,
+      "hle": 0.0746061167747915,
+      "ifbench": 0.434013605442177,
+      "itBenchSre": null,
+      "lcr": 0,
+      "livecodebench": 0.679365079365079,
+      "mmmuPro": 0.602312138728324,
+      "omniscience": -61.4,
+      "omniscienceAccuracy": 0.146,
+      "omniscienceHallucinationRate": 0.8899297423887588,
+      "scicode": null,
+      "tau2": 0.213450292397661,
+      "tauBanking": null,
+      "terminalbenchHard": 0.0378787878787879,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 102.470828582067,
+        "medianTimeToFirstChunk": 1.91527626499999
+      }
+    }
+  },
+  {
+    "id": "ba0224cf-0351-4f56-8508-b3f1a740ae4a",
+    "source_id": "ba0224cf-0351-4f56-8508-b3f1a740ae4a",
+    "slug": "claude-sonnet-5-high",
+    "name": "Claude Sonnet 5 (High)",
+    "variant": "high",
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.32096638814380396,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 1175.99,
+          "lower95ci": 1168.39,
+          "upper95ci": 1183.37
+        },
+        "rubricPassRate": 0.35454545454545455,
+        "analyticalQuality": {
+          "elo": 1190.8,
+          "lower95ci": 1176.98,
+          "upper95ci": 1204.93
+        },
+        "presentation": {
+          "elo": 1192.92,
+          "lower95ci": 1179.79,
+          "upper95ci": 1206.29
+        }
+      },
+      "briefcaseTotalCost": 342.5867226354512,
+      "critpt": 0.151428571428571,
+      "gdpPdfAllPass": 0.094,
+      "gdpval": 1257.77,
+      "gdpvalNormalized": 0.37888499999999997,
+      "gpqa": null,
+      "hle": 0.357275254865616,
+      "ifbench": null,
+      "itBenchSre": null,
+      "lcr": 0.766666666666667,
+      "livecodebench": null,
+      "mmmuPro": null,
+      "omniscience": -3.683333333333333,
+      "omniscienceAccuracy": 0.37433333333333335,
+      "omniscienceHallucinationRate": 0.6571656899307405,
+      "scicode": 0.542824074074074,
+      "tau2": null,
+      "tauBanking": null,
+      "terminalbenchHard": null,
+      "terminalbenchV21": null,
+      "terminalbenchV40": 0.0505050505050505,
+      "timescaleData": {
+        "medianOutputSpeed": 68.2678539456634,
+        "medianTimeToFirstChunk": 12.99088105
+      }
+    }
+  },
+  {
+    "id": "ba04694d-326a-4a6a-8f1b-46316f872a7f",
+    "source_id": "ba04694d-326a-4a6a-8f1b-46316f872a7f",
+    "slug": "kimi-k2-5-non-reasoning",
+    "name": "Kimi K2.5 (Non-reasoning)",
+    "variant": null,
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0.00571428571428571,
+      "gdpval": null,
+      "gpqa": 0.788888888888889,
+      "hle": 0.131603336422614,
+      "ifbench": 0.436734693877551,
+      "itBenchSre": null,
+      "lcr": 0.673333333333333,
+      "livecodebench": null,
+      "mmmuPro": 0.730635838150289,
+      "omniscience": -13.766666666666667,
+      "omniscienceAccuracy": 0.24133333333333334,
+      "omniscienceHallucinationRate": 0.4995606326889279,
+      "scicode": null,
+      "tau2": 0.812865497076023,
+      "tauBanking": null,
+      "terminalbenchHard": 0.189393939393939,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {}
+    }
+  },
+  {
+    "id": "ba242e40-83b7-4cd3-a0e0-b56237984914",
+    "source_id": "ba242e40-83b7-4cd3-a0e0-b56237984914",
+    "slug": "gpt-5-4-mini",
+    "name": "GPT-5.4 mini (Xhigh)",
+    "variant": "xhigh",
+    "fields": {
+      "aime25": null,
+      "analystAgent": 0.15,
+      "apexAgents": 0.281710914454277,
+      "automationBenchPartialScore": 0.26204887225711754,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 717.48,
+          "lower95ci": 710.09,
+          "upper95ci": 724.9
+        },
+        "rubricPassRate": 0.1254355400696864,
+        "analyticalQuality": {
+          "elo": 614.3,
+          "lower95ci": 600.06,
+          "upper95ci": 627.61
+        },
+        "presentation": {
+          "elo": 777.56,
+          "lower95ci": 762.81,
+          "upper95ci": 791.89
+        }
+      },
+      "briefcaseTotalCost": 34.05336575223885,
+      "critpt": 0.1,
+      "enterpriseOpsGym": 0.3461653237839451,
+      "gdpPdfAllPass": 0.134,
+      "gdpval": 1016.03,
+      "gdpvalNormalized": 0.258015,
+      "gpqa": 0.874747474747475,
+      "harveyLab": 0.607468519322623,
+      "hle": 0.281278962001854,
+      "ifbench": 0.73265306122449,
+      "itBenchSre": 0.352165725047081,
+      "lcr": 0.77,
+      "livecodebench": null,
+      "mlcrOverall": 0.0388888888888889,
+      "mmmuPro": 0.732947976878613,
+      "omniscience": -18.916666666666668,
+      "omniscienceAccuracy": 0.37466666666666665,
+      "omniscienceHallucinationRate": 0.9016524520255863,
+      "scicode": 0.520833333333333,
+      "tau2": 0.833333333333333,
+      "tauBanking": 0.255670103092783,
+      "terminalbenchHard": 0.522727272727273,
+      "terminalbenchV21": 0.591760299625468,
+      "terminalbenchV40": 0.0202020202020202,
+      "timescaleData": {
+        "medianOutputSpeed": 246.141911109975,
+        "medianTimeToFirstChunk": 129.413819389
+      }
+    }
+  },
+  {
+    "id": "bb3d7e75-8e22-4082-b9d6-1db0803e042f",
+    "source_id": "bb3d7e75-8e22-4082-b9d6-1db0803e042f",
+    "slug": "k2-horizon-375b-a23b",
+    "name": "K2 Horizon 375B A23B",
+    "variant": null,
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.3720802754388014,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 1295.86,
+          "lower95ci": 1288.06,
+          "upper95ci": 1304.59
+        },
+        "rubricPassRate": 0.4164926931106472,
+        "analyticalQuality": {
+          "elo": 1385.29,
+          "lower95ci": 1368.49,
+          "upper95ci": 1402.08
+        },
+        "presentation": {
+          "elo": 1254.82,
+          "lower95ci": 1241.64,
+          "upper95ci": 1267.3
+        }
+      },
+      "briefcaseTotalCost": 0,
+      "critpt": 0.0457142857142857,
+      "gdpPdfAllPass": 0.074,
+      "gdpval": 1366.06,
+      "gdpvalNormalized": 0.43302999999999997,
+      "gpqa": 0.872727272727273,
+      "hle": 0.319740500463392,
+      "ifbench": null,
+      "itBenchSre": null,
+      "lcr": 0.8,
+      "livecodebench": null,
+      "mmmuPro": null,
+      "omniscience": -2.966666666666667,
+      "omniscienceAccuracy": 0.18183333333333335,
+      "omniscienceHallucinationRate": 0.25850478712568753,
+      "scicode": 0.429398148148148,
+      "tau2": null,
+      "tauBanking": 0.342268041237113,
+      "terminalbenchHard": null,
+      "terminalbenchV21": 0.719101123595506,
+      "terminalbenchV40": 0.0151515151515152,
+      "timescaleData": {
+        "medianOutputSpeed": 119.116253598855,
+        "medianTimeToFirstChunk": 20.2935935785001
+      }
+    }
+  },
+  {
+    "id": "bbc2ffea-cf6b-43be-8c41-1769347e234d",
+    "source_id": "bbc2ffea-cf6b-43be-8c41-1769347e234d",
+    "slug": "claude-sonnet-5-5-low",
+    "name": "Claude Sonnet 5.5 (Low, Default Fallback)",
+    "variant": "low",
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.4942092641344955,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 1272.3,
+          "lower95ci": 1261.38,
+          "upper95ci": 1283.52
+        },
+        "rubricPassRate": 0.4171717171717172,
+        "analyticalQuality": {
+          "elo": 1446.9,
+          "lower95ci": 1427.28,
+          "upper95ci": 1468.7
+        },
+        "presentation": {
+          "elo": 1117.83,
+          "lower95ci": 1100.04,
+          "upper95ci": 1136.81
+        }
+      },
+      "briefcaseTotalCost": 81.58298062982371,
+      "critpt": 0.114285714285714,
+      "gdpPdfAllPass": 0.16,
+      "gdpval": 1178.6,
+      "gdpvalNormalized": 0.33929999999999993,
+      "gpqa": null,
+      "harveyLab": 0.890288030105659,
+      "hle": 0.362372567191844,
+      "ifbench": null,
+      "itBenchSre": null,
+      "lcr": 0.76,
+      "livecodebench": null,
+      "mmmuPro": null,
+      "omniscience": 19.366666666666667,
+      "omniscienceAccuracy": 0.463,
+      "omniscienceHallucinationRate": 0.5015518311607697,
+      "scicode": 0.490740740740741,
+      "tau2": null,
+      "tauBanking": null,
+      "terminalbenchHard": null,
+      "terminalbenchV21": null,
+      "terminalbenchV40": 0.207070707070707,
+      "timescaleData": {
+        "medianOutputSpeed": 96.0418404173155,
+        "medianTimeToFirstChunk": 1.0414749119999
+      }
+    }
+  },
+  {
+    "id": "bbd93ebe-80da-4594-bb19-61e69d0331df",
+    "source_id": "bbd93ebe-80da-4594-bb19-61e69d0331df",
+    "slug": "gemini-3-1-pro-preview",
+    "name": "Gemini 3.1 Pro Preview",
+    "variant": null,
+    "fields": {
+      "aime25": null,
+      "analystAgent": 0.4125,
+      "apexAgents": 0.320058997050148,
+      "automationBenchPartialScore": 0.3542771839809836,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 456.12,
+          "lower95ci": 447.7,
+          "upper95ci": 464.16
+        },
+        "rubricPassRate": 0.12424242424242424,
+        "analyticalQuality": {
+          "elo": 289.71,
+          "lower95ci": 274.7,
+          "upper95ci": 305.29
+        },
+        "presentation": {
+          "elo": 351.74,
+          "lower95ci": 335.58,
+          "upper95ci": 367.57
+        }
+      },
+      "briefcaseTotalCost": 59.76896711772717,
+      "critpt": 0.177142857142857,
+      "enterpriseOpsGym": 0.42166517457475383,
+      "gdpPdfAllPass": 0.178,
+      "gdpval": 794.46,
+      "gdpvalNormalized": 0.14723000000000003,
+      "gpqa": 0.941414141414141,
+      "harveyLab": 0.588507743522941,
+      "hle": 0.470342910101946,
+      "ifbench": 0.771428571428571,
+      "itBenchSre": 0.303309120258273,
+      "lcr": 0.82,
+      "livecodebench": null,
+      "mlcrOverall": 0.155555555555556,
+      "mmmuPro": 0.824277456647399,
+      "omniscience": 31.883333333333333,
+      "omniscienceAccuracy": 0.5485,
+      "omniscienceHallucinationRate": 0.5086747877445552,
+      "scicode": 0.586805555555556,
+      "tau2": 0.956140350877193,
+      "tauBanking": 0.214432989690722,
+      "terminalbenchHard": 0.537878787878788,
+      "terminalbenchV21": 0.737827715355805,
+      "terminalbenchV40": 0.0404040404040404,
+      "timescaleData": {
+        "medianOutputSpeed": 120.617738107273,
+        "medianTimeToFirstChunk": 24.1494758205
+      }
+    }
+  },
+  {
+    "id": "bbe6d782-e630-48d5-b11c-3ce37f373f1e",
+    "source_id": "bbe6d782-e630-48d5-b11c-3ce37f373f1e",
+    "slug": "qwen3-235b-a22b-instruct-reasoning",
+    "name": "Qwen3 235B A22B (Reasoning)",
+    "variant": null,
+    "fields": {
+      "aime25": 0.82,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": null,
+      "gpqa": 0.7,
+      "hle": 0.1098,
+      "ifbench": 0.387074829931973,
+      "itBenchSre": null,
+      "lcr": 0,
+      "livecodebench": 0.622222222222222,
+      "mmmuPro": null,
+      "omniscience": -44.7,
+      "omniscienceAccuracy": 0.18533333333333332,
+      "omniscienceHallucinationRate": 0.7761865793780688,
+      "scicode": null,
+      "tau2": 0.239766081871345,
+      "tauBanking": null,
+      "terminalbenchHard": 0.0606060606060606,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 63.5006743016278,
+        "medianTimeToFirstChunk": 2.73766362250004
+      }
+    }
+  },
+  {
+    "id": "bc26bfdb-4923-4442-a6ca-e77392923581",
+    "source_id": "bc26bfdb-4923-4442-a6ca-e77392923581",
+    "slug": "gpt-5-mini-minimal",
+    "name": "GPT-5 mini (Minimal)",
+    "variant": "minimal",
+    "fields": {
+      "aime25": 0.466666666666667,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": null,
+      "gpqa": 0.686868686868687,
+      "hle": 0.0505097312326228,
+      "ifbench": 0.45578231292517,
+      "itBenchSre": null,
+      "lcr": 0.393333333333333,
+      "livecodebench": 0.544973544973545,
+      "mmmuPro": 0.583815028901734,
+      "omniscience": -53.05,
+      "omniscienceAccuracy": 0.19166666666666668,
+      "omniscienceHallucinationRate": 0.8934020618556701,
+      "scicode": null,
+      "tau2": 0.318713450292398,
+      "tauBanking": null,
+      "terminalbenchHard": 0.143939393939394,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 134.098173600007,
+        "medianTimeToFirstChunk": 0.981602426499991
+      }
+    }
+  },
+  {
+    "id": "bcca0e70-7e80-4c07-b1fa-b33bcfb19e51",
+    "source_id": "bcca0e70-7e80-4c07-b1fa-b33bcfb19e51",
+    "slug": "gemini-2-0-flash",
+    "name": "Gemini 2.0 Flash (Feb '25)",
+    "variant": null,
+    "fields": {
+      "aime25": 0.216666666666667,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": null,
+      "gpqa": 0.623232323232323,
+      "hle": 0.0426,
+      "ifbench": 0.402040816326531,
+      "itBenchSre": null,
+      "lcr": 0.313333333333333,
+      "livecodebench": 0.334391534391534,
+      "mmmuPro": null,
+      "omniscience": -42.53333333333333,
+      "omniscienceAccuracy": 0.23466666666666666,
+      "omniscienceHallucinationRate": 0.8623693379790941,
+      "scicode": null,
+      "tau2": 0.295321637426901,
+      "tauBanking": null,
+      "terminalbenchHard": 0.0378787878787879,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {}
+    }
+  },
+  {
+    "id": "bcf8db0a-3bb6-4d82-9516-0f57370c85a6",
+    "source_id": "bcf8db0a-3bb6-4d82-9516-0f57370c85a6",
+    "slug": "gpt-5-6-terra",
+    "name": "GPT-5.6 Terra (Max)",
+    "variant": "max",
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": 0.389380530973451,
+      "automationBenchPartialScore": 0.5964995802534495,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 1333.48,
+          "lower95ci": 1325.49,
+          "upper95ci": 1341.82
+        },
+        "rubricPassRate": 0.3414141414141414,
+        "analyticalQuality": {
+          "elo": 1344.14,
+          "lower95ci": 1328.23,
+          "upper95ci": 1361.75
+        },
+        "presentation": {
+          "elo": 1528.02,
+          "lower95ci": 1514.23,
+          "upper95ci": 1542.77
+        }
+      },
+      "briefcaseTotalCost": 257.32917821622607,
+      "critpt": 0.3,
+      "enterpriseOpsGym": 0.38495971351835273,
+      "gdpPdfAllPass": 0.24,
+      "gdpval": 1453.21,
+      "gdpvalNormalized": 0.476605,
+      "gpqa": 0.925252525252525,
+      "harveyLab": 0.851787523520046,
+      "hle": 0.429101019462465,
+      "ifbench": 0.712244897959184,
+      "itBenchSre": 0.510357815442561,
+      "lcr": 0.83,
+      "livecodebench": null,
+      "mlcrOverall": 0.316666666666667,
+      "mmmuPro": 0.806936416184971,
+      "omniscience": 0.05,
+      "omniscienceAccuracy": 0.468,
+      "omniscienceHallucinationRate": 0.8787593984962406,
+      "scicode": 0.549768518518518,
+      "tau2": 0.862573099415205,
+      "tauBanking": 0.402061855670103,
+      "terminalbenchHard": 0.575757575757576,
+      "terminalbenchV21": 0.880149812734082,
+      "terminalbenchV40": 0.353535353535354,
+      "timescaleData": {
+        "medianOutputSpeed": 122.415074122807,
+        "medianTimeToFirstChunk": 121.768731764
+      }
+    }
+  },
+  {
+    "id": "bddebfd3-0a8d-47f5-b722-bc4c2ca5a5dc",
+    "source_id": "bddebfd3-0a8d-47f5-b722-bc4c2ca5a5dc",
+    "slug": "kimi-k2-thinking",
+    "name": "Kimi K2 Thinking",
+    "variant": null,
+    "fields": {
+      "aime25": 0.946666666666667,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0.0257142857142857,
+      "gdpval": null,
+      "gpqa": 0.838383838383838,
+      "hle": 0.238183503243744,
+      "ifbench": 0.680952380952381,
+      "itBenchSre": null,
+      "lcr": 0.72,
+      "livecodebench": 0.852910052910053,
+      "mmmuPro": null,
+      "omniscience": -21.416666666666668,
+      "omniscienceAccuracy": 0.30866666666666664,
+      "omniscienceHallucinationRate": 0.756268081002893,
+      "scicode": null,
+      "tau2": 0.929824561403509,
+      "tauBanking": null,
+      "terminalbenchHard": 0.310606060606061,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 157.496194393396,
+        "medianTimeToFirstChunk": 1.32045037099994
+      }
+    }
+  },
+  {
+    "id": "be185709-ddb4-4268-9597-856464359b25",
+    "source_id": "be185709-ddb4-4268-9597-856464359b25",
+    "slug": "mimo-v2-flash-reasoning",
+    "name": "MiMo-V2-Flash (Reasoning)",
+    "variant": null,
+    "fields": {
+      "aime25": 0.963333333333333,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0.0428571428571429,
+      "gdpval": null,
+      "gpqa": 0.846464646464647,
+      "hle": 0.228452270620945,
+      "ifbench": 0.642176870748299,
+      "itBenchSre": null,
+      "lcr": 0.706666666666667,
+      "livecodebench": 0.867724867724868,
+      "mmmuPro": null,
+      "omniscience": -45.35,
+      "omniscienceAccuracy": 0.24833333333333332,
+      "omniscienceHallucinationRate": 0.9337028824833703,
+      "scicode": null,
+      "tau2": 0.950292397660819,
+      "tauBanking": null,
+      "terminalbenchHard": 0.28030303030303,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {}
+    }
+  },
+  {
+    "id": "bf220674-68bd-43cc-a1b8-ce5ed4d2f18d",
+    "source_id": "bf220674-68bd-43cc-a1b8-ce5ed4d2f18d",
+    "slug": "deepseek-v4-pro-0424",
+    "name": "DeepSeek V4 Pro 0424 (Max)",
+    "variant": "max",
+    "fields": {
+      "aime25": null,
+      "analystAgent": 0.1875,
+      "apexAgents": 0.242625368731563,
+      "automationBenchPartialScore": 0.5628968557434271,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 921.88,
+          "lower95ci": 915.94,
+          "upper95ci": 928.48
+        },
+        "rubricPassRate": 0.23938679245283018,
+        "analyticalQuality": {
+          "elo": 879.11,
+          "lower95ci": 867.85,
+          "upper95ci": 892.06
+        },
+        "presentation": {
+          "elo": 932.87,
+          "lower95ci": 920.44,
+          "upper95ci": 946.07
+        }
+      },
+      "briefcaseTotalCost": 8.420430990903489,
+      "critpt": 0.128571428571429,
+      "enterpriseOpsGym": 0.40435690838555655,
+      "gdpPdfAllPass": 0.134,
+      "gdpval": 1159.43,
+      "gdpvalNormalized": 0.32971500000000004,
+      "gpqa": 0.887878787878788,
+      "harveyLab": 0.843971631205674,
+      "hle": 0.375347544022243,
+      "ifbench": 0.764625850340136,
+      "itBenchSre": 0.383239171374765,
+      "lcr": 0.746666666666667,
+      "livecodebench": null,
+      "mlcrOverall": 0.211111111111111,
+      "mmmuPro": null,
+      "omniscience": -10.733333333333333,
+      "omniscienceAccuracy": 0.4295,
+      "omniscienceHallucinationRate": 0.9409874379199532,
+      "scicode": 0.508101851851852,
+      "tau2": 0.961988304093567,
+      "tauBanking": 0.301030927835052,
+      "terminalbenchHard": 0.462121212121212,
+      "terminalbenchV21": 0.640449438202247,
+      "terminalbenchV40": 0.146464646464646,
+      "timescaleData": {
+        "medianOutputSpeed": 110.472392463673,
+        "medianTimeToFirstChunk": 1.53532320799997
+      }
+    }
+  },
+  {
+    "id": "bf60740e-6aa5-422f-ba49-ef6e9d171205",
+    "source_id": "bf60740e-6aa5-422f-ba49-ef6e9d171205",
+    "slug": "qwen3-32b-instruct",
+    "name": "Qwen3 32B (Non-reasoning)",
+    "variant": null,
+    "fields": {
+      "aime25": 0.196666666666667,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": null,
+      "gdpval": null,
+      "gpqa": 0.535353535353535,
+      "hle": 0.0413,
+      "ifbench": 0.314965986394558,
+      "itBenchSre": null,
+      "lcr": 0,
+      "livecodebench": 0.287830687830688,
+      "mmmuPro": null,
+      "omniscience": null,
+      "scicode": null,
+      "tau2": null,
+      "tauBanking": null,
+      "terminalbenchHard": null,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 106.228411780027,
+        "medianTimeToFirstChunk": 2.50361432000005
+      }
+    }
+  },
+  {
+    "id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+    "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+    "slug": "gpt-6-luna-low",
+    "name": "GPT-6 Luna (Low)",
+    "variant": "low",
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.12049187272690505,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 741.01,
+          "lower95ci": 731.46,
+          "upper95ci": 750.32
+        },
+        "rubricPassRate": 0.14444444444444443,
+        "analyticalQuality": {
+          "elo": 654.28,
+          "lower95ci": 635.14,
+          "upper95ci": 673.22
+        },
+        "presentation": {
+          "elo": 774.77,
+          "lower95ci": 758.87,
+          "upper95ci": 791.81
+        }
+      },
+      "briefcaseTotalCost": 0.5538014382243373,
+      "critpt": 0.0257142857142857,
+      "gdpPdfAllPass": 0.09,
+      "gdpval": 1035.61,
+      "gdpvalNormalized": 0.26780499999999996,
+      "gpqa": null,
+      "hle": 0.202502316960148,
+      "ifbench": null,
+      "itBenchSre": null,
+      "lcr": 0.74,
+      "livecodebench": null,
+      "mmmuPro": 0.759537572254335,
+      "omniscience": -9.166666666666666,
+      "omniscienceAccuracy": 0.4076666666666667,
+      "omniscienceHallucinationRate": 0.842993809791784,
+      "scicode": 0.46875,
+      "tau2": null,
+      "tauBanking": null,
+      "terminalbenchHard": null,
+      "terminalbenchV21": null,
+      "terminalbenchV40": 0,
+      "timescaleData": {
+        "medianOutputSpeed": 128.384018289389,
+        "medianTimeToFirstChunk": 2.09545261600002
+      }
+    }
+  },
+  {
+    "id": "c07e65e6-32fc-451e-938d-7477a1c3ffcc",
+    "source_id": "c07e65e6-32fc-451e-938d-7477a1c3ffcc",
+    "slug": "grok-4-6-low",
+    "name": "Grok 4.6 (Low)",
+    "variant": "low",
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.53445400590317,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 1287.99,
+          "lower95ci": 1279.93,
+          "upper95ci": 1296.53
+        },
+        "rubricPassRate": 0.402020202020202,
+        "analyticalQuality": {
+          "elo": 1368.68,
+          "lower95ci": 1353.27,
+          "upper95ci": 1383.78
+        },
+        "presentation": {
+          "elo": 1268.69,
+          "lower95ci": 1254.11,
+          "upper95ci": 1283.7
+        }
+      },
+      "briefcaseTotalCost": 76.70700418404661,
+      "critpt": 0.0571428571428571,
+      "gdpPdfAllPass": 0.158,
+      "gdpval": 1409.26,
+      "gdpvalNormalized": 0.45463,
+      "gpqa": 0.878787878787879,
+      "hle": 0.276181649675626,
+      "ifbench": null,
+      "itBenchSre": null,
+      "lcr": 0.806666666666667,
+      "livecodebench": null,
+      "mmmuPro": null,
+      "omniscience": 25.9,
+      "omniscienceAccuracy": 0.43283333333333335,
+      "omniscienceHallucinationRate": 0.30649426976197475,
+      "scicode": 0.494212962962963,
+      "tau2": null,
+      "tauBanking": 0.381443298969072,
+      "terminalbenchHard": null,
+      "terminalbenchV21": 0.752808988764045,
+      "terminalbenchV40": 0.0303030303030303,
+      "timescaleData": {
+        "medianOutputSpeed": 68.966844203544,
+        "medianTimeToFirstChunk": 6.65843175900006
+      }
+    }
+  },
+  {
+    "id": "c1045dc0-4fd3-4adb-9548-18763e0d051f",
+    "source_id": "c1045dc0-4fd3-4adb-9548-18763e0d051f",
+    "slug": "gpt-4o",
+    "name": "GPT-4o (Nov '24)",
+    "variant": null,
+    "fields": {
+      "aime25": 0.06,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": -13.07,
+      "gdpvalNormalized": 0,
+      "gpqa": 0.543434343434343,
+      "hle": 0.0242,
+      "ifbench": 0.342857142857143,
+      "itBenchSre": null,
+      "lcr": 0.493333333333333,
+      "livecodebench": 0.308994708994709,
+      "mmmuPro": null,
+      "omniscience": -10.516666666666667,
+      "omniscienceAccuracy": 0.19866666666666666,
+      "omniscienceHallucinationRate": 0.37915973377703827,
+      "scicode": null,
+      "tau2": 0.251461988304094,
+      "tauBanking": null,
+      "terminalbenchHard": 0.0833333333333333,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 141.130880805312,
+        "medianTimeToFirstChunk": 0.854985582500035
+      }
+    }
+  },
+  {
+    "id": "c1c5db7c-968f-445a-a274-7b5689348bf8",
+    "source_id": "c1c5db7c-968f-445a-a274-7b5689348bf8",
+    "slug": "g9v3-39a5b",
+    "name": "G9v3-39A5B",
+    "variant": null,
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0.00285714285714286,
+      "gdpval": 1110.52,
+      "gdpvalNormalized": 0.30526,
+      "gpqa": 0.805050505050505,
+      "hle": 0.174698795180723,
+      "ifbench": null,
+      "itBenchSre": null,
+      "lcr": 0.653333333333333,
+      "livecodebench": null,
+      "mmmuPro": null,
+      "omniscience": 3.7666666666666666,
+      "omniscienceAccuracy": 0.14866666666666667,
+      "omniscienceHallucinationRate": 0.13038371182458888,
+      "scicode": 0.368055555555556,
+      "tau2": null,
+      "tauBanking": 0.220618556701031,
+      "terminalbenchHard": null,
+      "terminalbenchV21": 0.325842696629214,
+      "terminalbenchV40": null,
+      "timescaleData": {}
+    }
+  },
+  {
+    "id": "c298d1a8-606c-4971-8613-ccdaaf941043",
+    "source_id": "c298d1a8-606c-4971-8613-ccdaaf941043",
+    "slug": "gpt-5-4-nano-non-reasoning",
+    "name": "GPT-5.4 nano (Non-reasoning)",
+    "variant": null,
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": null,
+      "gpqa": 0.557575757575758,
+      "hle": 0.0407784986098239,
+      "ifbench": 0.327210884353741,
+      "itBenchSre": 0.12909604519774,
+      "lcr": 0.296666666666667,
+      "livecodebench": null,
+      "mmmuPro": 0.43757225433526,
+      "omniscience": -37.483333333333334,
+      "omniscienceAccuracy": 0.14883333333333335,
+      "omniscienceHallucinationRate": 0.6152339925592324,
+      "scicode": null,
+      "tau2": 0.347953216374269,
+      "tauBanking": null,
+      "terminalbenchHard": 0.242424242424242,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 177.433753604338,
+        "medianTimeToFirstChunk": 0.682618526499986
+      }
+    }
+  },
+  {
+    "id": "c2b1e769-7aee-4669-8076-73918bdebf6c",
+    "source_id": "c2b1e769-7aee-4669-8076-73918bdebf6c",
+    "slug": "claude-4-5-haiku",
+    "name": "Claude 4.5 Haiku (Non-reasoning)",
+    "variant": null,
+    "fields": {
+      "aime25": 0.39,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": null,
+      "gpqa": 0.646464646464646,
+      "hle": 0.0421686746987952,
+      "ifbench": 0.420408163265306,
+      "itBenchSre": null,
+      "lcr": 0.496666666666667,
+      "livecodebench": 0.511111111111111,
+      "mlcrOverall": 0.0444444444444444,
+      "mmmuPro": 0.551445086705202,
+      "omniscience": -7.566666666666666,
+      "omniscienceAccuracy": 0.14433333333333334,
+      "omniscienceHallucinationRate": 0.2571094663030775,
+      "scicode": null,
+      "tau2": 0.324561403508772,
+      "tauBanking": null,
+      "terminalbenchHard": 0.272727272727273,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 85.3805156585385,
+        "medianTimeToFirstChunk": 0.556290160999993
+      }
+    }
+  },
+  {
+    "id": "c3274a19-6d3c-4d01-ab9b-5055a0a40429",
+    "source_id": "c3274a19-6d3c-4d01-ab9b-5055a0a40429",
+    "slug": "gpt-5-mini-medium",
+    "name": "GPT-5 mini (Medium)",
+    "variant": "medium",
+    "fields": {
+      "aime25": 0.85,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0.0142857142857143,
+      "gdpval": null,
+      "gpqa": 0.803030303030303,
+      "hle": 0.159406858202039,
+      "ifbench": 0.71156462585034,
+      "itBenchSre": null,
+      "lcr": 0.723333333333333,
+      "livecodebench": 0.692063492063492,
+      "mmmuPro": 0.688439306358381,
+      "omniscience": -11.033333333333333,
+      "omniscienceAccuracy": 0.23066666666666666,
+      "omniscienceHallucinationRate": 0.44324090121317156,
+      "scicode": null,
+      "tau2": 0.710526315789474,
+      "tauBanking": null,
+      "terminalbenchHard": 0.287878787878788,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 135.607723381936,
+        "medianTimeToFirstChunk": 10.564435987
+      }
+    }
+  },
+  {
+    "id": "c3738fb0-3408-4430-a699-760ae4b70c93",
+    "source_id": "c3738fb0-3408-4430-a699-760ae4b70c93",
+    "slug": "gpt-5-minimal",
+    "name": "GPT-5 (Minimal)",
+    "variant": "minimal",
+    "fields": {
+      "aime25": 0.316666666666667,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": null,
+      "gpqa": 0.672727272727273,
+      "hle": 0.0602409638554217,
+      "ifbench": 0.45578231292517,
+      "itBenchSre": null,
+      "lcr": null,
+      "livecodebench": 0.557671957671958,
+      "mmmuPro": 0.620809248554913,
+      "omniscience": -33.8,
+      "omniscienceAccuracy": 0.29633333333333334,
+      "omniscienceHallucinationRate": 0.901468498342018,
+      "scicode": null,
+      "tau2": 0.669590643274854,
+      "tauBanking": null,
+      "terminalbenchHard": 0.181818181818182,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 104.370404813894,
+        "medianTimeToFirstChunk": 1.11110940949999
+      }
+    }
+  },
+  {
+    "id": "c3f12f61-9d57-4e2c-9106-5a82bb1cfee2",
+    "source_id": "c3f12f61-9d57-4e2c-9106-5a82bb1cfee2",
+    "slug": "diffusiongemma-26b-a4b",
+    "name": "DiffusionGemma 26B A4B",
+    "variant": null,
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0.00285714285714286,
+      "gdpval": 324.55,
+      "gdpvalNormalized": 0,
+      "gpqa": 0.668686868686869,
+      "hle": 0.108433734939759,
+      "ifbench": 0.594557823129252,
+      "itBenchSre": null,
+      "lcr": 0.196666666666667,
+      "livecodebench": null,
+      "mmmuPro": 0.665317919075144,
+      "omniscience": -59.233333333333334,
+      "omniscienceAccuracy": 0.16583333333333333,
+      "omniscienceHallucinationRate": 0.9088911088911089,
+      "scicode": null,
+      "tau2": null,
+      "tauBanking": null,
+      "terminalbenchHard": null,
+      "terminalbenchV21": 0.123595505617978,
+      "terminalbenchV40": null,
+      "timescaleData": {}
+    }
+  },
+  {
+    "id": "c4169d75-9d24-4794-a9c3-69e1fe364de5",
+    "source_id": "c4169d75-9d24-4794-a9c3-69e1fe364de5",
+    "slug": "gpt-5-5-instant-06-26",
+    "name": "GPT-5.5 Instant (June 2026)",
+    "variant": null,
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.36436554387118747,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 1085.43,
+          "lower95ci": 1076.66,
+          "upper95ci": 1093.72
+        },
+        "rubricPassRate": 0.2696969696969697,
+        "analyticalQuality": {
+          "elo": 1050.84,
+          "lower95ci": 1035.38,
+          "upper95ci": 1067.37
+        },
+        "presentation": {
+          "elo": 1198.29,
+          "lower95ci": 1181.36,
+          "upper95ci": 1213.3
+        }
+      },
+      "briefcaseTotalCost": 101.05263375425028,
+      "critpt": 0,
+      "gdpPdfAllPass": 0.202,
+      "gdpval": 511.82,
+      "gdpvalNormalized": 0.005909999999999997,
+      "gpqa": 0.823232323232323,
+      "hle": 0.199258572752549,
+      "ifbench": null,
+      "itBenchSre": null,
+      "lcr": 0.7,
+      "livecodebench": null,
+      "mmmuPro": null,
+      "omniscience": 3.7,
+      "omniscienceAccuracy": 0.44416666666666665,
+      "omniscienceHallucinationRate": 0.7325337331334333,
+      "scicode": 0.525462962962963,
+      "tau2": null,
+      "tauBanking": 0.117525773195876,
+      "terminalbenchHard": null,
+      "terminalbenchV21": 0.348314606741573,
+      "terminalbenchV40": 0.126262626262626,
+      "timescaleData": {
+        "medianOutputSpeed": 121.184997470837,
+        "medianTimeToFirstChunk": 0.884296462999999
+      }
+    }
+  },
+  {
+    "id": "c4c3b42f-e0f0-48ca-b6f9-b296e7697806",
+    "source_id": "c4c3b42f-e0f0-48ca-b6f9-b296e7697806",
+    "slug": "llama-3-3-nemotron-super-49b",
+    "name": "Llama 3.3 Nemotron Super 49B v1 (Non-reasoning)",
+    "variant": null,
+    "fields": {
+      "aime25": 0.0766666666666667,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": null,
+      "gpqa": 0.517171717171717,
+      "hle": 0.0381,
+      "ifbench": 0.394557823129252,
+      "itBenchSre": null,
+      "lcr": 0.12,
+      "livecodebench": 0.28042328042328,
+      "mmmuPro": null,
+      "omniscience": -50.3,
+      "omniscienceAccuracy": 0.13466666666666666,
+      "omniscienceHallucinationRate": 0.7369029275808937,
+      "scicode": null,
+      "tau2": null,
+      "tauBanking": null,
+      "terminalbenchHard": 0,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {}
+    }
+  },
+  {
+    "id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+    "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+    "slug": "gpt-6-sol",
+    "name": "GPT-6 Sol (Max)",
+    "variant": "max",
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.6163369295959864,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 1479.07,
+          "lower95ci": 1470.1,
+          "upper95ci": 1489.27
+        },
+        "rubricPassRate": 0.4626262626262626,
+        "analyticalQuality": {
+          "elo": 1615.44,
+          "lower95ci": 1597.81,
+          "upper95ci": 1635.74
+        },
+        "presentation": {
+          "elo": 1512.65,
+          "lower95ci": 1495.85,
+          "upper95ci": 1529.44
+        }
+      },
+      "briefcaseTotalCost": 238.8123648528785,
+      "critpt": 0.308571428571429,
+      "gdpPdfAllPass": 0.252,
+      "gdpval": 1509.92,
+      "gdpvalNormalized": 0.5049600000000001,
+      "gpqa": null,
+      "hle": 0.479147358665431,
+      "ifbench": null,
+      "itBenchSre": 0.494350282485876,
+      "lcr": 0.836666666666667,
+      "livecodebench": null,
+      "mlcrOverall": 0.161111111111111,
+      "mmmuPro": 0.829479768786127,
+      "omniscience": 27.116666666666667,
+      "omniscienceAccuracy": 0.5448333333333333,
+      "omniscienceHallucinationRate": 0.6012449652142072,
+      "scicode": 0.576388888888889,
+      "tau2": null,
+      "tauBanking": null,
+      "terminalbenchHard": null,
+      "terminalbenchV21": null,
+      "terminalbenchV40": 0.439393939393939,
+      "timescaleData": {
+        "medianOutputSpeed": 110.377586138148,
+        "medianTimeToFirstChunk": 107.764603228
+      }
+    }
+  },
+  {
+    "id": "c72cb85a-18a4-4235-b455-77dff2f16c50",
+    "source_id": "c72cb85a-18a4-4235-b455-77dff2f16c50",
+    "slug": "grok-4-20",
+    "name": "Grok 4.20 0309 v2 (Reasoning)",
+    "variant": null,
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0.0657142857142857,
+      "gdpval": null,
+      "gpqa": 0.911111111111111,
+      "hle": 0.345227062094532,
+      "ifbench": 0.812244897959184,
+      "itBenchSre": null,
+      "lcr": 0.69,
+      "livecodebench": null,
+      "mmmuPro": 0.745664739884393,
+      "omniscience": 14.833333333333334,
+      "omniscienceAccuracy": 0.2748333333333333,
+      "omniscienceHallucinationRate": 0.17444265686049185,
+      "scicode": null,
+      "tau2": 0.929824561403509,
+      "tauBanking": null,
+      "terminalbenchHard": 0.378787878787879,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 120.110533700195,
+        "medianTimeToFirstChunk": 18.4361974549999
+      }
+    }
+  },
+  {
+    "id": "c7667559-d9b6-43f1-8cd8-8bdbc78d190b",
+    "source_id": "c7667559-d9b6-43f1-8cd8-8bdbc78d190b",
+    "slug": "gemini-2-5-flash-preview-09-2025-reasoning",
+    "name": "Gemini 2.5 Flash Preview (Sep '25) (Reasoning)",
+    "variant": null,
+    "fields": {
+      "aime25": 0.783333333333333,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0.00285714285714286,
+      "gdpval": null,
+      "gpqa": 0.792929292929293,
+      "hle": 0.138090824837813,
+      "ifbench": 0.52312925170068,
+      "itBenchSre": null,
+      "lcr": 0.71,
+      "livecodebench": 0.713227513227513,
+      "mmmuPro": 0.73121387283237,
+      "omniscience": -36.1,
+      "omniscienceAccuracy": 0.2833333333333333,
+      "omniscienceHallucinationRate": 0.8990697674418605,
+      "scicode": null,
+      "tau2": 0.456140350877193,
+      "tauBanking": null,
+      "terminalbenchHard": 0.166666666666667,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {}
+    }
+  },
+  {
+    "id": "c76e0ae8-0fd2-45c0-a39d-d398fce9b128",
+    "source_id": "c76e0ae8-0fd2-45c0-a39d-d398fce9b128",
+    "slug": "falcon-h1r-7b",
+    "name": "Falcon-H1R-7B",
+    "variant": null,
+    "fields": {
+      "aime25": 0.8,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0.00285714285714286,
+      "gdpval": null,
+      "gpqa": 0.660606060606061,
+      "hle": 0.10982391102873,
+      "ifbench": 0.54421768707483,
+      "itBenchSre": null,
+      "lcr": 0.11,
+      "livecodebench": 0.723809523809524,
+      "mmmuPro": null,
+      "omniscience": -61.3,
+      "omniscienceAccuracy": 0.1455,
+      "omniscienceHallucinationRate": 0.88765359859567,
+      "scicode": null,
+      "tau2": 0.277777777777778,
+      "tauBanking": null,
+      "terminalbenchHard": 0.0227272727272727,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {}
+    }
+  },
+  {
+    "id": "c77cfe51-f4a0-4692-9dee-5061ef667f23",
+    "source_id": "c77cfe51-f4a0-4692-9dee-5061ef667f23",
+    "slug": "gpt-5-5-low",
+    "name": "GPT-5.5 (Low)",
+    "variant": "low",
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0.08,
+      "gdpval": 1048.71,
+      "gdpvalNormalized": 0.274355,
+      "gpqa": 0.91010101010101,
+      "hle": 0.326691380908248,
+      "ifbench": 0.643537414965986,
+      "itBenchSre": null,
+      "lcr": 0.81,
+      "livecodebench": null,
+      "mlcrOverall": 0.111111111111111,
+      "mmmuPro": 0.790173410404624,
+      "omniscience": 15.1,
+      "omniscienceAccuracy": 0.5485,
+      "omniscienceHallucinationRate": 0.8803986710963455,
+      "scicode": null,
+      "tau2": 0.839181286549708,
+      "tauBanking": 0.249484536082474,
+      "terminalbenchHard": 0.522727272727273,
+      "terminalbenchV21": 0.655430711610487,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 81.1970913977534,
+        "medianTimeToFirstChunk": 1.52843945900005
+      }
+    }
+  },
+  {
+    "id": "c8158c23-6fff-4c31-911d-954c32d80c28",
+    "source_id": "c8158c23-6fff-4c31-911d-954c32d80c28",
+    "slug": "step-3-5-flash-0202",
+    "name": "Step 3.5 Flash",
+    "variant": null,
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0.0246938775510204,
+      "gdpval": null,
+      "gpqa": 0.831313131313131,
+      "hle": 0.211306765523633,
+      "ifbench": 0.645578231292517,
+      "itBenchSre": null,
+      "lcr": 0.5,
+      "livecodebench": null,
+      "mmmuPro": null,
+      "omniscience": -41.81666666666667,
+      "omniscienceAccuracy": 0.23616666666666666,
+      "omniscienceHallucinationRate": 0.8566441195723326,
+      "scicode": null,
+      "tau2": 0.944444444444444,
+      "tauBanking": null,
+      "terminalbenchHard": 0.272727272727273,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 105.181091710741,
+        "medianTimeToFirstChunk": 3.38087399300008
+      }
+    }
+  },
+  {
+    "id": "c8673741-5e1a-46a1-9e4f-710a5c920982",
+    "source_id": "c8673741-5e1a-46a1-9e4f-710a5c920982",
+    "slug": "glm-4-7-flash-non-reasoning",
+    "name": "GLM-4.7-Flash (Non-reasoning)",
+    "variant": null,
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": null,
+      "gpqa": 0.451515151515151,
+      "hle": 0.0495829471733086,
+      "ifbench": 0.462585034013605,
+      "itBenchSre": null,
+      "lcr": 0.203333333333333,
+      "livecodebench": null,
+      "mmmuPro": null,
+      "omniscience": -68.93333333333334,
+      "omniscienceAccuracy": 0.1305,
+      "omniscienceHallucinationRate": 0.942879049262028,
+      "scicode": null,
+      "tau2": 0.91812865497076,
+      "tauBanking": null,
+      "terminalbenchHard": 0.0378787878787879,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 116.014393731113,
+        "medianTimeToFirstChunk": 1.51631507349998
+      }
+    }
+  },
+  {
+    "id": "c8a3fa87-735e-49a9-afb1-270c5e9f53f7",
+    "source_id": "c8a3fa87-735e-49a9-afb1-270c5e9f53f7",
+    "slug": "olmo-3-32b-think",
+    "name": "Olmo 3 32B Think",
+    "variant": null,
+    "fields": {
+      "aime25": 0.736666666666667,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": null,
+      "gpqa": 0.61010101010101,
+      "hle": 0.0644114921223355,
+      "ifbench": 0.491156462585034,
+      "itBenchSre": null,
+      "lcr": 0,
+      "livecodebench": 0.671957671957672,
+      "mmmuPro": null,
+      "omniscience": -58.06666666666667,
+      "omniscienceAccuracy": 0.14866666666666667,
+      "omniscienceHallucinationRate": 0.8566953797963978,
+      "scicode": null,
+      "tau2": 0,
+      "tauBanking": null,
+      "terminalbenchHard": 0.0151515151515152,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {}
+    }
+  },
+  {
+    "id": "c8a79180-7d16-4474-8701-9a77c0baa56a",
+    "source_id": "c8a79180-7d16-4474-8701-9a77c0baa56a",
+    "slug": "qwen3-next-80b-a3b-reasoning",
+    "name": "Qwen3 Next 80B A3B (Reasoning)",
+    "variant": null,
+    "fields": {
+      "aime25": 0.843333333333333,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": 131.64,
+      "gdpvalNormalized": 0,
+      "gpqa": 0.758585858585858,
+      "hle": 0.125579240037071,
+      "ifbench": 0.606802721088435,
+      "itBenchSre": null,
+      "lcr": 0.636666666666667,
+      "livecodebench": 0.784126984126984,
+      "mmmuPro": null,
+      "omniscience": -51.416666666666664,
+      "omniscienceAccuracy": 0.19033333333333333,
+      "omniscienceHallucinationRate": 0.8701111568546727,
+      "scicode": null,
+      "tau2": 0.415204678362573,
+      "tauBanking": 0.0618556701030928,
+      "terminalbenchHard": 0.0984848484848485,
+      "terminalbenchV21": 0.0674157303370786,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 194.235252501594,
+        "medianTimeToFirstChunk": 2.27771977149996
+      }
+    }
+  },
+  {
+    "id": "c8adc5cf-fd5a-407b-af51-dc3bede3e49c",
+    "source_id": "c8adc5cf-fd5a-407b-af51-dc3bede3e49c",
+    "slug": "grok-4-6",
+    "name": "Grok 4.6 (High)",
+    "variant": "high",
+    "fields": {
+      "aime25": null,
+      "analystAgent": 0.4125,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.6667849638121398,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 1535.9,
+          "lower95ci": 1528.09,
+          "upper95ci": 1544.99
+        },
+        "rubricPassRate": 0.5282828282828282,
+        "analyticalQuality": {
+          "elo": 1664.99,
+          "lower95ci": 1651.65,
+          "upper95ci": 1680.15
+        },
+        "presentation": {
+          "elo": 1519.56,
+          "lower95ci": 1505.38,
+          "upper95ci": 1536.28
+        }
+      },
+      "briefcaseTotalCost": 455.86172314930434,
+      "critpt": 0.171428571428571,
+      "enterpriseOpsGym": 0.4834377797672337,
+      "gdpPdfAllPass": 0.17,
+      "gdpval": 1621.65,
+      "gdpvalNormalized": 0.560825,
+      "gpqa": 0.94949494949495,
+      "hle": 0.429101019462465,
+      "ifbench": null,
+      "itBenchSre": null,
+      "lcr": 0.803333333333333,
+      "livecodebench": null,
+      "mlcrOverall": 0.122222222222222,
+      "mmmuPro": null,
+      "omniscience": 30.483333333333334,
+      "omniscienceAccuracy": 0.48233333333333334,
+      "omniscienceHallucinationRate": 0.3428847392144237,
+      "scicode": 0.564814814814815,
+      "tau2": null,
+      "tauBanking": 0.507216494845361,
+      "terminalbenchHard": null,
+      "terminalbenchV21": 0.883895131086142,
+      "terminalbenchV40": 0.212121212121212,
+      "timescaleData": {
+        "medianOutputSpeed": 72.816120005872,
+        "medianTimeToFirstChunk": 27.797551187
+      }
+    }
+  },
+  {
+    "id": "c99f3bde-7c08-4de8-bd5c-8ee9123ebffa",
+    "source_id": "c99f3bde-7c08-4de8-bd5c-8ee9123ebffa",
+    "slug": "gpt-oss-120b-low",
+    "name": "gpt-oss-120b (Low)",
+    "variant": "low",
+    "fields": {
+      "aime25": 0.666666666666667,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": 175.53,
+      "gdpvalNormalized": 0,
+      "gpqa": 0.671717171717172,
+      "hle": 0.0588507877664504,
+      "ifbench": 0.582993197278912,
+      "itBenchSre": null,
+      "lcr": 0.46,
+      "livecodebench": 0.706878306878307,
+      "mmmuPro": null,
+      "omniscience": -53.5,
+      "omniscienceAccuracy": 0.198,
+      "omniscienceHallucinationRate": 0.9139650872817955,
+      "scicode": null,
+      "tau2": 0.450292397660819,
+      "tauBanking": 0.0288659793814433,
+      "terminalbenchHard": 0.053030303030303,
+      "terminalbenchV21": 0.138576779026217,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 215.115136177553,
+        "medianTimeToFirstChunk": 0.795505015999993
+      }
+    }
+  },
+  {
+    "id": "cbac8c35-e069-4c73-823e-0953e6ed0e85",
+    "source_id": "cbac8c35-e069-4c73-823e-0953e6ed0e85",
+    "slug": "qwen3-max-thinking-preview",
+    "name": "Qwen3 Max Thinking (Preview)",
+    "variant": null,
+    "fields": {
+      "aime25": 0.823333333333333,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": null,
+      "gpqa": 0.775757575757576,
+      "hle": 0.126506024096386,
+      "ifbench": 0.538095238095238,
+      "itBenchSre": null,
+      "lcr": 0.62,
+      "livecodebench": 0.535449735449735,
+      "mmmuPro": null,
+      "omniscience": -39.11666666666667,
+      "omniscienceAccuracy": 0.2735,
+      "omniscienceHallucinationRate": 0.9148887359486121,
+      "scicode": null,
+      "tau2": 0.83625730994152,
+      "tauBanking": null,
+      "terminalbenchHard": 0.174242424242424,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 60.1176485565656,
+        "medianTimeToFirstChunk": 4.0462453445
+      }
+    }
+  },
+  {
+    "id": "cc1e488b-8ba4-464d-875d-690166b15ad3",
+    "source_id": "cc1e488b-8ba4-464d-875d-690166b15ad3",
+    "slug": "glm-5-3-low",
+    "name": "GLM-5.3 (Low)",
+    "variant": "low",
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.519790983751346,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 1187.75,
+          "lower95ci": 1178.01,
+          "upper95ci": 1198.43
+        },
+        "rubricPassRate": 0.37731958762886597,
+        "analyticalQuality": {
+          "elo": 1317.58,
+          "lower95ci": 1298.61,
+          "upper95ci": 1337.92
+        },
+        "presentation": {
+          "elo": 1066.1,
+          "lower95ci": 1047.75,
+          "upper95ci": 1082.93
+        }
+      },
+      "briefcaseTotalCost": 66.02989076128601,
+      "critpt": 0.145714285714286,
+      "gdpPdfAllPass": 0.088,
+      "gdpval": 1325.44,
+      "gdpvalNormalized": 0.41272000000000003,
+      "gpqa": null,
+      "hle": 0.365616311399444,
+      "ifbench": null,
+      "itBenchSre": null,
+      "lcr": 0.726666666666667,
+      "livecodebench": null,
+      "mmmuPro": null,
+      "omniscience": -8.4,
+      "omniscienceAccuracy": 0.33916666666666667,
+      "omniscienceHallucinationRate": 0.6403530895334174,
+      "scicode": 0.420138888888889,
+      "tau2": null,
+      "tauBanking": null,
+      "terminalbenchHard": null,
+      "terminalbenchV21": null,
+      "terminalbenchV40": 0.348484848484849,
+      "timescaleData": {
+        "medianOutputSpeed": 81.5714957429777,
+        "medianTimeToFirstChunk": 3.23048084700001
+      }
+    }
+  },
+  {
+    "id": "cc1fa238-1a76-486d-a997-22309275eadd",
+    "source_id": "cc1fa238-1a76-486d-a997-22309275eadd",
+    "slug": "devstral-small-2505",
+    "name": "Devstral Small (May '25)",
+    "variant": null,
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": null,
+      "gpqa": 0.434343434343434,
+      "hle": 0.0403151065801668,
+      "ifbench": 0.316326530612245,
+      "itBenchSre": null,
+      "lcr": 0.32,
+      "livecodebench": 0.258201058201058,
+      "mmmuPro": null,
+      "omniscience": -56.78333333333333,
+      "omniscienceAccuracy": 0.15866666666666668,
+      "omniscienceHallucinationRate": 0.8635103011093502,
+      "scicode": null,
+      "tau2": 0.380116959064327,
+      "tauBanking": null,
+      "terminalbenchHard": 0.0606060606060606,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {}
+    }
+  },
+  {
+    "id": "cc4a20cd-09fe-4962-a430-119c815e85fa",
+    "source_id": "cc4a20cd-09fe-4962-a430-119c815e85fa",
+    "slug": "gpt-5-6-terra-low",
+    "name": "GPT-5.6 Terra (Low)",
+    "variant": "low",
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.29106376138008166,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 1012.85,
+          "lower95ci": 1004.24,
+          "upper95ci": 1020.67
+        },
+        "rubricPassRate": 0.23333333333333334,
+        "analyticalQuality": {
+          "elo": 919.78,
+          "lower95ci": 905.1,
+          "upper95ci": 934.4
+        },
+        "presentation": {
+          "elo": 1176.81,
+          "lower95ci": 1162.06,
+          "upper95ci": 1191.38
+        }
+      },
+      "briefcaseTotalCost": 27.282110136374136,
+      "critpt": 0.0942857142857143,
+      "gdpPdfAllPass": 0.176,
+      "gdpval": 1110.3,
+      "gdpvalNormalized": 0.30515,
+      "gpqa": 0.843434343434343,
+      "hle": 0.291936978683967,
+      "ifbench": 0.596598639455782,
+      "itBenchSre": null,
+      "lcr": 0.713333333333333,
+      "livecodebench": null,
+      "mlcrOverall": 0.0888888888888889,
+      "mmmuPro": 0.761271676300578,
+      "omniscience": -6.833333333333333,
+      "omniscienceAccuracy": 0.43733333333333335,
+      "omniscienceHallucinationRate": 0.898696682464455,
+      "scicode": 0.498842592592593,
+      "tau2": 0.605263157894737,
+      "tauBanking": 0.187628865979381,
+      "terminalbenchHard": 0.439393939393939,
+      "terminalbenchV21": 0.625468164794007,
+      "terminalbenchV40": 0.0151515151515152,
+      "timescaleData": {
+        "medianOutputSpeed": 93.4523951543154,
+        "medianTimeToFirstChunk": 1.5787197075
+      }
+    }
+  },
+  {
+    "id": "cd26a386-4873-46ff-b853-d239050025a2",
+    "source_id": "cd26a386-4873-46ff-b853-d239050025a2",
+    "slug": "gemma-4-31b",
+    "name": "Gemma 4 31B (Reasoning)",
+    "variant": null,
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.049330634486812325,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 364.87,
+          "lower95ci": 355.7,
+          "upper95ci": 372.99
+        },
+        "rubricPassRate": 0.07777777777777778,
+        "analyticalQuality": {
+          "elo": 126.58,
+          "lower95ci": 109.73,
+          "upper95ci": 142.34
+        },
+        "presentation": {
+          "elo": 323.94,
+          "lower95ci": 307.19,
+          "upper95ci": 339.65
+        }
+      },
+      "briefcaseTotalCost": 0,
+      "critpt": 0.0142857142857143,
+      "enterpriseOpsGym": 0.28349746344374815,
+      "gdpPdfAllPass": 0.06,
+      "gdpval": 622.93,
+      "gdpvalNormalized": 0.06146499999999998,
+      "gpqa": 0.856565656565657,
+      "harveyLab": 0.47228253003329,
+      "hle": 0.236329935125116,
+      "ifbench": 0.75578231292517,
+      "itBenchSre": 0.372881355932203,
+      "lcr": 0.696666666666667,
+      "livecodebench": null,
+      "mmmuPro": 0.734104046242775,
+      "omniscience": -47.93333333333333,
+      "omniscienceAccuracy": 0.20033333333333334,
+      "omniscienceHallucinationRate": 0.8499374739474781,
+      "scicode": 0.454861111111111,
+      "tau2": 0.599415204678363,
+      "tauBanking": 0.148453608247423,
+      "terminalbenchHard": 0.363636363636364,
+      "terminalbenchV21": 0.434456928838951,
+      "terminalbenchV40": 0,
+      "timescaleData": {
+        "medianOutputSpeed": 35.5834186402662,
+        "medianTimeToFirstChunk": 1.12445730149995
+      }
+    }
+  },
+  {
+    "id": "cd55210d-358e-4df1-ba9c-9acb5f186cc9",
+    "source_id": "cd55210d-358e-4df1-ba9c-9acb5f186cc9",
+    "slug": "claude-fable-5",
+    "name": "Claude Fable 5 (Max, Opus 4.8 Fallback)",
+    "variant": "max",
+    "fields": {
+      "aime25": null,
+      "analystAgent": 0.4875,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.5407130114065382,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 1538.97,
+          "lower95ci": 1531.99,
+          "upper95ci": 1546.65
+        },
+        "rubricPassRate": 0.5595959595959596,
+        "analyticalQuality": {
+          "elo": 1667.17,
+          "lower95ci": 1654.04,
+          "upper95ci": 1681.88
+        },
+        "presentation": {
+          "elo": 1470.81,
+          "lower95ci": 1459.05,
+          "upper95ci": 1483.93
+        }
+      },
+      "briefcaseTotalCost": 2029.603637925242,
+      "critpt": 0.2857142857,
+      "enterpriseOpsGym": 0.5111906893464637,
+      "gdpPdfAllPass": 0.24,
+      "gdpval": 1612.65,
+      "gdpvalNormalized": 0.5563250000000001,
+      "gpqa": 0.926262626262626,
+      "harveyLab": 0.935591257779708,
+      "hle": 0.554680259499537,
+      "ifbench": 0.63469387755102,
+      "itBenchSre": null,
+      "lcr": 0.823333333333333,
+      "livecodebench": null,
+      "mlcrOverall": 0.644444444444444,
+      "mmmuPro": null,
+      "omniscience": 43.3,
+      "omniscienceAccuracy": 0.6535,
+      "omniscienceHallucinationRate": 0.6363636363636364,
+      "scicode": 0.609953703703704,
+      "tau2": 0.985380116959064,
+      "tauBanking": 0.381443298969072,
+      "terminalbenchHard": 0.628787878787879,
+      "terminalbenchV21": 0.846441947565543,
+      "terminalbenchV40": 0.424242424242424,
+      "timescaleData": {
+        "medianOutputSpeed": 64.3190327503088,
+        "medianTimeToFirstChunk": 91.833144163
+      }
+    }
+  },
+  {
+    "id": "cd684ea4-b475-4269-b001-d469d06d8a7a",
+    "source_id": "cd684ea4-b475-4269-b001-d469d06d8a7a",
+    "slug": "glm-5-3",
+    "name": "GLM-5.3 (Max)",
+    "variant": "max",
+    "fields": {
+      "aime25": null,
+      "analystAgent": null,
+      "apexAgents": null,
+      "automationBenchPartialScore": 0.622028649962642,
+      "briefcaseBreakdown": {
+        "overall": {
+          "elo": 1510.09,
+          "lower95ci": 1501.97,
+          "upper95ci": 1518.77
+        },
+        "rubricPassRate": 0.5134854771784232,
+        "analyticalQuality": {
+          "elo": 1777.1,
+          "lower95ci": 1762.14,
+          "upper95ci": 1794.18
+        },
+        "presentation": {
+          "elo": 1351.39,
+          "lower95ci": 1335.83,
+          "upper95ci": 1366.2
+        }
+      },
+      "briefcaseTotalCost": 514.039866984654,
+      "critpt": 0.191428571428571,
+      "enterpriseOpsGym": 0.36436884512085943,
+      "gdpPdfAllPass": 0.112,
+      "gdpval": 1652.93,
+      "gdpvalNormalized": 0.576465,
+      "gpqa": 0.917171717171717,
+      "hle": 0.422613531047266,
+      "ifbench": null,
+      "itBenchSre": 0.460828625235405,
+      "lcr": 0.796666666666667,
+      "livecodebench": null,
+      "mlcrOverall": 0.483333333333333,
+      "mmmuPro": null,
+      "omniscience": 14.3,
+      "omniscienceAccuracy": 0.3385,
+      "omniscienceHallucinationRate": 0.29554043839758126,
+      "scicode": 0.590277777777778,
+      "tau2": null,
+      "tauBanking": 0.503092783505155,
+      "terminalbenchHard": null,
+      "terminalbenchV21": 0.838951310861423,
+      "terminalbenchV40": 0.419191919191919,
+      "timescaleData": {
+        "medianOutputSpeed": 71.4304838549835,
+        "medianTimeToFirstChunk": 2.8405443675
+      }
+    }
+  },
+  {
+    "id": "ce3d286e-093d-413d-a81a-0270309f039e",
+    "source_id": "ce3d286e-093d-413d-a81a-0270309f039e",
+    "slug": "qwen3-vl-30b-a3b-reasoning",
+    "name": "Qwen3 VL 30B A3B (Reasoning)",
+    "variant": null,
+    "fields": {
+      "aime25": 0.823333333333333,
+      "analystAgent": null,
+      "apexAgents": null,
+      "critpt": 0,
+      "gdpval": null,
+      "gpqa": 0.72020202020202,
+      "hle": 0.0894346617238184,
+      "ifbench": 0.451020408163265,
+      "itBenchSre": null,
+      "lcr": null,
+      "livecodebench": 0.697354497354497,
+      "mmmuPro": 0.61849710982659,
+      "omniscience": -57.63333333333333,
+      "omniscienceAccuracy": 0.16933333333333334,
+      "omniscienceHallucinationRate": 0.8976725521669342,
+      "scicode": null,
+      "tau2": 0.198830409356725,
+      "tauBanking": null,
+      "terminalbenchHard": 0.053030303030303,
+      "terminalbenchV21": null,
+      "terminalbenchV40": null,
+      "timescaleData": {
+        "medianOutputSpeed": 113.096847986919,
+        "medianTimeToFirstChunk": 2.19828094450005
+      }
+    }
+  }
+]

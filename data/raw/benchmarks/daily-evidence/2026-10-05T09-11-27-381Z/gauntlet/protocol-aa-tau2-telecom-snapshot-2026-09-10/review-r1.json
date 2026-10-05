@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-aa-tau2-telecom-snapshot-2026-09-10",
+  "artifact_sha256": "7a1b0722b892cd74e282bbf8a07bd677479983a2a49cfba4be3c69bc473fab7d",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "aa-tau2-telecom::snapshot-2026-09-10",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not independently recompute hashes or run transport/qualification checks; relied on owner-supplied row hash and response hashes.",
+    "Successor registry id aa-tau3-banking::1.0.1 is not independently verified from a successor registry entry in this packet, but c2 only requires the protocol text to name that successor, which it does (tau3-Banking); the successor's version is settled outside this packet by design.",
+    "SOURCE 3 shows only newly-null tau2 values, no added/changed values, which cannot establish active reporting; this does not contradict the retained status supported by SOURCE 1."
+  ],
+  "missing_evidence": []
+}

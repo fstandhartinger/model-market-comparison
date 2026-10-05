@@ -1,10 +1,10 @@
 {
   "source": "STACKIT AI Model Serving",
   "region": "eu01 (Germany South)",
-  "collected_at": "2026-10-03",
+  "collected_at": "2026-10-05",
   "listing_url": "https://docs.stackit.cloud/products/data-and-ai/ai-model-serving/basics/available-shared-models/",
   "pricing_url": "https://stackit.com/en/products/data-ai/stackit-ai-model-serving",
-  "method": "scripts/fetch-stackit-catalog.mjs (2026-10-03): model list from the first-party Available Shared Models documentation (page last updated 2026-09-08; Type Chat rows under Text Models, embedding models excluded), each model's billing category and status from its Facts table. Token prices from the EU01 (Germany South) SKU table on the STACKIT AI Model Serving product page: LLM-Standard 0.15/0.25 EUR, LLM-Premium 1.5/1.75 EUR, LLM-Plus 0.45/0.65 EUR per 1M input/output tokens, mapped via each model's billing category. USD = EUR x 1.1225 (ECB euro reference rate of 2026-10-02, latest available on 2026-10-03), four decimal places. See stackit.method.md.",
+  "method": "scripts/fetch-stackit-catalog.mjs (2026-10-05): model list from the first-party Available Shared Models documentation (page last updated 2026-09-08; Type Chat rows under Text Models, embedding models excluded), each model's billing category and status from its Facts table. Token prices from the EU01 (Germany South) SKU table on the STACKIT AI Model Serving product page: LLM-Standard 0.15/0.25 EUR, LLM-Premium 1.5/1.75 EUR, LLM-Plus 0.45/0.65 EUR per 1M input/output tokens, mapped via each model's billing category. USD = EUR x 1.1225 (ECB euro reference rate of 2026-10-02, latest available on 2026-10-05), four decimal places. See stackit.method.md.",
   "models": [
     {
       "model_name": "Qwen3 VL 235B A22B Instruct",
@@ -146,8 +146,8 @@
   },
   "docs_last_updated": "2026-09-08",
   "response_sha256": {
-    "docs": "b492943c9ac27446c048d8eee3fcb4ed68478e0287a0b7d35dda5e416e83f514",
-    "product": "7fff40fc1e317f4b74f022a5467e1b26b084d3100307c3da8a024c77ab53f0fe"
+    "docs": "d114db4bb1217a6a48b40327311d26239c95bf8e8d28eff65fb3d9216e2f4c2e",
+    "product": "2e3ef2335801ebda04836ad8a95a65496e7ce088ebc4a99d96d998e8f5bd9cea"
   },
   "diff": {
     "added": [],

@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-aa-terminal-bench-hard-74221fb",
+  "artifact_sha256": "d24c7635c44b55db7292af4136c6122ae19b00854bf7d7bd125417a5e60f55fa",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "aa-terminal-bench-hard::74221fb",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute the row SHA-256 or execute transport/qualification checks; per instructions these are owned separately and are not missing numeric source evidence.",
+    "Source 2 reports 47 values newly null with 0 added/changed, so it does not independently affirm active status; the retained status is instead supported by the protocol's explicit supersession language.",
+    "The successor registry id aa-terminal-bench::2.1 is our registry id; protocol names the successor as Terminal-Bench 2.1, and I did not independently verify the successor entry's own version."
+  ],
+  "missing_evidence": []
+}

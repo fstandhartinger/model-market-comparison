@@ -1,0 +1,43 @@
+{
+  "summary": "No candidate row in the provided candidate array has a matching native_source_row among the provided SOURCE blocks (41-60). The 8 visible candidate rows (ids 0081ab31...018c60e8) correspond to source UUIDs not present in the visible source set, and the 20 visible source UUIDs (0e5f6140...18721247) correspond to candidate rows absent from the visible candidate array. Therefore no field-level comparison could be performed for any candidate row.",
+  "candidate_rows": [
+    {"id": "0081ab31-d10a-44a0-a10d-eee5533fec65", "slug": "glm-4-5v", "status": "unverifiable", "reason": "no native_source_row for this UUID in provided SOURCE blocks"},
+    {"id": "0097ebf5-124f-42f6-9463-33b00e711f03", "slug": "gemini-3-5-flash", "status": "unverifiable", "reason": "no native_source_row for this UUID in provided SOURCE blocks"},
+    {"id": "00f1248e-78e3-4230-8dc8-5e13ba8645e2", "slug": "mimo-v2-5-pro", "status": "unverifiable", "reason": "no native_source_row for this UUID in provided SOURCE blocks"},
+    {"id": "0121d27b-5b8a-4901-8684-80589cc6d40d", "slug": "jt-35b-flash", "status": "unverifiable", "reason": "no native_source_row for this UUID in provided SOURCE blocks"},
+    {"id": "01459872-433a-4ab2-8e99-7083162172eb", "slug": "gpt-6-sol-low", "status": "unverifiable", "reason": "no native_source_row for this UUID in provided SOURCE blocks"},
+    {"id": "016d330a-2141-4afa-b2fc-62b314423dc1", "slug": "mercury-2", "status": "unverifiable", "reason": "no native_source_row for this UUID in provided SOURCE blocks"},
+    {"id": "0179b427-93dc-415c-bb4c-f980ddf8d088", "slug": "qwen3-5-omni-plus", "status": "unverifiable", "reason": "no native_source_row for this UUID in provided SOURCE blocks"},
+    {"id": "018c60e8-e908-431a-ba57-c840b1df3987", "slug": "nova-2-0-omni-reasoning-medium", "status": "unverifiable", "reason": "no native_source_row for this UUID in provided SOURCE blocks", "candidate_internal_flags": [
+      "mapping failure: fields present unmapped source names terminalBench21=0.191011235955056 and terminalBench40=0 while the row's own field_name_map declares terminalbenchV21->terminalBench21 and terminalbenchV40->terminalBench40; per convention the candidate fields should carry the mapped names terminalbenchV21/terminalbenchV40"
+    ]}
+  ],
+  "unmatched_source_uuids": [
+    "0e5f6140-1154-4583-a3e0-8c032a338892",
+    "0e66bae9-41f1-42fc-9276-ce8cb6f72919",
+    "0faadeeb-320c-45cf-9c76-5f8768f342e6",
+    "0fc6308e-fbd2-42d3-a216-06da3c43e34e",
+    "0fc6308e-fbd2-42d3-a216-06da3c43e34e",
+    "0fec07d5-a9b2-407a-b5f8-5bf10bd86b59",
+    "1071dea1-43e7-4fe9-b936-3034bb622b2e",
+    "122a1fa1-976a-4089-87a2-5a0a13e2a52c",
+    "127de816-57d3-4037-8484-480a613cd413",
+    "12adec16-19fe-4d92-aeff-5ef3eb7e780a",
+    "12f6a061-0ab3-4c76-b225-49abee253651",
+    "1305c921-7aaa-4d6d-99b5-99b3acf15e19",
+    "13358187-4584-479c-ab43-5bcdf8f297a4",
+    "142b93bf-09c4-42dc-9c3a-50b1a222cbd4",
+    "1479f50b-d37f-4b55-bb8b-4212a15042eb",
+    "149096f3-57b7-4413-80c2-a2c010a2995a",
+    "15b56b8e-7b93-4ed9-ac06-75c922e3b86e",
+    "16149b9c-a1e9-4669-a5cb-ff3c00d78f89",
+    "169e47f5-3d4d-4ad4-8f8b-ab46f0c73f67",
+    "16c5b637-8bce-4252-81f2-1b87a36a4e4c",
+    "18721247-4e56-4cf7-9a9d-c71cc60c0961"
+  ],
+  "notes": [
+    "No value-level verification (nulls, zeros, numeric equality, timescaleData, briefcase breakdowns) was performed because no candidate/native pair was available; producing comparisons against non-matching models would be fabrication.",
+    "Candidate row 018c60e8 is truncated in the provided candidate array (cut mid-name and resumed mid-fields); its visible portion was still checked for the field-name mapping convention.",
+    "All other visible candidate rows correctly use the mapped names terminalbenchV21/terminalbenchV40 (or null values under those names) in their visible portions."
+  ]
+}

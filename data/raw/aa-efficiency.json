@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-10-03T08:06:12.911Z",
+  "collected_at": "2026-10-05T09:21:58.363Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-10-03T08:06:12.398Z",
+      "fetched_at": "2026-10-05T09:21:58.148Z",
       "http_status": 200,
-      "bytes": 4035095,
-      "sha256": "16c6b9327a3228a971a7bab82bd16be916ca9595735b6ea9768d84b65cab7ac1"
+      "bytes": 4033909,
+      "sha256": "497d7d098b89d4dd9cc76cc9a3c3c3ecc8bd4f806959c2029d6a9e24b8b30e9a"
     }
   ],
   "coverage": {
-    "published_rows": 194,
-    "scored_denominator": 680,
+    "published_rows": 195,
+    "scored_denominator": 681,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 194,
+  "count": 195,
   "rows": [
     {
       "source_id": "08242385-ee91-4de6-be7f-271a6d9780ce",
@@ -3148,6 +3148,28 @@
         "basis": "derived",
         "input_output_ratio": 11.252348474133912,
         "reasoning_output_share": 0.5681677847631842
+      }
+    },
+    {
+      "source_id": "a6043b9b-628a-4a76-a021-2834e0627d05",
+      "slug": "ling-3-1-flash",
+      "name": "Ling 3.1 Flash",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 66407.72015328896,
+        "answer": 34263.188096260834,
+        "output": 100670.9082495498
+      },
+      "canonical_token_counts": {
+        "input": 8678386045,
+        "output": 217613455,
+        "answer": 49234112,
+        "reasoning": 168379343
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 39.87982289514221,
+        "reasoning_output_share": 0.6596515448998737
       }
     },
     {

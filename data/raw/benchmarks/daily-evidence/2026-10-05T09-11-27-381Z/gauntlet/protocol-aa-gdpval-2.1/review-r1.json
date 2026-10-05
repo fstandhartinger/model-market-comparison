@@ -1,0 +1,21 @@
+{
+  "artifact_id": "protocol-aa-gdpval-2.1",
+  "artifact_sha256": "8379cfe55f41b7535223839ed9044d8def6e36f35e12e790424a27befda3cf21",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "aa-gdpval::2.1",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently verify the captured payload hashes, transport, or qualification; these are owner-executed and outside my read-only scope.",
+    "The protocol excerpt does not explicitly state that higher Elo is better, but the row's higher_better=true is not contradicted by the protocol; this is a routine inferred property rather than an explicit claim.",
+    "SOURCE 3 and SOURCE 4 are generated activity/scale summaries used only for the specific judgements allowed by the criteria (status active and unit/range scale), not for metric meaning or identity.",
+    "The row's description paraphrases the protocol as 'professional knowledge-work deliverables' vs 'economically valuable tasks'; the meaning is equivalent and not contradictory."
+  ],
+  "missing_evidence": []
+}

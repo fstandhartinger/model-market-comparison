@@ -1,0 +1,22 @@
+{
+  "artifact_id": "protocol-aa-omniscience-snapshot-2026-09-10",
+  "artifact_sha256": "c7182f463c2d1f3c8cc108007639f13cd496cc3317c811299a6df69fea853f2e",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "aa-omniscience::snapshot-2026-09-10",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute hashes or network retrieval; I rely on the owner-provided row SHA-256 c118739061e5887a19a23dae78c995f4f9ef682eb90fec75e65b82c0af3e1b4a and source SHA-256s as binding evidence.",
+    "The protocol excerpt names the grading model GPT-5.6 Luna (medium) and states AA-Omniscience contributes to an Intelligence Index; the row's description and metric match these but do not claim those specifics, so no mismatch is raised.",
+    "The row's range [null,null] declines to state bounds, and the served-scale summary (lowest -88.58333333333333, highest 46.416666666666664) is consistent with unbounded range, so criterion c1 is satisfied on this point.",
+    "The activity summary (395 model rows changed, 47 new, 348 changed, 0 newly null) supports status: active; no successor is named in the protocol excerpt, so superseded_by: null is consistent. Absence of protocol wording for 'snapshot' is expected and not a finding."
+  ],
+  "missing_evidence": [],
+  "coverage_checked_note": "All required coverage IDs were checked exactly as listed."
+}

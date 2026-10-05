@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-aa-automationbench-1.0.6",
+  "artifact_sha256": "58f8bb67cb4d7e0009c2d1298e2199fe7e0a0f7bcd35f8525cbdc5f66c53faa1",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["aa-automationbench::1.0.6", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute row/captured SHA-256 hashes; relies on owner-provided hashes and captured payload.",
+    "Protocol text states headline score as percentage, but actual served values are decimal fractions on 0-1 scale; row's unit/range match served scale as permitted by c1.",
+    "No separate release identifier for the board beyond the dataset version 1.0.6 named in the protocol, sufficient to support version_status 'published'."
+  ],
+  "missing_evidence": []
+}
