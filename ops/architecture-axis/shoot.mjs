@@ -23,7 +23,7 @@ try {
   for (const theme of ['dark', 'light']) for (const width of [1440, 390]) {
     const context = await browser.newContext({ viewport: { width, height: 1000 }, colorScheme: theme });
     try {
-      for (const [name, path] of [['jev-models', '/jev-models'], ['api', '/jev-models/api'], ['image-jev-bench', '/image-jev-bench'], ['system', jevSystemPath('quyet-1-0-large')]]) {
+      for (const [name, path] of [['jev-models', '/jev-models'], ['api', '/jev-models/api'], ['image-jev-bench', '/image-jev-bench'], ['system', jevSystemPath('decider-4b-v2')]]) {
         const page = await context.newPage();
         const errors = [];
         page.on('pageerror', (e) => errors.push(e.message));
