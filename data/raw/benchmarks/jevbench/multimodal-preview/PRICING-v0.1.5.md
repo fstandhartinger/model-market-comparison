@@ -12,6 +12,6 @@ The unchanged Cost score is `min(100, 100 − 30·log10(usd_per_1000 / 0.001))`.
 | core | 0.008129436 | 72.698188 | 78.625265 | 0.029033700 | 72.806783 |
 | everyday photo | 0.005424163 | 77.970018 | 84.164242 | 0.019372011 | 78.444651 |
 
-The alternative applies the Qwen3.6-35B-A3B base-model market reference of USD 0.15/M input and USD 1.00/M output to Wity's measured usage. The run returned zero output tokens, so the output rate contributes zero; its headline composite would be 74.363945, rank #2.
+The alternative applies the base-model market reference (base model undisclosed at the author's request) to Wity's measured usage. The run returned zero output tokens, so the output rate contributes zero; its headline composite would be 74.363945, rank #2.
 
 Images and thinking are unbilled by the API and are not quantified in its usage receipt. The exact deployed Wity server build remains under author review and could require a rerun and revised score. The live tariff can change; this artifact freezes the 1 Oct owner decision and the measured usage used for it.

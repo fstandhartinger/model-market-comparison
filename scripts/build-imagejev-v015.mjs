@@ -5,7 +5,7 @@ import { costScore } from '../lib/jevbench-v12-score.mjs';
 const directory = new URL('../data/raw/benchmarks/jevbench/multimodal-preview/', import.meta.url);
 const livePath = new URL('preview.json', directory);
 const frozenPath = new URL('preview-v0.1.4.json', directory);
-const EXPECTED_V014_SHA256 = '385aba04acb0649f73264f57b237fa6bcf481763641978d732f81b4e88ba2150';
+const EXPECTED_V014_SHA256 = '96592b31c1b419f1d85c5128dd8de6646927f18605e345b1d3652c9a07c4e9d8';
 let inputBytes;
 try {
   inputBytes = await readFile(frozenPath);
@@ -120,7 +120,7 @@ artifact.ranking.forEach((row, index) => {
 
 const headlineRank = (score) => 1 + artifact.ranking.filter((row) => row.key !== 'wity_1' && row.tracks.all.composite.score > score).length;
 wity.pricing_alternative = {
-  basis: 'Qwen3.6-35B-A3B base-model market reference (USD 0.15/M input, USD 1.00/M output)',
+  basis: 'Base-model market reference (base model undisclosed at the author\'s request)',
   tracks: wity.pricing_alternative.tracks,
   would_rank: headlineRank(wity.pricing_alternative.tracks.all.composite),
 };
@@ -128,7 +128,7 @@ wity.pricing_alternative = {
 artifact.revision = 'v0.1.5';
 artifact.benchmark = 'Image JevBench v0.1.5';
 artifact.built_utc = '2026-10-01';
-artifact.method.cost = 'Hosted cost uses returned usage receipts for four OpenRouter endpoints and published Gemma 4 rates for Autoloops. Wity-1 uses its stated API tariff (USD 0.042/M input; output, thinking, and images free) applied to measured usage, by Florian’s 1 Oct price decision. The tariff is younger than 30 days; the owner decision supersedes the 30-day rule for this case. The base-model market reference (USD 0.15/M input, USD 1.00/M output) remains visible as a pricing alternative. Introductory credit is not scored as a zero tariff. Missing receipts are not zero-filled; Cost is scaled by receipt coverage. Local cost uses measured GPU seconds at recorded GPU-hour rates. See PRICING-v0.1.5.md.';
+artifact.method.cost = 'Hosted cost uses returned usage receipts for four OpenRouter endpoints and published Gemma 4 rates for Autoloops. Wity-1 uses its stated API tariff (USD 0.042/M input; output, thinking, and images free) applied to measured usage, by Florian’s 1 Oct price decision. The tariff is younger than 30 days; the owner decision supersedes the 30-day rule for this case. The base-model market reference (base undisclosed at the author\'s request) remains visible as a pricing alternative. Introductory credit is not scored as a zero tariff. Missing receipts are not zero-filled; Cost is scaled by receipt coverage. Local cost uses measured GPU seconds at recorded GPU-hour rates. See PRICING-v0.1.5.md.';
 artifact.capability_eligibility = {
   anchor: 'jev-1.13.0',
   anchor_source: 'JevBench v1.5.4',
@@ -139,7 +139,7 @@ artifact.capability_eligibility = {
   anchor_latency_p50_s: anchorLatency,
   rationale: 'ImageJevBench has no Jev reference row because Jev does not accept images. Capability eligibility therefore uses the same absolute envelope as JevBench: twice Jev 1.13.0’s v1.5.4 cost and adjusted median latency. These anchor values are frozen here so later JevBench releases do not move the ImageJevBench cap.',
 };
-artifact.revision_note = 'Florian’s 1 Oct 2026 decision applies Wity-1’s stated API tariff to the measured Wity usage. This tariff is younger than 30 days, and the owner decision supersedes the 30-day rule for this case. The Qwen3.6-35B-A3B base-model market reference remains available as Wity-1’s pricing alternative.';
+artifact.revision_note = 'Florian’s 1 Oct 2026 decision applies Wity-1’s stated API tariff to the measured Wity usage. This tariff is younger than 30 days, and the owner decision supersedes the 30-day rule for this case. The base-model market reference (base undisclosed at the author\'s request) remains available as Wity-1’s pricing alternative.';
 
 const byKey = new Map(artifact.ranking.map((row) => [row.key, row]));
 artifact.candidate_coverage.included_note = 'Wity-1 completed a full 684-decision API run. Its Cost axis uses Wity’s stated API tariff by Florian’s 1 Oct price decision; the exact deployed server build remains under author review.';

@@ -1786,12 +1786,12 @@
    "licence": "proprietary hosted API",
    "repo": "https://wity.alphanimble.com/",
    "endpoint_condition": "operator's hosted production API, measured as is; API default is off, our request sets reasoning=auto as the operator asked for their main row.",
-   "underlying": "Qwen3.6-35B-A3B (operator self-reported; not independently verified)",
+   "underlying": "Base model: undisclosed (author request)",
    "adapter_id": "run/wity-1-auto.spec.json:wity_reasoning_adapter.WityReasoningAdapter",
    "api_exposure_note": "API measurement: the operator's endpoint received sealed item text, without answers.",
    "alt": {
-    "label": "Qwen3.6-35B-A3B base-model reference price",
-    "note": "Operator self-reported base, not independently verified; frozen Qwen/Qwen3.6-35B-A3B reference USD 0.15/M input and 1.00/M output, applied to the same measured tokens.",
+    "label": "Base-model reference price (base undisclosed at the author's request)",
+    "note": "base model undisclosed at the author's request; frozen base-model reference price applied to the same measured tokens",
     "usd_per_1000": 0.08721059113300492,
     "axes": {
      "calibration": 90.45687167393245,
@@ -33835,12 +33835,12 @@
    "licence": "proprietary hosted API",
    "repo": "https://wity.alphanimble.com/",
    "endpoint_condition": "operator's hosted production API, measured as is; API default is off, our request sets reasoning=always; labelled configuration variant.",
-   "underlying": "Qwen3.6-35B-A3B (operator self-reported; not independently verified)",
+   "underlying": "Base model: undisclosed (author request)",
    "adapter_id": "run/wity-1-always.spec.json:wity_reasoning_adapter.WityReasoningAdapter",
    "api_exposure_note": "API measurement: the operator's endpoint received sealed item text, without answers.",
    "alt": {
-    "label": "Qwen3.6-35B-A3B base-model reference price",
-    "note": "Operator self-reported base, not independently verified; frozen Qwen/Qwen3.6-35B-A3B reference USD 0.15/M input and 1.00/M output, applied to the same measured tokens.",
+    "label": "Base-model reference price (base undisclosed at the author's request)",
+    "note": "base model undisclosed at the author's request; frozen base-model reference price applied to the same measured tokens",
     "usd_per_1000": 0.08721059113300492,
     "axes": {
      "calibration": 91.0421772337923,
@@ -34209,12 +34209,12 @@
    "licence": "proprietary hosted API",
    "repo": "https://wity.alphanimble.com/",
    "endpoint_condition": "operator's hosted production API, measured as is; API default is off, our request sets reasoning=off; labelled configuration variant. The first approximately 70 decisions ran alongside two other streams; the remainder ran alone.",
-   "underlying": "Qwen3.6-35B-A3B (operator self-reported; not independently verified)",
+   "underlying": "Base model: undisclosed (author request)",
    "adapter_id": "run/wity-1-off.spec.json:wity_reasoning_adapter.WityReasoningAdapter",
    "api_exposure_note": "API measurement: the operator's endpoint received sealed item text, without answers.",
    "alt": {
-    "label": "Qwen3.6-35B-A3B base-model reference price",
-    "note": "Operator self-reported base, not independently verified; frozen Qwen/Qwen3.6-35B-A3B reference USD 0.15/M input and 1.00/M output, applied to the same measured tokens.",
+    "label": "Base-model reference price (base undisclosed at the author's request)",
+    "note": "base model undisclosed at the author's request; frozen base-model reference price applied to the same measured tokens",
     "usd_per_1000": 0.08721059113300492,
     "axes": {
      "calibration": 83.45289319036758,

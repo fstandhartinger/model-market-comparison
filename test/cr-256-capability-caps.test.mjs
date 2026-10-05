@@ -118,7 +118,7 @@ test('CR-256: ImageJev absolute limits retain the anchor and scale each selected
   assert.match(synthetic.rows.find((row) => row.row.key === '3x-anchor-latency').reasons[0], /3\.0× Anchor \(cap 2×\)/);
   const { reference: r, limits: l, rows } = before;
   // Captured from the unchanged HEAD classifier before this slice, including ImageJev's exact absolute limits.
-  assert.equal(createHash('sha256').update(JSON.stringify({ reference: r, limits: l, rows })).digest('hex'), '8b702f31ed04176ba64934b762508dd2431a0372838e1da8b4c802630b033f82');
+  assert.equal(createHash('sha256').update(JSON.stringify({ reference: r, limits: l, rows })).digest('hex'), 'eb15bc3e2b369ef4fabd36032a746e6603aa0b530496efd29c3f363402fa4b4e');
   assert.equal(JSON.stringify(jevClassRows(systems, { ...options, costFactor: 2, latencyFactor: 2 })), JSON.stringify(before));
 });
 

@@ -90,10 +90,10 @@ and supplement files are under `data/raw/benchmarks/jevbench/`. Each result endp
 [`/image-jev-bench`](https://benchmarkheaven.com/image-jev-bench) is the current public
 HTML results page for Image JevBench; the live aggregate artifact is v0.1.5 and there is no
 separate public JSON API for this benchmark. Its artifact is `data/raw/benchmarks/jevbench/multimodal-preview/preview.json`
-(SHA-256 `42f47c9bb172997089ed61b994b3cb8f2cb1b20cd73bef4e8b47271f0697f41c`). The prior
+(SHA-256 `c5829fb7a3b0a3c04f64446f6f1d821169795b82396216d5fbaf2d30bf4c5108`). The prior
 v0.1.1, v0.1.2, v0.1.3 and v0.1.4 artifacts are retained as `preview-v0.1.1.json`,
 `preview-v0.1.2.json`, `preview-v0.1.3.json` and `preview-v0.1.4.json` in the same directory.
-The frozen v0.1.4 file has SHA-256 `385aba04acb0649f73264f57b237fa6bcf481763641978d732f81b4e88ba2150`. The page
+The frozen v0.1.4 file has SHA-256 `96592b31c1b419f1d85c5128dd8de6646927f18605e345b1d3652c9a07c4e9d8`. The page
 publishes system-level aggregates only, not sealed images, tasks, answer keys or per-item
 predictions.
 

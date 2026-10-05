@@ -67,7 +67,7 @@ test('Image JevBench v0.1.4 preserves the frozen method and prices Wity-1 at its
   assert.ok(Math.abs(wity.tracks.all.cost.total_usd - 0.0180813) < 1e-12);
   assert.ok(Math.abs(wity.tracks.all.cost.usd_per_1000 - 0.026434649122807023) < 1e-12);
   assert.equal(wity.tracks.all.cost.coverage, 1);
-  assert.equal(wity.tracks.all.cost.source, 'Estimated Qwen3.6-35B-A3B base-model market reference: USD 0.15/M input, USD 1.00/M output; measured Wity usage (zero output tokens)');
+  assert.equal(wity.tracks.all.cost.source, 'Estimated base-model market reference (base model undisclosed at the author\'s request); measured Wity usage (zero output tokens)');
   assert.equal(wity.inference_setting, 'Wity SystemOne, reasoning=auto');
   assert.match(wity.measurement_source, /production-named Wity SystemOne endpoint/);
   assert.deepEqual(a.ranking.slice(0, 5).map((s) => s.key), ['imajev_4b', 'wity_1', 'jev_omni', 'neohorse_jev_4b', 'visual_jev_4b']);
@@ -129,7 +129,7 @@ test('Image JevBench v0.1.4 preserves the frozen method and prices Wity-1 at its
 
 test('Image JevBench v0.1.4 archive is byte-pinned separately from the live preview', async () => {
   const archived = await readArchivedMultimodalPreviewV014();
-  assert.equal(archived.sha256, '385aba04acb0649f73264f57b237fa6bcf481763641978d732f81b4e88ba2150');
+  assert.equal(archived.sha256, '96592b31c1b419f1d85c5128dd8de6646927f18605e345b1d3652c9a07c4e9d8');
   assert.equal(archived.artifact.revision, 'v0.1.4');
   assert.equal(archived.artifact.n_systems, 50);
 });
