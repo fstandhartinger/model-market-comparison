@@ -1,31 +1,115 @@
 {
   "schema": "jevbench-architecture/1",
-  "checked_utc": "2026-10-05T00:00:00Z",
+  "checked_utc": "2026-10-05T19:53:50Z",
   "benchmarks": {
     "jevbench": {
-      "quyet-1-0-large": {
+      "autojev-27b": {
         "arch": "open-llm-decoder",
         "evidence": [
           {
-            "url": "https://benchmarkheaven.com/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
-            "kind": "artifact",
-            "fact": "Published reference/API flag and legacy class; development seed pending cited architecture review."
+            "url": "https://huggingface.co/denis-pplx/autojev-27b/blob/6f5b557e037f5edb25c7dc92dbc6553e5a19c015/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.8-27B as the evaluated backbone. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/denis-pplx/autojev-27b/blob/6f5b557e037f5edb25c7dc92dbc6553e5a19c015/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5Model\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
           }
         ],
         "badges": {
-          "derivation": null,
-          "params": null,
+          "derivation": "fine-tune",
+          "params": "27B",
           "quant": null
-        },
-        "note": "Development seed; replace before release."
+        }
       },
-      "jev-1.13.0": {
-        "arch": "jev-reference",
+      "autojev-27b-rtxpro6000-a2": {
+        "arch": "open-llm-decoder",
         "evidence": [
           {
-            "url": "https://benchmarkheaven.com/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
-            "kind": "artifact",
-            "fact": "Published reference/API flag and legacy class; development seed pending cited architecture review."
+            "url": "https://huggingface.co/denis-pplx/autojev-27b/blob/6f5b557e037f5edb25c7dc92dbc6553e5a19c015/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.8-27B as the evaluated backbone. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "27B",
+          "quant": null
+        }
+      },
+      "autojev_27b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/denis-pplx/autojev-27b/blob/6f5b557e037f5edb25c7dc92dbc6553e5a19c015/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.8-27B as the evaluated backbone. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "27B",
+          "quant": null
+        }
+      },
+      "bev-bonsai-27b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Reza2kn/Bev/blob/f01edf952e3f2da8147aa08ec6d6229c863d5d19/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.8-27B as the evaluated backbone. Author documents GGUF PQ2_0 for this build."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/config.json",
+            "kind": "config.json",
+            "fact": "Disclosed base config (evaluated repo has no standalone config): architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "27B",
+          "quant": "GGUF PQ2_0"
+        }
+      },
+      "bge-reranker-v2-m3": {
+        "arch": "open-reranker",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/BAAI/bge-reranker-v2-m3/blob/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies BAAI/bge-m3 as the evaluated backbone. The evaluated checkpoint is used as a reranker. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/BAAI/bge-reranker-v2-m3/blob/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"XLMRobertaForSequenceClassification\"]; model_type: \"xlm-roberta\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": null,
+          "quant": null
+        }
+      },
+      "bonsai_2_27b_pq2_0": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/kyr0/Bonsai-Llama-Jev/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author README describes local language-model inference and candidate-token decision scoring."
           }
         ],
         "badges": {
@@ -33,79 +117,410 @@
           "params": null,
           "quant": null
         },
-        "note": "Development seed; replace before release."
+        "note": "Author documents local generative model serving; the exact upstream model identity remains undisclosed."
       },
-      "wity-1": {
+      "bosun-v31-0.6b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Hanno-Labs/bosun-v3.1-0.6b/blob/1d8b6f9611f9b64b514ce8b57cd86398fbc31a3b/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3-0.6B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Hanno-Labs/bosun-v3.1-0.6b/blob/1d8b6f9611f9b64b514ce8b57cd86398fbc31a3b/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"BosunForDecision\"]; model_type: \"bosun\"; base_model_name_or_path: \"Qwen/Qwen3-0.6B\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "0.6B",
+          "quant": null
+        }
+      },
+      "certo": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/altslate/certo-decision-model/blob/7628c0da918c5fce96a6629c548630ac6bed8c58/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies ModernBERT-large as the evaluated backbone. The evaluated route uses an encoder with a decision/classification head."
+          },
+          {
+            "url": "https://huggingface.co/answerdotai/ModernBERT-large/blob/45bb4654a4d5aaff24dd11d4781fa46d39bf8c13/config.json",
+            "kind": "config.json",
+            "fact": "Disclosed base config (evaluated repo has no standalone config): architectures: [\"ModernBertForMaskedLM\"]; model_type: \"modernbert\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "classifier-dev-fast": {
         "arch": "closed-api",
         "evidence": [
           {
-            "url": "https://benchmarkheaven.com/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.7-results.json",
             "kind": "artifact",
-            "fact": "Published reference/API flag and legacy class; development seed pending cited architecture review."
+            "fact": "Artifact key classifier-dev-fast records a hosted API with no public evaluated weights."
           }
         ],
         "badges": {
           "derivation": null,
           "params": null,
           "quant": null
-        },
-        "note": "Development seed; replace before release."
+        }
       },
-      "torchcast-decision-12b": {
+      "clef": {
         "arch": "open-llm-decoder",
         "evidence": [
           {
-            "url": "https://benchmarkheaven.com/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
-            "kind": "artifact",
-            "fact": "Published reference/API flag and legacy class; development seed pending cited architecture review."
+            "url": "https://huggingface.co/Cloudflare/clef/blob/2f3de3dd85f379784083b0814d997ab627200f0c/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.8-27B as the evaluated backbone. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/Cloudflare/clef/blob/2f3de3dd85f379784083b0814d997ab627200f0c/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
           }
         ],
         "badges": {
-          "derivation": null,
+          "derivation": "fine-tune",
           "params": null,
           "quant": null
-        },
-        "note": "Development seed; replace before release."
+        }
       },
-      "deck31b": {
+      "clef-flash": {
         "arch": "open-llm-decoder",
         "evidence": [
           {
-            "url": "https://benchmarkheaven.com/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
-            "kind": "artifact",
-            "fact": "Published reference/API flag and legacy class; development seed pending cited architecture review."
+            "url": "https://huggingface.co/Cloudflare/clef-flash/blob/17f0b0ad64efb65d273590632833508766b2aae6/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-9B as the evaluated backbone. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/Cloudflare/clef-flash/blob/17f0b0ad64efb65d273590632833508766b2aae6/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
           }
         ],
         "badges": {
-          "derivation": null,
+          "derivation": "fine-tune",
           "params": null,
           "quant": null
-        },
-        "note": "Development seed; replace before release."
+        }
       },
-      "winnow-12b": {
+      "clm-8b": {
         "arch": "open-llm-decoder",
         "evidence": [
           {
-            "url": "https://benchmarkheaven.com/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
-            "kind": "artifact",
-            "fact": "Published reference/API flag and legacy class; development seed pending cited architecture review."
+            "url": "https://raw.githubusercontent.com/Contrastive-LM/CLM/main/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen/Qwen3-8B as the evaluated backbone. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-8B/blob/b968826d9c46dd6066d109eabc6255188de91218/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3ForCausalLM\"]; model_type: \"qwen3\""
           }
         ],
         "badges": {
-          "derivation": "jev-rebuild",
-          "params": null,
+          "derivation": "fine-tune",
+          "params": "8B",
           "quant": null
-        },
-        "note": "Development seed; replace before release."
+        }
+      },
+      "cua_s1_4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/cua-ai/cua-s1-4b-0.2/blob/16818868b0cc7813808aae4e87b417657046ab79/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
       },
       "cygnet": {
         "arch": "open-llm-decoder",
         "evidence": [
           {
-            "url": "https://benchmarkheaven.com/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
+            "url": "https://raw.githubusercontent.com/blockbrain-ai/cygnet-recipe/main/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies google/gemma-4-12B-it as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-12B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4UnifiedForConditionalGeneration\"]; model_type: \"gemma4_unified\"; text_config.model_type: \"gemma4_unified_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "12B",
+          "quant": null
+        }
+      },
+      "decider-2b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Mapika/decider-2b/blob/533964dae8be954c5b5e19fa4948e48408094c1e/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-2B-Base as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Mapika/decider-2b/blob/533964dae8be954c5b5e19fa4948e48408094c1e/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForCausalLM\"]; model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "decider-35b-a3b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Mapika/decider-35b-a3b/blob/91470e65478656eb68fde8c0ccdfe575d69d0309/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-35B-A3B-Base as the evaluated backbone. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/Mapika/decider-35b-a3b/blob/91470e65478656eb68fde8c0ccdfe575d69d0309/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5MoeForCausalLM\"]; model_type: \"qwen3_5_moe_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "35B-A3B",
+          "quant": null
+        }
+      },
+      "decider-4b-v2": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/Mapika/decider/main/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B-Base as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B-Base/blob/1001bb4d826a52d1f399e183466143f4da7b741b/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "decider_2b_vision": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Mapika/decider-2b-vision/blob/863e290863655f1d6b69324d77d09ac972d21609/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-2B-Base as the evaluated backbone. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-2B-Base/blob/b1485b2fa6dfa1287294f269f5fb618e03d52d7c/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "decision-2b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/flymy-ai/decision-2b-preview/raw/df57b75db927acc9ad91ec8115508c1e487086eb/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies openbmb/MiniCPM5-2B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/openbmb/MiniCPM5-2B/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "Disclosed base config (evaluated repo has no standalone config): architectures: [\"LlamaForCausalLM\"]; model_type: \"llama\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "decision-4b-v11": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/flymy-ai/decision-4b-v1.1/raw/d7060294e51c83d173fe35b169682992bfdc20ce/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "decision-4b-v12": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/flymy-ai/decision-4b-v1.2/raw/79792bfb89e38498a21d1b71bc96b684be7b6617/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "decision-fast": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/flymy-ai/decision-fast-preview/raw/4225d41c66119fe28e95a2631bb0103decae6d56/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3-0.6B-Base as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-0.6B-Base/blob/da87bfb608c14b7cf20ba1ce41287e8de496c0cd/config.json",
+            "kind": "config.json",
+            "fact": "Disclosed base config (evaluated repo has no standalone config): architectures: [\"Qwen3ForCausalLM\"]; model_type: \"qwen3\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "0.6B",
+          "quant": null
+        }
+      },
+      "decision-machine-1": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-dated-carry.json",
             "kind": "artifact",
-            "fact": "Published reference/API flag and legacy class; development seed pending cited architecture review."
+            "fact": "Artifact key decision-machine-1 records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "deck-4b-v1-0": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/krishna-gogineni-765/deck/9c43e5f848887c081d9bb6f8636c2fdab72b95ec/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies alibiserikbay/JevK5 (built on Qwen/Qwen3.5-4B) as the evaluated backbone. Author describes LoRA adaptation. Author documents FP8 for this build."
+          },
+          {
+            "url": "https://huggingface.co/alibiserikbay/JevK5/blob/c4f7fdb3aeab5582336406e78d3bef11bf98833d/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForCausalLM\"]; model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": null,
+          "quant": "FP8"
+        }
+      },
+      "deck31b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/krishna-gogineni-765/deck31b/d499cf6f56ca7b2fd6c74b5f2125bfe960fe0c53/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies google/gemma-4-31B-it as the evaluated backbone. Author documents FP8 for this build."
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-31B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "31B",
+          "quant": "FP8"
+        }
+      },
+      "deem-0.8-v1": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/LibertAIDAI/deem-0.8-v1/blob/8cbabbb2c4a7ef13c6b43f0ef3ae4157983c6d21/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-0.8B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/LibertAIDAI/deem-0.8-v1/blob/8cbabbb2c4a7ef13c6b43f0ef3ae4157983c6d21/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForCausalLM\"]; model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "deepseek-flash": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/2cba9e42aa026125f3ed06c6d98c1db82f7ca027/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"DeepseekV41ForCausalLM\"]; model_type: \"deepseek_v41\"; text_config.model_type: \"deepseek_v41_text\""
+          },
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-dated-carry.json",
+            "kind": "artifact",
+            "fact": "Artifact key deepseek-flash identifies the evaluated model as: DeepSeek-V4.1-Flash"
           }
         ],
         "badges": {
@@ -113,31 +528,1373 @@
           "params": null,
           "quant": null
         },
-        "note": "Development seed; replace before release."
+        "note": "Public decoder weights; this benchmark measurement used a hosted API."
+      },
+      "djev": {
+        "arch": "open-diffusion-lm",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/Davipar/djev-dev/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies google/diffusiongemma-26B-A4B-it as the evaluated backbone. The inference route uses a diffusion language model."
+          },
+          {
+            "url": "https://huggingface.co/google/diffusiongemma-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"DiffusionGemmaForBlockDiffusion\"]; model_type: \"diffusion_gemma\"; text_config.model_type: \"diffusion_gemma_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "26B-A4B",
+          "quant": null
+        }
+      },
+      "djev-thinking": {
+        "arch": "open-diffusion-lm",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/Davipar/djev-dev/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies google/diffusiongemma-26B-A4B-it as the evaluated backbone. The inference route uses a diffusion language model."
+          },
+          {
+            "url": "https://huggingface.co/google/diffusiongemma-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"DiffusionGemmaForBlockDiffusion\"]; model_type: \"diffusion_gemma\"; text_config.model_type: \"diffusion_gemma_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "26B-A4B",
+          "quant": null
+        }
+      },
+      "djev_dev_bf16": {
+        "arch": "open-diffusion-lm",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/Davipar/djev-dev/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies google/diffusiongemma-26B-A4B-it as the evaluated backbone. The inference route uses a diffusion language model."
+          },
+          {
+            "url": "https://huggingface.co/google/diffusiongemma-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"DiffusionGemmaForBlockDiffusion\"]; model_type: \"diffusion_gemma\"; text_config.model_type: \"diffusion_gemma_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "26B-A4B",
+          "quant": null
+        }
+      },
+      "djev_distill_v4": {
+        "arch": "open-diffusion-lm",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/tarsur385/djev-distill-v4/raw/9e90719516ef62d06be646f94dc132136b627ba5/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies google/diffusiongemma-26B-A4B-it as the evaluated backbone. The inference route uses a diffusion language model. Author describes fine-tuning. Author describes distillation."
+          },
+          {
+            "url": "https://huggingface.co/google/diffusiongemma-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"DiffusionGemmaForBlockDiffusion\"]; model_type: \"diffusion_gemma\"; text_config.model_type: \"diffusion_gemma_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "distilled",
+          "params": "26B-A4B",
+          "quant": null
+        }
+      },
+      "djev_spark_nvfp4": {
+        "arch": "open-diffusion-lm",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/mmastrac/djev-spark/08b708e51bb8d9f4eba0e85b61dab0be7093d20e/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies google/diffusiongemma-26B-A4B-it as the evaluated backbone. The inference route uses a diffusion language model. Author documents NVFP4 for this build."
+          },
+          {
+            "url": "https://huggingface.co/google/diffusiongemma-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"DiffusionGemmaForBlockDiffusion\"]; model_type: \"diffusion_gemma\"; text_config.model_type: \"diffusion_gemma_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "26B-A4B",
+          "quant": "NVFP4"
+        }
+      },
+      "djev_v10_step160_snowicarus": {
+        "arch": "open-diffusion-lm",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/snowicarus/diffusiongemma-26b-djev-v10-step160/raw/858cc14441718ff52ea4dd6c9491d5316cc9834f/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies google/diffusiongemma-26B-A4B-it as the evaluated backbone. The inference route uses a diffusion language model. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/google/diffusiongemma-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"DiffusionGemmaForBlockDiffusion\"]; model_type: \"diffusion_gemma\"; text_config.model_type: \"diffusion_gemma_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "26B-A4B",
+          "quant": null
+        }
+      },
+      "eikos-27b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/caiovicentino1/eikos-27b/blob/103a5647c0131fd00abc165675fcee243d33a789/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.8-27B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/caiovicentino1/eikos-27b/blob/f44903e3d485cc742334b224fe309c6680eb0c13/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "27B",
+          "quant": null
+        }
+      },
+      "evalengine-decision-4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/evalengine/decision-4b/blob/aadc55517ae8bfb1264fd5932ec452b939361e47/README.md",
+            "kind": "model-card",
+            "fact": "Author README describes local language-model inference and candidate-token decision scoring. Author describes LoRA adaptation."
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": null,
+          "quant": null
+        }
+      },
+      "fastino-gliner-2-5-decide": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key fastino-gliner-2-5-decide records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "gemini-3.1-flash-lite": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-dated-carry.json",
+            "kind": "artifact",
+            "fact": "Artifact key gemini-3.1-flash-lite records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "gemini31_flash_lite": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/multimodal-preview/preview.json",
+            "kind": "artifact",
+            "fact": "Artifact key gemini31_flash_lite records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "gemini38_flash": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/multimodal-preview/preview.json",
+            "kind": "artifact",
+            "fact": "Artifact key gemini38_flash records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "gevva_e2b_multimodal": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/94",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Gemma 4 E2B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-E2B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "gevva_e4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/94",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Gemma 4 E4B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-E4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "glance_qwen3vl_4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/yoheinakajima/glance/master/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen3-VL-4B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-VL-4B-Instruct/blob/ebb281ec70b05090aa6165b016eac8ec08e71b17/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3VLForConditionalGeneration\"]; model_type: \"qwen3_vl\"; text_config.model_type: \"qwen3_vl_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "gliner2": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fastino-ai/GLiNER2/main/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies DeBERTa-v3-base as the evaluated backbone. The evaluated route uses an encoder with a decision/classification head. Author describes LoRA adaptation."
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": null,
+          "quant": null
+        }
+      },
+      "gliner2-large": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/fastino/gliner2-large-v1/raw/main/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies microsoft/deberta-v3-large as the evaluated backbone. The evaluated route uses an encoder with a decision/classification head. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/fastino/gliner2-large-v1/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "model_type: \"extractor\"; model_name: \"microsoft/deberta-v3-large\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": null,
+          "quant": null
+        }
+      },
+      "gliner2.5-multi": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/fastino/gliner2.5-multi-v1/raw/2ca71aafb3446d9014e1c55c7ff51c9bc7209c47/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies mDeBERTa-v3-base as the evaluated backbone. The evaluated route uses an encoder with a decision/classification head. Author describes fine-tuning. Author reports 287M parameters."
+          },
+          {
+            "url": "https://huggingface.co/fastino/gliner2.5-multi-v1/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"BoundaryExtractor\"]; model_type: \"extractor\"; model_name: \"microsoft/mdeberta-v3-base\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "287M",
+          "quant": null
+        }
+      },
+      "gliner2.5-small": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/fastino/gliner2.5-small-v1/raw/7132dc4561c3f94563c6147e75ffa8ef34c4964a/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies microsoft/deberta-v3-xsmall as the evaluated backbone. The evaluated route uses an encoder with a decision/classification head. Author describes fine-tuning. Author reports 74M parameters."
+          },
+          {
+            "url": "https://huggingface.co/fastino/gliner2.5-small-v1/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"BoundaryExtractor\"]; model_type: \"extractor\"; model_name: \"microsoft/deberta-v3-xsmall\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "74M",
+          "quant": null
+        }
+      },
+      "gpt-5.6-luna": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-dated-carry.json",
+            "kind": "artifact",
+            "fact": "Artifact key gpt-5.6-luna records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "gpt-6-luna": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-dated-carry.json",
+            "kind": "artifact",
+            "fact": "Artifact key gpt-6-luna records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "gpt-6-luna-low": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-dated-carry.json",
+            "kind": "artifact",
+            "fact": "Artifact key gpt-6-luna-low records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "gpt56_luna": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/multimodal-preview/preview.json",
+            "kind": "artifact",
+            "fact": "Artifact key gpt56_luna records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "gpt6_luna": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/multimodal-preview/preview.json",
+            "kind": "artifact",
+            "fact": "Artifact key gpt6_luna records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "gte-reranker-modernbert-base": {
+        "arch": "open-reranker",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Alibaba-NLP/gte-reranker-modernbert-base/blob/f7481e6055501a30fb19d090657df9ec1f79ab2c/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies answerdotai/ModernBERT-base as the evaluated backbone. The evaluated checkpoint is used as a reranker. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/Alibaba-NLP/gte-reranker-modernbert-base/blob/f7481e6055501a30fb19d090657df9ec1f79ab2c/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"ModernBertForSequenceClassification\"]; model_type: \"modernbert\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": null,
+          "quant": null
+        }
+      },
+      "hopper": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/HopitAI/hopper/blob/5d7ff514240655a07fb2ee4e59d0dcb5982314cf/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "Disclosed base config (evaluated repo has no standalone config): architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "imajev-4b-rtx5090-a2": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/110",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "imajev_2b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/80",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-2B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-2B/blob/15852e8c16360a2fea060d615a32b45270f8a8fc/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "imajev_4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/80",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "imajev_9b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/80",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-9B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-9B/blob/c202236235762e1c871ad0ccb60c8ee5ba337b9a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "9B",
+          "quant": null
+        }
+      },
+      "instinct": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-dated-carry.json",
+            "kind": "artifact",
+            "fact": "Artifact key instinct records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "instinct-dual-4b": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-dated-carry.json",
+            "kind": "artifact",
+            "fact": "Artifact key instinct-dual-4b records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "jeff": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/logan-markewich/jeff/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation describes a single-model decision engine on knowledgator/gliformer-large-v1. The evaluated route uses an encoder with a decision/classification head."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "jev-1.13.0": {
+        "arch": "jev-reference",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key jev-1.13.0 records the TypeSafe Jev reference API."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "jev-local": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/us/jev-local/main/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-9B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-9B/blob/c202236235762e1c871ad0ccb60c8ee5ba337b9a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "9B",
+          "quant": null
+        }
       },
       "jev-omni": {
         "arch": "open-llm-decoder",
         "evidence": [
           {
-            "url": "https://benchmarkheaven.com/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
-            "kind": "artifact",
-            "fact": "Published reference/API flag and legacy class; development seed pending cited architecture review."
+            "url": "https://huggingface.co/akhilaaa3/Jev-Omni/blob/5addda86ddee081a68fb067477ea100c221b8917/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies google/gemma-4-12B-it as the evaluated backbone. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/akhilaaa3/Jev-Omni/blob/5addda86ddee081a68fb067477ea100c221b8917/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4UnifiedForConditionalGeneration\"]; model_type: \"gemma4_unified\"; text_config.model_type: \"gemma4_unified_text\""
           }
         ],
         "badges": {
-          "derivation": "jev-rebuild",
+          "derivation": "fine-tune",
           "params": null,
           "quant": null
-        },
-        "note": "Development seed; replace before release."
+        }
       },
-      "sage-1.3.0": {
+      "jev-qwen3.5-9b-base-nvfp4": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/WIlfLin/JEV-Qwen3.5-9B-Base-NVFP4/blob/1b545cf7d0ce626e6b0fc574d8d82459b66f8335/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies ig1/Qwen3.5-9B-NVFP4 as the evaluated backbone. Author documents NVFP4 for this build."
+          },
+          {
+            "url": "https://huggingface.co/WIlfLin/JEV-Qwen3.5-9B-Base-NVFP4/blob/1b545cf7d0ce626e6b0fc574d8d82459b66f8335/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "9B",
+          "quant": "NVFP4"
+        }
+      },
+      "jev_omni": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/akhilaaa3/Jev-Omni/blob/5addda86ddee081a68fb067477ea100c221b8917/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Gemma 4 12B IT as the evaluated backbone. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-12B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4UnifiedForConditionalGeneration\"]; model_type: \"gemma4_unified\"; text_config.model_type: \"gemma4_unified_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "12B",
+          "quant": null
+        }
+      },
+      "jev_spatial": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Fr0zencr4nE/jev-spatial/blob/5727eade6e1af2750ff852b1b1e90bb1f41a0602/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies allenai/Molmo2-ER as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/allenai/Molmo2-ER/blob/dab22564403d2607855bb1fffb0721285b445081/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Molmo2ForConditionalGeneration\"]; model_type: \"molmo2\"; text_config.model_type: \"molmo2_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": null,
+          "quant": null
+        }
+      },
+      "jevact": {
         "arch": "closed-api",
         "evidence": [
           {
-            "url": "https://benchmarkheaven.com/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-dated-carry.json",
             "kind": "artifact",
-            "fact": "Published reference/API flag and legacy class; development seed pending cited architecture review."
+            "fact": "Artifact key jevact records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "jevany_27b_rlcr": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/SimpleJev/JevAny-Qwen3.8-27B-LoRA/blob/09c9e9102d5b8cc7d56558d25da1202a761b6c0d/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.8-27B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "27B",
+          "quant": null
+        }
+      },
+      "jevany_27b_sft": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/SimpleJev/JevAny-Qwen3.8-27B-LoRA/blob/09c9e9102d5b8cc7d56558d25da1202a761b6c0d/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.8-27B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "27B",
+          "quant": null
+        }
+      },
+      "jevify_gemma4_26b_a4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/kushalpatil/jevify-gemma4-26b-a4b/raw/d4c0d1d455892957d274f68ec64e9fc0881011c8/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies google/gemma-4-26B-A4B-it as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "26B-A4B",
+          "quant": null
+        }
+      },
+      "jevify_gemma4_e4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/kushalpatil/jevify-gemma4-e4b-lora/raw/cca1f55e19f59dd493928459c4551131d10fdff9/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies google/gemma-4-E4B-it as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-E4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "jevify_qwen3vl_2b_t2": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Praveenrajus/jevify-qwen3-vl-2b-t2/blob/1593ab894637b342bb20700b5af0ee17ce28d5d7/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3-VL-2B-Instruct as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct/blob/89644892e4d85e24eaac8bacfd4f463576704203/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3VLForConditionalGeneration\"]; model_type: \"qwen3_vl\"; text_config.model_type: \"qwen3_vl_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "jevision": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-0.8B-Base/blob/dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          },
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/multimodal-preview/preview.json",
+            "kind": "artifact",
+            "fact": "Artifact key jevision identifies the evaluated model as: JEVision (divyanshx11, visual route)"
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "0.8B",
+          "quant": null
+        },
+        "note": "Architecture follows the disclosed evaluated backbone; a separate author model card was unavailable."
+      },
+      "jevk5-v0.3-4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/alibiserikbay/JevK5/blob/c4f7fdb3aeab5582336406e78d3bef11bf98833d/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/alibiserikbay/JevK5/blob/c4f7fdb3aeab5582336406e78d3bef11bf98833d/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForCausalLM\"]; model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": null,
+          "quant": null
+        }
+      },
+      "jevk5-v02": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/allebee/jevk5/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "jevone": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/juspay/jev-one/raw/a286a461e6daedee1e2400bdbe81cbb741cd592f/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.6-35B-A3B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/juspay/jev-one/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5MoeForConditionalGeneration\"]; model_type: \"qwen3_5_moe\"; text_config.model_type: \"qwen3_5_moe_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": null,
+          "quant": null
+        }
+      },
+      "jobe-qwen3.5-4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/MantisShrimpdev/jobe/master/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation describes a single-model decision engine on Qwen/Qwen3.5-4B."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "jpt_0p8b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/78",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Qwen3.5-0.8B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-0.8B/blob/2fc06364715b967f1860aea9cf38778875588b17/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "0.8B",
+          "quant": null
+        }
+      },
+      "jpt_4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/78",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "jpt_9b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/78",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Qwen3.5-9B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-9B/blob/c202236235762e1c871ad0ccb60c8ee5ba337b9a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "9B",
+          "quant": null
+        }
+      },
+      "jqv": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/Octalab-Inc/jqv/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen3-32B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-32B/blob/9216db5781bf21249d130ec9da846c4624c16137/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3ForCausalLM\"]; model_type: \"qwen3\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "32B",
+          "quant": null
+        }
+      },
+      "kev-0.5b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/jaredpalmer/kev-0.5b/raw/9ce2fd39db3a397c89733f94af948e3d1fdfffcd/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen2.5-0.5B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen2.5-0.5B/blob/060db6499f32faf8b98477b0a26969ef7d8b9987/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen2ForCausalLM\"]; model_type: \"qwen2\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "0.5B",
+          "quant": null
+        }
+      },
+      "kev-0.6b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/jaredpalmer/kev-0.6b/raw/dece6dba8d43f0f7ded45e9f5b9df12474d90843/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3-0.6B-Base as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-0.6B-Base/blob/da87bfb608c14b7cf20ba1ce41287e8de496c0cd/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3ForCausalLM\"]; model_type: \"qwen3\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "0.6B",
+          "quant": null
+        }
+      },
+      "kev-4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/jaredpalmer/kev-4b/raw/qwen3/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3-4B-Base as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-4B-Base/blob/906bfd4b4dc7f14ee4320094d8b41684abff8539/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3ForCausalLM\"]; model_type: \"qwen3\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "kev-8b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/jaredpalmer/kev-8b/raw/c80773da7f383f93c4dbff0c0b008e0463f9145a/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3-8B-Base as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-8B-Base/blob/49e3418fbbbca6ecbdf9608b4d22e5a407081db4/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3ForCausalLM\"]; model_type: \"qwen3\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "8B",
+          "quant": null
+        }
+      },
+      "kushal-gemma4-31b-it-autoloops": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-dated-carry.json",
+            "kind": "artifact",
+            "fact": "Artifact key kushal-gemma4-31b-it-autoloops records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "kushal_gemma4_31b_it_autoloops": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/multimodal-preview/preview.json",
+            "kind": "artifact",
+            "fact": "Artifact key kushal_gemma4_31b_it_autoloops records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "laya": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/convaiinnovations/laya/blob/55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies ModernBERT-large as the evaluated backbone. The evaluated route uses an encoder with a decision/classification head. Author describes fine-tuning. Author reports 421M parameters. This artifact evaluates the fixed checkpoint rather than the optional router."
+          },
+          {
+            "url": "https://huggingface.co/convaiinnovations/laya/blob/7b928d828b7b0e022f929d9bd2e44165aa270148/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"LayaTypedDecisions\"]; model_type: \"laya\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "421M",
+          "quant": null
+        }
+      },
+      "laya-multilingual": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/convaiinnovations/laya/blob/55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies mmBERT-base as the evaluated backbone. The evaluated route uses an encoder with a decision/classification head. Author describes fine-tuning. Author reports 322M parameters. This artifact evaluates the fixed checkpoint rather than the optional router."
+          },
+          {
+            "url": "https://huggingface.co/jhu-clsp/mmBERT-base/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "Disclosed base config (evaluated repo has no standalone config): architectures: [\"ModernBertForMaskedLM\"]; model_type: \"modernbert\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "322M",
+          "quant": null
+        },
+        "note": "This row evaluates the fixed checkpoint, not the optional multilingual router."
+      },
+      "laya-typed-decisions": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/convaiinnovations/laya/blob/55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies ModernBERT-large as the evaluated backbone. The evaluated route uses an encoder with a decision/classification head. Author describes fine-tuning. Author reports 421M parameters. This artifact evaluates the fixed checkpoint rather than the optional router."
+          },
+          {
+            "url": "https://huggingface.co/answerdotai/ModernBERT-large/blob/45bb4654a4d5aaff24dd11d4781fa46d39bf8c13/config.json",
+            "kind": "config.json",
+            "fact": "Disclosed base config (evaluated repo has no standalone config): architectures: [\"ModernBertForMaskedLM\"]; model_type: \"modernbert\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "421M",
+          "quant": null
+        },
+        "note": "This row evaluates the fixed checkpoint, not the optional multilingual router."
+      },
+      "lev": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/interfaze-ai/lev/raw/7bdc748dffebd85b57ee0dbea8f994c6354fed31/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "Disclosed base config (evaluated repo has no standalone config): architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "lev-350m": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/franckverrot/lev/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies LiquidAI/LFM2.5-350M as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/LiquidAI/LFM2.5-350M/blob/9e6c6ccf47cd318696e137d381a7ded8fe4df09f/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Lfm2ForCausalLM\"]; model_type: \"lfm2\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": null,
+          "quant": null
+        }
+      },
+      "litjev": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/zhengxuyu/litjev/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen/Qwen3.8-27B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "27B",
+          "quant": null
+        }
+      },
+      "localjev-qwen3.5-4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/amithgc/local-jev/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "malkuth-2b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/dhtocks/malkuth-2b/blob/37ae1672eebcf9ee5417418bd0be49f2e53d9087/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies empero-ai/Qwen3.8-2B-Distill as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/empero-ai/Qwen3.8-2B-Distill/blob/e37a2dc4acc68ad75a91e07e63168cb04cc06345/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "malkuth-4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/dhtocks/malkuth-4b/blob/ba9221fcb1ff450fc51dcefffc8e034ed479630d/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B-Base as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B-Base/blob/1001bb4d826a52d1f399e183466143f4da7b741b/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "manchego-v21-v15": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/56",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "metask-jev-4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/metask-ai/metask-jev/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen3.5-4B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "mghafiri-qwen3.5-0.8b-decision-model": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/mghafiri/qwen3.5-0.8B-decision-model/raw/4a9939034a27006b4b62ad5aed65a90b82d0d350/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-0.8B-Base as the evaluated backbone. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/mghafiri/qwen3.5-0.8B-decision-model/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForCausalLM\"]; model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "0.8B",
+          "quant": null
+        }
+      },
+      "mirror": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/microsoft/deberta-v3-large/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "model_type: \"deberta-v2\""
+          },
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key mirror identifies the evaluated model as: Mirror DeBERTa-v3-large 436M classification-span scorer"
           }
         ],
         "badges": {
@@ -145,15 +1902,1628 @@
           "params": null,
           "quant": null
         },
-        "note": "Development seed; replace before release."
+        "note": "Architecture follows the disclosed evaluated backbone; a separate author model card was unavailable."
+      },
+      "mxbai-rerank-base-v2": {
+        "arch": "open-reranker",
+        "evidence": [
+          {
+            "url": "https://www.mixedbread.com/blog/mxbai-rerank-v2",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen2.5 (size not stated) as the evaluated backbone. The evaluated checkpoint is used as a reranker."
+          },
+          {
+            "url": "https://huggingface.co/mixedbread-ai/mxbai-rerank-base-v2/raw/3ea9d4dffa7d12a4f366be8e275c349de9fc9865/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen2ForCausalLM\"]; model_type: \"qwen2\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "needle-3": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/cactus-compute/needle/main/README.md",
+            "kind": "repo-readme",
+            "fact": "Author README describes local language-model inference and candidate-token decision scoring. Author describes LoRA adaptation. Needle 3 is a custom Laddered Simple Attention Network with 121M parameters."
+          }
+        ],
+        "badges": {
+          "derivation": "original",
+          "params": "121M",
+          "quant": null
+        }
+      },
+      "needle-3-tools": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/cactus-compute/needle/master/README.md",
+            "kind": "repo-readme",
+            "fact": "Author README describes local language-model inference and candidate-token decision scoring. Author describes LoRA adaptation. Needle 3 is a custom Laddered Simple Attention Network with 121M parameters."
+          }
+        ],
+        "badges": {
+          "derivation": "original",
+          "params": "121M",
+          "quant": null
+        }
+      },
+      "nemotron-diffusion-8b": {
+        "arch": "open-diffusion-lm",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/pst2154/Nemotron_Jev/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies nvidia/Nemotron-Labs-Diffusion-8B as the evaluated backbone. The inference route uses a diffusion language model."
+          },
+          {
+            "url": "https://huggingface.co/nvidia/Nemotron-Labs-Diffusion-8B/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"NemotronLabsDiffusionModel\"]; model_type: \"nemotron_labs_diffusion\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "8B",
+          "quant": null
+        }
+      },
+      "neohorse_jev_4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/131",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies NeoHorse-1-4B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/TokenRhythm/NeoHorse-Jev-4B/blob/434cb21d3a994a953d3ae5788405fcb2c4970554/config.json",
+            "kind": "config.json",
+            "fact": "backbone_class: \"Qwen3_5Model\"; vision_source: \"Qwen/Qwen3.5-4B\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "4B",
+          "quant": null
+        },
+        "note": "The decision head uses the Qwen3.5 model backbone; non-generative readout does not change the backbone class."
+      },
+      "nimble-9b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/bespokelabsai/nimble/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen3.5-9B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-9B/blob/c202236235762e1c871ad0ccb60c8ee5ba337b9a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "9B",
+          "quant": null
+        }
+      },
+      "ninfer-qwen3.8-27b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/igorls/ninfer/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen3.8-27B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "27B",
+          "quant": null
+        }
+      },
+      "ninfer-qwen3.8-27b-t1.5": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/igorls/ninfer/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen3.8-27B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "27B",
+          "quant": null
+        }
+      },
+      "ninfer-qwen3.8-flash-next": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/igorls/ninfer/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen3.8-Flash-Next as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next/blob/de4b8e4d43b917e7706784d8bb445c9af86a3540/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen4ExpForConditionalGeneration\"]; model_type: \"qwen4_exp\"; text_config.model_type: \"qwen4_exp_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "omnijev_0p8b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/tinnel123/OmniJev-SFT-0.8B/raw/4d0752d353d21eac324213180752317a7e027737/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-0.8B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-0.8B/blob/2fc06364715b967f1860aea9cf38778875588b17/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "0.8B",
+          "quant": null
+        }
+      },
+      "omnijev_2b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/tinnel123/OmniJev-2B/raw/37659c000df592edaf201590a622326ce60484d4/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-2B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-2B/blob/15852e8c16360a2fea060d615a32b45270f8a8fc/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "omnijev_4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/tinnel123/OmniJev/raw/91248107b7f5230bd5715db2e62e83c9a72fcd81/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "omnijev_9b_v4_tzcfly": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/tzcfly/OmniJev-Qwen3.5-9B-v4/raw/07890c86356f1fc3816ad47146a02f0daae65d92/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-9B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-9B/blob/c202236235762e1c871ad0ccb60c8ee5ba337b9a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "9B",
+          "quant": null
+        }
+      },
+      "open-alternative-jev": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/ikermoel/open-alternative-jev/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen3.5-4B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "open-jev-deberta-v3-large": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/com-kotobalabs/open-jev-deberta-v3-large/blob/188ee67a5c93122b916e5acd5bdb0cb3623e380a/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies microsoft/deberta-v3-large as the evaluated backbone. The evaluated route uses an encoder with a decision/classification head. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/microsoft/deberta-v3-large/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "model_type: \"deberta-v2\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": null,
+          "quant": null
+        }
+      },
+      "open-jev-json-canvas-joshuasp": {
+        "arch": "open-diffusion-lm",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/JoshuaSP/open-jev/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies google/diffusiongemma-26B-A4B-it as the evaluated backbone. The inference route uses a diffusion language model."
+          },
+          {
+            "url": "https://huggingface.co/google/diffusiongemma-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"DiffusionGemmaForBlockDiffusion\"]; model_type: \"diffusion_gemma\"; text_config.model_type: \"diffusion_gemma_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "26B-A4B",
+          "quant": null
+        }
+      },
+      "open-jev-zefan-27b-v1.1": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/ZefanCai/Open-Jev-27B-v1.1/blob/28cf73067d5b337860bbef3c85b8b82ba8730956/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.8-27B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/config.json",
+            "kind": "config.json",
+            "fact": "Disclosed base config (evaluated repo has no standalone config): architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "27B",
+          "quant": null
+        }
+      },
+      "open-jev-zefan-2b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/ZefanCai/Open-Jev-2B/blob/0c7aa498b1627be8da4acf34c863ff0ee0a92785/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-2B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-2B/blob/15852e8c16360a2fea060d615a32b45270f8a8fc/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "open-jev-zefan-9b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/ZefanCai/Open-Jev-9B/blob/47e966881e489511c0c7f5633a9e1960a676a551/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-9B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-9B/blob/c202236235762e1c871ad0ccb60c8ee5ba337b9a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "9B",
+          "quant": null
+        }
+      },
+      "opendecision": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/deepanwadhwa/OpenDecision/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies MoritzLaurer/ModernBERT-large-zeroshot-v2.0 as the evaluated backbone. The evaluated route uses an encoder with a decision/classification head."
+          },
+          {
+            "url": "https://huggingface.co/MoritzLaurer/ModernBERT-large-zeroshot-v2.0/blob/a51e07b524299e309dd2b88d48b0cfa2bd9ec598/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"ModernBertForSequenceClassification\"]; model_type: \"modernbert\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "openjev-razorback16": {
+        "arch": "open-diffusion-lm",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/razorback16/openjev/main/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation describes a single-model decision engine on google/diffusiongemma-26B-A4B-it. The inference route uses a diffusion language model. Author documents NVFP4 for this build."
+          },
+          {
+            "url": "https://huggingface.co/google/diffusiongemma-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"DiffusionGemmaForBlockDiffusion\"]; model_type: \"diffusion_gemma\"; text_config.model_type: \"diffusion_gemma_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "26B-A4B",
+          "quant": "NVFP4"
+        }
+      },
+      "openjev-sglang": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/ekzhang/openjev-sglang/main/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen/Qwen3.6-35B-A3B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B/blob/995ad96eacd98c81ed38be0c5b274b04031597b0/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5MoeForConditionalGeneration\"]; model_type: \"qwen3_5_moe\"; text_config.model_type: \"qwen3_5_moe_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "35B-A3B",
+          "quant": null
+        }
+      },
+      "openjev-thinking": {
+        "arch": "open-diffusion-lm",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/razorback16/openjev/dcd20947b5ddad5be4a8f5aed6aa6dd245653823/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies google/diffusiongemma-26B-A4B-it as the evaluated backbone. The inference route uses a diffusion language model."
+          },
+          {
+            "url": "https://huggingface.co/google/diffusiongemma-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"DiffusionGemmaForBlockDiffusion\"]; model_type: \"diffusion_gemma\"; text_config.model_type: \"diffusion_gemma_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "26B-A4B",
+          "quant": null
+        }
+      },
+      "openjev-verdict": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/Heman10x-NGU/openJev-verdict-2.0/bff28567cff463b833bf044f351a8b7945d53e07/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies knowledgator/gliclass-modern-base-v2.0 as the evaluated backbone. The evaluated route uses an encoder with a decision/classification head. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/knowledgator/gliclass-modern-base-v2.0/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"GLiClassModel\"]; model_type: \"GLiClass\"; encoder_config.architectures: [\"ModernBertForMaskedLM\"]; encoder_config.model_type: \"modernbert\"; encoder_config._name_or_path: \"answerdotai/ModernBERT-base\"; encoder_config.is_decoder: false"
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": null,
+          "quant": null
+        }
+      },
+      "openjev-verdict-1.4": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/heman10x/rlcd-modernbert-151m/raw/8af2496eb63c7fa66d7d234e1f62629380030eb4/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies knowledgator/gliclass-modern-base-v2.0 as the evaluated backbone. The evaluated route uses an encoder with a decision/classification head."
+          },
+          {
+            "url": "https://huggingface.co/heman10x/rlcd-modernbert-151m/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"GLiClassModel\"]; model_type: \"GLiClass\"; encoder_config.architectures: [\"ModernBertForMaskedLM\"]; encoder_config.model_type: \"modernbert\"; encoder_config._name_or_path: \"answerdotai/ModernBERT-base\"; encoder_config.is_decoder: false"
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "openjev_4b_nli": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/AlexWortega/openjev/blob/a20448012c213128955ca0c693e7c943865cab77/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "openjev_4b_v5": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/AlexWortega/openjev/blob/a20448012c213128955ca0c693e7c943865cab77/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "opensourcejev-qwen35-4b-q4km": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/sabeel111/OpenSourceJev/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation. Author documents GGUF Q4_K_M for this build."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": "GGUF Q4_K_M"
+        }
+      },
+      "playjev_0p8b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/OmniJev/PlayJev-0.8B/blob/a7348002b1e159add7037d6d50812cd4db2d96e9/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-0.8B-Base as the evaluated backbone. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-0.8B-Base/blob/dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "0.8B",
+          "quant": null
+        }
       },
       "plumb-4b": {
         "arch": "open-llm-decoder",
         "evidence": [
           {
-            "url": "https://benchmarkheaven.com/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
+            "url": "https://huggingface.co/crh225/plumb-4b/blob/24f7bf77e7ee258a2d158c61ea2dce2b60321010/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies alibiserikbay/JevK5 as the evaluated backbone. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/crh225/plumb-4b/blob/24f7bf77e7ee258a2d158c61ea2dce2b60321010/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForCausalLM\"]; model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "qevi_2b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/MeerDevelopment/Qevi-2B/blob/9a0f5ec8654598ed0c5a819daf6b4ecce749a190/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3-VL-2B-Instruct as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct/blob/89644892e4d85e24eaac8bacfd4f463576704203/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3VLForConditionalGeneration\"]; model_type: \"qwen3_vl\"; text_config.model_type: \"qwen3_vl_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "quyet-1-0-large": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/chinhnc/Quyet-1.0-Large/blob/d997d58951e3c0da4486cf0884ca9d4d916e95dc/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies google/gemma-4-31B-it as the evaluated backbone. Author describes LoRA adaptation. Author identifies the 31B backbone."
+          },
+          {
+            "url": "https://huggingface.co/chinhnc/Quyet-1.0-Large/blob/d997d58951e3c0da4486cf0884ca9d4d916e95dc/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "31B",
+          "quant": null
+        }
+      },
+      "quyet-1-0-medium": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/chinhnc/Quyet-1.0-Medium/blob/1088a90979194b6b6b6c19c5f7e95491447de3f8/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation. Author identifies the 4B backbone."
+          },
+          {
+            "url": "https://huggingface.co/chinhnc/Quyet-1.0-Medium/blob/1088a90979194b6b6b6c19c5f7e95491447de3f8/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "quyet-1-0-small": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/chinhnc/Quyet-1.0-Small/blob/74b0ceff421d8a4ca3cd3dd55db7a2c37ebd888b/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies aisingapore/SEA-LION-ModernBERT-300M as the evaluated backbone. The evaluated route uses an encoder with a decision/classification head. Author describes fine-tuning. Author reports 328M parameters."
+          },
+          {
+            "url": "https://huggingface.co/aisingapore/SEA-LION-ModernBERT-300M/blob/e3d70b810769bf86ae9041d1943e0ecd10b62b31/config.json",
+            "kind": "config.json",
+            "fact": "Disclosed base config (evaluated repo has no standalone config): architectures: [\"ModernBertForMaskedLM\"]; model_type: \"modernbert\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "328M",
+          "quant": null
+        }
+      },
+      "quyet-1-0-small-en": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/chinhnc/Quyet-1.0-Small-EN/blob/8ffaf5c9835869fa6d30b6d39b6f7b7e6b34e8ec/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies answerdotai/ModernBERT-base as the evaluated backbone. The evaluated route uses an encoder with a decision/classification head. Author describes fine-tuning. Author reports 153M parameters."
+          },
+          {
+            "url": "https://huggingface.co/answerdotai/ModernBERT-base/blob/8949b909ec900327062f0ebf497f51aef5e6f0c8/config.json",
+            "kind": "config.json",
+            "fact": "Disclosed base config (evaluated repo has no standalone config): architectures: [\"ModernBertForMaskedLM\"]; model_type: \"modernbert\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "153M",
+          "quant": null
+        }
+      },
+      "quyet-1-0-tiny": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/chinhnc/Quyet-1.0-Tiny/blob/9239e2cb21688a8a9237270525f31e559270db3e/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies jhu-clsp/mmBERT-small as the evaluated backbone. The evaluated route uses an encoder with a decision/classification head. Author describes fine-tuning. Author describes distillation. Author reports 183M parameters."
+          },
+          {
+            "url": "https://huggingface.co/jhu-clsp/mmBERT-small/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "Disclosed base config (evaluated repo has no standalone config): architectures: [\"ModernBertForMaskedLM\"]; model_type: \"modernbert\""
+          }
+        ],
+        "badges": {
+          "derivation": "distilled",
+          "params": "183M",
+          "quant": null
+        }
+      },
+      "qwen3-reranker-4b": {
+        "arch": "open-reranker",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-Reranker-4B/blob/22e683669bc0f0bd69640a1354a6d0aebcfeede5/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3-4B-Base as the evaluated backbone. The evaluated checkpoint is used as a reranker."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-Reranker-4B/blob/22e683669bc0f0bd69640a1354a6d0aebcfeede5/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3ForCausalLM\"]; model_type: \"qwen3\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "qwen3.8-27b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          },
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-dated-carry.json",
             "kind": "artifact",
-            "fact": "Published reference/API flag and legacy class; development seed pending cited architecture review."
+            "fact": "Artifact key qwen3.8-27b identifies the evaluated model as: Qwen3.8-27B"
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "27B",
+          "quant": null
+        },
+        "note": "Public decoder weights; this benchmark measurement used a hosted API."
+      },
+      "qwen35-9b-jev-data-mix-v2": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/jsaurabh/qwen3.5-9b-jev-data-mix-v2/raw/af0d51022410a72218f0ddc7414f877d0556e82d/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-9B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-9B/blob/c202236235762e1c871ad0ccb60c8ee5ba337b9a/config.json",
+            "kind": "config.json",
+            "fact": "Disclosed base config (evaluated repo has no standalone config): architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "9B",
+          "quant": null
+        }
+      },
+      "raw-phi-4-mini": {
+        "arch": "base-control",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/microsoft/Phi-4-mini-instruct/raw/cfbefacb99257ffa30c83adab238a50856ac3083/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies microsoft/Phi-4-mini-instruct (unmodified) as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/microsoft/Phi-4-mini-instruct/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Phi3ForCausalLM\"]; model_type: \"phi3\""
+          },
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key raw-phi-4-mini records class: raw-logit-control; the unchanged checkpoint is evaluated without a decision fine-tune."
+          }
+        ],
+        "badges": {
+          "derivation": "base",
+          "params": null,
+          "quant": null
+        }
+      },
+      "raw-qwen3-0.6b": {
+        "arch": "base-control",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-0.6B/blob/c1899de289a04d12100db370d81485cdf75e47ca/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3-0.6B-Base as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-0.6B/blob/c1899de289a04d12100db370d81485cdf75e47ca/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3ForCausalLM\"]; model_type: \"qwen3\""
+          },
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key raw-qwen3-0.6b records class: raw-logit-control; the unchanged checkpoint is evaluated without a decision fine-tune."
+          }
+        ],
+        "badges": {
+          "derivation": "base",
+          "params": "0.6B",
+          "quant": null
+        }
+      },
+      "raw-qwen3-1.7b": {
+        "arch": "base-control",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-1.7B/blob/70d244cc86ccca08cf5af4e1e306ecf908b1ad5e/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3-1.7B-Base as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-1.7B/blob/70d244cc86ccca08cf5af4e1e306ecf908b1ad5e/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3ForCausalLM\"]; model_type: \"qwen3\""
+          },
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key raw-qwen3-1.7b records class: raw-logit-control; the unchanged checkpoint is evaluated without a decision fine-tune."
+          }
+        ],
+        "badges": {
+          "derivation": "base",
+          "params": "1.7B",
+          "quant": null
+        }
+      },
+      "raw-qwen3-4b-instruct-2507": {
+        "arch": "base-control",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507/blob/cdbee75f17c01a7cc42f958dc650907174af0554/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3-4B-Instruct-2507 (unmodified) as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507/blob/cdbee75f17c01a7cc42f958dc650907174af0554/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3ForCausalLM\"]; model_type: \"qwen3\""
+          },
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key raw-qwen3-4b-instruct-2507 records class: raw-logit-control; the unchanged checkpoint is evaluated without a decision fine-tune."
+          }
+        ],
+        "badges": {
+          "derivation": "base",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "raw-qwen3-8b": {
+        "arch": "base-control",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-8B/blob/b968826d9c46dd6066d109eabc6255188de91218/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3-8B-Base as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-8B/blob/b968826d9c46dd6066d109eabc6255188de91218/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3ForCausalLM\"]; model_type: \"qwen3\""
+          },
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key raw-qwen3-8b records class: raw-logit-control; the unchanged checkpoint is evaluated without a decision fine-tune."
+          }
+        ],
+        "badges": {
+          "derivation": "base",
+          "params": "8B",
+          "quant": null
+        }
+      },
+      "reflex-27b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/kshetrajna12/reflex/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen3.8-27B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "27B",
+          "quant": null
+        }
+      },
+      "reflex-4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/kshetrajna12/reflex-qwen3.5-4b-lora/raw/9df1cbbbc1837ba494530a59d3d9d345688ed250/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "reflex_4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/kshetrajna12/reflex-qwen3.5-4b-lora/raw/9df1cbbbc1837ba494530a59d3d9d345688ed250/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "sage-1.3.0": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key sage-1.3.0 records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "seanliu_jev_vision_8b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/SeanLiu/Jev-Vision/blob/dc2d645b9d019e66b8f63def5c8a8be842448f4c/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3-VL-8B-Instruct as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct/blob/0c351dd01ed87e9c1b53cbc748cba10e6187ff3b/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3VLForConditionalGeneration\"]; model_type: \"qwen3_vl\"; text_config.model_type: \"qwen3_vl_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "8B",
+          "quant": null
+        }
+      },
+      "semif-qwen3.5-4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/TheoLeeCJ/openjev/master/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "shisa_de_1": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/55",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Gemma 4 26B-A4B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "26B-A4B",
+          "quant": null
+        }
+      },
+      "simplejev-qwen3.5-0.8b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/featherless-ai/simple-jev/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-0.8B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-0.8B/blob/2fc06364715b967f1860aea9cf38778875588b17/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "0.8B",
+          "quant": null
+        }
+      },
+      "simplejev-qwen3.6-35b-a3b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/featherless-ai/simple-jev/main/README.md",
+            "kind": "repo-readme",
+            "fact": "Author README describes local language-model inference and candidate-token decision scoring."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "Disclosed base config: architectures: [\"Qwen3_5MoeForConditionalGeneration\"]; model_type: qwen3_5_moe"
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "35B-A3B",
+          "quant": null
+        }
+      },
+      "simplejev-qwen3.8-27b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/featherless-ai/simple-jev/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen/Qwen3.8-27B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "27B",
+          "quant": null
+        }
+      },
+      "smalljev": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/isHeSatoshi/smalljev/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies openbmb/MiniCPM5-2B-Base as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/openbmb/MiniCPM5-2B-Base/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"LlamaForCausalLM\"]; model_type: \"llama\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "spark-s1-4b-v6": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/abhishek085/open-spark-jev/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "standard_one_3b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/74",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies mistralai/Ministral-3-3B-Instruct-2512-BF16 as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/mistralai/Ministral-3-3B-Instruct-2512-BF16/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Mistral3ForConditionalGeneration\"]; model_type: \"mistral3\"; text_config.model_type: \"ministral3\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "3B",
+          "quant": null
+        }
+      },
+      "standard_one_8b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/74",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies mistralai/Ministral-3-8B-Instruct-2512-BF16 as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512-BF16/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Mistral3ForConditionalGeneration\"]; model_type: \"mistral3\"; text_config.model_type: \"ministral3\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "8B",
+          "quant": null
+        }
+      },
+      "standardone-8b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/StandardThinking/StandardOne-8B/blob/36d7999c63403acc1fd5861d5b139eee275e26d8/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies mistralai/Ministral-3-8B-Instruct-2512-BF16 as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/StandardThinking/StandardOne-8B/blob/ac495d1c221297f0ae951941eff27bcf58b5ce52/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Mistral3ForConditionalGeneration\"]; model_type: \"mistral3\"; text_config.model_type: \"ministral3\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "8B",
+          "quant": null
+        }
+      },
+      "surogate-rune-26b-a4b-v3-rtxpro6000-a2": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/google/gemma-4-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\""
+          },
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-dated-carry.json",
+            "kind": "artifact",
+            "fact": "Artifact key surogate-rune-26b-a4b-v3-rtxpro6000-a2 identifies the evaluated model as: Surogate Rune 26B-A4B v3 (RTX PRO 6000)"
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "26B-A4B",
+          "quant": null
+        },
+        "note": "Architecture follows the disclosed evaluated backbone; a separate author model card was unavailable."
+      },
+      "surogate_rune_26b_v3": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/google/gemma-4-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\""
+          },
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/multimodal-preview/preview.json",
+            "kind": "artifact",
+            "fact": "Artifact key surogate_rune_26b_v3 identifies the evaluated model as: Surogate Rune 26B-A4B v3"
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "26B-A4B",
+          "quant": null
+        },
+        "note": "Architecture follows the disclosed evaluated backbone; a separate author model card was unavailable."
+      },
+      "swanone": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/blockbrain-ai/swanone-recipe/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Mia-AiLab/Qwen3.8-Flash-Next-NVFP4 as the evaluated backbone. Author documents NVFP4 for this build."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next/blob/de4b8e4d43b917e7706784d8bb445c9af86a3540/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen4ExpForConditionalGeneration\"]; model_type: \"qwen4_exp\"; text_config.model_type: \"qwen4_exp_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": "NVFP4"
+        }
+      },
+      "system-one-open": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/mithalouni/system-one-open/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Gemma 4 E2B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-E2B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "system-one-sg": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/sgoedecke/system-one/main/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen3-8B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-8B/blob/b968826d9c46dd6066d109eabc6255188de91218/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3ForCausalLM\"]; model_type: \"qwen3\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "8B",
+          "quant": null
+        }
+      },
+      "torchcast-decision-12b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/torchcast-ai/torchcast-decision-12b/raw/49107b5589bf2dc4ec3f5acd54316971dd5978b1/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies google/gemma-4-12B-it as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/torchcast-ai/torchcast-decision-12b/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4UnifiedForConditionalGeneration\"]; model_type: \"gemma4_unified\"; text_config.model_type: \"gemma4_unified_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "12B",
+          "quant": null
+        }
+      },
+      "typecastlm": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/mihail-gribov/typecastlm/main/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen3.5-4B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "vansa-3.4": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-dated-carry.json",
+            "kind": "artifact",
+            "fact": "Artifact key vansa-3.4 records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "verdict-small": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/Manavarya09/verdict/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies intfloat/multilingual-e5-small as the evaluated backbone. The evaluated route uses an encoder with a decision/classification head. Author describes fine-tuning. Author reports 118M parameters."
+          },
+          {
+            "url": "https://huggingface.co/intfloat/multilingual-e5-small/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"BertModel\"]; model_type: \"bert\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "118M",
+          "quant": null
+        }
+      },
+      "visual_jev_4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/guanxuyu/visual-jev-4b-answer-sft/raw/7a3f1bb0d8f7bfbbd8514d968ab7de3518849c8d/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3-VL-4B-Instruct as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-VL-4B-Instruct/blob/ebb281ec70b05090aa6165b016eac8ec08e71b17/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3VLForConditionalGeneration\"]; model_type: \"qwen3_vl\"; text_config.model_type: \"qwen3_vl_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "visual_jev_generic_baseline": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          },
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/multimodal-preview/preview.json",
+            "kind": "artifact",
+            "fact": "Artifact key visual_jev_generic_baseline identifies the evaluated model as: Visual-Jev generic (zero-shot Qwen3.5-4B baseline)"
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "4B",
+          "quant": null
+        },
+        "note": "The historical artifact names an untuned visual baseline; classify its model architecture as a decoder."
+      },
+      "vjev_vision": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/yah01/vjev-vision/raw/2fa8b58e40e5bc351a7d6dd39b953469a8f3ded2/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "von-395m": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/wfzyx/von/raw/52dd1845eb625fbaf67e26596df3f347f96a69a2/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies answerdotai/ModernBERT-large as the evaluated backbone. The evaluated route uses an encoder with a decision/classification head. Author describes fine-tuning. Author reports 395M parameters."
+          },
+          {
+            "url": "https://huggingface.co/answerdotai/ModernBERT-large/blob/45bb4654a4d5aaff24dd11d4781fa46d39bf8c13/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"ModernBertForMaskedLM\"]; model_type: \"modernbert\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "395M",
+          "quant": null
+        }
+      },
+      "winnow-12b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/EldanRing/Winnow-12B/blob/b6ac22b0d51b69b18200acacb3fbdd98073fffe8/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies google/gemma-4-12B-it as the evaluated backbone. Author describes LoRA adaptation. Adapter is merged into the exported checkpoint. Author documents GGUF Q8_0 for this build."
+          },
+          {
+            "url": "https://huggingface.co/EldanRing/Winnow-12B/blob/abb21621114b10690259a7517fa59b153675176e/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4UnifiedForConditionalGeneration\"]; model_type: \"gemma4_unified\"; text_config.model_type: \"gemma4_unified_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "merge",
+          "params": "12B",
+          "quant": "GGUF Q8_0"
+        }
+      },
+      "winnow_12b_q8": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/EldanRing/Winnow-12B/blob/abb21621114b10690259a7517fa59b153675176e/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies google/gemma-4-12B-it as the evaluated backbone. Author describes LoRA adaptation. Author documents GGUF Q8_0 for this build. Adapter is merged into the exported checkpoint."
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-12B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4UnifiedForConditionalGeneration\"]; model_type: \"gemma4_unified\"; text_config.model_type: \"gemma4_unified_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "merge",
+          "params": "12B",
+          "quant": "GGUF Q8_0"
+        }
+      },
+      "wity-1": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key wity-1 records api_flag: true; endpoint is a closed hosted decision API."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "wity-1-always": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key wity-1-always records api_flag: true; endpoint is a closed hosted decision API."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "wity-1-off": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key wity-1-off records api_flag: true; endpoint is a closed hosted decision API."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "wity_1": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/multimodal-preview/preview.json",
+            "kind": "artifact",
+            "fact": "Artifact key wity_1 records api_flag: true; endpoint is a closed hosted decision API."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "zerank-2": {
+        "arch": "open-reranker",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/zeroentropy/zerank-2-reranker/raw/5eae30d5ee3c6b2df2ef6d723bde45172d761c4c/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3-4B as the evaluated backbone. The evaluated checkpoint is used as a reranker."
+          },
+          {
+            "url": "https://huggingface.co/zeroentropy/zerank-2-reranker/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3ForCausalLM\"]; model_type: \"qwen3\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "open-alternative-jev-reversed-order": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/ikermoel/open-alternative-jev/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen3.5-4B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "4B",
+          "quant": null
+        },
+        "note": "Excluded historical run of the same decoder with reversed option order; no ranked score is changed."
+      }
+    },
+    "imagejevbench": {
+      "autojev_27b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/denis-pplx/autojev-27b/blob/6f5b557e037f5edb25c7dc92dbc6553e5a19c015/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.8-27B as the evaluated backbone. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "27B",
+          "quant": null
+        }
+      },
+      "bonsai_2_27b_pq2_0": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/kyr0/Bonsai-Llama-Jev/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author README describes local language-model inference and candidate-token decision scoring."
           }
         ],
         "badges": {
@@ -161,9 +3531,942 @@
           "params": null,
           "quant": null
         },
-        "note": "Development seed; replace before release."
+        "note": "Author documents local generative model serving; the exact upstream model identity remains undisclosed."
+      },
+      "cua_s1_4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/cua-ai/cua-s1-4b-0.2/blob/16818868b0cc7813808aae4e87b417657046ab79/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "decider_2b_vision": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Mapika/decider-2b-vision/blob/863e290863655f1d6b69324d77d09ac972d21609/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-2B-Base as the evaluated backbone. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-2B-Base/blob/b1485b2fa6dfa1287294f269f5fb618e03d52d7c/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "djev_dev_bf16": {
+        "arch": "open-diffusion-lm",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/Davipar/djev-dev/HEAD/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies google/diffusiongemma-26B-A4B-it as the evaluated backbone. The inference route uses a diffusion language model."
+          },
+          {
+            "url": "https://huggingface.co/google/diffusiongemma-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"DiffusionGemmaForBlockDiffusion\"]; model_type: \"diffusion_gemma\"; text_config.model_type: \"diffusion_gemma_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "26B-A4B",
+          "quant": null
+        }
+      },
+      "djev_distill_v4": {
+        "arch": "open-diffusion-lm",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/tarsur385/djev-distill-v4/raw/9e90719516ef62d06be646f94dc132136b627ba5/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies google/diffusiongemma-26B-A4B-it as the evaluated backbone. The inference route uses a diffusion language model. Author describes fine-tuning. Author describes distillation."
+          },
+          {
+            "url": "https://huggingface.co/google/diffusiongemma-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"DiffusionGemmaForBlockDiffusion\"]; model_type: \"diffusion_gemma\"; text_config.model_type: \"diffusion_gemma_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "distilled",
+          "params": "26B-A4B",
+          "quant": null
+        }
+      },
+      "djev_spark_nvfp4": {
+        "arch": "open-diffusion-lm",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/mmastrac/djev-spark/08b708e51bb8d9f4eba0e85b61dab0be7093d20e/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies google/diffusiongemma-26B-A4B-it as the evaluated backbone. The inference route uses a diffusion language model. Author documents NVFP4 for this build."
+          },
+          {
+            "url": "https://huggingface.co/google/diffusiongemma-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"DiffusionGemmaForBlockDiffusion\"]; model_type: \"diffusion_gemma\"; text_config.model_type: \"diffusion_gemma_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "26B-A4B",
+          "quant": "NVFP4"
+        }
+      },
+      "djev_v10_step160_snowicarus": {
+        "arch": "open-diffusion-lm",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/snowicarus/diffusiongemma-26b-djev-v10-step160/raw/858cc14441718ff52ea4dd6c9491d5316cc9834f/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies google/diffusiongemma-26B-A4B-it as the evaluated backbone. The inference route uses a diffusion language model. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/google/diffusiongemma-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"DiffusionGemmaForBlockDiffusion\"]; model_type: \"diffusion_gemma\"; text_config.model_type: \"diffusion_gemma_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "26B-A4B",
+          "quant": null
+        }
+      },
+      "gemini31_flash_lite": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/multimodal-preview/preview.json",
+            "kind": "artifact",
+            "fact": "Artifact key gemini31_flash_lite records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "gemini38_flash": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/multimodal-preview/preview.json",
+            "kind": "artifact",
+            "fact": "Artifact key gemini38_flash records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "gevva_e2b_multimodal": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/94",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Gemma 4 E2B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-E2B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "gevva_e4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/94",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Gemma 4 E4B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-E4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "glance_qwen3vl_4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/yoheinakajima/glance/master/README.md",
+            "kind": "repo-readme",
+            "fact": "Author documentation identifies Qwen3-VL-4B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-VL-4B-Instruct/blob/ebb281ec70b05090aa6165b016eac8ec08e71b17/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3VLForConditionalGeneration\"]; model_type: \"qwen3_vl\"; text_config.model_type: \"qwen3_vl_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "gpt56_luna": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/multimodal-preview/preview.json",
+            "kind": "artifact",
+            "fact": "Artifact key gpt56_luna records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "gpt6_luna": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/multimodal-preview/preview.json",
+            "kind": "artifact",
+            "fact": "Artifact key gpt6_luna records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "imajev_2b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/80",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-2B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-2B/blob/15852e8c16360a2fea060d615a32b45270f8a8fc/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "imajev_4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/80",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "imajev_9b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/80",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-9B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-9B/blob/c202236235762e1c871ad0ccb60c8ee5ba337b9a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "9B",
+          "quant": null
+        }
+      },
+      "jev_omni": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/akhilaaa3/Jev-Omni/blob/5addda86ddee081a68fb067477ea100c221b8917/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Gemma 4 12B IT as the evaluated backbone. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-12B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4UnifiedForConditionalGeneration\"]; model_type: \"gemma4_unified\"; text_config.model_type: \"gemma4_unified_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "12B",
+          "quant": null
+        }
+      },
+      "jev_spatial": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Fr0zencr4nE/jev-spatial/blob/5727eade6e1af2750ff852b1b1e90bb1f41a0602/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies allenai/Molmo2-ER as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/allenai/Molmo2-ER/blob/dab22564403d2607855bb1fffb0721285b445081/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Molmo2ForConditionalGeneration\"]; model_type: \"molmo2\"; text_config.model_type: \"molmo2_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": null,
+          "quant": null
+        }
+      },
+      "jevany_27b_rlcr": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/SimpleJev/JevAny-Qwen3.8-27B-LoRA/blob/09c9e9102d5b8cc7d56558d25da1202a761b6c0d/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.8-27B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "27B",
+          "quant": null
+        }
+      },
+      "jevany_27b_sft": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/SimpleJev/JevAny-Qwen3.8-27B-LoRA/blob/09c9e9102d5b8cc7d56558d25da1202a761b6c0d/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.8-27B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "27B",
+          "quant": null
+        }
+      },
+      "jevify_gemma4_26b_a4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/kushalpatil/jevify-gemma4-26b-a4b/raw/d4c0d1d455892957d274f68ec64e9fc0881011c8/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies google/gemma-4-26B-A4B-it as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "26B-A4B",
+          "quant": null
+        }
+      },
+      "jevify_gemma4_e4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/kushalpatil/jevify-gemma4-e4b-lora/raw/cca1f55e19f59dd493928459c4551131d10fdff9/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies google/gemma-4-E4B-it as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-E4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "jevify_qwen3vl_2b_t2": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Praveenrajus/jevify-qwen3-vl-2b-t2/blob/1593ab894637b342bb20700b5af0ee17ce28d5d7/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3-VL-2B-Instruct as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct/blob/89644892e4d85e24eaac8bacfd4f463576704203/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3VLForConditionalGeneration\"]; model_type: \"qwen3_vl\"; text_config.model_type: \"qwen3_vl_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "jevision": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-0.8B-Base/blob/dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          },
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/multimodal-preview/preview.json",
+            "kind": "artifact",
+            "fact": "Artifact key jevision identifies the evaluated model as: JEVision (divyanshx11, visual route)"
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "0.8B",
+          "quant": null
+        },
+        "note": "Architecture follows the disclosed evaluated backbone; a separate author model card was unavailable."
+      },
+      "jpt_0p8b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/78",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Qwen3.5-0.8B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-0.8B/blob/2fc06364715b967f1860aea9cf38778875588b17/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "0.8B",
+          "quant": null
+        }
+      },
+      "jpt_4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/78",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "jpt_9b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/78",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Qwen3.5-9B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-9B/blob/c202236235762e1c871ad0ccb60c8ee5ba337b9a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "9B",
+          "quant": null
+        }
+      },
+      "kushal_gemma4_31b_it_autoloops": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/multimodal-preview/preview.json",
+            "kind": "artifact",
+            "fact": "Artifact key kushal_gemma4_31b_it_autoloops records a hosted API with no public evaluated weights."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "neohorse_jev_4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/131",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies NeoHorse-1-4B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/TokenRhythm/NeoHorse-Jev-4B/blob/434cb21d3a994a953d3ae5788405fcb2c4970554/config.json",
+            "kind": "config.json",
+            "fact": "backbone_class: \"Qwen3_5Model\"; vision_source: \"Qwen/Qwen3.5-4B\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "4B",
+          "quant": null
+        },
+        "note": "The decision head uses the Qwen3.5 model backbone; non-generative readout does not change the backbone class."
+      },
+      "omnijev_0p8b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/tinnel123/OmniJev-SFT-0.8B/raw/4d0752d353d21eac324213180752317a7e027737/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-0.8B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-0.8B/blob/2fc06364715b967f1860aea9cf38778875588b17/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "0.8B",
+          "quant": null
+        }
+      },
+      "omnijev_2b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/tinnel123/OmniJev-2B/raw/37659c000df592edaf201590a622326ce60484d4/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-2B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-2B/blob/15852e8c16360a2fea060d615a32b45270f8a8fc/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "omnijev_4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/tinnel123/OmniJev/raw/91248107b7f5230bd5715db2e62e83c9a72fcd81/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "omnijev_9b_v4_tzcfly": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/tzcfly/OmniJev-Qwen3.5-9B-v4/raw/07890c86356f1fc3816ad47146a02f0daae65d92/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-9B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-9B/blob/c202236235762e1c871ad0ccb60c8ee5ba337b9a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "9B",
+          "quant": null
+        }
+      },
+      "openjev_4b_nli": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/AlexWortega/openjev/blob/a20448012c213128955ca0c693e7c943865cab77/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "openjev_4b_v5": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/AlexWortega/openjev/blob/a20448012c213128955ca0c693e7c943865cab77/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "playjev_0p8b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/OmniJev/PlayJev-0.8B/blob/a7348002b1e159add7037d6d50812cd4db2d96e9/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-0.8B-Base as the evaluated backbone. Author describes fine-tuning."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-0.8B-Base/blob/dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "0.8B",
+          "quant": null
+        }
+      },
+      "qevi_2b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/MeerDevelopment/Qevi-2B/blob/9a0f5ec8654598ed0c5a819daf6b4ecce749a190/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3-VL-2B-Instruct as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct/blob/89644892e4d85e24eaac8bacfd4f463576704203/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3VLForConditionalGeneration\"]; model_type: \"qwen3_vl\"; text_config.model_type: \"qwen3_vl_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "reflex_4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/kshetrajna12/reflex-qwen3.5-4b-lora/raw/9df1cbbbc1837ba494530a59d3d9d345688ed250/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "seanliu_jev_vision_8b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/SeanLiu/Jev-Vision/blob/dc2d645b9d019e66b8f63def5c8a8be842448f4c/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3-VL-8B-Instruct as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct/blob/0c351dd01ed87e9c1b53cbc748cba10e6187ff3b/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3VLForConditionalGeneration\"]; model_type: \"qwen3_vl\"; text_config.model_type: \"qwen3_vl_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "8B",
+          "quant": null
+        }
+      },
+      "shisa_de_1": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/55",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies Gemma 4 26B-A4B as the evaluated backbone."
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\""
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "26B-A4B",
+          "quant": null
+        }
+      },
+      "standard_one_3b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/74",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies mistralai/Ministral-3-3B-Instruct-2512-BF16 as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/mistralai/Ministral-3-3B-Instruct-2512-BF16/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Mistral3ForConditionalGeneration\"]; model_type: \"mistral3\"; text_config.model_type: \"ministral3\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "3B",
+          "quant": null
+        }
+      },
+      "standard_one_8b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://api.github.com/repos/fstandhartinger/jevbench/issues/74",
+            "kind": "provider-docs",
+            "fact": "Author documentation identifies mistralai/Ministral-3-8B-Instruct-2512-BF16 as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512-BF16/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Mistral3ForConditionalGeneration\"]; model_type: \"mistral3\"; text_config.model_type: \"ministral3\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "8B",
+          "quant": null
+        }
+      },
+      "surogate_rune_26b_v3": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/google/gemma-4-26B-A4B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\""
+          },
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/multimodal-preview/preview.json",
+            "kind": "artifact",
+            "fact": "Artifact key surogate_rune_26b_v3 identifies the evaluated model as: Surogate Rune 26B-A4B v3"
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "26B-A4B",
+          "quant": null
+        },
+        "note": "Architecture follows the disclosed evaluated backbone; a separate author model card was unavailable."
+      },
+      "visual_jev_4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/guanxuyu/visual-jev-4b-answer-sft/raw/7a3f1bb0d8f7bfbbd8514d968ab7de3518849c8d/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3-VL-4B-Instruct as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-VL-4B-Instruct/blob/ebb281ec70b05090aa6165b016eac8ec08e71b17/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3VLForConditionalGeneration\"]; model_type: \"qwen3_vl\"; text_config.model_type: \"qwen3_vl_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "visual_jev_generic_baseline": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          },
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/multimodal-preview/preview.json",
+            "kind": "artifact",
+            "fact": "Artifact key visual_jev_generic_baseline identifies the evaluated model as: Visual-Jev generic (zero-shot Qwen3.5-4B baseline)"
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "4B",
+          "quant": null
+        },
+        "note": "The historical artifact names an untuned visual baseline; classify its model architecture as a decoder."
+      },
+      "vjev_vision": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/yah01/vjev-vision/raw/2fa8b58e40e5bc351a7d6dd39b953469a8f3ded2/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "winnow_12b_q8": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/EldanRing/Winnow-12B/blob/abb21621114b10690259a7517fa59b153675176e/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation identifies google/gemma-4-12B-it as the evaluated backbone. Author describes LoRA adaptation. Author documents GGUF Q8_0 for this build. Adapter is merged into the exported checkpoint."
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-12B-it/raw/main/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4UnifiedForConditionalGeneration\"]; model_type: \"gemma4_unified\"; text_config.model_type: \"gemma4_unified_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "merge",
+          "params": "12B",
+          "quant": "GGUF Q8_0"
+        }
+      },
+      "wity_1": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/multimodal-preview/preview.json",
+            "kind": "artifact",
+            "fact": "Artifact key wity_1 records api_flag: true; endpoint is a closed hosted decision API."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
       }
-    },
-    "imagejevbench": {}
+    }
   }
 }
