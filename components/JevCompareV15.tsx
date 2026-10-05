@@ -16,7 +16,7 @@ import { useJevV15VisibleKeys } from "./useJevV15VisibleKeys";
 // and test/cr-257-category-radars.test.mjs.
 
 export type JevCompareV15Row = {
-  key: string; name: string; cls: string; rank: number | null; listing: string; score: number | null; repo?: string | null;
+  key: string; name: string; cls: string; rank: number | null; listing: string; score: number | null; repo?: string | null; hosted?: boolean;
   axes: Record<"intelligence" | "calibration" | "speed" | "cost", number | null> | null;
   typeCc: Record<"choice" | "noul" | "score", { open: number | null; sealed: number | null }>;
   tierCc: {
@@ -120,8 +120,9 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
   const pair = [A, B], s = series(A, B);
   const axisSpokes: Spoke[] = AXES.map(([k, label]) => ({
     key: k, lines: [label], thin: [false, false],
-    values: pair.map((r) => r.axes?.[k] ?? 0),
-    texts: pair.map((r) => (r.axes == null ? "not scored" : r.axes[k] == null ? "none (0)" : one(r.axes[k]))),
+    // CR-290: an unpublished axis is a gap on the radar (it counts as 0 in the composite, and the label says so).
+    values: pair.map((r) => r.axes?.[k] ?? null),
+    texts: pair.map((r) => (r.axes == null ? "not scored" : r.axes[k] == null ? "none (0 in score)" : one(r.axes[k]))),
   }));
   const typeSpokes = ccSpokes(pair, TYPE_SPOKES, (r, k) => {
     const [set, t] = k.split("|");
@@ -131,6 +132,19 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
   const sealedTierSpokes = ccSpokes(pair, TIERS, (r, k) => r.tierCc.sealed[k as "easy"] ?? null);
   const missingFor = (spokes: Spoke[]) => pair.filter((_, k) => spokes.every((sp) => sp.values[k] === null)).map((r) => r.name);
   const status = (r: JevCompareV15Row) => r.rank !== null ? `#${r.rank}` : ({ honorable_mention: "honorable mention", partial: "partial run", unpriced: "unpriced", addendum: "roster addendum", unranked: "not ranked" } as Record<string, string>)[r.listing] ?? `${r.listing}, not ranked`;
+  // CR-290 (Florian 5 Oct 2026): say in the caption which system has gaps and why, instead of letting a partial series
+  // read as a small area. Category cells exist only from min_n answered items; hosted APIs see far fewer items per category.
+  const gapNote = (f: { spokes: Spoke[]; dim?: CategoryDim }) => {
+    const gapped = pair.flatMap((r, k) => {
+      const gaps = f.spokes.filter((sp) => sp.values[k] === null || sp.thin[k]).length;
+      return gaps > 0 && gaps < f.spokes.length ? [{ r, text: `${k === 0 ? "A" : "B"} (${r.name}) has no plotted value on ${gaps} of ${f.spokes.length} spokes` }] : [];
+    });
+    if (!gapped.length) return null;
+    const parts = gapped.map((g) => g.text);
+    const hosted = gapped.some((g) => g.r.hosted === true);
+    const why = f.dim && categories ? ` — fewer than ${categories.minN} answered items in those categories${hosted ? " (hosted APIs answer a smaller item set, so many of their category cells stay under the minimum)" : ""}` : " — no published value there";
+    return <span className="block" data-bh-radar-gap-note> Gaps, not zeros: {parts.join("; ")}{why}. Those spokes are marked n/a and left open.</span>;
+  };
   const desc = (title: string, spokes: Spoke[]) => `${title}, ${s[0].name} vs ${s[1].name}. ` + spokes.map((sp) => `${sp.lines.join(" ")}: ${sp.texts[0]} vs ${sp.texts[1]}`).join("; ") + ".";
   const copy = async () => {
     const u = new URL(window.location.href); u.searchParams.set("compare", `${A.key},${B.key}`); u.hash = "compare";
@@ -144,7 +158,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
       spokes, missing: absent.map((r) => `${r.name}: ${categories!.missing[r.key] ?? "no per-category values"}`), size: { w: 500, h: 400, r: 112 } };
   });
   const figures: { key: string; title: string; note: string; spokes: Spoke[]; missing: string[]; size: { w: number; h: number; r: number }; dim?: CategoryDim }[] = [
-    { key: "axes", title: "The four score axes", note: "0–100, the values in the table. A system with no published axis draws at 0 and says so.", spokes: axisSpokes, missing: [], size: { w: 420, h: 320, r: 96 } },
+    { key: "axes", title: "The four score axes", note: "0–100, the values in the table. An axis a system has no published value for is left as a gap (it counts as 0 in the composite).", spokes: axisSpokes, missing: [], size: { w: 420, h: 320, r: 96 } },
     { key: "types", title: "Competence per request type, open / sealed", note: `Chance-corrected competence (0 = chance) for Choice, Noul and Score on the ${openDecisions} open and ${sealedDecisions} sealed decisions.`, spokes: typeSpokes, missing: missingFor(typeSpokes), size: { w: 440, h: 340, r: 100 } },
     { key: "tiers-open", title: "Competence per tier — open set", note: "Per-tier competence, the three request types pooled by their published decision counts.", spokes: openTierSpokes, missing: missingFor(openTierSpokes), size: { w: 440, h: 340, r: 100 } },
     { key: "tiers-sealed", title: "Competence per tier — sealed set", note: "Per-tier competence on the sealed decisions, types pooled the same way; item text stays private.", spokes: sealedTierSpokes, missing: missingFor(sealedTierSpokes), size: { w: 440, h: 340, r: 100 } },
@@ -173,7 +187,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
           {missingFor(f.spokes).length < 2
             ? <Radar spokes={f.spokes} series={s} size={f.size} id={`jev15-radar-${f.key}`} title={`Radar: ${f.title.toLowerCase()}, two systems`} desc={desc(f.title, f.spokes)} />
             : <p className="bh-muted mt-3 text-[12px]">Neither selected system has a published series for this view.</p>}
-          <figcaption className="bh-muted text-[12px]">{f.note}</figcaption>
+          <figcaption className="bh-muted text-[12px]">{f.note}{gapNote(f)}</figcaption>
           {f.dim && categories && <CategoryKey dim={f.dim} cats={categories} />}
         </figure>)}
       </div>

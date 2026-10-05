@@ -754,3 +754,10 @@ body.bh-fastlane-visible .bh-custom-evaluation-toast { bottom: calc(var(--bh-fas
 .bh-tl-chip { color: #111827; border-radius: 3px; padding: 0 3px; font-weight: 600; }
 [data-theme="light"] .bh-tl-chip { color: white; }
 .bh-jev-alt-bar { background: repeating-linear-gradient(135deg, rgb(var(--jev-t)) 0 3px, transparent 3px 6px); opacity: .65; }
+
+/* CR-290: ImageJevBench base-model-family palette. Qwen3.5 keeps the former orange so the largest group reads as before;
+   the other families take distinct hues; Wity keeps the decision-API yellow. */
+:root, [data-theme="dark"] { --jev-t-img-qwen35: 240 122 74; --jev-t-img-qwen3vl: 45 190 200; --jev-t-img-qwen38: 146 128 232;
+  --jev-t-img-gemma4: 47 192 141; --jev-t-img-dgemma: 222 92 168; --jev-t-img-other: 150 156 170; --jev-t-img-hosted: 74 149 234; }
+[data-theme="light"] { --jev-t-img-qwen35: 224 97 45; --jev-t-img-qwen3vl: 0 128 140; --jev-t-img-qwen38: 75 58 166;
+  --jev-t-img-gemma4: 22 163 116; --jev-t-img-dgemma: 176 42 124; --jev-t-img-other: 105 110 124; --jev-t-img-hosted: 42 122 213; }

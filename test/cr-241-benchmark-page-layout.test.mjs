@@ -31,9 +31,13 @@ test('CR-241: the public ImageJevBench page keeps the full v0.1.4 structure and 
   assert.match(publicPage, /MultimodalPreviewContent/, '/image-jev-bench renders the full results page');
   assert.match(publicPage, /canonical: '\/image-jev-bench'/);
   assert.doesNotMatch(publicPage, /robots:/, 'the public page stays indexable');
-  for (const marker of ['<ScoreBars', 'id="overall-heading"', '<RankingTable', '<ImageJevRadar']) {
+  for (const marker of ['<ScoreBars', 'id="overall-heading"', '<RankingTable', '<JevCompareV15']) {
     assert.ok(content.includes(marker), `ImageJevBench page keeps ${marker}`);
   }
+  // CR-290 (Florian 5 Oct 2026): exactly one "Compare two systems" section — JevCompareV15 already carries the
+  // four-axis radar, so the older ImageJevRadar section was a duplicate.
+  assert.equal(content.split('<JevCompareV15').length - 1, 1);
+  assert.doesNotMatch(content, /<ImageJevRadar/);
   const artifact = await readMultimodalPreview();
   assert.ok(artifact.ranking.length >= IMAGEJEV_MIN_RANKED_SYSTEMS,
     `ImageJevBench lists ${artifact.ranking.length} systems; the public page may not drop below ${IMAGEJEV_MIN_RANKED_SYSTEMS} without an explicit override`);

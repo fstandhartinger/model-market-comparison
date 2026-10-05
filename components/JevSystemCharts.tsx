@@ -1,4 +1,5 @@
 import type { JevV12Row } from '../lib/jevbench-v12.mjs';
+import { JEV_TYPE_VAR } from './jevTypes';
 
 // F-167 (Fable pass 32): the per-system page draws its number. Two figures that need no interaction —
 // a score strip on the board's own 0–100 scale and a band per axis — so this module is not "use client"
@@ -6,7 +7,7 @@ import type { JevV12Row } from '../lib/jevbench-v12.mjs';
 // "use client", and Next.js treats every export of a client module as a client reference, so a server
 // component cannot import it (the same reason the page duplicates `usdText` and `TYPE_LABEL`).
 const TYPE_VAR: Record<string, string> = { jev: '--jev-t-jev', 'jev-rebuild': '--jev-t-rebuild', 'llm-baseline': '--jev-t-llm', 'small-tool-model': '--jev-t-tool', 'jev-service': '--jev-t-service', classifier: '--jev-t-classifier', 'decision-api': '--jev-t-api' };
-export const typeColour = (cls: string) => `rgb(var(${TYPE_VAR[cls] ?? TYPE_VAR['llm-baseline']}))`;
+export const typeColour = (cls: string) => `rgb(var(${TYPE_VAR[cls] ?? JEV_TYPE_VAR[cls] ?? TYPE_VAR['llm-baseline']}))`;
 const one = (v: number) => v.toFixed(1);
 const clamp = (v: number) => Math.max(0, Math.min(100, v));
 const short = (d: string) => d.split(' (')[0].split(', formerly')[0];

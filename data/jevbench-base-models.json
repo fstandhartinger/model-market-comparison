@@ -142,16 +142,17 @@
         ]
       },
       "raw-qwen3-4b-instruct-2507": {
-        "label": "undisclosed",
-        "status": "undisclosed",
+        "label": "Qwen/Qwen3-4B-Instruct-2507 (unmodified)",
+        "status": "disclosed",
         "sources": [
           {
             "url": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507/blob/cdbee75f17c01a7cc42f958dc650907174af0554/README.md",
-            "title": "Reviewed model card",
-            "evidence": "No verified base-model identity is recorded from this source."
+            "title": "Upstream model card",
+            "evidence": "This is the upstream model card of the unmodified Qwen/Qwen3-4B-Instruct-2507 checkpoint itself."
           }
         ],
-        "note": "No verified public base-model disclosure recorded."
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
       },
       "jqv": {
         "label": "Qwen3-32B",
@@ -472,16 +473,22 @@
         "note": "Operator-reported; weights not publicly verifiable."
       },
       "openjev-thinking": {
-        "label": "undisclosed",
-        "status": "undisclosed",
+        "label": "google/diffusiongemma-26B-A4B-it",
+        "status": "disclosed",
         "sources": [
           {
-            "url": "https://raw.githubusercontent.com/razorback16/openjev/HEAD/README.md",
-            "title": "Reviewed author README",
-            "evidence": "No verified base-model identity for this evaluated variant is recorded from this source."
+            "url": "https://github.com/razorback16/openjev/blob/dcd20947b5ddad5be4a8f5aed6aa6dd245653823/README.md",
+            "title": "Author README",
+            "evidence": "Author README: 'It runs DiffusionGemma 26B-A4B (nvidia/diffusiongemma-26B-A4B-it-NVFP4 build) through vLLM'; openjev-latest is listed as DiffusionGemma 26B-A4B."
+          },
+          {
+            "url": "https://huggingface.co/nvidia/diffusiongemma-26B-A4B-it-NVFP4/blob/ec4ff3df205028f4e81c954c2227f9312b3ec2ea/README.md",
+            "title": "Upstream model card of the served NVFP4 build",
+            "evidence": "Model card base_model metadata: google/diffusiongemma-26B-A4B-it"
           }
         ],
-        "note": "No verified public base-model disclosure recorded."
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
       },
       "djev-thinking": {
         "label": "google/diffusiongemma-26B-A4B-it",
@@ -506,16 +513,17 @@
         ]
       },
       "raw-phi-4-mini": {
-        "label": "undisclosed",
-        "status": "undisclosed",
+        "label": "microsoft/Phi-4-mini-instruct (unmodified)",
+        "status": "disclosed",
         "sources": [
           {
             "url": "https://huggingface.co/microsoft/Phi-4-mini-instruct/blob/cfbefacb99257ffa30c83adab238a50856ac3083/README.md",
-            "title": "Reviewed model card",
-            "evidence": "No verified base-model identity is recorded from this source."
+            "title": "Upstream model card",
+            "evidence": "This is the upstream model card of the unmodified microsoft/Phi-4-mini-instruct checkpoint itself."
           }
         ],
-        "note": "No verified public base-model disclosure recorded."
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
       },
       "opensourcejev-qwen35-4b-q4km": {
         "label": "Qwen3.5-4B",
@@ -835,16 +843,22 @@
         ]
       },
       "mxbai-rerank-base-v2": {
-        "label": "undisclosed",
-        "status": "undisclosed",
+        "label": "Qwen2.5 (size not stated)",
+        "status": "disclosed",
         "sources": [
           {
-            "url": "https://huggingface.co/mixedbread-ai/mxbai-rerank-base-v2/blob/3ea9d4dffa7d12a4f366be8e275c349de9fc9865/README.md",
-            "title": "Reviewed model card",
-            "evidence": "No verified base-model identity is recorded from this source."
+            "url": "https://www.mixedbread.com/blog/mxbai-rerank-v2",
+            "title": "Mixedbread mxbai-rerank-v2 blog post",
+            "evidence": "Blog: the v2 rerankers are 'RL-optimized Qwen-2.5' models ('starting with Qwen-2.5'); the exact Qwen2.5 size is not stated."
+          },
+          {
+            "url": "https://huggingface.co/mixedbread-ai/mxbai-rerank-base-v2/blob/3ea9d4dffa7d12a4f366be8e275c349de9fc9865/config.json",
+            "title": "config.json at pinned revision (config evidence)",
+            "evidence": "Config evidence: config.json architectures is Qwen2ForCausalLM (model_type qwen2)."
           }
         ],
-        "note": "No verified public base-model disclosure recorded."
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
       },
       "needle-3": {
         "label": "undisclosed",
@@ -893,16 +907,22 @@
         ]
       },
       "openjev-verdict": {
-        "label": "undisclosed",
-        "status": "undisclosed",
+        "label": "knowledgator/gliclass-modern-base-v2.0",
+        "status": "disclosed",
         "sources": [
           {
-            "url": "https://raw.githubusercontent.com/Heman10x-NGU/openJev-verdict-2.0/main/README.md",
-            "title": "Reviewed author README",
-            "evidence": "No verified base-model identity for this evaluated variant is recorded from this source."
+            "url": "https://github.com/Heman10x-NGU/openJev-verdict-2.0/blob/bff28567cff463b833bf044f351a8b7945d53e07/README.md",
+            "title": "Author README",
+            "evidence": "Author README: the 151M Verdict model evaluated on JevBench is 'based on ModernBERT-base and GLiClass', checkpoint heman10x/rlcd-modernbert-151m."
+          },
+          {
+            "url": "https://huggingface.co/heman10x/rlcd-modernbert-151m/blob/8af2496eb63c7fa66d7d234e1f62629380030eb4/README.md",
+            "title": "Model card of the checkpoint named by the README",
+            "evidence": "Model card base_model metadata: knowledgator/gliclass-modern-base-v2.0"
           }
         ],
-        "note": "No verified public base-model disclosure recorded."
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
       },
       "openjev-verdict-1.4": {
         "label": "knowledgator/gliclass-modern-base-v2.0",
@@ -972,10 +992,17 @@
         ]
       },
       "decision-4b-v12": {
-        "label": "undisclosed",
-        "status": "undisclosed",
-        "sources": [],
-        "note": "No verified public base-model disclosure recorded."
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/flymy-ai/decision-4b-v1.2/blob/79792bfb89e38498a21d1b71bc96b684be7b6617/README.md",
+            "title": "Author model card",
+            "evidence": "Model card base_model metadata: Qwen/Qwen3.5-4B"
+          }
+        ],
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
       },
       "imajev-4b-rtx5090-a2": {
         "label": "Qwen/Qwen3.5-4B",
@@ -989,10 +1016,17 @@
         ]
       },
       "decision-4b-v11": {
-        "label": "undisclosed",
-        "status": "undisclosed",
-        "sources": [],
-        "note": "No verified public base-model disclosure recorded."
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/flymy-ai/decision-4b-v1.1/blob/d7060294e51c83d173fe35b169682992bfdc20ce/README.md",
+            "title": "Author model card",
+            "evidence": "Model card base_model metadata: Qwen/Qwen3.5-4B"
+          }
+        ],
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
       },
       "surogate-rune-26b-a4b-v3-rtxpro6000-a2": {
         "label": "google/gemma-4-26B-A4B-it",
@@ -1173,6 +1207,160 @@
             "evidence": "Identifies the Qwen3.8-27B base, verified by architecture in run 45."
           }
         ]
+      },
+      "quyet-1-0-large": {
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/chinhnc/Quyet-1.0-Large/blob/d997d58951e3c0da4486cf0884ca9d4d916e95dc/README.md",
+            "title": "Author model card",
+            "evidence": "Model card base_model metadata: google/gemma-4-31B-it"
+          }
+        ],
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
+      },
+      "torchcast-decision-12b": {
+        "label": "google/gemma-4-12B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/torchcast-ai/torchcast-decision-12b/blob/49107b5589bf2dc4ec3f5acd54316971dd5978b1/README.md",
+            "title": "Author model card",
+            "evidence": "Model card base_model metadata: google/gemma-4-12B-it"
+          }
+        ],
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
+      },
+      "deck31b": {
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/krishna-gogineni-765/deck31b/blob/d499cf6f56ca7b2fd6c74b5f2125bfe960fe0c53/README.md",
+            "title": "Author README",
+            "evidence": "Author README: 'The weights are google/gemma-4-31B-it at 842da3794eaa0b77d5f08bae87a17459d91ff475. We did not train them.'"
+          }
+        ],
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
+      },
+      "quyet-1-0-medium": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/chinhnc/Quyet-1.0-Medium/blob/1088a90979194b6b6b6c19c5f7e95491447de3f8/README.md",
+            "title": "Author model card",
+            "evidence": "Model card base_model metadata: Qwen/Qwen3.5-4B"
+          }
+        ],
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
+      },
+      "lev": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/interfaze-ai/lev/blob/7bdc748dffebd85b57ee0dbea8f994c6354fed31/README.md",
+            "title": "Author model card",
+            "evidence": "Model card base_model metadata: Qwen/Qwen3.5-4B"
+          }
+        ],
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
+      },
+      "deck-4b-v1-0": {
+        "label": "alibiserikbay/JevK5 (built on Qwen/Qwen3.5-4B)",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/krishna-gogineni-765/deck/blob/9c43e5f848887c081d9bb6f8636c2fdab72b95ec/README.md",
+            "title": "Author README",
+            "evidence": "Author README: 'Base checkpoint: alibiserikbay/JevK5 ..., itself built on Qwen3.5-4B (Apache-2.0)'; deck4b is a rank-8 LoRA on top of it."
+          },
+          {
+            "url": "https://huggingface.co/alibiserikbay/JevK5/blob/c4f7fdb3aeab5582336406e78d3bef11bf98833d/README.md",
+            "title": "Upstream model card",
+            "evidence": "Model card of the named base checkpoint, base_model metadata: Qwen/Qwen3.5-4B"
+          }
+        ],
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
+      },
+      "clef-flash": {
+        "label": "Qwen/Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Cloudflare/clef-flash/blob/17f0b0ad64efb65d273590632833508766b2aae6/README.md",
+            "title": "Author model card",
+            "evidence": "Model card base_model metadata: Qwen/Qwen3.5-9B"
+          }
+        ],
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
+      },
+      "clef": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Cloudflare/clef/blob/2f3de3dd85f379784083b0814d997ab627200f0c/README.md",
+            "title": "Author model card",
+            "evidence": "Model card base_model metadata: Qwen/Qwen3.8-27B"
+          }
+        ],
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
+      },
+      "quyet-1-0-small-en": {
+        "label": "answerdotai/ModernBERT-base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/chinhnc/Quyet-1.0-Small-EN/blob/8ffaf5c9835869fa6d30b6d39b6f7b7e6b34e8ec/README.md",
+            "title": "Author model card",
+            "evidence": "Model card base_model metadata: answerdotai/ModernBERT-base"
+          }
+        ],
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
+      },
+      "fastino-gliner-2-5-decide": {
+        "label": "undisclosed",
+        "status": "undisclosed",
+        "sources": [],
+        "note": "Hosted Fastino API (model id fastino/GLiNER-2.5-Decide). Checked fastino.ai home page and the GLiNER2.5-Decide announcement blog: no statement of the hosted endpoint's base model. Open-weight HF cards fastino/GLiNER2.5-Decide (base_model fastino/gliner2-large-v1) and fastino/GLiNER2.5-Decide-1B (base_model fastino/gliner2-xl-0111) exist, but nothing public says which one (or a different build) the hosted API serves, so no base is claimed."
+      },
+      "quyet-1-0-small": {
+        "label": "aisingapore/SEA-LION-ModernBERT-300M",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/chinhnc/Quyet-1.0-Small/blob/74b0ceff421d8a4ca3cd3dd55db7a2c37ebd888b/README.md",
+            "title": "Author model card",
+            "evidence": "Model card base_model metadata: aisingapore/SEA-LION-ModernBERT-300M"
+          }
+        ],
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
+      },
+      "quyet-1-0-tiny": {
+        "label": "jhu-clsp/mmBERT-small",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/chinhnc/Quyet-1.0-Tiny/blob/9239e2cb21688a8a9237270525f31e559270db3e/README.md",
+            "title": "Author model card",
+            "evidence": "Model card base_model metadata: jhu-clsp/mmBERT-small"
+          }
+        ],
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
       }
     },
     "imagejevbench": {
@@ -1326,10 +1514,17 @@
         ]
       },
       "omnijev_9b_v4_tzcfly": {
-        "label": "undisclosed",
-        "status": "undisclosed",
-        "sources": [],
-        "note": "No verified public base-model disclosure recorded."
+        "label": "Qwen/Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/tzcfly/OmniJev-Qwen3.5-9B-v4/blob/07890c86356f1fc3816ad47146a02f0daae65d92/README.md",
+            "title": "Author model card",
+            "evidence": "Model card base_model metadata: Qwen/Qwen3.5-9B"
+          }
+        ],
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
       },
       "jevify_gemma4_26b_a4b": {
         "label": "google/gemma-4-26B-A4B-it",
@@ -1354,16 +1549,40 @@
         ]
       },
       "jevany_27b_sft": {
-        "label": "undisclosed",
-        "status": "undisclosed",
-        "sources": [],
-        "note": "No verified public base-model disclosure recorded."
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/SimpleJev/JevAny-Qwen3.8-27B-LoRA/blob/09c9e9102d5b8cc7d56558d25da1202a761b6c0d/README.md",
+            "title": "Author model card",
+            "evidence": "Model card base_model metadata: Qwen/Qwen3.8-27B"
+          },
+          {
+            "url": "https://github.com/SimpleJev/JevAny/blob/33cb677bbe300ad853f2d2a061f2e1ea34e7fcba/README.md",
+            "title": "Project README",
+            "evidence": "Project README: the 27B release is JevAny-Qwen3.8-27B, LoRA adapters trained with SFT; RLCR is the optional post-SFT stage."
+          }
+        ],
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
       },
       "jevany_27b_rlcr": {
-        "label": "undisclosed",
-        "status": "undisclosed",
-        "sources": [],
-        "note": "No verified public base-model disclosure recorded."
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/SimpleJev/JevAny-Qwen3.8-27B-LoRA/blob/09c9e9102d5b8cc7d56558d25da1202a761b6c0d/README.md",
+            "title": "Author model card",
+            "evidence": "Model card base_model metadata: Qwen/Qwen3.8-27B"
+          },
+          {
+            "url": "https://github.com/SimpleJev/JevAny/blob/33cb677bbe300ad853f2d2a061f2e1ea34e7fcba/README.md",
+            "title": "Project README",
+            "evidence": "Project README: the 27B release is JevAny-Qwen3.8-27B (Qwen3.8-27B LoRA); RLCR is the optional post-SFT stage."
+          }
+        ],
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
       },
       "seanliu_jev_vision_8b": {
         "label": "Qwen/Qwen3-VL-8B-Instruct",
@@ -1449,34 +1668,48 @@
         "note": "No verified public base-model disclosure recorded."
       },
       "djev_distill_v4": {
-        "label": "undisclosed",
-        "status": "undisclosed",
-        "sources": [],
-        "note": "No verified public base-model disclosure recorded."
+        "label": "google/diffusiongemma-26B-A4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/tarsur385/djev-distill-v4/blob/9e90719516ef62d06be646f94dc132136b627ba5/README.md",
+            "title": "Author model card",
+            "evidence": "Model card base_model metadata: google/diffusiongemma-26B-A4B-it"
+          }
+        ],
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
       },
       "djev_spark_nvfp4": {
-        "label": "undisclosed",
-        "status": "undisclosed",
+        "label": "google/diffusiongemma-26B-A4B-it",
+        "status": "disclosed",
         "sources": [
           {
-            "url": "https://raw.githubusercontent.com/Davipar/djev-dev/HEAD/README.md",
-            "title": "Reviewed author README",
-            "evidence": "No verified base-model identity for this specific evaluated variant is recorded from this source."
+            "url": "https://github.com/mmastrac/djev-spark/blob/08b708e51bb8d9f4eba0e85b61dab0be7093d20e/README.md",
+            "title": "Author README",
+            "evidence": "Author README: djev-spark serves 'DiffusionGemma 26B-A4B (NVFP4) on a DGX Spark' and downloads nvidia/diffusiongemma-26B-A4B-it-NVFP4."
+          },
+          {
+            "url": "https://huggingface.co/nvidia/diffusiongemma-26B-A4B-it-NVFP4/blob/ec4ff3df205028f4e81c954c2227f9312b3ec2ea/README.md",
+            "title": "Upstream model card of the served NVFP4 build",
+            "evidence": "Model card base_model metadata: google/diffusiongemma-26B-A4B-it"
           }
         ],
-        "note": "No verified public base-model disclosure recorded."
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
       },
       "djev_v10_step160_snowicarus": {
-        "label": "undisclosed",
-        "status": "undisclosed",
+        "label": "google/diffusiongemma-26B-A4B-it",
+        "status": "disclosed",
         "sources": [
           {
-            "url": "https://raw.githubusercontent.com/Davipar/djev-dev/main/README.md",
-            "title": "Reviewed author README",
-            "evidence": "No verified base-model identity for this specific evaluated variant is recorded from this source."
+            "url": "https://huggingface.co/snowicarus/diffusiongemma-26b-djev-v10-step160/blob/858cc14441718ff52ea4dd6c9491d5316cc9834f/README.md",
+            "title": "Author model card",
+            "evidence": "Model card base_model metadata: google/diffusiongemma-26B-A4B-it"
           }
         ],
-        "note": "No verified public base-model disclosure recorded."
+        "checked_utc": "2026-10-05T17:00:00Z",
+        "cr": "CR-290"
       },
       "vjev_vision": {
         "label": "Qwen/Qwen3.5-4B",

@@ -118,7 +118,13 @@ test('CR-256: ImageJev absolute limits retain the anchor and scale each selected
   assert.match(synthetic.rows.find((row) => row.row.key === '3x-anchor-latency').reasons[0], /3\.0× Anchor \(cap 2×\)/);
   const { reference: r, limits: l, rows } = before;
   // Captured from the unchanged HEAD classifier before this slice, including ImageJev's exact absolute limits.
-  assert.equal(createHash('sha256').update(JSON.stringify({ reference: r, limits: l, rows })).digest('hex'), 'eb15bc3e2b369ef4fabd36032a746e6603aa0b530496efd29c3f363402fa4b4e');
+  // CR-290 changed only the presentation `class` (base-model family colours): with the former two-class mapping the
+  // classifier output still hashes to the CR-256 value, so eligibility, limits and reasons are unchanged.
+  const raw = new Map(artifact.ranking.map((row) => [row.key, row]));
+  const formerClass = (row) => (row.api_flag === true || row.kind === 'api' ? 'decision-api' : 'jev-rebuild');
+  const former = jevClassRows(systems.map((row) => ({ ...row, class: formerClass(raw.get(row.key)) })), options);
+  assert.equal(createHash('sha256').update(JSON.stringify({ reference: former.reference, limits: former.limits, rows: former.rows })).digest('hex'), 'eb15bc3e2b369ef4fabd36032a746e6603aa0b530496efd29c3f363402fa4b4e');
+  assert.equal(createHash('sha256').update(JSON.stringify({ reference: r, limits: l, rows })).digest('hex'), '83ae90f7667995f6f372a0362dec6c0f5d1955e0a9f05d4eaa0cf89efec88e76');
   assert.equal(JSON.stringify(jevClassRows(systems, { ...options, costFactor: 2, latencyFactor: 2 })), JSON.stringify(before));
 });
 

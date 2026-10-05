@@ -1,4 +1,5 @@
-import { imageJevBoardSystems, imageJevBoardRows, imageJevCompareRows, imageJevCapabilityLimits, imageJevSliderPresets } from '../../../lib/imagejev-board.mjs';
+import { imageJevBoardSystems, imageJevBoardRows, imageJevCompareRows, imageJevCapabilityLimits, imageJevSliderPresets, imageJevClassFor } from '../../../lib/imagejev-board.mjs';
+import { JEV_TYPE_LABEL, jevTypeVarName } from '../../../components/jevTypes';
 import { JevCapabilityRanking } from '../../../components/JevCapabilityRanking';
 import { jevClassView } from '../../../components/jevClassView';
 import { JevBubbleCharts } from '../../../components/JevBubbleChart';
@@ -11,7 +12,6 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { formatMatchedGapPp, readMultimodalPreview } from '../../../lib/jevbench-multimodal-preview.mjs';
 import { ImageJevExamples } from '../../../components/ImageJevExamples';
-import { ImageJevRadar } from '../../../components/ImageJevRadar';
 import { BaseModelDisplay } from '../../../components/BaseModelDisplay';
 import { imageJevSystemPath as imageSystemPath, imageJevSourceUrl } from '../../../lib/imagejev-system-links.mjs';
 
@@ -114,7 +114,8 @@ function ScoreBars({ systems, track }: { systems: any[]; track: Track }) {
   return <ol className="mt-4 grid gap-2" data-bh-mm-bars={track}>{rows.map((s, i) => {
     const v = s.tracks[track].composite.score;
     const gate = gateOf(s.tracks[track], s);
-    const color = i === 0 ? 'bg-amber-400' : s.api_flag ? 'bg-pink-400' : 'bg-teal-400';
+    // CR-290: the same base-model-family colours as the capability bars and bubbles.
+    const cls = imageJevClassFor(s);
     return <li key={s.key} className="grid grid-cols-[minmax(0,11rem)_1fr_3.2rem] items-center gap-3 sm:grid-cols-[minmax(0,17rem)_1fr_3.5rem]">
       <span className="min-w-0 break-words text-sm font-semibold leading-tight" title={s.name}>
         {i + 1}. {imageJevSourceUrl(s.key, s.repo)
@@ -124,7 +125,7 @@ function ScoreBars({ systems, track }: { systems: any[]; track: Track }) {
         <BaseModelDisplay benchmark="imagejevbench" systemKey={s.key} className="mt-1 block text-[11px] font-normal leading-tight" />
         {imageJevSourceUrl(s.key, s.repo) && <Link href={imageSystemPath(s.key)} className="text-[11px] font-normal text-accent underline">details</Link>}
       </span>
-      <span className="h-5 rounded-md bg-black/10 dark:bg-white/10"><span className={`block h-full rounded-md ${color}`} style={{ width: `${Math.max(0.5, v)}%` }} /></span>
+      <span className="h-5 rounded-md bg-black/10 dark:bg-white/10"><span className="block h-full rounded-md" title={JEV_TYPE_LABEL[cls] ?? cls} style={{ width: `${Math.max(0.5, v)}%`, backgroundColor: `rgb(var(${jevTypeVarName(cls)}))` }} data-bh-mm-bar-class={cls} /></span>
       <span className="text-right font-bold tabular-nums">{score(v)}</span>
     </li>;
   })}</ol>;
@@ -191,7 +192,6 @@ export async function MultimodalPreviewContent() {
       presets={imageJevSliderPresets(a)} compactMobile scoreKind="v15" methodLink={{ href: '#method-heading', label: 'Method notes ↓' }} benchmark="imagejevbench" />
     <p className="bh-muted mt-2 max-w-5xl text-sm" data-bh-mm-wity-pricing-note>Wity-1 is ranked at Wity&apos;s own stated API price (USD 0.042 per million input tokens, output free). The striped bar shows the score at the base-model reference price we use for self-hosted open weights of the same base (base model undisclosed at the author&apos;s request). <a className="text-accent underline" href="#imagejev-pricing">See pricing note ↓</a></p>
     <JevCompareV15 rows={compareRows} openDecisions={s.items_public} sealedDecisions={s.items_sealed} axesOnly categories={imageJevCategoryView(a.revision, compareRows.map((r: { key: string }) => r.key))} />
-    <ImageJevRadar systems={a.ranking} />
 
     <section className="mt-10 max-w-none" aria-labelledby="overall-heading">
       <h2 id="overall-heading" className="text-2xl font-semibold">Full ranking</h2>

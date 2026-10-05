@@ -197,7 +197,7 @@ test('public Image JevBench route leads with the ranking and preserves aggregate
   assert.doesNotMatch(page, /Clean split/, 'the clean-split alert is gone');
   assert.doesNotMatch(page, /approved/i, 'no review-trail wording in the copy');
   assert.ok(page.indexOf('<JevScoreChart') < page.indexOf('id="overall-heading"'));
-  assert.ok(page.indexOf('<ImageJevRadar systems={a.ranking} />') < page.indexOf('id="overall-heading"'));
+  assert.ok(page.indexOf('<JevCompareV15') > 0 && page.indexOf('<JevCompareV15') < page.indexOf('id="overall-heading"'));
   assert.ok(page.indexOf('<ImageJevExamples />') < page.indexOf('id="track-heading"'));
   assert.ok(page.indexOf('id="track-heading"') < page.indexOf('id="split-heading"'));
   assert.ok(page.indexOf('id="split-heading"') < page.indexOf('id="preview-tracks-heading"'));
