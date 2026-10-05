@@ -29,7 +29,7 @@ try {
         page.on('pageerror', (e) => errors.push(e.message));
         try {
           await page.addInitScript((theme) => localStorage.setItem('bh-theme', theme), theme);
-          const response = await page.goto(`${base}${path}`, { waitUntil: 'networkidle' });
+          const response = await page.goto(`${base}${path}`, { waitUntil: 'load' }); await page.waitForTimeout(2500);
           if (response.status() !== 200) throw new Error(`${path}: HTTP ${response.status()}`);
           await page.evaluate((theme) => document.documentElement.dataset.theme = theme, theme);
           const toggle = page.locator('[data-bh-jev-api-toggle-button]');
@@ -41,7 +41,7 @@ try {
             }
             const file = `${name}-${theme}-${width}${name === 'jev-models' ? `-api-${state}` : ''}.png`;
             await page.screenshot({ path: `${out}/${file}`, fullPage: true });
-            receipts.push({ file, path, theme, width, errors: [...errors], legends: await page.locator('[aria-label="System types"]').allTextContents() });
+            receipts.push({ file, path, theme, width, errors: [...errors], legends: await page.locator('[data-bh-jev-capability-legend], [data-bh-jev-bubble-legend], [aria-label="System types"]').allTextContents() });
           }
         } finally { await page.close(); }
       }
