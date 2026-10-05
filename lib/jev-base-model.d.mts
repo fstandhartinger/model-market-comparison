@@ -25,3 +25,4 @@ export declare const BASE_MODEL_METADATA: BaseModelsMetadata;
 export declare function baseModelFor(benchmark: string, key: string | null | undefined, overlay?: BaseModelsMetadata): BaseModelEntry;
 export declare function isBaseModelDisclosed(entry: BaseModelEntry): boolean;
 export declare function baseModelsForBenchmark(benchmark: string): Record<string, BaseModelEntry>;
+export function baseModelFamilies(benchmark: string, systems?: { key: string; underlying?: string | null }[]): Record<string, string>;

@@ -13,7 +13,7 @@ import { JevScoreChart } from './JevBoardInteractive';
 import { JevCompareV15 } from './JevCompareV15';
 import { JevV15FilterProvider, JevV15FilterPanel, type JevV15RowMeta } from './JevV15Filters';
 import { JevV15FilterVisibilityBridge } from './JevV15FilterVisibilityBridge';
-import { baseModelFamilies } from '../lib/jevbench-all-data-grid.mjs';
+import { baseModelFamilies } from '../lib/jev-base-model.mjs';
 import { JevV15AllDataGrid } from './JevV15AllDataGrid';
 
 // JevBench v1.6.0 release board. Reuses the established interactive charts on the

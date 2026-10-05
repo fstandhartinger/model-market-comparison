@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { baseModelFamilies, buildAllDataModel } from '../lib/jevbench-all-data-grid.mjs';
+import { buildAllDataModel } from '../lib/jevbench-all-data-grid.mjs';
+import { baseModelFamilies } from '../lib/jev-base-model.mjs';
 import { imageJevBoardSystems } from '../lib/imagejev-board.mjs';
 import { jevV15BoardScore } from '../lib/jevbench-v15-board.mjs';
 import { OFFICIAL_WEIGHTS } from '../lib/jevbench-axis-weights.mjs';
