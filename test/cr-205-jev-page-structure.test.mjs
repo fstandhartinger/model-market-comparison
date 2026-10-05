@@ -14,7 +14,7 @@ import { OFFICIAL_WEIGHTS } from '../lib/jevbench-axis-weights.mjs';
 // sections and their order for every /jev-models page so a release cannot silently drop one.
 
 const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
-const [page, v150Page, v151Page, v152Page, v153Page, v154Page, v155Page, v156Page, v157Page, releaseComponent, boardSource, capabilityLazySource, page1422, page1421, page142, page141, page140, pageV1, v14BoardSource, v14CapabilitySource] = await Promise.all([
+const [page, v150Page, v151Page, v152Page, v153Page, v154Page, v155Page, v156Page, v157Page, releaseComponent, boardSource, capabilityLazySource, page1422, page1421, page142, page141, page140, pageV1, v14BoardSource, v14CapabilitySource, v16Route] = await Promise.all([
   read('../app/jev-models/page.tsx'),
   read('../app/jev-models/v1.5.0/page.tsx'),
   read('../app/jev-models/v1.5.1/page.tsx'),
@@ -35,6 +35,7 @@ const [page, v150Page, v151Page, v152Page, v153Page, v154Page, v155Page, v156Pag
   read('../app/jev-models/v1/page.tsx'),
   read('../components/JevModelsV14.tsx'),
   read('../components/JevCapabilityChart.tsx'),
+  read('../components/JevBenchV16ReleaseRoute.tsx'),
 ]);
 
 const { artifact, sha256 } = await readJevbenchV150Release();
@@ -53,7 +54,6 @@ const ordered = (source, markers, where) => {
 
 test('CR-205: the live board and all frozen v1.5 pages render the complete release page', () => {
   for (const [name, source, loader] of [
-    ['/jev-models', page, 'readCurrentJevbench'],
     ['/jev-models/v1.5.0', v150Page, 'readJevbenchV150Release'],
     ['/jev-models/v1.5.1', v151Page, 'readJevbenchV151Release'],
     ['/jev-models/v1.5.2', v152Page, 'readJevbenchV152Release'],
@@ -67,8 +67,9 @@ test('CR-205: the live board and all frozen v1.5 pages render the complete relea
     assert.match(source, /<JevBenchV15ReleasePage artifact=\{artifact\} sha256=\{sha256\}/, `${name} renders the full release page`);
     assert.ok(source.indexOf('<JevBenchV15ReleasePage') < source.indexOf('<JevHistoryLazy />'), `${name} ends with the lazy revision history`);
   }
-  assert.match(page, /versionPath=\{CURRENT_JEVBENCH_PAGE\}/);
-  assert.match(page, /readCurrentJevbench/);
+  assert.match(page, /readCurrentJevbench\(\)/, 'the live v1.6 board reads the shared current release pointer');
+  assert.match(page, /<JevBenchV16ReleaseRoute live release=\{release\} versionPath=\{CURRENT_JEVBENCH_PAGE\}/);
+  assert.match(v16Route, /<JevBenchV16Board artifact=\{artifact\} sha256=\{sha256\}/, 'the current route renders the full v1.6.0 release board');
   assert.match(page, /versionPath=\{CURRENT_JEVBENCH_PAGE\}/);
   assert.match(page, /canonical: '\/jev-models'/);
   assert.match(v151Page, /canonical: '\/jev-models\/v1\.5\.1'/);
@@ -261,7 +262,7 @@ test('CR-205: every versioned JevBench route is covered by this test', async () 
   const entries = await readdir(new URL('../app/jev-models', import.meta.url), { withFileTypes: true });
   const versionDirs = entries.filter((e) => e.isDirectory() && /^v[\d.]+$/.test(e.name)).map((e) => e.name).sort();
   // A new versioned page must be added to the structure assertions above — not silently reduced.
-  assert.deepEqual(versionDirs, ['v1', 'v1.4', 'v1.4.1', 'v1.4.2', 'v1.4.2.1', 'v1.4.2.2', 'v1.5.0', 'v1.5.1', 'v1.5.2', 'v1.5.3', 'v1.5.4', 'v1.5.5', 'v1.5.6', 'v1.5.7'].sort());
+  assert.deepEqual(versionDirs, ['v1', 'v1.4', 'v1.4.1', 'v1.4.2', 'v1.4.2.1', 'v1.4.2.2', 'v1.5.0', 'v1.5.1', 'v1.5.2', 'v1.5.3', 'v1.5.4', 'v1.5.5', 'v1.5.6', 'v1.5.7', 'v1.6.0'].sort());
 });
 
 test('CR-205: the board sections are fed by the pinned v1.5 release artifact', async () => {

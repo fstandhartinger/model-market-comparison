@@ -64,7 +64,7 @@ test('CR-191 preserves pinned v1.4.2.2 and v1.4.2 routes while v1.5.7 is live', 
   assert.match(version22Page, /<JevModelsV14Board artifact=\{v14\.artifact\} sha256=\{v14\.sha256\}/);
   assert.match(version22Page, /href="\/jev-models\/v1\.4\.2\.2" data-bh-jev-version-share/);
   assert.match(livePage, /readCurrentJevbench\(\)/);
-  assert.match(livePage, /JevBenchV15ReleasePage/);
+  assert.match(livePage, /JevBenchV16ReleaseRoute/);
   assert.match(livePage, /versionPath=\{CURRENT_JEVBENCH_PAGE\}/);
   // F-189 (Fable pass 35, decision 2): CR-152's "visible Intelligence ordering" is a control, not a second table of the
   // numbers the chart already draws. CR-151 (Florian 25 Sep): that control is the "View by" switch (it supersedes the
