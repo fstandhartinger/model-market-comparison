@@ -23,6 +23,9 @@ import {
 } from '../lib/jevbench-global-filters.mjs';
 import { JEV_V15_ELIGIBILITY_CHANGE_EVENT, JEV_V15_FILTER_CHANGE_EVENT } from '../lib/jevbench-global-filter-events.mjs';
 import { MultiCombobox } from './MultiCombobox';
+import { JevV15HiddenKeysContext } from './useJevV15VisibleKeys';
+
+const NO_KEYS: string[] = [];
 
 export type { JevV15RowMeta };
 
@@ -59,12 +62,18 @@ export interface JevV15FilterContextValue {
   providers: string[];
   families: string[];
   licences: string[];
+  /** v1.7 open-weights board: API offerings stay hidden until "Show API offerings" is on (UI state only, never in the URL). */
+  apiKeys: string[];
+  showApi: boolean;
+  setShowApi: (show: boolean) => void;
 }
 
 const JevV15FilterContext = createContext<JevV15FilterContextValue | null>(null);
 
-export function JevV15FilterProvider({ rows, children }: { rows: JevV15RowMeta[]; children?: ReactNode }) {
+export function JevV15FilterProvider({ rows, apiKeys = NO_KEYS, children }: { rows: JevV15RowMeta[]; apiKeys?: string[]; children?: ReactNode }) {
   const [filters, setFiltersState] = useState<JevV15FilterState>(defaultJevFilters);
+  const [showApi, setShowApi] = useState(false);
+  const hiddenKeys = useMemo(() => new Set(showApi ? [] : apiKeys), [apiKeys, showApi]);
   const filtersRef = useRef(filters);
   const [eligibilityOverrides, setEligibilityOverrides] = useState<Map<string, JevV15RowMeta['jevClass']>>(() => new Map());
   const effectiveRows = useMemo(() => rows.map((row) => {
@@ -130,7 +139,7 @@ export function JevV15FilterProvider({ rows, children }: { rows: JevV15RowMeta[]
 
   const value = useMemo<JevV15FilterContextValue>(() => {
     const effective = normalizeJevFilters(filters, effectiveRows);
-    const visibleRows = filterJevRows(effectiveRows, effective);
+    const visibleRows = filterJevRows(effectiveRows, effective).filter((row) => !hiddenKeys.has(row.key));
     const visibleKeys = new Set(visibleRows.map((row) => row.key));
     return {
       rows: effectiveRows,
@@ -147,8 +156,9 @@ export function JevV15FilterProvider({ rows, children }: { rows: JevV15RowMeta[]
       providers: distinctJevValues(effectiveRows, 'provider'),
       families: distinctJevValues(effectiveRows, 'family'),
       licences: distinctJevValues(effectiveRows, 'licence'),
+      apiKeys, showApi, setShowApi,
     };
-  }, [effectiveRows, filters, setFilters, resetFilters]);
+  }, [effectiveRows, filters, setFilters, resetFilters, hiddenKeys, apiKeys, showApi]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -157,7 +167,9 @@ export function JevV15FilterProvider({ rows, children }: { rows: JevV15RowMeta[]
     return () => window.clearTimeout(timer);
   }, [value.visibleKeys]);
 
-  return <JevV15FilterContext.Provider value={value}>{children}</JevV15FilterContext.Provider>;
+  return <JevV15FilterContext.Provider value={value}>
+    <JevV15HiddenKeysContext.Provider value={hiddenKeys}>{children}</JevV15HiddenKeysContext.Provider>
+  </JevV15FilterContext.Provider>;
 }
 
 export function useJevV15Filters(): JevV15FilterContextValue {
