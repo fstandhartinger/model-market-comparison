@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Radar, Swatch, type Series, type Spoke } from "./JevRadars";
-import { JEV_TYPE_LABEL, JEV_TYPE_VAR } from "./jevTypes";
+import { JEV_TYPE_LABEL, jevTypeVarName } from "./jevTypes";
 import { SystemCombobox } from "./JevCompareV14";
 import { jevSourceUrl } from "./jevSystemLinks";
 import type { CompareCategories, CategoryDim } from "../lib/jevbench-categories.mjs";
@@ -27,7 +27,8 @@ export type JevCompareV15Row = {
 };
 
 const FAMILY: Record<string, string> = { jev: "blue", "jev-service": "blue", "jev-rebuild": "orange", "llm-baseline": "green", "small-tool-model": "violet", classifier: "magenta", "decision-api": "yellow", reranker: "teal", "raw-logit-control": "grey", "native-logit": "lime", "system-one-open": "red" };
-const colour = (cls: string) => `rgb(var(${JEV_TYPE_VAR[cls] ?? JEV_TYPE_VAR["llm-baseline"]}))`;
+// F-192 resolver, as in the ranking and bubbles: an unlabelled class (e.g. Quyet's) keeps its own swatch, never the llm-baseline green.
+const colour = (cls: string) => `rgb(var(${jevTypeVarName(cls)}))`;
 
 const AXES = [["intelligence", "Intelligence"], ["calibration", "Calibration"], ["speed", "Speed"], ["cost", "Cost"]] as const;
 const TYPE_SPOKES = [
