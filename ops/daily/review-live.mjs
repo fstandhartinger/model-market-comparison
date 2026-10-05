@@ -140,6 +140,12 @@ const jbody = (receipt, why) => {
   catch { fail(`${why}: captured source is not valid JSON`); }
 };
 
+// Mirrors lib/aa-metadata.mjs: a metadata field is retained only while the current
+// leaderboard omits it, so a stale value can never shadow a currently published one.
+export function assertRetainedFieldOmitted(leaderboardObject, sourceField, where) {
+  if (Object.hasOwn(leaderboardObject || {}, sourceField)) fail(`${where}: currently published by the leaderboard but staged as retained`);
+}
+
 const loc = (receipt) => ({ url: receipt.url, sha256: receipt.sha256, fetched_at: receipt.fetched_at });
 const baseline = async (src, name) => JSON.parse(await readFile(join(src.beforeDir, name), 'utf8'));
 
@@ -189,6 +195,7 @@ async function verifyAa(rawDir, src, runStart, rows, report) {
     const kept = meta.retained_fields || {};
     for (const [field, sourceField] of Object.entries(AA_METADATA_FIELDS)) {
       if (Object.hasOwn(kept, field)) {
+        assertRetainedFieldOmitted(mobj, sourceField, `aa ${sm.id} metadata.${field}`);
         assertRetainedDate(kept[field].collected_at, runStart, `aa ${sm.id} metadata.${field} (retained_fields)`);
         eq(meta[field], prior.get(sm.id)?.metadata?.[field], `aa ${sm.id} retained ${field} prior snapshot`);
         eq(kept[field].collected_at, prior.get(sm.id)?.metadata?.retained_fields?.[field]?.collected_at ?? priorSnapshot.collected_at, `aa ${sm.id} retained ${field} original date`);
