@@ -6,7 +6,7 @@ import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
 // JevBench v1.7.0 (Florian, 5 Oct 2026): the API-provider leaderboard. Same release data as /jev-models; only the
 // ranked set differs (hosted API offerings plus Jev, ranked among themselves).
 export async function generateMetadata(): Promise<Metadata> {
-  const title = 'JevBench API leaderboard — hosted decision APIs compared';
+  const title = 'Jev API benchmark — JevBench leaderboard of hosted decision APIs';
   const description = 'JevBench ranking of hosted decision APIs (Jev, wity, Sage, Fastino and more): Capability Score, intelligence, calibration, measured latency and list-price cost per 1,000 decisions.';
   const image = 'https://benchmarkheaven.com/jev-models/opengraph-image?v=og4';
   return {
