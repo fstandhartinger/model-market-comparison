@@ -92,7 +92,7 @@ function RankingTable({ systems, track, all = false }: { systems: any[]; track: 
             {t.cost.coverage < 0.9995 && <p className="bh-muted mt-1 text-xs">Cost receipts cover {pct(t.cost.coverage)} of calls</p>}
             {s.api_flag && <span className="mt-1 inline-block rounded-full border border-accent px-2 py-0.5 text-[0.68rem] font-bold text-accent">API</span>}
             <JevArchitectureBadge row={s} benchmark="imagejevbench" />
-            <BaseModelDisplay benchmark="imagejevbench" systemKey={s.key} className="mt-1 block text-[11px] font-normal leading-tight" />
+        <BaseModelDisplay benchmark="imagejevbench" systemKey={s.key} className="mt-1 block text-[11px] font-normal leading-tight" />
             <Link href={imageSystemPath(s.key)} className="mt-0.5 inline-block text-[11px] font-normal text-accent underline decoration-[rgb(var(--line))] underline-offset-2 hover:decoration-current" data-bh-mm-system-details={s.key}>details</Link>
           </th>
           <td className="p-3 text-right font-bold tabular-nums">{score(t.composite.score)}</td>
@@ -271,7 +271,7 @@ export async function MultimodalPreviewContent() {
 
     <section className="mt-10 max-w-6xl" aria-labelledby="method-heading">
       <h2 id="method-heading" className="text-2xl font-semibold">Method and limitations</h2>
-    <JevArchitectureMethod />
+      <JevArchitectureMethod />
       <div className="bh-panel mt-4 space-y-4 p-5 text-sm">
         <p><b>Intelligence.</b> Accuracy counts missing, invalid and unparseable answers as wrong. Each part is chance-corrected against its own average chance rate, then combined as {a.weights.public * 100}% public and {a.weights.sealed * 100}% sealed. Calibration uses the same weights.</p>
         <p><b>Matched-family overfit penalty.</b> The gap is public accuracy minus sealed accuracy within families that have at least 10 items on both sides: ScreenSpot and Everyday photo. If that matched gap is above {a.gap_allowance_pp} percentage points, Intelligence is multiplied by max(0, 1 − (gap − {a.gap_allowance_pp})/100). The same rule applies to every system. The raw overall gap is shown in the data but does not affect the score.</p>

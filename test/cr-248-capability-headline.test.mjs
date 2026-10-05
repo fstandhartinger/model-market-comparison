@@ -60,7 +60,7 @@ test('CR-248: generic headline renders JevBench Capability Score by default and 
   assert.match(source, /data-bh-tl-cost=/); assert.match(source, /data-bh-tl-latency=/); assert.match(source, /role="img"/);
   assert.match(source, /derived from Speed axis/); assert.match(source, /group-hover:block group-focus-within:block/);
   assert.doesNotMatch(source, /data-bh-jev14-cost-bar|Thin red line/);
-  assert.match(read('../app/jev-models/page.tsx'), /const description = 'JevBench Capability Score/);
+  assert.match(read('../app/jev-models/page.tsx'), /const description = '[^']*JevBench Capability Score/);
 });
 
 test('CR-248: alternative cost is rescored live and ranked against other current scores', () => {

@@ -9,7 +9,7 @@ import { jevV15BoardSystem, jevV15BoardRow, jevV15CompareRow } from '../lib/jevb
 test('canonical architecture classes and deterministic fallback rules', () => {
   assert.equal(JEV_ARCH_CLASSES.length, 8);
   const cases = [
-    [{ class: 'jev', api_flag: true }, 'jev-reference'], [{ key: 'jev-1.99.0' }, 'jev-reference'],
+    [{ class: 'jev', api_flag: true }, 'closed-api'], [{ key: 'jev-1.99.0' }, 'jev-reference'],
     [{ api_flag: true, class: 'reranker' }, 'closed-api'], [{ kind: 'api' }, 'closed-api'], [{ endpoint_kind: 'api' }, 'closed-api'],
     [{ class: 'reranker' }, 'open-reranker'], [{ class: 'raw-logit-control' }, 'base-control'],
     [{ class: 'classifier' }, 'open-encoder'], [{ class: 'unclassified' }, 'open-llm-decoder'],
@@ -59,9 +59,16 @@ test('legends merge legacy classes, keep canonical order and use one palette', (
 });
 
 test('chart renderers colour rows by architecture, never by the legacy artifact class', () => {
-  const dir = new URL('../components/', import.meta.url);
-  const offenders = readdirSync(dir).filter((f) => /\.tsx?$/.test(f)).flatMap((f) =>
-    readFileSync(new URL(f, dir), 'utf8').split('\n').map((line, i) => [f, i + 1, line])
-      .filter(([, , line]) => /(typeVar|typeColour|jevTypeVarName)\(\s*\w+\.(cls|class)\s*\)/.test(line)));
+  const walk = (dir) => readdirSync(dir, { withFileTypes: true }).flatMap((e) => e.isDirectory() ? walk(new URL(`${e.name}/`, dir)) : /\.tsx?$/.test(e.name) ? [new URL(e.name, dir)] : []);
+  const files = ['../components/', '../app/'].flatMap((d) => walk(new URL(d, import.meta.url)));
+  const offenders = files.flatMap((f) => readFileSync(f, 'utf8').split('\n').map((line, i) => [f.pathname.split('/').slice(-2).join('/'), i + 1, line])
+    .filter(([, , line]) => /(typeVar|typeColour|architectureVar|jevTypeVarName)\(\s*\w+\.(cls|class)\s*\)/.test(line)));
   assert.deepEqual(offenders.map(([f, n]) => `${f}:${n}`), []);
+});
+
+test('fallback never paints a non-Jev or hosted row in the Jev reference colour', () => {
+  assert.equal(jevArchFor('jevbench', { key: 'not-in-json', class: 'jev' }).arch, 'open-llm-decoder');
+  assert.equal(jevArchFor('jevbench', { key: 'not-in-json', class: 'jev', api_flag: true }).arch, 'closed-api');
+  assert.equal(jevArchFor('jevbench', { key: 'not-in-json', class: 'llm-baseline' }).arch, 'closed-api');
+  assert.equal(jevArchFor('jevbench', { key: 'jev-9.9.9' }).arch, 'jev-reference');
 });

@@ -41,6 +41,6 @@ for (const theme of ['dark', 'light']) test(`${theme} architecture palette: cont
       if (distance < min) { min = distance; pair = `${JEV_ARCH_CLASSES[i].id}/${JEV_ARCH_CLASSES[j].id}`; }
     }
     t.diagnostic(`${theme} ${name} minimum CIE76 ${min.toFixed(3)} (${pair})`);
-    assert.ok(min >= 5, `${name} minimum ${min} (${pair})`);
+    assert.ok(min >= 6, `${name} minimum ${min} (${pair})`);
   }
 });
