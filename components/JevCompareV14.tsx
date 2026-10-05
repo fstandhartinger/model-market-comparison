@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
-import { Radar, Swatch, type Series, type Spoke } from "./JevRadars";
+import { Radar, Swatch, type Series, type Spoke, sparseNote } from "./JevRadars";
 import { JEV_TYPE_LABEL, JEV_TYPE_VAR } from "./jevTypes";
 
 // Page fix (Florian 23 Sep 2026): CR-131 left the v1.3 two-system compare behind the historical disclosure. v1.4 brings it
@@ -238,7 +238,7 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
           {missingFor(f.spokes).length < 2
             ? <Radar spokes={f.spokes} series={s} size={f.size} id={`jev14-radar-${f.key}`} title={`Radar: ${f.title.toLowerCase()}, two systems`} desc={desc(f.title, f.spokes)} />
             : <p className="bh-muted mt-3 text-[12px]">Neither selected system has a published series for this view.</p>}
-          <figcaption className="bh-muted text-[12px]">{f.note}</figcaption>
+          <figcaption className="bh-muted text-[12px]">{f.note}{sparseNote(f.spokes, s) && <span className="block" data-bh-radar-gap-note="points">{sparseNote(f.spokes, s)}</span>}</figcaption>
         </figure>)}
       </div>
       {!fixedPair && <details className="mt-3 text-[13px]" data-bh-jev14-compare-values><summary className="cursor-pointer text-accent">All values as a table</summary>

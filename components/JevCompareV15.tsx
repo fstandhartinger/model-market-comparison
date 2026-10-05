@@ -78,20 +78,23 @@ function CategoryKey({ dim, cats }: { dim: CategoryDim; cats: CompareCategories 
 function LowSampleTable({ dim, cats, pair }: { dim: CategoryDim; cats: CompareCategories; pair: JevCompareV15Row[] }) {
   // A value below the artifact's own reporting minimum (min_n) is not shown at all, not even as indicative.
   const cellOf = (r: JevCompareV15Row, key: string) => { const v = cats.systems[r.key]?.[dim.key]?.[key]; return v && v[1] >= cats.minN ? v : null; };
-  const low = dim.cats.filter((c) => c.lowSample && pair.some((r) => cellOf(r, c.key)));
+  // Pool-level low-sample categories, plus a well-measured category in which one of the two systems answered fewer than
+  // radarMinN items (its value is not drawn on the radar, so it is shown here instead of disappearing).
+  const lowCell = (r: JevCompareV15Row, key: string) => { const v = cellOf(r, key); return v !== null && v[1] < cats.radarMinN; };
+  const low = dim.cats.filter((c) => (c.lowSample && pair.some((r) => cellOf(r, c.key))) || (c.plotted && pair.some((r) => lowCell(r, c.key))));
   const unreported = dim.cats.filter((c) => c.lowSample && !pair.some((r) => cellOf(r, c.key)));
   if (!low.length && !unreported.length) return null;
   const cell = (r: JevCompareV15Row, key: string) => {
     const v = cellOf(r, key);
-    return v ? <>{one(v[0])} <span className="bh-muted text-[11px]">n={v[1]}</span></> : <span className="bh-muted" title={`No published cell: fewer than ${cats.minN} answered items, or no per-category values for this system`}>—</span>;
+    return v ? <>{one(v[0])} <span className="bh-muted text-[11px]">n={v[1]}</span></> : <span className="bh-muted" title={`No published value: fewer than ${cats.minN} answered items, or no per-category values for this system`}>—</span>;
   };
   return <div className="mt-2" data-bh-jev15-low-sample={dim.key}>
     <p className="text-[12px] font-semibold">Low sample, n &lt; {cats.radarMinN} — indicative only</p>
     {low.length > 0 && <div className="bh-table-wrap"><table className="bh-table mt-1 text-[12px]">
       <thead><tr><th scope="col">Category (items)</th><th scope="col">A: {pair[0].name}</th><th scope="col">B: {pair[1].name}</th></tr></thead>
-      <tbody>{low.map((c) => <tr key={c.key} title={`${c.label}: ${c.covers}`} data-bh-jev15-low-sample-row={`${dim.key}:${c.key}`}><th scope="row" className="text-left font-normal">{c.label} <span className="bh-muted">({c.n})</span></th><td className="tabular">{cell(pair[0], c.key)}</td><td className="tabular">{cell(pair[1], c.key)}</td></tr>)}</tbody>
+      <tbody>{low.map((c) => <tr key={c.key} title={`${c.label}: ${c.covers}`} data-bh-jev15-low-sample-row={`${dim.key}:${c.key}`}><th scope="row" className="text-left font-normal">{c.label} <span className="bh-muted">({c.n}{c.plotted ? `; a system answered fewer than ${cats.radarMinN}` : ""})</span></th><td className="tabular">{cell(pair[0], c.key)}</td><td className="tabular">{cell(pair[1], c.key)}</td></tr>)}</tbody>
     </table></div>}
-    {unreported.length > 0 && <p className="bh-muted mt-1 text-[11px]" data-bh-jev15-low-sample-unreported={dim.key}>No value for either system (under {cats.minN} answered items): {unreported.map((c) => `${c.label} (${c.n})`).join(", ")}.</p>}
+    {unreported.length > 0 && <p className="bh-muted mt-1 text-[11px]" data-bh-jev15-low-sample-unreported={dim.key}>No published value for either system (under {cats.minN} answered items, or no per-category values): {unreported.map((c) => `${c.label} (${c.n})`).join(", ")}.</p>}
     <p className="bh-muted mt-1 text-[11px]">Not drawn on the radar: with so few items a single answer moves a category score by several points, so these values are noise-prone. These values become spokes once the item pool reaches {cats.radarMinN} items per category.</p>
   </div>;
 }
@@ -170,7 +173,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
     });
     if (!notes.length) return null;
     const hosted = notes.some((g) => g.r.hosted === true);
-    const why = f.dim && categories ? `Open spokes (n/a or n=…) have fewer than ${categories.radarMinN} answered items for that system${hosted ? "; hosted APIs answer a smaller item set, so more of their category cells stay under that" : ""}.` : "Open spokes have no published value.";
+    const why = f.dim && categories ? `Open spokes (n/a or n=…) have fewer than ${categories.radarMinN} answered items for that system or no published value${hosted ? "; hosted APIs answer a smaller item set, so more of their category cells stay under that" : ""}.` : "Open spokes have no published value.";
     return <>{notes.map((g) => <span key={g.k} className="block" data-bh-radar-gap-note={g.points ? "points" : "runs"}>{g.text}.</span>)}<span className="block">Gaps, not zeros: {why}</span></>;
   };
   const desc = (title: string, spokes: Spoke[]) => `${title}, ${s[0].name} vs ${s[1].name}. ` + spokes.map((sp) => `${sp.lines.join(" ")}: ${sp.texts[0]} vs ${sp.texts[1]}`).join("; ") + ".";

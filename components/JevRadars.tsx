@@ -2,7 +2,7 @@
 import { useState } from "react";
 import type { JevAxis, JevV12Row } from "../lib/jevbench-v12.mjs";
 import type { JevTopicsView } from "../lib/jevbench-v12-topics.mjs";
-import { radarShape } from "../lib/radar-shape.mjs";
+import { radarShape, RADAR_MIN_N } from "../lib/radar-shape.mjs";
 
 // CR-94 (Florian 2026-09-19 ~17:30 UTC): compare two systems on radars — the four axes of the JevBench Score and accuracy by
 // subject topic (completes CR-90.3). Every value is the table's (axes) or the published topic artifact's; nothing is recomputed.
@@ -22,6 +22,15 @@ const pct = (v: number | null) => (v === null ? "—" : `${(v * 100).toFixed(1)}
 const short = (d: string) => d.split(" (")[0].split(", formerly")[0];
 
 export type Series = { name: string; stroke: string; dashed: boolean; square: boolean };
+
+/** CR-290 radar correction: the one-line caption for every series the Radar draws as points only (see lib/radar-shape.mjs). */
+export function sparseNote(spokes: Spoke[], series: Series[]): string | null {
+  const sparse = series.flatMap((se, k) => {
+    const present = spokes.map((sp) => sp.values[k] !== null && !sp.thin[k]);
+    return radarShape(present).kind === "points" ? [`${se.name} has values on ${present.filter(Boolean).length} of ${spokes.length} spokes only, so it is drawn as points, not a shape`] : [];
+  });
+  return sparse.length ? `${sparse.join("; ")}.` : null;
+}
 export type Spoke = { key: string; lines: string[]; values: (number | null)[]; texts: string[]; thin: boolean[]; tip?: string };
 
 export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke[]; series: Series[]; size: { w: number; h: number; r: number }; id: string; title: string; desc: string }) {
@@ -84,13 +93,25 @@ function pairSeries(A: JevV12Row, B: JevV12Row): Series[] {
     { name: short(B.display), stroke: same ? `color-mix(in srgb, ${colour(B.cls)} 55%, var(--text))` : colour(B.cls), dashed: same, square: true }];
 }
 
+// CR-290 radar correction (Florian 5 Oct 2026 ~20:30): only topics with at least RADAR_MIN_N items are spokes, and a cell needs
+// that many answered items to be drawn; smaller topics are listed under the radar as low-sample values.
+const radarTopics = (topics: JevTopicsView) => topics.topics.filter((t) => t.n >= RADAR_MIN_N);
+const lowTopics = (topics: JevTopicsView) => topics.topics.filter((t) => t.n < RADAR_MIN_N);
+const thinAt = (topics: JevTopicsView) => Math.max(topics.minAttempted, RADAR_MIN_N);
+function lowTopicLine(pair: JevV12Row[], topics: JevTopicsView): string | null {
+  const low = lowTopics(topics);
+  if (!low.length) return null;
+  const v = (r: JevV12Row, key: string) => { const c = topics.systems[r.key]?.[key]; return c && c.attempted >= topics.minAttempted ? `${pct(c.accuracy)} (n=${c.attempted})` : "—"; };
+  return `Low sample, n < ${RADAR_MIN_N} — indicative only, not drawn: ${low.map((t) => `${t.label} (${t.n} items): ${pair.map((r) => v(r, t.key)).join(" · ")}`).join("; ")}.`;
+}
+
 function topicSpokesFor(pair: JevV12Row[], topics: JevTopicsView): Spoke[] {
   const cells = pair.map((r) => topics.systems[r.key]);
-  return topics.topics.map((t) => ({
+  return radarTopics(topics).map((t) => ({
     key: t.key, lines: t.short.split(" ").reduce<string[]>((ls, w) => (ls.length && (ls[ls.length - 1] + " " + w).length <= 13 ? [...ls.slice(0, -1), `${ls[ls.length - 1]} ${w}`] : [...ls, w]), []),
-    thin: cells.map((c) => Boolean(c && c[t.key].attempted < topics.minAttempted)),
+    thin: cells.map((c) => Boolean(c && c[t.key].attempted < thinAt(topics))),
     values: cells.map((c) => (c?.[t.key]?.accuracy == null ? null : c[t.key].accuracy! * 100)),
-    texts: cells.map((c) => !c?.[t.key] ? "not published" : c[t.key].attempted < topics.minAttempted ? `n=${c[t.key].attempted}` : pct(c[t.key].accuracy)),
+    texts: cells.map((c) => !c?.[t.key] ? "not published" : c[t.key].attempted < thinAt(topics) ? `n=${c[t.key].attempted}` : pct(c[t.key].accuracy)),
   }));
 }
 
@@ -104,8 +125,9 @@ export function JevPairRadar({ a, b, topics }: { a: JevV12Row; b: JevV12Row; top
     Per-topic comparison is unavailable for {missing.map((r) => short(r.display)).join(" and ")}; the official topic artifact does not publish aggregate rows for those systems.
   </p>;
   const pair = [a, b], series = pairSeries(a, b), spokes = topicSpokesFor(pair, topics);
-  const desc = `Accuracy by subject topic, ${series[0].name} vs ${series[1].name}. ` + topics.topics.map((t, i) => `${t.label} (${t.n} items): ${spokes[i].texts[0]} vs ${spokes[i].texts[1]}`).join("; ") + ".";
+  const desc = `Accuracy by subject topic, ${series[0].name} vs ${series[1].name}. ` + radarTopics(topics).map((t, i) => `${t.label} (${t.n} items): ${spokes[i].texts[0]} vs ${spokes[i].texts[1]}`).join("; ") + ".";
   const anyThin = spokes.some((sp) => sp.thin.some(Boolean));
+  const lowLine = lowTopicLine(pair, topics), sparse = sparseNote(spokes, series);
   return <figure className="min-w-0" data-bh-jev-system-radar={a.key}>
     <ul className="mb-1 space-y-1 text-[13px]" aria-label="Legend" data-bh-jev-system-radar-legend>
       {pair.map((r, k) => <li key={r.key}><Swatch s={series[k]} /><b>{short(r.display)}</b></li>)}
@@ -113,7 +135,9 @@ export function JevPairRadar({ a, b, topics }: { a: JevV12Row; b: JevV12Row; top
     <Radar spokes={spokes} series={series} size={{ w: 460, h: 370, r: 100 }} id={`jev-system-radar-${a.key}`} title="Radar: accuracy by subject topic, this system and the reference" desc={desc} />
     <figcaption className="bh-muted space-y-1 text-[12px]">
       <span className="block">Share of each topic&apos;s decisions answered correctly, all tiers together — compare the two systems within a topic, not topics with each other.</span>
-      {anyThin && <span className="block" data-bh-jev-system-radar-thin>Grey “n=…”: fewer than {topics.minAttempted} items of that topic were answered — too few to plot.</span>}
+      {anyThin && <span className="block" data-bh-jev-system-radar-thin>Grey “n=…”: fewer than {thinAt(topics)} items of that topic were answered — too few to plot.</span>}
+      {sparse && <span className="block" data-bh-radar-gap-note="points">{sparse}</span>}
+      {lowLine && <span className="block" data-bh-jev12-low-sample>{lowLine}</span>}
     </figcaption>
   </figure>;
 }
@@ -126,7 +150,7 @@ export function JevRadars({ ranked, honorable, partial, topics }: { ranked: JevV
   const A = all.find((r) => r.key === a) ?? first, B = all.find((r) => r.key === b) ?? ranked[1];
   const series = pairSeries(A, B);
   const pair = [A, B];
-  const min = topics.minAttempted;
+  const min = thinAt(topics);
   const axisSpokes: Spoke[] = AXES.map((k) => ({
     key: k, lines: [AXIS_LABEL[k]], thin: [false, false],
     values: pair.map((r) => r.axes[k] ?? 0), // label-only systems have no calibration: counted as 0, as in the score
@@ -148,7 +172,8 @@ export function JevRadars({ ranked, honorable, partial, topics }: { ranked: JevV
     </select></label>;
   const scoreText = (r: JevV12Row) => `JevBench Score ${one(r.main)}${r.rank ? ` (#${r.rank})` : r.listing === "honorable_mention" ? " (honorable mention, not ranked)" : " (partial run, not ranked)"}`;
   const axisDesc = `${series[0].name} vs ${series[1].name}. ` + AXES.map((k, i) => `${AXIS_LABEL[k]}: ${axisSpokes[i].texts[0]} vs ${axisSpokes[i].texts[1]}`).join("; ") + ".";
-  const topicDesc = `Accuracy by subject topic, ${series[0].name} vs ${series[1].name}. ` + topics.topics.map((t, i) => `${t.label} (${t.n} items): ${topicSpokes[i].texts[0]} vs ${topicSpokes[i].texts[1]}`).join("; ") + ".";
+  const topicDesc = `Accuracy by subject topic, ${series[0].name} vs ${series[1].name}. ` + radarTopics(topics).map((t, i) => `${t.label} (${t.n} items): ${topicSpokes[i].texts[0]} vs ${topicSpokes[i].texts[1]}`).join("; ") + ".";
+  const lowLine = lowTopicLine(pair, topics), topicSparse = sparseNote(topicSpokes, series);
   const anyThin = topicSpokes.some((s) => s.thin.some(Boolean));
   return <section className="mt-8" aria-labelledby="jev12-compare" data-bh-jev12-compare data-bh-jev12-compare-a={A.key} data-bh-jev12-compare-b={B.key}>
     <h2 id="jev12-compare" className="text-xl font-semibold">Compare two systems</h2>
@@ -180,7 +205,9 @@ export function JevRadars({ ranked, honorable, partial, topics }: { ranked: JevV
               first lines of the disclosure below, above the table. */}
           <figcaption className="bh-muted space-y-1 text-[12px]">
             <span className="block">Share of each topic&apos;s decisions answered correctly, all tiers together — compare the two systems within a topic, not topics with each other.</span>
-            {anyThin && <span className="block" data-bh-jev12-radar-thin>Grey “n=…”: a partial run answered fewer than {min} items of that topic — too few to plot.</span>}
+            {anyThin && <span className="block" data-bh-jev12-radar-thin>Grey “n=…”: fewer than {min} items of that topic were answered — too few to plot.</span>}
+            {topicSparse && <span className="block" data-bh-radar-gap-note="points">{topicSparse}</span>}
+            {lowLine && <span className="block" data-bh-jev12-low-sample>{lowLine}</span>}
             {missingTopicRows.length > 0 && <span className="block" data-bh-jev12-topic-unavailable>Per-topic aggregates unavailable for {missingTopicRows.map((r) => short(r.display)).join(" and ")}; those values are left blank (official artifact covers 47 systems)</span>}
           </figcaption>
           <details className="mt-2 text-[13px]" data-bh-jev12-radar-notes><summary className="cursor-pointer text-accent">Values and notes</summary>
@@ -189,11 +216,12 @@ export function JevRadars({ ranked, honorable, partial, topics }: { ranked: JevV
               <li>Topics: one per item, drafted by a model and checked by hand — <a className="text-accent underline" href="https://github.com/fstandhartinger/jevbench/blob/main/datasets/TOPICS.md">method</a>. Held-out items count in the totals; their texts stay private.</li>
             </ul>
             <div className="bh-table-wrap"><table className="bh-table mt-2" data-bh-jev12-radar-table="topics"><thead><tr><th scope="col">Topic (items)</th><th scope="col">A: {series[0].name}</th><th scope="col">B: {series[1].name}</th></tr></thead>
-              <tbody>{topics.topics.map((t, i) => <tr key={t.key} title={t.covers}><th scope="row" className="text-left font-normal"><b>{t.label}</b> <span className="bh-muted">({t.n})</span><span className="bh-muted block text-[11px]">{t.covers}</span></th>
+              <tbody>{topics.topics.map((t) => <tr key={t.key} title={t.covers}><th scope="row" className="text-left font-normal"><b>{t.label}</b> <span className="bh-muted">({t.n})</span><span className="bh-muted block text-[11px]">{t.covers}</span></th>
                 {cells.map((c, k) => {
                   const cell = c?.[t.key];
-                  return <td key={k} className={`tabular ${topicSpokes[i].thin[k] ? "bh-muted" : ""}`}>
-                    {cell ? <>{pct(cell.accuracy)} <span className="bh-muted block text-[11px]">{cell.correct} of {cell.attempted}{cell.attempted < cell.n ? ` answered (of ${cell.n})` : ""}{topicSpokes[i].thin[k] ? " — too few" : ""}</span></> : <span data-bh-jev12-topic-cell-unavailable>Not published</span>}
+                  const thin = Boolean(cell && (t.n < RADAR_MIN_N || cell.attempted < min));
+                  return <td key={k} className={`tabular ${thin ? "bh-muted" : ""}`}>
+                    {cell ? <>{pct(cell.accuracy)} <span className="bh-muted block text-[11px]">{cell.correct} of {cell.attempted}{cell.attempted < cell.n ? ` answered (of ${cell.n})` : ""}{thin ? (t.n < RADAR_MIN_N ? " — low sample, not drawn" : " — too few") : ""}</span></> : <span data-bh-jev12-topic-cell-unavailable>Not published</span>}
                   </td>;
                 })}</tr>)}</tbody></table></div>
           </details>
