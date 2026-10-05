@@ -2,6 +2,7 @@
 import { useState } from "react";
 import type { JevAxis, JevV12Row } from "../lib/jevbench-v12.mjs";
 import type { JevTopicsView } from "../lib/jevbench-v12-topics.mjs";
+import { radarShape } from "../lib/radar-shape.mjs";
 
 // CR-94 (Florian 2026-09-19 ~17:30 UTC): compare two systems on radars — the four axes of the JevBench Score and accuracy by
 // subject topic (completes CR-90.3). Every value is the table's (axes) or the published topic artifact's; nothing is recomputed.
@@ -41,17 +42,16 @@ export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke
     {spokes.map((s, i) => { const [x, y] = at(i, 100); return <line key={s.key} x1={cx} y1={cy} x2={x} y2={y} stroke="rgb(var(--line))" strokeOpacity={0.6} />; })}
     {series.map((se, k) => {
       // CR-290 (Florian 5 Oct 2026): a spoke without a plotted value (unpublished, or under the minimum n) is a gap, never
-      // a 0 and never bridged. Joining the remaining points drew a small misleading polygon (Jev 1.13.0, a hosted API with
-      // P300 cells only, on the use-case radar). Only a complete series is a filled polygon; otherwise only neighbouring
-      // spokes that both have values are joined.
+      // a 0 and never bridged. CR-290 correction (Florian ~20:30): joining neighbouring points still drew a few dots tied by a line that
+      // read as a shape (Jev 1.13.0, values on 3 of 8 use-case spokes). Only a complete series is a filled polygon; a series
+      // with at least half the spokes draws lines only along runs of 3+ adjacent spokes; anything sparser is points only.
       const byIndex = spokes.map((s, i) => (s.values[k] === null || s.thin[k] ? null : at(i, s.values[k] as number)));
       const pts = byIndex.filter((p): p is number[] => p !== null);
-      const complete = pts.length === spokes.length;
-      const segments = complete ? [] : byIndex.flatMap((p, i) => { const q = byIndex[(i + 1) % byIndex.length]; return p && q && spokes.length > 2 ? [[p, q]] : []; });
-      return <g key={k} data-bh-jev12-radar-series={k === 0 ? "a" : "b"} data-bh-radar-gaps={complete ? undefined : spokes.length - pts.length}>
-        {complete
+      const shape = radarShape(byIndex.map((p) => p !== null));
+      return <g key={k} data-bh-jev12-radar-series={k === 0 ? "a" : "b"} data-bh-radar-shape={shape.kind} data-bh-radar-gaps={shape.kind === "polygon" ? undefined : spokes.length - pts.length}>
+        {shape.kind === "polygon"
           ? <polygon points={pts.map((p) => p.join(",")).join(" ")} fill={se.stroke} fillOpacity={k === 0 ? 0.18 : 0.1} stroke={se.stroke} strokeWidth={2.2} strokeDasharray={se.dashed ? "6 4" : undefined} strokeLinejoin="round" />
-          : segments.map(([p, q], i) => <line key={i} x1={p[0]} y1={p[1]} x2={q[0]} y2={q[1]} stroke={se.stroke} strokeWidth={2.2} strokeDasharray={se.dashed ? "6 4" : undefined} strokeLinecap="round" />)}
+          : shape.runs.map((run) => <polyline key={run[0]} points={run.map((i) => (byIndex[i] as number[]).join(",")).join(" ")} fill="none" stroke={se.stroke} strokeWidth={2.2} strokeDasharray={se.dashed ? "6 4" : undefined} strokeLinejoin="round" strokeLinecap="round" />)}
         {pts.map(([x, y], i) => se.square ? <rect key={i} x={x - 3.5} y={y - 3.5} width={7} height={7} fill={se.stroke} stroke="var(--surface)" strokeWidth={1} /> : <circle key={i} cx={x} cy={y} r={3.8} fill={se.stroke} stroke="var(--surface)" strokeWidth={1} />)}
       </g>;
     })}

@@ -80,8 +80,8 @@ test('ImageJevBench colours systems by distinct cited base-model families, Wity 
 
 test('radars leave missing spokes as gaps marked n/a and never bridge or zero them', () => {
   const radar = src('components/JevRadars.tsx'), compare = src('components/JevCompareV15.tsx');
-  assert.match(radar, /const complete = pts\.length === spokes\.length;/);
-  assert.match(radar, /complete\s*\? <polygon/);
+  assert.match(radar, /const shape = radarShape\(/);
+  assert.match(radar, /shape\.kind === "polygon"\s*\? <polygon/);
   assert.match(radar, /"n\/a"/);
   assert.match(compare, /values: pair\.map\(\(r\) => r\.axes\?\.\[k\] \?\? null\)/);
   assert.match(compare, /Gaps, not zeros/);

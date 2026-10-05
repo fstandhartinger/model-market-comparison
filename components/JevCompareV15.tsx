@@ -6,6 +6,7 @@ import { SystemCombobox } from "./JevCompareV14";
 import { jevSourceUrl } from "./jevSystemLinks";
 import type { CompareCategories, CategoryDim } from "../lib/jevbench-categories.mjs";
 import { useJevV15VisibleKeys } from "./useJevV15VisibleKeys";
+import { radarShape } from "../lib/radar-shape.mjs";
 
 // CR-205: the v1.4 board's two-system compare, on v1.5 data. Four radars per pair — the four score axes,
 // chance-corrected competence per request type (open and sealed), and competence per tier on the open and
@@ -45,31 +46,54 @@ function series(A: JevCompareV15Row, B: JevCompareV15Row): Series[] {
     { name: B.name, stroke: same ? `color-mix(in srgb, ${colour(B.cls)} 55%, var(--text))` : colour(B.cls), dashed: same, square: true }];
 }
 
-/** CR-257: one radar per category dimension. Categories under the artifact's min_n are listed, not plotted; a value below
- *  chance draws at the centre and prints its real (negative) number; a system that answered fewer than min_n items of a
- *  category is printed as n=… and not plotted, like the v1.2 topic radar. */
+/** CR-257: one radar per category dimension. A value below chance draws at the centre and prints its real (negative) number.
+ *  CR-290 correction (Florian 5 Oct 2026 ~20:30): only well-measured categories (radarMinN = 30 items) are spokes; smaller ones go to the
+ *  low-sample table. A system that answered fewer than radarMinN items of a spoke's category is printed as n=… and not plotted. */
 function categorySpokes(pair: JevCompareV15Row[], dim: CategoryDim, cats: CompareCategories): Spoke[] {
   return dim.cats.filter((c) => c.plotted).map((c) => {
     const cells = pair.map((r) => cats.systems[r.key]?.[dim.key]?.[c.key] ?? null);
     return {
       key: c.key, lines: lines(c.short),
-      thin: cells.map((v) => v !== null && v[1] < cats.minN),
+      thin: cells.map((v) => v !== null && v[1] < cats.radarMinN),
       values: cells.map((v) => (v === null ? null : Math.max(0, Math.min(100, v[0])))),
-      texts: cells.map((v) => (v === null ? "—" : v[1] < cats.minN ? `n=${v[1]}` : one(v[0]))),
+      texts: cells.map((v) => (v === null ? "—" : v[1] < cats.radarMinN ? `n=${v[1]}` : one(v[0]))),
       tip: `${c.label}: ${c.covers}. ${c.n} items (${c.split.a} ${cats.splitNames[0]}, ${c.split.b} ${cats.splitNames[1]}).`,
     };
   });
 }
 
 function CategoryKey({ dim, cats }: { dim: CategoryDim; cats: CompareCategories }) {
-  const low = dim.cats.filter((c) => c.lowN);
-  const unplotted = dim.cats.filter((c) => !c.lowN && !c.plotted);
+  const unplotted = dim.cats.filter((c) => !c.lowSample && !c.plotted && c.n >= cats.radarMinN);
+  const empty = dim.cats.filter((c) => c.n === 0);
   return <details className="mt-1 text-[12px]" data-bh-jev15-category-key={dim.key}>
     <summary className="cursor-pointer text-accent">What each category means · items per category</summary>
     <ul className="mt-1 space-y-0.5">{dim.cats.filter((c) => c.plotted).map((c) => <li key={c.key} data-bh-jev15-category={`${dim.key}:${c.key}`} data-bh-jev15-category-n={c.n}><b>{c.label}</b> — {c.covers}. <span className="bh-muted tabular">{c.n} items ({c.split.a} {cats.splitNames[0]} / {c.split.b} {cats.splitNames[1]})</span></li>)}</ul>
     {unplotted.map((c) => <p key={c.key} className="bh-muted mt-1" data-bh-jev15-category-unplotted={`${dim.key}:${c.key}`}>Not drawn: <b>{c.label}</b> — {c.covers}. {c.n} items ({c.split.a} {cats.splitNames[0]} / {c.split.b} {cats.splitNames[1]}) — not a use case of its own, so it is counted but not drawn.</p>)}
-    {low.length > 0 && <p className="bh-muted mt-1" data-bh-jev15-category-low-n={dim.key}>Low n (under {cats.minN} items, not plotted): {low.map((c) => `${c.label} (${c.n})`).join(", ")}.</p>}
+    {empty.length > 0 && <p className="bh-muted mt-1" data-bh-jev15-category-empty={dim.key}>No items in this release: {empty.map((c) => c.label).join(", ")}.</p>}
   </details>;
+}
+
+/** CR-290 correction (Florian 5 Oct 2026 ~20:30): categories with fewer than radarMinN items are never spokes. They are listed here with their
+ *  item count and both systems' values, marked indicative: with 16 items one answer moves a category by about six points. */
+function LowSampleTable({ dim, cats, pair }: { dim: CategoryDim; cats: CompareCategories; pair: JevCompareV15Row[] }) {
+  // A value below the artifact's own reporting minimum (min_n) is not shown at all, not even as indicative.
+  const cellOf = (r: JevCompareV15Row, key: string) => { const v = cats.systems[r.key]?.[dim.key]?.[key]; return v && v[1] >= cats.minN ? v : null; };
+  const low = dim.cats.filter((c) => c.lowSample && pair.some((r) => cellOf(r, c.key)));
+  const unreported = dim.cats.filter((c) => c.lowSample && !pair.some((r) => cellOf(r, c.key)));
+  if (!low.length && !unreported.length) return null;
+  const cell = (r: JevCompareV15Row, key: string) => {
+    const v = cellOf(r, key);
+    return v ? <>{one(v[0])} <span className="bh-muted text-[11px]">n={v[1]}</span></> : <span className="bh-muted" title={`No published cell: fewer than ${cats.minN} answered items, or no per-category values for this system`}>—</span>;
+  };
+  return <div className="mt-2" data-bh-jev15-low-sample={dim.key}>
+    <p className="text-[12px] font-semibold">Low sample, n &lt; {cats.radarMinN} — indicative only</p>
+    {low.length > 0 && <div className="bh-table-wrap"><table className="bh-table mt-1 text-[12px]">
+      <thead><tr><th scope="col">Category (items)</th><th scope="col">A: {pair[0].name}</th><th scope="col">B: {pair[1].name}</th></tr></thead>
+      <tbody>{low.map((c) => <tr key={c.key} title={`${c.label}: ${c.covers}`} data-bh-jev15-low-sample-row={`${dim.key}:${c.key}`}><th scope="row" className="text-left font-normal">{c.label} <span className="bh-muted">({c.n})</span></th><td className="tabular">{cell(pair[0], c.key)}</td><td className="tabular">{cell(pair[1], c.key)}</td></tr>)}</tbody>
+    </table></div>}
+    {unreported.length > 0 && <p className="bh-muted mt-1 text-[11px]" data-bh-jev15-low-sample-unreported={dim.key}>No value for either system (under {cats.minN} answered items): {unreported.map((c) => `${c.label} (${c.n})`).join(", ")}.</p>}
+    <p className="bh-muted mt-1 text-[11px]">Not drawn on the radar: with so few items a single answer moves a category score by several points, so these values are noise-prone. These values become spokes once the item pool reaches {cats.radarMinN} items per category.</p>
+  </div>;
 }
 
 /** Competence spokes (0–100); a missing cell is neither plotted nor guessed. */
@@ -133,17 +157,21 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
   const missingFor = (spokes: Spoke[]) => pair.filter((_, k) => spokes.every((sp) => sp.values[k] === null)).map((r) => r.name);
   const status = (r: JevCompareV15Row) => r.rank !== null ? `#${r.rank}` : ({ honorable_mention: "honorable mention", partial: "partial run", unpriced: "unpriced", addendum: "roster addendum", unranked: "not ranked" } as Record<string, string>)[r.listing] ?? `${r.listing}, not ranked`;
   // CR-290 (Florian 5 Oct 2026): say in the caption which system has gaps and why, instead of letting a partial series
-  // read as a small area. Category cells exist only from min_n answered items; hosted APIs see far fewer items per category.
+  // read as a small area. CR-290 correction: a series too sparse for lines (radarShape "points") says so in one line.
   const gapNote = (f: { spokes: Spoke[]; dim?: CategoryDim }) => {
-    const gapped = pair.flatMap((r, k) => {
-      const gaps = f.spokes.filter((sp) => sp.values[k] === null || sp.thin[k]).length;
-      return gaps > 0 && gaps < f.spokes.length ? [{ r, text: `${k === 0 ? "A" : "B"} (${r.name}) has no plotted value on ${gaps} of ${f.spokes.length} spokes` }] : [];
+    const notes = pair.flatMap((r, k) => {
+      const present = f.spokes.map((sp) => sp.values[k] !== null && !sp.thin[k]);
+      const shape = radarShape(present);
+      if (shape.kind === "polygon" || shape.kind === "none") return [];
+      const who = `${k === 0 ? "A" : "B"} (${r.name})`, got = `${present.filter(Boolean).length} of ${f.spokes.length}`;
+      return [{ r, k, points: shape.kind === "points", text: shape.kind === "points"
+        ? `${who} is measured on ${got} spokes only, so it is drawn as points, not a shape — measured on fewer items; full radar after the next re-measure`
+        : `${who} has values on ${got} spokes; lines join only adjacent measured spokes` }];
     });
-    if (!gapped.length) return null;
-    const parts = gapped.map((g) => g.text);
-    const hosted = gapped.some((g) => g.r.hosted === true);
-    const why = f.dim && categories ? ` — fewer than ${categories.minN} answered items in those categories${hosted ? " (hosted APIs answer a smaller item set, so many of their category cells stay under the minimum)" : ""}` : " — no published value there";
-    return <span className="block" data-bh-radar-gap-note> Gaps, not zeros: {parts.join("; ")}{why}. Those spokes are marked n/a and left open.</span>;
+    if (!notes.length) return null;
+    const hosted = notes.some((g) => g.r.hosted === true);
+    const why = f.dim && categories ? `Open spokes (n/a or n=…) have fewer than ${categories.radarMinN} answered items for that system${hosted ? "; hosted APIs answer a smaller item set, so more of their category cells stay under that" : ""}.` : "Open spokes have no published value.";
+    return <>{notes.map((g) => <span key={g.k} className="block" data-bh-radar-gap-note={g.points ? "points" : "runs"}>{g.text}.</span>)}<span className="block">Gaps, not zeros: {why}</span></>;
   };
   const desc = (title: string, spokes: Spoke[]) => `${title}, ${s[0].name} vs ${s[1].name}. ` + spokes.map((sp) => `${sp.lines.join(" ")}: ${sp.texts[0]} vs ${sp.texts[1]}`).join("; ") + ".";
   const copy = async () => {
@@ -154,7 +182,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
     const spokes = categorySpokes(pair, dim, categories!);
     const absent = pair.filter((r) => !categories!.systems[r.key]);
     return { key: `cat-${dim.key}`, title: dim.title, dim,
-      note: `${dim.note} Chance-corrected competence per category (0 = chance, 100 = perfect), ${categories!.splitNames.join(" and ")} items pooled; hover a category for its definition and item count.`,
+      note: `${dim.note} Chance-corrected competence per category (0 = chance, 100 = perfect), ${categories!.splitNames.join(" and ")} items pooled; only categories with at least ${categories!.radarMinN} items are spokes, smaller ones are listed below. Hover a category for its definition and item count.`,
       spokes, missing: absent.map((r) => `${r.name}: ${categories!.missing[r.key] ?? "no per-category values"}`), size: { w: 500, h: 400, r: 112 } };
   });
   const figures: { key: string; title: string; note: string; spokes: Spoke[]; missing: string[]; size: { w: number; h: number; r: number }; dim?: CategoryDim }[] = [
@@ -188,6 +216,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
             ? <Radar spokes={f.spokes} series={s} size={f.size} id={`jev15-radar-${f.key}`} title={`Radar: ${f.title.toLowerCase()}, two systems`} desc={desc(f.title, f.spokes)} />
             : <p className="bh-muted mt-3 text-[12px]">Neither selected system has a published series for this view.</p>}
           <figcaption className="bh-muted text-[12px]">{f.note}{gapNote(f)}</figcaption>
+          {f.dim && categories && <LowSampleTable dim={f.dim} cats={categories} pair={pair} />}
           {f.dim && categories && <CategoryKey dim={f.dim} cats={categories} />}
         </figure>)}
       </div>
