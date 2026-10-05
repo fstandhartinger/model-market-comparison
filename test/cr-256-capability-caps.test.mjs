@@ -122,9 +122,13 @@ test('CR-256: ImageJev absolute limits retain the anchor and scale each selected
   // classifier output still hashes to the CR-256 value, so eligibility, limits and reasons are unchanged.
   const raw = new Map(artifact.ranking.map((row) => [row.key, row]));
   const formerClass = (row) => (row.api_flag === true || row.kind === 'api' ? 'decision-api' : 'jev-rebuild');
-  const former = jevClassRows(systems.map((row) => ({ ...row, class: formerClass(raw.get(row.key)) })), options);
+  // CR-292: the architecture overlay (arch, archBadges, archEvidence) is presentation only; it is stripped before hashing.
+  const stripArch = ({ arch, archBadges, archEvidence, ...row }) => row;
+  const former = jevClassRows(systems.map((row) => ({ ...stripArch(row), class: formerClass(raw.get(row.key)) })), options);
   assert.equal(createHash('sha256').update(JSON.stringify({ reference: former.reference, limits: former.limits, rows: former.rows })).digest('hex'), 'eb15bc3e2b369ef4fabd36032a746e6603aa0b530496efd29c3f363402fa4b4e');
-  assert.equal(createHash('sha256').update(JSON.stringify({ reference: r, limits: l, rows })).digest('hex'), '83ae90f7667995f6f372a0362dec6c0f5d1955e0a9f05d4eaa0cf89efec88e76');
+  // CR-292: re-pinned because each embedded row now carries the architecture overlay instead of the CR-290 family class;
+  // the former-class hash above proves eligibility, limits and reasons are unchanged.
+  assert.equal(createHash('sha256').update(JSON.stringify({ reference: r, limits: l, rows })).digest('hex'), '4fb90fe032db2d9446b7da975aef7ba94d905289be0ed615bc9a405ad69034e7');
   assert.equal(JSON.stringify(jevClassRows(systems, { ...options, costFactor: 2, latencyFactor: 2 })), JSON.stringify(before));
 });
 
