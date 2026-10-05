@@ -9,22 +9,17 @@ import { createPortal } from 'react-dom';
 export function JevCapabilityTip({ label, title, children }: { label: string; title: string; children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
-  const lastPointerType = useRef('');
+  const trigger = useRef<HTMLButtonElement>(null);
   useEffect(() => { if (open) dialog.current?.showModal(); }, [open]);
-  // A tap synthesized click carries no pointerType, so the pointerdown records it: a touch tap on a
-  // phone-width row opens the modal (the floating panel is pointer-width only, see globals.css), while a
-  // mouse click does nothing — pointer devices already get the hover/focus panel from the row's group-hover.
   return <>
-    <button type="button" className="bh-jev-info relative ml-1 inline-flex h-4 min-h-0 w-4 shrink-0 items-center justify-center rounded text-accent before:absolute before:-inset-3 before:content-[''] focus:outline focus:outline-2"
+    <button ref={trigger} type="button" className="bh-jev-info relative ml-1 inline-flex h-4 min-h-0 w-4 shrink-0 items-center justify-center rounded text-accent before:absolute before:-inset-3 before:content-[''] focus:outline focus:outline-2"
       aria-label={label}
-      onPointerDown={(event) => { lastPointerType.current = event.pointerType; }}
       onClick={(event) => {
         event.stopPropagation();
-        if (lastPointerType.current === 'touch' && window.innerWidth < 640) setOpen(true);
-        lastPointerType.current = '';
+        if (window.innerWidth < 640) setOpen(true);
       }}>ⓘ</button>
     {open && createPortal(
-      <dialog ref={dialog} role="dialog" aria-modal="true" onClose={() => setOpen(false)}
+      <dialog ref={dialog} role="dialog" aria-modal="true" onClose={() => { setOpen(false); trigger.current?.focus(); }}
         onClick={(event) => {
           // A tap on the backdrop lands on the <dialog> itself, outside its box.
           const box = dialog.current?.getBoundingClientRect();

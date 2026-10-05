@@ -79,3 +79,8 @@ test('older radars (v1.2 topic radar, v1.4 compare) use the same n>=30 topic rul
   assert.match(radar, /export function sparseNote\(/);
   assert.match(v14, /sparseNote\(f\.spokes, s\)/);
 });
+
+test('compare radars resolve system colours like the ranking and bubbles (no llm-baseline fallback)', () => {
+  const compare = src('components/JevCompareV15.tsx');
+  assert.match(compare, /const colour = \(cls: string\) => `rgb\(var\(\$\{(?:jevTypeVarName|architectureVar)\(cls\)\}\)\)`;/);
+});

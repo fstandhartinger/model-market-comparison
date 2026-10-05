@@ -14,6 +14,7 @@ import { JevScoreChart } from './JevBoardInteractive';
 import { JevCompareV15 } from './JevCompareV15';
 import { JevV15FilterProvider, JevV15FilterPanel, type JevV15RowMeta } from './JevV15Filters';
 import { JevV15FilterVisibilityBridge } from './JevV15FilterVisibilityBridge';
+import { baseModelFamilies } from '../lib/jev-base-model.mjs';
 import { JevV15AllDataGrid } from './JevV15AllDataGrid';
 import { JevApiOfferingsToggle } from './JevApiOfferingsToggle';
 import { JevGpuCostCalculator } from './JevGpuCostCalculator';
@@ -59,7 +60,7 @@ function LanguageView({ a, categories, hiddenApi }: { a: JevV16ReleaseArtifact; 
   return <section className="mt-10" aria-labelledby="jev16-languages" data-bh-jev16-language-view>
     <h2 id="jev16-languages" className="text-2xl font-bold">Languages</h2>
     <p className="bh-muted mt-1 max-w-4xl text-sm">Raw chance-corrected competence per item language (0 = chance, 100 = perfect; can be negative), from each system&apos;s own measured items:
-      self-hosted systems over S 1,200 + P 300, hosted APIs over their A or A2 subset + P (600 items). A2 topic/use-case cells cover P300 only. Unequated and outside the Composite. Cells under {categories.min_n} items are left empty. A dagger (†) marks every displayed cell with fewer than 30 answered items.
+      self-hosted systems over S 1,200 + P 300, hosted APIs over their A or A2 subset + P (600 items). Sage (A3) language cells and A2/A3 topic/use-case cells cover public P300 only. Unequated and outside the Composite. Cells under {categories.min_n} items are left empty. A dagger (†) marks every displayed cell with fewer than 30 answered items.
       {en ? ` English (${en.n.toLocaleString('en-US')} items) is listed first; the other ${allLangs.filter((l) => l.key !== 'mixed').length} languages${allLangs.some((l) => l.key === 'mixed') ? ' and the mixed-language group' : ''} share ${allLangs.reduce((s, l) => s + l.n, 0)} items.` : ''}
       {hidden.length > 0 && <span data-bh-jev16-language-hidden={hidden.map((l) => l.key).join(' ')}>{' '}In {hidden.length === 1 ? 'one further group' : `${hidden.length} further groups`} no system reaches the {categories.min_n}-item reporting minimum, so {hidden.length === 1 ? 'it gets' : 'they get'} no column (items in the pool shown): {hidden.map((l) => `${l.label} (${l.n})`).join(', ')} — {hidden.reduce((s, l) => s + l.n, 0)} items, scored like every other item.</span>}
       {' '}This is the v1.6.0 main-pool breakdown. Per-language coverage grows with the expanded uc1.1 multilingual pool, a candidate for a later release that is not part of v1.6.0.</p>
@@ -141,8 +142,8 @@ function Method({ a, sha256, categoriesSha256, carrySha256, scope, hiddenApi }: 
     return [short(s.display), Math.round(v.reduce((t, c) => t + c.invalid_rate * c.n, 0)), v.reduce((t, c) => t + c.n, 0)] as [string, number, number];
   });
   const confidenceOnly = methodSystems.filter((s) => { const sup = Object.values((s as unknown as { support?: Record<string, string> }).support ?? {}); return sup.length > 0 && sup.every((x) => x === 'confidence'); }).map((s) => short(s.display));
-  return <section className="mt-10 max-w-4xl" aria-labelledby="jev16-method" id="jev16-method" data-bh-jev16-method>
-    <h2 id="jev16-method" className="text-2xl font-bold">Method · {a.revision}</h2>
+  return <section className="mt-10 max-w-4xl" aria-labelledby="jev16-method-title" id="jev16-method" data-bh-jev16-method>
+    <h2 id="jev16-method-title" className="text-2xl font-bold">Method · {a.revision}</h2>
     {scope !== 'all' && <BoardSplit scope={scope} />}
     <JevArchitectureMethod />
     {hiddenApi.size > 0 && <p className="bh-muted mt-2 text-xs" data-bh-jev-method-scope-note>Per-system method lists on this board cover the open-weights systems and the Jev reference; the hosted API offerings&apos; lists are on the <a className="text-accent underline" href="/jev-models/api#jev16-method">API leaderboard</a>.</p>}
@@ -283,7 +284,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
         categoryView={jevbenchCategoryView(a.revision, allDataKeys)}
         previousKeys={previousKeys}
         eligibility={allClass}
-        metadata={null}
+        metadata={{ families: baseModelFamilies('jevbench', a.systems) }}
         links={{ method: '#jev16-method', pricing: '#jev16-method', revisionNotes: '#jev16-method', addenda: {} }}
       />
       {scope === 'open' && <div className="mt-10"><JevGpuCostCalculator systems={ranked.filter((s) => s.v16.lane !== 'api').map((s) => ({

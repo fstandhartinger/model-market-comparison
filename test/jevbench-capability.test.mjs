@@ -118,9 +118,9 @@ test('F-200 (pass 36): the Capability ⓘ panel is a definition list and the row
   assert.ok(dts >= 7, `≥ 7 definition rows (${dts})`);
   assert.doesNotMatch(source, /title=\{tooltip\}/, 'the long native tooltip on the row is gone');
   assert.match(source, /data-bh-jev-capability-tooltip/);
-  // desktop keeps the hover panel (globals.css gates .bh-jev-cap-tip off under 640 px); touch opens the modal
+  // desktop keeps the hover panel (globals.css gates .bh-jev-cap-tip off under 640 px); narrow activations open the modal
   assert.match(tip, /aria-label="Close"/);
-  assert.match(tip, /lastPointerType\.current === 'touch' && window\.innerWidth < 640/);
+  assert.match(tip, /if \(window\.innerWidth < 640\) setOpen\(true\)/);
 });
 
 test('CR-176.6: the 3D capability view labels all three axes and pins the top five permanently', () => {

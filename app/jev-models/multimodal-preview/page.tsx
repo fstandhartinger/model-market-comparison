@@ -38,11 +38,11 @@ type FamilyCount = { public: number; sealed: number; retired: number };
 type GateInfo = { gate: string; line: string } | null;
 function gateOf(t: any, row: any): GateInfo {
   if (t.composite.score >= 1) return null;
-  if ((t.axes?.calibration ?? 0) < 0.5) return { gate: 'Calibration', line: `0.0 · gated by Calibration (no probabilities reported)` };
+  if ((t.axes?.calibration ?? 0) < 0.5) return { gate: 'Calibration', line: `gated by Calibration (no probabilities reported)` };
   const g = t.composite?.gates ?? {};
-  if ((g.cost ?? 1) < 0.5) return { gate: 'Cost', line: `0.0 · gated by Cost (USD ${t.cost.usd_per_1000.toFixed(2)} per 1,000 decisions)` };
-  if ((g.intelligence ?? 1) < 0.5) return { gate: 'Intelligence', line: `0.0 · gated by Intelligence (below the Jev-class floor)` };
-  if ((g.speed ?? 1) < 0.5) return { gate: 'Speed', line: `0.0 · gated by Speed (below the Jev-class floor)` };
+  if ((g.cost ?? 1) < 0.5) return { gate: 'Cost', line: `gated by Cost (USD ${t.cost.usd_per_1000.toFixed(2)} per 1,000 decisions)` };
+  if ((g.intelligence ?? 1) < 0.5) return { gate: 'Intelligence', line: `gated by Intelligence (below the Jev-class floor)` };
+  if ((g.speed ?? 1) < 0.5) return { gate: 'Speed', line: `gated by Speed (below the Jev-class floor)` };
   return null;
 }
 
@@ -68,7 +68,7 @@ function SystemName({ name, gate }: { name: string; gate?: GateInfo }) {
 function RankingTable({ systems, track, all = false }: { systems: any[]; track: Track; all?: boolean }) {
   const rows = [...systems].sort((x, y) => y.tracks[track].composite.score - x.tracks[track].composite.score);
   return <div className="mt-4 overflow-x-auto rounded-xl border border-line">
-    <table className={`w-full ${all ? 'min-w-[1240px]' : 'min-w-[1080px]'} text-left text-sm`} data-bh-mm-ranking={track} aria-label={`${track === 'all' ? 'Full benchmark' : track === 'core' ? 'Licensed core' : 'Everyday photo'} ranking`}>
+    <table className={`w-full ${all ? 'min-w-[1240px]' : 'min-w-[1080px]'} text-left text-sm`} data-bh-mm-ranking={track} aria-label={`${track === 'all' ? 'Full benchmark' : track === 'core' ? 'Core' : 'Everyday photo'} ranking`}>
       <thead><tr>
         <th className="sticky left-0 z-[1] w-14 min-w-14 bg-[var(--surface)] p-3 shadow-[inset_-1px_0_0_rgb(var(--line))]">#</th><th className="sticky left-14 z-[1] w-52 min-w-52 bg-[var(--surface)] p-3 shadow-[inset_-1px_0_0_rgb(var(--line))]">System</th><th className="p-3 text-right">Composite</th>
         <th className="p-3 text-right">Intelligence</th><th className="p-3 text-right">Calibration</th><th className="p-3 text-right">Speed</th><th className="p-3 text-right">Cost</th>
@@ -186,7 +186,7 @@ export async function MultimodalPreviewContent() {
     <JevCapabilityRanking systems={chartSystems} revision={a.release_version} officialHref="#jev14-chart-title"
       benchName="JevImageBench" benchmark="imagejevbench" {...classOptions} eligibilityNote={eligibility}
       correlationReason="mostly because self-hosted cost is computed from measured GPU time; both bars are kept for consistency with JevBench" />
-    <JevBubbleCharts points={capability.points} costLimit={limits.cost} latencyCap={limits.latency} referenceName={limits.referenceLabel} benchName="Image JevBench" />
+    <JevBubbleCharts points={capability.points} costLimit={limits.cost} latencyCap={limits.latency} referenceName={limits.referenceLabel} benchName="Image JevBench" scoreKind="v15" officialCaps />
     <details className="mt-4" data-bh-mm-3d-toggle><summary className="cursor-pointer text-sm font-semibold text-accent">Explore capability, cost and speed in 3D</summary>
       <JevCapabilityLazy revision={a.release_version} systems={chartSystems} classOptions={classOptions} benchName="Image JevBench" only3d />
     </details>
@@ -212,7 +212,7 @@ export async function MultimodalPreviewContent() {
     <section className="mt-10 max-w-6xl" aria-labelledby="track-heading">
       <h2 id="track-heading" className="text-2xl font-semibold">Results by track</h2>
       <p className="bh-muted mt-2 max-w-5xl text-sm">Each track is ranked on its own public and sealed items. The licensed core and synthetic everyday-photo results remain separately visible.</p>
-      <article className="mt-6" aria-labelledby="core-heading"><h3 id="core-heading" className="text-xl font-semibold">Core · {s.core_total} items</h3><p className="bh-muted mt-1 text-sm">{s.core_public} public · {s.core_sealed} sealed: {s.licensed_core_sealed} real-source items and {s.pool_core_sealed} fresh synthetic pool items (documents, charts, inventory, safety).</p><RankingTable systems={a.ranking} track="core" /><details className="mt-3"><summary className="cursor-pointer text-sm font-semibold text-accent">Licensed core composite bars</summary><ScoreBars systems={a.ranking} track="core" /></details></article>
+      <article className="mt-6" aria-labelledby="core-heading"><h3 id="core-heading" className="text-xl font-semibold">Core · {s.core_total} items</h3><p className="bh-muted mt-1 text-sm">{s.core_public} public · {s.core_sealed} sealed: {s.licensed_core_sealed} real-source items and {s.pool_core_sealed} fresh synthetic pool items (documents, charts, inventory, safety).</p><RankingTable systems={a.ranking} track="core" /><details className="mt-3"><summary className="cursor-pointer text-sm font-semibold text-accent">Core composite bars</summary><ScoreBars systems={a.ranking} track="core" /></details></article>
       <article className="mt-10" aria-labelledby="photo-heading"><h3 id="photo-heading" className="text-xl font-semibold">Everyday photo decisions · {s.everyday_photo_total} synthetic items</h3><p className="bh-muted mt-1 text-sm">{s.everyday_photo_public} public images from the promo set; {s.everyday_photo_sealed} sealed: {s.everyday_photo_sealed - s.everyday_photo_sealed_fresh} variants from the reviewed v0.1 candidate pool across {s.everyday_photo_situations} matched situations and {s.everyday_photo_sealed_fresh} fresh pool photos. Ambiguous labels were dropped after visual, two-model and gold-blind human checks. No brands and no focused faces.</p><RankingTable systems={a.ranking} track="everyday_photo" /><details className="mt-3"><summary className="cursor-pointer text-sm font-semibold text-accent">Everyday photo composite bars</summary><ScoreBars systems={a.ranking} track="everyday_photo" /></details></article>
       <p className="mt-4 rounded-lg border border-line p-4 text-sm" data-bh-djev-spark-sealed-photo><b>djev-spark sealed photo result:</b> {photoSealed.correct}/{photoSealed.n} sealed decisions · {pct(photoSealed.accuracy)}. It saw the public promo images in an earlier inference-only video run, with no training; this sealed score is the independent measurement for it.</p>
     </section>

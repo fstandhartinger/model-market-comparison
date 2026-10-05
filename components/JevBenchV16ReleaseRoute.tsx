@@ -42,7 +42,7 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
       <p className="bh-muted mt-3 max-w-3xl text-xs leading-relaxed" data-bh-jev-meta>
         Release v1.6.0 · {artifact.v16.counts.selfhosted_input.toLocaleString('en-US')} decisions per self-hosted system and {artifact.v16.counts.api_input} per hosted API ·
         {' '}{scope === 'open' ? `${rankedSelfHosted} ranked open-weights systems` : scope === 'api' ? `${rankedApi} ranked API offerings` : `${artifact.n_ranked} ranked systems`} · {carryCount} systems retain a separately dated v1.5.x score · only system-level aggregates are published ·
-        {' '}<a className="text-accent underline" href="/api/jevbench/v1.6.0">aggregate results JSON</a> · SHA-256 <code>{sha256}</code>
+        {' '}<a className="text-accent underline" href="/api/jevbench/v1.6.0">aggregate results JSON</a> · SHA-256 <code className="break-all">{sha256}</code>
       </p>
       <p className="mt-3 max-w-3xl text-sm" data-bh-jev-version-share-row>
         <a className="text-accent underline" href={sharePath} data-bh-jev-version-share>Share this {scope === 'api' ? 'board' : 'version'}</a>
