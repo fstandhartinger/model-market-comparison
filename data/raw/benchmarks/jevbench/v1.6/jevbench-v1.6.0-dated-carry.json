@@ -1,0 +1,1109 @@
+{
+ "benchmark": "JevBench",
+ "revision": "v1.6.0",
+ "kind": "dated-carry",
+ "provisional": false,
+ "carried_from": {
+  "revision": "v1.5.7",
+  "path": "data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.7-results.json",
+  "sha256": "8b837b2b760ef238e2a465632a48aa95b53b9ce5d797dfa79b2c24b0a638911e"
+ },
+ "method": "v1.5 protocol (1,624 decisions: 904 open + 720 sealed); scores are on the v1.5 scale and are not comparable with v1.6-measured rows.",
+ "rule": "Every ranked system of the live v1.5.7 board that is not measured on the v1.6.0 pool keeps its last published score, marked with the release that first published that measurement and that release's publication day. Carried rows are listed separately and never ranked together with v1.6-measured rows.",
+ "releases": [
+  {
+   "revision": "v1.5.0",
+   "published_on": "2026-09-28",
+   "main_commit": "25f5145267d1b17af3a682c3ba770fadade43027",
+   "path": "data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.0-results.json",
+   "sha256": "6b2f6b058b36203c98ec5f585eb8376038bc905f11db944f4e0bcd29c278c643"
+  },
+  {
+   "revision": "v1.5.1",
+   "published_on": "2026-09-29",
+   "main_commit": "81936840d25e83167fa4154f6aaa7e57269dd555",
+   "path": "data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.1-results.json",
+   "sha256": "6f2fa547454b1108fad701ef302f48450742562393d532d45eccd048f736a9e2"
+  },
+  {
+   "revision": "v1.5.2",
+   "published_on": "2026-09-29",
+   "main_commit": "7af330ae3bc43af1e558de1000c16aa10be71c3d",
+   "path": "data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.2-results.json",
+   "sha256": "01e1f0019ca3bd3b1183f5b701f069ba0c7bf52462d1103f88a03e01339c968b"
+  },
+  {
+   "revision": "v1.5.3",
+   "published_on": "2026-09-29",
+   "main_commit": "15fbfde56c2725c797317e9b846eeb3ef90a1d37",
+   "path": "data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.3-results.json",
+   "sha256": "5c3d97440ebb1463133ce1049df78cf3fd829c5f735c053c92cf707e7b3f7b24"
+  },
+  {
+   "revision": "v1.5.4",
+   "published_on": "2026-09-29",
+   "main_commit": "4e58b8e6e7248fb3286f51368caa3d4899dc2490",
+   "path": "data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.4-results.json",
+   "sha256": "0cf210b76bf85084a5f3fb40fb109e9a2c2f93df42ff6628696377666e89db45"
+  },
+  {
+   "revision": "v1.5.5",
+   "published_on": "2026-10-02",
+   "main_commit": "dda0c5a2f29dad5a0b96d3f0a714e923a2b1c587",
+   "path": "data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.5-results.json",
+   "sha256": "591e56fe98b5122f1a47ed8c0945c4ba2e848e5d0dcc09ffbfc5967bedeafd25"
+  },
+  {
+   "revision": "v1.5.6",
+   "published_on": "2026-10-03",
+   "main_commit": "bfd1a42116bdfd703845d1b28b70bf64b7ac4de6",
+   "path": "data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.6-results.json",
+   "sha256": "2a0adbfa3b78996042cbc8a4fe9a140af68934951f13088396b9c33a36a63583"
+  },
+  {
+   "revision": "v1.5.7",
+   "published_on": "2026-10-04",
+   "main_commit": "4549ca55037af084ab27074e036f682432b56bac",
+   "path": "data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.7-results.json",
+   "sha256": "8b837b2b760ef238e2a465632a48aa95b53b9ce5d797dfa79b2c24b0a638911e"
+  }
+ ],
+ "rows": [
+  {
+   "key": "qwen3.8-27b",
+   "display": "Qwen3.8 27B (Chutes TEE)",
+   "author": "Qwen / Chutes",
+   "class": "llm-baseline",
+   "open": "weights",
+   "licence": "open weights",
+   "repo": null,
+   "endpoint_kind": "api",
+   "api_flag": true,
+   "axes": {
+    "intelligence": 95.56146727664041,
+    "calibration": 98.08678902254937,
+    "speed": 56.846295929381085,
+    "cost": 0
+   },
+   "capability": 96.82412814959488,
+   "composite_v15": 0,
+   "v156_rank": 108,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 2.1783887438423646,
+    "basis": "ESTIMATE: exact base-model market reference (operator tariff excluded by 30-day rule)"
+   },
+   "speed": {
+    "p50_s_adjusted": 6.489119492471218,
+    "p95_s_adjusted": 31.855515367165104,
+    "n": 450,
+    "adjustment": "none (hosted API, measured as is)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://benchmarkheaven.com/jev-models/qwen3.8-27b"
+  },
+  {
+   "key": "gpt-6-luna",
+   "display": "GPT-6 Luna (default medium reasoning effort)",
+   "author": "OpenAI",
+   "class": "llm-baseline",
+   "open": "unknown",
+   "licence": "proprietary API",
+   "repo": null,
+   "endpoint_kind": "api",
+   "api_flag": true,
+   "axes": {
+    "intelligence": 96.23569044084438,
+    "calibration": 95.56003846585782,
+    "speed": 73.18530319155485,
+    "cost": 38.316528790869064
+   },
+   "capability": 95.8978644533511,
+   "composite_v15": 38.751615238726444,
+   "v156_rank": 38,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.1137930418719212,
+    "basis": "operator standard launch list price (interpretation I-1); no exact base-model floor applies"
+   },
+   "speed": {
+    "p50_s_adjusted": 1.5554233863949776,
+    "p95_s_adjusted": 3.0876001715660073,
+    "n": 450,
+    "adjustment": "none (hosted API, measured as is)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://benchmarkheaven.com/jev-models/gpt-6-luna"
+  },
+  {
+   "key": "deepseek-flash",
+   "display": "DeepSeek V4.1 Flash (thinking default)",
+   "author": "DeepSeek",
+   "class": "llm-baseline",
+   "open": "weights",
+   "licence": "open weights, proprietary API route",
+   "repo": null,
+   "endpoint_kind": "api",
+   "api_flag": true,
+   "axes": {
+    "intelligence": 93.69043763543172,
+    "calibration": 96.91785139608032,
+    "speed": 69.39902343452796,
+    "cost": 19.093609002972528
+   },
+   "capability": 95.30414451575602,
+   "composite_v15": 6.645505039231519,
+   "v156_rank": 72,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.4975992302955664,
+    "basis": "ESTIMATE: exact base-model market reference (operator tariff excluded by 30-day rule)"
+   },
+   "speed": {
+    "p50_s_adjusted": 1.7762285992503166,
+    "p95_s_adjusted": 6.465450605377541,
+    "n": 450,
+    "adjustment": "none (hosted API, measured as is)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://benchmarkheaven.com/jev-models/deepseek-flash"
+  },
+  {
+   "key": "gpt-6-luna-low",
+   "display": "GPT-6 Luna (low reasoning effort)",
+   "author": "OpenAI",
+   "class": "llm-baseline",
+   "open": "unknown",
+   "licence": "proprietary API",
+   "repo": null,
+   "endpoint_kind": "api",
+   "api_flag": true,
+   "axes": {
+    "intelligence": 95.29107650041868,
+    "calibration": 94.92401460047215,
+    "speed": 73.19737721417388,
+    "cost": 39.05771622064802
+   },
+   "capability": 95.10754555044542,
+   "composite_v15": 40.481958334046816,
+   "v156_rank": 37,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.10750024630541874,
+    "basis": "operator standard launch list price (interpretation I-1); no exact base-model floor applies"
+   },
+   "speed": {
+    "p50_s_adjusted": 1.5798842646181583,
+    "p95_s_adjusted": 3.0313564356416416,
+    "n": 450,
+    "adjustment": "none (hosted API, measured as is)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://benchmarkheaven.com/jev-models/gpt-6-luna-low"
+  },
+  {
+   "key": "gpt-5.6-luna",
+   "display": "GPT-5.6 Luna (low reasoning effort)",
+   "author": "OpenAI",
+   "class": "llm-baseline",
+   "open": "no",
+   "licence": "proprietary API",
+   "repo": null,
+   "endpoint_kind": "api",
+   "api_flag": true,
+   "axes": {
+    "intelligence": 94.33090883309077,
+    "calibration": 94.71076759662373,
+    "speed": 74.06258245488996,
+    "cost": 30.66824417593942
+   },
+   "capability": 94.52083821485725,
+   "composite_v15": 22.371016433424646,
+   "v156_rank": 51,
+   "cost": {
+    "kind": "tariff",
+    "usd_per_1000": 0.20467204433497538,
+    "basis": "operator list price"
+   },
+   "speed": {
+    "p50_s_adjusted": 1.3211710378527641,
+    "p95_s_adjusted": 2.9701795924454926,
+    "n": 450,
+    "adjustment": "none (hosted API, measured as is)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://benchmarkheaven.com/jev-models/gpt-5.6-luna"
+  },
+  {
+   "key": "kushal-gemma4-31b-it-autoloops",
+   "display": "Autoloops – Gemma 4 31B IT",
+   "author": "Autoloops",
+   "class": "jev",
+   "open": "no",
+   "licence": "Gemma terms of use (Google) for the base weights; hosted Autoloops service",
+   "repo": null,
+   "endpoint_kind": "api",
+   "api_flag": true,
+   "axes": {
+    "intelligence": 76.68463397202072,
+    "calibration": 85.84316449763286,
+    "speed": 83.9240668357571,
+    "cost": 39.586359989532696
+   },
+   "capability": 81.2638992348268,
+   "composite_v15": 40.52814707638268,
+   "v156_rank": 36,
+   "cost": {
+    "kind": "tariff",
+    "usd_per_1000": 0.10322573891625615,
+    "basis": "operator standard launch list price (interpretation I-1)"
+   },
+   "speed": {
+    "p50_s_adjusted": 0.6074120700359344,
+    "p95_s_adjusted": 0.6669755268841981,
+    "n": 450,
+    "adjustment": "none (hosted API, measured as is)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://benchmarkheaven.com/jev-models/kushal-gemma4-31b-it-autoloops"
+  },
+  {
+   "key": "simplejev-qwen3.8-27b",
+   "display": "SimpleJev Qwen3.8-27B",
+   "author": "Featherless AI",
+   "class": "jev-rebuild",
+   "open": "yes",
+   "licence": "Apache-2.0 (Qwen weights); repository licence not stated",
+   "repo": "https://github.com/featherless-ai/simple-jev",
+   "endpoint_kind": "demo",
+   "api_flag": true,
+   "axes": {
+    "intelligence": 72.75482343968588,
+    "calibration": 87.1969052856583,
+    "speed": 74.91530661775406,
+    "cost": 14.895025990507506
+   },
+   "capability": 79.9758643626721,
+   "composite_v15": 3.3584255994370715,
+   "v156_rank": 74,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.686803448275862,
+    "basis": "ESTIMATE: exact base-model market reference (operator tariff excluded by 30-day rule)"
+   },
+   "speed": {
+    "p50_s_adjusted": 1.6791162490844727,
+    "p95_s_adjusted": 1.9203861884772777,
+    "n": 450,
+    "adjustment": "x2 demo-endpoint adjustment (assumption, not measured)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://github.com/featherless-ai/simple-jev"
+  },
+  {
+   "key": "autojev-27b-rtxpro6000-a2",
+   "display": "AutoJev-27B (RTX PRO 6000)",
+   "author": "unknown",
+   "class": "unclassified",
+   "open": "unknown",
+   "licence": "not recorded",
+   "repo": null,
+   "endpoint_kind": "gpu",
+   "api_flag": false,
+   "axes": {
+    "intelligence": 72.7504220700132,
+    "calibration": 86.68041666712992,
+    "speed": 87.06975289886662,
+    "cost": 29.365937020749882
+   },
+   "capability": 79.71541936857156,
+   "composite_v15": 19.482719520484327,
+   "v156_rank": 56,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.22618758620689655,
+    "basis": "ESTIMATE: M2 base-model market reference from the frozen 25 Sep 2026 OpenRouter snapshot applied to measured tokens."
+   },
+   "speed": {
+    "p50_s_adjusted": 0.3262282764539123,
+    "p95_s_adjusted": 0.6018705707974706,
+    "n": 450,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://huggingface.co/denis-pplx/autojev-27b"
+  },
+  {
+   "key": "surogate-rune-26b-a4b-v3-rtxpro6000-a2",
+   "display": "Surogate Rune 26B-A4B v3 (RTX PRO 6000)",
+   "author": "unknown",
+   "class": "unclassified",
+   "open": "unknown",
+   "licence": "not recorded",
+   "repo": null,
+   "endpoint_kind": "gpu",
+   "api_flag": false,
+   "axes": {
+    "intelligence": 69.7384372659144,
+    "calibration": 88.29679782691991,
+    "speed": 85.9674611821838,
+    "cost": 48.9678579741414
+   },
+   "capability": 79.01761754641716,
+   "composite_v15": 66.47011066179378,
+   "v156_rank": 19,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.050242518472906394,
+    "basis": "ESTIMATE: M2 base-model market reference from the frozen 25 Sep 2026 OpenRouter snapshot applied to measured tokens."
+   },
+   "speed": {
+    "p50_s_adjusted": 0.3509356487542391,
+    "p95_s_adjusted": 0.7211513067595657,
+    "n": 450,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": "Not yet measured on the v1.6 pool.",
+   "source_url": "https://huggingface.co/api/models/surogate/rune-26b-a4b-GGUF"
+  },
+  {
+   "key": "gemini-3.1-flash-lite",
+   "display": "Gemini 3.1 Flash-Lite",
+   "author": "Google",
+   "class": "llm-baseline",
+   "open": "no",
+   "licence": "proprietary API",
+   "repo": null,
+   "endpoint_kind": "api",
+   "api_flag": true,
+   "axes": {
+    "intelligence": 77.58771823015074,
+    "calibration": 74.67587927109267,
+    "speed": 80.05303137744917,
+    "cost": 29.76239303895973
+   },
+   "capability": 76.1317987506217,
+   "composite_v15": 19.583532784444895,
+   "v156_rank": 54,
+   "cost": {
+    "kind": "tariff",
+    "usd_per_1000": 0.21940855911330048,
+    "basis": "operator list price"
+   },
+   "speed": {
+    "p50_s_adjusted": 0.8633867427706718,
+    "p95_s_adjusted": 1.1441724501550194,
+    "n": 450,
+    "adjustment": "none (hosted API, measured as is)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://benchmarkheaven.com/jev-models/gemini-3.1-flash-lite"
+  },
+  {
+   "key": "reflex-27b",
+   "display": "reflex-27b (Qwen3.8-27B)",
+   "author": "kshetrajna12",
+   "class": "jev-rebuild",
+   "open": "yes",
+   "licence": "MIT code; Apache-2.0 Qwen weights",
+   "repo": "https://github.com/kshetrajna12/reflex",
+   "endpoint_kind": "gpu",
+   "api_flag": false,
+   "axes": {
+    "intelligence": 62.794986197868965,
+    "calibration": 85.93457237686198,
+    "speed": 69.19534736783416,
+    "cost": 25.802305452315423
+   },
+   "capability": 74.36477928736548,
+   "composite_v15": 13.188297397843682,
+   "v156_rank": 68,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.2973421551724138,
+    "basis": "price floor: base-model reference price applied"
+   },
+   "speed": {
+    "p50_s_adjusted": 2.7482751199044286,
+    "p95_s_adjusted": 4.3793036284856495,
+    "n": 450,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://github.com/kshetrajna12/reflex"
+  },
+  {
+   "key": "instinct",
+   "display": "Instinct (ZooWork, Qwen3.8-27B)",
+   "author": "rayrain-srp (ZooWork)",
+   "class": "jev-rebuild",
+   "open": "no",
+   "licence": "proprietary service over Apache-2.0 base weights (Qwen3.8-27B)",
+   "repo": "https://github.com/fstandhartinger/jevbench/issues/69",
+   "endpoint_kind": "demo",
+   "api_flag": true,
+   "axes": {
+    "intelligence": 62.74758857686837,
+    "calibration": 84.95658090858146,
+    "speed": 81.68029758765765,
+    "cost": 29.16007113367894
+   },
+   "capability": 73.85208474272491,
+   "composite_v15": 18.324676123308297,
+   "v156_rank": 60,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.22978991379310343,
+    "basis": "ESTIMATE: exact base-model market reference (operator tariff excluded by 30-day rule)"
+   },
+   "speed": {
+    "p50_s_adjusted": 0.51905956864357,
+    "p95_s_adjusted": 1.3084376722574222,
+    "n": 450,
+    "adjustment": "x2 demo-endpoint adjustment (assumption, not measured)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://github.com/fstandhartinger/jevbench/issues/69"
+  },
+  {
+   "key": "ninfer-qwen3.8-27b-t1.5",
+   "display": "NInfer Qwen3.8-27B NVFP4 (T=1.5)",
+   "author": "Igor L. / NInfer contributors",
+   "class": "native-logit",
+   "open": "yes",
+   "licence": "Apache-2.0 (engine and submitted 27B artifact/base)",
+   "repo": "https://github.com/igorls/ninfer",
+   "endpoint_kind": "gpu",
+   "api_flag": false,
+   "axes": {
+    "intelligence": 61.07759382196298,
+    "calibration": 86.49259657807198,
+    "speed": 89.8610845330764,
+    "cost": 29.118887844204664
+   },
+   "capability": 73.78509520001748,
+   "composite_v15": 18.48189600644971,
+   "v156_rank": 59,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.2305174137931034,
+    "basis": "price floor: base-model reference price applied"
+   },
+   "speed": {
+    "p50_s_adjusted": 0.2482897630892694,
+    "p95_s_adjusted": 0.4158461955375964,
+    "n": 450,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://github.com/igorls/ninfer"
+  },
+  {
+   "key": "vansa-3.4",
+   "display": "Vansa-3.4 (Vansa, hosted System One API)",
+   "author": "Vansa",
+   "class": "decision-api",
+   "open": "no",
+   "licence": "proprietary hosted API",
+   "repo": "https://vansa.org",
+   "endpoint_kind": "api",
+   "api_flag": true,
+   "axes": {
+    "intelligence": 58.038138517840565,
+    "calibration": 87.62340118994128,
+    "speed": 91.27886810559414,
+    "cost": 61.44286408313903
+   },
+   "capability": 72.83076985389093,
+   "composite_v15": 71.59061278658044,
+   "v156_rank": 5,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.019285809113300495,
+    "basis": "Developer's own stated API price: USD 0.034 per 1M input tokens, no output-token charge (docs.vansa.org/pricing, read 1 Oct 2026), x measured input tokens (921,181 over 1,624 decisions). Standard launch list price counted from day 1 (interpretation I-1); the closed-beta 'no charges today' is a promotion and is not used. API model with a developer-reported base: ranked at its own API price (1 Oct 2026 rule); the striped bar shows the Qwen3.5-4B base-model reference."
+   },
+   "speed": {
+    "p50_s_adjusted": 0.14382775500416756,
+    "p95_s_adjusted": 0.517929308861494,
+    "n": 450,
+    "adjustment": "none (hosted API, measured as is)"
+   },
+   "measured_revision": "v1.5.6",
+   "measured_label": "measured on v1.5.6 (2026-10-03)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": "Hosted API retained at its v1.5.6 score under the three-refresh exposure cadence.",
+   "source_url": "https://vansa.org"
+  },
+  {
+   "key": "openjev-sglang",
+   "display": "openjev-sglang (Qwen3.6-35B-A3B on SGLang)",
+   "author": "ekzhang",
+   "class": "jev-rebuild",
+   "open": "yes",
+   "licence": "no licence file in the repository as of 2026-09-19; Qwen3.6 weights keep their own terms",
+   "repo": "https://github.com/ekzhang/openjev-sglang",
+   "endpoint_kind": "demo",
+   "api_flag": true,
+   "axes": {
+    "intelligence": 58.648935534041364,
+    "calibration": 82.87127167957337,
+    "speed": 78.0657837921845,
+    "cost": 35.63382653259791
+   },
+   "capability": 70.76010360680736,
+   "composite_v15": 29.02726618573374,
+   "v156_rank": 45,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.13981028325123152,
+    "basis": "ESTIMATE: exact base-model market reference (operator tariff excluded by 30-day rule)"
+   },
+   "speed": {
+    "p50_s_adjusted": 1.1961704343557358,
+    "p95_s_adjusted": 1.3050542250275612,
+    "n": 450,
+    "adjustment": "x2 demo-endpoint adjustment (assumption, not measured)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://github.com/ekzhang/openjev-sglang"
+  },
+  {
+   "key": "instinct-dual-4b",
+   "display": "Instinct Dual 4B",
+   "author": "ZooWork / pierre-srp",
+   "class": "decision-api",
+   "open": "no",
+   "licence": "Not independently recorded",
+   "repo": "https://github.com/fstandhartinger/jevbench/issues/123",
+   "endpoint_kind": "demo",
+   "api_flag": true,
+   "axes": {
+    "calibration": 88.30057060841276,
+    "cost": 60.18614652266257,
+    "intelligence": 43.118121336422504,
+    "speed": 81.95420185350125
+   },
+   "capability": 65.70934597241762,
+   "composite_v15": 46.96798492261902,
+   "v156_rank": 30,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.021238725369458127,
+    "basis": "ESTIMATE: ESTIMATE: exact base-model market reference (operator tariff excluded by 30-day rule); reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, already marked deprecated at that cutoff (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3). Frozen market reference deepinfra:Qwen/Qwen3.5-4B."
+   },
+   "speed": {
+    "p50_s_adjusted": 0.5059344321489334,
+    "p95_s_adjusted": 1.2603337831795214,
+    "n": 450,
+    "adjustment": "x2 (demo assumption, not measured)"
+   },
+   "measured_revision": "v1.5.3",
+   "measured_label": "measured on v1.5.3 (2026-09-29)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://github.com/fstandhartinger/jevbench/issues/123"
+  },
+  {
+   "key": "system-one-open",
+   "display": "system-one-open (Gemma 4 E2B LoRA on an L4)",
+   "author": "mithalouni",
+   "class": "jev-rebuild",
+   "open": "yes",
+   "licence": "MIT (repository LICENSE; Gemma weights keep Google’s terms)",
+   "repo": "https://github.com/mithalouni/system-one-open",
+   "endpoint_kind": "demo",
+   "api_flag": true,
+   "axes": {
+    "intelligence": 41.64356524223511,
+    "calibration": 71.62757593487629,
+    "speed": 78.27072904753155,
+    "cost": 68.33006522881325
+   },
+   "capability": 56.6355705885557,
+   "composite_v15": 42.43603455732882,
+   "v156_rank": 35,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.011367487684729064,
+    "basis": "ESTIMATE: v1.5 measured-input proxy; no exact base-model floor applies"
+   },
+   "speed": {
+    "p50_s_adjusted": 1.1500380337238312,
+    "p95_s_adjusted": 1.294836376607418,
+    "n": 450,
+    "adjustment": "x2 demo-endpoint adjustment (assumption, not measured)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://github.com/mithalouni/system-one-open"
+  },
+  {
+   "key": "decision-machine-1",
+   "display": "decision-machine-1 (milliseconds.ai)",
+   "author": "milliseconds.ai (Baptiste Laget)",
+   "class": "decision-api",
+   "open": "no",
+   "licence": "proprietary API, closed weights",
+   "repo": "https://www.milliseconds.ai",
+   "endpoint_kind": "api",
+   "api_flag": true,
+   "axes": {
+    "intelligence": 14.816438176464153,
+    "calibration": 81.18169307356939,
+    "speed": 92.77166935344088,
+    "cost": 56.297500611451596
+   },
+   "capability": 47.99906562501677,
+   "composite_v15": 3.2416665489183343,
+   "v156_rank": 75,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.02862529556650246,
+    "basis": "operator standard launch list price (interpretation I-1); no exact base-model floor applies"
+   },
+   "speed": {
+    "p50_s_adjusted": 0.18023579940199852,
+    "p95_s_adjusted": 0.29308393076062134,
+    "n": 450,
+    "adjustment": "none (hosted API, measured as is)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://www.milliseconds.ai"
+  },
+  {
+   "key": "jeff",
+   "display": "jeff (Logan Markewich, GLiFormer 400M)",
+   "author": "Logan Markewich",
+   "class": "jev-rebuild",
+   "open": "yes",
+   "licence": "MIT (code); GLiFormer weights per their model card",
+   "repo": "https://github.com/logan-markewich/jeff",
+   "endpoint_kind": "cpu",
+   "api_flag": false,
+   "axes": {
+    "intelligence": 4.434526796394629,
+    "calibration": 80.26674639624511,
+    "speed": 55.762758324634696,
+    "cost": 81.08682556098348
+   },
+   "capability": 42.35063659631987,
+   "composite_v15": 0.11730368929731415,
+   "v156_rank": 89,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.004270110837438424,
+    "basis": "documented hosted-model estimate; no exact base-model floor applies"
+   },
+   "speed": {
+    "p50_s_adjusted": 7.137287200987339,
+    "p95_s_adjusted": 37.16986593082546,
+    "n": 450,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://github.com/logan-markewich/jeff"
+  },
+  {
+   "key": "von-395m",
+   "display": "Von (wfzyx, Option-Marker 395M)",
+   "author": "wfzyx (Victor Hugo)",
+   "class": "jev-rebuild",
+   "open": "unknown",
+   "licence": "Apache-2.0 code; Apache-2.0 weights (answerdotai/ModernBERT-large base)",
+   "repo": "https://github.com/wfzyx/von",
+   "endpoint_kind": "cpu",
+   "api_flag": false,
+   "axes": {
+    "intelligence": 0,
+    "calibration": 83.4757036120557,
+    "speed": 75.72186940216335,
+    "cost": 82.71254751426194
+   },
+   "capability": 41.73785180602785,
+   "composite_v15": 0,
+   "v156_rank": 110,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.003769193349753695,
+    "basis": "documented hosted-model estimate; no exact base-model floor applies"
+   },
+   "speed": {
+    "p50_s_adjusted": 0.9215299248229712,
+    "p95_s_adjusted": 2.9060535791795683,
+    "n": 450,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://github.com/wfzyx/von"
+  },
+  {
+   "key": "bosun-v31-0.6b",
+   "display": "Bosun v3.1 0.6B",
+   "author": "Clause Logic",
+   "class": "system-one-open",
+   "open": "yes",
+   "licence": "apache-2.0, not gated; LICENSE + NOTICE (Clause Logic Inc.) present at the pinned revision",
+   "repo": "https://huggingface.co/Hanno-Labs/bosun-v3.1-0.6b",
+   "endpoint_kind": "cpu",
+   "api_flag": false,
+   "axes": {
+    "calibration": 65.16279314945697,
+    "cost": 77.54568039374416,
+    "intelligence": 13.580986254814757,
+    "speed": 61.7605061985211
+   },
+   "capability": 39.37188970213587,
+   "composite_v15": 2.499532093665368,
+   "v156_rank": 78,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.005603731527093597,
+    "basis": "ESTIMATE: documented hosted-model estimate; no exact base-model floor applies. $0.01/M input, $0/M output; same-base frozen raw-qwen3-0.6b estimate."
+   },
+   "speed": {
+    "p50_s_adjusted": 4.037209974229336,
+    "p95_s_adjusted": 16.514599372446412,
+    "n": 450,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)"
+   },
+   "measured_revision": "v1.5.3",
+   "measured_label": "measured on v1.5.3 (2026-09-29)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://huggingface.co/Hanno-Labs/bosun-v3.1-0.6b"
+  },
+  {
+   "key": "jevact",
+   "display": "JevAct (einptein, jev1-2b-v2)",
+   "author": "einptein",
+   "class": "jev-rebuild",
+   "open": "no",
+   "licence": "not stated (the author published only an endpoint and the evaluation client)",
+   "repo": "https://github.com/fstandhartinger/jevbench/issues/66",
+   "endpoint_kind": "demo",
+   "api_flag": true,
+   "axes": {
+    "intelligence": 11.23787871976056,
+    "calibration": 62.54294670001093,
+    "speed": 76.43004589872001,
+    "cost": 68.56133553360087
+   },
+   "capability": 36.890412709885744,
+   "composite_v15": 1.523364886742046,
+   "v156_rank": 81,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.011167487684729064,
+    "basis": "ESTIMATE: v1.5 measured-input proxy; no exact base-model floor applies"
+   },
+   "speed": {
+    "p50_s_adjusted": 0.8022368848323822,
+    "p95_s_adjusted": 2.8359122216701502,
+    "n": 450,
+    "adjustment": "x2 demo-endpoint adjustment (assumption, not measured)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://github.com/fstandhartinger/jevbench/issues/66"
+  },
+  {
+   "key": "gliner2.5-multi",
+   "display": "GLiNER2.5 multi (Fastino, 287M)",
+   "author": "Fastino",
+   "class": "classifier",
+   "open": "yes",
+   "licence": "Apache-2.0",
+   "repo": "https://huggingface.co/fastino/gliner2.5-multi-v1",
+   "endpoint_kind": "cpu",
+   "api_flag": false,
+   "axes": {
+    "intelligence": 13.995189304514808,
+    "calibration": 57.96384531072885,
+    "speed": 66.5730877741724,
+    "cost": 86.62313527343974
+   },
+   "capability": 35.979517307621826,
+   "composite_v15": 2.7186855157112975,
+   "v156_rank": 77,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.002791871921182266,
+    "basis": "ESTIMATE: v1.5 measured-input proxy; no exact base-model floor applies"
+   },
+   "speed": {
+    "p50_s_adjusted": 1.369978056848049,
+    "p95_s_adjusted": 16.06858415156602,
+    "n": 450,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://huggingface.co/fastino/gliner2.5-multi-v1"
+  },
+  {
+   "key": "gliner2.5-small",
+   "display": "GLiNER2.5 small (Fastino, 74M)",
+   "author": "Fastino",
+   "class": "classifier",
+   "open": "yes",
+   "licence": "Apache-2.0",
+   "repo": "https://huggingface.co/fastino/gliner2.5-small-v1",
+   "endpoint_kind": "cpu",
+   "api_flag": false,
+   "axes": {
+    "intelligence": 9.18733556299694,
+    "calibration": 55.90409648375797,
+    "speed": 77.35928845375412,
+    "cost": 86.62313527343974
+   },
+   "capability": 32.54571602337745,
+   "composite_v15": 0.893172274587778,
+   "v156_rank": 85,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.002791871921182266,
+    "basis": "ESTIMATE: v1.5 measured-input proxy; no exact base-model floor applies"
+   },
+   "speed": {
+    "p50_s_adjusted": 0.47205987721681597,
+    "p95_s_adjusted": 3.8911149926483466,
+    "n": 450,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://huggingface.co/fastino/gliner2.5-small-v1"
+  },
+  {
+   "key": "gliner2-large",
+   "display": "GLiNER2 large (Fastino)",
+   "author": "Fastino",
+   "class": "classifier",
+   "open": "yes",
+   "licence": "Apache-2.0",
+   "repo": "https://huggingface.co/fastino/gliner2-large-v1",
+   "endpoint_kind": "cpu",
+   "api_flag": false,
+   "axes": {
+    "intelligence": 22.49372087756688,
+    "calibration": 42.37995459053843,
+    "speed": 64.775339304984,
+    "cost": 77.5922354035203
+   },
+   "capability": 32.43683773405266,
+   "composite_v15": 8.399649998514048,
+   "v156_rank": 70,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.005583743842364532,
+    "basis": "ESTIMATE: v1.5 measured-input proxy; no exact base-model floor applies"
+   },
+   "speed": {
+    "p50_s_adjusted": 1.879411768959835,
+    "p95_s_adjusted": 17.719200704549383,
+    "n": 450,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://huggingface.co/fastino/gliner2-large-v1"
+  },
+  {
+   "key": "gliner2",
+   "display": "GLiNER2 (Fastino, gliner2.5-base)",
+   "author": "Fastino",
+   "class": "classifier",
+   "open": "yes",
+   "licence": "Apache-2.0",
+   "repo": "https://github.com/fastino-ai/GLiNER2",
+   "endpoint_kind": "cpu",
+   "api_flag": false,
+   "axes": {
+    "intelligence": 13.475160169985848,
+    "calibration": 35.566185234425355,
+    "speed": 70.33059310938175,
+    "cost": 86.62313527343974
+   },
+   "capability": 24.5206727022056,
+   "composite_v15": 2.2681537932105402,
+   "v156_rank": 79,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.002791871921182266,
+    "basis": "ESTIMATE: v1.5 measured-input proxy; no exact base-model floor applies"
+   },
+   "speed": {
+    "p50_s_adjusted": 0.9981146171689034,
+    "p95_s_adjusted": 9.284537470340728,
+    "n": 450,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://github.com/fastino-ai/GLiNER2"
+  },
+  {
+   "key": "needle-3",
+   "display": "Needle 3 (Cactus, 2-bit, local CPU)",
+   "author": "Cactus Compute",
+   "class": "small-tool-model",
+   "open": "yes",
+   "licence": "Apache-2.0 (model and package)",
+   "repo": "https://github.com/cactus-compute/needle",
+   "endpoint_kind": "cpu",
+   "api_flag": false,
+   "axes": {
+    "intelligence": 0,
+    "calibration": 0,
+    "speed": 34.1252252793452,
+    "cost": 61.57165387848559
+   },
+   "capability": 0.0,
+   "composite_v15": 0,
+   "v156_rank": 102,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.019096108374384236,
+    "basis": "ESTIMATE: v1.5 measured-input proxy; no exact base-model floor applies"
+   },
+   "speed": {
+    "p50_s_adjusted": 135.51347517790273,
+    "p95_s_adjusted": 285.4269582731183,
+    "n": 450,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://github.com/cactus-compute/needle"
+  },
+  {
+   "key": "needle-3-tools",
+   "display": "Needle 3, options as tools (post-hoc adapter mode)",
+   "author": "Cactus Compute",
+   "class": "small-tool-model",
+   "open": "yes",
+   "licence": "Apache-2.0 (model and package)",
+   "repo": "https://github.com/cactus-compute/needle",
+   "endpoint_kind": "cpu",
+   "api_flag": false,
+   "axes": {
+    "intelligence": 0,
+    "calibration": 0,
+    "speed": 40.9964345452206,
+    "cost": 61.57165387848559
+   },
+   "capability": 0.0,
+   "composite_v15": 0,
+   "v156_rank": 103,
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.019096108374384236,
+    "basis": "ESTIMATE: v1.5 measured-input proxy; no exact base-model floor applies"
+   },
+   "speed": {
+    "p50_s_adjusted": 58.15954462890513,
+    "p95_s_adjusted": 136.68962372669483,
+    "n": 450,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)"
+   },
+   "measured_revision": "v1.5.0",
+   "measured_label": "measured on v1.5.0 (2026-09-28)",
+   "date_basis": "publication day of the release that first published this measurement (merge into main)",
+   "carried_from": "v1.5.7",
+   "note": null,
+   "source_url": "https://github.com/cactus-compute/needle"
+  }
+ ]
+}

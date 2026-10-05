@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import { readCurrentJevbench, CURRENT_JEVBENCH_PAGE } from '../../lib/jevbench-current.mjs';
-import { JevBenchV15ReleasePage } from '../../components/JevBenchV15ReleasePage';
+import { JevBenchV16ReleaseRoute } from '../../components/JevBenchV16ReleaseRoute';
 import { JevHistoryLazy } from '../../components/JevHistoryLazy';
 
 const OG_ART_REVISION = 'og4'; // Keep the live board share card evergreen across releases.
 
 export async function generateMetadata(): Promise<Metadata> {
   const title = 'JevBench Capability Score by Benchmark Heaven — Jev-class model benchmark';
-  const description = 'JevBench Capability Score ranks decision models within cost and latency caps. Compare intelligence, calibration, speed, and cost.';
+  const description = 'JevBench Capability Score ranks decision models within frozen cost and median-latency caps. Compare intelligence, calibration, speed, cost, use cases, topics and languages.';
   const imageAlt = 'JevBench by Benchmark Heaven: a benchmark for Jev-class decision models across intelligence, calibration, speed, and cost.';
   const image = `https://benchmarkheaven.com/jev-models/opengraph-image?v=${OG_ART_REVISION}`;
   return {
@@ -22,9 +22,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function JevModelsPage() {
-  const { artifact, sha256 } = await readCurrentJevbench();
+  const release = await readCurrentJevbench();
   return <>
-    <JevBenchV15ReleasePage artifact={artifact} sha256={sha256} versionPath={CURRENT_JEVBENCH_PAGE} live />
+    <JevBenchV16ReleaseRoute live release={release} versionPath={CURRENT_JEVBENCH_PAGE} />
     <JevHistoryLazy />
   </>;
 }

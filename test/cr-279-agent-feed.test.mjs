@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { readCurrentJevbench, CURRENT_JEVBENCH_PAGE } from '../lib/jevbench-current.mjs';
 import { readJevbenchAgentFeed, projectJevbenchFeed } from '../lib/jevbench-agent-feed.mjs';
-import { jevClassRows } from '../lib/jevbench-jev-class.mjs';
+import { jevClassRows, JEV_V16_CLASS_OPTIONS } from '../lib/jevbench-jev-class.mjs';
 import { jevV15BoardSystem } from '../lib/jevbench-v15-board.mjs';
 const { artifact, sha256 } = await readCurrentJevbench();
 const { feed, bytes, sha256: feedHash } = await readJevbenchAgentFeed();
@@ -22,7 +22,7 @@ test('current feed shares the live page release pointer and exactly its publishe
 });
 
 test('feed preserves published axes, composite ranks and price basis, and uses page Capability policy', () => {
-  const view = jevClassRows(artifact.systems.map(jevV15BoardSystem));
+  const view = jevClassRows(artifact.systems.map(jevV15BoardSystem), /^v1\.6(\.|$)/.test(artifact.revision) ? JEV_V16_CLASS_OPTIONS : undefined);
   const rankedKeys = view.rows.filter(r => r.inClass && r.row.ranked).map(r => r.row.key);
   for (const [i, row] of feed.systems.entries()) {
     const original = artifact.systems[i];
