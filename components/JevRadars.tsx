@@ -40,9 +40,18 @@ export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke
     {[50, 100].map((v) => { const a = -Math.PI / 2 + Math.PI / spokes.length; const d = (R * v / 100) * Math.cos(Math.PI / spokes.length) - 3; return <text key={v} x={r3(cx + d * Math.cos(a))} y={r3(cy + d * Math.sin(a))} textAnchor="start" dominantBaseline="hanging" fontSize={11} fill="currentColor" opacity={0.7} style={{ paintOrder: "stroke", stroke: "var(--surface)", strokeWidth: "3px", strokeLinejoin: "round" }} data-radar-ring>{v}</text>; })}
     {spokes.map((s, i) => { const [x, y] = at(i, 100); return <line key={s.key} x1={cx} y1={cy} x2={x} y2={y} stroke="rgb(var(--line))" strokeOpacity={0.6} />; })}
     {series.map((se, k) => {
-      const pts = spokes.map((s, i) => (s.values[k] === null || s.thin[k] ? null : at(i, s.values[k] as number))).filter((p): p is number[] => p !== null);
-      return <g key={k} data-bh-jev12-radar-series={k === 0 ? "a" : "b"}>
-        <polygon points={pts.map((p) => p.join(",")).join(" ")} fill={se.stroke} fillOpacity={k === 0 ? 0.18 : 0.1} stroke={se.stroke} strokeWidth={2.2} strokeDasharray={se.dashed ? "6 4" : undefined} strokeLinejoin="round" />
+      // CR-290 (Florian 5 Oct 2026): a spoke without a plotted value (unpublished, or under the minimum n) is a gap, never
+      // a 0 and never bridged. Joining the remaining points drew a small misleading polygon (Jev 1.13.0, a hosted API with
+      // P300 cells only, on the use-case radar). Only a complete series is a filled polygon; otherwise only neighbouring
+      // spokes that both have values are joined.
+      const byIndex = spokes.map((s, i) => (s.values[k] === null || s.thin[k] ? null : at(i, s.values[k] as number)));
+      const pts = byIndex.filter((p): p is number[] => p !== null);
+      const complete = pts.length === spokes.length;
+      const segments = complete ? [] : byIndex.flatMap((p, i) => { const q = byIndex[(i + 1) % byIndex.length]; return p && q && spokes.length > 2 ? [[p, q]] : []; });
+      return <g key={k} data-bh-jev12-radar-series={k === 0 ? "a" : "b"} data-bh-radar-gaps={complete ? undefined : spokes.length - pts.length}>
+        {complete
+          ? <polygon points={pts.map((p) => p.join(",")).join(" ")} fill={se.stroke} fillOpacity={k === 0 ? 0.18 : 0.1} stroke={se.stroke} strokeWidth={2.2} strokeDasharray={se.dashed ? "6 4" : undefined} strokeLinejoin="round" />
+          : segments.map(([p, q], i) => <line key={i} x1={p[0]} y1={p[1]} x2={q[0]} y2={q[1]} stroke={se.stroke} strokeWidth={2.2} strokeDasharray={se.dashed ? "6 4" : undefined} strokeLinecap="round" />)}
         {pts.map(([x, y], i) => se.square ? <rect key={i} x={x - 3.5} y={y - 3.5} width={7} height={7} fill={se.stroke} stroke="var(--surface)" strokeWidth={1} /> : <circle key={i} cx={x} cy={y} r={3.8} fill={se.stroke} stroke="var(--surface)" strokeWidth={1} />)}
       </g>;
     })}
@@ -56,8 +65,11 @@ export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke
       return <text key={s.key} x={x} y={y} textAnchor={anchor} fontSize={13.5} fill="var(--text)" data-bh-jev12-radar-spoke={s.key} style={s.tip ? { cursor: "help" } : undefined}>
         {s.tip && <title>{s.tip}</title>}
         {s.lines.map((l, j) => <tspan key={j} x={x} dy={j === 0 ? 0 : 14} fontWeight={600}>{l}</tspan>)}
-        {/* F-216 (Fable pass 40): the separator sits between two printed values; a spoke whose A is unpublished prints B alone, not "· 74%". */}
-        <tspan x={x} dy={14} fontSize={13}>{series.map((se, k) => s.values[k] === null ? null : <tspan key={k} fill={s.thin[k] ? "var(--muted)" : se.stroke} fontWeight={700} data-bh-jev12-radar-value={`${k === 0 ? "a" : "b"}:${s.key}`}>{k > 0 && s.values[k - 1] !== null ? <tspan fill="var(--muted)" fontWeight={400}> · </tspan> : null}{s.texts[k]}</tspan>)}</tspan>
+        {/* F-216 (Fable pass 40), refined by CR-290: the separator sits between two printed slots; an unpublished value prints "n/a", never a bare "· 74%". */}
+        {/* CR-290: when one system has a value and the other has none, the missing one prints a muted "n/a" in its slot, so a gap
+            reads as "no value", not as a low score. A spoke neither system has keeps its label alone. */}
+        <tspan x={x} dy={14} fontSize={13}>{series.map((se, k) => { const shown = (j: number) => s.values[j] !== null || series.some((_, m) => s.values[m] !== null);
+          return !shown(k) ? null : <tspan key={k} fill={s.values[k] === null || s.thin[k] ? "var(--muted)" : se.stroke} fontWeight={s.values[k] === null ? 400 : 700} data-bh-jev12-radar-value={`${k === 0 ? "a" : "b"}:${s.key}`} data-bh-radar-na={s.values[k] === null ? "" : undefined}>{k > 0 && shown(k - 1) ? <tspan fill="var(--muted)" fontWeight={400}> · </tspan> : null}{s.values[k] === null ? "n/a" : s.texts[k]}</tspan>; })}</tspan>
       </text>;
     })}
   </svg>;

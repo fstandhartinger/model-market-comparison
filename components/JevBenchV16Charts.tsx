@@ -27,7 +27,7 @@ export function JevBenchV16Charts({ systems, eligibilitySystems, revision, offic
 
   return <>
     <JevCapabilityRanking systems={systems} eligibilitySystems={eligibilitySystems} revision={revision} officialHref={officialHref} onCapsChange={onCapsChange} referenceLabel={JEV_V16_REFERENCE_LABEL} limits={JEV_V16_CLASS_OPTIONS.limits} />
-    <JevBubbleCharts points={current.points} costLimit={selected.costLimit} latencyCap={selected.latencyLimit} referenceName={JEV_V16_REFERENCE_LABEL} scoreKind="v15" />
+    <JevBubbleCharts points={current.points} costLimit={selected.costLimit} latencyCap={selected.latencyLimit} costFactor={selected.costFactor} latencyFactor={selected.latencyFactor} referenceName={JEV_V16_REFERENCE_LABEL} scoreKind="v15" />
     <section className="mt-8 scroll-mt-6" data-bh-jev16-3d-toggle>
       <button type="button" className="text-accent underline" aria-expanded={show3d} aria-controls="jev16-capability-3d" onClick={() => setShow3d((open) => !open)}>{show3d ? 'Hide 3D view' : 'Show 3D view'}</button>
       {show3d && <div id="jev16-capability-3d"><JevCapabilityLazy revision={revision} systems={systems} only3d classOptions={classOptions} /></div>}

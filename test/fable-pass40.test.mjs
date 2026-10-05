@@ -74,7 +74,7 @@ test('F-215: the pooled family sentence separates an unpublished breakdown (rank
   assert.match(src, /not run on the full v1\.4 question set \(a partial run\)/);
 });
 
-test('F-216: a radar spoke prints its separator only between two printed values', () => {
+test('F-216 (refined by CR-290): a radar spoke prints its separator only between two printed slots; a missing value is "n/a"', () => {
   const src = read('components/JevRadars.tsx');
-  assert.match(src, /\{k > 0 && s\.values\[k - 1\] !== null \? <tspan fill="var\(--muted\)" fontWeight=\{400\}> · <\/tspan> : null\}\{s\.texts\[k\]\}/);
+  assert.match(src, /\{k > 0 && shown\(k - 1\) \? <tspan fill="var\(--muted\)" fontWeight=\{400\}> · <\/tspan> : null\}\{s\.values\[k\] === null \? "n\/a" : s\.texts\[k\]\}/);
 });

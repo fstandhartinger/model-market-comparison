@@ -32,14 +32,20 @@ function heat(competence: number, lowN: boolean): CSSProperties {
 
 function LanguageView({ a, categories }: { a: JevV16ReleaseArtifact; categories: JevV16Categories }) {
   const systems = a.systems.filter((s) => s.ranked && categories.systems[s.key]);
-  const langs = categories.languages.filter((l) => l.key !== 'en').sort((x, y) => y.n - x.n);
+  const allLangs = categories.languages.filter((l) => l.key !== 'en').sort((x, y) => y.n - x.n);
   const en = categories.languages.find((l) => l.key === 'en');
+  // CR-290 (Florian 5 Oct 2026): a language column in which no system reaches the reporting minimum was all dashes.
+  // Those columns are not drawn; their languages and item counts are listed in the caption instead. Display only.
+  const shown = (l: { key: string }) => systems.some((s) => (categories.systems[s.key].languages?.[l.key]?.n ?? 0) >= categories.min_n);
+  const langs = allLangs.filter(shown);
+  const hidden = allLangs.filter((l) => !shown(l));
   return <section className="mt-10" aria-labelledby="jev16-languages" data-bh-jev16-language-view>
     <h2 id="jev16-languages" className="text-2xl font-bold">Languages</h2>
     <p className="bh-muted mt-1 max-w-4xl text-sm">Raw chance-corrected competence per item language (0 = chance, 100 = perfect; can be negative), from each system&apos;s own measured items:
       self-hosted systems over S 1,200 + P 300, hosted APIs over their A or A2 subset + P (600 items). A2 topic/use-case cells cover P300 only. Unequated and outside the Composite. Cells under {categories.min_n} items are left empty. A dagger (†) marks every displayed cell with fewer than 30 answered items.
-      {en ? ` English (${en.n.toLocaleString('en-US')} items) is listed first; the other ${langs.filter((l) => l.key !== 'mixed').length} languages${langs.some((l) => l.key === 'mixed') ? ' and the mixed-language column' : ''} share ${langs.reduce((s, l) => s + l.n, 0)} items.` : ''}
-      {' '}This is the v1.6.0 main-pool breakdown. The expanded uc1.1 multilingual pool is a candidate for a later release and is not part of v1.6.0.</p>
+      {en ? ` English (${en.n.toLocaleString('en-US')} items) is listed first; the other ${allLangs.filter((l) => l.key !== 'mixed').length} languages${allLangs.some((l) => l.key === 'mixed') ? ' and the mixed-language group' : ''} share ${allLangs.reduce((s, l) => s + l.n, 0)} items.` : ''}
+      {hidden.length > 0 && <span data-bh-jev16-language-hidden={hidden.map((l) => l.key).join(' ')}>{' '}{hidden.length === 1 ? 'One group has' : `${hidden.length} groups have`} fewer than {categories.min_n} items each, so no system can reach the reporting minimum and {hidden.length === 1 ? 'it gets' : 'they get'} no column: {hidden.map((l) => `${l.label} (${l.n})`).join(', ')} — {hidden.reduce((s, l) => s + l.n, 0)} items, scored like every other item.</span>}
+      {' '}This is the v1.6.0 main-pool breakdown. Per-language coverage grows with the expanded uc1.1 multilingual pool, a candidate for a later release that is not part of v1.6.0.</p>
     <div className="mt-3 overflow-x-auto"><table className="text-left text-xs tabular" data-bh-jev16-language-table>
       <caption className="sr-only">JevBench v1.6.0 competence by item language and system</caption>
       <thead><tr><th scope="col" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5">System</th>

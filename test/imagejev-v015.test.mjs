@@ -72,7 +72,7 @@ test('ImageJevBench adapter maps v0.1.5 board, comparison, presets and frozen ca
   assert.equal(compare.length, 50);
   assert.deepEqual(Object.keys(systems[0].axes), ['intelligence', 'calibration', 'speed', 'cost']);
   assert.equal(systems.find((row) => row.api_flag).class, 'decision-api');
-  assert.equal(systems.find((row) => row.key === 'imajev_4b').class, 'jev-rebuild');
+  assert.equal(systems.find((row) => row.key === 'imajev_4b').class, 'img-qwen35');
   assert.deepEqual(limits, {
     cost: 0.06459465517241379,
     latency: 1.2329566404223442,

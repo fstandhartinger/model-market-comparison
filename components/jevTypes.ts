@@ -6,12 +6,19 @@ export const JEV_TYPE_VAR: Record<string, string> = {
   reranker: "--jev-t-reranker", "raw-logit-control": "--jev-t-control", "native-logit": "--jev-t-native",
   // F-192: the v1.4.2 artifact introduced this class and named no label for it; the colour is ours, the label is the data owner's.
   "system-one-open": "--jev-t-sysone",
+  // CR-290: ImageJevBench colours self-hosted systems by cited base-model family (lib/imagejev-board.mjs).
+  "img-qwen35": "--jev-t-img-qwen35", "img-qwen3vl": "--jev-t-img-qwen3vl", "img-qwen38": "--jev-t-img-qwen38",
+  "img-gemma4": "--jev-t-img-gemma4", "img-diffusiongemma": "--jev-t-img-dgemma", "img-other-base": "--jev-t-img-other",
+  "img-hosted-llm": "--jev-t-img-hosted",
 };
 export const JEV_TYPE_LABEL: Record<string, string> = {
   jev: "Jev (TypeSafe, closed)", "jev-rebuild": "Jev rebuild", "llm-baseline": "Instruction model, JSON schema",
   "small-tool-model": "Small tool-calling model", "jev-service": "Service built on Jev", classifier: "Zero-shot classifier",
   "decision-api": "Closed decision API", reranker: "Reranker (neutral adapter)", "raw-logit-control": "Raw-logit control (base model)",
   "native-logit": "Native-logit decision engine",
+  // CR-290: ImageJevBench base-model families (lib/imagejev-board.mjs).
+  "img-qwen35": "Qwen3.5-based", "img-qwen3vl": "Qwen3-VL-based", "img-qwen38": "Qwen3.8-based", "img-gemma4": "Gemma 4-based",
+  "img-diffusiongemma": "DiffusionGemma-based", "img-other-base": "Other or undisclosed base", "img-hosted-llm": "Hosted general-purpose LLM",
   // F-226 (Fable pass 42): "unclassified" is the artifact's own value for a system the data owner has not classed — a word, not a pending key.
   unclassified: "Unclassified",
 };

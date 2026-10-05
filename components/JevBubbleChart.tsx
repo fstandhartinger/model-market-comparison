@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { JEV_TYPE_LABEL, jevLegendTypes, jevTypeVarName } from './jevTypes';
 import { speedFromLatency } from '../lib/jevbench-jev-class.mjs';
+import { bubbleXDomain } from '../lib/jevbench-bubble-domain.mjs';
 import { useJevV15VisibleKeys } from './useJevV15VisibleKeys';
 import { OFFICIAL_WEIGHTS, isOfficialWeights, type JevWeights } from '../lib/jevbench-axis-weights.mjs';
 import { jevV15BoardScore } from '../lib/jevbench-v15-board.mjs';
@@ -58,8 +59,8 @@ function useWidth(fallback: number) {
   return { ref, width };
 }
 
-export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, referenceName, scoreLabel = 'JevBench Score', customScore = false, active, setActive, pinned, setPinned, expanded, setExpanded }: {
-  id: string; kind: Kind; points: JevBubblePoint[]; costLimit: number; latencyCap?: number; referenceName: string; scoreLabel?: string; customScore?: boolean;
+export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, costFactor = 2, latencyFactor = 2, referenceName, scoreLabel = 'JevBench Score', customScore = false, active, setActive, pinned, setPinned, expanded, setExpanded }: {
+  id: string; kind: Kind; points: JevBubblePoint[]; costLimit: number; latencyCap?: number; costFactor?: number; latencyFactor?: number; referenceName: string; scoreLabel?: string; customScore?: boolean;
   active: string | null; setActive: (key: string | null) => void; pinned: boolean; setPinned: (value: boolean) => void;
   expanded: boolean; setExpanded: (value: boolean) => void;
 }) {
@@ -100,18 +101,12 @@ export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, refere
   // Plotting, the gate and the line all use the one median definition now; v1.3 carryovers with no recorded
   // median fall back to the composite Speed axis, exactly as the Jev-class rule does.
   const plotSpeed = (p: JevBubblePoint) => (p.medianSpeed != null ? p.medianSpeed : (p.speed as number));
-  const latencyLimit = latencyCap != null ? speedFromLatency(latencyCap) : reference != null ? (reference.latency != null ? speedFromLatency(2 * reference.latency) : (reference.speed != null ? reference.speed - 20 * Math.log10(2) : null)) : null;
+  // CR-290: a "no cap" selection arrives as an Infinity limit; it has no line and must not widen the axis domain.
+  const rawLatencyLimit = latencyCap != null ? (Number.isFinite(latencyCap) ? speedFromLatency(latencyCap) : null) : reference != null ? (reference.latency != null ? speedFromLatency(2 * reference.latency) : (reference.speed != null ? reference.speed - 20 * Math.log10(2) : null)) : null;
+  const latencyLimit = rawLatencyLimit != null && Number.isFinite(rawLatencyLimit) ? rawLatencyLimit : null;
   const xValue = (p: JevBubblePoint) => (kind === 'cost' ? Math.log10(p.cost as number) : plotSpeed(p));
-  const [xMin, xMax] = useMemo(() => {
-    const xs = plotted.map(xValue);
-    if (kind === 'cost') {
-      if (costLimit > 0) xs.push(Math.log10(costLimit));
-      return [Math.floor((Math.min(...xs) - 0.1) * 2) / 2, Math.ceil((Math.max(...xs) + 0.1) * 2) / 2];
-    }
-    if (latencyLimit != null) xs.push(latencyLimit);
-    return [Math.max(0, Math.floor((Math.min(...xs) - 5) / 10) * 10), 100];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [plotted, kind, costLimit, latencyLimit]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const [xMin, xMax] = useMemo(() => bubbleXDomain(kind, plotted.map(xValue), costLimit, latencyLimit), [plotted, kind, costLimit, latencyLimit]);
   const yMin = useMemo(() => Math.max(0, Math.floor(Math.min(...plotted.map((p) => p.capability)) / 10) * 10), [plotted]);
   const plotCenterX = (L + W - R) / 2, plotCenterY = (T + H - B) / 2;
   // Both charts improve toward the upper right. The cost domain stays logarithmic, with its visual direction reversed.
@@ -324,7 +319,7 @@ export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, refere
     ? Array.from({ length: Math.floor(xMax) - Math.ceil(xMin) + 1 }, (_, i) => Math.ceil(xMin) + i).map((e) => ({ v: e, label: usd(10 ** e) }))
     : Array.from({ length: Math.floor((xMax - xMin) / 10) + 1 }, (_, i) => xMin + 10 * i).filter((v, i, all) => !narrow || i % 2 === 0 || i === all.length - 1).map((v) => ({ v, label: String(v), sub: `≈${secs(speedToSeconds(v))}` }));
   const yTicks = Array.from({ length: Math.floor((100 - yMin) / 10) + 1 }, (_, i) => yMin + 10 * i);
-  const limitX = kind === 'cost' && costLimit > 0 ? x(Math.log10(costLimit)) : null;
+  const limitX = kind === 'cost' && costLimit > 0 && Number.isFinite(costLimit) ? x(Math.log10(costLimit)) : null;
   // Doubling the latency represented by the logarithmic Speed score moves it down by 20 log10(2) points.
   const latencyLimitX = kind === 'speed' && latencyLimit != null ? x(latencyLimit) : null;
   // F-225(a) (Fable pass 42): at 390 the dashed line sits close to the y-axis, so its caption is pushed out over the
@@ -338,8 +333,9 @@ export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, refere
   const sepLabelBaseY = phoneColumnLeft ? H - B - 6 : T + 25;
   const sepLabel = sepX != null && sepX > L && sepX < W - R && sepX - L <= 48
     ? (() => {
-      const full = kind === 'cost' ? `2× ${referenceName} cost` : `2× ${referenceName} latency`;
-      const text = sepX - 5 - sepWidthOf(full) >= L ? full : `2× ${referenceName}`;
+      const lineFactor = kind === 'cost' ? costFactor : latencyFactor;
+      const full = kind === 'cost' ? `${lineFactor}× ${referenceName} cost` : `${lineFactor}× ${referenceName} latency`;
+      const text = sepX - 5 - sepWidthOf(full) >= L ? full : `${lineFactor}× ${referenceName}`;
       const right = Math.max(4, sepX - 5);
       return { left: right - sepWidthOf(text), right };
     })()
@@ -370,7 +366,7 @@ export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, refere
         </button>
       </div>
     </div>
-    <p className="bh-muted mt-1 text-sm">{hint} {kind === 'cost' ? 'Cost is USD per 1,000 decisions on a log scale. The dashed line is 2× Jev’s cost.' : 'Speed here is the median-latency speed — the same adjusted median (p50) latency the Jev-class limit uses — a log scale, so each 20 points is 10× faster (median under the numbers). The dashed line is 2× Jev’s median latency.'}</p>
+    <p className="bh-muted mt-1 text-sm">{hint} {kind === 'cost' ? `Cost is USD per 1,000 decisions on a log scale. ${limitX == null ? 'No cost cap is selected, so no limit line is drawn.' : `The dashed line is ${costFactor}× Jev’s cost.`}` : 'Speed here is the median-latency speed — the same adjusted median (p50) latency the Jev-class limit uses — a log scale, so each 20 points is 10× faster (median under the numbers). ' + (latencyLimitX == null ? 'No latency cap is selected, so no limit line is drawn.' : `The dashed line is ${latencyFactor}× Jev’s median latency.`)}</p>
     {expanded && <p className="bh-muted mt-1 text-xs">Wheel or pinch to zoom. Drag to pan. Use Reset view to return to the full chart.</p>}
     <div ref={ref} className="relative mt-3 w-full" onPointerLeave={(e) => { if (e.pointerType === 'mouse' && !pinned && pointers.current.size === 0) setActive(null); }}>
       <svg ref={svgRef} width={W} height={H} viewBox={`0 0 ${W} ${H}`} className={`block select-none ${expanded ? 'cursor-grab touch-none active:cursor-grabbing' : 'touch-manipulation'}`}
@@ -400,8 +396,8 @@ export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, refere
         <text x={plotCenterX} y={H - 5} textAnchor="middle" fill="var(--text)" fontSize="11">{kind === 'cost' ? '$ per 1,000 decisions (log)' : 'Median-latency speed'}</text>
         <text x={11} y={plotCenterY + 7} textAnchor="middle" fill="var(--text)" fontSize="11" transform={`rotate(-90 11 ${plotCenterY + 7})`}>Capability</text>
         <text x={11} y={plotCenterY - 39} textAnchor="middle" fill="var(--text)" fontSize="13" aria-label="Capability up">↑</text>
-        {separator(limitX, 'cost', `2× ${referenceName} cost`, `2× ${referenceName}`, '← pricier', 'cheaper →')}
-        {separator(latencyLimitX, 'latency', `2× ${referenceName} latency`, `2× ${referenceName}`, '← slower', 'faster →')}
+        {separator(limitX, 'cost', `${costFactor}× ${referenceName} cost`, `${costFactor}× ${referenceName}`, '← pricier', 'cheaper →')}
+        {separator(latencyLimitX, 'latency', `${latencyFactor}× ${referenceName} latency`, `${latencyFactor}× ${referenceName}`, '← slower', 'faster →')}
         <g clipPath={`url(#${id}-plot-clip)`}>{drawOrder.map(({ p, cx, cy, r }) => <circle key={p.key} cx={cx} cy={cy} r={r}
           fill={colour(p.cls)} fillOpacity={p.inClass ? 0.85 : 0.18} stroke={p.inClass ? 'var(--surface)' : colour(p.cls)} strokeWidth={p.isReference ? 2.5 : 1.25}
           tabIndex={0} role="button" aria-label={`${p.name}: Capability ${one(p.capability)}`} data-bh-jev-bubble-point={p.key} data-bh-highlighted={active === p.key}
@@ -427,7 +423,7 @@ export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, refere
   </figure>;
 }
 
-export function JevBubbleCharts({ points, costLimit, latencyCap, referenceName, benchName = 'JevBench', scoreKind = 'official' }: { points: JevBubblePoint[]; costLimit: number; latencyCap?: number; referenceName: string; benchName?: string; scoreKind?: 'v15' | 'official' }) {
+export function JevBubbleCharts({ points, costLimit, latencyCap, costFactor = 2, latencyFactor = 2, referenceName, benchName = 'JevBench', scoreKind = 'official' }: { points: JevBubblePoint[]; costLimit: number; latencyCap?: number; costFactor?: number; latencyFactor?: number; referenceName: string; benchName?: string; scoreKind?: 'v15' | 'official' }) {
   const visibleKeys = useJevV15VisibleKeys(points.map((point) => point.key));
   const [weights, setWeights] = useState<JevWeights>(OFFICIAL_WEIGHTS);
   const [showOutside, setShowOutside] = useState(false);
@@ -463,9 +459,9 @@ export function JevBubbleCharts({ points, costLimit, latencyCap, referenceName, 
       Show models that don&apos;t qualify as Jev-class
     </label>
     <div className="mt-4 grid min-w-0 gap-4 lg:grid-cols-2">
-      <JevBubbleChart id="jev-bubble-cost" kind="cost" points={visible} costLimit={costLimit} latencyCap={latencyCap} referenceName={referenceName} scoreLabel={scoreLabel} customScore={customScore}
+      <JevBubbleChart id="jev-bubble-cost" kind="cost" points={visible} costLimit={costLimit} latencyCap={latencyCap} costFactor={costFactor} latencyFactor={latencyFactor} referenceName={referenceName} scoreLabel={scoreLabel} customScore={customScore}
         active={active} setActive={setActive} pinned={pinned} setPinned={setPinned} expanded={expandedKind === 'cost'} setExpanded={(value) => setExpandedKind(value ? 'cost' : null)} />
-      <JevBubbleChart id="jev-bubble-speed" kind="speed" points={visible} costLimit={costLimit} latencyCap={latencyCap} referenceName={referenceName} scoreLabel={scoreLabel} customScore={customScore}
+      <JevBubbleChart id="jev-bubble-speed" kind="speed" points={visible} costLimit={costLimit} latencyCap={latencyCap} costFactor={costFactor} latencyFactor={latencyFactor} referenceName={referenceName} scoreLabel={scoreLabel} customScore={customScore}
         active={active} setActive={setActive} pinned={pinned} setPinned={setPinned} expanded={expandedKind === 'speed'} setExpanded={(value) => setExpandedKind(value ? 'speed' : null)} />
     </div>
     <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="Bubble colours and styles" data-bh-jev-bubble-legend>

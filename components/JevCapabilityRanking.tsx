@@ -214,9 +214,11 @@ export function JevCapabilityRanking({ systems, eligibilitySystems = systems, re
     <details className="mt-2" open={desktopControls || !official} data-bh-jev-cap-controls>
       <summary className="cursor-pointer text-xs text-accent sm:hidden">Adjust cost / latency caps · {official ? <span className="bh-jevc-official">2× official</span> : 'custom'}</summary>
       <div className="bh-jev-cap-controls-body mt-2 sm:mt-0">
-      <div className="grid max-w-xl grid-cols-2 gap-x-4">
+      {/* CR-290 (Florian 5 Oct 2026): wide enough that "Max median latency vs Jev 1.13.0 (JevBench) 2× · official" stays on
+          one line, so both sliders sit on the same baseline; phones stack the two controls instead of wrapping the text. */}
+      <div className="grid max-w-4xl grid-cols-1 gap-x-8 gap-y-3 lg:grid-cols-2" data-bh-jev-cap-sliders>
         {([['costFactor', 'Max cost'], ['latencyFactor', 'Max median latency']] as const).map(([axis, label]) => <label key={axis} htmlFor={`${controlId}-${axis}`} className="text-[11px] sm:text-xs">
-          <span className="flex flex-wrap items-baseline justify-between gap-x-2"><span>{label} vs {referenceLabel}</span><b className="tabular">{formatCap(caps[axis])}{caps[axis] === DEFAULT_CAP ? <span className="bh-muted font-normal"> · official</span> : null}</b></span>
+          <span className="flex items-baseline justify-between gap-x-2 whitespace-nowrap" data-bh-jev-cap-label><span className="min-w-0 truncate">{label} vs {referenceLabel}</span><b className="tabular">{formatCap(caps[axis])}{caps[axis] === DEFAULT_CAP ? <span className="bh-muted font-normal"> · official</span> : null}</b></span>
           <input id={`${controlId}-${axis}`} className="mt-1 block h-3 w-full accent-[rgb(var(--accent))]" type="range" min="1" max="10.1" step="0.1"
             value={caps[axis] === Infinity ? 10.1 : caps[axis]} list={`${controlId}-official`} aria-valuetext={formatCap(caps[axis])}
             onChange={(event) => updateCaps({ ...caps, [axis]: Number(event.target.value) > 10 ? Infinity : clampCap(Number(event.target.value)) })} />
