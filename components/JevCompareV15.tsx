@@ -16,7 +16,7 @@ import { useJevV15VisibleKeys } from "./useJevV15VisibleKeys";
 // and test/cr-257-category-radars.test.mjs.
 
 export type JevCompareV15Row = {
-  key: string; name: string; cls: string; rank: number | null; listing: string; score: number | null; repo?: string | null;
+  key: string; name: string; cls: string; rank: number | null; listing: string; score: number | null; repo?: string | null; hosted?: boolean;
   axes: Record<"intelligence" | "calibration" | "speed" | "cost", number | null> | null;
   typeCc: Record<"choice" | "noul" | "score", { open: number | null; sealed: number | null }>;
   tierCc: {
@@ -135,12 +135,14 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
   // CR-290 (Florian 5 Oct 2026): say in the caption which system has gaps and why, instead of letting a partial series
   // read as a small area. Category cells exist only from min_n answered items; hosted APIs see far fewer items per category.
   const gapNote = (f: { spokes: Spoke[]; dim?: CategoryDim }) => {
-    const parts = pair.flatMap((r, k) => {
+    const gapped = pair.flatMap((r, k) => {
       const gaps = f.spokes.filter((sp) => sp.values[k] === null || sp.thin[k]).length;
-      return gaps > 0 && gaps < f.spokes.length ? [`${k === 0 ? "A" : "B"} (${r.name}) has no plotted value on ${gaps} of ${f.spokes.length} spokes`] : [];
+      return gaps > 0 && gaps < f.spokes.length ? [{ r, text: `${k === 0 ? "A" : "B"} (${r.name}) has no plotted value on ${gaps} of ${f.spokes.length} spokes` }] : [];
     });
-    if (!parts.length) return null;
-    const why = f.dim && categories ? ` — fewer than ${categories.minN} of its answered items fall in those categories (hosted APIs answer a smaller item set, so many of their category cells stay under the minimum)` : " — no published value there";
+    if (!gapped.length) return null;
+    const parts = gapped.map((g) => g.text);
+    const hosted = gapped.some((g) => g.r.hosted === true);
+    const why = f.dim && categories ? ` — fewer than ${categories.minN} answered items in those categories${hosted ? " (hosted APIs answer a smaller item set, so many of their category cells stay under the minimum)" : ""}` : " — no published value there";
     return <span className="block" data-bh-radar-gap-note> Gaps, not zeros: {parts.join("; ")}{why}. Those spokes are marked n/a and left open.</span>;
   };
   const desc = (title: string, spokes: Spoke[]) => `${title}, ${s[0].name} vs ${s[1].name}. ` + spokes.map((sp) => `${sp.lines.join(" ")}: ${sp.texts[0]} vs ${sp.texts[1]}`).join("; ") + ".";

@@ -1,4 +1,5 @@
-import { imageJevBoardSystems, imageJevBoardRows, imageJevCompareRows, imageJevCapabilityLimits, imageJevSliderPresets } from '../../../lib/imagejev-board.mjs';
+import { imageJevBoardSystems, imageJevBoardRows, imageJevCompareRows, imageJevCapabilityLimits, imageJevSliderPresets, imageJevClassFor } from '../../../lib/imagejev-board.mjs';
+import { JEV_TYPE_LABEL, jevTypeVarName } from '../../../components/jevTypes';
 import { JevCapabilityRanking } from '../../../components/JevCapabilityRanking';
 import { jevClassView } from '../../../components/jevClassView';
 import { JevBubbleCharts } from '../../../components/JevBubbleChart';
@@ -113,7 +114,8 @@ function ScoreBars({ systems, track }: { systems: any[]; track: Track }) {
   return <ol className="mt-4 grid gap-2" data-bh-mm-bars={track}>{rows.map((s, i) => {
     const v = s.tracks[track].composite.score;
     const gate = gateOf(s.tracks[track], s);
-    const color = i === 0 ? 'bg-amber-400' : s.api_flag ? 'bg-pink-400' : 'bg-teal-400';
+    // CR-290: the same base-model-family colours as the capability bars and bubbles.
+    const cls = imageJevClassFor(s);
     return <li key={s.key} className="grid grid-cols-[minmax(0,11rem)_1fr_3.2rem] items-center gap-3 sm:grid-cols-[minmax(0,17rem)_1fr_3.5rem]">
       <span className="min-w-0 break-words text-sm font-semibold leading-tight" title={s.name}>
         {i + 1}. {imageJevSourceUrl(s.key, s.repo)
@@ -123,7 +125,7 @@ function ScoreBars({ systems, track }: { systems: any[]; track: Track }) {
         <BaseModelDisplay benchmark="imagejevbench" systemKey={s.key} className="mt-1 block text-[11px] font-normal leading-tight" />
         {imageJevSourceUrl(s.key, s.repo) && <Link href={imageSystemPath(s.key)} className="text-[11px] font-normal text-accent underline">details</Link>}
       </span>
-      <span className="h-5 rounded-md bg-black/10 dark:bg-white/10"><span className={`block h-full rounded-md ${color}`} style={{ width: `${Math.max(0.5, v)}%` }} /></span>
+      <span className="h-5 rounded-md bg-black/10 dark:bg-white/10"><span className="block h-full rounded-md" title={JEV_TYPE_LABEL[cls] ?? cls} style={{ width: `${Math.max(0.5, v)}%`, backgroundColor: `rgb(var(${jevTypeVarName(cls)}))` }} data-bh-mm-bar-class={cls} /></span>
       <span className="text-right font-bold tabular-nums">{score(v)}</span>
     </li>;
   })}</ol>;
