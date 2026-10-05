@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { JEV_ARCH_CLASSES, jevArchFor, jevArchBadgeText } from '../lib/jevbench-architecture.mjs';
 import { compileTsModule } from './helpers/transpile-ts.mjs';
 const { jevRowArch, jevLegendTypes, jevTypeVarName, JEV_TYPE_LABEL } = await import(await compileTsModule(new URL('../components/jevTypes.ts', import.meta.url)));
@@ -56,4 +56,12 @@ test('legends merge legacy classes, keep canonical order and use one palette', (
   }
   assert.equal(jevRowArch({ key: 'missing', class: 'classifier', arch: 'system' }), 'system');
   assert.equal(jevArchFor('jevbench', { key: '__proto__' }).arch, 'open-llm-decoder');
+});
+
+test('chart renderers colour rows by architecture, never by the legacy artifact class', () => {
+  const dir = new URL('../components/', import.meta.url);
+  const offenders = readdirSync(dir).filter((f) => /\.tsx?$/.test(f)).flatMap((f) =>
+    readFileSync(new URL(f, dir), 'utf8').split('\n').map((line, i) => [f, i + 1, line])
+      .filter(([, , line]) => /(typeVar|typeColour|jevTypeVarName)\(\s*\w+\.(cls|class)\s*\)/.test(line)));
+  assert.deepEqual(offenders.map(([f, n]) => `${f}:${n}`), []);
 });

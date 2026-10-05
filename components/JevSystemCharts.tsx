@@ -11,7 +11,7 @@ const TICKS = [0, 25, 50, 75, 100];
 /** The JevBench Score scale, 0–100: every ranked system as a faint tick, this system as its own point,
  *  and the reference (Jev 1.13.0, or the rank-2 system on Jev's own page) as a marked tick. */
 export function JevScoreStrip({ row, ranked, reference }: { row: JevV12Row; ranked: JevV12Row[]; reference: JevV12Row | null }) {
-  const colour = typeColour(row.cls);
+  const colour = typeColour(jevRowArch(row));
   const caption = row.ranked ? `Where it sits among the ${ranked.length} ranked systems.` : 'Shown, not ranked.';
   return <figure className="mt-4" data-bh-jev-system-strip={row.key}>
     <div className="relative h-8 w-full min-w-[300px]">

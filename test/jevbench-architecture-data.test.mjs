@@ -21,7 +21,7 @@ function jsonFiles(dir) {
 // System rows are in these top-level arrays. Category definitions and per-item
 // source logs are deliberately excluded; excluded historical system runs count.
 function systemKeys(artifact) {
-  return ['ranking', 'systems', 'results', 'rows', 'excluded_runs'].flatMap((field) =>
+  return ['ranking', 'systems', 'results', 'rows', 'excluded_runs', 'not_measured'].flatMap((field) =>
     Array.isArray(artifact?.[field]) ? artifact[field].flatMap((row) =>
       typeof row?.key === 'string' ? [row.key] : []) : []);
 }

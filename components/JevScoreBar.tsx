@@ -55,7 +55,7 @@ export function JevScoreBar({ row, reference = false, order, metric = 'score' }:
   const small = metric === 'score' ? row.intelligence : row.score;
   const kind = row.costKind;
   const label = `${row.display}: ${BAR_METRIC_LABEL[metric]} ${one(drawn)}${row.rank ? `, rank ${row.rank}` : `, ${NOT_RANKED[row.listing] ?? row.listing}, not ranked`}. JevBench Score ${one(row.score)}, Intelligence ${one(row.intelligence)}, calibration ${row.calibration == null ? 'none' : one(row.calibration)}, speed ${one(row.speed)}, cost ${one(row.costAxis)}.`;
-  return <li style={typeVar(row.cls)} className="grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_19rem]"
+  return <li style={typeVar(jevRowArch(row))} className="grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_19rem]"
     data-bh-jev14-bar={row.key} data-bh-jev14-bar-score={row.score == null ? '' : row.score.toFixed(3)}
     data-bh-jev14-bar-order={order == null ? undefined : String(order)}
     data-bh-jev14-bar-intel={row.intelligence == null ? undefined : row.intelligence.toFixed(3)}

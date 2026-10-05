@@ -1883,6 +1883,26 @@
           "quant": null
         }
       },
+      "mica-v01-4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/sky7350/Mica-v0.1-4B/blob/9b6428b272f4708ef54a4702b52bb453a4059363/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation: base model Qwen/Qwen3.5-4B with a merged rank-16 LoRA on all 32 layers (base_model_relation: finetune)."
+          },
+          {
+            "url": "https://huggingface.co/sky7350/Mica-v0.1-4B/blob/9b6428b272f4708ef54a4702b52bb453a4059363/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForCausalLM\"]; model_type: \"qwen3_5_text\""
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        }
+      },
       "mirror": {
         "arch": "open-encoder",
         "evidence": [
