@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import { readCurrentJevbench } from '../lib/jevbench-current.mjs';
+import { readJevbenchV16Release } from '../lib/jevbench-v16-release.mjs';
 import { readMultimodalPreview } from '../lib/jevbench-multimodal-preview.mjs';
 import {
   JEVBENCH_CATEGORY_REVISIONS, IMAGEJEV_CATEGORY_REVISIONS, jevbenchCategoryView, imageJevCategoryView, validateCategoryArtifact,
@@ -38,6 +39,28 @@ test('CR-257: the live JevBench release has category values for every ranked sys
   const { artifact } = await readCurrentJevbench();
   assert.ok(JEVBENCH_CATEGORY_REVISIONS.includes(artifact.revision), `live revision ${artifact.revision} has a category artifact`);
   const ranked = artifact.systems.filter((s) => s.listing === 'ranked' || s.ranked).map((s) => s.key);
+  if (artifact.revision === 'v1.6.0') {
+    const { categories } = await readJevbenchV16Release();
+    assert.equal(categories.min_n, 15);
+    const descriptorKeys = {
+      topics: new Set(categories.topics.map((c) => c.key)),
+      usecases: new Set(categories.usecases.map((c) => c.key)),
+    };
+    for (const key of ranked) {
+      const system = categories.systems[key];
+      assert.ok(system, `${key}: ranked but no category record`);
+      for (const dim of ['topics', 'usecases']) {
+        const cells = system[dim] ?? {};
+        assert.ok(Object.keys(cells).length > 0, `${key}: no reportable ${dim} values`);
+        for (const [category, cell] of Object.entries(cells)) {
+          assert.ok(descriptorKeys[dim].has(category), `${key}: ${dim}.${category} is not in the category artifact`);
+          assert.ok(Number.isFinite(cell.competence), `${key}: ${dim}.${category} must be observed and finite`);
+          assert.ok(cell.n >= categories.min_n, `${key}: ${dim}.${category} is below the reporting minimum`);
+        }
+      }
+    }
+    return;
+  }
   const view = jevbenchCategoryView(artifact.revision, ranked);
   assert.deepEqual(view.dims.map((d) => d.key), ['topics', 'usecases']);
   for (const key of ranked) {

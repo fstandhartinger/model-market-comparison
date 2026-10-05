@@ -129,8 +129,9 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
   </li>;
 }
 
-export function JevCapabilityRanking({ systems, eligibilitySystems = systems, revision, officialHref, benchName = 'JevBench', classLabel = 'Jev-class', referenceLabel = 'Jev', eligibilityNote, correlationReason, benchmark = 'jevbench', ...options }: {
+export function JevCapabilityRanking({ systems, eligibilitySystems = systems, revision, officialHref, benchName = 'JevBench', classLabel = 'Jev-class', referenceLabel = 'Jev', eligibilityNote, correlationReason, benchmark = 'jevbench', onCapsChange, ...options }: {
   systems: JevV14System[]; revision: string; officialHref: string; benchName?: string; classLabel?: string;
+  onCapsChange?: (view: ClassCaps & { costLimit: number; latencyLimit: number }) => void;
   /** Include disclosure rows for filter status while keeping the headline chart's published row set unchanged. */
   eligibilitySystems?: JevV14System[];
   eligibilityNote?: ReactNode; correlationReason?: string; benchmark?: BaseModelBenchmark;
@@ -171,6 +172,9 @@ export function JevCapabilityRanking({ systems, eligibilitySystems = systems, re
     [eligibilitySystems, systems, capOptions, result],
   );
   const { reference, limits, rows, costLatencySpearman, n: pairedCount } = result;
+  useEffect(() => {
+    onCapsChange?.({ ...caps, costLimit: limits.cost, latencyLimit: limits.latency });
+  }, [onCapsChange, costFactor, latencyFactor, limits.cost, limits.latency]);
   useEffect(() => {
     if (benchmark !== 'jevbench') return;
     const eligibilityByKey = Object.fromEntries(eligibilityResult.rows.map((row) => [row.row.key, {

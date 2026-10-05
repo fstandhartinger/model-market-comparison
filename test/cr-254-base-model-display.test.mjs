@@ -1,3 +1,4 @@
+import { isJevbenchV16ExcludedKey } from '../lib/jevbench-v16-public-scope.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -81,6 +82,7 @@ test('CR-254 metadata covers current text and Image rosters, with citations on e
   const image = await readMultimodalPreview();
   for (const [benchmark, rows] of [['jevbench', [...artifact.systems, ...artifact.not_measured]], ['imagejevbench', image.ranking]]) {
     for (const row of rows) {
+      if (benchmark === 'jevbench' && isJevbenchV16ExcludedKey(row.key)) continue;
       assert.ok(Object.hasOwn(BASE_MODEL_METADATA.benchmarks[benchmark], row.key), `${benchmark}/${row.key}`);
       const base = baseModelFor(benchmark, row.key);
       if (base.status === 'disclosed') {

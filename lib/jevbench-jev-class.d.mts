@@ -22,3 +22,7 @@ export type JevClassOptions = { referenceKey?: string; factor?: number; costFact
 export declare function spearman(xs: (number | null)[], ys: (number | null)[]): number | null;
 export declare function trafficLightZone(ratio: number | null, factor?: number): 'green' | 'amber' | 'red' | null;
 export declare function ratioPosition(ratio: number): number;
+
+export const JEV_V16_FROZEN_LIMITS: Readonly<{ cost: number; latency: number }>;
+export const JEV_V16_REFERENCE_LABEL: string;
+export const JEV_V16_CLASS_OPTIONS: Readonly<{ limits: Readonly<{ cost: number; latency: number }>; referenceLabel: string }>;
