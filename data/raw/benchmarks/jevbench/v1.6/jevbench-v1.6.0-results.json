@@ -5,9 +5,9 @@
  "provisional": true,
  "status": "overnight-preview",
  "run_kind": "diagnostic",
- "label": "v1.6.0 private overnight preview (score-overnight-8)",
- "source_sha256": "54d6c1327bf6d8c65b9017acbae6e26210555f09c79e9948b434525447fb973c",
- "source_note": "Scorer output score-overnight-8/out-O1S, scored 2026-10-04 23:00:39 UTC (method option B, O1S). Private preview, not a release.",
+ "label": "v1.6.0 private overnight preview (score-overnight-9)",
+ "source_sha256": "2c4c339142cc45be1e65e392def13b8a0bcad368b8d0106d45166784db2574a6",
+ "source_note": "Scorer output score-overnight-9/out-O1S, scored 2026-10-05 06:11:25 UTC (method option B, O1S). Private preview, not a release.",
  "sample": {
   "open": 300,
   "sealed": 1200,
@@ -676,7 +676,7 @@
  },
  "noul_method": {
   "applied": "O1S",
-  "decisive_source_sha256": "d4ec17e4430b78e9cac29170c2a731773ad415e7f94a90edf2e23bbc83ea1f9e"
+  "decisive_source_sha256": "f8dfda0a90b1495df41a3a5d8f462473571d6ea529fb594b08d20824e41cb3c7"
  },
  "systems": [
   {
@@ -1022,7 +1022,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": null
    },
    "class": "Jev-compatible decision model",
@@ -1400,7 +1400,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -1447,16 +1447,16 @@
    "capability": 79.76173748610775,
    "composite_ci95": {
     "A": [
-     68.11709021501245,
-     73.45331926521122
+     68.15687258249172,
+     73.35279332784093
     ],
     "B": [
-     67.17562628137844,
-     74.37872362196383
+     67.09717099047732,
+     74.33311990887661
     ],
     "C": [
-     68.11709021501245,
-     73.45331926521122
+     68.15687258249172,
+     73.35279332784093
     ]
    },
    "cost": {
@@ -1611,32 +1611,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      81.4786291404002,
-      95.89510120047578
+      81.4230876457441,
+      95.66427678390652
      ],
      "I": [
-      63.19024031548064,
-      78.61329552409252
+      63.05165573804967,
+      78.70707770756738
      ],
      "capability": [
-      73.66611960182681,
-      86.15266246795021
+      73.5881071914245,
+      86.02169557601367
      ],
      "composite": {
       "A": [
-       68.11709021501245,
-       73.45331926521122
+       68.15687258249172,
+       73.35279332784093
       ],
       "B": [
-       67.17562628137844,
-       74.37872362196383
+       67.09717099047732,
+       74.33311990887661
       ],
       "C": [
-       68.11709021501245,
-       73.45331926521122
+       68.15687258249172,
+       73.35279332784093
       ]
      },
-     "seed": 105
+     "seed": 107
     },
     "ci95_basis": "bootstrap over the API system's items (n = A sealed items) AND over the equating offset (pool systems resampled with replacement, items resampled; B_offset = 200)",
     "ci95_n": 300,
@@ -1753,10 +1753,15 @@
    "last_measured_on": null,
    "measurement_date_status": "unknown",
    "measured_in": "v1.6.0",
-   "noul_decisive": null,
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.9,
+    "acc_among_decisive": 0.9185185185185185,
+    "valid": 150
+   },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": null
    },
    "class": "decision-api",
@@ -2123,7 +2128,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": null
    },
    "class": "Jev-compatible decision model",
@@ -2487,7 +2492,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -2843,7 +2848,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -2890,16 +2895,16 @@
    "capability": 68.39844054690333,
    "composite_ci95": {
     "A": [
-     51.71121236564244,
-     71.20715477819797
+     49.88681895794124,
+     71.3638362363698
     ],
     "B": [
-     47.9178903804961,
-     68.84021147968089
+     46.04265946728525,
+     69.03809754020054
     ],
     "C": [
-     35.910564142807246,
-     71.14298295743026
+     34.64362427634807,
+     71.2097402077346
     ]
    },
    "cost": {
@@ -3054,32 +3059,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      75.40005382205278,
-      90.15004291633358
+      75.40383229966531,
+      90.31276106913431
      ],
      "I": [
-      45.20306009062403,
-      61.12054616098205
+      44.487565452679576,
+      61.07512485530255
      ],
      "capability": [
-      61.52817687085594,
-      74.14032076804676
+      61.758642396268364,
+      74.11423869047947
      ],
      "composite": {
       "A": [
-       51.71121236564244,
-       71.20715477819797
+       49.88681895794124,
+       71.3638362363698
       ],
       "B": [
-       47.9178903804961,
-       68.84021147968089
+       46.04265946728525,
+       69.03809754020054
       ],
       "C": [
-       35.910564142807246,
-       71.14298295743026
+       34.64362427634807,
+       71.2097402077346
       ]
      },
-     "seed": 106
+     "seed": 108
     },
     "ci95_basis": "bootstrap over the API system's items (n = A sealed items) AND over the equating offset (pool systems resampled with replacement, items resampled; B_offset = 200)",
     "ci95_n": 300,
@@ -3196,10 +3201,15 @@
    "last_measured_on": null,
    "measurement_date_status": "unknown",
    "measured_in": "v1.6.0",
-   "noul_decisive": null,
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.8466666666666667,
+    "acc_among_decisive": 0.9133858267716536,
+    "valid": 150
+   },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": null
    },
    "unpublished_candidate": true
@@ -3556,7 +3566,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -3912,7 +3922,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -4268,7 +4278,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -4615,7 +4625,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": null
    },
    "class": "Jev-compatible decision model",
@@ -4979,7 +4989,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -5335,7 +5345,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -5691,7 +5701,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -6047,7 +6057,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -6403,7 +6413,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -6759,7 +6769,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -7127,7 +7137,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -7483,7 +7493,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -7839,7 +7849,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -8195,7 +8205,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -8551,7 +8561,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -8907,7 +8917,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -9263,7 +9273,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -9619,7 +9629,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -9975,7 +9985,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -10330,7 +10340,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -10686,7 +10696,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -11042,7 +11052,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -11398,7 +11408,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -11754,7 +11764,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -12110,7 +12120,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -12466,7 +12476,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -12822,7 +12832,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -13178,7 +13188,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -13534,7 +13544,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -13890,7 +13900,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -14246,7 +14256,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -14602,7 +14612,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -14970,7 +14980,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -15326,7 +15336,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -15682,7 +15692,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -16037,7 +16047,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -16393,7 +16403,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -16749,7 +16759,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -17105,7 +17115,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -17461,7 +17471,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -17817,7 +17827,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -18173,7 +18183,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -18529,7 +18539,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -18885,7 +18895,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -19241,7 +19251,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -19597,7 +19607,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -19953,7 +19963,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -20309,7 +20319,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -20665,7 +20675,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -21021,7 +21031,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -21368,7 +21378,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": null
    },
    "class": "jev-rebuild",
@@ -21732,7 +21742,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -22088,7 +22098,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -22444,7 +22454,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -22800,7 +22810,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -23156,7 +23166,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -23512,7 +23522,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -23867,7 +23877,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -24214,7 +24224,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": null
    },
    "class": "Jev-compatible decision model",
@@ -24589,7 +24599,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": null
    }
   },
@@ -24944,7 +24954,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -25300,7 +25310,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -25656,7 +25666,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -26012,7 +26022,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -26368,7 +26378,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -26724,7 +26734,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -27071,7 +27081,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": null
    },
    "class": "Jev-compatible decision model",
@@ -27426,7 +27436,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": null
    },
    "class": "Jev-compatible decision model",
@@ -27790,7 +27800,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -28146,7 +28156,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -28502,7 +28512,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -28858,7 +28868,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -29213,7 +29223,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -29569,7 +29579,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -29925,7 +29935,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -30281,7 +30291,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -30637,7 +30647,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -30993,7 +31003,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -31324,7 +31334,7 @@
    },
    "not_ranked_because": null,
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -31665,7 +31675,7 @@
     "valid": 375
    },
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": null
    },
    "unpublished_candidate": true
@@ -32007,7 +32017,7 @@
     "valid": 375
    },
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": null
    },
    "unpublished_candidate": true
@@ -32357,7 +32367,7 @@
     "valid": 371
    },
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": "v1.5.6"
    }
   },
@@ -32698,7 +32708,7 @@
     "valid": 375
    },
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": null
    },
    "unpublished_candidate": true
@@ -33040,7 +33050,7 @@
     "valid": 371
    },
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": null
    },
    "unpublished_candidate": true
@@ -33088,16 +33098,16 @@
    "capability": 80.71241810169991,
    "composite_ci95": {
     "A": [
-     68.10048097808374,
-     73.25847168192482
+     68.09965092066547,
+     73.25741849656603
     ],
     "B": [
-     66.70997312645561,
-     74.01908030698698
+     66.89564428894418,
+     73.98109977528595
     ],
     "C": [
-     68.06020978534198,
-     73.25847168192482
+     68.06974405095704,
+     73.25741849656603
     ]
    },
    "cost": {
@@ -33247,32 +33257,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      84.14594279098866,
-      98.06585735832765
+      83.6130829768619,
+      97.7442852844342
      ],
      "I": [
-      61.8084992863733,
-      77.65938564942132
+      61.8431691700233,
+      77.64565847551735
      ],
      "capability": [
-      74.53848724397588,
-      86.59149951031114
+      74.22575299636542,
+      86.6171995847334
      ],
      "composite": {
       "A": [
-       68.10048097808374,
-       73.25847168192482
+       68.09965092066547,
+       73.25741849656603
       ],
       "B": [
-       66.70997312645561,
-       74.01908030698698
+       66.89564428894418,
+       73.98109977528595
       ],
       "C": [
-       68.06020978534198,
-       73.25847168192482
+       68.06974405095704,
+       73.25741849656603
       ]
      },
-     "seed": 107
+     "seed": 106
     },
     "ci95_basis": "bootstrap over the API system's items (n = A sealed items) AND over the equating offset (pool systems resampled with replacement, items resampled; B_offset = 200)",
     "ci95_n": 300,
@@ -33389,9 +33399,14 @@
    "last_measured_on": null,
    "measurement_date_status": "unknown",
    "measured_in": "v1.6.0",
-   "noul_decisive": null,
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.8933333333333333,
+    "acc_among_decisive": 0.9253731343283582,
+    "valid": 150
+   },
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": null
    },
    "class": "decision-api",
@@ -33458,16 +33473,16 @@
    "capability": 57.913185425437945,
    "composite_ci95": {
     "A": [
-     21.491335474422637,
-     61.00324685036999
+     21.408105561508357,
+     61.571968005603566
     ],
     "B": [
-     18.79346074900235,
-     57.192293074691506
+     18.725311229212387,
+     57.876922165364036
     ],
     "C": [
-     14.92453852390461,
-     42.36336586831249
+     14.86673997326969,
+     42.75831111500248
     ]
    },
    "cost": {
@@ -33617,32 +33632,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      65.04204052833968,
-      82.32548865542157
+      66.35301255389945,
+      82.35550718444614
      ],
      "I": [
-      31.47666040737218,
-      48.54397886552869
+      31.520139578993714,
+      48.76129106260154
      ],
      "capability": [
-      50.192686391475775,
-      63.90061247809703
+      50.311148782063995,
+      64.15999497332965
      ],
      "composite": {
       "A": [
-       21.491335474422637,
-       61.00324685036999
+       21.408105561508357,
+       61.571968005603566
       ],
       "B": [
-       18.79346074900235,
-       57.192293074691506
+       18.725311229212387,
+       57.876922165364036
       ],
       "C": [
-       14.92453852390461,
-       42.36336586831249
+       14.86673997326969,
+       42.75831111500248
       ]
      },
-     "seed": 108
+     "seed": 105
     },
     "ci95_basis": "bootstrap over the API system's items (n = A sealed items) AND over the equating offset (pool systems resampled with replacement, items resampled; B_offset = 200)",
     "ci95_n": 300,
@@ -33759,9 +33774,14 @@
    "last_measured_on": null,
    "measurement_date_status": "unknown",
    "measured_in": "v1.6.0",
-   "noul_decisive": null,
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.74,
+    "acc_among_decisive": 0.8648648648648649,
+    "valid": 150
+   },
    "provenance": {
-    "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
+    "kind": "v1.6.0 overnight re-measure (score-overnight-9/out-O1S)",
     "carried_metadata_from": null
    },
    "class": "decision-api",
@@ -34090,9 +34110,9 @@
  ],
  "roster_count": 130,
  "overnight": {
-  "round": "score-overnight-8",
-  "scored_utc": "2026-10-04 23:00:39 UTC",
-  "a2_note": "The v1.6.0 API subset A had already gone to two providers (TypeSafe and Fastino) and is retired. Newly measured hosted APIs (wity-1 in three reasoning modes, Drex v1.5) therefore answered a fresh supplementary draw A2: 300 sealed items (150 Choice, 75 Noul, 75 Score) from never-exposed reserve items, disjoint from S and P, with the seed committed before the draw (SHA-256 a0d72684…), plus the same public set P. A2 rows are put on the self-hosted scale by their own offset: the median over at least six self-hosted systems re-run on A2 u P of score(S u P) − score(A2 u P). After these runs A2 has been sent to four external entities (Wity and its Railway proxy, Nace.AI and its Vercel host) and is retired for future draws. Tonight's A2 offset (S minus A2) is Intelligence −0.29 and Calibration +1.56 over 12 self-hosted systems re-run on A2 u P on our own pods. Caveat: that pool leans toward weaker systems (Intelligence on S between 5 and 39); over the same 12 systems the main-A offset differs from the full-pool offset by about 1.8 Intelligence points, so the A2 offset for strong API rows may be biased by roughly ±2 Intelligence points. The confidence interval covers pool resampling, not this selection effect. Topic and use-case radar values are not built for A2 rows in this preview.",
+  "round": "score-overnight-9",
+  "scored_utc": "2026-10-05 06:11:25 UTC",
+  "a2_note": "The v1.6.0 API subset A had already gone to two providers (TypeSafe and Fastino) and is retired. Newly measured hosted APIs (wity-1 in three reasoning modes, Drex v1.5) therefore answered a fresh supplementary draw A2: 300 sealed items (150 Choice, 75 Noul, 75 Score) from never-exposed reserve items, disjoint from S and P, with the seed committed before the draw (SHA-256 a0d72684…), plus the same public set P. A2 rows are put on the self-hosted scale by their own offset: the median over at least six self-hosted systems re-run on A2 u P of score(S u P) − score(A2 u P). After these runs A2 has been sent to four external entities (Wity and its Railway proxy, Nace.AI and its Vercel host) and is retired for future draws. Tonight's A2 offset (S minus A2) is Intelligence −0.29 and Calibration +1.56 over 12 self-hosted systems re-run on A2 u P on our own pods. Caveat: that pool leans toward weaker systems (Intelligence on S between 5 and 39); over the same 12 systems the main-A offset differs from the full-pool offset by about 1.8 Intelligence points, so the A2 offset for strong API rows may be biased by roughly ±2 Intelligence points. The confidence interval covers pool resampling, not this selection effect. Topic and use-case radar cells of A2 rows cover only the 300 public items P (the sealed A2 items were never topic-labelled); cells under 15 items are omitted, so these rows show fewer topic and use-case axes than self-hosted rows, and their family and language cells cover A2 u P (600 items).",
   "notes": [
    "Scores are the official v1.6.0 scorer (score_v16.py, method option B / O1S, bootstrap B = 1,000) over complete outputs only; each scoring round is kept separately.",
    "Rows marked [unpublished candidate] or [held for v1.5.8, unpublished] are not on any public board yet; they are shown here for review only.",

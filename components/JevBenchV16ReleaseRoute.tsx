@@ -38,7 +38,7 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
       <p className="mt-3 max-w-3xl text-sm" data-bh-jev-version-share-row>
         <a className="text-accent underline" href={sharePath} data-bh-jev-version-share>Share this version</a>
         {!live && <span className="bh-muted"> · <a className="text-accent underline" href="/jev-models" data-bh-jev-live-link>View live board</a></span>}
-        <span className="bh-muted"> · Previous release: <a className="text-accent underline" href="/jev-models/v1.5.6">JevBench v1.5.6</a></span>
+        <span className="bh-muted"> · Previous release: <a className="text-accent underline" href="/jev-models/v1.5.7">JevBench v1.5.7</a></span>
       </p>
       <p className="mt-3 max-w-3xl text-sm" data-bh-image-jev-link-row>Making decisions from images? <a className="text-accent font-semibold underline" href="/image-jev-bench" data-bh-image-jev-link>Explore Image JevBench and compare its systems</a>.</p>
     </header>
