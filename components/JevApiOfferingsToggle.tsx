@@ -18,7 +18,7 @@ export function JevApiOfferingsToggle({ measured }: { measured: number }) {
       <span aria-hidden="true" className={`relative inline-block h-5 w-9 rounded-full transition-colors ${showApi ? 'bg-accent' : 'bg-gray-600'}`}>
         <span className={`absolute top-0.5 h-4 w-4 rounded-full bg-white transition-all ${showApi ? 'left-[1.1rem]' : 'left-0.5'}`} />
       </span>
-      Show API offerings ({measured} measured on v1.6{apiKeys.length > measured ? `, ${apiKeys.length - measured} carried or listed` : ''})
+      Show API offerings <span className="bh-muted font-normal">({measured} measured{apiKeys.length > measured ? ` · ${apiKeys.length - measured} dated or listed` : ''})</span>
     </button>
     <span className="bh-muted min-w-0 flex-1 basis-64">
       {showApi

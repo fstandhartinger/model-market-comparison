@@ -15,6 +15,7 @@ import { JevV15FilterProvider, JevV15FilterPanel, type JevV15RowMeta } from './J
 import { JevV15FilterVisibilityBridge } from './JevV15FilterVisibilityBridge';
 import { JevV15AllDataGrid } from './JevV15AllDataGrid';
 import { JevApiOfferingsToggle } from './JevApiOfferingsToggle';
+import { JevGpuCostCalculator } from './JevGpuCostCalculator';
 import { JEV_SCOPE_LISTING, type JevScope } from '../lib/jevbench-scope.mjs';
 
 // JevBench v1.6.0 release board. Reuses the established interactive charts on the
@@ -279,6 +280,9 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
         metadata={null}
         links={{ method: '#jev16-method', pricing: '#jev16-method', revisionNotes: '#jev16-method', addenda: {} }}
       />
+      {scope === 'open' && <div className="mt-10"><JevGpuCostCalculator systems={ranked.filter((s) => s.v16.lane !== 'api').map((s) => ({
+        key: s.key, display: short(s.display), gpu: (s as { gpu?: string | null }).gpu ?? null, p50_s_raw: s.speed?.p50_s_raw ?? null,
+        officialUsdPer1000: s.cost?.usd_per_1000 ?? null, ranked: !!s.ranked }))} /></div>}
       <DatedCarry carry={carry} hiddenApi={hiddenApi} />
       <Method a={a} sha256={sha256} categoriesSha256={categoriesSha256} carrySha256={carrySha256} scope={scope} />
     </section>

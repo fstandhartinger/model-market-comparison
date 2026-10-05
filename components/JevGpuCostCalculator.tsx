@@ -38,8 +38,8 @@ export function JevGpuCostCalculator({ systems }: { systems: JevGpuSystem[] }) {
 
   return <section id="jev-gpu-cost" data-bh-jev-gpu-cost className="bh-panel space-y-5 p-4 sm:p-6">
     <div className="space-y-2">
-      <h2 className="text-xl font-semibold">What-If: GPU cost calculator</h2>
-      <p className="bh-muted text-sm">What-If only — the official Cost axis and all ranks use the method&apos;s reference prices</p>
+      <h2 className="text-2xl font-bold">What-If: GPU cost calculator</h2>
+      <p className="bh-muted text-sm">What-If only — the official Cost axis and all ranks use the method&apos;s reference prices.</p>
     </div>
     <fieldset className="space-y-2">
       <legend className="bh-muted text-sm">Hosting mode</legend>
@@ -53,14 +53,14 @@ export function JevGpuCostCalculator({ systems }: { systems: JevGpuSystem[] }) {
       <label className="grid gap-1 text-sm"><span className="bh-muted">GPU type override</span>
         <select className={controlClass} value={settings.gpu_override}
           onChange={(event) => setSettings((s) => ({ ...s, gpu_override: event.target.value as JevGpuSettings['gpu_override'] }))}>
-          <option className="bg-slate-950" value="as_measured">As measured (unknown → H100)</option>
-          {gpuKeys.map((gpu) => <option className="bg-slate-950" key={gpu} value={gpu}>{JEV_GPU_PRESETS[gpu].label}</option>)}
+          <option value="as_measured">As measured (unknown → H100)</option>
+          {gpuKeys.map((gpu) => <option key={gpu} value={gpu}>{JEV_GPU_PRESETS[gpu].label}</option>)}
         </select>
       </label>
       {settings.gpu_override === 'as_measured' && <label className="grid gap-1 text-sm">
         <span className="bh-muted">Preset to edit (applies to matching rows)</span>
         <select className={controlClass} value={editingGpu} onChange={(event) => setEditingGpu(event.target.value as JevGpuKey)}>
-          {gpuKeys.map((gpu) => <option className="bg-slate-950" key={gpu} value={gpu}>{JEV_GPU_PRESETS[gpu].label}</option>)}
+          {gpuKeys.map((gpu) => <option key={gpu} value={gpu}>{JEV_GPU_PRESETS[gpu].label}</option>)}
         </select>
       </label>}
       <NumberField label="Utilisation (fraction, 0 < u ≤ 1)" value={settings.utilisation} min={0.01} max={1} step="0.01"
