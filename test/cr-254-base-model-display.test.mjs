@@ -110,7 +110,7 @@ test('CR-254 separate provenance API exposes both scopes and leaves exact hashed
   assert.equal(JSON.stringify(artifact), textBefore);
   assert.equal(JSON.stringify(image), imageJsonBefore);
   assert.equal(sha256, '0cf210b76bf85084a5f3fb40fb109e9a2c2f93df42ff6628696377666e89db45');
-  assert.equal(createHash('sha256').update(imageBefore).digest('hex'), '42f47c9bb172997089ed61b994b3cb8f2cb1b20cd73bef4e8b47271f0697f41c');
+  assert.equal(createHash('sha256').update(imageBefore).digest('hex'), 'c5829fb7a3b0a3c04f64446f6f1d821169795b82396216d5fbaf2d30bf4c5108');
   const resultRoute = await importTsModule(file('../app/api/jevbench/v1.5.4/route.ts'));
   const response = await resultRoute.GET();
   assert.deepEqual(Buffer.from(await response.arrayBuffer()), bytes);

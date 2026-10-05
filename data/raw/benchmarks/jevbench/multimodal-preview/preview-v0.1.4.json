@@ -115,7 +115,7 @@
   "overfit_penalty": "Matched-family public-minus-sealed accuracy gap (ScreenSpot and Everyday photo, inverse-variance weighted). Above 15 points, Intelligence is multiplied by 1 - (gap - 15)/100. Same rule for every system.",
   "calibration": "10-bin top-label ECE scaled by valid probability coverage, 35% public / 65% sealed; label-only outputs receive zero calibration.",
   "speed": "p50 and p95 whole-call latency; local latency uses the v1.4 2× plus 0.15-second adjustment. For self-hosted systems the original run's timings are combined with the fresh-item run on the same GPU type.",
-  "cost": "Hosted cost uses returned usage receipts for four OpenRouter endpoints and published Gemma 4 rates for Autoloops. Wity-1 uses the estimated Qwen3.6-35B-A3B base-model market reference (USD 0.15/M input, USD 1.00/M output) applied to its measured 120,542 input and zero output tokens, following the 29 Sep price decision; Wity image and thinking usage is unbilled and not quantified by the API. Introductory credit is not scored as a zero tariff. Missing receipts are not zero-filled; Cost is scaled by receipt coverage. Local cost uses measured GPU seconds at recorded GPU-hour rates. See PRICING-v0.1.4.md.",
+  "cost": "Hosted cost uses returned usage receipts for four OpenRouter endpoints and published Gemma 4 rates for Autoloops. Wity-1 uses the estimated base-model market reference (base model undisclosed at the author's request) applied to its measured 120,542 input and zero output tokens, following the 29 Sep price decision; Wity image and thinking usage is unbilled and not quantified by the API. Introductory credit is not scored as a zero tariff. Missing receipts are not zero-filled; Cost is scaled by receipt coverage. Local cost uses measured GPU seconds at recorded GPU-hour rates. See PRICING-v0.1.4.md.",
   "composite": "Equal-weight harmonic mean of Intelligence, Calibration, Speed, and Cost, followed by the v1.4 intelligence, speed, and cost gates below 50.",
   "difficulty_caveat": "The 333 fresh sealed items are our own synthetic images and renders. They are easier for frontier API models than the older real-source items, so sealed accuracy is higher than on the earlier split for most hosted systems."
  },
@@ -422,7 +422,7 @@
       "usd_per_1000": 0.026434649122807023,
       "total_usd": 0.0180813,
       "coverage": 1,
-      "source": "Estimated Qwen3.6-35B-A3B base-model market reference: USD 0.15/M input, USD 1.00/M output; measured Wity usage (zero output tokens)"
+      "source": "Estimated base-model market reference (base model undisclosed at the author's request); measured Wity usage (zero output tokens)"
      },
      "composite": {
       "harmonic_before_gates": 74.36394536053653,
@@ -488,7 +488,7 @@
       "usd_per_1000": 0.0290337,
       "total_usd": 0.01451685,
       "coverage": 1,
-      "source": "Estimated Qwen3.6-35B-A3B base-model market reference: USD 0.15/M input, USD 1.00/M output; measured Wity usage (zero output tokens)"
+      "source": "Estimated base-model market reference (base model undisclosed at the author's request); measured Wity usage (zero output tokens)"
      },
      "composite": {
       "harmonic_before_gates": 72.80678257384854,
@@ -554,7 +554,7 @@
       "usd_per_1000": 0.019372010869565217,
       "total_usd": 0.00356445,
       "coverage": 1,
-      "source": "Estimated Qwen3.6-35B-A3B base-model market reference: USD 0.15/M input, USD 1.00/M output; measured Wity usage (zero output tokens)"
+      "source": "Estimated base-model market reference (base model undisclosed at the author's request); measured Wity usage (zero output tokens)"
      },
      "composite": {
       "harmonic_before_gates": 78.44465069369441,
@@ -11035,7 +11035,7 @@
  },
  "candidate_coverage": {
   "checked_utc": "2026-09-29T14:37:30Z",
-  "included_note": "Wity-1 completed a full 684-decision API run. Its Cost axis uses the Qwen3.6-35B-A3B market reference applied to returned usage, by the 29 Sep price decision; the server build remains under author review.",
+  "included_note": "Wity-1 completed a full 684-decision API run. Its Cost axis uses the base-model market reference (base undisclosed at the author's request) applied to returned usage, by the 29 Sep price decision; the server build remains under author review.",
   "candidates": [
    {
     "candidate": "CUA-S1-4B-0.2 multimodal adapter",
@@ -11565,7 +11565,7 @@
    {
     "candidate": "Wity-1",
     "source_revision": "Wity production-named endpoint; deployed build ID unavailable on 29 Sep 2026",
-    "access": "Hosted Wity SystemOne API; Cost estimated from Qwen3.6-35B-A3B market reference",
+    "access": "Hosted Wity SystemOne API; Cost estimated from base-model market reference (base undisclosed at the author's request)",
     "status": "included in v0.1.4 ranking (#2 of 50)",
     "reason": "Full 684-decision run with valid probabilities and complete input/output usage; base-model reference applied to measured tokens. Server build under author review.",
     "ranking_key": "wity_1"
@@ -11643,7 +11643,7 @@
    "visual_jev_generic_baseline": "3ccd55d82df468be4298b50c22e9dc5566f5804487f8bbc4cc33dde89e05d301",
    "vjev_vision": "ece12ccbdd7f938d4771b7089c7a4475515c4efdea1d784250584f56bc2a0105",
    "winnow_12b_q8": "3aa640049ac04ca6ea054568c03354c3367aaa97549cb00219d51ed304cacb25",
-   "wity_1": "703b5f1a2e42a8fbd6f016da2cc87142b8858b43d655e049681a04985c41dd21"
+   "wity_1": "9cb70ecdb79172156e4bae30b5e2554a7e3072d8d44cc90fdc6bb47b433c5f21"
   }
  }
 }

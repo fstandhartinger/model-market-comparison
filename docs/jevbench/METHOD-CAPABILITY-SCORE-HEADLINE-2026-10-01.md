@@ -62,7 +62,7 @@ decides so explicitly. For Wity-1 on 1 Oct 2026 the tariff was younger than 30 d
 
 First application: **Wity-1** (ImageJevBench v0.1.5). Wity's stated tariff is USD 0.042 per million input tokens, with
 output, thinking and images free. That gives USD 0.0074 per 1,000 decisions on the full split, Cost 73.92 and composite
-**80.20 (#1)**. At the Qwen3.6-35B-A3B base-model reference (USD 0.15/M input, USD 1.00/M output) it would be USD 0.0264
+**80.20 (#1)**. At the base-model reference price (base model undisclosed at the author's request) it would be USD 0.0264
 per 1,000 decisions, Cost 57.33 and composite 74.36 (#2), shown as the striped bar. Details:
 `data/raw/benchmarks/jevbench/multimodal-preview/PRICING-v0.1.5.md`.
 

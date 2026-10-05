@@ -6,7 +6,7 @@ const changes: Record<string, string> = {
   'v0.1.1': 'Expanded the clean public/sealed split to 48 measured systems; kept the frozen scoring method.',
   'v0.1.2': 'Added Imajev-4B (49 systems), initially #11 in the composite ranking.',
   'v0.1.3': 'Re-measured Imajev-4B with fast serving; it moved to #1. Other systems and the split stayed frozen.',
-  'v0.1.4': 'Added Wity-1 (50 systems), priced at the Qwen3.6-35B-A3B base-model reference; its build remains under author review.',
+  'v0.1.4': 'Added Wity-1 (50 systems), priced at a base-model reference (base undisclosed at the author’s request); its build remains under author review.',
   'v0.1.5': 'Ranked Wity-1 at its stated API tariff, kept a base-model price alternative, and froze the JevBench cost/latency envelope for the Capability Score.',
 };
 

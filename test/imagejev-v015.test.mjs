@@ -83,7 +83,7 @@ test('ImageJevBench adapter maps v0.1.5 board, comparison, presets and frozen ca
     axes: { cost: 57.334793493313725 },
     usd_per_1000: 0.026434649122807023,
     label: 'Base-model price',
-    note: 'Qwen3.6-35B-A3B base-model market reference (USD 0.15/M input, USD 1.00/M output)',
+    note: 'Base-model market reference (base model undisclosed at the author\'s request)',
   });
   assert.deepEqual(compare.find((row) => row.key === 'wity_1').alt, board.find((row) => row.key === 'wity_1').alt);
   assert.deepEqual(imageJevSliderPresets(artifact)[0], {

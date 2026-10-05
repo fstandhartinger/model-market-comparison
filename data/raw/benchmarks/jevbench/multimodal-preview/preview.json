@@ -115,7 +115,7 @@
     "overfit_penalty": "Matched-family public-minus-sealed accuracy gap (ScreenSpot and Everyday photo, inverse-variance weighted). Above 15 points, Intelligence is multiplied by 1 - (gap - 15)/100. Same rule for every system.",
     "calibration": "10-bin top-label ECE scaled by valid probability coverage, 35% public / 65% sealed; label-only outputs receive zero calibration.",
     "speed": "p50 and p95 whole-call latency; local latency uses the v1.4 2× plus 0.15-second adjustment. For self-hosted systems the original run's timings are combined with the fresh-item run on the same GPU type.",
-    "cost": "Hosted cost uses returned usage receipts for four OpenRouter endpoints and published Gemma 4 rates for Autoloops. Wity-1 uses its stated API tariff (USD 0.042/M input; output, thinking, and images free) applied to measured usage, by Florian’s 1 Oct price decision. The tariff is younger than 30 days; the owner decision supersedes the 30-day rule for this case. The base-model market reference (USD 0.15/M input, USD 1.00/M output) remains visible as a pricing alternative. Introductory credit is not scored as a zero tariff. Missing receipts are not zero-filled; Cost is scaled by receipt coverage. Local cost uses measured GPU seconds at recorded GPU-hour rates. See PRICING-v0.1.5.md.",
+    "cost": "Hosted cost uses returned usage receipts for four OpenRouter endpoints and published Gemma 4 rates for Autoloops. Wity-1 uses its stated API tariff (USD 0.042/M input; output, thinking, and images free) applied to measured usage, by Florian’s 1 Oct price decision. The tariff is younger than 30 days; the owner decision supersedes the 30-day rule for this case. The base-model market reference (base undisclosed at the author's request) remains visible as a pricing alternative. Introductory credit is not scored as a zero tariff. Missing receipts are not zero-filled; Cost is scaled by receipt coverage. Local cost uses measured GPU seconds at recorded GPU-hour rates. See PRICING-v0.1.5.md.",
     "composite": "Equal-weight harmonic mean of Intelligence, Calibration, Speed, and Cost, followed by the v1.4 intelligence, speed, and cost gates below 50.",
     "difficulty_caveat": "The 333 fresh sealed items are our own synthetic images and renders. They are easier for frontier API models than the older real-source items, so sealed accuracy is higher than on the earlier split for most hosted systems."
   },
@@ -355,7 +355,7 @@
       "score": 80.19853920531308,
       "rank": 1,
       "pricing_alternative": {
-        "basis": "Qwen3.6-35B-A3B base-model market reference (USD 0.15/M input, USD 1.00/M output)",
+        "basis": "Base-model market reference (base model undisclosed at the author's request)",
         "tracks": {
           "all": {
             "usd_per_1000": 0.026434649122807023,
@@ -11750,7 +11750,7 @@
     "split_sha256": "4cb721cd36c4fbe4320ec1d5420f56bedd82e060c2c634b3fe7c420353d51224",
     "scoring_code_sha256": "d63c9f3dca2b2419fcb9b62ecfcec624e598dfe625b0216c41dca3aa18582c34",
     "source_sha256": {
-      "live_v0_1_4_artifact": "385aba04acb0649f73264f57b237fa6bcf481763641978d732f81b4e88ba2150",
+      "live_v0_1_4_artifact": "96592b31c1b419f1d85c5128dd8de6646927f18605e345b1d3652c9a07c4e9d8",
       "wity_run_input": "d2bab93055b5decf97f53f18e6db576018e5fc5ec4409518f38a1222a8f0be80",
       "wity_result_rows": "f22e64c70187b193820d1ac98976e86d2d3500702f42824a71164068eeade08c",
       "wity_runner": "4596fdf83fb25cfcd1643b464921e81cfff87b8fa0438b8966550e730b818583",
@@ -11814,7 +11814,7 @@
       "visual_jev_generic_baseline": "9208c1fef8d8e5288c7ae4ee47b2d96e785b33f9d635eee4979cae2496bbb3c5",
       "vjev_vision": "fc88f433caec10605553734d266c436089d3a3a994de80a98353c79fdd135e57",
       "winnow_12b_q8": "1084fa1c2869f9cd73c2f37e5462fe101ef5c44c9974f35c81e550d5fe880a79",
-      "wity_1": "a54ce4a3f22d43200e6ad2de4f8f56b6198da1752b99b39f7d44f467560edff9"
+      "wity_1": "d8b580ff251caec7b40287850732864580cb34d8e53672ce1b8b7116738c00cc"
     }
   },
   "capability_eligibility": {
@@ -11827,5 +11827,5 @@
     "anchor_latency_p50_s": 0.6164783202111721,
     "rationale": "ImageJevBench has no Jev reference row because Jev does not accept images. Capability eligibility therefore uses the same absolute envelope as JevBench: twice Jev 1.13.0’s v1.5.4 cost and adjusted median latency. These anchor values are frozen here so later JevBench releases do not move the ImageJevBench cap."
   },
-  "revision_note": "Florian’s 1 Oct 2026 decision applies Wity-1’s stated API tariff to the measured Wity usage. This tariff is younger than 30 days, and the owner decision supersedes the 30-day rule for this case. The Qwen3.6-35B-A3B base-model market reference remains available as Wity-1’s pricing alternative."
+  "revision_note": "Florian’s 1 Oct 2026 decision applies Wity-1’s stated API tariff to the measured Wity usage. This tariff is younger than 30 days, and the owner decision supersedes the 30-day rule for this case. The base-model market reference (base undisclosed at the author's request) remains available as Wity-1’s pricing alternative."
 }
