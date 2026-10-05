@@ -305,4 +305,15 @@ pathlib.Path('/output/probe.json').write_text(json.dumps({'request_credential_on
             dispatch.runtime_spec({'backend':'typesafe','model':'fixture','credential':'none','endpoint':'http://localhost'},'imagejevbench')
 
 
+    def test_every_pinned_measurement_code_name_is_mountable(self):
+        # Regression (order 0c91d212, 5 Oct): the manifest pins pod_drivers/pod_entry.sh, and the sandbox
+        # mount check rejected every non-.py name, so every preparation and review failed.
+        names = list(dispatch.pins()['profile']['code'])
+        self.assertIn('pod_drivers/pod_entry.sh', names)
+        for name in names:
+            self.assertTrue(ap.MEASUREMENT_CODE_NAME_RE.fullmatch(name), name)
+        for bad in ('../x.py', '/abs.py', 'a/../b.sh', 'x.py.bak', 'x.txt', 'a//b.py', 'x y.sh'):
+            self.assertIsNone(ap.MEASUREMENT_CODE_NAME_RE.fullmatch(bad), bad)
+
+
 if __name__ == '__main__': unittest.main()
