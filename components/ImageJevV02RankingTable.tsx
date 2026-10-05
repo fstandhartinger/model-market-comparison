@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { BaseModelDisplay } from './BaseModelDisplay';
-import { imageJevSystemPath } from '../lib/imagejev-system-links.mjs';
+import { imageJevSystemPath, imageJevAuthorUrl } from '../lib/imagejev-system-links.mjs';
 
 type Row = {
   key: string;
@@ -55,6 +55,7 @@ function SortHeading({ label, sort, current, descending, onSort, className = '' 
 }
 
 function SystemCell({ row, compactMobile }: { row: Row; compactMobile: boolean }) {
+  const authorUrl = imageJevAuthorUrl(row.key);
   const detailClass = compactMobile ? 'hidden sm:block' : 'block';
   const config = row.inference_setting?.trim();
   let settingLabel = row.api_flag ? 'Hosted API · pinned request settings' : 'Local GPU · pinned image configuration';
@@ -72,6 +73,7 @@ function SystemCell({ row, compactMobile }: { row: Row; compactMobile: boolean }
     <span className="block">{row.name}{row.api_flag && <span className="bh-thin-tag ml-1.5">API</span>}</span>
     <BaseModelDisplay benchmark="imagejevbench" systemKey={row.key} className="mt-1 block text-[11px] font-normal leading-tight" />
     <Link href={imageJevSystemPath(row.key, 'v0.2.0')} className="block text-[11px] font-normal text-accent underline" data-bh-mm-system-details={row.key}>details</Link>
+    {authorUrl && <a href={authorUrl} target="_blank" rel="noopener noreferrer" className="block text-[11px] font-normal text-accent underline" data-bh-mm-author-site={row.key}>Author website</a>}
     <span className={`${detailClass} bh-muted mt-0.5 text-xs font-normal`}>{settingLabel}</span>
     <details className={`${detailClass} bh-muted mt-1 text-xs font-normal`} data-bh-imagejev-v02-configuration-details>
       <summary className="cursor-pointer text-accent">Configuration details</summary>

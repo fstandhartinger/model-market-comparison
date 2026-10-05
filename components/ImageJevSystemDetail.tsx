@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { BaseModelDisplay } from './BaseModelDisplay';
 import { JevAxisBand, typeColour } from './JevSystemCharts';
 import { findImageJevDetail } from '../lib/imagejev-details.mjs';
-import { imageJevSystemPath, imageJevBoardPath } from '../lib/imagejev-system-links.mjs';
+import { imageJevSystemPath, imageJevBoardPath, imageJevAuthorUrl } from '../lib/imagejev-system-links.mjs';
 import { previewMetadata } from '../lib/seo';
 
 // CR-254: version-specific details use only frozen release aggregates and cited provenance.
@@ -24,6 +24,7 @@ export async function ImageJevSystemDetail({ system, revision = 'v0.2.0' }: { sy
   if (!found) notFound();
   const { artifact, row, systems } = found;
   const source = row.source_url;
+  const authorUrl = imageJevAuthorUrl(row.key);
   const board = imageJevBoardPath(found.revision);
   const alternative = row.pricing_alternative?.tracks[row.track];
   const alternativeScore = typeof alternative?.composite === 'number' ? alternative.composite : alternative?.composite?.score;
@@ -34,6 +35,7 @@ export async function ImageJevSystemDetail({ system, revision = 'v0.2.0' }: { sy
       <div className="bh-eyebrow">Image JevBench {found.revision} · individual system</div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">{row.display}</h1>
       <BaseModelDisplay benchmark="imagejevbench" systemKey={row.key} className="mt-2 block text-sm" />
+      {authorUrl && <p className="mt-2 text-sm"><a href={authorUrl} target="_blank" rel="noopener noreferrer" className="text-accent underline" data-bh-mm-author-site={row.key}>Author website</a></p>}
       {source && <p className="mt-2 text-sm"><a href={source} target="_blank" rel="noopener noreferrer" className="text-accent underline" data-bh-jev-source={row.key}>Cited provenance</a></p>}
       {row.endpoint_condition && <p className="bh-muted mt-2 text-sm">{row.endpoint_condition}</p>}
       {found.revision !== 'v0.2.0' && row.key === 'wity_1' && <p className="mt-2 text-sm text-amber-700 dark:text-amber-300" data-bh-mm-author-review>Under author review: server build ID was not recorded; this score may change after verification.</p>}
