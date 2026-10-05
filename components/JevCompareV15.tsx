@@ -44,7 +44,7 @@ const lines = (label: string) => label.split(" ").reduce<string[]>((ls, w) => (l
 function series(A: JevCompareV15Row, B: JevCompareV15Row): Series[] {
   const same = jevRowArch(A) === jevRowArch(B);
   return [{ name: A.name, stroke: colour(jevRowArch(A)), dashed: false, square: false },
-    { name: B.name, stroke: colour(jevRowArch(B)), dashed: same, square: true }];
+    { name: B.name, stroke: same ? `color-mix(in srgb, ${colour(jevRowArch(B))} 55%, var(--text))` : colour(jevRowArch(B)), dashed: same, square: true }];
 }
 
 /** CR-257: one radar per category dimension. A value below chance draws at the centre and prints its real (negative) number.
