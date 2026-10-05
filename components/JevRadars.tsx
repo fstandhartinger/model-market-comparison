@@ -1,4 +1,5 @@
 "use client";
+import { JEV_TYPE_LABEL, jevRowArch, jevTypeVarName } from './jevTypes';
 import { useState } from "react";
 import type { JevAxis, JevV12Row } from "../lib/jevbench-v12.mjs";
 import type { JevTopicsView } from "../lib/jevbench-v12-topics.mjs";
@@ -8,14 +9,8 @@ import type { JevTopicsView } from "../lib/jevbench-v12-topics.mjs";
 // Colours follow the page's system types; if both picks share a type, B is dashed, darker/lighter and square-marked.
 const AXES: JevAxis[] = ["intelligence", "calibration", "speed", "cost"];
 const AXIS_LABEL: Record<JevAxis, string> = { intelligence: "Intelligence", calibration: "Calibration", speed: "Speed", cost: "Cost" };
-const TYPE_VAR: Record<string, string> = { jev: "--jev-t-jev", "jev-rebuild": "--jev-t-rebuild", "llm-baseline": "--jev-t-llm", "small-tool-model": "--jev-t-tool", "jev-service": "--jev-t-service", classifier: "--jev-t-classifier", "decision-api": "--jev-t-api" };
-// Review gate 20260919T233002Z: "Service built on Jev" is a second blue, so a Jev/jev-service pair — the default one —
-// drew two near-identical solid lines (rgb(42,122,213) vs rgb(84,150,214) in light). Pairs from the same colour family get
-// the treatment the page already has for two rows of the same type: B dashed, mixed towards the text colour, square marks.
-const TYPE_FAMILY: Record<string, string> = { jev: "blue", "jev-service": "blue", "jev-rebuild": "orange", "llm-baseline": "green", "small-tool-model": "violet", classifier: "magenta", "decision-api": "yellow" };
-const family = (cls: string) => TYPE_FAMILY[cls] ?? cls;
-const TYPE_LABEL: Record<string, string> = { jev: "Jev", "jev-rebuild": "Jev rebuild", "llm-baseline": "instruction model", "small-tool-model": "small tool-calling model", "jev-service": "service built on Jev", classifier: "zero-shot classifier", "decision-api": "closed decision API" };
-const colour = (cls: string) => `rgb(var(${TYPE_VAR[cls] ?? TYPE_VAR["llm-baseline"]}))`;
+// CR-292 (Florian 5 Oct 2026, architecture axis): same-class pairs keep their colour; dashes and squares distinguish B.
+const colour = (cls: string) => `rgb(var(${jevTypeVarName(cls)}))`;
 const one = (v: number | null) => (v === null ? "—" : v.toFixed(1));
 const pct = (v: number | null) => (v === null ? "—" : `${(v * 100).toFixed(1)}%`);
 const short = (d: string) => d.split(" (")[0].split(", formerly")[0];
@@ -79,9 +74,9 @@ export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke
 // derivations the hub does — the pair's colours and the topic spokes — are computed here once and used
 // by both. `JevPairRadar` below is the hub's second figure with the selects removed.
 function pairSeries(A: JevV12Row, B: JevV12Row): Series[] {
-  const same = family(A.cls) === family(B.cls);
-  return [{ name: short(A.display), stroke: colour(A.cls), dashed: false, square: false },
-    { name: short(B.display), stroke: same ? `color-mix(in srgb, ${colour(B.cls)} 55%, var(--text))` : colour(B.cls), dashed: same, square: true }];
+  const same = jevRowArch(A) === jevRowArch(B);
+  return [{ name: short(A.display), stroke: colour(jevRowArch(A)), dashed: false, square: false },
+    { name: short(B.display), stroke: colour(jevRowArch(B)), dashed: same, square: true }];
 }
 
 function topicSpokesFor(pair: JevV12Row[], topics: JevTopicsView): Spoke[] {
@@ -160,7 +155,7 @@ export function JevRadars({ ranked, honorable, partial, topics }: { ranked: JevV
         {pick("jev12-radar-b", "System B", B.key, setB, A.key)}
       </div>
       <ul className="mt-3 space-y-1 text-[13px]" aria-label="Legend" data-bh-jev12-radar-legend>
-        {pair.map((r, k) => <li key={k} data-bh-jev12-radar-legend-item={k === 0 ? "a" : "b"}><Swatch s={series[k]} /><b>{k === 0 ? "A" : "B"}: {short(r.display)}</b> <span className="bh-muted">— {TYPE_LABEL[r.cls] ?? r.cls} · </span><span data-bh-jev12-radar-score={r.main.toFixed(3)}>{scoreText(r)}</span></li>)}
+        {pair.map((r, k) => <li key={k} data-bh-jev12-radar-legend-item={k === 0 ? "a" : "b"}><Swatch s={series[k]} /><b>{k === 0 ? "A" : "B"}: {short(r.display)}</b> <span className="bh-muted">— {JEV_TYPE_LABEL[jevRowArch(r)] ?? r.cls} · </span><span data-bh-jev12-radar-score={r.main.toFixed(3)}>{scoreText(r)}</span></li>)}
       </ul>
       <div className="mt-3 grid gap-4 lg:grid-cols-2">
         <figure className="min-w-0" data-bh-jev12-radar="axes">

@@ -1,4 +1,5 @@
 "use client";
+import { jevRowArch, jevTypeVarName } from './jevTypes';
 
 import { useId, useState } from "react";
 import { Radar, Swatch, type Series, type Spoke } from "./JevRadars";
@@ -54,8 +55,8 @@ export function ImageJevRadar({ systems }: { systems: ImageSystem[] }) {
   const [bKey, setB] = useState(ranked[1].key);
   const pair = [systems.find((system) => system.key === aKey) ?? ranked[0], systems.find((system) => system.key === bKey) ?? ranked[1]];
   const series: Series[] = [
-    { name: pair[0].name, stroke: "rgb(var(--jev-t-jev))", dashed: false, square: false },
-    { name: pair[1].name, stroke: "rgb(var(--jev-t-rebuild))", dashed: true, square: true },
+    { name: pair[0].name, stroke: `rgb(var(${jevTypeVarName(jevRowArch(pair[0], 'imagejevbench'))}))`, dashed: false, square: false },
+    { name: pair[1].name, stroke: `rgb(var(${jevTypeVarName(jevRowArch(pair[1], 'imagejevbench'))}))`, dashed: true, square: true },
   ];
   const spokes: Spoke[] = axes.map((axis) => ({
     key: axis, lines: [title(axis)], thin: [false, false],

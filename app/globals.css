@@ -521,10 +521,10 @@ details[open] > .bh-collapsible-grid { display: grid; }
 /* F-180 (Fable pass 34): the context table scrolls sideways at 390 with its name cell pinned. */
 [data-bh-jev-context-table] .bh-ctx-sticky { position: sticky; left: 0; z-index: 1; background: var(--surface); box-shadow: inset -1px 0 0 rgb(var(--line)); }
 /* CR-87 (2026-09-19): JevBench Main Composite Score chart — colour by system type (as the launch chart), live weights. */
-:root, [data-theme="dark"] { --jev-t-jev: 74 149 234; --jev-t-rebuild: 240 122 74; --jev-t-llm: 47 192 141; --jev-t-tool: 146 128 232; --jev-t-service: 135 190 245; --jev-t-classifier: 222 92 168; --jev-t-api: 226 178 60; }
-[data-theme="light"] { --jev-t-jev: 42 122 213; --jev-t-rebuild: 224 97 45; --jev-t-llm: 22 163 116; --jev-t-tool: 75 58 166; --jev-t-service: 84 150 214; --jev-t-classifier: 176 42 124; --jev-t-api: 150 104 0; }
+:root, [data-theme="dark"] { --jev-t-jev: 74 149 234; --jev-t-rebuild: 240 122 74; --jev-t-classifier: 222 92 168; --jev-t-api: 226 178 60; }
+[data-theme="light"] { --jev-t-jev: 42 122 213; --jev-t-rebuild: 224 97 45; --jev-t-classifier: 176 42 124; --jev-t-api: 150 104 0; }
 .bh-jevc-bar { height: 100%; border-radius: 0 4px 4px 0; background: rgb(var(--jev-t)); transition: width .35s ease; }
-.bh-jevc-bar.is-reference { background: color-mix(in srgb, rgb(var(--jev-t-jev)) 58%, var(--muted)); }
+.bh-jevc-bar.is-reference { background: rgb(var(--jev-t)); }
 .bh-jevc-bar.is-partial { background: repeating-linear-gradient(135deg, rgb(var(--jev-t) / .85) 0 2px, transparent 2px 7px); box-shadow: inset 0 0 0 1.5px rgb(var(--jev-t)); }
 .bh-jevc-swatch { display: inline-block; width: 22px; height: 10px; border-radius: 2px; vertical-align: middle; background: rgb(var(--jev-t)); }
 .bh-jevc-swatch.is-partial { background: repeating-linear-gradient(135deg, var(--muted) 0 2px, transparent 2px 6px); box-shadow: inset 0 0 0 1px var(--muted); }
@@ -623,12 +623,9 @@ body.bh-fastlane-visible .bh-custom-evaluation-toast { bottom: calc(var(--bh-fas
 .bh-jev14-note > summary::-webkit-details-marker { display: none; }
 .bh-jev14-note > summary:focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 1px; border-radius: 2px; }
 .bh-jev14-note-body { display: block; white-space: normal; font-weight: 400; font-size: 11.5px; line-height: 1.35; color: var(--muted); margin: 4px 0 2px; max-width: 22rem; }
-:root, [data-theme="dark"] { --jev-t-reranker: 45 190 200; --jev-t-control: 150 156 170; --jev-t-native: 160 200 70; }
-[data-theme="light"] { --jev-t-reranker: 0 128 140; --jev-t-control: 105 110 124; --jev-t-native: 92 130 20; }
-/* F-192 (Fable pass 35): a class the artifact names but the repo has no label for gets its own swatch,
-   so it is never drawn in another class's colour. `--jev-t-unnamed` is that swatch. */
-:root, [data-theme="dark"] { --jev-t-sysone: 198 96 250; --jev-t-unnamed: 198 96 250; }
-[data-theme="light"] { --jev-t-sysone: 150 26 214; --jev-t-unnamed: 150 26 214; }
+
+:root, [data-theme="dark"] { --jev-t-unnamed: 198 96 250; }
+[data-theme="light"] { --jev-t-unnamed: 150 26 214; }
 /* Long project URLs in the credit and note lists break instead of sticking out at 320 px (UX iteration 182 probe). */
 [data-bh-jev-credits] a, [data-bh-jev14-notes] a, [data-bh-jev12-legend] a, [data-bh-jev-cost-rows], [data-bh-jev-availability] { overflow-wrap: anywhere; }
 
@@ -755,9 +752,25 @@ body.bh-fastlane-visible .bh-custom-evaluation-toast { bottom: calc(var(--bh-fas
 [data-theme="light"] .bh-tl-chip { color: white; }
 .bh-jev-alt-bar { background: repeating-linear-gradient(135deg, rgb(var(--jev-t)) 0 3px, transparent 3px 6px); opacity: .65; }
 
-/* CR-290: ImageJevBench base-model-family palette. Qwen3.5 keeps the former orange so the largest group reads as before;
-   the other families take distinct hues; Wity keeps the decision-API yellow. */
-:root, [data-theme="dark"] { --jev-t-img-qwen35: 240 122 74; --jev-t-img-qwen3vl: 45 190 200; --jev-t-img-qwen38: 146 128 232;
-  --jev-t-img-gemma4: 47 192 141; --jev-t-img-dgemma: 222 92 168; --jev-t-img-other: 150 156 170; --jev-t-img-hosted: 74 149 234; }
-[data-theme="light"] { --jev-t-img-qwen35: 224 97 45; --jev-t-img-qwen3vl: 0 128 140; --jev-t-img-qwen38: 75 58 166;
-  --jev-t-img-gemma4: 22 163 116; --jev-t-img-dgemma: 176 42 124; --jev-t-img-other: 105 110 124; --jev-t-img-hosted: 42 122 213; }
+
+:root, [data-theme="dark"] {
+  --jev-a-jev-reference: 0 114 178;
+  --jev-a-closed-api: 240 128 80;
+  --jev-a-open-llm-decoder: 0 158 115;
+  --jev-a-open-diffusion-lm: 204 121 167;
+  --jev-a-open-encoder: 230 159 0;
+  --jev-a-open-reranker: 86 180 233;
+  --jev-a-base-control: 144 144 144;
+  --jev-a-system: 240 228 66;
+}
+
+[data-theme="light"] {
+  --jev-a-jev-reference: 0 114 178;
+  --jev-a-closed-api: 158 68 0;
+  --jev-a-open-llm-decoder: 0 133 99;
+  --jev-a-open-diffusion-lm: 163 84 137;
+  --jev-a-open-encoder: 167 109 0;
+  --jev-a-open-reranker: 37 132 172;
+  --jev-a-base-control: 112 112 112;
+  --jev-a-system: 157 141 0;
+}

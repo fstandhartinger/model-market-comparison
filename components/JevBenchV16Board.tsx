@@ -1,3 +1,4 @@
+import { JevArchitectureMethod } from './JevArchitecture';
 import type { CSSProperties } from 'react';
 import type { JevV15Artifact } from '../lib/jevbench-v15-preview.mjs';
 import { jevV15LeaderSentence } from '../lib/jevbench-v15-preview.mjs';
@@ -143,6 +144,7 @@ function Method({ a, sha256, categoriesSha256, carrySha256, scope, hiddenApi }: 
   return <section className="mt-10 max-w-4xl" aria-labelledby="jev16-method" id="jev16-method" data-bh-jev16-method>
     <h2 id="jev16-method" className="text-2xl font-bold">Method · {a.revision}</h2>
     {scope !== 'all' && <BoardSplit scope={scope} />}
+    <JevArchitectureMethod />
     {hiddenApi.size > 0 && <p className="bh-muted mt-2 text-xs" data-bh-jev-method-scope-note>Per-system method lists on this board cover the open-weights systems and the Jev reference; the hosted API offerings&apos; lists are on the <a className="text-accent underline" href="/jev-models/api#jev16-method">API leaderboard</a>.</p>}
     <h3 className="mt-4 text-lg font-semibold">Rotating item sets</h3>
     <p className="bh-muted mt-1 text-sm">Each release draws fresh sealed decisions from a larger reserve. Self-hosted open-weights models (run offline on our own GPU pods or Sandy) answer S and P; externally hosted models answer only the API subset A and P.</p>

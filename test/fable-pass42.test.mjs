@@ -41,8 +41,8 @@ test('F-222: the live hub says what JevBench is first; the release facts sit on 
   assert.match(release, /api\/jevbench\/\$\{artifact\.revision\}/, 'the page links to the matching release API route');
 });
 
-test('F-226: the artifact value "unclassified" has a label; system-one-open stays the data owner\'s to name (F-192)', () => {
-  assert.match(types, /\n  unclassified: "Unclassified",\n\};/);
-  const labels = types.slice(types.indexOf('export const JEV_TYPE_LABEL'), types.indexOf('};', types.indexOf('export const JEV_TYPE_LABEL')));
-  assert.doesNotMatch(labels, /system-one-open/, 'F-192: no label is invented for system-one-open');
+test('CR-292: every legacy class resolves to a canonical architecture label', () => {
+  assert.match(types, /JEV_ARCH_CLASSES/);
+  assert.match(types, /jevArchFor/);
+  assert.doesNotMatch(types, /unclassified: "Unclassified"/);
 });

@@ -1,3 +1,4 @@
+import type { JevArchBadges } from './jevbench-architecture.mjs';
 export type JevAxis = 'intelligence' | 'calibration' | 'speed' | 'cost';
 export type JevTier12 = 'easy' | 'standard' | 'judge' | 'hard';
 export type JevAxes = Record<JevAxis, number | null>;
@@ -15,7 +16,7 @@ export type JevHonorableMention = {
   tier_measured: string; not_pass_through: string; credit: string; sources: string[]; sources_read: string;
 };
 export type JevV12Row = {
-  key: string; display: string; author: string; cls: string; link: string | null; licence: string; open: 'yes' | 'weights' | 'no';
+  key: string; display: string; author: string; cls: string; arch?: string; archBadges?: JevArchBadges; link: string | null; licence: string; open: 'yes' | 'weights' | 'no';
   ranked: boolean; listing: JevListing; notRankedBecause: string | null; rank: number | null; main: number; axes: JevAxes; presets: Record<string, number>; rankUnder: Record<string, number> | null;
   tiers: Record<JevTier12, number | null>; p50: number; p95: number; p50Adj: number; p95Adj: number; adjustment: string;
   endpointKind: 'api' | 'gpu' | 'demo' | 'cpu'; endpoint: string; usd: number; costKind: 'measured' | 'estimate' | 'announced'; costBasis: string;

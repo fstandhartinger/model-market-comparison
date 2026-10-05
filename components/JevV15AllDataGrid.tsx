@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
+import { JevArchitectureBadge } from './JevArchitecture';
 import type { MouseEvent, ReactNode } from 'react';
 import type { JevV15Artifact } from '../lib/jevbench-v15-preview.mjs';
 import type { CompareCategories } from '../lib/jevbench-categories.mjs';
@@ -243,6 +244,7 @@ export function JevV15AllDataGrid({
       content = url
         ? <a href={url} target="_blank" rel="noopener noreferrer" className="block max-w-[11.5rem] truncate underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent sm:max-w-[15rem]" title={String(value ?? row.key)}>{value}</a>
         : <Link href={jevSystemPath(row.key)} className="block max-w-[11.5rem] truncate underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent sm:max-w-[15rem]" title={String(value ?? row.key)}>{value}</Link>;
+      content = <>{content}<JevArchitectureBadge row={{ ...row.system, key: row.key }} /></>;
     } else if (column.id === 'rank' && value == null) {
       content = <span className="bh-muted" title={String(row.values.notRankedBecause ?? 'Not ranked')}>—</span>;
     } else if (column.id === 'addendum' && value != null) {

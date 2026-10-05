@@ -1,3 +1,4 @@
+import { jevArchFields } from '../lib/jevbench-architecture.mjs';
 import { jevV14RowNote, type JevV14Artifact, type JevV14System, sealedFamilyShares } from '../lib/jevbench-v14.mjs';
 import { withFieldNames } from './jevFieldNames';
 import { JevCompareV14, type JevCompareRow } from './JevCompareV14';
@@ -22,7 +23,7 @@ const openSource = (row: JevV14System) => {
 /** Only the fields the chart and table render travel to the client, not the per-family aggregates. */
 function viewRow(row: JevV14System, note: string | null, previousKeys: Set<string> | null): JevBoardViewRow {
   return {
-    key: row.key, display: row.display, author: row.author, repo: jevSourceUrl(row.key, row.repo), class: row.class,
+    key: row.key, display: row.display, author: row.author, repo: jevSourceUrl(row.key, row.repo), class: row.class, ...jevArchFields('jevbench', row),
     rank: row.rank, ranked: row.ranked, listing: row.listing, not_ranked_because: row.not_ranked_because,
     priority_run: row.priority_run === true, api_flag: row.api_flag === true, api_exposure_note: row.api_exposure_note,
     jevbench_score: row.jevbench_score,
@@ -61,7 +62,7 @@ function compareRow(row: JevV14System): JevCompareRow {
   const sealed = sealedFamilyShares(row); // F-213: numbers whatever shape the artifact wrote
   const tiers = (row.tiers ?? {}) as Record<string, number | null>;
   return {
-    key: row.key, name: shortName(row.display), cls: row.class, rank: row.rank, listing: row.listing, score: row.jevbench_score, source: jevSourceUrl(row.key, row.repo),
+    key: row.key, name: shortName(row.display), cls: row.class, ...jevArchFields('jevbench', row), rank: row.rank, listing: row.listing, score: row.jevbench_score, source: jevSourceUrl(row.key, row.repo),
     axes: row.axes, tiers: { easy: tiers.easy ?? null, standard: tiers.standard ?? null, judge: tiers.judge ?? null, hard: tiers.hard ?? null, sealed: row.sealed_accuracy },
     hard: hard ? Object.fromEntries(Object.entries(hard).map(([k, v]) => [k, { accuracy: v.accuracy, n: v.n }])) : null,
     sealed,

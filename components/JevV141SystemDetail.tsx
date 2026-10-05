@@ -1,3 +1,6 @@
+import { jevArchFields } from '../lib/jevbench-architecture.mjs';
+import { JevArchitectureBadge } from './JevArchitecture';
+import { jevRowArch } from './jevTypes';
 import Link from 'next/link';
 import { JevBenchRelatedLinks } from './JevBenchRelatedLinks';
 import { BaseModelDisplay } from './BaseModelDisplay';
@@ -28,7 +31,7 @@ function ScoreStrip({ row, ranked }: { row: JevV14System; ranked: JevV14System[]
       {[0, 25, 50, 75, 100].map((tick) => <span key={tick} aria-hidden="true" style={{ left: `${tick}%` }} className="absolute top-1/2 h-3.5 w-px -translate-x-1/2 -translate-y-1/2 bg-[rgb(var(--line))]" />)}
       {ranked.map((peer) => <span key={peer.key} title={`${short(peer.display)} · ${one(peer.jevbench_score)}`} style={{ left: `${Math.max(0, Math.min(100, peer.jevbench_score ?? 0))}%` }} className="absolute top-1/2 h-2.5 w-px -translate-x-1/2 -translate-y-1/2 bg-[var(--muted)] opacity-40" />)}
       {reference && <span title={`${short(reference.display)} · ${one(reference.jevbench_score)}`} style={{ left: `${reference.jevbench_score ?? 0}%` }} className="absolute top-1/2 h-5 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-sm bg-[var(--text)] opacity-75" />}
-      <span title={`${short(row.display)} · ${one(row.jevbench_score)}`} style={{ left: `${score}%`, background: row.ranked ? typeColour(row.class) : 'transparent', boxShadow: row.ranked ? undefined : 'inset 0 0 0 2px var(--muted)' }} className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full ring-2 ring-[var(--surface)]" />
+      <span title={`${short(row.display)} · ${one(row.jevbench_score)}`} style={{ left: `${score}%`, background: row.ranked ? typeColour(jevRowArch(row)) : 'transparent', boxShadow: row.ranked ? undefined : 'inset 0 0 0 2px var(--muted)' }} className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full ring-2 ring-[var(--surface)]" />
     </div>
     <div className="relative mt-0.5 h-4 w-full" aria-hidden="true">{[0, 25, 50, 75, 100].map((tick) => <span key={tick} style={{ left: `${tick}%`, transform: tick === 0 ? 'none' : tick === 100 ? 'translateX(-100%)' : 'translateX(-50%)' }} className="bh-muted absolute text-[11px] tabular-nums">{tick}</span>)}</div>
     <figcaption className="bh-muted mt-1 text-[12px]">{row.ranked ? `Where it sits among the ${ranked.length} ranked systems.` : 'Shown, not ranked.'}{reference ? ` The marked tick is ${short(reference.display)} (${one(reference.jevbench_score)}).` : ''}</figcaption>
@@ -40,13 +43,12 @@ function compareRow(row: JevV14System): JevCompareRow {
   const axes = row.axes ?? { intelligence: null, calibration: null, speed: null, cost: null };
   const hard = (row.hard as { by_family?: Record<string, { accuracy: number | null; n: number }> } | null)?.by_family ?? null;
   const sealed = sealedFamilyShares(row); // F-213: numbers whatever shape the artifact wrote
-  return { key: row.key, name: short(row.display), source: jevSourceUrl(row.key, row.repo), cls: row.class, rank: row.rank, listing: row.listing, score: row.jevbench_score, axes, tiers: { easy: tiers.easy ?? null, standard: tiers.standard ?? null, judge: tiers.judge ?? null, hard: tiers.hard ?? null, sealed: row.sealed_accuracy }, hard, sealed };
+  return { key: row.key, name: short(row.display), source: jevSourceUrl(row.key, row.repo), cls: row.class, ...jevArchFields('jevbench', row), rank: row.rank, listing: row.listing, score: row.jevbench_score, axes, tiers: { easy: tiers.easy ?? null, standard: tiers.standard ?? null, judge: tiers.judge ?? null, hard: tiers.hard ?? null, sealed: row.sealed_accuracy }, hard, sealed };
 }
 
 export function JevV141SystemDetail({ row, revision, generated, ranked, note = null, sealedFamilyN, hardFamilyN }: { row: JevV14System; revision: string; generated: string; ranked: JevV14System[]; note?: string | null; sealedFamilyN?: Record<string, number>; hardFamilyN?: Record<string, number> }) {
   const reference = referenceFor(row, ranked);
-  // F-192: an unlabelled class is still named on the leaf — as its key in code font, not as another class's label.
-  const classLabel = JEV_TYPE_LABEL[row.class] ?? null;
+  const classLabel = JEV_TYPE_LABEL[jevRowArch(row)] ?? null;
   const classKey = classLabel ? null : (row.class || null);
   const subLineTail = [row.author ? `by ${row.author}` : null].filter(Boolean).join(' · ');
   const path = jevSystemPath(row.key);
@@ -78,6 +80,7 @@ export function JevV141SystemDetail({ row, revision, generated, ranked, note = n
       <div className="bh-eyebrow">JevBench by Benchmark Heaven · {revision} · individual system</div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">{row.display}</h1>
       <p className="bh-muted mt-2 max-w-3xl" data-bh-jev-system-subline>{classLabel ? `${classLabel} · ` : null}{classKey && <><code title={`Class named in the ${revision} artifact; description pending`}>{classKey}</code>{' · '}</>}{subLineTail}{row.api_flag && <> · <span title={row.api_exposure_note ?? "The operator's endpoint received sealed item text, without answers."}>API endpoint saw sealed item text</span></>}</p>
+      <JevArchitectureBadge row={row} />
       <BaseModelDisplay systemKey={row.key} className="mt-2 block text-sm" />
       <JevBenchRelatedLinks systemKey={row.key} />
     </header>
@@ -96,7 +99,7 @@ export function JevV141SystemDetail({ row, revision, generated, ranked, note = n
           <h2 id="jev-v141-system-axes" className="text-xl font-semibold">Published axes</h2>
           <dl className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
             {axisKeys.map((axis) => <div className="bh-panel p-4" key={axis}>
-              <dt className="bh-muted text-sm capitalize">{axis}</dt><dd className="mt-1 text-2xl font-semibold tabular-nums">{one(axes[axis])}{axes[axis] != null && <JevAxisBand axis={axis} value={axes[axis]!} colour={typeColour(row.class)} reference={ranked.find((r) => r.key === 'jev-1.13.0')?.axes?.[axis] ?? null} referenceName="Jev 1.13.0" />}</dd>
+              <dt className="bh-muted text-sm capitalize">{axis}</dt><dd className="mt-1 text-2xl font-semibold tabular-nums">{one(axes[axis])}{axes[axis] != null && <JevAxisBand axis={axis} value={axes[axis]!} colour={typeColour(jevRowArch(row))} reference={ranked.find((r) => r.key === 'jev-1.13.0')?.axes?.[axis] ?? null} referenceName="Jev 1.13.0" />}</dd>
             </div>)}
           </dl>
         </section>

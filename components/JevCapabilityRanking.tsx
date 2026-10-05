@@ -1,4 +1,5 @@
 'use client';
+import { jevRowArch } from './jevTypes';
 
 import { useEffect, useId, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
 import { DEFAULT_CAP, clampCap, formatCap, isOfficialCaps, parseCaps, serialiseCaps, type ClassCaps } from '../lib/jevbench-class-caps.mjs';
@@ -82,7 +83,7 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
   const derived = item.latencyBasis === 'speed-axis';
   // F-200 (pass 36): the ⓘ panel is a definition list, not one sentence; the 300-character native title on
   // the row is gone, the ⓘ is the way in (desktop hover/focus panel, touch modal in JevCapabilityTip).
-  const tipTitle = `${row.display} · ${JEV_TYPE_LABEL[row.class] ?? row.class}`;
+  const tipTitle = `${row.display} · ${JEV_TYPE_LABEL[jevRowArch(row)] ?? row.class}`;
   const tipBody = <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1" data-bh-jev-capability-tip-dl>
     <dt className="text-gray-400">Base model</dt><dd data-bh-base-model-tip={row.key}>
       <BaseModelDisplay benchmark={benchmark} systemKey={row.key} prefix="" />
@@ -97,7 +98,7 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
     <dt className="text-gray-400">Rank</dt><dd className="tabular">Capability Score {rank || `outside ${classLabel}`} · official {row.rank == null ? 'unranked' : `#${row.rank}`}</dd>
     <dt className="text-gray-400">Colours</dt><dd>Green ≤ reference; amber ≤ cap; red &gt; cap. Shorter is cheaper or faster.</dd>
   </dl>;
-  const style = { '--jev-t': `var(${jevTypeVarName(row.class)})` } as CSSProperties;
+  const style = { '--jev-t': `var(${jevTypeVarName(jevRowArch(row))})` } as CSSProperties;
   const link = benchmark === 'imagejevbench' ? imageJevSourceUrl(row.key, row.repo) : jevSourceUrl(row.key, row.repo);
   return <li className={`group relative ${grid} min-h-[43px] items-center text-[11px] sm:text-sm`} style={style}
     data-bh-jev14-capability-row={row.key} data-bh-jev14-capability-value={capability.toFixed(3)} data-bh-jev14-cost={cost ?? ''}>
@@ -195,7 +196,7 @@ export function JevCapabilityRanking({ systems, eligibilitySystems = systems, re
   const bar = ({ r, label }: { r: JevClassRow; label: string }) => <RankingRow key={r.row.key} item={r} rank={label} reference={reference} costFactor={costFactor} latencyFactor={latencyFactor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark}
     note={r.isReference ? `Reference system for the ${classLabel} limits` : !r.row.ranked ? `Not ranked in the official ${benchName} Score (${r.row.listing.replace(/_/g, ' ')})` : undefined} />;
   const outsideBar = (r: JevClassRow) => <RankingRow key={r.row.key} item={r} rank="" reference={reference} costFactor={costFactor} latencyFactor={latencyFactor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark} note={`Outside: ${r.reasons.join(', ')}`} />;
-  const types = jevLegendTypes(filteredRows.map((r) => r.row.class));
+  const types = jevLegendTypes(filteredRows.map((r) => jevRowArch(r.row)));
 
   // F-197 (pass 36): mt-6 not mt-8 — with the guides nav folded out of the page head the first Capability row
   // must sit inside the tightened 590/660 px budgets; the smaller gap is the remaining headroom.
@@ -253,7 +254,7 @@ export function JevCapabilityRanking({ systems, eligibilitySystems = systems, re
       <p className="bh-muted mt-2 text-[11.5px] leading-snug">Wide coloured bar = Capability Score (0–100). Thin bars: cost above, median latency below; shared log ratio scale 0.25× … 64× {referenceLabel}, {official ? <>ticks at 1× and {limits.factor}× (cap).</> : <>ticks at 1×{costFactor !== Infinity && costFactor !== 1 ? ` and ${formatCap(costFactor)} (cost cap)` : ''}{latencyFactor !== Infinity && latencyFactor !== 1 ? ` and ${formatCap(latencyFactor)} (latency cap)` : ''}; cost {formatCap(costFactor)}, latency {formatCap(latencyFactor)}. An uncapped axis never turns red.</>} Shorter is cheaper or faster. * = est. (estimated cost). # counts ranked {classLabel} systems; “–” marks unranked or outside systems. Tap ⓘ or hover a row or thin bar for details.</p>
       <p className="bh-muted mt-1 text-[11.5px] leading-snug" data-bh-cost-latency-correlation>{costLatencySpearman != null && Math.abs(costLatencySpearman) < 0.2 ? 'Cost and latency are shown separately because they are nearly independent across systems' : costLatencySpearman == null ? 'Cost and latency are shown separately' : 'Cost and latency correlate here'} (Spearman ρ = {costLatencySpearman == null ? 'unavailable' : costLatencySpearman.toFixed(2)}, n = {pairedCount}){correlationReason && costLatencySpearman != null && Math.abs(costLatencySpearman) >= 0.2 ? `, ${correlationReason}` : ''}.</p>
       <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11.5px]" aria-label="Ranking colour legend" data-bh-jev-capability-legend>
-        {types.map((type) => <li key={type} style={{ '--jev-t': `var(${jevTypeVarName(type)})` } as CSSProperties}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[type] ?? type}</li>)}
+        {types.map((type) => <li key={type} style={{ '--jev-t': `var(${jevTypeVarName(type)})` } as CSSProperties}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[type]} ({filteredRows.filter((r) => jevRowArch(r.row) === type).length})</li>)}
         {(['green', 'amber', 'red'] as const).map((zone) => <li key={zone}><span className={`bh-tl-${zone} mr-1.5 inline-block h-[4px] w-4 rounded-full align-middle`} />{zone}: {zone === 'green' ? '≤ reference' : zone === 'amber' ? official ? `≤ cap (${limits.factor}× reference)` : `above reference, within cost ${formatCap(costFactor)} / latency ${formatCap(latencyFactor)}` : official ? '> cap' : costFactor === Infinity && latencyFactor === Infinity ? 'disabled (no caps)' : '> the selected axis cap'}</li>)}
       </ul>
 

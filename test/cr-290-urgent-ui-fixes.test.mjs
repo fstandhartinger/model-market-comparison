@@ -62,20 +62,16 @@ test('the two cap sliders sit in a wide grid whose labels never wrap', () => {
   assert.match(ranking, /whitespace-nowrap" data-bh-jev-cap-label/);
 });
 
-test('ImageJevBench colours systems by distinct cited base-model families, Wity keeps the decision-API colour', () => {
+test('ImageJevBench uses the shared architecture axis and retains artifact classes', () => {
   const preview = JSON.parse(src('data/raw/benchmarks/jevbench/multimodal-preview/preview.json'));
-  const classes = new Set(imageJevBoardSystems(preview).map((row) => row.class));
-  assert.ok(classes.size >= 6, [...classes].join(','));
-  assert.equal(imageJevClassFor({ key: 'wity_1', kind: 'api', api_flag: true }), 'decision-api');
-  assert.equal(imageJevClassFor({ key: 'gpt6_luna', kind: 'api', api_flag: true }), 'img-hosted-llm');
-  assert.equal(imageJevClassFor({ key: 'djev_distill_v4', kind: 'gpu' }), 'img-diffusiongemma');
-  const types = src('components/jevTypes.ts'), css = src('app/globals.css');
-  for (const cls of classes) {
-    if (cls === 'decision-api') continue;
-    assert.ok(types.includes(`"${cls}"`), `${cls} has a label and colour variable`);
-    const variable = types.match(new RegExp(`"${cls}": "(--[a-z0-9-]+)"`))?.[1];
-    assert.ok(variable && css.includes(`${variable}:`), `${cls} colour defined in globals.css`);
+  const systems = imageJevBoardSystems(preview);
+  for (const row of systems) {
+    assert.equal(row.class, preview.ranking.find((s) => s.key === row.key).class ?? '');
+    assert.ok(src('lib/jevbench-architecture.mjs').includes(row.arch));
   }
+  assert.equal(imageJevClassFor({ key: 'wity_1', kind: 'api', api_flag: true }), 'closed-api');
+  assert.equal(imageJevClassFor({ key: 'gpt6_luna', kind: 'api', api_flag: true }), 'closed-api');
+  assert.match(src('components/jevTypes.ts'), /JEV_ARCH_CLASSES/);
 });
 
 test('radars leave missing spokes as gaps marked n/a and never bridge or zero them', () => {

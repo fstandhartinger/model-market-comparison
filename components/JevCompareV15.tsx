@@ -1,7 +1,9 @@
 "use client";
+import { jevRowArch, jevTypeVarName as architectureVar } from './jevTypes';
+import type { JevArchBadges } from '../lib/jevbench-architecture.mjs';
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Radar, Swatch, type Series, type Spoke } from "./JevRadars";
-import { JEV_TYPE_LABEL, JEV_TYPE_VAR } from "./jevTypes";
+import { JEV_TYPE_LABEL } from "./jevTypes";
 import { SystemCombobox } from "./JevCompareV14";
 import { jevSourceUrl } from "./jevSystemLinks";
 import type { CompareCategories, CategoryDim } from "../lib/jevbench-categories.mjs";
@@ -16,7 +18,7 @@ import { useJevV15VisibleKeys } from "./useJevV15VisibleKeys";
 // and test/cr-257-category-radars.test.mjs.
 
 export type JevCompareV15Row = {
-  key: string; name: string; cls: string; rank: number | null; listing: string; score: number | null; repo?: string | null; hosted?: boolean;
+  key: string; name: string; cls: string; arch?: string; archBadges?: JevArchBadges; rank: number | null; listing: string; score: number | null; repo?: string | null; hosted?: boolean;
   axes: Record<"intelligence" | "calibration" | "speed" | "cost", number | null> | null;
   typeCc: Record<"choice" | "noul" | "score", { open: number | null; sealed: number | null }>;
   tierCc: {
@@ -25,8 +27,7 @@ export type JevCompareV15Row = {
   };
 };
 
-const FAMILY: Record<string, string> = { jev: "blue", "jev-service": "blue", "jev-rebuild": "orange", "llm-baseline": "green", "small-tool-model": "violet", classifier: "magenta", "decision-api": "yellow", reranker: "teal", "raw-logit-control": "grey", "native-logit": "lime", "system-one-open": "red" };
-const colour = (cls: string) => `rgb(var(${JEV_TYPE_VAR[cls] ?? JEV_TYPE_VAR["llm-baseline"]}))`;
+const colour = (cls: string) => `rgb(var(${architectureVar(cls)}))`;
 
 const AXES = [["intelligence", "Intelligence"], ["calibration", "Calibration"], ["speed", "Speed"], ["cost", "Cost"]] as const;
 const TYPE_SPOKES = [
@@ -40,9 +41,9 @@ const one = (v: number | null) => (v === null ? "—" : v.toFixed(1));
 const lines = (label: string) => label.split(" ").reduce<string[]>((ls, w) => (ls.length && (ls[ls.length - 1] + " " + w).length <= 13 ? [...ls.slice(0, -1), `${ls[ls.length - 1]} ${w}`] : [...ls, w]), []);
 
 function series(A: JevCompareV15Row, B: JevCompareV15Row): Series[] {
-  const same = (FAMILY[A.cls] ?? A.cls) === (FAMILY[B.cls] ?? B.cls);
-  return [{ name: A.name, stroke: colour(A.cls), dashed: false, square: false },
-    { name: B.name, stroke: same ? `color-mix(in srgb, ${colour(B.cls)} 55%, var(--text))` : colour(B.cls), dashed: same, square: true }];
+  const same = jevRowArch(A) === jevRowArch(B);
+  return [{ name: A.name, stroke: colour(jevRowArch(A)), dashed: false, square: false },
+    { name: B.name, stroke: colour(jevRowArch(B)), dashed: same, square: true }];
 }
 
 /** CR-257: one radar per category dimension. Categories under the artifact's min_n are listed, not plotted; a value below
@@ -176,7 +177,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
       </div>
       <div className="mt-3 flex flex-wrap items-start justify-between gap-2">
         <ul className="space-y-1 text-[13px]" aria-label="Legend" data-bh-jev15-compare-legend>
-          {pair.map((r, k) => <li key={k}><Swatch s={s[k]} /><b>{k === 0 ? "A" : "B"}: {r.repo ? <a href={jevSourceUrl(r.key, r.repo) ?? undefined} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-source={r.key}>{r.name}</a> : r.name}</b> <span className="bh-muted" data-bh-jev15-class={r.cls}>— {JEV_TYPE_LABEL[r.cls] ?? <code title="Class named in the artifact; description pending">{r.cls}</code>} · </span><span className="whitespace-nowrap">Score {one(r.score)} ({status(r)})</span></li>)}
+          {pair.map((r, k) => <li key={k}><Swatch s={s[k]} /><b>{k === 0 ? "A" : "B"}: {r.repo ? <a href={jevSourceUrl(r.key, r.repo) ?? undefined} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-source={r.key}>{r.name}</a> : r.name}</b> <span className="bh-muted" data-bh-jev15-class={r.cls}>— {JEV_TYPE_LABEL[jevRowArch(r)] ?? <code title="Class named in the artifact; description pending">{r.cls}</code>} · </span><span className="whitespace-nowrap">Score {one(r.score)} ({status(r)})</span></li>)}
         </ul>
         <button type="button" className="bh-button text-xs font-semibold" onClick={copy} data-bh-jev15-compare-copy>{copied ? "Link copied" : "Copy link to this pair"}</button>
       </div>

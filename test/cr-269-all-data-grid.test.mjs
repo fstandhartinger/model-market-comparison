@@ -1,3 +1,4 @@
+import { JEV_ARCH_CLASSES, jevArchFor } from '../lib/jevbench-architecture.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readJevbenchV155Release } from '../lib/jevbench-v15-release.mjs';
@@ -54,7 +55,7 @@ test('CR-269: cells carry the exact published values for a known ranked row', ()
   assert.equal(row.values.system, sys.display);
   assert.equal(row.values.author, sys.author);
   assert.equal(row.values.family, sys.underlying ?? sys.family ?? sys.base_model ?? null);
-  assert.equal(row.values.class, sys.class);
+  assert.equal(row.values.class, JEV_ARCH_CLASSES.find((c) => c.id === jevArchFor('jevbench', sys).arch).label);
   assert.equal(row.values.open, String(sys.open));
   assert.equal(row.values.api, sys.api_flag);
   assert.equal(row.values.licence, sys.licence);
