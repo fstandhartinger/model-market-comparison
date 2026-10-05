@@ -125,6 +125,17 @@ def main(round_dir, held_path, notes_path):
     results['not_measured'].sort(key=lambda r: r['key'])
     results['roster_count'] = len(results['systems']) + len(results['not_measured'])
 
+    # 3a. metadata for rows that were not on the live v1.5.6 board: join from live v1.5.7, then held v1.5.8
+    prior_rows = {r['key']: r for r in held['systems']}
+    prior_rows.update({r['key']: r for r in live['systems']})
+    for s in results['systems']:
+        prior = prior_rows.get(s['key'])
+        for f in P.JOIN_FIELDS:
+            if prior is not None and prior.get(f) is not None and s.get(f) is None:
+                s[f] = prior[f]
+        if s['key'].startswith('wity-1'):
+            s['repo'] = 'https://wity.alphanimble.com/'  # author/site link promised to Wity (board #10296)
+
     # 3b. measured rows that are not on any public board yet (fast-lane orders, add-request candidates) are marked
     public = {r['key'] for r in live['systems']} | {r['key'] for r in live.get('not_measured', [])}
     approved = {r['key'] for r in json.loads(subprocess.run(['git', 'show', '16c79377:data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json'],

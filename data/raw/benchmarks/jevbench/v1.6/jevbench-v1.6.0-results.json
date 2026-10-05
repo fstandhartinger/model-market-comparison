@@ -1025,6 +1025,13 @@
     "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
     "carried_metadata_from": null
    },
+   "class": "Jev-compatible decision model",
+   "open": "open weights",
+   "licence": "apache-2.0",
+   "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Large",
+   "gpu": "H100",
+   "endpoint_condition": "evaluator-owned Lium GPU pod, 1x NVIDIA H100 80GB, weights fetched in a separate model-only container, scored run inside docker --network none (loopback only, no secrets, label-free inputs); pod destroyed afterwards; paid public fast-lane evaluation, 4 Oct 2026 (order 3643732b)",
+   "underlying": "google/gemma-4-31B-it",
    "unpublished_candidate": true
   },
   {
@@ -1752,6 +1759,25 @@
     "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
     "carried_metadata_from": null
    },
+   "class": "decision-api",
+   "open": "no",
+   "licence": "proprietary hosted API",
+   "repo": "https://wity.alphanimble.com/",
+   "endpoint_condition": "operator's hosted production API, measured as is; API default is off, our request sets reasoning=auto as the operator asked for their main row.",
+   "underlying": "Qwen3.6-35B-A3B (operator self-reported; not independently verified)",
+   "adapter_id": "run/wity-1-auto.spec.json:wity_reasoning_adapter.WityReasoningAdapter",
+   "api_exposure_note": "API measurement: the operator's endpoint received sealed item text, without answers.",
+   "alt": {
+    "label": "Qwen3.6-35B-A3B base-model reference price",
+    "note": "Operator self-reported base, not independently verified; frozen Qwen/Qwen3.6-35B-A3B reference USD 0.15/M input and 1.00/M output, applied to the same measured tokens.",
+    "usd_per_1000": 0.08721059113300492,
+    "axes": {
+     "calibration": 90.45687167393245,
+     "cost": 41.78292309262718,
+     "intelligence": 78.56795761907267,
+     "speed": 75.05991709119236
+    }
+   },
    "unpublished_candidate": true
   },
   {
@@ -2100,6 +2126,13 @@
     "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
     "carried_metadata_from": null
    },
+   "class": "Jev-compatible decision model",
+   "open": "open weights",
+   "licence": "cc-by-nc-4.0",
+   "repo": "https://huggingface.co/torchcast-ai/torchcast-decision-12b",
+   "gpu": "H100",
+   "endpoint_condition": "evaluator-owned Lium GPU pod, 1x NVIDIA H100 80GB, weights fetched in a separate model-only container, scored run inside docker --network none (loopback only, no secrets, label-free inputs); pod destroyed afterwards; paid public fast-lane evaluation, 4 Oct 2026 (order b113eac1)",
+   "underlying": "google/gemma-4-12B-it",
    "unpublished_candidate": true
   },
   {
@@ -4585,6 +4618,13 @@
     "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
     "carried_metadata_from": null
    },
+   "class": "Jev-compatible decision model",
+   "open": "open weights",
+   "licence": "apache-2.0",
+   "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Medium",
+   "gpu": "H100",
+   "endpoint_condition": "evaluator-owned Lium GPU pod, 1x NVIDIA H100 80GB, weights fetched in a separate model-only container, scored run inside docker --network none (loopback only, no secrets, label-free inputs); pod destroyed afterwards; paid public fast-lane evaluation, 4 Oct 2026 (order 3643732b)",
+   "underlying": "Qwen/Qwen3.5-4B",
    "unpublished_candidate": true
   },
   {
@@ -21330,7 +21370,15 @@
    "provenance": {
     "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
     "carried_metadata_from": null
-   }
+   },
+   "class": "jev-rebuild",
+   "open": "open weights",
+   "licence": "Apache-2.0",
+   "repo": "https://huggingface.co/ZefanCai/Open-Jev-27B-v1.1",
+   "gpu": "RTXPRO6000",
+   "endpoint_condition": "Self-hosted author loader, Transformers reference path on RTX PRO 6000 Blackwell; speed is a LOWER BOUND: flash-linear-attention and causal-conv1d kernels were not installed. The author documents the kernel path as answer-identical. Each candidate is encoded independently, producing high input-token usage.",
+   "underlying": "Qwen3.8-27B (lineage verified by architecture)",
+   "adapter_id": "/home/flori/jobs/jevbench-add-requests-20260919/r45/outputs/meta/specs/open-jev-zefan-27b-v1.1.json:jevbench.adapters.typesafe.TypeSafeAdapter"
   },
   {
    "addendum": null,
@@ -24169,6 +24217,13 @@
     "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
     "carried_metadata_from": null
    },
+   "class": "Jev-compatible decision model",
+   "open": "open weights",
+   "licence": "apache-2.0",
+   "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Small-EN",
+   "gpu": "H100",
+   "endpoint_condition": "evaluator-owned Lium GPU pod, 1x NVIDIA H100 80GB, weights fetched in a separate model-only container, scored run inside docker --network none (loopback only, no secrets, label-free inputs); pod destroyed afterwards; paid public fast-lane evaluation, 4 Oct 2026 (order 3643732b)",
+   "underlying": "answerdotai/ModernBERT-base",
    "unpublished_candidate": true
   },
   {
@@ -27019,6 +27074,13 @@
     "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
     "carried_metadata_from": null
    },
+   "class": "Jev-compatible decision model",
+   "open": "open weights",
+   "licence": "apache-2.0",
+   "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Small",
+   "gpu": "H100",
+   "endpoint_condition": "evaluator-owned Lium GPU pod, 1x NVIDIA H100 80GB, weights fetched in a separate model-only container, scored run inside docker --network none (loopback only, no secrets, label-free inputs); pod destroyed afterwards; paid public fast-lane evaluation, 4 Oct 2026 (order 3643732b)",
+   "underlying": "aisingapore/SEA-LION-ModernBERT-300M",
    "unpublished_candidate": true
   },
   {
@@ -27367,6 +27429,13 @@
     "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
     "carried_metadata_from": null
    },
+   "class": "Jev-compatible decision model",
+   "open": "open weights",
+   "licence": "apache-2.0",
+   "repo": "https://huggingface.co/chinhnc/Quyet-1.0-Tiny",
+   "gpu": "H100",
+   "endpoint_condition": "evaluator-owned Lium GPU pod, 1x NVIDIA H100 80GB, weights fetched in a separate model-only container, scored run inside docker --network none (loopback only, no secrets, label-free inputs); pod destroyed afterwards; paid public fast-lane evaluation, 4 Oct 2026 (order 3643732b)",
+   "underlying": "jhu-clsp/mmBERT-small",
    "unpublished_candidate": true
   },
   {
@@ -33325,6 +33394,25 @@
     "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
     "carried_metadata_from": null
    },
+   "class": "decision-api",
+   "open": "no",
+   "licence": "proprietary hosted API",
+   "repo": "https://wity.alphanimble.com/",
+   "endpoint_condition": "operator's hosted production API, measured as is; API default is off, our request sets reasoning=always; labelled configuration variant.",
+   "underlying": "Qwen3.6-35B-A3B (operator self-reported; not independently verified)",
+   "adapter_id": "run/wity-1-always.spec.json:wity_reasoning_adapter.WityReasoningAdapter",
+   "api_exposure_note": "API measurement: the operator's endpoint received sealed item text, without answers.",
+   "alt": {
+    "label": "Qwen3.6-35B-A3B base-model reference price",
+    "note": "Operator self-reported base, not independently verified; frozen Qwen/Qwen3.6-35B-A3B reference USD 0.15/M input and 1.00/M output, applied to the same measured tokens.",
+    "usd_per_1000": 0.08721059113300492,
+    "axes": {
+     "calibration": 91.0421772337923,
+     "cost": 41.78292309262718,
+     "intelligence": 79.49960112075699,
+     "speed": 74.36141604169042
+    }
+   },
    "unpublished_candidate": true
   },
   {
@@ -33675,6 +33763,25 @@
    "provenance": {
     "kind": "v1.6.0 overnight re-measure (score-overnight-8/out-O1S)",
     "carried_metadata_from": null
+   },
+   "class": "decision-api",
+   "open": "no",
+   "licence": "proprietary hosted API",
+   "repo": "https://wity.alphanimble.com/",
+   "endpoint_condition": "operator's hosted production API, measured as is; API default is off, our request sets reasoning=off; labelled configuration variant. The first approximately 70 decisions ran alongside two other streams; the remainder ran alone.",
+   "underlying": "Qwen3.6-35B-A3B (operator self-reported; not independently verified)",
+   "adapter_id": "run/wity-1-off.spec.json:wity_reasoning_adapter.WityReasoningAdapter",
+   "api_exposure_note": "API measurement: the operator's endpoint received sealed item text, without answers.",
+   "alt": {
+    "label": "Qwen3.6-35B-A3B base-model reference price",
+    "note": "Operator self-reported base, not independently verified; frozen Qwen/Qwen3.6-35B-A3B reference USD 0.15/M input and 1.00/M output, applied to the same measured tokens.",
+    "usd_per_1000": 0.08721059113300492,
+    "axes": {
+     "calibration": 83.45289319036758,
+     "cost": 41.78292309262718,
+     "intelligence": 60.40492797149856,
+     "speed": 87.66397534612332
+    }
    },
    "unpublished_candidate": true
   }
