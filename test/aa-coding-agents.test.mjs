@@ -15,9 +15,11 @@ const rows = () => Array.from({ length: 13 }, (_, i) => ({
   evals: ["deep-swe-v1.1", "swe-atlas-qna", "terminal-bench-v4"].map((datasetIndexName) => ({ datasetIndexName, mean: { reward: 0.5 }, weight: 1 / 3 })),
 }));
 const html = (items = rows(), options = {}) => {
-  const records = `a:${JSON.stringify(["$", "div", null, { rows: items }])}\nb:${JSON.stringify({ title: "Performance", description: "Performance across the Artificial Analysis Coding Agent Index.", change: { description: `Coding Agent Index v${options.version || "1.5"}:` }, benchmarkRows: items.map((_, i) => `$a:props:rows:${i}`) })}\n`;
+  const change = options.badge === false ? "$undefined" : { description: `Coding Agent Index v${options.version || "1.5"}:` };
+  const records = `a:${JSON.stringify(["$", "div", null, { rows: items }])}\nb:${JSON.stringify({ title: "Performance", description: "Performance across the Artificial Analysis Coding Agent Index.", change, benchmarkRows: items.map((_, i) => `$a:props:rows:${i}`) })}\n`;
   // A Flight chunk can end in the middle of a string escape.
-  return [records.slice(0, 133), records.slice(133)].map((part) => `<script>self.__next_f.push(${JSON.stringify([1, part])})</script>`).join("");
+  const subtitle = options.subtitle ? `<span>Artificial Analysis Coding Agent Index v${options.subtitle} incorporates 3 benchmarks: DeepSWE v1.1, Terminal-Bench 4.0, and SWE-Atlas-QnA · Higher is better</span>` : "";
+  return subtitle + [records.slice(0, 133), records.slice(133)].map((part) => `<script>self.__next_f.push(${JSON.stringify([1, part])})</script>`).join("");
 };
 
 test("full Coding Agent board resolves Flight references and preserves exact model/harness names", () => {
@@ -53,6 +55,15 @@ test("Coding Agent rejects partial, malformed, ambiguous, changed-version and in
   assert.throws(() => parseCodingAgents(html(weight)), /invalid component/);
   const score = rows(); score[0].evals[0].mean.reward = 1.5;
   assert.throws(() => parseCodingAgents(html(score)), /invalid component/);
+});
+
+test("CR-285: Coding Agent version comes from the stable index subtitle when AA drops the change badge", () => {
+  assert.equal(parseCodingAgents(html(rows(), { badge: false, subtitle: "1.5" })).version, "1.5");
+  assert.equal(parseCodingAgents(html(rows(), { subtitle: "1.5" })).count, 13);
+  assert.throws(() => parseCodingAgents(html(rows(), { badge: false })), /version absent or changed/);
+  assert.throws(() => parseCodingAgents(html(rows(), { badge: false, subtitle: "1.6" })), /version absent or changed/);
+  assert.throws(() => parseCodingAgents(html(rows(), { subtitle: "1.6" })), /version absent or changed/);
+  assert.throws(() => parseCodingAgents(html(rows(), { version: "1.6", subtitle: "1.5" })), /version absent or changed/);
 });
 
 test("failed live fetch or partial parse never overwrites the previous snapshot", async () => {
