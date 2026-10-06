@@ -28,11 +28,11 @@ const onCpu = (row: SeoRow) => /ryzen|cpu/i.test(`${(row as unknown as Setup).sp
 
 export default async function OpenSourceJevPage() {
   const data = await readJevbenchSeoData();
-  const jev = (data.ranked as unknown as SeoRow[]).find((row) => row.key === 'jev-1.13.0')!;
+  const jev = data.reference as unknown as SeoRow;
   const open = data.openWeightAlternatives as unknown as SeoRow[];
   const top = open.filter((row) => row.capability_eligible).slice(0, TOP);
   const best = top[0];
-  const aboveJev = open.filter((row) => row.rank != null && jev.rank != null && row.rank < jev.rank);
+  const aboveJev = open.filter((row) => row.capability_eligible && row.capability != null && jev.capability != null && row.capability > jev.capability);
   const bestCpu = open.find(onCpu) ?? null;
   const topFiveNote = (data.artifact as { top_five_note?: string }).top_five_note ?? null;
   const faq = [
@@ -42,16 +42,16 @@ export default async function OpenSourceJevPage() {
     },
     {
       question: 'What is the best open-source Jev alternative?',
-      answer: `On the ${data.artifact.revision} Capability ranking, ${best.display} ranks #${best.rank} with a Capability Score of ${one(best.capability)} (${best.licence}). ${topFiveNote ?? ''} The right choice depends on whether you weight reasoning, calibration, speed or cost most.`,
+      answer: `On the ${data.artifact.revision} open-weights board, ${best.display} ranks #${best.rank} with a Capability Score of ${one(best.capability)} (${best.licence}). ${topFiveNote ?? ''} The right choice depends on whether you weight reasoning, calibration, speed or cost most.`,
     },
     {
       question: 'How many open-weight Jev-class models does JevBench measure?',
-      answer: `${open.length} Jev-class systems with public code or weights are measured in ${data.artifact.revision}. ${aboveJev.length === 1 ? 'One of them ranks' : `${aboveJev.length} of them rank`} above Jev 1.13.0 (#${jev.rank}) on the Capability Score.`,
+      answer: `${open.length} Jev-class systems with public code or weights are measured in ${data.artifact.revision}. ${aboveJev.length === 1 ? 'One of them scores' : `${aboveJev.length} of them score`} above Jev 1.13.0 (the unranked reference, Capability Score ${one(jev.capability)}) on the Capability Score.`,
     },
     {
       question: 'Can I run an open Jev alternative on a CPU?',
       answer: bestCpu
-        ? `Yes, some were measured on four CPU threads of an AMD Ryzen 5 3600. The highest-ranked of them is ${bestCpu.display} at #${bestCpu.rank} (Capability Score ${one(bestCpu.capability)}). Most higher-ranked open models were measured on a rented GPU or the author’s own endpoint.`
+        ? `Yes, some were measured on four CPU threads of an AMD Ryzen 5 3600. The highest-ranked of them is ${bestCpu.display} at #${bestCpu.rank} on the open-weights board (Capability Score ${one(bestCpu.capability)}). Most higher-ranked open models were measured on a rented GPU or the author’s own endpoint.`
         : 'None of the open-weight rows in this release was measured on a CPU.',
     },
     {
@@ -72,14 +72,14 @@ export default async function OpenSourceJevPage() {
     <header className="bh-page-head mt-3">
       <p className="bh-eyebrow">JevBench by Benchmark Heaven · released {data.artifact.revision}</p>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">Is Jev open source?</h1>
-      <p className="mt-3 max-w-3xl text-lg" data-bh-jev-open-answer><b>No.</b> Jev 1.13.0 is TypeSafe AI’s proprietary API; its weights are not published. But {open.length} open-weight Jev-class models were measured on the same benchmark, and {aboveJev.length === 1 ? 'one of them ranks' : `${aboveJev.length} of them rank`} above Jev on the Capability Score.</p>
+      <p className="mt-3 max-w-3xl text-lg" data-bh-jev-open-answer><b>No.</b> Jev 1.13.0 is TypeSafe AI’s proprietary API; its weights are not published. But {open.length} open-weight Jev-class models were measured on the same benchmark, and {aboveJev.length === 1 ? 'one of them scores' : `${aboveJev.length} of them score`} above Jev on the Capability Score.</p>
       {topFiveNote && <p className="bh-muted mt-3 max-w-3xl" data-bh-jev-top-five-note>{topFiveNote}</p>}
       <JevReleaseStamp data={data} /><JevIntentLinks current="openSource" />
     </header>
 
     <section className="bh-panel mt-6 p-5" aria-labelledby="open-jev-top">
       <h2 id="open-jev-top" className="text-xl font-semibold">The {TOP} highest-ranked open-weight Jev-class models</h2>
-      <p className="bh-muted mt-2">Ranks are overall ranks in {data.artifact.revision}, with Jev 1.13.0 at #{jev.rank} (Capability Score {one(jev.capability)}) for reference.</p>
+      <p className="bh-muted mt-2">Ranks are open-weights board ranks in {data.artifact.revision}. Jev 1.13.0 is the unranked reference (Capability Score {one(jev.capability)}); hosted API offerings are ranked on the <Link className="text-accent underline" href="/jev-models/api">API leaderboard</Link>.</p>
       <div className="mt-4 overflow-x-auto">
         <table className="w-full min-w-[880px] text-left text-sm" data-bh-jev-open-top>
           <thead><tr className="border-b text-xs uppercase tracking-wide text-muted-foreground">

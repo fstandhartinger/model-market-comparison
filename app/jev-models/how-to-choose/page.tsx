@@ -27,7 +27,7 @@ export default async function HowToChooseJevModelPage() {
   const faq = [
     {
       question: 'Which Jev-class model has the highest published Intelligence?',
-      answer: `${accurate.display} has the highest Intelligence axis in the published ${data.artifact.revision} ranked rows (${one(accurate.axes.intelligence)}). This is a separate measure from the composite JevBench Score.`,
+      answer: `${accurate.display} has the highest Intelligence axis among the open-weights ranked rows of ${data.artifact.revision} (${one(accurate.axes.intelligence)}). This is a separate measure from the composite JevBench Score.`,
     },
     {
       question: 'Which Jev-class model is fastest?',
@@ -87,7 +87,7 @@ export default async function HowToChooseJevModelPage() {
       <h2 id="self-hostable-rows" className="text-2xl font-semibold">Systems with explicit self-hosting evidence</h2>
       <ul className="mt-4 grid gap-3 md:grid-cols-2">
         {openRows.map((row) => <li className="bh-panel p-4" key={row.key}>
-          <p className="font-semibold"><JevRowLink row={row} /> <span className="bh-muted text-sm">· rank {row.rank}</span></p>
+          <p className="font-semibold"><JevRowLink row={row} /> <span className="bh-muted text-sm">· open-weights rank {row.rank}</span></p>
           <p className="bh-muted mt-1 text-sm">{opennessLabel(row)} · {row.licence}</p>
           <p className="mt-2 text-sm"><a className="text-accent underline" href={row.repo!}>Published repository or weights</a></p>
         </li>)}

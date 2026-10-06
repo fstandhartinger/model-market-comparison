@@ -8,17 +8,19 @@ import {isJevbenchV16ExcludedKey} from '../lib/jevbench-v16-public-scope.mjs';
 import {importSeoModule,renderSeo,parseJsonLd} from './jevbench-seo-render.mjs';
 
 const data = await readJevbenchSeoData();
-test('SEO headline ranks exactly match the current public feed, not artifact-wide ranks',async()=>{
+test('SEO headline ranks match the open-weights board in the current public feed, not artifact-wide ranks',async()=>{
  const {feed}=await readJevbenchAgentFeed();const {artifact}=await readCurrentJevbench();
  assert.equal(data.artifact.revision,artifact.revision);
- assert.deepEqual(data.ranked.map(r=>[r.key,r.rank,r.capability]),feed.systems.filter(r=>r.capability.eligible).sort((a,b)=>a.capability.rank-b.capability.rank).map(r=>[r.key,r.capability.rank,r.capability.score]));
+ assert.deepEqual(data.ranked.map(r=>[r.key,r.rank,r.capability]),feed.systems.filter(r=>r.capability.open_board_rank!=null).sort((a,b)=>a.capability.open_board_rank-b.capability.open_board_rank).map(r=>[r.key,r.capability.open_board_rank,r.capability.score]));
  assert.ok(data.systems.some(r=>r.key==='jev-1.13.0'));
  assert.ok(Number.isFinite(Date.parse(data.date)));
 });
 test('comparisons preserve legacy slugs and derive current top-eight rivals',()=>{
- assert.deepEqual(data.comparisons.map(p=>p.slug),currentComparisonPairs(data.ranked).map(p=>p.slug));
+ // Pairs still follow the combined Capability order (sitemap unchanged); page ranks use the open board.
+ const combined=data.systems.filter(r=>r.capability_eligible&&r.ranked&&r.listing==='ranked').sort((a,b)=>a.combined_rank-b.combined_rank);
+ assert.deepEqual(data.comparisons.map(p=>p.slug),currentComparisonPairs(combined).map(p=>p.slug));
  for(const pair of JEV_LEGACY_COMPARISONS) assert.ok(data.comparisons.some(p=>p.slug===pair.slug));
- for(const row of data.ranked.slice(0,8).filter(r=>r.key!=='jev-1.13.0'))assert.ok(data.comparisons.some(p=>p.key===row.key));
+ for(const row of combined.slice(0,8).filter(r=>r.key!=='jev-1.13.0'))assert.ok(data.comparisons.some(p=>p.key===row.key));
  for(const pair of data.comparisons.filter(p=>!p.inCurrentRelease))assert.ok(pair.rival.last_measured_on);
 });
 test('picks and open-weight classification use current measured evidence',()=>{
