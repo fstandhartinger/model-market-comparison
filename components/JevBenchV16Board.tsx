@@ -18,7 +18,7 @@ import { baseModelFamilies } from '../lib/jev-base-model.mjs';
 import { JevV15AllDataGrid } from './JevV15AllDataGrid';
 import { JevApiOfferingsToggle } from './JevApiOfferingsToggle';
 import { JevGpuCostCalculator } from './JevGpuCostCalculator';
-import { JEV_REFERENCE_KEY, JEV_SCOPE_LISTING, jevApiRoster, type JevApiListedRow, type JevScope } from '../lib/jevbench-scope.mjs';
+import { JEV_REFERENCE_KEY, JEV_SCOPE_LISTING, jevApiRoster, jevScopeDisplayOrder, type JevApiListedRow, type JevScope } from '../lib/jevbench-scope.mjs';
 import { NOT_RANKED } from './JevBoardShared';
 
 // JevBench v1.6.0 release board. Reuses the established interactive charts on the
@@ -110,6 +110,7 @@ function DatedCarry({ carry, hiddenApi }: { carry: JevV16Carry; hiddenApi: Reado
 
 // v1.7.0 (Florian, 5 Oct 2026): open-weights board on /jev-models, API-provider board on /jev-models/api.
 export const JEV_BOARD_REVISIONS: { version: string; date: string; text: string }[] = [
+  { version: 'v1.7.3', date: '2026-10-06', text: 'Display only, no score or rank changed. The API board ranks every offering at its own list price and no longer shows a base-model reference price (that comparison only matters against open weights). The Jev reference row and, with “Show API offerings” on, every API offering now sit at their score position in each ranking section (Composite and Capability) instead of the folded end of the list.' },
   { version: 'v1.7.2', date: '2026-10-06', text: 'Display only. The API roster says why carried API rows were not re-run on v1.6 yet (exposure cadence, retired v1.6.0 sealed set) and that no v1.5 to v1.6 conversion is applied.' },
   { version: 'v1.7.1', date: '2026-10-06', text: 'Display only, no score or rank changed. Headings name the board (open weights / API offerings); the API board leads with the Composite Score and lists every API offering we measured, including mode variants, carried v1.5.x rows and wrappers; the Jev reference row reads “Not ranked, only shown as a reference to compare with”; long base-model notes became numbered footnotes under the ranking; a short expandable note explains the split.' },
   { version: 'v1.7.0', date: '2026-10-06', text: 'Leaderboard split. /jev-models ranks open-weights systems we ran on our own hardware, with Jev 1.13.0 as an unranked reference row and a “Show API offerings” switch; hosted API offerings are ranked on the new /jev-models/api board. No score was recomputed: ranks are the published order filtered to each board. Adds the GPU cost What-If.' },
@@ -125,7 +126,7 @@ function BoardSplit({ scope, history }: { scope: JevScope; history: Array<{ revi
       <li>{scope === 'open' ? 'This board' : 'The main board at /jev-models'} ranks <b>open-weights systems</b>: published weights that we ran ourselves, on GPU or CPU machines we rent and operate. A system we measured through an endpoint we do not run (vendor API, author-hosted or third-party-hosted endpoint, for example Qwen3.8 27B via Chutes) is an <b>API offering</b>, even when its base weights are open; API offerings are ranked on {scope === 'api' ? 'this board' : <a className="text-accent underline" href="/jev-models/api">the API leaderboard</a>}.</li>
       <li>Why separate boards: open weights can be compared on equal hosting terms, while an API price is a vendor decision that can be subsidised or raised later and is not reproducible by readers. Every score and measurement is the same on both boards; only the set of ranked rows differs, and ranks are the published order filtered to that set.</li>
       <li>Jev 1.13.0 is a hosted API. It stays on the open-weights board as the <b>reference row</b> (it defines the Jev-class cost and latency caps) and is not ranked there; it is ranked on the API leaderboard.</li>
-      <li>Official cost basis is unchanged: the Cost axis keeps each row&apos;s documented reference price (see the cost notes below; APIs with a known base model are priced at the developer&apos;s own list price). {scope === 'open' ? 'The GPU cost calculator above' : 'The GPU cost calculator on the main board'} is a What-If for your own hosting and never changes a score or rank.</li>
+      <li>Official cost basis is unchanged: the Cost axis keeps each row&apos;s documented reference price (see the cost notes below; APIs with a known base model are priced at the developer&apos;s own list price). The base-model reference price only applies to open-weights rows; API offerings are ranked at their own list price{scope === 'api' ? ' on this board' : ''}. {scope === 'open' ? 'The GPU cost calculator above' : 'The GPU cost calculator on the main board'} is a What-If for your own hosting and never changes a score or rank.</li>
     </ul>
     <h3 className="mt-4 text-lg font-semibold">Revision history</h3>
     <ul className="bh-muted mt-1 list-disc space-y-1 pl-5 text-sm" data-bh-jev-revision-history>
@@ -317,7 +318,8 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
   scope?: JevScope; apiKeys?: string[];
 }) {
   const v15 = a as unknown as JevV15Artifact; // same per-system aggregate schema (score_v16 extends score_v15)
-  const ranked = (scope === 'all' ? a.systems.filter((s) => s.ranked) : a.systems.filter(listedRow)).sort(byBoard);
+  // v1.7.3: on scoped boards the Jev reference and API offerings sit at their score position in every ranking section.
+  const ranked = scope === 'all' ? a.systems.filter((s) => s.ranked).sort(byBoard) : jevScopeDisplayOrder(a.systems.filter(listedRow));
   const hiddenApi: ReadonlySet<string> = new Set(scope === 'open' ? apiKeys : []);
   const chartSystems = ranked.map((s) => jevV15BoardSystem(s) as JevV14System);
   const allChartSystems = a.systems.map((s) => jevV15BoardSystem(s) as JevV14System);

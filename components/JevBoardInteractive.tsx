@@ -17,6 +17,7 @@ import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 import { BaseModelDisplay, BaseModelFootnotes, type BaseModelBenchmark } from './BaseModelDisplay';
 import { baseModelFootnotes } from '../lib/jev-base-model.mjs';
 import { useJevV15VisibleKeys } from './useJevV15VisibleKeys';
+import { JEV_INTERLEAVED_LISTINGS } from '../lib/jevbench-scope.mjs';
 
 // CR-151 (Florian 25 Sep 2026): the score chart and the axes table become readable in more than one way. Axis cells are
 // shaded by their standing within the column, both views sort and filter, and a "View by" switch above the chart says
@@ -103,8 +104,10 @@ const sortValue = (row: JevBoardViewRow, key: SortKey): number | string | null =
  *  the ranked ones, by score. */
 function sortRows(rows: JevBoardViewRow[], sort: Sort, official: Map<string, number>) {
   const byOfficial = (a: JevBoardViewRow, b: JevBoardViewRow) => (official.get(a.key) ?? 0) - (official.get(b.key) ?? 0);
-  // Reversing the official order keeps the unranked rows last: they have no rank to reverse.
-  if (sort.key === 'rank') return [...rows].sort((a, b) => a.ranked !== b.ranked ? (a.ranked ? -1 : 1) : sort.dir === 'asc' || !a.ranked ? byOfficial(a, b) : byOfficial(b, a));
+  // Reversing the official order keeps the unranked rows last: they have no rank to reverse. v1.7.3: the Jev reference
+  // and API offerings on a scoped board keep their score position (the official map already interleaves them).
+  const placed = (r: JevBoardViewRow) => r.ranked || JEV_INTERLEAVED_LISTINGS.has(r.listing);
+  if (sort.key === 'rank') return [...rows].sort((a, b) => placed(a) !== placed(b) ? (placed(a) ? -1 : 1) : sort.dir === 'asc' || !placed(a) ? byOfficial(a, b) : byOfficial(b, a));
   const sign = sort.dir === 'asc' ? 1 : -1;
   return [...rows].sort((a, b) => {
     const x = sortValue(a, sort.key), y = sortValue(b, sort.key);

@@ -1345,7 +1345,7 @@
             "evidence": "Hosted fastino/GLiNER-2.5-Decide, 340M parameters, the same model as the open checkpoint."
           }
         ],
-        "note": "Measured via Fastino's hosted API. The open checkpoint scores 11.2 on the community Decision Index (rank 53 of 70; Jev 57.9). Fastino's closed GLiDE is a separate model, not yet measured."
+        "note": "Measured via Fastino's hosted API. A 340M English classifier (8k context), not built for multi-step reasoning: near chance on Noul and Score items; 23 very long items exceed its context. Our request follows Fastino's documented format. The open checkpoint scores 11.2 on the community Decision Index (rank 53 of 70; Jev 57.9). Fastino's larger GLiDE is a separate model, not yet measured."
       },
       "quyet-1-0-small": {
         "label": "aisingapore/SEA-LION-ModernBERT-300M",
