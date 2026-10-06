@@ -49,7 +49,8 @@ artifact URL and artifact SHA-256), `headline`, `composite_option`, `weights`,
   combined rank across open-weights and API systems (kept for compatibility); `capability.open_board_rank` is
   the Capability rank on the open-weights board, i.e. the number `/jev-models` shows (null for API systems,
   the reference and systems outside the caps). Quote `open_board_rank` for `/jev-models`.
-- `composite_score`, `rank` (official Composite rank), `ranked`, `listing`, and
+- `composite_score`, `rank` (official Composite rank, combined across open-weights and API systems), `open_board_rank`
+  (Composite rank on the open-weights board `/jev-models`; null for API systems and the reference), `ranked`, `listing`, and
   `not_ranked_because`. Capability rank and Composite rank are separate.
 - `price`: `kind`, `usd_per_1000_decisions`, and the published `basis` disclosure.
   Prices are per thousand decisions, not token prices; consult the basis for the
