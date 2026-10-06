@@ -1,16 +1,16 @@
 {
   "source": "Inceptron",
   "region": "eu (Finland; HQ Sweden)",
-  "collected_at": "2026-10-05",
+  "collected_at": "2026-10-06",
   "listing_url": "https://www.inceptron.io/models",
-  "method": "scripts/fetch-inceptron-catalog.mjs (2026-10-05): one GET of Inceptron's unauthenticated OpenAI-compatible catalog https://api.inceptron.io/v1/models, the live billing meter; pricing.prompt / pricing.completion / input_cache_reads are USD per token, stored per 1M tokens with four decimals. Models with text output, the chat feature and both token prices are included; curated rows kept by api_model_id, the id in their notes, or name; new ids mapping=derived; ids no longer listed are dropped. The marketing page www.inceptron.io/models is a client-rendered list that has shown different list prices; the API is canonical. HQ Sweden (SE), datacenter Finland (FI) per OpenRouter provider metadata. See inceptron.method.md.",
+  "method": "scripts/fetch-inceptron-catalog.mjs (2026-10-06): one GET of Inceptron's unauthenticated OpenAI-compatible catalog https://api.inceptron.io/v1/models, the live billing meter; pricing.prompt / pricing.completion / input_cache_reads are USD per token, stored per 1M tokens with four decimals. Models with text output, the chat feature and both token prices are included; curated rows kept by api_model_id, the id in their notes, or name; new ids mapping=derived; ids no longer listed are dropped. The marketing page www.inceptron.io/models is a client-rendered list that has shown different list prices; the API is canonical. HQ Sweden (SE), datacenter Finland (FI) per OpenRouter provider metadata. See inceptron.method.md.",
   "models": [
     {
       "model_name": "GLM 5.2",
       "provider_org": "Z.ai",
-      "input_per_1m_usd": 1.25,
+      "input_per_1m_usd": 1.39,
       "output_per_1m_usd": 4.39,
-      "cache_read_per_1m_usd": 0.2,
+      "cache_read_per_1m_usd": 0.25,
       "region": "eu",
       "notes": "fp4 quant, 1,048,576 context. Inceptron model id zai-org/GLM-5.2. Native API and OpenRouter Inceptron endpoint agree at $0.95/$3.04 on 2026-07-12. | Re-verified 2026-07-13 vs native API: 0.85/2.50. | 2026-07-14: 0.94/2.90 (native API; volatile pricing). | 2026-07-22: 0.94/2.90 unchanged, cache read dropped 0.18 -> 0.17 (native API + OpenRouter agree). | 2026-08-26: native API 0.75/2.40 (cache 0.17); web page lists 1.20/4.20 | 2026-09-08: native API 1.25/2.99 (cache 0.17->0.22); web page still lists 1.20/4.20",
       "api_model_id": "zai-org/GLM-5.2",
@@ -20,9 +20,9 @@
     {
       "model_name": "GLM 5.3",
       "provider_org": "Z.ai",
-      "input_per_1m_usd": 0.55,
+      "input_per_1m_usd": 0.6,
       "output_per_1m_usd": 3.39,
-      "cache_read_per_1m_usd": 0.165,
+      "cache_read_per_1m_usd": 0.2,
       "region": "eu",
       "notes": "Added 2026-09-08: api.inceptron.io zai-org/GLM-5.3, fp4 quant, 1,048,576 context, text-only, reasoning (effort low/high/max), tools/json_mode/structured_outputs. Native API 1.25/4.40 (cache 0.26); web page lists 1.40/4.40 (cache 0.26)",
       "api_model_id": "zai-org/GLM-5.3",
@@ -69,9 +69,9 @@
       "model_name": "GLM 5.3 Flash",
       "api_model_id": "zai-org/GLM-5.3-Flash",
       "provider_org": "Z.ai",
-      "input_per_1m_usd": 0.16,
-      "output_per_1m_usd": 0.45,
-      "cache_read_per_1m_usd": 0.07,
+      "input_per_1m_usd": 0.225,
+      "output_per_1m_usd": 0.6,
+      "cache_read_per_1m_usd": 0.09,
       "context_length": 1048576,
       "quantization": "fp8",
       "region": "eu",
@@ -79,15 +79,15 @@
       "notes": "Listed by api.inceptron.io/v1/models as zai-org/GLM-5.3-Flash; fp8 quant; 1,048,576 context; text"
     }
   ],
-  "response_sha256": "f573dc1d016b35c7e18ed4197896d98e765f2c184547fb2d516a845fd7bef76a",
+  "response_sha256": "0b9088f329d277ed90e53bfb37f5f81c060d45ee7c085a42129a07590f79608b",
   "skipped": [],
   "diff": {
     "added": [],
     "removed": [],
     "price_changed": [
-      "GLM 5.2: 1.25/4.39 (cache 0.23) -> 1.25/4.39 (cache 0.2)",
-      "GLM 5.3: 0.6/3.39 (cache 0.175) -> 0.55/3.39 (cache 0.165)",
-      "GLM 5.3 Flash: 0.225/0.45 (cache 0.08) -> 0.16/0.45 (cache 0.07)"
+      "GLM 5.2: 1.25/4.39 (cache 0.2) -> 1.39/4.39 (cache 0.25)",
+      "GLM 5.3: 0.55/3.39 (cache 0.165) -> 0.6/3.39 (cache 0.2)",
+      "GLM 5.3 Flash: 0.16/0.45 (cache 0.07) -> 0.225/0.6 (cache 0.09)"
     ]
   }
 }

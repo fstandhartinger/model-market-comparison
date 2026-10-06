@@ -1,9 +1,9 @@
 {
   "source": "IONOS AI Model Hub",
   "region": "eu (Germany)",
-  "collected_at": "2026-10-05",
+  "collected_at": "2026-10-06",
   "currency_note": "USD fields use IONOS' official localized USD price table at https://cloud.ionos.com/prices; EUR source prices are preserved in notes and are not converted locally.",
-  "method": "scripts/fetch-ionos-catalog.mjs (2026-10-05): one GET each of the server-rendered IONOS Cloud price pages https://cloud.ionos.com/prices (official localized USD, used for the price fields) and https://cloud.ionos.de/preise (original EUR, recorded as \"€in/€out\" at the start of each row's notes); every AI Model Hub table with an input- and an output-token price is included (Large language models, Vision-Language Models, Code Models); embedding, reranker and image tables are out of scope. Curated rows kept by catalog_name, normalized name or the page name in the notes; new rows mapping=derived; rows no longer listed are dropped. OpenAI-compatible pay-per-use, EU-sovereign (DE). See ionos.method.md.",
+  "method": "scripts/fetch-ionos-catalog.mjs (2026-10-06): one GET each of the server-rendered IONOS Cloud price pages https://cloud.ionos.com/prices (official localized USD, used for the price fields) and https://cloud.ionos.de/preise (original EUR, recorded as \"€in/€out\" at the start of each row's notes); every AI Model Hub table with an input- and an output-token price is included (Large language models, Vision-Language Models, Code Models); embedding, reranker and image tables are out of scope. Curated rows kept by catalog_name, normalized name or the page name in the notes; new rows mapping=derived; rows no longer listed are dropped. OpenAI-compatible pay-per-use, EU-sovereign (DE). See ionos.method.md.",
   "models": [
     {
       "model_name": "Qwen3.5 9B",
@@ -97,8 +97,8 @@
     }
   ],
   "response_sha256": {
-    "usd": "90a49527c22d5c91548a468e0a6bbe9b388564496d13d6b0754ade7574baa807",
-    "eur": "36f67ee320a2df3db5104e2bb60bfbbeec0c543bbd3e6b18b6a610934bbeaab2"
+    "usd": "93e3a78b8517a8cc053ef1d4a6741a4268bfdd87ae42f4970a772807a8a0a192",
+    "eur": "496119504dbd65bdf4127075db73afcb186418a1467135afc7a82e89589b79b8"
   },
   "eur_missing": [],
   "diff": {

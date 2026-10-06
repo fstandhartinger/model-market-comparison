@@ -1,0 +1,22 @@
+[
+  {
+    "id": "aa-terminal-bench::2.1",
+    "version": "2.1",
+    "version_guard": "Verify the published version 2.1 before reading results.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": "aa-terminal-bench::4.0",
+    "scoring": {
+      "metric": "All verifier tests must pass; pass@1 averaged over three repeats",
+      "unit": "fraction",
+      "range": [
+        0,
+        1
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. Keep raw units; do not normalize before phase-05 validation."
+    },
+    "description": "Tests terminal-based work on the 89-task verified refresh using Terminus 2.",
+    "maintainer": "Artificial Analysis"
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "aa-terminal-bench::4.0-upstream-timeouts",
+    "version": "4.0-upstream-timeouts",
+    "version_guard": "Verify the published version 4.0 and AA's implementation paragraph before reading results. This identity is Terminal-Bench 4.0 as AA describes it from 2026-09-21: the full 66-task dataset, 'the mini-swe-agent harness' with no harness version stated, pass@1 averaged over 3 repeats, a 500-step cap, and 'Task timeouts and sandbox resources follow the upstream task definitions'. A different task set, harness or timeout policy needs a new identity.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "All verifier tests must pass; pass@1 averaged over three repeats",
+      "unit": "fraction",
+      "range": [
+        0,
+        1
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. Keep raw units; do not normalize before phase-05 validation."
+    },
+    "description": "Tests terminal-based work on the 66-task release using AA's mini-swe-agent harness with the tasks' own timeouts.",
+    "maintainer": "Artificial Analysis"
+  }
+]

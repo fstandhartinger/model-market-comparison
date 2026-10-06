@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-10-05T09:21:58.363Z",
+  "collected_at": "2026-10-06T10:17:28.531Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,19 +13,41 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-10-05T09:21:58.148Z",
+      "fetched_at": "2026-10-06T10:17:28.359Z",
       "http_status": 200,
-      "bytes": 4033909,
-      "sha256": "497d7d098b89d4dd9cc76cc9a3c3c3ecc8bd4f806959c2029d6a9e24b8b30e9a"
+      "bytes": 4038187,
+      "sha256": "bcb409ada4e8d2589722280328c9b696fb87742830e55bbdc56cb8859e1ab113"
     }
   ],
   "coverage": {
-    "published_rows": 195,
+    "published_rows": 196,
     "scored_denominator": 681,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 195,
+  "count": 196,
   "rows": [
+    {
+      "source_id": "8215372b-66ff-457b-855e-e8abeafc9571",
+      "slug": "a-x-k2",
+      "name": "A.X-K2",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 37246.09415808941,
+        "answer": 57217.959312374056,
+        "output": 94464.05347046346
+      },
+      "canonical_token_counts": {
+        "input": 3223174897,
+        "output": 229148064,
+        "answer": 60187571,
+        "reasoning": 168960493
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 14.065904990582858,
+        "reasoning_output_share": 0.3942885445809852
+      }
+    },
     {
       "source_id": "08242385-ee91-4de6-be7f-271a6d9780ce",
       "slug": "apodex-1-1",
