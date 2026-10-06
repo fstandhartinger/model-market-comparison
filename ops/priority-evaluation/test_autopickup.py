@@ -2326,7 +2326,7 @@ class PodRunnerLifecycleTests(unittest.TestCase):
     def tearDown(self):
         pod_runner.PODS_DIR = self._pods_root
 
-    def _run(self, provider, max_usd=5.0):
+    def _run(self, provider, max_usd=20.0):
         rid = str(uuid.uuid4())
         output = self.tmp / f"out-{rid[:8]}"
         with mock.patch.object(pod_runner.measurement_dispatch, "pins", return_value=self.pins):
@@ -2340,14 +2340,24 @@ class PodRunnerLifecycleTests(unittest.TestCase):
         self.assertEqual(receipt["network_mode"], "none")
         self.assertEqual(receipt["pod_id"], "pod-1")
         self.assertEqual(receipt["charged_or_reserved_usd"], receipt["cost_estimate_usd"])
-        self.assertLessEqual(receipt["cost_estimate_usd"], 5.0)
+        self.assertLessEqual(receipt["cost_estimate_usd"], 20.0)
         self.assertEqual(receipt["raw_sha256"],
                          hashlib.sha256((next(self.tmp.glob("out-*")) / "raw.jsonl").read_bytes()).hexdigest())
         self.assertEqual(provider.removed, ["pod-1"])
         self.assertEqual(provider.releases, 1)
         self.assertEqual(provider.pods, {})
-        # exact-id teardown verified against ps; TTL = min(3 h, 5/2.5) = 2 h
-        self.assertIn(("create", "H100", 2.0, 5.0), provider.calls)
+        # exact-id teardown verified against ps; TTL = min(3 h, 20/5) = 3 h
+        self.assertIn(("create", "H100", 3.0, 20.0), provider.calls)
+
+    def test_caps_are_five_per_hour_and_twenty_per_order(self):
+        self.assertEqual(pod_runner.MAX_HOURLY_USD, 5.00)
+        self.assertEqual(pod_runner.PER_ORDER_CAP_USD, 20.0)
+        provider = _FakeProvider()
+        self._run(provider, max_usd=50.0)  # the order cap wins over a larger caller budget
+        self.assertIn(("create", "H100", 3.0, 20.0), provider.calls)
+        provider = _FakeProvider()
+        self._run(provider, max_usd=4.0)  # a smaller remaining budget shortens the TTL
+        self.assertIn(("create", "H100", 0.8, 4.0), provider.calls)
 
     def test_run_failure_retries_once_on_a_fresh_pod_then_reports(self):
         provider = _FakeProvider({"wait_rc": {"pod-1": "1"}})
@@ -2513,7 +2523,7 @@ class PodUnidentifiedCreateTests(unittest.TestCase):
         self.addCleanup(patcher.stop)
         return pod_runner.LiumProvider()
 
-    def _run(self, provider, max_usd=5.0):
+    def _run(self, provider, max_usd=20.0):
         rid = str(uuid.uuid4())
         output = self.tmp / f"out-{rid[:8]}"
         with mock.patch.object(pod_runner.measurement_dispatch, "pins", return_value=self.pins):
@@ -2529,6 +2539,22 @@ class PodUnidentifiedCreateTests(unittest.TestCase):
         self.assertEqual(receipt["network_mode"], "none")
         self.assertEqual(fake.removed, [pod_id])
         self.assertEqual(fake.releases, 1)
+        self.assertEqual(fake.pods, {})
+
+    def test_pod_up_to_five_dollars_per_hour_is_accepted(self):
+        pod_id = "44444444-4444-4444-8444-444444444444"
+        fake = _FakeLium(new_on_up=[pod_id], hourly=4.80)
+        receipt = self._run(self._provider(fake))
+        self.assertEqual(receipt["hourly_usd"], 4.80)
+        self.assertEqual(fake.removed, [pod_id])
+
+    def test_pod_above_five_dollars_per_hour_is_removed_by_exact_id(self):
+        pod_id = "55555555-5555-4555-8555-555555555555"
+        fake = _FakeLium(new_on_up=[pod_id], hourly=5.10)
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(self._provider(fake))
+        self.assertEqual(str(ctx.exception), "gpu_pod_capacity")
+        self.assertEqual(set(fake.removed), {pod_id})  # only our exact id, never a foreign pod
         self.assertEqual(fake.pods, {})
 
     def test_no_new_pod_is_capacity(self):
