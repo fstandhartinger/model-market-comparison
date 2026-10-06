@@ -63,6 +63,8 @@ test('all historical and current JevBench and ImageJevBench artifact keys are co
   const jevKeys = new Set(jevFiles.flatMap((path) => systemKeys(read(path))));
   // v1.7.5: API rows first shown through the public-set figures (e.g. Fastino GLiDE) are artifact keys too.
   for (const row of read('data/jevbench-api-public-set.json').rows) jevKeys.add(row.key);
+  // v1.7.8: full-set API rows added after the release (Liquid d1) live in the API lane's rows file.
+  for (const row of read('data/jevbench-api-a4-equated.json').full_rows ?? []) jevKeys.add(row.key);
   // lib/jevbench-multimodal-preview.mjs loads preview.json and these versioned
   // previews; lib/imagejev-board.mjs converts their ranking arrays to board rows.
   const imageFiles = jevFiles.filter((path) => /\/multimodal-preview\/preview(?:-v[^/]+)?\.json$/.test(path));

@@ -27,7 +27,7 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
   const previousRelease = revision === 'v1.6.1' ? 'v1.6.0' : 'v1.5.7';
   const previousHref = revision === 'v1.6.1' ? '/jev-models/v1.6.0' : '/jev-models/v1.5.7';
   const allApiFull = release_.systems.filter((system) => system.v16.lane === 'api').every((system) => system.v16.full_set_api === true);
-  const a4Count = merged === release_ ? 0 : merged.systems.length - release_.systems.length;
+  const a4Count = merged === release_ ? 0 : merged.systems.filter((s) => (s as { a4?: unknown }).a4).length;
   const publishedKeys = new Set([...published.systems, ...published.not_measured, ...publishedCarry.rows].map((row) => row.key));
   const missingPrevious = [...previous.artifact.systems, ...previous.artifact.not_measured]
     .filter((row) => !isJevbenchV16ExcludedKey(row.key) && !publishedKeys.has(row.key));
