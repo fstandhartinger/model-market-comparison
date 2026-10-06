@@ -61,6 +61,8 @@ test('architecture schema, evidence and badges are valid for every entry', () =>
 test('all historical and current JevBench and ImageJevBench artifact keys are covered', () => {
   const jevFiles = jsonFiles('data/raw/benchmarks/jevbench');
   const jevKeys = new Set(jevFiles.flatMap((path) => systemKeys(read(path))));
+  // v1.7.5: API rows first shown through the public-set figures (e.g. Fastino GLiDE) are artifact keys too.
+  for (const row of read('data/jevbench-api-public-set.json').rows) jevKeys.add(row.key);
   // lib/jevbench-multimodal-preview.mjs loads preview.json and these versioned
   // previews; lib/imagejev-board.mjs converts their ranking arrays to board rows.
   const imageFiles = jevFiles.filter((path) => /\/multimodal-preview\/preview(?:-v[^/]+)?\.json$/.test(path));

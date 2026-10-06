@@ -42,7 +42,9 @@ export const dollars = (value: number | null | undefined) => value == null ? '�
 export const shortName = (value: string) => value.split(' (')[0].split(', formerly')[0];
 export const apiExplanation = "API — the operator's endpoint received sealed item text, without answers.";
 export const typeVar = (cls: string) => ({ '--jev-t': `var(${jevTypeVarName(cls)})` }) as CSSProperties;
-export const NOT_RANKED: Record<string, string> = { honorable_mention: 'honorable mention', partial: 'partial run', reference: 'reference', api_offering: 'API offering' };
+export const NOT_RANKED: Record<string, string> = { honorable_mention: 'honorable mention', partial: 'partial run', reference: 'reference', api_offering: 'API offering',
+  // v1.7.5: API board public-set rows before the full sealed re-run.
+  preliminary: 'preliminary', pending: 'pending' };
 
 // ---- Heat shading: each column shaded by where a value sits between the column's weakest and strongest system ----
 
@@ -145,6 +147,7 @@ export function JevScoreBar({ row, viewRank, reference = false, metric = 'score'
         {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1.5 align-middle" title={row.api_exposure_note ?? apiExplanation}>API</span>}
         {isNew && <span className="bh-new-tag ml-1.5 align-middle" data-bh-jev14-new={row.key}>new</span>}
       </span>
+      {row.listing === 'pending' && row.not_ranked_because && <span className="bh-muted mt-0.5 block whitespace-normal text-[10.5px] sm:text-right" data-bh-jev-pending-note={row.key}>{row.not_ranked_because}</span>}
       {viewRank != null && <span className="bh-muted mt-0.5 block text-[10.5px] sm:text-right" data-bh-jev-view-rank={viewRank} data-bh-jev-official-rank={row.rank ?? undefined}>view #{viewRank} · {row.rank != null ? `official #${row.rank}` : 'not officially ranked'}</span>}
       {/* CR-256: outside the truncated name so a long name never hides the gate. */}
       {gate && gate.gates.length > 0 && <span className="mt-0.5 block sm:text-right"><span className="bh-thin-tag bh-gate-tag whitespace-nowrap" title={gateSentence(gate, s)} data-bh-jev-gate={row.key} data-bh-jev-gate-factor={gate.factor.toFixed(4)} data-bh-jev-gate-axes={gate.gates.map((g) => g.axis).join(' ')}>{gate.gates.length === 1 ? `${GATE_AXIS[gate.gates[0].axis]} gate` : 'gates'} ×{gate.factor.toFixed(2)}</span></span>}

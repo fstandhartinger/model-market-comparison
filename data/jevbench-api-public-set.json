@@ -58,6 +58,7 @@
   {
    "key": "classifier-dev-fast",
    "display": "classifier.dev (fast tier)",
+   "author": null,
    "role": "wrapper",
    "cost_kind": "estimate",
    "p50_s_adjusted": 0.9728923365473747,
@@ -74,11 +75,25 @@
    "v15_capability": null,
    "v15_measured": "v1.5.0 (2026-09-28)",
    "href": "/jev-models/classifier-dev-fast",
-   "note": "wrapper that serves Jev; listed, never ranked"
+   "note": "wrapper that serves Jev; listed, never ranked",
+   "p95_s": 1.5708328776061535,
+   "p95_s_adjusted": 1.5708328776061535,
+   "axes": {
+    "intelligence": 64.57062804347952,
+    "calibration": 82.98802904052758,
+    "speed": 78.15805235024979,
+    "cost": 58.89475669158328
+   },
+   "composite": {
+    "A": 69.79478082320028,
+    "B": 68.6834006514225,
+    "C": 69.79478082320028
+   }
   },
   {
    "key": "decision-machine-1",
    "display": "decision-machine-1 (milliseconds.ai)",
+   "author": "milliseconds.ai (Baptiste Laget)",
    "role": "carried",
    "cost_kind": "measured",
    "p50_s_adjusted": 0.17073958739638329,
@@ -95,11 +110,25 @@
    "v15_capability": 47.99906562501677,
    "v15_measured": "v1.5.0 (2026-09-28)",
    "href": "https://www.milliseconds.ai",
-   "note": null
+   "note": null,
+   "p95_s": 0.2613233845680952,
+   "p95_s_adjusted": 0.2613233845680952,
+   "axes": {
+    "intelligence": 10.712170051099552,
+    "calibration": 67.42123401597713,
+    "speed": 93.50487498031899,
+    "cost": 58.565175244302615
+   },
+   "composite": {
+    "A": 1.3504685251416384,
+    "B": 1.000854298464667,
+    "C": 0.9378253646816933
+   }
   },
   {
    "key": "deepseek-flash",
    "display": "DeepSeek V4.1 Flash (thinking default)",
+   "author": "DeepSeek",
    "role": "carried",
    "cost_kind": "measured",
    "p50_s_adjusted": 2.164137165993452,
@@ -116,11 +145,60 @@
    "v15_capability": 95.30414451575602,
    "v15_measured": "v1.5.0 (2026-09-28)",
    "href": "https://benchmarkheaven.com/jev-models/deepseek-flash",
-   "note": null
+   "note": null,
+   "p95_s": 9.604332050681112,
+   "p95_s_adjusted": 9.604332050681112,
+   "axes": {
+    "intelligence": 86.16447007960934,
+    "calibration": 95.20372578193667,
+    "speed": 66.82248049998242,
+    "cost": 16.325444614371378
+   },
+   "composite": {
+    "A": 4.336807654986992,
+    "B": 4.848716232360034,
+    "C": 4.336807654986992
+   }
+  },
+  {
+   "key": "fastino-glide",
+   "display": "Fastino GLiDE",
+   "author": "Fastino",
+   "role": "new",
+   "cost_kind": "measured",
+   "p50_s_adjusted": 0.605163961648941,
+   "latency_adjustment": null,
+   "measured_on": "2026-10-06",
+   "n_items": 300,
+   "n_ok": 297,
+   "intelligence": 64.32770428098092,
+   "calibration": 86.12518973311961,
+   "capability": 75.22644700705027,
+   "p50_s": 0.605163961648941,
+   "usd_per_1000": 0.13266150000000002,
+   "v15_composite": null,
+   "v15_capability": null,
+   "v15_measured": null,
+   "href": "https://docs.fastino.ai",
+   "note": "new API offering, first measured on the public set",
+   "p95_s": 2.117205972969532,
+   "p95_s_adjusted": 2.117205972969532,
+   "axes": {
+    "intelligence": 64.32770428098092,
+    "calibration": 86.12518973311961,
+    "speed": 78.9236383218228,
+    "cost": 36.31765289361685
+   },
+   "composite": {
+    "A": 31.328708082636986,
+    "B": 31.818068020687015,
+    "C": 31.328708082636986
+   }
   },
   {
    "key": "gemini-3.1-flash-lite",
    "display": "Gemini 3.1 Flash-Lite",
+   "author": "Google",
    "role": "carried",
    "cost_kind": "measured",
    "p50_s_adjusted": 0.9862632155418396,
@@ -137,11 +215,25 @@
    "v15_capability": 76.1317987506217,
    "v15_measured": "v1.5.0 (2026-09-28)",
    "href": "https://benchmarkheaven.com/jev-models/gemini-3.1-flash-lite",
-   "note": null
+   "note": null,
+   "p95_s": 1.4336304765194654,
+   "p95_s_adjusted": 1.4336304765194654,
+   "axes": {
+    "intelligence": 64.34742864179697,
+    "calibration": 66.55074793028322,
+    "speed": 78.49569939596819,
+    "cost": 21.137989777094347
+   },
+   "composite": {
+    "A": 7.889502808671388,
+    "B": 8.418143713337411,
+    "C": 7.889502808671388
+   }
   },
   {
    "key": "gpt-5.6-luna",
    "display": "GPT-5.6 Luna (low reasoning effort)",
+   "author": "OpenAI",
    "role": "carried",
    "cost_kind": "measured",
    "p50_s_adjusted": 1.8110148534178734,
@@ -158,11 +250,25 @@
    "v15_capability": 94.52083821485725,
    "v15_measured": "v1.5.0 (2026-09-28)",
    "href": "https://benchmarkheaven.com/jev-models/gpt-5.6-luna",
-   "note": null
+   "note": null,
+   "p95_s": 2.9337860740721227,
+   "p95_s_adjusted": 2.9337860740721227,
+   "axes": {
+    "intelligence": 92.65938212909515,
+    "calibration": 93.10508734151414,
+    "speed": 72.74649544954377,
+    "cost": 24.738696024005293
+   },
+   "composite": {
+    "A": 12.935056372977238,
+    "B": 14.151366176582735,
+    "C": 12.935056372977238
+   }
   },
   {
    "key": "gpt-6-luna-low",
    "display": "GPT-6 Luna (low reasoning effort)",
+   "author": "OpenAI",
    "role": "carried",
    "cost_kind": "measured",
    "p50_s_adjusted": 2.1107355393469334,
@@ -179,11 +285,25 @@
    "v15_capability": 95.10754555044542,
    "v15_measured": "v1.5.0 (2026-09-28)",
    "href": "https://benchmarkheaven.com/jev-models/gpt-6-luna-low",
-   "note": null
+   "note": null,
+   "p95_s": 4.724782993271947,
+   "p95_s_adjusted": 4.724782993271947,
+   "axes": {
+    "intelligence": 95.31168374626,
+    "calibration": 97.90057566122002,
+    "speed": 70.01184311004221,
+    "cost": 33.67787385973824
+   },
+   "composite": {
+    "A": 28.055695015641195,
+    "B": 30.17505834812483,
+    "C": 28.055695015641195
+   }
   },
   {
    "key": "gpt-6-luna",
    "display": "GPT-6 Luna (default medium reasoning effort)",
+   "author": "OpenAI",
    "role": "carried",
    "cost_kind": "measured",
    "p50_s_adjusted": 2.361003514379263,
@@ -200,11 +320,25 @@
    "v15_capability": 95.8978644533511,
    "v15_measured": "v1.5.0 (2026-09-28)",
    "href": "https://benchmarkheaven.com/jev-models/gpt-6-luna",
-   "note": null
+   "note": null,
+   "p95_s": 4.685005398467182,
+   "p95_s_adjusted": 4.685005398467182,
+   "axes": {
+    "intelligence": 91.48961785134696,
+    "calibration": 92.66154653921568,
+    "speed": 69.56193270813125,
+    "cost": 33.054128335641536
+   },
+   "composite": {
+    "A": 26.34646089569879,
+    "B": 28.27522925961786,
+    "C": 26.34646089569879
+   }
   },
   {
    "key": "instinct",
    "display": "Instinct (ZooWork, Qwen3.8-27B)",
+   "author": "rayrain-srp (ZooWork)",
    "role": "carried",
    "cost_kind": "estimate",
    "p50_s_adjusted": 0.5813604220747948,
@@ -221,11 +355,25 @@
    "v15_capability": 73.85208474272491,
    "v15_measured": "v1.5.0 (2026-09-28)",
    "href": "https://github.com/fstandhartinger/jevbench/issues/69",
-   "note": "author-hosted demo"
+   "note": "author-hosted demo",
+   "p95_s": 0.6577351793646812,
+   "p95_s_adjusted": 1.3154703587293624,
+   "axes": {
+    "intelligence": 50.25659433905348,
+    "calibration": 82.49999251598524,
+    "speed": 81.16473470863545,
+    "cost": 29.16007113367894
+   },
+   "composite": {
+    "A": 17.301798252761667,
+    "B": 17.259727109812445,
+    "C": 12.138774761761486
+   }
   },
   {
    "key": "jevact",
    "display": "JevAct (einptein, jev1-2b-v2)",
+   "author": "einptein",
    "role": "carried",
    "cost_kind": "estimate",
    "p50_s_adjusted": 0.836137481033802,
@@ -242,11 +390,25 @@
    "v15_capability": 36.890412709885744,
    "v15_measured": "v1.5.0 (2026-09-28)",
    "href": "https://github.com/fstandhartinger/jevbench/issues/66",
-   "note": "author-hosted demo"
+   "note": "author-hosted demo",
+   "p95_s": 2.1683591257780783,
+   "p95_s_adjusted": 4.336718251556157,
+   "axes": {
+    "intelligence": 7.460841553600979,
+    "calibration": 36.99903685813188,
+    "speed": 74.40561100504152,
+    "cost": 68.56133553360087
+   },
+   "composite": {
+    "A": 0.4710161462189604,
+    "B": 0.34454241014899223,
+    "C": 0.3270945459853891
+   }
   },
   {
    "key": "openjev-sglang",
    "display": "openjev-sglang (Qwen3.6-35B-A3B on SGLang)",
+   "author": "ekzhang",
    "role": "carried",
    "cost_kind": "estimate",
    "p50_s_adjusted": 1.2717872336506844,
@@ -263,11 +425,60 @@
    "v15_capability": 70.76010360680736,
    "v15_measured": "v1.5.0 (2026-09-28)",
    "href": "https://github.com/ekzhang/openjev-sglang",
-   "note": "author-hosted demo"
+   "note": "author-hosted demo",
+   "p95_s": 0.6631696876138449,
+   "p95_s_adjusted": 1.3263393752276897,
+   "axes": {
+    "intelligence": 47.43586071951401,
+    "calibration": 76.240358393762,
+    "speed": 77.72930876049806,
+    "cost": 35.63382653259791
+   },
+   "composite": {
+    "A": 24.340462308592922,
+    "B": 23.758655126569852,
+    "C": 16.90309882541175
+   }
+  },
+  {
+   "key": "qwen3.8-27b",
+   "display": "Qwen3.8 27B (Chutes TEE)",
+   "author": "Qwen / Chutes",
+   "role": "carried",
+   "cost_kind": "estimate",
+   "p50_s_adjusted": 8.377573054283857,
+   "latency_adjustment": null,
+   "measured_on": "2026-10-06",
+   "n_items": 300,
+   "n_ok": 295,
+   "intelligence": 93.21406060035036,
+   "calibration": 97.9500940352481,
+   "capability": 95.58207731779923,
+   "p50_s": 8.377573054283857,
+   "usd_per_1000": 2.1783887438423646,
+   "v15_composite": 0,
+   "v15_capability": 96.82412814959488,
+   "v15_measured": "v1.5.0 (2026-09-28)",
+   "href": "https://benchmarkheaven.com/jev-models/qwen3.8-27b",
+   "note": null,
+   "p95_s": 23.843941807746873,
+   "p95_s_adjusted": 23.843941807746873,
+   "axes": {
+    "intelligence": 93.21406060035036,
+    "calibration": 97.9500940352481,
+    "speed": 56.99503723089781,
+    "cost": 0.0
+   },
+   "composite": {
+    "A": 0.0,
+    "B": 0.0,
+    "C": 0.0
+   }
   },
   {
    "key": "simplejev-qwen3.8-27b",
    "display": "SimpleJev Qwen3.8-27B",
+   "author": "Featherless AI",
    "role": "carried",
    "cost_kind": "estimate",
    "p50_s_adjusted": 1.3492993786931038,
@@ -284,11 +495,25 @@
    "v15_capability": 79.9758643626721,
    "v15_measured": "v1.5.0 (2026-09-28)",
    "href": "https://github.com/featherless-ai/simple-jev",
-   "note": "author-hosted demo"
+   "note": "author-hosted demo",
+   "p95_s": 0.899212870746851,
+   "p95_s_adjusted": 1.798425741493702,
+   "axes": {
+    "intelligence": 58.03128732259863,
+    "calibration": 86.88100796468133,
+    "speed": 76.14999169475432,
+    "cost": 14.895025990507506
+   },
+   "composite": {
+    "A": 3.2563713999093187,
+    "B": 3.5148470903537485,
+    "C": 3.0461819504095904
+   }
   },
   {
    "key": "system-one-open",
    "display": "system-one-open (Gemma 4 E2B LoRA on an L4)",
+   "author": "mithalouni",
    "role": "carried",
    "cost_kind": "estimate",
    "p50_s_adjusted": 0.9992383643984795,
@@ -305,29 +530,37 @@
    "v15_capability": 56.6355705885557,
    "v15_measured": "v1.5.0 (2026-09-28)",
    "href": "https://github.com/mithalouni/system-one-open",
-   "note": "author-hosted demo"
+   "note": "author-hosted demo",
+   "p95_s": 0.5631478048861027,
+   "p95_s_adjusted": 1.1262956097722054,
+   "axes": {
+    "intelligence": 27.91940435061683,
+    "calibration": 71.86003707745115,
+    "speed": 79.4867850890299,
+    "cost": 68.33006522881325
+   },
+   "composite": {
+    "A": 16.20802102848936,
+    "B": 13.82493551323121,
+    "C": 11.255570158673168
+   }
   }
  ],
  "pending": [
   {
-   "key": "qwen3.8-27b",
-   "display": "Qwen3.8 27B (Chutes TEE)",
-   "reason": "public-set run in progress (reasoning model, about 10 s per item)"
-  },
-  {
    "key": "vansa-3.4",
    "display": "Vansa-3.4",
-   "reason": "needs a new API key from Vansa"
+   "reason": "waiting for a current API key"
   },
   {
    "key": "instinct-dual-4b",
    "display": "Instinct Dual 4B (ZooWork)",
-   "reason": "needs an API key covering this model from ZooWork"
+   "reason": "waiting for an API key that covers this model"
   },
   {
    "key": "kushal-gemma4-31b-it-autoloops",
    "display": "Autoloops Gemma 4 31B IT",
-   "reason": "needs Autoloops to confirm the model is still served"
+   "reason": "waiting for confirmation that this model is still served"
   }
  ]
 }

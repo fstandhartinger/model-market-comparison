@@ -249,8 +249,10 @@ export function JevScoreChart({ revision, rows: officialRows, newLabel, fairness
     for (const r of globallyVisibleRows) { const g = jevGatePenalties(r.axes, weights, { gatesAlways: scoreKind === 'v15' }); if (g.gates.length) out.set(r.key, g); }
     return out;
   }, [globallyVisibleRows, weights, custom, scoreKind]);
-  const gateSummary = useMemo(() => summariseGates(rows, gates), [rows, gates]);
-  const heat = useMemo(() => heatScales(rows), [rows]);
+  // v1.7.5: preliminary/pending API rows never move the heat scale or the gate example of the measured rows.
+  const measured = useMemo(() => rows.filter((r) => r.listing !== 'preliminary' && r.listing !== 'pending'), [rows]);
+  const gateSummary = useMemo(() => summariseGates(measured, gates), [measured, gates]);
+  const heat = useMemo(() => heatScales(measured), [measured]);
   const official = useMemo(() => new Map(globallyVisibleRows.map((r, i) => [r.key, i])), [globallyVisibleRows]);
   const [filters, setFilters] = useState<Filters>(NO_FILTERS);
   const { sort, setSort, toggle } = useSort(OFFICIAL);
@@ -456,13 +458,17 @@ function HeatTd({ heat, column, row, children, className = '' }: { heat: HeatSca
   return <td className={`tabular ${level == null ? '' : 'bh-heat'} ${className}`} style={heatStyle(level)}>{children}</td>;
 }
 
+// v1.7.5: preliminary public-set rows and pending rows on the API board carry their own label.
+export const partialLabel = (listing: string) => listing === 'preliminary' ? 'preliminary · public set (300 items) · full re-evaluation running'
+  : listing === 'pending' ? 'pending · no v1.6 figure yet' : `${listing.replace(/_/g, ' ')} · not ranked`;
+
 const endpointLabel = (kind: string | undefined) => kind === 'api' ? 'API' : kind === 'gpu' ? 'RunPod GPU' : kind === 'demo' ? 'author demo' : kind === 'cpu' ? 'CPU' : kind ?? '—';
 
 function Row({ row, heat, benchmark = 'jevbench' }: { row: JevBoardViewRow; heat: HeatScales; benchmark?: BaseModelBenchmark }) {
   return <tr id={`jev14-row-${row.key}`} data-bh-jev14-row={row.key} data-bh-jev14-ranked={row.ranked ? '1' : '0'} className={row.ranked ? '' : 'bh-jev11-partial'}>
     <td className="bh-muted tabular">{row.rank ?? '—'}</td>
     <th scope="row" className="bh-jev-sticky text-left font-normal"><SystemName row={row} benchmark={benchmark} />
-      {!row.ranked && <span className="bh-thin-tag bh-partial-tag mt-1 inline-block" title={row.not_ranked_because ?? undefined} data-bh-jev14-partial={row.key}>{row.listing.replace(/_/g, ' ')} · not ranked</span>}
+      {!row.ranked && <span className="bh-thin-tag bh-partial-tag mt-1 inline-block" title={row.not_ranked_because ?? undefined} data-bh-jev14-partial={row.key}>{partialLabel(row.listing)}</span>}
     </th>
     <HeatTd heat={heat} column="score" row={row}><b className="text-lg" data-bh-jev14-score>{one(row.jevbench_score)}</b></HeatTd>
     <HeatTd heat={heat} column="intelligence" row={row}>{one(row.axes?.intelligence)}</HeatTd>
