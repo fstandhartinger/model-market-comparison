@@ -59,6 +59,8 @@ def packet(job, preparation):
             except UnicodeError:
                 raise CapacityHold('static_source_packet_has_unreviewable_binary') from None
     instruction = ('Return only JSON {"files":{"MEASUREMENT-META.json":"file text", "RUNTIME.json":"file text", "PRICING-REVIEW.md":"file text"}}. '
+                   'For an open-weights order also include "POD-RECIPE.json":"file text" unless PRICING-REVIEW.md records a recipe blocker. '
+                   'The reply must be exactly one JSON object with nothing before or after it. '
                    'These are data/configuration, never Python or shell. Do not write OUTPUT.md with tools.' if preparation else
                    'Return only the review JSON verdict required by the prompt. Do not write files with tools.')
     return ('\nTrusted policy and public method/configuration contract:\n' + json.dumps(context) + '\n' + instruction
@@ -79,9 +81,23 @@ def materialize(folder):
     path = Path(folder) / 'OUTPUT.md'
     if path.stat().st_size > 200_000:
         raise ValueError('static preparation output too large')
-    value = json.loads(path.read_text())
-    if set(value) != {'files'} or set(value['files']) != {'MEASUREMENT-META.json', 'RUNTIME.json', 'PRICING-REVIEW.md'}:
+    try:
+        value = json.loads(path.read_text())
+    except json.JSONDecodeError as exc:
+        # The model's reply is the whole envelope; a stray character must fail as a named schema error.
+        raise ValueError(f'static preparation output is not one JSON object ({exc.msg} at char {exc.pos})') from None
+    required = {'MEASUREMENT-META.json', 'RUNTIME.json', 'PRICING-REVIEW.md'}
+    if not isinstance(value, dict) or set(value) != {'files'} or not isinstance(value['files'], dict) \
+            or not required <= set(value['files']) <= required | {'POD-RECIPE.json'}:
         raise ValueError('static preparation output schema invalid')
+    if 'POD-RECIPE.json' in value['files']:
+        # Open-weights orders need the pod recipe (PREP-OPEN-WEIGHTS-PROMPT.txt); pod_runner validates its content.
+        try:
+            recipe = json.loads(value['files']['POD-RECIPE.json'])
+        except (TypeError, json.JSONDecodeError):
+            raise ValueError('static preparation POD-RECIPE.json is not JSON') from None
+        if not isinstance(recipe, dict):
+            raise ValueError('static preparation POD-RECIPE.json is not a JSON object')
     target = Path(folder) / 'trusted-runner'
     if target.exists():
         raise ValueError('static preparation output already exists')
