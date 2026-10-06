@@ -4123,7 +4123,11 @@ def run_agent(job_dir: Path, env: dict[str, str], timeout_hint: int, *, read_onl
     if result is None:
         raise PickupError("the isolated evaluation process did not return")
     if engine == "codex" and file_authoring and result.returncode == 0:
-        static_agent.materialize(job_dir)
+        try:
+            static_agent.materialize(job_dir)
+        except (OSError, ValueError) as exc:
+            # Name the defect in the journal instead of a bare exception type (order 1c027833, 6 Oct 2026).
+            raise PickupError(f"static preparation output rejected: {exc}") from None
     return result.returncode
 
 

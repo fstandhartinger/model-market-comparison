@@ -32,6 +32,25 @@ class BoundaryTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             dispatch.validate_api_meta('imagejevbench',{'system_key':'fixture','system':{'kind':'api','gpu_usd_h':0}},runtime)
 
+    def test_static_materialize_names_envelope_errors_and_accepts_pod_recipe(self):
+        base={'MEASUREMENT-META.json':'{}','RUNTIME.json':'{}','PRICING-REVIEW.md':'x'}
+        with tempfile.TemporaryDirectory() as directory:
+            folder=Path(directory)
+            # Order 1c027833 (6 Oct 2026): a valid envelope followed by one stray brace.
+            (folder/'OUTPUT.md').write_text(json.dumps({'files':base})+'}')
+            with self.assertRaisesRegex(ValueError,'not one JSON object'):
+                static_agent.materialize(folder)
+            for bad in ([], {'files':[]}, {'files':dict(base,**{'POD-RECIPE.json':'[]'})},
+                        {'files':dict(base,**{'POD-RECIPE.json':'{'})}, {'files':dict(base,**{'run.py':'x'})}):
+                with self.subTest(bad=bad):
+                    (folder/'OUTPUT.md').write_text(json.dumps(bad))
+                    with self.assertRaises(ValueError):
+                        static_agent.materialize(folder)
+            self.assertFalse((folder/'trusted-runner').exists())
+            (folder/'OUTPUT.md').write_text(json.dumps({'files':dict(base,**{'POD-RECIPE.json':'{"schema_version":1}'})}))
+            static_agent.materialize(folder)
+            self.assertEqual(json.loads((folder/'trusted-runner'/'POD-RECIPE.json').read_text()),{'schema_version':1})
+
     def test_static_packet_contains_policy_method_and_price_contract_without_gold_content(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory);job=root/'runner-prepare';job.mkdir()
