@@ -2,18 +2,19 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { readJevbenchSeoData } from '../../../lib/jevbench-seo.mjs';
 import { jevIntentMetadata } from '../../../lib/jevbench-seo-metadata';
-import { costBasisLabel, DatasetFaqJsonLd, JevFaq, JevIntentLinks, one, usdPerThousand, type SeoRow } from '../../../components/JevBenchSeoBlocks';
+import { JevReleaseStamp, costBasisLabel, DatasetFaqJsonLd, JevFaq, JevIntentLinks, one, usdPerThousand, type SeoRow } from '../../../components/JevBenchSeoBlocks';
 
 const PATH = '/jev-models/open-source-jev';
-const TITLE = 'Is Jev open source? Open-weight Jev models ranked on JevBench';
+const TITLE = 'Is Jev open source? Open-weight Jev-class models ranked on JevBench';
 const DESCRIPTION = 'Jev is a proprietary API. See which open-source and open-weight Jev-class models JevBench measured, how they rank against Jev, and what hardware they ran on.';
 const TOP = 10;
 
 export async function generateMetadata(): Promise<Metadata> {
+  const data = await readJevbenchSeoData();
   return jevIntentMetadata({
     path: PATH,
-    title: TITLE,
-    description: DESCRIPTION,
+    title: `${TITLE} (${data.month}): ${data.systems.length} models measured`,
+    description: `${DESCRIPTION} Data: ${data.artifact.revision}, ${data.month}.`,
     keywords: ['jev open source', 'is jev open source', 'open source jev', 'open weight jev model', 'self-hosted jev', 'JevBench by Benchmark Heaven'],
   });
 }
@@ -29,9 +30,9 @@ export default async function OpenSourceJevPage() {
   const data = await readJevbenchSeoData();
   const jev = (data.ranked as unknown as SeoRow[]).find((row) => row.key === 'jev-1.13.0')!;
   const open = data.openWeightAlternatives as unknown as SeoRow[];
-  const top = open.slice(0, TOP);
-  const best = open[0];
-  const aboveJev = open.filter((row) => row.rank < jev.rank);
+  const top = open.filter((row) => row.capability_eligible).slice(0, TOP);
+  const best = top[0];
+  const aboveJev = open.filter((row) => row.rank != null && jev.rank != null && row.rank < jev.rank);
   const bestCpu = open.find(onCpu) ?? null;
   const topFiveNote = (data.artifact as { top_five_note?: string }).top_five_note ?? null;
   const faq = [
@@ -41,16 +42,16 @@ export default async function OpenSourceJevPage() {
     },
     {
       question: 'What is the best open-source Jev alternative?',
-      answer: `On the ${data.artifact.revision} composite, ${best.display} ranks #${best.rank} with a JevBench Score of ${one(best.jevbench_score)} (${best.licence}). ${topFiveNote ?? ''} The right choice depends on whether you weight reasoning, calibration, speed or cost most.`,
+      answer: `On the ${data.artifact.revision} Capability ranking, ${best.display} ranks #${best.rank} with a Capability Score of ${one(best.capability)} (${best.licence}). ${topFiveNote ?? ''} The right choice depends on whether you weight reasoning, calibration, speed or cost most.`,
     },
     {
       question: 'How many open-weight Jev-class models does JevBench measure?',
-      answer: `${open.length} Jev-style systems with public code or weights are ranked in ${data.artifact.revision}. ${aboveJev.length === 1 ? 'One of them ranks' : `${aboveJev.length} of them rank`} above Jev 1.13.0 (#${jev.rank}) on the composite score.`,
+      answer: `${open.length} Jev-class systems with public code or weights are measured in ${data.artifact.revision}. ${aboveJev.length === 1 ? 'One of them ranks' : `${aboveJev.length} of them rank`} above Jev 1.13.0 (#${jev.rank}) on the Capability Score.`,
     },
     {
       question: 'Can I run an open Jev alternative on a CPU?',
       answer: bestCpu
-        ? `Yes, some were measured on four CPU threads of an AMD Ryzen 5 3600. The highest-ranked of them is ${bestCpu.display} at #${bestCpu.rank} (JevBench Score ${one(bestCpu.jevbench_score)}). Most higher-ranked open models were measured on a rented GPU or the author’s own endpoint.`
+        ? `Yes, some were measured on four CPU threads of an AMD Ryzen 5 3600. The highest-ranked of them is ${bestCpu.display} at #${bestCpu.rank} (Capability Score ${one(bestCpu.capability)}). Most higher-ranked open models were measured on a rented GPU or the author’s own endpoint.`
         : 'None of the open-weight rows in this release was measured on a CPU.',
     },
     {
@@ -71,23 +72,23 @@ export default async function OpenSourceJevPage() {
     <header className="bh-page-head mt-3">
       <p className="bh-eyebrow">JevBench by Benchmark Heaven · released {data.artifact.revision}</p>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">Is Jev open source?</h1>
-      <p className="mt-3 max-w-3xl text-lg" data-bh-jev-open-answer><b>No.</b> Jev 1.13.0 is TypeSafe AI’s proprietary API; its weights are not published. But {open.length} open-weight Jev-class models were measured on the same benchmark, and {aboveJev.length === 1 ? 'one of them ranks' : `${aboveJev.length} of them rank`} above Jev on the composite score.</p>
+      <p className="mt-3 max-w-3xl text-lg" data-bh-jev-open-answer><b>No.</b> Jev 1.13.0 is TypeSafe AI’s proprietary API; its weights are not published. But {open.length} open-weight Jev-class models were measured on the same benchmark, and {aboveJev.length === 1 ? 'one of them ranks' : `${aboveJev.length} of them rank`} above Jev on the Capability Score.</p>
       {topFiveNote && <p className="bh-muted mt-3 max-w-3xl" data-bh-jev-top-five-note>{topFiveNote}</p>}
-      <JevIntentLinks current="openSource" />
+      <JevReleaseStamp data={data} /><JevIntentLinks current="openSource" />
     </header>
 
     <section className="bh-panel mt-6 p-5" aria-labelledby="open-jev-top">
       <h2 id="open-jev-top" className="text-xl font-semibold">The {TOP} highest-ranked open-weight Jev-class models</h2>
-      <p className="bh-muted mt-2">Ranks are overall ranks in {data.artifact.revision}, with Jev 1.13.0 at #{jev.rank} (JevBench Score {one(jev.jevbench_score)}) for reference.</p>
+      <p className="bh-muted mt-2">Ranks are overall ranks in {data.artifact.revision}, with Jev 1.13.0 at #{jev.rank} (Capability Score {one(jev.capability)}) for reference.</p>
       <div className="mt-4 overflow-x-auto">
         <table className="w-full min-w-[880px] text-left text-sm" data-bh-jev-open-top>
           <thead><tr className="border-b text-xs uppercase tracking-wide text-muted-foreground">
-            <th className="py-2 pr-3">Rank</th><th className="py-2 pr-3">System</th><th className="py-2 pr-3">Score</th><th className="py-2 pr-3">Intelligence</th><th className="py-2 pr-3">Cost per 1,000</th><th className="py-2 pr-3">License</th><th className="py-2">Measured on</th>
+            <th className="py-2 pr-3">Rank</th><th className="py-2 pr-3">System</th><th className="py-2 pr-3">Capability</th><th className="py-2 pr-3">Intelligence</th><th className="py-2 pr-3">Cost per 1,000</th><th className="py-2 pr-3">License</th><th className="py-2">Measured on</th>
           </tr></thead>
           <tbody>{top.map((row) => <tr className="border-b align-top last:border-0" key={row.key}>
             <td className="py-3 pr-3 tabular-nums">{row.rank}</td>
             <td className="py-3 pr-3"><Link className="text-accent underline" href={`/jev-models/${encodeURIComponent(row.key)}`}>{row.display}</Link>{row.repo && <div className="mt-1 text-xs"><a className="text-accent underline" href={row.repo}>source or weights</a></div>}</td>
-            <td className="py-3 pr-3 tabular-nums">{one(row.jevbench_score)}</td>
+            <td className="py-3 pr-3 tabular-nums">{one(row.capability)}</td>
             <td className="py-3 pr-3 tabular-nums">{one(row.axes.intelligence)}</td>
             <td className="py-3 pr-3">{usdPerThousand(row.cost?.usd_per_1000).replace(' per 1,000 decisions', '')} <span className="bh-muted">({costBasisLabel(row.cost?.kind)})</span></td>
             <td className="py-3 pr-3">{row.licence}</td>
@@ -101,7 +102,7 @@ export default async function OpenSourceJevPage() {
     <section className="mt-6 grid gap-4 md:grid-cols-2">
       <article className="bh-panel p-5" aria-labelledby="open-jev-why">
         <h2 id="open-jev-why" className="text-lg font-semibold">What you give up and gain by self-hosting</h2>
-        <p className="bh-muted mt-2 text-sm">Jev was measured through its production API from a server in Germany, network included, at a measured {usdPerThousand(jev.cost?.usd_per_1000)}. Most open models were measured on GPUs we rented or on their authors’ endpoints; rows on our own hardware carry an assumed speed adjustment, and their cost is usually an estimate from a comparable hosted price. Self-hosting keeps decisions on your own hardware, which the API cannot.</p>
+        <p className="bh-muted mt-2 text-sm">Jev was measured through its production API from a server in Germany, network included, at {costBasisLabel(jev.cost?.kind)} {usdPerThousand(jev.cost?.usd_per_1000)}. Most open models were measured on GPUs we rented or on their authors’ endpoints; rows on our own hardware carry an assumed speed adjustment, and their cost is usually an estimate from a comparable hosted price. Self-hosting keeps decisions on your own hardware, which the API cannot.</p>
       </article>
       <article className="bh-panel p-5" aria-labelledby="open-jev-licence">
         <h2 id="open-jev-licence" className="text-lg font-semibold">Read the license, not just the label</h2>

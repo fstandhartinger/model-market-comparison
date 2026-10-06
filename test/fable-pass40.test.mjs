@@ -37,7 +37,7 @@ test('F-213: every v1.4.2.2 row with a sealed breakdown yields finite shares —
 });
 
 test('F-213: the three compare readers use the helper, not a raw by_family read', () => {
-  for (const file of ['components/JevModelsV14.tsx', 'components/JevV141SystemDetail.tsx', 'components/JevComparisonPage.tsx']) {
+  for (const file of ['components/JevModelsV14.tsx', 'components/JevV141SystemDetail.tsx']) {
     const src = read(file);
     assert.match(src, /sealedFamilyShares\((row|system)\)/, `${file} reads sealed shares through the helper`);
     assert.doesNotMatch(src, /sealed_aggregate as \{ by_family/, `${file} no longer casts by_family to numbers`);
@@ -54,17 +54,11 @@ test('F-212: the dataset record and the leaf class title name the release the pa
   assert.doesNotMatch(leaf, /Class named in the v1\.4\.2 artifact/);
 });
 
-test('F-214: the pair page prints the top-five note only when it names Jev and the page\'s rival', () => {
+test('F-214: current comparison pages do not borrow a historical top-five story', () => {
   const compare = read('components/JevComparisonPage.tsx');
-  assert.match(compare, /const aboutThisPair = \(note: string \| null\) => note && \/\\bJev\\b\/\.test\(note\) && note\.includes\(shortRival\) \? note : null;/);
-  assert.match(compare, /const topFiveNote = rival\.rank === 1 \? aboutThisPair\(/);
-});
-
-test('F-214: v1.4.2.2\'s note is about Imajev-4B and Plumb-4B, so no pair page prints it', async () => {
-  const { artifact } = await readJevbenchV1422(new URL('..', import.meta.url).pathname.replace(/\/$/, ''));
-  const note = artifact.top_five_note;
-  assert.equal(typeof note, 'string');
-  assert.doesNotMatch(note, /\bJev\b/, 'the release note does not mention Jev, so the Jev-vs pages have no claim on it');
+  assert.doesNotMatch(compare, /top_five_note/);
+  assert.match(compare, /jevV15CompareRow/);
+  assert.match(compare, /last published measurement/);
 });
 
 test('F-215: the pooled family sentence separates an unpublished breakdown (ranked row) from a partial run (unranked row)', () => {
