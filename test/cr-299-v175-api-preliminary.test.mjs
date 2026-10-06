@@ -48,6 +48,6 @@ test('3: the board wires extras into the API charts only, not the compare view; 
   assert.match(board, /const extra = scope === 'api' \? apiChartExtras\(carry, measuredKeys\) : \[\];/);
   assert.match(board, /ranked\.filter\(\(s\) => s\.listing !== JEV_PRELIMINARY_LISTING && s\.listing !== JEV_PENDING_LISTING\)\.map\(jevV15CompareRow\)/);
   assert.match(board, /version: 'v1\.7\.5'/);
-  assert.match(src('components/JevCapabilityRanking.tsx'), /Preliminary · public set \(300 items\) · full re-evaluation running/);
+  assert.match(src('components/JevCapabilityRanking.tsx'), /Preliminary · public set \(300 items\) · full sealed run pending/);
   assert.match(src('components/JevBoardShared.tsx'), /preliminary: 'preliminary', pending: 'pending',/);
 });

@@ -459,7 +459,7 @@ function HeatTd({ heat, column, row, children, className = '' }: { heat: HeatSca
 }
 
 // v1.7.5: preliminary public-set rows and pending rows on the API board carry their own label.
-export const partialLabel = (listing: string) => listing === 'preliminary' ? 'preliminary · public set (300 items) · full re-evaluation running'
+export const partialLabel = (listing: string) => listing === 'preliminary' ? 'preliminary · public set (300 items) · full sealed run pending'
   : listing === 'pending' ? 'pending · no v1.6 figure yet' : `${listing.replace(/_/g, ' ')} · not ranked`;
 
 const endpointLabel = (kind: string | undefined) => kind === 'api' ? 'API' : kind === 'gpu' ? 'RunPod GPU' : kind === 'demo' ? 'author demo' : kind === 'cpu' ? 'CPU' : kind ?? '—';

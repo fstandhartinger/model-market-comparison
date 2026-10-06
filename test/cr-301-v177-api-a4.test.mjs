@@ -50,7 +50,7 @@ test('4: measured rows leave the preliminary set; the route skips archived pages
   const measured = new Set(merged.systems.map((s) => s.key));
   const { prelim, pending } = jevApiPreliminaryRows(read('data/jevbench-api-public-set.json'), new Map(carry.map((r) => [r.key, r])));
   const left = [...prelim, ...pending].filter((r) => !measured.has(r.key)).map((r) => r.key);
-  assert.deepEqual(left, []);
+  assert.deepEqual(left, ['openai-decisions']); // v1.7.9: public set only until the next fresh sealed draw
   const route = readFileSync(new URL('../components/JevBenchV16ReleaseRoute.tsx', import.meta.url), 'utf8');
   assert.match(route, /scope === 'all' \|\| release_\.revision !== 'v1\.6\.1' \? release_ : jevWithApiA4Rows/);
   assert.match(readFileSync(new URL('../components/JevBenchV16Board.tsx', import.meta.url), 'utf8'), /version: 'v1\.7\.7'/);

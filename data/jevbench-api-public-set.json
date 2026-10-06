@@ -614,6 +614,42 @@
     "B": 44.18306175292698,
     "C": 33.67060257859796
    }
+  },
+  {
+   "key": "openai-decisions",
+   "display": "OpenAI Decisions (gpt-6-luna)",
+   "author": "OpenAI",
+   "role": "new",
+   "cost_kind": "measured",
+   "p50_s_adjusted": 0.3031342960894108,
+   "latency_adjustment": null,
+   "measured_on": "2026-10-06",
+   "n_items": 300,
+   "n_ok": 298,
+   "intelligence": 58.06852898677632,
+   "calibration": 79.58368158452569,
+   "capability": 68.82610528565101,
+   "p50_s": 0.3031342960894108,
+   "usd_per_1000": 0.10483666666666668,
+   "v15_composite": null,
+   "v15_capability": null,
+   "v15_measured": null,
+   "href": "https://developers.openai.com/api/docs/guides/decisions",
+   "note": "new API offering (OpenAI /v1/decisions, live 6 Oct 2026), first measured on the public set; list price USD 0.10/M input, no output charge",
+   "not_ranked_because": "Preliminary: v1.6 public set only (300 public items, measured 2026-10-06); the official run waits for the next fresh sealed API draw.",
+   "p95_s": 0.6721603922545902,
+   "p95_s_adjusted": 0.6721603922545902,
+   "axes": {
+    "intelligence": 58.06852898677632,
+    "calibration": 79.58368158452569,
+    "speed": 86.90892007890402,
+    "cost": 39.384603883371405
+   },
+   "composite": {
+    "A": 37.21821285634585,
+    "B": 36.97415853287833,
+    "C": 34.86058441613121
+   }
   }
  ],
  "pending": [

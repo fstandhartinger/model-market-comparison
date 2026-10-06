@@ -137,7 +137,7 @@ export function unrankedNote(listing: string, benchName: string) {
   if (listing === JEV_SCOPE_LISTING.reference) return 'Not ranked, only shown as a reference to compare with';
   if (listing === JEV_SCOPE_LISTING.api) return 'Not ranked here: API offering, ranked on the API leaderboard';
   // v1.7.5 (Florian 6 Oct 2026): public-set figures shown before the full sealed re-run.
-  if (listing === 'preliminary') return 'Preliminary · public set (300 items) · full re-evaluation running';
+  if (listing === 'preliminary') return 'Preliminary · public set (300 items) · full sealed run pending';
   if (listing === 'pending') return 'Pending · no v1.6 figure yet';
   return `Not ranked in the official ${benchName} Score (${listing.replace(/_/g, ' ')})`;
 }

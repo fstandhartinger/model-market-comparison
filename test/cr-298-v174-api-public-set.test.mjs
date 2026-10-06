@@ -20,7 +20,7 @@ test('1: public-set rows are complete, dated and above the answer floor; anchors
     for (const f of ['intelligence', 'calibration', 'capability']) assert.ok(r[f] >= 0 && r[f] <= 100, `${r.key}.${f} in range`);
     assert.ok(Math.abs(r.capability - (r.intelligence + r.calibration) / 2) < 1e-9, `${r.key} capability = mean(I, C)`);
     if (r.role === 'anchor') assert.ok(ranked.has(r.key) && ranked.get(r.key).endpoint_kind === 'api', `${r.key} anchor is a ranked API row`);
-    else if (r.role === 'new') assert.equal(r.key, 'fastino-glide', 'v1.7.5: GLiDE is the only new API row');
+    else if (r.role === 'new') assert.ok(['fastino-glide', 'openai-decisions'].includes(r.key), 'v1.7.5 GLiDE and v1.7.9 OpenAI Decisions are the only new API rows');
     else if (r.role === 'wrapper') assert.equal(r.key, 'classifier-dev-fast', 'only the classifier.dev wrapper is listed this way');
     else assert.ok(carried.has(r.key), `${r.key} is a carried row of the current release`);
   }
