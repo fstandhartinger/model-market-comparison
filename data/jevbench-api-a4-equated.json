@@ -199,7 +199,7 @@
     },
     {
       "key": "kushal-gemma4-31b-it-autoloops",
-      "display": "Autoloops \u2013 Gemma 4 31B IT",
+      "display": "Autoloops – Gemma 4 31B IT",
       "author": "Autoloops",
       "listing": "ranked",
       "endpoint_kind": "api",
@@ -1161,6 +1161,118 @@
         "results_sha256": "e8af18a525745185563af558f24c97605cc4c5402d945dc9ce8ad5598ffe2606",
         "measured_on": "2026-10-06"
       }
+    }
+  ],
+  "a5": {
+    "round": "score-a5-1",
+    "results_sha256": "89655f36934db7c937a1c8243f2558e353878b31e7c32defd42bc0186dd3fb7a",
+    "row_file_sha256": "20e613495dda4c3dbd0ae850779eb56d089e19381275d098529db82b6b6e5e63",
+    "base_round": "score-a4-3",
+    "a5_offsets": {
+      "C": 6.152420143549691,
+      "I": 5.780609498995467
+    },
+    "a5_pool": [
+      "decision-2b",
+      "decision-fast",
+      "jev-omni",
+      "lev-350m",
+      "malkuth-4b",
+      "metask-jev-4b",
+      "spark-s1-4b-v6",
+      "typecastlm"
+    ],
+    "note": "API lane board #10818 (6 Oct 2026): fresh sealed API subset A5 (300 never-exposed sealed items; A4 was already exposed to OpenAI, rotation rule 4) u the 300 public items, equated to S u P with the A2/A3/A4 supplement method on the same 8-system self-hosted pool. Every other row identical to score-a4-3."
+  },
+  "a5_rows": [
+    {
+      "key": "openai-decisions",
+      "display": "OpenAI Decisions (gpt-6-luna)",
+      "author": "OpenAI",
+      "endpoint_kind": "api",
+      "link": "https://developers.openai.com/api/docs/guides/decisions",
+      "listing": "ranked",
+      "measured_on": "2026-10-06",
+      "n_rows": 600,
+      "answered_ok": 598,
+      "intelligence": 56.9,
+      "calibration": 90.1,
+      "capability": 73.5,
+      "speed_axis": 89.25,
+      "cost_axis": 48.6,
+      "intelligence_raw_A5uP": 51.12,
+      "calibration_raw_A5uP": 83.95,
+      "I_open": 58.07,
+      "I_sealed": 44.16,
+      "composite": {
+        "A": 62.5,
+        "B": 60.53,
+        "C": 56.2
+      },
+      "composite_ci95": {
+        "A": [
+          51.61,
+          64.57
+        ],
+        "B": [
+          48.59,
+          63.73
+        ],
+        "C": [
+          35.84,
+          64.57
+        ]
+      },
+      "ci95": {
+        "B": 1000,
+        "C": [
+          80.0467144504189,
+          93.79397635134697
+        ],
+        "I": [
+          47.05861457886996,
+          64.14582922896071
+        ],
+        "capability": [
+          64.95711616914946,
+          77.40845637060448
+        ],
+        "composite": {
+          "A": [
+            51.61084547014081,
+            64.56795564040102
+          ],
+          "B": [
+            48.59013781648409,
+            63.72838278628422
+          ],
+          "C": [
+            35.84086490982,
+            64.56795564040102
+          ]
+        },
+        "seed": 116
+      },
+      "offset_ci95": {
+        "C": [
+          0.7667107969955191,
+          11.69322056116566
+        ],
+        "I": [
+          -0.17627620663245888,
+          10.410277166092916
+        ]
+      },
+      "ci95_basis": "bootstrap over the API system's items (n = A sealed items) AND over the equating offset (pool systems resampled with replacement, items resampled; B_offset = 200)",
+      "usd_per_1000": 0.0517,
+      "cost_kind": "tariff",
+      "cost_basis": "measured: token usage of the 6 Oct 2026 A5 u P run x tariff USD 0.1/M input, 0.0/M output (spec openai-decisions.json; OpenAI Decisions API (POST /v1/decisions, gpt-6-luna) list price USD 0.10 per 1M input tokens, no output/cache charges; source https://developers.openai.com/api/docs/guides/decisions (checked 2026-10-06); actual usage), per 1,000 decisions on the v1.6.1 common cost basis (592 of 600 items; the 8 A5 u P items outside the Jev reference's accepted input range are excluded, cost-basis-a5.json). List price as of 6 Oct 2026 (launch day); re-checked at each revision.",
+      "p50_s": 0.298,
+      "p95_s": 0.399,
+      "latency_adjustment": "none (API)",
+      "equating_flag": null,
+      "not_ranked_because": null,
+      "run_sha256": "83c37a9258466d201a3a3fb30f5245bd2fa77f29f3c02b8594e68934a7bb77aa"
     }
   ]
 }
