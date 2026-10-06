@@ -22,7 +22,7 @@ test('N6/N4: A4 exception notes sit next to the frozen "not equated" text and th
 });
 
 test('N7/F17/N8/N9: roster basis line, est. pill, wrapper group, Capability from axes', () => {
-  assert.match(board, /A4 ∪ P \(\$\{s\.a4\.n_items\} items, equated\)/);
+  assert.match(board, /\$\{s\.a4\.subset \?\? 'A4'\} ∪ P \(\$\{s\.a4\.n_items\} items, equated\)/); // v1.7.10: A5 rows name A5
   assert.match(board, /costCell/);
   assert.match(board, /Wrappers that serve Jev \(listed, never ranked, not class-assessed\)/);
   assert.match(board, /\(i \+ c\) \/ 2/);
