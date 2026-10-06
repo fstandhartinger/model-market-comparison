@@ -1,6 +1,6 @@
 {
   "schema": "jevbench-architecture/1",
-  "checked_utc": "2026-10-05T19:53:50Z",
+  "checked_utc": "2026-10-06T13:20:00Z",
   "benchmarks": {
     "jevbench": {
       "autojev-27b": {
@@ -686,19 +686,30 @@
         }
       },
       "fastino-gliner-2-5-decide": {
-        "arch": "closed-api",
+        "arch": "open-encoder",
         "evidence": [
           {
-            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-results.json",
-            "kind": "artifact",
-            "fact": "Artifact key fastino-gliner-2-5-decide records a hosted API with no public evaluated weights."
+            "url": "https://huggingface.co/fastino/GLiNER2.5-Decide/blob/5a7adf72a23b4d311abae6ce050d7f0012bb3416/README.md",
+            "kind": "model-card",
+            "fact": "Apache-2.0 open weights; base_model fastino/gliner2-large-v1; encoder DeBERTa-v3-large (GLiNER2 family classifier)."
+          },
+          {
+            "url": "https://huggingface.co/fastino/GLiNER2.5-Decide/blob/5a7adf72a23b4d311abae6ce050d7f0012bb3416/config.json",
+            "kind": "config.json",
+            "fact": "model_name microsoft/deberta-v3-large."
+          },
+          {
+            "url": "https://docs.fastino.ai/concepts/gliner-2-5-decide.md",
+            "kind": "provider-docs",
+            "fact": "Fastino documents the hosted fastino/GLiNER-2.5-Decide (340M) as 'Open and deployable - Apache 2.0 open weights'. Measured here through Fastino's hosted endpoint, so the row stays an API offering."
           }
         ],
         "badges": {
-          "derivation": null,
-          "params": null,
+          "derivation": "fine-tune",
+          "params": "340M",
           "quant": null
-        }
+        },
+        "note": "Corrected 6 Oct 2026 (v1.7.1): was classed Closed API; the weights are public. Scope unchanged (hosted endpoint)."
       },
       "gemini-3.1-flash-lite": {
         "arch": "closed-api",

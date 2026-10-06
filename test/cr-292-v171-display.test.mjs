@@ -68,7 +68,7 @@ test('4: the API board leads with the Composite and lists every API offering', a
 
 test('5: long base-model notes become numbered footnotes; routine notes stay tooltips', () => {
   const fastino = baseModelFor('jevbench', 'fastino-gliner-2-5-decide');
-  assert.ok(baseModelVisibleNote(fastino)?.length > 200);
+  assert.match(baseModelVisibleNote(fastino), /Decision Index/); assert.equal(fastino.status, 'disclosed');
   const { notes, index } = baseModelFootnotes('jevbench', ['jev-1.13.0', 'fastino-gliner-2-5-decide', 'fastino-gliner-2-5-decide']);
   assert.equal(index.get('fastino-gliner-2-5-decide'), notes.find((n) => n.key === 'fastino-gliner-2-5-decide').n);
   assert.equal(notes.filter((n) => n.key === 'fastino-gliner-2-5-decide').length, 1);
