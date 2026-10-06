@@ -168,7 +168,7 @@ test('the live and archived pages use the approved full-page route and keep vers
   const board = await read('components/JevBenchV16Board.tsx');
   const charts = await read('components/JevBenchV16Charts.tsx');
   assert.match(live, /const release = await readCurrentJevbench\(\)/);
-  assert.match(live, /<JevBenchV16ReleaseRoute live release=\{release\} versionPath=\{CURRENT_JEVBENCH_PAGE\} \/>/);
+  assert.match(live, /<JevBenchV16ReleaseRoute live release=\{release\} versionPath=\{CURRENT_JEVBENCH_PAGE\} scope="open" \/>/);
   assert.match(archive, /canonical: '\/jev-models\/v1\.6\.0'/);
   assert.match(route, /readJevbenchV157Release/);
   assert.match(route, /missingPrevious/);

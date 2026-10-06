@@ -19,7 +19,7 @@ test('F-191: one referenceFor() feeds the strip, the points sentence, the radar 
 
 test('F-183: the head is the board sub-line, the release sentence closes Availability, no provenance note as copy', () => {
   assert.match(detail, /data-bh-jev-system-subline/);
-  assert.match(detail, /JEV_TYPE_LABEL\[row\.class\] \?\? null/);
+  assert.match(detail, /JEV_TYPE_LABEL\[jevRowArch\(row\)\] \?\? null/);
   assert.doesNotMatch(detail, /hash-checked/);
   assert.doesNotMatch(detail, /name-only/);
   assert.match(detail, /From the public \{revision\} aggregate\. Scores and ranks can change when a new release is published\./);

@@ -15,8 +15,8 @@ const frozenV14 = jevbenchV14View(await readJevbenchV14());
 
 test('CR-131: the changing JevBench board has evergreen Open Graph and X metadata', () => {
   const metadata = page.slice(page.indexOf('export async function generateMetadata'), page.indexOf('\nexport default async function'));
-  assert.match(metadata, /JevBench Capability Score by Benchmark Heaven/);
-  assert.match(metadata, /Jev-class model benchmark/);
+  assert.match(metadata, /JevBench — Jev benchmark & leaderboard/);
+  assert.match(metadata, /open-weight Jev-class models/);
   assert.match(metadata, /intelligence, calibration, speed, and cost/);
   assert.match(metadata, /alternates: \{ canonical: '\/jev-models' \}/);
   assert.match(metadata, /card: 'summary_large_image'/);

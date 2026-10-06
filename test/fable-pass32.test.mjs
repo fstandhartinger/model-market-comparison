@@ -11,11 +11,12 @@ const page = await readFile(new URL('../app/jev-models/[system]/page.tsx', impor
 const radars = await readFile(new URL('../components/JevRadars.tsx', import.meta.url), 'utf8');
 
 test('F-168: the type sub-line prints a label from the same map the hub radar uses, never the raw class key', () => {
-  assert.match(page, /<span data-bh-jev-system-cls=\{row\.cls\}>\{typeLabel\(row\.cls\)\}<\/span>/);
+  assert.match(page, /<span data-bh-jev-system-cls=\{row\.cls\}>\{typeLabel\(jevRowArch\(row\)\)\}<\/span>/);
   assert.doesNotMatch(page, />\{row\.cls\}</, 'the raw key is not rendered as text');
-  const map = (src) => Object.fromEntries([...src.match(/const TYPE_LABEL[^\n]*\{([^}]*)\}/)[1].matchAll(/["']?([\w.-]+)["']?:\s*["']([^"']+)["']/g)].map((m) => [m[1], m[2]]));
-  const hub = map(radars), mine = map(page);
-  for (const [k, v] of Object.entries(hub)) assert.equal(mine[k], v, `label for ${k} matches the hub`);
+  assert.match(page, /JEV_TYPE_LABEL/);
+  assert.match(radars, /JEV_TYPE_LABEL/);
+  assert.match(page, /jevRowArch/);
+  assert.match(radars, /jevRowArch/);
 });
 
 test('F-168: the not-ranked status is one sentence with the reason once, and no "Listed as a <key>" tail', () => {

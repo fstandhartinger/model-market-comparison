@@ -1,3 +1,4 @@
+import { JevArchitectureMethod, JevArchitectureBadge } from '../../../components/JevArchitecture';
 import { imageJevBoardSystems, imageJevBoardRows, imageJevCompareRows, imageJevCapabilityLimits, imageJevSliderPresets, imageJevClassFor } from '../../../lib/imagejev-board.mjs';
 import { JEV_TYPE_LABEL, jevTypeVarName } from '../../../components/jevTypes';
 import { JevCapabilityRanking } from '../../../components/JevCapabilityRanking';
@@ -90,7 +91,8 @@ function RankingTable({ systems, track, all = false }: { systems: any[]; track: 
             {s.inference_setting && <p className="bh-muted mt-1 text-xs">Setting: {s.inference_setting}</p>}
             {t.cost.coverage < 0.9995 && <p className="bh-muted mt-1 text-xs">Cost receipts cover {pct(t.cost.coverage)} of calls</p>}
             {s.api_flag && <span className="mt-1 inline-block rounded-full border border-accent px-2 py-0.5 text-[0.68rem] font-bold text-accent">API</span>}
-            <BaseModelDisplay benchmark="imagejevbench" systemKey={s.key} className="mt-1 block text-[11px] font-normal leading-tight" />
+            <JevArchitectureBadge row={s} benchmark="imagejevbench" />
+        <BaseModelDisplay benchmark="imagejevbench" systemKey={s.key} className="mt-1 block text-[11px] font-normal leading-tight" />
             <Link href={imageSystemPath(s.key)} className="mt-0.5 inline-block text-[11px] font-normal text-accent underline decoration-[rgb(var(--line))] underline-offset-2 hover:decoration-current" data-bh-mm-system-details={s.key}>details</Link>
           </th>
           <td className="p-3 text-right font-bold tabular-nums">{score(t.composite.score)}</td>
@@ -122,7 +124,8 @@ function ScoreBars({ systems, track }: { systems: any[]; track: Track }) {
           ? <a href={imageJevSourceUrl(s.key, s.repo)!} target="_blank" rel="noopener noreferrer" className="underline" data-bh-jev-source={s.key}><SystemName name={s.name} gate={gate} /></a>
           : <Link href={imageSystemPath(s.key)}><SystemName name={s.name} gate={gate} /></Link>}
         {s.api_flag && <span className="ml-1 whitespace-nowrap text-[0.68rem] font-bold text-accent">API</span>}
-        <BaseModelDisplay benchmark="imagejevbench" systemKey={s.key} className="mt-1 block text-[11px] font-normal leading-tight" />
+        <JevArchitectureBadge row={s} benchmark="imagejevbench" />
+            <BaseModelDisplay benchmark="imagejevbench" systemKey={s.key} className="mt-1 block text-[11px] font-normal leading-tight" />
         {imageJevSourceUrl(s.key, s.repo) && <Link href={imageSystemPath(s.key)} className="text-[11px] font-normal text-accent underline">details</Link>}
       </span>
       <span className="h-5 rounded-md bg-black/10 dark:bg-white/10"><span className="block h-full rounded-md" title={JEV_TYPE_LABEL[cls] ?? cls} style={{ width: `${Math.max(0.5, v)}%`, backgroundColor: `rgb(var(${jevTypeVarName(cls)}))` }} data-bh-mm-bar-class={cls} /></span>
@@ -164,7 +167,7 @@ export async function MultimodalPreviewContent() {
     ...classOptions, factor: 3, limits: { cost: limits.cost * 3 / limits.factor, latency: limits.latency * 3 / limits.factor },
   });
   const addedAtThree = relaxed.rows.filter((row) => row.inClass).length - qualifying;
-  const eligibility = <>Jev itself cannot read images, so there is no Jev row to anchor on. We use the same absolute budget as JevBench: at most {limits.factor}× Jev 1.13.0&apos;s JevBench v1.5.4 cost (≤ USD {limits.cost.toFixed(4)} per 1,000 decisions) and at most {limits.factor}× its median latency (≤ {limits.latency.toFixed(2)} s, adjusted p50), frozen in this release. A decision model in this class should fit the same budget whether the input is text or an image. {qualifying} of {chartSystems.length} systems qualify, a larger share than on JevBench, so we keep {limits.factor}×. Loosening to 3× would add {addedAtThree} Jev-compatible fine-tunes that sit just above the cost line; the general-purpose hosted LLMs stay outside even at 3×.</>;
+  const eligibility = <>Jev itself cannot read images, so there is no Jev row to anchor on. We use the same absolute budget as JevBench: at most {limits.factor}× Jev 1.13.0&apos;s JevBench v1.5.4 cost (≤ USD {limits.cost.toFixed(4)} per 1,000 decisions) and at most {limits.factor}× its median latency (≤ {limits.latency.toFixed(2)} s, adjusted p50), frozen in this release. A decision model in this class should fit the same budget whether the input is text or an image. {qualifying} of {chartSystems.length} systems qualify, a larger share than on JevBench, so we keep {limits.factor}×. Loosening to 3× would add {addedAtThree} open-weight fine-tunes that sit just above the cost line; the general-purpose hosted LLMs stay outside even at 3×.</>;
 
   const djevSpark = a.ranking.find((x: any) => x.key === 'djev_spark_nvfp4');
   const photoSealed = djevSpark.tracks.everyday_photo.sealed;
@@ -268,6 +271,7 @@ export async function MultimodalPreviewContent() {
 
     <section className="mt-10 max-w-6xl" aria-labelledby="method-heading">
       <h2 id="method-heading" className="text-2xl font-semibold">Method and limitations</h2>
+      <JevArchitectureMethod />
       <div className="bh-panel mt-4 space-y-4 p-5 text-sm">
         <p><b>Intelligence.</b> Accuracy counts missing, invalid and unparseable answers as wrong. Each part is chance-corrected against its own average chance rate, then combined as {a.weights.public * 100}% public and {a.weights.sealed * 100}% sealed. Calibration uses the same weights.</p>
         <p><b>Matched-family overfit penalty.</b> The gap is public accuracy minus sealed accuracy within families that have at least 10 items on both sides: ScreenSpot and Everyday photo. If that matched gap is above {a.gap_allowance_pp} percentage points, Intelligence is multiplied by max(0, 1 − (gap − {a.gap_allowance_pp})/100). The same rule applies to every system. The raw overall gap is shown in the data but does not affect the score.</p>

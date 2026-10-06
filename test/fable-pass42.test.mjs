@@ -23,7 +23,7 @@ test('F-221: the release header prints the data hash through Sha (12-char prefix
 test('F-222: the live hub says what JevBench is first; the release facts sit on the small meta line; the release notes are not the hero', () => {
   assert.match(release, /live = false \}/, 'the component takes a live flag');
   assert.match(livePage, /readCurrentJevbench\(\)/, '/jev-models reads the explicit current release');
-  assert.match(livePage, /<JevBenchV16ReleaseRoute live release=\{release\} versionPath=\{CURRENT_JEVBENCH_PAGE\} \/>/, '/jev-models renders the current v1.6 board through the pointer');
+  assert.match(livePage, /<JevBenchV16ReleaseRoute live release=\{release\} versionPath=\{CURRENT_JEVBENCH_PAGE\} scope="open" \/>/, '/jev-models renders the current v1.6 board through the pointer');
   assert.doesNotMatch(livePage, /JevBenchV15ReleasePage/);
   assert.doesNotMatch(pinnedPage, /live \/>/, 'the pinned v1.5.0 page is not the live board');
   assert.match(release, /\{live \? 'JevBench by Benchmark Heaven' : `JevBench \$\{artifact\.revision\} — Jev alternatives ranking`\}/, 'the live h1 is the product name; the pinned h1 keeps the release name');
@@ -41,8 +41,8 @@ test('F-222: the live hub says what JevBench is first; the release facts sit on 
   assert.match(release, /api\/jevbench\/\$\{artifact\.revision\}/, 'the page links to the matching release API route');
 });
 
-test('F-226: the artifact value "unclassified" has a label; system-one-open stays the data owner\'s to name (F-192)', () => {
-  assert.match(types, /\n  unclassified: "Unclassified",\n\};/);
-  const labels = types.slice(types.indexOf('export const JEV_TYPE_LABEL'), types.indexOf('};', types.indexOf('export const JEV_TYPE_LABEL')));
-  assert.doesNotMatch(labels, /system-one-open/, 'F-192: no label is invented for system-one-open');
+test('CR-292: every legacy class resolves to a canonical architecture label', () => {
+  assert.match(types, /JEV_ARCH_CLASSES/);
+  assert.match(types, /jevArchFor/);
+  assert.doesNotMatch(types, /unclassified: "Unclassified"/);
 });

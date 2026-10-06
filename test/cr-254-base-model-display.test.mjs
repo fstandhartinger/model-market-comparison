@@ -129,6 +129,8 @@ const detail = await importReactModule(file('../app/image-jev-bench/[system]/pag
   'next/link': linkStub,
   'next/navigation': moduleUrl('export function notFound(){throw new Error("NOT_FOUND")}'),
   '../../../components/BaseModelDisplay': await compileReactModule(componentUrl),
+  '../../../components/jevTypes': await compileTsModule(file('../components/jevTypes.ts')),
+  '../../../components/JevArchitecture': await compileReactModule(file('../components/JevArchitecture.tsx')),
   '../../../components/JevSystemCharts': moduleUrl('export const JevAxisBand=()=>null; export const typeColour=()=>"blue";'),
   '../../../lib/seo': moduleUrl('export const previewMetadata=(value)=>value;'),
 });
@@ -175,6 +177,7 @@ test('CR-254 every text detail branch and shared leaderboard surface includes th
 const sharedAliases = {
   'next/link': linkStub,
   './BaseModelDisplay': await compileReactModule(componentUrl),
+  './JevArchitecture': await compileReactModule(file('../components/JevArchitecture.tsx')),
   './jevTypes': await compileTsModule(file('../components/jevTypes.ts')),
   // The isolated SSR render has no page-level filter provider; mirror the hook's default all-visible state.
   './useJevV15VisibleKeys': moduleUrl('export function useJevV15VisibleKeys(keys){return new Set(keys)}'),

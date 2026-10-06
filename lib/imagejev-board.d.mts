@@ -29,6 +29,5 @@ export declare function imageJevCapabilityLimits(artifact: unknown): ImageJevCap
 /** ImageJev composite presets, with equal axis weights as the official state. */
 export declare function imageJevSliderPresets(artifact: unknown): JevPreset[];
 
-/** CR-290: presentation class of one ImageJev row (base-model family for self-hosted systems). */
-export declare const IMAGEJEV_FAMILY_CLASSES: ReadonlyArray<readonly [string, RegExp]>;
+/** CR-292: architecture resolved from the shared overlay. */
 export declare function imageJevClassFor(row: { key: string; kind?: string; api_flag?: boolean; class?: string }): string;

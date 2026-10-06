@@ -1,3 +1,5 @@
+import { JevArchitectureBadge } from './JevArchitecture';
+import { jevRowArch } from './jevTypes';
 import { BaseModelDisplay } from './BaseModelDisplay';
 import Link from 'next/link';
 import { JevBenchRelatedLinks } from './JevBenchRelatedLinks';
@@ -15,7 +17,7 @@ const short = (value: string) => value.split(' (')[0].split(', formerly')[0];
 export function JevV15SystemDetail({ artifact, row }: { artifact: JevV15Artifact; row: JevV15System }) {
   const reference = artifact.systems.find((candidate) => candidate.key === 'jev-1.13.0') ?? null;
   const path = jevSystemPath(row.key);
-  const classLabel = JEV_TYPE_LABEL[row.class] ?? row.class;
+  const classLabel = JEV_TYPE_LABEL[jevRowArch(row)] ?? row.class;
   const headlineRank = row.ranks[artifact.headline];
   const openness = row.open === 'yes' ? 'Code and weights marked open' : row.open === 'weights' ? 'Weights marked open' : row.open === 'no' ? 'Marked closed' : `Openness: ${row.open}`;
   const adjustedP50 = row.speed.p50_s_adjusted;
@@ -40,6 +42,7 @@ export function JevV15SystemDetail({ artifact, row }: { artifact: JevV15Artifact
       <p className="bh-muted mt-2 max-w-3xl" data-bh-jev-system-subline>
         {classLabel} · {row.author === 'unknown' ? 'Author not recorded' : `by ${row.author}`} · {openness}
       </p>
+      <JevArchitectureBadge row={row} />
       <BaseModelDisplay systemKey={row.key} className="mt-2 block text-sm" />
       <JevBenchRelatedLinks systemKey={row.key} />
       {row.addendum && <p className="bh-muted mt-1 text-sm" data-bh-jev-v15-addendum>{row.addendum.label}</p>}
@@ -78,7 +81,7 @@ export function JevV15SystemDetail({ artifact, row }: { artifact: JevV15Artifact
             return <div className="bh-panel p-4" key={axis}>
               <dt className="bh-muted text-sm capitalize">{axis}</dt>
               <dd className="mt-1 text-2xl font-semibold tabular-nums">{one(value)}
-                {value != null && <JevAxisBand axis={axis} value={value} colour={typeColour(row.class)} reference={baseline} referenceName={short(reference?.display ?? 'Jev 1.13.0')} />}
+                {value != null && <JevAxisBand axis={axis} value={value} colour={typeColour(jevRowArch(row))} reference={baseline} referenceName={short(reference?.display ?? 'Jev 1.13.0')} />}
               </dd>
             </div>;
           })}
