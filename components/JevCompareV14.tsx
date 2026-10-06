@@ -132,7 +132,7 @@ export function SystemCombobox({ id, label, value, other, ranked, unranked, onCh
       {filtered.length ? filtered.map((row, index) => <div key={row.key} id={`${id}-option-${index}`} role="option" aria-selected={row.key === value}
         data-option-index={index} className={`cursor-pointer rounded px-3 py-2.5 ${index === activeIndex ? 'bg-accent/10' : ''}`}
         onMouseEnter={() => setActive(index)} onMouseDown={(event) => event.preventDefault()} onClick={() => choose(row)}>
-        <span className="font-medium">{row.name}</span><span className="bh-muted ml-2 text-xs">{row.rank === null ? row.listing === 'honorable_mention' ? 'Honorable mention' : 'Partial run' : `#${row.rank}`}</span>
+        <span className="font-medium">{row.name}</span><span className="bh-muted ml-2 text-xs">{row.rank === null ? row.listing === 'honorable_mention' ? 'Honorable mention' : row.listing === 'api_offering' ? 'API offering' : row.listing === 'reference' ? 'Reference' : 'Partial run' : `#${row.rank}`}</span>
       </div>) : <p className="bh-muted px-3 py-2.5">No matching systems</p>}
     </div>}
   </div>;
@@ -199,7 +199,7 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
     }
     return `${names.join(" and ")} has no published accuracy-tier results.`;
   };
-  const status = (r: JevCompareRow) => r.rank !== null ? `#${r.rank}` : r.listing === "honorable_mention" ? "honorable mention, not ranked" : "partial run, not ranked";
+  const status = (r: JevCompareRow) => r.rank !== null ? `#${r.rank}` : r.listing === "honorable_mention" ? "honorable mention, not ranked" : r.listing === "api_offering" ? "API offering, ranked on the API leaderboard" : r.listing === "reference" ? "reference, not ranked" : "partial run, not ranked";
   const desc = (title: string, spokes: Spoke[]) => `${title}, ${s[0].name} vs ${s[1].name}. ` + spokes.map((sp) => `${sp.lines.join(" ")}: ${sp.texts[0]} vs ${sp.texts[1]}`).join("; ") + ".";
   const copy = async () => {
     const u = new URL(window.location.href); u.searchParams.set("compare", `${A.key},${B.key}`); u.hash = "compare";

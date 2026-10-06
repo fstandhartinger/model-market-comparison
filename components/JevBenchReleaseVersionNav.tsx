@@ -11,7 +11,7 @@ export function JevBenchReleaseVersionNav({ active }: { active: JevRelease }) {
   return <nav aria-label="JevBench release versions" className="mb-5 flex flex-wrap gap-2" data-bh-jev-version-tabs>
     {versions.map(({ version, href }) => <a key={version} href={href}
       aria-current={active === version ? 'page' : undefined}
-      className={`rounded border px-3 py-1.5 text-sm ${active === version ? 'border-accent bg-accent text-white' : 'border-line text-accent hover:bg-panel'}`}>
+      className={`rounded border px-3 py-1.5 text-sm ${active === version ? 'bh-release-tab-active border-accent bg-accent' : 'border-line text-accent hover:bg-panel'}`}>
       JevBench {version}{active === version ? ' · selected' : ''}
     </a>)}
   </nav>;

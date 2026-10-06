@@ -17,6 +17,7 @@ export type SeoRow = {
   key: string;
   display: string;
   rank: number | null;
+  board?: 'open' | 'api' | 'reference' | string;
   capability?: number | null;
   capability_eligible?: boolean;
   last_measured_on?: string | null;
@@ -33,6 +34,21 @@ export type SeoRow = {
   licence?: string | null;
   repo?: string | null;
 };
+
+// Review 6 Oct 2026: /jev-models ranks open weights only. `rank` is that board's rank; the Jev 1.13.0 reference and hosted API rows have none.
+export function boardRankText(row: Pick<SeoRow, 'rank' | 'board'>, locale: 'en' | 'de' = 'en'): string {
+  const de = locale === 'de';
+  if (row.board === 'reference') return de ? 'Referenz, nicht gerankt' : 'Reference, not ranked';
+  if (row.board === 'api') return de ? 'API-Angebot, gerankt auf dem API-Leaderboard' : 'API offering, ranked on the API leaderboard';
+  if (row.rank == null) return de ? 'Ohne Rang (außerhalb der Grenzen)' : 'Outside the caps, no rank';
+  return de ? `Rang ${row.rank} (Open-Weights-Board)` : `Rank #${row.rank} (open-weights board)`;
+}
+
+export function ApiBoardNote({ rows, locale = 'en' }: { rows: Array<Pick<SeoRow, 'key' | 'display'>>; locale?: 'en' | 'de' }) {
+  const de = locale === 'de';
+  const names = rows.map((r) => r.display.split(' (')[0]).join(', ');
+  return <p className="bh-muted mt-3 text-sm" data-bh-jev-api-board-note>{de ? 'API-Angebote werden auf dem API-Leaderboard gerankt' : 'Hosted API alternatives are ranked on the API leaderboard'}{names && ` (${names})`}: <Link className="text-accent underline" href="/jev-models/api">{de ? 'zum API-Leaderboard' : 'JevBench API leaderboard'}</Link>.</p>;
+}
 
 export function one(value: number | null | undefined): string {
   return value == null || !Number.isFinite(value) ? '—' : value.toFixed(1);

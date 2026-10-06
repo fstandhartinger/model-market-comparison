@@ -329,10 +329,10 @@ export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, costFa
   // box the caption would cover loses its number (the gridline stays). If that tick is the axis maximum — the one the
   // reader needs to read the scale at all — the caption moves down one gridline instead.
   const sepX = kind === 'cost' ? limitX : latencyLimitX;
-  // F-225(b): when the phone's label column takes the left of the plot, the caption's usual place at the head of the
-  // line is inside that column. It stays left of the line (CR-176.1) and moves to the line's foot, where nothing reads.
-  const phoneColumnLeft = labels.some((l) => l.col === 'left');
-  const sepLabelBaseY = phoneColumnLeft ? H - B - 6 : T + 25;
+  // F-225(b): on a phone the head of the line is inside the label column; the caption stays left of the line (CR-176.1)
+  // and sits at the line's foot, where nothing reads.
+  // Review 6 Oct 2026: the caption also sits at the foot on desktop; at the head it overprinted the leader labels of top-5 points.
+  const sepLabelBaseY = H - B - 6;
   const sepLabel = sepX != null && sepX > L && sepX < W - R && sepX - L <= 48
     ? (() => {
       const lineFactor = kind === 'cost' ? costFactor : latencyFactor;
@@ -392,7 +392,8 @@ export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, costFa
         </g>)}
         {xTicks.map((t) => <g key={`x${t.v}`}>
           {x(t.v) >= L && x(t.v) <= W - R && <><line x1={x(t.v)} x2={x(t.v)} y1={T} y2={H - B} stroke="rgb(var(--line) / .55)" />
-            <text x={x(t.v)} y={H - B + 15} textAnchor="middle" fill="var(--muted)" fontSize="11">{t.label}</text>
+            {/* Review 6 Oct 2026: the right-most tick label ran past the viewBox edge ("$0.01(" clipped); anchor it to its gridline's end. */}
+            <text x={x(t.v)} y={H - B + 15} textAnchor={x(t.v) + t.label.length * 3.4 > W - 1 ? 'end' : 'middle'} fill="var(--muted)" fontSize="11">{t.label}</text>
             {t.sub && <text x={x(t.v)} y={H - B + 27} textAnchor="middle" fill="var(--muted)" fontSize="10">{t.sub}</text>}</>}
         </g>)}
         <text x={plotCenterX} y={H - 5} textAnchor="middle" fill="var(--text)" fontSize="11">{kind === 'cost' ? '$ per 1,000 decisions (log)' : 'Median-latency speed'}</text>

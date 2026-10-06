@@ -119,7 +119,7 @@ function CurrentReleaseSystem({ data, row }: { data: Awaited<ReturnType<typeof r
     <script type="application/ld+json" dangerouslySetInnerHTML={{__html:escapeJsonLd(json)}}/>
     <nav><Link href="/jev-models" className="text-accent underline">Back to JevBench</Link></nav>
     <header className="bh-page-head mt-3"><h1 className="text-3xl font-bold">{row.display}</h1><JevReleaseStamp data={data}/>
-      <p className="mt-3">Capability {seoOne(row.capability)} · {row.rank == null ? 'Not ranked in the current release' : `rank #${row.rank} of ${data.ranked.length}`}</p>
+      <p className="mt-3">Capability {seoOne(row.capability)} · {row.board === 'reference' ? 'Reference, not ranked' : row.board === 'api' ? <>API offering, ranked on the <Link href="/jev-models/api" className="text-accent underline">API leaderboard</Link></> : row.rank == null ? 'Not ranked in the current release' : `rank #${row.rank} of ${data.ranked.length} on the open-weights board`}</p>
       <p className="bh-muted mt-2">{row.not_ranked_because ?? row.capability_reasons?.join("; ")}</p>
       <p className="bh-muted mt-2">Last measured: {row.last_measured_on ?? 'date not published'} · measurement release: {row.measurement_revision}</p>
       <p className="bh-muted">{row.licence ?? 'Licence not stated'}</p>
@@ -127,7 +127,7 @@ function CurrentReleaseSystem({ data, row }: { data: Awaited<ReturnType<typeof r
     <BaseModelDisplay systemKey={row.key} className="mt-2 block text-sm"/>
     <JevBenchRelatedLinks systemKey={row.key}/>
     <section className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">{(['intelligence','calibration','speed','cost'] as const).map((axis) => <div className="bh-panel p-4" key={axis}><h2 className="capitalize">{axis}</h2><p className="text-2xl font-semibold">{seoOne(row.axes?.[axis])}</p></div>)}</section>
-    <section className="bh-panel mt-6 p-5"><h2 className="font-semibold">Composite (secondary)</h2><p>{seoOne(row.jevbench_score)} · {row.composite_rank == null ? 'Not ranked' : `Composite rank #${row.composite_rank}`}</p></section>
+    <section className="bh-panel mt-6 p-5"><h2 className="font-semibold">Composite (secondary)</h2><p>{seoOne(row.jevbench_score)} · {row.composite_rank == null || row.board !== 'open' ? 'Not ranked on this board' : `Composite rank #${row.composite_rank}`}</p></section>
     <section className="bh-panel mt-6 p-5"><h2 className="font-semibold">Cost and measurement conditions</h2>
       <p>{usdPerThousand(price)} ({costBasisLabel(row.cost?.kind)})</p><p className="bh-muted mt-2">{row.cost?.basis ?? 'Cost basis not published'}</p>
       <p className="mt-3">p50 latency: {seoOne(row.speed?.p50_s_adjusted ?? row.speed?.p50_s_raw)} s</p>

@@ -337,6 +337,9 @@ details[open] > .bh-collapsible-grid { display: grid; }
 .skip-link:focus { transform: translateY(0); }
 [data-theme="light"] [class*="bg-[#"] { background-color: var(--surface); }
 [data-theme="light"] .text-white { color: var(--text); }
+/* Review 6 Oct 2026: the selected release tab read 2.1:1 (light) / 2.3:1 (dark) with text-white on the accent fill. */
+.bh-release-tab-active { color: #0b1220; }
+[data-theme="light"] .bh-release-tab-active { color: #fff; }
 [data-theme="light"] :is(.text-amber-200,.text-amber-300,.text-yellow-300,.text-orange-300) { color: #85420a; }
 [data-theme="light"] :is(.text-red-300,.text-red-400,.text-pink-300) { color: #a51b35; }
 [data-theme="light"] :is(.text-emerald-300,.text-green-300,.text-teal-300) { color: #035448; }
