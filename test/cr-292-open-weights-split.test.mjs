@@ -86,3 +86,8 @@ test('pages: /jev-models keeps its canonical and renders the open scope; /jev-mo
   assert.doesNotMatch(toggle, /searchParams|history\.(push|replace)State|location\.hash/, 'the toggle is UI state only');
   assert.match(readFileSync('components/JevBenchV16Board.tsx', 'utf8'), /v1\.7\.0/);
 });
+
+test('CR-292: the main board says in one line that Jev is the only API model kept, as the reference (#10601)', () => {
+  const route = readFileSync('components/JevBenchV16ReleaseRoute.tsx', 'utf8');
+  assert.match(route, /Jev 1\.13\.0<\/b> \(TypeSafe\) is the only API model kept on this board, as the unranked reference row/);
+});
