@@ -336,6 +336,41 @@
    }
   },
   {
+   "key": "instinct-dual-4b",
+   "display": "Instinct Dual 4B",
+   "author": "ZooWork / pierre-srp",
+   "role": "carried",
+   "cost_kind": "estimate",
+   "p50_s_adjusted": 0.5063527971506119,
+   "latency_adjustment": "x2 demo-endpoint adjustment, as in the rankings",
+   "measured_on": "2026-10-06",
+   "n_items": 300,
+   "n_ok": 300,
+   "intelligence": 26.285898976854178,
+   "calibration": 81.19783460722252,
+   "capability": 53.74186679203835,
+   "p50_s": 0.25317639857530594,
+   "usd_per_1000": 0.021238725369458127,
+   "v15_composite": 46.96798492261902,
+   "v15_capability": 65.70934597241762,
+   "v15_measured": "v1.5.3 (2026-09-29)",
+   "href": "https://github.com/fstandhartinger/jevbench/issues/123",
+   "note": "author-hosted demo",
+   "p95_s": 0.616359607875347,
+   "p95_s_adjusted": 1.232719215750694,
+   "axes": {
+    "intelligence": 26.285898976854178,
+    "calibration": 81.19783460722252,
+    "speed": 82.04682620725481,
+    "cost": 60.18614652266257
+   },
+   "composite": {
+    "A": 13.965239625554608,
+    "B": 11.7903963551536,
+    "C": 9.698083073301811
+   }
+  },
+  {
    "key": "instinct",
    "display": "Instinct (ZooWork, Qwen3.8-27B)",
    "author": "rayrain-srp (ZooWork)",
@@ -544,23 +579,48 @@
     "B": 13.82493551323121,
     "C": 11.255570158673168
    }
+  },
+  {
+   "key": "vansa-3.4",
+   "display": "Vansa-3.4 (Vansa, hosted System One API)",
+   "author": "Vansa",
+   "role": "carried",
+   "cost_kind": "measured",
+   "p50_s_adjusted": 0.14971249923110008,
+   "latency_adjustment": null,
+   "measured_on": "2026-10-06",
+   "n_items": 300,
+   "n_ok": 297,
+   "intelligence": 43.360061363157925,
+   "calibration": 80.93394056304842,
+   "capability": 62.147000963103174,
+   "p50_s": 0.14971249923110008,
+   "usd_per_1000": 0.018532153333333336,
+   "v15_composite": 71.59061278658044,
+   "v15_capability": 72.83076985389093,
+   "v15_measured": "v1.5.6 (2026-10-03)",
+   "href": "https://vansa.org",
+   "note": null,
+   "p95_s": 0.19368388988077637,
+   "p95_s_adjusted": 0.19368388988077637,
+   "axes": {
+    "intelligence": 43.360061363157925,
+    "calibration": 80.93394056304842,
+    "speed": 95.37648440924457,
+    "cost": 61.96222345424173
+   },
+   "composite": {
+    "A": 48.48566771318107,
+    "B": 44.18306175292698,
+    "C": 33.67060257859796
+   }
   }
  ],
  "pending": [
   {
-   "key": "vansa-3.4",
-   "display": "Vansa-3.4",
-   "reason": "waiting for a current API key"
-  },
-  {
-   "key": "instinct-dual-4b",
-   "display": "Instinct Dual 4B (ZooWork)",
-   "reason": "waiting for an API key that covers this model"
-  },
-  {
    "key": "kushal-gemma4-31b-it-autoloops",
    "display": "Autoloops Gemma 4 31B IT",
-   "reason": "waiting for confirmation that this model is still served"
+   "reason": "full run on the fresh sealed set in progress"
   }
  ]
 }
