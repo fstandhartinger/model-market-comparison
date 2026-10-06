@@ -1,5 +1,6 @@
 'use client';
 import { jevRowArch } from './jevTypes';
+import { JEV_SCOPE_LISTING } from '../lib/jevbench-scope.mjs';
 
 import { useEffect, useId, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
 import { DEFAULT_CAP, clampCap, formatCap, isOfficialCaps, parseCaps, serialiseCaps, type ClassCaps } from '../lib/jevbench-class-caps.mjs';
@@ -131,8 +132,21 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
   </li>;
 }
 
-export function JevCapabilityRanking({ systems, eligibilitySystems = systems, revision, officialHref, benchName = 'JevBench', classLabel = 'Jev-class', referenceLabel = 'Jev', eligibilityNote, correlationReason, benchmark = 'jevbench', onCapsChange, ...options }: {
+// v1.7.1 (Florian 6 Oct 2026): the Jev row on the open-weights board says plainly that it is a comparison reference.
+export function unrankedNote(listing: string, benchName: string) {
+  if (listing === JEV_SCOPE_LISTING.reference) return 'Not ranked, only shown as a reference to compare with';
+  if (listing === JEV_SCOPE_LISTING.api) return 'Not ranked here: API offering, ranked on the API leaderboard';
+  return `Not ranked in the official ${benchName} Score (${listing.replace(/_/g, ' ')})`;
+}
+
+export function JevCapabilityRanking({ systems, eligibilitySystems = systems, revision, officialHref, benchName = 'JevBench', classLabel = 'Jev-class', referenceLabel = 'Jev', eligibilityNote, correlationReason, benchmark = 'jevbench', onCapsChange, scopeLabel, outsideOpen = false, headline = true, ...options }: {
+  /** v1.7.1: false on the API board, where the Composite is the headline. */
+  headline?: boolean;
   systems: JevV14System[]; revision: string; officialHref: string; benchName?: string; classLabel?: string;
+  /** v1.7.1: board name appended to the heading, e.g. "open weights" or "API offerings". */
+  scopeLabel?: string;
+  /** v1.7.1: the API board opens the rows outside the caps, so no offering is hidden behind a fold. */
+  outsideOpen?: boolean;
   onCapsChange?: (view: ClassCaps & { costLimit: number; latencyLimit: number }) => void;
   /** Include disclosure rows for filter status while keeping the headline chart's published row set unchanged. */
   eligibilitySystems?: JevV14System[];
@@ -195,15 +209,15 @@ export function JevCapabilityRanking({ systems, eligibilitySystems = systems, re
   const numbered = inside.map((r) => ({ r, label: r.row.ranked ? String(++n) : '–' }));
   const [lead] = numbered;
   const bar = ({ r, label }: { r: JevClassRow; label: string }) => <RankingRow key={r.row.key} item={r} rank={label} reference={reference} costFactor={costFactor} latencyFactor={latencyFactor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark}
-    note={r.isReference ? `Reference system for the ${classLabel} limits` : !r.row.ranked ? `Not ranked in the official ${benchName} Score (${r.row.listing.replace(/_/g, ' ')})` : undefined} />;
+    note={r.isReference ? `Reference system for the ${classLabel} limits` : !r.row.ranked ? unrankedNote(r.row.listing, benchName) : undefined} />;
   const outsideBar = (r: JevClassRow) => <RankingRow key={r.row.key} item={r} rank="" reference={reference} costFactor={costFactor} latencyFactor={latencyFactor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark} note={`Outside: ${r.reasons.join(', ')}`} />;
   const types = jevLegendTypes(filteredRows.map((r) => jevRowArch(r.row)));
 
   // F-197 (pass 36): mt-6 not mt-8 — with the guides nav folded out of the page head the first Capability row
   // must sit inside the tightened 590/660 px budgets; the smaller gap is the remaining headroom.
   return <section id="jev-capability" className="mt-6 scroll-mt-6" aria-labelledby="jev-capability-title" data-bh-jev-capability-ranking>
-    <p className="bh-eyebrow">{benchName} {revision} · headline</p>
-    <h2 id="jev-capability-title" className="mt-1 text-2xl font-bold leading-snug sm:text-3xl">{benchName} Capability Score</h2>
+    <p className="bh-eyebrow">{benchName} {revision}{headline && ' · headline'}</p>
+    <h2 id="jev-capability-title" className="mt-1 text-2xl font-bold leading-snug sm:text-3xl">{benchName} Capability Score{scopeLabel && ` (${scopeLabel})`}</h2>
     <p className="bh-muted mt-1 text-[13px]">Capability ranking of {classLabel} systems{!official && <> <span className="bh-jevc-notdefault ml-1" data-bh-jev-caps-custom>Custom caps: cost {formatCap(costFactor)} · latency {formatCap(latencyFactor)} — not the official ranking</span></>}</p>
     <p className="mt-2 max-w-4xl text-[15px] leading-snug">
       Capability Score averages <b>Intelligence</b> and <b>Calibration</b>.
@@ -260,7 +274,7 @@ export function JevCapabilityRanking({ systems, eligibilitySystems = systems, re
       </ul>
 
       <div className="bh-jev-class-divider" role="separator" data-bh-jev-class-divider>Outside the {classLabel} limits · {outside.length} systems</div>
-      <details className="mt-2" data-bh-jev-class-outside>
+      <details className="mt-2" open={outsideOpen || undefined} data-bh-jev-class-outside>
         <summary className="cursor-pointer text-sm font-semibold text-accent">{official ? 'Show general-purpose LLMs and other systems outside the limits' : 'Show systems outside the selected limits'}</summary>
         <p className="bh-muted mt-2 text-[12.5px]">Sorted by Capability Score, not numbered. Each row says which limit it misses, measured against {refName} ({usd(reference.cost)} per 1,000 decisions, median {secs(reference.latency)}).</p>
         <ol className="mt-2.5 space-y-2.5">{outside.map(outsideBar)}</ol>

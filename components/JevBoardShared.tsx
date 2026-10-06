@@ -42,7 +42,7 @@ export const dollars = (value: number | null | undefined) => value == null ? '�
 export const shortName = (value: string) => value.split(' (')[0].split(', formerly')[0];
 export const apiExplanation = "API — the operator's endpoint received sealed item text, without answers.";
 export const typeVar = (cls: string) => ({ '--jev-t': `var(${jevTypeVarName(cls)})` }) as CSSProperties;
-export const NOT_RANKED: Record<string, string> = { honorable_mention: 'honorable mention', partial: 'partial run' };
+export const NOT_RANKED: Record<string, string> = { honorable_mention: 'honorable mention', partial: 'partial run', reference: 'reference', api_offering: 'API offering' };
 
 // ---- Heat shading: each column shaded by where a value sits between the column's weakest and strongest system ----
 
@@ -118,7 +118,7 @@ export function gateSentence(gate: JevGatePenalty, score: number | null | undefi
   return `Low-axis gate: ${parts.join('; ')}. Score before the gate ${one(gate.ungated)} → ${one(score)}.`;
 }
 
-export function JevScoreBar({ row, viewRank, reference = false, metric = 'score', heat, isNew = false, name, ci = null, alternative = null, pageHref, benchmark = 'jevbench', gate = null }: { row: JevBoardRow; viewRank?: number; reference?: boolean; metric?: BarMetric; heat?: HeatScales; isNew?: boolean; name?: string; ci?: [number, number] | null; alternative?: JevBoardAlternative | null; pageHref?: string; benchmark?: BaseModelBenchmark; gate?: JevGatePenalty | null }) {
+export function JevScoreBar({ row, viewRank, reference = false, metric = 'score', heat, isNew = false, name, ci = null, alternative = null, pageHref, benchmark = 'jevbench', gate = null, baseNote }: { row: JevBoardRow; viewRank?: number; reference?: boolean; metric?: BarMetric; heat?: HeatScales; isNew?: boolean; name?: string; ci?: [number, number] | null; alternative?: JevBoardAlternative | null; pageHref?: string; benchmark?: BaseModelBenchmark; gate?: JevGatePenalty | null; baseNote?: number }) {
   const source = benchmark === 'imagejevbench' ? imageJevSourceUrl(row.key, row.repo) : jevSourceUrl(row.key, row.repo);
   const page = benchmark === 'imagejevbench' ? imageJevSystemPath(row.key) : jevSystemPath(row.key);
   const s = row.jevbench_score;
@@ -151,7 +151,7 @@ export function JevScoreBar({ row, viewRank, reference = false, metric = 'score'
       {benchmark === 'imagejevbench' && source && <Link href={page} className="block text-[10.5px] text-accent underline" data-bh-mm-system-details={row.key}>details</Link>}
       {/* CR-254 (2026-10-01): the cited base-model overlay, presentation only. Every row shows it, ranked, unranked or wrapper. */}
       <JevArchitectureBadge row={row} benchmark={benchmark} />
-      <BaseModelDisplay benchmark={benchmark} systemKey={row.key} className="mt-0.5 block text-[10.5px] leading-tight sm:text-right" />
+      <BaseModelDisplay benchmark={benchmark} systemKey={row.key} footnote={baseNote} className="mt-0.5 block text-[10.5px] leading-tight sm:text-right" />
     </span>
     <span className="bh-jevc-grid relative col-start-2 row-start-2 mt-1 flex h-4 sm:col-start-3 sm:row-start-1 sm:mt-0 sm:h-6" aria-hidden="true">
       {value != null && <span className={`bh-jevc-bar ${row.ranked ? '' : 'is-partial'} ${reference ? 'is-reference' : ''}`} style={{ width: `${Math.max(0, Math.min(100, value)).toFixed(4)}%` }} />}

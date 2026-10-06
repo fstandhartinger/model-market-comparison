@@ -1331,10 +1331,21 @@
         "cr": "CR-290"
       },
       "fastino-gliner-2-5-decide": {
-        "label": "undisclosed",
-        "status": "undisclosed",
-        "sources": [],
-        "note": "Hosted Fastino API (model id fastino/GLiNER-2.5-Decide). Checked fastino.ai home page and the GLiNER2.5-Decide announcement blog: no statement of the hosted endpoint's base model. Open-weight HF cards fastino/GLiNER2.5-Decide (base_model fastino/gliner2-large-v1) and fastino/GLiNER2.5-Decide-1B (base_model fastino/gliner2-xl-0111) exist, but nothing public says which one (or a different build) the hosted API serves, so no base is claimed."
+        "label": "fastino/gliner2-large-v1",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/fastino/GLiNER2.5-Decide/blob/5a7adf72a23b4d311abae6ce050d7f0012bb3416/README.md",
+            "title": "Fastino model card",
+            "evidence": "base_model: fastino/gliner2-large-v1; Encoder: DeBERTa-v3-large; Apache-2.0."
+          },
+          {
+            "url": "https://docs.fastino.ai/concepts/models.md",
+            "title": "Fastino model list",
+            "evidence": "Hosted fastino/GLiNER-2.5-Decide, 340M parameters, the same model as the open checkpoint."
+          }
+        ],
+        "note": "Measured via Fastino's hosted API. The open checkpoint scores 11.2 on the community Decision Index (rank 53 of 70; Jev 57.9). Fastino's closed GLiDE is a separate model, not yet measured."
       },
       "quyet-1-0-small": {
         "label": "aisingapore/SEA-LION-ModernBERT-300M",
