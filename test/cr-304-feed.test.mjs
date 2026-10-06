@@ -33,6 +33,6 @@ test('llms-full and FAQ use the open-weights board', async () => {
   assert.doesNotMatch(open, /\| Sage/);
   const data = await readJevbenchSeoData();
   const faq = jevbenchFaq(data);
-  assert.match(faq[1].answer, /^Quyet.*ranks #1 on the open-weights board.*among 62 eligible open-weights models/);
+  assert.match(faq[1].answer, /^Quyet.*ranks #1 on the open-weights board.*among 61 ranked open-weights models/);
   assert.doesNotMatch(faq[1].answer, /among 64/);
 });
