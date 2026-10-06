@@ -57,7 +57,7 @@ test('ImageJevBench production page keeps the shared section order, full roster,
       assert.ok(history.includes(frozen.ranking[0].name), `${revision} contains its recorded winner`);
     }
     const linked = (await (await fetch(`http://127.0.0.1:${port}/jev-models`)).text()).replace(/<!--[\s\S]*?-->/g, '');
-    assert.match(linked, /Explore Image JevBench v0\.1\.5/);
+    assert.match(linked, /Explore Image JevBench v0\.3\.0/);
   } finally {
     server.kill('SIGTERM');
     if (server.exitCode === null) await new Promise((resolve) => server.once('exit', resolve));
