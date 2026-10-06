@@ -26,3 +26,4 @@ export const JEV_PRELIMINARY_LISTING: string;
 export const JEV_PENDING_LISTING: string;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function jevApiPreliminaryRows(publicSet: unknown, meta: ReadonlyMap<string, any>): { prelim: any[]; pending: any[] };
+export function jevWithApiA4Rows<T extends { systems: any[]; board?: any; n_ranked?: number }>(artifact: T, a4: unknown, meta?: ReadonlyMap<string, any>): T;

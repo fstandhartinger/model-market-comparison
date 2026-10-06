@@ -38,7 +38,7 @@ test('2: anchors use the published Intelligence on public items (I_open) of the 
 
 test('3: shown only on the API board, unranked, linked from carried roster rows; ranking code does not read it', () => {
   const board = src('components/JevBenchV16Board.tsx');
-  assert.match(board, /\{scope === 'api' && <ApiPublicSet \/>\}/);
+  assert.match(board, /\{scope === 'api' && <ApiPublicSet measured=\{measuredKeys\} \/>\}/);
   assert.match(board, /not comparable with the 1,500-item rankings above/);
   assert.match(board, /data-bh-jev-api-roster-public=\{r\.key\}/);
   assert.match(board, /version: 'v1\.7\.4'/);

@@ -21,6 +21,7 @@ import { JevGpuCostCalculator } from './JevGpuCostCalculator';
 import { JEV_PENDING_LISTING, JEV_PRELIMINARY_LISTING, JEV_REFERENCE_KEY, JEV_SCOPE_LISTING, jevApiPreliminaryRows, jevApiRoster, jevScopeDisplayOrder, type JevApiListedRow, type JevScope } from '../lib/jevbench-scope.mjs';
 import { NOT_RANKED } from './JevBoardShared';
 import apiPublicSet from '../data/jevbench-api-public-set.json';
+import apiA4 from '../data/jevbench-api-a4-equated.json';
 
 // JevBench v1.6.0 release board. Reuses the established interactive charts on the
 // v1.6 aggregate artifact, and adds the main-pool language view, dated carry and the
@@ -111,6 +112,7 @@ function DatedCarry({ carry, hiddenApi }: { carry: JevV16Carry; hiddenApi: Reado
 
 // v1.7.0 (Florian, 5 Oct 2026): open-weights board on /jev-models, API-provider board on /jev-models/api.
 export const JEV_BOARD_REVISIONS: { version: string; date: string; text: string }[] = [
+  { version: 'v1.7.7', date: '2026-10-06', text: 'API board: 16 API offerings re-measured in full on a fresh sealed API set (A4, 300 never-used sealed items plus the 300 public items, 6 Oct 2026) and equated to the v1.6.1 scale with the published A2/A3 supplement method. They replace the hatched preliminary rows and are ranked on the API board: Instinct and Vansa-3.4 enter its Composite top 5, and GPT-6 Luna, GPT-6 Luna low, DeepSeek Flash and GPT-5.6 Luna lead its Capability ranking. classifier.dev (fast tier) is listed as a wrapper, not ranked. Qwen3.8 27B (Chutes) stays preliminary until its run finishes. The open-weights board is unchanged.' },
   { version: 'v1.7.6', date: '2026-10-06', text: 'API board: Vansa-3.4 and Instinct Dual 4B now have v1.6 public-set figures and appear as preliminary rows; Autoloops stays pending while its full run on the fresh sealed set is in progress. Very long items that exceed a provider’s context window count as wrong without ending the run. No rank changed.' },
   { version: 'v1.7.5', date: '2026-10-06', text: 'API board: every API offering with a v1.6 public-set figure is drawn in the Composite and Capability charts as a hatched, unranked “preliminary” row at its score position (public set of 300 items; full sealed re-evaluation running); offerings without any v1.6 figure are greyed “pending” rows. Adds Qwen3.8 27B (Chutes) and Fastino GLiDE to the public-set table. The four ranked rows and every rank are unchanged; the open-weights board is unchanged.' },
   { version: 'v1.7.4', date: '2026-10-06', text: 'API board: every reachable API offering that was not yet re-measured on v1.6 now has a dated public-set figure (the 300 public v1.6 items, no sealed items), shown next to its older v1.5 score with Jev and other ranked APIs on the same 300 items as anchors. Not ranked and not comparable with the 1,500-item headline; no score or rank of either board changed.' },
@@ -131,6 +133,7 @@ function BoardSplit({ scope, history }: { scope: JevScope; history: Array<{ revi
       <li>Why separate boards: open weights can be compared on equal hosting terms, while an API price is a vendor decision that can be subsidised or raised later and is not reproducible by readers. Every score and measurement is the same on both boards; only the set of ranked rows differs, and ranks are the published order filtered to that set.</li>
       <li>Jev 1.13.0 is a hosted API. It stays on the open-weights board as the <b>reference row</b> (it defines the Jev-class cost and latency caps) and is not ranked there; it is ranked on the API leaderboard.</li>
       <li>Official cost basis is unchanged: the Cost axis keeps each row&apos;s documented reference price (see the cost notes below; APIs with a known base model are priced at the developer&apos;s own list price). The base-model reference price only applies to open-weights rows; API offerings are ranked at their own list price{scope === 'api' ? ' on this board' : ''}. {scope === 'open' ? 'The GPU cost calculator above' : 'The GPU cost calculator on the main board'} is a What-If for your own hosting and never changes a score or rank.</li>
+      <li><b>Full API re-run (A4, v1.7.7).</b> {scope === 'api' ? 'Most offerings on this board' : 'Most API offerings'} were measured on 6 Oct 2026 on a fresh sealed API set A4 (300 never-used sealed items) plus the same 300 public items every system answers, and equated to the v1.6.1 S ∪ P scale with the published A2/A3 supplement method (offset {(apiA4 as { a4_offsets: { I: number; C: number } }).a4_offsets.I >= 0 ? '+' : ''}{(apiA4 as { a4_offsets: { I: number; C: number } }).a4_offsets.I.toFixed(2)} Intelligence, +{(apiA4 as { a4_offsets: { I: number; C: number } }).a4_offsets.C.toFixed(2)} Calibration; pool of {(apiA4 as { a4_pool: string[] }).a4_pool.length} ranked self-hosted systems re-run on A4 ∪ P). Jev, Sage, wity-1 and Fastino GLiNER-2.5-Decide keep their full-set S ∪ P scores. The pool is mid-strength, so for the strongest LLM rows the offset is an extrapolation (likely within ±2 Intelligence points; the 95% intervals include it). Nine A4 ∪ P items of about 77,000–82,000 input tokens, beyond the Jev reference&apos;s accepted input range, count against Intelligence when refused but are left out of cost. Rows without a public tariff keep their documented v1.5 cost estimate. A4 is now retired for everyone.</li>
       <li>API offerings that are not yet re-measured on the full v1.6 set show a dated <b>public-set figure</b> (the 300 public v1.6 items, no sealed items, so no exposure) next to their older v1.5 score. It is never ranked; on the API board it is drawn as a hatched “preliminary” bar so every offering is visible, but strictly it is comparable only with the anchor rows scored on the same 300 items (Calibration on 300 items reads a few points lower than on 1,500){scope === 'api' ? <> (<a className="text-accent underline" href="#jev-api-public-set">table</a>)</> : ''}.</li>
     </ul>
     <h3 className="mt-4 text-lg font-semibold">Revision history</h3>
@@ -320,10 +323,11 @@ function ApiRoster({ a, carry, listed, eligibility }: { a: JevV16ReleaseArtifact
 // Reachable API offerings without a v1.6 measurement answered the 300 public v1.6 items (no sealed items, so no exposure).
 // Scored with the pinned v1.6.1 scorer restricted to P (no sealed side: no gap penalty, no equating). Shown dated, unranked,
 // with anchors (rows ranked above, re-scored on the same 300 items) so readers can compare inside this table only.
-function apiChartExtras(carry: JevV16Carry) {
+// v1.7.7: rows that now have a full A4 u P result are board systems; only the rest stay preliminary or pending.
+function apiChartExtras(carry: JevV16Carry, measured: ReadonlySet<string>) {
   const meta = new Map<string, unknown>(carry.rows.map((r) => [r.key, r]));
   const { prelim, pending } = jevApiPreliminaryRows(apiPublicSet, meta);
-  return [...prelim, ...pending];
+  return [...prelim, ...pending].filter((r) => !measured.has(r.key));
 }
 type JevApiPublicRow = { key: string; display: string; role: 'anchor' | 'carried' | 'wrapper'; measured_on: string; n_items: number; n_ok: number;
   intelligence: number | null; calibration: number | null; capability: number | null; p50_s: number | null; p50_s_adjusted: number | null;
@@ -331,9 +335,11 @@ type JevApiPublicRow = { key: string; display: string; role: 'anchor' | 'carried
   usd_per_1000: number | null; v15_composite?: number | null; v15_capability?: number | null; v15_measured?: string | null; note?: string | null; href?: string | null };
 const PUBLIC_ROWS = (apiPublicSet as { rows: JevApiPublicRow[] }).rows;
 const PUBLIC_SET: ReadonlyMap<string, JevApiPublicRow> = new Map(PUBLIC_ROWS.filter((r) => r.role === 'carried').map((r) => [r.key, r]));
-function ApiPublicSet() {
-  if (PUBLIC_ROWS.length === 0) return null;
-  const rows = [...PUBLIC_ROWS].sort((x, y) => (y.capability ?? -1) - (x.capability ?? -1));
+function ApiPublicSet({ measured }: { measured: ReadonlySet<string> }) {
+  // v1.7.7: offerings with a full A4 u P result leave this table; the anchors stay for the rows still waiting.
+  const waiting = PUBLIC_ROWS.filter((r) => r.role !== 'anchor' && !measured.has(r.key));
+  if (waiting.length === 0) return null;
+  const rows = [...PUBLIC_ROWS.filter((r) => r.role === 'anchor'), ...waiting].sort((x, y) => (y.capability ?? -1) - (x.capability ?? -1));
   // Same Jev-class caps as the rankings: 2x the frozen v1.5 Jev reference cost and median latency, on the same cost basis and
   // demo-endpoint latency adjustment the rankings use. Wrappers (they serve Jev) are not class-assessed.
   const ref = { cost: JEV_V16_FROZEN_LIMITS.cost / 2, latency: JEV_V16_FROZEN_LIMITS.latency / 2 };
@@ -344,7 +350,7 @@ function ApiPublicSet() {
     ['Within the Jev-class caps (cost and median latency at most 2× the Jev v1.5 reference)', rows.filter((r) => r.role !== 'wrapper' && !outside(r))],
     ['Outside the Jev-class caps', rows.filter((r) => r.role !== 'wrapper' && outside(r))],
     ['Wrappers (serve Jev, listed, never ranked, not class-assessed)', rows.filter((r) => r.role === 'wrapper')]];
-  const pending = (apiPublicSet as { pending?: { key: string; display: string; reason: string }[] }).pending ?? [];
+  const pending = ((apiPublicSet as { pending?: { key: string; display: string; reason: string }[] }).pending ?? []).filter((x) => !measured.has(x.key));
   const meta = apiPublicSet as { set_label: string; scorer: string };
   return <section className="bh-panel mt-10 p-5" id="jev-api-public-set" aria-labelledby="jev-api-public-set-title" data-bh-jev-api-public-set>
     <h2 id="jev-api-public-set-title" className="text-2xl font-bold">Public-set re-runs (v1.6, 300 public items): not ranked</h2>
@@ -382,7 +388,8 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
   // v1.7.3: on scoped boards the Jev reference and API offerings sit at their score position in every ranking section.
   // v1.7.5 (Florian 6 Oct 2026, Part 12): the API board also draws preliminary public-set rows (hatched, unranked, at their
   // score position) and greyed pending rows in both ranking charts. They never enter the compare view or other sections.
-  const extra = scope === 'api' ? apiChartExtras(carry) : [];
+  const measuredKeys = new Set(a.systems.map((s) => s.key));
+  const extra = scope === 'api' ? apiChartExtras(carry, measuredKeys) : [];
   const ranked = scope === 'all' ? a.systems.filter((s) => s.ranked).sort(byBoard) : jevScopeDisplayOrder([...a.systems.filter(listedRow), ...(extra as typeof a.systems)]);
   const hiddenApi: ReadonlySet<string> = new Set(scope === 'open' ? apiKeys : []);
   const chartSystems = ranked.map((s) => jevV15BoardSystem(s) as JevV14System);
@@ -430,7 +437,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
         scoreLabel={scopeLabel ? `JevBench Composite Score (${scopeLabel})` : undefined} headline={scope === 'api'} capabilityLabel={scope === 'api' ? 'Capability ↓' : undefined} />
       {scope === 'api' && capabilityCharts}
       {scope === 'api' && <ApiRoster a={a} carry={carry} listed={apiListed} eligibility={eligibilityByKey} />}
-      {scope === 'api' && <ApiPublicSet />}
+      {scope === 'api' && <ApiPublicSet measured={measuredKeys} />}
       {scope === 'api' && <JevV15FilterPanel />}
       <JevCompareV15 rows={compareRows} openDecisions={a.v16.counts.P} sealedDecisions={a.v16.counts.S} categories={jevbenchCategoryView(a.revision, compareRows.map((r) => r.key))} />
       <p className="bh-muted mt-2 max-w-4xl text-xs" data-bh-jev16-radar-note>{categories.lane_note} {a.revision === 'v1.6.1' ? `Sealed counts in the compare view refer to the sealed set S (${a.v16.counts.S.toLocaleString('en-US')}), which hosted APIs now answer in full.` : `Sealed counts in the compare view refer to self-hosted systems (S ${a.v16.counts.S.toLocaleString('en-US')}); hosted APIs answered A ${a.v16.counts.A}.`}</p>
