@@ -83,7 +83,12 @@ test('5: long base-model notes become numbered footnotes; routine notes stay too
   assert.match(chart, /<BaseModelFootnotes benchmark=\{benchmark\} notes=\{baseNotes\.notes\}/);
 });
 
+test('v1.7.2: the roster says why carried API rows were not re-run, without extrapolated scores', () => {
+  assert.match(board, /data-bh-jev-api-roster-carry-why>Why not re-run yet: hosted APIs are re-measured at most once every three refresh releases/);
+  assert.match(board, /no validated conversion from the v1\.5 to the v1\.6 scale/);
+});
+
 test('revision history names board v1.7.1 first; scores untouched (display-only files)', () => {
   assert.match(board, /\{ version: 'v1\.7\.1', date: '2026-10-06', text: 'Display only, no score or rank changed\./);
-  assert.ok(board.indexOf("version: 'v1.7.1'") < board.indexOf("version: 'v1.7.0'"));
+  assert.ok(board.indexOf("version: 'v1.7.2'") < board.indexOf("version: 'v1.7.1'") && board.indexOf("version: 'v1.7.1'") < board.indexOf("version: 'v1.7.0'"));
 });
