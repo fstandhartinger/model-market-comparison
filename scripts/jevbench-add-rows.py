@@ -167,18 +167,18 @@ def build_row(key, srow, meta, decisive, scorer_sha, label):
     return row
 
 
-def check_entries(key, meta, architecture, base_models):
+def check_entries(key, meta, architecture, base_models, roster=False):
     arch = meta.get('architecture')
     if not arch or arch.get('arch') not in ARCH_CLASSES or not arch.get('evidence') or set(arch.get('badges', {})) != {'derivation', 'params', 'quant'}:
         fail(f'{key}: meta.architecture needs arch, evidence[] and badges{{derivation,params,quant}}')
     if not any(e.get('kind') != 'artifact' for e in arch['evidence']):
         fail(f'{key}: architecture needs external (non-artifact) evidence')
-    if key in architecture['benchmarks']['jevbench']:
+    if key in architecture['benchmarks']['jevbench'] and not roster:
         fail(f'{key}: architecture entry already exists')
     base = meta.get('base_model')
     if not base or not base.get('label') or base.get('status') not in ('disclosed', 'undisclosed') or not base.get('sources'):
         fail(f'{key}: meta.base_model needs label, status and sources[]')
-    if key in base_models['benchmarks']['jevbench']:
+    if key in base_models['benchmarks']['jevbench'] and not roster:
         fail(f'{key}: base-model entry already exists')
 
 
@@ -210,6 +210,7 @@ def main():
     if (pub['revision'], pub['protocol'], scorer['protocol']) != ('v1.6.1', 'jevbench::v1.6', 'jevbench::v1.6'):
         fail('unexpected release identity')
     pub_keys = {s['key'] for s in pub['systems']}
+    roster_keys = {n['key'] for n in pub.get('not_measured', [])}
     scorer_rows = {s['key']: s for s in scorer['systems']}
     for k in keys:
         if k in pub_keys:
@@ -220,7 +221,8 @@ def main():
             fail(f'{k} has no category cells in the scorer output')
         if k not in metas:
             fail(f'{k} has no entry in the meta file')
-        check_entries(k, metas[k], architecture, base_models)
+        # a published not_measured roster row keeps its existing architecture/base-model entries
+        check_entries(k, metas[k], architecture, base_models, roster=k in roster_keys)
 
     bad = check_reproduction(pub, scorer, pub_cats, scorer_cats)
     if bad:
@@ -257,6 +259,8 @@ def main():
         cats['lanes'][k] = 'selfhosted'
 
     for k in keys:
+        if k in roster_keys and k in architecture['benchmarks']['jevbench']:
+            continue
         architecture['benchmarks']['jevbench'][k] = metas[k]['architecture']
         base_models['benchmarks']['jevbench'][k] = {**metas[k]['base_model'], 'checked_utc': f'{args.date}T00:00:00Z'}
     architecture['checked_utc'] = base_models['checked_utc'] = f'{args.date}T00:00:00Z'
