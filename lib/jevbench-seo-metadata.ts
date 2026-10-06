@@ -9,20 +9,24 @@ export function jevIntentMetadata({
   title,
   description,
   keywords,
+  languages,
+  locale = 'en_US',
 }: {
   path: string;
   title: string;
   description: string;
   keywords: string[];
+  languages?: Record<string, string>;
+  locale?: string;
 }): Metadata {
   const canonical = new URL(path, SITE_URL).toString();
   return {
     title,
     description,
     keywords,
-    alternates: { canonical },
+    alternates: { canonical, ...(languages ? { languages: Object.fromEntries(Object.entries(languages).map(([k, v]) => [k, new URL(v, SITE_URL).toString()])) } : {}) },
     openGraph: {
-      type: 'website', siteName: 'Benchmark Heaven', locale: 'en_US',
+      type: 'website', siteName: 'Benchmark Heaven', locale,
       url: canonical, title, description,
       images: [{ url: IMAGE_URL, type: 'image/png', secureUrl: IMAGE_URL, width: 1200, height: 630, alt: IMAGE_ALT }],
     },

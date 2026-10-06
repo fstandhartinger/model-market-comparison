@@ -7,10 +7,12 @@ import { DatasetFaqJsonLd, JevFaq, JevIntentLinks, JevReleaseStamp, one, usdPerT
 import { jevSystemPath } from '../../../lib/jev-system-slug.mjs';
 
 const PATH = '/jev-models/alternatives';
+const DE_PATH = '/de/jev-models/alternativen';
 export async function generateMetadata(): Promise<Metadata> {
   const data = await readJevbenchSeoData();
   return jevIntentMetadata({path: PATH, title: `Best Jev alternatives (${data.month}): ${data.systems.length} models measured on JevBench`,
-    description: `Compare ${data.systems.length} measured Jev-class models in ${data.month}: Capability, Intelligence, Calibration, price, latency and open-weight evidence.`, keywords: ['jev alternatives', 'best Jev alternative', 'JevBench']});
+    description: `Compare ${data.systems.length} measured Jev-class models in ${data.month}: Capability, Intelligence, Calibration, price, latency and open-weight evidence.`, keywords: ['jev alternatives', 'best Jev alternative', 'JevBench'],
+    languages: {en: PATH, de: DE_PATH, 'x-default': PATH}});
 }
 export default async function JevAlternativesPage() {
   const data = await readJevbenchSeoData();
@@ -26,6 +28,7 @@ export default async function JevAlternativesPage() {
     <header className="bh-page-head"><h1 className="text-3xl font-bold">Best Jev alternatives ({data.month})</h1>
       <p className="bh-muted mt-3">{data.systems.length} measured Jev-class models; {data.ranked.length} eligible for the Capability ranking. Jev 1.13.0 is the reference. Wrappers and subsidised listings are excluded from the ranking.</p>
       <JevReleaseStamp data={data}/><JevIntentLinks current="alternatives"/>
+      <p className="mt-2 text-sm"><Link className="text-accent underline" href={DE_PATH} hrefLang="de" lang="de">Deutsche Version: Jev-Alternativen im Vergleich</Link></p>
     </header>
     <section className="bh-panel mt-6 p-5"><h2 className="text-xl font-semibold">Top 15 by Capability Score</h2>
       <JevBenchRankingTable rows={data.ranked.slice(0,15)}/>
