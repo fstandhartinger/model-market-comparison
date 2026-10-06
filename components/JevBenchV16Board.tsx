@@ -31,6 +31,14 @@ const one = (v: number | null | undefined) => v == null ? '—' : v.toFixed(1);
 const usd = (v: number | null | undefined) => v == null ? '—' : `$${v.toFixed(4)}`;
 const sec = (v: number | null | undefined) => v == null ? '—' : `${v.toFixed(2)} s`;
 const short = (display: string) => display.replace(/\s*\(.*\)\s*$/, '');
+// Review 6 Oct 2026: variants share a short name ("GPT-6 Luna", "wity-1"); texts that list systems by name keep the full display for those.
+const nameLabel = (display: string, all: ReadonlyArray<{ display: string }>) => all.filter((x) => short(x.display) === short(display)).length > 1 ? display : short(display);
+const A4_OFFSETS = (apiA4 as { a4_offsets: { I: number; C: number } }).a4_offsets;
+const A4_ROWS = (apiA4 as { rows: Array<{ key: string; listing: string; n_rows: number }> }).rows.length;
+const A4_RANKED = (apiA4 as { rows: Array<{ key: string; listing: string; n_rows: number }> }).rows.filter((r) => r.listing === 'ranked').length;
+// Review 6 Oct 2026: most ranked API rows are A4 u P re-runs and are equated; the frozen v1.6.1 text says hosted APIs are not.
+const A4_FULL = ((apiA4 as { full_rows?: { display: string }[] }).full_rows ?? []).map((row) => row.display);
+const A4_EXCEPTION = `Exception since v1.7.7: the ${A4_RANKED} API rows re-run on A4 ∪ P (600 items) are equated (+${A4_OFFSETS.I.toFixed(2)} Intelligence, +${A4_OFFSETS.C.toFixed(2)} Calibration); see “Full API re-run (A4, v1.7.7)” under Open weights and API offerings. Full-set API rows (Jev, Sage, wity-1, Fastino GLiNER-2.5-Decide${A4_FULL.length ? `, ${A4_FULL.join(', ')}` : ''}) are not equated.`;
 
 // v1.7: rows a board lists — its ranked systems plus, on the open-weights board, the Jev reference and the API offerings
 // (unranked there). API rows of server-rendered tables carry data-bh-jev-api-row and start hidden; the toggle reveals them.
@@ -116,18 +124,18 @@ function DatedCarry({ carry, hiddenApi }: { carry: JevV16Carry; hiddenApi: Reado
 export const JEV_BOARD_REVISIONS: { version: string; date: string; text: string }[] = [
   { version: 'v1.7.9', date: '2026-10-06', text: 'API board: the OpenAI Decisions API (POST /v1/decisions with gpt-6-luna, opened on 6 Oct 2026) is added as a preliminary, unranked row from the 300 public v1.6 items (298 answered; Capability 68.8, Composite 37.2 on that set; list price USD 0.10 per 1M input tokens). Its official sealed run waits for the next fresh sealed API draw. No score or rank changed on either board.' },
   { version: 'v1.7.8', date: '2026-10-06', text: 'API board: Liquid AI d1 is added as a ranked API offering. It answered the full v1.6.1 set (1,200 sealed + 300 public items, all 1,500 answered) on 6 Oct 2026 and is scored exactly like the other full-set API rows, without equating (Composite 73.0, Capability 74.4; tariff USD 0.04 per 1M input tokens). It enters the API board top 5 in Composite and in Jev-class Capability. Every other score is unchanged; the open-weights board is unchanged.' },
-  { version: 'v1.7.7', date: '2026-10-06', text: 'API board: 17 API offerings re-measured in full on a fresh sealed API set (A4, 300 never-used sealed items plus the 300 public items, 6 Oct 2026) and equated to the v1.6.1 scale with the published A2/A3 supplement method. They replace the hatched preliminary rows and are ranked on the API board: Instinct and Vansa-3.4 enter its Composite top 5, and Instinct, Vansa-3.4 and Instinct Dual 4B join Sage and Jev in its Jev-class Capability top 5; GPT-6 Luna, GPT-6 Luna low, DeepSeek Flash and GPT-5.6 Luna have the highest raw Capability but sit outside the Jev-class caps. Qwen3.8 27B (Chutes) is ranked too (Composite 0.0: no published tariff, so its documented USD 2.18 estimate per 1,000 decisions gives Cost 0). Instinct and Instinct Dual 4B are now treated as production APIs (public tariff), so no demo-endpoint latency adjustment applies to them. classifier.dev (fast tier) is listed as a wrapper, not ranked. No preliminary rows remain. The open-weights board is unchanged.' },
+  { version: 'v1.7.7', date: '2026-10-06', text: 'API board: 17 API offerings re-measured in full on a fresh sealed API set (A4, 300 never-used sealed items plus the 300 public items, 6 Oct 2026) and equated to the v1.6.1 scale with the published A2/A3 supplement method. They replace the hatched preliminary rows and are ranked on the API board: Instinct and Vansa-3.4 enter its Composite top 5, and Instinct, Vansa-3.4 and Instinct Dual 4B join Sage and Jev in its Jev-class Capability top 5; GPT-6 Luna, Qwen3.8 27B, GPT-6 Luna low, DeepSeek Flash and GPT-5.6 Luna have the highest raw Capability (98.4, 98.2, 97.8, 97.4 and 94.5) but sit outside the Jev-class caps. Qwen3.8 27B (Chutes) is ranked as well (Composite 0.0: no published tariff, so its documented USD 2.18 estimate per 1,000 decisions gives Cost 0). Instinct and Instinct Dual 4B are now treated as production APIs (public tariff), so no demo-endpoint latency adjustment applies to them. classifier.dev (fast tier) is listed as a wrapper, not ranked. No preliminary rows remain. The open-weights board is unchanged.' },
   { version: 'v1.7.6', date: '2026-10-06', text: 'API board: Vansa-3.4 and Instinct Dual 4B now have v1.6 public-set figures and appear as preliminary rows; Autoloops stays pending while its full run on the fresh sealed set is in progress. Very long items that exceed a provider’s context window count as wrong without ending the run. No rank changed.' },
   { version: 'v1.7.5', date: '2026-10-06', text: 'API board: every API offering with a v1.6 public-set figure is drawn in the Composite and Capability charts as a hatched, unranked “preliminary” row at its score position (public set of 300 items; full sealed re-evaluation running); offerings without any v1.6 figure are greyed “pending” rows. Adds Qwen3.8 27B (Chutes) and Fastino GLiDE to the public-set table. The four ranked rows and every rank are unchanged; the open-weights board is unchanged.' },
   { version: 'v1.7.4', date: '2026-10-06', text: 'API board: every reachable API offering that was not yet re-measured on v1.6 now has a dated public-set figure (the 300 public v1.6 items, no sealed items), shown next to its older v1.5 score with Jev and other ranked APIs on the same 300 items as anchors. Not ranked and not comparable with the 1,500-item headline; no score or rank of either board changed.' },
   { version: 'v1.7.3', date: '2026-10-06', text: 'Display only, no score or rank changed. The API board ranks every offering at its own list price and no longer shows a base-model reference price (that comparison only matters against open weights). The Jev reference row and, with “Show API offerings” on, every API offering now sit at their score position in each ranking section (Composite and Capability) instead of the folded end of the list.' },
   { version: 'v1.7.2', date: '2026-10-06', text: 'Display only. The API roster says why carried API rows were not re-run on v1.6 yet (exposure cadence, retired v1.6.0 sealed set) and that no v1.5 to v1.6 conversion is applied.' },
-  { version: 'v1.7.1', date: '2026-10-06', text: 'Display only, no score or rank changed. Headings name the board (open weights / API offerings); the API board leads with the Composite Score and lists every API offering we measured, including mode variants, carried v1.5.x rows and wrappers; the Jev reference row reads “Not ranked, only shown as a reference to compare with”; long base-model notes became numbered footnotes under the ranking; a short expandable note explains the split.' },
+  { version: 'v1.7.1', date: '2026-10-06', text: 'Display only, no score or rank changed. Headings name the board (open weights / API offerings); the API board leads with the Composite Score and lists every API offering we measured, including mode variants, carried v1.5.x rows and wrappers; the Jev reference row reads “Not ranked, only shown as a reference to compare with” on the open-weights board; long base-model notes became numbered footnotes under the ranking; a short expandable note explains the split.' },
   { version: 'v1.7.0', date: '2026-10-06', text: 'Leaderboard split. /jev-models ranks open-weights systems we ran on our own hardware, with Jev 1.13.0 as an unranked reference row and a “Show API offerings” switch; hosted API offerings are ranked on the new /jev-models/api board. No score was recomputed: ranks are the published order filtered to each board. Adds the GPU cost What-If.' },
   { version: 'v1.6.0', date: '2026-10-05', text: 'Rotating sealed item sets, API-exposure rule, Noul decisiveness (method B), language view and dated carry.' },
 ];
 
-function BoardSplit({ scope, history }: { scope: JevScope; history: Array<{ revision: string; date: string; summary: string }> }) {
+function BoardSplit({ scope, history, preliminary }: { scope: JevScope; history: Array<{ revision: string; date: string; summary: string }>; preliminary: boolean }) {
   const boardOnly = JEV_BOARD_REVISIONS.filter((r) => r.version.startsWith('v1.7'));
   const revisions = history.length > 0 ? [...boardOnly, ...history.map((r) => ({ version: r.revision, date: r.date, text: r.summary }))] : JEV_BOARD_REVISIONS;
   return <div data-bh-jev-board-split>
@@ -138,7 +146,7 @@ function BoardSplit({ scope, history }: { scope: JevScope; history: Array<{ revi
       <li>Jev 1.13.0 is a hosted API. It stays on the open-weights board as the <b>reference row</b> (it defines the Jev-class cost and latency caps) and is not ranked there; it is ranked on the API leaderboard.</li>
       <li>Official cost basis is unchanged: the Cost axis keeps each row&apos;s documented reference price (see the cost notes below; APIs with a known base model are priced at the developer&apos;s own list price). The base-model reference price only applies to open-weights rows; API offerings are ranked at their own list price{scope === 'api' ? ' on this board' : ''}. {scope === 'open' ? 'The GPU cost calculator above' : 'The GPU cost calculator on the main board'} is a What-If for your own hosting and never changes a score or rank.</li>
       <li><b>Full API re-run (A4, v1.7.7).</b> {scope === 'api' ? 'Most offerings on this board' : 'Most API offerings'} were measured on 6 Oct 2026 on a fresh sealed API set A4 (300 never-used sealed items) plus the same 300 public items every system answers, and equated to the v1.6.1 S ∪ P scale with the published A2/A3 supplement method (offset {(apiA4 as { a4_offsets: { I: number; C: number } }).a4_offsets.I >= 0 ? '+' : ''}{(apiA4 as { a4_offsets: { I: number; C: number } }).a4_offsets.I.toFixed(2)} Intelligence, +{(apiA4 as { a4_offsets: { I: number; C: number } }).a4_offsets.C.toFixed(2)} Calibration; pool of {(apiA4 as { a4_pool: string[] }).a4_pool.length} ranked self-hosted systems re-run on A4 ∪ P). Jev, Sage, wity-1 and Fastino GLiNER-2.5-Decide keep their full-set S ∪ P scores; Liquid AI d1 answered the full S ∪ P set on 6 Oct 2026 (v1.7.8) and is scored like them, without equating. The pool is mid-strength, so for the strongest LLM rows the offset is an extrapolation (likely within ±2 Intelligence points; the 95% intervals include it). Nine A4 ∪ P items of about 77,000–82,000 input tokens, beyond the Jev reference&apos;s accepted input range, count against Intelligence when refused but are left out of cost. Rows without a public tariff keep their documented v1.5 cost estimate. A4 is now retired for everyone.</li>
-      <li>API offerings that are not yet re-measured on the full v1.6 set show a dated <b>public-set figure</b> (the 300 public v1.6 items, no sealed items, so no exposure) next to their older v1.5 score. It is never ranked; on the API board it is drawn as a hatched “preliminary” bar so every offering is visible, but strictly it is comparable only with the anchor rows scored on the same 300 items (Calibration on 300 items reads a few points lower than on 1,500){scope === 'api' ? <> (<a className="text-accent underline" href="#jev-api-public-set">table</a>)</> : ''}.</li>
+      {preliminary ? <li>API offerings that are not yet re-measured on the full v1.6 set show a dated <b>public-set figure</b> (the 300 public v1.6 items, no sealed items, so no exposure) next to their older v1.5 score. It is never ranked; on the API board it is drawn as a hatched “preliminary” bar so every offering is visible, but strictly it is comparable only with the anchor rows scored on the same 300 items (Calibration on 300 items reads a few points lower than on 1,500){scope === 'api' ? <> (<a className="text-accent underline" href="#jev-api-public-set">table</a>)</> : ''}.</li> : <li>Every API offering we reached is measured on v1.6.1: either on the full 1,500-item set or on A4 ∪ P (600 items, equated). No preliminary public-set rows remain.</li>}
     </ul>
     <h3 className="mt-4 text-lg font-semibold">Revision history</h3>
     <ul className="bh-muted mt-1 list-disc space-y-1 pl-5 text-sm" data-bh-jev-revision-history>
@@ -148,32 +156,34 @@ function BoardSplit({ scope, history }: { scope: JevScope; history: Array<{ revi
   </div>;
 }
 
-function Method({ a, sha256, categoriesSha256, carrySha256, scope, hiddenApi }: { a: JevV16ReleaseArtifact; sha256: string; categoriesSha256: string; carrySha256: string; scope: JevScope; hiddenApi: ReadonlySet<string> }) {
+function Method({ a, sha256, categoriesSha256, carrySha256, scope, hiddenApi, preliminary }: { a: JevV16ReleaseArtifact; sha256: string; categoriesSha256: string; carrySha256: string; scope: JevScope; hiddenApi: ReadonlySet<string>; preliminary: boolean }) {
   const sets = a.v16.item_sets;
   const v161 = a.revision === 'v1.6.1';
   const amendments = (a as unknown as { amendments?: Array<{ date: string; revision: string; text: string }> }).amendments ?? [];
+  const hasA4 = a.systems.some((s) => (s as { a4?: unknown }).a4);
   const revisionHistory = (a as unknown as { revision_history?: Array<{ revision: string; date: string; summary: string }> }).revision_history ?? [];
   const off = a.v16.equating.offsets;
   const byDay = new Map<string, string[]>();
   const methodSystems = a.systems.filter((s) => !hiddenApi.has(s.key));
-  for (const s of methodSystems) if (s.last_measured_on) byDay.set(s.last_measured_on, [...(byDay.get(s.last_measured_on) ?? []), short(s.display)]);
+  for (const s of methodSystems) if (s.last_measured_on) byDay.set(s.last_measured_on, [...(byDay.get(s.last_measured_on) ?? []), nameLabel(s.display, methodSystems)]);
   const measuredDays = [...byDay.entries()].sort(([x], [y]) => x.localeCompare(y));
   const failures = methodSystems.map((s) => {
     const v = Object.values((s as unknown as { validity?: Record<string, { invalid_rate: number; n: number }> }).validity ?? {});
     // v1.7.7: A4 re-run rows carry answered/total instead of per-type validity.
     const st = (s as unknown as { a4?: unknown; status?: { answered_ok: number; rows: number } });
-    if (st.a4 && st.status) return [short(s.display), st.status.rows - st.status.answered_ok, st.status.rows] as [string, number, number];
-    return [short(s.display), Math.round(v.reduce((t, c) => t + c.invalid_rate * c.n, 0)), v.reduce((t, c) => t + c.n, 0)] as [string, number, number];
+    if (st.a4 && st.status) return [nameLabel(s.display, methodSystems), st.status.rows - st.status.answered_ok, st.status.rows] as [string, number, number];
+    return [nameLabel(s.display, methodSystems), Math.round(v.reduce((t, c) => t + c.invalid_rate * c.n, 0)), v.reduce((t, c) => t + c.n, 0)] as [string, number, number];
   });
   const confidenceOnly = methodSystems.filter((s) => { const sup = Object.values((s as unknown as { support?: Record<string, string> }).support ?? {}); return sup.length > 0 && sup.every((x) => x === 'confidence'); }).map((s) => short(s.display));
   return <section className="mt-10 max-w-4xl" aria-labelledby="jev16-method-title" id="jev16-method" data-bh-jev16-method>
     <h2 id="jev16-method-title" className="text-2xl font-bold">Method · {a.revision}</h2>
-    {scope !== 'all' && <BoardSplit scope={scope} history={revisionHistory} />}
+    {scope !== 'all' && <BoardSplit scope={scope} history={revisionHistory} preliminary={preliminary} />}
     <JevArchitectureMethod />
     {hiddenApi.size > 0 && <p className="bh-muted mt-2 text-xs" data-bh-jev-method-scope-note>Per-system method lists on this board cover the open-weights systems and the Jev reference; the hosted API offerings&apos; lists are on the <a className="text-accent underline" href="/jev-models/api#jev16-method">API leaderboard</a>.</p>}
     {amendments.length > 0 && <div data-bh-jev16-amendments>
       <h3 className="mt-4 text-lg font-semibold">Method amendments</h3>
       <ul className="bh-muted mt-1 list-disc space-y-1 pl-5 text-sm">{amendments.map((m) => <li key={`${m.date}-${m.revision}`}>{m.text}</li>)}</ul>
+      {hasA4 && <p className="bh-muted mt-1 text-sm" data-bh-jev16-a4-exception>The v1.6.1 amendments above say hosted APIs are no longer equated. {A4_EXCEPTION}</p>}
     </div>}
     <h3 className="mt-4 text-lg font-semibold">Rotating item sets</h3>
     <p className="bh-muted mt-1 text-sm">Each release draws fresh sealed decisions from a larger reserve. Self-hosted open-weights models (run offline on our own GPU pods or Sandy) answer S and P; {v161 ? 'externally hosted models answer the same full set (S and P) as the self-hosted systems since v1.6.1, so hosted APIs are no longer equated.' : 'externally hosted models answer only the API subset A and P.'}</p>
@@ -182,8 +192,9 @@ function Method({ a, sha256, categoriesSha256, carrySha256, scope, hiddenApi }: 
       <tbody>{sets.map((s) => <tr key={s.set} className="border-t border-line"><th scope="row" className="p-2">{s.set} · {s.name}</th><td className="p-2">{s.items.toLocaleString('en-US')}</td>
         <td className="p-2">{s.by_type.choice}</td><td className="p-2">{s.by_type.noul}</td><td className="p-2">{s.by_type.score}</td><td className="p-2">{s.answered_by}</td></tr>)}</tbody>
     </table></div>
+    {hasA4 && <p className="bh-muted mt-1 text-xs" data-bh-jev16-a4-set-note>Not in the table above (frozen release data): API set A4 · 300 never-used sealed items, answered together with P by the {A4_ROWS} API endpoints re-run on 6 Oct 2026 (the {A4_RANKED} ranked offerings and the classifier.dev wrapper); retired after that run.</p>}
     <ul className="bh-muted mt-2 list-disc space-y-1 pl-5 text-sm">
-      <li>Self-hosted systems: {a.v16.counts.selfhosted_input.toLocaleString('en-US')} items (S {a.v16.counts.S.toLocaleString('en-US')} + P {a.v16.counts.P}). {v161 ? `Hosted APIs: ${a.v16.counts.selfhosted_input.toLocaleString('en-US')} items (S ${a.v16.counts.S.toLocaleString('en-US')} + P ${a.v16.counts.P}), the same as self-hosted systems; A (${a.v16.counts.A}) is the part of S that earlier API measurements used.` : `Hosted APIs: ${a.v16.counts.api_input} items (A ${a.v16.counts.A} + P ${a.v16.counts.P}).`}</li>
+      <li>Self-hosted systems: {a.v16.counts.selfhosted_input.toLocaleString('en-US')} items (S {a.v16.counts.S.toLocaleString('en-US')} + P {a.v16.counts.P}). {v161 ? `Hosted APIs: ${a.v16.counts.selfhosted_input.toLocaleString('en-US')} items (S ${a.v16.counts.S.toLocaleString('en-US')} + P ${a.v16.counts.P}), the same as self-hosted systems; A (${a.v16.counts.A}) is the part of S that earlier API measurements used.` : `Hosted APIs: ${a.v16.counts.api_input} items (A ${a.v16.counts.A} + P ${a.v16.counts.P}).`}{hasA4 && ` ${A4_EXCEPTION}`}</li>
       <li>A sealed item is scored in at most three releases, then retired. An item used in one release is not drawn again in the next. If coverage minimums cannot be met, the release waits for newly reviewed items.</li>
       <li>The selection seed is committed (SHA-256) before any inference, and the draw is a deterministic function of policy, seed and item id.</li>
     </ul>
@@ -212,7 +223,7 @@ function Method({ a, sha256, categoriesSha256, carrySha256, scope, hiddenApi }: 
     <h3 className="mt-4 text-lg font-semibold">Calibration basis</h3>
     <p className="bh-muted mt-1 text-sm" data-bh-jev16-calibration-basis>Systems that return a full probability distribution are calibrated on all components (top-label error, plus distribution distance for Choice and ranked-probability error for Score).
       {confidenceOnly.length > 0 ? ` ${confidenceOnly.join(', ')} return${confidenceOnly.length === 1 ? 's' : ''} a single confidence value, so ${confidenceOnly.length === 1 ? 'its' : 'their'} Calibration is the top-label error only and is not like-for-like with full-distribution systems.` : ''}</p>
-    {(a as unknown as { overnight?: OvernightNotes }).overnight && <Overnight o={(a as unknown as { overnight: OvernightNotes }).overnight} hiddenApi={hiddenApi} />}
+    {(a as unknown as { overnight?: OvernightNotes }).overnight && <Overnight o={(a as unknown as { overnight: OvernightNotes }).overnight} hiddenApi={hiddenApi} a4={hasA4 ? { exception: A4_EXCEPTION, apiKeys: new Set((apiA4 as { rows: Array<{ key: string; n_rows: number }> }).rows.map((r) => r.key)), sealed: (apiA4 as { rows: Array<{ n_rows: number }> }).rows[0].n_rows - a.v16.counts.P } : null} />}
     {scope === 'all' && revisionHistory.length > 0 && <div data-bh-jev16-revision-history>
       <h3 className="mt-4 text-lg font-semibold">Revision history</h3>
       <ul className="bh-muted mt-1 list-disc space-y-1 pl-5 text-sm">{revisionHistory.map((r) => <li key={r.revision}><b>{r.revision}</b> · {r.date} · {r.summary}</li>)}</ul>
@@ -233,7 +244,7 @@ const overnightErratum = (note: string) => note.includes(SAGE_PRE_AMENDMENT_COST
   ? note.replace(SAGE_PRE_AMENDMENT_COST, 'over all 600 answered rows: USD 0.0766/1,000 decisions. Superseded by the v1.6.1 cost rule (common item set): USD 0.0247/1,000 decisions, inside the Jev-class cost cap.')
   : note;
 
-function Overnight({ o, hiddenApi }: { o: OvernightNotes; hiddenApi: ReadonlySet<string> }) {
+function Overnight({ o, hiddenApi, a4 }: { o: OvernightNotes; hiddenApi: ReadonlySet<string>; a4: { exception: string; apiKeys: ReadonlySet<string>; sealed: number } | null }) {
   const exp = Object.entries(o.exposure ?? {})
     // Every exposure entry is a hosted endpoint (keys can name a mode, e.g. wity-1-auto); the open board keeps only the Jev reference.
     .filter(([key]) => !hiddenApi.size || key === JEV_REFERENCE_KEY);
@@ -241,12 +252,16 @@ function Overnight({ o, hiddenApi }: { o: OvernightNotes; hiddenApi: ReadonlySet
     <h3 className="mt-4 text-lg font-semibold">Overnight full re-measure (4–5 Oct 2026)</h3>
     <p className="bh-muted mt-1 text-sm">Every system with a reproducible recipe was re-run on the v1.6.0 pool overnight with the same pinned inputs and scorer (method option B / O1S). This page uses scoring round {o.round} ({o.scored_utc}). Only complete runs (1,500 items self-hosted, the full API input for hosted APIs) are ranked; partial runs are never ranked, and systems not yet re-measured keep their dated v1.5.x score in the separate table.</p>
     {o.notes && o.notes.length > 0 && <ul className="bh-muted mt-1 list-disc space-y-1 pl-5 text-sm">{o.notes.map((n, i) => <li key={i}>{overnightErratum(n)}</li>)}</ul>}
+    {a4 && <p className="bh-muted mt-1 text-sm" data-bh-jev16-overnight-a4-exception>Display note on the overnight text above (frozen release data). {a4.exception}</p>}
     {o.a2_note && <><h3 className="mt-4 text-lg font-semibold">Supplementary API draws A2 and A3</h3><p className="bh-muted mt-1 text-sm" data-bh-jev16-a2>{o.a2_note}</p></>}
     {exp.length > 0 && <><h3 className="mt-4 text-lg font-semibold">Per-model exposure counts (hosted and author-hosted endpoints)</h3>
       <div className="mt-2 overflow-x-auto"><table className="text-left text-sm tabular" data-bh-jev16-exposure>
         <thead><tr>{['System (provider)', 'v1.6 sealed items sent', 'Scored sealed set', 'Status'].map((h) => <th key={h} scope="col" className="p-2">{h}</th>)}</tr></thead>
-        <tbody>{exp.map(([k, e]) => <tr key={k} className="border-t border-line"><th scope="row" className="p-2 font-normal">{e.display ?? k}</th>
-          <td className="p-2">{e.sealed_items_exposed ?? '—'}</td><td className="p-2">{e.draws ?? '—'}</td><td className="p-2 bh-muted">{e.note ?? ''}</td></tr>)}</tbody>
+        <tbody>{exp.map(([k, e]) => {
+          // Review 6 Oct 2026: the frozen table predates the A4 re-run; rows measured on A4 u P show what was sent on 6 Oct.
+          const re = a4?.apiKeys.has(k) ? { sent: a4.sealed, draws: 'A4 (retired after this run)', note: 'measured 6 Oct 2026 on A4 ∪ P (v1.7.7)' } : null;
+          return <tr key={k} className="border-t border-line"><th scope="row" className="p-2 font-normal">{e.display ?? k}</th>
+          <td className="p-2">{re ? re.sent : e.sealed_items_exposed ?? '—'}</td><td className="p-2">{re?.draws ?? e.draws ?? '—'}</td><td className="p-2 bh-muted">{re?.note ?? e.note ?? ''}</td></tr>; })}</tbody>
       </table></div></>}
   </div>;
 }
@@ -283,7 +298,15 @@ function NoulAndGate({ a, hiddenApi }: { a: JevV16ReleaseArtifact; hiddenApi: Re
   </section>;
 }
 
+// Review 6 Oct 2026: same value the Capability list prints, (Intelligence + Calibration) / 2 (the stored 97.35 rounded to 97.3).
+const rosterCapability = (s: { capability?: number | null; axes?: { intelligence?: number | null; calibration?: number | null } }) => {
+  const i = s.axes?.intelligence, c = s.axes?.calibration;
+  return one(i != null && c != null ? (i + c) / 2 : s.capability);
+};
 const ENDPOINT_TAG: Record<string, string> = { api: 'hosted API', demo: 'author-hosted demo' };
+// Review 6 Oct 2026: the roster says per row which score basis it is, and marks estimated costs like the charts do.
+const basisLine = (s: { a4?: { n_items: number } }, fullItems: number) => s.a4 ? `A4 ∪ P (${s.a4.n_items} items, equated)` : `full set (${fullItems.toLocaleString('en-US')} items)`;
+const costCell = (cost: { usd_per_1000?: number | null; kind?: string | null } | null | undefined) => <>{cost?.kind === 'estimate' && <span className="bh-thin-tag bh-est-tag mr-1 align-middle" data-bh-jev14-est>est.</span>}{usd(cost?.usd_per_1000)}</>;
 const rosterStatus = (listing: string | null, reason: string | null) => listing === 'listed' ? 'configuration variant · not ranked'
   : listing ? `${NOT_RANKED[listing] ?? listing.replace(/_/g, ' ')} · not ranked` : reason ?? 'not ranked';
 
@@ -294,6 +317,13 @@ function ApiRoster({ a, carry, listed, eligibility }: { a: JevV16ReleaseArtifact
   eligibility: ReadonlyMap<string, { status: 'eligible' | 'outside'; reason: string }> }) {
   const { ranked, variants, carried } = jevApiRoster(a, carry.rows);
   const total = ranked.length + variants.length + carried.length + listed.length;
+  // Review 6 Oct 2026: wrappers (classifier.dev) are their own group, apart from the configuration variants.
+  const configVariants = variants.filter((s) => (s.listing as string) !== 'wrapper'), wrappers = variants.filter((s) => (s.listing as string) === 'wrapper');
+  const variantRow = (s: (typeof variants)[number]) => <tr key={s.key} className="border-t border-line">
+    <th scope="row" className="p-2 font-normal">{name(s.display, s.repo, s.key, s.endpoint_kind)}</th>
+    <td className="p-2 bh-muted">{rosterStatus(s.listing, s.not_ranked_because ?? null)}<span className="block text-xs">{basisLine(s as { a4?: { n_items: number } }, a.v16.counts.selfhosted_input)}</span></td>
+    <td className="p-2">{one(s.jevbench_score)}</td><td className="p-2">{rosterCapability(s)}</td>
+    <td className="p-2">{costCell(s.cost)}</td><td className="p-2">{sec(s.speed?.p50_s_adjusted)}</td></tr>;
   const head = (label: string, n: number) => <tr className="border-t border-line"><th colSpan={6} scope="colgroup" className="p-2 pt-4 text-left text-sm font-semibold">{label} ({n})</th></tr>;
   const name = (display: string, href: string | null | undefined, key: string, endpoint: string | null | undefined) => <>
     {href ? <a className="text-accent underline" href={href} target={href.startsWith('/') ? undefined : '_blank'} rel={href.startsWith('/') ? undefined : 'noopener noreferrer'} data-bh-jev-api-roster-row={key}>{display}</a>
@@ -302,7 +332,7 @@ function ApiRoster({ a, carry, listed, eligibility }: { a: JevV16ReleaseArtifact
   </>;
   return <section className="bh-panel mt-10 p-5" id="jev-api-roster" aria-labelledby="jev-api-roster-title" data-bh-jev-api-roster>
     <h2 id="jev-api-roster-title" className="text-2xl font-bold">Every API offering we have measured ({total})</h2>
-    <p className="bh-muted mt-1 max-w-4xl text-sm">No API offering is left out. “API offering” means an endpoint we do not run ourselves: vendor APIs and author-hosted demos (tagged). Ranked rows outside the Jev-class cost or latency caps (2× Jev) keep their Composite rank and appear below the divider of the Capability ranking. Only rows measured on {a.revision} are ranked; APIs not yet re-measured keep their dated v1.5.x score, which is on the v1.5 scale and not comparable with {a.revision} scores (a v1.5 Composite near 0 means a low-axis gate applied).</p>
+    <p className="bh-muted mt-1 max-w-4xl text-sm">No API offering is left out. “API offering” means an endpoint we do not run ourselves: vendor APIs and author-hosted demos (tagged). Ranked rows outside the Jev-class cost or latency caps (2× Jev) keep their Composite rank and appear below the divider of the Capability ranking. Only rows measured on {a.revision} are ranked; {carry.rows.length > 0 ? <>APIs not yet re-measured keep their dated v1.5.x score, which is on the v1.5 scale and not comparable with {a.revision} scores (a v1.5 Composite near 0 means a low-axis gate applied).</> : 'every offering is measured on the v1.6.1 scale, on the full 1,500-item set or on A4 ∪ P (600 items, equated); none keeps an older score.'}</p>
     <div className="mt-3 overflow-x-auto"><table className="w-full text-left text-sm tabular" data-bh-jev-api-roster-table>
       <caption className="sr-only">All hosted API offerings measured on JevBench, by status</caption>
       <thead><tr>{['System', 'Status', 'Composite', 'Capability', 'Cost / 1,000', 'Median latency'].map((h) => <th key={h} scope="col" className="p-2">{h}</th>)}</tr></thead>
@@ -310,15 +340,13 @@ function ApiRoster({ a, carry, listed, eligibility }: { a: JevV16ReleaseArtifact
         {head(ranked.some((s) => (s as { a4?: unknown }).a4) ? `Ranked on the ${a.revision} scale (full set, or A4 ∪ P re-run equated)` : `Ranked on ${a.revision}`, ranked.length)}
         {ranked.map((s) => { const e = eligibility.get(s.key); return <tr key={s.key} className="border-t border-line">
           <th scope="row" className="p-2 font-normal">{name(s.display, s.repo, s.key, s.endpoint_kind)}</th>
-          <td className="p-2">Composite #{s.rank}{e?.status === 'outside' && <span className="bh-muted block text-xs">outside Jev-class caps: {e.reason}</span>}</td>
-          <td className="p-2">{one(s.jevbench_score)}</td><td className="p-2">{one(s.capability)}</td>
-          <td className="p-2">{usd(s.cost?.usd_per_1000)}</td><td className="p-2">{sec(s.speed?.p50_s_adjusted)}</td></tr>; })}
-        {variants.length > 0 && head(`Also measured on ${a.revision}, listed, not ranked`, variants.length)}
-        {variants.map((s) => <tr key={s.key} className="border-t border-line">
-          <th scope="row" className="p-2 font-normal">{name(s.display, s.repo, s.key, s.endpoint_kind)}</th>
-          <td className="p-2 bh-muted">{rosterStatus(s.listing, s.not_ranked_because ?? null)}</td>
-          <td className="p-2">{one(s.jevbench_score)}</td><td className="p-2">{one(s.capability)}</td>
-          <td className="p-2">{usd(s.cost?.usd_per_1000)}</td><td className="p-2">{sec(s.speed?.p50_s_adjusted)}</td></tr>)}
+          <td className="p-2">Composite #{s.rank}<span className="bh-muted block text-xs" data-bh-jev-api-roster-basis>{basisLine(s as { a4?: { n_items: number } }, a.v16.counts.selfhosted_input)}</span>{e?.status === 'outside' && <span className="bh-muted block text-xs">outside Jev-class caps: {e.reason}</span>}</td>
+          <td className="p-2">{one(s.jevbench_score)}</td><td className="p-2">{rosterCapability(s)}</td>
+          <td className="p-2">{costCell(s.cost)}</td><td className="p-2">{sec(s.speed?.p50_s_adjusted)}</td></tr>; })}
+        {configVariants.length > 0 && head(`Also measured on ${a.revision}, listed, not ranked`, configVariants.length)}
+        {configVariants.map(variantRow)}
+        {wrappers.length > 0 && head('Wrappers that serve Jev (listed, never ranked, not class-assessed)', wrappers.length)}
+        {wrappers.map(variantRow)}
         {carried.length > 0 && head('Carried from v1.5.x, not yet re-measured (v1.5 scale)', carried.length)}
         {/* v1.7.2 (Florian 6 Oct 2026, Part 9): say why these rows were not re-run; no v1.5 -> v1.6 conversion exists, so none is shown. */}
         {carried.length > 0 && <tr><td colSpan={6} className="bh-muted p-2 pt-0 text-xs" data-bh-jev-api-roster-carry-why>Why not re-run yet: hosted APIs are re-measured at most once every three refresh releases (API-exposure rule), and the v1.6.0 sealed set is now retired, so a new run needs a fresh sealed draw. Re-runs are being arranged with each provider; some first need a new key or confirmation from the provider. There is no validated conversion from the v1.5 to the v1.6 scale, so these scores are shown as measured, with their date.</td></tr>}
@@ -408,11 +436,12 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
   // score position) and greyed pending rows in both ranking charts. They never enter the compare view or other sections.
   const measuredKeys = new Set(a.systems.map((s) => s.key));
   const extra = scope === 'api' ? apiChartExtras(carry, measuredKeys) : [];
+  const preliminary = apiChartExtras(carry, measuredKeys).length > 0;
   const ranked = scope === 'all' ? a.systems.filter((s) => s.ranked).sort(byBoard) : jevScopeDisplayOrder([...a.systems.filter(listedRow), ...(extra as typeof a.systems)]);
   const hiddenApi: ReadonlySet<string> = new Set(scope === 'open' ? apiKeys : []);
   const chartSystems = ranked.map((s) => jevV15BoardSystem(s) as JevV14System);
   const allChartSystems = [...a.systems, ...(extra as typeof a.systems)].map((s) => jevV15BoardSystem(s) as JevV14System);
-  const allClass = jevClassView(allChartSystems, JEV_V16_CLASS_OPTIONS);
+  const allClass = jevClassView(allChartSystems, { ...JEV_V16_CLASS_OPTIONS, nearCapPrecision: true });
   const eligibilityByKey = new Map(allClass.rows.map((row) => [row.row.key, {
     status: (row.inClass ? 'eligible' : 'outside') as 'eligible' | 'outside',
     reason: row.reasons.length ? row.reasons.join('; ') : 'within the official Jev-class caps',
@@ -473,7 +502,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
         key: s.key, display: short(s.display), gpu: (s as { gpu?: string | null }).gpu ?? null, p50_s_raw: s.speed?.p50_s_raw ?? null,
         officialUsdPer1000: s.cost?.usd_per_1000 ?? null, ranked: !!s.ranked }))} /></div>}
       <DatedCarry carry={carry} hiddenApi={hiddenApi} />
-      <Method a={a} sha256={sha256} categoriesSha256={categoriesSha256} carrySha256={carrySha256} scope={scope} hiddenApi={hiddenApi} />
+      <Method a={a} sha256={sha256} categoriesSha256={categoriesSha256} carrySha256={carrySha256} scope={scope} hiddenApi={hiddenApi} preliminary={preliminary} />
     </section>
   </JevV15FilterProvider>;
 }

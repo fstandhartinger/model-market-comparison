@@ -18,7 +18,7 @@ export type JevClassResult = {
 };
 export declare function jevClassRows(systems: JevV14System[], options?: JevClassOptions): JevClassResult;
 
-export type JevClassOptions = { referenceKey?: string; factor?: number; costFactor?: number; latencyFactor?: number; referenceLabel?: string; limits?: { cost: number; latency: number } };
+export type JevClassOptions = { referenceKey?: string; factor?: number; costFactor?: number; latencyFactor?: number; referenceLabel?: string; limits?: { cost: number; latency: number }; nearCapPrecision?: boolean };
 export declare function spearman(xs: (number | null)[], ys: (number | null)[]): number | null;
 export declare function trafficLightZone(ratio: number | null, factor?: number): 'green' | 'amber' | 'red' | null;
 export declare function ratioPosition(ratio: number): number;

@@ -18,6 +18,7 @@ import { previewMetadata } from '../../../lib/seo';
 import { jevSystemKeyFromSlug, jevSystemPath, jevSystemSlug } from '../../../lib/jev-system-slug.mjs';
 import { isJevbenchV16ExcludedKey } from '../../../lib/jevbench-v16-public-scope.mjs';
 import { readJevbenchSeoData } from '../../../lib/jevbench-seo.mjs';
+import { readJevbenchA4ModelPages } from '../../../lib/jevbench-a4-model-pages.mjs';
 import { jevIntentMetadata } from '../../../lib/jevbench-seo-metadata';
 import { JevComparisonPage } from '../../../components/JevComparisonPage';
 import { breadcrumbJsonLd, JevReleaseStamp, one as seoOne, usdPerThousand, costBasisLabel } from '../../../components/JevBenchSeoBlocks';
@@ -106,7 +107,44 @@ function describeRow(row: JevV12Row, view: JevV12View, all: JevV12Row[]): string
 
 // CR-291: systems of the current JevBench release (and their dated history) render from the SEO data layer, which reads the
 // release pointer in lib/jevbench-current.mjs, so the page never shows a frozen older release as current.
-function CurrentReleaseSystem({ data, row }: { data: Awaited<ReturnType<typeof readJevbenchSeoData>>; row: Awaited<ReturnType<typeof readJevbenchSeoData>>['systems'][number] }) {
+type SeoRow = Awaited<ReturnType<typeof readJevbenchSeoData>>['systems'][number];
+type A4Page = { row: unknown; ranked: boolean; compositeRank: number | null; capabilityRank: number | null; capabilityOutside: string | null;
+  nRanked: number; nCapability: number; nItems: number; measuredOn: string; round: string; offsets: { I: number; C: number }; full: boolean };
+const a4CostLabel = (kind: string | undefined) => kind === 'estimate' ? 'estimated' : 'public tariff';
+// Review 6 Oct 2026: the 17 API rows re-run on A4 ∪ P (v1.7.7) show the API-board figures; the older figure moves to a labelled block.
+function A4System({ data, page, previous }: { data: Awaited<ReturnType<typeof readJevbenchSeoData>>; page: A4Page; previous?: SeoRow }) {
+  const s = page.row as any;
+  const url = `${SITE_URL}${jevSystemPath(s.key)}`;
+  const capability = (s.axes.intelligence + s.axes.calibration) / 2;
+  const json = {'@context':'https://schema.org','@graph':[
+    {'@type':'SoftwareApplication',name:s.display,applicationCategory:'AI model',url}, breadcrumbJsonLd(jevSystemPath(s.key),s.display)]};
+  return <>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{__html:escapeJsonLd(json)}}/>
+    <nav><Link href="/jev-models" className="text-accent underline">Back to JevBench</Link></nav>
+    <header className="bh-page-head mt-3"><h1 className="text-3xl font-bold">{s.display}</h1><JevReleaseStamp data={data}/>
+      <p className="mt-3" data-bh-jev-a4-capability>Capability {seoOne(capability)} · {page.ranked ? <>API offering, ranked on the <Link href="/jev-models/api" className="text-accent underline">API leaderboard</Link>{page.capabilityRank != null ? ` · Capability rank #${page.capabilityRank} of ${page.nCapability} within the Jev-class caps` : ` · outside the Jev-class caps (${page.capabilityOutside}), below the Capability ranking`}</> : <>API offering, listed and never ranked (wrapper), see the <Link href="/jev-models/api" className="text-accent underline">API leaderboard</Link></>}</p>
+      <p className="bh-muted mt-2">{page.full
+        ? <>Measured {page.measuredOn} on the full v1.6.1 set ({page.nItems} items), scored like the other full-set API rows, not equated.</>
+        : <>Measured {page.measuredOn} on A4 ∪ P, {page.nItems} items, equated (+{page.offsets.I.toFixed(2)} I / +{page.offsets.C.toFixed(2)} C); round {page.round}.</>}</p>
+      <p className="bh-muted">{previous?.licence ?? s.licence ?? 'Licence not stated'}</p>
+    </header>
+    <BaseModelDisplay systemKey={s.key} className="mt-2 block text-sm"/>
+    <JevBenchRelatedLinks systemKey={s.key}/>
+    <section className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">{(['intelligence','calibration','speed','cost'] as const).map((axis) => <div className="bh-panel p-4" key={axis}><h2 className="capitalize">{axis}</h2><p className="text-2xl font-semibold">{seoOne(s.axes?.[axis])}</p></div>)}</section>
+    <section className="bh-panel mt-6 p-5"><h2 className="font-semibold">Composite (secondary)</h2><p data-bh-jev-a4-composite>{seoOne(s.jevbench_score)} · {page.compositeRank == null ? 'Not ranked' : `Composite rank #${page.compositeRank} of ${page.nRanked} on the API leaderboard`}</p></section>
+    <section className="bh-panel mt-6 p-5"><h2 className="font-semibold">Cost and measurement conditions</h2>
+      <p data-bh-jev-a4-cost>{usdPerThousand(s.cost?.usd_per_1000)} ({a4CostLabel(s.cost?.kind)})</p><p className="bh-muted mt-2">{s.cost?.basis ?? 'Cost basis not published'}</p>
+      <p className="mt-3">p50 latency: {seoOne(s.speed?.p50_s_adjusted ?? s.speed?.p50_s_raw)} s</p>
+      <p className="bh-muted">{s.speed?.adjustment ?? 'Latency adjustment not stated'}</p>
+    </section>
+    {previous && <section className="bh-panel mt-6 p-5" data-bh-jev-a4-previous><h2 className="font-semibold">Previous measurement (v1.5.x, not comparable)</h2>
+      <p>Capability {seoOne(previous.capability)} · composite {seoOne(previous.jevbench_score)} · cost {usdPerThousand(previous.cost?.usd_per_1000)} ({costBasisLabel(previous.cost?.kind)})</p>
+      <p className="bh-muted mt-2">Last measured {previous.last_measured_on ?? 'date not published'}, measurement release {previous.measurement_revision}. Older method and scale; the current figures above replace it.</p></section>}
+    {(previous?.source_url ?? previous?.repo ?? s.repo) && <p className="mt-4"><a className="text-accent underline" href={(previous?.source_url ?? previous?.repo ?? s.repo)!}>Published source</a></p>}
+  </>;
+}
+
+function CurrentReleaseSystem({ data, row }: { data: Awaited<ReturnType<typeof readJevbenchSeoData>>; row: SeoRow }) {
   const url = `${SITE_URL}${jevSystemPath(row.key)}`;
   // Publish only the current sanitized presentation fields. No historical base-model overlay is copied.
   const price = row.cost?.usd_per_1000;
@@ -149,7 +187,8 @@ export async function generateStaticParams() {
     .filter((row) => row.addendum !== null && !existingKeys.has(jevSystemSlug(row.key)))
     .map((row) => ({ system: jevSystemSlug(row.key) }));
   // CR-291: the current release (and its dated history) plus the comparison slugs; older rows stay reachable as before.
-  return [...data.modelKeys.map((key) => ({ system: jevSystemSlug(key) })), ...data.comparisons.map((pair) => ({ system: pair.slug })),
+  const a4 = [...(await readJevbenchA4ModelPages()).keys()].map((key) => ({ system: jevSystemSlug(key) }));
+  return [...data.modelKeys.map((key) => ({ system: jevSystemSlug(key) })), ...a4, ...data.comparisons.map((pair) => ({ system: pair.slug })),
     ...current, ...existing, ...addenda].filter(({ system }, index, rows) => rows.findIndex((r) => r.system === system) === index && !isJevbenchV16ExcludedKey(system));
 }
 
@@ -162,7 +201,8 @@ export async function generateMetadata({ params }: { params: Promise<{ system: s
   const addendum = current ? null : await findV157Addendum(key);
   const found = current || addendum ? null : await findRow(key);
   const seo = (await readJevbenchSeoData()).systems.find((r) => r.key === key);
-  const row = found?.row ?? current?.row ?? addendum?.row ?? seo;
+  const a4 = ((await readJevbenchA4ModelPages()) as Map<string, A4Page>).get(key)?.row as typeof seo;
+  const row = found?.row ?? current?.row ?? addendum?.row ?? seo ?? a4;
   if (!row) return { title: 'System not found' };
   const title = `${short(row.display)} — JevBench by Benchmark Heaven`;
   const description = `Explore the ${short(row.display)} configuration evaluated across intelligence, calibration, speed, and cost.`;
@@ -176,6 +216,8 @@ export default async function JevSystemPage({ params }: { params: Promise<{ syst
   if (pair) return <JevComparisonPage rivalKey={pair.key} label={pair.label} path={`/jev-models/${pair.slug}`} />;
   const key = jevSystemKeyFromSlug(decodeURIComponent(system));
   const seoRow = data.systems.find((r) => r.key === key) ?? data.historical.find((r) => r.key === key);
+  const a4Page = (await readJevbenchA4ModelPages() as Map<string, A4Page>).get(key);
+  if (a4Page) return <A4System data={data} page={a4Page} previous={seoRow} />;
   if (seoRow) return <CurrentReleaseSystem data={data} row={seoRow} />;
   const current = await findV142Row(key);
   if (current) return <JevV141SystemDetail row={current.row} ranked={current.view.ranked} revision={current.view.revision} generated={current.view.generated} note={current.note} sealedFamilyN={current.sealedFamilyN} hardFamilyN={current.hardFamilyN} />;
