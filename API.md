@@ -36,14 +36,19 @@ It does not discover newer files or publish drafts, sealed items, answers or pre
 
 The JSON contains `schema_version`, `revision`, `source` (live/frozen page, pinned
 artifact URL and artifact SHA-256), `headline`, `composite_option`, `weights`,
-`capability_policy`, and `systems`. Each system contains:
+`capability_policy`, `boards` (`{open: '/jev-models', api: '/jev-models/api'}`) and `systems`. Each system contains:
 
 - `key`, `name`, `source_url` (project source link, or null).
+- `board`: `open` (ranked on `/jev-models`), `api` (hosted API offering, ranked on `/jev-models/api`) or
+  `reference` (Jev 1.13.0, on the open-weights board but unranked).
 - `axes`: Intelligence, Calibration, Speed and Cost, all higher-is-better scores.
 - `capability`: arithmetic mean of Intelligence and Calibration, official rank,
   `eligible`, `within_caps`, and cap exclusion reasons. Only ranked systems within
   both official cost and median-latency caps receive a Capability rank. Eligibility
-  uses the same adjusted median/fallback policy and tie ordering as the page.
+  uses the same adjusted median/fallback policy and tie ordering as the page. `capability.rank` is the
+  combined rank across open-weights and API systems (kept for compatibility); `capability.open_board_rank` is
+  the Capability rank on the open-weights board, i.e. the number `/jev-models` shows (null for API systems,
+  the reference and systems outside the caps). Quote `open_board_rank` for `/jev-models`.
 - `composite_score`, `rank` (official Composite rank), `ranked`, `listing`, and
   `not_ranked_because`. Capability rank and Composite rank are separate.
 - `price`: `kind`, `usd_per_1000_decisions`, and the published `basis` disclosure.
