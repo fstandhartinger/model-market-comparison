@@ -8,7 +8,7 @@ import { readImageJevSitemapPaths } from '../lib/imagejev-sitemap.mjs';
 const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
 const release = JSON.parse(await read('../data/imagejev-v03.json'));
 
-test('CR-307 v0.3 page: revision history, rank/Jev-class columns, source links, API note, archive opener', async () => {
+test('CR-310 v0.3 page: revision history, rank/Jev-class columns, source links, API note, archive opener', async () => {
   const page = await read('../components/ImageJevV03Page.tsx');
   assert.match(page, /data-bh-imagejev-v03-history/);
   assert.match(page, /<th>Rank<\/th>.*<th>Jev-class \(within caps\)<\/th>/);
@@ -22,19 +22,19 @@ test('CR-307 v0.3 page: revision history, rank/Jev-class columns, source links, 
   assert.ok(release.categories.dims.length > 0, 'v0.3 has category values, so the method note may say so');
 });
 
-test('CR-307 author label never names a base-model owner; hosted API rows say so', () => {
+test('CR-310 author label never names a base-model owner; hosted API rows say so', () => {
   const byKey = Object.fromEntries(release.ranking.map((r) => [r.key, r]));
   for (const key of ['glance_qwen3vl_4b', 'jevision', 'visual_jev_generic_baseline']) assert.equal(imageJevAuthorLabel(byKey[key]), 'Author not reported', key);
   assert.equal(imageJevAuthorLabel(byKey.jpt_4b), 'kirp (model repository owner)');
   assert.equal(imageJevAuthorLabel(byKey['s1-vision']), 'Hosted API provider');
 });
 
-test('CR-307 s1-vision cost from usage receipts is measured, not announced', () => {
+test('CR-310 s1-vision cost from usage receipts is measured, not announced', () => {
   const s1 = imageJevBoardSystems(release).find((r) => r.key === 's1-vision');
   assert.equal(s1.cost.kind, 'measured');
 });
 
-test('CR-307 metadata and JSON-LD derive version and count from the data', async () => {
+test('CR-310 metadata and JSON-LD derive version and count from the data', async () => {
   const page = await read('../app/image-jev-bench/page.tsx');
   assert.match(page, /release\.revision/);
   assert.match(page, /release\.ranking\.length/);
@@ -44,7 +44,7 @@ test('CR-307 metadata and JSON-LD derive version and count from the data', async
   assert.match(page, /'@type': 'WebPage'/);
 });
 
-test('CR-307 sitemap lists every per-system page and still excludes multimodal-preview', async () => {
+test('CR-310 sitemap lists every per-system page and still excludes multimodal-preview', async () => {
   const paths = await readImageJevSitemapPaths();
   for (const r of [...release.ranking, ...release.carried]) assert.ok(paths.includes(`/image-jev-bench/${r.key}`), r.key);
   assert.ok(paths.length >= release.ranking.length + release.carried.length);
@@ -53,7 +53,7 @@ test('CR-307 sitemap lists every per-system page and still excludes multimodal-p
   assert.doesNotMatch(sitemap, /multimodal-preview/);
 });
 
-test('CR-307 detail page: archived banner, v0.1.5 rank wording, date-only publish line', async () => {
+test('CR-310 detail page: archived banner, v0.1.5 rank wording, date-only publish line', async () => {
   const page = await read('../app/image-jev-bench/[system]/page.tsx');
   assert.match(page, /data-bh-imagejev-archived-banner/);
   assert.match(page, /v0\.1\.5 rank #\$\{row\.rank\} of \$\{rankedCount\} \(archived\)/);
