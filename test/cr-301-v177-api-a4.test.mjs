@@ -18,8 +18,10 @@ test('1: every A4 row is added once with the lane figures unchanged; only the wr
     assert.equal(s.length, 1, r.key);
     assert.equal(s[0].jevbench_score, r.composite.A);
     assert.equal(s[0].capability, r.capability);
-    assert.equal(s[0].ranked, r.ranked, r.key);
+    assert.equal(s[0].ranked, r.ranked ?? r.listing === 'ranked', r.key);
     assert.equal(s[0].v16.lane, 'api');
+    assert.equal(s[0].speed.p50_s_adjusted, r.p50_s);
+    if (/^x2/.test(r.latency_adjustment ?? '')) assert.equal(s[0].speed.p50_s_raw * 2, r.p50_s);
   }
   assert.equal(merged.systems.find((s) => s.key === 'classifier-dev-fast').listing, 'wrapper');
 });
@@ -27,7 +29,7 @@ test('1: every A4 row is added once with the lane figures unchanged; only the wr
 test('2: API board ranks follow scores in every option and in Capability', () => {
   const api = jevbenchScopeArtifact(merged, 'api', isApi);
   const ranked = api.systems.filter((s) => s.ranked);
-  assert.equal(ranked.length, 4 + a4.rows.filter((r) => r.ranked).length);
+  assert.equal(ranked.length, 4 + a4.rows.filter((r) => (r.ranked ?? r.listing === 'ranked')).length);
   for (const o of ['A', 'B', 'C']) {
     const order = [...ranked].sort((x, y) => x.ranks[o] - y.ranks[o]);
     order.forEach((s, i) => { assert.equal(s.ranks[o], i + 1); if (i) assert.ok(order[i - 1].scores[o] >= s.scores[o], `${o}: ${order[i - 1].key} >= ${s.key}`); });
@@ -48,7 +50,7 @@ test('4: measured rows leave the preliminary set; the route skips archived pages
   const measured = new Set(merged.systems.map((s) => s.key));
   const { prelim, pending } = jevApiPreliminaryRows(read('data/jevbench-api-public-set.json'), new Map(carry.map((r) => [r.key, r])));
   const left = [...prelim, ...pending].filter((r) => !measured.has(r.key)).map((r) => r.key);
-  assert.deepEqual(left, ['qwen3.8-27b']);
+  assert.deepEqual(left, []);
   const route = readFileSync(new URL('../components/JevBenchV16ReleaseRoute.tsx', import.meta.url), 'utf8');
   assert.match(route, /scope === 'all' \|\| release_\.revision !== 'v1\.6\.1' \? release_ : jevWithApiA4Rows/);
   assert.match(readFileSync(new URL('../components/JevBenchV16Board.tsx', import.meta.url), 'utf8'), /version: 'v1\.7\.7'/);
