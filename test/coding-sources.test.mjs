@@ -5,6 +5,7 @@ import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { captureTargets } from '../ops/daily/refresh-benchmarks.mjs';
+import { reconcileScoreModelIds } from '../lib/benchmark-scores.mjs';
 
 // 2026-09-15 coding intake: DeepSWE (via Epoch AI) and Scale AI's SWE Atlas boards.
 const json = (p) => JSON.parse(readFileSync(new URL(`../${p}`, import.meta.url)));
@@ -172,13 +173,27 @@ test('identity map: exact existing configurations; measured joins visible; self-
   const catalog = new Set(dataset.models.map((m) => m.id));
   const observations = dataset.benchmark_results.observations;
   assert.ok(map.entries.length >= 80);
+  // 2026-10-06 (CR-294): a configuration can leave the catalog (OpenRouter withdrew stealth/space-bunny-alpha). The build
+  // then withholds the score rows still keyed to it (reconcileScoreModelIds: "model no longer in the catalog"), and the
+  // reviewed map entry keeps its rule so the row joins again if the configuration returns. Such an entry is accepted only
+  // when every source row it covers is exactly one of the rows this build withheld, and none of them is published.
+  const scores = json('data/raw/benchmarks/scores.json');
+  const withheldRows = new Set(reconcileScoreModelIds(scores, dataset.models).withheld);
+  const leftCatalog = (entry) => {
+    if (catalog.has(entry.model_id)) return false;
+    const rows = scores.observations.filter((x) => x.benchmark_id === entry.benchmark_id && x.subject.source_id === entry.source_id);
+    assert.ok(rows.length && rows.every((x) => x.subject.model_id === entry.model_id && withheldRows.has(x.id)), `${entry.model_id} exists`);
+    assert.ok(!observations.some((x) => x.benchmark_id === entry.benchmark_id && x.subject.source_id === entry.source_id),
+      `${entry.source_id}: a row withheld for a configuration that left the catalog is not published`);
+    return true;
+  };
   // CR-173 (2026-09-26): FrontierCode 1.1 Extended (the full 150-task set) and its cost twin are reviewed vendor boards too;
   // Terminal-Bench 4.0 board rows join by display name + the row's own reasoning_effort.
   const SELF_REPORTED = ['frontiercode::1.1', 'frontiercode-cost::1.1', 'frontiercode-extended::1.1', 'frontiercode-extended-cost::1.1',
     'cursorbench::4.0', 'cursorbench-cost::4.0', 'swe-bench-pro-public::snapshot-2026-09-10', 'terminal-bench::4.0'];
   for (const entry of map.entries.filter((e) => e.basis === 'self_reported')) {
     assert.ok(SELF_REPORTED.includes(entry.benchmark_id), 'self-reported joins cover only the reviewed vendor boards');
-    assert.ok(catalog.has(entry.model_id), `${entry.model_id} exists`);
+    if (leftCatalog(entry)) continue;
     const o = observations.find((x) => x.benchmark_id === entry.benchmark_id && x.subject.source_id === entry.source_id);
     assert.ok(o, entry.source_id);
     assert.equal(o.source_basis ?? o.basis, 'self_reported', 'derived rows keep their self-reported source basis');
@@ -200,7 +215,7 @@ test('identity map: exact existing configurations; measured joins visible; self-
   for (const entry of map.entries.filter((e) => e.basis !== 'self_reported')) {
     assert.ok([...IDS, ...EPOCH_RUN, ...SLUG_BOARDS].some((id) => entry.benchmark_id === id || entry.benchmark_id.startsWith(`${id}::`)),
       `the map covers only the reviewed boards: ${entry.benchmark_id}`);
-    assert.ok(catalog.has(entry.model_id), `${entry.model_id} exists`);
+    if (leftCatalog(entry)) continue;
     const o = observations.find((x) => x.benchmark_id === entry.benchmark_id && x.subject.source_id === entry.source_id);
     if (!o && withdrawn.has(`${entry.benchmark_id}#${entry.source_id}`)) continue;
     assert.ok(o, entry.source_id);
