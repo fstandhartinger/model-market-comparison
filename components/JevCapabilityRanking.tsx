@@ -5,7 +5,7 @@ import { JEV_SCOPE_LISTING } from '../lib/jevbench-scope.mjs';
 import { useEffect, useId, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
 import { DEFAULT_CAP, clampCap, formatCap, isOfficialCaps, parseCaps, serialiseCaps, type ClassCaps } from '../lib/jevbench-class-caps.mjs';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
-import { jevClassRows, ratioPosition, trafficLightZone, type JevClassOptions, type JevClassResult, type JevClassRow } from '../lib/jevbench-jev-class.mjs';
+import { jevClassRows, medianLatency, ratioPosition, spearman, trafficLightZone, type JevClassOptions, type JevClassResult, type JevClassRow } from '../lib/jevbench-jev-class.mjs';
 import { shortName, usd } from './JevCapabilityChart';
 import { imageJevSourceUrl } from '../lib/imagejev-system-links.mjs';
 import { jevSourceUrl } from './jevSystemLinks';
@@ -190,7 +190,7 @@ export function JevCapabilityRanking({ systems, eligibilitySystems = systems, re
     () => eligibilitySystems === systems ? result : jevClassRows(eligibilitySystems, capOptions),
     [eligibilitySystems, systems, capOptions, result],
   );
-  const { reference, limits, rows, costLatencySpearman, n: pairedCount } = result;
+  const { reference, limits, rows } = result;
   useEffect(() => {
     onCapsChange?.({ ...caps, costLimit: limits.cost, latencyLimit: limits.latency });
   }, [onCapsChange, costFactor, latencyFactor, limits.cost, limits.latency]);
@@ -204,6 +204,12 @@ export function JevCapabilityRanking({ systems, eligibilitySystems = systems, re
     return () => window.clearTimeout(timer);
   }, [benchmark, eligibilityResult]);
   const filteredRows = rows.filter((r) => visibleKeys.has(r.row.key));
+  // Review 6 Oct 2026: the correlation's n covers the visible systems only, like the counts around it (hidden API rows were counted).
+  const paired = systems.filter((row) => visibleKeys.has(row.key))
+    .map((row) => [Number.isFinite(row.cost?.usd_per_1000) ? row.cost!.usd_per_1000 : null, medianLatency(row)] as const)
+    .filter(([cost, latency]) => cost != null && latency != null);
+  const costLatencySpearman = spearman(paired.map((p) => p[0]), paired.map((p) => p[1]));
+  const pairedCount = paired.length;
   const inside = filteredRows.filter((r) => r.inClass);
   const outside = filteredRows.filter((r) => !r.inClass);
   const speedFallback = inside.filter((r) => r.latencyBasis === 'speed-axis');
@@ -285,10 +291,10 @@ export function JevCapabilityRanking({ systems, eligibilitySystems = systems, re
     </figure>
     <p id="jev-class-method" className="bh-panel mt-3 max-w-4xl scroll-mt-6 p-3 text-[13.5px] leading-snug" data-bh-jev-class-rule>
       {eligibilityNote ?? <><b>{classLabel}</b> = cost per decision {costFactor === Infinity ? 'with no cap' : <>at most {formatCap(costFactor)} {refName}&apos;s <span className="whitespace-nowrap">(≤ {usd(limits.cost)} per 1,000 decisions)</span></>} <b>and</b> median latency {latencyFactor === Infinity ? 'with no cap' : <>at most {formatCap(latencyFactor)} {refName}&apos;s <span className="whitespace-nowrap">(≤ {secs(limits.latency)})</span></>}, the adjusted p50 — the same median the speed chart plots, not the four-axis Speed score.
-      {' '}{inside.length} of {rows.length} systems qualify; {official ? <>the other {outside.length}, including the general-purpose LLMs, are listed below the divider in the ranking.</> : <>{outside.length} systems fall outside your selected limits and are listed below the divider in the ranking.</>}
+      {' '}{inside.length} of {filteredRows.length} systems qualify; {official ? <>the other {outside.length}, including the general-purpose LLMs, are listed below the divider in the ranking.</> : <>{outside.length} systems fall outside your selected limits and are listed below the divider in the ranking.</>}
       {speedFallback.length > 0 && <span className="bh-muted"> {speedFallback.map((r) => shortName(r.row.display)).join(', ')} {speedFallback.length === 1 ? 'has' : 'have'} no recorded median latency; for {speedFallback.length === 1 ? 'it' : 'them'} the Speed axis decides, {latencyFactor === Infinity ? '(no latency cap).' : <>at the {formatCap(latencyFactor)} latency equivalent (Speed ≥ {one(limits.speedFloor)}).</>}</span>}
       </>}
-      {eligibilityNote && !official && <span className="mt-1 block" data-bh-jev-custom-eligibility>The ranking above uses custom caps of {formatCap(costFactor)} cost / {formatCap(latencyFactor)} latency. {inside.length} of {rows.length} systems qualify; {outside.length} are outside.</span>}
+      {eligibilityNote && !official && <span className="mt-1 block" data-bh-jev-custom-eligibility>The ranking above uses custom caps of {formatCap(costFactor)} cost / {formatCap(latencyFactor)} latency. {inside.length} of {filteredRows.length} systems qualify; {outside.length} are outside.</span>}
       {(costFactor === Infinity || latencyFactor === Infinity) && <span className="bh-muted mt-1 block">Reported cost and median latency (or a Speed-axis fallback) are still required when a cap is off.</span>}
       {!official && !onCapsChange && <span className="bh-muted mt-1 block">Charts below use the official 2× caps.</span>}
       {' '}The <a className="text-accent underline" href="#jev-bubbles">charts below</a> show speed and cost beside Capability Score; the <a className="text-accent underline" href={officialHref}>official {benchName} Score</a> weighs all four axes.

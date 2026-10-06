@@ -6,6 +6,7 @@ import { jevClassRows, type JevClassOptions } from '../lib/jevbench-jev-class.mj
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
 import { JEV_TYPE_LABEL, jevLegendTypes, jevTypeVarName } from './jevTypes';
 import { JevCapability3D } from './JevCapability3D';
+import { JevCapability3DVisible } from './JevCapability3DVisible';
 
 const CHART_TOP = 20;
 const one = (value: number) => value.toFixed(1);
@@ -210,8 +211,7 @@ export function JevCapabilityChart({ systems, revision, only3d = false, classOpt
     <p className="bh-eyebrow">{benchName} {revision} · additional view</p>
     <h2 id="jev14-capability-3d-title" className="mt-1 text-2xl font-bold leading-snug">Capability, cost and speed in 3D</h2>
     <p className="bh-muted mt-2 max-w-5xl text-sm">The 3D view plots Capability vertically, lower cost to the right, and higher Speed toward you. Sphere size follows the {benchName} score. Drag to rotate; pinch or scroll to zoom. The view loads when it scrolls into view. The two flat charts are at the <a className="text-accent underline" href="#jev-bubbles">top of the page</a>.</p>
-    <div className="bh-panel mt-4 p-4 sm:p-5"><JevCapability3D points={plotted3d} costBounds={costBounds} benchmarkName={benchName} /></div>
-    <p className="bh-muted mt-2 text-xs">{plotted3d.length} systems plotted; systems missing cost or Speed are omitted.</p>
+    <JevCapability3DVisible points={plotted3d} costBounds={costBounds} benchmarkName={benchName} />
   </section>;
 
   return <section id="jev14-capability-views" className="mt-12 scroll-mt-6" data-bh-jev14-capability-suite aria-labelledby="jev14-capability-title">

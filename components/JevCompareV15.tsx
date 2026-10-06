@@ -159,7 +159,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
   const openTierSpokes = ccSpokes(pair, TIERS, (r, k) => r.tierCc.open[k as "easy"] ?? null);
   const sealedTierSpokes = ccSpokes(pair, TIERS, (r, k) => r.tierCc.sealed[k as "easy"] ?? null);
   const missingFor = (spokes: Spoke[]) => pair.filter((_, k) => spokes.every((sp) => sp.values[k] === null)).map((r) => r.name);
-  const status = (r: JevCompareV15Row) => r.rank !== null ? `#${r.rank}` : ({ honorable_mention: "honorable mention", partial: "partial run", unpriced: "unpriced", addendum: "roster addendum", unranked: "not ranked" } as Record<string, string>)[r.listing] ?? `${r.listing}, not ranked`;
+  const status = (r: JevCompareV15Row) => r.rank !== null ? `#${r.rank}` : ({ honorable_mention: "honorable mention", partial: "partial run", unpriced: "unpriced", addendum: "roster addendum", unranked: "not ranked", api_offering: "API offering, ranked on the API leaderboard", reference: "reference, not ranked" } as Record<string, string>)[r.listing] ?? `${r.listing}, not ranked`;
   // CR-290 (Florian 5 Oct 2026): say in the caption which system has gaps and why, instead of letting a partial series
   // read as a small area. CR-290 correction: a series too sparse for lines (radarShape "points") says so in one line.
   const gapNote = (f: { spokes: Spoke[]; dim?: CategoryDim }) => {

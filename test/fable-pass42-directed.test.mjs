@@ -97,6 +97,5 @@ test('F-225: a tick never reads under the limit caption, and the caption clears 
   assert.match(bubble, /const hiddenYTick = tickCollision != null && tickCollision !== yTickMax \? tickCollision : null;/);
   assert.match(bubble, /\{t !== hiddenYTick && <text/, 'the covered tick loses its number, not its gridline');
   assert.match(bubble, /tickCollision != null && tickCollision === yTickMax \? Math\.round\(gridPitch\) : 0/, 'the axis maximum moves the caption instead');
-  assert.match(bubble, /const phoneColumnLeft = labels\.some\(\(l\) => l\.col === 'left'\);/);
-  assert.match(bubble, /const sepLabelBaseY = phoneColumnLeft \? H - B - 6 : T \+ 25;/, 'the caption stays left of the line and moves to its foot');
+  assert.match(bubble, /const sepLabelBaseY = H - B - 6;/, 'the caption stays left of the line and moves to its foot');
 });
