@@ -240,9 +240,12 @@ type OvernightNotes = { round: string; scored_utc: string; a2_note?: string | nu
 // Review 6 Oct 2026: the frozen overnight note (part of the hashed artifact, so not edited) still gives Sage's pre-amendment
 // cost over all 600 rows; the v1.6.1 cost rule prices the common item set, which puts Sage inside the cost cap.
 const SAGE_PRE_AMENDMENT_COST = 'over all 600 answered rows: USD 0.0766/1,000 decisions. It exceeds the frozen Jev-class cost cap and is excluded from the Capability headline.';
-const overnightErratum = (note: string) => note.includes(SAGE_PRE_AMENDMENT_COST)
+// The frozen overnight notes repeat the Jev-class reference paragraph that Method already shows under "Headline and
+// Composite" (data-bh-jev16-class-reference); drop the repeat and keep the rest of that note.
+const CLASS_REFERENCE_REPEAT = /^Jev-class caps use a fixed reference: Jev 1\.13\.0 as measured in v1\.5 \([^)]*\); caps = 2x \([^)]*\)\. Jev's own v1\.6 p50 is 0\.24 s\. /;
+const overnightErratum = (note: string) => (note.includes(SAGE_PRE_AMENDMENT_COST)
   ? note.replace(SAGE_PRE_AMENDMENT_COST, 'over all 600 answered rows: USD 0.0766/1,000 decisions. Superseded by the v1.6.1 cost rule (common item set): USD 0.0247/1,000 decisions, inside the Jev-class cost cap.')
-  : note;
+  : note).replace(CLASS_REFERENCE_REPEAT, '');
 
 function Overnight({ o, hiddenApi, a4 }: { o: OvernightNotes; hiddenApi: ReadonlySet<string>; a4: { exception: string; apiKeys: ReadonlySet<string>; sealed: number } | null }) {
   const exp = Object.entries(o.exposure ?? {})
