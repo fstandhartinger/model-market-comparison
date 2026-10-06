@@ -110,6 +110,7 @@ function DatedCarry({ carry, hiddenApi }: { carry: JevV16Carry; hiddenApi: Reado
 
 // v1.7.0 (Florian, 5 Oct 2026): open-weights board on /jev-models, API-provider board on /jev-models/api.
 export const JEV_BOARD_REVISIONS: { version: string; date: string; text: string }[] = [
+  { version: 'v1.7.2', date: '2026-10-06', text: 'Display only. The API roster says why carried API rows were not re-run on v1.6 yet (exposure cadence, retired v1.6.0 sealed set) and that no v1.5 to v1.6 conversion is applied.' },
   { version: 'v1.7.1', date: '2026-10-06', text: 'Display only, no score or rank changed. Headings name the board (open weights / API offerings); the API board leads with the Composite Score and lists every API offering we measured, including mode variants, carried v1.5.x rows and wrappers; the Jev reference row reads “Not ranked, only shown as a reference to compare with”; long base-model notes became numbered footnotes under the ranking; a short expandable note explains the split.' },
   { version: 'v1.7.0', date: '2026-10-06', text: 'Leaderboard split. /jev-models ranks open-weights systems we ran on our own hardware, with Jev 1.13.0 as an unranked reference row and a “Show API offerings” switch; hosted API offerings are ranked on the new /jev-models/api board. No score was recomputed: ranks are the published order filtered to each board. Adds the GPU cost What-If.' },
   { version: 'v1.6.0', date: '2026-10-05', text: 'Rotating sealed item sets, API-exposure rule, Noul decisiveness (method B), language view and dated carry.' },
@@ -292,6 +293,8 @@ function ApiRoster({ a, carry, listed, eligibility }: { a: JevV16ReleaseArtifact
           <td className="p-2">{one(s.jevbench_score)}</td><td className="p-2">{one(s.capability)}</td>
           <td className="p-2">{usd(s.cost?.usd_per_1000)}</td><td className="p-2">{sec(s.speed?.p50_s_adjusted)}</td></tr>)}
         {carried.length > 0 && head('Carried from v1.5.x, not yet re-measured (v1.5 scale)', carried.length)}
+        {/* v1.7.2 (Florian 6 Oct 2026, Part 9): say why these rows were not re-run; no v1.5 -> v1.6 conversion exists, so none is shown. */}
+        {carried.length > 0 && <tr><td colSpan={6} className="bh-muted p-2 pt-0 text-xs" data-bh-jev-api-roster-carry-why>Why not re-run yet: hosted APIs are re-measured at most once every three refresh releases (API-exposure rule), and the v1.6.0 sealed set is now retired, so a new run needs a fresh sealed draw. Re-runs are being arranged with each provider; some first need a new key or confirmation from the provider. There is no validated conversion from the v1.5 to the v1.6 scale, so these scores are shown as measured, with their date.</td></tr>}
         {carried.map((r) => <tr key={r.key} className="border-t border-line">
           <th scope="row" className="p-2 font-normal">{name(r.display, r.source_url ?? r.repo, r.key, (r as { endpoint_kind?: string | null }).endpoint_kind)}</th>
           <td className="p-2 bh-muted">{r.measured_label}</td>
