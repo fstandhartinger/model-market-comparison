@@ -1,0 +1,134 @@
+{
+  "kev-27b": {
+    "class": "Jev-compatible decision model",
+    "open": "open weights",
+    "licence": "apache-2.0",
+    "repo": "https://huggingface.co/jaredpalmer/kev-27b",
+    "gpu": "H100",
+    "endpoint_condition": "evaluator-owned Lium GPU pod, 1x NVIDIA H100 80GB, weights fetched in a separate model-only container, scored run inside docker --network none (loopback only, no secrets, label-free inputs); pod destroyed afterwards; HF Jev Decision Index intake, 6 Oct 2026",
+    "underlying": "Qwen/Qwen3.8-27B",
+    "model_pin": "jaredpalmer/kev-27b@af0e6d551bdc2cc724f3e9d7a8bee1cd4fb8f7bf",
+    "last_measured_on": "2026-10-06",
+    "metadata_from": "author model card",
+    "architecture": {
+      "arch": "open-llm-decoder",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/jaredpalmer/kev-27b/blob/af0e6d551bdc2cc724f3e9d7a8bee1cd4fb8f7bf/README.md",
+          "kind": "model-card",
+          "fact": "DRY-RUN FIXTURE: model card names Qwen/Qwen3.8-27B as the backbone with a pointer head."
+        },
+        {
+          "url": "https://huggingface.co/jaredpalmer/kev-27b/blob/af0e6d551bdc2cc724f3e9d7a8bee1cd4fb8f7bf/config.json",
+          "kind": "config.json",
+          "fact": "architectures: [\"Qwen3_5TextModel\"]; dtype: bfloat16"
+        }
+      ],
+      "badges": {
+        "derivation": "fine-tune",
+        "params": "27B",
+        "quant": null
+      }
+    },
+    "base_model": {
+      "label": "Qwen/Qwen3.8-27B",
+      "status": "disclosed",
+      "sources": [
+        {
+          "url": "https://huggingface.co/jaredpalmer/kev-27b/blob/af0e6d551bdc2cc724f3e9d7a8bee1cd4fb8f7bf/README.md",
+          "title": "Author model card",
+          "evidence": "DRY-RUN FIXTURE: model card base statement"
+        }
+      ],
+      "cr": "DRY-RUN"
+    }
+  },
+  "pplx-decider-v1-1-27b": {
+    "class": "Jev-compatible decision model",
+    "open": "open weights",
+    "licence": "apache-2.0",
+    "repo": "https://huggingface.co/perplexity-ai/pplx-decider-v1.1-27b",
+    "gpu": "H100",
+    "endpoint_condition": "evaluator-owned Lium GPU pod, 1x NVIDIA H100 80GB, weights fetched in a separate model-only container, scored run inside docker --network none (loopback only, no secrets, label-free inputs); pod destroyed afterwards; HF Jev Decision Index intake, 6 Oct 2026",
+    "underlying": "Qwen/Qwen3.8-27B",
+    "model_pin": "perplexity-ai/pplx-decider-v1.1-27b@3b45dead91dfa6d95aad6b95764a606fab2bf7a6",
+    "last_measured_on": "2026-10-06",
+    "metadata_from": "author model card",
+    "architecture": {
+      "arch": "open-llm-decoder",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/perplexity-ai/pplx-decider-v1.1-27b/blob/3b45dead91dfa6d95aad6b95764a606fab2bf7a6/README.md",
+          "kind": "model-card",
+          "fact": "DRY-RUN FIXTURE: model card names Qwen/Qwen3.8-27B as the base."
+        },
+        {
+          "url": "https://huggingface.co/perplexity-ai/pplx-decider-v1.1-27b/blob/3b45dead91dfa6d95aad6b95764a606fab2bf7a6/config.json",
+          "kind": "config.json",
+          "fact": "architectures: [\"Qwen3_5Model\"]; dtype: bfloat16"
+        }
+      ],
+      "badges": {
+        "derivation": "fine-tune",
+        "params": "27B",
+        "quant": null
+      }
+    },
+    "base_model": {
+      "label": "Qwen/Qwen3.8-27B",
+      "status": "disclosed",
+      "sources": [
+        {
+          "url": "https://huggingface.co/perplexity-ai/pplx-decider-v1.1-27b/blob/3b45dead91dfa6d95aad6b95764a606fab2bf7a6/README.md",
+          "title": "Author model card",
+          "evidence": "DRY-RUN FIXTURE: decision_config.json names the base revision"
+        }
+      ],
+      "cr": "DRY-RUN"
+    }
+  },
+  "decider-chat-gemma4-31b": {
+    "class": "Jev-compatible decision model",
+    "open": "open weights",
+    "licence": "apache-2.0",
+    "repo": "https://github.com/Mapika/decider",
+    "gpu": "RTX PRO 6000",
+    "endpoint_condition": "evaluator-owned Lium GPU pod, 1x NVIDIA RTX PRO 6000 Blackwell 96GB, weights fetched in a separate model-only container, scored run inside docker --network none (loopback only, no secrets, label-free inputs); pod destroyed afterwards; HF Jev Decision Index intake, 6 Oct 2026",
+    "underlying": "google/gemma-4-31B-it",
+    "model_pin": "google/gemma-4-31B-it@842da3794eaa0b77d5f08bae87a17459d91ff475 + Mapika/decider-chat-gemma4-31b@22975cbd",
+    "last_measured_on": "2026-10-06",
+    "metadata_from": "author repository",
+    "architecture": {
+      "arch": "open-llm-decoder",
+      "evidence": [
+        {
+          "url": "https://github.com/Mapika/decider/blob/main/README.md",
+          "kind": "model-card",
+          "fact": "DRY-RUN FIXTURE: inference technique over the frozen google/gemma-4-31B-it."
+        },
+        {
+          "url": "https://huggingface.co/google/gemma-4-31B-it/raw/main/config.json",
+          "kind": "config.json",
+          "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\""
+        }
+      ],
+      "badges": {
+        "derivation": null,
+        "params": "31B",
+        "quant": null
+      }
+    },
+    "base_model": {
+      "label": "google/gemma-4-31B-it",
+      "status": "disclosed",
+      "sources": [
+        {
+          "url": "https://github.com/Mapika/decider/blob/main/README.md",
+          "title": "Author README",
+          "evidence": "DRY-RUN FIXTURE: decider chat layout over the frozen base"
+        }
+      ],
+      "cr": "DRY-RUN"
+    }
+  }
+}

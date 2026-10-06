@@ -1,6 +1,6 @@
 {
   "schema": "jevbench-architecture/1",
-  "checked_utc": "2026-10-06T13:20:00Z",
+  "checked_utc": "2026-10-07T00:00:00Z",
   "benchmarks": {
     "jevbench": {
       "autojev-27b": {
@@ -3568,6 +3568,263 @@
         "badges": {
           "derivation": null,
           "params": null,
+          "quant": null
+        }
+      },
+      "kev-27b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/jaredpalmer/kev-27b/blob/af0e6d551bdc2cc724f3e9d7a8bee1cd4fb8f7bf/README.md",
+            "kind": "model-card",
+            "fact": "\"every backbone weight fine-tuned\"; \"Full-weight fine-tuning.\" from Qwen/Qwen3.8-27B"
+          },
+          {
+            "url": "https://huggingface.co/jaredpalmer/kev-27b/blob/af0e6d551bdc2cc724f3e9d7a8bee1cd4fb8f7bf/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5TextModel\"]; model_type: \"qwen3_5_text\"; dtype: bfloat16"
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "27B",
+          "quant": null
+        }
+      },
+      "pplx-decider-v1-1-27b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/perplexity-ai/pplx-decider-v1.1-27b/blob/3b45dead91dfa6d95aad6b95764a606fab2bf7a6/README.md",
+            "kind": "model-card",
+            "fact": "Card metadata: \"base_model: Qwen/Qwen3.8-27B\", \"base_model_relation: finetune\"; \"The Transformers class name does not change the base model identity, Qwen3.8-27B.\""
+          },
+          {
+            "url": "https://huggingface.co/perplexity-ai/pplx-decider-v1.1-27b/blob/3b45dead91dfa6d95aad6b95764a606fab2bf7a6/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5Model\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\"; dtype: bfloat16"
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "27B",
+          "quant": null
+        }
+      },
+      "decider-chat-gemma4-31b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Mapika/decider-chat-gemma4-31b/blob/22975cbd1716170264a1d2a7e1105787e08c5d95/README.md",
+            "kind": "model-card",
+            "fact": "\"weights unchanged\"; \"There is no training.\""
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-31B-it/blob/842da3794eaa0b77d5f08bae87a17459d91ff475/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\"; dtype: bfloat16 (Mapika repo config.json is byte-identical)"
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "31B",
+          "quant": null
+        },
+        "note": "Inference technique over the frozen base; no derivation badge."
+      },
+      "jpt-35b-a3b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/kirp/jpt-35b-a3b/blob/f9b45a14df4f7eaf5551f1ab26607237604a8588/README.md",
+            "kind": "model-card",
+            "fact": "\"a LoRA fine-tune merged into full weights\"; \"Built on [Qwen/Qwen3.5-35B-A3B]\""
+          },
+          {
+            "url": "https://huggingface.co/kirp/jpt-35b-a3b/blob/f9b45a14df4f7eaf5551f1ab26607237604a8588/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5MoeForConditionalGeneration\"]; model_type: \"qwen3_5_moe\"; text_config.model_type: \"qwen3_5_moe_text\"; dtype: bfloat16"
+          }
+        ],
+        "badges": {
+          "derivation": "merge",
+          "params": "35B-A3B",
+          "quant": null
+        }
+      },
+      "jebadiah-27b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/frontier-infra/jebadiah-27b/blob/4d3ed81640bbc015b47976bedae67212a5fb39cd/README.md",
+            "kind": "model-card",
+            "fact": "\"the LoRA merged into `Qwen/Qwen3.8-27B` (revision `1d4bf0f2`\"; \"LoRA r=16, alpha=32 on every linear projection\""
+          },
+          {
+            "url": "https://huggingface.co/frontier-infra/jebadiah-27b/blob/4d3ed81640bbc015b47976bedae67212a5fb39cd/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\"; dtype: bfloat16"
+          }
+        ],
+        "badges": {
+          "derivation": "merge",
+          "params": "27B",
+          "quant": null
+        }
+      },
+      "simplejev-qwen3.8-27b-selfhost": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://github.com/featherless-ai/simple-jev/blob/9c11582d3e631e0b118f3f3132ebbb00c62020c5/README.md",
+            "kind": "model-card",
+            "fact": "Documented command: \"simple-jev --model Qwen/Qwen3.8-27B --device auto --dtype bfloat16\" (inference server over the unmodified base; no fine-tuned weights)"
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\"; dtype: bfloat16"
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "27B",
+          "quant": null
+        },
+        "note": "Inference technique over the frozen base; no derivation badge."
+      },
+      "bespoke-nimble-9b-v3": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/bespokelabs/Bespoke-Nimble-9B-v3/blob/8e927b9b4afdbb14479fac10a7364d1a695be208/README.md",
+            "kind": "model-card",
+            "fact": "\"is a LoRA adapter for [Qwen/Qwen3.5-9B]\""
+          },
+          {
+            "url": "https://huggingface.co/bespokelabs/Bespoke-Nimble-9B-v3/blob/8e927b9b4afdbb14479fac10a7364d1a695be208/adapter_config.json",
+            "kind": "config.json",
+            "fact": "base_model_name_or_path: \"Qwen/Qwen3.5-9B\"; peft_type: \"LORA\"; lora_alpha: 128"
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-9B/blob/c202236235762e1c871ad0ccb60c8ee5ba337b9a/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\"; dtype: bfloat16"
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "9B",
+          "quant": null
+        },
+        "note": "Adapter-only repo."
+      },
+      "gev-26b-decide": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/autotrust/GEV-26B-Decide/blob/7c89590ead085bf77630b4bf68264ea30b6ddc78/README.md",
+            "kind": "model-card",
+            "fact": "Card metadata: \"base_model: google/gemma-4-26B-A4B-it\", \"base_model_relation: adapter\"; \"System 1 was trained on teacher distributions and ground-truth decision data.\""
+          },
+          {
+            "url": "https://huggingface.co/autotrust/GEV-26B-Decide/blob/7c89590ead085bf77630b4bf68264ea30b6ddc78/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\"; dtype: bfloat16"
+          }
+        ],
+        "badges": {
+          "derivation": "distilled",
+          "params": "26B-A4B",
+          "quant": null
+        },
+        "note": "LoRA adapter + decision head trained on teacher (TypeSafe Jev 1.13) distributions; badge 'distilled' per the card's distillation statement (card relation is 'adapter')."
+      },
+      "torchcast-decision-27b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/torchcast-ai/torchcast-decision-27b/blob/08645834899cb8e00d370b77a3f4e0baa3241dd1/README.md",
+            "kind": "model-card",
+            "fact": "\"A LoRA fine-tune of StartLux-Decision-27B, merged into the weights.\"; \"Credit Torchcast AI for this checkpoint, StartLux Labs for StartLux-Decision, and the Qwen team at Alibaba Cloud for\" the underlying model"
+          },
+          {
+            "url": "https://huggingface.co/torchcast-ai/torchcast-decision-27b/blob/08645834899cb8e00d370b77a3f4e0baa3241dd1/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\"; dtype: bfloat16; text_config identical to Qwen/Qwen3.8-27B@1d4bf0f2 config.json (hidden_size 5120, 64 layers, vocab 248320)"
+          }
+        ],
+        "badges": {
+          "derivation": "merge",
+          "params": "27B",
+          "quant": null
+        },
+        "note": "Card names StartLux-Decision-27B as the fine-tuned base; Qwen3.8-27B inferred from identical config."
+      },
+      "decision-2-0-vega-27b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/vllm-sr/Decision-2.0-Vega-27B/blob/7aec49ae11a18741706da549ab626b9052795fe7/README.md",
+            "kind": "model-card",
+            "fact": "Card metadata: \"base_model: Qwen/Qwen3.8-27B\", \"base_model_relation: adapter\""
+          },
+          {
+            "url": "https://huggingface.co/vllm-sr/Decision-2.0-Vega-27B/blob/7aec49ae11a18741706da549ab626b9052795fe7/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Decision2Model\"]; model_type: \"decision2\"; backbone.repository: \"Qwen/Qwen3.8-27B\"; backbone.revision: \"1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0\"; runtime_family: \"decision2-qwen-adapter\""
+          },
+          {
+            "url": "https://huggingface.co/vllm-sr/Decision-2.0-Vega-27B/blob/7aec49ae11a18741706da549ab626b9052795fe7/adapter/adapter_config.json",
+            "kind": "config.json",
+            "fact": "peft_type: \"LORA\"; r: 512"
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "27B",
+          "quant": null
+        },
+        "note": "Card lists Parameters 29.37B (backbone + adapter + head); params badge uses the backbone class 27B as for other Qwen3.8-27B rows."
+      },
+      "jade": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/theunnecessarythings/JADE/blob/8e9f9a3aa4293190fcc4a6ff17ff5f3251f4c270/README.md",
+            "kind": "model-card",
+            "fact": "Card metadata: \"base_model: Qwen/Qwen3.8-27B\", \"library_name: peft\"; \"rank-8 LoRA adapters and a trained 255-way decision head\""
+          },
+          {
+            "url": "https://huggingface.co/theunnecessarythings/JADE/blob/8e9f9a3aa4293190fcc4a6ff17ff5f3251f4c270/decision_config.json",
+            "kind": "config.json",
+            "fact": "adapter_type: \"lora\"; base_model: \"Qwen/Qwen3.8-27B\" (repo ships no config.json; PEFT-style adapter repo)"
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "27B",
+          "quant": null
+        },
+        "note": "Adapter-only repo: no config.json; the base is read from decision_config.json and the card."
+      },
+      "jev-27b-autotrust": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/autotrust/JEV-27B/blob/51740a8891c2a8baefd969237fd44187b3e3a115/README.md",
+            "kind": "model-card",
+            "fact": "Card metadata: \"base_model: Qwen/Qwen3.8-27B\", \"base_model_relation: finetune\", tag \"knowledge-distillation\"; \"the System 1 block is 108.9 M trained\" parameters"
+          },
+          {
+            "url": "https://huggingface.co/autotrust/JEV-27B/blob/51740a8891c2a8baefd969237fd44187b3e3a115/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForCausalLM\"]; model_type: \"qwen3_5_text\"; dtype: bfloat16"
+          }
+        ],
+        "badges": {
+          "derivation": "distilled",
+          "params": "27B",
           "quant": null
         }
       }

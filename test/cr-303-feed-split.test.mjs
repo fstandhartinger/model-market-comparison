@@ -33,6 +33,8 @@ test('llms-full and FAQ use the open-weights board', async () => {
   assert.doesNotMatch(open, /\| Sage/);
   const data = await readJevbenchSeoData();
   const faq = jevbenchFaq(data);
-  assert.match(faq[1].answer, /^Quyet.*ranks #1 on the open-weights board.*among 61 ranked open-weights models/);
-  assert.doesNotMatch(faq[1].answer, /among 64/);
+  assert.match(faq[1].answer, new RegExp(`^Quyet.*ranks #1 on the open-weights board.*among ${data.openRanked.length} ranked open-weights models`));
+  assert.ok(data.openRanked.length >= 61, 'ranked open-weights models only grow with addenda (61 at v1.6.1)');
+  // the exact open-board count is pinned above; it must never include the API offerings
+  assert.ok(data.openRanked.every((row) => row.board === 'open'), 'open-weights count excludes API offerings');
 });

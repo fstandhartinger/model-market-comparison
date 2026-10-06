@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "checked_utc": "2026-10-01T17:52:40Z",
+  "checked_utc": "2026-10-07T00:00:00Z",
   "benchmarks": {
     "jevbench": {
       "cygnet": {
@@ -1372,6 +1372,173 @@
         ],
         "checked_utc": "2026-10-05T17:00:00Z",
         "cr": "CR-290"
+      },
+      "kev-27b": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/jaredpalmer/kev-27b/blob/af0e6d551bdc2cc724f3e9d7a8bee1cd4fb8f7bf/README.md",
+            "title": "Author model card",
+            "evidence": "base_model: Qwen/Qwen3.8-27B; base_model_relation: finetune; Backbone `Qwen/Qwen3.8-27B` (revision `1d4bf0f2`)"
+          }
+        ],
+        "cr": "CR-PENDING",
+        "checked_utc": "2026-10-07T00:00:00Z"
+      },
+      "pplx-decider-v1-1-27b": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/perplexity-ai/pplx-decider-v1.1-27b/blob/3b45dead91dfa6d95aad6b95764a606fab2bf7a6/README.md",
+            "title": "Author model card",
+            "evidence": "base_model: Qwen/Qwen3.8-27B; base_model_relation: finetune"
+          }
+        ],
+        "cr": "CR-PENDING",
+        "checked_utc": "2026-10-07T00:00:00Z"
+      },
+      "decider-chat-gemma4-31b": {
+        "label": "google/gemma-4-31B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/Mapika/decider-chat-gemma4-31b/blob/22975cbd1716170264a1d2a7e1105787e08c5d95/README.md",
+            "title": "Author model card",
+            "evidence": "This repository holds google/gemma-4-31B-it (revision 842da379, weights unchanged)"
+          }
+        ],
+        "cr": "CR-PENDING",
+        "checked_utc": "2026-10-07T00:00:00Z"
+      },
+      "jpt-35b-a3b": {
+        "label": "Qwen/Qwen3.5-35B-A3B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/kirp/jpt-35b-a3b/blob/f9b45a14df4f7eaf5551f1ab26607237604a8588/README.md",
+            "title": "Author model card",
+            "evidence": "base_model: Qwen/Qwen3.5-35B-A3B; Built on Qwen/Qwen3.5-35B-A3B ... a LoRA fine-tune merged into full weights"
+          }
+        ],
+        "cr": "CR-PENDING",
+        "checked_utc": "2026-10-07T00:00:00Z"
+      },
+      "jebadiah-27b": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/frontier-infra/jebadiah-27b/blob/4d3ed81640bbc015b47976bedae67212a5fb39cd/README.md",
+            "title": "Author model card",
+            "evidence": "base_model: Qwen/Qwen3.8-27B; base_model_relation: finetune; the LoRA merged into Qwen/Qwen3.8-27B (revision 1d4bf0f2)"
+          }
+        ],
+        "cr": "CR-PENDING",
+        "checked_utc": "2026-10-07T00:00:00Z"
+      },
+      "simplejev-qwen3.8-27b-selfhost": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/featherless-ai/simple-jev/blob/9c11582d3e631e0b118f3f3132ebbb00c62020c5/README.md",
+            "title": "Author README",
+            "evidence": "simple-jev --model Qwen/Qwen3.8-27B ... (serves the stock base model)"
+          }
+        ],
+        "cr": "CR-PENDING",
+        "checked_utc": "2026-10-07T00:00:00Z"
+      },
+      "bespoke-nimble-9b-v3": {
+        "label": "Qwen/Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/bespokelabs/Bespoke-Nimble-9B-v3/blob/8e927b9b4afdbb14479fac10a7364d1a695be208/README.md",
+            "title": "Author model card",
+            "evidence": "Bespoke-Nimble-9B-v3 is a LoRA adapter for Qwen/Qwen3.5-9B; base_model: Qwen/Qwen3.5-9B"
+          }
+        ],
+        "cr": "CR-PENDING",
+        "checked_utc": "2026-10-07T00:00:00Z"
+      },
+      "gev-26b-decide": {
+        "label": "google/gemma-4-26B-A4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/autotrust/GEV-26B-Decide/blob/7c89590ead085bf77630b4bf68264ea30b6ddc78/README.md",
+            "title": "Author model card",
+            "evidence": "base_model: google/gemma-4-26B-A4B-it; base_model_relation: adapter; System 2 is \"the unmodified google/gemma-4-26B-A4B-it\""
+          }
+        ],
+        "cr": "CR-PENDING",
+        "checked_utc": "2026-10-07T00:00:00Z"
+      },
+      "torchcast-decision-27b": {
+        "label": "startlux-models/StartLux-Decision-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/torchcast-ai/torchcast-decision-27b/blob/08645834899cb8e00d370b77a3f4e0baa3241dd1/README.md",
+            "title": "Author model card",
+            "evidence": "A LoRA fine-tune of StartLux-Decision-27B, merged into the weights.; Qwen team at Alibaba Cloud credited for the underlying model."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/config.json",
+            "title": "Qwen/Qwen3.8-27B config.json",
+            "evidence": "text_config of the evaluated repo is identical to this base config (inferred, the card does not name the Qwen version)"
+          }
+        ],
+        "cr": "CR-PENDING",
+        "note": "Direct base is StartLux-Decision-27B (startlux-models, CC-BY-NC-4.0), itself a modified Alibaba Qwen model; its card does not name the Qwen version. Qwen3.8-27B is inferred from the identical text_config.",
+        "checked_utc": "2026-10-07T00:00:00Z"
+      },
+      "decision-2-0-vega-27b": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/vllm-sr/Decision-2.0-Vega-27B/blob/7aec49ae11a18741706da549ab626b9052795fe7/config.json",
+            "title": "Author config.json",
+            "evidence": "backbone.repository: \"Qwen/Qwen3.8-27B\", revision 1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0"
+          },
+          {
+            "url": "https://huggingface.co/vllm-sr/Decision-2.0-Vega-27B/blob/7aec49ae11a18741706da549ab626b9052795fe7/README.md",
+            "title": "Author model card",
+            "evidence": "base_model: Qwen/Qwen3.8-27B"
+          }
+        ],
+        "cr": "CR-PENDING",
+        "checked_utc": "2026-10-07T00:00:00Z"
+      },
+      "jade": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/theunnecessarythings/JADE/blob/8e9f9a3aa4293190fcc4a6ff17ff5f3251f4c270/README.md",
+            "title": "Author model card",
+            "evidence": "base_model: Qwen/Qwen3.8-27B; JADE is built on Qwen3.8-27B"
+          }
+        ],
+        "cr": "CR-PENDING",
+        "checked_utc": "2026-10-07T00:00:00Z"
+      },
+      "jev-27b-autotrust": {
+        "label": "Qwen/Qwen3.8-27B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/autotrust/JEV-27B/blob/51740a8891c2a8baefd969237fd44187b3e3a115/README.md",
+            "title": "Author model card",
+            "evidence": "base_model: Qwen/Qwen3.8-27B; the System 2 block is Qwen3.8-27B, bit-identical to the release"
+          }
+        ],
+        "cr": "CR-PENDING",
+        "checked_utc": "2026-10-07T00:00:00Z"
       }
     },
     "imagejevbench": {

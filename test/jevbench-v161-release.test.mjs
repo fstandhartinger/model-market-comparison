@@ -40,7 +40,9 @@ test('v1.6.1 is the live release, v1.6.0 stays reachable unchanged', async () =>
 
 test('self-hosted rows are identical to v1.6.0 (scores, axes, intelligence, calibration, cost, speed)', () => {
   const old = new Map(v160.artifact.systems.map((s) => [s.key, s]));
-  const selfHosted = a.systems.filter((s) => s.v16.lane === 'selfhosted');
+  // rows appended by scripts/jevbench-add-rows.py (same pool, later measured) are covered by test/jevbench-add-rows.test.mjs
+  const added = new Set((a.additions ?? []).flatMap((x) => x.keys));
+  const selfHosted = a.systems.filter((s) => s.v16.lane === 'selfhosted' && !added.has(s.key));
   assert.ok(selfHosted.length > 80);
   for (const s of selfHosted) {
     const o = old.get(s.key);
