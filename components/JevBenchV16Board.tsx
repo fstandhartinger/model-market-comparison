@@ -9,7 +9,7 @@ import { jevbenchCategoryView } from '../lib/jevbench-categories.mjs';
 import { jevV15FilterRows } from '../lib/jevbench-v15-filter-rows.mjs';
 import { JevBenchV16Charts } from './JevBenchV16Charts';
 import { jevClassView } from './jevClassView';
-import { JEV_V16_CLASS_OPTIONS } from '../lib/jevbench-jev-class.mjs';
+import { JEV_V16_CLASS_OPTIONS, JEV_V16_FROZEN_LIMITS } from '../lib/jevbench-jev-class.mjs';
 import { JevScoreChart } from './JevBoardInteractive';
 import { JevCompareV15 } from './JevCompareV15';
 import { JevV15FilterProvider, JevV15FilterPanel, type JevV15RowMeta } from './JevV15Filters';
@@ -326,24 +326,32 @@ const PUBLIC_SET: ReadonlyMap<string, JevApiPublicRow> = new Map(PUBLIC_ROWS.fil
 function ApiPublicSet() {
   if (PUBLIC_ROWS.length === 0) return null;
   const rows = [...PUBLIC_ROWS].sort((x, y) => (y.capability ?? -1) - (x.capability ?? -1));
+  // Same Jev-class caps as the rankings (2x the frozen Jev reference cost and median latency); wrappers are never in class.
+  const outside = (r: JevApiPublicRow) => r.role === 'wrapper' ? r.note ?? 'wrapper'
+    : [r.usd_per_1000 == null ? 'no published price' : r.usd_per_1000 > JEV_V16_FROZEN_LIMITS.cost ? `cost ${(r.usd_per_1000 / (JEV_V16_FROZEN_LIMITS.cost / 2)).toFixed(1)}× Jev` : null,
+      r.p50_s != null && r.p50_s > JEV_V16_FROZEN_LIMITS.latency ? `latency ${(r.p50_s / (JEV_V16_FROZEN_LIMITS.latency / 2)).toFixed(1)}× Jev` : null].filter(Boolean).join(', ') || null;
+  const groups: [string, JevApiPublicRow[]][] = [['Within the Jev-class caps (cost and median latency at most 2× Jev)', rows.filter((r) => !outside(r))],
+    ['Outside the Jev-class caps', rows.filter((r) => outside(r))]];
   const meta = apiPublicSet as { set_label: string; scorer: string };
   return <section className="bh-panel mt-10 p-5" id="jev-api-public-set" aria-labelledby="jev-api-public-set-title" data-bh-jev-api-public-set>
     <h2 id="jev-api-public-set-title" className="text-2xl font-bold">Public-set re-runs (v1.6, 300 public items): not ranked</h2>
-    <p className="bh-muted mt-1 max-w-4xl text-sm">API offerings we have not re-measured on the full v1.6 set yet answered the {meta.set_label}. No sealed item was sent, so no provider saw held-out data. Scores use the same v1.6.1 scorer restricted to these 300 items ({meta.scorer}). Calibration on 300 items reads lower than on 1,500, and without a sealed side there is no gap penalty, so these numbers are <b>not comparable with the 1,500-item rankings above</b>. Failed or refused requests count as wrong; rows with fewer than {(apiPublicSet as { min_answered: number }).min_answered} answers are not shown. Cost is the list price as measured (or as documented in v1.5 for demo endpoints without a tariff); latency was measured from Helsinki. To compare, use the <b>anchor</b> rows: systems ranked above, scored on exactly the same 300 public items. Full sealed re-runs follow with the next fresh sealed draw.</p>
+    <p className="bh-muted mt-1 max-w-4xl text-sm">API offerings not yet re-measured on the full v1.6 set answered the 300 public v1.6 items (no sealed items, so no provider saw held-out data). These figures are <b>not comparable with the 1,500-item rankings above</b>; compare them with the <b>anchor</b> rows, which are ranked above and scored on the same 300 items. Full sealed re-runs follow with the next fresh sealed draw.</p>
+    <details className="bh-muted mt-2 max-w-4xl text-sm"><summary className="cursor-pointer">How these figures are measured</summary><p className="mt-1">Same v1.6.1 scorer restricted to the {meta.set_label} ({meta.scorer}). Calibration on 300 items reads lower than on 1,500, and without a sealed side there is no gap penalty. Failed or refused requests count as wrong; rows with fewer than {(apiPublicSet as { min_answered: number }).min_answered} answers are not shown. Cost is the list price as measured (or as documented in v1.5 for demo endpoints without a tariff); latency was measured from Helsinki.</p></details>
     <div className="mt-3 overflow-x-auto"><table className="w-full text-left text-sm tabular" data-bh-jev-api-public-table>
       <caption className="sr-only">API offerings scored on the 300 public v1.6 items, with anchors</caption>
-      <thead><tr>{['System', 'Measured', 'Answered', 'Intelligence', 'Calibration', 'Capability (public set)', 'Cost / 1,000', 'Median latency', 'Older v1.5 score'].map((h) => <th key={h} scope="col" className="p-2">{h}</th>)}</tr></thead>
-      <tbody>{rows.map((r) => <tr key={r.key} className="border-t border-line" data-bh-jev-api-public-row={r.key} data-role={r.role}>
+      <thead><tr>{['System', 'Capability (public set)', 'Intelligence', 'Calibration', 'Measured', 'Answered', 'Cost / 1,000', 'Median latency', 'Older v1.5 score'].map((h) => <th key={h} scope="col" className="p-2">{h}</th>)}</tr></thead>
+      <tbody>{groups.filter(([, g]) => g.length > 0).flatMap(([label, g]) => [<tr key={label} className="border-t border-line"><th colSpan={9} scope="colgroup" className="p-2 pt-4 text-left text-sm font-semibold">{label} ({g.length})</th></tr>, ...g.map((r) => <tr key={r.key} className="border-t border-line" data-bh-jev-api-public-row={r.key} data-role={r.role} data-jev-class={outside(r) ? 'outside' : 'eligible'}>
         <th scope="row" className="p-2 font-normal">{r.href ? <a className="text-accent underline" href={r.href}>{r.display}</a> : r.display}
           {r.role !== 'carried' && <span className="bh-thin-tag ml-1.5 align-middle">{r.role}</span>}
-          {r.note && <span className="bh-muted block text-xs">{r.note}</span>}</th>
+          {r.note && r.role !== 'wrapper' && <span className="bh-muted block text-xs">{r.note}</span>}
+          {outside(r) && <span className="bh-muted block text-xs">{outside(r)}</span>}</th>
+        <td className="p-2 font-semibold">{one(r.capability)}</td>
+        <td className="p-2">{one(r.intelligence)}</td><td className="p-2">{one(r.calibration)}</td>
         <td className="p-2 whitespace-nowrap">{r.measured_on}</td>
         <td className="p-2">{r.n_ok}/{r.n_items}</td>
-        <td className="p-2">{one(r.intelligence)}</td><td className="p-2">{one(r.calibration)}</td>
-        <td className="p-2 font-semibold">{one(r.capability)}</td>
         <td className="p-2">{usd(r.usd_per_1000)}</td><td className="p-2">{sec(r.p50_s)}</td>
         <td className="p-2 bh-muted">{r.role === 'anchor' ? 'ranked above on the full v1.6.1 set' : r.v15_capability != null || r.v15_composite != null ? <>{r.v15_capability != null && <>Capability {one(r.v15_capability)} · </>}Composite {one(r.v15_composite)}<span className="block text-xs">{r.v15_measured ?? 'v1.5'}, older method</span></> : '—'}</td>
-      </tr>)}</tbody>
+      </tr>)])}</tbody>
     </table></div>
   </section>;
 }
