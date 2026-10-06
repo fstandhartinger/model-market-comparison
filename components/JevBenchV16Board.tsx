@@ -89,18 +89,19 @@ function LanguageView({ a, categories, hiddenApi }: { a: JevV16ReleaseArtifact; 
 }
 
 function DatedCarry({ carry, hiddenApi }: { carry: JevV16Carry; hiddenApi: ReadonlySet<string> }) {
-  const byRelease = carry.releases.map((r) => ({ ...r, n: carry.rows.filter((row) => row.measured_revision === r.revision).length })).filter((r) => r.n > 0);
+  // Review 6 Oct 2026: the date counts follow the default view (hidden API rows are counted separately, and badged when shown).
+  const byRelease = carry.releases.map((r) => ({ ...r, n: carry.rows.filter((row) => row.measured_revision === r.revision && !hiddenApi.has(row.key)).length })).filter((r) => r.n > 0);
   const shownByDefault = carry.rows.filter((r) => !hiddenApi.has(r.key)).length;
   return <section className="bh-panel mt-10 p-5" aria-labelledby="jev16-carry" data-bh-jev16-dated-carry>
     <h2 id="jev16-carry" className="text-2xl font-bold">Not yet measured on v1.6 · {shownByDefault < carry.rows.length ? `${shownByDefault} open-weights systems` : `${carry.rows.length} systems`} with a dated carried score</h2>
     {shownByDefault < carry.rows.length && <p className="bh-muted mt-1 text-xs">A further {carry.rows.length - shownByDefault} carried rows are hosted API offerings; they appear here when “Show API offerings” is on and are listed on the <a className="text-accent underline" href="/jev-models/api#jev16-carry">API leaderboard</a>.</p>}
     <p className="bh-muted mt-1 max-w-4xl text-sm">{carry.rule} {carry.method}</p>
-    <p className="bh-muted mt-1 text-xs">Dates: {byRelease.map((r) => `${r.revision} published ${r.published_on} (${r.n})`).join(' · ')}. The date is the publication day of the release that first published the measurement, not a per-model measurement timestamp.</p>
+    <p className="bh-muted mt-1 text-xs">Dates: {byRelease.map((r) => `${r.revision} published ${r.published_on} (${r.n})`).join(' · ')}{shownByDefault < carry.rows.length ? ` · plus ${carry.rows.length - shownByDefault} hosted API rows when shown` : ''}. The date is the publication day of the release that first published the measurement, not a per-model measurement timestamp.</p>
     <div className="mt-3 max-h-[40rem] overflow-auto"><table className="w-full text-left text-sm tabular">
       <caption className="sr-only">Carried JevBench v1.5.x results, not ranked with v1.6 measurements</caption>
       <thead><tr>{['System', 'Measured on', 'Capability (v1.5 scale)', 'v1.5 Composite', 'Cost / 1,000', 'Median latency'].map((h) => <th key={h} scope="col" className="p-2">{h}</th>)}</tr></thead>
       <tbody>{carry.rows.map((r) => <tr key={r.key} className="border-t border-line" data-bh-jev16-carry-row={r.key} {...apiRowProps(r.key, hiddenApi)}>
-        <th scope="row" className="p-2 font-normal"><a className="text-accent underline" href={r.source_url ?? r.repo ?? undefined}>{r.display}</a>{r.note && <span className="bh-muted block text-xs">{r.note}</span>}</th>
+        <th scope="row" className="p-2 font-normal"><a className="text-accent underline" href={r.source_url ?? r.repo ?? undefined}>{r.display}</a>{hiddenApi.has(r.key) && <span className="bh-thin-tag bh-flag-tag ml-1">API</span>}{r.note && <span className="bh-muted block text-xs">{r.note}</span>}</th>
         <td className="p-2 whitespace-nowrap">{r.measured_label}</td>
         <td className="p-2">{one(r.capability)}</td>
         <td className="p-2">{one(r.composite_v15)}{r.v156_rank != null && <span className="bh-muted"> · was #{r.v156_rank} on {r.carried_from}</span>}</td>
@@ -197,7 +198,7 @@ function Method({ a, sha256, categoriesSha256, carrySha256, scope, hiddenApi }: 
     {!v161 && <p className="bh-muted mt-1 text-sm">{a.v16.equating.rule.charAt(0).toUpperCase() + a.v16.equating.rule.slice(1)}. Offsets in this run: Intelligence {off.I >= 0 ? '+' : ''}{off.I.toFixed(2)}, Calibration {off.C >= 0 ? '+' : ''}{off.C.toFixed(2)}. {a.v16.equating.pool_note} Category and language values stay raw and unequated.</p>}
     <h3 className="mt-4 text-lg font-semibold">Headline and Composite</h3>
     <p className="bh-muted mt-1 text-sm">Capability = mean(Intelligence, Calibration) for systems within twice the Jev 1.13.0 cost and median latency (the official caps; the sliders change only your view). The Composite (option {a.headline}) is the equal-weight harmonic mean of Intelligence, Calibration, Speed and Cost with the v1.5 low-axis gates; it remains secondary. Request types Choice, Noul and Score weigh equally; tiers weigh easy {a.tier_weights.easy}, standard {a.tier_weights.standard}, hard {a.tier_weights.hard}, judge {a.tier_weights.judge}.</p>
-    <p className="bh-muted mt-1 text-sm" data-bh-jev16-class-reference>Jev-class caps use a fixed reference: Jev 1.13.0 as measured in v1.5 (p50 0.62 s, USD 0.0323 per 1k answers); caps = 2x (1.23 s, USD 0.0646). Jev&apos;s own v1.6 p50 is 0.24 s.</p>
+    <p className="bh-muted mt-1 text-sm" data-bh-jev16-class-reference>Jev-class caps use a fixed reference: Jev 1.13.0 as measured in v1.5 (p50 0.62 s, USD 0.0323 per 1,000 decisions); caps = 2x (1.23 s, USD 0.0646). Jev&apos;s own v1.6 p50 is 0.24 s.</p>
     <p id="jev-costs" className="bh-muted mt-1 text-sm">Costs of v1.6-measured systems carry each system&apos;s published v1.5.4 cost per 1,000 decisions (pricing rules unchanged; v1.6 item lengths differ) unless the row says otherwise; Fastino&apos;s is an estimate from its published tariff and measured tokens.</p>
     {a.noul_method?.applied === 'O1S' && <>
     <h3 className="mt-4 text-lg font-semibold">Noul decisiveness and Score baseline (addendum B)</h3>
@@ -223,6 +224,13 @@ function Method({ a, sha256, categoriesSha256, carrySha256, scope, hiddenApi }: 
 type OvernightNotes = { round: string; scored_utc: string; a2_note?: string | null; notes?: string[];
   exposure?: Record<string, { display?: string; sealed_items_exposed?: number; draws?: string; note?: string }> };
 
+// Review 6 Oct 2026: the frozen overnight note (part of the hashed artifact, so not edited) still gives Sage's pre-amendment
+// cost over all 600 rows; the v1.6.1 cost rule prices the common item set, which puts Sage inside the cost cap.
+const SAGE_PRE_AMENDMENT_COST = 'over all 600 answered rows: USD 0.0766/1,000 decisions. It exceeds the frozen Jev-class cost cap and is excluded from the Capability headline.';
+const overnightErratum = (note: string) => note.includes(SAGE_PRE_AMENDMENT_COST)
+  ? note.replace(SAGE_PRE_AMENDMENT_COST, 'over all 600 answered rows: USD 0.0766/1,000 decisions. Superseded by the v1.6.1 cost rule (common item set): USD 0.0247/1,000 decisions, inside the Jev-class cost cap.')
+  : note;
+
 function Overnight({ o, hiddenApi }: { o: OvernightNotes; hiddenApi: ReadonlySet<string> }) {
   const exp = Object.entries(o.exposure ?? {})
     // Every exposure entry is a hosted endpoint (keys can name a mode, e.g. wity-1-auto); the open board keeps only the Jev reference.
@@ -230,7 +238,7 @@ function Overnight({ o, hiddenApi }: { o: OvernightNotes; hiddenApi: ReadonlySet
   return <div data-bh-jev16-overnight-method>
     <h3 className="mt-4 text-lg font-semibold">Overnight full re-measure (4–5 Oct 2026)</h3>
     <p className="bh-muted mt-1 text-sm">Every system with a reproducible recipe was re-run on the v1.6.0 pool overnight with the same pinned inputs and scorer (method option B / O1S). This page uses scoring round {o.round} ({o.scored_utc}). Only complete runs (1,500 items self-hosted, the full API input for hosted APIs) are ranked; partial runs are never ranked, and systems not yet re-measured keep their dated v1.5.x score in the separate table.</p>
-    {o.notes && o.notes.length > 0 && <ul className="bh-muted mt-1 list-disc space-y-1 pl-5 text-sm">{o.notes.map((n, i) => <li key={i}>{n}</li>)}</ul>}
+    {o.notes && o.notes.length > 0 && <ul className="bh-muted mt-1 list-disc space-y-1 pl-5 text-sm">{o.notes.map((n, i) => <li key={i}>{overnightErratum(n)}</li>)}</ul>}
     {o.a2_note && <><h3 className="mt-4 text-lg font-semibold">Supplementary API draws A2 and A3</h3><p className="bh-muted mt-1 text-sm" data-bh-jev16-a2>{o.a2_note}</p></>}
     {exp.length > 0 && <><h3 className="mt-4 text-lg font-semibold">Per-model exposure counts (hosted and author-hosted endpoints)</h3>
       <div className="mt-2 overflow-x-auto"><table className="text-left text-sm tabular" data-bh-jev16-exposure>
@@ -435,7 +443,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
   return <JevV15FilterProvider rows={filterRows} apiKeys={scope === 'open' ? apiKeys : undefined}>
     <section data-bh-jevbench-v16-release data-bh-jev-scope={scope}>
       <JevV15FilterVisibilityBridge />
-      {scope === 'open' && <JevApiOfferingsToggle measured={a.systems.filter((s) => (s as { scope?: string }).scope === 'api').length} />}
+      {scope === 'open' && <JevApiOfferingsToggle measured={a.systems.filter((s) => (s as { scope?: string; listing?: string }).scope === 'api' && (s as { listing?: string }).listing !== 'listed').length} />}
       {scope !== 'api' && capabilityCharts}
       {scope !== 'api' && <JevV15FilterPanel />}
       {scope === 'api' && extra.length > 0 && <p className="mt-6 max-w-4xl text-sm" data-bh-jev-api-preliminary-note><span className="bh-thin-tag bh-partial-tag mr-1.5 align-middle">preliminary</span><b>Hatched rows are preliminary:</b> API offerings scored on the 300 public v1.6 items only (no sealed items, so no gap penalty; Calibration reads a few points lower on 300 items than on 1,500). They are not ranked and compare strictly only with the anchor rows in the public-set table; a full re-evaluation on a fresh sealed set is running, and each row is replaced by its full result when that finishes. <span className="bh-thin-tag bh-partial-tag mx-1 align-middle">pending</span>Greyed rows have no v1.6 figure yet; their v1.5 score is in the tooltip and in the <a className="text-accent underline" href="#jev-api-public-set">public-set table</a>.</p>}
