@@ -44,6 +44,9 @@ export default async function ImageJevSystemPage({ params }: { params: Promise<{
   if (!found) notFound();
   const { artifact, row, systems } = found;
   const source = imageJevSourceUrl(row.key, row.repo);
+  // Review 6 Oct 2026: rows that exist only in the v0.1.5 artifact are dated carries, not ranked on the v0.3 scale.
+  const archived = artifact.revision !== 'v0.3.0';
+  const rankedCount = systems.filter((candidate) => candidate.ranked).length;
   return <>
     <nav className="text-sm"><Link href="/image-jev-bench" className="text-accent underline">← Back to the full Image JevBench leaderboard</Link></nav>
     <header className="bh-page-head mt-3">
@@ -52,6 +55,7 @@ export default async function ImageJevSystemPage({ params }: { params: Promise<{
       <JevArchitectureBadge row={row} benchmark="imagejevbench" />
       <BaseModelDisplay benchmark="imagejevbench" systemKey={row.key} className="mt-2 block text-sm" />
       {source && <p className="mt-2 text-sm"><a href={source} target="_blank" rel="noopener noreferrer" className="text-accent underline" data-bh-jev-source={row.key}>Published source</a></p>}
+      {archived && <p className="mt-2 rounded border border-line px-3 py-2 text-sm" data-bh-imagejev-archived-banner>Archived v0.1.5 score, not ranked on the v0.3 scale. <Link href="/image-jev-bench#imagejev-v015-archive" className="text-accent underline">See the v0.1.5 archive</Link>.</p>}
       {row.endpoint_condition && <p className="bh-muted mt-2 text-sm">{row.endpoint_condition}</p>}
       {row.key === 'wity_1' && <p className="mt-2 text-sm text-amber-700 dark:text-amber-300" data-bh-mm-author-review>Under author review: server build ID was not recorded; this score may change after verification.</p>}
     </header>
@@ -59,7 +63,7 @@ export default async function ImageJevSystemPage({ params }: { params: Promise<{
       <section className="bh-panel p-5" aria-labelledby="imagejev-system-score" data-bh-mm-system-score>
         <h2 id="imagejev-system-score" className="text-xl font-semibold">Image JevBench {artifact.revision} composite score</h2>
         <p className="mt-2 text-3xl font-bold tabular-nums">{number(row.jevbench_score)}</p>
-        <p className="bh-muted mt-1">{row.ranked && row.rank != null ? `Rank #${row.rank} of ${systems.filter((candidate) => candidate.ranked).length} ranked systems.` : 'Listed, not ranked.'}</p>
+        <p className="bh-muted mt-1">{row.ranked && row.rank != null ? archived ? `v0.1.5 rank #${row.rank} of ${rankedCount} (archived).` : `Rank #${row.rank} of ${rankedCount} ranked systems.` : 'Listed, not ranked.'}</p>
         <p className="bh-muted mt-3 text-sm">From the published full-benchmark aggregate. The composite combines intelligence, calibration, speed and cost.</p>
       </section>
       <section aria-labelledby="imagejev-system-axes" data-bh-mm-system-axes>
@@ -86,7 +90,7 @@ export default async function ImageJevSystemPage({ params }: { params: Promise<{
         {row.sealed_accuracy != null && <div><dt className="font-semibold">Sealed accuracy</dt><dd className="tabular-nums">{number(row.sealed_accuracy * 100, 1)}%</dd></div>}
         {typeof row.note === 'string' && row.note && <div><dt className="font-semibold">Measurement note</dt><dd className="bh-muted">{row.note}</dd></div>}
       </dl>
-      <p className="bh-muted mt-4 text-sm">Published {artifact.built_utc}. Scores and ranks can change in a later release. See the <Link href={artifact.revision === 'v0.3.0' ? '/image-jev-bench#v03-method' : '/image-jev-bench#method-heading'} className="text-accent underline">method notes</Link>.</p>
+      <p className="bh-muted mt-4 text-sm">Published {String(artifact.built_utc).slice(0, 10)}. Scores and ranks can change in a later release. See the <Link href={artifact.revision === 'v0.3.0' ? '/image-jev-bench#v03-method' : '/image-jev-bench#method-heading'} className="text-accent underline">method notes</Link>.</p>
     </section>
   </>;
 }

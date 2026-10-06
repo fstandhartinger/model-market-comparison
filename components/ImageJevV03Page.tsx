@@ -7,6 +7,8 @@ import { JevScoreChart } from './JevBoardInteractive';
 import { JevCompareV15 } from './JevCompareV15';
 import { ImageJevExamples } from './ImageJevExamples';
 import release from '../data/imagejev-v03.json';
+import { imageJevSourceUrl, imageJevAuthorLabel } from '../lib/imagejev-system-links.mjs';
+import { ImageJevArchiveOpener } from './ImageJevArchiveOpener';
 import { MultimodalPreviewContent } from '../app/jev-models/multimodal-preview/page';
 
 export async function ImageJevV03Page() {
@@ -16,12 +18,18 @@ export async function ImageJevV03Page() {
  const options = { limits, factor: limits.factor, referenceLabel: limits.referenceLabel };
  const capability = jevClassView(systems, options);
  const compare = imageJevCompareRows(a);
+ const inClass = new Map<string, boolean>(capability.points.map((p: any) => [p.key, !!p.inClass]));
+ const m = a.method;
+ const rankedCount = a.ranking.filter((r: any) => r.ranked).length;
+ const apiRows = a.ranking.filter((r: any) => r.api_flag);
+ const selfHostedSealed = a.ranking.find((r: any) => !r.api_flag)?.tracks['computer-use']?.n_sealed;
  return <>
+  <ImageJevArchiveOpener />
   <header className="bh-page-head max-w-5xl">
    <p className="bh-eyebrow">Image benchmark · v0.3.0</p>
    <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">Image JevBench</h1>
    <p className="mt-3 text-lg">JevImageBench Capability Score</p>
-   <p className="mt-2 bh-muted">{a.ranking.length} measured systems · {a.ranking.filter((r: any) => r.ranked).length} accepted for ranking · {a.carried.length} dated carries. Built {a.built_utc}.</p>
+   <p className="mt-2 bh-muted">{a.ranking.length} measured systems · {a.ranking.filter((r: any) => r.ranked).length} accepted for ranking · {a.carried.length} dated carries. Built {String(a.built_utc).slice(0, 10)}.</p>
    <p className="mt-3 bh-muted" data-bh-imagejev-v03-note>New item pool: 2,441 items on 2,160 images, fresh 300 public / 1,200 sealed draw. Measured rows with unresolved acceptance or equating holds remain unrankable. Carried scores belong to v0.1.5 and are not ranked on the v0.3 scale.</p>
    <nav className="mt-3 flex flex-wrap gap-4" aria-label="Image benchmark versions"><a className="text-accent underline" href="#jev-capability">v0.3.0</a><a className="text-accent underline" href="#imagejev-v015-archive">v0.1.5 archive</a><a className="text-accent underline" href="#imagejev-history-heading">Earlier versions</a></nav>
   </header>
@@ -34,10 +42,11 @@ export async function ImageJevV03Page() {
    {compare.length >= 2 ? <JevCompareV15 rows={compare} openDecisions={300} sealedDecisions={1200} axesOnly categories={a.categories} /> : <section className="mt-10" data-bh-v03-compare-pending><h2 className="text-2xl font-semibold">Compare two systems</h2><p className="bh-muted mt-2">Only {compare.length} v0.3 system is measured so far. The interactive two-system comparison becomes available after a second aggregate arrives.</p><div className="mt-3 grid gap-3 sm:grid-cols-3">{['Capability radar (four axes)','Capability by image type','Use cases (TypeSafe categories)'].map(title => <div key={title} className="bh-panel p-4"><h3 className="font-semibold">{title}</h3><p className="bh-muted mt-2 text-sm">Awaiting a second measured system{title.includes('categories') || title.includes('type') ? ' and category competence aggregates' : ''}. No scores estimated.</p></div>)}</div></section>}
   </>}
   <section className="mt-10" data-bh-v03-measured><h2 className="text-2xl font-semibold">Measured on v0.3.0 — core track</h2>
-   <div className="mt-4 overflow-x-auto"><table className="bh-table w-full"><thead><tr><th>System</th><th>Capability</th><th>Composite</th><th>Status</th><th>Score artifact date</th></tr></thead><tbody>{a.ranking.map((r: any) => <tr key={r.key} data-bh-v03-measured-row><th className="text-left font-normal"><a className="text-accent underline" href={r.repo ?? '#v03-method'}>{r.name}</a><span className="bh-muted block text-xs">{r.author ?? 'Author not reported'} · {r.licence ?? r.license ?? 'Licence not reported'}{r.params ? ' · '+r.params : ''}</span></th><td>{r.tracks.core.capability_raw.toFixed(2)}</td><td>{r.tracks.core.composite.score == null ? '—' : r.tracks.core.composite.score.toFixed(2)}</td><td>{r.ranked ? '#'+r.rank : 'Measured but unrankable'}<span className="bh-muted block text-xs">{r.not_ranked_because}</span></td><td>{r.last_measured_utc.slice(0,10)}</td></tr>)}</tbody></table></div>
+   <div className="mt-4 overflow-x-auto"><table className="bh-table w-full"><thead><tr><th>System</th><th>Rank</th><th>Capability</th><th>Jev-class (within caps)</th><th>Composite</th><th>Status</th><th>Score artifact date</th></tr></thead><tbody>{a.ranking.map((r: any) => { const source = imageJevSourceUrl(r.key, r.repo); return <tr key={r.key} data-bh-v03-measured-row><th className="text-left font-normal">{source ? <a className="text-accent underline" href={source}>{r.name}</a> : r.name}<span className="bh-muted block text-xs">{imageJevAuthorLabel(r)} · {r.licence ?? r.license ?? 'Licence not reported'}{r.params ? ' · '+r.params : ''}</span></th><td>{r.ranked ? '#'+r.rank : '—'}</td><td>{r.tracks.core.capability_raw.toFixed(2)}</td><td>{inClass.get(r.key) ? 'Yes' : 'No'}</td><td>{r.tracks.core.composite.score == null ? '—' : r.tracks.core.composite.score.toFixed(2)}</td><td>{r.ranked ? 'Ranked' : 'Measured but unrankable'}<span className="bh-muted block text-xs">{r.not_ranked_because}</span></td><td>{r.last_measured_utc.slice(0,10)}</td></tr>; })}</tbody></table></div>
+   <p className="bh-muted mt-2 text-xs">Capability here is the raw mean of Intelligence and Calibration. Only ranked rows inside the cost and latency caps (Jev-class) receive a Capability rank in the chart above; Rank is the official composite rank.</p>
    <details className="mt-4"><summary className="cursor-pointer text-accent">Per-type, P/S/A and hard-slice aggregates</summary><div className="grid gap-3 mt-3">{a.ranking.map((r: any) => <details key={r.key} className="bh-panel p-3"><summary>{r.name}</summary><pre className="mt-2 overflow-x-auto text-xs">{JSON.stringify({sets:r.tracks.core.sets,per_type:r.tracks.core.per_type,hard_slices:r.tracks.core.hard_slices},null,2)}</pre></details>)}</div></details>
   </section>
-  <section className="mt-10" data-bh-v03-computer-use><h2 className="text-2xl font-semibold">Computer-use track</h2><p className="bh-muted mt-2">Separate from the core Capability headline. No mixing of track scores.</p><div className="mt-3 overflow-x-auto"><table className="bh-table"><thead><tr><th>System</th><th>Capability</th><th>Composite</th><th>Public / sealed items</th></tr></thead><tbody>{a.ranking.map((r:any) => {const t=r.tracks['computer-use'];return <tr key={r.key}><th className="text-left font-normal">{r.name}</th><td>{t?.axes ? t.capability_raw.toFixed(2) : 'Unmeasured'}</td><td>{t?.axes && t.composite.score != null ? t.composite.score.toFixed(2) : '—'}</td><td>{t?.n_public ?? 0} / {t?.n_sealed ?? 0}</td></tr>})}</tbody></table></div></section>
+  <section className="mt-10" data-bh-v03-computer-use><h2 className="text-2xl font-semibold">Computer-use track</h2><p className="bh-muted mt-2">Separate from the core Capability headline. No mixing of track scores.</p><div className="mt-3 overflow-x-auto"><table className="bh-table"><thead><tr><th>System</th><th>Capability</th><th>Composite</th><th>Public / sealed items</th></tr></thead><tbody>{a.ranking.map((r:any) => {const t=r.tracks['computer-use'];return <tr key={r.key}><th className="text-left font-normal">{r.name}{r.api_flag && <span className="bh-thin-tag ml-1.5" title="Hosted API">API</span>}</th><td>{t?.axes ? t.capability_raw.toFixed(2) : 'Unmeasured'}</td><td>{t?.axes && t.composite.score != null ? t.composite.score.toFixed(2) : '—'}</td><td>{t?.n_public ?? 0} / {t?.n_sealed ?? 0}</td></tr>})}</tbody></table></div>{apiRows.length > 0 && <p className="bh-muted mt-2 text-xs" data-bh-v03-computer-use-api-note>API: {apiRows.map((r: any) => r.name).join(', ')} ran the hosted-API subset ({apiRows[0].tracks['computer-use']?.n_sealed ?? '—'} sealed items instead of {selfHostedSealed ?? '—'}), so its computer-use scores are not comparable with the self-hosted rows.</p>}</section>
   <section className="mt-10" data-bh-v03-carry><h2 className="text-2xl font-semibold">Dated carry — v0.1.5 scores</h2><p className="bh-muted mt-2">Hosted APIs carry their previous score between rotation-eligible refreshes. Unavailable sources and rows not yet measured remain visible. All rows below are carried, not ranked on v0.3 scale.</p><div className="mt-3 overflow-x-auto"><table className="bh-table w-full"><thead><tr><th>System</th><th>Capability (v0.1.5 all track)</th><th>Composite (v0.1.5)</th><th>Last measured / release date</th><th>Status</th></tr></thead><tbody>{a.carried.map((r:any) => <tr key={r.key} data-bh-v03-carry-row><th className="text-left font-normal"><a href={r.repo ?? '#imagejev-v015-archive'} className="text-accent underline">{r.name}</a></th><td>{((r.tracks.all.axes.intelligence+r.tracks.all.axes.calibration)/2).toFixed(2)}</td><td>{r.tracks.all.composite.score.toFixed(2)}</td><td>{r.last_measured_utc ? r.last_measured_utc.slice(0,10) : 'Unknown; release '+r.release_date.slice(0,10)}</td><td>{r.carry_note}</td></tr>)}</tbody></table></div></section>
   <p className="bh-muted mt-8 text-sm">The examples below are retained v0.1.5 public examples for illustration; they are not v0.3 sealed items.</p>
   <ImageJevExamples />
@@ -45,8 +54,20 @@ export async function ImageJevV03Page() {
    <p className="mt-3">The new reserve has 2,441 items: 713 real Hugging Face images/items with CC-BY/MIT provenance and 1,728 synthetic items. The frozen draw has 300 public and 1,200 sealed items; hosted APIs receive the 300-item API subset plus public items. The sealed draw uses 600 choice / 300 Noul / 300 score tasks and a 40% hard share, across 14 families, 14 languages and five use cases.</p>
    <p className="mt-3">{a.method.passes} {a.method.equating_note}</p>
    <p className="mt-3">Each refresh draws fresh items. Items retire after three scored uses; hosted API exposure is at most once per three refresh releases or on a new model version. Exposure is logged before dispatch, items are not reused for that provider, and retire globally after two providers.</p>
-   <p className="mt-3">Image-type and TypeSafe use-case radar panels are retained. The current score files do not contain category competence aggregates, so their panels state that values are unavailable. No v0.1.5 category values or inferred scores are substituted.</p>
+   <p className="mt-3">Image-type and TypeSafe use-case radar panels are retained. {a.categories?.dims?.length ? <>Their values are chance-corrected category competence measured on the v0.3.0 draw (categories with fewer than {a.categories.radarMinN} items are listed in a table, not drawn).</> : 'The current score files do not contain category competence aggregates, so their panels state that values are unavailable.'} No v0.1.5 category values or inferred scores are substituted.</p>
    <details className="mt-3"><summary className="cursor-pointer text-accent">Aggregate source receipts and holds</summary><pre className="mt-2 overflow-x-auto text-xs">{JSON.stringify({sources:a.sources,warnings:a.warnings},null,2)}</pre></details>
+  </section>
+  <section className="mt-10 max-w-5xl" aria-labelledby="imagejev-v03-history-heading" data-bh-imagejev-v03-history>
+   <h2 id="imagejev-v03-history-heading" className="text-2xl font-semibold">Revision history</h2>
+   <details className="bh-panel mt-3 p-4" open data-bh-imagejev-v03-revision="v0.3.0">
+    <summary className="cursor-pointer text-sm leading-relaxed"><b>v0.3.0 · <time dateTime={String(a.built_utc).slice(0, 10)}>{String(a.built_utc).slice(0, 10)}</time></b></summary>
+    <ul className="mt-3 list-disc pl-5 text-sm">
+     <li>New item pool of {m.reserve.toLocaleString('en-US')} items: {m.real_hf.toLocaleString('en-US')} real and {m.synthetic.toLocaleString('en-US')} synthetic; fresh {m.public} public / {m.sealed.toLocaleString('en-US')} sealed draw.</li>
+     <li>{a.ranking.length} measured systems, {rankedCount} ranked; {a.carried.length} dated v0.1.5 carries, not ranked on the v0.3 scale.</li>
+     <li>Same-day fix: the lists follow the official rank order.</li>
+    </ul>
+    <p className="mt-3 text-sm">Earlier revisions (v0.1 to v0.1.5) are in the <a className="text-accent underline" href="#imagejev-history-heading">archive&apos;s revision history</a>.</p>
+   </details>
   </section>
   <details id="imagejev-v015-archive" className="mt-10 border-t border-line pt-4" data-bh-v015-archive><summary className="cursor-pointer text-xl font-semibold">v0.1.5 archive — full live page and earlier revision history</summary><MultimodalPreviewContent /></details>
  </>;

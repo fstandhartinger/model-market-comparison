@@ -151,7 +151,7 @@ test('CR-254 every Image detail route renders published rank, axes, cost, latenc
     const html = renderToStaticMarkup(await detail.default({ params: Promise.resolve({ system: row.key }) }));
     assert.match(html, new RegExp(`data-bh-base-model="${row.key}"`));
     assert.match(html, /data-bh-base-model-benchmark="imagejevbench"/);
-    assert.ok(html.includes(row.ranked ? `Rank #${row.rank} of ${rankedCount} ranked systems.` : 'Listed, not ranked.'), row.key);
+    assert.ok(html.includes(row.ranked ? (artifact.revision === 'v0.3.0' ? `Rank #${row.rank} of ${rankedCount} ranked systems.` : `v0.1.5 rank #${row.rank} of ${rankedCount} (archived).`) : 'Listed, not ranked.'), row.key); // CR-307: carried rows say archived
     assert.ok(html.includes(`Image JevBench ${artifact.revision}`), row.key);
     if (row.jevbench_score != null) assert.ok(html.includes(row.jevbench_score.toFixed(3)), row.key);
     if (row.cost?.usd_per_1000 != null) assert.ok(html.includes(`USD ${row.cost.usd_per_1000.toFixed(6)}`), row.key);
