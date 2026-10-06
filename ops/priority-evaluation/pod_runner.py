@@ -41,8 +41,8 @@ HOME = Path.home()
 LIUM = HOME / ".local/bin/lium"
 GUARD = HOME / "bin/gpu-pod-guard"
 
-MAX_HOURLY_USD = 2.50
-PER_ORDER_CAP_USD = 5.0
+MAX_HOURLY_USD = 5.00  # Florian 6 Oct 2026: paid fast-lane GPU pods up to USD 5/h
+PER_ORDER_CAP_USD = 20.0  # ... and at most USD 20 per order
 TTL_CAP_HOURS = 3.0
 EXPECTED_ROWS = 1624
 GPU_PREFERENCE = (("H100", 80), ("A100", 80), ("L40S", 48), ("RTX6000", 48))  # lium marketplace names

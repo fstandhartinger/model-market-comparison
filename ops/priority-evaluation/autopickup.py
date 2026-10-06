@@ -51,6 +51,7 @@ from typing import Any, Callable
 
 HOME = Path.home()
 TABLE = "bh_priority_evaluation_requests"
+API_ORDER_CAP_USD = 5.0  # endpoint measurements; GPU pod orders use pod_runner.PER_ORDER_CAP_USD
 EVENTS_TABLE = "bh_priority_eval_webhook_events"
 DB_NAME = os.environ.get("FASTLANE_DB") or "benchmarkheaven_accounts"
 STATE_ROOT = Path(os.environ.get("FASTLANE_STATE_ROOT") or HOME / ".local/state/fastlane-autopickup")
@@ -1843,11 +1844,11 @@ def dispatch_measurement(rid: str, job_dir: Path) -> None:
         output = STATE_ROOT / "measurements" / rid / benchmark
         if runtime["backend"] == "gpu_pod":
             recipe = load_json_file(job_dir / "trusted-runner" / "POD-RECIPE.json", 100_000)
-            record = pod_runner.run(rid, job_dir, recipe, output,
-                                    review["source_pins"]["official_measurement"], max(0, 5.0 - spent))
+            record = pod_runner.run(rid, job_dir, recipe, output, review["source_pins"]["official_measurement"],
+                                    max(0, pod_runner.PER_ORDER_CAP_USD - spent))
         else:
             record = measurement_dispatch.run(benchmark, runtime, credential, output,
-                                              review["source_pins"]["official_measurement"], max(0, 5.0 - spent))
+                                              review["source_pins"]["official_measurement"], max(0, API_ORDER_CAP_USD - spent))
         if benchmark not in records:
             spent += record["charged_or_reserved_usd"]
         records[benchmark] = record
