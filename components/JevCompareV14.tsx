@@ -119,7 +119,7 @@ export function SystemCombobox({ id, label, value, other, ranked, unranked, onCh
   }}>
     <label htmlFor={id} className="bh-muted mb-1 block font-semibold">{label}</label>
     <div className="relative">
-      <input ref={input} id={id} type="text" role="combobox" aria-autocomplete="list" aria-expanded={open} aria-controls={`${id}-options`}
+      <input ref={input} id={id} type="text" role="combobox" aria-autocomplete="list" aria-expanded={open} aria-controls={open ? `${id}-options` : undefined}
         aria-activedescendant={open && filtered.length ? `${id}-option-${activeIndex}` : undefined}
         autoComplete="off" spellCheck={false} className="bh-input min-h-11 w-full pr-9" value={open ? query : selected?.name ?? ''}
         placeholder={open ? 'Search systems…' : undefined} onFocus={() => { setOpen(true); setQuery(''); setActive(0); }}

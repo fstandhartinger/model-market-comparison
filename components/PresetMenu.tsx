@@ -74,7 +74,7 @@ export function PresetMenu({ kind, label, ours, activeId, onOurs, onYours, curre
   const submit = () => { const n = name.trim(); if (!n) return; save(kind, n, current); setName(""); setSaved(n); suggestSignIn(); };
 
   return <div ref={box} className="bh-preset relative" data-preset-kind={kind}>
-    <button type="button" className="bh-button !min-h-9 !py-1.5 text-sm" aria-expanded={open} aria-controls={panelId} onClick={() => { setOpen(!open); setSaved(null); }}>
+    <button type="button" className="bh-button !min-h-9 !py-1.5 text-sm" aria-expanded={open} aria-controls={open ? panelId : undefined} onClick={() => { setOpen(!open); setSaved(null); }}>
       <span className="bh-muted">{label}:</span> <span className="max-w-[11rem] truncate font-semibold">{active}</span>
       <svg aria-hidden="true" width="10" height="10" viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
     </button>
