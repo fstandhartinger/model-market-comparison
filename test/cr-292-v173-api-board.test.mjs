@@ -58,3 +58,10 @@ test('4: the shared sort keeps interleaved listings in place; the board uses the
   assert.match(board, /The base-model reference price only applies to open-weights rows; API offerings are ranked at their own list price/);
   assert.match(board, /version: 'v1\.7\.3'/);
 });
+
+test('5: the Fastino GLiNER-2.5-Decide footnote says why the score is low (model, not our request) in short', () => {
+  const note = JSON.parse(src('data/jevbench-base-models.json'));
+  const text = JSON.stringify(note);
+  assert.match(text, /A 340M English classifier \(8k context\), not built for multi-step reasoning/);
+  assert.match(text, /Our request follows Fastino's documented format/);
+});
