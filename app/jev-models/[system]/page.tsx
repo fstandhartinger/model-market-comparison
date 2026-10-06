@@ -109,7 +109,7 @@ function describeRow(row: JevV12Row, view: JevV12View, all: JevV12Row[]): string
 // release pointer in lib/jevbench-current.mjs, so the page never shows a frozen older release as current.
 type SeoRow = Awaited<ReturnType<typeof readJevbenchSeoData>>['systems'][number];
 type A4Page = { row: unknown; ranked: boolean; compositeRank: number | null; capabilityRank: number | null; capabilityOutside: string | null;
-  nRanked: number; nCapability: number; nItems: number; measuredOn: string; round: string; offsets: { I: number; C: number } };
+  nRanked: number; nCapability: number; nItems: number; measuredOn: string; round: string; offsets: { I: number; C: number }; full: boolean };
 const a4CostLabel = (kind: string | undefined) => kind === 'estimate' ? 'estimated' : 'public tariff';
 // Review 6 Oct 2026: the 17 API rows re-run on A4 ∪ P (v1.7.7) show the API-board figures; the older figure moves to a labelled block.
 function A4System({ data, page, previous }: { data: Awaited<ReturnType<typeof readJevbenchSeoData>>; page: A4Page; previous?: SeoRow }) {
@@ -123,7 +123,9 @@ function A4System({ data, page, previous }: { data: Awaited<ReturnType<typeof re
     <nav><Link href="/jev-models" className="text-accent underline">Back to JevBench</Link></nav>
     <header className="bh-page-head mt-3"><h1 className="text-3xl font-bold">{s.display}</h1><JevReleaseStamp data={data}/>
       <p className="mt-3" data-bh-jev-a4-capability>Capability {seoOne(capability)} · {page.ranked ? <>API offering, ranked on the <Link href="/jev-models/api" className="text-accent underline">API leaderboard</Link>{page.capabilityRank != null ? ` · Capability rank #${page.capabilityRank} of ${page.nCapability} within the Jev-class caps` : ` · outside the Jev-class caps (${page.capabilityOutside}), below the Capability ranking`}</> : <>API offering, listed and never ranked (wrapper), see the <Link href="/jev-models/api" className="text-accent underline">API leaderboard</Link></>}</p>
-      <p className="bh-muted mt-2">Measured {page.measuredOn} on A4 ∪ P, {page.nItems} items, equated (+{page.offsets.I.toFixed(2)} I / +{page.offsets.C.toFixed(2)} C); round {page.round}.</p>
+      <p className="bh-muted mt-2">{page.full
+        ? <>Measured {page.measuredOn} on the full v1.6.1 set ({page.nItems} items), scored like the other full-set API rows, not equated.</>
+        : <>Measured {page.measuredOn} on A4 ∪ P, {page.nItems} items, equated (+{page.offsets.I.toFixed(2)} I / +{page.offsets.C.toFixed(2)} C); round {page.round}.</>}</p>
       <p className="bh-muted">{previous?.licence ?? s.licence ?? 'Licence not stated'}</p>
     </header>
     <BaseModelDisplay systemKey={s.key} className="mt-2 block text-sm"/>

@@ -36,8 +36,9 @@ const nameLabel = (display: string, all: ReadonlyArray<{ display: string }>) => 
 const A4_OFFSETS = (apiA4 as { a4_offsets: { I: number; C: number } }).a4_offsets;
 const A4_ROWS = (apiA4 as { rows: Array<{ key: string; listing: string; n_rows: number }> }).rows.length;
 const A4_RANKED = (apiA4 as { rows: Array<{ key: string; listing: string; n_rows: number }> }).rows.filter((r) => r.listing === 'ranked').length;
-// Review 6 Oct 2026: 17 of the 21 ranked API rows are A4 u P re-runs and are equated; the frozen v1.6.1 text says hosted APIs are not.
-const A4_EXCEPTION = `Exception since v1.7.7: the ${A4_RANKED} API rows re-run on A4 ∪ P (600 items) are equated (+${A4_OFFSETS.I.toFixed(2)} Intelligence, +${A4_OFFSETS.C.toFixed(2)} Calibration); see “Full API re-run (A4, v1.7.7)” under Open weights and API offerings. Jev, Sage, wity-1 and Fastino GLiNER-2.5-Decide keep their full-set, unequated scores.`;
+// Review 6 Oct 2026: most ranked API rows are A4 u P re-runs and are equated; the frozen v1.6.1 text says hosted APIs are not.
+const A4_FULL = ((apiA4 as { full_rows?: { display: string }[] }).full_rows ?? []).map((row) => row.display);
+const A4_EXCEPTION = `Exception since v1.7.7: the ${A4_RANKED} API rows re-run on A4 ∪ P (600 items) are equated (+${A4_OFFSETS.I.toFixed(2)} Intelligence, +${A4_OFFSETS.C.toFixed(2)} Calibration); see “Full API re-run (A4, v1.7.7)” under Open weights and API offerings. Full-set API rows (Jev, Sage, wity-1, Fastino GLiNER-2.5-Decide${A4_FULL.length ? `, ${A4_FULL.join(', ')}` : ''}) are not equated.`;
 
 // v1.7: rows a board lists — its ranked systems plus, on the open-weights board, the Jev reference and the API offerings
 // (unranked there). API rows of server-rendered tables carry data-bh-jev-api-row and start hidden; the toggle reveals them.
