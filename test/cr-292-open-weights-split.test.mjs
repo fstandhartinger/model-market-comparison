@@ -91,3 +91,8 @@ test('CR-292: the main board says in one line that Jev is the only API model kep
   const route = readFileSync('components/JevBenchV16ReleaseRoute.tsx', 'utf8');
   assert.match(route, /Jev 1\.13\.0<\/b> \(TypeSafe\) is the only API model kept on this board, as the unranked reference row/);
 });
+
+test('CR-292: the API toggle pill never shrinks on narrow screens', () => {
+  const src = readFileSync('components/JevApiOfferingsToggle.tsx', 'utf8');
+  assert.match(src, /relative inline-block h-5 w-9 shrink-0 rounded-full/);
+});

@@ -14,8 +14,8 @@ export function JevApiOfferingsToggle({ measured }: { measured: number }) {
   if (!apiKeys.length) return null;
   return <div className="bh-panel mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 p-3 text-sm" data-bh-jev-api-toggle>
     <button type="button" role="switch" aria-checked={showApi} onClick={() => setShowApi(!showApi)}
-      className="inline-flex min-h-9 items-center gap-2 rounded-md border border-line px-3 font-semibold" data-bh-jev-api-toggle-button>
-      <span aria-hidden="true" className={`relative inline-block h-5 w-9 rounded-full transition-colors ${showApi ? 'bg-accent' : 'bg-gray-600'}`}>
+      className="inline-flex min-h-9 items-center gap-2 rounded-md border border-line px-3 text-left font-semibold" data-bh-jev-api-toggle-button>
+      <span aria-hidden="true" className={`relative inline-block h-5 w-9 shrink-0 rounded-full transition-colors ${showApi ? 'bg-accent' : 'bg-gray-600'}`}>
         <span className={`absolute top-0.5 h-4 w-4 rounded-full bg-white transition-all ${showApi ? 'left-[1.1rem]' : 'left-0.5'}`} />
       </span>
       Show API offerings <span className="bh-muted font-normal">({measured} measured{apiKeys.length > measured ? ` · ${apiKeys.length - measured} dated or listed` : ''})</span>
