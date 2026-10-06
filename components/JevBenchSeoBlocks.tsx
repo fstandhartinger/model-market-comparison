@@ -61,7 +61,7 @@ export function opennessLabel(row: SeoRow): string {
   return 'Unknown in the published row';
 }
 
-export function DatasetFaqJsonLd({ path, artifact, faq, items, itemListName, variables, breadcrumbName }: {
+export function DatasetFaqJsonLd({ path, artifact, faq, items, itemListName, variables, breadcrumbName, de }: {
   path: string;
   artifact: Artifact;
   faq: Faq[];
@@ -69,6 +69,7 @@ export function DatasetFaqJsonLd({ path, artifact, faq, items, itemListName, var
   itemListName?: string;
   variables?: string[];
   breadcrumbName?: string;
+  de?: { datasetName: string; datasetDescription: string };
 }) {
   const canonical = new URL(path, SITE_URL).toString();
   const json = {
@@ -77,8 +78,9 @@ export function DatasetFaqJsonLd({ path, artifact, faq, items, itemListName, var
       {
         '@type': 'Dataset',
         '@id': `${canonical}#dataset`,
-        name: `JevBench ${artifact.revision} public aggregate — Benchmark Heaven`,
-        description: 'Published aggregate benchmark results for Jev-class decision models, with separate intelligence, calibration, speed and cost measures.',
+        name: de?.datasetName ?? `JevBench ${artifact.revision} public aggregate — Benchmark Heaven`,
+        description: de?.datasetDescription ?? 'Published aggregate benchmark results for Jev-class decision models, with separate intelligence, calibration, speed and cost measures.',
+        ...(de ? { inLanguage: 'de' } : {}),
         url: canonical,
         creator: { '@type': 'Organization', name: 'Benchmark Heaven', url: SITE_URL },
         isAccessibleForFree: true,
@@ -110,6 +112,7 @@ export function DatasetFaqJsonLd({ path, artifact, faq, items, itemListName, var
       breadcrumbJsonLd(path, breadcrumbName ?? path.split('/').pop()?.replace(/-/g, ' ') ?? 'JevBench'),
       {
         '@type': 'FAQPage',
+        ...(de ? { inLanguage: 'de' } : {}),
         '@id': `${canonical}#faq`,
         mainEntity: faq.map(({ question, answer }) => ({
           '@type': 'Question',
@@ -122,10 +125,10 @@ export function DatasetFaqJsonLd({ path, artifact, faq, items, itemListName, var
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(json).replace(/</g, '\\u003c') }} />;
 }
 
-export function JevFaq({ items }: { items: Faq[] }) {
+export function JevFaq({ items, heading = 'Frequently asked questions' }: { items: Faq[]; heading?: string }) {
   return (
     <section className="bh-panel mt-8 p-5" aria-labelledby="jev-intent-faq">
-      <h2 id="jev-intent-faq" className="text-xl font-semibold">Frequently asked questions</h2>
+      <h2 id="jev-intent-faq" className="text-xl font-semibold">{heading}</h2>
       <dl className="mt-3 space-y-4">
         {items.map(({ question, answer }) => (
           <div key={question}>

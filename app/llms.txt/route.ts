@@ -25,6 +25,7 @@ async function llmsTxt(): Promise<string> {
     `- [JevBench leaderboard](${u("/jev-models")}): open-weights Jev-class models by intelligence, calibration, speed and cost, with Jev as the reference row`,
     `- [JevBench API leaderboard](${u("/jev-models/api")}): hosted decision APIs (Jev, wity, Sage, Fastino and more) ranked on the same scores`,
     `- [Jev alternatives](${u("/jev-models/alternatives")})`,
+    `- [Jev-Alternativen im Vergleich (Deutsch)](${u("/de/jev-models/alternativen")})`,
     `- [Is Jev open source? Open-source Jev-class models](${u("/jev-models/open-source-jev")})`,
     `- [How to choose a Jev-class model](${u("/jev-models/how-to-choose")})`,
     "",
