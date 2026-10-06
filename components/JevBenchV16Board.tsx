@@ -43,12 +43,12 @@ function LanguageView({ a, categories }: { a: JevV16ReleaseArtifact; categories:
   return <section className="mt-10" aria-labelledby="jev16-languages" data-bh-jev16-language-view>
     <h2 id="jev16-languages" className="text-2xl font-bold">Languages</h2>
     <p className="bh-muted mt-1 max-w-4xl text-sm">Raw chance-corrected competence per item language (0 = chance, 100 = perfect; can be negative), from each system&apos;s own measured items:
-      self-hosted systems over S 1,200 + P 300, hosted APIs over their A or A2 subset + P (600 items). Sage (A3) language cells and A2/A3 topic/use-case cells cover public P300 only. Unequated and outside the Composite. Cells under {categories.min_n} items are left empty. A dagger (†) marks every displayed cell with fewer than 30 answered items.
+      self-hosted systems over S 1,200 + P 300{a.revision === 'v1.6.1' ? ', and every hosted API that answered the full set the same way (1,500 items)' : ', hosted APIs over their A or A2 subset + P (600 items). Sage (A3) language cells and A2/A3 topic/use-case cells cover public P300 only'}. Unequated and outside the Composite. Cells under {categories.min_n} items are left empty. A dagger (†) marks every displayed cell with fewer than 30 answered items.
       {en ? ` English (${en.n.toLocaleString('en-US')} items) is listed first; the other ${allLangs.filter((l) => l.key !== 'mixed').length} languages${allLangs.some((l) => l.key === 'mixed') ? ' and the mixed-language group' : ''} share ${allLangs.reduce((s, l) => s + l.n, 0)} items.` : ''}
       {hidden.length > 0 && <span data-bh-jev16-language-hidden={hidden.map((l) => l.key).join(' ')}>{' '}In {hidden.length === 1 ? 'one further group' : `${hidden.length} further groups`} no system reaches the {categories.min_n}-item reporting minimum, so {hidden.length === 1 ? 'it gets' : 'they get'} no column (items in the pool shown): {hidden.map((l) => `${l.label} (${l.n})`).join(', ')} — {hidden.reduce((s, l) => s + l.n, 0)} items, scored like every other item.</span>}
-      {' '}This is the v1.6.0 main-pool breakdown. Per-language coverage grows with the expanded uc1.1 multilingual pool, a candidate for a later release that is not part of v1.6.0.</p>
+      {' '}This is the {a.revision} main-pool breakdown. Per-language coverage grows with the expanded uc1.1 multilingual pool, a candidate for a later release that is not part of {a.revision}.</p>
     <div className="mt-3 overflow-x-auto"><table className="text-left text-xs tabular" data-bh-jev16-language-table>
-      <caption className="sr-only">JevBench v1.6.0 competence by item language and system</caption>
+      <caption className="sr-only">JevBench {a.revision} competence by item language and system</caption>
       <thead><tr><th scope="col" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5">System</th>
         {[...(en ? [en] : []), ...langs].map((l) => <th key={l.key} scope="col" className="p-1.5 text-center" title={`${l.label}: ${l.n} items (${l.open} public, ${l.sealed} sealed)`}>{l.key}{l.n < 30 && <sup aria-label="low n">†</sup>}<span className="bh-muted block font-normal">{l.n}</span></th>)}</tr></thead>
       <tbody>{systems.map((s) => <tr key={s.key} className="border-t border-line">
@@ -90,6 +90,9 @@ function DatedCarry({ carry }: { carry: JevV16Carry }) {
 
 function Method({ a, sha256, categoriesSha256, carrySha256 }: { a: JevV16ReleaseArtifact; sha256: string; categoriesSha256: string; carrySha256: string }) {
   const sets = a.v16.item_sets;
+  const v161 = a.revision === 'v1.6.1';
+  const amendments = (a as unknown as { amendments?: Array<{ date: string; revision: string; text: string }> }).amendments ?? [];
+  const revisionHistory = (a as unknown as { revision_history?: Array<{ revision: string; date: string; summary: string }> }).revision_history ?? [];
   const off = a.v16.equating.offsets;
   const byDay = new Map<string, string[]>();
   for (const s of a.systems) if (s.last_measured_on) byDay.set(s.last_measured_on, [...(byDay.get(s.last_measured_on) ?? []), short(s.display)]);
@@ -100,36 +103,41 @@ function Method({ a, sha256, categoriesSha256, carrySha256 }: { a: JevV16Release
   });
   const confidenceOnly = a.systems.filter((s) => { const sup = Object.values((s as unknown as { support?: Record<string, string> }).support ?? {}); return sup.length > 0 && sup.every((x) => x === 'confidence'); }).map((s) => short(s.display));
   return <section className="mt-10 max-w-4xl" aria-labelledby="jev16-method-title" id="jev16-method" data-bh-jev16-method>
-    <h2 id="jev16-method-title" className="text-2xl font-bold">Method · v1.6.0</h2>
+    <h2 id="jev16-method-title" className="text-2xl font-bold">Method · {a.revision}</h2>
+    {amendments.length > 0 && <div data-bh-jev16-amendments>
+      <h3 className="mt-4 text-lg font-semibold">Method amendments</h3>
+      <ul className="bh-muted mt-1 list-disc space-y-1 pl-5 text-sm">{amendments.map((m) => <li key={`${m.date}-${m.revision}`}>{m.text}</li>)}</ul>
+    </div>}
     <h3 className="mt-4 text-lg font-semibold">Rotating item sets</h3>
-    <p className="bh-muted mt-1 text-sm">Each release draws fresh sealed decisions from a larger reserve. Self-hosted open-weights models (run offline on our own GPU pods or Sandy) answer S and P; externally hosted models answer only the API subset A and P.</p>
+    <p className="bh-muted mt-1 text-sm">Each release draws fresh sealed decisions from a larger reserve. Self-hosted open-weights models (run offline on our own GPU pods or Sandy) answer S and P; {v161 ? 'externally hosted models answer the same full set (S and P) as the self-hosted systems since v1.6.1, so hosted APIs are no longer equated.' : 'externally hosted models answer only the API subset A and P.'}</p>
     <div className="mt-2 overflow-x-auto"><table className="text-left text-sm tabular" data-bh-jev16-rotation>
       <thead><tr>{['Set', 'Items', 'Choice', 'Noul', 'Score', 'Answered by'].map((h) => <th key={h} scope="col" className="p-2">{h}</th>)}</tr></thead>
       <tbody>{sets.map((s) => <tr key={s.set} className="border-t border-line"><th scope="row" className="p-2">{s.set} · {s.name}</th><td className="p-2">{s.items.toLocaleString('en-US')}</td>
         <td className="p-2">{s.by_type.choice}</td><td className="p-2">{s.by_type.noul}</td><td className="p-2">{s.by_type.score}</td><td className="p-2">{s.answered_by}</td></tr>)}</tbody>
     </table></div>
     <ul className="bh-muted mt-2 list-disc space-y-1 pl-5 text-sm">
-      <li>Self-hosted systems: {a.v16.counts.selfhosted_input.toLocaleString('en-US')} items (S {a.v16.counts.S.toLocaleString('en-US')} + P {a.v16.counts.P}). Hosted APIs: {a.v16.counts.api_input} items (A {a.v16.counts.A} + P {a.v16.counts.P}).</li>
+      <li>Self-hosted systems: {a.v16.counts.selfhosted_input.toLocaleString('en-US')} items (S {a.v16.counts.S.toLocaleString('en-US')} + P {a.v16.counts.P}). {v161 ? `Hosted APIs: ${a.v16.counts.selfhosted_input.toLocaleString('en-US')} items (S ${a.v16.counts.S.toLocaleString('en-US')} + P ${a.v16.counts.P}), the same as self-hosted systems; A (${a.v16.counts.A}) is the part of S that earlier API measurements used.` : `Hosted APIs: ${a.v16.counts.api_input} items (A ${a.v16.counts.A} + P ${a.v16.counts.P}).`}</li>
       <li>A sealed item is scored in at most three releases, then retired. An item used in one release is not drawn again in the next. If coverage minimums cannot be met, the release waits for newly reviewed items.</li>
       <li>The selection seed is committed (SHA-256) before any inference, and the draw is a deterministic function of policy, seed and item id.</li>
     </ul>
     <h3 className="mt-4 text-lg font-semibold">API-exposure rule</h3>
     <ul className="bh-muted mt-1 list-disc space-y-1 pl-5 text-sm">
       <li>An external exposure is any sealed item sent to an endpoint we do not control: closed APIs, and open-weights models reached through third-party hosts, routers or a submitter&apos;s endpoint. Timeouts count as exposure.</li>
-      <li>Hosted models receive only the release&apos;s API subset A plus the public set P, and are re-measured at most once every three refresh releases unless a verified new model version ships. Between measurements they keep their last score with its measurement date.</li>
-      <li>Every externally sent sealed item is logged before dispatch. An item exposed to a provider is never scored again for that provider; once two different providers have received it, it retires for everyone. In v1.6.0 Jev 1.13.0 and Fastino GLiNER-2.5-Decide both received the same A, so A retires globally.</li>
+      <li>{v161 ? 'From v1.6.1 hosted models receive the full item set (S plus P); items they had already answered were reused and only the missing sealed items were sent. Hosted models are' : 'Hosted models receive only the release&apos;s API subset A plus the public set P, and are'} re-measured at most once every three refresh releases unless a verified new model version ships. Between measurements they keep their last score with its measurement date.</li>
+      <li>Every externally sent sealed item is logged before dispatch. An item exposed to a provider is never scored again for that provider; once two different providers have received it, it retires for everyone. In v1.6.0 Jev 1.13.0 and Fastino GLiNER-2.5-Decide both received the same A, so A retires globally.{v161 ? ' With the v1.6.1 amendment every v1.6.0 sealed item has been seen by at least two providers, so the whole v1.6.0 sealed draw is retired for future releases.' : ''}</li>
     </ul>
     <h3 className="mt-4 text-lg font-semibold">Public-versus-sealed gap penalty</h3>
     <p className="bh-muted mt-1 text-sm">Intelligence is half public, half sealed. A system whose public score exceeds its sealed score by more than the field-median gap (G_med = {one(a.G_med)} points{a.G_med_flag_gt10 ? ', flagged above 10' : ''}) plus 8 points loses one Intelligence point per excess point. Hosted APIs are compared on P versus A against the same self-hosted systems&apos; P-versus-A gap ({one(a.G_med_api_basis_P_vs_A)} points).</p>
-    <h3 className="mt-4 text-lg font-semibold">Comparable scores for hosted APIs</h3>
-    <p className="bh-muted mt-1 text-sm">{a.v16.equating.rule.charAt(0).toUpperCase() + a.v16.equating.rule.slice(1)}. Offsets in this run: Intelligence {off.I >= 0 ? '+' : ''}{off.I.toFixed(2)}, Calibration {off.C >= 0 ? '+' : ''}{off.C.toFixed(2)}. {a.v16.equating.pool_note} Category and language values stay raw and unequated.</p>
+    <h3 className="mt-4 text-lg font-semibold">{v161 ? 'Hosted APIs (not equated since v1.6.1)' : 'Comparable scores for hosted APIs'}</h3>
+    {v161 && <p className="bh-muted mt-1 text-sm" data-bh-jev16-no-equating>Hosted APIs that answered the full set are scored exactly like self-hosted systems; no equating offset is applied to them. Category and language values stay raw.</p>}
+    {!v161 && <p className="bh-muted mt-1 text-sm">{a.v16.equating.rule.charAt(0).toUpperCase() + a.v16.equating.rule.slice(1)}. Offsets in this run: Intelligence {off.I >= 0 ? '+' : ''}{off.I.toFixed(2)}, Calibration {off.C >= 0 ? '+' : ''}{off.C.toFixed(2)}. {a.v16.equating.pool_note} Category and language values stay raw and unequated.</p>}
     <h3 className="mt-4 text-lg font-semibold">Headline and Composite</h3>
     <p className="bh-muted mt-1 text-sm">Capability = mean(Intelligence, Calibration) for systems within twice the Jev 1.13.0 cost and median latency (the official caps; the sliders change only your view). The Composite (option {a.headline}) is the equal-weight harmonic mean of Intelligence, Calibration, Speed and Cost with the v1.5 low-axis gates; it remains secondary. Request types Choice, Noul and Score weigh equally; tiers weigh easy {a.tier_weights.easy}, standard {a.tier_weights.standard}, hard {a.tier_weights.hard}, judge {a.tier_weights.judge}.</p>
     <p className="bh-muted mt-1 text-sm" data-bh-jev16-class-reference>Jev-class caps use a fixed reference: Jev 1.13.0 as measured in v1.5 (p50 0.62 s, USD 0.0323 per 1k answers); caps = 2x (1.23 s, USD 0.0646). Jev&apos;s own v1.6 p50 is 0.24 s.</p>
     <p id="jev-costs" className="bh-muted mt-1 text-sm">Costs of v1.6-measured systems carry each system&apos;s published v1.5.4 cost per 1,000 decisions (pricing rules unchanged; v1.6 item lengths differ) unless the row says otherwise; Fastino&apos;s is an estimate from its published tariff and measured tokens.</p>
     {a.noul_method?.applied === 'O1S' && <>
     <h3 className="mt-4 text-lg font-semibold">Noul decisiveness and Score baseline (addendum B)</h3>
-    <p className="bh-muted mt-1 text-sm" data-bh-jev16-noul-method>Scored with method option B (scorer setting {a.noul_method?.applied ?? 'O0'}), selected on 3 Oct 2026 after the v1.6 scores were known and disclosed as a post-results change. Each split × type competence is clipped at 0 before the type weighting, so a type answered no better than chance counts as chance instead of negative. The Score chance baseline is the error of always predicting the mid-scale level, so a flat know-nothing distribution earns about 0. A Score cell whose golds all sit at mid-scale keeps the v1.5 random-level baseline; this only occurs in small breakdown and bootstrap cells. Calibration is unchanged. This run: G_med = {a.G_med == null ? "—" : a.G_med.toFixed(2)} points; hosted-API offsets Intelligence {off.I >= 0 ? '+' : ''}{off.I.toFixed(2)}, Calibration {off.C >= 0 ? '+' : ''}{off.C.toFixed(2)}.</p>
+    <p className="bh-muted mt-1 text-sm" data-bh-jev16-noul-method>Scored with method option B (scorer setting {a.noul_method?.applied ?? 'O0'}), selected on 3 Oct 2026 after the v1.6 scores were known and disclosed as a post-results change. Each split × type competence is clipped at 0 before the type weighting, so a type answered no better than chance counts as chance instead of negative. The Score chance baseline is the error of always predicting the mid-scale level, so a flat know-nothing distribution earns about 0. A Score cell whose golds all sit at mid-scale keeps the v1.5 random-level baseline; this only occurs in small breakdown and bootstrap cells. Calibration is unchanged. This run: G_med = {a.G_med == null ? "—" : a.G_med.toFixed(2)} points{v161 ? '.' : <>; hosted-API offsets Intelligence {off.I >= 0 ? '+' : ''}{off.I.toFixed(2)}, Calibration {off.C >= 0 ? '+' : ''}{off.C.toFixed(2)}.</>}</p>
     </>}
     <h3 className="mt-4 text-lg font-semibold">Failed requests and very long items</h3>
     <p className="bh-muted mt-1 text-sm" data-bh-jev16-failures>{a.v16.long_items_note} A failed, refused or unparseable answer counts as wrong for Intelligence and stays in the denominator; it does not enter Calibration (the v1.5 rule, applied to every system).
@@ -138,6 +146,10 @@ function Method({ a, sha256, categoriesSha256, carrySha256 }: { a: JevV16Release
     <p className="bh-muted mt-1 text-sm" data-bh-jev16-calibration-basis>Systems that return a full probability distribution are calibrated on all components (top-label error, plus distribution distance for Choice and ranked-probability error for Score).
       {confidenceOnly.length > 0 ? ` ${confidenceOnly.join(', ')} return${confidenceOnly.length === 1 ? 's' : ''} a single confidence value, so ${confidenceOnly.length === 1 ? 'its' : 'their'} Calibration is the top-label error only and is not like-for-like with full-distribution systems.` : ''}</p>
     {(a as unknown as { overnight?: OvernightNotes }).overnight && <Overnight o={(a as unknown as { overnight: OvernightNotes }).overnight} />}
+    {revisionHistory.length > 0 && <div data-bh-jev16-revision-history>
+      <h3 className="mt-4 text-lg font-semibold">Revision history</h3>
+      <ul className="bh-muted mt-1 list-disc space-y-1 pl-5 text-sm">{revisionHistory.map((r) => <li key={r.revision}><b>{r.revision}</b> · {r.date} · {r.summary}</li>)}</ul>
+    </div>}
     <h3 className="mt-4 text-lg font-semibold">Provenance</h3>
     {measuredDays.length > 0 && <p className="bh-muted mt-1 text-sm" data-bh-jev16-measured-days>Measured on the v1.6 pool (run completion day, UTC): {measuredDays.map(([day, names]) => `${day}: ${names.join(', ')}`).join(' · ')}.</p>}
     <p className="bh-muted mt-1 break-all text-xs">Aggregate files: results sha256 {sha256} · categories sha256 {categoriesSha256} · dated carry sha256 {carrySha256}. Scoring source sha256 {a.source_sha256}. The method, release data and carry artifact are independently hashable.</p>
@@ -224,7 +236,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
       <JevV15FilterPanel />
       <JevScoreChart revision={a.revision} rows={viewRows} rankedCount={ranked.length} newLabel={null} fairness={null} approvedNote={leader} tieNote={null} capabilityHref="#jev-capability" presets={jevV15SliderPresets(v15)} compactMobile scoreKind="v15" methodLink={{ href: '#jev16-method', label: 'Method notes ↓' }} />
       <JevCompareV15 rows={compareRows} openDecisions={a.v16.counts.P} sealedDecisions={a.v16.counts.S} categories={jevbenchCategoryView(a.revision, compareRows.map((r) => r.key))} />
-      <p className="bh-muted mt-2 max-w-4xl text-xs" data-bh-jev16-radar-note>{categories.lane_note} Sealed counts in the compare view refer to self-hosted systems (S {a.v16.counts.S.toLocaleString('en-US')}); hosted APIs answered A {a.v16.counts.A}.</p>
+      <p className="bh-muted mt-2 max-w-4xl text-xs" data-bh-jev16-radar-note>{categories.lane_note} {a.revision === 'v1.6.1' ? `Sealed counts in the compare view refer to the sealed set S (${a.v16.counts.S.toLocaleString('en-US')}), which hosted APIs now answer in full.` : `Sealed counts in the compare view refer to self-hosted systems (S ${a.v16.counts.S.toLocaleString('en-US')}); hosted APIs answered A ${a.v16.counts.A}.`}</p>
       <LanguageView a={a} categories={categories} />
       <NoulAndGate a={a} />
       <JevV15AllDataGrid

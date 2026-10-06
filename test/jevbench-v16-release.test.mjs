@@ -173,8 +173,8 @@ test('the live and archived pages use the approved full-page route and keep vers
   assert.match(route, /readJevbenchV157Release/);
   assert.match(route, /missingPrevious/);
   const current = await read('lib/jevbench-current.mjs');
-  assert.match(current, /CURRENT_JEVBENCH_PAGE = '\/jev-models\/v1\.6\.0'/);
-  assert.match(current, /readCurrentJevbench = readJevbenchV16Release/);
+  assert.match(current, /CURRENT_JEVBENCH_PAGE = '\/jev-models\/v1\.6\.1'/);
+  assert.match(current, /readCurrentJevbench = readJevbenchV161Release/);
   for (const marker of ['<JevBenchV16Charts', '<JevScoreChart', '<JevCompareV15', '<LanguageView', '<NoulAndGate', '<JevV15AllDataGrid', '<DatedCarry', '<Method']) assert.ok(board.includes(marker), marker);
   assert.match(board, /aria-label="low n: fewer than 30 answered items"/);
   assert.match(board, /Not plotted; fewer than \$\{categories\.min_n\} answered items/);
