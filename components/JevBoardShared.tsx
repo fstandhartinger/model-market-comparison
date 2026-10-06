@@ -44,7 +44,9 @@ export const apiExplanation = "API — the operator's endpoint received sealed i
 export const typeVar = (cls: string) => ({ '--jev-t': `var(${jevTypeVarName(cls)})` }) as CSSProperties;
 export const NOT_RANKED: Record<string, string> = { honorable_mention: 'honorable mention', partial: 'partial run', reference: 'reference', api_offering: 'API offering',
   // v1.7.5: API board public-set rows before the full sealed re-run.
-  preliminary: 'preliminary', pending: 'pending' };
+  preliminary: 'preliminary', pending: 'pending',
+  // v1.7.7: listed wrappers that serve Jev (classifier.dev).
+  wrapper: 'wrapper (serves Jev)' };
 
 // ---- Heat shading: each column shaded by where a value sits between the column's weakest and strongest system ----
 

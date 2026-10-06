@@ -1,0 +1,817 @@
+{
+ "round": "score-a4-2",
+ "results_sha256": "4b13090044d8bb82a69bd4283252f294431e921c5de7be59a78473c74c8a418c",
+ "supersedes": "score-a4-1",
+ "changes_vs_a4_1": [
+  "+ qwen3.8-27b (Chutes) row",
+  "instinct, instinct-dual-4b endpoint_kind demo -> api (public tariff + console keys; no x2 demo latency)"
+ ],
+ "a4_offsets": {
+  "C": 3.349920853296446,
+  "I": 2.5713984460596446
+ },
+ "a4_pool": [
+  "decision-2b",
+  "decision-fast",
+  "jev-omni",
+  "lev-350m",
+  "malkuth-4b",
+  "metask-jev-4b",
+  "spark-s1-4b-v6",
+  "typecastlm"
+ ],
+ "rows": [
+  {
+   "key": "classifier-dev-fast",
+   "display": "classifier.dev (fast tier)",
+   "author": "mrmps (@michael_chomsky)",
+   "listing": "listed",
+   "endpoint_kind": "api",
+   "measured_on": "2026-10-06",
+   "n_rows": 600,
+   "answered_ok": 591,
+   "intelligence": 65.16,
+   "calibration": 91.33,
+   "capability": 78.25,
+   "speed_axis": 79.54,
+   "cost_axis": 58.89,
+   "intelligence_raw_A4uP": 62.59,
+   "I_open": 67.78,
+   "I_sealed": 57.39,
+   "composite": {
+    "A": 71.62,
+    "B": 70.23,
+    "C": 71.62
+   },
+   "composite_ci95": {
+    "A": [
+     68.03,
+     74.31
+    ],
+    "B": [
+     65.43,
+     74.36
+    ],
+    "C": [
+     59.7,
+     74.31
+    ]
+   },
+   "usd_per_1000": 0.02345172413793104,
+   "cost_kind": "estimate",
+   "cost_basis": "v1.5.4 published cost per 1,000 decisions carried (pricing rules unchanged; v1.6 item lengths differ): ESTIMATE (proxy tokens, I-2): operator list price: higher of 19 Sep plan cost and 26 Sep usage tariff USD 0.042/M input (rule 1.2); no exact base-model floor applies",
+   "p50_s": 0.806,
+   "p95_s": 1.381,
+   "latency_adjustment": "none (API)",
+   "run_sha256": "cc0da2fbc545cd44056fce4dbc8b1e17b6adbbe73146aa905c9abcfa6b0d3a87"
+  },
+  {
+   "key": "instinct",
+   "display": "Instinct (ZooWork, Qwen3.8-27B)",
+   "author": "rayrain-srp (ZooWork)",
+   "listing": "ranked",
+   "endpoint_kind": "api",
+   "measured_on": "2026-10-06",
+   "n_rows": 600,
+   "answered_ok": 591,
+   "intelligence": 47.77,
+   "calibration": 93.17,
+   "capability": 70.47,
+   "speed_axis": 87.2,
+   "cost_axis": 64.41,
+   "intelligence_raw_A4uP": 45.2,
+   "I_open": 50.26,
+   "I_sealed": 40.14,
+   "composite": {
+    "A": 62.24,
+    "B": 57.34,
+    "C": 43.22
+   },
+   "composite_ci95": {
+    "A": [
+     39.54,
+     72.12
+    ],
+    "B": [
+     35.42,
+     68.61
+    ],
+    "C": [
+     27.46,
+     66.05
+    ]
+   },
+   "usd_per_1000": 0.015355329949238578,
+   "cost_kind": "tariff",
+   "cost_basis": "measured: token usage of the 6 Oct 2026 A4 u P run x tariff USD 0.03/M input, 0/M output (spec instinct.json), per 1,000 decisions on the v1.6.1 common cost basis (591 of 600 items; the 9 A4 u P items outside the Jev reference's accepted input range are excluded, cost-basis-a4.json)",
+   "p50_s": 0.292,
+   "p95_s": 0.652,
+   "latency_adjustment": "none (API)",
+   "run_sha256": "83e1676aa839fe8666ffd6623d701c421d5841083daf6792bd3e3ab4be9d6c5c"
+  },
+  {
+   "key": "vansa-3.4",
+   "display": "Vansa-3.4 (Vansa, hosted System One API)",
+   "author": "Vansa",
+   "listing": "ranked",
+   "endpoint_kind": "api",
+   "measured_on": "2026-10-06",
+   "n_rows": 600,
+   "answered_ok": 591,
+   "intelligence": 40.85,
+   "calibration": 86.52,
+   "capability": 63.68,
+   "speed_axis": 95.49,
+   "cost_axis": 61.92,
+   "intelligence_raw_A4uP": 38.27,
+   "I_open": 43.36,
+   "I_sealed": 33.19,
+   "composite": {
+    "A": 42.6,
+    "B": 38.29,
+    "C": 29.58
+   },
+   "composite_ci95": {
+    "A": [
+     25.32,
+     69.03
+    ],
+    "B": [
+     21.99,
+     64.46
+    ],
+    "C": [
+     17.58,
+     49.94
+    ]
+   },
+   "usd_per_1000": 0.018590751269035533,
+   "cost_kind": "tariff",
+   "cost_basis": "measured: token usage of the 6 Oct 2026 A4 u P run x tariff USD 0.034/M input, 0/M output (spec vansa-3.4.json), per 1,000 decisions on the v1.6.1 common cost basis (591 of 600 items; the 9 A4 u P items outside the Jev reference's accepted input range are excluded, cost-basis-a4.json)",
+   "p50_s": 0.15,
+   "p95_s": 0.189,
+   "latency_adjustment": "none (API)",
+   "run_sha256": "84165e0500a8ebbc881b3cd1115354b060b09c1d964d82e41df5245a2cb22c6e"
+  },
+  {
+   "key": "gpt-6-luna-low",
+   "display": "GPT-6 Luna (low reasoning effort)",
+   "author": "OpenAI",
+   "listing": "ranked",
+   "endpoint_kind": "api",
+   "measured_on": "2026-10-06",
+   "n_rows": 600,
+   "answered_ok": 600,
+   "intelligence": 96.62,
+   "calibration": 99.02,
+   "capability": 97.82,
+   "speed_axis": 71.66,
+   "cost_axis": 38.98,
+   "intelligence_raw_A4uP": 94.05,
+   "I_open": 93.06,
+   "I_sealed": 95.04,
+   "composite": {
+    "A": 40.48,
+    "B": 43.16,
+    "C": 40.48
+   },
+   "composite_ci95": {
+    "A": [
+     39.96,
+     40.78
+    ],
+    "B": [
+     42.4,
+     43.66
+    ],
+    "C": [
+     39.96,
+     40.78
+    ]
+   },
+   "usd_per_1000": 0.10814365482233503,
+   "cost_kind": "tariff",
+   "cost_basis": "measured: token usage of the 6 Oct 2026 A4 u P run x tariff USD 0.1/M input, 0.5/M output (spec gpt-6-luna-low.json), per 1,000 decisions on the v1.6.1 common cost basis (591 of 600 items; the 9 A4 u P items outside the Jev reference's accepted input range are excluded, cost-basis-a4.json)",
+   "p50_s": 1.854,
+   "p95_s": 3.683,
+   "latency_adjustment": "none (API)",
+   "run_sha256": "c5fa6729c53fbe4fc0ec88af75ee26aa997274bc1ef4a820a8c468616c433e33"
+  },
+  {
+   "key": "kushal-gemma4-31b-it-autoloops",
+   "display": "Autoloops \u2013 Gemma 4 31B IT",
+   "author": "Autoloops",
+   "listing": "ranked",
+   "endpoint_kind": "api",
+   "measured_on": "2026-10-06",
+   "n_rows": 600,
+   "answered_ok": 591,
+   "intelligence": 58.1,
+   "calibration": 87.31,
+   "capability": 72.7,
+   "speed_axis": 84.51,
+   "cost_axis": 40.47,
+   "intelligence_raw_A4uP": 55.52,
+   "I_open": 57.42,
+   "I_sealed": 53.63,
+   "composite": {
+    "A": 40.18,
+    "B": 39.73,
+    "C": 37.67
+   },
+   "composite_ci95": {
+    "A": [
+     38.21,
+     41.78
+    ],
+    "B": [
+     37.03,
+     42.18
+    ],
+    "C": [
+     26.77,
+     41.78
+    ]
+   },
+   "usd_per_1000": 0.09648663282571913,
+   "cost_kind": "tariff",
+   "cost_basis": "measured: token usage of the 6 Oct 2026 A4 u P run x tariff USD 0.2/M input, 0.45/M output (spec kushal-gemma4-31b-it-autoloops.json), per 1,000 decisions on the v1.6.1 common cost basis (591 of 600 items; the 9 A4 u P items outside the Jev reference's accepted input range are excluded, cost-basis-a4.json)",
+   "p50_s": 0.584,
+   "p95_s": 0.606,
+   "latency_adjustment": "none (API)",
+   "run_sha256": "18ef06f9a56b5d3e358f5a8ddd0bf942facf1bae52fb8b57b5336b8026c1be5f"
+  },
+  {
+   "key": "gpt-6-luna",
+   "display": "GPT-6 Luna (default medium reasoning effort)",
+   "author": "OpenAI",
+   "listing": "ranked",
+   "endpoint_kind": "api",
+   "measured_on": "2026-10-06",
+   "n_rows": 600,
+   "answered_ok": 596,
+   "intelligence": 96.88,
+   "calibration": 100.0,
+   "capability": 98.44,
+   "speed_axis": 71.77,
+   "cost_axis": 38.41,
+   "intelligence_raw_A4uP": 94.31,
+   "I_open": 95.37,
+   "I_sealed": 93.25,
+   "composite": {
+    "A": 39.16,
+    "B": 41.79,
+    "C": 39.16
+   },
+   "composite_ci95": {
+    "A": [
+     38.68,
+     39.37
+    ],
+    "B": [
+     41.06,
+     42.18
+    ],
+    "C": [
+     38.68,
+     39.37
+    ]
+   },
+   "usd_per_1000": 0.1129575296108291,
+   "cost_kind": "tariff",
+   "cost_basis": "measured: token usage of the 6 Oct 2026 A4 u P run x tariff USD 0.1/M input, 0.5/M output (spec gpt-6-luna.json), per 1,000 decisions on the v1.6.1 common cost basis (591 of 600 items; the 9 A4 u P items outside the Jev reference's accepted input range are excluded, cost-basis-a4.json)",
+   "p50_s": 1.824,
+   "p95_s": 3.646,
+   "latency_adjustment": "none (API)",
+   "run_sha256": "36dce9d9c3ec86a404450d2d6b5e9d6f57a229474e17c5a78a5805689d481088"
+  },
+  {
+   "key": "fastino-glide",
+   "display": "Fastino GLiDE",
+   "author": "Fastino",
+   "listing": "ranked",
+   "endpoint_kind": "api",
+   "measured_on": "2026-10-06",
+   "n_rows": 600,
+   "answered_ok": 591,
+   "intelligence": 66.1,
+   "calibration": 87.95,
+   "capability": 77.02,
+   "speed_axis": 77.48,
+   "cost_axis": 35.86,
+   "intelligence_raw_A4uP": 63.53,
+   "I_open": 64.15,
+   "I_sealed": 62.91,
+   "composite": {
+    "A": 30.59,
+    "B": 31.21,
+    "C": 30.59
+   },
+   "composite_ci95": {
+    "A": [
+     29.48,
+     31.58
+    ],
+    "B": [
+     29.61,
+     32.81
+    ],
+    "C": [
+     27.81,
+     31.58
+    ]
+   },
+   "usd_per_1000": 0.13735482233502538,
+   "cost_kind": "tariff",
+   "cost_basis": "measured: token usage of the 6 Oct 2026 A4 u P run x tariff USD 0.15/M input, 0/M output (spec fastino-glide.json), per 1,000 decisions on the v1.6.1 common cost basis (591 of 600 items; the 9 A4 u P items outside the Jev reference's accepted input range are excluded, cost-basis-a4.json)",
+   "p50_s": 0.743,
+   "p95_s": 2.405,
+   "latency_adjustment": "none (API)",
+   "run_sha256": "a5736558e4af448fa482a03cbcbd4b119fc82c7695931ca18b671b86dfe1e724"
+  },
+  {
+   "key": "simplejev-qwen3.6-35b-a3b",
+   "display": "SimpleJev Qwen3.6-35B-A3B",
+   "author": "Featherless AI",
+   "listing": "ranked",
+   "endpoint_kind": "demo",
+   "measured_on": "2026-10-06",
+   "n_rows": 600,
+   "answered_ok": 591,
+   "intelligence": 56.29,
+   "calibration": 80.3,
+   "capability": 68.29,
+   "speed_axis": 76.7,
+   "cost_axis": 35.15,
+   "intelligence_raw_A4uP": 53.71,
+   "I_open": 60.15,
+   "I_sealed": 47.27,
+   "composite": {
+    "A": 27.57,
+    "B": 27.61,
+    "C": 24.26
+   },
+   "composite_ci95": {
+    "A": [
+     22.78,
+     28.87
+    ],
+    "B": [
+     22.27,
+     29.53
+    ],
+    "C": [
+     15.82,
+     28.87
+    ]
+   },
+   "usd_per_1000": 0.1451164454277286,
+   "cost_kind": "estimate",
+   "cost_basis": "v1.5.4 published cost per 1,000 decisions carried (pricing rules unchanged; v1.6 item lengths differ): ESTIMATE: exact base-model market reference (operator tariff excluded by 30-day rule)",
+   "p50_s": 1.25,
+   "p95_s": 1.709,
+   "latency_adjustment": "x2 (demo)",
+   "run_sha256": "7cd32be5f5c8177492a086c471436c956ff89527c8b26c3705c4e939597ffd6e"
+  },
+  {
+   "key": "gpt-5.6-luna",
+   "display": "GPT-5.6 Luna (low reasoning effort)",
+   "author": "OpenAI",
+   "listing": "ranked",
+   "endpoint_kind": "api",
+   "measured_on": "2026-10-06",
+   "n_rows": 600,
+   "answered_ok": 600,
+   "intelligence": 94.07,
+   "calibration": 94.91,
+   "capability": 94.49,
+   "speed_axis": 73.12,
+   "cost_axis": 30.16,
+   "intelligence_raw_A4uP": 91.5,
+   "I_open": 91.05,
+   "I_sealed": 91.94,
+   "composite": {
+    "A": 21.41,
+    "B": 23.14,
+    "C": 21.41
+   },
+   "composite_ci95": {
+    "A": [
+     21.08,
+     21.77
+    ],
+    "B": [
+     22.67,
+     23.67
+    ],
+    "C": [
+     21.08,
+     21.77
+    ]
+   },
+   "usd_per_1000": 0.2127451776649746,
+   "cost_kind": "tariff",
+   "cost_basis": "measured: token usage of the 6 Oct 2026 A4 u P run x tariff USD 0.2/M input, 1.2/M output (spec gpt-5.6-luna.json), per 1,000 decisions on the v1.6.1 common cost basis (591 of 600 items; the 9 A4 u P items outside the Jev reference's accepted input range are excluded, cost-basis-a4.json)",
+   "p50_s": 1.588,
+   "p95_s": 3.067,
+   "latency_adjustment": "none (API)",
+   "run_sha256": "5d37f643d12df8d42d02c44dc364058832ddc8298187ebc522f43050b9199cac"
+  },
+  {
+   "key": "instinct-dual-4b",
+   "display": "Instinct Dual 4B",
+   "author": "ZooWork / pierre-srp",
+   "listing": "ranked",
+   "endpoint_kind": "api",
+   "measured_on": "2026-10-06",
+   "n_rows": 600,
+   "answered_ok": 600,
+   "intelligence": 28.34,
+   "calibration": 86.08,
+   "capability": 57.21,
+   "speed_axis": 88.6,
+   "cost_axis": 75.03,
+   "intelligence_raw_A4uP": 25.77,
+   "I_open": 26.29,
+   "I_sealed": 25.26,
+   "composite": {
+    "A": 17.97,
+    "B": 15.04,
+    "C": 12.48
+   },
+   "composite_ci95": {
+    "A": [
+     10.92,
+     37.04
+    ],
+    "B": [
+     8.89,
+     32.67
+    ],
+    "C": [
+     7.58,
+     25.72
+    ]
+   },
+   "usd_per_1000": 0.006799306260575296,
+   "cost_kind": "tariff",
+   "cost_basis": "measured: token usage of the 6 Oct 2026 A4 u P run x tariff USD 0.01/M input, 0/M output (spec instinct-dual-4b.json), per 1,000 decisions on the v1.6.1 common cost basis (591 of 600 items; the 9 A4 u P items outside the Jev reference's accepted input range are excluded, cost-basis-a4.json)",
+   "p50_s": 0.231,
+   "p95_s": 0.598,
+   "latency_adjustment": "none (API)",
+   "run_sha256": "8d8a87d185d8fb317472c636b36cbb1f0ac8f03abef8c751bdfa290a9aacc746"
+  },
+  {
+   "key": "gemini-3.1-flash-lite",
+   "display": "Gemini 3.1 Flash-Lite",
+   "author": "Google",
+   "listing": "ranked",
+   "endpoint_kind": "api",
+   "measured_on": "2026-10-06",
+   "n_rows": 600,
+   "answered_ok": 599,
+   "intelligence": 58.57,
+   "calibration": 60.93,
+   "capability": 59.75,
+   "speed_axis": 79.03,
+   "cost_axis": 29.17,
+   "intelligence_raw_A4uP": 56.0,
+   "I_open": 63.88,
+   "I_sealed": 48.12,
+   "composite": {
+    "A": 16.94,
+    "B": 17.46,
+    "C": 16.14
+   },
+   "composite_ci95": {
+    "A": [
+     15.19,
+     17.77
+    ],
+    "B": [
+     15.24,
+     18.65
+    ],
+    "C": [
+     10.55,
+     17.77
+    ]
+   },
+   "usd_per_1000": 0.22953722504230117,
+   "cost_kind": "tariff",
+   "cost_basis": "measured: token usage of the 6 Oct 2026 A4 u P run x tariff USD 0.25/M input, 1.5/M output (spec gemini-3.1-flash-lite.json), per 1,000 decisions on the v1.6.1 common cost basis (591 of 600 items; the 9 A4 u P items outside the Jev reference's accepted input range are excluded, cost-basis-a4.json)",
+   "p50_s": 0.957,
+   "p95_s": 1.306,
+   "latency_adjustment": "none (API)",
+   "run_sha256": "96adf8183eaf9826b99e72a821469fa1fcc61783bc7b04ec2a95f0abcea883e8"
+  },
+  {
+   "key": "system-one-open",
+   "display": "system-one-open (Gemma 4 E2B LoRA on an L4)",
+   "author": "mithalouni",
+   "listing": "ranked",
+   "endpoint_kind": "demo",
+   "measured_on": "2026-10-06",
+   "n_rows": 600,
+   "answered_ok": 600,
+   "intelligence": 27.94,
+   "calibration": 75.94,
+   "capability": 51.94,
+   "speed_axis": 79.32,
+   "cost_axis": 68.33,
+   "intelligence_raw_A4uP": 25.37,
+   "I_open": 27.92,
+   "I_sealed": 22.82,
+   "composite": {
+    "A": 16.39,
+    "B": 13.94,
+    "C": 11.38
+   },
+   "composite_ci95": {
+    "A": [
+     7.72,
+     36.09
+    ],
+    "B": [
+     6.26,
+     32.43
+    ],
+    "C": [
+     5.36,
+     25.06
+    ]
+   },
+   "usd_per_1000": 0.011367487684729064,
+   "cost_kind": "estimate",
+   "cost_basis": "v1.5.4 published cost per 1,000 decisions carried (pricing rules unchanged; v1.6 item lengths differ): ESTIMATE: v1.5 measured-input proxy; no exact base-model floor applies",
+   "p50_s": 1.02,
+   "p95_s": 1.146,
+   "latency_adjustment": "x2 (demo)",
+   "run_sha256": "1059a8be40a52bc4482c5bd40a45a368b53c2849acb4c370bc8735079c33e5a3"
+  },
+  {
+   "key": "openjev-sglang",
+   "display": "openjev-sglang (Qwen3.6-35B-A3B on SGLang)",
+   "author": "ekzhang",
+   "listing": "ranked",
+   "endpoint_kind": "demo",
+   "measured_on": "2026-10-06",
+   "n_rows": 600,
+   "answered_ok": 591,
+   "intelligence": 38.77,
+   "calibration": 78.57,
+   "capability": 58.67,
+   "speed_axis": 77.71,
+   "cost_axis": 35.63,
+   "intelligence_raw_A4uP": 36.2,
+   "I_open": 44.34,
+   "I_sealed": 28.06,
+   "composite": {
+    "A": 15.38,
+    "B": 14.51,
+    "C": 10.68
+   },
+   "composite_ci95": {
+    "A": [
+     8.74,
+     26.17
+    ],
+    "B": [
+     7.94,
+     25.59
+    ],
+    "C": [
+     6.07,
+     18.18
+    ]
+   },
+   "usd_per_1000": 0.13981028325123152,
+   "cost_kind": "estimate",
+   "cost_basis": "v1.5.4 published cost per 1,000 decisions carried (pricing rules unchanged; v1.6 item lengths differ): ESTIMATE: exact base-model market reference (operator tariff excluded by 30-day rule)",
+   "p50_s": 1.265,
+   "p95_s": 1.339,
+   "latency_adjustment": "x2 (demo)",
+   "run_sha256": "16b2211d50e366983ff0094cc9cd19139fb0bdee7907d67f0240d1f03f900217"
+  },
+  {
+   "key": "deepseek-flash",
+   "display": "DeepSeek V4.1 Flash (thinking default)",
+   "author": "DeepSeek",
+   "listing": "ranked",
+   "endpoint_kind": "api",
+   "measured_on": "2026-10-06",
+   "n_rows": 600,
+   "answered_ok": 595,
+   "intelligence": 94.71,
+   "calibration": 100.0,
+   "capability": 97.35,
+   "speed_axis": 68.07,
+   "cost_axis": 19.56,
+   "intelligence_raw_A4uP": 92.14,
+   "I_open": 92.58,
+   "I_sealed": 91.69,
+   "composite": {
+    "A": 7.09,
+    "B": 7.89,
+    "C": 7.09
+   },
+   "composite_ci95": {
+    "A": [
+     7.02,
+     7.13
+    ],
+    "B": [
+     7.78,
+     7.99
+    ],
+    "C": [
+     7.02,
+     7.13
+    ]
+   },
+   "usd_per_1000": 0.480105076142132,
+   "cost_kind": "tariff",
+   "cost_basis": "measured: token usage of the 6 Oct 2026 A4 u P run x tariff USD 0.15/M input, 0.6/M output (spec deepseek-flash.json), per 1,000 decisions on the v1.6.1 common cost basis (591 of 600 items; the 9 A4 u P items outside the Jev reference's accepted input range are excluded, cost-basis-a4.json)",
+   "p50_s": 2.038,
+   "p95_s": 7.648,
+   "latency_adjustment": "none (API)",
+   "run_sha256": "c9078842b58b17d1e14e86c940cbe4291066ec8a620c430aac3b4385e656feb0"
+  },
+  {
+   "key": "simplejev-qwen3.8-27b",
+   "display": "SimpleJev Qwen3.8-27B",
+   "author": "Featherless AI",
+   "listing": "ranked",
+   "endpoint_kind": "demo",
+   "measured_on": "2026-10-06",
+   "n_rows": 600,
+   "answered_ok": 591,
+   "intelligence": 52.88,
+   "calibration": 90.33,
+   "capability": 71.6,
+   "speed_axis": 76.93,
+   "cost_axis": 14.9,
+   "intelligence_raw_A4uP": 50.3,
+   "I_open": 58.03,
+   "I_sealed": 42.58,
+   "composite": {
+    "A": 3.22,
+    "B": 3.44,
+    "C": 2.5
+   },
+   "composite_ci95": {
+    "A": [
+     2.11,
+     3.31
+    ],
+    "B": [
+     2.18,
+     3.6
+    ],
+    "C": [
+     1.46,
+     3.31
+    ]
+   },
+   "usd_per_1000": 0.686803448275862,
+   "cost_kind": "estimate",
+   "cost_basis": "v1.5.4 published cost per 1,000 decisions carried (pricing rules unchanged; v1.6 item lengths differ): ESTIMATE: exact base-model market reference (operator tariff excluded by 30-day rule)",
+   "p50_s": 1.212,
+   "p95_s": 1.675,
+   "latency_adjustment": "x2 (demo)",
+   "run_sha256": "f12f4c57ca739705117c34ceb3f847b59b15f9744120c83faf519a83ba9c123b"
+  },
+  {
+   "key": "decision-machine-1",
+   "display": "decision-machine-1 (milliseconds.ai)",
+   "author": "milliseconds.ai (Baptiste Laget)",
+   "listing": "ranked",
+   "endpoint_kind": "api",
+   "measured_on": "2026-10-06",
+   "n_rows": 600,
+   "answered_ok": 591,
+   "intelligence": 13.11,
+   "calibration": 79.15,
+   "capability": 46.13,
+   "speed_axis": 92.97,
+   "cost_axis": 58.33,
+   "intelligence_raw_A4uP": 10.53,
+   "I_open": 10.71,
+   "I_sealed": 10.36,
+   "composite": {
+    "A": 2.35,
+    "B": 1.78,
+    "C": 1.63
+   },
+   "composite_ci95": {
+    "A": [
+     0.89,
+     8.58
+    ],
+    "B": [
+     0.64,
+     7.01
+    ],
+    "C": [
+     0.62,
+     5.96
+    ]
+   },
+   "usd_per_1000": 0.02449299492385787,
+   "cost_kind": "tariff",
+   "cost_basis": "measured: token usage of the 6 Oct 2026 A4 u P run x tariff USD 0.04/M input, 0/M output (spec decision-machine-1.json), per 1,000 decisions on the v1.6.1 common cost basis (591 of 600 items; the 9 A4 u P items outside the Jev reference's accepted input range are excluded, cost-basis-a4.json)",
+   "p50_s": 0.167,
+   "p95_s": 0.303,
+   "latency_adjustment": "none (API)",
+   "run_sha256": "9fb20f7a1415fa931bb212eade8b88af31affff7800a8f45949b8b519e3bf2be"
+  },
+  {
+   "key": "jevact",
+   "display": "JevAct (einptein, jev1-2b-v2)",
+   "author": "einptein",
+   "listing": "ranked",
+   "endpoint_kind": "demo",
+   "measured_on": "2026-10-06",
+   "n_rows": 600,
+   "answered_ok": 579,
+   "intelligence": 10.1,
+   "calibration": 47.44,
+   "capability": 28.77,
+   "speed_axis": 76.45,
+   "cost_axis": 68.56,
+   "intelligence_raw_A4uP": 7.53,
+   "I_open": 7.46,
+   "I_sealed": 7.6,
+   "composite": {
+    "A": 1.11,
+    "B": 0.83,
+    "C": 0.77
+   },
+   "composite_ci95": {
+    "A": [
+     0.3,
+     5.7
+    ],
+    "B": [
+     0.21,
+     4.67
+    ],
+    "C": [
+     0.21,
+     3.96
+    ]
+   },
+   "usd_per_1000": 0.011167487684729064,
+   "cost_kind": "estimate",
+   "cost_basis": "v1.5.4 published cost per 1,000 decisions carried (pricing rules unchanged; v1.6 item lengths differ): ESTIMATE: v1.5 measured-input proxy; no exact base-model floor applies",
+   "p50_s": 0.801,
+   "p95_s": 2.829,
+   "latency_adjustment": "x2 (demo)",
+   "run_sha256": "67145bec630ccceb1b6cbf2ed3545a5fd7ece3aa60a4e43e06f395b75da7c9f5"
+  },
+  {
+   "key": "qwen3.8-27b",
+   "display": "Qwen3.8 27B (Chutes TEE)",
+   "author": "Qwen / Chutes",
+   "listing": "ranked",
+   "endpoint_kind": "api",
+   "measured_on": "2026-10-06",
+   "n_rows": 600,
+   "answered_ok": 592,
+   "intelligence": 96.38,
+   "calibration": 100.0,
+   "capability": 98.19,
+   "speed_axis": 57.43,
+   "cost_axis": 0.0,
+   "intelligence_raw_A4uP": 93.81,
+   "I_open": 94.09,
+   "I_sealed": 93.52,
+   "composite": {
+    "A": 0.0,
+    "B": 0.0,
+    "C": 0.0
+   },
+   "composite_ci95": {
+    "A": [
+     0.0,
+     0.0
+    ],
+    "B": [
+     0.0,
+     0.0
+    ],
+    "C": [
+     0.0,
+     0.0
+    ]
+   },
+   "usd_per_1000": 2.1783887438423646,
+   "cost_kind": "estimate",
+   "cost_basis": "v1.5.4 published cost per 1,000 decisions carried (pricing rules unchanged; v1.6 item lengths differ): ESTIMATE: exact base-model market reference (operator tariff excluded by 30-day rule)",
+   "p50_s": 7.095,
+   "p95_s": 25.469,
+   "latency_adjustment": "none (API)",
+   "run_sha256": "e513ccfd7f429c1bfc4533c40ba34037b9951812bbddb6d01db7e0ef9753386f"
+  }
+ ]
+}
