@@ -8,7 +8,7 @@ const artifact = JSON.parse(await read('../data/imagejev-v03.json'));
 const rankedOrder = (rows) => rows.filter((r) => r.ranked).sort((x, y) => x.rank - y.rank).map((r) => r.key);
 
 // CR-311 (Review 6 Oct 2026): ImageJevBench ranks open weights; API rows are listed unranked.
-test('open scope marks the API row unranked and shifts later composite ranks by one', () => {
+test('open scope marks the API rows unranked and shifts later composite ranks past them', () => {
   const all = imageJevBoardSystems(artifact);
   const open = imageJevBoardSystems(artifact, 'open');
   assert.equal(open.length, all.length);
@@ -17,14 +17,17 @@ test('open scope marks the API row unranked and shifts later composite ranks by 
   assert.equal(api.listing, 'api_offering');
   assert.equal(api.rank, null);
   assert.equal(api.not_ranked_because, IMAGEJEV_API_NOT_RANKED);
+  const apiKeys = imageJevApiKeys(artifact);
+  for (const k of apiKeys) assert.equal(open.find((r) => r.key === k).ranked, false, k);
+  const apiRanks = all.filter((r) => apiKeys.includes(r.key) && r.ranked).map((r) => r.rank);
   const before = new Map(all.map((r) => [r.key, r.rank]));
   for (const r of open.filter((x) => x.ranked)) {
     const old = before.get(r.key);
-    assert.equal(r.rank, old > 10 ? old - 1 : old, `${r.key} ${old} -> ${r.rank}`);
+    assert.equal(r.rank, old - apiRanks.filter((a) => a < old).length, `${r.key} ${old} -> ${r.rank}`);
   }
-  assert.deepEqual(rankedOrder(open), rankedOrder(all).filter((k) => k !== 's1-vision'));
+  assert.deepEqual(rankedOrder(open), rankedOrder(all).filter((k) => !apiKeys.includes(k)));
   assert.deepEqual(rankedOrder(open).slice(0, 5), rankedOrder(all).slice(0, 5));
-  assert.equal(open.filter((r) => r.ranked).length, 42);
+  assert.equal(open.filter((r) => r.ranked).length, all.filter((r) => r.ranked).length - apiRanks.length);
   const order = open.map((r) => r.key);
   assert.equal(order[order.indexOf('s1-vision') + 1], 'shisa_de_1');
   assert.deepEqual(open.map((r) => r.jevbench_score).sort(), all.map((r) => r.jevbench_score).sort(), 'scores untouched');
@@ -38,7 +41,8 @@ test('default scope is unchanged and scope reaches chart and compare rows', () =
   assert.equal(imageJevBoardRows(artifact, 'open').find((r) => r.key === 'shisa_de_1').rank, 10);
   assert.equal(imageJevCompareRows(artifact, 'open').find((r) => r.key === 's1-vision').listing, 'api_offering');
   assert.throws(() => imageJevBoardSystems(artifact, 'api'));
-  assert.deepEqual(imageJevApiKeys(artifact), ['s1-vision']);
+  // CR-313 added GPT-6 Luna via OpenAI Decisions (closed API) after the preview.
+  assert.deepEqual(imageJevApiKeys(artifact), ['s1-vision', 'gpt6_luna_decisions']);
 });
 
 test('ImageJev page wires the open-weights split like /jev-models', async () => {
