@@ -1,3 +1,4 @@
+import { jevArchFor } from '../lib/jevbench-architecture.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -10,7 +11,7 @@ test('CR-269: filter metadata maps exact release fields and preserves missing pa
   const cygnet = rows.find((row) => row.key === 'cygnet');
   assert.equal(cygnet.provider, 'blockbrain');
   assert.equal(cygnet.family, null, 'model class is not a family identifier');
-  assert.equal(cygnet.modelType, artifact.systems.find((row) => row.key === 'cygnet').class);
+  assert.equal(cygnet.modelType, jevArchFor('jevbench', artifact.systems.find((row) => row.key === 'cygnet')).arch);
   assert.equal(cygnet.openStatus, 'yes');
   assert.equal(cygnet.newInVersion, false);
   assert.equal(cygnet.parametersB, null, 'v1.5.5 has no explicit parameter-count field');

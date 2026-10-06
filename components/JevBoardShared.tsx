@@ -1,3 +1,6 @@
+import { JevArchitectureBadge } from './JevArchitecture';
+import { jevRowArch } from './jevTypes';
+import type { JevArchBadges } from '../lib/jevbench-architecture.mjs';
 import type { CSSProperties, ReactNode } from 'react';
 import Link from 'next/link';
 import { jevTypeVarName } from './jevTypes';
@@ -11,7 +14,7 @@ import type { JevGate, JevGatePenalty } from '../lib/jevbench-axis-weights.mjs';
 // no client directive, so both the server board and the interactive client views can use it.
 
 export type JevBoardRow = {
-  key: string; display: string; author: string; repo: string | null; class: string;
+  key: string; display: string; author: string; repo: string | null; class: string; arch?: string; archBadges?: JevArchBadges;
   rank: number | null; ranked: boolean; listing: string; not_ranked_because: string | null;
   priority_run?: boolean; api_flag: boolean; api_exposure_note: string | null;
   jevbench_score: number | null;
@@ -128,7 +131,7 @@ export function JevScoreBar({ row, viewRank, reference = false, metric = 'score'
   const kind = row.cost?.kind;
   const level = (column: HeatColumn) => heat ? heatLevel(heat, column, row) : null;
   const label = `${row.display}: ${one(s)}${viewRank != null ? `, view position ${viewRank}` : ''}${row.rank ? `, official rank ${row.rank}` : `, ${NOT_RANKED[row.listing] ?? row.listing}, not ranked`}. Intelligence ${one(row.axes?.intelligence)}, calibration ${row.axes?.calibration == null ? 'none' : one(row.axes.calibration)}, speed ${one(row.axes?.speed)}, cost ${one(row.axes?.cost)}.${ciLo != null && ciHi != null ? ` 95% interval ${one(ciLo)} to ${one(ciHi)}.` : ''}${alternative ? ` ${alternative.label}: ${one(alternative.score)} (would be #${alternative.rank}). ${alternative.note}` : ''}${gate?.gates.length ? ` ${gateSentence(gate, s)}` : ''}`;
-  return <li style={typeVar(row.class)} className="grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_21rem]"
+  return <li style={typeVar(jevRowArch(row))} className="grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_21rem]"
     data-bh-jev14-bar={row.key} data-bh-jev14-bar-score={s == null ? '' : s.toFixed(3)} data-bh-jev14-bar-metric={metric === 'score' ? undefined : metric} data-bh-jev14-reference={reference ? '1' : undefined} aria-label={label}>
     <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs" data-bh-jev-row-number title={viewRank != null ? 'Position in the current view' : 'Official rank'}>{viewRank ?? row.rank ?? ''}</span>
     <span className="col-start-2 row-start-1 min-w-0 sm:text-right" title={row.display}>
@@ -147,6 +150,7 @@ export function JevScoreBar({ row, viewRank, reference = false, metric = 'score'
       {gate && gate.gates.length > 0 && <span className="mt-0.5 block sm:text-right"><span className="bh-thin-tag bh-gate-tag whitespace-nowrap" title={gateSentence(gate, s)} data-bh-jev-gate={row.key} data-bh-jev-gate-factor={gate.factor.toFixed(4)} data-bh-jev-gate-axes={gate.gates.map((g) => g.axis).join(' ')}>{gate.gates.length === 1 ? `${GATE_AXIS[gate.gates[0].axis]} gate` : 'gates'} ×{gate.factor.toFixed(2)}</span></span>}
       {benchmark === 'imagejevbench' && source && <Link href={page} className="block text-[10.5px] text-accent underline" data-bh-mm-system-details={row.key}>details</Link>}
       {/* CR-254 (2026-10-01): the cited base-model overlay, presentation only. Every row shows it, ranked, unranked or wrapper. */}
+      <JevArchitectureBadge row={row} benchmark={benchmark} />
       <BaseModelDisplay benchmark={benchmark} systemKey={row.key} className="mt-0.5 block text-[10.5px] leading-tight sm:text-right" />
     </span>
     <span className="bh-jevc-grid relative col-start-2 row-start-2 mt-1 flex h-4 sm:col-start-3 sm:row-start-1 sm:mt-0 sm:h-6" aria-hidden="true">

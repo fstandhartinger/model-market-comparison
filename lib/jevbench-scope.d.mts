@@ -1,0 +1,14 @@
+export type JevScope = 'open' | 'api' | 'all';
+export type JevRowScope = 'open' | 'api' | 'reference';
+type ScopeRow = { key: string; v16?: { lane?: string } | null; api_flag?: boolean | null; endpoint_kind?: string | null };
+export type JevApiClassifier = (row: ScopeRow) => boolean;
+export const JEV_REFERENCE_KEY: string;
+export const JEV_SCOPES: JevScope[];
+export const JEV_SCOPE_LISTING: { reference: string; api: string };
+export function isJevApiOffering(row: ScopeRow | null | undefined): boolean;
+export function jevScopeClassifier(...sources: (readonly ScopeRow[] | null | undefined)[]): JevApiClassifier;
+export function jevRowScope(row: ScopeRow, isApi?: JevApiClassifier): JevRowScope;
+export function jevScopeRows<T extends ScopeRow>(rows: readonly T[] | null | undefined, scope: JevScope, isApi?: JevApiClassifier): T[];
+export function jevbenchScopeArtifact<T extends { systems: ScopeRow[]; not_measured: ScopeRow[] }>(artifact: T, scope: JevScope, isApi?: JevApiClassifier): T & { scope?: JevScope };
+export function jevbenchScopeCarry<T extends { rows: ScopeRow[] }>(carry: T, scope: JevScope, isApi?: JevApiClassifier): T;
+export function jevApiOfferingKeys(rows: readonly ScopeRow[] | null | undefined, isApi?: JevApiClassifier): string[];

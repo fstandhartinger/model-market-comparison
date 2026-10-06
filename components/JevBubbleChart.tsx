@@ -467,7 +467,7 @@ export function JevBubbleCharts({ points, costLimit, latencyCap, costFactor = 2,
         active={active} setActive={setActive} pinned={pinned} setPinned={setPinned} expanded={expandedKind === 'speed'} setExpanded={(value) => setExpandedKind(value ? 'speed' : null)} />
     </div>
     <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="Bubble colours and styles" data-bh-jev-bubble-legend>
-      {types.map((t) => <li key={t}><span className="mr-1.5 inline-block h-2.5 w-2.5 rounded-full align-middle" style={{ backgroundColor: colour(t) }} aria-hidden="true" />{JEV_TYPE_LABEL[t] ?? t}</li>)}
+      {types.map((t) => <li key={t}><span className="mr-1.5 inline-block h-2.5 w-2.5 rounded-full align-middle" style={{ backgroundColor: colour(t) }} aria-hidden="true" />{JEV_TYPE_LABEL[t]} ({filteredPoints.filter((p) => p.cls === t).length})</li>)}
       <li><span className="mr-1.5 inline-block h-2.5 w-2.5 rounded-full border align-middle opacity-60" style={{ borderColor: 'var(--muted)' }} aria-hidden="true" />faint = outside Jev-class</li>
     </ul>
   </section>;

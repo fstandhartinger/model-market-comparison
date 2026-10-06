@@ -1,4 +1,7 @@
 "use client";
+import { JevArchitectureBadge } from './JevArchitecture';
+import { JEV_ARCH_CLASSES } from '../lib/jevbench-architecture.mjs';
+import { jevRowArch, jevLegendTypes, jevTypeVarName } from './jevTypes';
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type { JevTier, JevV11Row, JevV11View } from "../lib/jevbench-v11.mjs";
 import { DEFAULT_PRESET, DEFAULT_WEIGHTS, PRESETS, SCORE_NAME, describe, isDefault, normalise, parseParams, percents, ratioText, rerank, sameWeights, toParam, type JevWeights } from "../lib/jevbench-weights.mjs";
@@ -21,13 +24,8 @@ const one = (v: number | null) => (v === null ? "—" : v.toFixed(1));
 const pct = (v: number | null) => (v === null ? "—" : `${(v * 100).toFixed(1)}%`);
 const sec = (v: number | null) => (v === null ? "—" : `${v.toFixed(2)} s`);
 const short = (d: string) => d.split(" (")[0];
-const TYPE: Record<string, { label: string; v: string }> = {
-  jev: { label: "Jev (TypeSafe, closed)", v: "--jev-t-jev" },
-  "jev-rebuild": { label: "Open Jev rebuild", v: "--jev-t-rebuild" },
-  "llm-baseline": { label: "Instruction model, JSON schema", v: "--jev-t-llm" },
-  "small-tool-model": { label: "Small tool-calling model", v: "--jev-t-tool" },
-};
-const typeVar = (cls: string) => ({ ["--jev-t" as string]: `var(${(TYPE[cls] ?? TYPE["llm-baseline"]).v})` });
+const TYPE: Record<string, { label: string; v: string }> = Object.fromEntries(JEV_ARCH_CLASSES.map((c) => [c.id, { label: c.label, v: c.cssVar }]));
+const typeVar = (cls: string) => ({ ["--jev-t" as string]: `var(${jevTypeVarName(cls)})` });
 // Chart labels: the short name, plus the one qualifier the launch chart kept (the GPT effort level, the adapter mode).
 const chartName = (r: JevV11Row) => r.key === "gpt-5.6-luna" ? "GPT-5.6 Luna (low)" : r.key.endsWith("-tools") ? "Needle 3, options as tools" : short(r.display);
 
@@ -96,7 +94,7 @@ function ScoreChart({ rows, partial, w, view }: { rows: Row[]; partial: Row[]; w
   const eff = percents(w);
   const all = [...rows, ...partial];
   const star = (r: Row) => (r.note && r.ranked && r.key.endsWith("-tools") ? "*" : "");
-  const types = Object.keys(TYPE).filter((t) => all.some((r) => r.cls === t));
+  const types = jevLegendTypes(all.map((r) => jevRowArch(r)));
   return <figure className={`bh-panel p-4 sm:p-5 ${d.official ? "" : "bh-jevc-custom"}`} data-bh-jev11-main-chart data-bh-jevc-chart={d.official ? "official" : "custom"} aria-labelledby="jevc-title">
     <p className="bh-eyebrow">JevBench v1.1 · {view.decisions} decisions per system</p>
     <h2 id="jevc-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl" data-bh-jevc-title>{d.title}</h2>
@@ -113,7 +111,7 @@ function ScoreChart({ rows, partial, w, view }: { rows: Row[]; partial: Row[]; w
       {all.map((r) => {
         const s = r.score;
         const label = s === null ? `${r.display}: not scored (partial run)` : `${r.display}: ${one(s)}${r.rank ? `, rank ${r.rank}` : ", partial run, not ranked"}. Capability ${one(r.capability)}, speed ${one(r.speed)}, cost ${one(r.cost)}${r.costKind === "estimate" ? " (estimated)" : ""}.`;
-        return <li key={r.key} style={typeVar(r.cls)} className="grid grid-cols-[1.4rem_1fr_2.9rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_13.5rem_1fr_3.2rem_18.5rem]"
+        return <li key={r.key} style={typeVar(jevRowArch(r))} className="grid grid-cols-[1.4rem_1fr_2.9rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_13.5rem_1fr_3.2rem_18.5rem]"
           data-bh-jev11-bar={r.key} data-bh-jevc-score={s === null ? "" : s.toFixed(3)} aria-label={label}>
           <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs" data-bh-jevc-rank={r.rank ?? ""}>{r.rank ?? ""}</span>
           <span className="col-start-2 row-start-1 min-w-0 truncate sm:col-start-2 sm:text-right" title={r.display}>
@@ -139,7 +137,7 @@ function ScoreChart({ rows, partial, w, view }: { rows: Row[]; partial: Row[]; w
       {!d.official && <span className="bh-muted block text-[12px]">Official ({DEFAULT_PRESET.name} {DEFAULT_PRESET.ratio}): {ratioText(view.weights) === "33:33:33" ? "(Capability + Speed + Cost) / 3" : `${view.weights.capability} × Capability + ${view.weights.speed} × Speed + ${view.weights.cost} × Cost`}</span>}
     </p>
     <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="Legend" data-bh-jevc-legend>
-      {types.map((t) => <li key={t} style={typeVar(t)}><span className="bh-jevc-swatch mr-1.5" />{TYPE[t].label}</li>)}
+      {types.map((t) => <li key={t} style={typeVar(t)}><span className="bh-jevc-swatch mr-1.5" />{TYPE[t].label} ({all.filter((r) => jevRowArch(r) === t).length})</li>)}
       {partial.length > 0 && <li><span className="bh-jevc-swatch is-partial mr-1.5" />Partial run — shown, not ranked</li>}
     </ul>
     <figcaption className="bh-muted mt-3 space-y-1 text-[11.5px] leading-snug" data-bh-jevc-footnotes>
@@ -174,7 +172,7 @@ function Table({ view, rows, partialRows, w }: { view: JevV11View; rows: Row[]; 
   const R = ({ r }: { r: Row }) => <tr data-bh-jev11-row={r.key} data-bh-jev11-ranked={r.ranked ? "1" : "0"} className={r.ranked ? "" : "bh-jev11-partial"}>
     <td className="bh-muted tabular">{r.rank ?? ""}{!d.official && r.rank !== null && <Delta d={r.delta} />}</td>
     <th scope="row" className="bh-jev-sticky text-left font-normal"><span className="bh-muted block text-[11px] leading-tight">by {r.author}</span>
-      <span className="block font-semibold leading-snug"><ProjectLink r={r}>{short(r.display)}</ProjectLink>{r.note ? <sup>{notes.indexOf(r) + 1}</sup> : null}</span>
+      <span className="block font-semibold leading-snug"><ProjectLink r={r}>{short(r.display)}</ProjectLink><JevArchitectureBadge row={r} />{r.note ? <sup>{notes.indexOf(r) + 1}</sup> : null}</span>
       {r.display !== short(r.display) && r.display.slice(short(r.display).length + 2, -1) !== r.author && <span className="bh-muted block text-[11px] leading-tight">{r.display.slice(short(r.display).length + 2, -1)}</span>}
       {!r.ranked && <span className="bh-thin-tag mt-1 inline-block">partial · not ranked</span>}</th>
     <td className="tabular"><b className="text-lg" data-bh-jevc-cell-score>{one(r.score)}</b>{!d.official && <span className="bh-muted block text-[11px]" data-bh-jevc-cell-official>official {one(r.official)}</span>}</td>

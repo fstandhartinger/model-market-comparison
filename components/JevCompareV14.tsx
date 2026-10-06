@@ -1,7 +1,9 @@
 "use client";
+import { jevRowArch, jevTypeVarName as architectureVar } from './jevTypes';
+import type { JevArchBadges } from '../lib/jevbench-architecture.mjs';
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { Radar, Swatch, type Series, type Spoke, sparseNote } from "./JevRadars";
-import { JEV_TYPE_LABEL, JEV_TYPE_VAR } from "./jevTypes";
+import { JEV_TYPE_LABEL } from "./jevTypes";
 
 // Page fix (Florian 23 Sep 2026): CR-131 left the v1.3 two-system compare behind the historical disclosure. v1.4 brings it
 // back with four radars per pair — the four score axes, accuracy per tier including the sealed set, public hard-tier accuracy
@@ -9,15 +11,14 @@ import { JEV_TYPE_LABEL, JEV_TYPE_VAR } from "./jevTypes";
 // pinned v1.4 artifact; no sealed item text, gold or per-item result reaches this component. The pair lives in ?compare=a,b.
 
 export type JevCompareRow = {
-  key: string; name: string; cls: string; rank: number | null; listing: string; score: number | null; source?: string | null;
+  key: string; name: string; cls: string; arch?: string; archBadges?: JevArchBadges; rank: number | null; listing: string; score: number | null; source?: string | null;
   axes: Record<"intelligence" | "calibration" | "speed" | "cost", number | null> | null;
   tiers: Record<"easy" | "standard" | "judge" | "hard" | "sealed", number | null>;
   hard: Record<string, { accuracy: number | null; n: number }> | null;
   sealed: Record<string, number | null> | null;
 };
 
-const FAMILY: Record<string, string> = { jev: "blue", "jev-service": "blue", "jev-rebuild": "orange", "llm-baseline": "green", "small-tool-model": "violet", classifier: "magenta", "decision-api": "yellow", reranker: "teal", "raw-logit-control": "grey", "native-logit": "lime", "system-one-open": "red" };
-const colour = (cls: string) => `rgb(var(${JEV_TYPE_VAR[cls] ?? JEV_TYPE_VAR["llm-baseline"]}))`;
+const colour = (cls: string) => `rgb(var(${architectureVar(cls)}))`;
 
 const AXES = [["intelligence", "Intelligence"], ["calibration", "Calibration"], ["speed", "Speed"], ["cost", "Cost"]] as const;
 const TIERS = [["easy", "Easy"], ["standard", "Standard"], ["judge", "Judge"], ["hard", "Hard"], ["sealed", "Sealed"]] as const;
@@ -53,9 +54,9 @@ const pct = (v: number | null) => (v === null ? "—" : `${(v * 100).toFixed(0)}
 const lines = (label: string) => label.split(" ").reduce<string[]>((ls, w) => (ls.length && (ls[ls.length - 1] + " " + w).length <= 13 ? [...ls.slice(0, -1), `${ls[ls.length - 1]} ${w}`] : [...ls, w]), []);
 
 function series(A: JevCompareRow, B: JevCompareRow): Series[] {
-  const same = (FAMILY[A.cls] ?? A.cls) === (FAMILY[B.cls] ?? B.cls);
-  return [{ name: A.name, stroke: colour(A.cls), dashed: false, square: false },
-    { name: B.name, stroke: same ? `color-mix(in srgb, ${colour(B.cls)} 55%, var(--text))` : colour(B.cls), dashed: same, square: true }];
+  const same = jevRowArch(A) === jevRowArch(B);
+  return [{ name: A.name, stroke: colour(jevRowArch(A)), dashed: false, square: false },
+    { name: B.name, stroke: colour(jevRowArch(B)), dashed: same, square: true }];
 }
 
 /** Accuracy spokes (0–1 in, 0–100 plotted); a missing value is neither plotted nor guessed. */
@@ -227,7 +228,7 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
       </div>}
       <div className="mt-3 flex flex-wrap items-start justify-between gap-2">
         <ul className="space-y-1 text-[13px]" aria-label="Legend" data-bh-jev14-compare-legend>
-          {pair.map((r, k) => <li key={k}><Swatch s={s[k]} /><b>{k === 0 ? "A" : "B"}: {r.source ? <a href={r.source} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-source={r.key}>{r.name}</a> : r.name}</b> <span className="bh-muted" data-bh-jev14-class={r.cls} data-bh-jev14-class-labelled={JEV_TYPE_LABEL[r.cls] ? '1' : '0'}>— {JEV_TYPE_LABEL[r.cls] ?? <code title="Class named in the v1.4.2 artifact; description pending">{r.cls}</code>} · </span><span className="whitespace-nowrap" data-bh-jev14-compare-score={r.score === null ? "" : r.score.toFixed(3)}>Score {one(r.score)} ({status(r)})</span></li>)}
+          {pair.map((r, k) => <li key={k}><Swatch s={s[k]} /><b>{k === 0 ? "A" : "B"}: {r.source ? <a href={r.source} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-source={r.key}>{r.name}</a> : r.name}</b> <span className="bh-muted" data-bh-jev14-class={r.cls} data-bh-jev14-class-labelled={JEV_TYPE_LABEL[jevRowArch(r)] ? '1' : '0'}>— {JEV_TYPE_LABEL[jevRowArch(r)] ?? <code title="Class named in the v1.4.2 artifact; description pending">{r.cls}</code>} · </span><span className="whitespace-nowrap" data-bh-jev14-compare-score={r.score === null ? "" : r.score.toFixed(3)}>Score {one(r.score)} ({status(r)})</span></li>)}
         </ul>
         {!fixedPair && <button type="button" className="bh-button text-xs font-semibold" onClick={copy} data-bh-jev14-compare-copy>{copied ? "Link copied" : "Copy link to this pair"}</button>}
       </div>

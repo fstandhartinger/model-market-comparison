@@ -1,3 +1,6 @@
+import { jevArchFields } from '../lib/jevbench-architecture.mjs';
+import { jevRowArch } from './jevTypes';
+import type { JevArchBadges } from '../lib/jevbench-architecture.mjs';
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
@@ -6,14 +9,14 @@ import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 
 /** The fields a bar row prints — the board serialises exactly these for the client-side rank-by control (F-189d). */
 export type JevBarRow = {
-  key: string; display: string; cls: string; rank: number | null; ranked: boolean; listing: string;
+  key: string; display: string; cls: string; arch?: string; archBadges?: JevArchBadges; rank: number | null; ranked: boolean; listing: string;
   score: number | null; intelligence: number | null; calibration: number | null; speed: number | null; costAxis: number | null;
   usd: number | null; costKind: string | null; costBasis: string | null;
   apiFlag: boolean; apiNote: string | null; priorityRun: boolean; notRankedBecause: string | null;
 };
 
 export const toBarRow = (row: JevV14System): JevBarRow => ({
-  key: row.key, display: row.display, cls: row.class, rank: row.rank ?? null, ranked: !!row.ranked, listing: row.listing,
+  key: row.key, display: row.display, cls: row.class, ...jevArchFields('jevbench', row), rank: row.rank ?? null, ranked: !!row.ranked, listing: row.listing,
   score: row.jevbench_score ?? null,
   intelligence: row.axes?.intelligence ?? null, calibration: row.axes?.calibration ?? null,
   speed: row.axes?.speed ?? null, costAxis: row.axes?.cost ?? null,
@@ -52,7 +55,7 @@ export function JevScoreBar({ row, reference = false, order, metric = 'score' }:
   const small = metric === 'score' ? row.intelligence : row.score;
   const kind = row.costKind;
   const label = `${row.display}: ${BAR_METRIC_LABEL[metric]} ${one(drawn)}${row.rank ? `, rank ${row.rank}` : `, ${NOT_RANKED[row.listing] ?? row.listing}, not ranked`}. JevBench Score ${one(row.score)}, Intelligence ${one(row.intelligence)}, calibration ${row.calibration == null ? 'none' : one(row.calibration)}, speed ${one(row.speed)}, cost ${one(row.costAxis)}.`;
-  return <li style={typeVar(row.cls)} className="grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_19rem]"
+  return <li style={typeVar(jevRowArch(row))} className="grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_19rem]"
     data-bh-jev14-bar={row.key} data-bh-jev14-bar-score={row.score == null ? '' : row.score.toFixed(3)}
     data-bh-jev14-bar-order={order == null ? undefined : String(order)}
     data-bh-jev14-bar-intel={row.intelligence == null ? undefined : row.intelligence.toFixed(3)}

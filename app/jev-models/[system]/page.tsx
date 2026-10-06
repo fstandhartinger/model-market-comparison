@@ -1,3 +1,5 @@
+import { jevRowArch, JEV_TYPE_LABEL } from '../../../components/jevTypes';
+import { JevArchitectureBadge } from '../../../components/JevArchitecture';
 import { BaseModelDisplay } from '../../../components/BaseModelDisplay';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -33,11 +35,10 @@ const openLabel = (open: JevV12Row['open']) => open === 'yes' ? 'open (code and 
 const costCaveat = (row: JevV12Row) => row.costKind === 'estimate' ? ' (estimated)' : row.costKind === 'announced' ? ' (announced price, not yet charged)' : '';
 // F-168 (Fable pass 32): a system type is a data key (`jev-service`, `small-tool-model`); the reader gets the board's own words for it.
 // Same map as components/JevRadars.tsx (a client module, so not importable here — see usdText above).
-const TYPE_LABEL: Record<string, string> = { jev: 'Jev', 'jev-rebuild': 'Jev rebuild', 'llm-baseline': 'instruction model', 'small-tool-model': 'small tool-calling model', 'jev-service': 'service built on Jev', classifier: 'zero-shot classifier', 'decision-api': 'closed decision API', reranker: 'reranker' };
-const typeLabel = (cls: string) => TYPE_LABEL[cls] ?? cls.replace(/-/g, ' ');
+const typeLabel = (cls: string) => JEV_TYPE_LABEL[cls];
 // F-167: one axis card's band — the system's value on 0–100 in its type colour, the reference's value as a tick.
 const Band = ({ axis, row, reference }: { axis: 'intelligence' | 'calibration' | 'speed' | 'cost'; row: JevV12Row; reference: JevV12Row | null }) =>
-  <JevAxisBand axis={axis} value={row.axes[axis] ?? 0} colour={typeColour(row.cls)}
+  <JevAxisBand axis={axis} value={row.axes[axis] ?? 0} colour={typeColour(jevRowArch(row))}
     reference={reference?.axes[axis] ?? null} referenceName={short(reference?.display ?? '')} />;
 // F-168: the not-ranked status is one sentence — the listing kind, "not ranked", and the artifact's reason once. The artifact's
 // `notRankedBecause` already ends in "— listed, not ranked" for an honorable mention; that clause is the sentence's own and is not repeated.
@@ -165,9 +166,10 @@ export default async function JevSystemPage({ params }: { params: Promise<{ syst
       <div className="bh-eyebrow">JevBench {view.revision} · one system</div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">{row.display}</h1>
       <p className="bh-muted mt-2 max-w-3xl">
-        {row.author} · {row.licence} · {openLabel(row.open)} · <span data-bh-jev-system-cls={row.cls}>{typeLabel(row.cls)}</span>
+        {row.author} · {row.licence} · {openLabel(row.open)} · <span data-bh-jev-system-cls={row.cls}>{typeLabel(jevRowArch(row))}</span>
       </p>
     </header>
+    <JevArchitectureBadge row={row} />
     <BaseModelDisplay systemKey={row.key} className="mt-2 block text-sm" />
     <JevBenchRelatedLinks systemKey={row.key} />
 

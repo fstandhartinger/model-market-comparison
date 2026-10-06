@@ -1,3 +1,5 @@
+import { JevArchitectureBadge } from './JevArchitecture';
+import { jevRowArch } from './jevTypes';
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 import Link from 'next/link';
 import type { CSSProperties, ReactNode } from 'react';
@@ -8,7 +10,7 @@ import {
 } from '../lib/jevbench-v15-preview.mjs';
 import { jevV15SliderPresets, jevV15BoardSystem, jevV15BoardRow, jevV15CompareRow, jevV15OpenSource } from '../lib/jevbench-v15-board.mjs';
 import { JEVBENCH_REPO } from '../lib/jevbench.mjs';
-import { jevTypeVarName, JEV_TYPE_LABEL } from './jevTypes';
+import { jevTypeVarName, JEV_TYPE_LABEL, jevLegendTypes } from './jevTypes';
 import { JevCapabilityRanking } from './JevCapabilityRanking';
 import { jevClassView } from './jevClassView';
 import { JevBubbleCharts } from './JevBubbleChart';
@@ -82,14 +84,15 @@ function Th({ children, right = true, title }: { children: ReactNode; right?: bo
 function NameCell({ row, rank }: { row: JevV15System; rank: ReactNode }) {
   return <>
     <td className="sticky left-0 z-[1] w-10 min-w-10 bg-[var(--surface)] p-2 text-right font-bold tabular-nums shadow-[inset_-1px_0_0_rgb(var(--line))]">{rank}</td>
-    <th scope="row" className="sticky left-10 z-[1] w-44 min-w-44 bg-[var(--surface)] p-2 text-left font-semibold shadow-[inset_-1px_0_0_rgb(var(--line))] sm:w-60 sm:min-w-60" style={typeVar(row.class)}>
+    <th scope="row" className="sticky left-10 z-[1] w-44 min-w-44 bg-[var(--surface)] p-2 text-left font-semibold shadow-[inset_-1px_0_0_rgb(var(--line))] sm:w-60 sm:min-w-60" style={typeVar(jevRowArch(row))}>
       <span className="mr-1.5 inline-block h-2.5 w-2.5 rounded-full bg-[rgb(var(--jev-t))] align-middle" aria-hidden="true" />
       {jevSourceUrl(row.key, row.repo)
         ? <a href={jevSourceUrl(row.key, row.repo)!} target="_blank" rel="noopener noreferrer" className="underline" title={row.display}>{short(row.display)}</a>
         : <Link href={jevSystemPath(row.key)} title={row.display}>{short(row.display)}</Link>}<Tags row={row} />
       {jevSourceUrl(row.key, row.repo) && <Link href={jevSystemPath(row.key)} className="ml-2 text-[11px] font-normal text-accent underline">details</Link>}
       {/* CR-254 (2026-10-01): cited base-model overlay, presentation only; every listed row keeps it. */}
-      <BaseModelDisplay systemKey={row.key} className="mt-1 block text-[11px] font-normal leading-tight" />
+      <JevArchitectureBadge row={row} />
+    <BaseModelDisplay systemKey={row.key} className="mt-1 block text-[11px] font-normal leading-tight" />
     </th>
   </>;
 }
@@ -140,12 +143,13 @@ function HeadlineBars({ a, ranked }: { a: JevV15Artifact; ranked: JevV15System[]
       const ci = row.composite_ci95?.[headline] ?? null;
       const clamp = (v: number) => Math.max(0, Math.min(100, v));
       const lo = ci ? clamp(Math.min(ci[0], ci[1])) : null, hi = ci ? clamp(Math.max(ci[0], ci[1])) : null;
-      return <li key={row.key} style={typeVar(row.class)} className="grid grid-cols-[1.5rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.8rem_15rem_minmax(0,1fr)_3.4rem_24rem]" data-bh-jev15-bar={row.key} data-bh-jev15-global-filter-row={row.key}
+      return <li key={row.key} style={typeVar(jevRowArch(row))} className="grid grid-cols-[1.5rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.8rem_15rem_minmax(0,1fr)_3.4rem_24rem]" data-bh-jev15-bar={row.key} data-bh-jev15-global-filter-row={row.key}
         aria-label={`${row.display}: JevBench Score ${one(s)}, rank ${row.ranks[headline]}. Intelligence ${one(row.axes.intelligence)}, calibration ${one(row.axes.calibration)}, speed ${one(row.axes.speed)}, cost ${one(row.axes.cost)}.${ci ? ` 95% interval ${one(lo)} to ${one(hi)}.` : ''}${tieBelow.has(row.key) ? ' Statistical tie with the next row.' : ''}`}>
         <span className="bh-muted tabular-nums col-start-1 row-start-1 text-right text-xs">{row.ranks[headline]}</span>
         <span className="col-start-2 row-start-1 min-w-0 sm:text-right" title={row.display}>
           <span className="block truncate sm:text-right">{short(row.display)}<Tags row={row} /></span>
-          <BaseModelDisplay systemKey={row.key} className="mt-0.5 block text-[10.5px] font-normal leading-tight sm:text-right" />
+          <JevArchitectureBadge row={row} />
+    <BaseModelDisplay systemKey={row.key} className="mt-0.5 block text-[10.5px] font-normal leading-tight sm:text-right" />
         </span>
         <span className="bh-jevc-grid relative col-start-2 row-start-2 mt-1 flex h-4 sm:col-start-3 sm:row-start-1 sm:mt-0 sm:h-6" aria-hidden="true">
           {s != null && <span className="bh-jevc-bar" style={{ width: `${Math.max(0, Math.min(100, s)).toFixed(3)}%` }} />}
@@ -276,7 +280,7 @@ function Addendum({ a, rows }: { a: JevV15Artifact; rows: JevV15System[] }) {
           <Th>Rank (C)</Th><Th title="Individual 95% bootstrap interval">C score · 95% CI</Th>
         </tr></thead>
         <tbody>{rows.map((r) => <tr key={r.key} className="border-t border-line" data-bh-jev15-addendum-row={r.key} data-bh-jev15-global-filter-row={r.key}>
-          <th scope="row" className="whitespace-nowrap p-2 text-left font-semibold" style={typeVar(r.class)}>
+          <th scope="row" className="whitespace-nowrap p-2 text-left font-semibold" style={typeVar(jevRowArch(r))}>
             <span className="mr-1.5 inline-block h-2.5 w-2.5 rounded-full bg-[rgb(var(--jev-t))] align-middle" aria-hidden="true" />
             <span title={r.display}>{short(r.display)}</span><Tags row={r} />
           </th>
@@ -306,7 +310,7 @@ function Addendum({ a, rows }: { a: JevV15Artifact; rows: JevV15System[] }) {
           <Th title={PLACE_TITLE('B')}>Would place (B)</Th><Th title={CI_TITLE}>B score · 95% CI</Th>
         </tr></thead>
         <tbody>{rows.map((r) => <tr key={r.key} className="border-t border-line" data-bh-jev15-addendum-row={r.key} data-bh-jev15-global-filter-row={r.key}>
-          <th scope="row" className="whitespace-nowrap p-2 text-left font-semibold" style={typeVar(r.class)} title={r.not_ranked_because ?? undefined}>
+          <th scope="row" className="whitespace-nowrap p-2 text-left font-semibold" style={typeVar(jevRowArch(r))} title={r.not_ranked_because ?? undefined}>
             <span className="mr-1.5 inline-block h-2.5 w-2.5 rounded-full bg-[rgb(var(--jev-t))] align-middle" aria-hidden="true" />
             <span title={r.display}>{short(r.display)}</span><Tags row={r} />
           </th>
@@ -330,7 +334,8 @@ function NotRanked({ a, partial, unpriced }: { a: JevV15Artifact; partial: JevV1
     {unpriced.length > 0 && <><h3 className="mt-4 font-semibold">Measured, unpriced ({unpriced.length})</h3>
       <ul className="bh-muted mt-1 space-y-1 text-sm">{unpriced.map((r) => <li key={r.key} data-bh-jev15-unpriced={r.key} data-bh-jev15-global-filter-row={r.key}><b>{r.display}</b><Tags row={r} />: {r.not_scored_reason}. No Cost axis and no score until a price qualifies under the v1.5 price rules.</li>)}</ul></>}
     {a.not_measured.length > 0 && <><h3 className="mt-4 font-semibold">Incomplete or not measured in v1.5 ({a.not_measured.length})</h3>
-      <ul className="bh-muted mt-1 space-y-1 text-sm" data-bh-jev15-not-measured>{a.not_measured.map((r) => <li key={r.key} data-bh-jev15-unmeasured-row={r.key} data-bh-jev15-global-filter-row={r.key}><b>{r.display}</b>{r.addendum ? <span className="bh-thin-tag ml-1">{r.addendum.label}</span> : null}: {r.reason ?? r.status}{r.rows != null && r.missing != null ? ` (${r.rows.toLocaleString('en-US')}/${a.sample.total.toLocaleString('en-US')} rows; ${r.missing.toLocaleString('en-US')} missing)` : ''}. <BaseModelDisplay systemKey={r.key} className="ml-1 text-xs" /></li>)}</ul>
+      <ul className="bh-muted mt-1 space-y-1 text-sm" data-bh-jev15-not-measured>{a.not_measured.map((r) => <li key={r.key} data-bh-jev15-unmeasured-row={r.key} data-bh-jev15-global-filter-row={r.key}><b>{r.display}</b>{r.addendum ? <span className="bh-thin-tag ml-1">{r.addendum.label}</span> : null}: {r.reason ?? r.status}{r.rows != null && r.missing != null ? ` (${r.rows.toLocaleString('en-US')}/${a.sample.total.toLocaleString('en-US')} rows; ${r.missing.toLocaleString('en-US')} missing)` : ''}. <JevArchitectureBadge row={r} />
+    <BaseModelDisplay systemKey={r.key} className="ml-1 text-xs" /></li>)}</ul>
       <p className="bh-muted mt-1 text-xs">Incomplete and unmeasured systems receive no official rank. Existing results from earlier benchmark versions remain on their frozen version pages.</p></>}
   </section>;
 }
@@ -483,7 +488,7 @@ export function JevBenchV15({ artifact: a, sha256, previousKeys = [] }: { artifa
   const unpriced = a.systems.filter((s) => s.listing === 'unpriced');
   // v1.5.1 and v1.5.2 keep wrappers and other non-eligible rows out of every ranked visualization. v1.5.0 stays frozen.
   const chartData = a.revision === 'v1.5.1' || a.revision === 'v1.5.2' || a.revision === 'v1.5.3' || a.revision === 'v1.5.4' || a.revision === 'v1.5.5' || a.revision === 'v1.5.6' || a.revision === 'v1.5.7' ? ranked : a.systems;
-  const classes = [...new Set(chartData.map((s) => s.class))];
+  const classes = jevLegendTypes(chartData.map((s) => jevRowArch(s)));
   const seen = new Map<string, number>();
   for (const s of [...a.systems, ...a.not_measured]) seen.set(shortOnly(s.display), (seen.get(shortOnly(s.display)) ?? 0) + 1);
   collisions = new Set([...seen].filter(([, n]) => n > 1).map(([name]) => name));
@@ -563,7 +568,7 @@ export function JevBenchV15({ artifact: a, sha256, previousKeys = [] }: { artifa
     <JevCompareV15 rows={compareRows} openDecisions={a.sample.open} sealedDecisions={a.sample.sealed} categories={jevbenchCategoryView(a.revision, compareRows.map((r) => r.key))} />
     <AxesTable a={a} rows={[...new Map([...ranked, ...honorable, ...addendum, ...partial, ...unpriced].map((row) => [row.key, row])).values()]} />
     <HeadlineBars a={a} ranked={ranked} />
-    <p className="bh-muted mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs" aria-label="System types">{classes.map((c) => <span key={c} style={typeVar(c)} className="whitespace-nowrap"><span className="mr-1 inline-block h-2.5 w-2.5 rounded-full bg-[rgb(var(--jev-t))] align-middle" aria-hidden="true" />{JEV_TYPE_LABEL[c] ?? c}</span>)}</p>
+    <p className="bh-muted mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs" aria-label="System types">{classes.map((c) => <span key={c} style={typeVar(c)} className="whitespace-nowrap"><span className="mr-1 inline-block h-2.5 w-2.5 rounded-full bg-[rgb(var(--jev-t))] align-middle" aria-hidden="true" />{JEV_TYPE_LABEL[c]} ({chartData.filter((s) => jevRowArch(s) === c).length})</span>)}</p>
     <OptionsTable a={a} ranked={ranked} />
     <JevV15AllDataGrid
       artifact={a}

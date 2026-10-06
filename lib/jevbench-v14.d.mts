@@ -1,7 +1,8 @@
+import type { JevArchBadges } from './jevbench-architecture.mjs';
 export interface JevV14System {
   key: string;
   display: string;
-  class: string;
+  class: string; arch?: string; archBadges?: JevArchBadges;
   author: string;
   repo: string | null;
   licence: string;

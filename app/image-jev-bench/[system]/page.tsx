@@ -1,3 +1,5 @@
+import { jevRowArch, JEV_TYPE_LABEL } from '../../../components/jevTypes';
+import { JevArchitectureBadge } from '../../../components/JevArchitecture';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -43,6 +45,7 @@ export default async function ImageJevSystemPage({ params }: { params: Promise<{
     <header className="bh-page-head mt-3">
       <div className="bh-eyebrow">Image JevBench {artifact.revision} · individual system</div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">{row.display}</h1>
+      <JevArchitectureBadge row={row} benchmark="imagejevbench" />
       <BaseModelDisplay benchmark="imagejevbench" systemKey={row.key} className="mt-2 block text-sm" />
       {source && <p className="mt-2 text-sm"><a href={source} target="_blank" rel="noopener noreferrer" className="text-accent underline" data-bh-jev-source={row.key}>Published source</a></p>}
       {row.endpoint_condition && <p className="bh-muted mt-2 text-sm">{row.endpoint_condition}</p>}
@@ -61,7 +64,7 @@ export default async function ImageJevSystemPage({ params }: { params: Promise<{
           {AXES.map((axis) => <div className="bh-panel p-4" key={axis}>
             <dt className="bh-muted text-sm capitalize">{axis}</dt>
             <dd className="mt-1 text-2xl font-semibold tabular-nums">{number(row.axes?.[axis], 1)}
-              {row.axes?.[axis] != null && <JevAxisBand axis={axis} value={row.axes[axis]!} colour={typeColour(row.class)} reference={null} referenceName="" />}
+              {row.axes?.[axis] != null && <JevAxisBand axis={axis} value={row.axes[axis]!} colour={typeColour(jevRowArch(row, 'imagejevbench'))} reference={null} referenceName="" />}
             </dd>
           </div>)}
         </dl>

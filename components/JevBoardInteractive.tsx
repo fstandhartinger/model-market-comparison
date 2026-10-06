@@ -1,4 +1,6 @@
 "use client";
+import { JevArchitectureBadge } from './JevArchitecture';
+import { jevRowArch } from './jevTypes';
 import { useEffect, useId, useMemo, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import {
@@ -30,7 +32,7 @@ const isFiltered = (f: Filters) => f.q.trim() !== '' || f.type !== '' || f.open 
 function applyFilters(rows: JevBoardViewRow[], f: Filters) {
   const q = f.q.trim().toLowerCase();
   return rows.filter((row) => (!q || `${row.display} ${row.author} ${row.key}`.toLowerCase().includes(q))
-    && (!f.type || row.class === f.type)
+    && (!f.type || jevRowArch(row) === f.type)
     && (!f.open || (f.open === 'open') === row.openSource)
     && (!f.api || (f.api === 'flagged') === row.api_flag)
     && (!f.fresh || row.isNew));
@@ -40,7 +42,7 @@ function FilterBar({ rows, filters, setFilters, shown, newLabel, idPrefix }: { r
   // Phones show the search box and one toggle; the selects open on demand so the ranking starts near the top.
   const [more, setMore] = useState(false);
   const active = [filters.type, filters.open, filters.api].filter(Boolean).length + (filters.fresh ? 1 : 0);
-  const types = jevLegendTypes(rows.map((r) => r.class));
+  const types = jevLegendTypes(rows.map((r) => jevRowArch(r)));
   const hasNew = newLabel !== null && rows.some((r) => r.isNew);
   const set = (patch: Partial<Filters>) => setFilters({ ...filters, ...patch });
   return <div className={`bh-jev-filters mt-3 ${more ? 'is-open' : ''}`} role="search" aria-label="Filter systems" data-bh-jev-filters={idPrefix}>
@@ -258,7 +260,7 @@ export function JevScoreChart({ revision, rows: officialRows, newLabel, fairness
   const shown = useMemo(() => sortRows(applyFilters(rows, filters), sort, official).filter((r) => !hidingLlms || r.class !== GENERAL_LLM), [rows, filters, sort, official, hidingLlms]);
   const unranked = rows.filter((r) => !r.ranked).length;
   const visibleRankedCount = globallyVisibleRows.filter((row) => row.ranked).length;
-  const types = jevLegendTypes(rows.map((r) => r.class));
+  const types = jevLegendTypes(rows.map((r) => jevRowArch(r)));
 
   const setWeights = (next: JevWeights) => {
     if (JEV_AXES.every((axis) => next[axis] === 0)) {
@@ -379,8 +381,8 @@ export function JevScoreChart({ revision, rows: officialRows, newLabel, fairness
         : <>Score = 4 / (1/I + 1/C + 1/S + 1/K) <span className="bh-muted">(each 0–100; × (axis / 50)² for Intelligence, Speed or Cost below 50)</span></>}
     </p>
     <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="Legend" data-bh-jev14-legend>
-      {types.map((t) => <li key={t} style={typeVar(t)} data-bh-jev14-class={t} data-bh-jev14-class-labelled={JEV_TYPE_LABEL[t] ? '1' : '0'}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[t] ?? <code title="Class named in the artifact; description pending">{t}</code>}</li>)}
-      {rows.some((r) => r.alt) && <li><span className="bh-jev-alt-bar mr-1.5 inline-block h-[6px] w-4" style={typeVar(rows.find((r) => r.alt)!.class)} />Striped bar = same system under the labelled alternative price assumption</li>}
+      {types.map((t) => <li key={t} style={typeVar(t)} data-bh-jev14-class={t} data-bh-jev14-class-labelled={JEV_TYPE_LABEL[t] ? '1' : '0'}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[t]} ({rows.filter((r) => jevRowArch(r) === t).length})</li>)}
+      {rows.some((r) => r.alt) && <li><span className="bh-jev-alt-bar mr-1.5 inline-block h-[6px] w-4" style={typeVar(jevRowArch(rows.find((r) => r.alt)!))} />Striped bar = same system under the labelled alternative price assumption</li>}
       {unranked > 0 && <li><span className="bh-jevc-swatch is-partial mr-1.5" />Shown, not ranked</li>}
     </ul>
     <figcaption className="bh-muted mt-3 text-[11.5px] leading-snug">I, C, S, K = Intelligence, Calibration, Speed, Cost; the est. pill = <a href={costHref} className="text-accent underline">estimated cost</a>; ann. = announced price; API = the operator&apos;s endpoint saw held-out benchmark inputs, without answers{newLabel ? <>; new = first listed in {newLabel}</> : null}; $/1k decisions = US dollars per 1,000 decisions (not heat-shaded). <span className="hidden sm:inline">Click a column heading to sort. </span>Names link to each project.</figcaption>
@@ -424,6 +426,7 @@ function SystemName({ row, benchmark = 'jevbench' }: { row: JevBoardViewRow; ben
     {row.isNew && <span className="bh-new-tag ml-2 align-middle" data-bh-jev14-new={row.key}>new</span>}
     <span className="bh-muted block text-[11px] leading-tight">by {row.author}{variant ? ` · ${variant}` : ''}{href !== page && <> · <Link href={page} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-details={row.key}>details</Link></>}</span>
     {/* CR-254 (2026-10-01): the cited base-model overlay, presentation only; every row keeps it, ranked or not. */}
+    <JevArchitectureBadge row={row} benchmark={benchmark} />
     <BaseModelDisplay benchmark={benchmark} systemKey={row.key} className="block text-[11px] leading-tight" />
   </div>;
 }
