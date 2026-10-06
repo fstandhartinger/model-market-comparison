@@ -139,15 +139,18 @@ export function JevScoreBar({ row, viewRank, reference = false, metric = 'score'
     data-bh-jev14-bar={row.key} data-bh-jev14-bar-score={s == null ? '' : s.toFixed(3)} data-bh-jev14-bar-metric={metric === 'score' ? undefined : metric} data-bh-jev14-reference={reference ? '1' : undefined} aria-label={label}>
     <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs" data-bh-jev-row-number title={viewRank != null ? 'Position in the current view' : 'Official rank'}>{viewRank ?? row.rank ?? ''}</span>
     <span className="col-start-2 row-start-1 min-w-0 sm:text-right" title={row.display}>
-      <span className="block truncate sm:text-right">
+      {/* Review 6 Oct 2026: only the name truncates; the tags (API, new, not ranked) are flex-none siblings so a long name keeps its API pill. */}
+      <span className="flex min-w-0 items-baseline sm:justify-end" data-bh-jev-name-row>
+        <span className="min-w-0 truncate">
         {/* Florian 25 Sep 2026: the name opens the model's best source (repo, Hugging Face or vendor docs); rows without one keep the system page. */}
         {source
           ? <a href={source} target="_blank" rel="noopener noreferrer" title={`${row.display} — opens ${source.replace(/^https:\/\/(www\.)?/, '').split('/')[0]}`} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current" data-bh-jev-source={row.key}>{name ?? shortName(row.display)}</a>
           : <Link href={pageHref ?? page} title={row.display} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{name ?? shortName(row.display)}</Link>}
-        {row.priority_run === true && <span className="bh-thin-tag ml-1.5 align-middle" data-bh-jev14-priority-run={row.key}>priority run</span>}
-        {!row.ranked && <span className="bh-muted whitespace-nowrap" title={row.not_ranked_because ?? undefined}> ({NOT_RANKED[row.listing] ?? row.listing})</span>}
-        {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1.5 align-middle" title={row.api_exposure_note ?? apiExplanation}>API</span>}
-        {isNew && <span className="bh-new-tag ml-1.5 align-middle" data-bh-jev14-new={row.key}>new</span>}
+        </span>
+        {row.priority_run === true && <span className="bh-thin-tag ml-1.5 shrink-0 align-middle" data-bh-jev14-priority-run={row.key}>priority run</span>}
+        {!row.ranked && <span className="bh-muted shrink-0 whitespace-nowrap" title={row.not_ranked_because ?? undefined}> ({NOT_RANKED[row.listing] ?? row.listing})</span>}
+        {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1.5 shrink-0 align-middle" title={row.api_exposure_note ?? apiExplanation}>API</span>}
+        {isNew && <span className="bh-new-tag ml-1.5 shrink-0 align-middle" data-bh-jev14-new={row.key}>new</span>}
       </span>
       {row.listing === 'pending' && row.not_ranked_because && <span className="bh-muted mt-0.5 block whitespace-normal text-[10.5px] sm:text-right" data-bh-jev-pending-note={row.key}>{row.not_ranked_because}</span>}
       {viewRank != null && <span className="bh-muted mt-0.5 block text-[10.5px] sm:text-right" data-bh-jev-view-rank={viewRank} data-bh-jev-official-rank={row.rank ?? undefined}>view #{viewRank} · {row.rank != null ? `official #${row.rank}` : 'not officially ranked'}</span>}
