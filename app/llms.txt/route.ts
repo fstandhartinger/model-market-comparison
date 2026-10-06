@@ -1,10 +1,13 @@
+import { readJevbenchComparisonLinks } from '../../lib/jevbench-seo.mjs';
 import { SITE_URL, BRAND_CLAIM, BRAND_LINE } from "../../lib/seo";
 
 // CR-171 (seo-router-sites, 26 Sep 2026): an llms.txt index (llmstxt.org) so an agent finds the pages and the
 // public API without crawling the app. Links only; it states no number, so it cannot drift from the data.
 export const dynamic = "force-static";
+export const revalidate = 300;
 
-function llmsTxt(): string {
+async function llmsTxt(): Promise<string> {
+  const comparisons = await readJevbenchComparisonLinks();
   const u = (path: string) => `${SITE_URL}${path}`;
   return [
     "# Benchmark Heaven",
@@ -25,6 +28,10 @@ function llmsTxt(): string {
     `- [Is Jev open source? Open-source Jev-class models](${u("/jev-models/open-source-jev")})`,
     `- [How to choose a Jev-class model](${u("/jev-models/how-to-choose")})`,
     "",
+    ...comparisons.map((p) => `- [Jev vs ${p.label}](${u(`/jev-models/${p.slug}`)})`),
+    `- Model pages: ${u("/jev-models/{system}")} (replace {system} with the public model slug)`,
+    `- [Full JevBench data and method](${u("/llms-full.txt")})`,
+    "",
     "## Data and API",
     `- [Public API reference](https://github.com/fstandhartinger/model-market-comparison/blob/main/API.md)`,
     `- [Full dataset, JSON](${u("/api/dataset")}): models, prices and benchmark observations with provenance`,
@@ -44,6 +51,6 @@ function llmsTxt(): string {
   ].join("\n");
 }
 
-export function GET() {
-  return new Response(llmsTxt(), { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
+export async function GET() {
+  return new Response(await llmsTxt(), { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
 }

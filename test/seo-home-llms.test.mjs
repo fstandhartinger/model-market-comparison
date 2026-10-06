@@ -14,7 +14,7 @@ test('llms.txt is a static text route that links real app routes', async () => {
   const { existsSync } = await import('node:fs');
   for (const p of paths) {
     if (p === '/') continue;
-    const dir = new URL(`../app${p}`, import.meta.url);
+    const dir = new URL(`../app${p.replace(/\{([^}]+)\}/g, '[$1]')}`, import.meta.url);
     assert.ok(existsSync(dir), `llms.txt links ${p}, which has no app route`);
   }
   const body = route.slice(route.indexOf('return ['), route.indexOf('].join'));

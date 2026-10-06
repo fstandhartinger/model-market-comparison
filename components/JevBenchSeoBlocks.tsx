@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { SITE_URL } from '../lib/seo';
-import { JEV_COMPARISONS } from '../lib/jevbench-seo.mjs';
+import { readJevbenchComparisonLinks } from '../lib/jevbench-seo.mjs';
 import { JevBoardGuides } from './JevBoardGuides';
 
 type Faq = { question: string; answer: string };
@@ -16,15 +16,19 @@ export type StructuredListItem = { name: string; url?: string | null };
 export type SeoRow = {
   key: string;
   display: string;
-  rank: number;
-  jevbench_score: number;
-  sealed_accuracy: number;
-  public_accuracy?: number;
-  public_minus_sealed_gap_pp?: number;
-  axes: { intelligence: number; calibration: number; speed: number; cost: number };
-  cost?: { kind?: string; usd_per_1000?: number | null };
-  speed?: { p50_s_adjusted?: number | null; p95_s_adjusted?: number | null; adjustment?: string };
-  endpoint_condition?: string;
+  rank: number | null;
+  capability?: number | null;
+  capability_eligible?: boolean;
+  last_measured_on?: string | null;
+  measurement_revision?: string;
+  jevbench_score: number | null;
+  sealed_accuracy: number | null;
+  public_accuracy?: number | null;
+  public_minus_sealed_gap_pp?: number | null;
+  axes: { intelligence: number | null; calibration: number | null; speed: number | null; cost: number | null };
+  cost?: { kind?: string; usd_per_1000?: number | null; basis?: string }; 
+  speed?: { p50_s_raw?: number | null; p50_s_adjusted?: number | null; p95_s_adjusted?: number | null; adjustment?: string | null };
+  endpoint_condition?: string | null;
   open?: string | boolean | null;
   licence?: string | null;
   repo?: string | null;
@@ -46,24 +50,25 @@ export function usdPerThousand(value: number | null | undefined): string {
 export function costBasisLabel(kind: string | null | undefined): string {
   if (kind === 'measured') return 'measured';
   if (kind === 'estimate') return 'estimated';
-  if (kind === 'announced') return 'announced price';
+  if (kind === 'announced') return 'self-reported announced price';
   return 'not published';
 }
 
 export function opennessLabel(row: SeoRow): string {
   if (row.open === 'yes' || row.open === true) return 'Code and weights marked open in the published row';
-  if (row.open === 'weights') return 'Weights marked open in the published row';
+  if ((row.open === 'weights' || row.open === 'open weights')) return 'Weights marked open in the published row';
   if (row.open === 'no') return 'Marked closed in the published row';
   return 'Unknown in the published row';
 }
 
-export function DatasetFaqJsonLd({ path, artifact, faq, items, itemListName, variables }: {
+export function DatasetFaqJsonLd({ path, artifact, faq, items, itemListName, variables, breadcrumbName }: {
   path: string;
   artifact: Artifact;
   faq: Faq[];
   items?: StructuredListItem[];
   itemListName?: string;
   variables?: string[];
+  breadcrumbName?: string;
 }) {
   const canonical = new URL(path, SITE_URL).toString();
   const json = {
@@ -102,6 +107,7 @@ export function DatasetFaqJsonLd({ path, artifact, faq, items, itemListName, var
           item: { '@type': 'Thing', name, ...(url ? { url } : {}) },
         })),
       }] : []),
+      breadcrumbJsonLd(path, breadcrumbName ?? path.split('/').pop()?.replace(/-/g, ' ') ?? 'JevBench'),
       {
         '@type': 'FAQPage',
         '@id': `${canonical}#faq`,
@@ -153,15 +159,27 @@ export function JevIntentLinks({ current }: { current: 'alternatives' | 'chooser
   );
 }
 
-export function JevBoardIntentLinks() {
+export async function JevBoardIntentLinks() {
+  const comparisons = await readJevbenchComparisonLinks();
   return <JevBoardGuides links={[
     { href: '/jev-models/alternatives', label: 'Compare Jev alternatives' },
     { href: '/jev-models/how-to-choose', label: 'Choose a Jev-class model by use case' },
     { href: '/jev-models/open-source-jev', label: 'Is Jev open source? Open-weight options' },
-    ...JEV_COMPARISONS.map((pair) => ({ href: `/jev-models/${pair.slug}`, label: `Jev vs ${pair.label}` })),
+    ...comparisons.map((pair) => ({ href: `/jev-models/${pair.slug}`, label: `Jev vs ${pair.label}` })),
   ]} />;
 }
 
 export function JevRowLink({ row, children }: { row: SeoRow; children?: ReactNode }) {
-  return <Link className="text-accent underline" href={`/jev-models#jev14-row-${encodeURIComponent(row.key)}`}>{children ?? row.display}</Link>;
+  return <Link className="text-accent underline" href={`/jev-models/${encodeURIComponent(row.key)}`}>{children ?? row.display}</Link>;
+}
+
+export function breadcrumbJsonLd(path: string, name: string) {
+  return { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Benchmark Heaven', item: SITE_URL },
+    { '@type': 'ListItem', position: 2, name: 'JevBench', item: `${SITE_URL}/jev-models` },
+    { '@type': 'ListItem', position: 3, name, item: `${SITE_URL}${path}` },
+  ] };
+}
+export function JevReleaseStamp({ data }: { data: { artifact: {revision: string}; date: string; releasePage: string } }) {
+  return <p className="bh-muted mt-2 text-sm">Data: JevBench {data.artifact.revision}, published <Link className="text-accent underline" href={data.releasePage}>{data.date.slice(0,10)}</Link></p>;
 }

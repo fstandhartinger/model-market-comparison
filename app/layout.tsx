@@ -32,6 +32,8 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image", site: X_HANDLE, creator: X_HANDLE, title: "Benchmark Heaven", description: `${BRAND_CLAIM} ${BRAND_LINE}`, images: ["/brand/og-launch.png?v=1"] },
   icons: { icon: "/icon.svg", apple: "/apple-icon.png" },
+  // CR-291: Bing Webmaster Tools site verification (keep after verification succeeds).
+  verification: { other: { "msvalidate.01": "A10068AB02B05DAA5C1E1C0915123CFD" } },
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

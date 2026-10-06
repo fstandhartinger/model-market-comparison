@@ -1,116 +1,48 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
-import {
-  JEV_SEO_PATHS,
-  JEV_COMPARISONS,
-  JEV_TOP_FIVE_COMPARISONS,
-  readJevbenchSeoData,
-} from '../lib/jevbench-seo.mjs';
+import {readCurrentJevbench} from '../lib/jevbench-current.mjs';
+import {readJevbenchAgentFeed} from '../lib/jevbench-agent-feed.mjs';
+import {readJevbenchSeoData,currentComparisonPairs,JEV_LEGACY_COMPARISONS,isOpenWeightJevRow} from '../lib/jevbench-seo.mjs';
+import {jevbenchLlmsFull} from '../lib/jevbench-llms-full.mjs';
+import {isJevbenchV16ExcludedKey} from '../lib/jevbench-v16-public-scope.mjs';
+import {importSeoModule,renderSeo,parseJsonLd} from './jevbench-seo-render.mjs';
 
-test('JevBench intent routes use the hash-checked current v1.4.2.2 public release', async () => {
-  const data = await readJevbenchSeoData();
-  assert.equal(data.artifact.revision, 'v1.4.2.2');
-  assert.equal(data.sha256, '7f39b2f742a69ded7384fb7eb4c54daa9cf67b26e72e25133c6da1f8e49cf570');
-  assert.equal(data.ranked.length, 91);
-  // CR-191: Imajev-4B leads v1.4.2.2; Jev 1.13.0 is #4 and remains the comparison reference.
-  assert.equal(data.topFive[0].key, 'imajev_4b');
-  assert.equal(data.topFive[3].key, 'jev-1.13.0');
-  assert.deepEqual(JEV_SEO_PATHS, {
-    alternatives: '/jev-models/alternatives',
-    chooser: '/jev-models/how-to-choose',
-    openSource: '/jev-models/open-source-jev',
-  });
+const data = await readJevbenchSeoData();
+test('SEO headline ranks exactly match the current public feed, not artifact-wide ranks',async()=>{
+ const {feed}=await readJevbenchAgentFeed();const {artifact}=await readCurrentJevbench();
+ assert.equal(data.artifact.revision,artifact.revision);
+ assert.deepEqual(data.ranked.map(r=>[r.key,r.rank,r.capability]),feed.systems.filter(r=>r.capability.eligible).sort((a,b)=>a.capability.rank-b.capability.rank).map(r=>[r.key,r.capability.rank,r.capability.score]));
+ assert.ok(data.systems.some(r=>r.key==='jev-1.13.0'));
+ assert.ok(Number.isFinite(Date.parse(data.date)));
 });
-
-test('comparison pages keep their ranked rivals against Jev 1.13.0', async () => {
-  const data = await readJevbenchSeoData();
-  // Current top-five rivals minus Jev, plus established search comparisons.
-  assert.equal(data.comparisons.length, 9);
-  assert.deepEqual(JEV_TOP_FIVE_COMPARISONS.map((pair) => pair.key), ['imajev_4b', 'plumb-4b', 'decider-4b-v2', 'jevk5-v02']);
-  assert.deepEqual(data.comparisons.map((pair) => pair.rival.key), JEV_COMPARISONS.map((pair) => pair.key));
-  assert.ok(data.comparisons.every((pair) => data.ranked.some((row) => row.key === pair.rival.key)));
-  assert.deepEqual(data.comparisons.map((pair) => pair.slug), JEV_COMPARISONS.map((pair) => pair.slug));
-  for (const pair of JEV_COMPARISONS) {
-    const page = readFileSync(new URL(`../app/jev-models/${pair.slug}/page.tsx`, import.meta.url), 'utf8');
-    assert.match(page, new RegExp(`rivalKey="${pair.key}"`));
-    assert.match(page, new RegExp(`const PATH = '/jev-models/${pair.slug}'`));
-  }
-  assert.ok(data.comparisons.every((pair) => pair.jev.key === 'jev-1.13.0'));
+test('comparisons preserve legacy slugs and derive current top-eight rivals',()=>{
+ assert.deepEqual(data.comparisons.map(p=>p.slug),currentComparisonPairs(data.ranked).map(p=>p.slug));
+ for(const pair of JEV_LEGACY_COMPARISONS) assert.ok(data.comparisons.some(p=>p.slug===pair.slug));
+ for(const row of data.ranked.slice(0,8).filter(r=>r.key!=='jev-1.13.0'))assert.ok(data.comparisons.some(p=>p.key===row.key));
+ for(const pair of data.comparisons.filter(p=>!p.inCurrentRelease))assert.ok(pair.rival.last_measured_on);
 });
-
-test('chooser winners use the published accuracy, speed and cost fields', async () => {
-  const data = await readJevbenchSeoData();
-  assert.equal(data.winners.mostAccurate.key, [...data.ranked].sort((a, b) => b.sealed_accuracy - a.sealed_accuracy)[0].key);
-  assert.equal(data.winners.fastest.key, [...data.ranked].sort((a, b) => b.axes.speed - a.axes.speed)[0].key);
-  assert.equal(data.winners.cheapest.key, [...data.ranked].filter((row) =>
-    ['measured', 'estimate', 'announced'].includes(row.cost?.kind)
-      && Number.isFinite(row.cost?.usd_per_1000)
-      && Number.isFinite(row.axes?.cost),
-  ).sort((a, b) => b.axes.cost - a.axes.cost)[0].key);
-  assert.ok(['measured', 'estimate', 'announced'].includes(data.winners.cheapest.cost.kind));
+test('picks and open-weight classification use current measured evidence',()=>{
+ assert.equal(data.winners.mostAccurate.key,[...data.ranked].sort((a,b)=>b.axes.intelligence-a.axes.intelligence)[0].key);
+ assert.equal(data.winners.fastest.key,[...data.ranked].sort((a,b)=>b.axes.speed-a.axes.speed)[0].key);
+ assert.equal(data.winners.cheapest.key,[...data.ranked].filter(r=>Number.isFinite(r.cost?.usd_per_1000)).sort((a,b)=>a.cost.usd_per_1000-b.cost.usd_per_1000)[0].key);
+ assert.deepEqual(data.openWeightAlternatives.map(r=>r.key).sort(),data.systems.filter(isOpenWeightJevRow).map(r=>r.key).sort());
 });
-
-test('self-host candidates have explicit published openness, license and repository evidence', async () => {
-  const data = await readJevbenchSeoData();
-  assert.ok(data.selfHostable.length > 0);
-  assert.ok(data.selfHostable.every((row) =>
-    (row.open === 'yes' || row.open === 'weights' || row.open === true)
-      && typeof row.licence === 'string' && row.licence.trim()
-      && /^https:\/\//i.test(row.repo),
-  ));
+test('main server JSON-LD renders valid Dataset, Breadcrumb and visible matching FAQ',async()=>{
+ const component=await importSeoModule('components/JevBenchJsonLd.tsx');
+ const html=renderSeo(await component.JevBenchMainJsonLd());const [json]=parseJsonLd(html);
+ assert.deepEqual(json['@graph'].map(g=>g['@type']),['Dataset','BreadcrumbList','FAQPage']);
+ assert.equal(json['@graph'][0].name,'JevBench');assert.equal(json['@graph'][0].dateModified,data.date);
+ assert.ok(json['@graph'][0].distribution.contentUrl.endsWith('/api/jevbench/latest'));
+ for(const q of json['@graph'][2].mainEntity){assert.ok(html.includes(q.name.replace(/&/g,'&amp;')));assert.ok(q.acceptedAnswer.text);}
+ assert.equal(json['@graph'][2].mainEntity.length,4);
 });
-
-test('alternatives guide reuses the board score bars and keeps the reference first', () => {
-  const alternatives = readFileSync(new URL('../app/jev-models/alternatives/page.tsx', import.meta.url), 'utf8');
-  const board = ['JevModelsV14', 'JevBoardShared', 'JevBoardInteractive'].map((f) => readFileSync(new URL(`../components/${f}.tsx`, import.meta.url), 'utf8')).join('\n'); // CR-151 split the board
-  const guides = readFileSync(new URL('../components/JevBenchSeoBlocks.tsx', import.meta.url), 'utf8');
-  assert.match(alternatives, /data-bh-jev-alternatives-bars/);
-  // F-188/F-189: the bar row and its header moved to components/JevScoreBar.tsx so the client rank-by control
-  // and this server page can both draw them; the board re-exports them, and this page still marks Jev the reference.
-  assert.match(alternatives, /JevScoreBar key=\{row\.key\} row=\{toBarRow\(row\)\} reference=\{row\.key === 'jev-1\.13\.0'\}/);
-  assert.match(board, /export \{ JevScoreBar, JevScoreBarHeader, toBarRow \};/);
-  const bar = readFileSync(new URL('../components/JevScoreBar.tsx', import.meta.url), 'utf8');
-  assert.match(bar, /export function JevScoreBar/);
-  // F-188: the five number columns are named above the bars on the alternatives page too.
-  assert.match(alternatives, /<JevScoreBarHeader/);
-  assert.match(bar, /\$\/1k dec\./);
-  assert.match(guides, /data-bh-jev-guides=\{current\}/);
-  assert.match(guides, /const sibling = current === 'alternatives'/);
-  const intentLinks = guides.slice(guides.indexOf('export function JevIntentLinks'), guides.indexOf('export function JevBoardIntentLinks'));
-  assert.doesNotMatch(intentLinks, /jev-vs-/);
-});
-
-test('pair pages render a fixed JevCompareV14 radar pair and an expandable values table', () => {
-  const compare = readFileSync(new URL('../components/JevComparisonPage.tsx', import.meta.url), 'utf8');
-  const radar = readFileSync(new URL('../components/JevCompareV14.tsx', import.meta.url), 'utf8');
-  assert.match(compare, /<JevCompareV14[\s\S]*?fixedPair/);
-  assert.match(compare, /All values as a table/);
-  assert.match(radar, /data-bh-jev14-radar=\{f\.key\}/);
-  assert.match(radar, /data-bh-jev14-pair-mode=\{fixedPair \? 'fixed' : 'selectable'\}/);
-  assert.match(radar, /\{!fixedPair && <div className="flex flex-col gap-2/);
-});
-
-test('chooser and comparison copy uses reader-facing metric labels', () => {
-  const chooser = readFileSync(new URL('../app/jev-models/how-to-choose/page.tsx', import.meta.url), 'utf8');
-  const compare = readFileSync(new URL('../components/JevComparisonPage.tsx', import.meta.url), 'utf8');
-  assert.match(chooser, /Most accurate \(sealed-set accuracy\)/);
-  assert.match(chooser, /Fastest \(Speed axis\)/);
-  assert.match(chooser, /Cheapest per decision \(Cost axis\)/);
-  assert.doesNotMatch(chooser, /sealed_accuracy aggregate/);
-  assert.doesNotMatch(compare, /sealed_accuracy aggregate/);
-});
-
-test('dynamic chooser and open-row links target stable anchors in the live v1.4.2.2 board', () => {
-  const chooser = readFileSync(new URL('../app/jev-models/how-to-choose/page.tsx', import.meta.url), 'utf8');
-  const alternatives = readFileSync(new URL('../app/jev-models/alternatives/page.tsx', import.meta.url), 'utf8');
-  const links = readFileSync(new URL('../components/JevBenchSeoBlocks.tsx', import.meta.url), 'utf8');
-  const board = ['JevModelsV14', 'JevBoardShared', 'JevBoardInteractive'].map((f) => readFileSync(new URL(`../components/${f}.tsx`, import.meta.url), 'utf8')).join('\n'); // CR-151 split the board
-  assert.match(links, /href=\{`\/jev-models#jev14-row-\$\{encodeURIComponent\(row\.key\)\}`\}/);
-  assert.match(board, /id=\{`jev14-row-\$\{row\.key\}`\}/);
-  assert.match(chooser, /<JevRowLink row=\{accurate\}/);
-  assert.match(chooser, /<JevRowLink row=\{fastest\}/);
-  assert.match(chooser, /<JevRowLink row=\{cheapest\}/);
-  assert.match(chooser, /<JevRowLink row=\{row\}/);
-  assert.match(alternatives, /<JevRowLink row=\{bestOpen\}/);
+test('static model params include every current and historical public system; private keys never escape',async()=>{
+ const page=await importSeoModule('app/jev-models/[system]/page.tsx');const params=await page.generateStaticParams();
+ const {jevSystemSlug}=await import('../lib/jev-system-slug.mjs');
+ for(const key of data.modelKeys)assert.ok(params.some(p=>p.system===jevSystemSlug(key)),key);
+ for(const row of data.systems)assert.ok(params.some(p=>p.system===jevSystemSlug(row.key)),row.key);
+ assert.ok(params.every(p=>!isJevbenchV16ExcludedKey(p.system)));
+ const text=await jevbenchLlmsFull();
+ for(const row of data.systems.filter(r=>r.ranked))assert.ok(text.includes(`| ${row.key} |`),row.key);
+ for(const key of ['djev','djev-thinking'])assert.ok(!text.includes(key));
 });

@@ -16,6 +16,13 @@ import { readJevbenchV1422WithFamilies } from '../../../lib/jevbench-v1422-famil
 import { jevV14RowNote } from '../../../lib/jevbench-v14.mjs';
 import { previewMetadata } from '../../../lib/seo';
 import { jevSystemKeyFromSlug, jevSystemPath, jevSystemSlug } from '../../../lib/jev-system-slug.mjs';
+import { isJevbenchV16ExcludedKey } from '../../../lib/jevbench-v16-public-scope.mjs';
+import { readJevbenchSeoData } from '../../../lib/jevbench-seo.mjs';
+import { jevIntentMetadata } from '../../../lib/jevbench-seo-metadata';
+import { JevComparisonPage } from '../../../components/JevComparisonPage';
+import { breadcrumbJsonLd, JevReleaseStamp, one as seoOne, usdPerThousand, costBasisLabel } from '../../../components/JevBenchSeoBlocks';
+import { escapeJsonLd } from '../../../lib/jevbench-seo-jsonld.mjs';
+import { SITE_URL } from '../../../lib/seo';
 import { JevV15SystemDetail } from '../../../components/JevV15SystemDetail';
 import { readJevbenchV157Release } from '../../../lib/jevbench-v15-release.mjs';
 
@@ -97,7 +104,42 @@ function describeRow(row: JevV12Row, view: JevV12View, all: JevV12Row[]): string
   return `${row.display} by ${row.author} (${openLabel(row.open)}) ${rankText}.${vsJev}`;
 }
 
+// CR-291: systems of the current JevBench release (and their dated history) render from the SEO data layer, which reads the
+// release pointer in lib/jevbench-current.mjs, so the page never shows a frozen older release as current.
+function CurrentReleaseSystem({ data, row }: { data: Awaited<ReturnType<typeof readJevbenchSeoData>>; row: Awaited<ReturnType<typeof readJevbenchSeoData>>['systems'][number] }) {
+  const url = `${SITE_URL}${jevSystemPath(row.key)}`;
+  // Publish only the current sanitized presentation fields. No historical base-model overlay is copied.
+  const price = row.cost?.usd_per_1000;
+  const json = {'@context':'https://schema.org','@graph':[
+    {'@type':'SoftwareApplication',name:row.display,applicationCategory:'AI model',url,
+      ...(Number.isFinite(price) && price != null && price >= 0 && ['measured','announced'].includes(row.cost?.kind ?? '') ? {offers:{'@type':'Offer',price,priceCurrency:'USD',description:`${costBasisLabel(row.cost?.kind)} USD per 1,000 decisions. ${row.cost?.basis ?? ''}`}} : {})},
+    breadcrumbJsonLd(jevSystemPath(row.key),row.display),
+  ]};
+  return <>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{__html:escapeJsonLd(json)}}/>
+    <nav><Link href="/jev-models" className="text-accent underline">Back to JevBench</Link></nav>
+    <header className="bh-page-head mt-3"><h1 className="text-3xl font-bold">{row.display}</h1><JevReleaseStamp data={data}/>
+      <p className="mt-3">Capability {seoOne(row.capability)} · {row.rank == null ? 'Not ranked in the current release' : `rank #${row.rank} of ${data.ranked.length}`}</p>
+      <p className="bh-muted mt-2">{row.not_ranked_because ?? row.capability_reasons?.join("; ")}</p>
+      <p className="bh-muted mt-2">Last measured: {row.last_measured_on ?? 'date not published'} · measurement release: {row.measurement_revision}</p>
+      <p className="bh-muted">{row.licence ?? 'Licence not stated'}</p>
+    </header>
+    <BaseModelDisplay systemKey={row.key} className="mt-2 block text-sm"/>
+    <JevBenchRelatedLinks systemKey={row.key}/>
+    <section className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">{(['intelligence','calibration','speed','cost'] as const).map((axis) => <div className="bh-panel p-4" key={axis}><h2 className="capitalize">{axis}</h2><p className="text-2xl font-semibold">{seoOne(row.axes?.[axis])}</p></div>)}</section>
+    <section className="bh-panel mt-6 p-5"><h2 className="font-semibold">Composite (secondary)</h2><p>{seoOne(row.jevbench_score)} · {row.composite_rank == null ? 'Not ranked' : `Composite rank #${row.composite_rank}`}</p></section>
+    <section className="bh-panel mt-6 p-5"><h2 className="font-semibold">Cost and measurement conditions</h2>
+      <p>{usdPerThousand(price)} ({costBasisLabel(row.cost?.kind)})</p><p className="bh-muted mt-2">{row.cost?.basis ?? 'Cost basis not published'}</p>
+      <p className="mt-3">p50 latency: {seoOne(row.speed?.p50_s_adjusted ?? row.speed?.p50_s_raw)} s</p>
+      <p className="bh-muted">{row.speed?.adjustment ?? 'Latency adjustment not stated'}</p>
+      <p className="bh-muted">{row.speed?.hardware ?? row.endpoint_condition ?? row.speed?.measured_where ?? 'Setup not stated'}</p>
+    </section>
+    {(row.source_url ?? row.repo) && <p className="mt-4"><a className="text-accent underline" href={(row.source_url ?? row.repo)!}>Published source</a></p>}
+  </>;
+}
+
 export async function generateStaticParams() {
+  const data = await readJevbenchSeoData();
   const view = jevbenchV12View(await readJevbenchV12());
   const existing = [...view.ranked, ...view.honorable, ...view.partial].map((r) => ({ system: jevSystemSlug(r.key) }));
   const current = jevbenchV1422View(await readJevbenchV1422()).systems.map((r) => ({ system: jevSystemSlug(r.key) }));
@@ -106,16 +148,21 @@ export async function generateStaticParams() {
   const addenda = latest.artifact.systems
     .filter((row) => row.addendum !== null && !existingKeys.has(jevSystemSlug(row.key)))
     .map((row) => ({ system: jevSystemSlug(row.key) }));
-  return [...current, ...existing, ...addenda].filter(({ system }, index, rows) => rows.findIndex((r) => r.system === system) === index);
+  // CR-291: the current release (and its dated history) plus the comparison slugs; older rows stay reachable as before.
+  return [...data.modelKeys.map((key) => ({ system: jevSystemSlug(key) })), ...data.comparisons.map((pair) => ({ system: pair.slug })),
+    ...current, ...existing, ...addenda].filter(({ system }, index, rows) => rows.findIndex((r) => r.system === system) === index && !isJevbenchV16ExcludedKey(system));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ system: string }> }): Promise<Metadata> {
   const { system } = await params;
+  const pair = (await readJevbenchSeoData()).comparisons.find((p) => p.slug === system);
+  if (pair) return jevIntentMetadata({ path: `/jev-models/${pair.slug}`, title: `Jev vs ${pair.label} — JevBench by Benchmark Heaven`, description: `Published Jev-compatible model comparison from the current JevBench release.`, keywords: ['JevBench'] });
   const key = jevSystemKeyFromSlug(decodeURIComponent(system));
   const current = await findV142Row(key);
   const addendum = current ? null : await findV157Addendum(key);
   const found = current || addendum ? null : await findRow(key);
-  const row = found?.row ?? current?.row ?? addendum?.row;
+  const seo = (await readJevbenchSeoData()).systems.find((r) => r.key === key);
+  const row = found?.row ?? current?.row ?? addendum?.row ?? seo;
   if (!row) return { title: 'System not found' };
   const title = `${short(row.display)} — JevBench by Benchmark Heaven`;
   const description = `Explore the ${short(row.display)} configuration evaluated across intelligence, calibration, speed, and cost.`;
@@ -124,7 +171,12 @@ export async function generateMetadata({ params }: { params: Promise<{ system: s
 
 export default async function JevSystemPage({ params }: { params: Promise<{ system: string }> }) {
   const { system } = await params;
+  const data = await readJevbenchSeoData();
+  const pair = data.comparisons.find((p) => p.slug === system);
+  if (pair) return <JevComparisonPage rivalKey={pair.key} label={pair.label} path={`/jev-models/${pair.slug}`} />;
   const key = jevSystemKeyFromSlug(decodeURIComponent(system));
+  const seoRow = data.systems.find((r) => r.key === key) ?? data.historical.find((r) => r.key === key);
+  if (seoRow) return <CurrentReleaseSystem data={data} row={seoRow} />;
   const current = await findV142Row(key);
   if (current) return <JevV141SystemDetail row={current.row} ranked={current.view.ranked} revision={current.view.revision} generated={current.view.generated} note={current.note} sealedFamilyN={current.sealedFamilyN} hardFamilyN={current.hardFamilyN} />;
   const addendum = await findV157Addendum(key);

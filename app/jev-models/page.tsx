@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { readCurrentJevbench, CURRENT_JEVBENCH_PAGE } from '../../lib/jevbench-current.mjs';
 import { JevBenchV16ReleaseRoute } from '../../components/JevBenchV16ReleaseRoute';
 import { JevHistoryLazy } from '../../components/JevHistoryLazy';
+import { JevBenchMainJsonLd } from '../../components/JevBenchJsonLd';
 
 const OG_ART_REVISION = 'og4'; // Keep the live board share card evergreen across releases.
 
@@ -26,5 +27,7 @@ export default async function JevModelsPage() {
   return <>
     <JevBenchV16ReleaseRoute live release={release} versionPath={CURRENT_JEVBENCH_PAGE} scope="open" />
     <JevHistoryLazy />
+    {/* CR-291: Dataset + BreadcrumbList + FAQPage JSON-LD from the current release; its FAQ is rendered visibly below the history. */}
+    <JevBenchMainJsonLd />
   </>;
 }

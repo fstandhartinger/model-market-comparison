@@ -2,17 +2,18 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { readJevbenchSeoData } from '../../../lib/jevbench-seo.mjs';
 import { jevIntentMetadata } from '../../../lib/jevbench-seo-metadata';
-import { costBasisLabel, DatasetFaqJsonLd, JevFaq, JevIntentLinks, JevRowLink, one, opennessLabel, percent, usdPerThousand, type SeoRow } from '../../../components/JevBenchSeoBlocks';
+import { JevReleaseStamp, costBasisLabel, DatasetFaqJsonLd, JevFaq, JevIntentLinks, JevRowLink, one, opennessLabel, percent, usdPerThousand, type SeoRow } from '../../../components/JevBenchSeoBlocks';
 
 const PATH = '/jev-models/how-to-choose';
 const TITLE = 'How to choose a Jev-class model — JevBench by Benchmark Heaven';
-const DESCRIPTION = 'Choose a Jev-class model by use case using published JevBench accuracy, speed, cost and self-hosting evidence.';
+const DESCRIPTION = 'Choose a Jev-class model by use case using published JevBench Intelligence, speed, cost and self-hosting evidence.';
 
 export async function generateMetadata(): Promise<Metadata> {
+  const data = await readJevbenchSeoData();
   return jevIntentMetadata({
     path: PATH,
-    title: TITLE,
-    description: DESCRIPTION,
+    title: `${TITLE} (${data.month}): ${data.systems.length} models measured`,
+    description: `${DESCRIPTION} Data: ${data.artifact.revision}, ${data.month}.`,
     keywords: ['how to choose a Jev-class model', 'best Jev alternative', 'Jev model speed', 'self-hosted Jev model'],
   });
 }
@@ -25,8 +26,8 @@ export default async function HowToChooseJevModelPage() {
   const openRows = data.selfHostable.slice(0, 8) as SeoRow[];
   const faq = [
     {
-      question: 'Which Jev-class model has the highest published accuracy?',
-      answer: `${accurate.display} has the highest sealed-set accuracy in the published ${data.artifact.revision} ranked rows (${percent(accurate.sealed_accuracy)}). This is a separate measure from the composite JevBench Score.`,
+      question: 'Which Jev-class model has the highest published Intelligence?',
+      answer: `${accurate.display} has the highest Intelligence axis in the published ${data.artifact.revision} ranked rows (${one(accurate.axes.intelligence)}). This is a separate measure from the composite JevBench Score.`,
     },
     {
       question: 'Which Jev-class model is fastest?',
@@ -49,15 +50,15 @@ export default async function HowToChooseJevModelPage() {
       <p className="bh-eyebrow">JevBench by Benchmark Heaven · released {data.artifact.revision}</p>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">How to choose a Jev-class model</h1>
       <p className="bh-muted mt-3 max-w-3xl">Start with the use case, then read the metric behind each recommendation. The guide uses the latest published JevBench artifact; it does not treat the overall composite as raw accuracy.</p>
-      <JevIntentLinks current="chooser" />
+      <JevReleaseStamp data={data} /><JevIntentLinks current="chooser" />
     </header>
 
     <div className="mt-6 grid gap-4 md:grid-cols-2">
       <section className="bh-panel p-5" aria-labelledby="chooser-accuracy">
-        <p className="bh-eyebrow">Most accurate (sealed-set accuracy)</p>
+        <p className="bh-eyebrow">Most accurate (Intelligence axis)</p>
         <h2 id="chooser-accuracy" className="mt-1 text-xl font-semibold"><JevRowLink row={accurate} /></h2>
-        <p className="mt-2 text-3xl font-bold tabular-nums">{percent(accurate.sealed_accuracy)}</p>
-        <p className="bh-muted mt-2 text-sm">Published sealed-set accuracy in {data.artifact.revision}. The JevBench Score is a separate composite.</p>
+        <p className="mt-2 text-3xl font-bold tabular-nums">{one(accurate.axes.intelligence)}</p>
+        <p className="bh-muted mt-2 text-sm">Published Intelligence axis in {data.artifact.revision}. The JevBench Score is a separate composite.</p>
       </section>
 
       <section className="bh-panel p-5" aria-labelledby="chooser-speed">

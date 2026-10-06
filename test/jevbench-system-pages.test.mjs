@@ -19,23 +19,23 @@ test('CR-129 the current artifact really has semif-qwen3.5-4b and laya (the two 
 
 test('CR-129 generateStaticParams is artifact-driven, not a hardcoded list', () => {
   assert.match(page, /export async function generateStaticParams/);
-  assert.match(page, /readJevbenchV12/);
-  assert.match(page, /view\.ranked.*view\.honorable.*view\.partial/s);
-  assert.match(page, /system:\s*jevSystemSlug\(r\.key\)/);
+  assert.match(page, /readJevbenchSeoData/);
+  assert.match(page, /data\.modelKeys/);
+  assert.match(page, /system:\s*jevSystemSlug\(key\)/);
 });
 
 test('CR-129 metadata is built only from row fields: main score, rank, and the not-ranked reason', () => {
   assert.match(page, /generateMetadata\(/);
-  assert.match(page, /row\.main/);
+  assert.match(page, /row\.capability/);
   assert.match(page, /row\.rank/);
-  assert.match(page, /row\.notRankedBecause/);
-  assert.match(page, /previewMetadata/);
+  assert.match(page, /row\.measurement_revision/);
+  assert.match(page, /jevIntentMetadata/);
   assert.match(page, /notFound\(\)/);
 });
 
-test('CR-129 structured data is WebPage + BreadcrumbList only, never Product/AggregateRating/Review', () => {
-  assert.match(page, /'@type': 'WebPage'/);
-  assert.match(page, /'@type': 'BreadcrumbList'/);
+test('CR-291 structured data is SoftwareApplication + BreadcrumbList, never Product/AggregateRating/Review', () => {
+  assert.match(page, /'@type':'SoftwareApplication'/);
+  assert.match(page, /breadcrumbJsonLd/);
   assert.doesNotMatch(page, /'@type': 'Product'/);
   assert.doesNotMatch(page, /'@type': 'AggregateRating'/);
   assert.doesNotMatch(page, /'@type': 'Review'/);
@@ -47,9 +47,9 @@ test('CR-129 no GDPR-compliance claim (same rule CR-120 already follows on the p
 });
 
 test('CR-129 sitemap gets one entry per JevBench system and still excludes multimodal-preview', () => {
-  assert.match(sitemap, /readJevbenchV12/);
-  assert.match(sitemap, /jevbenchV12View/);
-  assert.match(sitemap, /\$\{jevSystemPath\(r\.key\)\}/);
+  assert.match(sitemap, /readJevbenchSeoUrls/);
+  assert.match(sitemap, /current\.urls/);
+  assert.match(sitemap, /readJevbenchSeoData/);
   assert.doesNotMatch(sitemap, /multimodal-preview/);
 });
 
@@ -72,13 +72,11 @@ test('CR-129 the hub HTML actually contains links for semif-qwen3.5-4b and laya 
   assert.doesNotMatch(board, /jev-models\/\[system\]/); // sanity: no literal dynamic-segment text leaked into the board
 });
 
-test('F-171 current per-system pages resolve v1.4.2.2 first and draw its score evidence', () => {
-  assert.match(page, /const current = await findV142Row\(key\);\n  if \(current\) return <JevV141SystemDetail/);
-  assert.match(page, /jevbenchV1422View\(await readJevbenchV1422\(\)\)\.systems\.map\(\(r\) => \(\{ system: jevSystemSlug\(r\.key\) \}\)\)/);
-  assert.match(v141Detail, /data-bh-jev-system-score/);
-  assert.match(v141Detail, /data-bh-jev-system-strip/);
-  assert.match(v141Detail, /data-bh-jev-system-radar/);
-  assert.match(v141Detail, /JevCompareV14/);
+test('CR-291 current per-system pages prefer the current release to historical measurements', () => {
+  assert.match(page, /data\.systems\.find/);
+  assert.match(page, /data\.historical\.find/);
+  assert.match(page, /row\.last_measured_on/);
+  assert.match(page, /row\.cost\?\.basis/);
 });
 
 test('CR-170 a renamed system keeps its artifact key, gets a clean public slug, and the old URL redirects permanently', async () => {
