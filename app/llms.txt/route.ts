@@ -24,6 +24,8 @@ async function llmsTxt(): Promise<string> {
     "## JevBench (Jev-class decision models)",
     `- [JevBench leaderboard](${u("/jev-models")}): open-weights Jev-class models by intelligence, calibration, speed and cost, with Jev as the reference row`,
     `- [JevBench API leaderboard](${u("/jev-models/api")}): hosted decision APIs (Jev, wity, Sage, Fastino and more) ranked on the same scores`,
+    `- [ImageJevBench leaderboard](${u("/image-jev-bench")}): image decision systems by intelligence, calibration, speed and cost, inside the same cost and latency budget as JevBench`,
+    `- [AudioJevBench](${u("/audio-jev-bench")}): audio models that make typed voice-agent decisions (intent, sentiment, urgency, speaker verification, sound events) straight from audio`,
     `- [Jev alternatives](${u("/jev-models/alternatives")})`,
     `- [Jev-Alternativen im Vergleich (Deutsch)](${u("/de/jev-models/alternativen")})`,
     `- [Is Jev open source? Open-source Jev-class models](${u("/jev-models/open-source-jev")})`,
