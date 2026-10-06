@@ -34,3 +34,15 @@ test('3: d1 never reaches the open-weights board', () => {
   assert.ok(isApi(merged.systems.find((s) => s.key === 'liquid-d1')));
   assert.equal(open.systems.filter((s) => s.key === 'liquid-d1' && s.ranked).length, 0);
 });
+
+// v1.7.9 (API lane #10791): OpenAI Decisions is a preliminary public-set row with its own reason, never ranked.
+test('4: OpenAI Decisions is preliminary with the lane figures and its own reason', async () => {
+  const { jevApiPreliminaryRows } = await import('../lib/jevbench-scope.mjs');
+  const { prelim } = jevApiPreliminaryRows(read('data/jevbench-api-public-set.json'), new Map());
+  const o = prelim.find((r) => r.key === 'openai-decisions');
+  assert.equal(o.ranked, false);
+  assert.equal(o.listing, 'preliminary');
+  assert.equal(o.jevbench_score, 37.21821285634585);
+  assert.equal(o.capability, 68.82610528565101);
+  assert.match(o.not_ranked_because, /next fresh sealed API draw/);
+});
