@@ -399,6 +399,15 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
     developerPrice: row.apiPricePer1000, basePrice: row.basePricePer1000, officialCost: row.costPer1000, alternativePrice: row.alternativePricePer1000,
     p50: row.p50, p95: row.p95, jevClass: { status: row.eligibility, reason: row.eligibilityReason },
   }));
+  // v1.7.5: the filter provider must know the API board's preliminary/pending rows, or it hides them after hydration.
+  for (const x of extra as Array<{ key: string; display: string; author?: string | null; class?: string | null; licence?: string | null;
+    cost?: { usd_per_1000?: number | null } | null; speed?: { p50_s_adjusted?: number | null; p95_s_adjusted?: number | null } | null }>) {
+    const e = eligibilityByKey.get(x.key);
+    filterRows.push({ key: x.key, display: x.display, provider: x.author || null, family: null, modelClass: x.class ?? null, open: 'no', api: true,
+      newInVersion: false, parameters: null, licence: x.licence ?? null, developerPrice: x.cost?.usd_per_1000 ?? null, basePrice: null,
+      officialCost: x.cost?.usd_per_1000 ?? null, alternativePrice: null, p50: x.speed?.p50_s_adjusted ?? null, p95: x.speed?.p95_s_adjusted ?? null,
+      jevClass: { status: e?.status ?? 'outside', reason: e?.reason ?? 'no v1.6 figure yet' } });
+  }
   const allDataKeys = [...new Set([...a.systems, ...a.not_measured].map((row) => row.key))];
   const previous = new Set(previousKeys);
   const viewRows = ranked.map((s) => jevV15BoardRow(s, { isNew: previous.size > 0 && !previous.has(s.key), headline: a.headline }));
@@ -415,7 +424,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
       {scope === 'open' && <JevApiOfferingsToggle measured={a.systems.filter((s) => (s as { scope?: string }).scope === 'api').length} />}
       {scope !== 'api' && capabilityCharts}
       {scope !== 'api' && <JevV15FilterPanel />}
-      {scope === 'api' && extra.length > 0 && <p className="mt-6 max-w-4xl text-sm" data-bh-jev-api-preliminary-note><span className="bh-thin-tag bh-partial-tag mr-1.5 align-middle">preliminary</span><b>Hatched rows are preliminary:</b> API offerings scored on the 300 public v1.6 items only, while their full re-evaluation on a fresh sealed set is running (expected about 10 October). They are not ranked and replace themselves with full results as each run finishes. <span className="bh-thin-tag bh-partial-tag mx-1 align-middle">pending</span>Greyed rows have no v1.6 figure yet; their v1.5 score is in the tooltip and in the <a className="text-accent underline" href="#jev-api-public-set">public-set table</a>.</p>}
+      {scope === 'api' && extra.length > 0 && <p className="mt-6 max-w-4xl text-sm" data-bh-jev-api-preliminary-note><span className="bh-thin-tag bh-partial-tag mr-1.5 align-middle">preliminary</span><b>Hatched rows are preliminary:</b> API offerings scored on the 300 public v1.6 items only (no sealed items, so no gap penalty; Calibration reads a few points lower on 300 items than on 1,500). They are not ranked and compare strictly only with the anchor rows in the public-set table; a full re-evaluation on a fresh sealed set is running, and each row is replaced by its full result when that finishes. <span className="bh-thin-tag bh-partial-tag mx-1 align-middle">pending</span>Greyed rows have no v1.6 figure yet; their v1.5 score is in the tooltip and in the <a className="text-accent underline" href="#jev-api-public-set">public-set table</a>.</p>}
       <JevScoreChart revision={a.revision} rows={viewRows} rankedCount={a.n_ranked} newLabel={null} fairness={null} approvedNote={leader} tieNote={null} capabilityHref="#jev-capability" presets={jevV15SliderPresets(v15)} compactMobile scoreKind="v15" methodLink={{ href: '#jev16-method', label: 'Method notes ↓' }}
         scoreLabel={scopeLabel ? `JevBench Composite Score (${scopeLabel})` : undefined} headline={scope === 'api'} capabilityLabel={scope === 'api' ? 'Capability ↓' : undefined} />
       {scope === 'api' && capabilityCharts}

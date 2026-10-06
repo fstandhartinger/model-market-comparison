@@ -249,8 +249,10 @@ export function JevScoreChart({ revision, rows: officialRows, newLabel, fairness
     for (const r of globallyVisibleRows) { const g = jevGatePenalties(r.axes, weights, { gatesAlways: scoreKind === 'v15' }); if (g.gates.length) out.set(r.key, g); }
     return out;
   }, [globallyVisibleRows, weights, custom, scoreKind]);
-  const gateSummary = useMemo(() => summariseGates(rows, gates), [rows, gates]);
-  const heat = useMemo(() => heatScales(rows), [rows]);
+  // v1.7.5: preliminary/pending API rows never move the heat scale or the gate example of the measured rows.
+  const measured = useMemo(() => rows.filter((r) => r.listing !== 'preliminary' && r.listing !== 'pending'), [rows]);
+  const gateSummary = useMemo(() => summariseGates(measured, gates), [measured, gates]);
+  const heat = useMemo(() => heatScales(measured), [measured]);
   const official = useMemo(() => new Map(globallyVisibleRows.map((r, i) => [r.key, i])), [globallyVisibleRows]);
   const [filters, setFilters] = useState<Filters>(NO_FILTERS);
   const { sort, setSort, toggle } = useSort(OFFICIAL);

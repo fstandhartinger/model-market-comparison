@@ -210,7 +210,7 @@ export function JevCapabilityRanking({ systems, eligibilitySystems = systems, re
   const refName = shortName(reference.display);
   let n = 0;
   const numbered = inside.map((r) => ({ r, label: r.row.ranked ? String(++n) : '–' }));
-  const [lead] = numbered;
+  const lead = numbered.find((x) => x.r.row.ranked) ?? numbered[0];
   const bar = ({ r, label }: { r: JevClassRow; label: string }) => <RankingRow key={r.row.key} item={r} rank={label} reference={reference} costFactor={costFactor} latencyFactor={latencyFactor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark}
     note={r.isReference ? `Reference system for the ${classLabel} limits` : !r.row.ranked ? unrankedNote(r.row.listing, benchName) : undefined} />;
   const outsideBar = (r: JevClassRow) => <RankingRow key={r.row.key} item={r} rank="" reference={reference} costFactor={costFactor} latencyFactor={latencyFactor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark} note={`Outside: ${r.reasons.join(', ')}`} />;

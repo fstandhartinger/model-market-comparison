@@ -17,7 +17,9 @@ export function JevBenchV16Charts({ systems, eligibilitySystems, revision, offic
   /** v1.7.1: "open weights" or "API offerings" in the section headings of a split board. */
   scopeLabel?: string; outsideOpen?: boolean; headline?: boolean;
 }) {
-  const official = useMemo(() => jevClassView(systems, JEV_V16_CLASS_OPTIONS), [systems]);
+  // v1.7.5: preliminary/pending API rows appear in the Capability ranking only, not in the scatter or 3D charts.
+  const plotted = useMemo(() => systems.filter((s) => s.listing !== 'preliminary' && s.listing !== 'pending'), [systems]);
+  const official = useMemo(() => jevClassView(plotted, JEV_V16_CLASS_OPTIONS), [plotted]);
   const [view, setView] = useState<CapView | null>(null);
   const [show3d, setShow3d] = useState(false);
   const onCapsChange = useCallback((next: CapView) => setView((current) =>
@@ -25,14 +27,14 @@ export function JevBenchV16Charts({ systems, eligibilitySystems, revision, offic
       && current.costLimit === next.costLimit && current.latencyLimit === next.latencyLimit ? current : next), []);
   const selected = view ?? { costFactor: 2, latencyFactor: 2, costLimit: official.limits.cost, latencyLimit: official.limits.latency };
   const classOptions = useMemo<JevClassOptions>(() => ({ ...JEV_V16_CLASS_OPTIONS, costFactor: selected.costFactor, latencyFactor: selected.latencyFactor }), [selected.costFactor, selected.latencyFactor]);
-  const current = useMemo(() => jevClassView(systems, classOptions), [systems, classOptions]);
+  const current = useMemo(() => jevClassView(plotted, classOptions), [plotted, classOptions]);
 
   return <>
     <JevCapabilityRanking systems={systems} eligibilitySystems={eligibilitySystems} revision={revision} officialHref={officialHref} onCapsChange={onCapsChange} referenceLabel={JEV_V16_REFERENCE_LABEL} limits={JEV_V16_CLASS_OPTIONS.limits} scopeLabel={scopeLabel} outsideOpen={outsideOpen} headline={headline} />
     <JevBubbleCharts points={current.points} costLimit={selected.costLimit} latencyCap={selected.latencyLimit} costFactor={selected.costFactor} latencyFactor={selected.latencyFactor} referenceName={JEV_V16_REFERENCE_LABEL} scoreKind="v15" scopeLabel={scopeLabel} />
     <section className="mt-8 scroll-mt-6" data-bh-jev16-3d-toggle>
       <button type="button" className="text-accent underline" aria-expanded={show3d} aria-controls="jev16-capability-3d" onClick={() => setShow3d((open) => !open)}>{show3d ? 'Hide 3D view' : 'Show 3D view'}</button>
-      {show3d && <div id="jev16-capability-3d"><JevCapabilityLazy revision={revision} systems={systems} only3d classOptions={classOptions} /></div>}
+      {show3d && <div id="jev16-capability-3d"><JevCapabilityLazy revision={revision} systems={plotted} only3d classOptions={classOptions} /></div>}
     </section>
   </>;
 }
