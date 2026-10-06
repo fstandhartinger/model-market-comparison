@@ -1,12 +1,13 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { useJevV15Filters } from './JevV15Filters';
 
-/** v1.7 (Florian, 5 Oct 2026): the open-weights board mixes hosted API offerings back in on request. Plain UI state:
+/** Review 6 Oct 2026: `onNote` / `offNote` replace the /jev-models/api explanation on boards without an API sub-page (ImageJevBench).
+ *  v1.7 (Florian, 5 Oct 2026): the open-weights board mixes hosted API offerings back in on request. Plain UI state:
  *  no query parameter or hash, so /jev-models stays one URL. API rows stay unranked here; their ranks live on
  *  /jev-models/api. Server-rendered tables mark API rows with data-bh-jev-api-row and follow the same switch. */
-export function JevApiOfferingsToggle({ measured }: { measured: number }) {
+export function JevApiOfferingsToggle({ measured, onNote, offNote }: { measured: number; onNote?: ReactNode; offNote?: ReactNode }) {
   const { apiKeys, showApi, setShowApi } = useJevV15Filters();
   useEffect(() => {
     document.querySelectorAll<HTMLElement>('[data-bh-jev-api-row]').forEach((row) => { row.hidden = !showApi; });
@@ -22,8 +23,8 @@ export function JevApiOfferingsToggle({ measured }: { measured: number }) {
     </button>
     <span className="bh-muted min-w-0 flex-1 basis-64">
       {showApi
-        ? <>API offerings are mixed in for comparison, badged <span className="bh-thin-tag bh-flag-tag">API</span> and not ranked here. Their ranking: <a className="text-accent underline" href="/jev-models/api">JevBench API leaderboard</a>.</>
-        : <>This board ranks open-weights systems that we ran ourselves; Jev 1.13.0 is shown as the reference. Hosted APIs are ranked on the <a className="text-accent underline" href="/jev-models/api">JevBench API leaderboard</a>.</>}
+        ? onNote ?? <>API offerings are mixed in for comparison, badged <span className="bh-thin-tag bh-flag-tag">API</span> and not ranked here. Their ranking: <a className="text-accent underline" href="/jev-models/api">JevBench API leaderboard</a>.</>
+        : offNote ?? <>This board ranks open-weights systems that we ran ourselves; Jev 1.13.0 is shown as the reference. Hosted APIs are ranked on the <a className="text-accent underline" href="/jev-models/api">JevBench API leaderboard</a>.</>}
     </span>
   </div>;
 }

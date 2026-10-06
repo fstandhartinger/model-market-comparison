@@ -135,7 +135,8 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
 // v1.7.1 (Florian 6 Oct 2026): the Jev row on the open-weights board says plainly that it is a comparison reference.
 export function unrankedNote(listing: string, benchName: string) {
   if (listing === JEV_SCOPE_LISTING.reference) return 'Not ranked, only shown as a reference to compare with';
-  if (listing === JEV_SCOPE_LISTING.api) return 'Not ranked here: API offering, ranked on the API leaderboard';
+  // Review 6 Oct 2026: ImageJevBench has no API leaderboard page, so its note stops after "API offering".
+  if (listing === JEV_SCOPE_LISTING.api) return benchName === 'JevImageBench' ? 'Not ranked here: API offering' : 'Not ranked here: API offering, ranked on the API leaderboard';
   // v1.7.5 (Florian 6 Oct 2026): public-set figures shown before the full sealed re-run.
   if (listing === 'preliminary') return 'Preliminary · public set (300 items) · full sealed run pending';
   if (listing === 'pending') return 'Pending · no v1.6 figure yet';

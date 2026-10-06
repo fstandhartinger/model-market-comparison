@@ -19,11 +19,15 @@ export type ImageJevCapabilityLimits = {
 };
 
 /** Convert ImageJev v0.1.x (`all`) or v0.2 (`headline_track`) rows to Jev V1.4 capability/bubble rows. */
-export declare function imageJevBoardSystems(artifact: unknown): JevV14System[];
+export type ImageJevScope = 'all' | 'open';
+export declare const IMAGEJEV_API_NOT_RANKED: string;
+export declare function isImageJevApiRow(row: { api_flag?: boolean; kind?: string }): boolean;
+export declare function imageJevApiKeys(artifact: unknown): string[];
+export declare function imageJevBoardSystems(artifact: unknown, scope?: ImageJevScope): JevV14System[];
 /** Convert to the shared composite chart rows, including Wity-1's optional base-model price `alt`. */
-export declare function imageJevBoardRows(artifact: unknown): ImageJevBoardRow[];
+export declare function imageJevBoardRows(artifact: unknown, scope?: ImageJevScope): ImageJevBoardRow[];
 /** Convert to the shared two-system comparison rows, including Wity-1's optional base-model price `alt`. */
-export declare function imageJevCompareRows(artifact: unknown): ImageJevCompareRow[];
+export declare function imageJevCompareRows(artifact: unknown, scope?: ImageJevScope): ImageJevCompareRow[];
 /** Use artifact-frozen eligibility, or derive v0.2 fallback limits from JevBench v1.5.4. */
 export declare function imageJevCapabilityLimits(artifact: unknown): ImageJevCapabilityLimits;
 /** ImageJev composite presets, with equal axis weights as the official state. */
