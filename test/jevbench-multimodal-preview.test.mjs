@@ -190,7 +190,7 @@ test('public Image JevBench route leads with the ranking and preserves aggregate
   assert.match(page, /data-bh-mm-author-review/);
   assert.match(page, /data-bh-mm-author-review-summary/);
   assert.match(publicPage, /canonical: '\/image-jev-bench'/);
-  assert.match(publicPage, /Image JevBench v0\.3\.0/);
+  assert.match(publicPage, /Image JevBench \$\{version\}/); // CR-307: version comes from data/imagejev-v03.json
   assert.match(publicPage, /<ImageJevV03Page \/>/, 'v0.3.0 is the public release');
   assert.match(publicPage, /openGraph:/);
   // CR-248: capability → bubbles → composite → comparison → full ranking, with existing track content preserved.
