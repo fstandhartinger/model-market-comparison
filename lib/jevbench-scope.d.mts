@@ -12,3 +12,11 @@ export function jevScopeRows<T extends ScopeRow>(rows: readonly T[] | null | und
 export function jevbenchScopeArtifact<T extends { systems: ScopeRow[]; not_measured: ScopeRow[] }>(artifact: T, scope: JevScope, isApi?: JevApiClassifier): T & { scope?: JevScope };
 export function jevbenchScopeCarry<T extends { rows: ScopeRow[] }>(carry: T, scope: JevScope, isApi?: JevApiClassifier): T;
 export function jevApiOfferingKeys(rows: readonly ScopeRow[] | null | undefined, isApi?: JevApiClassifier): string[];
+export type JevApiListedRow = { key: string; display: string; listing: string | null; reason: string | null; composite_v15: number | null;
+  endpoint_kind: string | null; href: string | null; revision: string | null };
+export function jevApiRoster<S extends ScopeRow & { ranked?: boolean; rank?: number | null }, C extends ScopeRow>(
+  apiArtifact: { systems: S[]; not_measured?: (ScopeRow & { display: string; repo?: string | null; reason?: string | null })[] },
+  carryRows: C[] | null | undefined,
+  previousSystems?: readonly (ScopeRow & { display: string; listing?: string; not_ranked_because?: string | null; jevbench_score?: number | null })[],
+  previousRevision?: string | null,
+): { ranked: S[]; variants: S[]; carried: C[]; listed: JevApiListedRow[] };

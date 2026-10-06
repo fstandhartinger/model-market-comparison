@@ -1,7 +1,7 @@
 import { isJevbenchV16ExcludedKey } from '../lib/jevbench-v16-public-scope.mjs';
 import { readJevbenchV161Release } from '../lib/jevbench-v16-release.mjs';
 import { readJevbenchV157Release } from '../lib/jevbench-v15-release.mjs';
-import { jevApiOfferingKeys, jevbenchScopeArtifact, jevbenchScopeCarry, jevScopeClassifier, type JevScope } from '../lib/jevbench-scope.mjs';
+import { jevApiOfferingKeys, jevApiRoster, jevbenchScopeArtifact, jevbenchScopeCarry, jevScopeClassifier, type JevScope } from '../lib/jevbench-scope.mjs';
 import { JevBenchV16Board, JEV_BOARD_REVISIONS } from './JevBenchV16Board';
 import { JevBenchReleaseVersionNav } from './JevBenchReleaseVersionNav';
 
@@ -32,13 +32,8 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
   const sharePath = versionPath ?? (scope === 'api' ? '/jev-models/api' : live ? '/jev-models' : `/jev-models/${revision}`);
   const rankedSelfHosted = artifact.systems.filter((s) => s.ranked && s.v16.lane !== 'api').length;
   const rankedApi = artifact.systems.filter((s) => s.ranked && s.v16.lane === 'api').length;
-  // v1.7.1: API wrappers listed (not ranked) on v1.5.7 and not re-measured since, e.g. classifier.dev on Jev.
-  const carriedKeys = new Set(carry.rows.map((row) => row.key));
-  const notMeasuredApi = new Map(artifact.not_measured.map((row) => [row.key, row]));
-  const apiWrappers = scope !== 'api' ? [] : previous.artifact.systems
-    .filter((s) => !s.ranked && s.listing === 'honorable_mention' && notMeasuredApi.has(s.key) && !carriedKeys.has(s.key))
-    .map((s) => ({ key: s.key, display: s.display, composite_v15: s.jevbench_score ?? null, reason: s.not_ranked_because ?? null,
-      href: (notMeasuredApi.get(s.key) as { repo?: string | null } | undefined)?.repo ?? null, revision: previous.artifact.revision as string }));
+  // v1.7.1: catalogue-only API rows (wrappers, partial runs, not yet measured) for the roster on /jev-models/api.
+  const apiListed = scope === 'api' ? jevApiRoster(artifact, carry.rows, previous.artifact.systems, previous.artifact.revision as string).listed : [];
 
   return <>
     <JevBenchReleaseVersionNav active={revision} />
@@ -51,15 +46,16 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
       <p className="mt-3 max-w-3xl text-lg" data-bh-jev-own>JevBench is <b>Benchmark Heaven&apos;s own benchmark</b> for Jev-class decision models: state and a bounded rubric in, a typed answer out.</p>
       {scope === 'open' && <p className="mt-3 max-w-3xl text-base" data-bh-jev-scope-intro>This main board ranks <b>open-weights</b> decision models from published weights that we ran ourselves. <b>Jev 1.13.0</b> (TypeSafe) is the only API model kept on this board, as the unranked reference row that defines the genre.</p>}
       {/* v1.7.1 (Florian 6 Oct 2026): one expandable sentence on why the boards are split, with the link and the toggle. */}
-      {scope === 'open' && <details className="mt-2 max-w-3xl text-base" data-bh-jev-split-why>
-        <summary className="cursor-pointer"><b>Why open weights and API offerings are separate:</b> open-weights models compare on equal hardware terms, so hosted APIs (Jev, wity, Sage, Fastino, …) have their own <a className="text-accent font-semibold underline" href="/jev-models/api" data-bh-jev-api-board-link>JevBench API leaderboard</a>, and “Show API offerings” below mixes them back in. <span className="text-accent text-sm">Why ↓</span></summary>
+      {scope === 'open' && <div className="mt-2 max-w-3xl text-base" data-bh-jev-split-why>
+        <p><b>Why open weights and API offerings are separate:</b> open-weights models compare on equal hardware terms, so hosted APIs (Jev, wity, Sage, Fastino, …) have their own <a className="text-accent font-semibold underline" href="/jev-models/api" data-bh-jev-api-board-link>JevBench API leaderboard</a>, and “Show API offerings” below mixes them back in.</p>
+        <details className="mt-1" data-bh-jev-split-why-more><summary className="cursor-pointer text-sm text-accent">Read why</summary>
         <ul className="bh-muted mt-2 list-disc space-y-1 pl-5 text-sm">
           <li><b>Fair cost and speed.</b> We run every open-weights model on hardware we rent and operate, so cost and latency compare on the same terms. The GPU cost calculator below prices your own setup: own hardware, on-demand or long-term rental.</li>
           <li><b>API prices can change.</b> An API price is the vendor&apos;s decision. It can be subsidised (for example on top-end GPUs) and raised later, and readers cannot reproduce it.</li>
           <li><b>Different fairness needs.</b> A hosted endpoint chooses its own hardware and sees the benchmark inputs, so API offerings are compared with each other on their own board.</li>
           <li><b>Open-source focus.</b> JevBench exists to make open decision models comparable and reproducible. The API board stays one click away, and every score and the method are identical on both boards.</li>
         </ul>
-      </details>}
+      </details></div>}
       {scope === 'api' && <p className="mt-3 max-w-3xl text-base" data-bh-jev-scope-intro>This board ranks <b>hosted API offerings</b>: decision APIs and models we reached through an endpoint we do not run. The <b>JevBench Composite Score</b> is the headline here: an API has one public price and one endpoint speed, so all four axes compare directly (on open weights both depend on your hardware, so Capability leads there). Open-weights models are ranked on the <a className="text-accent font-semibold underline" href="/jev-models" data-bh-jev-open-board-link>main JevBench board</a>; every score is identical on both boards.</p>}
       <p className="bh-muted mt-3 max-w-3xl text-xs leading-relaxed" data-bh-jev-meta>
         Release {revision} · {artifact.v16.counts.selfhosted_input.toLocaleString('en-US')} decisions per self-hosted system and {apiItems} per hosted API ·
@@ -75,7 +71,7 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
       <p className="mt-3 max-w-3xl text-sm" data-bh-image-jev-link-row>Making decisions from images? <a className="text-accent font-semibold underline" href="/image-jev-bench" data-bh-image-jev-link>Explore Image JevBench v0.1.5 and compare its systems</a>.</p>
     </header>
     <JevBenchV16Board artifact={artifact} sha256={sha256} categories={categories} categoriesSha256={categoriesSha256}
-      carry={carry} carrySha256={carrySha256} scope={scope} apiKeys={apiKeys} apiWrappers={apiWrappers}
+      carry={carry} carrySha256={carrySha256} scope={scope} apiKeys={apiKeys} apiListed={apiListed}
       previousKeys={[...previous.artifact.systems, ...previous.artifact.not_measured].filter((row: { key: string }) => !isJevbenchV16ExcludedKey(row.key)).map((row: { key: string }) => row.key)} />
   </>;
 }

@@ -18,7 +18,8 @@ import { baseModelFamilies } from '../lib/jev-base-model.mjs';
 import { JevV15AllDataGrid } from './JevV15AllDataGrid';
 import { JevApiOfferingsToggle } from './JevApiOfferingsToggle';
 import { JevGpuCostCalculator } from './JevGpuCostCalculator';
-import { JEV_REFERENCE_KEY, JEV_SCOPE_LISTING, type JevScope } from '../lib/jevbench-scope.mjs';
+import { JEV_REFERENCE_KEY, JEV_SCOPE_LISTING, jevApiRoster, type JevApiListedRow, type JevScope } from '../lib/jevbench-scope.mjs';
+import { NOT_RANKED } from './JevBoardShared';
 
 // JevBench v1.6.0 release board. Reuses the established interactive charts on the
 // v1.6 aggregate artifact, and adds the main-pool language view, dated carry and the
@@ -254,57 +255,60 @@ function NoulAndGate({ a, hiddenApi }: { a: JevV16ReleaseArtifact; hiddenApi: Re
   </section>;
 }
 
-export type JevApiWrapper = { key: string; display: string; composite_v15: number | null; reason: string | null; href: string | null; revision: string };
+const ENDPOINT_TAG: Record<string, string> = { api: 'hosted API', demo: 'author-hosted demo' };
+const rosterStatus = (listing: string | null, reason: string | null) => listing === 'listed' ? 'configuration variant · not ranked'
+  : listing ? `${NOT_RANKED[listing] ?? listing.replace(/_/g, ' ')} · not ranked` : reason ?? 'not ranked';
 
 // v1.7.1 (Florian 6 Oct 2026): "the page with the API offerings needs to contain all the API offerings". One table lists
-// every hosted row we have measured: ranked on this release, labelled mode variants, carried v1.5.x rows and wrappers.
-// Display only; nothing here is ranked or re-scored, and rows outside the Jev-class caps are never dropped.
-function ApiRoster({ a, carry, wrappers, eligibility }: { a: JevV16ReleaseArtifact; carry: JevV16Carry; wrappers: JevApiWrapper[];
+// every row the API scope holds (lib jevApiRoster): ranked on this release, unranked variants, carried v1.5.x rows and
+// catalogue rows (wrappers, partial runs). Display only; nothing here is ranked or re-scored, and no row is dropped.
+function ApiRoster({ a, carry, listed, eligibility }: { a: JevV16ReleaseArtifact; carry: JevV16Carry; listed: JevApiListedRow[];
   eligibility: ReadonlyMap<string, { status: 'eligible' | 'outside'; reason: string }> }) {
-  const ranked = a.systems.filter((s) => s.ranked).sort(byBoard);
-  const variants = a.systems.filter((s) => !s.ranked).sort(byBoard);
-  const total = ranked.length + variants.length + carry.rows.length + wrappers.length;
+  const { ranked, variants, carried } = jevApiRoster(a, carry.rows);
+  const total = ranked.length + variants.length + carried.length + listed.length;
   const head = (label: string, n: number) => <tr className="border-t border-line"><th colSpan={6} scope="colgroup" className="p-2 pt-4 text-left text-sm font-semibold">{label} ({n})</th></tr>;
-  const name = (display: string, href: string | null | undefined, key: string) => href
-    ? <a className="text-accent underline" href={href} target={href.startsWith('/') ? undefined : '_blank'} rel={href.startsWith('/') ? undefined : 'noopener noreferrer'} data-bh-jev-api-roster-row={key}>{display}</a>
-    : <span data-bh-jev-api-roster-row={key}>{display}</span>;
+  const name = (display: string, href: string | null | undefined, key: string, endpoint: string | null | undefined) => <>
+    {href ? <a className="text-accent underline" href={href} target={href.startsWith('/') ? undefined : '_blank'} rel={href.startsWith('/') ? undefined : 'noopener noreferrer'} data-bh-jev-api-roster-row={key}>{display}</a>
+      : <span data-bh-jev-api-roster-row={key}>{display}</span>}
+    {endpoint && ENDPOINT_TAG[endpoint] && <span className="bh-muted block text-xs" data-bh-jev-api-roster-endpoint={endpoint}>{ENDPOINT_TAG[endpoint]}</span>}
+  </>;
   return <section className="bh-panel mt-10 p-5" id="jev-api-roster" aria-labelledby="jev-api-roster-title" data-bh-jev-api-roster>
     <h2 id="jev-api-roster-title" className="text-2xl font-bold">Every API offering we have measured ({total})</h2>
-    <p className="bh-muted mt-1 max-w-4xl text-sm">No API offering is left out. Rows outside the Jev-class cost or latency caps (2× Jev) stay ranked in the Composite and are listed below the divider of the Capability ranking. Only rows measured on {a.revision} are ranked; mode variants of a ranked API are listed beside it, and APIs not yet re-measured keep their dated v1.5.x score, which is on the v1.5 scale and not comparable with {a.revision} scores.</p>
+    <p className="bh-muted mt-1 max-w-4xl text-sm">No API offering is left out. “API offering” means an endpoint we do not run ourselves: vendor APIs and author-hosted demos (tagged). Ranked rows outside the Jev-class cost or latency caps (2× Jev) keep their Composite rank and appear below the divider of the Capability ranking. Only rows measured on {a.revision} are ranked; APIs not yet re-measured keep their dated v1.5.x score, which is on the v1.5 scale and not comparable with {a.revision} scores (a v1.5 Composite near 0 means a low-axis gate applied).</p>
     <div className="mt-3 overflow-x-auto"><table className="w-full text-left text-sm tabular" data-bh-jev-api-roster-table>
       <caption className="sr-only">All hosted API offerings measured on JevBench, by status</caption>
       <thead><tr>{['System', 'Status', 'Composite', 'Capability', 'Cost / 1,000', 'Median latency'].map((h) => <th key={h} scope="col" className="p-2">{h}</th>)}</tr></thead>
       <tbody>
         {head(`Ranked on ${a.revision}`, ranked.length)}
         {ranked.map((s) => { const e = eligibility.get(s.key); return <tr key={s.key} className="border-t border-line">
-          <th scope="row" className="p-2 font-normal">{name(s.display, s.repo, s.key)}</th>
+          <th scope="row" className="p-2 font-normal">{name(s.display, s.repo, s.key, s.endpoint_kind)}</th>
           <td className="p-2">Composite #{s.rank}{e?.status === 'outside' && <span className="bh-muted block text-xs">outside Jev-class caps: {e.reason}</span>}</td>
           <td className="p-2">{one(s.jevbench_score)}</td><td className="p-2">{one(s.capability)}</td>
           <td className="p-2">{usd(s.cost?.usd_per_1000)}</td><td className="p-2">{sec(s.speed?.p50_s_adjusted)}</td></tr>; })}
-        {variants.length > 0 && head(`Mode variants measured on ${a.revision}, listed, not ranked`, variants.length)}
+        {variants.length > 0 && head(`Also measured on ${a.revision}, listed, not ranked`, variants.length)}
         {variants.map((s) => <tr key={s.key} className="border-t border-line">
-          <th scope="row" className="p-2 font-normal">{name(s.display, s.repo, s.key)}</th>
-          <td className="p-2 bh-muted">configuration variant · not ranked</td>
+          <th scope="row" className="p-2 font-normal">{name(s.display, s.repo, s.key, s.endpoint_kind)}</th>
+          <td className="p-2 bh-muted">{rosterStatus(s.listing, s.not_ranked_because ?? null)}</td>
           <td className="p-2">{one(s.jevbench_score)}</td><td className="p-2">{one(s.capability)}</td>
           <td className="p-2">{usd(s.cost?.usd_per_1000)}</td><td className="p-2">{sec(s.speed?.p50_s_adjusted)}</td></tr>)}
-        {carry.rows.length > 0 && head('Carried from v1.5.x, not yet re-measured (v1.5 scale)', carry.rows.length)}
-        {carry.rows.map((r) => <tr key={r.key} className="border-t border-line">
-          <th scope="row" className="p-2 font-normal">{name(r.display, r.source_url ?? r.repo, r.key)}</th>
+        {carried.length > 0 && head('Carried from v1.5.x, not yet re-measured (v1.5 scale)', carried.length)}
+        {carried.map((r) => <tr key={r.key} className="border-t border-line">
+          <th scope="row" className="p-2 font-normal">{name(r.display, r.source_url ?? r.repo, r.key, (r as { endpoint_kind?: string | null }).endpoint_kind)}</th>
           <td className="p-2 bh-muted">{r.measured_label}</td>
           <td className="p-2">{one(r.composite_v15)}<span className="bh-muted"> (v1.5)</span></td><td className="p-2">{one(r.capability)}<span className="bh-muted"> (v1.5)</span></td>
           <td className="p-2">{usd(r.cost?.usd_per_1000)}</td><td className="p-2">{sec(r.speed.p50_s_adjusted)}</td></tr>)}
-        {wrappers.length > 0 && head('Wrappers of another API, listed, not ranked', wrappers.length)}
-        {wrappers.map((w) => <tr key={w.key} className="border-t border-line">
-          <th scope="row" className="p-2 font-normal">{name(w.display, w.href, w.key)}</th>
-          <td className="p-2 bh-muted">{w.reason ?? 'listed, not ranked'} · <a className="text-accent underline" href={`/jev-models/${w.revision}`}>{w.revision}</a></td>
-          <td className="p-2">{one(w.composite_v15)}<span className="bh-muted"> (v1.5)</span></td><td className="p-2">—</td><td className="p-2">—</td><td className="p-2">—</td></tr>)}
+        {listed.length > 0 && head('Listed only, never ranked (wrappers, partial runs)', listed.length)}
+        {listed.map((w) => <tr key={w.key} className="border-t border-line">
+          <th scope="row" className="p-2 font-normal">{name(w.display, w.href, w.key, w.endpoint_kind)}</th>
+          <td className="p-2 bh-muted">{rosterStatus(w.listing, w.reason)}{w.reason && w.listing && <span className="block text-xs">{w.reason}</span>}{w.revision && <> · <a className="text-accent underline" href={`/jev-models/${w.revision}`}>{w.revision}</a></>}</td>
+          <td className="p-2">{one(w.composite_v15)}{w.composite_v15 != null && <span className="bh-muted"> (v1.5)</span>}</td><td className="p-2">—</td><td className="p-2">—</td><td className="p-2">—</td></tr>)}
       </tbody>
     </table></div>
   </section>;
 }
 
-export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSha256, carry, carrySha256, previousKeys, scope = 'all', apiKeys = [], apiWrappers = [] }: {
-  apiWrappers?: JevApiWrapper[];
+export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSha256, carry, carrySha256, previousKeys, scope = 'all', apiKeys = [], apiListed = [] }: {
+  apiListed?: JevApiListedRow[];
   artifact: JevV16ReleaseArtifact; sha256: string; categories: JevV16Categories; categoriesSha256: string; carry: JevV16Carry; carrySha256: string; previousKeys: string[];
   /** v1.7: 'open' = open-weights board with the API toggle, 'api' = API leaderboard, 'all' = archived release as published. */
   scope?: JevScope; apiKeys?: string[];
@@ -346,7 +350,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
       <JevScoreChart revision={a.revision} rows={viewRows} rankedCount={a.n_ranked} newLabel={null} fairness={null} approvedNote={leader} tieNote={null} capabilityHref="#jev-capability" presets={jevV15SliderPresets(v15)} compactMobile scoreKind="v15" methodLink={{ href: '#jev16-method', label: 'Method notes ↓' }}
         scoreLabel={scopeLabel ? `JevBench Composite Score (${scopeLabel})` : undefined} headline={scope === 'api'} capabilityLabel={scope === 'api' ? 'Capability ↓' : undefined} />
       {scope === 'api' && capabilityCharts}
-      {scope === 'api' && <ApiRoster a={a} carry={carry} wrappers={apiWrappers} eligibility={eligibilityByKey} />}
+      {scope === 'api' && <ApiRoster a={a} carry={carry} listed={apiListed} eligibility={eligibilityByKey} />}
       {scope === 'api' && <JevV15FilterPanel />}
       <JevCompareV15 rows={compareRows} openDecisions={a.v16.counts.P} sealedDecisions={a.v16.counts.S} categories={jevbenchCategoryView(a.revision, compareRows.map((r) => r.key))} />
       <p className="bh-muted mt-2 max-w-4xl text-xs" data-bh-jev16-radar-note>{categories.lane_note} {a.revision === 'v1.6.1' ? `Sealed counts in the compare view refer to the sealed set S (${a.v16.counts.S.toLocaleString('en-US')}), which hosted APIs now answer in full.` : `Sealed counts in the compare view refer to self-hosted systems (S ${a.v16.counts.S.toLocaleString('en-US')}); hosted APIs answered A ${a.v16.counts.A}.`}</p>

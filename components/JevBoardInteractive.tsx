@@ -301,8 +301,9 @@ export function JevScoreChart({ revision, rows: officialRows, newLabel, fairness
     window.history.replaceState(window.history.state, '', url.toString());
   };
 
-  // v1.7.1 (Florian 6 Oct 2026): rows keep a one-line base-model label; long provenance notes are numbered footnotes below.
-  const baseNotes = useMemo(() => baseModelFootnotes(benchmark, rows.map((r) => r.key)), [benchmark, rows]);
+  // v1.7.1 (Florian 6 Oct 2026): rows keep a one-line base-model label; long provenance notes are numbered footnotes
+  // below, numbered in the order the rows are shown (filters, sort and the API toggle renumber them).
+  const baseNotes = useMemo(() => baseModelFootnotes(benchmark, shown.map((r) => r.key)), [benchmark, shown]);
   const baseNames = useMemo(() => new Map(rows.map((r) => [r.key, shortName(r.display)])), [rows]);
   const top = shown.slice(0, CHART_TOP);
   const rest = shown.slice(CHART_TOP);
