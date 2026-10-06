@@ -56,7 +56,8 @@ test('every internal link on the benchmark pages opens a page or an element that
     }
     assert.deepEqual(broken, [], `broken links:\n${broken.join('\n')}`);
     assert.ok(modelLinks >= 50, `the crawl must see the model links (found ${modelLinks})`);
-    assert.equal(imageSystemDetails, 50, `CR-254: every ImageJev system has a working detail page (found ${imageSystemDetails})`);
+    // v0.3.0: 45 measured rows plus the dated v0.1.5 carries that keep their v0.1.5 detail page.
+    assert.equal(imageSystemDetails, 54, `CR-254: every ImageJev system has a working detail page (found ${imageSystemDetails})`);
   } finally {
     server.kill('SIGTERM');
   }
