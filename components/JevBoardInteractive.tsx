@@ -378,7 +378,7 @@ export function JevScoreChart({ revision, rows: officialRows, newLabel, fairness
     {shown.length === 0 && <p className="bh-muted mt-3 text-sm" data-bh-jev-filter-empty>No system matches these filters.</p>}
     <ol className="mt-2 space-y-2.5 sm:mt-1" data-bh-jev14-bars>{top.map(bar)}</ol>
     {rest.length > 0 && <details className="mt-2.5" data-bh-jev14-bars-more>
-      <summary className="cursor-pointer text-sm font-semibold text-accent">{isFiltered(filters) || hidingLlms ? `Show all ${shown.length} matching systems` : `Show all ${rows.length} systems (${rest.filter((r) => r.ranked).length} more ranked, ${rest.filter((r) => !r.ranked).length} more not ranked)`}</summary>
+      <summary className="cursor-pointer text-sm font-semibold text-accent">{isFiltered(filters) || hidingLlms ? `Show all ${shown.length} matching systems` : `Show all ${rows.length} systems (${rest.filter((r) => r.ranked).length} more ranked${rest.some((r) => !r.ranked) ? `, ${rest.filter((r) => !r.ranked).length} more not ranked` : ''})`}</summary>
       <ol className="mt-2.5 space-y-2.5">{rest.map(bar)}</ol>
     </details>}
     <BaseModelFootnotes benchmark={benchmark} notes={baseNotes.notes} names={baseNames} />
