@@ -26,7 +26,8 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
   const revision = published.revision as 'v1.6.0' | 'v1.6.1';
   const previousRelease = revision === 'v1.6.1' ? 'v1.6.0' : 'v1.5.7';
   const previousHref = revision === 'v1.6.1' ? '/jev-models/v1.6.0' : '/jev-models/v1.5.7';
-  const allApiFull = published.systems.filter((system) => system.v16.lane === 'api').every((system) => system.v16.full_set_api === true);
+  const allApiFull = release_.systems.filter((system) => system.v16.lane === 'api').every((system) => system.v16.full_set_api === true);
+  const a4Count = merged === release_ ? 0 : merged.systems.length - release_.systems.length;
   const publishedKeys = new Set([...published.systems, ...published.not_measured, ...publishedCarry.rows].map((row) => row.key));
   const missingPrevious = [...previous.artifact.systems, ...previous.artifact.not_measured]
     .filter((row) => !isJevbenchV16ExcludedKey(row.key) && !publishedKeys.has(row.key));
@@ -66,7 +67,7 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
       </details></div>}
       {scope === 'api' && <p className="mt-3 max-w-3xl text-base" data-bh-jev-scope-intro>This board ranks <b>hosted API offerings</b>: decision APIs and models we reached through an endpoint we do not run. The <b>JevBench Composite Score</b> is the headline here: an API has one public price and one endpoint speed, so all four axes compare directly (on open weights both depend on your hardware, so Capability leads there). Open-weights models are ranked on the <a className="text-accent font-semibold underline" href="/jev-models" data-bh-jev-open-board-link>main JevBench board</a>; every score is identical on both boards.</p>}
       <p className="bh-muted mt-3 max-w-3xl text-xs leading-relaxed" data-bh-jev-meta>
-        Release {revision} · {artifact.v16.counts.selfhosted_input.toLocaleString('en-US')} decisions per self-hosted system and {apiItems} per hosted API ·
+        Release {revision} · {artifact.v16.counts.selfhosted_input.toLocaleString('en-US')} decisions per self-hosted system and {apiItems} per hosted API{a4Count > 0 && ` (600 for the ${a4Count} API rows re-run on A4 ∪ P on 6 Oct 2026, equated)`} ·
         {' '}{scope === 'open' ? `${rankedSelfHosted} ranked open-weights systems` : scope === 'api' ? `${rankedApi} ranked API offerings` : `${artifact.n_ranked} ranked systems`} · {carryCount} systems retain a separately dated v1.5.x score · only system-level aggregates are published ·
         {' '}<a className="text-accent underline" href={`/api/jevbench/${revision}`}>aggregate results JSON</a> · SHA-256 <code className="break-all">{sha256}</code>
       </p>
