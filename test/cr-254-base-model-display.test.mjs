@@ -10,7 +10,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { BASE_MODEL_METADATA, baseModelFor, baseModelsForBenchmark } from '../lib/jev-base-model.mjs';
 import { imageJevSystemPath, imageJevSourceUrl } from '../lib/imagejev-system-links.mjs';
 import { imageJevCapabilityLimits, imageJevBoardSystems } from '../lib/imagejev-board.mjs';
-import { readMultimodalPreview } from '../lib/jevbench-multimodal-preview.mjs';
+import { readMultimodalPreview, readImageJevV03 } from '../lib/jevbench-multimodal-preview.mjs';
 import { jevV15BoardRow } from '../lib/jevbench-v15-board.mjs';
 import { readJevbenchV154Release } from '../lib/jevbench-v15-release.mjs';
 import { importTsModule, compileTsModule } from './helpers/transpile-ts.mjs';
@@ -135,21 +135,29 @@ const detail = await importReactModule(file('../app/image-jev-bench/[system]/pag
   '../../../lib/seo': moduleUrl('export const previewMetadata=(value)=>value;'),
 });
 
-test('CR-254 all 50 Image detail routes render published rank, axes, cost, latency and cited provenance', async () => {
-  const artifact = await readMultimodalPreview();
-  const rows = imageJevBoardSystems(artifact);
-  assert.equal(rows.length, 50);
-  assert.deepEqual(await detail.generateStaticParams(), rows.map((row) => ({ system: row.key })));
-  for (const row of rows) {
+test('CR-254 every Image detail route renders published rank, axes, cost, latency and cited provenance', async () => {
+  // v0.3.0 rows render from the v0.3.0 artifact; systems only on v0.1.5 (dated carries) keep their v0.1.5 page.
+  const current = await readImageJevV03();
+  const archive = await readMultimodalPreview();
+  const v03 = imageJevBoardSystems(current);
+  const v03Keys = new Set(v03.map((row) => row.key));
+  const sources = [...v03.map((row) => ({ row, artifact: current, rows: v03 })),
+    ...imageJevBoardSystems(archive).filter((row) => !v03Keys.has(row.key)).map((row, _, rows) => ({ row, artifact: archive, rows: imageJevBoardSystems(archive) }))];
+  assert.equal(v03.length, 45);
+  assert.equal(sources.length, 54);
+  assert.deepEqual(await detail.generateStaticParams(), sources.map(({ row }) => ({ system: row.key })));
+  for (const { row, artifact, rows } of sources) {
+    const rankedCount = rows.filter((candidate) => candidate.ranked).length;
     const html = renderToStaticMarkup(await detail.default({ params: Promise.resolve({ system: row.key }) }));
     assert.match(html, new RegExp(`data-bh-base-model="${row.key}"`));
     assert.match(html, /data-bh-base-model-benchmark="imagejevbench"/);
-    assert.ok(html.includes(`Rank #${row.rank} of 50 ranked systems.`));
-    assert.ok(html.includes(row.jevbench_score.toFixed(3)), row.key);
-    assert.ok(html.includes(`USD ${row.cost.usd_per_1000.toFixed(6)}`), row.key);
-    assert.ok(html.includes(`${row.speed.p50_s_raw.toFixed(3)} s / ${row.speed.p95_s_raw.toFixed(3)} s`), row.key);
-    for (const value of Object.values(row.axes)) assert.ok(html.includes(value.toFixed(1)), row.key);
-    for (const citation of baseModelFor('imagejevbench', row.key).sources) assert.ok(html.includes(citation.url.replaceAll('&', '&amp;')), row.key);
+    assert.ok(html.includes(row.ranked ? `Rank #${row.rank} of ${rankedCount} ranked systems.` : 'Listed, not ranked.'), row.key);
+    assert.ok(html.includes(`Image JevBench ${artifact.revision}`), row.key);
+    if (row.jevbench_score != null) assert.ok(html.includes(row.jevbench_score.toFixed(3)), row.key);
+    if (row.cost?.usd_per_1000 != null) assert.ok(html.includes(`USD ${row.cost.usd_per_1000.toFixed(6)}`), row.key);
+    if (row.speed?.p50_s_raw != null && row.speed?.p95_s_raw != null) assert.ok(html.includes(`${row.speed.p50_s_raw.toFixed(3)} s / ${row.speed.p95_s_raw.toFixed(3)} s`), row.key);
+    for (const value of Object.values(row.axes ?? {})) if (value != null) assert.ok(html.includes(value.toFixed(1)), row.key);
+    for (const citation of baseModelFor('imagejevbench', row.key)?.sources ?? []) assert.ok(html.includes(citation.url.replaceAll('&', '&amp;')), row.key);
     assert.equal((await detail.generateMetadata({ params: Promise.resolve({ system: row.key }) })).path, imageJevSystemPath(row.key));
   }
   await assert.rejects(detail.default({ params: Promise.resolve({ system: 'missing' }) }), /NOT_FOUND/);

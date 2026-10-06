@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { BaseModelDisplay } from '../../../components/BaseModelDisplay';
 import { JevAxisBand, typeColour } from '../../../components/JevSystemCharts';
-import { readMultimodalPreview } from '../../../lib/jevbench-multimodal-preview.mjs';
+import { readMultimodalPreview, readImageJevV03 } from '../../../lib/jevbench-multimodal-preview.mjs';
 import { imageJevBoardSystems } from '../../../lib/imagejev-board.mjs';
 import { imageJevSystemPath, imageJevSourceUrl } from '../../../lib/imagejev-system-links.mjs';
 import { previewMetadata } from '../../../lib/seo';
@@ -14,15 +14,19 @@ import { previewMetadata } from '../../../lib/seo';
 const AXES = ['intelligence', 'calibration', 'speed', 'cost'] as const;
 const number = (value: number | null | undefined, digits = 3) => value == null ? 'Not measured' : value.toFixed(digits);
 
+// v0.3.0 rows come first; systems measured only on v0.1.5 (e.g. dated API carries) keep their v0.1.5 page.
 async function findSystem(key: string) {
-  const artifact = await readMultimodalPreview();
-  const systems = imageJevBoardSystems(artifact);
-  const row = systems.find((candidate) => candidate.key === key);
-  return row ? { artifact, row, systems } : null;
+  for (const artifact of [await readImageJevV03(), await readMultimodalPreview()]) {
+    const systems = imageJevBoardSystems(artifact);
+    const row = systems.find((candidate) => candidate.key === key);
+    if (row) return { artifact, row, systems };
+  }
+  return null;
 }
 
 export async function generateStaticParams() {
-  return imageJevBoardSystems(await readMultimodalPreview()).map((row) => ({ system: row.key }));
+  const keys = new Set([...imageJevBoardSystems(await readImageJevV03()), ...imageJevBoardSystems(await readMultimodalPreview())].map((row) => row.key));
+  return [...keys].map((system) => ({ system }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ system: string }> }): Promise<Metadata> {
@@ -82,7 +86,7 @@ export default async function ImageJevSystemPage({ params }: { params: Promise<{
         {row.sealed_accuracy != null && <div><dt className="font-semibold">Sealed accuracy</dt><dd className="tabular-nums">{number(row.sealed_accuracy * 100, 1)}%</dd></div>}
         {typeof row.note === 'string' && row.note && <div><dt className="font-semibold">Measurement note</dt><dd className="bh-muted">{row.note}</dd></div>}
       </dl>
-      <p className="bh-muted mt-4 text-sm">Published {artifact.built_utc}. Scores and ranks can change in a later release. See the <Link href="/image-jev-bench#method-heading" className="text-accent underline">method notes</Link>.</p>
+      <p className="bh-muted mt-4 text-sm">Published {artifact.built_utc}. Scores and ranks can change in a later release. See the <Link href={artifact.revision === 'v0.3.0' ? '/image-jev-bench#v03-method' : '/image-jev-bench#method-heading'} className="text-accent underline">method notes</Link>.</p>
     </section>
   </>;
 }

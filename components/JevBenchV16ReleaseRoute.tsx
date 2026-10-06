@@ -68,7 +68,7 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
         {scope === 'all' && <span className="bh-muted"> · <a className="text-accent underline" href="/jev-models/api">API leaderboard</a></span>}
         <span className="bh-muted"> · Previous release: <a className="text-accent underline" href={previousHref}>JevBench {previousRelease}</a></span>
       </p>
-      <p className="mt-3 max-w-3xl text-sm" data-bh-image-jev-link-row>Making decisions from images? <a className="text-accent font-semibold underline" href="/image-jev-bench" data-bh-image-jev-link>Explore Image JevBench v0.1.5 and compare its systems</a>.</p>
+      <p className="mt-3 max-w-3xl text-sm" data-bh-image-jev-link-row>Making decisions from images? <a className="text-accent font-semibold underline" href="/image-jev-bench" data-bh-image-jev-link>Explore Image JevBench v0.3.0 and compare its systems</a>.</p>
     </header>
     <JevBenchV16Board artifact={artifact} sha256={sha256} categories={categories} categoriesSha256={categoriesSha256}
       carry={carry} carrySha256={carrySha256} scope={scope} apiKeys={apiKeys} apiListed={apiListed}
