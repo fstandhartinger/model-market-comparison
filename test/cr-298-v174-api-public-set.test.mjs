@@ -45,3 +45,15 @@ test('3: shown only on the API board, unranked, linked from carried roster rows;
     assert.doesNotMatch(src(f), /jevbench-api-public-set/, `${f} must not use public-set figures`);
   }
 });
+
+test('4: demo endpoints use the rankings cost basis and x2 latency adjustment; pending rows are named', async () => {
+  const { carry } = await readCurrentJevbench();
+  const byKey = new Map(carry.rows.map((r) => [r.key, r]));
+  for (const r of data.rows.filter((x) => byKey.get(x.key)?.endpoint_kind === 'demo')) {
+    assert.equal(r.cost_kind, 'estimate', `${r.key} cost basis`);
+    assert.equal(r.usd_per_1000, byKey.get(r.key).cost.usd_per_1000, `${r.key} uses the documented ranking cost`);
+    assert.ok(Math.abs(r.p50_s_adjusted - 2 * r.p50_s) < 1e-9, `${r.key} latency adjusted x2`);
+  }
+  const shown = new Set(data.rows.map((r) => r.key));
+  for (const p of data.pending) assert.ok(!shown.has(p.key) && p.reason, `${p.key} pending with a reason`);
+});
