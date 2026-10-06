@@ -39,7 +39,7 @@ test('CR-257: the live JevBench release has category values for every ranked sys
   const { artifact } = await readCurrentJevbench();
   assert.ok(JEVBENCH_CATEGORY_REVISIONS.includes(artifact.revision), `live revision ${artifact.revision} has a category artifact`);
   const ranked = artifact.systems.filter((s) => s.listing === 'ranked' || s.ranked).map((s) => s.key);
-  if (artifact.revision === 'v1.6.0' || artifact.revision === 'v1.6.1') {
+  if (['v1.6.0', 'v1.6.1', 'v1.6.2'].includes(artifact.revision)) {
     const { categories } = await readCurrentJevbench();
     assert.equal(categories.min_n, 15);
     const descriptorKeys = {

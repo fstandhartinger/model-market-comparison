@@ -1,11 +1,11 @@
 import { isJevbenchV16ExcludedKey } from '../lib/jevbench-v16-public-scope.mjs';
-import { readJevbenchV161Release } from '../lib/jevbench-v16-release.mjs';
+import { readCurrentJevbench } from '../lib/jevbench-current.mjs';
 import { readJevbenchV157Release } from '../lib/jevbench-v15-release.mjs';
 import { jevApiOfferingKeys, jevApiRoster, jevbenchScopeArtifact, jevbenchScopeCarry, jevScopeClassifier, type JevScope } from '../lib/jevbench-scope.mjs';
 import { JevBenchV16Board, JEV_BOARD_REVISIONS } from './JevBenchV16Board';
 import { JevBenchReleaseVersionNav } from './JevBenchReleaseVersionNav';
 
-type ReleaseData = Awaited<ReturnType<typeof readJevbenchV161Release>>;
+type ReleaseData = Awaited<ReturnType<typeof readCurrentJevbench>>;
 
 export async function JevBenchV16ReleaseRoute({ live = false, release, versionPath, scope = 'all' }: {
   live?: boolean; release?: ReleaseData; versionPath?: string;
@@ -13,11 +13,11 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
   scope?: JevScope;
 }) {
   const [{ artifact: published, sha256, categories, categoriesSha256, carry: publishedCarry, carrySha256 }, previous] = await Promise.all([
-    release ? Promise.resolve(release) : readJevbenchV161Release(), readJevbenchV157Release(),
+    release ? Promise.resolve(release) : readCurrentJevbench(), readJevbenchV157Release(),
   ]);
-  const revision = published.revision as 'v1.6.0' | 'v1.6.1';
-  const previousRelease = revision === 'v1.6.1' ? 'v1.6.0' : 'v1.5.7';
-  const previousHref = revision === 'v1.6.1' ? '/jev-models/v1.6.0' : '/jev-models/v1.5.7';
+  const revision = published.revision as 'v1.6.0' | 'v1.6.1' | 'v1.6.2';
+  const previousRelease = ({ 'v1.6.2': 'v1.6.1', 'v1.6.1': 'v1.6.0', 'v1.6.0': 'v1.5.7' } as const)[revision];
+  const previousHref = `/jev-models/${previousRelease}`;
   const allApiFull = published.systems.filter((system) => system.v16.lane === 'api').every((system) => system.v16.full_set_api === true);
   const publishedKeys = new Set([...published.systems, ...published.not_measured, ...publishedCarry.rows].map((row) => row.key));
   const missingPrevious = [...previous.artifact.systems, ...previous.artifact.not_measured]

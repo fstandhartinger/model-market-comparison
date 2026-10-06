@@ -1,8 +1,9 @@
-type JevRelease = 'v1.6.1' | 'v1.6.0' | 'v1.5.7' | 'v1.5.6' | 'v1.5.5';
+type JevRelease = 'v1.6.2' | 'v1.6.1' | 'v1.6.0' | 'v1.5.7' | 'v1.5.6' | 'v1.5.5';
 
 export function JevBenchReleaseVersionNav({ active }: { active: JevRelease }) {
   const versions: Array<{ version: JevRelease; href: string }> = [
-    { version: 'v1.6.1', href: '/jev-models' },
+    { version: 'v1.6.2', href: '/jev-models' },
+    { version: 'v1.6.1', href: '/jev-models/v1.6.1' },
     { version: 'v1.6.0', href: '/jev-models/v1.6.0' },
     { version: 'v1.5.7', href: '/jev-models/v1.5.7' },
     { version: 'v1.5.6', href: '/jev-models/v1.5.6' },

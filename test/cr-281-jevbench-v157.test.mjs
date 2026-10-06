@@ -17,7 +17,7 @@ test('CR-281 adds exactly one measured row and preserves all prior values and pr
  assert.deepEqual(a.not_measured,old.not_measured);
  for(const r of old.systems){const now=a.systems.find(s=>s.key===r.key);for(const f of Object.keys(r).filter(f=>!['rank','ranks'].includes(f)))assert.deepEqual(now[f],r[f],`${r.key}.${f}`);}
  assert.equal(a.G_med,old.G_med);assert.equal(a.n_ranked,old.n_ranked+1);
- assert.equal((await readCurrentJevbench()).artifact.revision,'v1.6.1');assert.equal(CURRENT_JEVBENCH_PAGE,'/jev-models/v1.6.1');
+ assert.equal((await readCurrentJevbench()).artifact.revision,'v1.6.2');assert.equal(CURRENT_JEVBENCH_PAGE,'/jev-models/v1.6.2');
 });
 test('CR-281 exact ranks, eligibility, source hashes and unchanged top fives',()=>{
  assert.deepEqual(rows.map(r=>r.ranks),[{A:76,B:75,C:74}]);

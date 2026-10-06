@@ -9,7 +9,6 @@ import {
 } from '../lib/jevbench-v16-release.mjs';
 import { readCurrentJevbench, CURRENT_JEVBENCH_PAGE } from '../lib/jevbench-current.mjs';
 import { jevbenchCategoryView } from '../lib/jevbench-categories.mjs';
-import { readJevbenchAgentFeed } from '../lib/jevbench-agent-feed.mjs';
 
 const read = (p) => readFile(new URL(`../${p}`, import.meta.url), 'utf8');
 const sha = (text) => createHash('sha256').update(text).digest('hex');
@@ -21,9 +20,10 @@ const api = a.systems.filter((s) => s.v16.lane === 'api');
 // (JEVBENCH_V161_FINAL=1, used by the release job) requires every hosted API row on the full set.
 const final = process.env.JEVBENCH_V161_FINAL === '1';
 
-test('v1.6.1 is the live release, v1.6.0 stays reachable unchanged', async () => {
-  assert.equal(CURRENT_JEVBENCH_PAGE, '/jev-models/v1.6.1');
-  assert.equal((await readCurrentJevbench()).artifact.revision, 'v1.6.1');
+test('v1.6.1 and v1.6.0 stay reachable unchanged (v1.6.2 is live since 6 Oct 2026)', async () => {
+  assert.equal(CURRENT_JEVBENCH_PAGE, '/jev-models/v1.6.2');
+  assert.equal((await readCurrentJevbench()).artifact.revision, 'v1.6.2');
+  assert.equal(a.revision, 'v1.6.1');
   assert.equal(v160.artifact.revision, 'v1.6.0');
   assert.equal(v160.artifact.systems.find((s) => s.key === 'jev-1.13.0').status.rows, 600);
   assert.equal(JEVBENCH_V161_RELEASE_CARRY, JEVBENCH_V16_RELEASE_CARRY, 'the dated-carry file is shared and unchanged');
@@ -34,7 +34,7 @@ test('v1.6.1 is the live release, v1.6.0 stays reachable unchanged', async () =>
   assert.match(await read('app/jev-models/v1.6.1/page.tsx'), /canonical: '\/jev-models\/v1\.6\.1'/);
   assert.match(await read('app/sitemap.ts'), /"\/jev-models\/v1\.6\.0", "\/jev-models\/v1\.6\.1"/);
   const nav = await read('components/JevBenchReleaseVersionNav.tsx');
-  assert.match(nav, /version: 'v1\.6\.1', href: '\/jev-models'/);
+  assert.match(nav, /version: 'v1\.6\.1', href: '\/jev-models\/v1\.6\.1'/);
   assert.match(nav, /version: 'v1\.6\.0', href: '\/jev-models\/v1\.6\.0'/);
 });
 
@@ -114,15 +114,11 @@ test('exclusions, wity base model, Sage common cost basis and frozen caps are un
   assert.equal(sha(await read(JEVBENCH_V16_RELEASE_RESULTS)), v160.sha256, 'v1.6.0 results are unchanged on disk');
 });
 
-test('category view, agent feed and the v1.6.1 board describe the release', async () => {
+test('category view and the v1.6.1 board describe the release', async () => {
   const keys = a.systems.filter((s) => s.ranked).map((s) => s.key);
   const view = jevbenchCategoryView('v1.6.1', keys);
   assert.equal(view.revision, 'v1.6.1');
   for (const k of keys) assert.ok(view.systems[k], `${k} has a radar record`);
-  const { feed } = await readJevbenchAgentFeed();
-  assert.equal(feed.revision, 'v1.6.1');
-  assert.equal(feed.source.artifact, '/api/jevbench/v1.6.1');
-  assert.equal(feed.source.frozen_page, '/jev-models/v1.6.1');
   const board = await read('components/JevBenchV16Board.tsx');
   assert.match(board, /data-bh-jev16-amendments/);
   assert.match(board, /data-bh-jev16-revision-history/);

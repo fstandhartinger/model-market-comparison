@@ -11,7 +11,7 @@ Weights availability governs the architecture axis; serving through an API does 
 | Architecture | JevBench | ImageJevBench |
 | --- | ---: | ---: |
 | jev-reference | 1 | 0 |
-| closed-api | 22 | 6 |
+| closed-api | 23 | 6 |
 | open-llm-decoder | 118 | 40 |
 | open-diffusion-lm | 10 | 4 |
 | open-encoder | 19 | 0 |
@@ -193,6 +193,7 @@ The table links to the actual retained evidence, not failed candidate URLs. Unav
 | jevbench | lev | open-llm-decoder | Jev-compatible decision model | [Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes LoRA adaptation.](https://huggingface.co/interfaze-ai/lev/raw/7bdc748dffebd85b57ee0dbea8f994c6354fed31/README.md) |
 | jevbench | lev-350m | open-llm-decoder | jev-rebuild | [Author documentation identifies LiquidAI/LFM2.5-350M as the evaluated backbone. Author describes LoRA adaptation.](https://raw.githubusercontent.com/franckverrot/lev/HEAD/README.md) |
 | jevbench | litjev | open-llm-decoder | jev-rebuild | [Author documentation identifies Qwen/Qwen3.8-27B as the evaluated backbone.](https://raw.githubusercontent.com/zhengxuyu/litjev/HEAD/README.md) |
+| jevbench | liquid-d1 | closed-api | decision-api | [Liquid AI announces d1 as a hosted decision API (model id d1); no weights are released ("we plan to release open weights for upcoming models", 5 Oct 2026).](https://www.liquid.ai/blog/d1-decision-model) |
 | jevbench | localjev-qwen3.5-4b | open-llm-decoder | jev-rebuild | [Author documentation identifies Qwen/Qwen3.5-4B as the evaluated backbone. Author describes fine-tuning.](https://raw.githubusercontent.com/amithgc/local-jev/HEAD/README.md) |
 | jevbench | malkuth-2b | open-llm-decoder | jev-rebuild | [Author documentation identifies empero-ai/Qwen3.8-2B-Distill as the evaluated backbone. Author describes LoRA adaptation.](https://huggingface.co/dhtocks/malkuth-2b/blob/37ae1672eebcf9ee5417418bd0be49f2e53d9087/README.md) |
 | jevbench | malkuth-4b | open-llm-decoder | jev-rebuild | [Author documentation identifies Qwen/Qwen3.5-4B-Base as the evaluated backbone. Author describes LoRA adaptation.](https://huggingface.co/dhtocks/malkuth-4b/blob/ba9221fcb1ff450fc51dcefffc8e034ed479630d/README.md) |
