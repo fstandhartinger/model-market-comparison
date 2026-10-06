@@ -26,3 +26,7 @@ export declare function baseModelFor(benchmark: string, key: string | null | und
 export declare function isBaseModelDisclosed(entry: BaseModelEntry): boolean;
 export declare function baseModelsForBenchmark(benchmark: string): Record<string, BaseModelEntry>;
 export function baseModelFamilies(benchmark: string, systems?: { key: string; underlying?: string | null }[]): Record<string, string>;
+export declare const ROUTINE_UNDISCLOSED_NOTE: string;
+export declare function baseModelVisibleNote(entry: BaseModelEntry): string | null;
+export type BaseModelFootnote = { key: string; n: number; label: string; note: string };
+export declare function baseModelFootnotes(benchmark: string, keys: readonly string[]): { notes: BaseModelFootnote[]; index: Map<string, number> };

@@ -425,7 +425,7 @@ export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, costFa
   </figure>;
 }
 
-export function JevBubbleCharts({ points, costLimit, latencyCap, costFactor = 2, latencyFactor = 2, referenceName, benchName = 'JevBench', scoreKind = 'official', officialCaps = false }: { points: JevBubblePoint[]; costLimit: number; latencyCap?: number; costFactor?: number; latencyFactor?: number; referenceName: string; benchName?: string; scoreKind?: 'v15' | 'official'; officialCaps?: boolean }) {
+export function JevBubbleCharts({ points, costLimit, latencyCap, costFactor = 2, latencyFactor = 2, referenceName, benchName = 'JevBench', scoreKind = 'official', officialCaps = false, scopeLabel }: { points: JevBubblePoint[]; costLimit: number; latencyCap?: number; costFactor?: number; latencyFactor?: number; referenceName: string; benchName?: string; scoreKind?: 'v15' | 'official'; officialCaps?: boolean; scopeLabel?: string }) {
   const visibleKeys = useJevV15VisibleKeys(points.map((point) => point.key));
   const [weights, setWeights] = useState<JevWeights>(OFFICIAL_WEIGHTS);
   const [showOutside, setShowOutside] = useState(false);
@@ -454,7 +454,7 @@ export function JevBubbleCharts({ points, costLimit, latencyCap, costFactor = 2,
   const visible = useMemo(() => showOutside ? filteredPoints : filteredPoints.filter((p) => p.inClass), [filteredPoints, showOutside]);
   const types = jevLegendTypes(filteredPoints.map((p) => p.cls));
   return <section id="jev-bubbles" className="mt-8 scroll-mt-6" aria-labelledby="jev-bubbles-title" data-bh-jev-bubbles>
-    <h2 id="jev-bubbles-title" className="text-xl font-semibold">Capability against cost and speed</h2>
+    <h2 id="jev-bubbles-title" className="text-xl font-semibold">Capability against cost and speed{scopeLabel && ` (${scopeLabel})`}</h2>
     <p className="bh-muted mt-1 max-w-4xl text-sm">Jev-class systems are shown by default. {officialCaps && <>These charts use the official 2× caps. </>}Bubble size follows {customScore ? 'the custom composite from the weight sliders' : `the official ${benchName} Score`}; official rank stays unchanged. The five most capable Jev-class systems are labelled.</p>
     <label className="mt-3 flex min-h-10 w-fit cursor-pointer items-center gap-2 text-sm">
       <input type="checkbox" checked={showOutside} onChange={(e) => { setShowOutside(e.target.checked); setActive(null); setPinned(false); }} data-bh-jev-bubble-show-outside />

@@ -14,7 +14,8 @@ import { withFieldNames } from './jevFieldNames';
 import { imageJevSystemPath, imageJevSourceUrl } from '../lib/imagejev-system-links.mjs';
 import { jevSourceUrl } from './jevSystemLinks';
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
-import { BaseModelDisplay, type BaseModelBenchmark } from './BaseModelDisplay';
+import { BaseModelDisplay, BaseModelFootnotes, type BaseModelBenchmark } from './BaseModelDisplay';
+import { baseModelFootnotes } from '../lib/jev-base-model.mjs';
 import { useJevV15VisibleKeys } from './useJevV15VisibleKeys';
 
 // CR-151 (Florian 25 Sep 2026): the score chart and the axes table become readable in more than one way. Axis cells are
@@ -226,7 +227,7 @@ const GENERAL_LLM = 'llm-baseline';
 
 export type JevFairness = { leadName: string; topName: string; leadInt: number; topInt: number; leadsOn: string[] } | null;
 
-export function JevScoreChart({ revision, rows: officialRows, newLabel, fairness, approvedNote = null, tieNote = null, capabilityHref, presets = [], compactMobile = false, scoreKind = 'v14', methodLink, benchName = 'JevBench', scoreLabel, costHref = '#jev-costs', systemAnchorPrefix, benchmark = 'jevbench' }: { revision: string; rows: JevBoardViewRow[]; rankedCount: number; newLabel: string | null; fairness: JevFairness; approvedNote?: string | null; tieNote?: string | null; capabilityHref: string | null; presets?: JevPreset[]; compactMobile?: boolean; scoreKind?: 'v14' | 'v15'; methodLink?: { href: string; label: string }; benchName?: string; scoreLabel?: string; costHref?: string; systemAnchorPrefix?: string; benchmark?: BaseModelBenchmark }) {
+export function JevScoreChart({ revision, rows: officialRows, newLabel, fairness, approvedNote = null, tieNote = null, capabilityHref, presets = [], compactMobile = false, scoreKind = 'v14', methodLink, benchName = 'JevBench', scoreLabel, costHref = '#jev-costs', systemAnchorPrefix, benchmark = 'jevbench', capabilityLabel = 'Capability ↑', headline = false }: { capabilityLabel?: string; headline?: boolean; revision: string; rows: JevBoardViewRow[]; rankedCount: number; newLabel: string | null; fairness: JevFairness; approvedNote?: string | null; tieNote?: string | null; capabilityHref: string | null; presets?: JevPreset[]; compactMobile?: boolean; scoreKind?: 'v14' | 'v15'; methodLink?: { href: string; label: string }; benchName?: string; scoreLabel?: string; costHref?: string; systemAnchorPrefix?: string; benchmark?: BaseModelBenchmark }) {
   // Florian 25 Sep 2026: weight sliders. Equal weights are the official score; any other mix re-scores every row with
   // the same formula and re-sorts by it, clearly marked as not the official ranking.
   // CR-205: scoreKind 'v15' re-scores with the v1.5 composite — its low-axis gates apply even at weight 0.
@@ -300,6 +301,9 @@ export function JevScoreChart({ revision, rows: officialRows, newLabel, fairness
     window.history.replaceState(window.history.state, '', url.toString());
   };
 
+  // v1.7.1 (Florian 6 Oct 2026): rows keep a one-line base-model label; long provenance notes are numbered footnotes below.
+  const baseNotes = useMemo(() => baseModelFootnotes(benchmark, rows.map((r) => r.key)), [benchmark, rows]);
+  const baseNames = useMemo(() => new Map(rows.map((r) => [r.key, shortName(r.display)])), [rows]);
   const top = shown.slice(0, CHART_TOP);
   const rest = shown.slice(CHART_TOP);
   // Two configurations can share a short name (GPT-6 Luna and its low-effort setting); those rows keep the full name.
@@ -309,12 +313,12 @@ export function JevScoreChart({ revision, rows: officialRows, newLabel, fairness
   const officialOverall = !custom && view === 'overall';
   const showViewRank = !officialOverall || sort.key !== 'rank' || sort.dir !== 'asc';
   const viewRanks = new Map(shown.map((row, index) => [row.key, index + 1]));
-  const bar = (row: JevBoardViewRow) => <JevScoreBar key={row.key} row={row} viewRank={showViewRank ? viewRanks.get(row.key) : undefined} metric={metric} heat={heat} isNew={row.isNew} name={(collide.get(shortName(row.display)) ?? 0) > 1 ? row.display : undefined} ci={officialOverall ? row.ci ?? null : null} alternative={jevBoardAlternative(row, rows, weights, rescore)} benchmark={benchmark} pageHref={systemAnchorPrefix ? `${systemAnchorPrefix}${row.key}` : undefined} gate={gates.get(row.key) ?? null} />;
+  const bar = (row: JevBoardViewRow) => <JevScoreBar key={row.key} row={row} viewRank={showViewRank ? viewRanks.get(row.key) : undefined} metric={metric} heat={heat} isNew={row.isNew} name={(collide.get(shortName(row.display)) ?? 0) > 1 ? row.display : undefined} ci={officialOverall ? row.ci ?? null : null} alternative={jevBoardAlternative(row, rows, weights, rescore)} benchmark={benchmark} pageHref={systemAnchorPrefix ? `${systemAnchorPrefix}${row.key}` : undefined} gate={gates.get(row.key) ?? null} baseNote={baseNotes.index.get(row.key)} />;
   const status = `${shown.length} of ${rows.length} systems, sorted by ${SORT_LABEL[sort.key]}, ${dirWords(sort)}.`;
 
   return <figure className="bh-panel mt-6 p-4 sm:p-5" data-bh-jev14-chart data-bh-jev14-view={view} data-bh-jev14-compact={compactMobile ? '1' : undefined} aria-labelledby="jev14-chart-title">
     {/* F-193 (main, 25 Sep): on the live board a phone hides the chart eyebrow and tightens spacing. */}
-    <p className="bh-eyebrow" data-bh-jev14-chart-eyebrow>{benchName} {revision}</p>
+    <p className="bh-eyebrow" data-bh-jev14-chart-eyebrow>{benchName} {revision}{headline && ' · headline'}</p>
     <h2 id="jev14-chart-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">{scoreLabel ?? `${benchName} Composite Score`}: {visibleRankedCount} ranked systems</h2>
     <p className="bh-muted mt-1 text-sm">{custom ? <span className="bh-jevc-notdefault mr-2">Custom weights</span> : <span className="bh-jevc-official mr-2">Official</span>}· four axes 0–100, {custom ? 'your weights' : 'equal-weight'} harmonic mean · <a href={changesLink.href} className="text-accent underline">{changesLink.label}</a></p>
     <JevWeightSliders position="above" weights={weights} setWeights={setWeights} presets={presets} gatesAlways={scoreKind === 'v15'} benchName={benchName} gateSummary={gateSummary} />
@@ -324,7 +328,7 @@ export function JevScoreChart({ revision, rows: officialRows, newLabel, fairness
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5" role="group" aria-label="View the field by">
         <span className="text-sm font-semibold">View by:</span>
         {VIEWS.map(([v, label]) => <button key={v} type="button" className="bh-viewby-btn" aria-pressed={view === v} onClick={() => choose(v)} data-bh-jev-view={v} {...(v === 'intelligence' ? { 'data-bh-jev14-sort-intelligence': '' } : {})}>{label}</button>)}
-        {capabilityHref && <a className="bh-viewby-btn is-jump" href={capabilityHref} data-bh-jev-view="capability" title="Back to the Capability ranking at the top of the page">Capability ↑</a>}
+        {capabilityHref && <a className="bh-viewby-btn is-jump" href={capabilityHref} data-bh-jev-view="capability" title="Jump to the Capability ranking">{capabilityLabel}</a>}
       </div>
       {/* CR-152 put the release's approved top-five sentence (artifact.top_five_note) above the chart; CR-151 shows it
           verbatim beside the switch it points to. The computed sentence is the fallback for releases without one. */}
@@ -371,6 +375,7 @@ export function JevScoreChart({ revision, rows: officialRows, newLabel, fairness
       <summary className="cursor-pointer text-sm font-semibold text-accent">{isFiltered(filters) || hidingLlms ? `Show all ${shown.length} matching systems` : `Show all ${rows.length} systems (${rest.filter((r) => r.ranked).length} more ranked, ${rest.filter((r) => !r.ranked).length} more not ranked)`}</summary>
       <ol className="mt-2.5 space-y-2.5">{rest.map(bar)}</ol>
     </details>}
+    <BaseModelFootnotes benchmark={benchmark} notes={baseNotes.notes} names={baseNames} />
     <div className="mt-2 hidden grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_21rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
       <span /><span /><span className="bh-muted flex justify-between tabular"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span></span>
     </div>

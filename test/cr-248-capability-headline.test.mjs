@@ -54,7 +54,8 @@ test('CR-248: Spearman averages tied ranks and ignores missing pairs', () => {
 test('CR-248: generic headline renders JevBench Capability Score by default and separate accessible bars', () => {
   const source = read('../components/JevCapabilityRanking.tsx');
   assert.match(source, /benchName = 'JevBench'/);
-  assert.match(source, /\{benchName\} Capability Score<\/h2>/);
+  // CR-292 v1.7.1: split boards append their scope, e.g. "(open weights)"; the default heading is unchanged.
+  assert.match(source, /\{benchName\} Capability Score\{scopeLabel && ` \(\$\{scopeLabel\}\)`\}<\/h2>/);
   assert.match(source, /classLabel = 'Jev-class'/); assert.match(source, /referenceLabel = 'Jev'/);
   assert.match(source, /TrafficLightBar kind="cost"/); assert.match(source, /TrafficLightBar kind="latency"/);
   assert.match(source, /data-bh-tl-cost=/); assert.match(source, /data-bh-tl-latency=/); assert.match(source, /role="img"/);
