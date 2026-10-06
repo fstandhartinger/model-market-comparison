@@ -20,3 +20,5 @@ export function jevApiRoster<S extends ScopeRow & { ranked?: boolean; rank?: num
   previousSystems?: readonly (ScopeRow & { display: string; listing?: string; not_ranked_because?: string | null; jevbench_score?: number | null })[],
   previousRevision?: string | null,
 ): { ranked: S[]; variants: S[]; carried: C[]; listed: JevApiListedRow[] };
+export const JEV_INTERLEAVED_LISTINGS: ReadonlySet<string>;
+export function jevScopeDisplayOrder<T extends { ranked?: boolean; rank?: number | null; jevbench_score?: number | null }>(rows: readonly T[]): T[];
