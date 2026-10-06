@@ -42,7 +42,9 @@ export const dollars = (value: number | null | undefined) => value == null ? 'â€
 export const shortName = (value: string) => value.split(' (')[0].split(', formerly')[0];
 export const apiExplanation = "API â€” the operator's endpoint received sealed item text, without answers.";
 export const typeVar = (cls: string) => ({ '--jev-t': `var(${jevTypeVarName(cls)})` }) as CSSProperties;
-export const NOT_RANKED: Record<string, string> = { honorable_mention: 'honorable mention', partial: 'partial run', reference: 'reference', api_offering: 'API offering' };
+export const NOT_RANKED: Record<string, string> = { honorable_mention: 'honorable mention', partial: 'partial run', reference: 'reference', api_offering: 'API offering',
+  // v1.7.5: API board public-set rows before the full sealed re-run.
+  preliminary: 'preliminary', pending: 'pending' };
 
 // ---- Heat shading: each column shaded by where a value sits between the column's weakest and strongest system ----
 

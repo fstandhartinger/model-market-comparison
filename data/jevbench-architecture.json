@@ -3525,6 +3525,21 @@
           "quant": null
         },
         "note": "Excluded historical run of the same decoder with reversed option order; no ranked score is changed."
+      },
+      "fastino-glide": {
+        "arch": "closed-api",
+        "evidence": [
+          {
+            "url": "https://docs.fastino.ai/llms-full.txt",
+            "kind": "vendor-docs",
+            "fact": "Fastino documents fastino/GLiDE as a hosted decision model behind POST /v1/systemone (40,000-token context, USD 0.15 per 1M input); no evaluated weights are published."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
       }
     },
     "imagejevbench": {

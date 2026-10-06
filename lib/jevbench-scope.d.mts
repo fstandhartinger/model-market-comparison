@@ -22,3 +22,7 @@ export function jevApiRoster<S extends ScopeRow & { ranked?: boolean; rank?: num
 ): { ranked: S[]; variants: S[]; carried: C[]; listed: JevApiListedRow[] };
 export const JEV_INTERLEAVED_LISTINGS: ReadonlySet<string>;
 export function jevScopeDisplayOrder<T extends { ranked?: boolean; rank?: number | null; jevbench_score?: number | null }>(rows: readonly T[]): T[];
+export const JEV_PRELIMINARY_LISTING: string;
+export const JEV_PENDING_LISTING: string;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function jevApiPreliminaryRows(publicSet: unknown, meta: ReadonlyMap<string, any>): { prelim: any[]; pending: any[] };
