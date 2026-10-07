@@ -21,6 +21,7 @@ import { JevApiOfferingsToggle } from './JevApiOfferingsToggle';
 import { JevGpuCostCalculator } from './JevGpuCostCalculator';
 import { JEV_PENDING_LISTING, JEV_PRELIMINARY_LISTING, JEV_REFERENCE_KEY, JEV_SCOPE_LISTING, jevApiPreliminaryRows, jevApiRoster, jevScopeDisplayOrder, type JevApiListedRow, type JevScope } from '../lib/jevbench-scope.mjs';
 import { NOT_RANKED } from './JevBoardShared';
+import { apiRerunCells } from '../lib/jevbench-api-rerun-cells.mjs';
 import apiPublicSet from '../data/jevbench-api-public-set.json';
 import apiA4 from '../data/jevbench-api-a4-equated.json';
 
@@ -34,6 +35,7 @@ const sec = (v: number | null | undefined) => v == null ? '—' : `${v.toFixed(2
 const short = (display: string) => display.replace(/\s*\(.*\)\s*$/, '');
 // Review 6 Oct 2026: variants share a short name ("GPT-6 Luna", "wity-1"); texts that list systems by name keep the full display for those.
 const nameLabel = (display: string, all: ReadonlyArray<{ display: string }>) => all.filter((x) => short(x.display) === short(display)).length > 1 ? display : short(display);
+const API_CATEGORY_POOLS = [...new Set(Object.values(apiRerunCells.systems as Record<string, { category_pools: string }>).map((r) => r.category_pools))].sort().join('; ');
 const A4_OFFSETS = (apiA4 as { a4_offsets: { I: number; C: number } }).a4_offsets;
 const A4_ROWS = (apiA4 as { rows: Array<{ key: string; listing: string; n_rows: number }> }).rows.length;
 const A4_RANKED = (apiA4 as { rows: Array<{ key: string; listing: string; n_rows: number }> }).rows.filter((r) => r.listing === 'ranked').length;
@@ -95,7 +97,7 @@ function LanguageView({ a, categories, hiddenApi, scope }: { scope: JevScope; a:
       <tbody>{systems.map((s, i) => <Fragment key={s.key}>
         {(s.listing as string) === 'wrapper' && (systems[i - 1]?.listing as string) !== 'wrapper' && <tr {...apiRowProps(s.key, hiddenApi)}><th colSpan={1 + (en ? 1 : 0) + langs.length} className="p-2 pt-4" scope="colgroup">Wrappers (listed, never ranked)</th></tr>}
         <tr data-bh-jev16-language-row={s.key} className="border-t border-line" {...apiRowProps(s.key, hiddenApi)}>
-        <th scope="row" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5 font-normal"><span className="block w-44 whitespace-normal sm:w-auto sm:whitespace-nowrap">{short(s.display)}<span className="bh-muted"> · {laneTag(s)}</span><span className="bh-thin-tag ml-1" title="Measured item pools used for these language cells" data-bh-jev16-cell-coverage={coverageOf(categories, s.key)}>{coverageOf(categories, s.key)}</span></span></th>
+        <th scope="row" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5 font-normal"><span className="block w-44 whitespace-normal sm:w-auto sm:whitespace-nowrap">{nameLabel(s.display, systems)}<span className="bh-muted"> · {laneTag(s)}</span><span className="bh-thin-tag ml-1" title="Measured item pools used for these language cells" data-bh-jev16-cell-coverage={coverageOf(categories, s.key)}>{coverageOf(categories, s.key)}</span></span></th>
         {[...(en ? [en] : []), ...langs].map((l) => {
           const c = categories.systems[s.key]?.languages?.[l.key];
           if (!c || c.n < minN) {
@@ -136,7 +138,7 @@ function DatedCarry({ carry, hiddenApi }: { carry: JevV16Carry; hiddenApi: Reado
 
 // v1.7.0 (Florian, 5 Oct 2026): open-weights board on /jev-models, API-provider board on /jev-models/api.
 export const JEV_BOARD_REVISIONS: { version: string; date: string; text: string }[] = [
-  { version: 'v1.7.17', date: '2026-10-07', text: `Languages now includes every measured row on both boards, with wrappers listed below the models. ${languagePoolNote(JEVBENCH_LANGUAGE_META)} L3 is API-facing by design and never reused in a headline draw.` },
+  { version: 'v1.7.17', date: '2026-10-07', text: `Languages now includes every measured row on both boards, with wrappers listed below the models. ${languagePoolNote(JEVBENCH_LANGUAGE_META)} ${Object.values(apiRerunCells.systems as Record<string, { coverage: string; category_pools?: string }>).filter((r) => /^(A4|A5)\+P/.test(r.coverage) && r.category_pools?.includes("L1+L2")).length} API rows re-run on A4/A5 have answered L1/L2 supplements; their category radars count those items too. L3 coverage will follow when measured.` },
   { version: 'v1.7.16', date: '2026-10-07', text: 'Compare view, API board: subject-topic and use-case radars for OpenAI Decisions, the 17 API offerings re-run on A4 ∪ P and the classifier.dev wrapper. Their 600 new sealed items were labelled with the same recipe as every other item (Winnow-12B Q8 on our own GPU pod; uc1 items keep their authoring use case); values are raw and rest on 600 items (300 sealed), so more categories fall under the 30-item spoke minimum and are listed below the radar. Each of these rows also gets a breakdown section on its own page. Every live row now has all breakdown views, and a release check keeps it that way. No score, axis, cost or rank changed.' },
   { version: 'v1.7.15', date: '2026-10-07', text: 'Compare view, API board: OpenAI Decisions, the 17 API offerings re-run on A4 ∪ P and the classifier.dev wrapper now show competence per request type and per tier on the open and sealed items they answered (300 open + 300 sealed: fewer sealed items than the full set, so wider uncertainty; the view note says so), and Liquid AI d1 shows its subject-topic and use-case radars. Values are raw, computed from the stored per-item results with the same scorer as every other row. Subject-topic and use-case radars for the 600-item rows follow once their 600 new sealed items are labelled. No score, axis, cost or rank changed.' },
   { version: 'v1.7.14', date: '2026-10-07', text: 'Open-weights board: H2O-Lightning-4B v1.1 (H2O.ai) and Kahn1 4B (Okura66), two Qwen3.5-4B fine-tunes submitted as JevBench add-requests, measured on the same sealed v1.6 pool with the same scorer, G_med and cost basis as every other row (addendum a8 of v1.6.1). Both are priced with labelled cost estimates like every other Qwen3.5-4B row; Kahn1\'s server reports no token usage, so its estimate is our own count of its input tokens (three passes per decision, its server default). Both rank inside the Jev-class caps: H2O-Lightning-4B at #3 of the Capability Score and #1 of the Composite, Kahn1 at #23 of the Capability Score. No published score, axis or cost changed.' },
@@ -514,7 +516,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
       {scope === 'api' && <ApiPublicSet measured={measuredKeys} />}
       {scope === 'api' && <JevV15FilterPanel />}
       <JevCompareV15 rows={compareRows} openDecisions={a.v16.counts.P} sealedDecisions={a.v16.counts.S} categories={jevbenchCategoryView(a.revision, compareRows.map((r) => r.key), { supplement: Boolean(categories.supplement) })} />
-      <p className="bh-muted mt-2 max-w-4xl text-xs" data-bh-jev16-radar-note>{categories.lane_note} {categories.supplement && 'Rows tagged S+P in the language table below have not answered the supplements, so their radars cover fewer items. '}{a.revision === 'v1.6.1' ? `Sealed counts in the compare view refer to the sealed set S (${a.v16.counts.S.toLocaleString('en-US')}), which hosted APIs now answer in full.` : `Sealed counts in the compare view refer to self-hosted systems (S ${a.v16.counts.S.toLocaleString('en-US')}); hosted APIs answered A ${a.v16.counts.A}.`}</p>
+      <p className="bh-muted mt-2 max-w-4xl text-xs" data-bh-jev16-radar-note>{categories.supplement ? <>Category radars count each answered item once from the pools named under each radar. API overlay rows use {API_CATEGORY_POOLS}. Raw and unequated; cells under {categories.min_n} answered items are omitted. Per-type and tier radars retain each row&apos;s original measurement pools: A4/A5 rows have 300 open plus 300 sealed items; full-set rows have S {a.v16.counts.S.toLocaleString('en-US')} plus P {a.v16.counts.P}.</> : <>{categories.lane_note} Sealed counts refer to self-hosted S ({a.v16.counts.S.toLocaleString('en-US')}); API rows use their original measured sealed basis.</>}</p>
       <LanguageView scope={scope} a={a} categories={categories} hiddenApi={hiddenApi} />
       <NoulAndGate a={a} hiddenApi={hiddenApi} />
       <JevV15AllDataGrid

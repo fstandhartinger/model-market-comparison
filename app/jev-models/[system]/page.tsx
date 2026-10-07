@@ -124,7 +124,7 @@ function A4Breakdowns({ s, page }: { s: any; page: A4Page }) {
   const pct = (v: number | null | undefined) => (v == null ? '—' : v.toFixed(1));
   return <section className="bh-panel mt-6 p-5" data-bh-jev-a4-breakdowns>
     <h2 className="font-semibold">Breakdowns (not part of the score)</h2>
-    <p className="bh-muted mt-1 text-sm">Chance-corrected competence (0 = chance, 100 = perfect) on {sets}. Raw values, not equated. <Link className="text-accent underline" href={`/jev-models/api?compare=${encodeURIComponent(s.key)},jev-1.13.0#compare`}>Radars against Jev</Link>.</p>
+    <p className="bh-muted mt-1 text-sm">Chance-corrected competence (0 = chance, 100 = perfect) on {sets}. Raw values, not equated. Category cells use {cats?.categoryPools?.[s.key] ?? sets}; per-type/tier cells use the original basis above. <Link className="text-accent underline" href={`/jev-models/api?compare=${encodeURIComponent(s.key)},jev-1.13.0#compare`}>Radars against Jev</Link>.</p>
     {types.length > 0 && <div className="bh-table-wrap mt-3"><table className="bh-table text-sm" data-bh-jev-a4-types>
       <thead><tr><th scope="col">Request type</th><th scope="col">Open</th><th scope="col">Sealed</th></tr></thead>
       <tbody>{types.map((t) => <tr key={t}><th scope="row" className="font-normal capitalize">{t}</th><td className="tabular">{pct(split[`open|${t}`]?.cc)}</td><td className="tabular">{pct(split[`sealed|${t}`]?.cc)}</td></tr>)}</tbody>

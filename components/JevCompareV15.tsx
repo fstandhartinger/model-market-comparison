@@ -159,7 +159,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
   const openTierSpokes = ccSpokes(pair, TIERS, (r, k) => r.tierCc.open[k as "easy"] ?? null);
   const sealedTierSpokes = ccSpokes(pair, TIERS, (r, k) => r.tierCc.sealed[k as "easy"] ?? null);
   // CR-331: a row measured on a 600-item API set (A4 u P / A5 u P) has 300 sealed items instead of the full sealed set.
-  const subsetNote = pair.filter((r) => r.subset).map((r) => ` ${r.name} was measured on ${r.subset!.tag} ∪ P (${r.subset!.nItems ?? 600} items: 300 open + 300 sealed), so its sealed and category values rest on fewer items and carry wider uncertainty.`).join("");
+  const subsetNote = pair.filter((r) => r.subset).map((r) => ` ${r.name} was measured on ${r.subset!.tag} ∪ P (${r.subset!.nItems ?? 600} items: 300 open + 300 sealed), so its sealed per-type and tier values rest on fewer items and carry wider uncertainty.`).join("");
   const missingFor = (spokes: Spoke[]) => pair.filter((_, k) => spokes.every((sp) => sp.values[k] === null)).map((r) => r.name);
   const status = (r: JevCompareV15Row) => r.rank !== null ? `#${r.rank}` : ({ honorable_mention: "honorable mention", partial: "partial run", unpriced: "unpriced", addendum: "roster addendum", unranked: "not ranked", api_offering: "API offering, ranked on the API leaderboard", reference: "reference, not ranked" } as Record<string, string>)[r.listing] ?? `${r.listing}, not ranked`;
   // CR-290 (Florian 5 Oct 2026): say in the caption which system has gaps and why, instead of letting a partial series
@@ -188,7 +188,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
     const spokes = categorySpokes(pair, dim, categories!);
     const absent = pair.filter((r) => !categories!.systems[r.key]);
     return { key: `cat-${dim.key}`, title: dim.title, dim,
-      note: `${dim.note} Chance-corrected competence per category (0 = chance, 100 = perfect), ${categories!.splitNames.join(" and ")} items pooled; only categories with at least ${categories!.radarMinN} items are spokes, smaller ones are listed below. Hover a category for its definition and item count.`,
+      note: `${dim.note} Chance-corrected competence per category (0 = chance, 100 = perfect), ${pair.map((r) => `${r.name}: ${categories!.categoryPools?.[r.key] ?? categories!.splitNames.join("+")}`).join("; ")} items pooled; only categories with at least ${categories!.radarMinN} items are spokes, smaller ones are listed below. Hover a category for its definition and item count.`,
       spokes, missing: absent.map((r) => `${r.name}: ${categories!.missing[r.key] ?? "no per-category values"}`), size: { w: 500, h: 400, r: 112 } };
   });
   const figures: { key: string; title: string; note: string; spokes: Spoke[]; missing: string[]; size: { w: number; h: number; r: number }; dim?: CategoryDim }[] = [
@@ -221,7 +221,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
           {missingFor(f.spokes).length < 2
             ? <Radar spokes={f.spokes} series={s} size={f.size} id={`jev15-radar-${f.key}`} title={`Radar: ${f.title.toLowerCase()}, two systems`} desc={desc(f.title, f.spokes)} />
             : <p className="bh-muted mt-3 text-[12px]">Neither selected system has a published series for this view.</p>}
-          <figcaption className="bh-muted text-[12px]">{f.note}{f.key !== "axes" && subsetNote && <span data-bh-jev15-subset-note>{subsetNote}</span>}{gapNote(f)}</figcaption>
+          <figcaption className="bh-muted text-[12px]">{f.note}{f.key !== "axes" && !f.dim && subsetNote && <span data-bh-jev15-subset-note>{subsetNote}</span>}{gapNote(f)}</figcaption>
           {f.dim && categories && <LowSampleTable dim={f.dim} cats={categories} pair={pair} />}
           {f.dim && categories && <CategoryKey dim={f.dim} cats={categories} />}
         </figure>)}
