@@ -177,14 +177,26 @@ test('identity map: exact existing configurations; measured joins visible; self-
   // then withholds the score rows still keyed to it (reconcileScoreModelIds: "model no longer in the catalog"), and the
   // reviewed map entry keeps its rule so the row joins again if the configuration returns. Such an entry is accepted only
   // when every source row it covers is exactly one of the rows this build withheld, and none of them is published.
+  // 2026-10-07 (CR-322): that withheld state lasts only until the next score ingest. The ingest reads the catalog the
+  // model already left, so — as scripts/ingest-benchmark-scores.mjs documents — the map entry then leaves the row
+  // unmatched (model_id null), and the validator would reject a scores.json row keyed to an unknown model. Every source
+  // row of such an entry must therefore be in exactly one of the two states: withheld under the old id and unpublished,
+  // or unmatched with no reviewed join, published (if at all) only as an unjoined row.
   const scores = json('data/raw/benchmarks/scores.json');
   const withheldRows = new Set(reconcileScoreModelIds(scores, dataset.models).withheld);
   const leftCatalog = (entry) => {
     if (catalog.has(entry.model_id)) return false;
     const rows = scores.observations.filter((x) => x.benchmark_id === entry.benchmark_id && x.subject.source_id === entry.source_id);
-    assert.ok(rows.length && rows.every((x) => x.subject.model_id === entry.model_id && withheldRows.has(x.id)), `${entry.model_id} exists`);
-    assert.ok(!observations.some((x) => x.benchmark_id === entry.benchmark_id && x.subject.source_id === entry.source_id),
-      `${entry.source_id}: a row withheld for a configuration that left the catalog is not published`);
+    const withheld = (x) => x.subject.model_id === entry.model_id && withheldRows.has(x.id);
+    const unmatched = (x) => x.subject.model_id === null && !/^Reviewed identity map /.test(x.join_note ?? '');
+    assert.ok(rows.length && rows.every((x) => withheld(x) || unmatched(x)), `${entry.model_id} exists`);
+    const published = observations.filter((x) => x.benchmark_id === entry.benchmark_id && x.subject.source_id === entry.source_id);
+    for (const x of published) {
+      assert.ok(!withheldRows.has(x.id), `${entry.source_id}: a row withheld for a configuration that left the catalog is not published`);
+      assert.ok(rows.some((r) => r.id === x.id && unmatched(r)), `${x.id}: only a row the ingest left unmatched may be published`);
+      assert.equal(x.subject.model_id, null, `${x.id}: a configuration that left the catalog is never joined`);
+      assert.doesNotMatch(x.join_note ?? '', /^Reviewed identity map /, `${x.id}: an unmatched row carries no reviewed join`);
+    }
     return true;
   };
   // CR-173 (2026-09-26): FrontierCode 1.1 Extended (the full 150-task set) and its cost twin are reviewed vendor boards too;
