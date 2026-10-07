@@ -34,6 +34,8 @@ test('gate 2: every live row has subject-topic and use-case cells in the compare
   // Point release 1 of CR-331: rows whose sealed items are still being labelled carry labels_missing and an explicit
   // pending text; nothing else may be missing. Point release 2 empties this list.
   const pending = Object.entries(apiRerunCells.systems).filter(([, r]) => r.labels_missing).map(([k]) => k).sort();
+  // Release 2 (v1.7.16): every overlay row is labelled; a pending row may never ship again.
+  assert.deepEqual(pending, []);
   assert.deepEqual(Object.keys(view.missing).sort(), pending);
   for (const k of pending) assert.equal(view.missing[k], PENDING_TEXT);
   const dims = view.dims.map((d) => d.key);

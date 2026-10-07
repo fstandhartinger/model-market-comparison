@@ -19,6 +19,7 @@ import { jevSystemKeyFromSlug, jevSystemPath, jevSystemSlug } from '../../../lib
 import { isJevbenchV16ExcludedKey } from '../../../lib/jevbench-v16-public-scope.mjs';
 import { readJevbenchSeoData } from '../../../lib/jevbench-seo.mjs';
 import { readJevbenchA4ModelPages } from '../../../lib/jevbench-a4-model-pages.mjs';
+import { jevbenchCategoryView } from '../../../lib/jevbench-categories.mjs';
 import { jevIntentMetadata } from '../../../lib/jevbench-seo-metadata';
 import { JevComparisonPage } from '../../../components/JevComparisonPage';
 import { breadcrumbJsonLd, JevReleaseStamp, one as seoOne, usdPerThousand, costBasisLabel } from '../../../components/JevBenchSeoBlocks';
@@ -112,6 +113,31 @@ type A4Page = { row: unknown; ranked: boolean; compositeRank: number | null; cap
   nRanked: number; nCapability: number; nItems: number; measuredOn: string; round: string; offsets: { I: number; C: number }; subset?: string; full: boolean };
 const a4CostLabel = (kind: string | undefined) => kind === 'estimate' ? 'estimated' : 'public tariff';
 // Review 6 Oct 2026: the 17 API rows re-run on A4 ∪ P (v1.7.7) show the API-board figures; the older figure moves to a labelled block.
+// CR-331 (Florian 7 Oct 2026): the breakdowns behind the compare-view radars, on the overlay row's own page. Raw values
+// (never equated) on the items the row answered; the same cells feed /jev-models/api#compare.
+function A4Breakdowns({ s, page }: { s: any; page: A4Page }) {
+  const split = s.intelligence?.per_type_split ?? {};
+  const types = (['choice', 'noul', 'score'] as const).filter((t) => split[`open|${t}`] || split[`sealed|${t}`]);
+  const cats = jevbenchCategoryView('v1.6.1', [s.key], { supplement: true });
+  const cell = cats?.systems[s.key];
+  const sets = page.full ? `the full set (${page.nItems} items)` : `${page.subset} ∪ P (${page.nItems} items: 300 open + 300 sealed; fewer sealed items than the full set, so wider uncertainty)`;
+  const pct = (v: number | null | undefined) => (v == null ? '—' : v.toFixed(1));
+  return <section className="bh-panel mt-6 p-5" data-bh-jev-a4-breakdowns>
+    <h2 className="font-semibold">Breakdowns (not part of the score)</h2>
+    <p className="bh-muted mt-1 text-sm">Chance-corrected competence (0 = chance, 100 = perfect) on {sets}. Raw values, not equated. <Link className="text-accent underline" href={`/jev-models/api?compare=${encodeURIComponent(s.key)},jev-1.13.0#compare`}>Radars against Jev</Link>.</p>
+    {types.length > 0 && <div className="bh-table-wrap mt-3"><table className="bh-table text-sm" data-bh-jev-a4-types>
+      <thead><tr><th scope="col">Request type</th><th scope="col">Open</th><th scope="col">Sealed</th></tr></thead>
+      <tbody>{types.map((t) => <tr key={t}><th scope="row" className="font-normal capitalize">{t}</th><td className="tabular">{pct(split[`open|${t}`]?.cc)}</td><td className="tabular">{pct(split[`sealed|${t}`]?.cc)}</td></tr>)}</tbody>
+    </table></div>}
+    {cats && (cell ? <div className="mt-3 grid gap-4 sm:grid-cols-2">{cats.dims.map((d) => {
+      const rows = d.cats.filter((c) => !['other'].includes(c.key) && cell[d.key]?.[c.key]);
+      return <div key={d.key} data-bh-jev-a4-dim={d.key}><h3 className="text-sm font-semibold">{d.title}</h3>
+        <table className="bh-table mt-1 text-sm"><tbody>{rows.map((c) => { const [v, n] = cell[d.key][c.key]; return <tr key={c.key}><th scope="row" className="font-normal" title={c.covers}>{c.short}</th><td className="tabular">{pct(v)}</td><td className="bh-muted tabular">n={n}{n < cats.radarMinN ? ' †' : ''}</td></tr>; })}</tbody></table></div>;
+    })}<p className="bh-muted text-xs sm:col-span-2">Cells need at least {cats.minN} answered items; † fewer than {cats.radarMinN} (indicative only, listed below the radar in the compare view).</p></div>
+      : <p className="bh-muted mt-3 text-sm">{cats.missing[s.key] ?? 'No per-category values are published for this system.'}</p>)}
+  </section>;
+}
+
 function A4System({ data, page, previous }: { data: Awaited<ReturnType<typeof readJevbenchSeoData>>; page: A4Page; previous?: SeoRow }) {
   const s = page.row as any;
   const url = `${SITE_URL}${jevSystemPath(s.key)}`;
@@ -137,6 +163,7 @@ function A4System({ data, page, previous }: { data: Awaited<ReturnType<typeof re
       <p className="mt-3">p50 latency: {seoOne(s.speed?.p50_s_adjusted ?? s.speed?.p50_s_raw)} s</p>
       <p className="bh-muted">{s.speed?.adjustment ?? 'Latency adjustment not stated'}</p>
     </section>
+    <A4Breakdowns s={s} page={page} />
     {previous && <section className="bh-panel mt-6 p-5" data-bh-jev-a4-previous><h2 className="font-semibold">Previous measurement (v1.5.x, not comparable)</h2>
       <p>Capability {seoOne(previous.capability)} · composite {seoOne(previous.jevbench_score)} · cost {usdPerThousand(previous.cost?.usd_per_1000)} ({costBasisLabel(previous.cost?.kind)})</p>
       <p className="bh-muted mt-2">Last measured {previous.last_measured_on ?? 'date not published'}, measurement release {previous.measurement_revision}. Older method and scale; the current figures above replace it.</p></section>}
