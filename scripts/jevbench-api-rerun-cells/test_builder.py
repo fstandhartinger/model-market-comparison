@@ -24,15 +24,29 @@ class UnionChecks(unittest.TestCase):
                 rd = root / name
                 run = rd / 'runs/api/x.jsonl'
                 run.parent.mkdir(parents=True)
-                run.write_text('{}\n')
+                run.write_text('{"task_id": "t1"}\n')
                 Path(str(run) + '.exposure.json').write_text('{}')
-                pools.append((name, rd, {}))
+                pools.append((name, rd, {'t1': None}))
             with patch.object(B, 'answered', side_effect=[[(p, 9), (l, 2)], [(l, 3)], [(c, 4)]]):
                 items, tags, receipts = B.category_union('x', {}, 'A4', [(p, 1)], pools,
                                                         {'public': ('x', 'u'), 'new': ('x', 'u'), 'c1': ('x', 'u')})
             self.assertEqual([(g.item_id, s) for g, s in items], [('public', 1), ('new', 2), ('c1', 4)])
             self.assertEqual(tags, 'A4+P+L1+L3+C1')
             self.assertEqual(len(receipts), 3)
+
+    def test_incomplete_supplement_run_is_skipped(self):
+        p = SimpleNamespace(item_id='public', split='open')
+        with tempfile.TemporaryDirectory() as tmp:
+            rd = Path(tmp) / 'L1'
+            run = rd / 'runs/api/x.jsonl'
+            run.parent.mkdir(parents=True)
+            run.write_text('{"task_id": "t1"}\n')
+            Path(str(run) + '.exposure.json').write_text('{}')
+            with patch.object(B, 'answered', side_effect=AssertionError('must not score an incomplete run')):
+                items, tags, receipts = B.category_union('x', {}, 'A4', [(p, 1)], [('L1', rd, {'t1': None, 't2': None})],
+                                                        {'public': ('x', 'u')})
+            self.assertEqual(tags, 'A4+P')
+            self.assertEqual(receipts, [])
 
     def test_missing_receipt_refuses_existing_run(self):
         with tempfile.TemporaryDirectory() as tmp:

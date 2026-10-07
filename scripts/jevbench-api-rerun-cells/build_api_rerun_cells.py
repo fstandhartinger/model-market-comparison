@@ -90,6 +90,8 @@ def category_union(key, meta, basis, base_items, pools, labels):
         receipt = Path(str(run) + '.exposure.json')
         assert receipt.is_file(), f'{key}/{name}: missing exposure receipt'
         json.loads(receipt.read_text())
+        if len({r.get('task_id') or r.get('id') for r in V.read_rows(run)}) != len(gold):
+            continue  # CR-334: an incomplete supplement run (in progress or aborted) is not used
         run_hash = sha(run)
         extra = answered(gold, key, meta, run)
         assert sha(run) == run_hash, f'{key}/{name}: run changed during scoring; rebuild snapshot'

@@ -1,6 +1,6 @@
 {
   "benchmark": "JevBench",
-  "board_revision": "v1.7.12",
+  "board_revision": "v1.7.17",
   "kind": "language-cells",
   "languages": [
     {
@@ -477,7 +477,7 @@
     "S": 1200
   },
   "revision": "v1.6.1",
-  "source_sha256": "2b50d617494da14e2b62a7e78ef8949cc0ba5dd290a9b045015c608cf03f8a63",
+  "source_sha256": "ad3ab42e995e5969162d373b6448d108a4c80029e8f717b22aba04ec0407f7ee",
   "systems": {
     "autojev-27b": {
       "coverage": "S+P+L1+L2",
@@ -584,46 +584,104 @@
       "sealed_basis": "S"
     },
     "bespoke-nimble-9b-v3": {
-      "coverage": "S+P",
+      "coverage": "S+P+L1+L2",
       "languages": {
+        "ar": {
+          "competence": 54.73,
+          "n": 40
+        },
+        "cs": {
+          "competence": 34.23,
+          "n": 30
+        },
         "da": {
-          "competence": 25.58,
-          "n": 22
+          "competence": 33.04,
+          "n": 43
         },
         "de": {
-          "competence": 68.26,
-          "n": 27
+          "competence": 70.9,
+          "n": 30
+        },
+        "el": {
+          "competence": 42.15,
+          "n": 30
         },
         "en": {
-          "competence": 58.46,
-          "n": 1160
+          "competence": 57.94,
+          "n": 1174
         },
         "es": {
           "competence": 76.84,
           "n": 31
         },
+        "fi": {
+          "competence": 26.6,
+          "n": 32
+        },
         "fr": {
-          "competence": 77.71,
-          "n": 16
+          "competence": 67.46,
+          "n": 30
+        },
+        "hi": {
+          "competence": 38.4,
+          "n": 30
+        },
+        "id": {
+          "competence": 67.5,
+          "n": 32
         },
         "it": {
-          "competence": 40.63,
-          "n": 17
+          "competence": 51.3,
+          "n": 31
         },
         "ja": {
-          "competence": 26.56,
-          "n": 17
+          "competence": 42.68,
+          "n": 30
+        },
+        "ko": {
+          "competence": 58.02,
+          "n": 30
+        },
+        "mixed": {
+          "competence": 95.67,
+          "n": 30
+        },
+        "nl": {
+          "competence": 37.76,
+          "n": 34
+        },
+        "no": {
+          "competence": 0.0,
+          "n": 31
         },
         "pl": {
           "competence": 55.03,
           "n": 31
         },
         "pt": {
-          "competence": 75.71,
-          "n": 29
+          "competence": 75.84,
+          "n": 32
+        },
+        "sv": {
+          "competence": 1.75,
+          "n": 32
+        },
+        "tr": {
+          "competence": 57.51,
+          "n": 31
+        },
+        "uk": {
+          "competence": 39.89,
+          "n": 32
+        },
+        "zh": {
+          "competence": 71.56,
+          "n": 41
         }
       },
       "pool_ok": {
+        "L1": 354,
+        "L2": 33,
         "P": 297,
         "S": 1180
       },
@@ -2287,24 +2345,24 @@
       "coverage": "A4+P+L1+L2",
       "languages": {
         "ar": {
-          "competence": 12.17,
-          "n": 28
+          "competence": 0.0,
+          "n": 34
         },
         "cs": {
           "competence": 0.0,
-          "n": 18
+          "n": 22
         },
         "da": {
-          "competence": 29.49,
-          "n": 21
+          "competence": 30.82,
+          "n": 25
         },
         "de": {
           "competence": 4.86,
           "n": 18
         },
         "el": {
-          "competence": 0.0,
-          "n": 19
+          "competence": 13.98,
+          "n": 26
         },
         "en": {
           "competence": 0.0,
@@ -2312,19 +2370,23 @@
         },
         "fi": {
           "competence": 0.0,
-          "n": 22
+          "n": 26
         },
         "fr": {
-          "competence": 21.8,
-          "n": 17
+          "competence": 21.49,
+          "n": 18
         },
         "hi": {
-          "competence": 8.29,
-          "n": 20
+          "competence": 2.24,
+          "n": 22
         },
         "id": {
           "competence": 0.0,
-          "n": 25
+          "n": 29
+        },
+        "it": {
+          "competence": 14.26,
+          "n": 18
         },
         "ja": {
           "competence": 0.0,
@@ -2332,40 +2394,40 @@
         },
         "ko": {
           "competence": 0.0,
-          "n": 19
+          "n": 22
         },
         "mixed": {
-          "competence": 22.67,
-          "n": 18
+          "competence": 28.36,
+          "n": 20
         },
         "nl": {
           "competence": 0.0,
-          "n": 22
+          "n": 26
         },
         "no": {
           "competence": 0.0,
-          "n": 24
+          "n": 26
         },
         "sv": {
           "competence": 0.0,
-          "n": 21
+          "n": 25
         },
         "tr": {
-          "competence": 9.86,
-          "n": 20
+          "competence": 2.24,
+          "n": 22
         },
         "uk": {
           "competence": 0.0,
-          "n": 21
+          "n": 24
         },
         "zh": {
           "competence": 0.0,
-          "n": 33
+          "n": 35
         }
       },
       "pool_ok": {
         "A4": 294,
-        "L1": 296,
+        "L1": 354,
         "L2": 33,
         "P": 297
       },
@@ -4341,46 +4403,104 @@
       "sealed_basis": "S"
     },
     "jev-27b-autotrust": {
-      "coverage": "S+P",
+      "coverage": "S+P+L1+L2",
       "languages": {
+        "ar": {
+          "competence": 49.69,
+          "n": 40
+        },
+        "cs": {
+          "competence": 28.0,
+          "n": 30
+        },
         "da": {
-          "competence": 39.18,
-          "n": 22
+          "competence": 29.89,
+          "n": 43
         },
         "de": {
-          "competence": 74.91,
-          "n": 27
+          "competence": 76.87,
+          "n": 30
+        },
+        "el": {
+          "competence": 58.76,
+          "n": 30
         },
         "en": {
-          "competence": 58.35,
-          "n": 1160
+          "competence": 58.1,
+          "n": 1174
         },
         "es": {
           "competence": 76.78,
           "n": 31
         },
+        "fi": {
+          "competence": 24.0,
+          "n": 32
+        },
         "fr": {
-          "competence": 77.83,
-          "n": 16
+          "competence": 64.62,
+          "n": 30
+        },
+        "hi": {
+          "competence": 62.55,
+          "n": 30
+        },
+        "id": {
+          "competence": 49.27,
+          "n": 32
         },
         "it": {
-          "competence": 46.37,
-          "n": 17
+          "competence": 62.3,
+          "n": 31
         },
         "ja": {
-          "competence": 35.91,
-          "n": 17
+          "competence": 37.86,
+          "n": 30
+        },
+        "ko": {
+          "competence": 44.72,
+          "n": 30
+        },
+        "mixed": {
+          "competence": 78.6,
+          "n": 30
+        },
+        "nl": {
+          "competence": 33.78,
+          "n": 34
+        },
+        "no": {
+          "competence": 17.83,
+          "n": 31
         },
         "pl": {
           "competence": 34.2,
           "n": 31
         },
         "pt": {
-          "competence": 67.18,
-          "n": 29
+          "competence": 68.98,
+          "n": 32
+        },
+        "sv": {
+          "competence": 25.87,
+          "n": 32
+        },
+        "tr": {
+          "competence": 62.16,
+          "n": 31
+        },
+        "uk": {
+          "competence": 62.21,
+          "n": 32
+        },
+        "zh": {
+          "competence": 59.2,
+          "n": 41
         }
       },
       "pool_ok": {
+        "L1": 354,
+        "L2": 33,
         "P": 297,
         "S": 1180
       },
