@@ -62,10 +62,11 @@ function coverageOf(categories: JevV16Categories, key: string) {
   return (categories.systems[key] as unknown as { coverage?: string }).coverage ?? 'S+P';
 }
 
-function heat(competence: number, lowN: boolean): CSSProperties {
+// CR-320: a low-n cell's shade is dimmed in CSS ([data-bh-heat-low-n]); opacity here also faded the number below 4.5:1.
+function heat(competence: number): CSSProperties {
   const t = Math.max(0, Math.min(1, competence / 100));
   // Site heat scale (.bh-heat in globals.css reads --h in 0..1).
-  return { ['--h' as string]: t.toFixed(3), opacity: lowN ? 0.6 : 1 } as CSSProperties;
+  return { ['--h' as string]: t.toFixed(3) } as CSSProperties;
 }
 
 function LanguageView({ a, categories, hiddenApi }: { a: JevV16ReleaseArtifact; categories: JevV16Categories; hiddenApi: ReadonlySet<string> }) {
@@ -98,7 +99,7 @@ function LanguageView({ a, categories, hiddenApi }: { a: JevV16ReleaseArtifact; 
             return <td key={l.key} className="p-1.5 text-center bh-muted" title={`${l.label}: ${status}`} aria-label={`${l.label}: ${status}`} data-bh-jev16-language-suppressed>{!c ? '—' : '·'}</td>;
           }
           const lowN = c.n < 30;
-          return <td key={l.key} className="bh-heat p-1.5 text-center" style={heat(c.competence, lowN)} title={`${l.label}: ${c.competence.toFixed(1)} over ${c.n} items${lowN ? ' (low n)' : ''}`}>{c.competence.toFixed(0)}{lowN && <sup className="ml-0.5 text-[10px]" aria-label="low n: fewer than 30 answered items">†</sup>}</td>;
+          return <td key={l.key} className="bh-heat p-1.5 text-center" style={heat(c.competence)} data-bh-heat-low-n={lowN ? '' : undefined} title={`${l.label}: ${c.competence.toFixed(1)} over ${c.n} items${lowN ? ' (low n)' : ''}`}>{c.competence.toFixed(0)}{lowN && <sup className="ml-0.5 text-[10px]" aria-label="low n: fewer than 30 answered items">†</sup>}</td>;
         })}
       </tr>)}</tbody>
     </table></div>
