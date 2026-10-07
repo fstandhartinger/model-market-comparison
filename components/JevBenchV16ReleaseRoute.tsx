@@ -7,6 +7,7 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { withJevCellSupplement, JEVBENCH_CELL_SUPPLEMENT_ARTIFACT } from '../lib/jevbench-categories.mjs';
+import { withApiRerunSplits } from '../lib/jevbench-api-rerun-cells.mjs';
 import { JevBenchV16Board, JEV_BOARD_REVISIONS } from './JevBenchV16Board';
 import { JevBenchReleaseVersionNav } from './JevBenchReleaseVersionNav';
 
@@ -23,7 +24,7 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
   // v1.7.7 (Florian 6 Oct 2026, Part 12b): on the live boards the API lane's full A4 u P re-run rows (equated) join the
   // release as measured API offerings and leave the dated carry; archived release pages show the release as published.
   const a4Meta = new Map<string, unknown>([...previous.artifact.systems, ...releaseCarry.rows].map((r) => [r.key, r]));
-  const merged = scope === 'all' || release_.revision !== 'v1.6.1' ? release_ : jevWithApiA4Rows(release_, apiA4, a4Meta) as typeof release_;
+  const merged = scope === 'all' || release_.revision !== 'v1.6.1' ? release_ : jevWithApiA4Rows(release_, withApiRerunSplits(apiA4), a4Meta) as typeof release_;
   // v1.7.12 (Part B): the live boards show language/use-case cells with the sealed L1/L2 supplements; archived pages stay as published.
   const categories = merged === release_ ? releaseCategories : withJevCellSupplement(releaseCategories);
   const cellSupplementSha256 = merged === release_ ? undefined : createHash('sha256').update(await readFile(path.join(process.cwd(), JEVBENCH_CELL_SUPPLEMENT_ARTIFACT))).digest('hex');

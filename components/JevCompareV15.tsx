@@ -19,7 +19,7 @@ import { radarShape } from "../lib/radar-shape.mjs";
 // and test/cr-257-category-radars.test.mjs.
 
 export type JevCompareV15Row = {
-  key: string; name: string; cls: string; arch?: string; archBadges?: JevArchBadges; rank: number | null; listing: string; score: number | null; repo?: string | null; hosted?: boolean;
+  key: string; name: string; cls: string; arch?: string; archBadges?: JevArchBadges; rank: number | null; listing: string; score: number | null; repo?: string | null; hosted?: boolean; subset?: { tag: string; nItems: number | null } | null;
   axes: Record<"intelligence" | "calibration" | "speed" | "cost", number | null> | null;
   typeCc: Record<"choice" | "noul" | "score", { open: number | null; sealed: number | null }>;
   tierCc: {
@@ -158,6 +158,8 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
   });
   const openTierSpokes = ccSpokes(pair, TIERS, (r, k) => r.tierCc.open[k as "easy"] ?? null);
   const sealedTierSpokes = ccSpokes(pair, TIERS, (r, k) => r.tierCc.sealed[k as "easy"] ?? null);
+  // CR-331: a row measured on a 600-item API set (A4 u P / A5 u P) has 300 sealed items instead of the full sealed set.
+  const subsetNote = pair.filter((r) => r.subset).map((r) => ` ${r.name} was measured on ${r.subset!.tag} ∪ P (${r.subset!.nItems ?? 600} items: 300 open + 300 sealed), so its sealed and category values rest on fewer items and carry wider uncertainty.`).join("");
   const missingFor = (spokes: Spoke[]) => pair.filter((_, k) => spokes.every((sp) => sp.values[k] === null)).map((r) => r.name);
   const status = (r: JevCompareV15Row) => r.rank !== null ? `#${r.rank}` : ({ honorable_mention: "honorable mention", partial: "partial run", unpriced: "unpriced", addendum: "roster addendum", unranked: "not ranked", api_offering: "API offering, ranked on the API leaderboard", reference: "reference, not ranked" } as Record<string, string>)[r.listing] ?? `${r.listing}, not ranked`;
   // CR-290 (Florian 5 Oct 2026): say in the caption which system has gaps and why, instead of letting a partial series
@@ -219,7 +221,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
           {missingFor(f.spokes).length < 2
             ? <Radar spokes={f.spokes} series={s} size={f.size} id={`jev15-radar-${f.key}`} title={`Radar: ${f.title.toLowerCase()}, two systems`} desc={desc(f.title, f.spokes)} />
             : <p className="bh-muted mt-3 text-[12px]">Neither selected system has a published series for this view.</p>}
-          <figcaption className="bh-muted text-[12px]">{f.note}{gapNote(f)}</figcaption>
+          <figcaption className="bh-muted text-[12px]">{f.note}{f.key !== "axes" && subsetNote && <span data-bh-jev15-subset-note>{subsetNote}</span>}{gapNote(f)}</figcaption>
           {f.dim && categories && <LowSampleTable dim={f.dim} cats={categories} pair={pair} />}
           {f.dim && categories && <CategoryKey dim={f.dim} cats={categories} />}
         </figure>)}
