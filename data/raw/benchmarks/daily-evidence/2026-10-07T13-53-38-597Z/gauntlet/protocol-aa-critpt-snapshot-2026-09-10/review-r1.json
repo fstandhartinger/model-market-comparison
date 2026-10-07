@@ -1,0 +1,18 @@
+{
+  "artifact_id": "protocol-aa-critpt-snapshot-2026-09-10",
+  "artifact_sha256": "6e77ec904452223e12ec52956a816445114f894e7614c020a57baaefac4ac850",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["aa-critpt::snapshot-2026-09-10", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute owner hash, transport or qualification checks; row sha256 40791429f56c112a5b4a553cba659ffb8470d7453f9147142ee1b2124cab1013 and all source hashes are accepted as bound values, which is a limitation of this read-only role, not missing numeric evidence.",
+    "SOURCE 1 is a bounded excerpt; the CritPt passage appears complete (it runs from 'CritPt Description' through the grading-API note and ends where the Harvey LAB-AA passage begins), but I cannot inspect unexcerpted regions of the page.",
+    "The row's metric wording 'pass@1 averaged over five repeats' interprets the protocol's 'We run 5 repeats for each question with pass@1 scoring' plus 'official CritPt grading server ... correctness'; it is consistent but not a verbatim quote.",
+    "The version date 2026-09-10 is Benchmark Heaven vocabulary no maintainer would state; the supplied evidence was retrieved 2026-10-07 and the current protocol still matches the frozen identity, metric and description, so no contradiction arises from the date gap.",
+    "The protocol page states no numeric scale and no score direction; per criterion c1 the served-value summary in SOURCE 3 (569 finite values, lowest 0, highest 0.322857142857143) is admissible for scale and agrees with unit 'fraction' and range [0,1]; higher_better:true is implied by correctness scoring and is not textually stated, which is expected and not a gap."
+  ],
+  "missing_evidence": []
+}

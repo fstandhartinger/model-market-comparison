@@ -1,0 +1,18 @@
+{
+  "artifact_id": "protocol-aa-terminal-bench-hard-74221fb",
+  "artifact_sha256": "d24c7635c44b55db7292af4136c6122ae19b00854bf7d7bd125417a5e60f55fa",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["aa-terminal-bench-hard::74221fb", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row version '74221fb' matches the protocol's dataset commit 74221fb; c1 metric (pass@1 averaged over 3 repeats, success = all tests pass), 44-task hard subset, Terminus 2 harness, and units/scale all match SOURCE 1 and SOURCE 3 (served values 0 to 0.659 fall within stated range [0,1]).",
+    "c2: SOURCE 1 explicitly says 'Superseded by Terminal-Bench 2.1, which we use going forward', supporting status 'retained' (board retired going forward, values kept) and superseded_by 'aa-terminal-bench::2.1' (our registry id for the named successor; successor's version settled by its own entry, not required here). The page publishes a release identifier (commit 74221fb), supporting version_status 'published'.",
+    "SOURCE 2 shows 48 newly null values and no added or changed values; this does not contradict 'retained' and the summary cannot establish retained, but no affirmative activity evidence is needed for a retained row.",
+    "I cannot execute hash or transport/qualification checks; owner-computed hashes and the producer receipt are taken as provided. Rows are bound by the owner-supplied per-row sha256.",
+    "The protocol text does not restate unit or range; per c1 the SOURCE 3 value-scale summary is admissible solely for the unit/range judgement, and it is consistent with unit 'fraction' and range [0,1]."
+  ],
+  "missing_evidence": []
+}

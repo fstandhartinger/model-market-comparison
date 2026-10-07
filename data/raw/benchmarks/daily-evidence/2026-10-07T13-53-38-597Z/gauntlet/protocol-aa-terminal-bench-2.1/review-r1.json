@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-aa-terminal-bench-2.1",
+  "artifact_sha256": "7989fc4a30583fb3d768784c48ebcc5b52b14b81cb9a4d970c01eafadfaafb61",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["aa-terminal-bench::2.1", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row hash 4fc32500672e05da33f0f81360bcfe5e1bed3a2a07d53f3f6ce9ddfb8db89a27 and owner transport/qualification checks are owner-executed; I cannot recompute or verify them myself.",
+    "c1 identity continuity: SOURCE 1 confirms Terminal-Bench 2.1 with 89 tasks, Terminus 2 harness, pass@1 averaged over 3 repeats, matching the row's metric and description; the excerpt is bounded but sufficient for these fields.",
+    "c1 unit/range: served scale summary (240 values, min 0, max ~0.9139) is consistent with the row's fraction/[0,1] claim; scale cannot establish metric meaning, so the scoring text is judged only against the protocol excerpt.",
+    "c2 status active is supported independently by the protocol (superseded in Intelligence Index v4.3 but still part of Coding Index) and by the activity summary (6 newly added values, nonzero added/changed count is affirmative evidence for active only). Supersession does not contradict active per the independent-judgment rule.",
+    "c2 superseded_by 'aa-terminal-bench::4.0' is our registry id for the protocol-named successor Terminal-Bench 4.0; the successor's own version is out of scope for this row per c2.",
+    "c2 version_status 'published' is supported: the page publishes the release identifier 2.1 (leaderboard URL terminal-bench/2.1), and the row's version copies it.",
+    "higher_better is not explicitly stated in the protocol excerpt; it is a plausible convention claim and not contradicted by the served scale, so treated as acceptable rather than a mismatch."
+  ],
+  "missing_evidence": []
+}
