@@ -1,0 +1,2831 @@
+{
+ "benchmark": "JevBench",
+ "revision": "v1.6.1",
+ "kind": "api-rerun-cells",
+ "equated_rows_sha256": "9e988af4421f980d53dc2cfff4e155282110124f90d2b5b520d50892b1816c80",
+ "supplement_sha256": "804d2ad1838431220d03239dbe765f921ec455456ca65267fb8e85987167f957",
+ "metric": "Chance-corrected competence (0 = chance, 100 = perfect), per request type then the mean over the types present.",
+ "min_n": 15,
+ "note": "Breakdowns for the API rows re-run on a 600-item set (A4 u P or A5 u P: 300 sealed + 300 public) and for full-set API rows added after the v1.6.1 category artifact. Same scorer, labels recipe and minimum cell size as every other row; values are raw (never equated). A 600-item row has only 300 sealed items, so its cells cover fewer items and carry wider uncertainty; compare them with care.",
+ "labelling": "Topic and use case per item by Winnow-12B Q8 on our own GPU pod (the r13 recipe used for every v1.6 item; uc1 items keep their authoring use case); the A4/A5 sealed items were labelled with the same recipe (r15). Family and language are authoring metadata.",
+ "labels_sha256": {
+  "labels-r13-ruled.jsonl": "b9fefbd3154f92ef4129bf7fb1270e0be8a19802ec9c6b6d04f13d4a12707881"
+ },
+ "sources": {
+  "a4_round": "score-a4-2",
+  "a5_round": "score-a5-1",
+  "full_rows_round": "score-d1prov-2"
+ },
+ "systems": {
+  "classifier-dev-fast": {
+   "coverage": "A4+P",
+   "n_items": 600,
+   "answered_ok": 591,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 79.2975,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 73.5766,
+      "judge": 76.269,
+      "standard": 84.9309
+     }
+    },
+    "open|noul": {
+     "cc": 57.942,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 56.5217,
+      "judge": 40.0,
+      "standard": 66.6667
+     }
+    },
+    "open|score": {
+     "cc": 66.1139,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 72.6364,
+      "hard": 64.3333,
+      "judge": 75.5254,
+      "standard": 52.2963
+     }
+    },
+    "sealed|choice": {
+     "cc": 74.0974,
+     "n": {
+      "easy": 23,
+      "hard": 66,
+      "judge": 28,
+      "standard": 33
+     },
+     "tiers": {
+      "easy": 83.3179,
+      "hard": 68.9755,
+      "judge": 68.3417,
+      "standard": 88.3646
+     }
+    },
+    "sealed|noul": {
+     "cc": 47.1925,
+     "n": {
+      "easy": 17,
+      "hard": 22,
+      "judge": 20,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 76.4706,
+      "hard": 36.3636,
+      "judge": 50.0,
+      "standard": 50.0
+     }
+    },
+    "sealed|score": {
+     "cc": 50.894,
+     "n": {
+      "easy": 11,
+      "hard": 32,
+      "judge": 11,
+      "standard": 21
+     },
+     "tiers": {
+      "easy": 79.6944,
+      "hard": 31.0482,
+      "judge": 48.7273,
+      "standard": 79.4356
+     }
+    }
+   },
+   "families": {
+    "calibration_gen": {
+     "n": 28,
+     "competence": 45.41
+    },
+    "composite_gen": {
+     "n": 33,
+     "competence": 60.4
+    },
+    "fairness": {
+     "n": 27,
+     "competence": 99.83
+    },
+    "jaggedness": {
+     "n": 51,
+     "competence": 13.97
+    },
+    "llm_router": {
+     "n": 184,
+     "competence": 84.91
+    },
+    "multilingual": {
+     "n": 96,
+     "competence": 53.81
+    },
+    "negation_pair_gen": {
+     "n": 36,
+     "competence": 85.2
+    },
+    "option_order": {
+     "n": 27,
+     "competence": 100.0
+    },
+    "perturb_pair": {
+     "n": 34,
+     "competence": 92.44
+    },
+    "usecase": {
+     "n": 69,
+     "competence": 46.16
+    }
+   },
+   "labels_missing": 300
+  },
+  "instinct": {
+   "coverage": "A4+P",
+   "n_items": 600,
+   "answered_ok": 591,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 76.6889,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 92.2162,
+      "hard": 69.8018,
+      "judge": 80.2241,
+      "standard": 77.3964
+     }
+    },
+    "open|noul": {
+     "cc": 22.4893,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 85.7143,
+      "hard": 21.7391,
+      "judge": 10.0,
+      "standard": 11.1111
+     }
+    },
+    "open|score": {
+     "cc": 51.5916,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 61.5514,
+      "hard": 43.6306,
+      "judge": 66.2661,
+      "standard": 40.522
+     }
+    },
+    "sealed|choice": {
+     "cc": 69.9997,
+     "n": {
+      "easy": 23,
+      "hard": 66,
+      "judge": 28,
+      "standard": 33
+     },
+     "tiers": {
+      "easy": 88.8786,
+      "hard": 61.2194,
+      "judge": 68.3417,
+      "standard": 80.6076
+     }
+    },
+    "sealed|noul": {
+     "cc": 14.607,
+     "n": {
+      "easy": 17,
+      "hard": 22,
+      "judge": 20,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 64.7059,
+      "hard": 9.0909,
+      "judge": -10.0,
+      "standard": 37.5
+     }
+    },
+    "sealed|score": {
+     "cc": 35.8134,
+     "n": {
+      "easy": 11,
+      "hard": 32,
+      "judge": 11,
+      "standard": 21
+     },
+     "tiers": {
+      "easy": 62.6995,
+      "hard": 22.3344,
+      "judge": 24.153,
+      "standard": 66.8189
+     }
+    }
+   },
+   "families": {
+    "calibration_gen": {
+     "n": 28,
+     "competence": 16.57
+    },
+    "composite_gen": {
+     "n": 33,
+     "competence": 17.51
+    },
+    "fairness": {
+     "n": 27,
+     "competence": 71.18
+    },
+    "jaggedness": {
+     "n": 51,
+     "competence": 5.83
+    },
+    "llm_router": {
+     "n": 184,
+     "competence": 80.42
+    },
+    "multilingual": {
+     "n": 96,
+     "competence": 44.05
+    },
+    "negation_pair_gen": {
+     "n": 36,
+     "competence": 25.68
+    },
+    "option_order": {
+     "n": 27,
+     "competence": 95.24
+    },
+    "perturb_pair": {
+     "n": 34,
+     "competence": 76.56
+    },
+    "usecase": {
+     "n": 69,
+     "competence": 28.48
+    }
+   },
+   "labels_missing": 300
+  },
+  "vansa-3.4": {
+   "coverage": "A4+P",
+   "n_items": 600,
+   "answered_ok": 591,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 62.8658,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 84.4324,
+      "hard": 56.5901,
+      "judge": 64.4034,
+      "standard": 62.3273
+     }
+    },
+    "open|noul": {
+     "cc": 32.7674,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 57.1429,
+      "hard": 56.5217,
+      "judge": 0.0,
+      "standard": 22.2222
+     }
+    },
+    "open|score": {
+     "cc": 34.447,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 54.8152,
+      "hard": 36.7794,
+      "judge": 37.1156,
+      "standard": 15.5952
+     }
+    },
+    "sealed|choice": {
+     "cc": 60.2137,
+     "n": {
+      "easy": 23,
+      "hard": 66,
+      "judge": 28,
+      "standard": 33
+     },
+     "tiers": {
+      "easy": 66.6358,
+      "hard": 45.7072,
+      "judge": 63.8191,
+      "standard": 80.6076
+     }
+    },
+    "sealed|noul": {
+     "cc": 21.254,
+     "n": {
+      "easy": 17,
+      "hard": 22,
+      "judge": 20,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 41.1765,
+      "hard": 9.0909,
+      "judge": 20.0,
+      "standard": 37.5
+     }
+    },
+    "sealed|score": {
+     "cc": 18.1016,
+     "n": {
+      "easy": 11,
+      "hard": 32,
+      "judge": 11,
+      "standard": 21
+     },
+     "tiers": {
+      "easy": 53.2589,
+      "hard": -0.6743,
+      "judge": 4.7068,
+      "standard": 58.1668
+     }
+    }
+   },
+   "families": {
+    "calibration_gen": {
+     "n": 28,
+     "competence": 2.96
+    },
+    "composite_gen": {
+     "n": 33,
+     "competence": 0.93
+    },
+    "fairness": {
+     "n": 27,
+     "competence": 89.36
+    },
+    "jaggedness": {
+     "n": 51,
+     "competence": 0.0
+    },
+    "llm_router": {
+     "n": 184,
+     "competence": 67.26
+    },
+    "multilingual": {
+     "n": 96,
+     "competence": 34.75
+    },
+    "negation_pair_gen": {
+     "n": 36,
+     "competence": 37.62
+    },
+    "option_order": {
+     "n": 27,
+     "competence": 80.95
+    },
+    "perturb_pair": {
+     "n": 34,
+     "competence": 75.22
+    },
+    "usecase": {
+     "n": 69,
+     "competence": 27.38
+    }
+   },
+   "labels_missing": 300
+  },
+  "gpt-6-luna-low": {
+   "coverage": "A4+P",
+   "n_items": 600,
+   "answered_ok": 600,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 96.9832,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 96.2252,
+      "judge": 100.0,
+      "standard": 92.4655
+     }
+    },
+    "open|noul": {
+     "cc": 96.3492,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 85.7143,
+      "hard": 100.0,
+      "judge": 100.0,
+      "standard": 88.8889
+     }
+    },
+    "open|score": {
+     "cc": 85.8511,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 87.0909,
+      "hard": 99.6667,
+      "judge": 94.1525,
+      "standard": 45.1481
+     }
+    },
+    "sealed|choice": {
+     "cc": 100.0,
+     "n": {
+      "easy": 23,
+      "hard": 66,
+      "judge": 28,
+      "standard": 33
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 100.0,
+      "judge": 100.0,
+      "standard": 100.0
+     }
+    },
+    "sealed|noul": {
+     "cc": 92.1872,
+     "n": {
+      "easy": 17,
+      "hard": 22,
+      "judge": 20,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 88.2353,
+      "hard": 90.9091,
+      "judge": 90.0,
+      "standard": 100.0
+     }
+    },
+    "sealed|score": {
+     "cc": 92.9195,
+     "n": {
+      "easy": 11,
+      "hard": 32,
+      "judge": 11,
+      "standard": 21
+     },
+     "tiers": {
+      "easy": 97.8611,
+      "hard": 92.7711,
+      "judge": 88.8182,
+      "standard": 96.8976
+     }
+    }
+   },
+   "families": {
+    "calibration_gen": {
+     "n": 28,
+     "competence": 100.0
+    },
+    "composite_gen": {
+     "n": 33,
+     "competence": 100.0
+    },
+    "fairness": {
+     "n": 27,
+     "competence": 100.0
+    },
+    "jaggedness": {
+     "n": 51,
+     "competence": 100.0
+    },
+    "llm_router": {
+     "n": 184,
+     "competence": 90.4
+    },
+    "multilingual": {
+     "n": 96,
+     "competence": 95.55
+    },
+    "negation_pair_gen": {
+     "n": 36,
+     "competence": 95.24
+    },
+    "option_order": {
+     "n": 27,
+     "competence": 100.0
+    },
+    "perturb_pair": {
+     "n": 34,
+     "competence": 100.0
+    },
+    "usecase": {
+     "n": 69,
+     "competence": 98.46
+    }
+   },
+   "labels_missing": 300
+  },
+  "kushal-gemma4-31b-it-autoloops": {
+   "coverage": "A4+P",
+   "n_items": 600,
+   "answered_ok": 591,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 75.1396,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 96.1081,
+      "hard": 71.6892,
+      "judge": 76.269,
+      "standard": 69.8619
+     }
+    },
+    "open|noul": {
+     "cc": 50.0193,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 47.8261,
+      "judge": 40.0,
+      "standard": 44.4444
+     }
+    },
+    "open|score": {
+     "cc": 47.1011,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 67.1922,
+      "hard": 49.5059,
+      "judge": 45.7484,
+      "standard": 34.2749
+     }
+    },
+    "sealed|choice": {
+     "cc": 80.2748,
+     "n": {
+      "easy": 23,
+      "hard": 66,
+      "judge": 28,
+      "standard": 33
+     },
+     "tiers": {
+      "easy": 88.8786,
+      "hard": 78.6707,
+      "judge": 81.9095,
+      "standard": 76.7292
+     }
+    },
+    "sealed|noul": {
+     "cc": 39.9198,
+     "n": {
+      "easy": 17,
+      "hard": 22,
+      "judge": 20,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 76.4706,
+      "hard": 18.1818,
+      "judge": 50.0,
+      "standard": 50.0
+     }
+    },
+    "sealed|score": {
+     "cc": 40.6891,
+     "n": {
+      "easy": 11,
+      "hard": 32,
+      "judge": 11,
+      "standard": 21
+     },
+     "tiers": {
+      "easy": 81.6366,
+      "hard": 8.7267,
+      "judge": 56.0954,
+      "standard": 61.0306
+     }
+    }
+   },
+   "families": {
+    "calibration_gen": {
+     "n": 28,
+     "competence": 66.8
+    },
+    "composite_gen": {
+     "n": 33,
+     "competence": 29.69
+    },
+    "fairness": {
+     "n": 27,
+     "competence": 94.25
+    },
+    "jaggedness": {
+     "n": 51,
+     "competence": 21.19
+    },
+    "llm_router": {
+     "n": 184,
+     "competence": 82.12
+    },
+    "multilingual": {
+     "n": 96,
+     "competence": 50.3
+    },
+    "negation_pair_gen": {
+     "n": 36,
+     "competence": 36.06
+    },
+    "option_order": {
+     "n": 27,
+     "competence": 100.0
+    },
+    "perturb_pair": {
+     "n": 34,
+     "competence": 74.51
+    },
+    "usecase": {
+     "n": 69,
+     "competence": 45.83
+    }
+   },
+   "labels_missing": 300
+  },
+  "gpt-6-luna": {
+   "coverage": "A4+P",
+   "n_items": 600,
+   "answered_ok": 596,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 99.245,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 98.1126,
+      "judge": 100.0,
+      "standard": 100.0
+     }
+    },
+    "open|noul": {
+     "cc": 97.1429,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 71.4286,
+      "hard": 100.0,
+      "judge": 100.0,
+      "standard": 100.0
+     }
+    },
+    "open|score": {
+     "cc": 89.716,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 88.4545,
+      "hard": 100.0,
+      "judge": 93.5932,
+      "standard": 63.963
+     }
+    },
+    "sealed|choice": {
+     "cc": 99.2244,
+     "n": {
+      "easy": 23,
+      "hard": 66,
+      "judge": 28,
+      "standard": 33
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 98.061,
+      "judge": 100.0,
+      "standard": 100.0
+     }
+    },
+    "sealed|noul": {
+     "cc": 93.3636,
+     "n": {
+      "easy": 17,
+      "hard": 22,
+      "judge": 20,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 90.9091,
+      "judge": 90.0,
+      "standard": 100.0
+     }
+    },
+    "sealed|score": {
+     "cc": 87.1594,
+     "n": {
+      "easy": 11,
+      "hard": 32,
+      "judge": 11,
+      "standard": 21
+     },
+     "tiers": {
+      "easy": 98.5972,
+      "hard": 78.3133,
+      "judge": 89.5,
+      "standard": 95.622
+     }
+    }
+   },
+   "families": {
+    "calibration_gen": {
+     "n": 28,
+     "competence": 100.0
+    },
+    "composite_gen": {
+     "n": 33,
+     "competence": 100.0
+    },
+    "fairness": {
+     "n": 27,
+     "competence": 100.0
+    },
+    "jaggedness": {
+     "n": 51,
+     "competence": 100.0
+    },
+    "llm_router": {
+     "n": 184,
+     "competence": 93.37
+    },
+    "multilingual": {
+     "n": 96,
+     "competence": 93.55
+    },
+    "negation_pair_gen": {
+     "n": 36,
+     "competence": 100.0
+    },
+    "option_order": {
+     "n": 27,
+     "competence": 100.0
+    },
+    "perturb_pair": {
+     "n": 34,
+     "competence": 100.0
+    },
+    "usecase": {
+     "n": 69,
+     "competence": 99.98
+    }
+   },
+   "labels_missing": 300
+  },
+  "fastino-glide": {
+   "coverage": "A4+P",
+   "n_items": 600,
+   "answered_ok": 591,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 92.7738,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 84.9009,
+      "judge": 96.0448,
+      "standard": 100.0
+     }
+    },
+    "open|noul": {
+     "cc": 34.3685,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 85.7143,
+      "hard": 47.8261,
+      "judge": 0.0,
+      "standard": 33.3333
+     }
+    },
+    "open|score": {
+     "cc": 65.3016,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 78.1513,
+      "hard": 64.5629,
+      "judge": 75.2145,
+      "standard": 45.485
+     }
+    },
+    "sealed|choice": {
+     "cc": 93.9895,
+     "n": {
+      "easy": 23,
+      "hard": 66,
+      "judge": 28,
+      "standard": 33
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 88.3658,
+      "judge": 95.4774,
+      "standard": 100.0
+     }
+    },
+    "sealed|noul": {
+     "cc": 36.4305,
+     "n": {
+      "easy": 17,
+      "hard": 22,
+      "judge": 20,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 52.9412,
+      "hard": 9.0909,
+      "judge": 50.0,
+      "standard": 62.5
+     }
+    },
+    "sealed|score": {
+     "cc": 58.3168,
+     "n": {
+      "easy": 11,
+      "hard": 32,
+      "judge": 11,
+      "standard": 21
+     },
+     "tiers": {
+      "easy": 87.3406,
+      "hard": 37.016,
+      "judge": 63.7483,
+      "standard": 78.2591
+     }
+    }
+   },
+   "families": {
+    "calibration_gen": {
+     "n": 28,
+     "competence": 76.2
+    },
+    "composite_gen": {
+     "n": 33,
+     "competence": 63.75
+    },
+    "fairness": {
+     "n": 27,
+     "competence": 95.96
+    },
+    "jaggedness": {
+     "n": 51,
+     "competence": 23.69
+    },
+    "llm_router": {
+     "n": 184,
+     "competence": 83.35
+    },
+    "multilingual": {
+     "n": 96,
+     "competence": 60.44
+    },
+    "negation_pair_gen": {
+     "n": 36,
+     "competence": 54.2
+    },
+    "option_order": {
+     "n": 27,
+     "competence": 100.0
+    },
+    "perturb_pair": {
+     "n": 34,
+     "competence": 79.53
+    },
+    "usecase": {
+     "n": 69,
+     "competence": 49.53
+    }
+   },
+   "labels_missing": 300
+  },
+  "simplejev-qwen3.6-35b-a3b": {
+   "coverage": "A4+P",
+   "n_items": 600,
+   "answered_ok": 591,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 73.3677,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 80.5405,
+      "hard": 62.2523,
+      "judge": 88.1345,
+      "standard": 69.8619
+     }
+    },
+    "open|noul": {
+     "cc": 55.5473,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 85.7143,
+      "hard": 65.2174,
+      "judge": 40.0,
+      "standard": 44.4444
+     }
+    },
+    "open|score": {
+     "cc": 51.55,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 55.6168,
+      "hard": 57.237,
+      "judge": 65.3065,
+      "standard": 17.5079
+     }
+    },
+    "sealed|choice": {
+     "cc": 60.9118,
+     "n": {
+      "easy": 23,
+      "hard": 66,
+      "judge": 28,
+      "standard": 33
+     },
+     "tiers": {
+      "easy": 83.3179,
+      "hard": 41.8292,
+      "judge": 68.3417,
+      "standard": 76.7292
+     }
+    },
+    "sealed|noul": {
+     "cc": 40.5963,
+     "n": {
+      "easy": 17,
+      "hard": 22,
+      "judge": 20,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 88.2353,
+      "hard": 18.1818,
+      "judge": 40.0,
+      "standard": 62.5
+     }
+    },
+    "sealed|score": {
+     "cc": 40.3111,
+     "n": {
+      "easy": 11,
+      "hard": 32,
+      "judge": 11,
+      "standard": 21
+     },
+     "tiers": {
+      "easy": 59.2125,
+      "hard": 8.1459,
+      "judge": 57.1294,
+      "standard": 69.9633
+     }
+    }
+   },
+   "families": {
+    "calibration_gen": {
+     "n": 28,
+     "competence": 37.8
+    },
+    "composite_gen": {
+     "n": 33,
+     "competence": 5.58
+    },
+    "fairness": {
+     "n": 27,
+     "competence": 96.55
+    },
+    "jaggedness": {
+     "n": 51,
+     "competence": 32.17
+    },
+    "llm_router": {
+     "n": 184,
+     "competence": 81.28
+    },
+    "multilingual": {
+     "n": 96,
+     "competence": 50.29
+    },
+    "negation_pair_gen": {
+     "n": 36,
+     "competence": 60.69
+    },
+    "option_order": {
+     "n": 27,
+     "competence": 61.9
+    },
+    "perturb_pair": {
+     "n": 34,
+     "competence": 72.84
+    },
+    "usecase": {
+     "n": 69,
+     "competence": 46.67
+    }
+   },
+   "labels_missing": 300
+  },
+  "gpt-5.6-luna": {
+   "coverage": "A4+P",
+   "n_items": 600,
+   "answered_ok": 600,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 93.8551,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 94.3378,
+      "judge": 92.0897,
+      "standard": 92.4655
+     }
+    },
+    "open|noul": {
+     "cc": 100.0,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 100.0,
+      "judge": 100.0,
+      "standard": 100.0
+     }
+    },
+    "open|score": {
+     "cc": 79.3051,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 77.1818,
+      "hard": 94.0625,
+      "judge": 83.7819,
+      "standard": 44.137
+     }
+    },
+    "sealed|choice": {
+     "cc": 90.3309,
+     "n": {
+      "easy": 23,
+      "hard": 66,
+      "judge": 28,
+      "standard": 33
+     },
+     "tiers": {
+      "easy": 94.4393,
+      "hard": 84.4878,
+      "judge": 95.4774,
+      "standard": 92.2431
+     }
+    },
+    "sealed|noul": {
+     "cc": 94.6471,
+     "n": {
+      "easy": 17,
+      "hard": 22,
+      "judge": 20,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 76.4706,
+      "hard": 100.0,
+      "judge": 90.0,
+      "standard": 100.0
+     }
+    },
+    "sealed|score": {
+     "cc": 90.8374,
+     "n": {
+      "easy": 11,
+      "hard": 32,
+      "judge": 11,
+      "standard": 21
+     },
+     "tiers": {
+      "easy": 90.2472,
+      "hard": 92.76,
+      "judge": 91.2727,
+      "standard": 86.6341
+     }
+    }
+   },
+   "families": {
+    "calibration_gen": {
+     "n": 28,
+     "competence": 100.0
+    },
+    "composite_gen": {
+     "n": 33,
+     "competence": 82.63
+    },
+    "fairness": {
+     "n": 27,
+     "competence": 100.0
+    },
+    "jaggedness": {
+     "n": 51,
+     "competence": 93.93
+    },
+    "llm_router": {
+     "n": 184,
+     "competence": 84.35
+    },
+    "multilingual": {
+     "n": 96,
+     "competence": 98.82
+    },
+    "negation_pair_gen": {
+     "n": 36,
+     "competence": 92.59
+    },
+    "option_order": {
+     "n": 27,
+     "competence": 100.0
+    },
+    "perturb_pair": {
+     "n": 34,
+     "competence": 97.49
+    },
+    "usecase": {
+     "n": 69,
+     "competence": 89.41
+    }
+   },
+   "labels_missing": 300
+  },
+  "instinct-dual-4b": {
+   "coverage": "A4+P",
+   "n_items": 600,
+   "answered_ok": 600,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 51.7127,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 68.8649,
+      "hard": 45.2658,
+      "judge": 52.5379,
+      "standard": 54.7928
+     }
+    },
+    "open|noul": {
+     "cc": 0.0,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 42.8571,
+      "hard": -4.3478,
+      "judge": -10.0,
+      "standard": -11.1111
+     }
+    },
+    "open|score": {
+     "cc": 27.145,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 58.8556,
+      "hard": 24.9911,
+      "judge": 27.0981,
+      "standard": 15.6677
+     }
+    },
+    "sealed|choice": {
+     "cc": 49.0204,
+     "n": {
+      "easy": 23,
+      "hard": 66,
+      "judge": 28,
+      "standard": 33
+     },
+     "tiers": {
+      "easy": 55.5144,
+      "hard": 43.7682,
+      "judge": 45.7286,
+      "standard": 61.2153
+     }
+    },
+    "sealed|noul": {
+     "cc": 0.0,
+     "n": {
+      "easy": 17,
+      "hard": 22,
+      "judge": 20,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 17.6471,
+      "hard": 9.0909,
+      "judge": -30.0,
+      "standard": 0.0
+     }
+    },
+    "sealed|score": {
+     "cc": 26.7459,
+     "n": {
+      "easy": 11,
+      "hard": 32,
+      "judge": 11,
+      "standard": 21
+     },
+     "tiers": {
+      "easy": 42.7071,
+      "hard": 24.586,
+      "judge": 5.175,
+      "standard": 55.4417
+     }
+    }
+   },
+   "families": {
+    "calibration_gen": {
+     "n": 28,
+     "competence": 0.0
+    },
+    "composite_gen": {
+     "n": 33,
+     "competence": 0.0
+    },
+    "fairness": {
+     "n": 27,
+     "competence": 73.9
+    },
+    "jaggedness": {
+     "n": 51,
+     "competence": 0.0
+    },
+    "llm_router": {
+     "n": 184,
+     "competence": 57.49
+    },
+    "multilingual": {
+     "n": 96,
+     "competence": 14.97
+    },
+    "negation_pair_gen": {
+     "n": 36,
+     "competence": 0.0
+    },
+    "option_order": {
+     "n": 27,
+     "competence": 85.71
+    },
+    "perturb_pair": {
+     "n": 34,
+     "competence": 59.59
+    },
+    "usecase": {
+     "n": 69,
+     "competence": 11.03
+    }
+   },
+   "labels_missing": 300
+  },
+  "gemini-3.1-flash-lite": {
+   "coverage": "A4+P",
+   "n_items": 600,
+   "answered_ok": 599,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 70.9158,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 88.3243,
+      "hard": 73.5766,
+      "judge": 72.3138,
+      "standard": 54.7928
+     }
+    },
+    "open|noul": {
+     "cc": 62.9917,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 85.7143,
+      "hard": 65.2174,
+      "judge": 50.0,
+      "standard": 66.6667
+     }
+    },
+    "open|score": {
+     "cc": 57.7334,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 43.1818,
+      "hard": 58.3333,
+      "judge": 56.0508,
+      "standard": 66.3333
+     }
+    },
+    "sealed|choice": {
+     "cc": 66.1467,
+     "n": {
+      "easy": 23,
+      "hard": 66,
+      "judge": 28,
+      "standard": 33
+     },
+     "tiers": {
+      "easy": 83.3179,
+      "hard": 49.5853,
+      "judge": 72.8643,
+      "standard": 80.6076
+     }
+    },
+    "sealed|noul": {
+     "cc": 56.3289,
+     "n": {
+      "easy": 17,
+      "hard": 22,
+      "judge": 20,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 76.4706,
+      "hard": 45.4545,
+      "judge": 60.0,
+      "standard": 62.5
+     }
+    },
+    "sealed|score": {
+     "cc": 21.8863,
+     "n": {
+      "easy": 11,
+      "hard": 32,
+      "judge": 11,
+      "standard": 21
+     },
+     "tiers": {
+      "easy": 54.2222,
+      "hard": 21.553,
+      "judge": -22.9545,
+      "standard": 73.6463
+     }
+    }
+   },
+   "families": {
+    "calibration_gen": {
+     "n": 28,
+     "competence": 53.65
+    },
+    "composite_gen": {
+     "n": 33,
+     "competence": 33.49
+    },
+    "fairness": {
+     "n": 27,
+     "competence": 96.94
+    },
+    "jaggedness": {
+     "n": 51,
+     "competence": 32.18
+    },
+    "llm_router": {
+     "n": 184,
+     "competence": 79.07
+    },
+    "multilingual": {
+     "n": 96,
+     "competence": 52.27
+    },
+    "negation_pair_gen": {
+     "n": 36,
+     "competence": 75.84
+    },
+    "option_order": {
+     "n": 27,
+     "competence": 100.0
+    },
+    "perturb_pair": {
+     "n": 34,
+     "competence": 79.23
+    },
+    "usecase": {
+     "n": 69,
+     "competence": 34.84
+    }
+   },
+   "labels_missing": 300
+  },
+  "system-one-open": {
+   "coverage": "A4+P",
+   "n_items": 600,
+   "answered_ok": 600,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 56.8437,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 53.2973,
+      "hard": 47.1532,
+      "judge": 72.3138,
+      "standard": 54.7928
+     }
+    },
+    "open|noul": {
+     "cc": 3.8026,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 42.8571,
+      "hard": 4.3478,
+      "judge": 0.0,
+      "standard": -11.1111
+     }
+    },
+    "open|score": {
+     "cc": 23.1119,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 49.1386,
+      "hard": 15.9484,
+      "judge": 27.2824,
+      "standard": 18.1699
+     }
+    },
+    "sealed|choice": {
+     "cc": 47.7778,
+     "n": {
+      "easy": 23,
+      "hard": 66,
+      "judge": 28,
+      "standard": 33
+     },
+     "tiers": {
+      "easy": 72.1965,
+      "hard": 39.8901,
+      "judge": 59.2965,
+      "standard": 34.0659
+     }
+    },
+    "sealed|noul": {
+     "cc": 9.754,
+     "n": {
+      "easy": 17,
+      "hard": 22,
+      "judge": 20,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 41.1765,
+      "hard": 9.0909,
+      "judge": -10.0,
+      "standard": 25.0
+     }
+    },
+    "sealed|score": {
+     "cc": 10.9164,
+     "n": {
+      "easy": 11,
+      "hard": 32,
+      "judge": 11,
+      "standard": 21
+     },
+     "tiers": {
+      "easy": 11.5419,
+      "hard": 7.5012,
+      "judge": -9.576,
+      "standard": 48.1724
+     }
+    }
+   },
+   "families": {
+    "calibration_gen": {
+     "n": 28,
+     "competence": 7.19
+    },
+    "composite_gen": {
+     "n": 33,
+     "competence": 0.61
+    },
+    "fairness": {
+     "n": 27,
+     "competence": 23.6
+    },
+    "jaggedness": {
+     "n": 51,
+     "competence": 0.0
+    },
+    "llm_router": {
+     "n": 184,
+     "competence": 58.53
+    },
+    "multilingual": {
+     "n": 96,
+     "competence": 25.16
+    },
+    "negation_pair_gen": {
+     "n": 36,
+     "competence": 5.17
+    },
+    "option_order": {
+     "n": 27,
+     "competence": 66.67
+    },
+    "perturb_pair": {
+     "n": 34,
+     "competence": 57.3
+    },
+    "usecase": {
+     "n": 69,
+     "competence": 0.0
+    }
+   },
+   "labels_missing": 300
+  },
+  "openjev-sglang": {
+   "coverage": "A4+P",
+   "n_items": 600,
+   "answered_ok": 591,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 69.7112,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 88.3243,
+      "hard": 50.928,
+      "judge": 68.3586,
+      "standard": 100.0
+     }
+    },
+    "open|noul": {
+     "cc": 32.4458,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 85.7143,
+      "hard": 39.1304,
+      "judge": 20.0,
+      "standard": 11.1111
+     }
+    },
+    "open|score": {
+     "cc": 30.8736,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 41.725,
+      "hard": 32.6506,
+      "judge": 31.5762,
+      "standard": 20.8401
+     }
+    },
+    "sealed|choice": {
+     "cc": 56.672,
+     "n": {
+      "easy": 23,
+      "hard": 66,
+      "judge": 28,
+      "standard": 33
+     },
+     "tiers": {
+      "easy": 77.7572,
+      "hard": 37.9511,
+      "judge": 63.8191,
+      "standard": 72.8507
+     }
+    },
+    "sealed|noul": {
+     "cc": 2.9813,
+     "n": {
+      "easy": 17,
+      "hard": 22,
+      "judge": 20,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 41.1765,
+      "hard": -9.0909,
+      "judge": 0.0,
+      "standard": 12.5
+     }
+    },
+    "sealed|score": {
+     "cc": 24.5338,
+     "n": {
+      "easy": 11,
+      "hard": 32,
+      "judge": 11,
+      "standard": 21
+     },
+     "tiers": {
+      "easy": 60.2254,
+      "hard": 0.9111,
+      "judge": 15.1583,
+      "standard": 67.9965
+     }
+    }
+   },
+   "families": {
+    "calibration_gen": {
+     "n": 28,
+     "competence": 16.94
+    },
+    "composite_gen": {
+     "n": 33,
+     "competence": 0.0
+    },
+    "fairness": {
+     "n": 27,
+     "competence": 70.82
+    },
+    "jaggedness": {
+     "n": 51,
+     "competence": 0.0
+    },
+    "llm_router": {
+     "n": 184,
+     "competence": 73.92
+    },
+    "multilingual": {
+     "n": 96,
+     "competence": 29.95
+    },
+    "negation_pair_gen": {
+     "n": 36,
+     "competence": 15.49
+    },
+    "option_order": {
+     "n": 27,
+     "competence": 71.43
+    },
+    "perturb_pair": {
+     "n": 34,
+     "competence": 67.12
+    },
+    "usecase": {
+     "n": 69,
+     "competence": 31.38
+    }
+   },
+   "labels_missing": 300
+  },
+  "deepseek-flash": {
+   "coverage": "A4+P",
+   "n_items": 600,
+   "answered_ok": 595,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 99.245,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 98.1126,
+      "judge": 100.0,
+      "standard": 100.0
+     }
+    },
+    "open|noul": {
+     "cc": 93.5217,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 91.3043,
+      "judge": 90.0,
+      "standard": 100.0
+     }
+    },
+    "open|score": {
+     "cc": 84.9868,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 79.1818,
+      "hard": 99.5833,
+      "judge": 81.9153,
+      "standard": 63.3037
+     }
+    },
+    "sealed|choice": {
+     "cc": 98.4486,
+     "n": {
+      "easy": 23,
+      "hard": 66,
+      "judge": 28,
+      "standard": 33
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 100.0,
+      "judge": 100.0,
+      "standard": 92.2431
+     }
+    },
+    "sealed|noul": {
+     "cc": 90.3636,
+     "n": {
+      "easy": 17,
+      "hard": 22,
+      "judge": 20,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 90.9091,
+      "judge": 80.0,
+      "standard": 100.0
+     }
+    },
+    "sealed|score": {
+     "cc": 86.2561,
+     "n": {
+      "easy": 11,
+      "hard": 32,
+      "judge": 11,
+      "standard": 21
+     },
+     "tiers": {
+      "easy": 83.5278,
+      "hard": 76.8675,
+      "judge": 94.5455,
+      "standard": 93.9634
+     }
+    }
+   },
+   "families": {
+    "calibration_gen": {
+     "n": 28,
+     "competence": 100.0
+    },
+    "composite_gen": {
+     "n": 33,
+     "competence": 95.95
+    },
+    "fairness": {
+     "n": 27,
+     "competence": 100.0
+    },
+    "jaggedness": {
+     "n": 51,
+     "competence": 99.33
+    },
+    "llm_router": {
+     "n": 184,
+     "competence": 89.26
+    },
+    "multilingual": {
+     "n": 96,
+     "competence": 95.55
+    },
+    "negation_pair_gen": {
+     "n": 36,
+     "competence": 100.0
+    },
+    "option_order": {
+     "n": 27,
+     "competence": 100.0
+    },
+    "perturb_pair": {
+     "n": 34,
+     "competence": 99.37
+    },
+    "usecase": {
+     "n": 69,
+     "competence": 88.93
+    }
+   },
+   "labels_missing": 300
+  },
+  "simplejev-qwen3.8-27b": {
+   "coverage": "A4+P",
+   "n_items": 600,
+   "answered_ok": 591,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 77.1205,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 92.2162,
+      "hard": 67.9144,
+      "judge": 84.1793,
+      "standard": 77.3964
+     }
+    },
+    "open|noul": {
+     "cc": 39.7633,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 39.1304,
+      "judge": 10.0,
+      "standard": 55.5556
+     }
+    },
+    "open|score": {
+     "cc": 57.2101,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 75.6453,
+      "hard": 49.2044,
+      "judge": 65.6588,
+      "standard": 51.3309
+     }
+    },
+    "sealed|choice": {
+     "cc": 61.5454,
+     "n": {
+      "easy": 23,
+      "hard": 66,
+      "judge": 28,
+      "standard": 33
+     },
+     "tiers": {
+      "easy": 72.1965,
+      "hard": 47.6462,
+      "judge": 63.8191,
+      "standard": 80.6076
+     }
+    },
+    "sealed|noul": {
+     "cc": 31.4198,
+     "n": {
+      "easy": 17,
+      "hard": 22,
+      "judge": 20,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 76.4706,
+      "hard": 18.1818,
+      "judge": 30.0,
+      "standard": 37.5
+     }
+    },
+    "sealed|score": {
+     "cc": 34.7637,
+     "n": {
+      "easy": 11,
+      "hard": 32,
+      "judge": 11,
+      "standard": 21
+     },
+     "tiers": {
+      "easy": 72.2528,
+      "hard": 8.1052,
+      "judge": 33.119,
+      "standard": 71.8031
+     }
+    }
+   },
+   "families": {
+    "calibration_gen": {
+     "n": 28,
+     "competence": 5.61
+    },
+    "composite_gen": {
+     "n": 33,
+     "competence": 47.18
+    },
+    "fairness": {
+     "n": 27,
+     "competence": 95.33
+    },
+    "jaggedness": {
+     "n": 51,
+     "competence": 0.0
+    },
+    "llm_router": {
+     "n": 184,
+     "competence": 85.44
+    },
+    "multilingual": {
+     "n": 96,
+     "competence": 48.13
+    },
+    "negation_pair_gen": {
+     "n": 36,
+     "competence": 61.87
+    },
+    "option_order": {
+     "n": 27,
+     "competence": 100.0
+    },
+    "perturb_pair": {
+     "n": 34,
+     "competence": 69.52
+    },
+    "usecase": {
+     "n": 69,
+     "competence": 25.25
+    }
+   },
+   "labels_missing": 300
+  },
+  "decision-machine-1": {
+   "coverage": "A4+P",
+   "n_items": 600,
+   "answered_ok": 591,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 32.1365,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 33.8378,
+      "hard": 13.1802,
+      "judge": 36.7172,
+      "standard": 62.3273
+     }
+    },
+    "open|noul": {
+     "cc": 0.0,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": -14.2857,
+      "hard": -47.8261,
+      "judge": -50.0,
+      "standard": -66.6667
+     }
+    },
+    "open|score": {
+     "cc": 0.0,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 37.3934,
+      "hard": -8.8505,
+      "judge": 13.5155,
+      "standard": -60.8938
+     }
+    },
+    "sealed|choice": {
+     "cc": 31.0657,
+     "n": {
+      "easy": 23,
+      "hard": 66,
+      "judge": 28,
+      "standard": 33
+     },
+     "tiers": {
+      "easy": 38.8323,
+      "hard": 34.073,
+      "judge": 27.6382,
+      "standard": 26.309
+     }
+    },
+    "sealed|noul": {
+     "cc": 0.0,
+     "n": {
+      "easy": 17,
+      "hard": 22,
+      "judge": 20,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 5.8824,
+      "hard": -72.7273,
+      "judge": -90.0,
+      "standard": 0.0
+     }
+    },
+    "sealed|score": {
+     "cc": 0.0,
+     "n": {
+      "easy": 11,
+      "hard": 32,
+      "judge": 11,
+      "standard": 21
+     },
+     "tiers": {
+      "easy": 8.9152,
+      "hard": -27.1485,
+      "judge": -46.9134,
+      "standard": 35.2328
+     }
+    }
+   },
+   "families": {
+    "calibration_gen": {
+     "n": 28,
+     "competence": 0.0
+    },
+    "composite_gen": {
+     "n": 33,
+     "competence": 0.0
+    },
+    "fairness": {
+     "n": 27,
+     "competence": 0.0
+    },
+    "jaggedness": {
+     "n": 51,
+     "competence": 2.26
+    },
+    "llm_router": {
+     "n": 184,
+     "competence": 16.68
+    },
+    "multilingual": {
+     "n": 96,
+     "competence": 1.08
+    },
+    "negation_pair_gen": {
+     "n": 36,
+     "competence": 0.0
+    },
+    "option_order": {
+     "n": 27,
+     "competence": 9.52
+    },
+    "perturb_pair": {
+     "n": 34,
+     "competence": 23.07
+    },
+    "usecase": {
+     "n": 69,
+     "competence": 0.0
+    }
+   },
+   "labels_missing": 300
+  },
+  "jevact": {
+   "coverage": "A4+P",
+   "n_items": 600,
+   "answered_ok": 579,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 22.3825,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 29.9459,
+      "hard": 9.4055,
+      "judge": 40.6724,
+      "standard": 17.1201
+     }
+    },
+    "open|noul": {
+     "cc": 0.0,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 0.0,
+      "hard": -30.4348,
+      "judge": -40.0,
+      "standard": -33.3333
+     }
+    },
+    "open|score": {
+     "cc": 0.0,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 34.0168,
+      "hard": -40.2474,
+      "judge": 11.2946,
+      "standard": -47.936
+     }
+    },
+    "sealed|choice": {
+     "cc": 22.8059,
+     "n": {
+      "easy": 23,
+      "hard": 66,
+      "judge": 28,
+      "standard": 33
+     },
+     "tiers": {
+      "easy": 22.1501,
+      "hard": 22.4389,
+      "judge": 18.593,
+      "standard": 30.1875
+     }
+    },
+    "sealed|noul": {
+     "cc": 0.0,
+     "n": {
+      "easy": 17,
+      "hard": 22,
+      "judge": 20,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 29.4118,
+      "hard": 9.0909,
+      "judge": -10.0,
+      "standard": -25.0
+     }
+    },
+    "sealed|score": {
+     "cc": 0.0,
+     "n": {
+      "easy": 11,
+      "hard": 32,
+      "judge": 11,
+      "standard": 21
+     },
+     "tiers": {
+      "easy": 2.6763,
+      "hard": -73.6675,
+      "judge": -35.3444,
+      "standard": -0.6115
+     }
+    }
+   },
+   "families": {
+    "calibration_gen": {
+     "n": 28,
+     "competence": 0.0
+    },
+    "composite_gen": {
+     "n": 33,
+     "competence": 2.77
+    },
+    "fairness": {
+     "n": 27,
+     "competence": 44.57
+    },
+    "jaggedness": {
+     "n": 51,
+     "competence": 0.0
+    },
+    "llm_router": {
+     "n": 184,
+     "competence": 9.16
+    },
+    "multilingual": {
+     "n": 96,
+     "competence": 0.0
+    },
+    "negation_pair_gen": {
+     "n": 36,
+     "competence": 2.58
+    },
+    "option_order": {
+     "n": 27,
+     "competence": 9.52
+    },
+    "perturb_pair": {
+     "n": 34,
+     "competence": 22.67
+    },
+    "usecase": {
+     "n": 69,
+     "competence": 0.0
+    }
+   },
+   "labels_missing": 300
+  },
+  "qwen3.8-27b": {
+   "coverage": "A4+P",
+   "n_items": 600,
+   "answered_ok": 592,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 96.9832,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 96.2252,
+      "judge": 100.0,
+      "standard": 92.4655
+     }
+    },
+    "open|noul": {
+     "cc": 96.5217,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 91.3043,
+      "judge": 100.0,
+      "standard": 100.0
+     }
+    },
+    "open|score": {
+     "cc": 88.771,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 82.0909,
+      "hard": 99.7778,
+      "judge": 92.1695,
+      "standard": 65.0
+     }
+    },
+    "sealed|choice": {
+     "cc": 97.6732,
+     "n": {
+      "easy": 23,
+      "hard": 66,
+      "judge": 28,
+      "standard": 33
+     },
+     "tiers": {
+      "easy": 100.0,
+      "hard": 94.1829,
+      "judge": 100.0,
+      "standard": 100.0
+     }
+    },
+    "sealed|noul": {
+     "cc": 95.1872,
+     "n": {
+      "easy": 17,
+      "hard": 22,
+      "judge": 20,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 88.2353,
+      "hard": 90.9091,
+      "judge": 100.0,
+      "standard": 100.0
+     }
+    },
+    "sealed|score": {
+     "cc": 87.709,
+     "n": {
+      "easy": 11,
+      "hard": 32,
+      "judge": 11,
+      "standard": 21
+     },
+     "tiers": {
+      "easy": 90.25,
+      "hard": 78.241,
+      "judge": 96.4545,
+      "standard": 92.2561
+     }
+    }
+   },
+   "families": {
+    "calibration_gen": {
+     "n": 28,
+     "competence": 100.0
+    },
+    "composite_gen": {
+     "n": 33,
+     "competence": 100.0
+    },
+    "fairness": {
+     "n": 27,
+     "competence": 100.0
+    },
+    "jaggedness": {
+     "n": 51,
+     "competence": 98.37
+    },
+    "llm_router": {
+     "n": 184,
+     "competence": 89.76
+    },
+    "multilingual": {
+     "n": 96,
+     "competence": 99.9
+    },
+    "negation_pair_gen": {
+     "n": 36,
+     "competence": 100.0
+    },
+    "option_order": {
+     "n": 27,
+     "competence": 100.0
+    },
+    "perturb_pair": {
+     "n": 34,
+     "competence": 99.81
+    },
+    "usecase": {
+     "n": 69,
+     "competence": 94.03
+    }
+   },
+   "labels_missing": 300
+  },
+  "openai-decisions": {
+   "coverage": "A5+P",
+   "n_items": 600,
+   "answered_ok": 598,
+   "per_type_split": {
+    "open|choice": {
+     "cc": 72.5513,
+     "n": {
+      "easy": 33,
+      "hard": 68,
+      "judge": 32,
+      "standard": 17
+     },
+     "tiers": {
+      "easy": 96.1081,
+      "hard": 62.2523,
+      "judge": 80.2241,
+      "standard": 69.8619
+     }
+    },
+    "open|noul": {
+     "cc": 48.9124,
+     "n": {
+      "easy": 14,
+      "hard": 23,
+      "judge": 20,
+      "standard": 18
+     },
+     "tiers": {
+      "easy": 57.1429,
+      "hard": 65.2174,
+      "judge": 20.0,
+      "standard": 55.5556
+     }
+    },
+    "open|score": {
+     "cc": 52.7419,
+     "n": {
+      "easy": 9,
+      "hard": 29,
+      "judge": 21,
+      "standard": 16
+     },
+     "tiers": {
+      "easy": 49.2727,
+      "hard": 53.7315,
+      "judge": 54.4068,
+      "standard": 50.0
+     }
+    },
+    "sealed|choice": {
+     "cc": 69.2318,
+     "n": {
+      "easy": 17,
+      "hard": 73,
+      "judge": 38,
+      "standard": 22
+     },
+     "tiers": {
+      "easy": 75.8389,
+      "hard": 64.8643,
+      "judge": 76.453,
+      "standard": 63.8312
+     }
+    },
+    "sealed|noul": {
+     "cc": 20.6086,
+     "n": {
+      "easy": 15,
+      "hard": 17,
+      "judge": 22,
+      "standard": 21
+     },
+     "tiers": {
+      "easy": 33.3333,
+      "hard": 17.6471,
+      "judge": 18.1818,
+      "standard": 23.8095
+     }
+    },
+    "sealed|score": {
+     "cc": 42.6453,
+     "n": {
+      "easy": 9,
+      "hard": 30,
+      "judge": 21,
+      "standard": 15
+     },
+     "tiers": {
+      "easy": 55.64,
+      "hard": 50.4536,
+      "judge": 35.5753,
+      "standard": 31.1364
+     }
+    }
+   },
+   "families": {
+    "calibration_gen": {
+     "n": 36,
+     "competence": 66.67
+    },
+    "composite_gen": {
+     "n": 44,
+     "competence": 39.38
+    },
+    "fairness": {
+     "n": 21,
+     "competence": 98.39
+    },
+    "jaggedness": {
+     "n": 60,
+     "competence": 17.35
+    },
+    "llm_router": {
+     "n": 127,
+     "competence": 73.64
+    },
+    "multilingual": {
+     "n": 114,
+     "competence": 45.33
+    },
+    "negation_pair_gen": {
+     "n": 42,
+     "competence": 50.44
+    },
+    "option_order": {
+     "n": 42,
+     "competence": 100.0
+    },
+    "perturb_pair": {
+     "n": 40,
+     "competence": 68.74
+    },
+    "usecase": {
+     "n": 63,
+     "competence": 27.32
+    }
+   },
+   "labels_missing": 300
+  },
+  "liquid-d1": {
+   "coverage": "S+P",
+   "n_items": 1500,
+   "families": {
+    "calibration": {
+     "n": 22,
+     "competence": 88.84
+    },
+    "calibration_gen": {
+     "n": 59,
+     "competence": 41.11
+    },
+    "composite_gen": {
+     "n": 66,
+     "competence": 82.64
+    },
+    "fairness": {
+     "n": 153,
+     "competence": 91.95
+    },
+    "jaggedness": {
+     "n": 101,
+     "competence": 17.43
+    },
+    "llm_router": {
+     "n": 434,
+     "competence": 72.29
+    },
+    "long_state": {
+     "n": 23,
+     "competence": 0.0
+    },
+    "multilingual": {
+     "n": 264,
+     "competence": 47.68
+    },
+    "negation_pair_gen": {
+     "n": 100,
+     "competence": 69.19
+    },
+    "option_order": {
+     "n": 75,
+     "competence": 79.38
+    },
+    "perturb_pair": {
+     "n": 70,
+     "competence": 84.8
+    },
+    "usecase": {
+     "n": 133,
+     "competence": 36.06
+    }
+   },
+   "topics": {
+    "safety_security": {
+     "n": 37,
+     "competence": 35.68
+    },
+    "coding": {
+     "n": 302,
+     "competence": 70.54
+    },
+    "everyday_language": {
+     "n": 46,
+     "competence": 47.17
+    },
+    "math": {
+     "n": 193,
+     "competence": 27.4
+    },
+    "law_policy": {
+     "n": 763,
+     "competence": 68.28
+    },
+    "support_ops": {
+     "n": 93,
+     "competence": 34.75
+    },
+    "finance_commerce": {
+     "n": 66,
+     "competence": 67.73
+    }
+   },
+   "usecases": {
+    "financial_crime": {
+     "n": 39,
+     "competence": 28.81
+    },
+    "model_routing": {
+     "n": 442,
+     "competence": 71.05
+    },
+    "other": {
+     "n": 145,
+     "competence": 27.17
+    },
+    "legal_compliance": {
+     "n": 387,
+     "competence": 78.65
+    },
+    "customer_support": {
+     "n": 149,
+     "competence": 56.29
+    },
+    "code_linting": {
+     "n": 16,
+     "competence": 8.52
+    },
+    "llm_guardrails": {
+     "n": 17,
+     "competence": 42.75
+    },
+    "search_retrieval": {
+     "n": 17,
+     "competence": 73.54
+    },
+    "risk_assessment": {
+     "n": 45,
+     "competence": 31.23
+    },
+    "ecommerce_marketplaces": {
+     "n": 48,
+     "competence": 65.24
+    },
+    "lead_generation": {
+     "n": 17,
+     "competence": 80.63
+    },
+    "moderation_trust_safety": {
+     "n": 32,
+     "competence": 52.14
+    },
+    "demand_forecasting": {
+     "n": 16,
+     "competence": 0.0
+    },
+    "knowledge_graphs": {
+     "n": 18,
+     "competence": 36.49
+    },
+    "insurance_claims": {
+     "n": 41,
+     "competence": 75.79
+    },
+    "feature_extraction": {
+     "n": 19,
+     "competence": 39.41
+    }
+   }
+  }
+ }
+}
