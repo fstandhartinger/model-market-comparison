@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { buildBenchmarkView, cohortOf, distribution, isRankableScore, latestScores, normalize, profileAnomalies, rankingPosition, rankingTopValue, selectBenchmarkView, sortRankingScores } from '../lib/benchmark-view.mjs';
+import { buildBenchmarkView, cohortOf, currentSnapshotAxisId, distribution, isRankableScore, latestScores, normalize, profileAnomalies, rankingPosition, rankingTopValue, selectBenchmarkView, sortRankingScores } from '../lib/benchmark-view.mjs';
 
 const row = (id, value, extra = {}) => ({ id, modelId: id, subjectId: id, value, date: '2026-09-10', basis: 'measured', lowSample: false, ...extra });
 test('radar preserves zero, reverses lower-better, and withholds missing or uninformative ranges', () => {
@@ -203,4 +203,13 @@ test('family view: best-of per benchmark, direction-aware, measured before claim
   assert.ok(view.axes.every((a) => a.scores.every((r) => r.modelId !== 'fable::high')));
   assert.equal(view.models.find((m) => m.id === 'fable::max').name, 'Claude Fable 5.1');
   assert.deepEqual(view.missing.map((m) => m.model_id), ['fable::max']);
+});
+
+test('a stale dated snapshot axis resolves to the current day of the same axis (old result links 404ed)', () => {
+  const ids = ['epoch_eci::snapshot-2026-10-07', 'epoch_eci_software::snapshot-2026-10-07', 'aa-lcr::1.1'];
+  assert.equal(currentSnapshotAxisId('epoch_eci::snapshot-2026-10-02', ids), 'epoch_eci::snapshot-2026-10-07');
+  assert.equal(currentSnapshotAxisId('epoch_eci_software::snapshot-2026-09-28', ids), 'epoch_eci_software::snapshot-2026-10-07');
+  assert.equal(currentSnapshotAxisId('epoch_eci::snapshot-2026-10-07', ids), null);
+  assert.equal(currentSnapshotAxisId('aa-lcr::1.1@@Published', ids), null);
+  assert.equal(currentSnapshotAxisId('fullstack::snapshot-2026-10-02', ids), null);
 });

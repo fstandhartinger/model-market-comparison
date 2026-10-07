@@ -29,6 +29,7 @@ export function rankingTopValue(rows: ViewScore[], higherBetter: boolean | null)
 export function cohortOf(o: import('./benchmark-scores.mjs').BenchmarkObservation): string;
 export function latestScores(rows: ViewScore[], basis?: string): ViewScore[];
 export const SNAPSHOT_INDEX_KEYS: string[];
+export function currentSnapshotAxisId(axisId: string, currentIds: Iterable<string>): string | null;
 export function isSnapshotIndexAxis(axis: { id?: string; benchmarkId?: string } | null | undefined): boolean;
 export function distribution(axis: ViewAxis, models: ViewModel[]): ViewStats;
 export function normalize(value: number | null, stats: ViewStats, higherBetter: boolean | null): number | null;
