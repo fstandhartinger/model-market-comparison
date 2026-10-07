@@ -60,3 +60,13 @@ test('5: compare view uses the supplement only when asked', () => {
   assert.notDeepEqual(plain, live);
   assert.deepEqual(jevbenchCategoryView('v1.6.0', keys, { supplement: true }), jevbenchCategoryView('v1.6.0', keys));
 });
+
+test('6: labelling/rules describe the supplements; hard-coded page numbers match the file', () => {
+  assert.match(merged.labelling, /387 supplement items/);
+  assert.match(merged.rules.join(' '), /L2 supplement/);
+  const board = readFileSync(path('components/JevBenchV16Board.tsx'), 'utf8');
+  const full = Object.values(supp.systems).filter((r) => r.coverage === 'S+P+L1+L2').length;
+  assert.match(board, new RegExp(`language supplement L1 \\(${supp.pools.L1} items\\) and a use-case supplement L2 \\(${supp.pools.L2} items\\)`));
+  assert.match(board, new RegExp(`${full} rows answered both supplements`));
+  assert.match(board, new RegExp(`${supp.pools.L1} language items, ${supp.pools.L2} use-case items`));
+});

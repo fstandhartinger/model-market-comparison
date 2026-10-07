@@ -59,6 +59,16 @@ def main(src=SRC):
                 'supplements yet and keep their S + P cells.',
         'lane_note': ('Self-hosted cells and hosted-API cells pool S 1,200 + P 300 plus the sealed supplements L1 354 + L2 33 '
                       f'({n_pool:,} items) where a row answered them; raw and unequated. Cells under 15 items are omitted.'),
+        'labelling': ('Family and language are authoring metadata of every item. Each of the 1,500 v1.6 items and each of the 387 supplement '
+                      'items (L1 language supplement 354, L2 use-case supplement 33) was labelled with one subject topic (the v1.2 topic list, '
+                      'unchanged) and one TypeSafe use-case category by Winnow-12B Q8 on our own GPU pod, with the same model, questions, '
+                      'taxonomy and item-group rules (labelling rounds r13 and r14); where a uc1 item was written for a use case, that '
+                      'authoring use case is used instead. Sealed items stayed on our own infrastructure. 75 public items (5 %) of the main '
+                      'pool were checked by hand (topic agreement before rules 93 %). All non-English uc1 items are machine-authored and not '
+                      'native-reviewed. Self-hosted systems and full-set hosted APIs answered S u P (1,500 items) plus the supplements where '
+                      'their row is tagged so; API rows re-run on A4/A5 have no cells yet.'),
+        'rules': ['Cells with fewer than 15 items are omitted; categories under 30 items are marked low-n.',
+                  'Core v1.6 items carry no use case; the use-case view covers the use-case (uc1) items of S u P and the L2 supplement.'],
         **{d: new[d] for d in DIMS},
         'systems': systems,
     }

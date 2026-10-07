@@ -5,7 +5,7 @@ import { jevV15LeaderSentence } from '../lib/jevbench-v15-preview.mjs';
 import { jevV15SliderPresets, jevV15BoardSystem, jevV15BoardRow, jevV15CompareRow } from '../lib/jevbench-v15-board.mjs';
 import type { JevV16ReleaseArtifact, JevV16Categories, JevV16Carry } from '../lib/jevbench-v16-release.mjs';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
-import { jevbenchCategoryView } from '../lib/jevbench-categories.mjs';
+import { jevbenchCategoryView, JEVBENCH_CELL_SUPPLEMENT_ARTIFACT } from '../lib/jevbench-categories.mjs';
 import { jevV15FilterRows } from '../lib/jevbench-v15-filter-rows.mjs';
 import { JevBenchV16Charts } from './JevBenchV16Charts';
 import { jevClassView } from './jevClassView';
@@ -80,11 +80,11 @@ function LanguageView({ a, categories, hiddenApi }: { a: JevV16ReleaseArtifact; 
   return <section className="mt-10" aria-labelledby="jev16-languages" data-bh-jev16-language-view>
     <h2 id="jev16-languages" className="text-2xl font-bold">Languages</h2>
     <p className="bh-muted mt-1 max-w-4xl text-sm">Raw chance-corrected competence per item language (0 = chance, 100 = perfect; can be negative), from each system&apos;s own measured items:
-      self-hosted systems over S 1,200 + P 300{a.revision === 'v1.6.1' ? ', and every hosted API that answered the full set the same way (1,500 items)' : ', hosted APIs over their A or A2 subset + P (600 items). Sage (A3) language cells and A2/A3 topic/use-case cells cover public P300 only'}{categories.supplement ? `, plus the sealed language supplement L1 (${categories.supplement.pools.L1} items) and use-case supplement L2 (${categories.supplement.pools.L2} items), drawn ${categories.supplement.drawn} (${categories.supplement.pool_items.toLocaleString('en-US')} items in all; headline scores stay on S + P). Rows tagged “S+P” have not answered the supplements yet and keep their S + P cells` : ''}. Unequated and outside the Composite. Cells under {categories.min_n} items are left empty. A dagger (†) marks every displayed cell with fewer than 30 answered items.
+      self-hosted systems over S 1,200 + P 300{a.revision === 'v1.6.1' ? ', and every hosted API that answered the full set the same way (1,500 items)' : ', hosted APIs over their A or A2 subset + P (600 items). Sage (A3) language cells and A2/A3 topic/use-case cells cover public P300 only'}{categories.supplement ? `, plus the sealed language supplement L1 (${categories.supplement.pools.L1} items) and use-case supplement L2 (${categories.supplement.pools.L2} items), drawn ${categories.supplement.drawn} (${categories.supplement.pool_items.toLocaleString('en-US')} items in all; headline scores stay on S + P). Rows tagged “S+P” or “S+P+L1” have not answered every supplement yet and keep cells from the pools in the tag` : ''}. Unequated and outside the Composite. Cells under {categories.min_n} items are left empty. A dagger (†) marks every displayed cell with fewer than 30 answered items.
       {en ? ` English (${en.n.toLocaleString('en-US')} items) is listed first; the other ${allLangs.filter((l) => l.key !== 'mixed').length} languages${allLangs.some((l) => l.key === 'mixed') ? ' and the mixed-language group' : ''} share ${allLangs.reduce((s, l) => s + l.n, 0)} items.` : ''}
       {hidden.length > 0 && <span data-bh-jev16-language-hidden={hidden.map((l) => l.key).join(' ')}>{' '}In {hidden.length === 1 ? 'one further group' : `${hidden.length} further groups`} no system reaches the {categories.min_n}-item reporting minimum, so {hidden.length === 1 ? 'it gets' : 'they get'} no column (items in the pool shown): {hidden.map((l) => `${l.label} (${l.n})`).join(', ')} — {hidden.reduce((s, l) => s + l.n, 0)} items, scored like every other item.</span>}
       {a.systems.some((s) => (s as { a4?: unknown }).a4) && ' API rows re-run on A4 ∪ P (v1.7.7) or A5 ∪ P (v1.7.10) and Liquid AI d1 (v1.7.8) are not in this view yet: their per-language breakdown is not published.'}
-      {categories.supplement ? ` Every language now has at least 30 items in the pool (supplements added in ${categories.supplement.revision}).` : ` This is the ${a.revision} main-pool breakdown. Per-language coverage grows with the expanded uc1.1 multilingual pool, a candidate for a later release that is not part of ${a.revision}.`}</p>
+      {categories.supplement ? ` Every language now has at least 30 items in the pool (supplements added in ${categories.supplement.revision}); rows tagged S+P can still have fewer.` : ` This is the ${a.revision} main-pool breakdown. Per-language coverage grows with the expanded uc1.1 multilingual pool, a candidate for a later release that is not part of ${a.revision}.`}</p>
     <div className="mt-3 overflow-x-auto"><table className="text-left text-xs tabular" data-bh-jev16-language-table>
       <caption className="sr-only">JevBench {a.revision} competence by item language and system</caption>
       <thead><tr><th scope="col" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5">System</th>
@@ -243,7 +243,7 @@ function Method({ a, sha256, categoriesSha256, carrySha256, scope, hiddenApi, pr
     </div>}
     <h3 className="mt-4 text-lg font-semibold">Provenance</h3>
     {measuredDays.length > 0 && <p className="bh-muted mt-1 text-sm" data-bh-jev16-measured-days>Measured on the v1.6 pool (run completion day, UTC): {measuredDays.map(([day, names]) => `${day}: ${names.join(', ')}`).join(' · ')}.</p>}
-    <p className="bh-muted mt-1 break-all text-xs">Aggregate files: results sha256 {sha256} · categories sha256 {categoriesSha256} · dated carry sha256 {carrySha256}. Scoring source sha256 {a.source_sha256}. The method, release data and carry artifact are independently hashable.</p>
+    <p className="bh-muted mt-1 break-all text-xs">Aggregate files: results sha256 {sha256} · categories sha256 {categoriesSha256} · dated carry sha256 {carrySha256}{(a as unknown as { cellSupplementSha256?: string }).cellSupplementSha256 && <> · live language/use-case cell supplement (<code>{JEVBENCH_CELL_SUPPLEMENT_ARTIFACT}</code>) sha256 {(a as unknown as { cellSupplementSha256?: string }).cellSupplementSha256}</>}. Scoring source sha256 {a.source_sha256}. The method, release data and carry artifact are independently hashable.</p>
   </section>;
 }
 
@@ -503,12 +503,12 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
       {scope === 'api' && <ApiPublicSet measured={measuredKeys} />}
       {scope === 'api' && <JevV15FilterPanel />}
       <JevCompareV15 rows={compareRows} openDecisions={a.v16.counts.P} sealedDecisions={a.v16.counts.S} categories={jevbenchCategoryView(a.revision, compareRows.map((r) => r.key), { supplement: Boolean(categories.supplement) })} />
-      <p className="bh-muted mt-2 max-w-4xl text-xs" data-bh-jev16-radar-note>{categories.lane_note} {a.revision === 'v1.6.1' ? `Sealed counts in the compare view refer to the sealed set S (${a.v16.counts.S.toLocaleString('en-US')}), which hosted APIs now answer in full.` : `Sealed counts in the compare view refer to self-hosted systems (S ${a.v16.counts.S.toLocaleString('en-US')}); hosted APIs answered A ${a.v16.counts.A}.`}</p>
+      <p className="bh-muted mt-2 max-w-4xl text-xs" data-bh-jev16-radar-note>{categories.lane_note} {categories.supplement && 'Rows tagged S+P in the language table below have not answered the supplements, so their radars cover fewer items. '}{a.revision === 'v1.6.1' ? `Sealed counts in the compare view refer to the sealed set S (${a.v16.counts.S.toLocaleString('en-US')}), which hosted APIs now answer in full.` : `Sealed counts in the compare view refer to self-hosted systems (S ${a.v16.counts.S.toLocaleString('en-US')}); hosted APIs answered A ${a.v16.counts.A}.`}</p>
       <LanguageView a={a} categories={categories} hiddenApi={hiddenApi} />
       <NoulAndGate a={a} hiddenApi={hiddenApi} />
       <JevV15AllDataGrid
         artifact={v15}
-        categoryView={jevbenchCategoryView(a.revision, allDataKeys)}
+        categoryView={jevbenchCategoryView(a.revision, allDataKeys, { supplement: Boolean(categories.supplement) })}
         previousKeys={previousKeys}
         eligibility={allClass}
         metadata={{ families: baseModelFamilies('jevbench', a.systems) }}

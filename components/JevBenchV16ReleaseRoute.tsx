@@ -3,7 +3,10 @@ import { readJevbenchV161Release } from '../lib/jevbench-v16-release.mjs';
 import { readJevbenchV157Release } from '../lib/jevbench-v15-release.mjs';
 import { jevApiOfferingKeys, jevApiRoster, jevbenchScopeArtifact, jevbenchScopeCarry, jevScopeClassifier, jevWithApiA4Rows, type JevScope } from '../lib/jevbench-scope.mjs';
 import apiA4 from '../data/jevbench-api-a4-equated.json';
-import { withJevCellSupplement } from '../lib/jevbench-categories.mjs';
+import { createHash } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
+import { withJevCellSupplement, JEVBENCH_CELL_SUPPLEMENT_ARTIFACT } from '../lib/jevbench-categories.mjs';
 import { JevBenchV16Board, JEV_BOARD_REVISIONS } from './JevBenchV16Board';
 import { JevBenchReleaseVersionNav } from './JevBenchReleaseVersionNav';
 
@@ -23,6 +26,7 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
   const merged = scope === 'all' || release_.revision !== 'v1.6.1' ? release_ : jevWithApiA4Rows(release_, apiA4, a4Meta) as typeof release_;
   // v1.7.12 (Part B): the live boards show language/use-case cells with the sealed L1/L2 supplements; archived pages stay as published.
   const categories = merged === release_ ? releaseCategories : withJevCellSupplement(releaseCategories);
+  const cellSupplementSha256 = merged === release_ ? undefined : createHash('sha256').update(await readFile(path.join(process.cwd(), JEVBENCH_CELL_SUPPLEMENT_ARTIFACT))).digest('hex');
   const a4Keys = new Set(merged.systems.map((s) => s.key));
   const published = merged === release_ ? release_ : { ...merged, not_measured: merged.not_measured.filter((r) => !a4Keys.has(r.key)) };
   const publishedCarry = merged === release_ ? releaseCarry : { ...releaseCarry, rows: releaseCarry.rows.filter((r) => !a4Keys.has(r.key)) };
@@ -36,7 +40,9 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
     .filter((row) => !isJevbenchV16ExcludedKey(row.key) && !publishedKeys.has(row.key));
   if (missingPrevious.length) throw new Error(`JevBench ${revision} catalogue omits public prior rows: ${missingPrevious.map((row) => row.key).join(', ')}`);
   const isApi = jevScopeClassifier(published.systems, publishedCarry.rows, previous.artifact.systems, previous.artifact.not_measured);
-  const artifact = jevbenchScopeArtifact(published, scope, isApi);
+  const scoped = jevbenchScopeArtifact(published, scope, isApi);
+  // v1.7.12: the method footer also hashes the live cell supplement.
+  const artifact = cellSupplementSha256 ? { ...scoped, cellSupplementSha256 } as typeof scoped : scoped;
   const carry = jevbenchScopeCarry(publishedCarry, scope === 'api' ? 'api' : 'all', isApi);
   const apiKeys = scope === 'open' ? jevApiOfferingKeys([...published.systems, ...published.not_measured, ...publishedCarry.rows], isApi) : [];
   const carryCount = carry.rows.filter((row) => !apiKeys.includes(row.key)).length;
