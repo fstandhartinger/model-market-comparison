@@ -95,11 +95,13 @@ const SOURCE_KEYS: Record<string, string> = {
 export function offerPrice(offer: ClientOffer, context: Pricing = 10, evaluatedAt: Date = new Date()): PriceResult {
   const settings = typeof context === "number" ? { priceMode: "raw" as const, inputWeight: context } : context;
   const priceUrl = offer.platform === "OpenRouter" && offer.or_model_id ? `https://openrouter.ai/api/v1/models/${offer.or_model_id}/endpoints`
+    : offer.price_source?.url ? offer.price_source.url
     : offer.platform === "Google Vertex AI" ? "https://cloud.google.com/vertex-ai/generative-ai/pricing"
     : offer.platform === "Artificial Analysis" ? "https://artificialanalysis.ai/leaderboards/models"
     : offer.notes?.match(/https:\/\/[^\s,)]+/)?.[0];
-  const sources: PriceSource[] = [{ label: "List prices", source: offer.source, url: priceUrl,
-    date: typeof context === "number" ? undefined : context.data.sourceDates?.[SOURCE_KEYS[offer.platform]], basis: offer.estimated ? "assumed" : "self_reported",
+  // CR-329.1: the source line names the channel the price is for.
+  const sources: PriceSource[] = [{ label: offer.platform === "OpenRouter" ? "List prices (via OpenRouter)" : "List prices (direct)", source: offer.source, url: priceUrl,
+    date: offer.price_source?.date || (typeof context === "number" ? undefined : context.data.sourceDates?.[SOURCE_KEYS[offer.platform]]), basis: offer.estimated ? "assumed" : "self_reported",
     note: `${offer.platform} / ${offer.provider}; ${offer.region}${offer.endpoint_tag ? `; endpoint ${offer.endpoint_tag}` : ""}${offer.pricing_tier ? `; ${offer.pricing_tier}` : ""}${offer.notes ? `. ${offer.notes}` : ""}` }];
   if (offer.cache_read_source?.url) sources.push({ label: "Cache-read price", source: offer.cache_read_source.url,
     url: offer.cache_read_source.url, date: offer.cache_read_source.date, basis: "measured",

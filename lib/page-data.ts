@@ -86,7 +86,7 @@ async function build(key: PageDataKey): Promise<unknown> {
   const preferred = preferredVariantIds(clientModels, "composite");
   const clientById = new Map(clientModels.map((m) => [m.id, m]));
   // CR-74.2: Top 50 matches the Overview default, which hides deprecated families.
-  const aliveIds = new Set(selectableModels(clientModels, true).map((m) => m.id));
+  const aliveIds = new Set(selectableModels(clientModels, true, "composite").map((m) => m.id));
   const familyComposite = (id: string) => {
     const m = clientById.get(id);
     const shown = m ? clientById.get(preferred.get(m.family_key) ?? m.id) : undefined;

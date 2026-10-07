@@ -169,7 +169,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
   const simplePair = compact && !advanced && !guided;
   const minScore = simplePair ? s.minScoreSimple : s.advancedMinScore;
   const maxCost = simplePair ? s.simpleMaxCost : s.maxCost;
-  const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
+  const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated, s.score), [data.models, s.hideDeprecated, s.score]);
   const preferredId = useMemo(() => preferredVariantIds(candidates, score), [candidates, score]);
 
   const idKey = ids?.join(",");

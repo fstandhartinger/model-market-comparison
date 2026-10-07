@@ -337,7 +337,7 @@ function OptionsBody({ providers, families, inline }: { providers: ProviderInfo[
         </details>
         </div>
 
-        <p className="text-[11px] text-gray-600">Applies to price views &amp; model offers; benchmark evidence stays unfiltered.</p>
+        <p className="text-[11px] text-gray-600">“Hide deprecated” removes retired models (every Artificial Analysis configuration retired, on no current DesignArena board) and older retired configurations of current models. Applies to model tables, charts, price views &amp; model offers; benchmark evidence stays unfiltered.</p>
       </div>
       <div className={`flex shrink-0 items-center gap-3 border-t border-line px-4 ${inline ? "py-2" : "bg-panel py-3"}`}>
         {!inline && <button type="button" onClick={closeFilters} className="inline-flex min-h-10 items-center rounded-md bg-accent px-4 text-sm font-semibold text-ink">

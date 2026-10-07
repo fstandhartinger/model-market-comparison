@@ -511,6 +511,22 @@ function offerRunsInEu(offer, meta = {}) {
   return offer.platform === "OpenRouter" && region === "global" && meta.openrouter_eu_hosted === true;
 }
 
+// CR-329.1: where a direct catalog's prices were read. Order: the row's own price_source, the snapshot's listing_url, a
+// first-party URL named in its `source` line ("Scaleway … — scaleway.com/en/pricing/…"), the documented price page.
+const DIRECT_PRICE_PAGES = {
+  "AWS Bedrock": "https://aws.amazon.com/bedrock/pricing/",
+  "Azure AI Foundry": "https://prices.azure.com/api/retail/prices",
+  "Google Vertex AI": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+  Anthropic: "https://platform.claude.com/docs/en/about-claude/pricing",
+};
+function directPriceSource(platform, src, m) {
+  if (m?.price_source?.url) return { ...m.price_source, date: m.price_source.date || src.collected_at || null };
+  const named = String(src.source || "").match(/\b((?:[a-z0-9-]+\.)+[a-z]{2,}\/[^\s,;()]*)/i)?.[1];
+  const url = src.listing_url || (named ? `https://${named.replace(/^https?:\/\//, "")}` : null) || DIRECT_PRICE_PAGES[platform]
+    || String(src.method || "").match(/https?:\/\/[^\s,;)'"`]+/)?.[0] || null;
+  return url ? { url, date: src.collected_at || null } : null;
+}
+
 async function build() {
   // Discovery artifacts must retain valid version identities and source evidence
   // even before phase 05 adds their scores to the consumer dataset.
@@ -842,7 +858,7 @@ async function build() {
     const { familyKey } = normalizeCatalogFamily(m, "AWS Bedrock");
     const fam = family(familyKey, m.provider_org || guessOrg(familyKey));
     fam.offers.push({
-      source: "AWS Bedrock", provider: "AWS Bedrock", platform: "AWS Bedrock",
+      source: "AWS Bedrock", provider: "AWS Bedrock", platform: "AWS Bedrock", price_source: directPriceSource("AWS Bedrock", aws, m) ?? undefined,
       input_per_1m: num(m.input_per_1m_usd), output_per_1m: num(m.output_per_1m_usd),
       cache_read_per_1m: num(m.cache_read_per_1m_usd ?? m.cache_read),
       region: m.region || "eu-central-1", unit: "per_1m_token", notes: m.notes || "",
@@ -861,7 +877,7 @@ async function build() {
     const { familyKey } = normalizeCatalogFamily(m, "Azure AI Foundry");
     const fam = family(familyKey, m.provider_org || guessOrg(familyKey));
     fam.offers.push({
-      source: "Azure AI Foundry", provider: "Azure AI Foundry", platform: "Azure AI Foundry",
+      source: "Azure AI Foundry", provider: "Azure AI Foundry", platform: "Azure AI Foundry", price_source: directPriceSource("Azure AI Foundry", azure, m) ?? undefined,
       input_per_1m: num(m.input_per_1m_usd), output_per_1m: num(m.output_per_1m_usd),
       cache_read_per_1m: num(m.cache_read_per_1m_usd),
       region: m.region || "swedencentral", unit: "per_1m_token", notes: m.notes || "",
@@ -880,7 +896,7 @@ async function build() {
     const { familyKey } = normalizeCatalogFamily(m, "Google Vertex AI");
     const fam = family(familyKey, m.provider_org || guessOrg(familyKey));
     fam.offers.push({
-      source: "Google Vertex AI", provider: "Google Vertex AI", platform: "Google Vertex AI",
+      source: "Google Vertex AI", provider: "Google Vertex AI", platform: "Google Vertex AI", price_source: directPriceSource("Google Vertex AI", vertex, m) ?? undefined,
       input_per_1m: num(m.input_per_1m_usd), output_per_1m: num(m.output_per_1m_usd),
       cache_read_per_1m: num(m.cache_read_per_1m_usd),
       region: m.region || "europe-west4", unit: "per_1m_token", notes: m.notes || "",
@@ -898,10 +914,13 @@ async function build() {
     ["OVHcloud", ovhcloud], ["STACKIT", stackit], ["T-Systems LLM Hub", tSystems],
     ["TrustedTokens", trustedtokens],
   ]) {
+    // CR-329.1: every direct price names the page it was read from and the day, so a direct row can never silently
+    // stand for another channel's price (Inceptron's direct row once carried its OpenRouter feed price).
     for (const m of src.models || []) {
       if (EXCLUDE_RE.test(m.model_name || "")) continue;
 
       const { familyKey, catalogIdentity } = normalizeCatalogFamily(m, plat);
+      const priceSource = directPriceSource(plat, src, m);
       const fam = family(familyKey, m.provider_org || guessOrg(familyKey));
       fam.offers.push({
         source: plat, provider: plat, platform: plat,
@@ -914,6 +933,8 @@ async function build() {
         context_length: num(m.context_length),
         catalog_status: m.status || null,
         hosting_class: m.hosting_class || null,
+        ...(priceSource ? { price_source: priceSource } : {}),
+        ...(m.price_status === "n/a" ? { price_status: "n/a" } : {}),
         pricing_tier: pricingTier(m.model_name), route_type: routeType(m.model_name),
         eu_hosted: typeof m.eu_hosted === "boolean" ? m.eu_hosted : undefined,
       });
@@ -927,7 +948,7 @@ async function build() {
     const { familyKey } = normalizeCatalogFamily(m, "Chutes");
     const fam = family(familyKey, m.provider_org || guessOrg(familyKey));
     fam.offers.push({
-      source: "Chutes", provider: "Chutes", platform: "Chutes",
+      source: "Chutes", provider: "Chutes", platform: "Chutes", price_source: directPriceSource("Chutes", chutes, m) ?? undefined,
       input_per_1m: num(m.input_per_1m_usd), output_per_1m: num(m.output_per_1m_usd),
       cache_read_per_1m: num(m.cache_read_per_1m_usd), cache_write_per_1m: num(m.cache_write_per_1m_usd),
       region: m.region || "global", unit: "per_1m_token",
@@ -943,7 +964,7 @@ async function build() {
     const { familyKey } = normalizeFamily(m.model_name, "Anthropic");
     const fam = family(familyKey, "Anthropic");
     fam.offers.push({
-      source: "Anthropic API / Claude Code", provider: "Anthropic", platform: "Anthropic",
+      source: "Anthropic API / Claude Code", provider: "Anthropic", platform: "Anthropic", price_source: directPriceSource("Anthropic", claude, m) ?? undefined,
       input_per_1m: num(m.input_per_1m_usd), output_per_1m: num(m.output_per_1m_usd),
       cache_read_per_1m: num(m.cache_read_per_1m_usd), cache_write_per_1m: num(m.cache_write_per_1m_usd),
       region: "global", unit: "per_1m_token", notes: m.notes || "",
