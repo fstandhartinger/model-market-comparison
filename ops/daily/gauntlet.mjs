@@ -586,6 +586,7 @@ export async function reviewArtifact({
   for (let round = 1; round <= maxRounds && acceptedRound === null && terminalError === null; round++) {
     attemptsUsed = round;
     const rowIds = new Set(current.map((r) => r.id));
+    const objectionsBefore = objections;
     try {
       // 1. Freeze the artifact; its bytes are what the critic must echo and what
       //    the score-evidence verifier re-hashes on ingestion.
@@ -688,8 +689,16 @@ export async function reviewArtifact({
         rescue.second_critic = critic.meta.actual_model;
         rescue.second_critic_clean = clean;
         rescue.outcome = clean && !auditFlagged.size ? 'accepted: a different-family producer and a fresh critic both passed' : 'not rescued: the second opinion objected too';
+        // Any substantive answer from the second-opinion pair other than two passes ends the review: no later round
+        // may turn it into an acceptance through the ordinary retry branches.
+        if (!(clean && !auditFlagged.size)) {
+          errors.push(`round ${round}: second opinion did not pass (producer ${producer.meta.actual_model}${auditFlagged.size ? ' flagged' : ' passed'}, critic ${critic.meta.actual_model} ${clean ? 'passed' : 'objected'}); rejection kept`);
+          terminalError = new Error('second opinion objected');
+          continue;
+        }
       }
-      if (clean && auditFlagged.size && secondOpinion && !rescue && round < maxRounds) {
+      // Only round 1 may start a second opinion (decision #10945), and only when the producer's flag is the sole objection.
+      if (clean && auditFlagged.size && secondOpinion && !rescue && round === 1 && round < maxRounds) {
         rescue = { first_round: round, second_round: round + 1, first_producer: producer.meta.actual_model, first_critic: critic.meta.actual_model,
           flagged: [...auditFlagged].map(([id, flag]) => ({ id, status: flag.status, note: String(flag.note ?? '').slice(0, 500) })) };
         avoidProducerFamilies = [vendorFamily(producer.meta.actual_model)];
@@ -739,8 +748,14 @@ export async function reviewArtifact({
       }
     } catch (error) {
       errors.push(`round ${round}: ${error.message}`);
-      // A second opinion that never answered may be asked again in the next round, still from another family.
-      if (rescue && rescue.second_round === round && !rescue.outcome) rescue.second_round = round + 1;
+      // A second opinion that never gave a usable answer may be asked again in the next round, still from another
+      // family; an unusable answer that still carried an objection (objectionSignal) ends the review instead.
+      if (rescue && rescue.second_round === round && !rescue.outcome) {
+        if (objections > objectionsBefore) {
+          rescue.outcome = 'not rescued: the second opinion objected in an unusable answer';
+          terminalError = error;
+        } else rescue.second_round = round + 1;
+      }
       // D218: an account-level status is terminal for the same reason as the other three — another round
       // cannot pay a bill. The 05:17 run spent three identical 402s per arm to learn that once.
       if (round === maxRounds || ACCOUNT_LEVEL_HTTP.test(error.message)

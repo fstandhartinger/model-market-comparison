@@ -13,8 +13,8 @@ const rows = [{ id: 'or', value: 465 }];
 const sources = [{ url: 'https://example.test/primary', sha256: sha256('or = 465'), fetched_at: '2026-10-07', locator: 'or', content: 'or = 465' }];
 
 // producers: one entry per producer call, { model, flag }; the critic is always a clean pass from moonshotai.
-function scriptedRunner(producers, calls) {
-  let producerCall = 0;
+function scriptedRunner(producers, calls, critics = []) {
+  let producerCall = 0, criticCall = 0;
   return async (args) => {
     calls.push(args);
     const out = args[args.indexOf('--out') + 1];
@@ -25,6 +25,7 @@ function scriptedRunner(producers, calls) {
       model = 'moonshotai/fixture-critic';
       object = { artifact_id: packet.match(/ARTIFACT_ID: (.*)/)[1], artifact_sha256: packet.match(/ARTIFACT_SHA256: (.*)/)[1],
         round: Number(packet.match(/ROUND: (\d+)/)[1]), verdict: 'pass', coverage_checked: ['or', 'c1'], errors_found: 0, findings: [], fixed: [], uncertainties: [], missing_evidence: [] };
+      Object.assign(object, critics[criticCall++] ?? {});
     } else {
       const p = producers[producerCall++];
       model = p.model;
@@ -105,4 +106,35 @@ test('worker selection honours avoidFamilies', () => {
   assert.notEqual(other.split('/')[0], first.split('/')[0]);
   assert.throws(() => selectModel(catalog, dataset, { scheduled: true, freeRouter: [], avoidFamilies: ['z-ai', 'deepseek'] }), /No supported viable worker model found/);
   assert.throws(() => selectModel(catalog, dataset, { model: GLM, avoidFamilies: ['z-ai'] }), /must avoid/);
+});
+
+test('regression (review of #203): an objecting second-opinion critic is terminal, never retried into acceptance', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'bh-second-opinion-critic-'));
+  try {
+    for (const [name, critic2] of [
+      ['missing evidence', { missing_evidence: ['pricing discount is absent from the primary source'] }],
+      ['revise', { verdict: 'revise', errors_found: 1, missing_evidence: ['discount absent'] }],
+      ['wrong round with objection', { round: 99, verdict: 'revise', errors_found: 1, missing_evidence: ['discount absent'] }],
+    ]) {
+      const calls = [];
+      const runner = scriptedRunner([{ model: 'z-ai/glm-fixture', flag: true }, { model: 'deepseek/fixture', flag: false }, { model: 'deepseek/fixture', flag: false }], calls, [{}, critic2, {}]);
+      const result = await reviewArtifact({ runDir: dir, artifactId: `critic-${name.replace(/ /g, '-')}`, rows, sources, criteria: ['c1'], runner, secondOpinion: true });
+      assert.equal(result.accepted, false, name);
+      assert.equal(calls.length, 4, `${name}: no third round`);
+      assert.match(result.second_opinion.outcome, /^not rescued/, name);
+    }
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
+test('regression (review of #203): only round 1 can start a second opinion', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'bh-second-opinion-late-'));
+  try {
+    const calls = [];
+    // Round 1: producer flags AND the critic reports missing evidence (not eligible). Round 2: producer flags under a clean critic.
+    const runner = scriptedRunner([{ model: 'z-ai/glm-fixture', flag: true }, { model: 'z-ai/glm-fixture', flag: true }, { model: 'deepseek/fixture', flag: false }], calls,
+      [{ missing_evidence: ['row or: discount not shown'] }, {}, {}]);
+    const result = await reviewArtifact({ runDir: dir, artifactId: 'late', rows, sources, criteria: ['c1'], runner, secondOpinion: true });
+    assert.equal(result.accepted, false);
+    assert.equal(result.second_opinion, null);
+  } finally { await rm(dir, { recursive: true, force: true }); }
 });
