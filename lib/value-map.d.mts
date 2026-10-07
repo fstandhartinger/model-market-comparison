@@ -23,3 +23,5 @@ export declare const SIMPLE_SCORE_CHOICES: readonly string[];
 export type CostMeasure = { id: 'adjusted' | 'blended' | 'input' | 'output'; label: string; unit: string; patch: { priceMode: 'adjusted' | 'raw'; inputWeight?: number } };
 export declare function costMeasureChoices(blends: readonly { value: number }[], currentWeight: number): CostMeasure[];
 export declare function activeCostMeasure(choices: CostMeasure[], priceMode: string, inputWeight: number): CostMeasure['id'];
+export declare const UNMEASURED_TASK_NOTE: string;
+export declare function comparableTaskCost(price: { value: number | null; unit: string; assumedTask?: boolean } | null | undefined): boolean;

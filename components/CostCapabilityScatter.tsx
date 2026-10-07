@@ -16,7 +16,7 @@ import { useSettings } from "./SettingsContext";
 import { GearIcon } from "./GearIcon";
 import { preferredVariantIds, collapseModels, collapsedName, selectableModels } from "../lib/variants";
 import { paretoFrontier } from "../lib/pareto.mjs";
-import { COST_AXIS, LABEL_LIMIT, QUADRANT_NOTE, annotationBox, attractiveQuadrant, costAxisCaption, FRONTIER_GRACE_NOTE, frontierGrace, labelCandidates, placeLabels, valueMapYDomain } from "../lib/value-map.mjs";
+import { COST_AXIS, LABEL_LIMIT, QUADRANT_NOTE, annotationBox, attractiveQuadrant, costAxisCaption, FRONTIER_GRACE_NOTE, frontierGrace, labelCandidates, placeLabels, valueMapYDomain, comparableTaskCost, UNMEASURED_TASK_NOTE } from "../lib/value-map.mjs";
 import { AaCredit } from "./AaCredit";
 import { EpochCredit } from "./EpochCredit";
 import { IncompleteCompositeToggle } from "./IncompleteCompositeToggle";
@@ -195,8 +195,10 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
   const includeIncomplete = s.showIncompleteComposites;
   const plotted = useMemo(() => evaluated.filter((x) => compositeChartVisible(x.m, score, includeIncomplete)), [evaluated, score, includeIncomplete]);
   const hiddenIncomplete = evaluated.length - plotted.length;
+  // CR-326: a model priced on the assumed 1,000-token example task is not plotted and cannot join the Pareto line.
+  const unmeasured = useMemo(() => plotted.filter((x) => x.price.value != null && (x.price.value as number) >= 0 && !comparableTaskCost(x.price)), [plotted]);
   const allPoints = useMemo(() => plotted
-    .filter((x) => x.price.value != null && (x.price.value as number) >= 0)
+    .filter((x) => x.price.value != null && (x.price.value as number) >= 0 && comparableTaskCost(x.price))
     .map((x) => ({ x: x.price.value as number, y: x.sc as number, price: x.price, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100,
       coverage: x.coverage, compositeChart: score === "composite",
       pass: (x.sc as number) >= minScore && (maxCost == null || (x.price.value as number) <= maxCost) })),
@@ -312,6 +314,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
       {/* CR-77.3: the sentence stays as Florian phrased it; the small tolerance is named in its tooltip and on /about. */}
       {!advanced && mapPrefs.pareto && pareto.length > 0 && <p className="mt-1 text-xs text-gray-400" data-bh-pareto-caption title={FRONTIER_GRACE_NOTE}>Models on the green line are the most capable in their price range.</p>}
       {unpricedCount > 0 && <p className="mt-1 text-[11px] text-gray-500" data-bh-unpriced-note title={unpricedNames}>{counted(unpricedCount, "model")} without a public price not plotted.</p>}
+      {unmeasured.length > 0 && <p className="mt-1 text-[11px] text-gray-500" data-bh-unmeasured-task-note title={`${UNMEASURED_TASK_NOTE} ${unmeasured.map((x) => x.m.display_name).join(", ")}`}>{counted(unmeasured.length, "model")} without measured tokens per task not plotted (cost estimate unavailable).</p>}
     </div>;
   }
 
@@ -329,6 +332,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
 
       {logX && zeroCount > 0 && <p className="mb-2 text-xs text-amber-300">{zeroCount} zero-cost models cannot appear on a logarithmic axis; switch to linear or open the model price table. Frontier calculations include these models.</p>}
       {unpricedCount > 0 && <p className="mb-2 text-xs text-gray-400" data-bh-unpriced-note title={unpricedNames}>{counted(unpricedCount, "model")} without a public price not plotted.</p>}
+      {unmeasured.length > 0 && <p className="mb-2 text-xs text-gray-400" data-bh-unmeasured-task-note title={`${UNMEASURED_TASK_NOTE} ${unmeasured.map((x) => x.m.display_name).join(", ")}`}>{counted(unmeasured.length, "model")} without measured tokens per task not plotted (cost estimate unavailable).</p>}
       <div aria-hidden="true" className="card p-4" style={{ height: 580 }}>
         <ResponsiveContainer width="100%" height="100%">
           <ScatterChart accessibilityLayer={false} margin={{ top: 20, right: 40, bottom: 64, left: 30 }}>

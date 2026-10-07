@@ -8,7 +8,7 @@ import { SCORE_PICKER_LABELS, SCORE_SHORT_LABELS, type ScoreKey } from "../lib/t
 import { orgColor, counted } from "../lib/format";
 import { FIXED_BLENDS, SCORE_OPTIONS, modelPrice, scopedCatalogOffers, scopeFromSettings, priceContext, priceLabel, type PriceResult, type PriceSettings } from "../lib/cost";
 import { ScoreCostSliders } from "./ShortlistControls";
-import { SIMPLE_LIMIT, activeCostMeasure, costMeasureChoices, topCandidates } from "../lib/value-map.mjs";
+import { SIMPLE_LIMIT, UNMEASURED_TASK_NOTE, activeCostMeasure, comparableTaskCost, costMeasureChoices, topCandidates } from "../lib/value-map.mjs";
 import { PriceValue, PriceAssumptions, priceNumber } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
 import { CostCapabilityScatter } from "./CostCapabilityScatter";
@@ -197,8 +197,10 @@ export function ChartsBoard({ data }: { data: ClientData }) {
     [scoredShown, s.collapse, preferredId, score]);
   const leaderIncomplete = leaderboard.filter((d) => d.coverage).length;
 
+  // CR-326: an estimate on the assumed 1,000-token example task is not a comparable cost; it stays out of every cost panel.
+  const unmeasured = useMemo(() => pool.filter((x) => x.price.value != null && !comparableTaskCost(x.price)), [pool]);
   const cheapest = useMemo(() =>
-    pool.filter((x) => x.price.value != null).sort((a, b) => (a.price.value as number) - (b.price.value as number)).slice(0, 18)
+    pool.filter((x) => comparableTaskCost(x.price)).sort((a, b) => (a.price.value as number) - (b.price.value as number)).slice(0, 18)
       .map((x) => ({ name: collapsedName(x.m, s.collapse, preferredId), value: x.price.value as number, org: x.m.org, price: x.price })),
     [pool, s.collapse, preferredId]);
 
@@ -212,7 +214,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
       const scoredRows = arr.filter((x) => x.hasEvidence && x.sc != null && compositeChartVisible(x.m, score, includeIncomplete));
       const scores = scoredRows.map((x) => x.sc as number);
       const incomplete = scoredRows.map((x) => compositeCoverageLabel(x.m, score));
-      const priced = arr.filter((x) => x.price.value != null);
+      const priced = arr.filter((x) => comparableTaskCost(x.price));
       const costSum = priced.reduce((a, x) => a + (x.price.value as number), 0);
       const scoreRows = scoredRows.map((x) => ({ id: x.m.id, name: collapsedName(x.m, s.collapse, preferredId), value: x.sc as number, coverage: compositeCoverageLabel(x.m, score) }));
       return { name: k, scores, incomplete, scoreRows, costs: priced.map((x) => x.price.value as number), avgCost: priced.length ? costSum / priced.length : null, costSum, priced };
@@ -232,7 +234,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
       <div className="card mb-4 p-3 lg:p-4" data-bh-charts-map>
         <ScoreCostSliders className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-6"
           scores={base.filter((x) => x.hasEvidence).map((x) => x.sc).filter((v): v is number => v != null)}
-          costs={base.map((x) => x.price.value).filter((v): v is number => v != null)}
+          costs={base.filter((x) => comparableTaskCost(x.price)).map((x) => x.price.value as number)}
           score={score} scoreName={SCORE_SHORT_LABELS[score]}
           minScore={s.advancedMinScore} setMinScore={s.setAdvancedMinScore}
           maxCost={s.maxCost} setMaxCost={s.setMaxCost}
@@ -276,6 +278,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
           <div className="hidden md:block">
             <CostDotPlot rows={cheapest} format={priceNumber} unit={unitShort} label={adjusted ? "Adjusted cost" : "Cost"} />
           </div>
+          {unmeasured.length > 0 && <p className="mt-1 text-[11px] text-gray-500" data-bh-unmeasured-task-note title={`${UNMEASURED_TASK_NOTE} ${unmeasured.map((x) => x.m.display_name).join(", ")}`}>{counted(unmeasured.length, "model")} without measured tokens per task left out (cost estimate unavailable).</p>}
           {/* The recharts tooltip is mouse-only, so every plotted price is also
               listed here with its exact inputs via the PriceValue expansion. */}
           <details className="mt-3">

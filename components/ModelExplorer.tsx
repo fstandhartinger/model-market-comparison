@@ -20,7 +20,7 @@ import { SubscriptionsPanel } from "./SubscriptionsPanel";
 import { preferredVariantIds, collapsedName, selectableModels } from "../lib/variants";
 import { BENCHMAXX_LEVELS, BENCHMAXX_TAG_RULE_TEXT, BENCHMAXX_UNCERTAIN_MARK, BENCHMAXX_UNCERTAIN_TEXT, benchmaxxingLevelInfo, benchmaxxingThresholdText, type BenchmaxxingLevel } from "../lib/benchmaxxing-levels.mjs";
 import { capShortlist } from "../lib/shortlist.mjs";
-import { SIMPLE_LIMIT, SIMPLE_SCORE_CHOICES, activeCostMeasure, costMeasureChoices, derivedMinScore, topCandidates } from "../lib/value-map.mjs";
+import { SIMPLE_LIMIT, SIMPLE_SCORE_CHOICES, activeCostMeasure, comparableTaskCost, costMeasureChoices, derivedMinScore, topCandidates } from "../lib/value-map.mjs";
 import { FIXED_BLENDS } from "../lib/effective-cost.mjs";
 import { valueSignals, type ValueSignal } from "../lib/value-signal.mjs";
 import { scoreRowSubtitle } from "./ScoreRows";
@@ -182,7 +182,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
   // the pool cannot change with the default it produces. Table and map both read s.minScoreSimple.
   const { setDerivedMinScore } = s;
   const derivedFloor = useMemo(() => simplePair
-    ? derivedMinScore(pool.filter((x) => x.hasEvidence && x.sc != null).map((x) => ({ x: x.price.value ?? NaN, y: x.sc as number })), { score })
+    ? derivedMinScore(pool.filter((x) => x.hasEvidence && x.sc != null && comparableTaskCost(x.price)).map((x) => ({ x: x.price.value ?? NaN, y: x.sc as number })), { score })
     : null, [simplePair, pool, score]);
   useEffect(() => { if (simplePair) setDerivedMinScore({ score, value: derivedFloor }); }, [simplePair, score, derivedFloor, setDerivedMinScore]);
 
@@ -221,7 +221,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
     if (!limit || r.length <= limit) return r;
     // F-74: the cap is decided apart from the display order — Pareto line first, then the
     // highest scores — so a list sorted by score or by cost never drops its cheapest member.
-    const keep = capShortlist(r.map((x) => ({ id: x.m.id, cost: x.price.value, score: x.sc })), limit);
+    // CR-326: an assumed-task estimate cannot earn a Pareto slot.
+    const keep = capShortlist(r.map((x) => ({ id: x.m.id, cost: comparableTaskCost(x.price) ? x.price.value : null, score: x.sc })), limit);
     return r.filter((x) => keep.has(x.m.id));
   }, [matching, sort, asc, limit, score]);
 
