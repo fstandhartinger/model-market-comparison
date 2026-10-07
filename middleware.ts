@@ -5,6 +5,11 @@ import { clientIdentity, documentPageview, sendPageview } from "./lib/umami-page
 export function middleware(req: NextRequest, event?: NextFetchEvent) {
   const path = req.nextUrl.pathname;
   if (!path.startsWith("/api/")) {
+    // Pages live on the apex host only: www served 200 copies with an apex canonical, which Search Console listed as
+    // duplicates and alternates. /api/* stays on both hosts (the merge queue reads /api/meta on each).
+    if (requestHost(req) === "www.benchmarkheaven.com") {
+      return NextResponse.redirect(`https://benchmarkheaven.com${path}${req.nextUrl.search}`, 301);
+    }
     // CR-67.4: aggregate page counts from the request itself; see lib/visit-stats.mjs.
     try { countRequest(req); } catch { /* statistics must never break a page */ }
     // CR-177.1: the same page load, forwarded once to our own Umami so it has page views at all. No client
@@ -32,6 +37,10 @@ export function middleware(req: NextRequest, event?: NextFetchEvent) {
   const res = NextResponse.next();
   for (const [k, v] of Object.entries(CORS)) res.headers.set(k, v);
   return res;
+}
+
+function requestHost(req: NextRequest): string {
+  return (req.headers.get("x-forwarded-host") ?? req.headers.get("host") ?? "").split(",")[0].trim().toLowerCase().replace(/:\d+$/, "");
 }
 
 const CORS: Record<string, string> = {

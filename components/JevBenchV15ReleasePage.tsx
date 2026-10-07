@@ -2,16 +2,18 @@ import { readMultimodalPreview } from '../lib/jevbench-multimodal-preview.mjs';
 import { JevBenchV15, Sha } from './JevBenchV15Preview';
 import { CustomEvaluationOffer } from './CustomEvaluationOffer';
 import { readJevbenchV1422 } from '../lib/jevbench-v1422.mjs';
-import { readJevbenchV150Release, readJevbenchV151Release, readJevbenchV152Release, readJevbenchV153Release, readJevbenchV154Release, readJevbenchV155Release, readJevbenchV156Release } from '../lib/jevbench-v15-release.mjs';
+import { readJevbenchV150Release, readJevbenchV151Release, readJevbenchV152Release, readJevbenchV153Release, readJevbenchV154Release, readJevbenchV155Release, readJevbenchV156Release, withPublicAdapterIds } from '../lib/jevbench-v15-release.mjs';
 import type { JevV15Artifact } from '../lib/jevbench-v15-preview.mjs';
 
-export async function JevBenchV15ReleasePage({ artifact, sha256, versionPath = '/jev-models/v1.5.0', live = false }: {
+export async function JevBenchV15ReleasePage({ artifact: releaseArtifact, sha256, versionPath = '/jev-models/v1.5.0', live = false }: {
   artifact: JevV15Artifact;
   sha256: string;
   versionPath?: string;
   /** True on the live board (`/jev-models`): the hero names the benchmark, not the release (Fable pass 42, F-222). */
   live?: boolean;
 }) {
+  // CR-327: no runner-local adapter paths in the client payload (Google followed them as links).
+  const artifact = withPublicAdapterIds(releaseArtifact);
   // CR-205: a release compares against the immediately prior official ranking; v1.5.0 began at v1.4.2.2.
   const previousKeys = artifact.revision === 'v1.5.7'
     ? (await readJevbenchV156Release()).artifact.systems.map((row) => row.key)

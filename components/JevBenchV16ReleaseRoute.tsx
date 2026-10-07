@@ -1,6 +1,6 @@
 import { isJevbenchV16ExcludedKey } from '../lib/jevbench-v16-public-scope.mjs';
 import { readJevbenchV161Release } from '../lib/jevbench-v16-release.mjs';
-import { readJevbenchV157Release } from '../lib/jevbench-v15-release.mjs';
+import { readJevbenchV157Release, withPublicAdapterIds } from '../lib/jevbench-v15-release.mjs';
 import { jevApiOfferingKeys, jevApiRoster, jevbenchScopeArtifact, jevbenchScopeCarry, jevScopeClassifier, jevWithApiA4Rows, type JevScope } from '../lib/jevbench-scope.mjs';
 import apiA4 from '../data/jevbench-api-a4-equated.json';
 import { createHash } from 'node:crypto';
@@ -42,7 +42,8 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
   const isApi = jevScopeClassifier(published.systems, publishedCarry.rows, previous.artifact.systems, previous.artifact.not_measured);
   const scoped = jevbenchScopeArtifact(published, scope, isApi);
   // v1.7.12: the method footer also hashes the live cell supplement.
-  const artifact = cellSupplementSha256 ? { ...scoped, cellSupplementSha256 } as typeof scoped : scoped;
+  // CR-327: no runner-local adapter paths in the client payload (Google followed them as links).
+  const artifact = withPublicAdapterIds(cellSupplementSha256 ? { ...scoped, cellSupplementSha256 } as typeof scoped : scoped);
   const carry = jevbenchScopeCarry(publishedCarry, scope === 'api' ? 'api' : 'all', isApi);
   const apiKeys = scope === 'open' ? jevApiOfferingKeys([...published.systems, ...published.not_measured, ...publishedCarry.rows], isApi) : [];
   const carryCount = carry.rows.filter((row) => !apiKeys.includes(row.key)).length;

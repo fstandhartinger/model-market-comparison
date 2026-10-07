@@ -1,18 +1,25 @@
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import type { Metadata } from 'next';
 import taxonomy from '../../../data/benchmark-taxonomy.json';
 import epochEciRaw from '../../../data/raw/epoch-eci.json';
 import { getDataset } from '../../../lib/data';
 import { getBenchmarkView } from '../../../lib/benchmark-data';
 import { getBenchmarkMatrixPage } from '../../../lib/benchmark-matrix-data';
-import { latestScores } from '../../../lib/benchmark-view.mjs';
+import { latestScores, currentSnapshotAxisId } from '../../../lib/benchmark-view.mjs';
 import { formatValue, cellHref, cellAxisId, resultHref, rowWinners, versionLine, cohortLabel, cohortSubLabel, variantLabel, familyScopeDonorOf } from '../../../lib/benchmark-matrix.mjs';
 import caveats from '../../../data/benchmark-caveats.json';
 import { SourceScore } from '../../../components/BenchmarkEvidence';
 import { humanVersion, isPin } from '../../../lib/version-label';
 
-export const metadata: Metadata = { title: 'Benchmark result' };
+// One cell is one page: the compared set and the pin only change the back link, so the canonical keeps axis and model.
+export async function generateMetadata({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }): Promise<Metadata> {
+  const p = await searchParams;
+  const q = new URLSearchParams();
+  if (typeof p.axis === 'string') q.set('axis', p.axis);
+  if (typeof p.model === 'string') q.set('model', p.model);
+  return { title: 'Benchmark result', alternates: { canonical: `/benchmarks/result?${q}` } };
+}
 
 const host = (url: string) => { try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return 'source'; } };
 
@@ -39,6 +46,14 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
   // Index values kept on the model row (Epoch ECI) have no benchmark-view axis, only a matrix row.
   const fieldRow = axis ? undefined : matrix.rows.find((r) => r.id === axisId && !r.ranking);
   const field = fieldRow && taxonomy.model_field_rows.find((f) => f.key === fieldRow.key);
+  if (!axis && !fieldRow) {
+    const current = currentSnapshotAxisId(axisId, [...view.axes.map((a) => a.id), ...matrix.rows.filter((r) => !r.ranking).map((r) => r.id)]);
+    if (current) {
+      const q = new URLSearchParams(Object.entries(p).filter((e): e is [string, string] => typeof e[1] === 'string'));
+      q.set('axis', current);
+      permanentRedirect(`/benchmarks/result?${q}`);
+    }
+  }
   if ((!axis && !field) || !models.has(modelId)) notFound();
   const compared = (typeof p.models === 'string' ? p.models.split(',') : []).filter((id) => models.has(id)).slice(0, 10);
   if (!compared.includes(modelId)) compared.unshift(modelId);
