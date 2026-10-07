@@ -621,7 +621,7 @@ async function verifyCodingV15(rawDir, src, runStart, rows) {
 // --- evidence packets -------------------------------------------------------
 
 export const RULES = {
-  aa: 'staged model = AA v2 API model object passthrough + metadata: nine named fields from the leaderboard Flight metadata object keyed by slug||id; fields the current leaderboard omits are null or republished with metadata.retained_fields {source,collected_at,reason}.',
+  aa: 'staged model = AA v2 API model object passthrough + metadata: nine named fields from the leaderboard Flight metadata object keyed by slug||id; a field the current leaderboard publishes is copied exactly and never retained; a field it omits is null, or keeps the prior accepted value with a metadata.retained_fields[field] entry whose collected_at is the original collection date (before this run).',
   da: 'leaderboards[key].data = POST /api/leaderboard .data passthrough for the exact request body; model_registry[id] = {display_name<-displayName||id, provider<-provider||null, open_source<-boolean openSource else null} from GET /api/registry.',
   or: 'staged model = fixed projection of the catalog row + its /endpoints response; prices keep the source $/token string units; provider tag/quantization identity unchanged.',
   aa_efficiency: 'row = {source_id<-id (AA model UUID), slug, name, variant<-effort.slug, tokens_per_task<-intelligenceIndexOutputTokensPerTask, canonical_token_counts<-canonicalIntelligenceIndexTokenCount, derived ratios from those}; canonical_token_counts: integers with answer+reasoning==output exactly; tokens_per_task: answer+reasoning within 0.01 of output (SUM_TOLERANCE in lib/aa-efficiency.mjs).',
