@@ -1,5 +1,39 @@
 # Inceptron — data collection method
 
+## CR-329.1 (2026-10-07): the direct price comes from the published list, not the API catalog
+
+User report (Simon, 7 Oct 2026): our GLM-5.3 table showed Inceptron via OpenRouter **and** Inceptron direct
+at the same $0.60 / $3.39, while Inceptron's own models page lists GLM-5.3 "Inceptron Optimized" (fp4, 754B)
+at **$1.40 / $4.40, cache read $0.26**.
+
+Root cause: the collector priced the direct route from `https://api.inceptron.io/v1/models`. That catalog
+carries an `openrouter.slug` per model and its prices track the OpenRouter Inceptron endpoint exactly
+(7 Oct 2026, GLM-5.3: API 0.60/3.39 cache 0.20 = OpenRouter 0.60/3.39 cache 0.20). It is the provider feed
+OpenRouter ingests, so the direct row was a copy of the OpenRouter price. Inceptron's pricing page
+(`https://www.inceptron.io/pricing`) says "Serverless inference: See models page"; the models page
+(`https://www.inceptron.io/models`, server-rendered Framer HTML) is the direct list price. Its numbers have
+been stable while the API catalog moved (GLM 5.2 list 1.20/4.20 on 08-26, 09-08 and 10-07; API 0.75/2.40 →
+1.25/2.99 → 1.39/4.39 over the same dates).
+
+Since CR-329.1 `scripts/fetch-inceptron-catalog.mjs` reads both: the API decides which models are served, the
+list page gives the direct price (`price_source` = list URL + collection day per model). The API price is
+kept per model as `api_catalog_price` for reference. A served model the list page does not show gets
+`price_status: "n/a"` and no direct price — never the OpenRouter price.
+
+Prices on 2026-10-07 (USD per 1M tokens, input / output / cache read):
+
+| Model | Direct list price (www.inceptron.io/models) | API catalog = OpenRouter feed |
+|---|---|---|
+| GLM 5.3 | 1.40 / 4.40 / 0.26 | 0.60 / 3.39 / 0.20 |
+| GLM 5.3 Flash | 0.15 / 0.50 / 0.07 | 0.225 / 0.60 / 0.09 |
+| GLM 5.2 | 1.20 / 4.20 / 0.26 | 1.39 / 4.39 / 0.25 |
+| Kimi K2.7 Code | 0.75 / 3.50 / 0.20 | 0.6712 / 3.35 / 0.18 |
+| Kimi K2.6 | 0.73 / 3.50 / 0.25 | 0.465 / 2.45 / 0.0975 |
+| DeepSeek V4 Flash 0731 | 0.13 / 0.28 / 0.03 | 0.05 / 0.65 / 0.027 |
+
+Earlier per-model price history (native API vs web page, July–September 2026) was moved out of the row notes
+and is preserved in git history of `data/raw/inceptron.json`.
+
 **Date collected:** 2026-07-22 (prior: 2026-07-14, 2026-07-13, 2026-07-12, 2026-07-06, 2026-07-01)
 **Output:** `data/raw/inceptron.json`
 

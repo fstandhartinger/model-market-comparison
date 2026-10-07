@@ -12,6 +12,7 @@ import {
 import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { preferredVariantIds, selectableModels } from "../lib/variants";
 import { useSettings } from "./SettingsContext";
+import { OfferChannel } from "./OfferChannel";
 
 interface SotaEntry { key: string; name: string }
 interface SotaRow { entry: SotaEntry; model: ClientModel | null; offers: ClientOffer[] }
@@ -88,7 +89,7 @@ export function EuSotaTable({ data, entries }: { data: ClientData; entries: Sota
                     return (
                       <span key={offer.key} className="mr-3 whitespace-nowrap">
                         <b>{offer.provider}</b>
-                        {offer.platform !== offer.provider && <span className="text-[10px] text-gray-500">/{offer.platform}</span>}
+                        <OfferChannel offer={offer} openRouterDate={data.sourceDates?.openrouter} />
                         {" "}<span className="text-gray-400">{price.value == null ? "price not public" : <PriceValue price={price} />}</span>
                         {offer.eu_policy_equivalent && <span title="Company-approved equivalent; this Global deployment may process inference outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[10px] text-sky-300">EU equivalent</span>}
                         {offer.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[10px] text-purple-300">TEE</span>}

@@ -116,6 +116,10 @@ export interface Offer {
   cache_read_per_1m?: number | null;
   cache_write_per_1m?: number | null;
   cache_read_source?: { url: string; date?: string; sha256?: string; locator?: string };
+  /** CR-329.1: where a direct (non-OpenRouter) price was read and when; OpenRouter routes derive theirs from or_model_id. */
+  price_source?: { url: string; date?: string | null; basis?: string };
+  /** CR-329.1: "n/a" = the provider serves the model but publishes no direct price we could collect. */
+  price_status?: "n/a";
   price_overrides?: {
     min_prompt_tokens?: number;
     utc_start?: number;

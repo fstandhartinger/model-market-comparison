@@ -3,87 +3,167 @@
   "region": "eu (Finland; HQ Sweden)",
   "collected_at": "2026-10-07",
   "listing_url": "https://www.inceptron.io/models",
-  "method": "scripts/fetch-inceptron-catalog.mjs (2026-10-07): one GET of Inceptron's unauthenticated OpenAI-compatible catalog https://api.inceptron.io/v1/models, the live billing meter; pricing.prompt / pricing.completion / input_cache_reads are USD per token, stored per 1M tokens with four decimals. Models with text output, the chat feature and both token prices are included; curated rows kept by api_model_id, the id in their notes, or name; new ids mapping=derived; ids no longer listed are dropped. The marketing page www.inceptron.io/models is a client-rendered list that has shown different list prices; the API is canonical. HQ Sweden (SE), datacenter Finland (FI) per OpenRouter provider metadata. See inceptron.method.md.",
+  "method": "scripts/fetch-inceptron-catalog.mjs (2026-10-07): the served model list comes from Inceptron's unauthenticated OpenAI-compatible catalog https://api.inceptron.io/v1/models (text output, chat feature, both token prices); the DIRECT price of each model comes from Inceptron's published list https://www.inceptron.io/models (server-rendered; input / output / cache read in USD per 1M tokens; the pricing page www.inceptron.io/pricing says \"Serverless inference: see models page\"). CR-329.1 (7 Oct 2026): the API catalog prices carry an openrouter.slug and equal the OpenRouter Inceptron route, so they are the OpenRouter feed, not the direct price; they are kept per model as api_catalog_price for reference only. A served model missing from the list page gets price_status \"n/a\" and no direct price. Curated rows kept by api_model_id, the id in their notes, or name; new ids mapping=derived; ids no longer listed are dropped. HQ Sweden (SE), datacenter Finland (FI) per OpenRouter provider metadata. See inceptron.method.md.",
   "models": [
     {
       "model_name": "GLM 5.2",
       "provider_org": "Z.ai",
-      "input_per_1m_usd": 1.39,
-      "output_per_1m_usd": 4.39,
-      "cache_read_per_1m_usd": 0.25,
       "region": "eu",
-      "notes": "fp4 quant, 1,048,576 context. Inceptron model id zai-org/GLM-5.2. Native API and OpenRouter Inceptron endpoint agree at $0.95/$3.04 on 2026-07-12. | Re-verified 2026-07-13 vs native API: 0.85/2.50. | 2026-07-14: 0.94/2.90 (native API; volatile pricing). | 2026-07-22: 0.94/2.90 unchanged, cache read dropped 0.18 -> 0.17 (native API + OpenRouter agree). | 2026-08-26: native API 0.75/2.40 (cache 0.17); web page lists 1.20/4.20 | 2026-09-08: native API 1.25/2.99 (cache 0.17->0.22); web page still lists 1.20/4.20",
+      "notes": "fp4 quant, 1,048,576 context. Inceptron model id zai-org/GLM-5.2. Direct price = Inceptron list price (www.inceptron.io/models); the API catalog price is the OpenRouter feed and is kept as api_catalog_price. Price history: inceptron.method.md.",
       "api_model_id": "zai-org/GLM-5.2",
       "context_length": 1048576,
-      "quantization": "fp4"
+      "quantization": "fp4",
+      "input_per_1m_usd": 1.2,
+      "output_per_1m_usd": 4.2,
+      "cache_read_per_1m_usd": 0.26,
+      "price_source": {
+        "url": "https://www.inceptron.io/models",
+        "date": "2026-10-07",
+        "basis": "Inceptron list price (direct API)"
+      },
+      "api_catalog_price": {
+        "input_per_1m_usd": 1.39,
+        "output_per_1m_usd": 4.39,
+        "cache_read_per_1m_usd": 0.25,
+        "url": "https://api.inceptron.io/v1/models",
+        "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
+      }
     },
     {
       "model_name": "GLM 5.3",
       "provider_org": "Z.ai",
-      "input_per_1m_usd": 0.6,
-      "output_per_1m_usd": 3.39,
-      "cache_read_per_1m_usd": 0.2,
       "region": "eu",
-      "notes": "Added 2026-09-08: api.inceptron.io zai-org/GLM-5.3, fp4 quant, 1,048,576 context, text-only, reasoning (effort low/high/max), tools/json_mode/structured_outputs. Native API 1.25/4.40 (cache 0.26); web page lists 1.40/4.40 (cache 0.26)",
+      "notes": "fp4 quant, 1,048,576 context, text-only, reasoning (effort low/high/max), tools/json_mode/structured_outputs. Inceptron model id zai-org/GLM-5.3 (added 2026-09-08). Direct price = Inceptron list price (www.inceptron.io/models); the API catalog price is the OpenRouter feed and is kept as api_catalog_price. Price history: inceptron.method.md.",
       "api_model_id": "zai-org/GLM-5.3",
       "context_length": 1048576,
-      "quantization": "fp4"
+      "quantization": "fp4",
+      "input_per_1m_usd": 1.4,
+      "output_per_1m_usd": 4.4,
+      "cache_read_per_1m_usd": 0.26,
+      "price_source": {
+        "url": "https://www.inceptron.io/models",
+        "date": "2026-10-07",
+        "basis": "Inceptron list price (direct API)"
+      },
+      "api_catalog_price": {
+        "input_per_1m_usd": 0.6,
+        "output_per_1m_usd": 3.39,
+        "cache_read_per_1m_usd": 0.2,
+        "url": "https://api.inceptron.io/v1/models",
+        "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
+      }
     },
     {
       "model_name": "Kimi K2.6",
       "provider_org": "Moonshot AI",
-      "input_per_1m_usd": 0.465,
-      "output_per_1m_usd": 2.45,
-      "cache_read_per_1m_usd": 0.0975,
       "region": "eu",
-      "notes": "int4 quant, 262,144 context, multimodal (text+image input). Inceptron model id moonshotai/Kimi-K2.6. Native API and OpenRouter Inceptron endpoint agree at $0.66/$3.41 on 2026-07-12; unchanged 2026-07-22. | 2026-07-30: input 0.66->0.60, cache-read 0.20 (native API). | 2026-08-26: native API 0.56/3.39 (cache 0.20->0.17); web page lists 0.73/3.50 | 2026-09-08: native API 0.62/3.39 (cache 0.17 unchanged); web page still lists 0.73/3.50 (cache 0.25)",
+      "notes": "int4 quant, 262,144 context, multimodal (text+image input). Inceptron model id moonshotai/Kimi-K2.6. Direct price = Inceptron list price (www.inceptron.io/models); the API catalog price is the OpenRouter feed and is kept as api_catalog_price. Price history: inceptron.method.md.",
       "api_model_id": "moonshotai/Kimi-K2.6",
       "context_length": 262144,
-      "quantization": "int4"
+      "quantization": "int4",
+      "input_per_1m_usd": 0.73,
+      "output_per_1m_usd": 3.5,
+      "cache_read_per_1m_usd": 0.25,
+      "price_source": {
+        "url": "https://www.inceptron.io/models",
+        "date": "2026-10-07",
+        "basis": "Inceptron list price (direct API)"
+      },
+      "api_catalog_price": {
+        "input_per_1m_usd": 0.465,
+        "output_per_1m_usd": 2.45,
+        "cache_read_per_1m_usd": 0.0975,
+        "url": "https://api.inceptron.io/v1/models",
+        "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
+      }
     },
     {
       "model_name": "Kimi K2.7 Code",
       "provider_org": "Moonshot AI",
-      "input_per_1m_usd": 0.6712,
-      "output_per_1m_usd": 3.35,
-      "cache_read_per_1m_usd": 0.18,
       "region": "eu",
-      "notes": "int4 quant, 262,144 context, multimodal (text+image input). Inceptron model id moonshotai/Kimi-K2.7-Code. Native API and OpenRouter Inceptron endpoint agree at $0.72/$3.50 on 2026-07-12; unchanged 2026-07-22. | 2026-08-26: native API 0.67/3.40 (cache 0.15->0.19); web page lists 0.75/3.50 | 2026-09-08: native API 0.66/3.40 (cache 0.19->0.18); web page still lists 0.75/3.50 (cache 0.20)",
+      "notes": "int4 quant, 262,144 context, multimodal (text+image input). Inceptron model id moonshotai/Kimi-K2.7-Code. Direct price = Inceptron list price (www.inceptron.io/models); the API catalog price is the OpenRouter feed and is kept as api_catalog_price. Price history: inceptron.method.md.",
       "api_model_id": "moonshotai/Kimi-K2.7-Code",
       "context_length": 262144,
-      "quantization": "int4"
+      "quantization": "int4",
+      "input_per_1m_usd": 0.75,
+      "output_per_1m_usd": 3.5,
+      "cache_read_per_1m_usd": 0.2,
+      "price_source": {
+        "url": "https://www.inceptron.io/models",
+        "date": "2026-10-07",
+        "basis": "Inceptron list price (direct API)"
+      },
+      "api_catalog_price": {
+        "input_per_1m_usd": 0.6712,
+        "output_per_1m_usd": 3.35,
+        "cache_read_per_1m_usd": 0.18,
+        "url": "https://api.inceptron.io/v1/models",
+        "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
+      }
     },
     {
       "model_name": "DeepSeek V4 Flash 0731",
       "provider_org": "DeepSeek",
-      "input_per_1m_usd": 0.05,
-      "output_per_1m_usd": 0.65,
       "region": "eu",
-      "notes": "Added 2026-08-26: api.inceptron.io deepseek-ai/DeepSeek-V4-Flash-0731, cache 0.03, 1M ctx; web page agrees 0.13/0.28. | 2026-09-08: unchanged 0.13/0.28 (cache 0.03)",
-      "cache_read_per_1m_usd": 0.027,
+      "notes": "fp4 quant, 1M context. Inceptron model id deepseek-ai/DeepSeek-V4-Flash-0731 (added 2026-08-26). Direct price = Inceptron list price (www.inceptron.io/models); the API catalog price is the OpenRouter feed and is kept as api_catalog_price. Price history: inceptron.method.md.",
       "api_model_id": "deepseek-ai/DeepSeek-V4-Flash-0731",
       "context_length": 1048576,
-      "quantization": "fp4"
+      "quantization": "fp4",
+      "input_per_1m_usd": 0.13,
+      "output_per_1m_usd": 0.28,
+      "cache_read_per_1m_usd": 0.03,
+      "price_source": {
+        "url": "https://www.inceptron.io/models",
+        "date": "2026-10-07",
+        "basis": "Inceptron list price (direct API)"
+      },
+      "api_catalog_price": {
+        "input_per_1m_usd": 0.05,
+        "output_per_1m_usd": 0.65,
+        "cache_read_per_1m_usd": 0.027,
+        "url": "https://api.inceptron.io/v1/models",
+        "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
+      }
     },
     {
       "model_name": "GLM 5.3 Flash",
       "api_model_id": "zai-org/GLM-5.3-Flash",
       "provider_org": "Z.ai",
-      "input_per_1m_usd": 0.225,
-      "output_per_1m_usd": 0.6,
-      "cache_read_per_1m_usd": 0.09,
       "context_length": 1048576,
       "quantization": "fp8",
       "region": "eu",
       "mapping": "derived",
-      "notes": "Listed by api.inceptron.io/v1/models as zai-org/GLM-5.3-Flash; fp8 quant; 1,048,576 context; text"
+      "notes": "Listed by api.inceptron.io/v1/models as zai-org/GLM-5.3-Flash; fp8 quant; 1,048,576 context; text",
+      "input_per_1m_usd": 0.15,
+      "output_per_1m_usd": 0.5,
+      "cache_read_per_1m_usd": 0.07,
+      "price_source": {
+        "url": "https://www.inceptron.io/models",
+        "date": "2026-10-07",
+        "basis": "Inceptron list price (direct API)"
+      },
+      "api_catalog_price": {
+        "input_per_1m_usd": 0.225,
+        "output_per_1m_usd": 0.6,
+        "cache_read_per_1m_usd": 0.09,
+        "url": "https://api.inceptron.io/v1/models",
+        "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
+      }
     }
   ],
-  "response_sha256": "81cbb92ab6cca4768e2c0f5226588669bc9df2904c28f1b2fb497d2377acfde0",
+  "response_sha256": "ab86a66cc1211213307a858a63f83bfe4e746dfd4f3cfc94bf18be2ca289b557",
   "skipped": [],
   "diff": {
     "added": [],
     "removed": [],
-    "price_changed": []
-  }
+    "price_changed": [
+      "GLM 5.2: 1.39/4.39 (cache 0.25) -> 1.2/4.2 (cache 0.26)",
+      "GLM 5.3: 0.6/3.39 (cache 0.2) -> 1.4/4.4 (cache 0.26)",
+      "Kimi K2.6: 0.465/2.45 (cache 0.0975) -> 0.73/3.5 (cache 0.25)",
+      "Kimi K2.7 Code: 0.6712/3.35 (cache 0.18) -> 0.75/3.5 (cache 0.2)",
+      "DeepSeek V4 Flash 0731: 0.05/0.65 (cache 0.027) -> 0.13/0.28 (cache 0.03)",
+      "GLM 5.3 Flash: 0.225/0.6 (cache 0.09) -> 0.15/0.5 (cache 0.07)"
+    ]
+  },
+  "listing_sha256": "c0a7075e2691f374620f1a935267046cf518e9fda6b3fabe0b36f79cc01854a2"
 }

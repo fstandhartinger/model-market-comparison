@@ -25,6 +25,8 @@ import { FIXED_BLENDS } from "../lib/effective-cost.mjs";
 import { valueSignals, type ValueSignal } from "../lib/value-signal.mjs";
 import { scoreRowSubtitle } from "./ScoreRows";
 import { bridgeDisclosure } from "../lib/benchmark-comparison.mjs";
+import { OfferChannel } from "./OfferChannel";
+import { priceNotAvailable } from "../lib/offer-channel.mjs";
 
 type SortKey = "name" | "org" | "score" | "cost" | "providers" | "benchmarks";
 const SCORE_ROWS: { key: keyof ClientData["models"][number]["scores"]; label: string; dp: number }[] = [
@@ -687,11 +689,11 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                                     {o.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[10px] text-sky-300">EU≈</span>}
                                     {o.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[10px] text-purple-300">TEE</span>}
                                     {free && <span title={FREE_ROUTE_NOTE} className="ml-1 rounded border border-line px-1 text-[10px] text-gray-400">{freeRouteLabel(o)}<span className="sr-only"> — {FREE_ROUTE_NOTE}</span></span>}
-                                    <span className="ml-1 text-[10px] text-gray-500">{o.platform !== o.provider ? o.platform : ""} {o.region && o.region !== "global" ? `· ${o.region}` : ""}</span>
+                                    <OfferChannel offer={o} openRouterDate={data.sourceDates?.openrouter} />
                                   </td>
                                   <td className="py-1 tabular text-right text-gray-400">{usdPerM(o.input_per_1m)}</td>
                                   <td className="py-1 tabular text-right text-gray-400">{usdPerM(o.output_per_1m)}</td>
-                                  <td className="py-1 tabular text-right font-semibold">{free ? <span className="text-[10px] font-normal text-gray-500" title={FREE_ROUTE_NOTE}>not a paid price</span> : <PriceValue price={o.price} compact showEstimate={false} />}</td>
+                                  <td className="py-1 tabular text-right font-semibold">{free ? <span className="text-[10px] font-normal text-gray-500" title={FREE_ROUTE_NOTE}>not a paid price</span> : priceNotAvailable(o) ? <span className="text-[10px] font-normal text-gray-500" data-bh-price-na>price n/a</span> : <PriceValue price={o.price} compact showEstimate={false} />}</td>
                                 </tr>
                               );
                             })}

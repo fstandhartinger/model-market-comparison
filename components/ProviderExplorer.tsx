@@ -8,6 +8,7 @@ import { useSettings } from "./SettingsContext";
 import { createScope, rankedOffers, scopedCatalogOffers, scoreOf, offerPrice, priceContext, priceLabel, type PriceSettings, type PriceResult } from "../lib/cost";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { collapseModels, preferredVariantIds, selectableModels } from "../lib/variants";
+import { OfferChannel } from "./OfferChannel";
 
 const fmt = (n: number | null) => (n == null ? "—" : `$${n.toFixed(n < 1 ? 3 : 2)}`);
 type PricedOffer = ClientOffer & { price: PriceResult };
@@ -241,7 +242,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
                               {r.ranked.map((o) => (
                                 <tr key={o.key} className={o.key === activeKey ? "bg-accent/10" : ""}>
                                   <td className="px-2 py-1 text-gray-500">{priceRankByKey.has(o.key) ? `#${priceRankByKey.get(o.key)}` : "—"}</td>
-                                  <td className="px-2 py-1 font-medium">{o.provider}<span className="ml-1 text-[10px] text-gray-500">{o.platform !== o.provider ? o.platform : ""}</span></td>
+                                  <td className="px-2 py-1 font-medium">{o.provider}<OfferChannel offer={o} openRouterDate={data.sourceDates?.openrouter} /></td>
                                   <td className="px-2 py-1 text-gray-500">{o.region}</td>
                                   <td className="px-2 py-1 tabular text-right">{fmt(o.input_per_1m)} raw in</td>
                                   <td className="px-2 py-1 tabular text-right">{fmt(o.output_per_1m)} raw out</td>

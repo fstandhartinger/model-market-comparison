@@ -26,6 +26,10 @@ export interface ClientOffer {
   cache_read_per_1m?: number | null;
   cache_write_per_1m?: number | null;
   cache_read_source?: { url: string; date?: string; sha256?: string; locator?: string };
+  /** CR-329.1: where a direct (non-OpenRouter) price was read and when; OpenRouter routes derive theirs from or_model_id. */
+  price_source?: { url: string; date?: string | null; basis?: string };
+  /** CR-329.1: "n/a" = the provider serves the model but publishes no direct price we could collect. */
+  price_status?: "n/a";
   price_overrides?: OfferPriceOverride[];
   or_model_id?: string;
   or_canonical_slug?: string | null;
@@ -255,6 +259,7 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
     input_per_1m: o.input_per_1m, output_per_1m: o.output_per_1m,
     cache_read_per_1m: o.cache_read_per_1m, cache_write_per_1m: o.cache_write_per_1m,
     cache_read_source: o.cache_read_source,
+    price_source: o.price_source, price_status: o.price_status,
     price_overrides: o.price_overrides,
     or_model_id: o.or_model_id,
     or_canonical_slug: o.or_canonical_slug,

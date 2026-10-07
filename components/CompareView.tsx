@@ -10,6 +10,7 @@ import { DataBar } from "./ui";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapseModels, selectableModels } from "../lib/variants";
+import { OfferChannel } from "./OfferChannel";
 
 const METRICS: { key: ScoreKey | "cost"; label: string; lowerBetter?: boolean; digits?: number }[] = [
   { key: "designarena_fullstack", label: "DesignArena Full-Stack Elo", digits: 0 },
@@ -193,7 +194,7 @@ function ProviderMini({ slot, model, data, offerScope, priceSettings }: { slot: 
             <tbody>
               {offers.map((o, idx) => (
                 <tr key={o.key + idx}>
-                  <td className="px-2 py-1 truncate text-xs">{o.provider}<span className="ml-1 text-[10px] text-gray-500">{o.platform}</span>{o.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[9px] text-sky-300">EU equivalent</span>}</td>
+                  <td className="px-2 py-1 truncate text-xs">{o.provider}<OfferChannel offer={o} openRouterDate={data.sourceDates?.openrouter} />{o.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[9px] text-sky-300">EU equivalent</span>}</td>
                   <td className="px-2 py-1"><DataBar frac={(o.price.value ?? 0) / max} color={idx === 0 ? "#7ee0c0" : "#8a93a3"} align="right"><span className="block text-right font-semibold"><PriceValue price={o.price} compact /></span></DataBar></td>
                 </tr>
               ))}

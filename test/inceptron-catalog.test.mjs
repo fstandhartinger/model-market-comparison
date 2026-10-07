@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { parseInceptronCatalog } from "../lib/inceptron-catalog.mjs";
+import { parseInceptronCatalog, parseInceptronModelsPage, INCEPTRON_LIST_URL } from "../lib/inceptron-catalog.mjs";
 
 const model = (id, name, prompt, completion, extra = {}) => ({
   id, name, object: "model", owned_by: id.split("/")[0], quantization: "fp4", context_length: 1048576,
@@ -45,4 +45,42 @@ test("fails closed on shape changes, unreadable prices, duplicates and large los
   assert.throws(() => parseInceptronCatalog({ data: [model("zai-org/GLM-5.2", "GLM 5.2", "free", "0.000003")] }, previous), /unreadable prompt price/);
   assert.throws(() => parseInceptronCatalog({ data: [model("zai-org/GLM-5.2", "GLM 5.2", "0.000001", "0.000003"), model("zai-org/GLM-5.2", "GLM 5.2", "0.000001", "0.000003")] }, previous), /listed twice/);
   assert.throws(() => parseInceptronCatalog({ data: [model("x/New", "New", "0.000001", "0.000003")] }, previous), /refusing/);
+});
+
+// CR-329.1: the direct price comes from www.inceptron.io/models; the API catalog is the OpenRouter feed.
+const card = (name, org, input, output, cache, quant = "fp4") => `<div><p class="framer-text">${name}</p><p>${org}</p><a>Description</a><a>License</a><p>Mode</p><p>Inceptron Optimized</p><p>Region</p><img/>`
+  + `<p>Input tokens, 1M</p><div data-framer-name="$0.80"><p>$${input}</p></div><p>Output tokens, 1M</p><p>$${output}</p>${cache == null ? "" : `<p>Cache read</p><p>$${cache}</p>`}<p>Quantization</p><p>${quant}</p><p>Size</p><p>754B</p>`
+  + `<p>1M context</p><a>Go to playground</a></div>`;
+const page = `<html><head><script>var x = "GLM-5.3 Zai Description";</script></head><body><nav>Models Pricing Docs</nav><h1>M o d e l s</h1>${card("GLM-5.3", "Zai", "1.40", "4.40", "0.26")}${card("Kimi-K2.7 Code", "Moonshotai", "0.75", "3.50", "0.20", "Int4")}${card("GLM-5.3", "Zai", "1.40", "4.40", "0.26")}</body></html>`;
+
+test("parses the published list page, collapsing Framer's per-breakpoint duplicates", () => {
+  const rows = parseInceptronModelsPage(page);
+  assert.deepEqual(rows.map((r) => [r.name, r.key, r.input_per_1m_usd, r.output_per_1m_usd, r.cache_read_per_1m_usd, r.quantization]), [
+    ["GLM-5.3", "glm53", 1.4, 4.4, 0.26, "fp4"],
+    ["Kimi-K2.7 Code", "kimik27code", 0.75, 3.5, 0.2, "int4"],
+  ]);
+  assert.throws(() => parseInceptronModelsPage("<html>no cards</html>"), /no priced model cards/);
+  assert.throws(() => parseInceptronModelsPage("<h1>M o d e l s</h1>" + card("GLM-5.3", "Zai", "1.40", "4.40", "0.26") + card("GLM-5.3", "Zai", "0.60", "3.39", "0.20")), /two different prices/);
+});
+
+test("direct price = list price with provenance; the OpenRouter-feed API price is never copied; unlisted = n/a", () => {
+  const listPrices = parseInceptronModelsPage(page);
+  const { models } = parseInceptronCatalog({ data: [
+    model("zai-org/GLM-5.3", "GLM 5.3", "0.0000006", "0.00000339", { openrouter: { slug: "zai-org/GLM-5.3" }, pricing: { prompt: "0.0000006", completion: "0.00000339", input_cache_reads: "0.0000002" } }),
+    model("zai-org/GLM-5.2", "GLM 5.2", "0.00000139", "0.00000439"),
+  ] }, previous, { listPrices, collectedAt: "2026-10-07", minRetainedShare: 0 });
+  const glm53 = models.find((m) => m.api_model_id === "zai-org/GLM-5.3");
+  assert.equal(glm53.input_per_1m_usd, 1.4);
+  assert.equal(glm53.output_per_1m_usd, 4.4);
+  assert.equal(glm53.cache_read_per_1m_usd, 0.26);
+  assert.deepEqual(glm53.price_source, { url: INCEPTRON_LIST_URL, date: "2026-10-07", basis: "Inceptron list price (direct API)" });
+  assert.equal(glm53.api_catalog_price.input_per_1m_usd, 0.6);
+  assert.equal(glm53.api_catalog_price.output_per_1m_usd, 3.39);
+  const glm52 = models.find((m) => m.api_model_id === "zai-org/GLM-5.2");
+  assert.equal(glm52.price_status, "n/a");
+  assert.equal(glm52.input_per_1m_usd, undefined, "the previous snapshot's price must not survive either");
+  assert.equal(glm52.output_per_1m_usd, undefined);
+  assert.equal(glm52.api_catalog_price.input_per_1m_usd, 1.39);
+  assert.throws(() => parseInceptronCatalog({ data: [model("zai-org/GLM-5.2", "GLM 5.2", "0.00000139", "0.00000439")] }, previous,
+    { listPrices, minRetainedShare: 0 }), /no served model matches the published price list/);
 });

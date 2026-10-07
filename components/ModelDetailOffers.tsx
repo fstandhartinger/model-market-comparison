@@ -8,6 +8,8 @@ import { describeOpenRouterPriceOverrideWithRates } from "../lib/openrouter-pric
 import { usdPerM, counted } from "../lib/format";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
+import { OfferChannel } from "./OfferChannel";
+import { offerChannel, channelTitle, priceNotAvailable } from "../lib/offer-channel.mjs";
 
 // "A", "A and B", "A, B and C", "A, B, C and 2 more".
 const nameList = (names: string[]) => {
@@ -85,7 +87,7 @@ export function ModelDetailOffers({
             <thead><tr>
               <th className="px-2 py-1 text-left text-xs text-gray-400">#</th>
               <th className="px-2 py-1 text-left text-xs text-gray-400">Provider</th>
-              <th className="hidden px-2 py-1 text-left text-xs text-gray-400 sm:table-cell">Platform</th>
+              <th className="hidden px-2 py-1 text-left text-xs text-gray-400 sm:table-cell">Price channel</th>
               <th className="hidden px-2 py-1 text-right text-xs text-gray-400 md:table-cell">Raw input $/1M</th>
               <th className="hidden px-2 py-1 text-right text-xs text-gray-400 md:table-cell">Raw output $/1M</th>
               <th className="px-2 py-1 text-right text-xs text-gray-400">{priceLabel(s)}</th>
@@ -94,8 +96,8 @@ export function ModelDetailOffers({
               {top.map((offer, index) => (
                 <tr key={offer.key}>
                   <td className="px-2 py-1 text-gray-500">{index + 1}</td>
-                  <td className="px-2 py-1">{offer.provider}{offer.estimated && <span className="ml-1 text-[10px] text-warn">est.</span>}{offer.eu_policy_equivalent && <span title="Company-approved equivalent; this Global deployment may process inference outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[10px] text-sky-300">EU equivalent</span>}</td>
-                  <td className="hidden px-2 py-1 text-gray-400 sm:table-cell">{offer.platform}</td>
+                  <td className="px-2 py-1">{offer.provider}<OfferChannel offer={offer} openRouterDate={pricingData.sourceDates?.openrouter} className="ml-1 text-[10px] text-gray-500 sm:hidden" />{offer.estimated && <span className="ml-1 text-[10px] text-warn">est.</span>}{offer.eu_policy_equivalent && <span title="Company-approved equivalent; this Global deployment may process inference outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[10px] text-sky-300">EU equivalent</span>}</td>
+                  <td className="hidden px-2 py-1 text-gray-400 sm:table-cell"><OfferChannel offer={offer} openRouterDate={pricingData.sourceDates?.openrouter} className="" /></td>
                   <td className="hidden px-2 py-1 text-right tabular md:table-cell">{usdPerM(offer.input_per_1m)}</td>
                   <td className="hidden px-2 py-1 text-right tabular md:table-cell">{usdPerM(offer.output_per_1m)}</td>
                   <td className="px-2 py-1 text-right tabular font-semibold"><PriceValue price={offer.price} showEstimate={false} /></td>
@@ -132,10 +134,18 @@ export function ModelDetailOffers({
     <details ref={allRef} id="all-offers" className="card mt-6 min-w-0 overflow-x-auto p-4">
       <summary className="font-semibold">Token offers by platform · {counted(catalog.length, "offer")} <span className="text-xs font-normal text-gray-500">({priceLabel(s)})</span></summary>
       <PriceAssumptions />
-      <p className="mb-3 text-[11px] text-gray-500">{counted(catalog.length, "offer")} within the active global filters{outside > 0 ? `, ${outside} more outside them` : ""}; “—” means the catalog is active but no public token price is available.</p>
+      <p className="mb-3 text-[11px] text-gray-500">{counted(catalog.length, "offer")} within the active global filters{outside > 0 ? `, ${outside} more outside them` : ""}; “price n/a” means the provider serves the model but publishes no direct token price we could collect — no other channel's price is shown in its place.</p>
       {[...byPlatform.entries()].map(([platform, platformOffers]) => (
         <div key={platform} className="mb-4">
           <h3 className="mb-1 text-sm font-medium text-accent">{platform} <span className="text-xs font-normal text-gray-500">({platformOffers.length})</span></h3>
+          {/* CR-329.1: say which channel these prices are for and where/when each was read. */}
+          {(() => {
+            const channel = offerChannel(platformOffers[0], pricingData.sourceDates?.openrouter);
+            return <p className="mb-1 text-[11px] text-gray-500" data-bh-channel-note={channel.kind}>
+              {channel.kind === "openrouter" ? "Prices via OpenRouter — what OpenRouter charges for each provider's endpoint, not the provider's own direct price." : `Direct prices from ${platform}'s own price list.`}
+              {channel.url && <> Source: <a className="underline" href={channel.url} target="_blank" rel="noopener noreferrer">{channel.url.replace(/^https?:\/\//, "")}</a></>}{channel.date && <>, collected {channel.date}</>}.
+            </p>;
+          })()}
           {/* F-08b: the same column set as the top-5 table — Provider and price on phones,
               route details and raw prices from md up. */}
           <table className="dtable w-full text-sm">
@@ -150,7 +160,7 @@ export function ModelDetailOffers({
                   <td className="hidden px-2 py-1 text-xs text-gray-500 md:table-cell">{offer.region}{offer.endpoint_tag && <span className="ml-1 text-gray-400">{offer.endpoint_tag}</span>}{offer.pricing_tier && <span className="ml-1 text-sky-300">{offer.pricing_tier.replaceAll("_", " ")}</span>}{offer.route_type && <span className="ml-1 text-amber-300">{offer.route_type.replaceAll("_", " ")}</span>}{offer.eu_hosted && <span className="ml-1 text-emerald-300">EU</span>}{offer.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 text-sky-300">EU equivalent</span>}{offer.tee && <span className="ml-1 text-purple-300">TEE</span>}</td>
                   <td className="hidden px-2 py-1 text-right tabular md:table-cell">{usdPerM(offer.input_per_1m)}<span className="text-gray-600"> raw in $/1M</span></td>
                   <td className="hidden px-2 py-1 text-right tabular md:table-cell">{usdPerM(offer.output_per_1m)}<span className="text-gray-600"> raw out $/1M</span></td>
-                  <td className="px-2 py-1 text-right tabular font-semibold">{isFreeRoute(offer) ? <span className="text-xs font-normal text-gray-500" title={FREE_ROUTE_NOTE}>not a paid price</span> : <PriceValue price={offer.price} showEstimate={false} />}</td>
+                  <td className="px-2 py-1 text-right tabular font-semibold">{isFreeRoute(offer) ? <span className="text-xs font-normal text-gray-500" title={FREE_ROUTE_NOTE}>not a paid price</span> : priceNotAvailable(offer) ? <span className="text-xs font-normal text-gray-500" title={channelTitle(offerChannel(offer, pricingData.sourceDates?.openrouter))} data-bh-price-na>price n/a</span> : <PriceValue price={offer.price} showEstimate={false} />}</td>
                 </tr>
               ))}
             </tbody>
