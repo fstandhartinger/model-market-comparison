@@ -18,3 +18,21 @@ When you add an overlay row:
    fails for any live row without per-type/tier and topic/use-case aggregates.
 
 Language cells are not in this artifact (the language view has its own supplement pipeline).
+
+CR-334: the default build adds L1/L2 runs from each release's `runs/api/<key>.jsonl`, requiring an exposure receipt,
+unique response IDs and complete joins to that release's frozen ID map. Category cells include only present scored
+responses; missing responses are not imputed. Original A/P (or S/P) responses win over repeated public responses;
+supplements follow L1 then L2, with each stable identity scored once. `coverage` / `n_items` and per-type/tier splits
+retain their original basis; `category_pools` / `category_n_items` describe the category union. The default labels
+are ruled r13, r14 and r15, with authoring use-case precedence.
+
+Future labelled supplements need no code edit: repeat `--pool NAME=/path/to/release` (L1/L2/L3/C1; explicit pools
+replace the defaults) and `--label-file /path/to/ruled.jsonl` (adds to the default label files). Example:
+
+```bash
+python3 scripts/jevbench-api-rerun-cells/build_api_rerun_cells.py EQUATED SUPPLEMENT OUT \
+  --pool L1=/path/to/L1 --pool L2=/path/to/L2 --pool L3=/path/to/L3 --pool C1=/path/to/C1 \
+  --label-file /path/to/labels-L3-ruled.jsonl --label-file /path/to/labels-C1-ruled.jsonl
+```
+
+Run `python3 -m unittest discover -s scripts/jevbench-api-rerun-cells -p 'test_*.py'` for union/receipt/join checks.

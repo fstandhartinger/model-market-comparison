@@ -3,6 +3,7 @@ export type CategoryDim = { key: string; title: string; note: string; cats: Cate
 /** systems[key][dim][category] = [competence 0–100 (can be negative), items answered by that system in the category] */
 export type CompareCategories = {
   revision: string; minN: number; radarMinN: number; metric: string; labelling: string; rules: string[]; splitNames: [string, string] | string[];
+  categoryPools?: Record<string, string>;
   dims: CategoryDim[]; systems: Record<string, Record<string, Record<string, [number, number]>>>; missing: Record<string, string>;
 };
 export const JEVBENCH_CATEGORY_ARTIFACT: string;
@@ -16,3 +17,12 @@ export function withJevCellSupplement<T extends { revision: string; systems: Rec
 export function imageJevCategoryView(revision: string, keys: string[]): CompareCategories | null;
 export const RADAR_MIN_N: number;
 export const CATEGORY_SHORT: Record<string, string>;
+
+export const JEVBENCH_LANGUAGE_CELLS_ARTIFACT: string;
+export type LanguageCellsMeta = { pools: Record<string, number>; min_n: number; drawn: string | null; min_api_basis: number };
+export function withLanguageCells<T extends { revision: string; systems: Record<string, unknown> }>(base: T, cells?: any): T & { language_cells: LanguageCellsMeta };
+export function languageCoverage(row: any): string;
+export function jevLanguageRows<T extends { key: string; listing?: string }>(systems: T[], scope?: string): T[];
+export function languagePoolNote(meta: LanguageCellsMeta): string;
+
+export const JEVBENCH_LANGUAGE_META: LanguageCellsMeta;

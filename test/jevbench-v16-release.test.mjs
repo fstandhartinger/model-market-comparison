@@ -177,7 +177,7 @@ test('the live and archived pages use the approved full-page route and keep vers
   assert.match(current, /readCurrentJevbench = readJevbenchV161Release/);
   for (const marker of ['<JevBenchV16Charts', '<JevScoreChart', '<JevCompareV15', '<LanguageView', '<NoulAndGate', '<JevV15AllDataGrid', '<DatedCarry', '<Method']) assert.ok(board.includes(marker), marker);
   assert.match(board, /aria-label="low n: fewer than 30 answered items"/);
-  assert.match(board, /Not plotted; fewer than \$\{categories\.min_n\} answered items/);
+  assert.match(board, /Not plotted; fewer than \$\{minN\} answered items/);
   assert.match(charts, /onCapsChange/);
   assert.match(charts, /latencyCap=\{selected\.latencyLimit\}/);
   assert.match(charts, /aria-expanded=\{show3d\}/);

@@ -13,6 +13,7 @@ export type JevV16CategoryCell = { n: number; competence: number };
 export type JevV16CategoryDescriptor = { key: string; label: string; covers: string; n: number; open: number; sealed: number; low_n: boolean };
 export type JevV16Categories = { revision: 'v1.6.0' | 'v1.6.1'; provisional: false; source_results_sha256: string; min_n: number; metric: string; labelling: string; rules: string[];
   languages: JevV16CategoryDescriptor[]; lanes: Record<string, 'api' | 'selfhosted'>; lane_note: string;
+  language_cells?: import("./jevbench-categories.mjs").LanguageCellsMeta;
   supplement?: { revision: string; pools: Record<string, number>; pool_items: number; drawn: string; note: string; source_sha256: string };
   systems: Record<string, { languages: Record<string, JevV16CategoryCell>; [dim: string]: Record<string, JevV16CategoryCell> }> };
 export type JevV16CarryRow = { key: string; display: string; author: string | null; class: string | null; open: string | null; licence: string | null;

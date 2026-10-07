@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { JevArchitectureMethod } from './JevArchitecture';
 import type { CSSProperties } from 'react';
 import type { JevV15Artifact } from '../lib/jevbench-v15-preview.mjs';
@@ -5,7 +6,7 @@ import { jevV15LeaderSentence } from '../lib/jevbench-v15-preview.mjs';
 import { jevV15SliderPresets, jevV15BoardSystem, jevV15BoardRow, jevV15CompareRow } from '../lib/jevbench-v15-board.mjs';
 import type { JevV16ReleaseArtifact, JevV16Categories, JevV16Carry } from '../lib/jevbench-v16-release.mjs';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
-import { jevbenchCategoryView, JEVBENCH_CELL_SUPPLEMENT_ARTIFACT } from '../lib/jevbench-categories.mjs';
+import { JEVBENCH_LANGUAGE_META, jevLanguageRows, languagePoolNote, jevbenchCategoryView, JEVBENCH_CELL_SUPPLEMENT_ARTIFACT } from '../lib/jevbench-categories.mjs';
 import { jevV15FilterRows } from '../lib/jevbench-v15-filter-rows.mjs';
 import { JevBenchV16Charts } from './JevBenchV16Charts';
 import { jevClassView } from './jevClassView';
@@ -20,6 +21,7 @@ import { JevApiOfferingsToggle } from './JevApiOfferingsToggle';
 import { JevGpuCostCalculator } from './JevGpuCostCalculator';
 import { JEV_PENDING_LISTING, JEV_PRELIMINARY_LISTING, JEV_REFERENCE_KEY, JEV_SCOPE_LISTING, jevApiPreliminaryRows, jevApiRoster, jevScopeDisplayOrder, type JevApiListedRow, type JevScope } from '../lib/jevbench-scope.mjs';
 import { NOT_RANKED } from './JevBoardShared';
+import { apiRerunCells } from '../lib/jevbench-api-rerun-cells.mjs';
 import apiPublicSet from '../data/jevbench-api-public-set.json';
 import apiA4 from '../data/jevbench-api-a4-equated.json';
 
@@ -33,6 +35,7 @@ const sec = (v: number | null | undefined) => v == null ? '—' : `${v.toFixed(2
 const short = (display: string) => display.replace(/\s*\(.*\)\s*$/, '');
 // Review 6 Oct 2026: variants share a short name ("GPT-6 Luna", "wity-1"); texts that list systems by name keep the full display for those.
 const nameLabel = (display: string, all: ReadonlyArray<{ display: string }>) => all.filter((x) => short(x.display) === short(display)).length > 1 ? display : short(display);
+const API_CATEGORY_POOLS = [...new Set(Object.values(apiRerunCells.systems as Record<string, { category_pools: string }>).map((r) => r.category_pools))].sort().join('; ');
 const A4_OFFSETS = (apiA4 as { a4_offsets: { I: number; C: number } }).a4_offsets;
 const A4_ROWS = (apiA4 as { rows: Array<{ key: string; listing: string; n_rows: number }> }).rows.length;
 const A4_RANKED = (apiA4 as { rows: Array<{ key: string; listing: string; n_rows: number }> }).rows.filter((r) => r.listing === 'ranked').length;
@@ -59,7 +62,7 @@ function laneTag(s: { key: string; listing?: string; v16: { lane: string } }) {
 
 // v1.7.12: which item pools a row's category cells cover (S+P, S+P+L1 or S+P+L1+L2).
 function coverageOf(categories: JevV16Categories, key: string) {
-  return (categories.systems[key] as unknown as { coverage?: string }).coverage ?? 'S+P';
+  return (categories.systems[key] as unknown as { language_coverage?: string; coverage?: string } | undefined)?.language_coverage ?? (categories.systems[key] as unknown as { coverage?: string } | undefined)?.coverage ?? 'S+P';
 }
 
 // CR-320: a low-n cell's shade is dimmed in CSS ([data-bh-heat-low-n]); opacity here also faded the number below 4.5:1.
@@ -69,39 +72,42 @@ function heat(competence: number): CSSProperties {
   return { ['--h' as string]: t.toFixed(3) } as CSSProperties;
 }
 
-function LanguageView({ a, categories, hiddenApi }: { a: JevV16ReleaseArtifact; categories: JevV16Categories; hiddenApi: ReadonlySet<string> }) {
-  const systems = a.systems.filter((s) => listedRow(s) && categories.systems[s.key]).sort(byBoard);
+function LanguageView({ a, categories, hiddenApi, scope }: { scope: JevScope; a: JevV16ReleaseArtifact; categories: JevV16Categories; hiddenApi: ReadonlySet<string> }) {
+  const systems = categories.language_cells ? jevLanguageRows(a.systems, scope) : a.systems.filter((s) => listedRow(s) && categories.systems[s.key]).sort(byBoard);
+  const minN = categories.language_cells?.min_n ?? categories.min_n;
   const allLangs = categories.languages.filter((l) => l.key !== 'en').sort((x, y) => y.n - x.n);
   const en = categories.languages.find((l) => l.key === 'en');
   // CR-290 (Florian 5 Oct 2026): a language column in which no system reaches the reporting minimum was all dashes.
   // Those columns are not drawn; their languages and item counts are listed in the caption instead. Display only.
-  const shown = (l: { key: string }) => systems.some((s) => (categories.systems[s.key].languages?.[l.key]?.n ?? 0) >= categories.min_n);
+  const shown = (l: { key: string }) => systems.some((s) => (categories.systems[s.key]?.languages?.[l.key]?.n ?? 0) >= minN);
   const langs = allLangs.filter(shown);
   const hidden = allLangs.filter((l) => !shown(l));
   return <section className="mt-10" aria-labelledby="jev16-languages" data-bh-jev16-language-view>
     <h2 id="jev16-languages" className="text-2xl font-bold">Languages</h2>
     <p className="bh-muted mt-1 max-w-4xl text-sm">Raw chance-corrected competence per item language (0 = chance, 100 = perfect; can be negative), from each system&apos;s own measured items:
-      self-hosted systems over S 1,200 + P 300{a.revision === 'v1.6.1' ? ', and every hosted API that answered the full set the same way (1,500 items)' : ', hosted APIs over their A or A2 subset + P (600 items). Sage (A3) language cells and A2/A3 topic/use-case cells cover public P300 only'}{categories.supplement ? `, plus the sealed language supplement L1 (${categories.supplement.pools.L1} items) and use-case supplement L2 (${categories.supplement.pools.L2} items), drawn ${categories.supplement.drawn} (${categories.supplement.pool_items.toLocaleString('en-US')} items in all; headline scores stay on S + P). Rows tagged “S+P” or “S+P+L1” have not answered every supplement yet and keep cells from the pools in the tag` : ''}. Unequated and outside the Composite. Cells under {categories.min_n} items are left empty. A dagger (†) marks every displayed cell with fewer than 30 answered items.
+      {' '}{categories.language_cells ? languagePoolNote(categories.language_cells) : `Self-hosted rows use S ${a.v16.counts.S} + P ${a.v16.counts.P}; API rows use their measured sealed subset plus P. Sage (A3) language cells and A2/A3 topic/use-case cells cover public P300 only. Raw and outside the Composite.`} Cells under {minN} items are left empty. A dagger (†) marks every displayed cell with fewer than 30 answered items.
+      {!categories.language_cells && !categories.supplement && ` Per-language coverage grows with the expanded uc1.1 multilingual pool, a candidate for a later release that is not part of ${a.revision}.`}
       {en ? ` English (${en.n.toLocaleString('en-US')} items) is listed first; the other ${allLangs.filter((l) => l.key !== 'mixed').length} languages${allLangs.some((l) => l.key === 'mixed') ? ' and the mixed-language group' : ''} share ${allLangs.reduce((s, l) => s + l.n, 0)} items.` : ''}
-      {hidden.length > 0 && <span data-bh-jev16-language-hidden={hidden.map((l) => l.key).join(' ')}>{' '}In {hidden.length === 1 ? 'one further group' : `${hidden.length} further groups`} no system reaches the {categories.min_n}-item reporting minimum, so {hidden.length === 1 ? 'it gets' : 'they get'} no column (items in the pool shown): {hidden.map((l) => `${l.label} (${l.n})`).join(', ')} — {hidden.reduce((s, l) => s + l.n, 0)} items, scored like every other item.</span>}
-      {a.systems.some((s) => (s as { a4?: unknown }).a4) && ' API rows re-run on A4 ∪ P (v1.7.7) or A5 ∪ P (v1.7.10) and Liquid AI d1 (v1.7.8) are not in this view yet: their per-language breakdown is not published.'}
-      {categories.supplement ? ` Every language now has at least 30 items in the pool (supplements added in ${categories.supplement.revision}); rows tagged S+P can still have fewer.` : ` This is the ${a.revision} main-pool breakdown. Per-language coverage grows with the expanded uc1.1 multilingual pool, a candidate for a later release that is not part of ${a.revision}.`}</p>
+      {hidden.length > 0 && <span data-bh-jev16-language-hidden={hidden.map((l) => l.key).join(' ')}>{' '}In {hidden.length === 1 ? 'one further group' : `${hidden.length} further groups`} no system reaches the {minN}-item reporting minimum, so {hidden.length === 1 ? 'it gets' : 'they get'} no column (items in the pool shown): {hidden.map((l) => `${l.label} (${l.n})`).join(', ')} — {hidden.reduce((s, l) => s + l.n, 0)} items, scored like every other item.</span>}
+    </p>
     <div className="mt-3 overflow-x-auto"><table className="text-left text-xs tabular" data-bh-jev16-language-table>
       <caption className="sr-only">JevBench {a.revision} competence by item language and system</caption>
       <thead><tr><th scope="col" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5">System</th>
         {[...(en ? [en] : []), ...langs].map((l) => <th key={l.key} scope="col" className="p-1.5 text-center" title={`${l.label}: ${l.n} items (${l.open} public, ${l.sealed} sealed)`}>{l.key}{l.n < 30 && <sup aria-label="low n">†</sup>}<span className="bh-muted block font-normal">{l.n}</span></th>)}</tr></thead>
-      <tbody>{systems.map((s) => <tr key={s.key} className="border-t border-line" {...apiRowProps(s.key, hiddenApi)}>
-        <th scope="row" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5 font-normal whitespace-nowrap">{short(s.display)}<span className="bh-muted"> · {laneTag(s)}</span>{categories.supplement && coverageOf(categories, s.key) !== 'S+P+L1+L2' && <span className="bh-thin-tag ml-1" title="Cells from S + P only; not yet run on the language/use-case supplements" data-bh-jev16-cell-coverage={coverageOf(categories, s.key)}>{coverageOf(categories, s.key)}</span>}</th>
+      <tbody>{systems.map((s, i) => <Fragment key={s.key}>
+        {(s.listing as string) === 'wrapper' && (systems[i - 1]?.listing as string) !== 'wrapper' && <tr {...apiRowProps(s.key, hiddenApi)}><th colSpan={1 + (en ? 1 : 0) + langs.length} className="p-2 pt-4" scope="colgroup">Wrappers (listed, never ranked)</th></tr>}
+        <tr data-bh-jev16-language-row={s.key} className="border-t border-line" {...apiRowProps(s.key, hiddenApi)}>
+        <th scope="row" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5 font-normal"><span className="block w-44 whitespace-normal sm:w-auto sm:whitespace-nowrap">{nameLabel(s.display, systems)}<span className="bh-muted"> · {laneTag(s)}</span><span className="bh-thin-tag ml-1" title="Measured item pools used for these language cells" data-bh-jev16-cell-coverage={coverageOf(categories, s.key)}>{coverageOf(categories, s.key)}</span></span></th>
         {[...(en ? [en] : []), ...langs].map((l) => {
-          const c = categories.systems[s.key].languages?.[l.key];
-          if (!c || c.n < categories.min_n) {
-            const status = c ? `${c.n} answered items; below the ${categories.min_n}-item reporting minimum` : `Not plotted; fewer than ${categories.min_n} answered items`;
+          const c = categories.systems[s.key]?.languages?.[l.key];
+          if (!c || c.n < minN) {
+            const status = c ? `${c.n} answered items; below the ${minN}-item reporting minimum` : `Not plotted; fewer than ${minN} answered items`;
             return <td key={l.key} className="p-1.5 text-center bh-muted" title={`${l.label}: ${status}`} aria-label={`${l.label}: ${status}`} data-bh-jev16-language-suppressed>{!c ? '—' : '·'}</td>;
           }
           const lowN = c.n < 30;
           return <td key={l.key} className="bh-heat p-1.5 text-center" style={heat(c.competence)} data-bh-heat-low-n={lowN ? '' : undefined} title={`${l.label}: ${c.competence.toFixed(1)} over ${c.n} items${lowN ? ' (low n)' : ''}`}>{c.competence.toFixed(0)}{lowN && <sup className="ml-0.5 text-[10px]" aria-label="low n: fewer than 30 answered items">†</sup>}</td>;
         })}
-      </tr>)}</tbody>
+      </tr></Fragment>)}</tbody>
     </table></div>
   </section>;
 }
@@ -132,6 +138,7 @@ function DatedCarry({ carry, hiddenApi }: { carry: JevV16Carry; hiddenApi: Reado
 
 // v1.7.0 (Florian, 5 Oct 2026): open-weights board on /jev-models, API-provider board on /jev-models/api.
 export const JEV_BOARD_REVISIONS: { version: string; date: string; text: string }[] = [
+  { version: 'v1.7.17', date: '2026-10-07', text: `Languages now includes every measured row on both boards, with wrappers listed below the models. ${languagePoolNote(JEVBENCH_LANGUAGE_META)} ${Object.values(apiRerunCells.systems as Record<string, { coverage: string; category_pools?: string }>).filter((r) => /^(A4|A5)\+P/.test(r.coverage) && r.category_pools?.includes("L1+L2")).length} API rows re-run on A4/A5 have answered L1/L2 supplements; their category radars count those items too. L3 coverage will follow when measured.` },
   { version: 'v1.7.16', date: '2026-10-07', text: 'Compare view, API board: subject-topic and use-case radars for OpenAI Decisions, the 17 API offerings re-run on A4 ∪ P and the classifier.dev wrapper. Their 600 new sealed items were labelled with the same recipe as every other item (Winnow-12B Q8 on our own GPU pod; uc1 items keep their authoring use case); values are raw and rest on 600 items (300 sealed), so more categories fall under the 30-item spoke minimum and are listed below the radar. Each of these rows also gets a breakdown section on its own page. Every live row now has all breakdown views, and a release check keeps it that way. No score, axis, cost or rank changed.' },
   { version: 'v1.7.15', date: '2026-10-07', text: 'Compare view, API board: OpenAI Decisions, the 17 API offerings re-run on A4 ∪ P and the classifier.dev wrapper now show competence per request type and per tier on the open and sealed items they answered (300 open + 300 sealed: fewer sealed items than the full set, so wider uncertainty; the view note says so), and Liquid AI d1 shows its subject-topic and use-case radars. Values are raw, computed from the stored per-item results with the same scorer as every other row. Subject-topic and use-case radars for the 600-item rows follow once their 600 new sealed items are labelled. No score, axis, cost or rank changed.' },
   { version: 'v1.7.14', date: '2026-10-07', text: 'Open-weights board: H2O-Lightning-4B v1.1 (H2O.ai) and Kahn1 4B (Okura66), two Qwen3.5-4B fine-tunes submitted as JevBench add-requests, measured on the same sealed v1.6 pool with the same scorer, G_med and cost basis as every other row (addendum a8 of v1.6.1). Both are priced with labelled cost estimates like every other Qwen3.5-4B row; Kahn1\'s server reports no token usage, so its estimate is our own count of its input tokens (three passes per decision, its server default). Both rank inside the Jev-class caps: H2O-Lightning-4B at #3 of the Capability Score and #1 of the Composite, Kahn1 at #23 of the Capability Score. No published score, axis or cost changed.' },
@@ -174,7 +181,7 @@ function BoardSplit({ scope, history, preliminary }: { scope: JevScope; history:
   </div>;
 }
 
-function Method({ a, sha256, categoriesSha256, carrySha256, scope, hiddenApi, preliminary }: { a: JevV16ReleaseArtifact; sha256: string; categoriesSha256: string; carrySha256: string; scope: JevScope; hiddenApi: ReadonlySet<string>; preliminary: boolean }) {
+function Method({ categories, a, sha256, categoriesSha256, carrySha256, scope, hiddenApi, preliminary }: { categories: JevV16Categories; a: JevV16ReleaseArtifact; sha256: string; categoriesSha256: string; carrySha256: string; scope: JevScope; hiddenApi: ReadonlySet<string>; preliminary: boolean }) {
   const sets = a.v16.item_sets;
   const v161 = a.revision === 'v1.6.1';
   const amendments = (a as unknown as { amendments?: Array<{ date: string; revision: string; text: string }> }).amendments ?? [];
@@ -197,6 +204,7 @@ function Method({ a, sha256, categoriesSha256, carrySha256, scope, hiddenApi, pr
     <h2 id="jev16-method-title" className="text-2xl font-bold">Method · {a.revision}</h2>
     {scope !== 'all' && <BoardSplit scope={scope} history={revisionHistory} preliminary={preliminary} />}
     <JevArchitectureMethod />
+    {categories.language_cells && <p className="bh-muted mt-2 text-sm" data-bh-jev-language-method>{languagePoolNote(categories.language_cells)} L3 is API-facing by design: its items are sent to hosted APIs and are therefore never reused in a headline draw.</p>}
     {hiddenApi.size > 0 && <p className="bh-muted mt-2 text-xs" data-bh-jev-method-scope-note>Per-system method lists on this board cover the open-weights systems and the Jev reference; the hosted API offerings&apos; lists are on the <a className="text-accent underline" href="/jev-models/api#jev16-method">API leaderboard</a>.</p>}
     {amendments.length > 0 && <div data-bh-jev16-amendments>
       <h3 className="mt-4 text-lg font-semibold">Method amendments</h3>
@@ -508,8 +516,8 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
       {scope === 'api' && <ApiPublicSet measured={measuredKeys} />}
       {scope === 'api' && <JevV15FilterPanel />}
       <JevCompareV15 rows={compareRows} openDecisions={a.v16.counts.P} sealedDecisions={a.v16.counts.S} categories={jevbenchCategoryView(a.revision, compareRows.map((r) => r.key), { supplement: Boolean(categories.supplement) })} />
-      <p className="bh-muted mt-2 max-w-4xl text-xs" data-bh-jev16-radar-note>{categories.lane_note} {categories.supplement && 'Rows tagged S+P in the language table below have not answered the supplements, so their radars cover fewer items. '}{a.revision === 'v1.6.1' ? `Sealed counts in the compare view refer to the sealed set S (${a.v16.counts.S.toLocaleString('en-US')}), which hosted APIs now answer in full.` : `Sealed counts in the compare view refer to self-hosted systems (S ${a.v16.counts.S.toLocaleString('en-US')}); hosted APIs answered A ${a.v16.counts.A}.`}</p>
-      <LanguageView a={a} categories={categories} hiddenApi={hiddenApi} />
+      <p className="bh-muted mt-2 max-w-4xl text-xs" data-bh-jev16-radar-note>{categories.supplement ? <>Category radars count each answered item once from the pools named under each radar. API overlay rows use {API_CATEGORY_POOLS}. Raw and unequated; cells under {categories.min_n} answered items are omitted. Per-type and tier radars retain each row&apos;s original measurement pools: A4/A5 rows have 300 open plus 300 sealed items; full-set rows have S {a.v16.counts.S.toLocaleString('en-US')} plus P {a.v16.counts.P}.</> : <>{categories.lane_note} Sealed counts refer to self-hosted S ({a.v16.counts.S.toLocaleString('en-US')}); API rows use their original measured sealed basis.</>}</p>
+      <LanguageView scope={scope} a={a} categories={categories} hiddenApi={hiddenApi} />
       <NoulAndGate a={a} hiddenApi={hiddenApi} />
       <JevV15AllDataGrid
         artifact={v15}
@@ -523,7 +531,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
         key: s.key, display: short(s.display), gpu: (s as { gpu?: string | null }).gpu ?? null, p50_s_raw: s.speed?.p50_s_raw ?? null,
         officialUsdPer1000: s.cost?.usd_per_1000 ?? null, ranked: !!s.ranked }))} /></div>}
       <DatedCarry carry={carry} hiddenApi={hiddenApi} />
-      <Method a={a} sha256={sha256} categoriesSha256={categoriesSha256} carrySha256={carrySha256} scope={scope} hiddenApi={hiddenApi} preliminary={preliminary} />
+      <Method categories={categories} a={a} sha256={sha256} categoriesSha256={categoriesSha256} carrySha256={carrySha256} scope={scope} hiddenApi={hiddenApi} preliminary={preliminary} />
     </section>
   </JevV15FilterProvider>;
 }

@@ -79,3 +79,19 @@ test('compare rows of A4/A5 overlay rows carry their subset for the view note', 
   assert.equal(jevV15CompareRow(merged.systems.find((s) => s.key === 'liquid-d1')).subset, null);
   assert.equal(jevV15CompareRow(merged.systems.find((s) => s.key === 'jev-1.13.0')).subset, null);
 });
+
+// CR-334: frozen API-language run coverage at this interim release. qwen3.8-27b has no admitted run.
+test('overlay category radars include every admitted L1/L2 row, with separate original split basis', () => {
+  const measured = [...a4.rows, ...a4.a5_rows, ...a4.full_rows].map((r) => r.key).filter((k) => k !== 'qwen3.8-27b');
+  for (const key of measured) {
+    const r = apiRerunCells.systems[key];
+    assert.equal(r.category_pools, `${r.coverage}+L1+L2`, key);
+    assert.ok(r.category_n_items > r.n_items, key);
+    assert.equal(view.categoryPools[key], r.category_pools, key);
+  }
+  assert.equal(apiRerunCells.systems['qwen3.8-27b'].category_pools, 'A4+P');
+  assert.equal(apiRerunCells.systems['openai-decisions'].category_n_items, 987);
+  assert.equal(apiRerunCells.systems['liquid-d1'].category_n_items, 1887);
+  assert.equal(Object.values(apiRerunCells.systems['openai-decisions'].topics).reduce((n, c) => n + c.n, 0), 987);
+  assert.doesNotMatch(JSON.stringify(apiRerunCells), /"(?:task_id|opaque_id|item_ids?|gold|prediction|expected|labels_by_item)"/);
+});
