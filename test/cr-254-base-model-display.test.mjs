@@ -143,7 +143,7 @@ test('CR-254 every Image detail route renders published rank, axes, cost, latenc
   const v03Keys = new Set(v03.map((row) => row.key));
   const sources = [...v03.map((row) => ({ row, artifact: current, rows: v03 })),
     ...imageJevBoardSystems(archive).filter((row) => !v03Keys.has(row.key)).map((row, _, rows) => ({ row, artifact: archive, rows: imageJevBoardSystems(archive) }))];
-  assert.equal(v03.length, 46);
+  assert.equal(v03.length, 47);
   assert.equal(sources.length, 55);
   assert.deepEqual(await detail.generateStaticParams(), sources.map(({ row }) => ({ system: row.key })));
   for (const { row, artifact, rows } of sources) {
