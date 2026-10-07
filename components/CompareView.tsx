@@ -9,7 +9,7 @@ import { modelPrice, rankedOffers, scopedCatalogOffers, scopeFromSettings, price
 import { DataBar } from "./ui";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
-import { preferredVariantIds, collapseModels, selectableModels } from "../lib/variants";
+import { preferredVariantIds, collapseModels, selectableModels, retiredFamilies } from "../lib/variants";
 import { OfferChannel } from "./OfferChannel";
 
 const METRICS: { key: ScoreKey | "cost"; label: string; lowerBetter?: boolean; digits?: number }[] = [
@@ -30,7 +30,8 @@ export function CompareView({ data }: { data: ClientData }) {
   const offerScope = useMemo(() => scopeFromSettings(s, data.providers), [s.excludedSet, s.hostedIn, s.providerBasedIn, data.providers, s.allowDataTraining]);
   const [q, setQ] = useState("");
   const [picks, setPicks] = useState<string[]>([]);
-  const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
+  const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated, s.score), [data.models, s.hideDeprecated, s.score]);
+  const retired = useMemo(() => retiredFamilies(data.models), [data.models]);
   const preferredId = useMemo(() => preferredVariantIds(candidates, s.score), [candidates, s.score]);
 
   const models = useMemo(() => {
@@ -98,7 +99,7 @@ export function CompareView({ data }: { data: ClientData }) {
                 return (
                   <tr key={m.id} onClick={() => pick(m.id)} className={`cursor-pointer ${slot ? "bg-accent/15" : ""}`}>
                     <td className="px-2 py-2">{slot && <span className={`rounded px-1.5 py-0.5 text-[10px] font-bold ${slot === "A" ? "bg-accent text-black" : "bg-accent2 text-black"}`}>{slot}</span>}</td>
-                    <td className="px-3 py-2 truncate"><span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} /> <button type="button" aria-pressed={!!slot} aria-label={`Select ${m.display_name} for comparison`} className="inline-block max-w-[85%] truncate align-middle text-left font-medium focus-visible:outline focus-visible:outline-accent" onClick={(event) => { event.stopPropagation(); pick(m.id); }}>{m.display_name}</button>{m.open_weights && <span className="ml-1 text-[10px] text-accent2">open</span>}{m.deprecated && <span className="ml-1 text-[10px] text-amber-300">deprecated</span>}</td>
+                    <td className="px-3 py-2 truncate"><span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} /> <button type="button" aria-pressed={!!slot} aria-label={`Select ${m.display_name} for comparison`} className="inline-block max-w-[85%] truncate align-middle text-left font-medium focus-visible:outline focus-visible:outline-accent" onClick={(event) => { event.stopPropagation(); pick(m.id); }}>{m.display_name}</button>{m.open_weights && <span className="ml-1 text-[10px] text-accent2">open</span>}{retired.has(m.family_key) && <span className="ml-1 text-[10px] text-amber-300">deprecated</span>}</td>
                     <td className="px-3 py-2">{sc != null ? <DataBar frac={sc / maxScore} color={orgColor(m.org)} align="right"><span className="block text-right font-semibold">{num(sc, s.score.startsWith("designarena") ? 0 : 1)}</span></DataBar> : <span className="block text-right text-gray-600">—</span>}</td>
                   </tr>
                 );

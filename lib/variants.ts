@@ -17,15 +17,42 @@ import type { ScoreKey } from "./types";
  *       Without (b), Claude Opus 4.6 and GPT-5.4 — sold and actively ranked on
  *       both DA boards — vanished from the default view. True legacy models
  *       (Claude 3, GPT-4o, …) are on no DA board and stay hidden. */
-export function selectableModels<T extends ClientModel>(models: T[], hideDeprecated: boolean): T[] {
+export function selectableModels<T extends ClientModel>(models: T[], hideDeprecated: boolean, score?: ScoreKey): T[] {
   if (!hideDeprecated) return models;
-  const familyAlive = new Set<string>();
+  const retired = retiredFamilies(models);
+  return dropDeprecatedRows(models.filter((m) => !retired.has(m.family_key)), score);
+}
+
+/** CR-329.2: the families that count as DEPRECATED MODELS — every AA configuration retired and on no current
+ *  DesignArena board (the family rule above). Only these carry the "deprecated" badge: an AA-retired effort
+ *  configuration of a current model (Claude Opus 5 "(Max)", GPT-6 Sol "(High)") is an older benchmark run, not a
+ *  deprecated model. Badging those made "Hide deprecated" look broken (Simon, 7 Oct 2026). */
+export function retiredFamilies(models: ClientModel[]): Set<string> {
+  const alive = new Set<string>();
+  const all = new Set<string>();
   for (const m of models) {
+    all.add(m.family_key);
     if (!m.deprecated
       || m.scores.designarena_frontend != null
-      || m.scores.designarena_fullstack != null) familyAlive.add(m.family_key);
+      || m.scores.designarena_fullstack != null) alive.add(m.family_key);
   }
-  return models.filter((m) => familyAlive.has(m.family_key));
+  return new Set([...all].filter((k) => !alive.has(k)));
+}
+
+/** Row level of "Hide deprecated", for rows of families that already passed the family rule: a
+ *  deprecated row is dropped unless it is the row that represents its family for `score` (the
+ *  strongest measured configuration — see `preferredVariantIds`). Deprecated effort variants of a
+ *  live family therefore no longer show up as separate rows, while the family keeps its best-measured
+ *  row even when AA flags it deprecated (the GPT-5.4 case above). */
+export function dropDeprecatedRows<T extends ClientModel>(models: T[], score?: ScoreKey): T[] {
+  if (!models.some((m) => m.deprecated)) return models;
+  const preferred = preferredVariantIds(models, score);
+  return models.filter((m) => {
+    if (!m.deprecated) return true;
+    const pick = preferred.get(m.family_key);
+    // Single-row families are kept (they passed the family rule on DesignArena evidence).
+    return pick == null || pick === m.id;
+  });
 }
 
 /** For families that expose MULTIPLE variants (reasoning effort / thinking settings),

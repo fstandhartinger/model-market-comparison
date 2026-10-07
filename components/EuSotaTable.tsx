@@ -19,7 +19,7 @@ interface SotaRow { entry: SotaEntry; model: ClientModel | null; offers: ClientO
 
 export function EuSotaTable({ data, entries }: { data: ClientData; entries: SotaEntry[] }) {
   const s = useSettings();
-  const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
+  const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated, s.score), [data.models, s.hideDeprecated, s.score]);
   const preferredIds = useMemo(() => preferredVariantIds(candidates, s.score), [candidates, s.score]);
   const modelByFamily = useMemo(() => {
     const result = new Map<string, (typeof data.models)[number]>();

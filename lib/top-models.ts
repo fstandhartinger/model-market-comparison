@@ -2,7 +2,7 @@ import type { ClientModel, ClientOffer } from "./client-model";
 import type { ScoreKey } from "./types";
 import { hasScoreEvidence } from "./client-model";
 import { scopeFromSettings, offerMatchesScope } from "./cost";
-import { preferredVariantIds } from "./variants";
+import { preferredVariantIds, dropDeprecatedRows } from "./variants";
 import type { PresetCandidate } from "./presets.mjs";
 
 /** CR-1.2: the slim model record the Benchmarks page ships instead of the full client catalog. */
@@ -40,7 +40,8 @@ export interface TopModelSettings {
  *  whether any route is EU-hosted, for the model presets (CR-2.4). */
 export function filteredCandidates(data: MatrixFilterData, s: TopModelSettings): (MatrixModel & PresetCandidate)[] {
   const scope = scopeFromSettings(s, data.providers);
-  let r = s.hideDeprecated ? data.models.filter((m) => m.family_alive) : data.models;
+  // Family rule (server-computed `family_alive`), then the row rule shared with `selectableModels`.
+  let r = s.hideDeprecated ? dropDeprecatedRows(data.models.filter((m) => m.family_alive) as unknown as ClientModel[], s.score) as unknown as MatrixModel[] : data.models;
   const preferred = preferredVariantIds(r as unknown as ClientModel[], s.score);
   if (s.collapse) r = r.filter((m) => !preferred.has(m.family_key) || preferred.get(m.family_key) === m.id);
   if (s.openOnly) r = r.filter((m) => m.open_weights);

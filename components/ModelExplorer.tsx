@@ -17,7 +17,7 @@ import { MenuDetails } from "./Nav";
 import { OptionsInline } from "./GlobalFilters";
 import { CostCapabilityScatter } from "./CostCapabilityScatter";
 import { SubscriptionsPanel } from "./SubscriptionsPanel";
-import { preferredVariantIds, collapsedName, selectableModels } from "../lib/variants";
+import { preferredVariantIds, collapsedName, selectableModels, retiredFamilies } from "../lib/variants";
 import { BENCHMAXX_LEVELS, BENCHMAXX_TAG_RULE_TEXT, BENCHMAXX_UNCERTAIN_MARK, BENCHMAXX_UNCERTAIN_TEXT, benchmaxxingLevelInfo, benchmaxxingThresholdText, type BenchmaxxingLevel } from "../lib/benchmaxxing-levels.mjs";
 import { capShortlist } from "../lib/shortlist.mjs";
 import { SIMPLE_LIMIT, SIMPLE_SCORE_CHOICES, activeCostMeasure, comparableTaskCost, costMeasureChoices, derivedMinScore, topCandidates } from "../lib/value-map.mjs";
@@ -61,6 +61,8 @@ function MagnitudeBar({ frac, tone, thin, children }: { frac: number; tone: "sco
   );
 }
 
+const DEPRECATED_NOTE = "Deprecated model: Artificial Analysis has retired every configuration of this model and it is on no current DesignArena board. “Hide deprecated” (Options → More settings) removes it.";
+
 export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, guided, onRowsChange }: { data: ClientData; limit?: number; defaultSort?: SortKey; defaultAsc?: boolean; simple?: boolean; guided?: boolean; /** CR-7.1: the model ids on screen, in display order. */ onRowsChange?: (ids: string[]) => void }) {
   const s = useSettings();
   const score = s.score;
@@ -98,7 +100,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
   const expandSimple = simplePair && !s.featuredTouched;
   const featuredOnly = expandSimple ? false : simple ? s.featured : s.featuredAdvanced;
 
-  const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
+  const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated, s.score), [data.models, s.hideDeprecated, s.score]);
+  const retired = useMemo(() => retiredFamilies(data.models), [data.models]);
   const orgs = useMemo(() => Array.from(new Set(candidates.map((m) => m.org))).sort(), [candidates]);
   const preferredId = useMemo(() => preferredVariantIds(candidates, score), [candidates, score]);
   const provByKey = useMemo(() => new Map(data.providers.map((p) => [p.key, p])), [data.providers]);
@@ -540,7 +543,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                   <span aria-hidden="true" className={`bh-row-chevron mr-1 ${isOpen ? "is-open" : ""}`}>›</span>
                   <Link href={`/models/${encodeURIComponent(m.id)}`} onClick={(e) => e.stopPropagation()} className="font-medium hover:text-accent">{String(collapsedName(m, s.collapse, preferredId)).split(" ").map((token, i) => <Fragment key={i}>{i > 0 && " "}<span className="whitespace-nowrap">{token}</span></Fragment>)}</Link>
                   {m.open_weights && <span className="ml-2 hidden rounded bg-accent2/15 px-1.5 py-0.5 text-[10px] text-accent2 md:inline">open</span>}
-                  {m.deprecated && <span className="ml-1 hidden rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] text-amber-300 md:inline">deprecated</span>}
+                  {retired.has(m.family_key) && <span title={DEPRECATED_NOTE} className="ml-1 hidden rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] text-amber-300 md:inline">deprecated</span>}
                   {m.featured && !simple && <span className="ml-1 hidden text-[10px] text-warn md:inline" title="Featured model">★</span>}
                   {m.benchmaxxing_level && <BenchmaxxingTag id={m.benchmaxxing_report_id ?? m.id} name={String(collapsedName(m, s.collapse, preferredId))} level={m.benchmaxxing_level} score={m.benchmaxxing_score ?? null} uncertain={m.benchmaxxing_uncertain ?? null} />}
                   <span className="mt-0.5 flex flex-wrap items-center gap-1.5 text-[11px] text-gray-500 md:hidden">
@@ -548,7 +551,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                     {m.org}
                     {m.featured && !simple && <span className="text-[10px] text-warn" title="Featured model">★</span>}
                     {m.open_weights && <span className="rounded bg-accent2/15 px-1.5 py-0.5 text-[10px] text-accent2">open</span>}
-                    {m.deprecated && <span className="rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] text-amber-300">deprecated</span>}
+                    {retired.has(m.family_key) && <span title={DEPRECATED_NOTE} className="rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] text-amber-300">deprecated</span>}
                   </span>
                 </td>
                 <td className="hidden truncate px-3 py-2 md:table-cell"><span className="inline-flex items-center gap-1.5"><span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} />{m.org}</span></td>

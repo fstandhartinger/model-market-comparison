@@ -20,7 +20,7 @@ const Badge = ({ children, cls }: { children: React.ReactNode; cls: string }) =>
 export function ProviderExplorer({ data }: { data: ClientData }) {
   const s = useSettings();
   const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight, ioBasis: s.ioBasis }), [s.priceMode, s.inputWeight, s.ioBasis]);
-  const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
+  const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated, s.score), [data.models, s.hideDeprecated, s.score]);
   const preferredId = useMemo(() => preferredVariantIds(candidates, s.score), [candidates, s.score]);
   const [euOnly, setEuOnly] = useState(false);
   const [showEmpty, setShowEmpty] = useState(false);
