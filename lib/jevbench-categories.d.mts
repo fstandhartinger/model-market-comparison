@@ -16,3 +16,12 @@ export function withJevCellSupplement<T extends { revision: string; systems: Rec
 export function imageJevCategoryView(revision: string, keys: string[]): CompareCategories | null;
 export const RADAR_MIN_N: number;
 export const CATEGORY_SHORT: Record<string, string>;
+
+export const JEVBENCH_LANGUAGE_CELLS_ARTIFACT: string;
+export type LanguageCellsMeta = { pools: Record<string, number>; min_n: number; drawn: string | null; min_api_basis: number };
+export function withLanguageCells<T extends { revision: string; systems: Record<string, unknown> }>(base: T, cells?: any): T & { language_cells: LanguageCellsMeta };
+export function languageCoverage(row: any): string;
+export function jevLanguageRows<T extends { key: string; listing?: string }>(systems: T[], scope?: string): T[];
+export function languagePoolNote(meta: LanguageCellsMeta): string;
+
+export const JEVBENCH_LANGUAGE_META: LanguageCellsMeta;
