@@ -42,7 +42,8 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
   const isApi = jevScopeClassifier(published.systems, publishedCarry.rows, previous.artifact.systems, previous.artifact.not_measured);
   const scoped = jevbenchScopeArtifact(published, scope, isApi);
   // v1.7.12: the method footer also hashes the live cell supplement.
-  const artifact = cellSupplementSha256 ? { ...scoped, cellSupplementSha256 } as typeof scoped : scoped;
+  // CR-327: no runner-local adapter paths in the client payload (Google followed them as links).
+  const artifact = withPublicAdapterIds(cellSupplementSha256 ? { ...scoped, cellSupplementSha256 } as typeof scoped : scoped);
   const carry = jevbenchScopeCarry(publishedCarry, scope === 'api' ? 'api' : 'all', isApi);
   const apiKeys = scope === 'open' ? jevApiOfferingKeys([...published.systems, ...published.not_measured, ...publishedCarry.rows], isApi) : [];
   const carryCount = carry.rows.filter((row) => !apiKeys.includes(row.key)).length;
@@ -88,7 +89,7 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
       </p>
       <p className="mt-3 max-w-3xl text-sm" data-bh-image-jev-link-row>Making decisions from images? <a className="text-accent font-semibold underline" href="/image-jev-bench" data-bh-image-jev-link>Explore Image JevBench v0.3.0 and compare its systems</a>.</p>
     </header>
-    <JevBenchV16Board artifact={withPublicAdapterIds(artifact)} sha256={sha256} categories={categories} categoriesSha256={categoriesSha256}
+    <JevBenchV16Board artifact={artifact} sha256={sha256} categories={categories} categoriesSha256={categoriesSha256}
       carry={carry} carrySha256={carrySha256} scope={scope} apiKeys={apiKeys} apiListed={apiListed}
       previousKeys={[...previous.artifact.systems, ...previous.artifact.not_measured].filter((row: { key: string }) => !isJevbenchV16ExcludedKey(row.key)).map((row: { key: string }) => row.key)} />
   </>;
