@@ -660,13 +660,25 @@ def parse(source,spec,load_source,entry=None):
             raise quarantine_columns(entry['id'],added,header,'the reviewed columns are unchanged and in order, but what the new column(s) mean for the published comparison has not been reviewed')
         partial=[]
         for index,r in enumerate(parsed):
+            # 2026-10-07: a source-stated population with a different judge panel is
+            # rejection evidence, never a score under this version. Match the exact
+            # reviewed population; a new Cursor protocol must still fail closed.
+            excluded=next((x for x in (entry or {}).get('how_to_collect',{}).get('excluded_rows',[])
+                if all(r.get(k)==x.get(k) for k in ('protocol','model','harness','report'))),None)
             # 2026-09-21: the board publishes a run judged on fewer than its 23 tasks. The combined score then
             # has a different denominator, so such a row was withheld rather than compared with the full-suite
             # rows. D256.1 (2026-09-29) keeps that rule and sharpens what "denominator" means, because the two
             # columns the board appended on 2026-09-29 make its two kinds of short row tell themselves apart
             # for the first time. See the registry's version guard for the reviewed sentence.
-            if r.get('harness') not in ('Codex','Claude Code'):raise ValueError(f"VulcanBench Frontier row {index}: harness {r.get('harness')!r} is not a stated harness")
+            if not excluded and r.get('harness') not in ('Codex','Claude Code'):raise ValueError(f"VulcanBench Frontier row {index}: harness {r.get('harness')!r} is not a stated harness")
             if r.get('effort') not in ('low','medium','high','extra-high','max'):raise ValueError(f"VulcanBench Frontier row {index}: effort {r.get('effort')!r} not stated")
+            if excluded:
+                identity=f"{r['model']} [{r['effort']}] ({r['harness']})"
+                rows.append({'name':identity,'id':identity,'harness':r['harness'],'source_row':index,
+                    'combined_full_denominator':None,'reject_reason':excluded['reason'],
+                    'context':{'model':r['model'],'effort':r['effort'],'harness':r['harness'],
+                        'protocol':r['protocol'],'report':r['report'],'exclusion':excluded['reason']}})
+                continue
             # F-209: the reviewed revisions are the registry's own sentence, not a prefix test — the
             # board's numbering counts amendments, so v3.15 follows v3.7. Any protocol the registry has
             # not reviewed quarantines this arm (the whole board: one unreviewed revision means the

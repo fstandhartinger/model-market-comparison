@@ -1,5 +1,14 @@
 # Lumina Bench ledger — discovery and provenance feed (CR-37.2, CR-38.4)
 
+## Retired 2026-10-07
+
+The paused ledger did not come back. On 2026-10-07 `downloads/luminabench-ledger-manifest.json` and the `/data/`
+page that had announced the pause both answer HTTP 404, the site now presents its own voxel/3D/gamedev indexes,
+and `sitemap.xml` lists no data or download page. The daily step `fetch-lumina-ledger` was removed from
+`ops/daily/daily.mjs`; `availability.state` is `retired_by_source` (the pause record is kept under
+`availability.previous`). The 2026-09-01 ledger stays as a dated discovery record. `node
+scripts/fetch-lumina-ledger.mjs --recheck` probes the live ledger if Lumina publishes one again.
+
 **What it is.** Lumina Bench (https://luminabench.com/) aggregates 435 benchmark families and 15,598 result
 records (ledger generated 2026-09-01, methodology 2.3.0). It is an aggregator, so Benchmark Heaven uses it to
 find benchmarks and to see where results come from — **no Lumina value reaches the dataset**. A family becomes

@@ -18,7 +18,8 @@ const UA = "BenchmarkHeaven/1.0 (+https://github.com/fstandhartinger/model-marke
 const POLITE_DELAY_MS = 2500;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const target = fileURLToPath(new URL("../data/raw/mistral.json", import.meta.url));
-const url = "https://mistral.ai/pricing/api";
+// 7 Oct 2026: mistral.ai/pricing/api answers 301 to this docs page; fetch it directly.
+const url = "https://docs.mistral.ai/inference/pricing";
 try {
   const previous = JSON.parse(await readFile(target, "utf8"));
   const response = await fetch(url, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(60000) });
@@ -43,9 +44,10 @@ try {
   const collected_at = new Date().toISOString().slice(0, 10);
   await writeJSONAtomic(target, {
     ...previous,
-    source: "Mistral AI (La Plateforme) — mistral.ai/pricing/api (first-party, public)",
+    source: "Mistral AI (La Plateforme) — docs.mistral.ai/inference/pricing (first-party, public; mistral.ai/pricing/api redirects here)",
     collected_at,
-    method: "scripts/fetch-mistral-catalog.mjs: one GET of the server-rendered pricing page; every <mistral-block-card-model> with both an 'Input (/M tokens)' and an 'Output (/M tokens)' USD price is a chat/text model (OCR per 1000 pages, embeddings, classifiers, TTS/transcription and unpriced Labs endpoints drop out); duplicate cards must agree; identity is the card's normalized model name against the curated snapshot, because the page dropped its copy-to-clipboard API id on ~16 Sep 2026 — a model the snapshot does not name has its id read from the docs model page the card links ('Click to copy: <id>'), recorded in docs_sources, mapping=derived. The same redesign made cached input a client-side toggle, so a row that already published one has it re-read from its docs page (docs_sources reason=cache_read) and diff.cache_read_dropped names any row that lost it anyway; rows that never had a cached price are not resolved, so cached-input coverage is not complete. A resolved docs page must state the same list prices as the pricing card or the refresh fails closed. Region eu (Mistral hosts in the EU unless the US endpoint is chosen). See mistral.method.md.",
+    method: "scripts/fetch-mistral-catalog.mjs: one GET of the server-rendered pricing page (Standard mode, global prices, the page's default); every row of its 'Model | Input | Cached input | Output' tables under the 'Prices /M Tokens' heading whose input and output are both bare USD amounts is a chat/text model (OCR per 1000 pages, transcription per minute, TTS per M characters, embeddings without output and free moderation drop out); a struck-through list price beside a sale price publishes the sale price and names the list price in notes; duplicate rows must agree; identity is the row's normalized model name (or the name the page last used, source_name) against the curated snapshot — a model the snapshot does not name has its id read from the docs model page the row links ('Click to copy: <id>'), recorded in docs_sources, mapping=derived, and that page must state the same input/output prices or the refresh fails closed. Region eu (Mistral hosts in the EU unless the US endpoint is chosen). See mistral.method.md.",
+
     response_sha256: createHash("sha256").update(text).digest("hex"),
     docs_sources,
     diff,

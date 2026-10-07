@@ -230,7 +230,16 @@ export const COLLECTOR_STEP = /^(fetch-|build-epoch-provenance$|check-provider-m
 const dayDiff = (a, b) => Math.round((Date.parse(`${a}T00:00:00Z`) - Date.parse(`${b}T00:00:00Z`)) / 86_400_000);
 
 /** state: { collectors: { name: { last_ok, failing_since, last_error } } }; steps: daily report.steps. */
-export function updateCollectorHealth(state, steps, day) {
+// bh-daily-collectors-fix (7 Oct 2026): an entry outlived the step behind it — `fetch-published` (folded into
+// fetch-main on 21 Sep) sat at last_ok 2026-09-20, and the removed Lumina step would have stayed "failing" in every
+// digest. Retirement is explicit, never inferred from a run's step list: price-scope and early-aborted runs skip
+// collectors that are still configured, and inferring would erase their failure history.
+export const RETIRED_COLLECTORS = {
+  'fetch-published': '2026-09-21: folded into fetch-main (e79693f3)',
+  'fetch-lumina-ledger': '2026-10-07: Lumina retired its public ledger; step removed (see data/raw/lumina-ledger.method.md)',
+};
+
+export function updateCollectorHealth(state, steps, day, { retired = RETIRED_COLLECTORS } = {}) {
   const collectors = { ...(state?.collectors || {}) };
   for (const step of steps || []) {
     if (!COLLECTOR_STEP.test(step.name)) continue;
@@ -239,6 +248,7 @@ export function updateCollectorHealth(state, steps, day) {
       ? { last_ok: day, failing_since: null, last_error: null }
       : { last_ok: prior.last_ok, failing_since: prior.failing_since ?? day, last_error: reasonLine(step.error) };
   }
+  for (const name of Object.keys(retired)) delete collectors[name];
   return { collectors };
 }
 

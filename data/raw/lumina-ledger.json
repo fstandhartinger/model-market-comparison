@@ -9933,11 +9933,19 @@
     }
   ],
   "availability": {
-    "state": "paused_by_source",
-    "since": "2026-09-23T09:59:27.650Z",
-    "checked_at": "2026-10-02T06:37:54.151Z",
-    "evidence_url": "https://luminabench.com/data/",
-    "notice": "Public bulk downloads are paused. Model pages, charts and source attribution remain available.",
-    "manifest_status": 404
+    "state": "retired_by_source",
+    "since": "2026-10-07",
+    "checked_at": "2026-10-07T12:00:00Z",
+    "evidence_url": "https://luminabench.com/sitemap.xml",
+    "notice": "Lumina Bench now publishes its own voxel/3D/gamedev indexes. https://luminabench.com/downloads/luminabench-ledger-manifest.json and https://luminabench.com/data/ both answer HTTP 404 (checked 2026-10-07), and the sitemap lists no data or download page. The daily collector step was removed; this is the last ledger (generated 2026-09-01), kept as a dated discovery record.",
+    "manifest_status": 404,
+    "previous": {
+      "state": "paused_by_source",
+      "since": "2026-09-23T09:59:27.650Z",
+      "checked_at": "2026-10-02T06:37:54.151Z",
+      "evidence_url": "https://luminabench.com/data/",
+      "notice": "Public bulk downloads are paused. Model pages, charts and source attribution remain available.",
+      "manifest_status": 404
+    }
   }
 }
