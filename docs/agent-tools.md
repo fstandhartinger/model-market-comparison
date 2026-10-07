@@ -1,8 +1,12 @@
-# Read-only agent tools — CR-279 design
+# Read-only agent tools — CR-279 design, implemented in A34
 
-Status: prepared JevBench tool design; these JevBench WebMCP/MCP tools are not deployed. Agents can use the
-current public JSON at `/api/jevbench/latest` now. This PR deploys that feed and
-`llms.txt` guidance; it creates no hosted service or new dependency.
+Status (7 Oct 2026): implemented. The hosted read-only MCP server is `POST /api/mcp`
+(see API.md) and the same tools register through WebMCP in `components/WebMcpTools.tsx`.
+Both use `lib/jevbench-mcp-tools.mjs` over the `/api/jevbench/latest` projection.
+Differences from the design below: `list_models` also takes `board`, `limit` and
+`cursor`; `compare_models` also returns Capability and Composite differences and
+links the API board page when both systems are API offerings. The hosted endpoint
+replaced the local stdio adapter alternative.
 
 ## Shared tool contract
 

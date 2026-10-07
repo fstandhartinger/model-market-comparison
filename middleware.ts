@@ -31,11 +31,13 @@ export function middleware(req: NextRequest, event?: NextFetchEvent) {
   // CR-177.1: and so is the page-view report — it is a same-origin write, not public data.
   if (path.startsWith("/api/auth") || path.startsWith("/api/account") || path.startsWith("/api/operator/")
     || path === "/api/page-view") return NextResponse.next();
+  // CR-335 (A34): the read-only MCP endpoint takes JSON-RPC by POST, so its preflight also allows POST and the MCP headers.
+  const cors = path === "/api/mcp" ? MCP_CORS : CORS;
   if (req.method === "OPTIONS") {
-    return new NextResponse(null, { status: 204, headers: CORS });
+    return new NextResponse(null, { status: 204, headers: cors });
   }
   const res = NextResponse.next();
-  for (const [k, v] of Object.entries(CORS)) res.headers.set(k, v);
+  for (const [k, v] of Object.entries(cors)) res.headers.set(k, v);
   return res;
 }
 
@@ -47,6 +49,13 @@ const CORS: Record<string, string> = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
+};
+
+const MCP_CORS: Record<string, string> = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Accept, Mcp-Protocol-Version, Mcp-Session-Id, Last-Event-ID",
+  "Access-Control-Max-Age": "86400",
 };
 
 // Node runtime: the visit counter keeps daily totals in process memory and writes them with pg.
