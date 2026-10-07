@@ -34,8 +34,13 @@ const capturePool = await acceptedCaptures({
   dirs: (await readdir(EVIDENCE)).map((dir) => `${EVIDENCE}/${dir}`),
   readJson: async (path) => { try { return JSON.parse(await readFile(path, 'utf8')); } catch { return null; } },
 });
+// Dated, hashed primary fixtures support the 2026-10-07 method review without
+// claiming that the daily collector has already published from these bytes.
+const vulcanReview = JSON.parse(await readFile('test/fixtures/vulcanbench-frontier-2026-10-07/manifest.json', 'utf8'));
 const captures = capturePool.accepted;
-const newestCapture = (url) => newestAccepted(capturePool, url);
+const reviewPool = { ...capturePool, accepted: [...capturePool.accepted, ...vulcanReview]
+  .sort((a, b) => a.retrieved_at.localeCompare(b.retrieved_at)) };
+const newestCapture = (url) => newestAccepted(reviewPool, url);
 const bytesOf = async (receipt) => {
   const raw = await readFile(receipt.file);
   const body = receipt.file.endsWith('.gz') ? gunzipSync(raw) : raw;
@@ -61,7 +66,10 @@ const vulcanRows = csv((await bytesOf(newestCapture(VULCAN_BOARD))).toString());
 const revisions = (text) => [...text.matchAll(/v(\d+\.\d+)/g)].map((m) => m[1]);
 
 test('D188: VulcanBench notes name every protocol revision the board actually publishes', () => {
-  const published = [...new Set(vulcanRows.map((row) => row.protocol))].sort();
+  const excluded = entry('vulcanbench-frontier::4').how_to_collect.excluded_rows ?? [];
+  const published = [...new Set(vulcanRows.filter((row) => !excluded.some((x) =>
+    ['protocol', 'model', 'harness', 'report'].every((k) => x[k] === row[k])))
+    .map((row) => row.protocol))].sort();
   assert.ok(published.length, 'the board CSV carries a protocol column');
   for (const protocol of published) {
     assert.match(protocol, /^code-quality-maintenance-v\d+\.\d+$/, `unexpected protocol literal ${protocol}`);
@@ -167,7 +175,8 @@ test('D188: every date the VulcanBench guard annotates is a date the board has p
   const pages = await Promise.all(held.map(async (receipt) =>
     ({ dir: receipt.dir, text: (await visibleText(receipt)).replace(/\s+/g, ' ') })));
   const guard = entry('vulcanbench-frontier::4').how_to_collect.version_guard;
-  const dates = [...new Set(guard.match(/\d{4}-\d{2}-\d{2}/g) ?? [])];
+  // Our review date is receipt metadata, not a claim about the board's update date.
+  const dates = [...new Set([...guard.matchAll(/board’s (\d{4}-\d{2}-\d{2}) update/g)].map((m) => m[1]))];
   assert.ok(dates.length, 'the guard annotates the withheld-row exception with a date');
   for (const date of dates) {
     const shown = pages.filter((page) => page.text.includes(date));

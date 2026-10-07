@@ -83,3 +83,15 @@ Use [the daily workflow](../../../docs/benchmark-ingestion.md), including exact 
 manual recipes, missing-state semantics and compatibility requirements for divergences.
 Unverified LiveCodeBench task windows, HLE README sample output and OTIS historical
 grading are withheld. Current model coverage never counts unmatched source identities.
+
+### VulcanBench Frontier review — 2026-10-07
+
+The [primary board](https://vulcanbench.com/leaderboard.html) states Cursor as
+Grok 4.7's harness, but v3.20 replaces judge Grok 4.6 with GPT-6.1 Sol and warns
+that its scores are “not strictly comparable with the other columns”. The exact
+Cursor population is retained as rejection evidence, with its harness in the
+identity, and requires a separate judge-panel version before ingestion. v3.17
+and v3.18 match the reviewed judges, rubric and 23 task IDs and enter the closed
+allow-list. Existing full-denominator rules still withhold GPT-6 Sol at medium.
+Primary GET bytes, SHA-256 hashes and retrieval times are test fixtures under
+`test/fixtures/vulcanbench-frontier-2026-10-07/`; no generated scores change here.
