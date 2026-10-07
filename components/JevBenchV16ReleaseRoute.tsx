@@ -3,6 +3,7 @@ import { readJevbenchV161Release } from '../lib/jevbench-v16-release.mjs';
 import { readJevbenchV157Release } from '../lib/jevbench-v15-release.mjs';
 import { jevApiOfferingKeys, jevApiRoster, jevbenchScopeArtifact, jevbenchScopeCarry, jevScopeClassifier, jevWithApiA4Rows, type JevScope } from '../lib/jevbench-scope.mjs';
 import apiA4 from '../data/jevbench-api-a4-equated.json';
+import { withJevCellSupplement } from '../lib/jevbench-categories.mjs';
 import { JevBenchV16Board, JEV_BOARD_REVISIONS } from './JevBenchV16Board';
 import { JevBenchReleaseVersionNav } from './JevBenchReleaseVersionNav';
 
@@ -13,13 +14,15 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
   /** v1.7: 'open' on /jev-models, 'api' on /jev-models/api, 'all' on the archived release page. */
   scope?: JevScope;
 }) {
-  const [{ artifact: release_, sha256, categories, categoriesSha256, carry: releaseCarry, carrySha256 }, previous] = await Promise.all([
+  const [{ artifact: release_, sha256, categories: releaseCategories, categoriesSha256, carry: releaseCarry, carrySha256 }, previous] = await Promise.all([
     release ? Promise.resolve(release) : readJevbenchV161Release(), readJevbenchV157Release(),
   ]);
   // v1.7.7 (Florian 6 Oct 2026, Part 12b): on the live boards the API lane's full A4 u P re-run rows (equated) join the
   // release as measured API offerings and leave the dated carry; archived release pages show the release as published.
   const a4Meta = new Map<string, unknown>([...previous.artifact.systems, ...releaseCarry.rows].map((r) => [r.key, r]));
   const merged = scope === 'all' || release_.revision !== 'v1.6.1' ? release_ : jevWithApiA4Rows(release_, apiA4, a4Meta) as typeof release_;
+  // v1.7.12 (Part B): the live boards show language/use-case cells with the sealed L1/L2 supplements; archived pages stay as published.
+  const categories = merged === release_ ? releaseCategories : withJevCellSupplement(releaseCategories);
   const a4Keys = new Set(merged.systems.map((s) => s.key));
   const published = merged === release_ ? release_ : { ...merged, not_measured: merged.not_measured.filter((r) => !a4Keys.has(r.key)) };
   const publishedCarry = merged === release_ ? releaseCarry : { ...releaseCarry, rows: releaseCarry.rows.filter((r) => !a4Keys.has(r.key)) };
