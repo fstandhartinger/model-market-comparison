@@ -3,7 +3,7 @@ export type CategoryDim = { key: string; title: string; note: string; cats: Cate
 /** systems[key][dim][category] = [competence 0–100 (can be negative), items answered by that system in the category] */
 export type CompareCategories = {
   revision: string; minN: number; radarMinN: number; metric: string; labelling: string; rules: string[]; splitNames: [string, string] | string[];
-  categoryPools?: Record<string, string>;
+  categoryPools?: Record<string, string>; spokeExceptions?: Record<string, string>;
   dims: CategoryDim[]; systems: Record<string, Record<string, Record<string, [number, number]>>>; missing: Record<string, string>;
 };
 export const JEVBENCH_CATEGORY_ARTIFACT: string;
@@ -26,3 +26,7 @@ export function jevLanguageRows<T extends { key: string; listing?: string }>(sys
 export function languagePoolNote(meta: LanguageCellsMeta): string;
 
 export const JEVBENCH_LANGUAGE_META: LanguageCellsMeta;
+
+export const JEVBENCH_S_CATEGORY_CELLS_ARTIFACT: string;
+export function withSCategoryCells<T extends { revision: string; systems: Record<string, unknown> }>(base: T, cells?: any): T;
+export function withLiveCategoryCells<T extends { revision: string; systems: Record<string, unknown> }>(base: T): ReturnType<typeof withLanguageCells<T>>;
