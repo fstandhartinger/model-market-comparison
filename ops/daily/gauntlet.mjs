@@ -544,7 +544,7 @@ function findingSummary(review, limit = 2) {
  */
 export async function reviewArtifact({
   runDir, artifactId, rows, sources = [], criteria, producerModels = [], layout = null,
-  runner = defaultRunner, maxRounds = GAUNTLET_LIMITS.maxRounds, limits = GAUNTLET_LIMITS,
+  runner = defaultRunner, maxRounds = GAUNTLET_LIMITS.maxRounds, limits = GAUNTLET_LIMITS, secondOpinion = false,
 } = {}) {
   if (typeof runDir !== 'string' || !runDir.trim()) throw new Error('reviewArtifact requires runDir');
   if (!Number.isSafeInteger(maxRounds) || maxRounds < 1 || maxRounds > GAUNTLET_LIMITS.maxRounds) throw new Error(`maxRounds must be 1..${GAUNTLET_LIMITS.maxRounds}`);
@@ -565,6 +565,11 @@ export async function reviewArtifact({
   let acceptedRound = null, producerFlagged = new Map(), terminalError = null, attemptsUsed = 0;
   const producerDisputed = new Set(); // every row a parsed producer audit flagged in any round (kept even if the critic then fails)
   let objections = 0; // answers rejected by the strict parsers that still carried an objection (see objectionSignal)
+  // bh-daily-collectors-fix (7 Oct 2026, decision #10945): with `secondOpinion`, a round whose only objection is the
+  // producer's own flag under a clean critic pass is not the end. The next round asks a producer of a DIFFERENT vendor
+  // family to audit the same frozen artifact, then a fresh critic; acceptance needs that producer AND that critic to
+  // pass. Nothing is overruled: a second flag, or any critic objection, keeps the normal rejection. One per artifact.
+  let rescue = null, avoidProducerFamilies = [];
 
   if (!current.length) {
     const manifest = {
@@ -581,6 +586,7 @@ export async function reviewArtifact({
   for (let round = 1; round <= maxRounds && acceptedRound === null && terminalError === null; round++) {
     attemptsUsed = round;
     const rowIds = new Set(current.map((r) => r.id));
+    const objectionsBefore = objections;
     try {
       // 1. Freeze the artifact; its bytes are what the critic must echo and what
       //    the score-evidence verifier re-hashes on ingestion.
@@ -613,7 +619,7 @@ export async function reviewArtifact({
         producerOut = join(dir, `producer-r${round}.json`);
         const producerSchema = join(dir, `producer-schema-r${round}.json`);
         await writeJSONAtomic(producerSchema, producerResponseSchema([...rowIds]));
-        await callWorker(runner, ['--json', '--file', packetPath, '--out', producerOut, producerTaskFor([...rowIds])], { attempt: round });
+        await callWorker(runner, ['--json', ...(avoidProducerFamilies.length ? ['--avoid-family', avoidProducerFamilies.join(',')] : []), '--file', packetPath, '--out', producerOut, producerTaskFor([...rowIds])], { attempt: round });
         producer = await readWorkerReceipt(producerOut);
         try { auditFlagged = parseProducerAudit(producer.text, rowIds); }
         catch (error) { if (objectionSignal(producer.text)) objections++; await recordInvalidModel(producer.meta, 'producer', error.message, runner); throw error; }
@@ -623,6 +629,9 @@ export async function reviewArtifact({
         if (!auditFlagged.size) cachedProducer = { artifactSha256, evidenceSha256, out: producerOut, round };
       }
       for (const rowId of auditFlagged.keys()) producerDisputed.add(rowId);
+      if (rescue && rescue.second_round === round && avoidProducerFamilies.includes(vendorFamily(producer.meta.actual_model))) {
+        throw new Error(`Second-opinion producer ${producer.meta.actual_model} is from the family it must re-examine`);
+      }
       if (!producers.includes(producer.meta.actual_model)) producers.push(producer.meta.actual_model);
       // CR-73.4: requested/actual model, route, attempt and cost are all on the receipt, not only in the qualification blob.
       receipts.push({ round, role: 'producer', reused_from_round: reusedFrom, requested_model: producer.meta.requested_model ?? null, model: producer.meta.actual_model, route: producer.meta.route ?? null, attempt: producer.meta.attempt ?? round, cost_usd: reusedFrom ? 0 : (producer.meta.usage?.cost ?? null), out: repoRelative(producerOut), output_sha256: producer.meta.output_sha256, qualification: producer.meta.qualification, usage: reusedFrom ? null : producer.meta.usage, reasoning: producer.meta.reasoning });
@@ -674,6 +683,29 @@ export async function reviewArtifact({
       // A source uncertainty is not a broken model transport. Drop disputed
       // rows below without excluding a careful producer from unrelated work.
       // The critic cannot overrule a producer's missing evidence or mismatch.
+      if (rescue && rescue.second_round === round) {
+        rescue.second_producer = producer.meta.actual_model;
+        rescue.second_producer_flagged = [...auditFlagged.keys()];
+        rescue.second_critic = critic.meta.actual_model;
+        rescue.second_critic_clean = clean;
+        rescue.outcome = clean && !auditFlagged.size ? 'accepted: a different-family producer and a fresh critic both passed' : 'not rescued: the second opinion objected too';
+        // Any substantive answer from the second-opinion pair other than two passes ends the review: no later round
+        // may turn it into an acceptance through the ordinary retry branches.
+        if (!(clean && !auditFlagged.size)) {
+          errors.push(`round ${round}: second opinion did not pass (producer ${producer.meta.actual_model}${auditFlagged.size ? ' flagged' : ' passed'}, critic ${critic.meta.actual_model} ${clean ? 'passed' : 'objected'}); rejection kept`);
+          terminalError = new Error('second opinion objected');
+          continue;
+        }
+      }
+      // Only round 1 may start a second opinion (decision #10945), and only when the producer's flag is the sole objection.
+      if (clean && auditFlagged.size && secondOpinion && !rescue && round === 1 && round < maxRounds) {
+        rescue = { first_round: round, second_round: round + 1, first_producer: producer.meta.actual_model, first_critic: critic.meta.actual_model,
+          flagged: [...auditFlagged].map(([id, flag]) => ({ id, status: flag.status, note: String(flag.note ?? '').slice(0, 500) })) };
+        avoidProducerFamilies = [vendorFamily(producer.meta.actual_model)];
+        cachedProducer = null;
+        errors.push(`round ${round}: ${auditFlagged.size} row(s) flagged only by producer ${producer.meta.actual_model} under a clean critic pass; asking a different-family producer for a second opinion`);
+        continue;
+      }
       if (clean && auditFlagged.size) errors.push(`round ${round}: ${auditFlagged.size} disputed rows quarantined; producer uncertainty cannot be overruled by a critic pass`);
       if (clean) {
         acceptedRound = record;
@@ -716,6 +748,14 @@ export async function reviewArtifact({
       }
     } catch (error) {
       errors.push(`round ${round}: ${error.message}`);
+      // A second opinion that never gave a usable answer may be asked again in the next round, still from another
+      // family; an unusable answer that still carried an objection (objectionSignal) ends the review instead.
+      if (rescue && rescue.second_round === round && !rescue.outcome) {
+        if (objections > objectionsBefore) {
+          rescue.outcome = 'not rescued: the second opinion objected in an unusable answer';
+          terminalError = error;
+        } else rescue.second_round = round + 1;
+      }
       // D218: an account-level status is terminal for the same reason as the other three — another round
       // cannot pay a bill. The 05:17 run spent three identical 402s per arm to learn that once.
       if (round === maxRounds || ACCOUNT_LEVEL_HTTP.test(error.message)
@@ -759,6 +799,7 @@ export async function reviewArtifact({
     artifact_id: id, rounds_used: attemptsUsed,
     rows: { total: (Array.isArray(rows) ? rows : []).length, accepted: fingerprints.map((f) => f.id), quarantined: quarantined.map((q) => q.id) },
     producer_flagged: [...producerFlagged.keys()],
+    second_opinion: rescue ? { ...rescue, outcome: rescue.outcome ?? 'not rescued: no second opinion within the round budget' } : null,
     criteria: criteriaNorm.map((c) => c.id),
     coverage: {
       producer: acceptedRound ? { complete: true, model: receipts.find((r) => r.role === 'producer' && r.round === acceptedRound.round)?.model ?? null, rows_covered: acceptedRound.coverage.rows_total } : null,
@@ -768,5 +809,5 @@ export async function reviewArtifact({
     receipts,
   };
   await writeJSONAtomic(join(dir, 'coverage-manifest.json'), manifest);
-  return { accepted, reviews, fingerprints, quarantined, manifest, errors, producer_disputed: [...producerDisputed], objections };
+  return { accepted, reviews, fingerprints, quarantined, manifest, errors, producer_disputed: [...producerDisputed], objections, second_opinion: manifest.second_opinion };
 }

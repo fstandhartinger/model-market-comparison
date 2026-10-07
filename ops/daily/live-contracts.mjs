@@ -131,6 +131,8 @@ export async function reviewLiveContracts({
     }
     return review({
       runDir, artifactId: `live-contract-${unit.dataset}`, rows: [unit.row], sources: unit.sources, criteria: LIVE_CONTRACT_CRITERIA,
+      // Decision #10945 (7 Oct 2026): a lone producer flag under a clean critic gets one different-family second opinion.
+      secondOpinion: true,
     });
   }, {
     limit,
@@ -180,5 +182,7 @@ export async function reviewLiveContracts({
     });
     log.log(`live gauntlet ${unit.dataset}: contract accepted; ${unit.rows} rows verified against primary bodies; ${unit.examples.length} explicit model examples`);
   }
-  return { reviewed, retained, deterministic, reused, reuse_stats: reuse.stats() };
+  // Every second-opinion round is reported, rescued or not, so its frequency stays visible (decision #10945).
+  const second_opinions = reviewed.filter((r) => r.second_opinion).map((r) => ({ dataset: r.dataset, ...r.second_opinion }));
+  return { reviewed, retained, deterministic, reused, second_opinions, reuse_stats: reuse.stats() };
 }

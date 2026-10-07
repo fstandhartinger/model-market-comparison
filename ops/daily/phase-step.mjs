@@ -59,13 +59,13 @@ try {
     // gauntlet directory, so they share the waiting; every decision below stays in
     // manifest order (see ops/daily/live-contracts.mjs).
     console.log(`live gauntlet: reviewing ${units.length} source contracts with concurrency ${limit}${reuse.stats().enabled ? ` (reuse of unchanged units on, ${reuse.stats().entries_loaded} prior decisions)` : ''}`);
-    const { reviewed, retained, deterministic, reused, reuse_stats } = await reviewLiveContracts({
+    const { reviewed, retained, deterministic, reused, second_opinions, reuse_stats } = await reviewLiveContracts({
       runDir, rawDir: resolve('data/raw'), units, limit, cache: reuse, runId,
     });
     const covered = reviewed.reduce((n, r) => n + r.programmatic_rows, 0);
     if (covered !== manifest.coverage.required_rows) throw new Error('Live verification did not cover every source row');
     result = { ok: true, deterministic: verified.report, gauntlet: { contracts: reviewed.length, concurrency: limit, reuse: reuse_stats, reused_contracts: reused, programmatically_verified_rows: covered,
-      model_reviewed_examples: reviewed.flatMap((r) => r.example_rows), complete: true, retained_contracts: retained, deterministic_fallback_contracts: deterministic,
+      model_reviewed_examples: reviewed.flatMap((r) => r.example_rows), complete: true, retained_contracts: retained, deterministic_fallback_contracts: deterministic, second_opinions: second_opinions ?? [],
       coverage_note: 'All rows verified programmatically against complete captured primary bodies. Different-model gauntlet verifies adapter contracts and explicit examples. No claim of full manual LLM numeric inspection.',
       reviews: reviewed.map((r) => ({ dataset: r.dataset, manifest: r.manifest })) } };
 

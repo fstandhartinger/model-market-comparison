@@ -396,12 +396,15 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     const live = await readJSON(join(reports, 'live-step-result.json')).catch(() => null);
     report.retained_contracts = live?.gauntlet?.retained_contracts ?? [];
     report.deterministic_fallback_contracts = live?.gauntlet?.deterministic_fallback_contracts ?? [];
+    // Decision #10945: every different-family second opinion on a live contract, rescued or not.
+    report.second_opinions = live?.gauntlet?.second_opinions ?? [];
     report.unverified_providers = (after.providers ?? []).filter((p) => p.metadata_unverified).map((p) => p.provider);
     // Plain notices for the daily digest (gate.mjs finalize appends them): what published in a degraded but honest way.
     report.notices = [
       ...report.unverified_providers.map((p) => `New provider "${p}" published without verified metadata (not in EU/non-US filters) — add it to data/raw/provider-meta.json`),
       ...report.retained_contracts.map((r) => `${r.dataset}: today's capture withheld after a review dispute; previous snapshot kept with its date`),
       ...report.deterministic_fallback_contracts.map((r) => `${r.dataset}: reviewer models gave no usable answer; accepted on the full-row source verification`),
+      ...report.second_opinions.map((r) => `${r.dataset}: only producer ${r.first_producer} flagged it under a clean critic pass; second opinion ${r.second_producer ?? 'unavailable'} → ${r.outcome}`),
     ];
     const retainedSources = [...report.retained_contracts.map((r) => r.source), ...report.retained_sources.map((r) => r.source)];
     const stale = sourceFreshnessErrors({ scope: report.scope, day, before, after, retained: retainedSources }); // `scope` is the commit scope below

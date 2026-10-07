@@ -174,7 +174,7 @@ export function routeLabel(candidate) {
   return 'openrouter';
 }
 
-export function selectModel(catalog, dataset, { model, critic = false, producers = [], smokeTest = false, maxPricePer1M = Infinity, excludeModels = [], hardExcludeModels = [], scheduled = false, freeRouter = [], freeRouteRole: role = 'critic' } = {}) {
+export function selectModel(catalog, dataset, { model, critic = false, producers = [], avoidFamilies = [], smokeTest = false, maxPricePer1M = Infinity, excludeModels = [], hardExcludeModels = [], scheduled = false, freeRouter = [], freeRouteRole: role = 'critic' } = {}) {
   if (typeof maxPricePer1M !== 'number' || maxPricePer1M <= 0 || Number.isNaN(maxPricePer1M)) throw new Error('Invalid worker price ceiling');
   for (const list of [excludeModels, hardExcludeModels]) {
     if (!Array.isArray(list) || list.some((m) => typeof m !== 'string' || !m.includes('/'))) throw new Error('Invalid excluded worker model IDs');
@@ -182,6 +182,9 @@ export function selectModel(catalog, dataset, { model, critic = false, producers
   const excluded = new Set([...excludeModels, ...hardExcludeModels]);
   if (model && excluded.has(model)) throw new Error('Pinned worker is excluded after a recorded failure');
   const avoid = new Set(producers.map(vendorFamily));
+  // bh-daily-collectors-fix (7 Oct 2026, decision #10945): a second-opinion producer must come from a different
+  // vendor family than the producer whose flag it re-examines. Applies to any role; a pinned model must satisfy it too.
+  const avoidFamily = new Set((Array.isArray(avoidFamilies) ? avoidFamilies : []).filter(Boolean));
   if (critic && (!producers.length || producers.some((id) => !id.includes('/')))) throw new Error('Critic requires explicit producer model IDs (or valid last-successful producer state)');
   if (critic && smokeTest) throw new Error('Smoke tests cannot certify a critic round');
   if (smokeTest && !model) throw new Error('Smoke tests require an explicitly pinned model');
@@ -195,8 +198,9 @@ export function selectModel(catalog, dataset, { model, critic = false, producers
   const rankedCandidates = [...(freeFirst ? offeredFree : []), ...candidates.free_verified, ...candidates.cheap_verified, ...(freeFirst ? [] : offeredFree)]
     .filter((m) => !scheduled || m.transport === 'router' || FLORIAN_ALLOWED_SCHEDULED_WORKERS.includes(modelBase(m.id)));
   const candidate = model ? assessModel(catalog.find((m) => m.id === model) || {}, dataset)
-    : rankedCandidates.find((m) => !excluded.has(m.id) && m.input_per_1m <= maxPricePer1M && m.output_per_1m <= maxPricePer1M && (!critic || !avoid.has(m.family)));
+    : rankedCandidates.find((m) => !excluded.has(m.id) && m.input_per_1m <= maxPricePer1M && m.output_per_1m <= maxPricePer1M && (!critic || !avoid.has(m.family)) && !avoidFamily.has(m.family));
   if (!candidate) throw new Error('No supported viable worker model found');
+  if (avoidFamily.has(candidate.family)) throw new Error('Worker belongs to a vendor family this call must avoid');
   if (candidate.input_per_1m > maxPricePer1M || candidate.output_per_1m > maxPricePer1M) throw new Error('Worker price exceeds configured ceiling');
   if (critic && avoid.has(candidate.family)) throw new Error('Critic must belong to a different vendor family than every producer');
   if (candidate.aa_intelligence_index !== null && candidate.aa_intelligence_index < MIN_INDEX) throw new Error(`Model is below AA ${MIN_INDEX}`);
