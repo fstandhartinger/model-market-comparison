@@ -44,6 +44,7 @@ async function llmsTxt(): Promise<string> {
     "## For agents",
     "- Start with the current JevBench JSON feed. Capability is the mean of Intelligence and Calibration; use capability.eligible and capability.rank for the official cost and median-latency caps.",
     "- Pick by an axis when that priority dominates. For custom weights, use the published axes and the documented gated harmonic Composite formula; custom scores are exploratory, not official ranks. Higher axis scores are better; lower actual price and latency are better.",
+    `- MCP server (read-only, no auth): ${u("/api/mcp")} — Streamable HTTP, one JSON-RPC message per POST; tools list_models, get_model and compare_models over the same JevBench feed. Pages also register these tools through WebMCP (document.modelContext) where the browser supports it.`,
     `- Compare two ranked model keys: ${u("/jev-models")}?compare=a,b#compare (replace a,b with feed keys).`,
     `- [Submit a model](${u("/submit")}): free queue or fast lane`,
     "- See the Public API reference above for schema, units, pricing basis and missing-value rules.",
