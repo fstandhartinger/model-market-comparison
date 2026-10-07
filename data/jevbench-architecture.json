@@ -3827,6 +3827,47 @@
           "params": "27B",
           "quant": null
         }
+      },
+      "surogate-rune-26b-a4b-v3-v16": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/google/gemma-4-26B-A4B-it/blob/4d7ae4984b7db7de8f8457170b3f1a419ee76d52/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\""
+          },
+          {
+            "url": "https://huggingface.co/api/models/surogate/rune-26b-a4b-GGUF/revision/bd4a7cbbed66af1a95dfbac12cabf52e6e677411",
+            "kind": "model-card",
+            "fact": "Hub metadata at the pinned revision (the repo's README/config.json are gated, HTTP 401 anonymously): cardData.license: apache-2.0; cardData.base_model: google/gemma-4-26B-A4B-it; safetensors.parameters: {BF16: 25805936206}"
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "26B-A4B",
+          "quant": null
+        },
+        "note": "Repo files are gated; architecture follows the disclosed base. Same basis as the published entry surogate-rune-26b-a4b-v3-rtxpro6000-a2."
+      },
+      "xor-26b-a4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/juspay/Xor-26B-A4B/blob/8afd4396492084c7c91846ed3791161d54665d34/README.md",
+            "kind": "model-card",
+            "fact": "\"is a post-trained build of [google/gemma-4-26B-A4B-it]...\"; \"released as merged BF16 weights\"; \"each merged into BF16, then weight-averaged\""
+          },
+          {
+            "url": "https://huggingface.co/juspay/Xor-26B-A4B/blob/8afd4396492084c7c91846ed3791161d54665d34/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\"; dtype: bfloat16"
+          }
+        ],
+        "badges": {
+          "derivation": "merge",
+          "params": "26B-A4B",
+          "quant": null
+        }
       }
     },
     "imagejevbench": {
