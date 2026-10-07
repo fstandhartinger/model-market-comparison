@@ -15,11 +15,13 @@ test('feed carries board and open-board rank next to the unchanged combined rank
   assert.equal(get(feed, 'jev-1.13.0').board, 'reference');
   assert.equal(get(feed, 'jev-1.13.0').capability.open_board_rank, null);
   assert.equal(get(feed, 'quyet-1-0-large').capability.open_board_rank, 1);
-  // v1.7.13 (addendum a7): Rune v3 and Xor 26B-A4B enter at #3 and #4 of the open-board Capability ranking
-  assert.equal(get(feed, 'surogate-rune-26b-a4b-v3-v16').capability.open_board_rank, 3);
-  assert.equal(get(feed, 'xor-26b-a4b').capability.open_board_rank, 4);
-  assert.equal(get(feed, 'torchcast-decision-12b').capability.open_board_rank, 5);
-  assert.equal(get(feed, 'torchcast-decision-12b').capability.rank, 7);
+  // v1.7.13 (addendum a7): Rune v3 and Xor 26B-A4B entered at #3 and #4 of the open-board Capability ranking;
+  // v1.7.14 (addendum a8): H2O-Lightning-4B v1.1 enters at #3, so Rune, Xor and torchcast-decision-12b move down one place
+  assert.equal(get(feed, 'h2o-lightning-4b').capability.open_board_rank, 3);
+  assert.equal(get(feed, 'surogate-rune-26b-a4b-v3-v16').capability.open_board_rank, 4);
+  assert.equal(get(feed, 'xor-26b-a4b').capability.open_board_rank, 5);
+  assert.equal(get(feed, 'torchcast-decision-12b').capability.open_board_rank, 6);
+  assert.equal(get(feed, 'torchcast-decision-12b').capability.rank, 8);
   const ranks = feed.systems.map((s) => s.capability.open_board_rank).filter((r) => r != null).sort((a, b) => a - b);
   assert.deepEqual(ranks, ranks.map((_, i) => i + 1));
   for (const s of feed.systems) if (s.board !== 'open') assert.equal(s.capability.open_board_rank, null);

@@ -71,11 +71,12 @@
   "bootstrap_seed": 16,
   "g_med_fixed": true
  },
- "n_ranked": 106,
+ "n_ranked": 108,
  "board": {
   "A": {
    "order": [
     "sage-1.3.0",
+    "h2o-lightning-4b",
     "jev-1.13.0",
     "quyet-1-0-large",
     "wity-1",
@@ -104,6 +105,7 @@
     "qwen35-9b-jev-data-mix-v2",
     "jevk5-v02",
     "jevone",
+    "kahn1",
     "hopper",
     "imajev-4b-rtx5090-a2",
     "malkuth-4b",
@@ -191,6 +193,7 @@
     "quyet-1-0-large",
     "wity-1",
     "jev-1.13.0",
+    "h2o-lightning-4b",
     "deck31b",
     "torchcast-decision-12b",
     "winnow-12b",
@@ -215,6 +218,7 @@
     "jevk5-v0.3-4b",
     "qwen35-9b-jev-data-mix-v2",
     "jevone",
+    "kahn1",
     "jevk5-v02",
     "hopper",
     "imajev-4b-rtx5090-a2",
@@ -300,6 +304,7 @@
   "C": {
    "order": [
     "sage-1.3.0",
+    "h2o-lightning-4b",
     "jev-1.13.0",
     "quyet-1-0-large",
     "wity-1",
@@ -328,6 +333,7 @@
     "qwen35-9b-jev-data-mix-v2",
     "jevk5-v02",
     "jevone",
+    "kahn1",
     "torchcast-decision-27b",
     "pplx-decider-v1-1-27b",
     "hopper",
@@ -1105,6 +1111,363 @@
   },
   {
    "addendum": null,
+   "api_flag": false,
+   "api_subset": false,
+   "author": "H2O.ai",
+   "axes": {
+    "calibration": 89.95399367673842,
+    "cost": 60.29882443070202,
+    "intelligence": 60.03839906196252,
+    "speed": 92.61084474720658
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.03794010455551056,
+      "ece_score": 92.4119790888979,
+      "mean_tvd": null,
+      "n": 750,
+      "n_ece_hard": 320,
+      "n_tvd": 0,
+      "score": 92.4119790888979
+     },
+     "noul": {
+      "abstention_rate": 0.0,
+      "brier": 0.1156787859671944,
+      "ece": 0.055451181905507255,
+      "n": 375,
+      "score": 88.90976361889855
+     },
+     "score": {
+      "interval90_coverage": 0.952,
+      "interval90_width": 0.45600000000000007,
+      "n": 375,
+      "nrps": 0.08555524714180213,
+      "score": 88.54023832241884,
+      "top_ece": 0.0718199932049105
+     }
+    },
+    "score": 89.95399367673842
+   },
+   "capability": 74.99619636935047,
+   "composite_ci95": {
+    "A": [
+     69.79499879039663,
+     73.78891952313766
+    ],
+    "B": [
+     66.0714448834085,
+     71.5461599654
+    ],
+    "C": [
+     57.59678849695695,
+     73.78891952313766
+    ]
+   },
+   "cost": {
+    "basis": "ESTIMATE (self-hosted open weights, no public tariff): cost per 1,000 decisions measured for H2O-Lightning-4B v1.0 on the v1.5 pool (same base, shim and token path) carried for v1.1, the practice of every Qwen3.5-4B row on this board; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off. Cross-check: v1.1's own v1.6 input tokens on the common cost basis give USD 0.0204 per 1,000 (within 3 %)",
+    "common_basis": null,
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.021055837438423645
+   },
+   "display": "H2O-Lightning-4B v1.1 (H2O.ai, Qwen3.5-4B fine-tune, stock vLLM + open shim)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 61.05316077664259,
+    "I_sealed": 59.02363734728246,
+    "base": 60.03839906196252,
+    "excess": -0.5438642130781113,
+    "gap": 2.0295234293601325,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 75.18196275852294,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 92.21621621621622,
+       "hard": 69.80182447310474,
+       "judge": 80.22412656558997,
+       "standard": 69.8618668899121
+      }
+     },
+     "open|noul": {
+      "cc": 60.94202898550725,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 100.0,
+       "hard": 56.52173913043479,
+       "judge": 50.0,
+       "standard": 66.66666666666667
+      }
+     },
+     "open|score": {
+      "cc": 47.035490585897584,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 54.83317199906027,
+       "hard": 55.09009420986275,
+       "judge": 42.073705022183916,
+       "standard": 34.47012097695641
+      }
+     },
+     "sealed|choice": {
+      "cc": 64.65667579231118,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 72.06414899120539,
+       "hard": 60.80316742081447,
+       "judge": 67.41154562383613,
+       "standard": 64.52765118857003
+      }
+     },
+     "sealed|noul": {
+      "cc": 68.08195642942992,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 87.99999999999999,
+       "hard": 55.33980582524271,
+       "judge": 68.42105263157893,
+       "standard": 83.09859154929578
+      }
+     },
+     "sealed|score": {
+      "cc": 44.33227982010628,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 63.681000195734974,
+       "hard": 40.36020718747171,
+       "judge": 45.957875906717405,
+       "standard": 40.163670767644376
+      }
+     }
+    }
+   },
+   "jevbench_score": 72.5232271521435,
+   "key": "h2o-lightning-4b",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 2,
+   "ranked": true,
+   "ranks": {
+    "A": 2,
+    "B": 5,
+    "C": 2,
+    "capability": 12
+   },
+   "scores": {
+    "A": 72.5232271521435,
+    "B": 69.62745760423118,
+    "C": 72.5232271521435
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.20856922594830393,
+    "p50_s_raw": 0.02928461297415197,
+    "p95_s_adjusted": 0.2628241665661335,
+    "p95_s_raw": 0.056412083283066745
+   },
+   "status": {
+    "answered_ok": 1500,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "api_subset_tag": null,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      84.64761887040858,
+      90.96540455486856
+     ],
+     "I": [
+      54.48601679476801,
+      63.869097672212845
+     ],
+     "capability": [
+      70.2236559039794,
+      76.81358157643643
+     ],
+     "composite": {
+      "A": [
+       69.79499879039663,
+       73.78891952313766
+      ],
+      "B": [
+       66.0714448834085,
+       71.5461599654
+      ],
+      "C": [
+       57.59678849695695,
+       73.78891952313766
+      ]
+     },
+     "seed": 44
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted",
+    "metric_basis": "S u P",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 89.95399367673842,
+     "capability": 74.99619636935047,
+     "intelligence": 60.03839906196252
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.744,
+      "calibration": 92.4119790888979,
+      "cc": 67.26125631139698,
+      "cc_by_type": {
+       "choice": 67.26125631139698
+      },
+      "cc_tiered": 69.91931927541705,
+      "cc_tiered_open": 75.18196275852294,
+      "cc_tiered_sealed": 64.65667579231118,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 67.26125631139698
+     },
+     "noul": {
+      "accuracy": 0.848,
+      "calibration": 88.90976361889855,
+      "cc": 69.6,
+      "cc_by_type": {
+       "noul": 69.6
+      },
+      "cc_tiered": 64.51199270746858,
+      "cc_tiered_open": 60.94202898550725,
+      "cc_tiered_sealed": 68.08195642942992,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 69.6
+     },
+     "score": {
+      "accuracy": 0.5893333333333334,
+      "calibration": 88.54023832241884,
+      "cc": 45.79426376408395,
+      "cc_by_type": {
+       "score": 45.79426376408395
+      },
+      "cc_tiered": 45.683885203001935,
+      "cc_tiered_open": 47.035490585897584,
+      "cc_tiered_sealed": 44.33227982010628,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 45.79426376408395
+     }
+    },
+    "raw_on_A": {
+     "calibration": 86.31592326935305,
+     "capability": 74.50666727956846,
+     "intelligence": 62.69741128978386
+    },
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.0,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.0,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.0,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 68.12306233469367,
+    "Emphasis on Accuracy 60:20:20": 64.64127121779333,
+    "Emphasis on Cost 20:20:60": 64.76172866409156,
+    "Emphasis on Speed 20:60:20": 76.18038522166987,
+    "Intelligence only": 60.038399061962515
+   },
+   "class": "Jev-compatible decision model",
+   "open": "open weights",
+   "licence": "apache-2.0",
+   "repo": "https://huggingface.co/h2oai/h2o-lightning-4b",
+   "gpu": "RTX 5090",
+   "endpoint_condition": "evaluator-owned Lium GPU pod, 1x NVIDIA RTX 5090, official vLLM 0.30.0 image + the author's open standard-library shim (h2o_lightning_shim.py) as published on the model card, offline (all credentials unset), driven over loopback only by the JevBench client; label-free inputs; pod destroyed afterwards; JevBench add-request (GitHub #181), measured 4 Oct 2026",
+   "underlying": "Qwen/Qwen3.5-4B",
+   "model_pin": "h2oai/h2o-lightning-4b@193ad740925b176a3b70a5a13a7cff2f2fadd01e",
+   "last_measured_on": "2026-10-04",
+   "adapter_id": null,
+   "alt": null,
+   "measurement_date_status": "run output completion day (UTC)",
+   "measured_in": "v1.6.1",
+   "not_ranked_because": null,
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 1.0,
+    "acc_among_decisive": 0.848,
+    "valid": 375
+   },
+   "provenance": {
+    "kind": "v1.6.1 addendum a8 (scorer output sha256 7a5b4d4c7b7c, method option B / O1S)",
+    "carried_metadata_from": "author model card + config.json"
+   }
+  },
+  {
+   "addendum": null,
    "api_flag": true,
    "api_subset": false,
    "author": "TypeSafe AI",
@@ -1276,12 +1639,12 @@
    "key": "jev-1.13.0",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 2,
+   "rank": 3,
    "ranked": true,
    "ranks": {
-    "A": 2,
+    "A": 3,
     "B": 4,
-    "C": 2,
+    "C": 3,
     "capability": 9
    },
    "scores": {
@@ -1630,12 +1993,12 @@
    "key": "quyet-1-0-large",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 3,
+   "rank": 4,
    "ranked": true,
    "ranks": {
-    "A": 3,
+    "A": 4,
     "B": 2,
-    "C": 3,
+    "C": 4,
     "capability": 2
    },
    "scores": {
@@ -1989,12 +2352,12 @@
    "key": "wity-1",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 4,
+   "rank": 5,
    "ranked": true,
    "ranks": {
-    "A": 4,
+    "A": 5,
     "B": 3,
-    "C": 4,
+    "C": 5,
     "capability": 4
    },
    "scores": {
@@ -2353,13 +2716,13 @@
    "key": "torchcast-decision-12b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 5,
+   "rank": 6,
    "ranked": true,
    "ranks": {
-    "A": 5,
-    "B": 6,
-    "C": 5,
-    "capability": 17
+    "A": 6,
+    "B": 7,
+    "C": 6,
+    "capability": 18
    },
    "scores": {
     "A": 69.9087143535159,
@@ -2708,13 +3071,13 @@
    "key": "winnow-12b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 6,
+   "rank": 7,
    "ranked": true,
    "ranks": {
-    "A": 6,
-    "B": 7,
-    "C": 7,
-    "capability": 21
+    "A": 7,
+    "B": 8,
+    "C": 8,
+    "capability": 22
    },
    "scores": {
     "A": 68.88542163459404,
@@ -3069,12 +3432,12 @@
    "key": "deck31b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 7,
+   "rank": 8,
    "ranked": true,
    "ranks": {
-    "A": 7,
-    "B": 5,
-    "C": 6,
+    "A": 8,
+    "B": 6,
+    "C": 7,
     "capability": 7
    },
    "scores": {
@@ -3418,13 +3781,13 @@
    "key": "cygnet",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 8,
+   "rank": 9,
    "ranked": true,
    "ranks": {
-    "A": 8,
-    "B": 9,
-    "C": 11,
-    "capability": 22
+    "A": 9,
+    "B": 10,
+    "C": 12,
+    "capability": 23
    },
    "scores": {
     "A": 68.55012424151383,
@@ -3775,13 +4138,13 @@
    "key": "jev-omni",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 9,
+   "rank": 10,
    "ranked": true,
    "ranks": {
-    "A": 9,
-    "B": 10,
-    "C": 10,
-    "capability": 20
+    "A": 10,
+    "B": 11,
+    "C": 11,
+    "capability": 21
    },
    "scores": {
     "A": 67.74758858028281,
@@ -4136,13 +4499,13 @@
    "key": "xor-26b-a4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 10,
+   "rank": 11,
    "ranked": true,
    "ranks": {
-    "A": 10,
-    "B": 8,
-    "C": 8,
-    "capability": 15
+    "A": 11,
+    "B": 9,
+    "C": 9,
+    "capability": 16
    },
    "scores": {
     "A": 67.3818936950357,
@@ -4497,13 +4860,13 @@
    "key": "decider-chat-gemma4-31b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 11,
+   "rank": 12,
    "ranked": true,
    "ranks": {
-    "A": 11,
-    "B": 11,
-    "C": 9,
-    "capability": 24
+    "A": 12,
+    "B": 12,
+    "C": 10,
+    "capability": 25
    },
    "scores": {
     "A": 66.07956202755186,
@@ -4858,13 +5221,13 @@
    "key": "surogate-rune-26b-a4b-v3-v16",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 12,
+   "rank": 13,
    "ranked": true,
    "ranks": {
-    "A": 12,
-    "B": 12,
-    "C": 12,
-    "capability": 14
+    "A": 13,
+    "B": 13,
+    "C": 13,
+    "capability": 15
    },
    "scores": {
     "A": 65.0490738113794,
@@ -5219,13 +5582,13 @@
    "key": "gev-26b-decide",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 13,
+   "rank": 14,
    "ranked": true,
    "ranks": {
-    "A": 13,
-    "B": 13,
-    "C": 14,
-    "capability": 26
+    "A": 14,
+    "B": 14,
+    "C": 15,
+    "capability": 27
    },
    "scores": {
     "A": 64.2201412904201,
@@ -5580,13 +5943,13 @@
    "key": "bespoke-nimble-9b-v3",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 14,
+   "rank": 15,
    "ranked": true,
    "ranks": {
-    "A": 14,
-    "B": 14,
-    "C": 13,
-    "capability": 31
+    "A": 15,
+    "B": 15,
+    "C": 14,
+    "capability": 32
    },
    "scores": {
     "A": 53.47656993239491,
@@ -5937,13 +6300,13 @@
    "key": "plumb-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 15,
+   "rank": 16,
    "ranked": true,
    "ranks": {
-    "A": 15,
-    "B": 15,
-    "C": 16,
-    "capability": 35
+    "A": 16,
+    "B": 16,
+    "C": 17,
+    "capability": 36
    },
    "scores": {
     "A": 48.28224126395837,
@@ -6294,13 +6657,13 @@
    "key": "spark-s1-4b-v6",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 16,
+   "rank": 17,
    "ranked": true,
    "ranks": {
-    "A": 16,
-    "B": 17,
-    "C": 17,
-    "capability": 62
+    "A": 17,
+    "B": 18,
+    "C": 18,
+    "capability": 64
    },
    "scores": {
     "A": 44.90217636528639,
@@ -6651,13 +7014,13 @@
    "key": "swanone",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 17,
+   "rank": 18,
    "ranked": true,
    "ranks": {
-    "A": 17,
-    "B": 16,
-    "C": 15,
-    "capability": 16
+    "A": 18,
+    "B": 17,
+    "C": 16,
+    "capability": 17
    },
    "scores": {
     "A": 43.78640157551217,
@@ -7008,13 +7371,13 @@
    "key": "quyet-1-0-medium",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 18,
+   "rank": 19,
    "ranked": true,
    "ranks": {
-    "A": 18,
-    "B": 19,
-    "C": 18,
-    "capability": 50
+    "A": 19,
+    "B": 20,
+    "C": 19,
+    "capability": 52
    },
    "scores": {
     "A": 43.58925238992216,
@@ -7363,13 +7726,13 @@
    "key": "lev",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 19,
+   "rank": 20,
    "ranked": true,
    "ranks": {
-    "A": 19,
-    "B": 20,
-    "C": 19,
-    "capability": 46
+    "A": 20,
+    "B": 21,
+    "C": 20,
+    "capability": 48
    },
    "scores": {
     "A": 42.177760514319104,
@@ -7720,13 +8083,13 @@
    "key": "ninfer-qwen3.8-flash-next",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 20,
+   "rank": 21,
    "ranked": true,
    "ranks": {
-    "A": 20,
-    "B": 18,
-    "C": 20,
-    "capability": 27
+    "A": 21,
+    "B": 19,
+    "C": 21,
+    "capability": 28
    },
    "scores": {
     "A": 41.96785076957165,
@@ -8077,13 +8440,13 @@
    "key": "jev-local",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 21,
+   "rank": 22,
    "ranked": true,
    "ranks": {
-    "A": 21,
-    "B": 21,
-    "C": 21,
-    "capability": 54
+    "A": 22,
+    "B": 22,
+    "C": 22,
+    "capability": 56
    },
    "scores": {
     "A": 41.328564334669615,
@@ -8434,13 +8797,13 @@
    "key": "decider-4b-v2",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 22,
+   "rank": 23,
    "ranked": true,
    "ranks": {
-    "A": 22,
-    "B": 22,
-    "C": 22,
-    "capability": 36
+    "A": 23,
+    "B": 23,
+    "C": 23,
+    "capability": 37
    },
    "scores": {
     "A": 41.240894350857424,
@@ -8791,13 +9154,13 @@
    "key": "jevk5-v0.3-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 23,
+   "rank": 24,
    "ranked": true,
    "ranks": {
-    "A": 23,
-    "B": 26,
-    "C": 23,
-    "capability": 37
+    "A": 24,
+    "B": 27,
+    "C": 24,
+    "capability": 38
    },
    "scores": {
     "A": 37.36493548751909,
@@ -9148,13 +9511,13 @@
    "key": "metask-jev-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 24,
+   "rank": 25,
    "ranked": true,
    "ranks": {
-    "A": 24,
-    "B": 24,
-    "C": 24,
-    "capability": 45
+    "A": 25,
+    "B": 25,
+    "C": 25,
+    "capability": 46
    },
    "scores": {
     "A": 37.34931073616377,
@@ -9509,13 +9872,13 @@
    "key": "deck-4b-v1-0",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 25,
+   "rank": 26,
    "ranked": true,
    "ranks": {
-    "A": 25,
-    "B": 25,
-    "C": 25,
-    "capability": 39
+    "A": 26,
+    "B": 26,
+    "C": 26,
+    "capability": 40
    },
    "scores": {
     "A": 37.26498528662829,
@@ -9858,13 +10221,13 @@
    "key": "clef-flash",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 26,
+   "rank": 27,
    "ranked": true,
    "ranks": {
-    "A": 26,
-    "B": 23,
-    "C": 26,
-    "capability": 38
+    "A": 27,
+    "B": 24,
+    "C": 27,
+    "capability": 39
    },
    "scores": {
     "A": 36.635050479655426,
@@ -10227,13 +10590,13 @@
    "key": "qwen35-9b-jev-data-mix-v2",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 27,
+   "rank": 28,
    "ranked": true,
    "ranks": {
-    "A": 27,
-    "B": 27,
-    "C": 27,
-    "capability": 48
+    "A": 28,
+    "B": 28,
+    "C": 28,
+    "capability": 50
    },
    "scores": {
     "A": 33.58966697347588,
@@ -10584,13 +10947,13 @@
    "key": "jevk5-v02",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 28,
+   "rank": 29,
    "ranked": true,
    "ranks": {
-    "A": 28,
-    "B": 29,
-    "C": 28,
-    "capability": 40
+    "A": 29,
+    "B": 31,
+    "C": 29,
+    "capability": 41
    },
    "scores": {
     "A": 32.09901620353128,
@@ -10941,13 +11304,13 @@
    "key": "jevone",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 29,
+   "rank": 30,
    "ranked": true,
    "ranks": {
-    "A": 29,
-    "B": 28,
-    "C": 29,
-    "capability": 28
+    "A": 30,
+    "B": 29,
+    "C": 30,
+    "capability": 29
    },
    "scores": {
     "A": 31.14510331640707,
@@ -11133,6 +11496,363 @@
    "addendum": null,
    "api_flag": false,
    "api_subset": false,
+   "author": "Axel Montzamir (Okura66)",
+   "axes": {
+    "calibration": 83.76747077065221,
+    "cost": 46.37729040230682,
+    "intelligence": 39.71971801341685,
+    "speed": 89.97531755002697
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.06004736643320625,
+      "ece_score": 87.99052671335875,
+      "mean_tvd": null,
+      "n": 737,
+      "n_ece_hard": 307,
+      "n_tvd": 0,
+      "score": 87.99052671335875
+     },
+     "noul": {
+      "abstention_rate": 0.2991913746630728,
+      "brier": 0.1447023593915565,
+      "ece": 0.10598766007071211,
+      "n": 371,
+      "score": 78.80246798585758
+     },
+     "score": {
+      "interval90_coverage": 0.9214092140921409,
+      "interval90_width": 0.3678861788617887,
+      "n": 369,
+      "nrps": 0.09917884531883965,
+      "score": 84.50941761274032,
+      "top_ece": 0.10531640121317691
+     }
+    },
+    "score": 83.76747077065221
+   },
+   "capability": 61.74359439203453,
+   "composite_ci95": {
+    "A": [
+     20.65829877133707,
+     39.3142784887598
+    ],
+    "B": [
+     18.472216595378455,
+     36.751585049789064
+    ],
+    "C": [
+     14.346040813428516,
+     27.301582283860974
+    ]
+   },
+   "cost": {
+    "basis": "ESTIMATE, ours (the author's server returns no token usage; Florian 7 Oct 2026: use our own estimate): 829,523 input tokens counted with the author's tokenizer and prompt builder over the 1,624 v1.5 items x n_permutations 3 (the author's server default) = 2,488,569 tokens / 1,624 decisions x USD 0.04 per 1M input (deepinfra:Qwen/Qwen3.5-4B, frozen 25 Sep snapshot), 0 output tokens = USD 0.061295 per 1,000 decisions; carried like every Qwen3.5-4B row on this board. Cross-check: the same count on the v1.6 common cost basis (1,477 items, x3) gives USD 0.0597 per 1,000 (within 3 %)",
+    "common_basis": null,
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.06129480295566502
+   },
+   "display": "Kahn1 4B (Okura66, Qwen3.5-4B LoRA merge, author's sysone engine)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 41.96168150915031,
+    "I_sealed": 37.4777545176834,
+    "base": 39.71971801341685,
+    "excess": 1.910539349028665,
+    "gap": 4.483926991466909,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 62.694715037494376,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 80.54054054054055,
+       "hard": 69.80182447310474,
+       "judge": 52.537903757415954,
+       "standard": 54.79280033486815
+      }
+     },
+     "open|noul": {
+      "cc": 17.904071773636996,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 42.85714285714286,
+       "hard": 30.434782608695656,
+       "judge": -9.999999999999998,
+       "standard": 22.222222222222232
+      }
+     },
+     "open|score": {
+      "cc": 45.28625771631957,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 49.624702928143726,
+       "hard": 52.08153129449285,
+       "judge": 35.187676087499,
+       "standard": 44.67436039729178
+      }
+     },
+     "sealed|choice": {
+      "cc": 60.13243945421864,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 69.40359175227256,
+       "hard": 56.730769230769226,
+       "judge": 57.16945996275605,
+       "standard": 66.7446729892844
+      }
+     },
+     "sealed|noul": {
+      "cc": 16.581379950628655,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 39.99999999999999,
+       "hard": -10.679611650485432,
+       "judge": 28.947368421052634,
+       "standard": 40.8450704225352
+      }
+     },
+     "sealed|score": {
+      "cc": 35.719444148202925,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 55.76848705914599,
+       "hard": 35.73652095498605,
+       "judge": 30.714342076628732,
+       "standard": 33.16842218652643
+      }
+     }
+    }
+   },
+   "jevbench_score": 31.117574813020727,
+   "key": "kahn1",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 31,
+   "ranked": true,
+   "ranks": {
+    "A": 31,
+    "B": 30,
+    "C": 31,
+    "capability": 47
+   },
+   "scores": {
+    "A": 31.117574813020727,
+    "B": 28.585119108273094,
+    "C": 21.60942695348661
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.2821926829987206,
+    "p50_s_raw": 0.06609634149936028,
+    "p95_s_adjusted": 0.3563875272346194,
+    "p95_s_raw": 0.10319376361730971
+   },
+   "status": {
+    "answered_ok": 1477,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "api_subset_tag": null,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      78.07087093913225,
+      85.02256483809754
+     ],
+     "I": [
+      33.5350460501225,
+      43.90853133816846
+     ],
+     "capability": [
+      56.37025407029597,
+      63.949534098181175
+     ],
+     "composite": {
+      "A": [
+       20.65829877133707,
+       39.3142784887598
+      ],
+      "B": [
+       18.472216595378455,
+       36.751585049789064
+      ],
+      "C": [
+       14.346040813428516,
+       27.301582283860974
+      ]
+     },
+     "seed": 60
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted",
+    "metric_basis": "S u P",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 83.76747077065221,
+     "capability": 61.74359439203453,
+     "intelligence": 39.71971801341685
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.7026666666666667,
+      "calibration": 87.99052671335875,
+      "cc": 61.97531332000794,
+      "cc_by_type": {
+       "choice": 61.97531332000794
+      },
+      "cc_tiered": 61.41357724585651,
+      "cc_tiered_open": 62.694715037494376,
+      "cc_tiered_sealed": 60.13243945421864,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 61.97531332000794
+     },
+     "noul": {
+      "accuracy": 0.6,
+      "calibration": 78.80246798585758,
+      "cc": 19.999999999999996,
+      "cc_by_type": {
+       "noul": 19.999999999999996
+      },
+      "cc_tiered": 17.242725862132826,
+      "cc_tiered_open": 17.904071773636996,
+      "cc_tiered_sealed": 16.581379950628655,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 19.999999999999996
+     },
+     "score": {
+      "accuracy": 0.56,
+      "calibration": 84.50941761274032,
+      "cc": 39.16844975336833,
+      "cc_by_type": {
+       "score": 39.16844975336833
+      },
+      "cc_tiered": 40.502850932261246,
+      "cc_tiered_open": 45.28625771631957,
+      "cc_tiered_sealed": 35.719444148202925,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 39.16844975336833
+     }
+    },
+    "raw_on_A": {
+     "calibration": 81.01531873303975,
+     "capability": 63.27790509971841,
+     "intelligence": 45.54049146639707
+    },
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.01733333333333331,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.010666666666666713,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.016000000000000014,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 28.153963481406958,
+    "Emphasis on Accuracy 60:20:20": 25.087824889920398,
+    "Emphasis on Cost 20:20:60": 26.883687773639345,
+    "Emphasis on Speed 20:60:20": 33.89866914190837,
+    "Intelligence only": 21.564986725380077
+   },
+   "class": "Jev-compatible decision model",
+   "open": "open weights",
+   "licence": "apache-2.0",
+   "repo": "https://huggingface.co/Okura66/Kahn1-Qwen3.5-4B",
+   "gpu": "RTX 5090",
+   "endpoint_condition": "evaluator-owned Lium GPU pod, 1x NVIDIA RTX 5090, the author's own sysone engine (github.com/Okura66/kahn1) on vLLM 0.30.0 with the author's documented max-model-len 4096 and calibration.json, offline (all credentials unset), driven over loopback only by the JevBench client through a thin pre-registered adapter for the author's /v1/evaluate/jev endpoint; label-free inputs; pod destroyed afterwards; JevBench add-request, measured 7 Oct 2026",
+   "underlying": "Qwen/Qwen3.5-4B",
+   "model_pin": "Okura66/Kahn1-Qwen3.5-4B@f3f9910f995b0e345a6e8a9cb0aeed1e06bafaf6",
+   "last_measured_on": "2026-10-07",
+   "adapter_id": null,
+   "alt": null,
+   "measurement_date_status": "run output completion day (UTC)",
+   "measured_in": "v1.6.1",
+   "not_ranked_because": null,
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.7008086253369272,
+    "acc_among_decisive": 0.8653846153846154,
+    "valid": 371
+   },
+   "provenance": {
+    "kind": "v1.6.1 addendum a8 (scorer output sha256 7a5b4d4c7b7c, method option B / O1S)",
+    "carried_metadata_from": "author model card + config.json"
+   }
+  },
+  {
+   "addendum": null,
+   "api_flag": false,
+   "api_subset": false,
    "author": "HopitAI",
    "axes": {
     "calibration": 90.07902805935959,
@@ -11298,13 +12018,13 @@
    "key": "hopper",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 30,
+   "rank": 32,
    "ranked": true,
    "ranks": {
-    "A": 30,
-    "B": 30,
-    "C": 32,
-    "capability": 41
+    "A": 32,
+    "B": 32,
+    "C": 34,
+    "capability": 42
    },
    "scores": {
     "A": 28.852652318563656,
@@ -11655,13 +12375,13 @@
    "key": "imajev-4b-rtx5090-a2",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 31,
+   "rank": 33,
    "ranked": true,
    "ranks": {
-    "A": 31,
-    "B": 31,
-    "C": 33,
-    "capability": 42
+    "A": 33,
+    "B": 33,
+    "C": 35,
+    "capability": 43
    },
    "scores": {
     "A": 28.655751132526984,
@@ -12012,13 +12732,13 @@
    "key": "malkuth-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 32,
+   "rank": 34,
    "ranked": true,
    "ranks": {
-    "A": 32,
-    "B": 34,
-    "C": 37,
-    "capability": 47
+    "A": 34,
+    "B": 36,
+    "C": 39,
+    "capability": 49
    },
    "scores": {
     "A": 26.197476126697616,
@@ -12369,13 +13089,13 @@
    "key": "jqv",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 33,
+   "rank": 35,
    "ranked": true,
    "ranks": {
-    "A": 33,
-    "B": 35,
-    "C": 40,
-    "capability": 43
+    "A": 35,
+    "B": 37,
+    "C": 42,
+    "capability": 44
    },
    "scores": {
     "A": 25.391439220985372,
@@ -12730,13 +13450,13 @@
    "key": "jpt-35b-a3b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 34,
+   "rank": 36,
    "ranked": true,
    "ranks": {
-    "A": 34,
-    "B": 32,
-    "C": 36,
-    "capability": 23
+    "A": 36,
+    "B": 34,
+    "C": 38,
+    "capability": 24
    },
    "scores": {
     "A": 25.357657195103958,
@@ -13087,13 +13807,13 @@
    "key": "decider-35b-a3b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 35,
+   "rank": 37,
    "ranked": true,
    "ranks": {
-    "A": 35,
-    "B": 33,
-    "C": 42,
-    "capability": 33
+    "A": 37,
+    "B": 35,
+    "C": 44,
+    "capability": 34
    },
    "scores": {
     "A": 24.772887446577812,
@@ -13444,13 +14164,13 @@
    "key": "manchego-v21-v15",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 36,
+   "rank": 38,
    "ranked": true,
    "ranks": {
-    "A": 36,
-    "B": 39,
-    "C": 43,
-    "capability": 53
+    "A": 38,
+    "B": 41,
+    "C": 45,
+    "capability": 55
    },
    "scores": {
     "A": 24.487333472500133,
@@ -13800,13 +14520,13 @@
    "key": "decision-4b-v12",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 37,
+   "rank": 39,
    "ranked": true,
    "ranks": {
-    "A": 37,
-    "B": 40,
-    "C": 44,
-    "capability": 49
+    "A": 39,
+    "B": 42,
+    "C": 46,
+    "capability": 51
    },
    "scores": {
     "A": 24.463556699266523,
@@ -14157,13 +14877,13 @@
    "key": "raw-qwen3-4b-instruct-2507",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 38,
+   "rank": 40,
    "ranked": true,
    "ranks": {
-    "A": 38,
-    "B": 42,
-    "C": 47,
-    "capability": 91
+    "A": 40,
+    "B": 44,
+    "C": 49,
+    "capability": 93
    },
    "scores": {
     "A": 21.792436038282993,
@@ -14518,13 +15238,13 @@
    "key": "jev-27b-autotrust",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 39,
+   "rank": 41,
    "ranked": true,
    "ranks": {
-    "A": 39,
-    "B": 38,
-    "C": 34,
-    "capability": 13
+    "A": 41,
+    "B": 40,
+    "C": 36,
+    "capability": 14
    },
    "scores": {
     "A": 21.291230595611577,
@@ -14879,12 +15599,12 @@
    "key": "torchcast-decision-27b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 40,
+   "rank": 42,
    "ranked": true,
    "ranks": {
-    "A": 40,
-    "B": 36,
-    "C": 30,
+    "A": 42,
+    "B": 38,
+    "C": 32,
     "capability": 3
    },
    "scores": {
@@ -15236,13 +15956,13 @@
    "key": "nimble-9b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 41,
+   "rank": 43,
    "ranked": true,
    "ranks": {
-    "A": 41,
-    "B": 41,
-    "C": 48,
-    "capability": 58
+    "A": 43,
+    "B": 43,
+    "C": 50,
+    "capability": 60
    },
    "scores": {
     "A": 21.082616704957896,
@@ -15593,13 +16313,13 @@
    "key": "reflex-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 42,
+   "rank": 44,
    "ranked": true,
    "ranks": {
-    "A": 42,
-    "B": 49,
-    "C": 49,
-    "capability": 51
+    "A": 44,
+    "B": 51,
+    "C": 51,
+    "capability": 53
    },
    "scores": {
     "A": 20.637311182702398,
@@ -15954,12 +16674,12 @@
    "key": "pplx-decider-v1-1-27b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 43,
+   "rank": 45,
    "ranked": true,
    "ranks": {
-    "A": 43,
-    "B": 37,
-    "C": 31,
+    "A": 45,
+    "B": 39,
+    "C": 33,
     "capability": 1
    },
    "scores": {
@@ -16307,13 +17027,13 @@
    "key": "jade",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 44,
+   "rank": 46,
    "ranked": true,
    "ranks": {
-    "A": 44,
-    "B": 43,
-    "C": 50,
-    "capability": 65
+    "A": 46,
+    "B": 45,
+    "C": 52,
+    "capability": 67
    },
    "scores": {
     "A": 20.194459825016597,
@@ -16664,13 +17384,13 @@
    "key": "typecastlm",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 45,
+   "rank": 47,
    "ranked": true,
    "ranks": {
-    "A": 45,
-    "B": 52,
-    "C": 51,
-    "capability": 57
+    "A": 47,
+    "B": 54,
+    "C": 53,
+    "capability": 59
    },
    "scores": {
     "A": 19.72256430004839,
@@ -17025,13 +17745,13 @@
    "key": "jebadiah-27b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 46,
+   "rank": 48,
    "ranked": true,
    "ranks": {
-    "A": 46,
-    "B": 44,
-    "C": 39,
-    "capability": 25
+    "A": 48,
+    "B": 46,
+    "C": 41,
+    "capability": 26
    },
    "scores": {
     "A": 19.255307672764186,
@@ -17386,13 +18106,13 @@
    "key": "decision-2-0-vega-27b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 47,
+   "rank": 49,
    "ranked": true,
    "ranks": {
-    "A": 47,
-    "B": 45,
-    "C": 35,
-    "capability": 19
+    "A": 49,
+    "B": 47,
+    "C": 37,
+    "capability": 20
    },
    "scores": {
     "A": 18.883756282485887,
@@ -17743,13 +18463,13 @@
    "key": "decision-4b-v11",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 48,
+   "rank": 50,
    "ranked": true,
    "ranks": {
-    "A": 48,
-    "B": 54,
-    "C": 53,
-    "capability": 55
+    "A": 50,
+    "B": 56,
+    "C": 55,
+    "capability": 57
    },
    "scores": {
     "A": 18.718356274892123,
@@ -18100,13 +18820,13 @@
    "key": "autojev-27b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 49,
+   "rank": 51,
    "ranked": true,
    "ranks": {
-    "A": 49,
-    "B": 47,
-    "C": 46,
-    "capability": 18
+    "A": 51,
+    "B": 49,
+    "C": 48,
+    "capability": 19
    },
    "scores": {
     "A": 18.463427917707932,
@@ -18457,12 +19177,12 @@
    "key": "eikos-27b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 50,
+   "rank": 52,
    "ranked": true,
    "ranks": {
-    "A": 50,
-    "B": 46,
-    "C": 38,
+    "A": 52,
+    "B": 48,
+    "C": 40,
     "capability": 8
    },
    "scores": {
@@ -18814,13 +19534,13 @@
    "key": "ninfer-qwen3.8-27b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 51,
+   "rank": 53,
    "ranked": true,
    "ranks": {
-    "A": 51,
-    "B": 50,
-    "C": 52,
-    "capability": 29
+    "A": 53,
+    "B": 52,
+    "C": 54,
+    "capability": 30
    },
    "scores": {
     "A": 17.71600496541158,
@@ -19171,12 +19891,12 @@
    "key": "openjev-thinking",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 52,
+   "rank": 54,
    "ranked": true,
    "ranks": {
-    "A": 52,
-    "B": 48,
-    "C": 41,
+    "A": 54,
+    "B": 50,
+    "C": 43,
     "capability": 10
    },
    "scores": {
@@ -19528,13 +20248,13 @@
    "key": "open-jev-zefan-9b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 53,
+   "rank": 55,
    "ranked": true,
    "ranks": {
-    "A": 53,
-    "B": 53,
-    "C": 54,
-    "capability": 44
+    "A": 55,
+    "B": 55,
+    "C": 56,
+    "capability": 45
    },
    "scores": {
     "A": 17.045611746249723,
@@ -19885,13 +20605,13 @@
    "key": "standardone-8b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 54,
+   "rank": 56,
    "ranked": true,
    "ranks": {
-    "A": 54,
-    "B": 55,
-    "C": 55,
-    "capability": 52
+    "A": 56,
+    "B": 57,
+    "C": 57,
+    "capability": 54
    },
    "scores": {
     "A": 16.917108299009165,
@@ -20242,12 +20962,12 @@
    "key": "clef",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 55,
+   "rank": 57,
    "ranked": true,
    "ranks": {
-    "A": 55,
-    "B": 51,
-    "C": 45,
+    "A": 57,
+    "B": 53,
+    "C": 47,
     "capability": 11
    },
    "scores": {
@@ -20611,13 +21331,13 @@
    "key": "jev-qwen3.5-9b-base-nvfp4",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 56,
+   "rank": 58,
    "ranked": true,
    "ranks": {
-    "A": 56,
-    "B": 56,
-    "C": 56,
-    "capability": 56
+    "A": 58,
+    "B": 58,
+    "C": 58,
+    "capability": 58
    },
    "scores": {
     "A": 15.97555620862577,
@@ -20968,13 +21688,13 @@
    "key": "semif-qwen3.5-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 57,
+   "rank": 59,
    "ranked": true,
    "ranks": {
-    "A": 57,
-    "B": 57,
-    "C": 57,
-    "capability": 59
+    "A": 59,
+    "B": 59,
+    "C": 59,
+    "capability": 61
    },
    "scores": {
     "A": 15.517179498801362,
@@ -21325,13 +22045,13 @@
    "key": "bev-bonsai-27b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 58,
+   "rank": 60,
    "ranked": true,
    "ranks": {
-    "A": 58,
-    "B": 58,
-    "C": 58,
-    "capability": 34
+    "A": 60,
+    "B": 60,
+    "C": 60,
+    "capability": 35
    },
    "scores": {
     "A": 11.7393704396132,
@@ -21681,13 +22401,13 @@
    "key": "litjev",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 59,
+   "rank": 61,
    "ranked": true,
    "ranks": {
-    "A": 59,
-    "B": 59,
-    "C": 59,
-    "capability": 32
+    "A": 61,
+    "B": 61,
+    "C": 61,
+    "capability": 33
    },
    "scores": {
     "A": 11.458886170296882,
@@ -22038,13 +22758,13 @@
    "key": "localjev-qwen3.5-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 60,
+   "rank": 62,
    "ranked": true,
    "ranks": {
-    "A": 60,
-    "B": 61,
-    "C": 60,
-    "capability": 60
+    "A": 62,
+    "B": 63,
+    "C": 62,
+    "capability": 62
    },
    "scores": {
     "A": 11.438161297684031,
@@ -22395,13 +23115,13 @@
    "key": "system-one-sg",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 61,
+   "rank": 63,
    "ranked": true,
    "ranks": {
-    "A": 61,
-    "B": 60,
-    "C": 61,
-    "capability": 99
+    "A": 63,
+    "B": 62,
+    "C": 63,
+    "capability": 101
    },
    "scores": {
     "A": 11.027723483913586,
@@ -22752,13 +23472,13 @@
    "key": "kev-8b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 62,
+   "rank": 64,
    "ranked": true,
    "ranks": {
-    "A": 62,
-    "B": 62,
-    "C": 62,
-    "capability": 63
+    "A": 64,
+    "B": 64,
+    "C": 64,
+    "capability": 65
    },
    "scores": {
     "A": 10.62283914209564,
@@ -23109,13 +23829,13 @@
    "key": "decision-2b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 63,
+   "rank": 65,
    "ranked": true,
    "ranks": {
-    "A": 63,
-    "B": 65,
-    "C": 63,
-    "capability": 61
+    "A": 65,
+    "B": 67,
+    "C": 65,
+    "capability": 63
    },
    "scores": {
     "A": 10.289708493744515,
@@ -23466,13 +24186,13 @@
    "key": "opensourcejev-qwen35-4b-q4km",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 64,
+   "rank": 66,
    "ranked": true,
    "ranks": {
-    "A": 64,
-    "B": 63,
-    "C": 64,
-    "capability": 67
+    "A": 66,
+    "B": 65,
+    "C": 66,
+    "capability": 69
    },
    "scores": {
     "A": 10.263493713193125,
@@ -23823,13 +24543,13 @@
    "key": "open-alternative-jev",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 65,
+   "rank": 67,
    "ranked": true,
    "ranks": {
-    "A": 65,
-    "B": 66,
-    "C": 65,
-    "capability": 66
+    "A": 67,
+    "B": 68,
+    "C": 67,
+    "capability": 68
    },
    "scores": {
     "A": 9.435692571873393,
@@ -24180,13 +24900,13 @@
    "key": "raw-qwen3-8b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 66,
+   "rank": 68,
    "ranked": true,
    "ranks": {
-    "A": 66,
-    "B": 64,
-    "C": 66,
-    "capability": 98
+    "A": 68,
+    "B": 66,
+    "C": 68,
+    "capability": 100
    },
    "scores": {
     "A": 9.30125972789427,
@@ -24537,13 +25257,13 @@
    "key": "decider-2b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 67,
+   "rank": 69,
    "ranked": true,
    "ranks": {
-    "A": 67,
-    "B": 67,
-    "C": 68,
-    "capability": 72
+    "A": 69,
+    "B": 69,
+    "C": 70,
+    "capability": 74
    },
    "scores": {
     "A": 7.6704332123718,
@@ -24894,13 +25614,13 @@
    "key": "nemotron-diffusion-8b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 68,
+   "rank": 70,
    "ranked": true,
    "ranks": {
-    "A": 68,
-    "B": 69,
-    "C": 69,
-    "capability": 70
+    "A": 70,
+    "B": 71,
+    "C": 71,
+    "capability": 72
    },
    "scores": {
     "A": 7.29748476516348,
@@ -25251,13 +25971,13 @@
    "key": "kev-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 69,
+   "rank": 71,
    "ranked": true,
    "ranks": {
-    "A": 69,
-    "B": 70,
-    "C": 70,
-    "capability": 75
+    "A": 71,
+    "B": 72,
+    "C": 72,
+    "capability": 77
    },
    "scores": {
     "A": 6.611791819903415,
@@ -25612,12 +26332,12 @@
    "key": "kev-27b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 70,
+   "rank": 72,
    "ranked": true,
    "ranks": {
-    "A": 70,
-    "B": 68,
-    "C": 67,
+    "A": 72,
+    "B": 70,
+    "C": 69,
     "capability": 5
    },
    "scores": {
@@ -25969,13 +26689,13 @@
    "key": "malkuth-2b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 71,
+   "rank": 73,
    "ranked": true,
    "ranks": {
-    "A": 71,
-    "B": 73,
-    "C": 72,
-    "capability": 69
+    "A": 73,
+    "B": 75,
+    "C": 74,
+    "capability": 71
    },
    "scores": {
     "A": 3.992169201455145,
@@ -26326,13 +27046,13 @@
    "key": "qwen3-reranker-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 72,
+   "rank": 74,
    "ranked": true,
    "ranks": {
-    "A": 72,
-    "B": 74,
-    "C": 73,
-    "capability": 71
+    "A": 74,
+    "B": 76,
+    "C": 75,
+    "capability": 73
    },
    "scores": {
     "A": 3.715006798009075,
@@ -26687,13 +27407,13 @@
    "key": "simplejev-qwen3.8-27b-selfhost",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 73,
+   "rank": 75,
    "ranked": true,
    "ranks": {
-    "A": 73,
-    "B": 71,
-    "C": 71,
-    "capability": 12
+    "A": 75,
+    "B": 73,
+    "C": 73,
+    "capability": 13
    },
    "scores": {
     "A": 3.394848880196433,
@@ -27044,13 +27764,13 @@
    "key": "zerank-2",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 74,
+   "rank": 76,
    "ranked": true,
    "ranks": {
-    "A": 74,
-    "B": 76,
-    "C": 74,
-    "capability": 64
+    "A": 76,
+    "B": 78,
+    "C": 76,
+    "capability": 66
    },
    "scores": {
     "A": 3.349795360318651,
@@ -27401,13 +28121,13 @@
    "key": "open-jev-zefan-2b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 75,
+   "rank": 77,
    "ranked": true,
    "ranks": {
-    "A": 75,
-    "B": 75,
-    "C": 75,
-    "capability": 68
+    "A": 77,
+    "B": 77,
+    "C": 77,
+    "capability": 70
    },
    "scores": {
     "A": 3.2383990318693976,
@@ -27758,13 +28478,13 @@
    "key": "open-jev-zefan-27b-v1.1",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 76,
+   "rank": 78,
    "ranked": true,
    "ranks": {
-    "A": 76,
-    "B": 72,
-    "C": 76,
-    "capability": 30
+    "A": 78,
+    "B": 74,
+    "C": 78,
+    "capability": 31
    },
    "scores": {
     "A": 2.8808671915746493,
@@ -28115,13 +28835,13 @@
    "key": "raw-phi-4-mini",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 77,
+   "rank": 79,
    "ranked": true,
    "ranks": {
-    "A": 77,
-    "B": 77,
-    "C": 77,
-    "capability": 89
+    "A": 79,
+    "B": 79,
+    "C": 79,
+    "capability": 91
    },
    "scores": {
     "A": 2.4794266829120515,
@@ -28472,13 +29192,13 @@
    "key": "simplejev-qwen3.5-0.8b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 78,
+   "rank": 80,
    "ranked": true,
    "ranks": {
-    "A": 78,
-    "B": 78,
-    "C": 78,
-    "capability": 95
+    "A": 80,
+    "B": 80,
+    "C": 80,
+    "capability": 97
    },
    "scores": {
     "A": 2.112084174105171,
@@ -28829,13 +29549,13 @@
    "key": "smalljev",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 79,
+   "rank": 81,
    "ranked": true,
    "ranks": {
-    "A": 79,
-    "B": 79,
-    "C": 79,
-    "capability": 79
+    "A": 81,
+    "B": 81,
+    "C": 81,
+    "capability": 81
    },
    "scores": {
     "A": 0.7719455446134506,
@@ -29186,13 +29906,13 @@
    "key": "kev-0.6b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 80,
+   "rank": 82,
    "ranked": true,
    "ranks": {
-    "A": 80,
-    "B": 80,
-    "C": 80,
-    "capability": 87
+    "A": 82,
+    "B": 82,
+    "C": 82,
+    "capability": 89
    },
    "scores": {
     "A": 0.5431213026023877,
@@ -29543,13 +30263,13 @@
    "key": "opendecision",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 81,
+   "rank": 83,
    "ranked": true,
    "ranks": {
-    "A": 81,
-    "B": 81,
-    "C": 81,
-    "capability": 85
+    "A": 83,
+    "B": 83,
+    "C": 83,
+    "capability": 87
    },
    "scores": {
     "A": 0.508795165212109,
@@ -29900,13 +30620,13 @@
    "key": "mghafiri-qwen3.5-0.8b-decision-model",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 82,
+   "rank": 84,
    "ranked": true,
    "ranks": {
-    "A": 82,
-    "B": 82,
-    "C": 82,
-    "capability": 80
+    "A": 84,
+    "B": 84,
+    "C": 84,
+    "capability": 82
    },
    "scores": {
     "A": 0.47247471382875306,
@@ -30261,13 +30981,13 @@
    "key": "fastino-gliner-2-5-decide",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 83,
+   "rank": 85,
    "ranked": true,
    "ranks": {
-    "A": 83,
-    "B": 83,
-    "C": 83,
-    "capability": 90
+    "A": 85,
+    "B": 85,
+    "C": 85,
+    "capability": 92
    },
    "scores": {
     "A": 0.34332996901846624,
@@ -30612,13 +31332,13 @@
    "key": "deem-0.8-v1",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 84,
+   "rank": 86,
    "ranked": true,
    "ranks": {
-    "A": 84,
-    "B": 84,
-    "C": 84,
-    "capability": 103
+    "A": 86,
+    "B": 86,
+    "C": 86,
+    "capability": 105
    },
    "scores": {
     "A": 0.32342918922131697,
@@ -30968,13 +31688,13 @@
    "key": "decision-fast",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 85,
+   "rank": 87,
    "ranked": true,
    "ranks": {
-    "A": 85,
-    "B": 85,
-    "C": 85,
-    "capability": 82
+    "A": 87,
+    "B": 87,
+    "C": 87,
+    "capability": 84
    },
    "scores": {
     "A": 0.2981489585308357,
@@ -31325,13 +32045,13 @@
    "key": "quyet-1-0-small-en",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 86,
+   "rank": 88,
    "ranked": true,
    "ranks": {
-    "A": 86,
-    "B": 86,
-    "C": 86,
-    "capability": 84
+    "A": 88,
+    "B": 88,
+    "C": 88,
+    "capability": 86
    },
    "scores": {
     "A": 0.29239342204088814,
@@ -31680,13 +32400,13 @@
    "key": "laya-typed-decisions",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 87,
+   "rank": 89,
    "ranked": true,
    "ranks": {
-    "A": 87,
-    "B": 87,
-    "C": 87,
-    "capability": 73
+    "A": 89,
+    "B": 89,
+    "C": 89,
+    "capability": 75
    },
    "scores": {
     "A": 0.21666109526429145,
@@ -32036,13 +32756,13 @@
    "key": "openjev-verdict-1.4",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 88,
+   "rank": 90,
    "ranked": true,
    "ranks": {
-    "A": 88,
-    "B": 89,
-    "C": 88,
-    "capability": 83
+    "A": 90,
+    "B": 91,
+    "C": 90,
+    "capability": 85
    },
    "scores": {
     "A": 0.17222636557331997,
@@ -32393,13 +33113,13 @@
    "key": "raw-qwen3-0.6b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 89,
+   "rank": 91,
    "ranked": true,
    "ranks": {
-    "A": 89,
-    "B": 88,
-    "C": 89,
-    "capability": 106
+    "A": 91,
+    "B": 90,
+    "C": 91,
+    "capability": 108
    },
    "scores": {
     "A": 0.1673536172919218,
@@ -32750,13 +33470,13 @@
    "key": "lev-350m",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 90,
+   "rank": 92,
    "ranked": true,
    "ranks": {
-    "A": 90,
-    "B": 91,
-    "C": 90,
-    "capability": 77
+    "A": 92,
+    "B": 93,
+    "C": 92,
+    "capability": 79
    },
    "scores": {
     "A": 0.15377137469809216,
@@ -33107,13 +33827,13 @@
    "key": "raw-qwen3-1.7b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 91,
+   "rank": 93,
    "ranked": true,
    "ranks": {
-    "A": 91,
-    "B": 90,
-    "C": 91,
-    "capability": 105
+    "A": 93,
+    "B": 92,
+    "C": 93,
+    "capability": 107
    },
    "scores": {
     "A": 0.13671939226506033,
@@ -33464,13 +34184,13 @@
    "key": "kev-0.5b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 92,
+   "rank": 94,
    "ranked": true,
    "ranks": {
-    "A": 92,
-    "B": 92,
-    "C": 92,
-    "capability": 92
+    "A": 94,
+    "B": 94,
+    "C": 94,
+    "capability": 94
    },
    "scores": {
     "A": 0.131588623265787,
@@ -33821,13 +34541,13 @@
    "key": "openjev-verdict",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 93,
+   "rank": 95,
    "ranked": true,
    "ranks": {
-    "A": 93,
-    "B": 93,
-    "C": 93,
-    "capability": 100
+    "A": 95,
+    "B": 95,
+    "C": 95,
+    "capability": 102
    },
    "scores": {
     "A": 0.09650709186186587,
@@ -34178,13 +34898,13 @@
    "key": "quyet-1-0-small",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 94,
+   "rank": 96,
    "ranked": true,
    "ranks": {
-    "A": 94,
-    "B": 94,
-    "C": 94,
-    "capability": 94
+    "A": 96,
+    "B": 96,
+    "C": 96,
+    "capability": 96
    },
    "scores": {
     "A": 0.08963716950381444,
@@ -34533,13 +35253,13 @@
    "key": "quyet-1-0-tiny",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 95,
+   "rank": 97,
    "ranked": true,
    "ranks": {
-    "A": 95,
-    "B": 95,
-    "C": 95,
-    "capability": 96
+    "A": 97,
+    "B": 97,
+    "C": 97,
+    "capability": 98
    },
    "scores": {
     "A": 0.07064766318734213,
@@ -34888,13 +35608,13 @@
    "key": "open-jev-deberta-v3-large",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 96,
+   "rank": 98,
    "ranked": true,
    "ranks": {
-    "A": 96,
-    "B": 96,
-    "C": 96,
-    "capability": 88
+    "A": 98,
+    "B": 98,
+    "C": 98,
+    "capability": 90
    },
    "scores": {
     "A": 0.03235814777127837,
@@ -35245,13 +35965,13 @@
    "key": "verdict-small",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 97,
+   "rank": 99,
    "ranked": true,
    "ranks": {
-    "A": 97,
-    "B": 97,
-    "C": 97,
-    "capability": 86
+    "A": 99,
+    "B": 99,
+    "C": 99,
+    "capability": 88
    },
    "scores": {
     "A": 0.01899384266854915,
@@ -35602,13 +36322,13 @@
    "key": "laya",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 98,
+   "rank": 100,
    "ranked": true,
    "ranks": {
-    "A": 98,
-    "B": 98,
-    "C": 98,
-    "capability": 93
+    "A": 100,
+    "B": 100,
+    "C": 100,
+    "capability": 95
    },
    "scores": {
     "A": 0.008560099345041717,
@@ -35959,13 +36679,13 @@
    "key": "mxbai-rerank-base-v2",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 99,
+   "rank": 101,
    "ranked": true,
    "ranks": {
-    "A": 99,
-    "B": 99,
-    "C": 99,
-    "capability": 76
+    "A": 101,
+    "B": 101,
+    "C": 101,
+    "capability": 78
    },
    "scores": {
     "A": 0.002273929358844764,
@@ -36316,13 +37036,13 @@
    "key": "laya-multilingual",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 100,
+   "rank": 102,
    "ranked": true,
    "ranks": {
-    "A": 100,
-    "B": 100,
-    "C": 100,
-    "capability": 104
+    "A": 102,
+    "B": 102,
+    "C": 102,
+    "capability": 106
    },
    "scores": {
     "A": 3.7595668430455566e-05,
@@ -36672,13 +37392,13 @@
    "key": "certo",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 101,
+   "rank": 103,
    "ranked": true,
    "ranks": {
-    "A": 101,
-    "B": 101,
-    "C": 101,
-    "capability": 78
+    "A": 103,
+    "B": 103,
+    "C": 103,
+    "capability": 80
    },
    "scores": {
     "A": 1.3254531668229452e-05,
@@ -37029,13 +37749,13 @@
    "key": "clm-8b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 102,
+   "rank": 104,
    "ranked": true,
    "ranks": {
-    "A": 102,
-    "B": 102,
-    "C": 102,
-    "capability": 102
+    "A": 104,
+    "B": 104,
+    "C": 104,
+    "capability": 104
    },
    "scores": {
     "A": 3.5510969933114796e-06,
@@ -37386,13 +38106,13 @@
    "key": "bge-reranker-v2-m3",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 103,
+   "rank": 105,
    "ranked": true,
    "ranks": {
-    "A": 103,
-    "B": 103,
-    "C": 103,
-    "capability": 74
+    "A": 105,
+    "B": 105,
+    "C": 105,
+    "capability": 76
    },
    "scores": {
     "A": 4.4076803151681546e-07,
@@ -37743,13 +38463,13 @@
    "key": "gte-reranker-modernbert-base",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 104,
+   "rank": 106,
    "ranked": true,
    "ranks": {
-    "A": 104,
-    "B": 104,
-    "C": 104,
-    "capability": 81
+    "A": 106,
+    "B": 106,
+    "C": 106,
+    "capability": 83
    },
    "scores": {
     "A": 0.0,
@@ -38100,13 +38820,13 @@
    "key": "mirror",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 105,
+   "rank": 107,
    "ranked": true,
    "ranks": {
-    "A": 105,
-    "B": 105,
-    "C": 105,
-    "capability": 101
+    "A": 107,
+    "B": 107,
+    "C": 107,
+    "capability": 103
    },
    "scores": {
     "A": 0.0,
@@ -38432,13 +39152,13 @@
    "key": "open-jev-json-canvas-joshuasp",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 106,
+   "rank": 108,
    "ranked": true,
    "ranks": {
-    "A": 106,
-    "B": 106,
-    "C": 106,
-    "capability": 97
+    "A": 108,
+    "B": 108,
+    "C": 108,
+    "capability": 99
    },
    "scores": {
     "A": 0.0,
@@ -39648,7 +40368,7 @@
    "repo": "https://github.com/wfzyx/von"
   }
  ],
- "roster_count": 141,
+ "roster_count": 143,
  "overnight": {
   "round": "score-v161-3 (v1.6.1)",
   "scored_utc": "2026-10-06 00:39:36 UTC",
@@ -39862,6 +40582,19 @@
    "scorer_source_sha256": "9d512dc13d7d876b233560e8710ed5f64d83f555be90141fa62644f22d5c9421",
    "baseline_systems_sha256": "2ff7130b5dc1946f005044b773c703835d902b808dec9a7f1556f2b9452b2657",
    "baseline_categories_sha256": "a2fe49209522d498b3be81e884f9751392c9c135669f11fbb5b8bdda0b2765ce",
+   "rule": "Same frozen v1.6 pool, scorer, G_med and cost basis as the published rows; every published row is byte-identical apart from its rank."
+  },
+  {
+   "date": "2026-10-07",
+   "label": "a8",
+   "keys": [
+    "h2o-lightning-4b",
+    "kahn1"
+   ],
+   "note": "H2O-Lightning-4B v1.1 (H2O.ai) and Kahn1 4B (Okura66), two Qwen3.5-4B fine-tunes submitted as JevBench add-requests, measured on the same sealed v1.6 pool, scorer and cost basis as every other row; both are priced with labelled cost estimates (Kahn1's server reports no token usage).",
+   "scorer_source_sha256": "7a5b4d4c7b7ce966c1d7048d5106d50a6a700c8d89372e223ac276f41540be9d",
+   "baseline_systems_sha256": "67d9aca6921a4f148b1137b2fcd438e582463b6e09a1e9904bf00a60c0b82812",
+   "baseline_categories_sha256": "1922c9d5f5391b2e280288f4b5414edf24ac82e06b06cb6fb8bda3d34bf6342e",
    "rule": "Same frozen v1.6 pool, scorer, G_med and cost basis as the published rows; every published row is byte-identical apart from its rank."
   }
  ]
