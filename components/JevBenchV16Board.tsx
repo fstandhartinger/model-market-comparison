@@ -5,7 +5,7 @@ import { jevV15LeaderSentence } from '../lib/jevbench-v15-preview.mjs';
 import { jevV15SliderPresets, jevV15BoardSystem, jevV15BoardRow, jevV15CompareRow } from '../lib/jevbench-v15-board.mjs';
 import type { JevV16ReleaseArtifact, JevV16Categories, JevV16Carry } from '../lib/jevbench-v16-release.mjs';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
-import { jevbenchCategoryView } from '../lib/jevbench-categories.mjs';
+import { jevbenchCategoryView, JEVBENCH_CELL_SUPPLEMENT_ARTIFACT } from '../lib/jevbench-categories.mjs';
 import { jevV15FilterRows } from '../lib/jevbench-v15-filter-rows.mjs';
 import { JevBenchV16Charts } from './JevBenchV16Charts';
 import { jevClassView } from './jevClassView';
@@ -57,6 +57,11 @@ function laneTag(s: { key: string; listing?: string; v16: { lane: string } }) {
   return s.v16.lane === 'api' ? 'API' : 'self-hosted';
 }
 
+// v1.7.12: which item pools a row's category cells cover (S+P, S+P+L1 or S+P+L1+L2).
+function coverageOf(categories: JevV16Categories, key: string) {
+  return (categories.systems[key] as unknown as { coverage?: string }).coverage ?? 'S+P';
+}
+
 function heat(competence: number, lowN: boolean): CSSProperties {
   const t = Math.max(0, Math.min(1, competence / 100));
   // Site heat scale (.bh-heat in globals.css reads --h in 0..1).
@@ -75,17 +80,17 @@ function LanguageView({ a, categories, hiddenApi }: { a: JevV16ReleaseArtifact; 
   return <section className="mt-10" aria-labelledby="jev16-languages" data-bh-jev16-language-view>
     <h2 id="jev16-languages" className="text-2xl font-bold">Languages</h2>
     <p className="bh-muted mt-1 max-w-4xl text-sm">Raw chance-corrected competence per item language (0 = chance, 100 = perfect; can be negative), from each system&apos;s own measured items:
-      self-hosted systems over S 1,200 + P 300{a.revision === 'v1.6.1' ? ', and every hosted API that answered the full set the same way (1,500 items)' : ', hosted APIs over their A or A2 subset + P (600 items). Sage (A3) language cells and A2/A3 topic/use-case cells cover public P300 only'}. Unequated and outside the Composite. Cells under {categories.min_n} items are left empty. A dagger (†) marks every displayed cell with fewer than 30 answered items.
+      self-hosted systems over S 1,200 + P 300{a.revision === 'v1.6.1' ? ', and every hosted API that answered the full set the same way (1,500 items)' : ', hosted APIs over their A or A2 subset + P (600 items). Sage (A3) language cells and A2/A3 topic/use-case cells cover public P300 only'}{categories.supplement ? `, plus the sealed language supplement L1 (${categories.supplement.pools.L1} items) and use-case supplement L2 (${categories.supplement.pools.L2} items), drawn ${categories.supplement.drawn} (${categories.supplement.pool_items.toLocaleString('en-US')} items in all; headline scores stay on S + P). Rows tagged “S+P” or “S+P+L1” have not answered every supplement yet and keep cells from the pools in the tag` : ''}. Unequated and outside the Composite. Cells under {categories.min_n} items are left empty. A dagger (†) marks every displayed cell with fewer than 30 answered items.
       {en ? ` English (${en.n.toLocaleString('en-US')} items) is listed first; the other ${allLangs.filter((l) => l.key !== 'mixed').length} languages${allLangs.some((l) => l.key === 'mixed') ? ' and the mixed-language group' : ''} share ${allLangs.reduce((s, l) => s + l.n, 0)} items.` : ''}
       {hidden.length > 0 && <span data-bh-jev16-language-hidden={hidden.map((l) => l.key).join(' ')}>{' '}In {hidden.length === 1 ? 'one further group' : `${hidden.length} further groups`} no system reaches the {categories.min_n}-item reporting minimum, so {hidden.length === 1 ? 'it gets' : 'they get'} no column (items in the pool shown): {hidden.map((l) => `${l.label} (${l.n})`).join(', ')} — {hidden.reduce((s, l) => s + l.n, 0)} items, scored like every other item.</span>}
       {a.systems.some((s) => (s as { a4?: unknown }).a4) && ' API rows re-run on A4 ∪ P (v1.7.7) or A5 ∪ P (v1.7.10) and Liquid AI d1 (v1.7.8) are not in this view yet: their per-language breakdown is not published.'}
-      {' '}This is the {a.revision} main-pool breakdown. Per-language coverage grows with the expanded uc1.1 multilingual pool, a candidate for a later release that is not part of {a.revision}.</p>
+      {categories.supplement ? ` Every language now has at least 30 items in the pool (supplements added in ${categories.supplement.revision}); rows tagged S+P can still have fewer.` : ` This is the ${a.revision} main-pool breakdown. Per-language coverage grows with the expanded uc1.1 multilingual pool, a candidate for a later release that is not part of ${a.revision}.`}</p>
     <div className="mt-3 overflow-x-auto"><table className="text-left text-xs tabular" data-bh-jev16-language-table>
       <caption className="sr-only">JevBench {a.revision} competence by item language and system</caption>
       <thead><tr><th scope="col" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5">System</th>
         {[...(en ? [en] : []), ...langs].map((l) => <th key={l.key} scope="col" className="p-1.5 text-center" title={`${l.label}: ${l.n} items (${l.open} public, ${l.sealed} sealed)`}>{l.key}{l.n < 30 && <sup aria-label="low n">†</sup>}<span className="bh-muted block font-normal">{l.n}</span></th>)}</tr></thead>
       <tbody>{systems.map((s) => <tr key={s.key} className="border-t border-line" {...apiRowProps(s.key, hiddenApi)}>
-        <th scope="row" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5 font-normal whitespace-nowrap">{short(s.display)}<span className="bh-muted"> · {laneTag(s)}</span></th>
+        <th scope="row" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5 font-normal whitespace-nowrap">{short(s.display)}<span className="bh-muted"> · {laneTag(s)}</span>{categories.supplement && coverageOf(categories, s.key) !== 'S+P+L1+L2' && <span className="bh-thin-tag ml-1" title="Cells from S + P only; not yet run on the language/use-case supplements" data-bh-jev16-cell-coverage={coverageOf(categories, s.key)}>{coverageOf(categories, s.key)}</span>}</th>
         {[...(en ? [en] : []), ...langs].map((l) => {
           const c = categories.systems[s.key].languages?.[l.key];
           if (!c || c.n < categories.min_n) {
@@ -126,6 +131,7 @@ function DatedCarry({ carry, hiddenApi }: { carry: JevV16Carry; hiddenApi: Reado
 
 // v1.7.0 (Florian, 5 Oct 2026): open-weights board on /jev-models, API-provider board on /jev-models/api.
 export const JEV_BOARD_REVISIONS: { version: string; date: string; text: string }[] = [
+  { version: 'v1.7.12', date: '2026-10-07', text: 'Languages and use cases: the per-language and per-use-case cells now also count two sealed supplements, a language supplement L1 (354 items) and a use-case supplement L2 (33 items), drawn and reviewed on 6 Oct 2026. Every one of the 22 languages (plus the mixed-language group) and every one of the 20 use cases now has at least 30 items (before: as few as 5). 82 rows answered both supplements; rows not run on them yet keep their S + P cells and are tagged S+P (or S+P+L1). Headline scores, Capability, Composite and every rank are unchanged on both boards.' },
   { version: 'v1.7.11', date: '2026-10-07', text: 'Open-weights board: 12 new self-hosted Jev-compatible rows from the top 20 of the community Jev Decision Index on Hugging Face (Perplexity Decider v1.1 27B, torchcast-decision-27b, Kev 27B, decider chat on Gemma-4-31B-it, GEV-26B-Decide, Decision 2.0 Vega 27B, JEV-27B, Jebadiah 27B, JADE, Bespoke Nimble 9B v3, SimpleJev Qwen3.8-27B self-hosted, JPT-35B-A3B), measured on the same sealed v1.6 pool with the same scorer, G_med and cost basis as every other row (addendum a6 of v1.6.1). No published score, axis or cost changed; ranks move only where a new row places above. Rows priced above the Jev-class cost or latency caps are listed under the limits section, not in the Capability ranking.' },
   { version: 'v1.7.10', date: '2026-10-06', text: 'API board: OpenAI Decisions (POST /v1/decisions with gpt-6-luna) replaces its preliminary public-set row with its official result. It answered a fresh sealed API set A5 (300 never-used sealed items, since A4 had already been sent to OpenAI) plus the 300 public items (598 of 600 answered) and is equated to the v1.6.1 scale with the same method and pool as the A4 rows (offsets +5.78 Intelligence, +6.15 Calibration). It is ranked on the API board: Composite 62.5 (95% interval 51.6–64.6), Capability 73.5; list price USD 0.10 per 1M input tokens as of 6 Oct 2026 (launch day), re-checked at each revision. It enters the API Composite top 5 at #5, statistically tied with Instinct (62.2, now #6), and the Jev-class Capability top 5 at #4 (Instinct moves to #5, Vansa-3.4 to #6). Every other score is unchanged; the open-weights board is unchanged.' },
   { version: 'v1.7.9', date: '2026-10-06', text: 'API board: the OpenAI Decisions API (POST /v1/decisions with gpt-6-luna, opened on 6 Oct 2026) is added as a preliminary, unranked row from the 300 public v1.6 items (298 answered; Capability 68.8, Composite 37.2 on that set; list price USD 0.10 per 1M input tokens). Its official sealed run waits for the next fresh sealed API draw. No score or rank changed on either board.' },
@@ -152,6 +158,7 @@ function BoardSplit({ scope, history, preliminary }: { scope: JevScope; history:
       <li>Jev 1.13.0 is a hosted API. It stays on the open-weights board as the <b>reference row</b> (it defines the Jev-class cost and latency caps) and is not ranked there; it is ranked on the API leaderboard.</li>
       <li>Official cost basis is unchanged: the Cost axis keeps each row&apos;s documented reference price (see the cost notes below; APIs with a known base model are priced at the developer&apos;s own list price). The base-model reference price only applies to open-weights rows; API offerings are ranked at their own list price{scope === 'api' ? ' on this board' : ''}. {scope === 'open' ? 'The GPU cost calculator above' : 'The GPU cost calculator on the main board'} is a What-If for your own hosting and never changes a score or rank.</li>
       <li><b>Full API re-run (A4, v1.7.7).</b> {scope === 'api' ? 'Most offerings on this board' : 'Most API offerings'} were measured on 6 Oct 2026 on a fresh sealed API set A4 (300 never-used sealed items) plus the same 300 public items every system answers, and equated to the v1.6.1 S ∪ P scale with the published A2/A3 supplement method (offset {(apiA4 as { a4_offsets: { I: number; C: number } }).a4_offsets.I >= 0 ? '+' : ''}{(apiA4 as { a4_offsets: { I: number; C: number } }).a4_offsets.I.toFixed(2)} Intelligence, +{(apiA4 as { a4_offsets: { I: number; C: number } }).a4_offsets.C.toFixed(2)} Calibration; pool of {(apiA4 as { a4_pool: string[] }).a4_pool.length} ranked self-hosted systems re-run on A4 ∪ P). Jev, Sage, wity-1 and Fastino GLiNER-2.5-Decide keep their full-set S ∪ P scores; Liquid AI d1 answered the full S ∪ P set on 6 Oct 2026 (v1.7.8) and is scored like them, without equating. The pool is mid-strength, so for the strongest LLM rows the offset is an extrapolation (likely within ±2 Intelligence points; the 95% intervals include it). Nine A4 ∪ P items of about 77,000–82,000 input tokens, beyond the Jev reference&apos;s accepted input range, count against Intelligence when refused but are left out of cost. Rows without a public tariff keep their documented v1.5 cost estimate. A4 is now retired for everyone.{A5_TEXT}</li>
+      <li data-bh-jev-cells-supplement><b>Language and use-case cells (v1.7.12).</b> These breakdowns add two sealed supplements (354 language items, 33 use-case items, drawn and reviewed on 6 Oct 2026), so every language and use case has at least 30 items. Headline scores are unchanged; rows not yet run on the supplements are tagged S+P in the language table.</li>
       {preliminary ? <li>API offerings that are not yet re-measured on the full v1.6 set show a dated <b>public-set figure</b> (the 300 public v1.6 items, no sealed items, so no exposure) next to their older v1.5 score. It is never ranked; on the API board it is drawn as a hatched “preliminary” bar so every offering is visible, but strictly it is comparable only with the anchor rows scored on the same 300 items (Calibration on 300 items reads a few points lower than on 1,500){scope === 'api' ? <> (<a className="text-accent underline" href="#jev-api-public-set">table</a>)</> : ''}.</li> : <li>Every API offering we reached is measured on v1.6.1: either on the full 1,500-item set or on A4 ∪ P (600 items, equated). No preliminary public-set rows remain.</li>}
     </ul>
     <h3 className="mt-4 text-lg font-semibold">Revision history</h3>
@@ -236,7 +243,7 @@ function Method({ a, sha256, categoriesSha256, carrySha256, scope, hiddenApi, pr
     </div>}
     <h3 className="mt-4 text-lg font-semibold">Provenance</h3>
     {measuredDays.length > 0 && <p className="bh-muted mt-1 text-sm" data-bh-jev16-measured-days>Measured on the v1.6 pool (run completion day, UTC): {measuredDays.map(([day, names]) => `${day}: ${names.join(', ')}`).join(' · ')}.</p>}
-    <p className="bh-muted mt-1 break-all text-xs">Aggregate files: results sha256 {sha256} · categories sha256 {categoriesSha256} · dated carry sha256 {carrySha256}. Scoring source sha256 {a.source_sha256}. The method, release data and carry artifact are independently hashable.</p>
+    <p className="bh-muted mt-1 break-all text-xs">Aggregate files: results sha256 {sha256} · categories sha256 {categoriesSha256} · dated carry sha256 {carrySha256}{(a as unknown as { cellSupplementSha256?: string }).cellSupplementSha256 && <> · live language/use-case cell supplement (<code>{JEVBENCH_CELL_SUPPLEMENT_ARTIFACT}</code>) sha256 {(a as unknown as { cellSupplementSha256?: string }).cellSupplementSha256}</>}. Scoring source sha256 {a.source_sha256}. The method, release data and carry artifact are independently hashable.</p>
   </section>;
 }
 
@@ -495,13 +502,13 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
       {scope === 'api' && <ApiRoster a={a} carry={carry} listed={apiListed} eligibility={eligibilityByKey} />}
       {scope === 'api' && <ApiPublicSet measured={measuredKeys} />}
       {scope === 'api' && <JevV15FilterPanel />}
-      <JevCompareV15 rows={compareRows} openDecisions={a.v16.counts.P} sealedDecisions={a.v16.counts.S} categories={jevbenchCategoryView(a.revision, compareRows.map((r) => r.key))} />
-      <p className="bh-muted mt-2 max-w-4xl text-xs" data-bh-jev16-radar-note>{categories.lane_note} {a.revision === 'v1.6.1' ? `Sealed counts in the compare view refer to the sealed set S (${a.v16.counts.S.toLocaleString('en-US')}), which hosted APIs now answer in full.` : `Sealed counts in the compare view refer to self-hosted systems (S ${a.v16.counts.S.toLocaleString('en-US')}); hosted APIs answered A ${a.v16.counts.A}.`}</p>
+      <JevCompareV15 rows={compareRows} openDecisions={a.v16.counts.P} sealedDecisions={a.v16.counts.S} categories={jevbenchCategoryView(a.revision, compareRows.map((r) => r.key), { supplement: Boolean(categories.supplement) })} />
+      <p className="bh-muted mt-2 max-w-4xl text-xs" data-bh-jev16-radar-note>{categories.lane_note} {categories.supplement && 'Rows tagged S+P in the language table below have not answered the supplements, so their radars cover fewer items. '}{a.revision === 'v1.6.1' ? `Sealed counts in the compare view refer to the sealed set S (${a.v16.counts.S.toLocaleString('en-US')}), which hosted APIs now answer in full.` : `Sealed counts in the compare view refer to self-hosted systems (S ${a.v16.counts.S.toLocaleString('en-US')}); hosted APIs answered A ${a.v16.counts.A}.`}</p>
       <LanguageView a={a} categories={categories} hiddenApi={hiddenApi} />
       <NoulAndGate a={a} hiddenApi={hiddenApi} />
       <JevV15AllDataGrid
         artifact={v15}
-        categoryView={jevbenchCategoryView(a.revision, allDataKeys)}
+        categoryView={jevbenchCategoryView(a.revision, allDataKeys, { supplement: Boolean(categories.supplement) })}
         previousKeys={previousKeys}
         eligibility={allClass}
         metadata={{ families: baseModelFamilies('jevbench', a.systems) }}

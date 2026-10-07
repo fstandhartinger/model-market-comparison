@@ -35,7 +35,7 @@ export async function JevComparisonPage({rivalKey,path,label}: {rivalKey:string;
       <p className="mt-3">{status}.{rival.board === 'api' && <> <Link className="text-accent underline" href="/jev-models/api">JevBench API leaderboard</Link></>}</p><p className="bh-muted mt-2">Compare Jev-compatible models by separate measures and their measurement conditions. A historical measurement is not a current rank.</p>
     </header>
     <JevCompareV15 rows={[jevV15CompareRow(jev as JevV15System),jevV15CompareRow(rival as JevV15System)]} openDecisions={data.artifact.sample?.open ?? 0} sealedDecisions={data.artifact.sample?.sealed ?? 0}
-      categories={jevbenchCategoryView(data.artifact.revision,[jev.key,rival.key])} heading={`Jev and ${label}: published axes and category radars`}/>
+      categories={jevbenchCategoryView(data.artifact.revision,[jev.key,rival.key],{ supplement: true })} heading={`Jev and ${label}: published axes and category radars`}/>
     <section className="bh-panel mt-6 p-5"><h2 className="text-xl font-semibold">Published values</h2>
       <div className="overflow-x-auto"><table className="w-full text-left text-sm" data-bh-jev-comparison-table><thead><tr><th>Measure</th><th>{jev.display}</th><th>{rival.display}</th></tr></thead><tbody>{measures.map(([name,a,b]) => <tr className="border-t" key={name}><th className="py-2">{name}</th><td>{a}</td><td>{b}</td></tr>)}</tbody></table></div>
     </section>
