@@ -638,6 +638,9 @@ body.bh-fastlane-visible .bh-custom-evaluation-toast { bottom: calc(var(--bh-fas
 [data-theme="light"] { --heat: 22 163 74; --heat-min: .04; --heat-span: .52; }
 .bh-heat { background-color: rgb(var(--heat) / calc(var(--heat-min) + var(--h, 0) * var(--heat-span))); }
 .bh-heat-cell { border-radius: 3px; }
+/* CR-320: numbers on a heat shade use the body text colour, not --muted, so they keep >= 4.5:1 on the strongest green
+   in both themes (muted on the green reached only 3.43-4.22:1 in light mode). The shade itself is unchanged. */
+.bh-heat { color: var(--text); }
 @media (min-width: 640px) { [data-bh-jev14-bar-axes] .bh-heat-cell { padding: 1px 4px; } }
 @media (max-width: 639px) { [data-bh-jev14-bar-axes] .bh-heat { padding: 0 2px; } }
 .bh-heat-key { display: inline-block; width: 40px; height: 10px; border-radius: 2px; vertical-align: middle; border: 1px solid rgb(var(--line) / .6);
@@ -777,3 +780,22 @@ body.bh-fastlane-visible .bh-custom-evaluation-toast { bottom: calc(var(--bh-fas
   --jev-a-base-control: 112 112 112;
   --jev-a-system: 157 141 0;
 }
+
+/* CR-320 (WCAG 2.5.8 target size): chart/table source links are inline text (14-16px tall; a short name like "d1"
+   is 14-16px wide). Padding grows the clickable box to >= 24x24px; the matching negative margin keeps the line box,
+   truncation and the chart grid exactly where they were. The extra width goes on the left only, so the box never
+   runs into the info button (ⓘ) that can follow the name. */
+a[data-bh-jev-source] { --bh-src-pad: max(4px, calc(12.5px - .55em)); padding: var(--bh-src-pad) 0 var(--bh-src-pad) 14px; margin: calc(-1 * var(--bh-src-pad)) 0 calc(-1 * var(--bh-src-pad)) -14px; }
+/* A truncating name wrapper clips at its padding box, so it gets the same neutral room around the link. */
+.truncate:has(> a[data-bh-jev-source]) { padding: 7px 0 7px 14px; margin: -7px 0 -7px -14px; }
+/* ImageJevBench "details" links under a name: a 10.5px block line (20px tall). The source link's enlarged box above
+   reaches ~3px into its top, so the extra height goes below only (8px, cancelled by the margin): >= 24px stay clear. */
+a[data-bh-mm-system-details] { padding-bottom: 8px; margin-bottom: -8px; }
+/* The capability row's ⓘ button was a 16x16 box (its ::before only widened the pointer area, not the target).
+   It is now 24x24 around the same centre: the old 4px left gap and the extra 8px are absorbed by margins. */
+button.bh-jev-info { width: 24px; height: 24px; margin: -4px -4px -4px 0; }
+/* The base-model footnote marker ("*3") is accent-coloured beside body text; an underline makes it read as a link
+   without relying on colour (2.06:1 against the adjacent text). */
+a[data-bh-base-model-footnote-ref] { text-decoration: underline; text-underline-offset: 2px; }
+/* Low-n language cells (JevBench v1.6+ category view) dim only their heat shade, never the number. */
+.bh-heat[data-bh-heat-low-n] { background-color: rgb(var(--heat) / calc((var(--heat-min) + var(--h, 0) * var(--heat-span)) * .6)); }

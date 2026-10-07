@@ -137,8 +137,9 @@ function SortArrow({ active, dir }: { active: boolean; dir: Sort['dir'] }) {
 function SortButton({ k, label, sort, toggle, className = '', title }: { k: SortKey; label: ReactNode; sort: Sort; toggle: (k: SortKey) => void; className?: string; title?: string }) {
   const active = sort.key === k;
   return <button type="button" className={`bh-sort-btn ${active ? 'is-active' : ''} ${className}`} onClick={() => toggle(k)} title={title ?? `Sort by ${SORT_LABEL[k]}`}
-    aria-label={`Sort by ${SORT_LABEL[k]}${active ? `, currently ${dirWords(sort)}` : ''}`} data-bh-jev-sort={k} data-bh-jev-sort-dir={active ? sort.dir : undefined}>
-    {label}<SortArrow active={active} dir={sort.dir} />
+    data-bh-jev-sort={k} data-bh-jev-sort-dir={active ? sort.dir : undefined}>
+    {/* CR-320: no aria-label, so the accessible name starts with the visible label ("System, sort by name, …"). */}
+    {label}<span className="sr-only">, sort by {SORT_LABEL[k]}{active ? `, currently ${dirWords(sort)}` : ''}</span><SortArrow active={active} dir={sort.dir} />
   </button>;
 }
 
