@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LisanBench — LLM Word Chain Benchmark</title>
+  <meta name="description" content="An open benchmark that stress-tests LLMs on vocabulary, planning, and rule-following through word-chain generation.">
+  <script defer src="vendor/plotly-3.4.0.min.js"></script>
+  <link rel="stylesheet" href="fonts/local-fonts.css">
+  <script>(function () { var s = localStorage.getItem('lisanbench-theme'); var t = s === 'light' || s === 'dark' ? s : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = t; })()</script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div id="app-shell">
+    <div class="header">
+      <h1><a href="index.html"><span>Lisan</span>Bench</a></h1>
+      <div class="header-actions">
+        <a href="https://github.com/voice-from-the-outer-world/lisan-bench" class="header-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <button class="theme-toggle" id="theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <circle cx="12" cy="12" r="5" />
+            <path
+              d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+          </svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <section class="hero" id="hero">
+      <div class="hero-inner">
+        <h2 class="hero-headline">How good are LLMs at basic reasoning?</h2>
+        <p class="hero-description">LisanBench asks models to build the longest chain of non-repeating English words where each word differs from the last by exactly one letter. It measures rule-following, knowledge, planning, recall and persistence. <a href="?tab=about" class="hero-inline-link" aria-label="Learn more about LisanBench"><span class="hero-inline-link-icon" aria-hidden="true">&#8505;</span> Learn more.</a></p>
+        <div class="hero-example">
+          <span class="hero-example-label">Example</span>
+          <span class="hero-example-chain">
+            <span class="hero-example-step">
+              <span class="hero-example-word">love</span>
+              <span class="hero-example-connector">
+                <span class="hero-example-line"></span>
+                <span class="hero-example-op hero-example-op-insert">insert <span class="hero-example-op-letter">r</span></span>
+                <span class="hero-example-line"></span>
+                <span class="hero-example-chevron hero-example-chevron-insert">&#x276F;</span>
+              </span>
+            </span>
+            <span class="hero-example-step">
+              <span class="hero-example-word">love<span class="hero-edit hero-edit-insert">r</span></span>
+              <span class="hero-example-connector">
+                <span class="hero-example-line"></span>
+                <span class="hero-example-op hero-example-op-sub">substitute <span class="hero-example-op-letter">l</span></span>
+                <span class="hero-example-line"></span>
+                <span class="hero-example-chevron hero-example-chevron-sub">&#x276F;</span>
+              </span>
+            </span>
+            <span class="hero-example-step">
+              <span class="hero-example-word"><span class="hero-edit hero-edit-sub">c</span>over</span>
+              <span class="hero-example-connector">
+                <span class="hero-example-line"></span>
+                <span class="hero-example-op hero-example-op-delete">delete <span class="hero-example-op-letter">r</span></span>
+                <span class="hero-example-line"></span>
+                <span class="hero-example-chevron hero-example-chevron-delete">&#x276F;</span>
+              </span>
+            </span>
+            <span class="hero-example-step">
+              <span class="hero-example-word">cove<span class="hero-edit hero-edit-delete">r</span></span>
+              <span class="hero-example-connector">
+                <span class="hero-example-line hero-example-line-break"></span>
+                <span class="hero-example-op hero-example-op-break">invalid</span>
+                <span class="hero-example-line hero-example-line-break"></span>
+                <span class="hero-example-chevron hero-example-chevron-break">&#x276F;</span>
+              </span>
+            </span>
+            <span class="hero-example-step">
+              <span class="hero-example-word hero-example-word-invalid">c<span class="hero-edit hero-edit-break">ur</span>e</span>
+            </span>
+          </span>
+        </div>
+        <div class="hero-metrics">
+          <div class="hero-metric">
+            <span class="hero-metric-header"><span class="hero-metric-name">Path Length</span> <span class="hero-metric-value">= 3</span></span>
+            <span class="hero-metric-desc">Number of valid transitions from the required starting word.</span>
+          </div>
+          <div class="hero-metric">
+            <span class="hero-metric-header"><span class="hero-metric-name">Difficulty-Weighted</span> <span class="hero-metric-value">= 0.52</span></span>
+            <span class="hero-metric-desc">Common words with many possible next words are given less weight.</span>
+          </div>
+        </div>
+        <nav class="hero-nav" id="hero-nav" aria-label="Explore sections">
+          <button class="hero-nav-card active" data-tab="leaderboard" type="button">
+            <span class="hero-nav-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="5" width="4" height="16" rx="1"/><rect x="17" y="8" width="4" height="13" rx="1"/></svg>
+            </span>
+            <span class="hero-nav-title">Leaderboard</span>
+            <span class="hero-nav-desc">Rankings and model trends</span>
+          </button>
+          <button class="hero-nav-card" data-tab="explorer" type="button">
+            <span class="hero-nav-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="2"/><circle cx="5" cy="8" r="2"/><circle cx="19" cy="8" r="2"/><circle cx="5" cy="16" r="2"/><circle cx="19" cy="16" r="2"/><path d="M7 9l3 2M14 9l-3 2M7 15l3-2M17 15l-3-2"/></svg>
+            </span>
+            <span class="hero-nav-title">Explorer</span>
+            <span class="hero-nav-desc">Model trajectories</span>
+          </button>
+          <button class="hero-nav-card" data-tab="failures" type="button">
+            <span class="hero-nav-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
+            </span>
+            <span class="hero-nav-title">Why They Fail</span>
+            <span class="hero-nav-desc">Failure modes</span>
+          </button>
+          <button class="hero-nav-card" data-tab="patterns" type="button">
+            <span class="hero-nav-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg>
+            </span>
+            <span class="hero-nav-title">Chain Patterns</span>
+            <span class="hero-nav-desc">Chain behavior</span>
+          </button>
+          <button class="hero-nav-card" data-tab="about" type="button">
+            <span class="hero-nav-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><circle cx="12" cy="8" r="0.5" fill="currentColor"/></svg>
+            </span>
+            <span class="hero-nav-title">About</span>
+            <span class="hero-nav-desc">Code, rationale, and scoring</span>
+          </button>
+        </nav>
+      </div>
+    </section>
+
+    <div class="content">
+    <!-- LEADERBOARD -->
+    <div class="panel active" id="panel-leaderboard" role="tabpanel">
+      <div style="margin-bottom: 8px">
+        <h2 class="section-title">Leaderboard</h2>
+        <p class="section-subtitle">Rankings, release-date trends, efficiency, and the comparison plots that show how models trade off score, validity, and difficulty.</p>
+      </div>
+      <div class="stat-row" id="stat-row">
+        <div class="stat-item"><div class="stat-value" id="hero-stat-models">&mdash;</div><div class="stat-label">Models Tested</div></div>
+        <div class="stat-item"><div class="stat-value" id="hero-stat-top">&mdash;</div><div class="stat-label">Top Score</div></div>
+        <div class="stat-item"><div class="stat-value" id="hero-stat-words">&mdash;</div><div class="stat-label">Starting Words</div></div>
+      </div>
+      <p class="stat-row-note">Each model is tested 3 times per starting word. Scores are averaged across all trials.</p>
+      <div class="leaderboard-toolbar">
+        <input type="text" id="leaderboard-filter" placeholder="Filter models or companies..." class="leaderboard-filter-input">
+        <div class="leaderboard-toolbar-toggles">
+          <div class="pill-toggle leaderboard-metric-toggle" id="rank-metric-toggle">
+            <span class="pill-toggle-slider"></span>
+            <button class="pill-toggle-btn active" data-metric="sum_chain_avg" type="button" title="Mean number of valid transitions across all starting words">Path Length</button>
+            <button class="pill-toggle-btn" data-metric="sum_sparse_chain_avg" type="button" title="Valid transitions weighted by move difficulty — harder moves count more">Difficulty-Weighted</button>
+          </div>
+          <div class="pill-toggle" id="rank-thinking-toggle">
+            <span class="pill-toggle-slider"></span>
+            <button class="pill-toggle-btn active" data-thinking="all" type="button">All</button>
+            <button class="pill-toggle-btn" data-thinking="thinking" type="button">Thinking</button>
+            <button class="pill-toggle-btn" data-thinking="non-thinking" type="button">Non-thinking</button>
+          </div>
+          <div class="pill-toggle" id="rank-topk-toggle">
+            <span class="pill-toggle-slider"></span>
+            <button class="pill-toggle-btn active" data-topk="20" type="button">Top 20</button>
+            <button class="pill-toggle-btn" data-topk="all" type="button">All</button>
+          </div>
+          <div class="pill-toggle" id="leaderboard-view-toggle">
+            <span class="pill-toggle-slider"></span>
+            <button class="pill-toggle-btn active" data-view="table" type="button">Table</button>
+            <button class="pill-toggle-btn" data-view="chart" type="button">Chart</button>
+          </div>
+        </div>
+      </div>
+      <div class="card" id="leaderboard-card">
+        <div id="leaderboard-view-table">
+          <div class="leaderboard-wrap">
+            <table class="leaderboard-table" id="leaderboard-table">
+              <colgroup></colgroup>
+              <thead>
+                <tr>
+                  <th data-sort="rank">#</th>
+                  <th data-sort="model">Model</th>
+                  <th data-sort="company">Company</th>
+                  <th data-sort="avg" class="sorted desc" title="Mean number of valid transitions across all starting words">Path Length</th>
+                  <th data-sort="weighted" title="Valid transitions weighted by move difficulty — harder moves count more">Difficulty-Weighted</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboard-body"></tbody>
+            </table>
+          </div>
+        </div>
+        <div id="leaderboard-view-chart" style="display:none">
+          <div id="plot-ranking"></div>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h3 class="section-title" style="font-size:22px">Timeline</h3>
+      <p class="section-subtitle">How the frontier moves over model release dates.</p>
+      <div class="card">
+        <div id="plot-timeline" style="height:550px"></div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h3 class="section-title" style="font-size:22px">Score vs Total Benchmark Cost</h3>
+      <p class="section-subtitle" style="margin-bottom:12px">Total estimated benchmark cost compared against the selected score.</p>
+      <div class="card">
+        <div id="plot-score-vs-cost" style="height:520px"></div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h3 class="section-title" style="font-size:22px">Reasoning Efficiency</h3>
+      <p class="section-subtitle" style="margin-bottom:12px">Output tokens spent vs score achieved. Models below the frontier are spending tokens without proportional gains.</p>
+      <div class="card">
+        <div id="plot-reasoning-eff" style="height:550px"></div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h3 class="section-title" style="font-size:22px">Path Length vs Validity</h3>
+      <p class="section-subtitle" style="margin-bottom:12px">Validity is the fraction of legal moves in a chain. Separates models that are long <em>and</em> clean from those that trade correctness for length.</p>
+      <div class="card">
+        <div id="plot-score-vs-validity" style="height:550px"></div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h3 class="section-title" style="font-size:22px">Path Length vs Difficulty-Weighted Score</h3>
+      <p class="section-subtitle" style="margin-bottom:12px">Path length vs difficulty-weighted score. Models above the diagonal perform harder moves for a given path length.</p>
+      <div class="card">
+        <div id="plot-score-vs-sparse" style="height:550px"></div>
+      </div>
+
+    </div>
+
+    <!-- WHY THEY FAIL -->
+    <div class="panel" id="panel-failures" role="tabpanel" hidden>
+      <div style="margin-bottom: 8px">
+        <h2 class="section-title">Why They Fail</h2>
+        <p class="section-subtitle">Failure modes, stop reasons, and the patterns that keep models from achieving longer chains.</p>
+      </div>
+      <div class="leaderboard-toolbar">
+        <input type="text" id="stop-filter" placeholder="Filter models or companies..." class="leaderboard-filter-input">
+        <div class="leaderboard-toolbar-toggles">
+          <div class="pill-toggle" id="stop-view-toggle">
+            <span class="pill-toggle-slider"></span>
+            <button class="pill-toggle-btn" data-view="table" type="button">Table</button>
+            <button class="pill-toggle-btn active" data-view="chart" type="button">Chart</button>
+          </div>
+          <div class="pill-toggle" id="stop-sort-toggle">
+            <span class="pill-toggle-slider"></span>
+            <button class="pill-toggle-btn active" data-sort="clean_stop" type="button">Clean Stop</button>
+            <button class="pill-toggle-btn" data-sort="dead_end" type="button">Dead End</button>
+            <button class="pill-toggle-btn" data-sort="repeated_word" type="button">Repeated</button>
+            <button class="pill-toggle-btn" data-sort="invalid_word" type="button">Invalid</button>
+            <button class="pill-toggle-btn" data-sort="wrong_edit_distance" type="button">Wrong Dist</button>
+            <button class="pill-toggle-btn" data-sort="no_output" type="button">No Output</button>
+          </div>
+          <div class="pill-toggle" id="stop-topk-toggle">
+            <span class="pill-toggle-slider"></span>
+            <button class="pill-toggle-btn active" data-topk="20" type="button">Top 20</button>
+            <button class="pill-toggle-btn" data-topk="all" type="button">All</button>
+          </div>
+        </div>
+      </div>
+      <div class="card" id="stop-card">
+        <div id="stop-view-table" style="display:none">
+          <div class="leaderboard-wrap">
+            <table class="leaderboard-table" id="stop-table">
+              <colgroup></colgroup>
+              <thead><tr id="stop-table-head"></tr></thead>
+              <tbody id="stop-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+        <div id="stop-view-chart">
+          <div id="plot-stop-reasons"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CHAIN PATTERNS -->
+    <div class="panel" id="panel-patterns" role="tabpanel" hidden>
+      <div style="margin-bottom: 8px">
+        <h2 class="section-title">Chain Patterns</h2>
+        <p class="section-subtitle">How chains unfold step by step, from exploration drift to edit choices and movement through the graph.</p>
+      </div>
+      <div id="traj-model-selector" style="margin-bottom:20px"></div>
+
+      <h3 class="section-title" style="font-size:22px">Exploration Drift</h3>
+      <p class="section-subtitle">Average distance to the previous 20 words in the chain.</p>
+      <div class="card">
+        <div id="plot-drift" style="height:700px"></div>
+      </div>
+
+      <hr class="section-divider">
+
+      <h3 class="section-title" style="font-size:22px">Edit Operations</h3>
+      <p class="section-subtitle">What types of edits models prefer and how they sequence them.</p>
+      <div class="card">
+        <h3 class="card-title">Edit Type Distribution</h3>
+        <p class="section-subtitle" style="margin-bottom:12px">Share of insertions, deletions, and substitutions in each model's chains.</p>
+        <div id="plot-edit-types" style="height:600px"></div>
+      </div>
+      <div class="card">
+        <h3 class="card-title">Bridge Pattern Rate</h3>
+        <p class="section-subtitle" style="margin-bottom:12px">How often models use the insert-substitute-delete bridge pattern.</p>
+        <div id="plot-bridge-rate" style="height:600px"></div>
+      </div>
+      <div class="card">
+        <h3 class="card-title">Word Length Over Chain Steps</h3>
+        <p class="section-subtitle" style="margin-bottom:12px">Longest-trial word length by step for each starting word.</p>
+        <div style="margin-bottom:8px;display:flex;align-items:center;gap:8px">
+          <button id="wl-prev" style="font-size:16px;padding:2px 10px;border-radius:4px;border:1px solid var(--border);background:var(--card-bg);color:var(--text);cursor:pointer">&larr;</button>
+          <span id="wl-word-label" style="font-size:15px;font-weight:600;min-width:60px;text-align:center"></span>
+          <button id="wl-next" style="font-size:16px;padding:2px 10px;border-radius:4px;border:1px solid var(--border);background:var(--card-bg);color:var(--text);cursor:pointer">&rarr;</button>
+        </div>
+        <div id="plot-word-length-series" style="height:450px"></div>
+      </div>
+
+    </div>
+
+    <!-- WORD EXPLORER -->
+    <div class="panel" id="panel-explorer" role="tabpanel" hidden>
+      <div style="margin-bottom: 8px">
+        <h2 class="section-title">Explorer</h2>
+        <p class="section-subtitle">Browse the full path each model takes for every starting word, word by word through the graph.</p>
+      </div>
+      <div id="explorer-model-selector"></div>
+      <div class="leaderboard-toolbar-toggles" style="margin-top:20px">
+        <div class="pill-toggle" id="explorer-view-toggle">
+          <span class="pill-toggle-slider"></span>
+          <button class="pill-toggle-btn active" data-view="3d" type="button">3D</button>
+          <button class="pill-toggle-btn" data-view="text" type="button">Text</button>
+        </div>
+      </div>
+      <p class="section-subtitle" id="explorer-3d-note" style="margin-top:12px;margin-bottom:0">
+        In 3D mode, nearby words are close in the word graph: words with shorter graph distance and tighter local
+        connectivity are placed nearer each other. The absolute axes and orientation do not mean anything.
+      </p>
+      <div id="explorer-grid-container" style="margin-top:28px"></div>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="panel" id="panel-about" role="tabpanel" aria-labelledby="tab-about" hidden>
+      <div style="margin-bottom: 8px; text-align:center">
+        <h2 class="section-title">About LisanBench</h2>
+        <p class="section-subtitle" style="margin-left:auto;margin-right:auto">Code and details, why word chains work, and how the benchmark is scored.</p>
+      </div>
+
+      <div class="card" style="max-width:800px;margin-left:auto;margin-right:auto">
+        <h3 class="card-title">Code &amp; Details</h3>
+        <p style="margin-bottom:16px;line-height:1.7">
+          More details, the benchmark implementation, and the source data are available on
+          <a href="https://github.com/voice-from-the-outer-world/lisan-bench" target="_blank" rel="noopener noreferrer">GitHub</a>.
+        </p>
+      </div>
+
+      <div class="card" style="max-width:800px;margin-left:auto;margin-right:auto">
+        <h3 class="card-title">Why Word Chains?</h3>
+        <p style="margin-bottom:16px;line-height:1.7">
+          <strong>Words as building blocks.</strong> Every language model is familiar with words. By making words the
+          basic unit, evaluation becomes trivial: each answer is checked with simple string matching and a dictionary
+          lookup. There is no LLM judge, no rubric-writing, and no human annotation.
+        </p>
+        <p style="margin-bottom:16px;line-height:1.7">
+          <strong>Simple rules, emergent complexity.</strong> The problem is easy to state, but difficulty emerges
+          naturally and can be adjusted by changing the starting words. The benchmark also scales effortlessly: you can
+          add more starting words, more trials, or even switch languages without
+          redesigning the task or changing how evaluation works. If you want to isolate reasoning more directly, you can
+          also provide all valid next moves at each step and measure whether the model chooses well.
+        </p>
+        <p style="margin-bottom:16px;line-height:1.7">
+          <strong>Why complexity emerges.</strong> As stronger models produce longer chains, the task gets harder on its
+          own. They have to track a longer history, recall more accurately which words have already been used, and avoid
+          painting themselves into a corner. Every chosen word removes one future node from the search space, so each
+          move changes the structure of what remains.
+        </p>
+        <p style="margin-bottom:16px;line-height:1.7">
+          <strong>Capabilities that matter in practice.</strong> Word chains probe a combination of abilities that
+          real-world tasks depend on. To score well, models need to follow instructions, draw on broad and sometimes
+          obscure knowledge, plan ahead strategically, remember what they have already done, and keep going until the
+          task is actually finished:
+        </p>
+        <ul style="line-height:1.9;padding-left:24px">
+          <li><strong>Rule Following</strong> &mdash; stay within the problem's constraints at every step</li>
+          <li><strong>Knowledge</strong> &mdash; know enough words to navigate sparse regions</li>
+          <li><strong>Planning</strong> &mdash; avoid short-sighted moves that lead to dead ends</li>
+          <li><strong>Recall</strong> &mdash; keep track of what has already been used</li>
+          <li><strong>Persistence</strong> &mdash; continue until no valid moves remain</li>
+        </ul>
+
+        <p style="margin-top:24px;margin-bottom:16px;line-height:1.7">
+          <strong>These abilities compound rather than substitute for one another.</strong> Weakness in any one of
+          them shows up quickly: models that stop early score poorly, models with weak recall repeat words, models
+          without enough vocabulary get stuck in sparse regions, and models that know many words but plan poorly still
+          fail to escape low-connectivity parts of the graph. That makes LisanBench difficult to game and better
+          aligned with real-world usefulness than benchmarks that can be optimized around narrow tricks.
+        </p>
+
+      </div>
+
+      <div class="card" style="max-width:800px;margin-left:auto;margin-right:auto">
+        <h3 class="card-title">Methodology &amp; Scoring</h3>
+        <p style="margin-bottom:16px;line-height:1.7">
+          Each model is evaluated on the same <strong>50 starting words</strong>, chosen to cover a range of
+          difficulty. Some starting words, like <span style="font-family:var(--mono)">hat</span>, sit in dense parts
+          of the graph with many valid continuations. Others, like <span style="font-family:var(--mono)">countries</span>,
+          lie in much sparser regions, where valid moves are scarce and poor choices lead to dead ends more quickly.
+          Each starting word is tested <strong>3 times</strong> per model to reduce variance.
+        </p>
+        <p style="margin-bottom:16px;line-height:1.7">
+          All chains are validated programmatically: each word must exist in the dictionary, each transition must be
+          exactly edit-distance&nbsp;1, and no repeats are allowed.
+        </p>
+        <div style="line-height:1.7">
+          <p style="margin-bottom:12px"><strong>Average Path Length</strong> &mdash; The number of valid edit-distance-1
+            transitions from the required starting word, summed across all 50 starting words and averaged over the 3
+            trials for each word. This gives a stable overall score.</p>
+          <p><strong>Difficulty-Weighted Score</strong> &mdash; Each move is weighted by
+            <span style="font-family:var(--mono)">1/branching_factor &times; rarity</span>, where branching factor is
+            the number of legal next moves and rarity is based on inverse word frequency. Models that successfully move
+            through sparse, uncommon parts of the word graph score higher, rewarding path quality rather than raw
+            length alone.</p>
+        </div>
+      </div>
+    </div>
+
+    </div>
+
+    <div class="footer">
+      <div class="footer-inner">
+        <div class="footer-brand">LisanBench</div>
+        <div class="footer-links">
+          <a href="impressum.html" class="footer-link">Impressum</a>
+          <a href="datenschutz.html" class="footer-link">Datenschutzerkl&auml;rung</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="explorer-modal-overlay" id="explorer-modal-overlay" hidden>
+    <div class="explorer-modal" id="explorer-modal" role="dialog" aria-modal="true" aria-labelledby="modal-word" aria-describedby="modal-meta" tabindex="-1">
+      <div class="explorer-modal-header">
+        <div class="modal-row-top">
+          <button class="modal-nav-btn" id="modal-prev" type="button" title="Previous word" aria-label="Previous word">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <span class="modal-word" id="modal-word"></span>
+          <button class="modal-nav-btn" id="modal-next" type="button" title="Next word" aria-label="Next word">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+          </button>
+          <span class="modal-meta" id="modal-meta"></span>
+          <div class="modal-row-top-actions">
+            <button class="explorer-cell-play" id="modal-play" type="button" title="Play animation" aria-label="Play animation">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20" /></svg>
+            </button>
+            <button class="modal-close-btn" id="modal-close" type="button" title="Close dialog" aria-label="Close dialog">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+            </button>
+          </div>
+        </div>
+        <div class="modal-row-toggles">
+          <label style="cursor: pointer;"><input type="checkbox" id="modal-bg-toggle" checked> Graph</label>
+          <label style="cursor: pointer;"><input type="checkbox" id="modal-labels-toggle"> Labels</label>
+          <label style="cursor: pointer;"><input type="checkbox" id="modal-autorotate-toggle" checked> Auto-Rotate</label>
+          <label style="cursor: pointer;"><input type="checkbox" id="modal-density-toggle"> Density</label>
+        </div>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <div class="modal-3d-container" id="modal-3d-container"></div>
+        <div class="modal-legend" id="modal-legend" aria-label="Selected model chains"></div>
+        <div class="modal-tooltip" id="modal-tooltip" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+  <script defer src="app.js"></script>
+</body>
+</html>

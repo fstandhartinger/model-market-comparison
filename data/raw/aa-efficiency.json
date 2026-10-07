@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-10-06T10:17:28.531Z",
+  "collected_at": "2026-10-07T08:07:34.701Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-10-06T10:17:28.359Z",
+      "fetched_at": "2026-10-07T08:07:31.053Z",
       "http_status": 200,
-      "bytes": 4038187,
-      "sha256": "bcb409ada4e8d2589722280328c9b696fb87742830e55bbdc56cb8859e1ab113"
+      "bytes": 4045615,
+      "sha256": "99b10c51f4c7525d9d8878fa3e1612b162e630c2aa3be7d2cba8068f971a4f3a"
     }
   ],
   "coverage": {
-    "published_rows": 196,
-    "scored_denominator": 681,
+    "published_rows": 197,
+    "scored_denominator": 682,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 196,
+  "count": 197,
   "rows": [
     {
       "source_id": "8215372b-66ff-457b-855e-e8abeafc9571",
@@ -3456,6 +3456,28 @@
         "basis": "derived",
         "input_output_ratio": 23.559758409458073,
         "reasoning_output_share": 0
+      }
+    },
+    {
+      "source_id": "34fc646a-0174-470e-9e62-d8df452210b3",
+      "slug": "mistral-large-4",
+      "name": "Mistral Large 4 Preview",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 52010.59481503627,
+        "answer": 17319.36825509927,
+        "output": 69329.96307013553
+      },
+      "canonical_token_counts": {
+        "input": 3633283330,
+        "output": 199803890,
+        "answer": 22184199,
+        "reasoning": 177619691
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 18.1842472136053,
+        "reasoning_output_share": 0.7501892762069027
       }
     },
     {

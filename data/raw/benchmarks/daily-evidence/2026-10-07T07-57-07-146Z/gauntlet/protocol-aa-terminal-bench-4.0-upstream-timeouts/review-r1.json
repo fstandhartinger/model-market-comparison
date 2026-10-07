@@ -1,0 +1,18 @@
+{
+  "artifact_id": "protocol-aa-terminal-bench-4.0-upstream-timeouts",
+  "artifact_sha256": "06b545eea85fac10c54832e2641dd986af48b1d4523a98cd5d5055e292b39aad",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["aa-terminal-bench::4.0-upstream-timeouts", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not recompute row SHA-256 or execute owner hash/transport checks; limitation only, not missing evidence.",
+    "c1/identity: SOURCE 1 supports the row's identity claims — full 66-task Terminal-Bench 4.0 dataset, mini-swe-agent harness with no harness version stated, pass@1 averaged over 3 repeats, 500-step cap, and 'Task timeouts and sandbox resources follow the upstream task definitions' — all quoted in SOURCE 1; row matches. The version string '4.0-upstream-timeouts' appends a variant suffix to the release identifier '4.0'; SOURCE 1 does not publish a variant identifier itself, but the suffix is consistent with AA's own 'follow the upstream task definitions' timeout policy, so treated as a defensible variant naming, not a mismatch.",
+    "c1 metric/units: row's metric ('All verifier tests must pass; pass@1 averaged over three repeats'), unit 'fraction' and range [0,1] agree with SOURCE 1's scoring text; SOURCE 3's served-scale summary (210 finite values, lowest 0, highest 0.636363636363636) lies within [0,1], so unit/range match the served scale. SOURCE 3 and SOURCE 2 are this run's generated summaries and were used only for the scale judgement and the active-status judgement respectively, not for methodology.",
+    "c2 lifecycle: status 'active' is supported by SOURCE 2 (62 added nonzero values today, maintainer still reporting); superseded_by null is consistent with SOURCE 1, which names no successor board; version_status 'published' is supported because SOURCE 1 publishes the release identifier 4.0. Protocol text does not contradict any lifecycle field.",
+    "Evidence covers only the protocol excerpt and generated summaries; per-model observed values were not required for this review."
+  ],
+  "missing_evidence": []
+}

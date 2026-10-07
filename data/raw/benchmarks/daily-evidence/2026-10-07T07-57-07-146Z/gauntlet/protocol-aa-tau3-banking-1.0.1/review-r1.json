@@ -1,0 +1,18 @@
+{
+  "artifact_id": "protocol-aa-tau3-banking-1.0.1",
+  "artifact_sha256": "2afdf1c62117507ed7f164d08a3763c634e707b051ff3673538cfbdd7082e496",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["aa-tau3-banking::1.0.1", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row 'version':'1.0.1' is read as the published tau2-bench dataset/grader release identifier named in SOURCE 1 ('running the upstream tau2-bench v1.0.1 dataset and grader'); the packet contains no separate Artificial Analysis release identifier for the board itself, so 'published' rests on that upstream identifier being the row's 'version' semantics.",
+    "SOURCE 3 scale summary (208 values, min 0.00206, max 0.5134) is consistent with unit 'fraction' and range [0,1]; it cannot verify metric meaning, computation, task set, harness, judges or version, per its own stated limits.",
+    "SOURCE 2 activity summary supports status 'active' (6 added values) but settles nothing about methodology or version identity.",
+    "Owner-executed hash and transport/qualification checks could not be independently re-executed by this reviewer; this is a limitation, not missing source evidence.",
+    "SOURCE 1 is an excerpt; continuity of harness/judge details is judged only against the excerpt text supplied."
+  ],
+  "missing_evidence": []
+}

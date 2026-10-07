@@ -1,0 +1,154 @@
+{
+  "artifact_id": "protocol-aa-tau2-telecom-snapshot-2026-09-10",
+  "rounds_used": 1,
+  "rows": {
+    "total": 1,
+    "accepted": [
+      "aa-tau2-telecom::snapshot-2026-09-10"
+    ],
+    "quarantined": []
+  },
+  "producer_flagged": [],
+  "criteria": [
+    "c1",
+    "c2"
+  ],
+  "coverage": {
+    "producer": {
+      "complete": true,
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "rows_covered": 1
+    },
+    "critic": [
+      {
+        "round": 1,
+        "verdict": "pass",
+        "coverage_complete": true,
+        "missing_rows": [],
+        "missing_criteria": []
+      }
+    ],
+    "final": {
+      "rows_covered": 1,
+      "criteria_covered": 2,
+      "complete": true
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.00191700927,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-07T07-57-07-146Z/gauntlet/protocol-aa-tau2-telecom-snapshot-2026-09-10/producer-r1.json",
+      "output_sha256": "5c8bfe43e7426f2cc882c01321b2718fe8f06e25145a14648350e45db8d3f4e4",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.018,
+        "output_per_1m": 1.28,
+        "context": 1048576,
+        "aa_intelligence_index": 34.3,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 34.3
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 3375,
+        "completion_tokens": 4462,
+        "total_tokens": 7837,
+        "cost": 0.00191700927,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 256,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.001936373,
+          "upstream_inference_prompt_cost": 0.000062333,
+          "upstream_inference_completions_cost": 0.00187404
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 4362,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 1,
+      "role": "critic",
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.000851502168,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-07T07-57-07-146Z/gauntlet/protocol-aa-tau2-telecom-snapshot-2026-09-10/review-r1.json",
+      "output_sha256": "d11d525bb611c3aff322da0a79f9a9741f3816b1d9f074e24b7be72ac5bfb224",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.5,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 3942,
+        "completion_tokens": 1024,
+        "total_tokens": 4966,
+        "cost": 0.000851502168,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 3785,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0008601032,
+          "upstream_inference_prompt_cost": 0.0001561032,
+          "upstream_inference_completions_cost": 0.000704
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 488,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

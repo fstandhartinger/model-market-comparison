@@ -1,0 +1,17 @@
+{
+  "artifact_id": "protocol-aa-tau2-telecom-snapshot-2026-09-10",
+  "artifact_sha256": "7a1b0722b892cd74e282bbf8a07bd677479983a2a49cfba4be3c69bc473fab7d",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["aa-tau2-telecom::snapshot-2026-09-10", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row id aa-tau2-telecom::snapshot-2026-09-10, c1: I cannot recompute row or page hashes; binding relies on owner-provided sha256 values. Metric wording 'World-state success, pass@1 averaged over three repeats' matches SOURCE 1 ('world state' outcome, pass@1 as average of 3 attempts, 3 repeats per task over the 114-task telecom domain).",
+    "Row id aa-tau2-telecom::snapshot-2026-09-10, c1: unit 'fraction' and range [0,1] agree with SOURCE 4's served scale (440 finite values, lowest 0, highest 0.991228070175439); that summary settles only scale, not metric meaning, per criterion c1.",
+    "Row id aa-tau2-telecom::snapshot-2026-09-10, c2: version_status 'snapshot' is supported because the SOURCE 1 excerpt publishes no release identifier for the telecom board; the excerpt is bounded, but the criteria direct that a page publishing no identifier supports 'snapshot'.",
+    "Row id aa-tau2-telecom::snapshot-2026-09-10, c2: status 'retained' is supported by SOURCE 1 ('Superseded by τ³-Banking, which we use going forward'). SOURCE 3 shows 0 added/changed values (48 newly null), which does not establish 'active' and does not contradict 'retained'. superseded_by 'aa-tau3-banking::1.0.1' names the successor the protocol names; the successor's version 1.0.1 is settled by the successor's own registry entry, which is outside this packet and not required here."
+  ],
+  "missing_evidence": []
+}

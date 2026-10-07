@@ -1,0 +1,22 @@
+[
+  {
+    "id": "rsi-exam::0.1",
+    "version": "0.1",
+    "version_guard": "The page must still state the release label \"RSI-Exam 0.1\", the three scope tabs Full 88 / Public 35 / Private 53 over the same task bank, the frontier-calibrated reference anchor, one ranked panel per scope covering the same systems, and a resource chart whose score for every model it covers equals that model's Full-board value. The release write-up must still state the anchors (inherited Starter 0.00, frontier-calibrated SOTA anchor 0.60, upper bound 1.00) and one rollout per model per released task. A changed task count, a re-normalisation or a new release label is a new identity, never a silent update of this one.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Mean frozen normalised hidden-set score (0–1) over the 88 active tasks (Full board)",
+      "unit": "points",
+      "range": [
+        0,
+        1
+      ],
+      "higher_better": true,
+      "notes": "Each task's native metric is mapped onto a common 0-1 scale by anchors frozen before the release: the inherited starter method is 0.00, a finite mathematical, theoretical or oracle upper bound is 1.00, and where the task author provides a verified strong frontier solution it is placed at 0.60 as the frontier-calibrated reference; without a finite upper bound an exponential tail approaches but never reaches 1.00. The board averages those per-task scores with equal weight. The number is a normalised index on the benchmark’s own 0–1 scale, not a share of tasks solved, and is shown the way the source publishes it — never as a percentage and never averaged into a category composite. One rollout per model x agent-harness pair per task, so the numbers carry no run-to-run variance estimate; a score of 0.00 means the submitted artifact did not improve on the inherited method, including after an early termination. The Public 35 / Private 53 panels restrict the same runs to the two splits and stay in each observation's protocol."
+    },
+    "description": "An agent spends a long, budgeted run improving an inherited, working-but-weak executable research method or harness on a visible split, and the single artifact it submits is re-run once on a sealed hidden split across 88 executable research tasks in six domains.",
+    "maintainer": "RSI-Exam Team (aiming-lab, UNC Chapel Hill)"
+  }
+]

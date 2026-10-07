@@ -1,0 +1,154 @@
+{
+  "artifact_id": "protocol-aa-tau3-banking-1.0.1",
+  "rounds_used": 1,
+  "rows": {
+    "total": 1,
+    "accepted": [
+      "aa-tau3-banking::1.0.1"
+    ],
+    "quarantined": []
+  },
+  "producer_flagged": [],
+  "criteria": [
+    "c1",
+    "c2"
+  ],
+  "coverage": {
+    "producer": {
+      "complete": true,
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "rows_covered": 1
+    },
+    "critic": [
+      {
+        "round": 1,
+        "verdict": "pass",
+        "coverage_complete": true,
+        "missing_rows": [],
+        "missing_criteria": []
+      }
+    ],
+    "final": {
+      "rows_covered": 1,
+      "criteria_covered": 2,
+      "complete": true
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.00045814626,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-07T07-57-07-146Z/gauntlet/protocol-aa-tau3-banking-1.0.1/producer-r1.json",
+      "output_sha256": "c553d7217770bd1097f183e85ece081ff67152b2559413da668563cf5505e2de",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.018,
+        "output_per_1m": 1.28,
+        "context": 1048576,
+        "aa_intelligence_index": 34.3,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 34.3
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 2854,
+        "completion_tokens": 977,
+        "total_tokens": 3831,
+        "cost": 0.00045814626,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 256,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.000462774,
+          "upstream_inference_prompt_cost": 0.000052434,
+          "upstream_inference_completions_cost": 0.00041034
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 881,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 1,
+      "role": "critic",
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.000587231271,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-07T07-57-07-146Z/gauntlet/protocol-aa-tau3-banking-1.0.1/review-r1.json",
+      "output_sha256": "b77c9a6f13b7b317ad98cd407033268c28ea19f0110d72a78426145f8ffbfca8",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.5,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 3399,
+        "completion_tokens": 667,
+        "total_tokens": 4066,
+        "cost": 0.000587231271,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 3366,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0005931629,
+          "upstream_inference_prompt_cost": 0.0001346004,
+          "upstream_inference_completions_cost": 0.0004585625
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 288,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

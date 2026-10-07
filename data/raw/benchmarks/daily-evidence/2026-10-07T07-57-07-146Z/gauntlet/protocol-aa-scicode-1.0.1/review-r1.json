@@ -1,0 +1,26 @@
+{
+  "artifact_id": "protocol-aa-scicode-1.0.1",
+  "artifact_sha256": "5c8bb6535e6cf3151e9c13db0501ea60c9de3f4906338ed5c8f737a70fb6998a",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["aa-scicode::1.0.1", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "aa-scicode::1.0.1 scoring.metric",
+      "evidence": "Row claims 'Subproblem-level unit-test pass@1 over three repeats'. SOURCE 1 protocol excerpt states only 'We report sub-problem level scoring' and 'Pass@1 evaluation criteria ... graded on isolated executors with a 300-second execution timeout (dataset v1.0.1)'. Nothing in the packet mentions 'three repeats' or any repeat count.",
+      "repair": "Remove the unsupported 'over three repeats' clause from the metric string (or supply a primary-source excerpt that explicitly states the repeat protocol). 'Subproblem-level unit-test pass@1' is supported; the repeat count is not."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-computed row and artifact SHA-256 values and transport/qualification checks cannot be re-executed by this read-only reviewer; receipt identity (deepseek/deepseek-v4-flash-0731) matches PRODUCERS.",
+    "SOURCE 1 writes '(dataset v1.0.1)'; I treat this as the maintainer's published release identifier supporting version_status 'published' and version '1.0.1'. It is the only version identifier in the excerpt, so no other reading is available from the packet, but it is phrased as a dataset version.",
+    "Metric description 'unit-test pass@1' and description 'scientist-annotated background information' map to 'Pass@1 evaluation criteria' / 'isolated executors' and 'We test with scientist-annotated background information included in the prompt'; wording is paraphrase, not verbatim, judged acceptable.",
+    "unit 'fraction' with range [0,1] agrees with served scale (221 values, min 0.0694444444444444, max 0.668981481481482, all within [0,1]) per the admissible SOURCE 3 summary; this settles only the scale, not metric meaning.",
+    "status 'active' is affirmatively supported by SOURCE 2's 55 added values for the scicode field; superseded_by null is consistent with no successor board named in the excerpt (AA-Omniscience text is a separate board, not a SciCode successor)."
+  ],
+  "missing_evidence": []
+}

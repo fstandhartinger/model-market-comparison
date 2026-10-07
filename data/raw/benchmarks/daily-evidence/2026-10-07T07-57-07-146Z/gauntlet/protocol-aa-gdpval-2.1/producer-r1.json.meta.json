@@ -1,0 +1,83 @@
+{
+  "started_at": "2026-10-07T08:37:36.664Z",
+  "mode": "oneshot",
+  "requested_model": "deepseek/deepseek-v4-flash-0731",
+  "producers": [],
+  "qualification": {
+    "id": "deepseek/deepseek-v4-flash-0731",
+    "family": "deepseek",
+    "free": false,
+    "input_per_1m": 0.018,
+    "output_per_1m": 1.28,
+    "context": 1048576,
+    "aa_intelligence_index": 34.3,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "deepseek-v4-flash-0731::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4-flash-0731::max",
+        "index": 34.3
+      }
+    ]
+  },
+  "input_sha256": "b9401ccb89727670a5de07548d1b6a2693fc6e87229ca92f462b3d7ba6cc23e2",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [
+    "z-ai/glm-5.3-flash"
+  ],
+  "hard_excluded_models": [],
+  "catalog": {
+    "source": "run-cache",
+    "fetched_at": "2026-10-07T08:10:34.940Z"
+  },
+  "request_limits": {
+    "max_tokens": 16384,
+    "timeout_seconds": 600,
+    "input_bytes": 23906
+  },
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "ignored_providers": [],
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4-flash-0731",
+  "usage": {
+    "prompt_tokens": 7956,
+    "completion_tokens": 2205,
+    "total_tokens": 10161,
+    "cost": 0.00106471728,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 256,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.001075472,
+      "upstream_inference_prompt_cost": 0.000149372,
+      "upstream_inference_completions_cost": 0.0009261
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2052,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "provider": "Sail Research",
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "session_id": null,
+  "finished_at": "2026-10-07T08:38:29.858Z",
+  "output_sha256": "dd65352294914770054c3a1d0bc001a6f3de1ff3c8178e87894d8ae0d10b4b06"
+}

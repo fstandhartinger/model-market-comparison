@@ -1,0 +1,26 @@
+{
+  "artifact_id": "protocol-aa-hle-snapshot-2026-09-10",
+  "artifact_sha256": "dc4bb8898ae01dabb5874477237ddc05f696ba750ac97de1f1f48962a46976f1",
+  "round": 2,
+  "verdict": "revise",
+  "coverage_checked": ["aa-hle::snapshot-2026-09-10", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row aa-hle::snapshot-2026-09-10, scoring.metric field, clause '; no tool use'",
+      "evidence": "SOURCE 1 excerpt states only: 'Evaluated with an equality checker LLM prompt adapted from the original HLE paper, using GPT-5.6 Luna (medium), with pass@1 scoring'. It supports equality-checker, pass@1 and the judge identity, but says nothing about tool use; the packet contains no other source establishing 'no tool use'. Per row-level rule, a claimed field value with no supporting evidence cannot be accepted and must not be filled from memory.",
+      "repair": "Remove the '; no tool use' clause from the metric string, or add primary evidence from the packet showing tool use is excluded for this board, then re-issue the row."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Row-hash binding: owner-provided per-row sha256 f90dde07100ef0f51c1e9608543f51712a168b8087fbba8785428a56f60411b9 accepted as stated; recomputation not executable in this review.",
+    "Artifact-level sha256 dc4bb8898ae01dabb5874477237ddc05f696ba750ac97de1f1f48962a46976f1 echoed from instructions; transport/qualification/hash execution is the owner's separate check and not independently verified here.",
+    "c1 identity/version: protocol publishes no release identifier for HLE, so version_status 'snapshot' with guard text is consistent; description's 'text-only' subset matches 'we use the text-only subset'.",
+    "c1 unit/range: row states fraction with range [0,1]; SOURCE 3 summary shows 654 served values between 0.0106580166821131 and 0.613531047265987, all within [0,1], so unit and range agree with the served scale.",
+    "c2 status: 'active' is supported by SOURCE 2's 48 added values (0 changed, 0 newly null); this summary establishes liveness only, not methodology. superseded_by null is consistent: the excerpt names no successor board."
+  ],
+  "missing_evidence": []
+}
