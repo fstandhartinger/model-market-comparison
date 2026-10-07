@@ -16,6 +16,7 @@ const REPO = fileURLToPath(new URL('../../../', import.meta.url));
 const HELP = `worker.sh [options] "task"
   --agent              opencode / Kimi K3 via Chutes (may edit repo files)
   --critic             read-only completion, different family from all producers
+  --avoid-family F[,F] never select a worker of these vendor families (second-opinion producer)
   --producer ID[,ID]   explicit artifact producers; recommended for every critic
   --model ID           pin a supported OpenRouter model (AA gate still applies)
   --file PATH          embed contents in the request, not just the file path
@@ -152,6 +153,7 @@ try {
     else if (flag === '--critic') options.critic = true;
     else if (flag === '--smoke-test') options.smokeTest = true;
     else if (flag === '--producer') options.producers.push(...value(flag).split(',').filter(Boolean));
+    else if (flag === '--avoid-family') options.avoidFamilies = [...(options.avoidFamilies ?? []), ...value(flag).split(',').filter(Boolean)];
     else if (flag === '--model') options.model = value(flag);
     else if (flag === '--schema') options.schema = resolve(value(flag));
     else if (flag === '--json') options.json = true;
