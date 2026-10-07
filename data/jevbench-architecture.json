@@ -3868,6 +3868,46 @@
           "params": "26B-A4B",
           "quant": null
         }
+      },
+      "h2o-lightning-4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/h2oai/h2o-lightning-4b/blob/193ad740925b176a3b70a5a13a7cff2f2fadd01e/README.md",
+            "kind": "model-card",
+            "fact": "\"a 4B-parameter decision model from H2O.ai, built on Qwen/Qwen3.5-4B\"; \"runs on unmodified vLLM 0.30.0 with a small standard-library shim\"; card metadata base_model: Qwen/Qwen3.5-4B"
+          },
+          {
+            "url": "https://huggingface.co/h2oai/h2o-lightning-4b/blob/193ad740925b176a3b70a5a13a7cff2f2fadd01e/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForCausalLM\"]; model_type: \"qwen3_5_text\"; dtype: bfloat16"
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "kahn1": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Okura66/Kahn1-Qwen3.5-4B/blob/f3f9910f995b0e345a6e8a9cb0aeed1e06bafaf6/README.md",
+            "kind": "model-card",
+            "fact": "\"a LoRA fine-tune of Qwen/Qwen3.5-4B merged into a standalone text-only checkpoint (Qwen3_5ForCausalLM)\"; \"LoRA r = 16, alpha = 32\""
+          },
+          {
+            "url": "https://huggingface.co/Okura66/Kahn1-Qwen3.5-4B/blob/f3f9910f995b0e345a6e8a9cb0aeed1e06bafaf6/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForCausalLM\"]; model_type: \"qwen3_5_text\"; dtype: bfloat16"
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        }
       }
     },
     "imagejevbench": {

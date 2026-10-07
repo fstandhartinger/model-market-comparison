@@ -100,7 +100,8 @@ test('method amendment and revision history are published; the ledger consequenc
 test('exclusions, wity base model, Sage common cost basis and frozen caps are unchanged', async () => {
   for (const file of [JEVBENCH_V161_RELEASE_RESULTS, JEVBENCH_V161_RELEASE_CATEGORIES]) {
     const text = await read(file);
-    for (const key of [...JEVBENCH_V16_EXCLUDED_KEYS, 'drex-v1.5', 'decider-12b', 'decider-12b-v1', 'h2o-lightning-4b', 'janus-4b', 'evalengine-decision-4b']) assert.ok(!text.includes(`"${key}"`), `${file} lists ${key}`);
+    // h2o-lightning-4b v1.1 is published as addendum a8 (v1.7.14, CR-324); the other internal candidates stay out.
+    for (const key of [...JEVBENCH_V16_EXCLUDED_KEYS, 'drex-v1.5', 'decider-12b', 'decider-12b-v1', 'janus-4b', 'evalengine-decision-4b']) assert.ok(!text.includes(`"${key}"`), `${file} lists ${key}`);
     assert.equal(mentionsPrivateSystem(text), false);
     assert.doesNotMatch(text, /"(?:item_id|item_text|question_text|gold|prediction|prompt)"\s*:/i);
   }
