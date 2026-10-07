@@ -6,6 +6,7 @@ import { mkdtemp, rm, writeFile, chmod, readFile, readdir } from 'node:fs/promis
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { planNotifications, staleCollectorDigestLines, staleCollectorHumanTodo, COLLECTOR_CARD_DAYS } from '../ops/daily/policy.mjs';
+import { prepareReplyJob } from '../ops/daily/notify.mjs';
 import { updateCollectorHealth, staleSources } from '../ops/daily/source-health.mjs';
 import { executeNotifications } from '../ops/daily/notify.mjs';
 
@@ -33,20 +34,17 @@ test('from 7 days a collector becomes one human-action card per failure episode,
   assert.equal(plan({ 'collector-stale:fetch-x@2026-09-23': '2026-10-01' }).sends.some((s) => s.kind === 'collector-stale'), false, 'once per episode');
 });
 
-test('a collector step that stopped running is dropped after 14 days; a running failing one is kept', () => {
+test('retired collectors are dropped by name; a collector a partial run skipped keeps its failure history', () => {
   let state = { collectors: {
     'fetch-published': { last_ok: '2026-09-20', failing_since: null, last_error: null },
     'fetch-lumina-ledger': { last_ok: '2026-09-22', failing_since: '2026-09-23', last_error: 'HTTP 404' },
+    'fetch-aa': { last_ok: '2026-09-20', failing_since: '2026-09-21', last_error: 'HTTP 500' },
   } };
-  state = updateCollectorHealth(state, [{ name: 'fetch-main', ok: true }, { name: 'fetch-lumina-ledger', ok: false, error: 'Error: HTTP 404' }], '2026-10-04');
-  assert.equal(state.collectors['fetch-published'], undefined, 'unseen since 2026-09-20');
-  assert.equal(state.collectors['fetch-lumina-ledger'].last_seen, '2026-10-04');
-  // The lumina step is removed: it stays visible as stale for two weeks after its last run, then goes.
-  state = updateCollectorHealth(state, [{ name: 'fetch-main', ok: true }], '2026-10-17');
-  assert.equal(staleSources({ collectors: state.collectors, day: '2026-10-17' }).map((x) => x.id).includes('fetch-lumina-ledger'), true);
-  state = updateCollectorHealth(state, [{ name: 'fetch-main', ok: true }], '2026-10-18');
-  assert.equal(state.collectors['fetch-lumina-ledger'], undefined);
-  assert.equal(state.collectors['fetch-main'].last_seen, '2026-10-18');
+  // A prices-only run executes only fetch-or; fetch-aa is still configured and must not lose its failure start.
+  state = updateCollectorHealth(state, [{ name: 'fetch-or', ok: true }], '2026-10-07');
+  assert.deepEqual(Object.keys(state.collectors).sort(), ['fetch-aa', 'fetch-or']);
+  assert.equal(state.collectors['fetch-aa'].failing_since, '2026-09-21');
+  assert.deepEqual(staleSources({ collectors: state.collectors, day: '2026-10-07' }).map((x) => [x.id, x.stale_days]), [['fetch-aa', 17]]);
 });
 
 async function stubNotify(dir) {
@@ -76,11 +74,28 @@ test('a human-action card goes out as an ask owned by a reply job; stale pending
     assert.deepEqual(calls[0].argv.slice(0, 3), ['now', '--ask', '960']);
     assert.match(calls[0].argv[3], /collector fetch-mistral-catalog has failed for 7 days/);
     assert.equal(calls[0].source, 'benchmarkheaven-daily');
-    assert.equal(calls[0].jobdir, join(replyRoot, 'bh-daily-collector-stale-reply-2026-10-07'));
+    assert.match(calls[0].jobdir, /\/bh-daily-collector-stale-reply-2026-10-07-[0-9a-f]{10}$/);
     assert.match(await readFile(join(calls[0].jobdir, 'PROMPT.md'), 'utf8'), /notify ack <reply_message_id>/);
     const state = JSON.parse(await readFile(join(stateDir, 'daily-state.json'), 'utf8'));
     assert.deepEqual(state.pending, []);
     assert.ok(state.notified['collector-stale:fetch-mistral-catalog@2026-09-23']);
-    assert.deepEqual(await readdir(replyRoot), ['bh-daily-collector-stale-reply-2026-10-07']);
+    assert.equal((await readdir(replyRoot)).length, 1);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
+test('two cards the same day get separate reply jobs, and a retry keeps an appended reply', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'bh-reply-job-'));
+  try {
+    const env = { BH_TODO_REPLY_ROOT: dir };
+    const now = Date.parse('2026-10-07T05:17:00Z');
+    const a = await prepareReplyJob({ kind: 'collector-stale', key: 'collector-stale:a@2026-09-30', text: 'card A' }, { env, now });
+    const b = await prepareReplyJob({ kind: 'collector-stale', key: 'collector-stale:a@2026-09-30|b@2026-09-30', text: 'card B' }, { env, now });
+    assert.notEqual(a, b);
+    await writeFile(join(a, 'PROMPT.md'), (await readFile(join(a, 'PROMPT.md'), 'utf8')) + '\n## Reply\nyes\n');
+    assert.equal(await prepareReplyJob({ kind: 'collector-stale', key: 'collector-stale:a@2026-09-30', text: 'card A again' }, { env, now }), a);
+    const prompt = await readFile(join(a, 'PROMPT.md'), 'utf8');
+    assert.match(prompt, /card A\n/);
+    assert.match(prompt, /## Reply\nyes/);
+    assert.doesNotMatch(prompt, /card A again/);
   } finally { await rm(dir, { recursive: true, force: true }); }
 });

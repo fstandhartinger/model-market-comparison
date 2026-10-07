@@ -7,7 +7,7 @@ import { parseMistralPricing, parseMistralDocsModel, pricedChatCards, cardsNeedi
 const sale = (was, now) => `<span><del><span class="sr-only">Original price:<!-- --> </span>$${was}</del><ins><span class="sr-only">Sale price:<!-- --> </span>$${now}</ins></span>`;
 const cell = (v) => `<td class="p-2">${v === null ? "—" : typeof v === "number" ? `$${v}` : v}</td>`;
 const row = (name, input, cached, output, slug = nameKey(name)) => `<tr class="r"><td class="p-2"><a target="_blank" href="/models/${slug}">${name}<!-- --> <span class="font-mono">↗</span></a></td>${cell(input)}${cell(cached)}${cell(output)}</tr>`;
-const section = (unit, ...rows) => `<div><h2>Section</h2><span>Prices ${unit}</span><button aria-pressed="false">Regional</button><button class="b" aria-pressed="true">Standard</button><button aria-pressed="false">Batch</button></div>
+const section = (unit, ...rows) => `<div><h2>Section</h2><span>Prices ${unit}</span><label><button type="button" role="checkbox" aria-checked="false" data-state="unchecked"></button>Regional inference</label><button class="b" aria-pressed="true">Standard</button><button aria-pressed="false">Batch</button></div>
   <table><thead><tr><th>Model</th><th class="e">Input</th><th>Cached input</th><th>Output</th></tr></thead><tbody>${rows.join("")}</tbody></table>`;
 const page = (...sections) => `<html><body>${sections.join("\n")}</body></html>`;
 const chat = (...rows) => section("/M Tokens", ...rows);
@@ -31,6 +31,7 @@ test("cells: bare amounts, sale prices with their list price, other units, dashe
   assert.deepEqual(parseCell("$4 /1000 Pages"), { unit: "$4 /1000 Pages" });
   assert.equal(parseCell("—"), null);
   assert.equal(parseCell("Free"), null);
+  assert.deepEqual(parseCell(`${sale(2, 1)} /Min`), { unit: "Original price: $2 Sale price: $1 /Min" }, "a unit beside a sale price is not per M tokens");
   const r = parseRow(row("Mistral Large 4", sale(1.36, 0.68), sale(0.14, 0.07), sale(4.18, 2.09), "mistral-large-4-0"));
   assert.equal(r.name, "Mistral Large 4");
   assert.equal(r.docs_url, "https://docs.mistral.ai/models/mistral-large-4-0");
@@ -111,8 +112,13 @@ test("a resolved docs page supplies a new model's id, matches a renamed row by A
 });
 
 test("fails closed on layout changes, missing units, conflicting duplicates, unidentifiable models and large loss", () => {
-  assert.throws(() => parseMistralPricing("<html></html>", previous), /not on the Standard pricing mode/);
-  assert.throws(() => parseMistralPricing(`<button aria-pressed="true">Standard</button>`, previous), /no pricing tables/);
+  assert.throws(() => parseMistralPricing("<html></html>", previous), /no pricing tables/);
+  // Each section has its own mode controls: one section on Batch, or with the regional surcharge on, fails the refresh.
+  const flagship = chat(row("Mistral Large 3", 0.5, 0.05, 1.5), row("Ministral 3 (3B)", 0.1, 0.01, 0.1));
+  const batch = chat(row("GLM 5.2", 0.7, 0.07, 2.2)).replace('aria-pressed="true">Standard', 'aria-pressed="false">Standard').replace('aria-pressed="false">Batch', 'aria-pressed="true">Batch');
+  assert.throws(() => parseMistralPricing(page(flagship, batch), previous), /not on the Standard pricing mode \(pressed: \["Batch"\]\)/);
+  const regional = chat(row("GLM 5.2", 1.4, 0.14, 4.4)).replace('aria-checked="false"', 'aria-checked="true"');
+  assert.throws(() => parseMistralPricing(page(flagship, regional), previous), /regional-inference switch is not off/);
   assert.throws(() => parseMistralPricing(page(section("per something", row("Mistral Large 3", 0.5, 0.05, 1.5))), previous), /unit heading/);
   assert.throws(() => parseMistralPricing(page(chat(row("Codestral Embed", 0.15, 0.015, null))), previous), /no priced chat/);
   assert.throws(() => parseMistralPricing(page(chat(row("Mistral Large 3", 0.5, 0.05, 1.5)).replace("<th>Cached input</th>", "<th>Cache</th>")), previous), /unexpected table header/);

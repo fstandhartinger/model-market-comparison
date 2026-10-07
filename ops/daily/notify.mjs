@@ -27,6 +27,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
+import { createHash } from 'node:crypto';
 import { parseJsonTolerant, planNotifications } from './policy.mjs';
 
 export const DEFAULT_HOME = '/opt/benchmarkheaven-daily';
@@ -96,11 +97,16 @@ export async function sendNotify(text, { bin = notifyBinary(), execImpl = execFi
 export const HUMAN_TODO_KINDS = new Set(['quarantine', 'collector-stale']);
 export const HUMAN_TODO_ASK_MINUTES = 960;
 
+// One reply job per card key: the dispatcher appends Florian's reply to that job's PROMPT.md and resumes it, so a
+// second card the same day, or a retry of this one, must never overwrite another card's prompt or an appended reply.
 export async function prepareReplyJob(send, { env = process.env, now = Date.now() } = {}) {
   const root = env.BH_TODO_REPLY_ROOT || join(env.HOME || '/home/flori', 'jobs');
-  const dir = join(root, `bh-daily-${send.kind}-reply-${new Date(now).toISOString().slice(0, 10)}`);
+  const id = createHash('sha256').update(String(send.key)).digest('hex').slice(0, 10);
+  const dir = join(root, `bh-daily-${send.kind}-reply-${new Date(now).toISOString().slice(0, 10)}-${id}`);
   await mkdir(dir, { recursive: true });
-  await writeFile(join(dir, 'PROMPT.md'), [
+  const prompt = join(dir, 'PROMPT.md');
+  if (await stat(prompt).then(() => true, () => false)) return dir;
+  await writeFile(prompt, [
     'Read /home/flori/AGENTS.md and /home/flori/DECISIONS.md first. This job owns the reply to one Benchmark Heaven',
     `daily-run card (${send.kind}, key ${send.key}). When resumed by a reply, FIRST run`,
     '~/bin/notify ack <reply_message_id> "<what you will do now and when you will report back>".',
