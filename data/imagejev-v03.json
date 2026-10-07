@@ -2,7 +2,7 @@
   "benchmark": "ImageJevBench",
   "revision": "v0.3.0",
   "release_version": "v0.3.0",
-  "built_utc": "2026-10-06T22:11:03.935433+00:00",
+  "built_utc": "2026-10-07T11:19:04.399679+00:00",
   "status": "released",
   "headline_track": "core",
   "capability_eligibility": {
@@ -16,6 +16,800 @@
     "rationale": "ImageJevBench has no Jev reference row because Jev does not accept images. Capability eligibility therefore uses the same absolute envelope as JevBench: twice Jev 1.13.0\u2019s v1.5.4 cost and adjusted median latency. These anchor values are frozen here so later JevBench releases do not move the ImageJevBench cap."
   },
   "ranking": [
+    {
+      "key": "wity_1",
+      "name": "Wity-1 (AlphaNimble)",
+      "kind": "api",
+      "api_flag": true,
+      "prior_exposure": "v0.1.5 run on 29 Sep 2026 (684 decisions, earlier build); v0.3 API subset A exposed to wity on 7 Oct 2026 under rotation-imagejev-v0.3.",
+      "inference_setting": "Wity SystemOne /v1/systemone, reasoning=auto",
+      "measurement_source": "Official ImageJev v0.3 A300+P300 pass 1 on 7 Oct 2026 through the live Wity SystemOne endpoint (build 47ac68ed844f), requested by Florian; first attempt stopped after 5 public items for an endpoint latency check and not scored.",
+      "tracks": {
+        "core": {
+          "n_public": 235,
+          "n_sealed": 234,
+          "correct_public": 181,
+          "correct_sealed": 191,
+          "public": {
+            "n": 235,
+            "correct": 181,
+            "accuracy": 0.7702127659574468,
+            "chance": 0.3231205673758865,
+            "chance_corrected_intelligence": 66.05196982397318,
+            "ece": 0.10010248398124749,
+            "probability_coverage": 1.0,
+            "valid_answer_count": 235
+          },
+          "sealed": {
+            "n": 234,
+            "correct": 191,
+            "accuracy": 0.8162393162393162,
+            "chance": 0.3225071225071225,
+            "chance_corrected_intelligence": 72.87636669470143,
+            "ece": 0.09101040359860688,
+            "probability_coverage": 1.0,
+            "valid_answer_count": 234
+          },
+          "axes": {
+            "intelligence": 68.6834274011959,
+            "calibration": 79.35707326474312,
+            "speed": 66.27371847599187,
+            "cost": 71.79258072904886
+          },
+          "capability_raw": 74.02025033296951,
+          "composite": {
+            "harmonic_before_gates": 71.20126439611035,
+            "gates": {
+              "intelligence": 1.0,
+              "speed": 1.0,
+              "cost": 1.0
+            },
+            "score": 71.20126439611035
+          },
+          "composite_details": {
+            "harmonic_before_gates": 71.20126439611035,
+            "gates": {
+              "intelligence": 1.0,
+              "speed": 1.0,
+              "cost": 1.0
+            },
+            "score": 71.20126439611035
+          },
+          "p50_s": 2.714644618332386,
+          "p95_s": 8.687907122075558,
+          "cost_per_1000": 0.008714597014925373,
+          "cost_basis": "OpenRouter usage.cost receipts",
+          "speed": {
+            "score": 66.27371847599187,
+            "raw_p50_s": 2.714644618332386,
+            "raw_p95_s": 8.687907122075558,
+            "adjusted_p50_s": 2.714644618332386,
+            "adjusted_p95_s": 8.687907122075558,
+            "latency_coverage": 1.0
+          },
+          "cost": {
+            "score": 71.79258072904886,
+            "raw_score": 71.79258072904886,
+            "usd_per_1000": 0.008714597014925373,
+            "total_usd": 0.004087146,
+            "coverage": 1.0,
+            "source": "OpenRouter usage.cost receipts"
+          },
+          "intelligence_before_penalty": 70.48782778994655,
+          "gap_pp": -2.697059914857934,
+          "raw_gap_pp": -4.602655028186941,
+          "gap_details": {
+            "chart_reasoning": {
+              "n_public": 16,
+              "n_sealed": 15,
+              "gap_pp": 0.0,
+              "weight": 7.741935483870968
+            },
+            "counting": {
+              "n_public": 22,
+              "n_sealed": 17,
+              "gap_pp": -29.14438502673796,
+              "weight": 9.58974358974359
+            },
+            "diagram_reasoning": {
+              "n_public": 32,
+              "n_sealed": 24,
+              "gap_pp": -7.2916666666666625,
+              "weight": 13.714285714285714
+            },
+            "multi_panel": {
+              "n_public": 17,
+              "n_sealed": 23,
+              "gap_pp": -3.069053708439895,
+              "weight": 9.775
+            },
+            "photo_docs": {
+              "n_public": 30,
+              "n_sealed": 18,
+              "gap_pp": 13.333333333333341,
+              "weight": 11.25
+            },
+            "receipt": {
+              "n_public": 22,
+              "n_sealed": 44,
+              "gap_pp": -11.363636363636365,
+              "weight": 14.666666666666666
+            },
+            "small_text": {
+              "n_public": 36,
+              "n_sealed": 36,
+              "gap_pp": -2.777777777777779,
+              "weight": 18.0
+            },
+            "spatial": {
+              "n_public": 30,
+              "n_sealed": 28,
+              "gap_pp": 7.380952380952382,
+              "weight": 14.482758620689655
+            },
+            "trap_charts": {
+              "n_public": 21,
+              "n_sealed": 17,
+              "gap_pp": 8.123249299719893,
+              "weight": 9.394736842105264
+            }
+          },
+          "gap_unavailable": false,
+          "penalty_points": 0,
+          "penalty_multiplier": 1.0,
+          "failures": 0,
+          "sets": {
+            "P": {
+              "n": 235,
+              "metrics": {
+                "n": 235,
+                "correct": 181,
+                "accuracy": 0.7702127659574468,
+                "chance": 0.3231205673758865,
+                "chance_corrected_intelligence": 66.05196982397318,
+                "ece": 0.10010248398124749,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 235
+              },
+              "score": 73.01573651386184
+            },
+            "S": {
+              "n": 0,
+              "metrics": null,
+              "score": null
+            },
+            "A": {
+              "n": 234,
+              "metrics": {
+                "n": 234,
+                "correct": 191,
+                "accuracy": 0.8162393162393162,
+                "chance": 0.3225071225071225,
+                "chance_corrected_intelligence": 72.87636669470143,
+                "ece": 0.09101040359860688,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 234
+              },
+              "score": 77.33714298749003
+            }
+          },
+          "per_type": {
+            "choice": {
+              "n": 214,
+              "metrics": {
+                "n": 214,
+                "correct": 190,
+                "accuracy": 0.8878504672897196,
+                "chance": 0.29042056074766354,
+                "chance_corrected_intelligence": 84.19492920645374,
+                "ece": 0.08762237265331527,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 214
+              },
+              "score": 83.33522733789533
+            },
+            "noul": {
+              "n": 108,
+              "metrics": {
+                "n": 108,
+                "correct": 83,
+                "accuracy": 0.7685185185185185,
+                "chance": 0.5,
+                "chance_corrected_intelligence": 53.703703703703695,
+                "ece": 0.19078099761612172,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 108
+              },
+              "score": 57.773752090239675
+            },
+            "score": {
+              "n": 147,
+              "metrics": {
+                "n": 147,
+                "correct": 99,
+                "accuracy": 0.673469387755102,
+                "chance": 0.23979591836734693,
+                "chance_corrected_intelligence": 57.04697986577181,
+                "ece": 0.11040303422404674,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 147
+              },
+              "score": 67.48318651048123
+            }
+          },
+          "hard_slices": {
+            "hard": {
+              "n": 206,
+              "metrics": {
+                "n": 206,
+                "correct": 159,
+                "accuracy": 0.7718446601941747,
+                "chance": 0.33001618122977344,
+                "chance_corrected_intelligence": 65.9461417703176,
+                "ece": 0.12256330386049791,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 206
+              },
+              "score": 70.71674049910901
+            },
+            "non-hard": {
+              "n": 263,
+              "metrics": {
+                "n": 263,
+                "correct": 213,
+                "accuracy": 0.8098859315589354,
+                "chance": 0.3171736375158429,
+                "chance_corrected_intelligence": 72.15777262180976,
+                "ece": 0.10466502917850407,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 263
+              },
+              "score": 75.61238339305447
+            }
+          },
+          "gap_policy_pending": true,
+          "rotation_adjustment": {
+            "sealed_set": "A",
+            "offset_pp": -2.7760005980779248,
+            "field_median_gap_pp": -0.5356181579053398,
+            "measured_gap_pp": -4.321406473628187,
+            "penalty_points": 0,
+            "equated_sealed_score": 74.5611423894121,
+            "capability_score": 74.02025033296951,
+            "frozen_axes_unchanged": true,
+            "ready": true
+          },
+          "axes_raw": {
+            "intelligence": 70.48782778994655,
+            "calibration": 81.16147365349377,
+            "speed": 66.27371847599187,
+            "cost": 71.79258072904886
+          },
+          "composite_raw": 72.0384321696698,
+          "capability": 74.02025033296951,
+          "capability_adjustment_pp": -1.8044003887506506,
+          "matched_gap_pp": -2.697059914857934,
+          "raw_overall_gap_pp": -4.602655028186941
+        },
+        "computer-use": {
+          "n_public": 65,
+          "n_sealed": 66,
+          "correct_public": 62,
+          "correct_sealed": 63,
+          "public": {
+            "n": 65,
+            "correct": 62,
+            "accuracy": 0.9538461538461539,
+            "chance": 0.3569230769230769,
+            "chance_corrected_intelligence": 92.82296650717704,
+            "ece": 0.06697095034689016,
+            "probability_coverage": 1.0,
+            "valid_answer_count": 65
+          },
+          "sealed": {
+            "n": 66,
+            "correct": 63,
+            "accuracy": 0.9545454545454546,
+            "chance": 0.3318181818181818,
+            "chance_corrected_intelligence": 93.19727891156464,
+            "ece": 0.06406544864031535,
+            "probability_coverage": 1.0,
+            "valid_answer_count": 66
+          },
+          "axes": {
+            "intelligence": 93.69193091298692,
+            "calibration": 87.60918649543463,
+            "speed": 67.90929943586714,
+            "cost": 72.10117826742064
+          },
+          "capability_raw": 90.65055870421077,
+          "composite": {
+            "harmonic_before_gates": 78.9226608018335,
+            "gates": {
+              "intelligence": 1.0,
+              "speed": 1.0,
+              "cost": 1.0
+            },
+            "score": 78.9226608018335
+          },
+          "composite_details": {
+            "harmonic_before_gates": 78.9226608018335,
+            "gates": {
+              "intelligence": 1.0,
+              "speed": 1.0,
+              "cost": 1.0
+            },
+            "score": 78.9226608018335
+          },
+          "p50_s": 1.661941334605217,
+          "p95_s": 9.737654626369476,
+          "cost_per_1000": 0.008510610687022902,
+          "cost_basis": "OpenRouter usage.cost receipts",
+          "speed": {
+            "score": 67.90929943586714,
+            "raw_p50_s": 1.661941334605217,
+            "raw_p95_s": 9.737654626369476,
+            "adjusted_p50_s": 1.661941334605217,
+            "adjusted_p95_s": 9.737654626369476,
+            "latency_coverage": 1.0
+          },
+          "cost": {
+            "score": 72.10117826742064,
+            "raw_score": 72.10117826742064,
+            "usd_per_1000": 0.008510610687022902,
+            "total_usd": 0.00111489,
+            "coverage": 1.0,
+            "source": "OpenRouter usage.cost receipts"
+          },
+          "intelligence_before_penalty": 93.06626957002898,
+          "gap_pp": 0.4506850837976964,
+          "raw_gap_pp": -0.06993006993006867,
+          "gap_details": {
+            "agent_safety": {
+              "n_public": 14,
+              "n_sealed": 12,
+              "gap_pp": 8.333333333333337,
+              "weight": 6.461538461538462
+            },
+            "dense_ui": {
+              "n_public": 12,
+              "n_sealed": 11,
+              "gap_pp": -6.818181818181824,
+              "weight": 5.739130434782608
+            },
+            "ui_screenshots": {
+              "n_public": 39,
+              "n_sealed": 43,
+              "gap_pp": 0.0,
+              "weight": 20.451219512195124
+            }
+          },
+          "gap_unavailable": false,
+          "penalty_points": 0,
+          "penalty_multiplier": 1.0,
+          "failures": 0,
+          "sets": {
+            "P": {
+              "n": 65,
+              "metrics": {
+                "n": 65,
+                "correct": 62,
+                "accuracy": 0.9538461538461539,
+                "chance": 0.3569230769230769,
+                "chance_corrected_intelligence": 92.82296650717704,
+                "ece": 0.06697095034689016,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 65
+              },
+              "score": 89.7143882188995
+            },
+            "S": {
+              "n": 0,
+              "metrics": null,
+              "score": null
+            },
+            "A": {
+              "n": 66,
+              "metrics": {
+                "n": 66,
+                "correct": 63,
+                "accuracy": 0.9545454545454546,
+                "chance": 0.3318181818181818,
+                "chance_corrected_intelligence": 93.19727891156464,
+                "ece": 0.06406544864031535,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 66
+              },
+              "score": 90.19209459175079
+            }
+          },
+          "per_type": {
+            "choice": {
+              "n": 86,
+              "metrics": {
+                "n": 86,
+                "correct": 82,
+                "accuracy": 0.9534883720930233,
+                "chance": 0.27151162790697675,
+                "chance_corrected_intelligence": 93.61532322426176,
+                "ece": 0.0649941786362337,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 86
+              },
+              "score": 90.30824374850751
+            },
+            "noul": {
+              "n": 42,
+              "metrics": {
+                "n": 42,
+                "correct": 40,
+                "accuracy": 0.9523809523809523,
+                "chance": 0.5,
+                "chance_corrected_intelligence": 90.47619047619047,
+                "ece": 0.061973932774703866,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 42
+              },
+              "score": 89.04070196062484
+            },
+            "score": {
+              "n": 3,
+              "metrics": {
+                "n": 3,
+                "correct": 3,
+                "accuracy": 1.0,
+                "chance": 0.25,
+                "chance_corrected_intelligence": 100.0,
+                "ece": 0.18468529102473097,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 3
+              },
+              "score": 81.5314708975269
+            }
+          },
+          "hard_slices": {
+            "hard": {
+              "n": 34,
+              "metrics": {
+                "n": 34,
+                "correct": 31,
+                "accuracy": 0.9117647058823529,
+                "chance": 0.32794117647058824,
+                "chance_corrected_intelligence": 86.87089715536104,
+                "ece": 0.12119713279308186,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 34
+              },
+              "score": 81.31573529837233
+            },
+            "non-hard": {
+              "n": 97,
+              "metrics": {
+                "n": 97,
+                "correct": 94,
+                "accuracy": 0.9690721649484536,
+                "chance": 0.35000000000000003,
+                "chance_corrected_intelligence": 95.24187153053134,
+                "ece": 0.04598689554478237,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 97
+              },
+              "score": 93.02224621078744
+            }
+          },
+          "gap_policy_pending": true,
+          "rotation_adjustment": {
+            "sealed_set": "A",
+            "offset_pp": 0.9625559122429905,
+            "field_median_gap_pp": -2.7959339756815638,
+            "measured_gap_pp": -0.47770637285128714,
+            "penalty_points": 0,
+            "equated_sealed_score": 91.15465050399378,
+            "capability_score": 90.65055870421078,
+            "frozen_axes_unchanged": true,
+            "ready": true
+          },
+          "axes_raw": {
+            "intelligence": 93.06626957002898,
+            "calibration": 86.98352515247669,
+            "speed": 67.90929943586714,
+            "cost": 72.10117826742064
+          },
+          "composite_raw": 78.68380250343962,
+          "capability": 90.65055870421078,
+          "capability_adjustment_pp": 0.6256613429579403,
+          "matched_gap_pp": 0.4506850837976964,
+          "raw_overall_gap_pp": -0.06993006993006867
+        },
+        "browser-use": {
+          "n_public": 0,
+          "n_sealed": 0,
+          "unmeasured": true,
+          "axes": null,
+          "composite": null
+        },
+        "all": {
+          "n_public": 235,
+          "n_sealed": 234,
+          "correct_public": 181,
+          "correct_sealed": 191,
+          "public": {
+            "n": 235,
+            "correct": 181,
+            "accuracy": 0.7702127659574468,
+            "chance": 0.3231205673758865,
+            "chance_corrected_intelligence": 66.05196982397318,
+            "ece": 0.10010248398124749,
+            "probability_coverage": 1.0,
+            "valid_answer_count": 235
+          },
+          "sealed": {
+            "n": 234,
+            "correct": 191,
+            "accuracy": 0.8162393162393162,
+            "chance": 0.3225071225071225,
+            "chance_corrected_intelligence": 72.87636669470143,
+            "ece": 0.09101040359860688,
+            "probability_coverage": 1.0,
+            "valid_answer_count": 234
+          },
+          "axes": {
+            "intelligence": 68.6834274011959,
+            "calibration": 79.35707326474312,
+            "speed": 66.27371847599187,
+            "cost": 71.79258072904886
+          },
+          "capability_raw": 74.02025033296951,
+          "composite": {
+            "harmonic_before_gates": 71.20126439611035,
+            "gates": {
+              "intelligence": 1.0,
+              "speed": 1.0,
+              "cost": 1.0
+            },
+            "score": 71.20126439611035
+          },
+          "composite_details": {
+            "harmonic_before_gates": 71.20126439611035,
+            "gates": {
+              "intelligence": 1.0,
+              "speed": 1.0,
+              "cost": 1.0
+            },
+            "score": 71.20126439611035
+          },
+          "p50_s": 2.714644618332386,
+          "p95_s": 8.687907122075558,
+          "cost_per_1000": 0.008714597014925373,
+          "cost_basis": "OpenRouter usage.cost receipts",
+          "speed": {
+            "score": 66.27371847599187,
+            "raw_p50_s": 2.714644618332386,
+            "raw_p95_s": 8.687907122075558,
+            "adjusted_p50_s": 2.714644618332386,
+            "adjusted_p95_s": 8.687907122075558,
+            "latency_coverage": 1.0
+          },
+          "cost": {
+            "score": 71.79258072904886,
+            "raw_score": 71.79258072904886,
+            "usd_per_1000": 0.008714597014925373,
+            "total_usd": 0.004087146,
+            "coverage": 1.0,
+            "source": "OpenRouter usage.cost receipts"
+          },
+          "intelligence_before_penalty": 70.48782778994655,
+          "gap_pp": -2.697059914857934,
+          "raw_gap_pp": -4.602655028186941,
+          "gap_details": {
+            "chart_reasoning": {
+              "n_public": 16,
+              "n_sealed": 15,
+              "gap_pp": 0.0,
+              "weight": 7.741935483870968
+            },
+            "counting": {
+              "n_public": 22,
+              "n_sealed": 17,
+              "gap_pp": -29.14438502673796,
+              "weight": 9.58974358974359
+            },
+            "diagram_reasoning": {
+              "n_public": 32,
+              "n_sealed": 24,
+              "gap_pp": -7.2916666666666625,
+              "weight": 13.714285714285714
+            },
+            "multi_panel": {
+              "n_public": 17,
+              "n_sealed": 23,
+              "gap_pp": -3.069053708439895,
+              "weight": 9.775
+            },
+            "photo_docs": {
+              "n_public": 30,
+              "n_sealed": 18,
+              "gap_pp": 13.333333333333341,
+              "weight": 11.25
+            },
+            "receipt": {
+              "n_public": 22,
+              "n_sealed": 44,
+              "gap_pp": -11.363636363636365,
+              "weight": 14.666666666666666
+            },
+            "small_text": {
+              "n_public": 36,
+              "n_sealed": 36,
+              "gap_pp": -2.777777777777779,
+              "weight": 18.0
+            },
+            "spatial": {
+              "n_public": 30,
+              "n_sealed": 28,
+              "gap_pp": 7.380952380952382,
+              "weight": 14.482758620689655
+            },
+            "trap_charts": {
+              "n_public": 21,
+              "n_sealed": 17,
+              "gap_pp": 8.123249299719893,
+              "weight": 9.394736842105264
+            }
+          },
+          "gap_unavailable": false,
+          "penalty_points": 0,
+          "penalty_multiplier": 1.0,
+          "failures": 0,
+          "sets": {
+            "P": {
+              "n": 235,
+              "metrics": {
+                "n": 235,
+                "correct": 181,
+                "accuracy": 0.7702127659574468,
+                "chance": 0.3231205673758865,
+                "chance_corrected_intelligence": 66.05196982397318,
+                "ece": 0.10010248398124749,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 235
+              },
+              "score": 73.01573651386184
+            },
+            "S": {
+              "n": 0,
+              "metrics": null,
+              "score": null
+            },
+            "A": {
+              "n": 234,
+              "metrics": {
+                "n": 234,
+                "correct": 191,
+                "accuracy": 0.8162393162393162,
+                "chance": 0.3225071225071225,
+                "chance_corrected_intelligence": 72.87636669470143,
+                "ece": 0.09101040359860688,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 234
+              },
+              "score": 77.33714298749003
+            }
+          },
+          "per_type": {
+            "choice": {
+              "n": 214,
+              "metrics": {
+                "n": 214,
+                "correct": 190,
+                "accuracy": 0.8878504672897196,
+                "chance": 0.29042056074766354,
+                "chance_corrected_intelligence": 84.19492920645374,
+                "ece": 0.08762237265331527,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 214
+              },
+              "score": 83.33522733789533
+            },
+            "noul": {
+              "n": 108,
+              "metrics": {
+                "n": 108,
+                "correct": 83,
+                "accuracy": 0.7685185185185185,
+                "chance": 0.5,
+                "chance_corrected_intelligence": 53.703703703703695,
+                "ece": 0.19078099761612172,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 108
+              },
+              "score": 57.773752090239675
+            },
+            "score": {
+              "n": 147,
+              "metrics": {
+                "n": 147,
+                "correct": 99,
+                "accuracy": 0.673469387755102,
+                "chance": 0.23979591836734693,
+                "chance_corrected_intelligence": 57.04697986577181,
+                "ece": 0.11040303422404674,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 147
+              },
+              "score": 67.48318651048123
+            }
+          },
+          "hard_slices": {
+            "hard": {
+              "n": 206,
+              "metrics": {
+                "n": 206,
+                "correct": 159,
+                "accuracy": 0.7718446601941747,
+                "chance": 0.33001618122977344,
+                "chance_corrected_intelligence": 65.9461417703176,
+                "ece": 0.12256330386049791,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 206
+              },
+              "score": 70.71674049910901
+            },
+            "non-hard": {
+              "n": 263,
+              "metrics": {
+                "n": 263,
+                "correct": 213,
+                "accuracy": 0.8098859315589354,
+                "chance": 0.3171736375158429,
+                "chance_corrected_intelligence": 72.15777262180976,
+                "ece": 0.10466502917850407,
+                "probability_coverage": 1.0,
+                "valid_answer_count": 263
+              },
+              "score": 75.61238339305447
+            }
+          },
+          "gap_policy_pending": true,
+          "rotation_adjustment": {
+            "sealed_set": "A",
+            "offset_pp": -2.7760005980779248,
+            "field_median_gap_pp": -0.5356181579053398,
+            "measured_gap_pp": -4.321406473628187,
+            "penalty_points": 0,
+            "equated_sealed_score": 74.5611423894121,
+            "capability_score": 74.02025033296951,
+            "frozen_axes_unchanged": true,
+            "ready": true
+          },
+          "axes_raw": {
+            "intelligence": 70.48782778994655,
+            "calibration": 81.16147365349377,
+            "speed": 66.27371847599187,
+            "cost": 71.79258072904886
+          },
+          "composite_raw": 72.0384321696698,
+          "capability": 74.02025033296951,
+          "capability_adjustment_pp": -1.8044003887506506,
+          "matched_gap_pp": -2.697059914857934,
+          "raw_overall_gap_pp": -4.602655028186941
+        }
+      },
+      "score": 71.20126439611035,
+      "rank": 1,
+      "last_measured_utc": "2026-10-07T11:18:42.946732+00:00",
+      "score_source": "run03/final-api/wity_1.json",
+      "source_sha256": "b7b34ead0efdedf91af5cb46073f54d63397024131ef60a1613bb60b154e6845",
+      "holds": [],
+      "release_ready": true,
+      "ranked": true,
+      "listing": "ranked",
+      "author": "AlphaNimble",
+      "repo": "https://wity.alphanimble.com/",
+      "pricing_note": "Cost uses Wity's published API price: USD 0.042 per 1M input tokens, output and thinking free.",
+      "measurement_date_basis": "Score artifact timestamp; exact run date not separately recorded.",
+      "not_ranked_because": null
+    },
     {
       "api_flag": false,
       "key": "imajev_4b",
@@ -277,7 +1071,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 3.191658177867069,
             "penalty_points": 0,
             "equated_sealed_score": 66.8910709723182,
@@ -516,7 +1310,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": 2.142531357383689,
             "penalty_points": 0,
             "equated_sealed_score": 92.09332955117557,
@@ -798,7 +1592,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 3.191658177867069,
             "penalty_points": 0,
             "equated_sealed_score": 66.8910709723182,
@@ -820,12 +1614,12 @@
         }
       },
       "score": 63.714150433135494,
-      "rank": 1,
+      "rank": 2,
       "prior_exposure": "Previous v0.1.2 row; remeasured on the customer's pinned fast-serving setup.",
       "inference_setting": "not equivalent: adapter pin updated for current v014 fast-serving run; base pin is unchanged",
       "last_measured_utc": "2026-10-06T18:39:58.945603+00:00",
       "score_source": "run03/final-gpu/imajev_4b.json",
-      "source_sha256": "9ffa789d9b6b72ddb059cdade31c28f18ec26e24df764e59d00426f327402ea8",
+      "source_sha256": "a621b02a6b69f6d58a002ff9e16f03b5007a1efbf553a4cf8641b786923a5c6c",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -839,7 +1633,7 @@
       "key": "surogate_rune_26b_v3",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "Surogate Rune 26B-A4B v3",
-      "rank": 2,
+      "rank": 3,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -1097,7 +1891,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -3.6628458031652755,
             "penalty_points": 0,
             "equated_sealed_score": 66.0893398153566,
@@ -1336,7 +2130,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -1.3870099218443386,
             "penalty_points": 0,
             "equated_sealed_score": 86.79206732593096,
@@ -1618,7 +2412,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -3.6628458031652755,
             "penalty_points": 0,
             "equated_sealed_score": 66.0893398153566,
@@ -1643,7 +2437,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.969603+00:00",
       "score_source": "run03/final-gpu/surogate_rune_26b_v3.json",
-      "source_sha256": "0a9482ef9600e4eb251496c07e2f12d8fdbbb7d2733986d09827cfbfc5b93b23",
+      "source_sha256": "9a51c5825fbaa9b00875366c36d7ccea289ab73072edd518f295373abfb11b05",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -1659,7 +2453,7 @@
       "key": "imajev_9b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "imajev 9B",
-      "rank": 3,
+      "rank": 4,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -1917,7 +2711,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -13.74650798719091,
             "penalty_points": 0,
             "equated_sealed_score": 71.8821096003372,
@@ -2156,7 +2950,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -4.907573140296577,
             "penalty_points": 0,
             "equated_sealed_score": 89.10509969674973,
@@ -2438,7 +3232,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -13.74650798719091,
             "penalty_points": 0,
             "equated_sealed_score": 71.8821096003372,
@@ -2463,7 +3257,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.949603+00:00",
       "score_source": "run03/final-gpu/imajev_9b.json",
-      "source_sha256": "e8d28b73b49d00327b439abc7dda70a2796903e5eacd14eca8225ec6a944c53a",
+      "source_sha256": "875a9ef530266f16fe12b5c075284602dcaaac42adde2823455d38062b0b9a52",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -2479,7 +3273,7 @@
       "key": "jev_omni",
       "prior_exposure": "This checkpoint was measured on a separate frozen JevBench v1.4 text set before this run. It received no ImageJevBench task input before this evaluation.",
       "name": "Jev-Omni",
-      "rank": 4,
+      "rank": 5,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -2737,7 +3531,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 4.1673251128582365,
             "penalty_points": 0,
             "equated_sealed_score": 52.79154561995737,
@@ -2976,7 +3770,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -3.1678926850659934,
             "penalty_points": 0,
             "equated_sealed_score": 77.69110473662968,
@@ -3258,7 +4052,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 4.1673251128582365,
             "penalty_points": 0,
             "equated_sealed_score": 52.79154561995737,
@@ -3283,7 +4077,7 @@
       "inference_setting": "ImageJev roster pins Jev-Omni checkpoint and Gemma 4 base; model receipt verifies checkpoint SHA manifest and base weight hash. Historical run used the isolated offline Jev-Omni image, not the shared kitA image.",
       "last_measured_utc": "2026-10-06T18:39:58.949603+00:00",
       "score_source": "run03/final-gpu/jev_omni.json",
-      "source_sha256": "7f2eed2730fd67940cba98e9750a954b8f1bb3909a14ad77c8a95a4556b000ab",
+      "source_sha256": "74b44b6d553ba3a402300167b3c10d04e6b2fd5ac1a083f99be8fef9f30c8240",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -3297,7 +4091,7 @@
       "key": "jpt_9b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "JPT-9B (kirp / llm2jev)",
-      "rank": 5,
+      "rank": 6,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -3555,7 +4349,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -1.772839544698087,
             "penalty_points": 0,
             "equated_sealed_score": 59.344514102052464,
@@ -3794,7 +4588,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -2.712231574847266,
             "penalty_points": 0,
             "equated_sealed_score": 90.22750747904158,
@@ -4076,7 +4870,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -1.772839544698087,
             "penalty_points": 0,
             "equated_sealed_score": 59.344514102052464,
@@ -4101,7 +4895,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.957603+00:00",
       "score_source": "run03/final-gpu/jpt_9b.json",
-      "source_sha256": "2c02581fa7ae27fa7c73b84734007b63b969056f9155095da01ab94688c223cc",
+      "source_sha256": "15c25e730d78e844dea05a47ace792a244cb70e827f037d0c84bc5f01b63797f",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -4117,7 +4911,7 @@
       "key": "jevify_gemma4_26b_a4b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "Jevify Gemma 4 26B-A4B",
-      "rank": 6,
+      "rank": 7,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -4375,7 +5169,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 3.3942721142874603,
             "penalty_points": 0,
             "equated_sealed_score": 57.54593448986118,
@@ -4614,7 +5408,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -3.8895326013083604,
             "penalty_points": 0,
             "equated_sealed_score": 83.305828286554,
@@ -4896,7 +5690,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 3.3942721142874603,
             "penalty_points": 0,
             "equated_sealed_score": 57.54593448986118,
@@ -4921,7 +5715,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.949603+00:00",
       "score_source": "run03/final-gpu/jevify_gemma4_26b_a4b.json",
-      "source_sha256": "6da82e759e4812ce25d3f4cf1e28e37d03dd371753147a4f24b19eb080d466eb",
+      "source_sha256": "e3dfaf958287ec595c603fc476afcc71c0c40c5a00a8c244b4cab5a2a114c020",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -4937,7 +5731,7 @@
       "key": "autojev_27b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "AutoJev-27B",
-      "rank": 7,
+      "rank": 8,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -5195,7 +5989,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 1.5129259612403558,
             "penalty_points": 0,
             "equated_sealed_score": 61.61854872026075,
@@ -5434,7 +6228,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -1.9504512499230486,
             "penalty_points": 0,
             "equated_sealed_score": 81.49023758444545,
@@ -5716,7 +6510,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 1.5129259612403558,
             "penalty_points": 0,
             "equated_sealed_score": 61.61854872026075,
@@ -5741,7 +6535,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.933603+00:00",
       "score_source": "run03/final-gpu/autojev_27b.json",
-      "source_sha256": "637269a354adc09e8b5bb5a13d8c5b8a71cc411599f17d73a3c3151a156d1f0e",
+      "source_sha256": "3ff65532d731e6437859f1d88db0ce5fa6d500a637cb3b3492509504a62a8a54",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -5757,7 +6551,7 @@
       "key": "jpt_4b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "JPT-4B (kirp / llm2jev)",
-      "rank": 8,
+      "rank": 9,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -6015,7 +6809,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -3.36236401618563,
             "penalty_points": 0,
             "equated_sealed_score": 56.798397744277835,
@@ -6254,7 +7048,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": 0.16378514130009592,
             "penalty_points": 0,
             "equated_sealed_score": 90.21581434420318,
@@ -6536,7 +7330,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -3.36236401618563,
             "penalty_points": 0,
             "equated_sealed_score": 56.798397744277835,
@@ -6561,7 +7355,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.953603+00:00",
       "score_source": "run03/final-gpu/jpt_4b.json",
-      "source_sha256": "cfce07a67f50bf5b860e98d0c2e7026891aafbd765108a48947b577b6c88337c",
+      "source_sha256": "2fd554b935ed1c81fdcaf4211d7c36962d8d59ec52649a178d332afdddd304f7",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -6577,7 +7371,7 @@
       "key": "seanliu_jev_vision_8b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "Jev-Vision 8B (SeanLiu)",
-      "rank": 9,
+      "rank": 10,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -6835,7 +7629,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 4.2431277959517,
             "penalty_points": 0,
             "equated_sealed_score": 36.278708234830155,
@@ -7074,7 +7868,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -6.260094713326282,
             "penalty_points": 0,
             "equated_sealed_score": 76.48900420366691,
@@ -7356,7 +8150,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 4.2431277959517,
             "penalty_points": 0,
             "equated_sealed_score": 36.278708234830155,
@@ -7381,7 +8175,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.965603+00:00",
       "score_source": "run03/final-gpu/seanliu_jev_vision_8b.json",
-      "source_sha256": "dc79a0e15b9415a66aab0cdcf8a5561b524285b77f36035700f054452a387bb1",
+      "source_sha256": "9105f68618e6724d432825cb95415f215ce805842843d42536ee1ac731a00a80",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -7399,10 +8193,10 @@
       "api_flag": true,
       "last_measured_utc": "2026-10-06T18:39:58.973602+00:00",
       "score_source": "run03/final-api/s1-vision.json",
-      "source_sha256": "0624ac92df94c76cf1575e9b0decd0a65aa6012325893636fa13ec4650b8a76f",
+      "source_sha256": "d94c9348daff58d2716901f015b606ee83cba7727a1d4b7feaa592809011d9db",
       "holds": [],
       "release_ready": true,
-      "rank": 10,
+      "rank": 11,
       "ranked": true,
       "listing": "ranked",
       "pricing_alternative": null,
@@ -7655,7 +8449,7 @@
           "rotation_adjustment": {
             "sealed_set": "A",
             "offset_pp": -2.7760005980779248,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -5.332852998606484,
             "penalty_points": 0,
             "equated_sealed_score": 59.151283109441835,
@@ -7885,7 +8679,7 @@
           "rotation_adjustment": {
             "sealed_set": "A",
             "offset_pp": 0.9625559122429905,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -6.2095013690531715,
             "penalty_points": 0,
             "equated_sealed_score": 89.86432278924939,
@@ -8158,7 +8952,7 @@
           "rotation_adjustment": {
             "sealed_set": "A",
             "offset_pp": -2.7760005980779248,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -5.332852998606484,
             "penalty_points": 0,
             "equated_sealed_score": 59.151283109441835,
@@ -8186,7 +8980,7 @@
       "key": "shisa_de_1",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "shisa-de-1",
-      "rank": 11,
+      "rank": 12,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -8444,7 +9238,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 3.3448053839768193,
             "penalty_points": 0,
             "equated_sealed_score": 50.29041901780825,
@@ -8683,7 +9477,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -3.9802683931956295,
             "penalty_points": 0,
             "equated_sealed_score": 82.11382853153499,
@@ -8965,7 +9759,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 3.3448053839768193,
             "penalty_points": 0,
             "equated_sealed_score": 50.29041901780825,
@@ -8990,7 +9784,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.965603+00:00",
       "score_source": "run03/final-gpu/shisa_de_1.json",
-      "source_sha256": "853ba16292dbda1e3b538c4d6a361fbb6bdd862a8a6a743f8c5f345ebcff7820",
+      "source_sha256": "d7576501a893cc6645c5a19d2042ab1f491e57c8c263fd6c87dfbfbc3f1ac577",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -9008,10 +9802,10 @@
       "api_flag": false,
       "last_measured_utc": "2026-10-06T18:39:58.937603+00:00",
       "score_source": "run03/final-gpu/clef_flash.json",
-      "source_sha256": "181e844c5d06b4a45d62d29bb3a5267a74279ba3eaecc2f58ac7ea32ea50a04f",
+      "source_sha256": "6d4f9c5f6044fda12a85cd0a92ae9504ddbd884633c9f68db0645424956ee7e2",
       "holds": [],
       "release_ready": true,
-      "rank": 12,
+      "rank": 13,
       "ranked": true,
       "listing": "ranked",
       "pricing_alternative": null,
@@ -9273,7 +10067,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -6.434059943307041,
             "penalty_points": 0,
             "equated_sealed_score": 54.49398724124346,
@@ -9512,7 +10306,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": 0.8480485107229185,
             "penalty_points": 0,
             "equated_sealed_score": 83.44290747250056,
@@ -9794,7 +10588,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -6.434059943307041,
             "penalty_points": 0,
             "equated_sealed_score": 54.49398724124346,
@@ -9824,10 +10618,10 @@
       "api_flag": false,
       "last_measured_utc": "2026-10-06T18:39:58.933603+00:00",
       "score_source": "run03/final-gpu/clef.json",
-      "source_sha256": "b6e4d9c7ebdf9567a697b86e1e9c5269960924d81eb5f972576facc1de50f423",
+      "source_sha256": "f6af9c45a4b356e5dad21fcfdd02d010ee8728fbf5f76752af92c22a910cc7e4",
       "holds": [],
       "release_ready": true,
-      "rank": 13,
+      "rank": 14,
       "ranked": true,
       "listing": "ranked",
       "pricing_alternative": null,
@@ -10089,7 +10883,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -6.159993350771636,
             "penalty_points": 0,
             "equated_sealed_score": 60.234069561610724,
@@ -10328,7 +11122,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": 2.2540127085386956,
             "penalty_points": 0,
             "equated_sealed_score": 90.6397277838989,
@@ -10610,7 +11404,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -6.159993350771636,
             "penalty_points": 0,
             "equated_sealed_score": 60.234069561610724,
@@ -10640,10 +11434,10 @@
       "api_flag": true,
       "last_measured_utc": "2026-10-06T22:09:55.865802+00:00",
       "score_source": "run03/final-api/gpt6_luna_decisions.json",
-      "source_sha256": "db4b08cc92717377bc1bf4ccd0d1170b389d2cb0fe367de52b8fb3e4cf8fe9fb",
+      "source_sha256": "9d05464e13daeab93c74ebc9455c27e7317b42bd8828d6e4bf87ca7430beb804",
       "holds": [],
       "release_ready": true,
-      "rank": 14,
+      "rank": 15,
       "ranked": true,
       "listing": "ranked",
       "pricing_alternative": null,
@@ -10897,7 +11691,7 @@
           "rotation_adjustment": {
             "sealed_set": "A",
             "offset_pp": -2.7760005980779248,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -0.18421722200416468,
             "penalty_points": 0,
             "equated_sealed_score": 61.951674026148424,
@@ -11127,7 +11921,7 @@
           "rotation_adjustment": {
             "sealed_set": "A",
             "offset_pp": 0.9625559122429905,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": 1.9648852400732153,
             "penalty_points": 0,
             "equated_sealed_score": 88.70528936926216,
@@ -11400,7 +12194,7 @@
           "rotation_adjustment": {
             "sealed_set": "A",
             "offset_pp": -2.7760005980779248,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -0.18421722200416468,
             "penalty_points": 0,
             "equated_sealed_score": 61.951674026148424,
@@ -11428,7 +12222,7 @@
       "key": "winnow_12b_q8",
       "prior_exposure": "Previously measured on JevBench; ImageJevBench vision path newly measured.",
       "name": "Winnow-12B (Q8_0 + F16 vision projector)",
-      "rank": 15,
+      "rank": 16,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -11686,7 +12480,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -0.2673359070837833,
             "penalty_points": 0,
             "equated_sealed_score": 50.08684136479982,
@@ -11925,7 +12719,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": 3.9948367094866057,
             "penalty_points": 0,
             "equated_sealed_score": 90.57495654526355,
@@ -12207,7 +13001,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -0.2673359070837833,
             "penalty_points": 0,
             "equated_sealed_score": 50.08684136479982,
@@ -12232,7 +13026,7 @@
       "inference_setting": "The frozen v0.1.4 candidate coverage names winnow-inference@77d14580c6732ca2f3745750c1dc1fd446d8bcee. The release manifest at that source tree pins Winnow-12B@b2b14213dfa252e6d6b543c8b334762e51772d29 and Gemma 4 base@707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7. The closest reviewed 12B Docker/spec recipe in v15 uses older model b6ac22b0 and code 6c2b3c04; it is a serving-interface reference only, not an exact v014 image match.",
       "last_measured_utc": "2026-10-06T18:39:58.973602+00:00",
       "score_source": "run03/final-gpu/winnow_12b_q8.json",
-      "source_sha256": "23d21d64d4b860c7a45bda01229243dd78144912da2ecb12fe0ce57312c69cb5",
+      "source_sha256": "062fcf98a46b8ff184559bdd2f99bfa937592d8ce8df6e9091f0d1d3956998cc",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -12248,10 +13042,10 @@
       "api_flag": false,
       "last_measured_utc": "2026-10-06T18:39:58.945603+00:00",
       "score_source": "run03/final-gpu/image_hopper.json",
-      "source_sha256": "84247e91bce2a6d0e2b349b785ddeea92aaf8ceb89707013319afebe75430c34",
+      "source_sha256": "f000b3a4a75494578dc0b6cdc380b9afdb2331ecfed15ee5b69b3d3e76275276",
       "holds": [],
       "release_ready": true,
-      "rank": 16,
+      "rank": 17,
       "ranked": true,
       "listing": "ranked",
       "pricing_alternative": null,
@@ -12513,7 +13307,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -2.6658622935663487,
             "penalty_points": 0,
             "equated_sealed_score": 52.61519941253489,
@@ -12752,7 +13546,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -2.30611127303753,
             "penalty_points": 0,
             "equated_sealed_score": 84.29494953250389,
@@ -13034,7 +13828,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -2.6658622935663487,
             "penalty_points": 0,
             "equated_sealed_score": 52.61519941253489,
@@ -13062,7 +13856,7 @@
       "key": "omnijev_9b_v4_tzcfly",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "OmniJev-Qwen3.5-9B-v4 (tzcfly)",
-      "rank": 17,
+      "rank": 18,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -13320,7 +14114,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 3.7328540386598696,
             "penalty_points": 0,
             "equated_sealed_score": 31.836627872889945,
@@ -13559,7 +14353,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -0.446162028549125,
             "penalty_points": 0,
             "equated_sealed_score": 69.97839403580583,
@@ -13841,7 +14635,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 3.7328540386598696,
             "penalty_points": 0,
             "equated_sealed_score": 31.836627872889945,
@@ -13866,7 +14660,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.961603+00:00",
       "score_source": "run03/final-gpu/omnijev_9b_v4_tzcfly.json",
-      "source_sha256": "5f2ccdf52414412894519f6762dc8a296693a07926b30123fa6f35a732070487",
+      "source_sha256": "a844afff0103e20b8124eb7b25abbd0d1817e7a9c719104eecf4c260053ae5e3",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -13882,7 +14676,7 @@
       "key": "omnijev_4b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "OmniJev 4B (tinnel123)",
-      "rank": 18,
+      "rank": 19,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -14140,7 +14934,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 4.609046300939838,
             "penalty_points": 0,
             "equated_sealed_score": 45.59813995458482,
@@ -14379,7 +15173,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -13.796741658547596,
             "penalty_points": 0,
             "equated_sealed_score": 71.02554221112192,
@@ -14661,7 +15455,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 4.609046300939838,
             "penalty_points": 0,
             "equated_sealed_score": 45.59813995458482,
@@ -14686,7 +15480,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.957603+00:00",
       "score_source": "run03/final-gpu/omnijev_4b.json",
-      "source_sha256": "ecb85fa4fae2721ee104a47caafe4c1e0304352e6b96fdfccd0afa83a8c3e667",
+      "source_sha256": "4747d9771cdc580dbda5aad2cffc6f7bc22d5b2e1e9e9cbd0a103fe0f6459403",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -14702,7 +15496,7 @@
       "key": "reflex_4b",
       "prior_exposure": "No evaluation run on this item set before this job.",
       "name": "Reflex 4B (released stable configuration)",
-      "rank": 19,
+      "rank": 20,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -14960,7 +15754,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 0.21427589403740654,
             "penalty_points": 0,
             "equated_sealed_score": 53.26873092511671,
@@ -15199,7 +15993,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -2.7959339756815638,
             "penalty_points": 0,
             "equated_sealed_score": 81.97707389377892,
@@ -15481,7 +16275,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 0.21427589403740654,
             "penalty_points": 0,
             "equated_sealed_score": 53.26873092511671,
@@ -15506,7 +16300,7 @@
       "inference_setting": "ImageJev run roster records Qwen base, exact Reflex code revision, and stable config (no adapter/calibration, markdown prompt, two permutations); clean-sealed kitA run receipt records successful execution. Peak memory was not logged.",
       "last_measured_utc": "2026-10-06T18:39:58.965603+00:00",
       "score_source": "run03/final-gpu/reflex_4b.json",
-      "source_sha256": "b37c35ef800a85da1d03a1b109ee741f68165ebeb8f34e7bf934e59512d6bed8",
+      "source_sha256": "e20c70aa46ed9646b24e6047c48cdb0df3961df9bf08f3a284a25894772e3fa3",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -15520,7 +16314,7 @@
       "key": "cua_s1_4b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "CUA-S1 4B",
-      "rank": 20,
+      "rank": 21,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -15549,29 +16343,29 @@
             "valid_answer_count": 939
           },
           "axes": {
-            "intelligence": 30.207379267971362,
-            "calibration": 68.85198263169748,
+            "intelligence": 30.120805778086087,
+            "calibration": 68.7654091418122,
             "speed": 81.85296392037813,
             "cost": 42.8552863838826
           },
-          "capability_raw": 49.52968094983442,
+          "capability_raw": 49.44310745994915,
           "composite": {
-            "harmonic_before_gates": 48.08861200086121,
+            "harmonic_before_gates": 48.02312164708866,
             "gates": {
-              "intelligence": 0.36499430489562645,
+              "intelligence": 0.36290517628847363,
               "speed": 1.0,
               "cost": 0.7346302284178374
             },
-            "score": 12.894280833814436
+            "score": 12.803017659277057
           },
           "composite_details": {
-            "harmonic_before_gates": 48.08861200086121,
+            "harmonic_before_gates": 48.02312164708866,
             "gates": {
-              "intelligence": 0.36499430489562645,
+              "intelligence": 0.36290517628847363,
               "speed": 1.0,
               "cost": 0.7346302284178374
             },
-            "score": 12.894280833814436
+            "score": 12.803017659277057
           },
           "p50_s": 0.2184449345804751,
           "p95_s": 0.4810540387406945,
@@ -15778,11 +16572,11 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 9.802033340997568,
-            "penalty_points": 2.2510780090176308,
+            "penalty_points": 2.3376514989029076,
             "equated_sealed_score": 48.35004728950291,
-            "capability_score": 49.52968094983442,
+            "capability_score": 49.44310745994915,
             "frozen_axes_unchanged": true,
             "ready": true
           },
@@ -15793,8 +16587,8 @@
             "cost": 42.8552863838826
           },
           "composite_raw": 15.39779182867951,
-          "capability": 49.52968094983442,
-          "capability_adjustment_pp": -2.2510780090176326,
+          "capability": 49.44310745994915,
+          "capability_adjustment_pp": -2.3376514989029076,
           "matched_gap_pp": 5.986174018690731,
           "raw_overall_gap_pp": 6.540230666394753
         },
@@ -16017,7 +16811,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": 0.25690504955990434,
             "penalty_points": 0,
             "equated_sealed_score": 83.00493867596904,
@@ -16070,29 +16864,29 @@
             "valid_answer_count": 939
           },
           "axes": {
-            "intelligence": 30.207379267971362,
-            "calibration": 68.85198263169748,
+            "intelligence": 30.120805778086087,
+            "calibration": 68.7654091418122,
             "speed": 81.85296392037813,
             "cost": 42.8552863838826
           },
-          "capability_raw": 49.52968094983442,
+          "capability_raw": 49.44310745994915,
           "composite": {
-            "harmonic_before_gates": 48.08861200086121,
+            "harmonic_before_gates": 48.02312164708866,
             "gates": {
-              "intelligence": 0.36499430489562645,
+              "intelligence": 0.36290517628847363,
               "speed": 1.0,
               "cost": 0.7346302284178374
             },
-            "score": 12.894280833814436
+            "score": 12.803017659277057
           },
           "composite_details": {
-            "harmonic_before_gates": 48.08861200086121,
+            "harmonic_before_gates": 48.02312164708866,
             "gates": {
-              "intelligence": 0.36499430489562645,
+              "intelligence": 0.36290517628847363,
               "speed": 1.0,
               "cost": 0.7346302284178374
             },
-            "score": 12.894280833814436
+            "score": 12.803017659277057
           },
           "p50_s": 0.2184449345804751,
           "p95_s": 0.4810540387406945,
@@ -16299,11 +17093,11 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 9.802033340997568,
-            "penalty_points": 2.2510780090176308,
+            "penalty_points": 2.3376514989029076,
             "equated_sealed_score": 48.35004728950291,
-            "capability_score": 49.52968094983442,
+            "capability_score": 49.44310745994915,
             "frozen_axes_unchanged": true,
             "ready": true
           },
@@ -16314,17 +17108,17 @@
             "cost": 42.8552863838826
           },
           "composite_raw": 15.39779182867951,
-          "capability": 49.52968094983442,
-          "capability_adjustment_pp": -2.2510780090176326,
+          "capability": 49.44310745994915,
+          "capability_adjustment_pp": -2.3376514989029076,
           "matched_gap_pp": 5.986174018690731,
           "raw_overall_gap_pp": 6.540230666394753
         }
       },
-      "score": 12.894280833814436,
+      "score": 12.803017659277057,
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
-      "last_measured_utc": "2026-10-06T18:39:58.937603+00:00",
+      "last_measured_utc": "2026-10-07T11:18:42.850734+00:00",
       "score_source": "run03/final-gpu/cua_s1_4b.json",
-      "source_sha256": "444a5239faca40a6dd4365cb157622436e0e450e758343fbcb7d3311bb0e69f6",
+      "source_sha256": "6b4549ea76ae7e6c06f4a4af430fe9e05519b6ce02dc79ff33244b1a7cb2914d",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -16340,7 +17134,7 @@
       "key": "bonsai_2_27b_pq2_0",
       "prior_exposure": "Measured separately on 24 Sep; clean PNG-normalized rerun scored.",
       "name": "Bonsai-2-27B v2 PQ2_0 + Q8_0 MMProj",
-      "rank": 21,
+      "rank": 22,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -16598,7 +17392,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -1.8925026540385517,
             "penalty_points": 0,
             "equated_sealed_score": 63.7322790908249,
@@ -16837,7 +17631,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -1.4321320292726796,
             "penalty_points": 0,
             "equated_sealed_score": 86.07749203584652,
@@ -17119,7 +17913,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -1.8925026540385517,
             "penalty_points": 0,
             "equated_sealed_score": 63.7322790908249,
@@ -17144,7 +17938,7 @@
       "inference_setting": "partial; exact old evaluator/prompt/context/runtime digest missing; same weights and calibration, reconstructed adapter/runtime disclosed.",
       "last_measured_utc": "2026-10-06T18:39:58.933603+00:00",
       "score_source": "run03/final-gpu/bonsai_2_27b_pq2_0.json",
-      "source_sha256": "04e882f146b0ba9731e4264c5649e87246774dc938775fa43f526bee12580277",
+      "source_sha256": "779eb8ca839ab2c84f74b6a466dd5a55fd3ff5880dbc837c9046e250953bfbf6",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -17158,7 +17952,7 @@
       "key": "visual_jev_generic_baseline",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "Visual-Jev generic (zero-shot Qwen3.5-4B baseline)",
-      "rank": 22,
+      "rank": 23,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -17416,7 +18210,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 1.882567214105002,
             "penalty_points": 0,
             "equated_sealed_score": 56.07154504893078,
@@ -17655,7 +18449,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -7.027053781480589,
             "penalty_points": 0,
             "equated_sealed_score": 86.03210317984258,
@@ -17937,7 +18731,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 1.882567214105002,
             "penalty_points": 0,
             "equated_sealed_score": 56.07154504893078,
@@ -17962,7 +18756,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.969603+00:00",
       "score_source": "run03/final-gpu/visual_jev_generic_baseline.json",
-      "source_sha256": "964ba808b0899acccac613a7bdd076cf13e1631184fa9211ac39fd410a015254",
+      "source_sha256": "759ebb873e6b5a1d190e047923cdf2e80a26bc3c54dc1eff30a77bb11c6c6dd3",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -17978,7 +18772,7 @@
       "key": "decider_2b_vision",
       "prior_exposure": "No evaluation run on this item set before this job.",
       "name": "Mapika decider-2b-vision BF16",
-      "rank": 23,
+      "rank": 24,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -18236,7 +19030,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 1.2751823197814574,
             "penalty_points": 0,
             "equated_sealed_score": 42.39248094504254,
@@ -18475,7 +19269,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -1.4545097251946686,
             "penalty_points": 0,
             "equated_sealed_score": 76.81208021938474,
@@ -18757,7 +19551,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 1.2751823197814574,
             "penalty_points": 0,
             "equated_sealed_score": 42.39248094504254,
@@ -18782,7 +19576,7 @@
       "inference_setting": "ImageJev run roster pins Mapika model revision and author code revision; clean-sealed kitA run receipt records successful execution. Peak memory was not logged.",
       "last_measured_utc": "2026-10-06T18:39:58.937603+00:00",
       "score_source": "run03/final-gpu/decider_2b_vision.json",
-      "source_sha256": "04668e3dae4e440b4fcb1fd6269ad6f294ebeaa28988d5c2193a3d242e1f5b77",
+      "source_sha256": "1ce1e1f30bb3658617508bb58c09c1edc1dd21d527229df3c30ecec4b845b661",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -18796,7 +19590,7 @@
       "key": "vjev_vision",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "vjev-vision (yah01)",
-      "rank": 24,
+      "rank": 25,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -19054,7 +19848,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -6.181597122248668,
             "penalty_points": 0,
             "equated_sealed_score": 57.82730506810523,
@@ -19293,7 +20087,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -14.36847403640499,
             "penalty_points": 0,
             "equated_sealed_score": 70.29332476249334,
@@ -19575,7 +20369,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -6.181597122248668,
             "penalty_points": 0,
             "equated_sealed_score": 57.82730506810523,
@@ -19600,7 +20394,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.969603+00:00",
       "score_source": "run03/final-gpu/vjev_vision.json",
-      "source_sha256": "ad59dbecb41c656d031c6cc6835f842f30d54ecb4be10289b006d18e34ed4871",
+      "source_sha256": "f83f7390e4cda016abd34919ee48d6e0d96b71d9e71372bf2687cad28c483684",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -19616,7 +20410,7 @@
       "key": "visual_jev_4b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "Visual-Jev 4B Answer-SFT",
-      "rank": 25,
+      "rank": 26,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -19874,7 +20668,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 1.5483321758308222,
             "penalty_points": 0,
             "equated_sealed_score": 35.34488775044219,
@@ -19920,29 +20714,29 @@
             "valid_answer_count": 261
           },
           "axes": {
-            "intelligence": 79.52851559493679,
-            "calibration": 82.96679725531656,
+            "intelligence": 79.71449494962901,
+            "calibration": 83.15277661000879,
             "speed": 86.01391618565233,
             "cost": 50.369357797437004
           },
-          "capability_raw": 81.24765642512668,
+          "capability_raw": 81.4336357798189,
           "composite": {
-            "harmonic_before_gates": 71.29300454638002,
+            "harmonic_before_gates": 71.36460765960058,
             "gates": {
               "intelligence": 1.0,
               "speed": 1.0,
               "cost": 1.0
             },
-            "score": 71.29300454638002
+            "score": 71.36460765960058
           },
           "composite_details": {
-            "harmonic_before_gates": 71.29300454638002,
+            "harmonic_before_gates": 71.36460765960058,
             "gates": {
               "intelligence": 1.0,
               "speed": 1.0,
               "cost": 1.0
             },
-            "score": 71.29300454638002
+            "score": 71.36460765960058
           },
           "p50_s": 0.1366579500027001,
           "p95_s": 0.22074254415929317,
@@ -20113,11 +20907,11 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": 6.39996996754445,
-            "penalty_points": 1.381883297918229,
+            "penalty_points": 1.1959039432260141,
             "equated_sealed_score": 80.38955023440437,
-            "capability_score": 81.24765642512668,
+            "capability_score": 81.4336357798189,
             "frozen_axes_unchanged": true,
             "ready": true
           },
@@ -20128,8 +20922,8 @@
             "cost": 50.369357797437004
           },
           "composite_raw": 71.82067803590415,
-          "capability": 81.24765642512668,
-          "capability_adjustment_pp": -1.381883297918236,
+          "capability": 81.4336357798189,
+          "capability_adjustment_pp": -1.1959039432260141,
           "matched_gap_pp": 7.320894948038552,
           "raw_overall_gap_pp": 7.250221043324501
         },
@@ -20395,7 +21189,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 1.5483321758308222,
             "penalty_points": 0,
             "equated_sealed_score": 35.34488775044219,
@@ -20420,7 +21214,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.969603+00:00",
       "score_source": "run03/final-gpu/visual_jev_4b.json",
-      "source_sha256": "83dc5021a9d3f9e62f234cb9c367e54f5f2d73b2ed4801d466b1e93a4195bdfe",
+      "source_sha256": "d301e488e680fe72f8b288d4cf93e2285b5915b993accab6dab234ba66d434e5",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -20436,7 +21230,7 @@
       "key": "jevify_gemma4_e4b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "Jevify Gemma 4 E4B",
-      "rank": 26,
+      "rank": 27,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -20694,7 +21488,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -7.435270132835058,
             "penalty_points": 0,
             "equated_sealed_score": 46.31599512379857,
@@ -20933,7 +21727,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -12.982480815297478,
             "penalty_points": 0,
             "equated_sealed_score": 74.40463776126425,
@@ -21215,7 +22009,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -7.435270132835058,
             "penalty_points": 0,
             "equated_sealed_score": 46.31599512379857,
@@ -21240,7 +22034,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.953603+00:00",
       "score_source": "run03/final-gpu/jevify_gemma4_e4b.json",
-      "source_sha256": "1847512d556ef382c6d502cdd17e532f6f541125c0629fc610120fdc58b635b1",
+      "source_sha256": "4caa6eca09f307d364e188df13d00ce43015e5048def854c30e361f7d7024df5",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -21256,7 +22050,7 @@
       "key": "jpt_0p8b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "JPT-0.8B (kirp / llm2jev)",
-      "rank": 27,
+      "rank": 28,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -21514,7 +22308,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -1.2143951520828864,
             "penalty_points": 0,
             "equated_sealed_score": 46.49345775009028,
@@ -21753,7 +22547,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -0.47054261431954103,
             "penalty_points": 0,
             "equated_sealed_score": 77.44432760357732,
@@ -22035,7 +22829,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -1.2143951520828864,
             "penalty_points": 0,
             "equated_sealed_score": 46.49345775009028,
@@ -22060,7 +22854,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.953603+00:00",
       "score_source": "run03/final-gpu/jpt_0p8b.json",
-      "source_sha256": "449cdffb2ecd6a63dfe76c579d91939f23b3a24110261db0bbc95d1a881c85b3",
+      "source_sha256": "fe234c2d01e46dff16478118047072343c656a41b06d776931f94160232f1ea9",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -22076,7 +22870,7 @@
       "key": "glance_qwen3vl_4b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "Glance (frozen Qwen3-VL-4B)",
-      "rank": 28,
+      "rank": 29,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -22334,7 +23128,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -0.36247117813478624,
             "penalty_points": 0,
             "equated_sealed_score": 28.552607544668547,
@@ -22573,7 +23367,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -8.179138586514256,
             "penalty_points": 0,
             "equated_sealed_score": 71.72923702473366,
@@ -22855,7 +23649,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -0.36247117813478624,
             "penalty_points": 0,
             "equated_sealed_score": 28.552607544668547,
@@ -22880,7 +23674,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.945603+00:00",
       "score_source": "run03/final-gpu/glance_qwen3vl_4b.json",
-      "source_sha256": "370dbcd86a2752fe9893f862f1f71087c01f64e8c3cc5cde3fb1edd4c59c9114",
+      "source_sha256": "aaf55085a53cc14516e89ae113fc5211d8eec06940c5406524b4339199d35a51",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -22896,7 +23690,7 @@
       "key": "djev_v10_step160_snowicarus",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "diffusiongemma-26b djev v10 step160 (snowicarus)",
-      "rank": 29,
+      "rank": 30,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -23154,7 +23948,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -2.9667428349111233,
             "penalty_points": 0,
             "equated_sealed_score": 37.77820982821519,
@@ -23200,29 +23994,29 @@
             "valid_answer_count": 261
           },
           "axes": {
-            "intelligence": 66.7584210742214,
-            "calibration": 75.55941587837442,
+            "intelligence": 66.94440042891361,
+            "calibration": 75.74539523306663,
             "speed": 83.7946603140777,
             "cost": 45.65932512567093
           },
-          "capability_raw": 71.15891847629791,
+          "capability_raw": 71.34489783099012,
           "composite": {
-            "harmonic_before_gates": 64.46490296858282,
+            "harmonic_before_gates": 64.54198992667133,
             "gates": {
               "intelligence": 1.0,
               "speed": 1.0,
               "cost": 0.8339095883726899
             },
-            "score": 53.7579006990163
+            "score": 53.82218425250479
           },
           "composite_details": {
-            "harmonic_before_gates": 64.46490296858282,
+            "harmonic_before_gates": 64.54198992667133,
             "gates": {
               "intelligence": 1.0,
               "speed": 1.0,
               "cost": 0.8339095883726899
             },
-            "score": 53.7579006990163
+            "score": 53.82218425250479
           },
           "p50_s": 0.2238353815046139,
           "p95_s": 0.2741740510100499,
@@ -23393,11 +24187,11 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": 5.284129111096405,
-            "penalty_points": 0.26604244147018363,
+            "penalty_points": 0.0800630867779688,
             "equated_sealed_score": 69.57551572888434,
-            "capability_score": 71.15891847629791,
+            "capability_score": 71.34489783099012,
             "frozen_axes_unchanged": true,
             "ready": true
           },
@@ -23408,8 +24202,8 @@
             "cost": 45.65932512567093
           },
           "composite_raw": 53.849800842601205,
-          "capability": 71.15891847629791,
-          "capability_adjustment_pp": -0.2660424414701765,
+          "capability": 71.34489783099012,
+          "capability_adjustment_pp": -0.0800630867779688,
           "matched_gap_pp": 4.234815045628584,
           "raw_overall_gap_pp": 4.526967285587979
         },
@@ -23675,7 +24469,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -2.9667428349111233,
             "penalty_points": 0,
             "equated_sealed_score": 37.77820982821519,
@@ -23700,7 +24494,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.941603+00:00",
       "score_source": "run03/final-gpu/djev_v10_step160_snowicarus.json",
-      "source_sha256": "a2c6d1997277b8790cce21a2cf2bd3a53d51d56ff36d3f127ebd8ad13a34957c",
+      "source_sha256": "a4e7954a9ed5c12ab6a96b5a7a4b632c6c3b38c4877d0d8f7afa2e0e044ede32",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -23716,7 +24510,7 @@
       "key": "imajev_2b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "imajev 2B",
-      "rank": 30,
+      "rank": 31,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -23974,7 +24768,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -2.9439590470033323,
             "penalty_points": 0,
             "equated_sealed_score": 47.449066395274,
@@ -24213,7 +25007,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -9.39163335870758,
             "penalty_points": 0,
             "equated_sealed_score": 80.40929047396715,
@@ -24495,7 +25289,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -2.9439590470033323,
             "penalty_points": 0,
             "equated_sealed_score": 47.449066395274,
@@ -24520,7 +25314,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.945603+00:00",
       "score_source": "run03/final-gpu/imajev_2b.json",
-      "source_sha256": "53c847cd6b4e98b756920b169620d8251ee416111a0a62aeae9804f68d40d786",
+      "source_sha256": "f7ee3230e19fc22792cefc54f360e3e2c82bcb0c9beadfefb7fc8e4846d339ca",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -24536,7 +25330,7 @@
       "key": "gevva_e4b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "Gevva E4B (text checkpoint, image input)",
-      "rank": 31,
+      "rank": 32,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -24794,7 +25588,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 0.7235013294514374,
             "penalty_points": 0,
             "equated_sealed_score": 49.322241154070106,
@@ -25033,7 +25827,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -2.6787804255184824,
             "penalty_points": 0,
             "equated_sealed_score": 58.016897723650615,
@@ -25315,7 +26109,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 0.7235013294514374,
             "penalty_points": 0,
             "equated_sealed_score": 49.322241154070106,
@@ -25340,7 +26134,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.945603+00:00",
       "score_source": "run03/final-gpu/gevva_e4b.json",
-      "source_sha256": "b1aa0f89d8a98c508b56f6f72caf32ff12758f5af091a9c0a1808b169f34662b",
+      "source_sha256": "b68b31b17e95ea3bb4d1b68cd04cbdd5e538f65adfa05742cd3be52f6ef0c3f8",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -25356,7 +26150,7 @@
       "key": "djev_distill_v4",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "djev-distill-v4 (tarsur385)",
-      "rank": 32,
+      "rank": 33,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -25614,7 +26408,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -2.1028866006197617,
             "penalty_points": 0,
             "equated_sealed_score": 40.982922742806494,
@@ -25853,7 +26647,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -3.8712137101839375,
             "penalty_points": 0,
             "equated_sealed_score": 75.85338621023382,
@@ -26135,7 +26929,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -2.1028866006197617,
             "penalty_points": 0,
             "equated_sealed_score": 40.982922742806494,
@@ -26160,7 +26954,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.941603+00:00",
       "score_source": "run03/final-gpu/djev_distill_v4.json",
-      "source_sha256": "dbefea2fe11b63babffbc481e16e6b89dc069e6b8fc129f8282d97c1fc3eee07",
+      "source_sha256": "64a3f8deba8bc87d9e6696d4d84e731d9f106a8194a1a3eba0fe9b26ef4f0c53",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -26176,7 +26970,7 @@
       "key": "jevify_qwen3vl_2b_t2",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "Jevify Qwen3-VL-2B T2",
-      "rank": 33,
+      "rank": 34,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -26434,7 +27228,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -0.5356181579053398,
             "penalty_points": 0,
             "equated_sealed_score": 44.119722561251095,
@@ -26673,7 +27467,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -18.492913882007258,
             "penalty_points": 0,
             "equated_sealed_score": 75.71079831336537,
@@ -26955,7 +27749,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -0.5356181579053398,
             "penalty_points": 0,
             "equated_sealed_score": 44.119722561251095,
@@ -26980,7 +27774,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.953603+00:00",
       "score_source": "run03/final-gpu/jevify_qwen3vl_2b_t2.json",
-      "source_sha256": "f850e91a1ff49abef751034a09b4c59923845d7d9dafe4a8cd3c61a07d03b15f",
+      "source_sha256": "686ba5dc49f40ed66681c4b4575cfe7712e7657c73a8512df122c18f9e34a376",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -26996,7 +27790,7 @@
       "key": "omnijev_2b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "OmniJev 2B (tinnel123)",
-      "rank": 34,
+      "rank": 35,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -27254,7 +28048,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -3.6921185837336665,
             "penalty_points": 0,
             "equated_sealed_score": 39.22342124001921,
@@ -27493,7 +28287,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -11.477931039929935,
             "penalty_points": 0,
             "equated_sealed_score": 62.75430522072949,
@@ -27775,7 +28569,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -3.6921185837336665,
             "penalty_points": 0,
             "equated_sealed_score": 39.22342124001921,
@@ -27800,7 +28594,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.957603+00:00",
       "score_source": "run03/final-gpu/omnijev_2b.json",
-      "source_sha256": "a38496afd4af8f481f47e5115b45017b2016945020351186b8794afb7029ad6d",
+      "source_sha256": "c34dd56895fb82ca6eff6fe2a810711cd713fb83a09235da61a28d8baecf4c22",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -27816,7 +28610,7 @@
       "key": "jev_spatial",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "jev-spatial (Fr0zencr4nE)",
-      "rank": 35,
+      "rank": 36,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -27845,29 +28639,29 @@
             "valid_answer_count": 939
           },
           "axes": {
-            "intelligence": 14.063171365385443,
-            "calibration": 41.04786204257066,
+            "intelligence": 13.976597875500165,
+            "calibration": 40.961288552685374,
             "speed": 89.7496926776156,
             "cost": 58.78283535746186
           },
-          "capability_raw": 27.55551670397805,
+          "capability_raw": 27.468943214092768,
           "composite": {
-            "harmonic_before_gates": 32.356336656044924,
+            "harmonic_before_gates": 32.22808912213589,
             "gates": {
-              "intelligence": 0.07910911554087884,
+              "intelligence": 0.0781381152693743,
               "speed": 1.0,
               "cost": 1.0
             },
-            "score": 2.559681175002631
+            "score": 2.518242142737122
           },
           "composite_details": {
-            "harmonic_before_gates": 32.356336656044924,
+            "harmonic_before_gates": 32.22808912213589,
             "gates": {
-              "intelligence": 0.07910911554087884,
+              "intelligence": 0.0781381152693743,
               "speed": 1.0,
               "cost": 1.0
             },
-            "score": 2.559681175002631
+            "score": 2.518242142737122
           },
           "p50_s": 0.06824211776256561,
           "p95_s": 0.1098842890933156,
@@ -28074,11 +28868,11 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 8.775910285274204,
-            "penalty_points": 1.224954953294267,
+            "penalty_points": 1.3115284431795438,
             "equated_sealed_score": 25.708903057426344,
-            "capability_score": 27.55551670397805,
+            "capability_score": 27.46894321409277,
             "frozen_axes_unchanged": true,
             "ready": true
           },
@@ -28089,8 +28883,8 @@
             "cost": 58.78283535746186
           },
           "composite_raw": 3.1902660137403043,
-          "capability": 27.55551670397805,
-          "capability_adjustment_pp": -1.2249549532942652,
+          "capability": 27.46894321409277,
+          "capability_adjustment_pp": -1.3115284431795438,
           "matched_gap_pp": 5.059302944479715,
           "raw_overall_gap_pp": 6.020438220832486
         },
@@ -28313,7 +29107,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -16.471223552296742,
             "penalty_points": 0,
             "equated_sealed_score": 65.79249449780801,
@@ -28366,29 +29160,29 @@
             "valid_answer_count": 939
           },
           "axes": {
-            "intelligence": 14.063171365385443,
-            "calibration": 41.04786204257066,
+            "intelligence": 13.976597875500165,
+            "calibration": 40.961288552685374,
             "speed": 89.7496926776156,
             "cost": 58.78283535746186
           },
-          "capability_raw": 27.55551670397805,
+          "capability_raw": 27.468943214092768,
           "composite": {
-            "harmonic_before_gates": 32.356336656044924,
+            "harmonic_before_gates": 32.22808912213589,
             "gates": {
-              "intelligence": 0.07910911554087884,
+              "intelligence": 0.0781381152693743,
               "speed": 1.0,
               "cost": 1.0
             },
-            "score": 2.559681175002631
+            "score": 2.518242142737122
           },
           "composite_details": {
-            "harmonic_before_gates": 32.356336656044924,
+            "harmonic_before_gates": 32.22808912213589,
             "gates": {
-              "intelligence": 0.07910911554087884,
+              "intelligence": 0.0781381152693743,
               "speed": 1.0,
               "cost": 1.0
             },
-            "score": 2.559681175002631
+            "score": 2.518242142737122
           },
           "p50_s": 0.06824211776256561,
           "p95_s": 0.1098842890933156,
@@ -28595,11 +29389,11 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 8.775910285274204,
-            "penalty_points": 1.224954953294267,
+            "penalty_points": 1.3115284431795438,
             "equated_sealed_score": 25.708903057426344,
-            "capability_score": 27.55551670397805,
+            "capability_score": 27.46894321409277,
             "frozen_axes_unchanged": true,
             "ready": true
           },
@@ -28610,17 +29404,17 @@
             "cost": 58.78283535746186
           },
           "composite_raw": 3.1902660137403043,
-          "capability": 27.55551670397805,
-          "capability_adjustment_pp": -1.2249549532942652,
+          "capability": 27.46894321409277,
+          "capability_adjustment_pp": -1.3115284431795438,
           "matched_gap_pp": 5.059302944479715,
           "raw_overall_gap_pp": 6.020438220832486
         }
       },
-      "score": 2.559681175002631,
+      "score": 2.518242142737122,
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
-      "last_measured_utc": "2026-10-06T18:39:58.949603+00:00",
+      "last_measured_utc": "2026-10-07T11:18:42.886733+00:00",
       "score_source": "run03/final-gpu/jev_spatial.json",
-      "source_sha256": "72beb5f1fc3b6152360a9981578346f9f8512b5aa1853d08e62d19800a0b3729",
+      "source_sha256": "6b707184633f67f68074d8a30a83e4b7d4ce81c1011736d3f061cdd5b6269093",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -28636,7 +29430,7 @@
       "key": "gevva_e2b_multimodal",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "Gevva E2B multimodal",
-      "rank": 36,
+      "rank": 37,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -28894,7 +29688,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -2.569377858970121,
             "penalty_points": 0,
             "equated_sealed_score": 48.23603127593285,
@@ -29133,7 +29927,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -6.765778877018391,
             "penalty_points": 0,
             "equated_sealed_score": 58.88140748328533,
@@ -29415,7 +30209,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -2.569377858970121,
             "penalty_points": 0,
             "equated_sealed_score": 48.23603127593285,
@@ -29440,7 +30234,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.941603+00:00",
       "score_source": "run03/final-gpu/gevva_e2b_multimodal.json",
-      "source_sha256": "b813c0749f4f2e9fa9ab9eb5ea0303ff376cb874a9d22f90cde5ca10de7d7aa5",
+      "source_sha256": "60d8fb62a623b92105691c0eb2832f5185cd4c4a58e773eb3919362f72b0652c",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -29456,7 +30250,7 @@
       "key": "jevision",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "JEVision (divyanshx11, visual route)",
-      "rank": 37,
+      "rank": 38,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -29714,7 +30508,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 5.355622446169782,
             "penalty_points": 0,
             "equated_sealed_score": 14.32671079114953,
@@ -29953,7 +30747,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -15.38512563367749,
             "penalty_points": 0,
             "equated_sealed_score": 58.55049906697566,
@@ -30235,7 +31029,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 5.355622446169782,
             "penalty_points": 0,
             "equated_sealed_score": 14.32671079114953,
@@ -30260,7 +31054,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.953603+00:00",
       "score_source": "run03/final-gpu/jevision.json",
-      "source_sha256": "001e547e9502095e0f8cad42918cb8681f0237c6ecf58910f99cf9708791bffc",
+      "source_sha256": "e239c380388803af8f628b440239ff40ef52c2f079fc8933d6812acb7700418a",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -30276,7 +31070,7 @@
       "key": "omnijev_0p8b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "OmniJev 0.8B (tinnel123)",
-      "rank": 38,
+      "rank": 39,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -30534,7 +31328,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 4.6151967316307605,
             "penalty_points": 0,
             "equated_sealed_score": 36.96759417541527,
@@ -30773,7 +31567,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -16.292988984918154,
             "penalty_points": 0,
             "equated_sealed_score": 54.074102739765344,
@@ -31055,7 +31849,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 4.6151967316307605,
             "penalty_points": 0,
             "equated_sealed_score": 36.96759417541527,
@@ -31080,7 +31874,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.957603+00:00",
       "score_source": "run03/final-gpu/omnijev_0p8b.json",
-      "source_sha256": "031b7ed7a20eb502f2dd78208b2697f15d1c432f0fbf24303c1a75fc3a2ebb10",
+      "source_sha256": "e7414ae60b1a82f40328b98ef01ae67262be5ca4a93b6735fa39390a8623d2fe",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -31096,7 +31890,7 @@
       "key": "playjev_0p8b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "PlayJev 0.8B",
-      "rank": 39,
+      "rank": 40,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -31354,7 +32148,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 1.3829822659508828,
             "penalty_points": 0,
             "equated_sealed_score": 25.114306992328974,
@@ -31593,7 +32387,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -14.946871760881404,
             "penalty_points": 0,
             "equated_sealed_score": 36.82079380077982,
@@ -31875,7 +32669,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 1.3829822659508828,
             "penalty_points": 0,
             "equated_sealed_score": 25.114306992328974,
@@ -31900,7 +32694,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.961603+00:00",
       "score_source": "run03/final-gpu/playjev_0p8b.json",
-      "source_sha256": "c954f81a0e05de71064065942853e4850bb3e6cd1c26271736b22f2c1ba1d94d",
+      "source_sha256": "b791690a3701da39eacb8e1fcefc1b7a7f7ca2e2900ec4d9eed73316ec411772",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -31916,7 +32710,7 @@
       "key": "djev_dev_bf16",
       "prior_exposure": "No evaluation run on this item set before this job.",
       "name": "djev-dev BF16",
-      "rank": 40,
+      "rank": 41,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -32174,7 +32968,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -3.6640412202200494,
             "penalty_points": 0,
             "equated_sealed_score": 26.68915653920243,
@@ -32220,29 +33014,29 @@
             "valid_answer_count": 161
           },
           "axes": {
-            "intelligence": 3.2673777067790954,
-            "calibration": 38.32986732305214,
+            "intelligence": 3.4533570614713103,
+            "calibration": 38.515846677744356,
             "speed": 84.02512233641409,
             "cost": 28.723091418050487
           },
-          "capability_raw": 20.798622514915618,
+          "capability_raw": 20.984601869607832,
           "composite": {
-            "harmonic_before_gates": 10.557946752327343,
+            "harmonic_before_gates": 11.042005460613545,
             "gates": {
-              "intelligence": 0.004270302831502809,
+              "intelligence": 0.004770269997605504,
               "speed": 1.0,
               "cost": 0.3300063922438743
             },
-            "score": 0.014878546069076999
+            "score": 0.017382541330395122
           },
           "composite_details": {
-            "harmonic_before_gates": 10.557946752327343,
+            "harmonic_before_gates": 11.042005460613545,
             "gates": {
-              "intelligence": 0.004270302831502809,
+              "intelligence": 0.004770269997605504,
               "speed": 1.0,
               "cost": 0.3300063922438743
             },
-            "score": 0.014878546069076999
+            "score": 0.017382541330395122
           },
           "p50_s": 0.2199813206680119,
           "p95_s": 0.26045421976596117,
@@ -32413,11 +33207,11 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": 13.81594500469135,
-            "penalty_points": 8.79785833506513,
+            "penalty_points": 8.611878980372914,
             "equated_sealed_score": 24.760900098338773,
-            "capability_score": 20.798622514915618,
+            "capability_score": 20.984601869607832,
             "frozen_axes_unchanged": true,
             "ready": true
           },
@@ -32428,8 +33222,8 @@
             "cost": 28.723091418050487
           },
           "composite_raw": 0.5096365459763837,
-          "capability": 20.798622514915618,
-          "capability_adjustment_pp": -8.79785833506513,
+          "capability": 20.984601869607832,
+          "capability_adjustment_pp": -8.611878980372914,
           "matched_gap_pp": 11.088931850996499,
           "raw_overall_gap_pp": 12.071912761567932
         },
@@ -32695,7 +33489,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -3.6640412202200494,
             "penalty_points": 0,
             "equated_sealed_score": 26.68915653920243,
@@ -32720,7 +33514,7 @@
       "inference_setting": "ImageJev run roster and pinned model receipt match the exact model snapshot; the reviewed kitA runner uses the structured-read vLLM source overlay and offline local endpoint. vLLM is configured to reserve 85% of the 96-GiB GPU; measured peak was not logged.",
       "last_measured_utc": "2026-10-06T18:39:58.937603+00:00",
       "score_source": "run03/final-gpu/djev_dev_bf16.json",
-      "source_sha256": "f64df579c042c9acc7a258707f84f67e0d6128783ac6ee11f55dd04e5fa71eb8",
+      "source_sha256": "dcb1814edc4e566eaf2b49d9cf3315746b91262a7b8ba051839821df1f326942",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -32734,7 +33528,7 @@
       "key": "qevi_2b",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "Qevi-2B (MeerDevelopment)",
-      "rank": 41,
+      "rank": 42,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -32992,7 +33786,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -4.458019735070684,
             "penalty_points": 0,
             "equated_sealed_score": 12.70959620094974,
@@ -33231,7 +34025,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -17.488961976678908,
             "penalty_points": 0,
             "equated_sealed_score": 50.72348772600846,
@@ -33513,7 +34307,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -4.458019735070684,
             "penalty_points": 0,
             "equated_sealed_score": 12.70959620094974,
@@ -33538,7 +34332,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.961603+00:00",
       "score_source": "run03/final-gpu/qevi_2b.json",
-      "source_sha256": "d03a4381f67a1eb77617a0fc1e7a86dcd3e27b80e18bf2ec9cd24e7ffc027514",
+      "source_sha256": "ae05e2343f0b8e7e778f0f8e483f196ee56b30300aa888e3ec705ed91503b860",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -33554,7 +34348,7 @@
       "key": "djev_spark_nvfp4",
       "prior_exposure": "Saw the 100 public promo photos in the earlier video run through inference only; no training. Its score on the new sealed photo variants is the clean split measurement.",
       "name": "djev-spark NVFP4",
-      "rank": 42,
+      "rank": 43,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -33812,7 +34606,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -2.6691765543031245,
             "penalty_points": 0,
             "equated_sealed_score": 25.457531322115067,
@@ -33858,29 +34652,29 @@
             "valid_answer_count": 161
           },
           "axes": {
-            "intelligence": 4.19105667238307,
-            "calibration": 40.37689822541225,
+            "intelligence": 4.377036027075285,
+            "calibration": 40.56287758010447,
             "speed": 84.710707675796,
             "cost": 29.726388873259467
           },
-          "capability_raw": 22.28397744889766,
+          "capability_raw": 22.469956803589877,
           "composite": {
-            "harmonic_before_gates": 12.952739710026277,
+            "harmonic_before_gates": 13.397497686143337,
             "gates": {
-              "intelligence": 0.0070259824124506605,
+              "intelligence": 0.007663377752925997,
               "speed": 1.0,
               "cost": 0.35346327817769774
             },
-            "score": 0.032167180617448915
+            "score": 0.03629010506685566
           },
           "composite_details": {
-            "harmonic_before_gates": 12.952739710026277,
+            "harmonic_before_gates": 13.397497686143337,
             "gates": {
-              "intelligence": 0.0070259824124506605,
+              "intelligence": 0.007663377752925997,
               "speed": 1.0,
               "cost": 0.35346327817769774
             },
-            "score": 0.032167180617448915
+            "score": 0.03629010506685566
           },
           "p50_s": 0.19564423337578773,
           "p95_s": 0.23722700495272875,
@@ -34051,11 +34845,11 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": 12.1280097192755,
-            "penalty_points": 7.109923049649279,
+            "penalty_points": 6.923943694957064,
             "equated_sealed_score": 25.149097096800514,
-            "capability_score": 22.283977448897662,
+            "capability_score": 22.469956803589877,
             "frozen_axes_unchanged": true,
             "ready": true
           },
@@ -34066,8 +34860,8 @@
             "cost": 29.726388873259467
           },
           "composite_raw": 0.46600315968304673,
-          "capability": 22.283977448897662,
-          "capability_adjustment_pp": -7.109923049649279,
+          "capability": 22.469956803589877,
+          "capability_adjustment_pp": -6.923943694957064,
           "matched_gap_pp": 11.778729260029744,
           "raw_overall_gap_pp": 12.838196286472147
         },
@@ -34333,7 +35127,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -2.6691765543031245,
             "penalty_points": 0,
             "equated_sealed_score": 25.457531322115067,
@@ -34358,7 +35152,7 @@
       "inference_setting": "ImageJev run roster and pinned model receipt match the exact model snapshot; the reviewed kitA runner uses the structured-read vLLM source overlay and offline local endpoint. vLLM is configured to reserve 85% of the 96-GiB GPU; measured peak was not logged.",
       "last_measured_utc": "2026-10-06T18:39:58.941603+00:00",
       "score_source": "run03/final-gpu/djev_spark_nvfp4.json",
-      "source_sha256": "76b1b708141fb1a31f8f98c67d0c9fb84baf2f4af41cc5fe59c4a163d20224f8",
+      "source_sha256": "297164c97d1a202d30c8857dac6beeffd78d323c0149a0f883e1a0824418fd16",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -34372,7 +35166,7 @@
       "key": "openjev_4b_nli",
       "prior_exposure": "No evaluation run on this item set before this job. The repository includes `code/eval_image_nli.py`; the benchmark wrapper follows its image-premise NLI scoring path. It does not import or execute `train.py`, whose training entry point and dataset-loading code are excluded.",
       "name": "OpenJev 4B NLI v2 (official image-premise path)",
-      "rank": 43,
+      "rank": 44,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -34630,7 +35424,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -0.0165857752607117,
             "penalty_points": 0,
             "equated_sealed_score": 8.210215280709162,
@@ -34869,7 +35663,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -5.1721616049101335,
             "penalty_points": 0,
             "equated_sealed_score": 27.6601998824221,
@@ -35151,7 +35945,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -0.0165857752607117,
             "penalty_points": 0,
             "equated_sealed_score": 8.210215280709162,
@@ -35176,7 +35970,7 @@
       "inference_setting": "ImageJev run roster pins OpenJev snapshot and Qwen 3.5 processor/base snapshot; runner uses local BF16 sequence-classification inference with local_files_only and no remote code. Clean-sealed kitA run receipt records successful execution; peak memory was not logged.",
       "last_measured_utc": "2026-10-06T18:39:58.961603+00:00",
       "score_source": "run03/final-gpu/openjev_4b_nli.json",
-      "source_sha256": "aea08e616d36052ecf7f30189df8323b55bee713b026398e45b2b357e339778b",
+      "source_sha256": "6f23706c501181cfd40af78a260bbf82043c46f30bf171adac2334eb7cfcc46b",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -35190,7 +35984,7 @@
       "key": "openjev_4b_v5",
       "prior_exposure": "First ImageJevBench measurement, intake run 26 Sep 2026 (offline container, own pod).",
       "name": "OpenJev 4B NLI v5",
-      "rank": 44,
+      "rank": 45,
       "kind": "gpu",
       "tracks": {
         "core": {
@@ -35448,7 +36242,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -0.5478613284117912,
             "penalty_points": 0,
             "equated_sealed_score": 16.59983115238497,
@@ -35687,7 +36481,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": 3.95207997547179,
             "penalty_points": 0,
             "equated_sealed_score": 36.478542034097586,
@@ -35969,7 +36763,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -0.5478613284117912,
             "penalty_points": 0,
             "equated_sealed_score": 16.59983115238497,
@@ -35994,7 +36788,7 @@
       "inference_setting": "same reviewed 26 Sep intake configuration as published v0.1.4",
       "last_measured_utc": "2026-10-06T18:39:58.961603+00:00",
       "score_source": "run03/final-gpu/openjev_4b_v5.json",
-      "source_sha256": "4995eb6623a32c6ecbdb9a1a142d9271230735fe5cc6811d3903585d1d31f74e",
+      "source_sha256": "424143ed18f641a5570e7a04a489d23fec861a8a2bcbad1678ef0fa7f4ddd569",
       "holds": [],
       "release_ready": true,
       "ranked": true,
@@ -36247,7 +37041,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 4.66366436392822,
             "penalty_points": 0,
             "equated_sealed_score": 47.92108478390786,
@@ -36465,7 +37259,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -0.22315490608359312,
             "penalty_points": 0,
             "equated_sealed_score": 60.96638935886965,
@@ -36726,7 +37520,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": 4.66366436392822,
             "penalty_points": 0,
             "equated_sealed_score": 47.92108478390786,
@@ -36750,7 +37544,7 @@
       "score": null,
       "last_measured_utc": "2026-10-06T18:39:58.965603+00:00",
       "score_source": "run03/final-gpu/standard_one_3b.json",
-      "source_sha256": "e7bb531dbf98cdbbd989c80f8f000ad070313573f369fcf5eef6ee0aaf7e921f",
+      "source_sha256": "b55331359b154d9b237e2aab9252d9bd7c381571a709e7ec312a46fb8ffd617a",
       "holds": [
         "measured-unrankable: CORE cost unavailable (runtime returns no GPU-seconds), so no composite"
       ],
@@ -37005,7 +37799,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -0.8094576552712311,
             "penalty_points": 0,
             "equated_sealed_score": 51.83254037817763,
@@ -37223,7 +38017,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -2.9819133303737786,
+            "field_median_gap_pp": -2.7959339756815638,
             "measured_gap_pp": -6.304076955127314,
             "penalty_points": 0,
             "equated_sealed_score": 83.85310322418313,
@@ -37484,7 +38278,7 @@
           "rotation_adjustment": {
             "sealed_set": "S",
             "offset_pp": 0,
-            "field_median_gap_pp": -0.44904466802006304,
+            "field_median_gap_pp": -0.5356181579053398,
             "measured_gap_pp": -0.8094576552712311,
             "penalty_points": 0,
             "equated_sealed_score": 51.83254037817763,
@@ -37508,7 +38302,7 @@
       "score": null,
       "last_measured_utc": "2026-10-06T18:39:58.969603+00:00",
       "score_source": "run03/final-gpu/standard_one_8b.json",
-      "source_sha256": "6bb9293b02092eed533e7a4616b61f371aca7390b6a6faa73effa2ef2631b737",
+      "source_sha256": "ca4a5d1b2afeb1ae0bad3f3cf00c63cb1106e1997d6b704a5f37f22bab284fb8",
       "holds": [
         "measured-unrankable: CORE cost unavailable (runtime returns no GPU-seconds), so no composite"
       ],
@@ -37523,252 +38317,6 @@
     }
   ],
   "carried": [
-    {
-      "key": "wity_1",
-      "name": "Wity-1",
-      "kind": "api",
-      "api_flag": true,
-      "prior_exposure": "Full measurement on the current 228-public/456-sealed Image JevBench split through the hosted Wity SystemOne endpoint; exact server build under author review.",
-      "inference_setting": "Wity SystemOne, reasoning=auto",
-      "measurement_source": "Full 684-decision run on 29 Sep 2026 through the production-named Wity SystemOne endpoint; deployed build ID not recorded.",
-      "tracks": {
-        "all": {
-          "public": {
-            "n": 228,
-            "correct": 200,
-            "accuracy": 0.8771929824561403,
-            "chance": 0.32127192982456143,
-            "chance_corrected_intelligence": 81.90630048465266,
-            "ece": 0.031515342402260914,
-            "probability_coverage": 1,
-            "valid_answer_count": 228
-          },
-          "sealed": {
-            "n": 456,
-            "correct": 410,
-            "accuracy": 0.8991228070175439,
-            "chance": 0.3435672514619883,
-            "chance_corrected_intelligence": 84.6325167037862,
-            "ece": 0.07760500664667615,
-            "probability_coverage": 1,
-            "valid_answer_count": 456
-          },
-          "intelligence_before_penalty": 83.67834102708946,
-          "raw_overall_gap_pp": -2.1929824561403577,
-          "matched_gap_pp": 2.094565415583045,
-          "matched_gap_detail": {
-            "Everyday photo": {
-              "n_public": 89,
-              "n_sealed": 95,
-              "gap_pp": 2.9450029568302782,
-              "weight": 45.95108695652174
-            },
-            "ScreenSpot": {
-              "n_public": 20,
-              "n_sealed": 29,
-              "gap_pp": -1.2068965517241348,
-              "weight": 11.83673469387755
-            }
-          },
-          "penalty_points": 0,
-          "penalty_multiplier": 1,
-          "axes": {
-            "intelligence": 83.67834102708946,
-            "calibration": 87.70527516777383,
-            "speed": 76.9482637672557,
-            "cost": 73.92005255304716
-          },
-          "speed": {
-            "score": 76.9482637672557,
-            "raw_p50_s": 0.7100653946399689,
-            "raw_p95_s": 2.843644328415394,
-            "adjusted_p50_s": 0.7100653946399689,
-            "adjusted_p95_s": 2.843644328415394,
-            "latency_coverage": 1
-          },
-          "cost": {
-            "score": 73.92005255304716,
-            "raw_score": 73.92005255304716,
-            "usd_per_1000": 0.007401701754385967,
-            "total_usd": 0.005062764000000001,
-            "coverage": 1,
-            "source": "Wity stated API tariff: USD 0.042/M input; output, thinking, and images free; measured Wity usage (zero output tokens)"
-          },
-          "composite": {
-            "harmonic_before_gates": 80.19853920531308,
-            "gates": {
-              "intelligence": 1,
-              "speed": 1,
-              "cost": 1
-            },
-            "score": 80.19853920531308
-          },
-          "rank": 1
-        },
-        "core": {
-          "public": {
-            "n": 139,
-            "correct": 114,
-            "accuracy": 0.8201438848920863,
-            "chance": 0.21762589928057555,
-            "chance_corrected_intelligence": 77.01149425287356,
-            "ece": 0.048975871310188164,
-            "probability_coverage": 1,
-            "valid_answer_count": 139
-          },
-          "sealed": {
-            "n": 361,
-            "correct": 321,
-            "accuracy": 0.889196675900277,
-            "chance": 0.30932594644506,
-            "chance_corrected_intelligence": 83.9572192513369,
-            "ece": 0.08944598314514182,
-            "probability_coverage": 1,
-            "valid_answer_count": 361
-          },
-          "intelligence_before_penalty": 81.52621550187473,
-          "raw_overall_gap_pp": -6.905279100819062,
-          "matched_gap_pp": -1.2068965517241348,
-          "matched_gap_detail": {
-            "ScreenSpot": {
-              "n_public": 20,
-              "n_sealed": 29,
-              "gap_pp": -1.2068965517241348,
-              "weight": 11.83673469387755
-            }
-          },
-          "penalty_points": 0,
-          "penalty_multiplier": 1,
-          "axes": {
-            "intelligence": 81.52621550187473,
-            "calibration": 84.94371119941837,
-            "speed": 76.45121800152036,
-            "cost": 72.6981875088729
-          },
-          "speed": {
-            "score": 76.45121800152036,
-            "raw_p50_s": 0.6713419742882252,
-            "raw_p95_s": 3.372363641858101,
-            "adjusted_p50_s": 0.6713419742882252,
-            "adjusted_p95_s": 3.372363641858101,
-            "latency_coverage": 1
-          },
-          "cost": {
-            "score": 72.6981875088729,
-            "raw_score": 72.6981875088729,
-            "usd_per_1000": 0.008129436,
-            "total_usd": 0.004064718,
-            "coverage": 1,
-            "source": "Wity stated API tariff: USD 0.042/M input; output, thinking, and images free; measured Wity usage (zero output tokens)"
-          },
-          "composite": {
-            "harmonic_before_gates": 78.6252647853872,
-            "gates": {
-              "intelligence": 1,
-              "speed": 1,
-              "cost": 1
-            },
-            "score": 78.6252647853872
-          },
-          "rank": 1
-        },
-        "everyday_photo": {
-          "public": {
-            "n": 89,
-            "correct": 86,
-            "accuracy": 0.9662921348314607,
-            "chance": 0.48314606741573035,
-            "chance_corrected_intelligence": 93.47826086956523,
-            "ece": 0.05123739066436098,
-            "probability_coverage": 1,
-            "valid_answer_count": 89
-          },
-          "sealed": {
-            "n": 95,
-            "correct": 89,
-            "accuracy": 0.9368421052631579,
-            "chance": 0.47368421052631576,
-            "chance_corrected_intelligence": 87.99999999999999,
-            "ece": 0.048322460099844186,
-            "probability_coverage": 1,
-            "valid_answer_count": 95
-          },
-          "intelligence_before_penalty": 89.91739130434783,
-          "raw_overall_gap_pp": 2.9450029568302782,
-          "matched_gap_pp": 2.945002956830278,
-          "matched_gap_detail": {
-            "Everyday photo": {
-              "n_public": 89,
-              "n_sealed": 95,
-              "gap_pp": 2.9450029568302782,
-              "weight": 45.95108695652174
-            }
-          },
-          "penalty_points": 0,
-          "penalty_multiplier": 1,
-          "axes": {
-            "intelligence": 89.91739130434783,
-            "calibration": 90.131462840515,
-            "speed": 80.09961364959264,
-            "cost": 77.97001793806444
-          },
-          "speed": {
-            "score": 80.09961364959264,
-            "raw_p50_s": 0.7182572260499,
-            "raw_p95_s": 1.3606882393360138,
-            "adjusted_p50_s": 0.7182572260499,
-            "adjusted_p95_s": 1.3606882393360138,
-            "latency_coverage": 1
-          },
-          "cost": {
-            "score": 77.97001793806444,
-            "raw_score": 77.97001793806444,
-            "usd_per_1000": 0.005424163043478261,
-            "total_usd": 0.000998046,
-            "coverage": 1,
-            "source": "Wity stated API tariff: USD 0.042/M input; output, thinking, and images free; measured Wity usage (zero output tokens)"
-          },
-          "composite": {
-            "harmonic_before_gates": 84.16424245720599,
-            "gates": {
-              "intelligence": 1,
-              "speed": 1,
-              "cost": 1
-            },
-            "score": 84.16424245720599
-          },
-          "rank": 1
-        }
-      },
-      "score": 80.19853920531308,
-      "rank": null,
-      "pricing_alternative": {
-        "basis": "Base-model market reference (base model undisclosed at the author's request)",
-        "tracks": {
-          "all": {
-            "usd_per_1000": 0.026434649122807023,
-            "cost_score": 57.334793493313725,
-            "composite": 74.36394536053653
-          },
-          "core": {
-            "usd_per_1000": 0.0290337,
-            "cost_score": 56.11292844913949,
-            "composite": 72.80678257384854
-          },
-          "everyday_photo": {
-            "usd_per_1000": 0.019372010869565217,
-            "cost_score": 61.38475887833102,
-            "composite": 78.44465069369441
-          }
-        },
-        "would_rank": 2
-      },
-      "ranked": false,
-      "listing": "carried",
-      "last_measured_utc": "2026-09-29",
-      "release_date": "2026-10-01",
-      "carry_note": "carried, not ranked on v0.3 scale"
-    },
     {
       "api_flag": false,
       "key": "neohorse_jev_4b",
@@ -39571,7 +40119,7 @@
       "carry_note": "carried, not ranked on v0.3 scale"
     }
   ],
-  "n_systems": 46,
+  "n_systems": 47,
   "categories": {
     "revision": "v0.3.0",
     "minN": 15,
@@ -42802,6 +43350,88 @@
           ]
         }
       },
+      "wity_1": {
+        "capabilities": {
+          "receipt": [
+            90.91,
+            66
+          ],
+          "surface_inspection": [
+            100.0,
+            7
+          ],
+          "ui_screenshots": [
+            100.0,
+            82
+          ],
+          "diagram_reasoning": [
+            76.19,
+            56
+          ],
+          "chart_reasoning": [
+            100.0,
+            31
+          ],
+          "photo_docs": [
+            57.81,
+            48
+          ],
+          "small_text": [
+            58.45,
+            72
+          ],
+          "dense_ui": [
+            65.58,
+            23
+          ],
+          "trap_charts": [
+            75.66,
+            38
+          ],
+          "agent_safety": [
+            92.31,
+            26
+          ],
+          "counting": [
+            58.12,
+            39
+          ],
+          "multi_panel": [
+            81.88,
+            40
+          ],
+          "multilingual": [
+            61.9,
+            14
+          ],
+          "spatial": [
+            24.14,
+            58
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            69.25,
+            200
+          ],
+          "count_inspect": [
+            64.49,
+            46
+          ],
+          "ui_agent_action": [
+            92.43,
+            131
+          ],
+          "diagram_planning": [
+            49.71,
+            114
+          ],
+          "chart_decision": [
+            84.86,
+            109
+          ]
+        }
+      },
       "gpt6_luna_decisions": {
         "capabilities": {
           "receipt": [
@@ -43629,187 +44259,191 @@
   "sources": [
     {
       "path": "run03/final-gpu/autojev_27b.json",
-      "sha256": "637269a354adc09e8b5bb5a13d8c5b8a71cc411599f17d73a3c3151a156d1f0e"
+      "sha256": "3ff65532d731e6437859f1d88db0ce5fa6d500a637cb3b3492509504a62a8a54"
     },
     {
       "path": "run03/final-gpu/bonsai_2_27b_pq2_0.json",
-      "sha256": "04e882f146b0ba9731e4264c5649e87246774dc938775fa43f526bee12580277"
+      "sha256": "779eb8ca839ab2c84f74b6a466dd5a55fd3ff5880dbc837c9046e250953bfbf6"
     },
     {
       "path": "run03/final-gpu/clef.json",
-      "sha256": "b6e4d9c7ebdf9567a697b86e1e9c5269960924d81eb5f972576facc1de50f423"
+      "sha256": "f6af9c45a4b356e5dad21fcfdd02d010ee8728fbf5f76752af92c22a910cc7e4"
     },
     {
       "path": "run03/final-gpu/clef_flash.json",
-      "sha256": "181e844c5d06b4a45d62d29bb3a5267a74279ba3eaecc2f58ac7ea32ea50a04f"
+      "sha256": "6d4f9c5f6044fda12a85cd0a92ae9504ddbd884633c9f68db0645424956ee7e2"
     },
     {
       "path": "run03/final-gpu/cua_s1_4b.json",
-      "sha256": "444a5239faca40a6dd4365cb157622436e0e450e758343fbcb7d3311bb0e69f6"
+      "sha256": "6b4549ea76ae7e6c06f4a4af430fe9e05519b6ce02dc79ff33244b1a7cb2914d"
     },
     {
       "path": "run03/final-gpu/decider_2b_vision.json",
-      "sha256": "04668e3dae4e440b4fcb1fd6269ad6f294ebeaa28988d5c2193a3d242e1f5b77"
+      "sha256": "1ce1e1f30bb3658617508bb58c09c1edc1dd21d527229df3c30ecec4b845b661"
     },
     {
       "path": "run03/final-gpu/djev_dev_bf16.json",
-      "sha256": "f64df579c042c9acc7a258707f84f67e0d6128783ac6ee11f55dd04e5fa71eb8"
+      "sha256": "dcb1814edc4e566eaf2b49d9cf3315746b91262a7b8ba051839821df1f326942"
     },
     {
       "path": "run03/final-gpu/djev_distill_v4.json",
-      "sha256": "dbefea2fe11b63babffbc481e16e6b89dc069e6b8fc129f8282d97c1fc3eee07"
+      "sha256": "64a3f8deba8bc87d9e6696d4d84e731d9f106a8194a1a3eba0fe9b26ef4f0c53"
     },
     {
       "path": "run03/final-gpu/djev_spark_nvfp4.json",
-      "sha256": "76b1b708141fb1a31f8f98c67d0c9fb84baf2f4af41cc5fe59c4a163d20224f8"
+      "sha256": "297164c97d1a202d30c8857dac6beeffd78d323c0149a0f883e1a0824418fd16"
     },
     {
       "path": "run03/final-gpu/djev_v10_step160_snowicarus.json",
-      "sha256": "a2c6d1997277b8790cce21a2cf2bd3a53d51d56ff36d3f127ebd8ad13a34957c"
+      "sha256": "a4e7954a9ed5c12ab6a96b5a7a4b632c6c3b38c4877d0d8f7afa2e0e044ede32"
     },
     {
       "path": "run03/final-gpu/gevva_e2b_multimodal.json",
-      "sha256": "b813c0749f4f2e9fa9ab9eb5ea0303ff376cb874a9d22f90cde5ca10de7d7aa5"
+      "sha256": "60d8fb62a623b92105691c0eb2832f5185cd4c4a58e773eb3919362f72b0652c"
     },
     {
       "path": "run03/final-gpu/gevva_e4b.json",
-      "sha256": "b1aa0f89d8a98c508b56f6f72caf32ff12758f5af091a9c0a1808b169f34662b"
+      "sha256": "b68b31b17e95ea3bb4d1b68cd04cbdd5e538f65adfa05742cd3be52f6ef0c3f8"
     },
     {
       "path": "run03/final-gpu/glance_qwen3vl_4b.json",
-      "sha256": "370dbcd86a2752fe9893f862f1f71087c01f64e8c3cc5cde3fb1edd4c59c9114"
+      "sha256": "aaf55085a53cc14516e89ae113fc5211d8eec06940c5406524b4339199d35a51"
     },
     {
       "path": "run03/final-gpu/image_hopper.json",
-      "sha256": "84247e91bce2a6d0e2b349b785ddeea92aaf8ceb89707013319afebe75430c34"
+      "sha256": "f000b3a4a75494578dc0b6cdc380b9afdb2331ecfed15ee5b69b3d3e76275276"
     },
     {
       "path": "run03/final-gpu/imajev_2b.json",
-      "sha256": "53c847cd6b4e98b756920b169620d8251ee416111a0a62aeae9804f68d40d786"
+      "sha256": "f7ee3230e19fc22792cefc54f360e3e2c82bcb0c9beadfefb7fc8e4846d339ca"
     },
     {
       "path": "run03/final-gpu/imajev_4b.json",
-      "sha256": "9ffa789d9b6b72ddb059cdade31c28f18ec26e24df764e59d00426f327402ea8"
+      "sha256": "a621b02a6b69f6d58a002ff9e16f03b5007a1efbf553a4cf8641b786923a5c6c"
     },
     {
       "path": "run03/final-gpu/imajev_9b.json",
-      "sha256": "e8d28b73b49d00327b439abc7dda70a2796903e5eacd14eca8225ec6a944c53a"
+      "sha256": "875a9ef530266f16fe12b5c075284602dcaaac42adde2823455d38062b0b9a52"
     },
     {
       "path": "run03/final-gpu/jev_omni.json",
-      "sha256": "7f2eed2730fd67940cba98e9750a954b8f1bb3909a14ad77c8a95a4556b000ab"
+      "sha256": "74b44b6d553ba3a402300167b3c10d04e6b2fd5ac1a083f99be8fef9f30c8240"
     },
     {
       "path": "run03/final-gpu/jev_spatial.json",
-      "sha256": "72beb5f1fc3b6152360a9981578346f9f8512b5aa1853d08e62d19800a0b3729"
+      "sha256": "6b707184633f67f68074d8a30a83e4b7d4ce81c1011736d3f061cdd5b6269093"
     },
     {
       "path": "run03/final-gpu/jevify_gemma4_26b_a4b.json",
-      "sha256": "6da82e759e4812ce25d3f4cf1e28e37d03dd371753147a4f24b19eb080d466eb"
+      "sha256": "e3dfaf958287ec595c603fc476afcc71c0c40c5a00a8c244b4cab5a2a114c020"
     },
     {
       "path": "run03/final-gpu/jevify_gemma4_e4b.json",
-      "sha256": "1847512d556ef382c6d502cdd17e532f6f541125c0629fc610120fdc58b635b1"
+      "sha256": "4caa6eca09f307d364e188df13d00ce43015e5048def854c30e361f7d7024df5"
     },
     {
       "path": "run03/final-gpu/jevify_qwen3vl_2b_t2.json",
-      "sha256": "f850e91a1ff49abef751034a09b4c59923845d7d9dafe4a8cd3c61a07d03b15f"
+      "sha256": "686ba5dc49f40ed66681c4b4575cfe7712e7657c73a8512df122c18f9e34a376"
     },
     {
       "path": "run03/final-gpu/jevision.json",
-      "sha256": "001e547e9502095e0f8cad42918cb8681f0237c6ecf58910f99cf9708791bffc"
+      "sha256": "e239c380388803af8f628b440239ff40ef52c2f079fc8933d6812acb7700418a"
     },
     {
       "path": "run03/final-gpu/jpt_0p8b.json",
-      "sha256": "449cdffb2ecd6a63dfe76c579d91939f23b3a24110261db0bbc95d1a881c85b3"
+      "sha256": "fe234c2d01e46dff16478118047072343c656a41b06d776931f94160232f1ea9"
     },
     {
       "path": "run03/final-gpu/jpt_4b.json",
-      "sha256": "cfce07a67f50bf5b860e98d0c2e7026891aafbd765108a48947b577b6c88337c"
+      "sha256": "2fd554b935ed1c81fdcaf4211d7c36962d8d59ec52649a178d332afdddd304f7"
     },
     {
       "path": "run03/final-gpu/jpt_9b.json",
-      "sha256": "2c02581fa7ae27fa7c73b84734007b63b969056f9155095da01ab94688c223cc"
+      "sha256": "15c25e730d78e844dea05a47ace792a244cb70e827f037d0c84bc5f01b63797f"
     },
     {
       "path": "run03/final-gpu/omnijev_0p8b.json",
-      "sha256": "031b7ed7a20eb502f2dd78208b2697f15d1c432f0fbf24303c1a75fc3a2ebb10"
+      "sha256": "e7414ae60b1a82f40328b98ef01ae67262be5ca4a93b6735fa39390a8623d2fe"
     },
     {
       "path": "run03/final-gpu/omnijev_2b.json",
-      "sha256": "a38496afd4af8f481f47e5115b45017b2016945020351186b8794afb7029ad6d"
+      "sha256": "c34dd56895fb82ca6eff6fe2a810711cd713fb83a09235da61a28d8baecf4c22"
     },
     {
       "path": "run03/final-gpu/omnijev_4b.json",
-      "sha256": "ecb85fa4fae2721ee104a47caafe4c1e0304352e6b96fdfccd0afa83a8c3e667"
+      "sha256": "4747d9771cdc580dbda5aad2cffc6f7bc22d5b2e1e9e9cbd0a103fe0f6459403"
     },
     {
       "path": "run03/final-gpu/omnijev_9b_v4_tzcfly.json",
-      "sha256": "5f2ccdf52414412894519f6762dc8a296693a07926b30123fa6f35a732070487"
+      "sha256": "a844afff0103e20b8124eb7b25abbd0d1817e7a9c719104eecf4c260053ae5e3"
     },
     {
       "path": "run03/final-gpu/openjev_4b_nli.json",
-      "sha256": "aea08e616d36052ecf7f30189df8323b55bee713b026398e45b2b357e339778b"
+      "sha256": "6f23706c501181cfd40af78a260bbf82043c46f30bf171adac2334eb7cfcc46b"
     },
     {
       "path": "run03/final-gpu/openjev_4b_v5.json",
-      "sha256": "4995eb6623a32c6ecbdb9a1a142d9271230735fe5cc6811d3903585d1d31f74e"
+      "sha256": "424143ed18f641a5570e7a04a489d23fec861a8a2bcbad1678ef0fa7f4ddd569"
     },
     {
       "path": "run03/final-gpu/playjev_0p8b.json",
-      "sha256": "c954f81a0e05de71064065942853e4850bb3e6cd1c26271736b22f2c1ba1d94d"
+      "sha256": "b791690a3701da39eacb8e1fcefc1b7a7f7ca2e2900ec4d9eed73316ec411772"
     },
     {
       "path": "run03/final-gpu/qevi_2b.json",
-      "sha256": "d03a4381f67a1eb77617a0fc1e7a86dcd3e27b80e18bf2ec9cd24e7ffc027514"
+      "sha256": "ae05e2343f0b8e7e778f0f8e483f196ee56b30300aa888e3ec705ed91503b860"
     },
     {
       "path": "run03/final-gpu/reflex_4b.json",
-      "sha256": "b37c35ef800a85da1d03a1b109ee741f68165ebeb8f34e7bf934e59512d6bed8"
+      "sha256": "e20c70aa46ed9646b24e6047c48cdb0df3961df9bf08f3a284a25894772e3fa3"
     },
     {
       "path": "run03/final-gpu/seanliu_jev_vision_8b.json",
-      "sha256": "dc79a0e15b9415a66aab0cdcf8a5561b524285b77f36035700f054452a387bb1"
+      "sha256": "9105f68618e6724d432825cb95415f215ce805842843d42536ee1ac731a00a80"
     },
     {
       "path": "run03/final-gpu/shisa_de_1.json",
-      "sha256": "853ba16292dbda1e3b538c4d6a361fbb6bdd862a8a6a743f8c5f345ebcff7820"
+      "sha256": "d7576501a893cc6645c5a19d2042ab1f491e57c8c263fd6c87dfbfbc3f1ac577"
     },
     {
       "path": "run03/final-gpu/standard_one_3b.json",
-      "sha256": "e7bb531dbf98cdbbd989c80f8f000ad070313573f369fcf5eef6ee0aaf7e921f"
+      "sha256": "b55331359b154d9b237e2aab9252d9bd7c381571a709e7ec312a46fb8ffd617a"
     },
     {
       "path": "run03/final-gpu/standard_one_8b.json",
-      "sha256": "6bb9293b02092eed533e7a4616b61f371aca7390b6a6faa73effa2ef2631b737"
+      "sha256": "ca4a5d1b2afeb1ae0bad3f3cf00c63cb1106e1997d6b704a5f37f22bab284fb8"
     },
     {
       "path": "run03/final-gpu/surogate_rune_26b_v3.json",
-      "sha256": "0a9482ef9600e4eb251496c07e2f12d8fdbbb7d2733986d09827cfbfc5b93b23"
+      "sha256": "9a51c5825fbaa9b00875366c36d7ccea289ab73072edd518f295373abfb11b05"
     },
     {
       "path": "run03/final-gpu/visual_jev_4b.json",
-      "sha256": "83dc5021a9d3f9e62f234cb9c367e54f5f2d73b2ed4801d466b1e93a4195bdfe"
+      "sha256": "d301e488e680fe72f8b288d4cf93e2285b5915b993accab6dab234ba66d434e5"
     },
     {
       "path": "run03/final-gpu/visual_jev_generic_baseline.json",
-      "sha256": "964ba808b0899acccac613a7bdd076cf13e1631184fa9211ac39fd410a015254"
+      "sha256": "759ebb873e6b5a1d190e047923cdf2e80a26bc3c54dc1eff30a77bb11c6c6dd3"
     },
     {
       "path": "run03/final-gpu/vjev_vision.json",
-      "sha256": "ad59dbecb41c656d031c6cc6835f842f30d54ecb4be10289b006d18e34ed4871"
+      "sha256": "f83f7390e4cda016abd34919ee48d6e0d96b71d9e71372bf2687cad28c483684"
     },
     {
       "path": "run03/final-gpu/winnow_12b_q8.json",
-      "sha256": "23d21d64d4b860c7a45bda01229243dd78144912da2ecb12fe0ce57312c69cb5"
+      "sha256": "062fcf98a46b8ff184559bdd2f99bfa937592d8ce8df6e9091f0d1d3956998cc"
     },
     {
       "path": "run03/final-api/gpt6_luna_decisions.json",
-      "sha256": "db4b08cc92717377bc1bf4ccd0d1170b389d2cb0fe367de52b8fb3e4cf8fe9fb"
+      "sha256": "9d05464e13daeab93c74ebc9455c27e7317b42bd8828d6e4bf87ca7430beb804"
     },
     {
       "path": "run03/final-api/s1-vision.json",
-      "sha256": "0624ac92df94c76cf1575e9b0decd0a65aa6012325893636fa13ec4650b8a76f"
+      "sha256": "d94c9348daff58d2716901f015b606ee83cba7727a1d4b7feaa592809011d9db"
+    },
+    {
+      "path": "run03/final-api/wity_1.json",
+      "sha256": "b7b34ead0efdedf91af5cb46073f54d63397024131ef60a1613bb60b154e6845"
     }
   ],
   "method": {
@@ -43819,7 +44453,7 @@
     "public": 300,
     "sealed": 1200,
     "api_subset": 300,
-    "equating_note": "Frozen v0.2 scoring math is applied to the new draw. Core is the headline; computer-use is separate. Pending field-median gap/API equating holds remain visible per row. Scores from v0.1.5 are not directly ranked on the v0.3 scale. GPT-6 Luna via OpenAI Decisions was measured on 6 Oct 2026 through the native Decisions choice endpoint (same option text, native option probabilities, images re-encoded losslessly as PNG, refusals and provider errors counted wrong, no retries); the GPT-6 Luna chat-completions row from v0.1.5 stays a carry.",
+    "equating_note": "Frozen v0.2 scoring math is applied to the new draw. Core is the headline; computer-use is separate. Pending field-median gap/API equating holds remain visible per row. Scores from v0.1.5 are not directly ranked on the v0.3 scale. GPT-6 Luna via OpenAI Decisions was measured on 6 Oct 2026 through the native Decisions choice endpoint (same option text, native option probabilities, images re-encoded losslessly as PNG, refusals and provider errors counted wrong, no retries); the GPT-6 Luna chat-completions row from v0.1.5 stays a carry. Wity-1 (AlphaNimble) was measured on 7 Oct 2026 on the same A300+P300 input through its native SystemOne choice endpoint (reasoning=auto, native option probabilities, no retries; failed requests and timeouts counted wrong). Images that would exceed Wity's 12 MB request limit were downscaled to 1,500 px on the long side, as Wity's docs advise (2 images). Latency is measured end to end; on this run large images took much longer on the Wity side than the model time Wity reports.",
     "passes": "Pass 1 is the official prediction pass; pass 2 is diagnostic and is never included in these rankings. Reproducibility: a full second pass of the 29 common self-hosted systems on a fresh pod returned the same answer for 1,500 of 1,500 items in every system (100 % agreement)."
   }
 }
