@@ -7,7 +7,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { writeJSONAtomic } from '../../lib/snapshot.mjs';
 import { BOARD_REGISTRY_INCONSISTENT } from '../../lib/live-source.mjs';
-import { COMMIT_TRAILER, assessCommitScope, parseScope, parseStatusPorcelain, pricesScopeViolations, selectProducerCritic, sourceFreshnessErrors } from './policy.mjs';
+import { COMMIT_TRAILER, assessCommitScope, parseScope, parseStatusPorcelain, pricesScopeViolations, selectProducerCritic, sourceFreshnessErrors, staleCollectorDigestLines } from './policy.mjs';
 import { executeNotifications } from './notify.mjs';
 import { compactPublishedRun } from './compact-run.mjs';
 import { pruneStaleRuns } from './prune-runs.mjs';
@@ -244,15 +244,10 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
         report.warnings.push(`fetch-openrouter-benchmarks skipped: ${error.message.slice(0, 300)}`);
         console.warn(`WARN fetch-openrouter-benchmarks: keeping the previous snapshot`);
       }
-      // CR-37.2: Lumina Bench ledger as a discovery/provenance feed (no values). Non-fatal: a manifest change
-      // that needs a decision keeps the previous snapshot and writes a pending-review candidate.
-      try {
-        await command('fetch-lumina-ledger', process.execPath, ['scripts/fetch-lumina-ledger.mjs']);
-      } catch (error) {
-        report.warnings = report.warnings || [];
-        report.warnings.push(`fetch-lumina-ledger: ${error.message.slice(0, 300)}`);
-        console.warn(`WARN fetch-lumina-ledger: keeping the previous snapshot`);
-      }
+      // CR-37.2's Lumina Bench ledger step is retired (7 Oct 2026, bh-daily-collectors-fix): Lumina became its own
+      // voxel/3D/gamedev index, and the ledger manifest (404 since 23 Sep) and the /data page that announced the
+      // pause (404 by 7 Oct) are both gone, with no successor in its sitemap. The last ledger stays committed as a
+      // dated discovery record (data/raw/lumina-ledger.json availability.state = retired_by_source).
     }
     // R9.1: provider-meta is hand-curated; its date comes from a cross-check of `country` against the table
     // just fetched (dated by that table). New disagreements exit non-zero → a warning, curated values stay.
@@ -501,6 +496,9 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     if (!dryRun) await writeJSONAtomic(statePath, health);
     const benchmarks = await readJSON(join(reports, 'source-health.json')).catch(() => null);
     report.stale_sources = staleSources({ collectors: health.collectors, benchmarks, day });
+    // bh-daily-collectors-fix (7 Oct 2026): a collector failing 3+ days is one line in the publish digest
+    // (gate.mjs finalize appends report.notices); from 7 days the notify pass below raises one card.
+    report.notices = [...(report.notices ?? []), ...staleCollectorDigestLines(report.stale_sources)];
     // D204: reviewed-but-unpublished score rows. They are not a stale *source* — no source is failing —
     // so nothing above counts them, and 72 of them passed unseen on 2026-09-25.
     report.quarantined_scores = benchmarks?.quarantine?.batches ? benchmarks.quarantine : null;
@@ -569,7 +567,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
   } catch (error) { report.reuse = { error: redact(String(error.message)) }; }
   await writeJSONAtomic(join(reports, 'run-report.json'), report);
   const context = { status_ok: report.exit_code === 0, rc: report.exit_code, top5: top5 ? { current: top5 } : null, datasets: { before: slim(before), after: slim(after) },
-    quarantined_arms: report.quarantined_arms ?? [] };
+    quarantined_arms: report.quarantined_arms ?? [], stale_sources: report.stale_sources ?? [] };
   await writeJSONAtomic(join(reports, 'notify-context.json'), context);
   await executeNotifications({ context, stateDir: join(home, 'state'), dryRun }).catch((e) => console.error(`NOTIFICATION FAILED: ${redact(e.message)}`));
   console.log(summary);

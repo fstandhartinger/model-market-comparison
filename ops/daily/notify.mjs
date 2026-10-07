@@ -75,13 +75,40 @@ export async function readNotifyState(stateDir) {
 // never throws — a failed send must not mask the daily run's own exit code.
 export const notifyBinary = (env = process.env) => env.BH_NOTIFY || join(env.HOME || '/home/flori', 'bin/notify');
 
-export async function sendNotify(text, { bin = notifyBinary(), execImpl = execFileAsync } = {}) {
+export async function sendNotify(text, { bin = notifyBinary(), execImpl = execFileAsync, replyJobDir = null, env = process.env } = {}) {
   try {
-    await execImpl(bin, ['now', String(text).slice(0, 4000)], { timeout: NOTIFY_TIMEOUT_MS });
+    // A 🧑 human-action block is an ask: `notify` refuses it without `--ask` and a job folder that owns the reply.
+    const args = replyJobDir ? ['now', '--ask', String(HUMAN_TODO_ASK_MINUTES), String(text).slice(0, 4000)] : ['now', String(text).slice(0, 4000)];
+    await execImpl(bin, args, { timeout: NOTIFY_TIMEOUT_MS,
+      ...(replyJobDir ? { env: { ...env, AGENT_BOARD_JOBDIR: replyJobDir, NOTIFY_SOURCE: 'benchmarkheaven-daily' } } : {}) });
     return { sent: true };
   } catch (error) {
     return { sent: false, reason: error?.code === 'ENOENT' ? 'notify_missing' : `notify_failed:${String(error?.message || 'unknown error').slice(0, 200)}` };
   }
+}
+
+// --- human-action cards ---------------------------------------------------------
+// bh-daily-collectors-fix (7 Oct 2026): the quarantine card was sent as a plain `notify now` from 1 Oct on, and
+// `~/bin/notify` refused every send ("a 🧑 Für dich ask needs --ask [minutes]"), so it sat in `pending` and was
+// retried on every run, long after the arm had stopped being quarantined. A human-action card now goes out as an
+// ask owned by a dormant reply job (no agent is launched; `notify` registers the durable on-reply action, and
+// routine asks reach the chief of staff first), and a card is only ever sent from the current run's plan.
+export const HUMAN_TODO_KINDS = new Set(['quarantine', 'collector-stale']);
+export const HUMAN_TODO_ASK_MINUTES = 960;
+
+export async function prepareReplyJob(send, { env = process.env, now = Date.now() } = {}) {
+  const root = env.BH_TODO_REPLY_ROOT || join(env.HOME || '/home/flori', 'jobs');
+  const dir = join(root, `bh-daily-${send.kind}-reply-${new Date(now).toISOString().slice(0, 10)}`);
+  await mkdir(dir, { recursive: true });
+  await writeFile(join(dir, 'PROMPT.md'), [
+    'Read /home/flori/AGENTS.md and /home/flori/DECISIONS.md first. This job owns the reply to one Benchmark Heaven',
+    `daily-run card (${send.kind}, key ${send.key}). When resumed by a reply, FIRST run`,
+    '~/bin/notify ack <reply_message_id> "<what you will do now and when you will report back>".',
+    'Then act on the reply within its authorization. The card itself is below; the fix is agent work in a Benchmark',
+    'Heaven worktree through the PR merge queue (skill benchmarkheaven-site-merge-queue). Never edit',
+    '/opt/model-market-comparison. Evidence: /opt/benchmarkheaven-daily/last-summary.txt and state/collector-health.json.',
+    '', '## Card', '', send.text, ''].join('\n'));
+  return dir;
 }
 
 // --- the one entry point ------------------------------------------------------
@@ -103,12 +130,14 @@ export async function executeNotifications({
     notified: state.notified, escalation_request: state.escalation_request,
     summary_excerpt: context.summary_excerpt ?? null,
     // F-209 / D225: source-health's quarantined arms, so a standing quarantine becomes a human todo.
-    quarantined_arms: context.quarantined_arms ?? [], now,
+    quarantined_arms: context.quarantined_arms ?? [],
+    stale_sources: context.stale_sources ?? [], now,
   });
   // Pending DATA events are replayed first. Failure alerts are replanned from
   // current status through the weekly gate; recovery drops stale unsent failures.
   // Replaying them directly would bypass weekly dedup and report resolved problems.
-  const pendingReplay = state.pending.filter((p) => p.kind !== 'failure' && !state.notified[p.key]).map((p) => ({
+  // Human-action cards are never replayed: the current plan re-creates one that is still due and unsent.
+  const pendingReplay = state.pending.filter((p) => p.kind !== 'failure' && !HUMAN_TODO_KINDS.has(p.kind) && !state.notified[p.key]).map((p) => ({
     kind: p.kind ?? 'pending', key: p.key ?? null, text: p.text, onSent: p.onSent ?? null, pending: true,
   }));
   const pendingKeys = new Set(pendingReplay.map((p) => p.key).filter((k) => typeof k === 'string' && k));
@@ -127,7 +156,14 @@ export async function executeNotifications({
   const notifiedAdditions = {};
   let failureStampMs = null;
   for (const send of sends) {
-    const result = await sendNotify(send.text, { bin: notifyBinary(env), ...(execImpl ? { execImpl } : {}) });
+    let replyJobDir = null;
+    if (HUMAN_TODO_KINDS.has(send.kind)) {
+      try { replyJobDir = await prepareReplyJob(send, { env, now }); }
+      catch (error) { console.error(`notify: reply job for ${send.kind} not created: ${error.message}`); }
+    }
+    const result = replyJobDir === null && HUMAN_TODO_KINDS.has(send.kind)
+      ? { sent: false, reason: 'reply_job_unavailable' }
+      : await sendNotify(send.text, { bin: notifyBinary(env), env, replyJobDir, ...(execImpl ? { execImpl } : {}) });
     if (result.sent) {
       console.log(`notify: sent ${send.kind} [${send.key}]`);
       sent.push(send.kind);

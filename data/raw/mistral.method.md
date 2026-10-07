@@ -4,6 +4,31 @@
 **Last collected:** refreshed daily by `scripts/fetch-mistral-catalog.mjs` (first automated run
 2026-09-14; manual refreshes before: 2026-09-08, 2026-08-26, 2026-07-22, 2026-07-12)
 
+## Update 2026-10-07 — the pricing page moved to the docs site as plain tables
+
+From 2026-10-06 every run failed closed with `Mistral pricing: no model cards (page layout
+changed?)`. `https://mistral.ai/pricing/api` now answers **301** to
+`https://docs.mistral.ai/inference/pricing`; the collector fetches that URL directly.
+
+- The page is a set of server-rendered tables (`Model | Input | Cached input | Output`), one per
+  family section (Flagship, Specialized, Third-party hosted, Code). Each section states its unit
+  above the table: `Prices /M Tokens`, or `Prices as marked` for the specialized section (OCR per
+  1000 pages, transcription per minute, TTS per M characters, free moderation), which is skipped.
+  A table without either heading fails the refresh closed, as does any other header row.
+- The served default is the **Standard** pricing mode (`aria-pressed="true"`), i.e. not batch or
+  priority and not the regional-inference surcharge; the refresh fails closed if that changes.
+- A chat/text model is a row whose input **and** output are bare USD amounts (embeddings have no
+  output). Cached input is back in the served HTML and is read from the table.
+- **Sale prices:** a struck-through list price beside a sale price (Mistral Large 4 on 7 Oct:
+  list $1.36/$4.18, sale $0.68/$2.09) publishes the sale price — what the API charges, and what the
+  model's own docs page lists — and the row's `notes` name the list price. The note is regenerated
+  every run, so it disappears with the sale.
+- Identity rules are unchanged, plus `source_name` (the name the page last used): the page lists
+  the curated "GLM 5.3" as "Z.ai GLM 5.3". A row neither name matches has its id read from its docs
+  page, and then also matches a snapshot row by API id.
+- On the first new-layout capture GLM 5.2 and Voxtral Small are no longer listed (`diff.removed`);
+  Mistral Large 4 is new (`mapping: "derived"`, id `mistral-large-4`).
+
 ## Update 2026-09-20 — the page stopped publishing API ids (iteration 134)
 
 Between 2026-09-16 and 2026-09-20 Mistral rebuilt `/pricing/api`. Three things changed, and the

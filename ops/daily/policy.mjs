@@ -144,6 +144,38 @@ export function quarantineHumanTodo(arms, { escalateAfter = QUARANTINE_ESCALATIO
     text: lines.join('\n'), arms: due.map((arm) => arm.id) };
 }
 
+// --- Collector staleness (bh-daily-collectors-fix, 7 Oct 2026) ---------------
+// A failing collector keeps its previous snapshot, so the run stays green while one source quietly ages:
+// fetch-lumina-ledger failed for 14 days and fetch-mistral-catalog for two before anyone looked. From 3 days
+// a collector gets one plain line in the publish digest; from 7 days it becomes one human-action card per
+// failure episode (keyed on the collector and the day it started failing), which `notify` routes as a
+// routine ask so whoever owns Benchmark Heaven repairs or retires it.
+export const COLLECTOR_DIGEST_DAYS = 3;
+export const COLLECTOR_CARD_DAYS = 7;
+
+/** `stale`: source-health's staleSources() output. The collectors that belong in the digest, as text lines. */
+export function staleCollectorDigestLines(stale, { minDays = COLLECTOR_DIGEST_DAYS } = {}) {
+  return (Array.isArray(stale) ? stale : []).filter((x) => x?.kind === 'collector' && Number.isFinite(x.stale_days) && x.stale_days >= minDays)
+    .map((x) => `Collector ${x.id} failing for ${x.stale_days} days (last good ${x.last_ok ?? 'never'}); previous snapshot kept: ${String(x.reason ?? 'no reason recorded').slice(0, 200)}`);
+}
+
+/** The one human-action block for collectors failing `cardAfter`+ days, or null. */
+export function staleCollectorHumanTodo(stale, { cardAfter = COLLECTOR_CARD_DAYS } = {}) {
+  const due = (Array.isArray(stale) ? stale : []).filter((x) => x?.kind === 'collector' && typeof x.id === 'string'
+    && Number.isFinite(x.stale_days) && x.stale_days >= cardAfter).sort((a, b) => a.id.localeCompare(b.id));
+  if (!due.length) return null;
+  const lines = [STATUS_HUMAN, '', '🧑 Für dich'];
+  for (const x of due) {
+    lines.push(`- Benchmark Heaven collector ${x.id} has failed for ${x.stale_days} days`,
+      `  Why: the site still shows its data from ${x.last_ok ?? 'before it first failed'}; cause: ${String(x.reason ?? 'not recorded').slice(0, 160)}`,
+      '  Steps:',
+      `  1. Have an agent repair ${x.id} in a Benchmark Heaven worktree, or retire the source with a dated note.`,
+      '  2. Check the next daily summary: the collector is no longer listed as stale.',
+      '  Time: 5 min');
+  }
+  return { key: `collector-stale:${due.map((x) => `${x.id}@${x.failing_since ?? x.last_ok ?? 'unknown'}`).join('|')}`, text: lines.join('\n'), collectors: due.map((x) => x.id) };
+}
+
 // --- Failure streak / escalation -------------------------------------------
 export function nextFailureStreak(current, statusOk) {
   const streak = Number.isSafeInteger(current) && current >= 0 ? current : 0;
@@ -169,6 +201,7 @@ export function planNotifications({
   escalation_request: escalationRequest = null,
   summary_excerpt: summaryExcerpt = null,
   quarantined_arms: quarantinedArms = [],
+  stale_sources: staleSourceList = [],
   now = Date.now(),
 } = {}) {
   const at = Number.isFinite(now) ? now : Date.parse(now);
@@ -253,6 +286,11 @@ export function planNotifications({
   if (todo) {
     if (known[todo.key]) skips.push({ kind: 'quarantine', key: todo.key, reason: 'duplicate' });
     else sends.push({ kind: 'quarantine', key: todo.key, text: todo.text, onSent: { notified_key: todo.key } });
+  }
+  const collectorTodo = staleCollectorHumanTodo(staleSourceList);
+  if (collectorTodo) {
+    if (known[collectorTodo.key]) skips.push({ kind: 'collector-stale', key: collectorTodo.key, reason: 'duplicate' });
+    else sends.push({ kind: 'collector-stale', key: collectorTodo.key, text: collectorTodo.text, onSent: { notified_key: collectorTodo.key } });
   }
   return { sends, skips, baseline, seeded, evaluated_at: iso };
 }

@@ -142,11 +142,17 @@ test('pauseNotice reads the pause sentence from the live /data/ page, nothing el
   assert.equal(pauseNotice(''), null);
 });
 
-test('the committed snapshot records the pause and still carries the last ledger', () => {
+test('the committed snapshot records the retirement (after the pause) and still carries the last ledger', () => {
   const snapshot = JSON.parse(readFileSync(new URL('../data/raw/lumina-ledger.json', import.meta.url), 'utf8'));
   if (!snapshot.availability) return; // downloads back: the collector drops the field on the next good manifest
-  assert.equal(snapshot.availability.state, 'paused_by_source');
-  assert.match(snapshot.availability.notice, /^Public bulk downloads are paused\./);
-  assert.equal(snapshot.availability.evidence_url, 'https://luminabench.com/data/');
+  // 2026-10-07: the ledger and the /data page that announced the pause are both 404; the source is retired.
+  const pause = snapshot.availability.state === 'retired_by_source' ? snapshot.availability.previous : snapshot.availability;
+  if (snapshot.availability.state === 'retired_by_source') {
+    assert.match(snapshot.availability.since, /^\d{4}-\d{2}-\d{2}/);
+    assert.match(snapshot.availability.notice, /HTTP 404/);
+  }
+  assert.equal(pause.state, 'paused_by_source');
+  assert.match(pause.notice, /^Public bulk downloads are paused\./);
+  assert.equal(pause.evidence_url, 'https://luminabench.com/data/');
   assert.ok(snapshot.families.length >= 400, 'the paused feed keeps the last ledger, it does not empty it');
 });

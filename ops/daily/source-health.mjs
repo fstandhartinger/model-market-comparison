@@ -230,14 +230,24 @@ export const COLLECTOR_STEP = /^(fetch-|build-epoch-provenance$|check-provider-m
 const dayDiff = (a, b) => Math.round((Date.parse(`${a}T00:00:00Z`) - Date.parse(`${b}T00:00:00Z`)) / 86_400_000);
 
 /** state: { collectors: { name: { last_ok, failing_since, last_error } } }; steps: daily report.steps. */
-export function updateCollectorHealth(state, steps, day) {
+// bh-daily-collectors-fix (7 Oct 2026): a step that no longer runs kept its entry forever — `fetch-published`
+// (folded into fetch-main on 21 Sep) sat at last_ok 2026-09-20, and a removed collector would have stayed
+// "failing" in every digest. Each entry now records the last day its step ran; one unseen for
+// RETIRED_COLLECTOR_DAYS is dropped (entries from before last_seen existed use their newest date instead).
+export const RETIRED_COLLECTOR_DAYS = 14;
+
+export function updateCollectorHealth(state, steps, day, { retireAfterDays = RETIRED_COLLECTOR_DAYS } = {}) {
   const collectors = { ...(state?.collectors || {}) };
   for (const step of steps || []) {
     if (!COLLECTOR_STEP.test(step.name)) continue;
     const prior = collectors[step.name] || { last_ok: null, failing_since: null, last_error: null };
     collectors[step.name] = step.ok
-      ? { last_ok: day, failing_since: null, last_error: null }
-      : { last_ok: prior.last_ok, failing_since: prior.failing_since ?? day, last_error: reasonLine(step.error) };
+      ? { last_ok: day, failing_since: null, last_error: null, last_seen: day }
+      : { last_ok: prior.last_ok, failing_since: prior.failing_since ?? day, last_error: reasonLine(step.error), last_seen: day };
+  }
+  for (const [name, c] of Object.entries(collectors)) {
+    const seen = c.last_seen ?? [c.last_ok, c.failing_since].filter(Boolean).sort().at(-1);
+    if (seen && dayDiff(day, seen) >= retireAfterDays) delete collectors[name];
   }
   return { collectors };
 }

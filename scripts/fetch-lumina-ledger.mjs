@@ -16,6 +16,7 @@
 //   node scripts/fetch-lumina-ledger.mjs                 live
 //   node scripts/fetch-lumina-ledger.mjs --from-dir DIR  same checks on files already downloaded
 //   node scripts/fetch-lumina-ledger.mjs --report        summary of the committed snapshot
+//   node scripts/fetch-lumina-ledger.mjs --recheck       probe the live ledger although the snapshot records it retired
 import { readFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -94,6 +95,12 @@ async function main() {
     return;
   }
   const fromDir = args.includes('--from-dir') ? args[args.indexOf('--from-dir') + 1] : null;
+  // 7 Oct 2026: Lumina retired the public ledger (availability.state = retired_by_source) and the daily step is gone.
+  // A live run would only re-learn the 404; `--recheck` probes it anyway, e.g. after Lumina announces a new ledger.
+  if (!fromDir && previous?.availability?.state === 'retired_by_source' && !args.includes('--recheck')) {
+    console.log(`Lumina ledger retired by its source since ${previous.availability.since}: ${previous.availability.notice}`);
+    return;
+  }
   const now = new Date().toISOString();
 
   let manifestText;
