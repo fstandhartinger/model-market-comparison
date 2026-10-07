@@ -67,6 +67,34 @@ ranks; see the page method notes and `lib/jevbench-v15-board.mjs`.
 Example: `curl -fsS https://benchmarkheaven.com/api/jevbench/latest`.
 Compare ranked keys at `/jev-models?compare=a,b#compare`; submit at `/submit`.
 
+### `POST /api/mcp` — read-only JevBench MCP server
+
+A hosted [Model Context Protocol](https://modelcontextprotocol.io) server over the
+same data as `/api/jevbench/latest`. Streamable HTTP, stateless: send one JSON-RPC
+message per `POST` (`Content-Type: application/json`), get one JSON answer. No
+auth, no sessions, no event stream (`GET` answers 405), no batches, bodies up to
+16 KB, CORS open. Protocol versions 2025-11-25, 2025-06-18 and 2025-03-26.
+
+| Tool | Arguments | Result |
+|---|---|---|
+| `list_models` | `board` (`all`/`open`/`api`; Jev reference on both), `eligible_only`, `sort_by` (`capability`, `composite`, `intelligence`, `calibration`, `speed`, `cost`), `limit` (1–50, default 20), `cursor` | compact rows sorted descending, missing scores last, `next_cursor` |
+| `get_model` | `key` (exact feed key) | the full public feed row |
+| `compare_models` | `keys`: two different exact keys | both rows, differences (first minus second, null if missing), compare-page URL (null for an open-weights + API pair: no page compares across boards) |
+
+Every result carries `revision` and `artifact_sha256`. Unknown fields or keys
+return `isError: true` with `{ok:false,error:{code,message}}`. All tools are
+`readOnlyHint: true`. Example:
+
+```sh
+curl -sS https://benchmarkheaven.com/api/mcp -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"list_models","arguments":{"eligible_only":true,"limit":5}}}'
+```
+
+Client config: `{"mcpServers":{"benchmark-heaven":{"type":"http","url":"https://benchmarkheaven.com/api/mcp"}}}`.
+In browsers that implement [WebMCP](https://webmachinelearning.github.io/webmcp/)
+(`document.modelContext`), every page registers the same three tools next to the
+catalog tools (`search_benchmarks`, `get_benchmark_results`, `get_model_benchmark_summary`).
+
 `GET /api/jevbench` remains the **legacy frozen v1** byte-exact aggregate for
 existing clients. Its `X-JevBench-Status: legacy-frozen-v1` and successor `Link`
 header identify it as historical. Use `/api/jevbench/latest` for current results.

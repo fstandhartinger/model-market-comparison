@@ -4,6 +4,13 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-10-07 — Read-only JevBench MCP server and WebMCP tools (CR-335)
+
+New: `POST /api/mcp`, a stateless read-only MCP server (Streamable HTTP, JSON-RPC)
+with `list_models`, `get_model` and `compare_models` over the `/api/jevbench/latest`
+data. Browsers with WebMCP (`document.modelContext`) get the same three tools next to
+the existing catalog tools. No existing endpoint or data changed; see `API.md`.
+
 ## 2026-09-29 — JevBench v1.5.2 and Image JevBench v0.1.4
 
 The live JevBench board now uses v1.5.2; v1.5.0 and v1.5.1 remain frozen releases.
