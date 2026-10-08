@@ -1534,7 +1534,9 @@ class FinalizeTests(DatabaseTestCase):
         self.assertEqual((current["status"], current["release_status"], current["delivery_email_status"]),
                          ("completed", "verified", "sent"))
         result_mail = [mail for mail in fx.mails if "your result" in mail[1]][0]
-        self.assertIn("JevBench v1.5.2: #2 of 7, score 71.23 — https://benchmarkheaven.com/jev-models", result_mail[2])
+        self.assertIn("JevBench v1.5.2: score 71.23 — https://benchmarkheaven.com/jev-models", result_mail[2])
+        self.assertNotIn("#2", result_mail[2])
+        self.assertNotIn("of 7", result_mail[2])
         self.assertNotIn("Evil", result_mail[2])
         self.assertEqual(fx.started[-1], ap.XPOST_UNIT.format(rid))
         post = (job / "xpost" / "POST.txt").read_text()
