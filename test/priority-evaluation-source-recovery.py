@@ -170,6 +170,22 @@ class Recovery(unittest.TestCase):
   self.assertIn('release_attempts',self.ns['ROW_FIELDS']);sql=self.ns['row_json_sql']();self.assertEqual(sql.count("'release_attempts',r.release_attempts"),1)
   projected={k:self.row.get(k) for k in self.ns['ROW_FIELDS']};self.assertEqual(projected['release_attempts'],0)
   self.ns['load_row']=lambda rid:dict({k:self.row.get(k) for k in self.ns['ROW_FIELDS']});self.call();self.assertEqual(self.row['release_attempts'],0)
+ def test_actual_load_row_sql_projects_counter_and_preserves_baseline_columns(self):
+  baseline_query = "json_build_object('id',r.id::text,'status',r.status,'email',r.email,'model_name',r.model_name,'model_link',r.model_link,'code_link',r.code_link,'access_type',r.access_type,'access_instructions',r.access_instructions,'notes',r.notes,'benchmarks',r.benchmarks,'visibility',r.visibility,'stripe_mode',r.stripe_mode,'synthetic_test',r.synthetic_test,'checkout_session_id',r.checkout_session_id,'payment_intent_id',r.payment_intent_id,'paid_at',r.paid_at,'created_at',r.created_at,'review_passed_at',r.review_passed_at,'result_delivered_at',r.result_delivered_at,'notification_status',r.notification_status,'confirmation_status',r.confirmation_status,'board_status',r.board_status,'pickup_status',r.pickup_status,'pickup_owner',r.pickup_owner,'pickup_job_dir',r.pickup_job_dir,'pickup_attempts',r.pickup_attempts,'evaluation_status',r.evaluation_status,'evaluation_attempts',r.evaluation_attempts,'release_status',r.release_status,'delivery_email_status',r.delivery_email_status,'customer_hold_started_at',r.customer_hold_started_at,'sla_paused_seconds',r.sla_paused_seconds,'refund_reason',r.refund_reason,'refund_status',r.refund_status,'refund_id',r.refund_id,'refunded_at',r.refunded_at,'result_url',r.result_url,'review_email_status',r.review_email_status,'refusal_email_status',r.refusal_email_status,'customer_hold_reason',r.customer_hold_reason,'amount_total',r.amount_total,'refund_decision',r.refund_decision,'refund_decided_at',r.refund_decided_at,'change_request_email_status',r.change_request_email_status,'resubmission_count',r.resubmission_count)::text"
+  query=self.ns['row_json_sql']()
+  self.assertEqual(query.replace("'release_attempts',r.release_attempts,",''),baseline_query)
+  captured=[]
+  def sql_json(statement):
+   captured.append(statement)
+   self.assertIn("'release_attempts',r.release_attempts",statement)
+   self.assertIn("r.id='"+RID+"'::uuid",statement)
+   self.assertIn("'id',r.id::text",statement)
+   pairs=re.findall(r"'([a-z_]+)',r\.([a-z_]+)(?:::text)?",statement)
+   self.assertTrue(all(key==column for key,column in pairs))
+   return {key:self.row.get(column) for key,column in pairs}
+  tree=ast.parse((ROOT/'ops/priority-evaluation/autopickup.py').read_text());node=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='load_row');query_ns=dict(self.ns,sql_json=sql_json,TABLE='bh_priority_evaluation_requests');exec(compile(ast.Module(body=[node],type_ignores=[]),'actual-load-row-projection','exec'),query_ns)
+  loaded=query_ns['load_row'](RID);self.assertEqual(loaded['release_attempts'],0);self.assertEqual(loaded['evaluation_attempts'],self.original['evaluation_attempts']);self.assertEqual(loaded['paid_at'],self.original['paid_at']);self.assertEqual(len(captured),1)
+  self.ns['load_row']=query_ns['load_row'];self.call();self.assertEqual(self.row['release_attempts'],0)
  def test_legacy_projection_migrates_only_observed_zero_and_preserves_original_bytes(self):
   path,original=self.legacy_prepared();self.call();receipt_path=path.with_name('SOURCE-ACCESS-RECOVERY.release-attempts-migration.json');receipt=json.loads(receipt_path.read_text())
   self.assertEqual(receipt['prior_observation'],'UNOBSERVED');self.assertEqual(base64.b64decode(receipt['original_journal_bytes_base64']),original);self.assertEqual(receipt['original_journal_sha256'],hashlib.sha256(original).hexdigest());self.assertEqual(receipt_path.stat().st_mode&0o777,0o600)
