@@ -50,14 +50,16 @@ function series(A: JevCompareV15Row, B: JevCompareV15Row): Series[] {
 /** CR-257: one radar per category dimension. A value below chance draws at the centre and prints its real (negative) number.
  *  CR-290 correction (Florian 5 Oct 2026 ~20:30): only well-measured categories (radarMinN = 30 items) are spokes; smaller ones go to the
  *  low-sample table. A system that answered fewer than radarMinN items of a spoke's category is printed as n=… and not plotted. */
+const completedN = (cell: [number, number, number?]) => cell[2] ?? cell[1];
+
 function categorySpokes(pair: JevCompareV15Row[], dim: CategoryDim, cats: CompareCategories): Spoke[] {
   return dim.cats.filter((c) => c.plotted).map((c) => {
     const cells = pair.map((r) => cats.systems[r.key]?.[dim.key]?.[c.key] ?? null);
     return {
       key: c.key, lines: lines(c.short),
-      thin: cells.map((v) => v !== null && v[1] < cats.radarMinN),
+      thin: cells.map((v) => v !== null && completedN(v) < cats.radarMinN),
       values: cells.map((v) => (v === null ? null : Math.max(0, Math.min(100, v[0])))),
-      texts: cells.map((v) => (v === null ? "—" : v[1] < cats.radarMinN ? `n=${v[1]}` : one(v[0]))),
+      texts: cells.map((v) => (v === null ? "—" : completedN(v) < cats.radarMinN ? `n=${completedN(v)}` : one(v[0]))),
       tip: `${c.label}: ${c.covers}. ${c.n} items (${c.split.a} ${cats.splitNames[0]}, ${c.split.b} ${cats.splitNames[1]}).`,
     };
   });
@@ -78,16 +80,16 @@ function CategoryKey({ dim, cats }: { dim: CategoryDim; cats: CompareCategories 
  *  item count and both systems' values, marked indicative: with 16 items one answer moves a category by about six points. */
 function LowSampleTable({ dim, cats, pair }: { dim: CategoryDim; cats: CompareCategories; pair: JevCompareV15Row[] }) {
   // A value below the artifact's own reporting minimum (min_n) is not shown at all, not even as indicative.
-  const cellOf = (r: JevCompareV15Row, key: string) => { const v = cats.systems[r.key]?.[dim.key]?.[key]; return v && v[1] >= cats.minN ? v : null; };
+  const cellOf = (r: JevCompareV15Row, key: string) => { const v = cats.systems[r.key]?.[dim.key]?.[key]; return v && completedN(v) >= cats.minN ? v : null; };
   // Pool-level low-sample categories, plus a well-measured category in which one of the two systems answered fewer than
   // radarMinN items (its value is not drawn on the radar, so it is shown here instead of disappearing).
-  const lowCell = (r: JevCompareV15Row, key: string) => { const v = cellOf(r, key); return v !== null && v[1] < cats.radarMinN; };
+  const lowCell = (r: JevCompareV15Row, key: string) => { const v = cellOf(r, key); return v !== null && completedN(v) < cats.radarMinN; };
   const low = dim.cats.filter((c) => (c.lowSample && pair.some((r) => cellOf(r, c.key))) || (c.plotted && pair.some((r) => lowCell(r, c.key))));
   const unreported = dim.cats.filter((c) => c.lowSample && !pair.some((r) => cellOf(r, c.key)));
   if (!low.length && !unreported.length) return null;
   const cell = (r: JevCompareV15Row, key: string) => {
     const v = cellOf(r, key);
-    return v ? <>{one(v[0])} <span className="bh-muted text-[11px]">n={v[1]}</span></> : <span className="bh-muted" title={`No published value: fewer than ${cats.minN} answered items, or no per-category values for this system`}>—</span>;
+    return v ? <>{one(v[0])} <span className="bh-muted text-[11px]">n={completedN(v)}</span></> : <span className="bh-muted" title={`No published value: fewer than ${cats.minN} answered items, or no per-category values for this system`}>—</span>;
   };
   return <div className="mt-2" data-bh-jev15-low-sample={dim.key}>
     <p className="text-[12px] font-semibold">Low sample, n &lt; {cats.radarMinN} — indicative only</p>

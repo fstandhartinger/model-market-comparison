@@ -83,8 +83,7 @@ python3 -m unittest discover -s scripts/jevbench-api-rerun-cells -p 'test_*.py'
 
 The S builder currently returns **exit 1** for its strict historical family-invariance check: the historical v1.7.12
 family cells use S+P, whereas this release explicitly requests the full S+P+L1+L2+L3 category union.
-It still writes the aggregate artifacts and report. The lead must verify `historical_schema_pass: true`, inspect
-all strict differences and accept the family-basis change before copying; do not suppress or treat exit 1 as a pass.
+It still writes the aggregate artifacts and report. The lead must inspect every historical and strict difference and accept the recorded input-basis changes before copying; do not suppress or treat exit 1 as a pass.
 `spoke_report.json` is a diagnostic; the release test reads the shipped cells themselves and the full live roster.
 A coverage reason in `data/jevbench-radar-spoke-exceptions.json` must have `{key, reason, since}` and is shown by
 row in Languages/full table/dated carry and in Compare. It must disappear as soon as the row meets the gate.
@@ -93,3 +92,7 @@ The v1.7.12 supplement and frozen release remain untouched for historical pages.
 The final language caption computes every pool count, draw date and minimum P∪L1∪L2∪L3 language count from the
 language artifact. Confirm the refreshed minimum is 60 and the draw date is 2026-10-07 before releasing; the
 interim artifact is deliberately labelled with its actual counts. Headline release results and rankings do not change.
+
+## Every-row completion
+
+Run `node scripts/jevbench-full-coverage.mjs` against the shipped artifacts before declaring this job complete. It requires all listed rows on both boards to have 60 completed supported responses in every language and 30 on all 20 use-case and seven topic spokes. Recorded input refusals count as completed responses; authentication, rate-limit, service and transport failures do not. An interim exception never satisfies completion, and an old cell without answered-coverage metadata fails this check. Official scored counts and competence retain every supported observation, including failures.

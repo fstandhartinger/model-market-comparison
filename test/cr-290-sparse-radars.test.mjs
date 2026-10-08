@@ -56,7 +56,7 @@ test('Jev 1.13.0 on the v1.6.0 use-case radar is points only (values on under ha
 
 test('the compare view wires the rules: cell threshold, low-sample table, one-line note, no bridging', () => {
   const compare = src('components/JevCompareV15.tsx'), radar = src('components/JevRadars.tsx');
-  assert.match(compare, /v\[1\] < cats\.radarMinN/);
+  assert.match(compare, /completedN\(v\) < cats\.radarMinN/);
   assert.match(compare, /<LowSampleTable dim=\{f\.dim\}/);
   assert.match(compare, /Low sample, n &lt; \{cats\.radarMinN\} — indicative only/);
   assert.match(compare, /full radar after the next re-measure/);

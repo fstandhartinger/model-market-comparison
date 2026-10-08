@@ -12,6 +12,8 @@ aggregates are written.
 """
 import argparse, collections, hashlib, json, os, sys
 from pathlib import Path
+from answered_coverage import CoverageRegistry
+COVERAGE = CoverageRegistry()
 
 H = Path('/home/flori/jobs/jevbench-v16-run-20261001/harness')
 SEALED = Path('/home/flori/jevbench-sealed/v1.6-run')
@@ -76,7 +78,9 @@ def answered(gold, key, meta, run):
     m = {**meta, 'api_subset': 'S'}
     systems, _ = V.build_systems(gold, {key: m}, {key: rows})
     seen = set(ids)
-    return [(g, x) for g, x in systems[key].scored if g.oid in seen]
+    items = [(g, x) for g, x in systems[key].scored if g.oid in seen]
+    COVERAGE.bind(items, rows)
+    return items
 
 
 def category_union(key, meta, basis, base_items, pools, labels):
@@ -105,7 +109,7 @@ def category_union(key, meta, basis, base_items, pools, labels):
     return list(union.values()), '+'.join(tags), receipts
 
 
-def cells(scored, keyfn, known):
+def cells(scored, keyfn, known, coverage=False):
     groups = collections.defaultdict(list)
     for g, x in scored:
         k = keyfn(g)
@@ -116,7 +120,7 @@ def cells(scored, keyfn, known):
         st = V.group_stats(items)
         if st['score'] is not None and st['n'] >= MIN_N and k in known:
             out[k] = {'n': int(st['n']), 'competence': round(float(st['score']), 2)}
-    return out
+    return COVERAGE.enrich(out, scored, keyfn) if coverage else out
 
 
 def r2(x): return None if x is None else round(float(x), 4)
@@ -183,9 +187,9 @@ def main():
                 'category_pools': tag, 'category_n_items': len(items),
                 'per_type_split': {k: {'cc': r2(v['cc']), 'n': v['n'], 'tiers': {t: r2(c) for t, c in v['tiers'].items()}}
                                    for k, v in intel['per_type_split'].items()},
-                'families': cells(items, lambda g: g.family, known['families']),
-                'topics': cells(items, lambda g: labels[g.item_id][0], known['topics']),
-                'usecases': cells(items, lambda g: labels[g.item_id][1], known['usecases'])}
+                'families': cells(items, lambda g: g.family, known['families'], coverage=True),
+                'topics': cells(items, lambda g: labels[g.item_id][0], known['topics'], coverage=True),
+                'usecases': cells(items, lambda g: labels[g.item_id][1], known['usecases'], coverage=True)}
         systems[key] = cell
         checks.append({'key': key, 'round': rd.name, 'run_sha256': run_sha, 'I_open_I_sealed': 'match', 'breakdowns_rescore': 'match', 'category_pools': tag, 'supplement_receipts': receipts})
 
@@ -199,9 +203,9 @@ def main():
         run = rd / 'runs' / meta.get('file', f'{key}.jsonl')
         items, tag, receipts = category_union(key, meta, 'S', answered(base_gold, key, meta, run), pools, labels)
         systems[key] = {'coverage': 'S+P', 'n_items': 1500, 'category_pools': tag, 'category_n_items': len(items),
-                        'families': cells(items, lambda g: g.family, known['families']),
-                        'topics': cells(items, lambda g: labels[g.item_id][0], known['topics']),
-                        'usecases': cells(items, lambda g: labels[g.item_id][1], known['usecases'])}
+                        'families': cells(items, lambda g: g.family, known['families'], coverage=True),
+                        'topics': cells(items, lambda g: labels[g.item_id][0], known['topics'], coverage=True),
+                        'usecases': cells(items, lambda g: labels[g.item_id][1], known['usecases'], coverage=True)}
         checks.append({'key': key, 'round': rd.name, 'axes': 'match', 'source': 'out-O1S/categories-with-topics.json', 'category_pools': tag, 'supplement_receipts': receipts, 'run_sha256': sha(run)})
 
     for key, c in systems.items():
