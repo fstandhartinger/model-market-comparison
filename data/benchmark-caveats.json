@@ -227,6 +227,11 @@
       "quote": "Preference rating from pairwise community votes, not task accuracy",
       "field": "scoring.notes",
       "why": "The rating summarizes community preferences rather than task accuracy."
+    },
+    "scale-hss": {
+      "quote": "judge Claude-Opus-5 decides every rubric criterion and all must pass",
+      "field": "scoring.notes",
+      "why": "Rubric pass@1 is decided by an LLM judge; self-preference, ambiguous effort settings and public-media contamination remain limitations."
     }
   },
   "considered_not_judged": {
