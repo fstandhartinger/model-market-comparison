@@ -4571,6 +4571,56 @@
           "quant": null
         },
         "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+      },
+      "xor-26b-a4b-nvfp4": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/juspay/Xor-26B-A4B-NVFP4/blob/b73d35e002eb7d54b4b94e3049792c710b19a804/README.md",
+            "kind": "model-card",
+            "fact": "The pinned card identifies this as the NVFP4 build of Juspay Xor 26B-A4B, a post-trained build of google/gemma-4-26B-A4B-it; it describes quantized routed experts."
+          },
+          {
+            "url": "https://huggingface.co/juspay/Xor-26B-A4B-NVFP4/blob/b73d35e002eb7d54b4b94e3049792c710b19a804/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; quantization_config.quant_algo: \"NVFP4\""
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-26B-A4B-it/blob/4d7ae4984b7db7de8f8457170b3f1a419ee76d52/config.json",
+            "kind": "config.json",
+            "fact": "Base architecture: architectures [\"Gemma4ForConditionalGeneration\"]; model_type \"gemma4\"; text_config.model_type \"gemma4_text\"."
+          }
+        ],
+        "badges": {
+          "derivation": "merge",
+          "params": "26B-A4B",
+          "quant": "NVFP4"
+        }
+      },
+      "wald-q4b-v11": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/org2ai/Wald-4B/blob/b1b4c4c00726b296a22b77befe0e1099e741a663/README.md",
+            "kind": "model-card",
+            "fact": "base_model: Qwen/Qwen3.5-4B-Base; base_model_relation: finetune; the pinned card describes 4B parameters and BF16 weights."
+          },
+          {
+            "url": "https://huggingface.co/org2ai/Wald-4B/blob/b1b4c4c00726b296a22b77befe0e1099e741a663/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForCausalLM\"]; model_type: \"qwen3_5_text\""
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B-Base/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "Disclosed base architecture is a Qwen3.5 4B causal language model; the historical supplement pins Wald-Q4B v1.1 to this base."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        }
       }
     },
     "imagejevbench": {

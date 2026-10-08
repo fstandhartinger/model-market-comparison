@@ -1,0 +1,286 @@
+{
+  "schema_version": 1,
+  "release": "CR-338",
+  "approval": {
+    "choice": "Ja, alle",
+    "source": "Florian answer-button response to the single release preview",
+    "card_id": 16723,
+    "reply_message_id": 16723,
+    "received_at_utc": "2026-10-08T08:12:31Z"
+  },
+  "approved_rows": {
+    "current_v1_6_1": [
+      "bobcat-flash-1.2",
+      "decider-12b",
+      "decider-12b-v1",
+      "decisio-gemma-4-31b-v080",
+      "mercury-decide",
+      "rene-1-31b-fp8",
+      "spx-cd-flash",
+      "spx-cd-pro"
+    ],
+    "historical_v1_5_supplement": [
+      "xor-26b-a4b-nvfp4",
+      "wald-q4b-v11"
+    ]
+  },
+  "ranking_orders": {
+    "current": {
+      "baseline": "fresh live displayed boards before these eight additions",
+      "displayed_live_rows": 152,
+      "before": {
+        "open": {
+          "capability": [
+            "quyet-1-0-large",
+            "deck31b",
+            "h2o-lightning-4b",
+            "surogate-rune-26b-a4b-v3-v16",
+            "xor-26b-a4b"
+          ],
+          "A": [
+            "h2o-lightning-4b",
+            "quyet-1-0-large",
+            "torchcast-decision-12b",
+            "winnow-12b",
+            "deck31b"
+          ],
+          "B": [
+            "quyet-1-0-large",
+            "h2o-lightning-4b",
+            "deck31b",
+            "torchcast-decision-12b",
+            "winnow-12b"
+          ],
+          "C": [
+            "h2o-lightning-4b",
+            "quyet-1-0-large",
+            "torchcast-decision-12b",
+            "deck31b",
+            "winnow-12b"
+          ]
+        },
+        "api": {
+          "capability": [
+            "sage-1.3.0",
+            "liquid-d1",
+            "openai-decisions",
+            "instinct",
+            "vansa-3.4"
+          ],
+          "A": [
+            "sage-1.3.0",
+            "liquid-d1",
+            "wity-1",
+            "openai-decisions",
+            "instinct"
+          ],
+          "B": [
+            "sage-1.3.0",
+            "wity-1",
+            "liquid-d1",
+            "openai-decisions",
+            "instinct"
+          ],
+          "C": [
+            "sage-1.3.0",
+            "liquid-d1",
+            "wity-1",
+            "openai-decisions",
+            "instinct"
+          ]
+        },
+        "all": {
+          "capability": [
+            "quyet-1-0-large",
+            "sage-1.3.0",
+            "deck31b",
+            "h2o-lightning-4b",
+            "liquid-d1"
+          ],
+          "A": [
+            "sage-1.3.0",
+            "liquid-d1",
+            "h2o-lightning-4b",
+            "quyet-1-0-large",
+            "wity-1"
+          ],
+          "B": [
+            "sage-1.3.0",
+            "quyet-1-0-large",
+            "wity-1",
+            "liquid-d1",
+            "h2o-lightning-4b"
+          ],
+          "C": [
+            "sage-1.3.0",
+            "liquid-d1",
+            "h2o-lightning-4b",
+            "quyet-1-0-large",
+            "wity-1"
+          ]
+        }
+      },
+      "after": {
+        "open": {
+          "capability": [
+            "quyet-1-0-large",
+            "decisio-gemma-4-31b-v080",
+            "deck31b",
+            "rene-1-31b-fp8",
+            "h2o-lightning-4b"
+          ],
+          "A": [
+            "h2o-lightning-4b",
+            "decisio-gemma-4-31b-v080",
+            "quyet-1-0-large",
+            "decider-12b",
+            "decider-12b-v1"
+          ],
+          "B": [
+            "quyet-1-0-large",
+            "decisio-gemma-4-31b-v080",
+            "h2o-lightning-4b",
+            "deck31b",
+            "decider-12b"
+          ],
+          "C": [
+            "h2o-lightning-4b",
+            "decisio-gemma-4-31b-v080",
+            "quyet-1-0-large",
+            "decider-12b",
+            "decider-12b-v1"
+          ]
+        },
+        "api": {
+          "capability": [
+            "sage-1.3.0",
+            "liquid-d1",
+            "spx-cd-flash",
+            "mercury-decide",
+            "openai-decisions"
+          ],
+          "A": [
+            "sage-1.3.0",
+            "liquid-d1",
+            "mercury-decide",
+            "wity-1",
+            "spx-cd-flash"
+          ],
+          "B": [
+            "sage-1.3.0",
+            "mercury-decide",
+            "wity-1",
+            "liquid-d1",
+            "spx-cd-flash"
+          ],
+          "C": [
+            "sage-1.3.0",
+            "liquid-d1",
+            "mercury-decide",
+            "wity-1",
+            "spx-cd-flash"
+          ]
+        },
+        "all": {
+          "capability": [
+            "quyet-1-0-large",
+            "decisio-gemma-4-31b-v080",
+            "sage-1.3.0",
+            "deck31b",
+            "rene-1-31b-fp8"
+          ],
+          "A": [
+            "sage-1.3.0",
+            "liquid-d1",
+            "h2o-lightning-4b",
+            "mercury-decide",
+            "decisio-gemma-4-31b-v080"
+          ],
+          "B": [
+            "sage-1.3.0",
+            "quyet-1-0-large",
+            "decisio-gemma-4-31b-v080",
+            "mercury-decide",
+            "wity-1"
+          ],
+          "C": [
+            "sage-1.3.0",
+            "liquid-d1",
+            "h2o-lightning-4b",
+            "mercury-decide",
+            "decisio-gemma-4-31b-v080"
+          ]
+        }
+      }
+    },
+    "historical": {
+      "parent_revision": "v1.5.7",
+      "parent_sha256": "8b837b2b760ef238e2a465632a48aa95b53b9ce5d797dfa79b2c24b0a638911e",
+      "before": {
+        "A": [
+          "cygnet",
+          "winnow-12b",
+          "jev-1.13.0",
+          "jevk5-v0.3-4b",
+          "vansa-3.4"
+        ],
+        "B": [
+          "winnow-12b",
+          "cygnet",
+          "jev-1.13.0",
+          "jev-omni",
+          "vansa-3.4"
+        ],
+        "C": [
+          "cygnet",
+          "winnow-12b",
+          "jev-1.13.0",
+          "jev-omni",
+          "spark-s1-4b-v6"
+        ],
+        "capability": [
+          "jev-1.13.0",
+          "winnow-12b",
+          "cygnet",
+          "surogate-rune-26b-a4b-v3-rtxpro6000-a2",
+          "jev-omni"
+        ]
+      },
+      "after": {
+        "A": [
+          "cygnet",
+          "winnow-12b",
+          "jev-1.13.0",
+          "jevk5-v0.3-4b",
+          "vansa-3.4"
+        ],
+        "B": [
+          "winnow-12b",
+          "cygnet",
+          "jev-1.13.0",
+          "xor-26b-a4b-nvfp4",
+          "jev-omni"
+        ],
+        "C": [
+          "cygnet",
+          "winnow-12b",
+          "jev-1.13.0",
+          "jev-omni",
+          "xor-26b-a4b-nvfp4"
+        ],
+        "capability": [
+          "xor-26b-a4b-nvfp4",
+          "jev-1.13.0",
+          "winnow-12b",
+          "cygnet",
+          "surogate-rune-26b-a4b-v3-rtxpro6000-a2"
+        ]
+      },
+      "capability_caps": {
+        "cost_usd_per_1000": 0.06459465517241379,
+        "median_seconds": 1.2329566404223442,
+        "reference": "jev-1.13.0"
+      }
+    }
+  }
+}
