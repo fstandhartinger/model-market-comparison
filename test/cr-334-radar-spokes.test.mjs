@@ -25,7 +25,7 @@ test('gate fails on absent/thin cells, non-finite scores, unlisted/duplicate/hid
   const e = {key:'x',reason:'L3 run pending',since:'2026-10-07'};
   assert.deepEqual(validateRadarSpokeGate(good,['x'],[]),{});
   assert.throws(() => validateRadarSpokeGate(good,['x'],[e]), /stale exception/);
-  for (const cell of [undefined,[50,29],[NaN,30]]) {
+  for (const cell of [undefined,[50,29],[50,50,29],[50,30,31],[NaN,30]]) {
     const bad = structuredClone(good); bad.systems.x.topics['0'] = cell;
     assert.throws(() => validateRadarSpokeGate(bad,['x'],[]), /below 30/);
     validateRadarSpokeGate(bad,['x'],[e]);

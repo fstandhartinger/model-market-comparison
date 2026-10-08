@@ -22,7 +22,7 @@ test('strict <10 and <5 boundaries and ordinary even/odd medians', () => {
 
 test('zero is measured; missing/null/non-finite and under-30 cells are gaps, never zeros', () => {
   const view = fixture([0, null, NaN, Infinity, 5, 6]);
-  view.systems['4'].usecases.gaming[1] = 29;
+  view.systems['4'].usecases.gaming = [5, 50, 29]; // scored errors cannot make a completed spoke
   delete view.systems['5'].usecases.gaming;
   const report = usecaseReleaseReview(view, ['0', '0', '1', '2', '3', '4', '5']);
   const c = report.categories[0];
@@ -71,7 +71,8 @@ test('live report uses shipped category values, covers both boards and never mut
   for (const cat of report.categories) {
     assert.equal(cat.measured + cat.missingKeys.length, report.eligibleKeys.length);
     for (const cell of cat.cells) {
-      assert.deepEqual([cell.value, cell.n], view.systems[cell.key].usecases[cat.key]);
+      assert.deepEqual([cell.value, cell.n], view.systems[cell.key].usecases[cat.key].slice(0, 2));
+      assert.equal(cell.completed_n, view.systems[cell.key].usecases[cat.key][2]);
       assert.ok(cell.value >= 0 && cell.value <= 100);
     }
   }
