@@ -4569,6 +4569,118 @@ def resume(rid: str) -> str:
     return f"Order {order_ref(rid)} resumed; the 48-hour clock runs again."
 
 
+def recover_source_access(rid: str) -> str:
+    """Correct this exact operator source-access failure; never resubmit or extend its SLA.
+
+    Caller holds cycle_lock. No source/customer code is executed and no unit is started.
+    The persisted approval withdrawal precedes the DB CAS; interrupted work resumes
+    only with the same immutable source and original timestamps/counters.
+    """
+    rid = request_id(rid)
+    if rid != "acad951a-1b9d-4f3c-a449-350d1c04bd23":
+        raise PickupError("source-access correction is scoped to the Aplomb order")
+    row = load_row(rid) or {}
+    expected_url = "https://huggingface.co/empiriolabsai/aplomb-1"
+    if row.get("stripe_mode") != "live" or row.get("synthetic_test") is not False \
+            or row.get("status") != "paid" or row.get("model_link") != expected_url \
+            or row.get("refund_id") or row.get("result_delivered_at") \
+            or row.get("evaluation_status") != "pending" \
+            or row.get("change_request_email_status") not in ("approval_required", "not_due") \
+            or row.get("delivery_email_status") in ("sending", "sent"):
+        raise PickupError("order state is not eligible for source-access correction")
+    job_dir = job_directory(rid, JOB_ROOT)
+    if row.get("pickup_job_dir") != str(job_dir):
+        raise PickupError("source-access correction has no matching order custody")
+    unit = subprocess.run(["systemctl", "--user", "is-active", EVAL_UNIT.format(rid)],
+                          text=True, capture_output=True, timeout=15, check=False)
+    if unit.returncode != 3 or unit.stdout.strip() not in ("inactive", "failed"):
+        raise PickupError("evaluation unit must be verified inactive")
+    changes_path = job_dir / "review" / "CHANGES-REQUESTED.json"
+    fetch_path = job_dir / "source" / "FETCH-RECEIPT-model.json"
+    journal_path = job_dir / "review" / "SOURCE-ACCESS-RECOVERY.json"
+    for path in (changes_path, fetch_path, journal_path):
+        if path.is_symlink():
+            raise PickupError("unsafe source-access correction evidence path")
+    changes = json.loads(changes_path.read_text())
+    fetch = json.loads(fetch_path.read_text())
+    if changes.get("reason") != "unusable_model_link" or fetch.get("which") != "model" \
+            or fetch.get("url") != expected_url or fetch.get("credential_repository") != "empiriolabsai/aplomb-1" \
+            or not SHA40_RE.fullmatch(str(fetch.get("commit", ""))) \
+            or not SHA40_RE.fullmatch(str(fetch.get("tree", ""))):
+        raise PickupError("exact authenticated source-fetch proof is missing")
+    requested, fetched = parse_ts(changes.get("requested_at")), parse_ts(fetch.get("fetched_at"))
+    if requested is None or fetched is None or fetched <= requested:
+        raise PickupError("source-fetch proof does not postdate the access failure")
+    source_dir = job_dir / "source" / "model"
+    if source_dir.is_symlink() or source_dir.parent.is_symlink():
+        raise PickupError("unsafe fetched source directory")
+    if git(source_dir, "rev-parse", "HEAD").strip() != fetch["commit"] \
+            or git(source_dir, "rev-parse", "HEAD^{tree}").strip() != fetch["tree"]:
+        raise PickupError("fetched source changed after its authenticated receipt")
+    count = int(row.get("resubmission_count") or 0)
+    approval_path = STATE_ROOT / "change-requests" / str(count) / (rid + ".json")
+    if approval_path.is_symlink() or approval_path.with_suffix(".lock").is_symlink():
+        raise PickupError("unsafe change-request approval path")
+    preserved_keys = ("paid_at", "sla_paused_seconds", "evaluation_attempts", "resubmission_count",
+                      "pickup_attempts", "release_attempts", "review_passed_at", "code_link")
+    preserved = {key: row.get(key) for key in preserved_keys}
+    evidence = {"changes_sha256": hashlib.sha256(changes_path.read_bytes()).hexdigest(),
+                "fetch_sha256": hashlib.sha256(fetch_path.read_bytes()).hexdigest()}
+    with approval_path.with_suffix(".lock").open("a+") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        approval = json.loads(approval_path.read_text())
+        allowed_keys = {"draft", "digest", "send_key", "keep_key", "notification", "freshness_hold",
+                        "decision", "withdrawn_reason", "withdrawn_at", "recovery_evidence"}
+        if set(approval) - allowed_keys or approval.get("notification") != "pending" \
+                or approval.get("decision") not in (None, "withdrawn") \
+                or approval.get("draft", {}).get("request_id") != rid \
+                or approval.get("draft", {}).get("kind") != "change_request":
+            raise PickupError("approval is sent, sending, decided or uncertain; reconciliation required")
+        if row.get("customer_hold_started_at") and parse_ts(approval.get("draft", {}).get("hold_started_at")) != parse_ts(row["customer_hold_started_at"]):
+            raise PickupError("approval belongs to a different customer hold")
+        if journal_path.exists():
+            journal = json.loads(journal_path.read_text())
+            if journal.get("preserved") != preserved or journal.get("evidence") != evidence:
+                raise PickupError("source-access recovery evidence or original counters changed")
+        else:
+            if approval.get("decision") is not None or row.get("customer_hold_reason") != CHANGE_HOLD_REASON \
+                    or not row.get("customer_hold_started_at") or row.get("change_request_email_status") != "approval_required":
+                raise PickupError("original false source-access hold is missing")
+            journal = {"request_id": rid, "preserved": preserved, "evidence": evidence,
+                       "original_hold_started_at": row["customer_hold_started_at"], "phase": "prepared",
+                       "prepared_at": iso(utcnow()), "approval_before": approval}
+            atomic_write(journal_path, json.dumps(journal, indent=2) + "\n")
+        if approval.get("decision") == "withdrawn" and approval.get("recovery_evidence") != evidence:
+            raise PickupError("approval withdrawal belongs to a different recovery")
+        if approval.get("decision") is None:
+            approval.update(decision="withdrawn", withdrawn_reason="operator_source_access_corrected",
+                            withdrawn_at=iso(utcnow()), recovery_evidence=evidence)
+            refusal_approval.atomic(approval_path, approval)
+        if not row.get("customer_hold_started_at"):
+            if row.get("customer_hold_reason") is not None or row.get("change_request_email_status") != "not_due":
+                raise PickupError("order changed after the recovery claim")
+        else:
+            def literal(value: Any) -> str:
+                return "NULL" if value is None else sql_text(str(value))
+            guard = " AND ".join(f"{key} IS NOT DISTINCT FROM {literal(value)}" for key, value in preserved.items())
+            guard += (" AND status='paid' AND stripe_mode='live' AND synthetic_test=false AND refund_id IS NULL "
+                      "AND result_delivered_at IS NULL AND evaluation_status='pending' "
+                      "AND COALESCE(delivery_email_status,'not_due') NOT IN ('sending','sent') "
+                      "AND change_request_email_status='approval_required' AND customer_hold_reason='customer_changes' "
+                      f"AND customer_hold_started_at={sql_text(journal['original_hold_started_at'])} "
+                      f"AND model_link={sql_text(expected_url)}")
+            if not update_row(rid, "customer_hold_started_at=NULL, customer_hold_reason=NULL, change_request_email_status='not_due'", guard):
+                raise PickupError("order changed during source-access recovery; no hold was cleared")
+        current = load_row(rid) or {}
+        if {key: current.get(key) for key in preserved_keys} != preserved \
+                or current.get("customer_hold_started_at") or current.get("customer_hold_reason") \
+                or current.get("change_request_email_status") != "not_due":
+            raise PickupError("source-access recovery requires final state reconciliation")
+        journal.update(phase="complete", completed_at=iso(utcnow()))
+        atomic_write(journal_path, json.dumps(journal, indent=2) + "\n")
+    return "Aplomb source-access hold corrected; original SLA and all attempt counters preserved; no email or evaluation started."
+
+
 def resubmit(rid: str, model_link: str | None = None, code_link: str | None = None) -> str:
     """Restart an order after the customer answered a change request (Florian, 3 Oct 2026).
 
@@ -4766,7 +4878,9 @@ def fetch_source(rid: str, which: str) -> dict[str, Any]:
             raise FetchPermanentError(f"{which} source repository head could not be resolved") from exc
         raise FetchInfraError(str(exc)) from exc
     receipt = {"which": which, "url": url, "commit": resolved, "tree": tree, "pinned": bool(commit),
-               "review_source_bytes": source_bytes, "fetched_at": iso(utcnow())}
+               "review_source_bytes": source_bytes, "fetched_at": iso(utcnow()),
+               "credential_repository": match.group("path") if match.group("host") == "huggingface.co"
+               and match.group("path") in HF_SOURCE_AUTH_REPOSITORIES else None}
     atomic_write(job_dir / "source" / f"FETCH-RECEIPT-{which}.json", json.dumps(receipt, indent=2) + "\n")
     return receipt
 
@@ -4779,7 +4893,7 @@ def main(argv: list[str] | None = None) -> int:
     cycle_parser.add_argument("--synthetic")
     cycle_parser.add_argument("--job-root", type=Path)
     sub.add_parser("health")
-    for name in ("evaluate", "xpost", "adopt", "resume", "gate", "status"):
+    for name in ("evaluate", "xpost", "adopt", "resume", "gate", "status", "recover-source-access"):
         sub.add_parser(name).add_argument("request_id")
     resubmit_parser = sub.add_parser("resubmit")
     resubmit_parser.add_argument("request_id")
@@ -4838,6 +4952,8 @@ def main(argv: list[str] | None = None) -> int:
                 print(hold(args.request_id, args.reason))
             elif args.command == "resume":
                 print(resume(args.request_id))
+            elif args.command == "recover-source-access":
+                print(recover_source_access(args.request_id))
             elif args.command == "resubmit":
                 print(resubmit(args.request_id, args.model_link, args.code_link))
         return 0
