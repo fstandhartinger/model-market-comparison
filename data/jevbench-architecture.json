@@ -1,6 +1,6 @@
 {
   "schema": "jevbench-architecture/1",
-  "checked_utc": "2026-10-08T00:00:00Z",
+  "checked_utc": "2026-10-08T02:16:08Z",
   "benchmarks": {
     "jevbench": {
       "autojev-27b": {
@@ -4223,6 +4223,354 @@
           "params": "140M",
           "quant": null
         }
+      },
+      "decision2-nox-4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/vllm-sr/Decision-2.0-Nox-4B/blob/25e8f67d1b486c647222df3aac640d2d5d736bbe/README.md",
+            "kind": "model-card",
+            "fact": "Merged rank-128 LoRA on all text projections of Qwen3.5-4B-Base plus a new candidate head; eight-seed weight soup. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+      },
+      "decision2-lux-9b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/vllm-sr/Decision-2.0-Lux-9B/blob/78bf3c03d9147aeb30b641edfe0e30ed04887ca5/README.md",
+            "kind": "model-card",
+            "fact": "Full fine-tune of Decision-1.0-Lux-9B with soft targets; Qwen3.5-9B lineage. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+      },
+      "noma": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/BlackdromeAILabs/noma/blob/fac0429688a137ce451a27ad34d05e9fd47fb624/README.md",
+            "kind": "model-card",
+            "fact": "First 18 of 32 Qwen3.5-4B-Base layers with a merged LoRA and four bootstrap-trained scorer heads. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+      },
+      "fastsem-jev-l16r25": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://github.com/KoshiBebop/fastsem-jev/blob/1f1f70f61b9b10d3f094d2e24c5ff6e5d6c702c8/README.md",
+            "kind": "repo-readme",
+            "fact": "Training-free inference method on frozen Qwen3.5-4B weights, using the author l16r25 configuration in process. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/README.md",
+            "kind": "model-card",
+            "fact": "Training-free inference method on frozen Qwen3.5-4B weights, using the author l16r25 configuration in process. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+      },
+      "kev-9b-v2": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/jaredpalmer/kev-9b/blob/b5d8c18e44c60888d138b65cb6507ff0a5a448a0/README.md",
+            "kind": "model-card",
+            "fact": "Rank-16 LoRA and pointer head; author runtime with KEV_FUSED=0 because the published serving lock omits the fused-kernel dependency. Stored head temperature retained. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-9B-Base/blob/68c46c4b3498877f3ef123c856ecfde50c39f404/README.md",
+            "kind": "model-card",
+            "fact": "Rank-16 LoRA and pointer head; author runtime with KEV_FUSED=0 because the published serving lock omits the fused-kernel dependency. Stored head temperature retained. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+      },
+      "janus-35b-a3b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/cmxu/janus-35b-a3b/blob/a79c5af14957b4f4bcc2c950ddd47846201418ba/README.md",
+            "kind": "model-card",
+            "fact": "NVFP4 Qwen3.6-35B-A3B backbone with rank-64 LoRA and pointer head, measured on Blackwell hardware required by the routed-expert kernel. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          },
+          {
+            "url": "https://huggingface.co/nvidia/Qwen3.6-35B-A3B-NVFP4/blob/1355db6a052410cfd62085d94b58866fd0f2c3c5/README.md",
+            "kind": "model-card",
+            "fact": "NVFP4 Qwen3.6-35B-A3B backbone with rank-64 LoRA and pointer head, measured on Blackwell hardware required by the routed-expert kernel. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+      },
+      "coco-decision-4b-ko": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/corners-ai/CoCo-Decision-4B-Ko/blob/24aea6387d344babb59f1ee26acc7ac37b02aee5/README.md",
+            "kind": "model-card",
+            "fact": "Korean/English rank-16 LoRA served unmerged by the author oh-my-jev engine. The 96 GB card used bf16; the engine's optional nf4 fallback did not trigger. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/README.md",
+            "kind": "model-card",
+            "fact": "Korean/English rank-16 LoRA served unmerged by the author oh-my-jev engine. The 96 GB card used bf16; the engine's optional nf4 fallback did not trigger. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+      },
+      "reflex-reason-2b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Atlas-AI-research/reflex-reason-2b/blob/f69b5637faf157ddd7f336a3999325aa7b36668d/README.md",
+            "kind": "model-card",
+            "fact": "Pinned Qwen3-VL-2B-Instruct adapter and decision head, served by the author runtime. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct/blob/89644892e4d85e24eaac8bacfd4f463576704203/README.md",
+            "kind": "model-card",
+            "fact": "Pinned Qwen3-VL-2B-Instruct adapter and decision head, served by the author runtime. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+      },
+      "decision2-vega-27b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/vllm-sr/Decision-2.0-Vega-27B/blob/7aec49ae11a18741706da549ab626b9052795fe7/README.md",
+            "kind": "model-card",
+            "fact": "Rank-64 LoRA and candidate head on the pinned Qwen3.8-27B backbone; base is loaded separately. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/README.md",
+            "kind": "model-card",
+            "fact": "Rank-64 LoRA and candidate head on the pinned Qwen3.8-27B backbone; base is loaded separately. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+      },
+      "decision2-sol-2b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/vllm-sr/Decision-2.0-Sol-2B/blob/64235bef55dad29387dd16da7c90e038bf2f0972/README.md",
+            "kind": "model-card",
+            "fact": "Full fine-tune of Decision-1.0-Sol-2B with soft targets; Qwen3.5-2B lineage. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+      },
+      "sev-2b-preview": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/sora42y/Sev-2B-preview/blob/c5a31ce9a07729a1b774bb50616fae8feb683439/README.md",
+            "kind": "model-card",
+            "fact": "Tree Forcing full fine-tune of Qwen3.5-2B-Base, interpolated with base weights using the author WiSE-FT alpha 0.7. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+      },
+      "decision2-eos-0.8b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/vllm-sr/Decision-2.0-Eos-0.8B/blob/3594047d69f476f1d01cf84c593e213fc3a4dfe0/README.md",
+            "kind": "model-card",
+            "fact": "Full fine-tune of Decision-1.0-Eos-0.8B, itself a Qwen3.5-0.8B fine-tune. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+      },
+      "kev-27b-v2": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/jaredpalmer/kev-27b/blob/28be62e9c5ae0471bda2b7c636a55224b4f4b887/README.md",
+            "kind": "model-card",
+            "fact": "Full merged bf16 checkpoint and pointer head; author runtime with KEV_FUSED=0. Stored head temperature retained. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/README.md",
+            "kind": "model-card",
+            "fact": "Full merged bf16 checkpoint and pointer head; author runtime with KEV_FUSED=0. Stored head temperature retained. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+      },
+      "janus-08b-gpu": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/cmxu/janus-0.8b/blob/e6dcba52f5662e14fdc9726c6ec4ec34d18fe8d0/README.md",
+            "kind": "model-card",
+            "fact": "GPU measurement of the pinned Qwen3.5-0.8B checkpoint with rank-64 LoRA and pointer head. The author image lacks causal-conv1d; its reference PyTorch convolution path was retained. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-0.8B/blob/2fc06364715b967f1860aea9cf38778875588b17/README.md",
+            "kind": "model-card",
+            "fact": "GPU measurement of the pinned Qwen3.5-0.8B checkpoint with rank-64 LoRA and pointer head. The author image lacks causal-conv1d; its reference PyTorch convolution path was retained. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+      },
+      "decision2-kai-0.6b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/vllm-sr/Decision-2.0-Kai-0.6B/blob/cd49ea3813fd8ba0928a9a23ef6c9a0f2f0cd764/README.md",
+            "kind": "model-card",
+            "fact": "Full fine-tune of Qwen3-0.6B-Base with a candidate head trained from scratch; six-checkpoint weight average. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+      },
+      "jevberta-base": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/leobitz/jev-berta-base-zeroshot-classifier/blob/e1aa6fc182e777f8d622d119b803d3f3307a3c49/README.md",
+            "kind": "model-card",
+            "fact": "198M DeBERTa-v3-base encoder with two candidate-set attention layers and an MLP scoring head. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          },
+          {
+            "url": "https://github.com/leobitz/jev-berta/blob/52c9e51e/README.md",
+            "kind": "repo-readme",
+            "fact": "198M DeBERTa-v3-base encoder with two candidate-set attention layers and an MLP scoring head. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+      },
+      "reflex-instinct-06b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Atlas-AI-research/reflex-instinct-0.6b/blob/f29ab7b824371ce917ad4895882658d996bf94e2/README.md",
+            "kind": "model-card",
+            "fact": "Pinned Qwen3-0.6B adapter and decision head, served by the author runtime. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3-0.6B/blob/c1899de289a04d12100db370d81485cdf75e47ca/README.md",
+            "kind": "model-card",
+            "fact": "Pinned Qwen3-0.6B adapter and decision head, served by the author runtime. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+      },
+      "tachyone-en": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/munod/tachyone-en/blob/1c88ebef8f15f68e8a6583c564d636221f22c29f/README.md",
+            "kind": "model-card",
+            "fact": "Author CPU backend on shared AMD Zen 2 hardware (6 cores / 12 threads, AVX2). Recorded CPU load makes Speed a disclosed lower bound; no CUDA fast path was enabled. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          },
+          {
+            "url": "https://huggingface.co/answerdotai/ModernBERT-large/blob/45bb4654a4d5aaff24dd11d4781fa46d39bf8c13/README.md",
+            "kind": "model-card",
+            "fact": "Author CPU backend on shared AMD Zen 2 hardware (6 cores / 12 threads, AVX2). Recorded CPU load makes Speed a disclosed lower bound; no CUDA fast path was enabled. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          },
+          {
+            "url": "https://github.com/munod/tachyone/blob/538ac68aed2dd36962d242842efbb32bdfa0d41f/README.md",
+            "kind": "repo-readme",
+            "fact": "Author CPU backend on shared AMD Zen 2 hardware (6 cores / 12 threads, AVX2). Recorded CPU load makes Speed a disclosed lower bound; no CUDA fast path was enabled. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
       }
     },
     "imagejevbench": {

@@ -1,0 +1,3259 @@
+{
+  "schema_version": 1,
+  "benchmark": "JevBench",
+  "revision": "v1.5-supplement",
+  "published_on": "2026-10-08",
+  "measurement_basis": "Historical v1.5 pool: 1,624 decisions per model; scored with the frozen headline-A method and original G_med. These results are independent of v1.6.1 and do not enter its rankings.",
+  "parent": {
+    "revision": "v1.5.7",
+    "sha256": "8b837b2b760ef238e2a465632a48aa95b53b9ce5d797dfa79b2c24b0a638911e"
+  },
+  "G_med": 5.186627500079243,
+  "sample": {
+    "open": 904,
+    "sealed": 720,
+    "total": 1624,
+    "published_open": 601
+  },
+  "category_method": "Chance-corrected competence (0 = chance, 100 = perfect) over the category's items, open and sealed pooled, all tiers: per request type the method's competence cell (Choice and Noul accuracy above chance, Score 1 - error / chance error), then averaged over types weighted by item count. Not part of the JevBench Score; compare systems within a category, not categories with each other. Values can be negative (below chance).",
+  "category_min_n": 15,
+  "category_dimensions": {
+    "topics": [
+      {
+        "key": "math",
+        "label": "Math & numbers",
+        "covers": "a calculation decides the answer: arithmetic, word problems, probability, dates, units",
+        "n": 235,
+        "open": 174,
+        "sealed": 61
+      },
+      {
+        "key": "coding",
+        "label": "Coding & software",
+        "covers": "code, SQL, repositories, developer tools and IT systems",
+        "n": 92,
+        "open": 67,
+        "sealed": 25
+      },
+      {
+        "key": "law_policy",
+        "label": "Rules, policy & law",
+        "covers": "applying written rules: company policies, contracts, regulations, eligibility",
+        "n": 548,
+        "open": 260,
+        "sealed": 288
+      },
+      {
+        "key": "finance_commerce",
+        "label": "Finance & commerce",
+        "covers": "money: payments, refunds, invoices, orders, expenses, insurance payouts",
+        "n": 224,
+        "open": 134,
+        "sealed": 90
+      },
+      {
+        "key": "support_ops",
+        "label": "Support & operations",
+        "covers": "support tickets, incidents, logistics, scheduling desks and routing work to a team",
+        "n": 282,
+        "open": 131,
+        "sealed": 151
+      },
+      {
+        "key": "everyday_language",
+        "label": "Everyday language",
+        "covers": "short everyday messages: intents, assistant requests, reading a detail out of a text",
+        "n": 115,
+        "open": 98,
+        "sealed": 17
+      },
+      {
+        "key": "safety_security",
+        "label": "Safety & security",
+        "covers": "untrusted or injected instructions, fraud, moderation, access and security triage",
+        "n": 128,
+        "open": 40,
+        "sealed": 88
+      }
+    ],
+    "usecases": [
+      {
+        "key": "search_retrieval",
+        "label": "Search and retrieval",
+        "covers": "scoring query-to-candidate relevance, reranking results, selecting useful context for RAG",
+        "n": 54,
+        "open": 18,
+        "sealed": 36,
+        "low_n": false
+      },
+      {
+        "key": "scientific_discovery",
+        "label": "Scientific discovery",
+        "covers": "screening papers, labelling research passages or survey answers, checking that citations support claims, methodology checks",
+        "n": 1,
+        "open": 1,
+        "sealed": 0,
+        "low_n": true
+      },
+      {
+        "key": "model_routing",
+        "label": "Model routing",
+        "covers": "deciding which LLM or model tier should handle a prompt; classifying a request's intent, domain, difficulty or risk to pick a model",
+        "n": 132,
+        "open": 131,
+        "sealed": 1,
+        "low_n": false
+      },
+      {
+        "key": "llm_guardrails",
+        "label": "LLM guardrails",
+        "covers": "checking LLM inputs, outputs and tool calls: prompt injection, jailbreaks, policy violations, tool-call errors, answer quality",
+        "n": 339,
+        "open": 209,
+        "sealed": 130,
+        "low_n": false
+      },
+      {
+        "key": "code_linting",
+        "label": "Semantic code linting",
+        "covers": "checking code or writing against conventions and guidelines, as in CI review of code",
+        "n": 4,
+        "open": 4,
+        "sealed": 0,
+        "low_n": true
+      },
+      {
+        "key": "feature_extraction",
+        "label": "Feature extraction for predictive modeling",
+        "covers": "turning natural-language data into probabilistic features or estimates for a downstream prediction",
+        "n": 7,
+        "open": 2,
+        "sealed": 5,
+        "low_n": true
+      },
+      {
+        "key": "recruiting",
+        "label": "Recruiting",
+        "covers": "resumes, applications, interview feedback, matching candidates to roles",
+        "n": 3,
+        "open": 1,
+        "sealed": 2,
+        "low_n": true
+      },
+      {
+        "key": "lead_generation",
+        "label": "Lead generation",
+        "covers": "matching companies or inbound messages to an ideal customer profile, buyer intent, prioritising and routing sales leads",
+        "n": 98,
+        "open": 61,
+        "sealed": 37,
+        "low_n": false
+      },
+      {
+        "key": "customer_support",
+        "label": "Customer support",
+        "covers": "classifying tickets and customer intents, urgency, refunds, routing cases to a team, checking support replies",
+        "n": 389,
+        "open": 176,
+        "sealed": 213,
+        "low_n": false
+      },
+      {
+        "key": "insurance_claims",
+        "label": "Insurance claims",
+        "covers": "first-notice-of-loss reports, claim complexity, missing information, claim triage",
+        "n": 31,
+        "open": 14,
+        "sealed": 17,
+        "low_n": false
+      },
+      {
+        "key": "financial_crime",
+        "label": "Financial crime",
+        "covers": "suspicious transactions, KYC, fraud alerts, entity matching for investigations",
+        "n": 31,
+        "open": 10,
+        "sealed": 21,
+        "low_n": false
+      },
+      {
+        "key": "legal_compliance",
+        "label": "Legal and compliance",
+        "covers": "contracts, policies, regulations, eligibility rules, checking documents against written requirements",
+        "n": 508,
+        "open": 261,
+        "sealed": 247,
+        "low_n": false
+      },
+      {
+        "key": "ecommerce_marketplaces",
+        "label": "E-commerce marketplaces",
+        "covers": "product listings, product attributes, orders and deliveries, seller catalog policy",
+        "n": 71,
+        "open": 48,
+        "sealed": 23,
+        "low_n": false
+      },
+      {
+        "key": "moderation_trust_safety",
+        "label": "Moderation and trust and safety",
+        "covers": "user content moderation: toxicity, harassment, spam, unsafe advice, personal data exposure",
+        "n": 12,
+        "open": 5,
+        "sealed": 7,
+        "low_n": true
+      },
+      {
+        "key": "advertising",
+        "label": "Advertising",
+        "covers": "ad creatives, campaign copy, brand safety, prohibited claims in ads",
+        "n": 2,
+        "open": 0,
+        "sealed": 2,
+        "low_n": true
+      },
+      {
+        "key": "gaming",
+        "label": "Gaming",
+        "covers": "player reports, in-game chat, game support",
+        "n": 0,
+        "open": 0,
+        "sealed": 0,
+        "low_n": true
+      },
+      {
+        "key": "risk_assessment",
+        "label": "Risk assessment",
+        "covers": "estimating probabilities and severity of risks, incidents, vendor or underwriting risk",
+        "n": 78,
+        "open": 39,
+        "sealed": 39,
+        "low_n": false
+      },
+      {
+        "key": "demand_forecasting",
+        "label": "Demand forecasting",
+        "covers": "purchase intent, product interest, demand and supply signals for forecasting",
+        "n": 0,
+        "open": 0,
+        "sealed": 0,
+        "low_n": true
+      },
+      {
+        "key": "knowledge_graphs",
+        "label": "Graphs and knowledge graphs",
+        "covers": "entity types, relationships between records, contradictions between facts, multi-step lookups across linked facts",
+        "n": 15,
+        "open": 11,
+        "sealed": 4,
+        "low_n": false
+      },
+      {
+        "key": "other",
+        "label": "Other",
+        "covers": "none of the above: general reasoning, arithmetic or date puzzles, everyday assistant requests without a business workflow",
+        "n": 159,
+        "open": 76,
+        "sealed": 83,
+        "low_n": false
+      }
+    ]
+  },
+  "sources_sha256": {
+    "46": "e80f4ace7525aaed10c9baf680901127192cc47912a9bb1aa43f535481db1435",
+    "45": "44e9effe6145b16a87101527f9a7fae68f850343342b9027f1c3030a2d839c78",
+    "47": "01bbd2008796c0b9ee7ebf921c92b25618383597a4b276e37a0680027841fb0d",
+    "44": "b75b6d5f07a3d62dfbec8dd17337ade76851f414cea1565c1423d0539f9c89b7"
+  },
+  "systems": [
+    {
+      "key": "decision2-nox-4b",
+      "name": "Decision 2.0 Nox-4B (vLLM Semantic Router, vllm-sr/Decision-2.0-Nox-4B)",
+      "axes": {
+        "calibration": 86.5978470470875,
+        "cost": 63.68734543849802,
+        "intelligence": 53.684181399667196,
+        "speed": 90.95565844927393
+      },
+      "scores": {
+        "A": 70.33441052535805,
+        "B": 66.22636904985032,
+        "C": 56.306433753961755
+      },
+      "capability": 70.14101422337734,
+      "cost_usd_per_1000": 0.016233860837438423,
+      "cost_kind": "estimate",
+      "cost_basis": "price floor: base-model reference price applied; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)",
+      "latency": {
+        "n": 450,
+        "p50_adj": 0.23150667417794465,
+        "p50_raw": 0.04075333708897233,
+        "p95_adj": 0.3466335852630434,
+        "p95_raw": 0.0983167926315217
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "categories": {
+        "topics": {
+          "support_ops": {
+            "n": 282,
+            "competence": 75.63
+          },
+          "finance_commerce": {
+            "n": 224,
+            "competence": 67.08
+          },
+          "everyday_language": {
+            "n": 115,
+            "competence": 79.99
+          },
+          "safety_security": {
+            "n": 128,
+            "competence": 51.1
+          },
+          "law_policy": {
+            "n": 548,
+            "competence": 53.72
+          },
+          "math": {
+            "n": 235,
+            "competence": 31.34
+          },
+          "coding": {
+            "n": 92,
+            "competence": 60.87
+          }
+        },
+        "usecases": {
+          "customer_support": {
+            "n": 389,
+            "competence": 75.09
+          },
+          "other": {
+            "n": 159,
+            "competence": 16.43
+          },
+          "model_routing": {
+            "n": 132,
+            "competence": 92.9
+          },
+          "ecommerce_marketplaces": {
+            "n": 71,
+            "competence": 76.67
+          },
+          "search_retrieval": {
+            "n": 54,
+            "competence": 83.2
+          },
+          "legal_compliance": {
+            "n": 508,
+            "competence": 57.64
+          },
+          "lead_generation": {
+            "n": 98,
+            "competence": 64.54
+          },
+          "knowledge_graphs": {
+            "n": 15,
+            "competence": 82.16
+          },
+          "risk_assessment": {
+            "n": 78,
+            "competence": 60.81
+          },
+          "llm_guardrails": {
+            "n": 339,
+            "competence": 42.01
+          },
+          "code_linting": {
+            "n": 4,
+            "competence": 0.0
+          },
+          "insurance_claims": {
+            "n": 31,
+            "competence": 54.42
+          },
+          "financial_crime": {
+            "n": 31,
+            "competence": 45.28
+          },
+          "feature_extraction": {
+            "n": 7,
+            "competence": 100.0
+          },
+          "moderation_trust_safety": {
+            "n": 12,
+            "competence": 70.13
+          },
+          "recruiting": {
+            "n": 3,
+            "competence": 50.0
+          },
+          "scientific_discovery": {
+            "n": 1,
+            "competence": 100.0
+          },
+          "advertising": {
+            "n": 2,
+            "competence": 0.0
+          }
+        }
+      },
+      "base_model": "Qwen/Qwen3.5-4B-Base",
+      "source": {
+        "measurement_run": 45,
+        "scorer_sha256": "44e9effe6145b16a87101527f9a7fae68f850343342b9027f1c3030a2d839c78",
+        "raw_sha256": "c396caa40523c97b46e99eed88cf49ccb85a4c9e2ea66511eef47aec222654e7",
+        "scorer_run": 45
+      },
+      "repo": "https://huggingface.co/vllm-sr/Decision-2.0-Nox-4B",
+      "model_revision": "vllm-sr/Decision-2.0-Nox-4B@25e8f67d1b486c647222df3aac640d2d5d736bbe",
+      "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+      "gpu": "RTX PRO 6000 Blackwell 96 GB",
+      "measured_on": "2026-10-03",
+      "measurement_facts": "Merged rank-128 LoRA on all text projections of Qwen3.5-4B-Base plus a new candidate head; eight-seed weight soup. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained.",
+      "source_links": [
+        {
+          "url": "https://huggingface.co/vllm-sr/Decision-2.0-Nox-4B/blob/25e8f67d1b486c647222df3aac640d2d5d736bbe/README.md",
+          "title": "Pinned author model card"
+        }
+      ],
+      "source_metadata_sha256": "bd4c5e8a6b0b24d0124dcc39978b769b0fffd7f5118bec96f349c0045d2b4403",
+      "measurement_run": 45
+    },
+    {
+      "key": "decision2-lux-9b",
+      "name": "Decision 2.0 Lux-9B (vLLM Semantic Router, vllm-sr/Decision-2.0-Lux-9B)",
+      "axes": {
+        "calibration": 86.63111726285483,
+        "cost": 48.0009830800879,
+        "intelligence": 58.643049505811064,
+        "speed": 90.07900164374095
+      },
+      "scores": {
+        "A": 60.90473939371396,
+        "B": 59.39757091754623,
+        "C": 58.18106684989878
+      },
+      "capability": 72.63708338433295,
+      "cost_usd_per_1000": 0.05411286945812807,
+      "cost_kind": "estimate",
+      "cost_basis": "price floor: base-model reference price applied",
+      "latency": {
+        "n": 450,
+        "p50_adj": 0.24629959799349307,
+        "p50_raw": 0.04814979899674654,
+        "p95_adj": 0.3986907251179216,
+        "p95_raw": 0.12434536255896078
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "categories": {
+        "topics": {
+          "support_ops": {
+            "n": 282,
+            "competence": 80.04
+          },
+          "finance_commerce": {
+            "n": 224,
+            "competence": 68.13
+          },
+          "everyday_language": {
+            "n": 115,
+            "competence": 81.83
+          },
+          "safety_security": {
+            "n": 128,
+            "competence": 55.61
+          },
+          "law_policy": {
+            "n": 548,
+            "competence": 59.64
+          },
+          "math": {
+            "n": 235,
+            "competence": 30.49
+          },
+          "coding": {
+            "n": 92,
+            "competence": 68.09
+          }
+        },
+        "usecases": {
+          "customer_support": {
+            "n": 389,
+            "competence": 82.62
+          },
+          "other": {
+            "n": 159,
+            "competence": 13.81
+          },
+          "model_routing": {
+            "n": 132,
+            "competence": 93.79
+          },
+          "ecommerce_marketplaces": {
+            "n": 71,
+            "competence": 73.62
+          },
+          "search_retrieval": {
+            "n": 54,
+            "competence": 86.47
+          },
+          "legal_compliance": {
+            "n": 508,
+            "competence": 58.86
+          },
+          "lead_generation": {
+            "n": 98,
+            "competence": 68.39
+          },
+          "knowledge_graphs": {
+            "n": 15,
+            "competence": 91.08
+          },
+          "risk_assessment": {
+            "n": 78,
+            "competence": 66.85
+          },
+          "llm_guardrails": {
+            "n": 339,
+            "competence": 54.19
+          },
+          "code_linting": {
+            "n": 4,
+            "competence": 0.0
+          },
+          "insurance_claims": {
+            "n": 31,
+            "competence": 54.42
+          },
+          "financial_crime": {
+            "n": 31,
+            "competence": 50.7
+          },
+          "feature_extraction": {
+            "n": 7,
+            "competence": 100.0
+          },
+          "moderation_trust_safety": {
+            "n": 12,
+            "competence": 72.88
+          },
+          "recruiting": {
+            "n": 3,
+            "competence": -16.67
+          },
+          "scientific_discovery": {
+            "n": 1,
+            "competence": 100.0
+          },
+          "advertising": {
+            "n": 2,
+            "competence": 0.0
+          }
+        }
+      },
+      "base_model": "Qwen/Qwen3.5-9B",
+      "source": {
+        "measurement_run": 45,
+        "scorer_sha256": "44e9effe6145b16a87101527f9a7fae68f850343342b9027f1c3030a2d839c78",
+        "raw_sha256": "9b829de1266fa69a03a52ea0c9c1aa7633c60b9d67e60b88485129c4e38e46f5",
+        "scorer_run": 45
+      },
+      "repo": "https://huggingface.co/vllm-sr/Decision-2.0-Lux-9B",
+      "model_revision": "vllm-sr/Decision-2.0-Lux-9B@78bf3c03d9147aeb30b641edfe0e30ed04887ca5",
+      "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+      "gpu": "RTX PRO 6000 Blackwell 96 GB",
+      "measured_on": "2026-10-03",
+      "measurement_facts": "Full fine-tune of Decision-1.0-Lux-9B with soft targets; Qwen3.5-9B lineage. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained.",
+      "source_links": [
+        {
+          "url": "https://huggingface.co/vllm-sr/Decision-2.0-Lux-9B/blob/78bf3c03d9147aeb30b641edfe0e30ed04887ca5/README.md",
+          "title": "Pinned author model card"
+        }
+      ],
+      "source_metadata_sha256": "26778eed712449578288e5e2f24e212466603cc0f827a49651640b02a1de0b7f",
+      "measurement_run": 45
+    },
+    {
+      "key": "noma",
+      "name": "Noma (Blackdrome AI Labs)",
+      "axes": {
+        "calibration": 87.01609769014757,
+        "cost": 62.3327222840893,
+        "intelligence": 47.49667405792226,
+        "speed": 93.2306676574001
+      },
+      "scores": {
+        "A": 60.85271825555212,
+        "B": 56.13915643167472,
+        "C": 42.2588321219112
+      },
+      "capability": 67.25638587403492,
+      "cost_usd_per_1000": 0.018012580049261085,
+      "cost_kind": "estimate",
+      "cost_basis": "price floor: base-model reference price applied; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)",
+      "latency": {
+        "n": 450,
+        "p50_adj": 0.19894134309142827,
+        "p50_raw": 0.02447067154571414,
+        "p95_adj": 0.2388956207316368,
+        "p95_raw": 0.04444781036581841
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "categories": {
+        "topics": {
+          "support_ops": {
+            "n": 282,
+            "competence": 74.46
+          },
+          "finance_commerce": {
+            "n": 224,
+            "competence": 63.49
+          },
+          "everyday_language": {
+            "n": 115,
+            "competence": 86.25
+          },
+          "safety_security": {
+            "n": 128,
+            "competence": 46.74
+          },
+          "law_policy": {
+            "n": 548,
+            "competence": 46.13
+          },
+          "math": {
+            "n": 235,
+            "competence": 17.81
+          },
+          "coding": {
+            "n": 92,
+            "competence": 48.26
+          }
+        },
+        "usecases": {
+          "customer_support": {
+            "n": 389,
+            "competence": 71.3
+          },
+          "other": {
+            "n": 159,
+            "competence": 5.59
+          },
+          "model_routing": {
+            "n": 132,
+            "competence": 92.9
+          },
+          "ecommerce_marketplaces": {
+            "n": 71,
+            "competence": 78.66
+          },
+          "search_retrieval": {
+            "n": 54,
+            "competence": 80.11
+          },
+          "legal_compliance": {
+            "n": 508,
+            "competence": 48.43
+          },
+          "lead_generation": {
+            "n": 98,
+            "competence": 68.46
+          },
+          "knowledge_graphs": {
+            "n": 15,
+            "competence": 82.16
+          },
+          "risk_assessment": {
+            "n": 78,
+            "competence": 52.45
+          },
+          "llm_guardrails": {
+            "n": 339,
+            "competence": 29.03
+          },
+          "code_linting": {
+            "n": 4,
+            "competence": 0.0
+          },
+          "insurance_claims": {
+            "n": 31,
+            "competence": 50.05
+          },
+          "financial_crime": {
+            "n": 31,
+            "competence": 47.1
+          },
+          "feature_extraction": {
+            "n": 7,
+            "competence": 100.0
+          },
+          "moderation_trust_safety": {
+            "n": 12,
+            "competence": 40.28
+          },
+          "recruiting": {
+            "n": 3,
+            "competence": 100.0
+          },
+          "scientific_discovery": {
+            "n": 1,
+            "competence": 100.0
+          },
+          "advertising": {
+            "n": 2,
+            "competence": 0.0
+          }
+        }
+      },
+      "base_model": "Qwen/Qwen3.5-4B-Base",
+      "source": {
+        "measurement_run": 46,
+        "scorer_sha256": "e80f4ace7525aaed10c9baf680901127192cc47912a9bb1aa43f535481db1435",
+        "raw_sha256": "86a3e646ddaf7c3a0a3cac142e8f18bc9cc2de84ca025c6684a7c916ecd35ead",
+        "scorer_run": 46
+      },
+      "repo": "https://huggingface.co/BlackdromeAILabs/noma",
+      "model_revision": "BlackdromeAILabs/noma@fac0429688a137ce451a27ad34d05e9fd47fb624",
+      "licence": "MPL-2.0 weights and code; Apache-2.0 base",
+      "gpu": "RTX PRO 6000 Blackwell 96 GB",
+      "measured_on": "2026-10-03",
+      "measurement_facts": "First 18 of 32 Qwen3.5-4B-Base layers with a merged LoRA and four bootstrap-trained scorer heads. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained.",
+      "source_links": [
+        {
+          "url": "https://huggingface.co/BlackdromeAILabs/noma/blob/fac0429688a137ce451a27ad34d05e9fd47fb624/README.md",
+          "title": "Pinned author model card"
+        }
+      ],
+      "source_metadata_sha256": "aa9386cc6e4181c8551fa4560a09a462524ec54b3d892cacd36164ef8e1c7111",
+      "measurement_run": 46
+    },
+    {
+      "key": "fastsem-jev-l16r25",
+      "name": "fastsem-jev l16r25 (KoshiBebop)",
+      "axes": {
+        "calibration": 83.50547448745453,
+        "cost": 63.07359395281681,
+        "intelligence": 46.29922900940093,
+        "speed": 88.1225538088535
+      },
+      "scores": {
+        "A": 56.433085560378785,
+        "B": 52.04546028115148,
+        "C": 39.18964275026305
+      },
+      "capability": 64.90235174842773,
+      "cost_usd_per_1000": 0.01701689039408867,
+      "cost_kind": "estimate",
+      "cost_basis": "price floor: base-model reference price applied; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)",
+      "latency": {
+        "n": 450,
+        "p50_adj": 0.35131060271523895,
+        "p50_raw": 0.10065530135761946,
+        "p95_adj": 0.4385845835087818,
+        "p95_raw": 0.1442922917543909
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "categories": {
+        "topics": {
+          "support_ops": {
+            "n": 282,
+            "competence": 73.17
+          },
+          "finance_commerce": {
+            "n": 224,
+            "competence": 62.44
+          },
+          "everyday_language": {
+            "n": 115,
+            "competence": 91.8
+          },
+          "safety_security": {
+            "n": 128,
+            "competence": 33.53
+          },
+          "law_policy": {
+            "n": 548,
+            "competence": 47.44
+          },
+          "math": {
+            "n": 235,
+            "competence": 2.1
+          },
+          "coding": {
+            "n": 92,
+            "competence": 63.46
+          }
+        },
+        "usecases": {
+          "customer_support": {
+            "n": 389,
+            "competence": 71.55
+          },
+          "other": {
+            "n": 159,
+            "competence": 6.64
+          },
+          "model_routing": {
+            "n": 132,
+            "competence": 100.0
+          },
+          "ecommerce_marketplaces": {
+            "n": 71,
+            "competence": 77.71
+          },
+          "search_retrieval": {
+            "n": 54,
+            "competence": 77.49
+          },
+          "legal_compliance": {
+            "n": 508,
+            "competence": 47.91
+          },
+          "lead_generation": {
+            "n": 98,
+            "competence": 61.89
+          },
+          "knowledge_graphs": {
+            "n": 15,
+            "competence": 73.24
+          },
+          "risk_assessment": {
+            "n": 78,
+            "competence": 53.83
+          },
+          "llm_guardrails": {
+            "n": 339,
+            "competence": 24.1
+          },
+          "code_linting": {
+            "n": 4,
+            "competence": 0.0
+          },
+          "insurance_claims": {
+            "n": 31,
+            "competence": 41.31
+          },
+          "financial_crime": {
+            "n": 31,
+            "competence": 53.1
+          },
+          "feature_extraction": {
+            "n": 7,
+            "competence": 35.71
+          },
+          "moderation_trust_safety": {
+            "n": 12,
+            "competence": 62.84
+          },
+          "recruiting": {
+            "n": 3,
+            "competence": -83.33
+          },
+          "scientific_discovery": {
+            "n": 1,
+            "competence": 100.0
+          },
+          "advertising": {
+            "n": 2,
+            "competence": 0.0
+          }
+        }
+      },
+      "base_model": "Qwen/Qwen3.5-4B",
+      "source": {
+        "measurement_run": 46,
+        "scorer_sha256": "e80f4ace7525aaed10c9baf680901127192cc47912a9bb1aa43f535481db1435",
+        "raw_sha256": "d8e824680c36a3a044838f4ebf6bbb55aa52a2ff2782d1961cca504730e2918b",
+        "scorer_run": 46
+      },
+      "repo": "https://github.com/KoshiBebop/fastsem-jev",
+      "model_revision": "Qwen/Qwen3.5-4B@851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a + KoshiBebop/fastsem-jev@1f1f70f61b9b10d3f094d2e24c5ff6e5d6c702c8",
+      "licence": "MIT inference code; Apache-2.0 base weights",
+      "gpu": "RTX PRO 6000 Blackwell 96 GB",
+      "measured_on": "2026-10-04",
+      "measurement_facts": "Training-free inference method on frozen Qwen3.5-4B weights, using the author l16r25 configuration in process. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained.",
+      "source_links": [
+        {
+          "url": "https://github.com/KoshiBebop/fastsem-jev/blob/1f1f70f61b9b10d3f094d2e24c5ff6e5d6c702c8/README.md",
+          "title": "Pinned author repository"
+        },
+        {
+          "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/README.md",
+          "title": "Pinned runtime or backbone"
+        }
+      ],
+      "source_metadata_sha256": "6575a0cb2f4f8378b1cbcd97be83152e1822fa386f1fc14177f540619f496792",
+      "measurement_run": 46
+    },
+    {
+      "key": "kev-9b-v2",
+      "name": "Kev-9B v2 / Kev 1.0 (Jared Palmer, Qwen3.5-9B-Base + LoRA r16 + pointer head)",
+      "axes": {
+        "calibration": 87.19878550276475,
+        "cost": 46.11682368072457,
+        "intelligence": 57.667556235493734,
+        "speed": 89.13585671962917
+      },
+      "scores": {
+        "A": 55.140557923657845,
+        "B": 53.8063136652321,
+        "C": 50.93681091856534
+      },
+      "capability": 72.43317086912924,
+      "cost_usd_per_1000": 0.06253251231527093,
+      "cost_kind": "estimate",
+      "cost_basis": "price floor: base-model reference price applied",
+      "latency": {
+        "n": 450,
+        "p50_adj": 0.2434531430248171,
+        "p50_raw": 0.046726571512408555,
+        "p95_adj": 0.5011860130121928,
+        "p95_raw": 0.17559300650609638
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "categories": {
+        "topics": {
+          "support_ops": {
+            "n": 282,
+            "competence": 81.24
+          },
+          "finance_commerce": {
+            "n": 224,
+            "competence": 74.41
+          },
+          "everyday_language": {
+            "n": 115,
+            "competence": 81.92
+          },
+          "safety_security": {
+            "n": 128,
+            "competence": 47.89
+          },
+          "law_policy": {
+            "n": 548,
+            "competence": 59.92
+          },
+          "math": {
+            "n": 235,
+            "competence": 32.42
+          },
+          "coding": {
+            "n": 92,
+            "competence": 58.94
+          }
+        },
+        "usecases": {
+          "customer_support": {
+            "n": 389,
+            "competence": 81.84
+          },
+          "other": {
+            "n": 159,
+            "competence": 15.42
+          },
+          "model_routing": {
+            "n": 132,
+            "competence": 93.79
+          },
+          "ecommerce_marketplaces": {
+            "n": 71,
+            "competence": 75.72
+          },
+          "search_retrieval": {
+            "n": 54,
+            "competence": 86.09
+          },
+          "legal_compliance": {
+            "n": 508,
+            "competence": 63.39
+          },
+          "lead_generation": {
+            "n": 98,
+            "competence": 70.49
+          },
+          "knowledge_graphs": {
+            "n": 15,
+            "competence": 91.08
+          },
+          "risk_assessment": {
+            "n": 78,
+            "competence": 64.05
+          },
+          "llm_guardrails": {
+            "n": 339,
+            "competence": 46.9
+          },
+          "code_linting": {
+            "n": 4,
+            "competence": 0.0
+          },
+          "insurance_claims": {
+            "n": 31,
+            "competence": 67.53
+          },
+          "financial_crime": {
+            "n": 31,
+            "competence": 50.18
+          },
+          "feature_extraction": {
+            "n": 7,
+            "competence": 100.0
+          },
+          "moderation_trust_safety": {
+            "n": 12,
+            "competence": 61.06
+          },
+          "recruiting": {
+            "n": 3,
+            "competence": 33.33
+          },
+          "scientific_discovery": {
+            "n": 1,
+            "competence": 100.0
+          },
+          "advertising": {
+            "n": 2,
+            "competence": 100.0
+          }
+        }
+      },
+      "base_model": "Qwen/Qwen3.5-9B-Base",
+      "source": {
+        "measurement_run": 44,
+        "scorer_sha256": "45f3a277420721ef5d0707bba8c630b0ff39b89cc221f94c344edd96e0234986",
+        "raw_sha256": "c0879379cf55ce067702f5c84e8ba1b779a037924d3790d45cf5158de32201fe",
+        "scorer_run": 44
+      },
+      "repo": "https://huggingface.co/jaredpalmer/kev-9b",
+      "model_revision": "jaredpalmer/kev-9b@b5d8c18e44c60888d138b65cb6507ff0a5a448a0 + Qwen/Qwen3.5-9B-Base@68c46c4b3498877f3ef123c856ecfde50c39f404",
+      "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+      "gpu": "H100 80 GB",
+      "measured_on": "2026-10-03",
+      "measurement_facts": "Rank-16 LoRA and pointer head; author runtime with KEV_FUSED=0 because the published serving lock omits the fused-kernel dependency. Stored head temperature retained. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained.",
+      "source_links": [
+        {
+          "url": "https://huggingface.co/jaredpalmer/kev-9b/blob/b5d8c18e44c60888d138b65cb6507ff0a5a448a0/README.md",
+          "title": "Pinned author model card"
+        },
+        {
+          "url": "https://huggingface.co/Qwen/Qwen3.5-9B-Base/blob/68c46c4b3498877f3ef123c856ecfde50c39f404/README.md",
+          "title": "Pinned runtime or backbone"
+        }
+      ],
+      "source_metadata_sha256": "d47f2f4feda3efa11864f81044298d38619df32da5346e8af82bc996e44acc2f",
+      "measurement_run": 44
+    },
+    {
+      "key": "janus-35b-a3b",
+      "name": "janus 35B-A3B (Icarus AI / cmxu, NVFP4 MoE + LoRA r64 and pointer decision head)",
+      "axes": {
+        "calibration": 88.40474342068224,
+        "cost": 43.445511011348486,
+        "intelligence": 66.48035847556821,
+        "speed": 90.87480903292285
+      },
+      "scores": {
+        "A": 50.02092186590444,
+        "B": 50.05524325838078,
+        "C": 50.02092186590444
+      },
+      "capability": 77.44255094812522,
+      "cost_usd_per_1000": 0.07676259236453202,
+      "cost_kind": "estimate",
+      "cost_basis": "price floor: base-model reference price applied",
+      "latency": {
+        "n": 450,
+        "p50_adj": 0.2501373138278723,
+        "p50_raw": 0.05006865691393614,
+        "p95_adj": 0.32684407383203495,
+        "p95_raw": 0.08842203691601747
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "categories": {
+        "topics": {
+          "support_ops": {
+            "n": 282,
+            "competence": 84.32
+          },
+          "finance_commerce": {
+            "n": 224,
+            "competence": 76.86
+          },
+          "everyday_language": {
+            "n": 115,
+            "competence": 97.63
+          },
+          "safety_security": {
+            "n": 128,
+            "competence": 66.46
+          },
+          "law_policy": {
+            "n": 548,
+            "competence": 72.26
+          },
+          "math": {
+            "n": 235,
+            "competence": 27.61
+          },
+          "coding": {
+            "n": 92,
+            "competence": 74.67
+          }
+        },
+        "usecases": {
+          "customer_support": {
+            "n": 389,
+            "competence": 86.9
+          },
+          "other": {
+            "n": 159,
+            "competence": 21.66
+          },
+          "model_routing": {
+            "n": 132,
+            "competence": 100.0
+          },
+          "ecommerce_marketplaces": {
+            "n": 71,
+            "competence": 84.11
+          },
+          "search_retrieval": {
+            "n": 54,
+            "competence": 93.36
+          },
+          "legal_compliance": {
+            "n": 508,
+            "competence": 70.75
+          },
+          "lead_generation": {
+            "n": 98,
+            "competence": 75.77
+          },
+          "knowledge_graphs": {
+            "n": 15,
+            "competence": 82.16
+          },
+          "risk_assessment": {
+            "n": 78,
+            "competence": 69.84
+          },
+          "llm_guardrails": {
+            "n": 339,
+            "competence": 62.24
+          },
+          "code_linting": {
+            "n": 4,
+            "competence": 100.0
+          },
+          "insurance_claims": {
+            "n": 31,
+            "competence": 67.53
+          },
+          "financial_crime": {
+            "n": 31,
+            "competence": 57.29
+          },
+          "feature_extraction": {
+            "n": 7,
+            "competence": 100.0
+          },
+          "moderation_trust_safety": {
+            "n": 12,
+            "competence": 99.98
+          },
+          "recruiting": {
+            "n": 3,
+            "competence": 100.0
+          },
+          "scientific_discovery": {
+            "n": 1,
+            "competence": 100.0
+          },
+          "advertising": {
+            "n": 2,
+            "competence": 0.0
+          }
+        }
+      },
+      "base_model": "Qwen/Qwen3.6-35B-A3B",
+      "source": {
+        "measurement_run": 47,
+        "scorer_sha256": "01bbd2008796c0b9ee7ebf921c92b25618383597a4b276e37a0680027841fb0d",
+        "raw_sha256": "38328502afa05fb2a3175148cb87b057214e29a39757fb8fc3f657f84b4f130d",
+        "scorer_run": 47
+      },
+      "repo": "https://huggingface.co/cmxu/janus-35b-a3b",
+      "model_revision": "cmxu/janus-35b-a3b@a79c5af14957b4f4bcc2c950ddd47846201418ba + nvidia/Qwen3.6-35B-A3B-NVFP4@1355db6a052410cfd62085d94b58866fd0f2c3c5",
+      "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+      "gpu": "RTX PRO 6000 Blackwell 96 GB",
+      "measured_on": "2026-10-04",
+      "measurement_facts": "NVFP4 Qwen3.6-35B-A3B backbone with rank-64 LoRA and pointer head, measured on Blackwell hardware required by the routed-expert kernel. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained.",
+      "source_links": [
+        {
+          "url": "https://huggingface.co/cmxu/janus-35b-a3b/blob/a79c5af14957b4f4bcc2c950ddd47846201418ba/README.md",
+          "title": "Pinned author model card"
+        },
+        {
+          "url": "https://huggingface.co/nvidia/Qwen3.6-35B-A3B-NVFP4/blob/1355db6a052410cfd62085d94b58866fd0f2c3c5/README.md",
+          "title": "Pinned runtime or backbone"
+        }
+      ],
+      "source_metadata_sha256": "53f9d99f8bedfc1e79b544a1d54334cd5b0cb5ec3fe20512eb6c5dcb2ad8b70e",
+      "measurement_run": 47
+    },
+    {
+      "key": "coco-decision-4b-ko",
+      "name": "CoCo-Decision-4B-Ko (corners.ai)",
+      "axes": {
+        "calibration": 82.84218462320095,
+        "cost": 64.622936859839,
+        "intelligence": 40.612254708637295,
+        "speed": 86.32319713059863
+      },
+      "scores": {
+        "A": 41.39362926431907,
+        "B": 37.32581333698918,
+        "C": 28.745575877999347
+      },
+      "capability": 61.72721966591912,
+      "cost_usd_per_1000": 0.015108990147783254,
+      "cost_kind": "estimate",
+      "cost_basis": "price floor: base-model reference price applied; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)",
+      "latency": {
+        "n": 450,
+        "p50_adj": 0.4034725689329207,
+        "p50_raw": 0.12673628446646035,
+        "p95_adj": 0.5779180693440139,
+        "p95_raw": 0.21395903467200694
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "categories": {
+        "topics": {
+          "support_ops": {
+            "n": 282,
+            "competence": 75.11
+          },
+          "finance_commerce": {
+            "n": 224,
+            "competence": 66.37
+          },
+          "everyday_language": {
+            "n": 115,
+            "competence": 80.18
+          },
+          "safety_security": {
+            "n": 128,
+            "competence": 32.6
+          },
+          "law_policy": {
+            "n": 548,
+            "competence": 51.62
+          },
+          "math": {
+            "n": 235,
+            "competence": -21.13
+          },
+          "coding": {
+            "n": 92,
+            "competence": 36.65
+          }
+        },
+        "usecases": {
+          "customer_support": {
+            "n": 389,
+            "competence": 73.75
+          },
+          "other": {
+            "n": 159,
+            "competence": 14.86
+          },
+          "model_routing": {
+            "n": 132,
+            "competence": 92.9
+          },
+          "ecommerce_marketplaces": {
+            "n": 71,
+            "competence": 83.19
+          },
+          "search_retrieval": {
+            "n": 54,
+            "competence": 73.01
+          },
+          "legal_compliance": {
+            "n": 508,
+            "competence": 51.72
+          },
+          "lead_generation": {
+            "n": 98,
+            "competence": 64.25
+          },
+          "knowledge_graphs": {
+            "n": 15,
+            "competence": 91.08
+          },
+          "risk_assessment": {
+            "n": 78,
+            "competence": 59.55
+          },
+          "llm_guardrails": {
+            "n": 339,
+            "competence": -15.63
+          },
+          "code_linting": {
+            "n": 4,
+            "competence": 50.0
+          },
+          "insurance_claims": {
+            "n": 31,
+            "competence": 73.99
+          },
+          "financial_crime": {
+            "n": 31,
+            "competence": 56.27
+          },
+          "feature_extraction": {
+            "n": 7,
+            "competence": 100.0
+          },
+          "moderation_trust_safety": {
+            "n": 12,
+            "competence": 84.12
+          },
+          "recruiting": {
+            "n": 3,
+            "competence": 33.33
+          },
+          "scientific_discovery": {
+            "n": 1,
+            "competence": 100.0
+          },
+          "advertising": {
+            "n": 2,
+            "competence": 0.0
+          }
+        }
+      },
+      "base_model": "Qwen/Qwen3.5-4B",
+      "source": {
+        "measurement_run": 46,
+        "scorer_sha256": "e80f4ace7525aaed10c9baf680901127192cc47912a9bb1aa43f535481db1435",
+        "raw_sha256": "ffcaf91edafc3e1006d2cd9eea75141b58905c2a3da042079a48d88a39ce17a9",
+        "scorer_run": 46
+      },
+      "repo": "https://huggingface.co/corners-ai/CoCo-Decision-4B-Ko",
+      "model_revision": "corners-ai/CoCo-Decision-4B-Ko@24aea6387d344babb59f1ee26acc7ac37b02aee5 + Qwen/Qwen3.5-4B@851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+      "gpu": "RTX PRO 6000 Blackwell 96 GB",
+      "measured_on": "2026-10-04",
+      "measurement_facts": "Korean/English rank-16 LoRA served unmerged by the author oh-my-jev engine. The 96 GB card used bf16; the engine's optional nf4 fallback did not trigger. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained.",
+      "source_links": [
+        {
+          "url": "https://huggingface.co/corners-ai/CoCo-Decision-4B-Ko/blob/24aea6387d344babb59f1ee26acc7ac37b02aee5/README.md",
+          "title": "Pinned author model card"
+        },
+        {
+          "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/README.md",
+          "title": "Pinned runtime or backbone"
+        }
+      ],
+      "source_metadata_sha256": "2de4c51b601175d6b4b7f4ddc1d73f130bcd0a2a67fb73d0d410b5cafe4b0017",
+      "measurement_run": 46
+    },
+    {
+      "key": "reflex-reason-2b",
+      "name": "Reflex Reason 2B (Atlas AI, Qwen3-VL-2B-Instruct + LoRA, think-then-letter)",
+      "axes": {
+        "calibration": 80.46362218394522,
+        "cost": 52.99354502840993,
+        "intelligence": 34.85059428557072,
+        "speed": 62.310585947032
+      },
+      "scores": {
+        "A": 25.55606338973295,
+        "B": 23.19315953226542,
+        "C": 17.747266242870097
+      },
+      "capability": 57.65710823475797,
+      "cost_usd_per_1000": 0.03688772167487685,
+      "cost_kind": "estimate",
+      "cost_basis": "documented hosted-model estimate; no exact base-model floor applies",
+      "latency": {
+        "n": 450,
+        "p50_adj": 5.462089673941955,
+        "p50_raw": 2.6560448369709775,
+        "p95_adj": 10.754310699668713,
+        "p95_raw": 5.302155349834356
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "categories": {
+        "topics": {
+          "support_ops": {
+            "n": 282,
+            "competence": 52.44
+          },
+          "finance_commerce": {
+            "n": 224,
+            "competence": 49.19
+          },
+          "everyday_language": {
+            "n": 115,
+            "competence": 74.46
+          },
+          "safety_security": {
+            "n": 128,
+            "competence": 15.53
+          },
+          "law_policy": {
+            "n": 548,
+            "competence": 27.31
+          },
+          "math": {
+            "n": 235,
+            "competence": 31.22
+          },
+          "coding": {
+            "n": 92,
+            "competence": 67.78
+          }
+        },
+        "usecases": {
+          "customer_support": {
+            "n": 389,
+            "competence": 50.85
+          },
+          "other": {
+            "n": 159,
+            "competence": 19.97
+          },
+          "model_routing": {
+            "n": 132,
+            "competence": 80.47
+          },
+          "ecommerce_marketplaces": {
+            "n": 71,
+            "competence": 71.12
+          },
+          "search_retrieval": {
+            "n": 54,
+            "competence": 57.34
+          },
+          "legal_compliance": {
+            "n": 508,
+            "competence": 30.37
+          },
+          "lead_generation": {
+            "n": 98,
+            "competence": 45.44
+          },
+          "knowledge_graphs": {
+            "n": 15,
+            "competence": 55.4
+          },
+          "risk_assessment": {
+            "n": 78,
+            "competence": 36.43
+          },
+          "llm_guardrails": {
+            "n": 339,
+            "competence": 29.24
+          },
+          "code_linting": {
+            "n": 4,
+            "competence": 19.49
+          },
+          "insurance_claims": {
+            "n": 31,
+            "competence": 23.83
+          },
+          "financial_crime": {
+            "n": 31,
+            "competence": 8.79
+          },
+          "feature_extraction": {
+            "n": 7,
+            "competence": 78.57
+          },
+          "moderation_trust_safety": {
+            "n": 12,
+            "competence": 42.92
+          },
+          "recruiting": {
+            "n": 3,
+            "competence": -16.67
+          },
+          "scientific_discovery": {
+            "n": 1,
+            "competence": -33.33
+          },
+          "advertising": {
+            "n": 2,
+            "competence": 0.0
+          }
+        }
+      },
+      "base_model": "Qwen/Qwen3-VL-2B-Instruct",
+      "source": {
+        "measurement_run": 44,
+        "scorer_sha256": "b52a19d505f367cde7eb4f0cbf34f7fd2166c4be511b78a0763ad4d924daa0eb",
+        "raw_sha256": "01dfd005a14d8dadcfe37e8ba246ab8c244de990debf545dca316a2d98c7f72b",
+        "scorer_run": 44
+      },
+      "repo": "https://huggingface.co/Atlas-AI-research/reflex-reason-2b",
+      "model_revision": "Atlas-AI-research/reflex-reason-2b@f69b5637faf157ddd7f336a3999325aa7b36668d + Qwen/Qwen3-VL-2B-Instruct@89644892e4d85e24eaac8bacfd4f463576704203",
+      "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+      "gpu": "RTX 5090",
+      "measured_on": "2026-10-03",
+      "measurement_facts": "Pinned Qwen3-VL-2B-Instruct adapter and decision head, served by the author runtime. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained.",
+      "source_links": [
+        {
+          "url": "https://huggingface.co/Atlas-AI-research/reflex-reason-2b/blob/f69b5637faf157ddd7f336a3999325aa7b36668d/README.md",
+          "title": "Pinned author model card"
+        },
+        {
+          "url": "https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct/blob/89644892e4d85e24eaac8bacfd4f463576704203/README.md",
+          "title": "Pinned runtime or backbone"
+        }
+      ],
+      "source_metadata_sha256": "a8904ab018a972adb4e74c8469047dc8935351a7ec8a3a965baee8e987fb3347",
+      "measurement_run": 44
+    },
+    {
+      "key": "decision2-vega-27b",
+      "name": "Decision 2.0 Vega-27B (vLLM Semantic Router, vllm-sr/Decision-2.0-Vega-27B)",
+      "axes": {
+        "calibration": 81.48945821910768,
+        "cost": 29.303504368150882,
+        "intelligence": 70.60748659045751,
+        "speed": 83.03048920306819
+      },
+      "scores": {
+        "A": 18.923448817636984,
+        "B": 19.793243458904605,
+        "C": 18.923448817636984
+      },
+      "capability": 76.04847240478259,
+      "cost_usd_per_1000": 0.22727405172413792,
+      "cost_kind": "estimate",
+      "cost_basis": "price floor: base-model reference price applied",
+      "latency": {
+        "n": 450,
+        "p50_adj": 0.47942719105631115,
+        "p50_raw": 0.16471359552815557,
+        "p95_adj": 1.0380742493085555,
+        "p95_raw": 0.4440371246542778
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "categories": {
+        "topics": {
+          "support_ops": {
+            "n": 282,
+            "competence": 89.22
+          },
+          "finance_commerce": {
+            "n": 224,
+            "competence": 78.08
+          },
+          "everyday_language": {
+            "n": 115,
+            "competence": 95.17
+          },
+          "safety_security": {
+            "n": 128,
+            "competence": 79.34
+          },
+          "law_policy": {
+            "n": 548,
+            "competence": 77.51
+          },
+          "math": {
+            "n": 235,
+            "competence": 28.94
+          },
+          "coding": {
+            "n": 92,
+            "competence": 69.29
+          }
+        },
+        "usecases": {
+          "customer_support": {
+            "n": 389,
+            "competence": 89.48
+          },
+          "other": {
+            "n": 159,
+            "competence": 22.06
+          },
+          "model_routing": {
+            "n": 132,
+            "competence": 100.0
+          },
+          "ecommerce_marketplaces": {
+            "n": 71,
+            "competence": 89.51
+          },
+          "search_retrieval": {
+            "n": 54,
+            "competence": 85.24
+          },
+          "legal_compliance": {
+            "n": 508,
+            "competence": 79.48
+          },
+          "lead_generation": {
+            "n": 98,
+            "competence": 79.28
+          },
+          "knowledge_graphs": {
+            "n": 15,
+            "competence": 82.16
+          },
+          "risk_assessment": {
+            "n": 78,
+            "competence": 76.69
+          },
+          "llm_guardrails": {
+            "n": 339,
+            "competence": 65.78
+          },
+          "code_linting": {
+            "n": 4,
+            "competence": 100.0
+          },
+          "insurance_claims": {
+            "n": 31,
+            "competence": 71.9
+          },
+          "financial_crime": {
+            "n": 31,
+            "competence": 70.35
+          },
+          "feature_extraction": {
+            "n": 7,
+            "competence": 100.0
+          },
+          "moderation_trust_safety": {
+            "n": 12,
+            "competence": 63.21
+          },
+          "recruiting": {
+            "n": 3,
+            "competence": 100.0
+          },
+          "scientific_discovery": {
+            "n": 1,
+            "competence": 100.0
+          },
+          "advertising": {
+            "n": 2,
+            "competence": 0.0
+          }
+        }
+      },
+      "base_model": "Qwen/Qwen3.8-27B",
+      "source": {
+        "measurement_run": 45,
+        "scorer_sha256": "44e9effe6145b16a87101527f9a7fae68f850343342b9027f1c3030a2d839c78",
+        "raw_sha256": "2f84466515a91d03a42206983fa873828c20be3873835eeeb33c5b83b2fe8259",
+        "scorer_run": 45
+      },
+      "repo": "https://huggingface.co/vllm-sr/Decision-2.0-Vega-27B",
+      "model_revision": "vllm-sr/Decision-2.0-Vega-27B@7aec49ae11a18741706da549ab626b9052795fe7 + Qwen/Qwen3.8-27B@1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0",
+      "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+      "gpu": "RTX PRO 6000 Blackwell 96 GB",
+      "measured_on": "2026-10-03",
+      "measurement_facts": "Rank-64 LoRA and candidate head on the pinned Qwen3.8-27B backbone; base is loaded separately. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained.",
+      "source_links": [
+        {
+          "url": "https://huggingface.co/vllm-sr/Decision-2.0-Vega-27B/blob/7aec49ae11a18741706da549ab626b9052795fe7/README.md",
+          "title": "Pinned author model card"
+        },
+        {
+          "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/README.md",
+          "title": "Pinned runtime or backbone"
+        }
+      ],
+      "source_metadata_sha256": "396b8054e4a3b979d2472f2c3c332ac4bafcc5b43b29664c45eaacfa1eac429f",
+      "measurement_run": 45
+    },
+    {
+      "key": "decision2-sol-2b",
+      "name": "Decision 2.0 Sol-2B (vLLM Semantic Router, vllm-sr/Decision-2.0-Sol-2B)",
+      "axes": {
+        "calibration": 83.90314346262636,
+        "cost": 68.97008321016847,
+        "intelligence": 26.550538007037897,
+        "speed": 92.66664771779828
+      },
+      "scores": {
+        "A": 15.06405118234698,
+        "B": 12.527992668734038,
+        "C": 10.461146654407623
+      },
+      "capability": 55.22684073483213,
+      "cost_usd_per_1000": 0.010822573891625616,
+      "cost_kind": "estimate",
+      "cost_basis": "price floor: base-model reference price applied",
+      "latency": {
+        "n": 450,
+        "p50_adj": 0.2082798644900322,
+        "p50_raw": 0.029139932245016098,
+        "p95_adj": 0.2598291913978754,
+        "p95_raw": 0.054914595698937724
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "categories": {
+        "topics": {
+          "support_ops": {
+            "n": 282,
+            "competence": 60.52
+          },
+          "finance_commerce": {
+            "n": 224,
+            "competence": 49.95
+          },
+          "everyday_language": {
+            "n": 115,
+            "competence": 66.81
+          },
+          "safety_security": {
+            "n": 128,
+            "competence": 14.31
+          },
+          "law_policy": {
+            "n": 548,
+            "competence": 18.46
+          },
+          "math": {
+            "n": 235,
+            "competence": 17.34
+          },
+          "coding": {
+            "n": 92,
+            "competence": 27.78
+          }
+        },
+        "usecases": {
+          "customer_support": {
+            "n": 389,
+            "competence": 51.96
+          },
+          "other": {
+            "n": 159,
+            "competence": 3.59
+          },
+          "model_routing": {
+            "n": 132,
+            "competence": 84.91
+          },
+          "ecommerce_marketplaces": {
+            "n": 71,
+            "competence": 70.19
+          },
+          "search_retrieval": {
+            "n": 54,
+            "competence": 62.59
+          },
+          "legal_compliance": {
+            "n": 508,
+            "competence": 24.6
+          },
+          "lead_generation": {
+            "n": 98,
+            "competence": 51.98
+          },
+          "knowledge_graphs": {
+            "n": 15,
+            "competence": 55.4
+          },
+          "risk_assessment": {
+            "n": 78,
+            "competence": 37.52
+          },
+          "llm_guardrails": {
+            "n": 339,
+            "competence": 1.72
+          },
+          "code_linting": {
+            "n": 4,
+            "competence": 0.0
+          },
+          "insurance_claims": {
+            "n": 31,
+            "competence": 32.57
+          },
+          "financial_crime": {
+            "n": 31,
+            "competence": 35.72
+          },
+          "feature_extraction": {
+            "n": 7,
+            "competence": 57.14
+          },
+          "moderation_trust_safety": {
+            "n": 12,
+            "competence": 20.44
+          },
+          "recruiting": {
+            "n": 3,
+            "competence": -83.33
+          },
+          "scientific_discovery": {
+            "n": 1,
+            "competence": -33.33
+          },
+          "advertising": {
+            "n": 2,
+            "competence": 0.0
+          }
+        }
+      },
+      "base_model": "Qwen/Qwen3.5-2B",
+      "source": {
+        "measurement_run": 45,
+        "scorer_sha256": "44e9effe6145b16a87101527f9a7fae68f850343342b9027f1c3030a2d839c78",
+        "raw_sha256": "c90cf09fe004f2ed5700adf252cf4cdc37e3c0a0ae05c9c53313302ef9b5c4b1",
+        "scorer_run": 45
+      },
+      "repo": "https://huggingface.co/vllm-sr/Decision-2.0-Sol-2B",
+      "model_revision": "vllm-sr/Decision-2.0-Sol-2B@64235bef55dad29387dd16da7c90e038bf2f0972",
+      "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+      "gpu": "RTX PRO 6000 Blackwell 96 GB",
+      "measured_on": "2026-10-03",
+      "measurement_facts": "Full fine-tune of Decision-1.0-Sol-2B with soft targets; Qwen3.5-2B lineage. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained.",
+      "source_links": [
+        {
+          "url": "https://huggingface.co/vllm-sr/Decision-2.0-Sol-2B/blob/64235bef55dad29387dd16da7c90e038bf2f0972/README.md",
+          "title": "Pinned author model card"
+        }
+      ],
+      "source_metadata_sha256": "7edc3f59cf6431b86d80c6c903f49149c6728a99d564e74ed42e9dee33400f61",
+      "measurement_run": 45
+    },
+    {
+      "key": "sev-2b-preview",
+      "name": "Sev-2B-preview (sora42y)",
+      "axes": {
+        "calibration": 83.02018203417404,
+        "cost": 70.4092766480412,
+        "intelligence": 23.605446214016673,
+        "speed": 91.22767859330204
+      },
+      "scores": {
+        "A": 11.204196246253717,
+        "B": 9.139520865617289,
+        "C": 7.780691837676194
+      },
+      "capability": 53.312814124095354,
+      "cost_usd_per_1000": 0.009690751231527094,
+      "cost_kind": "estimate",
+      "cost_basis": "price floor: base-model reference price applied",
+      "latency": {
+        "n": 450,
+        "p50_adj": 0.26934367706999185,
+        "p50_raw": 0.059671838534995914,
+        "p95_adj": 0.2798500287579372,
+        "p95_raw": 0.06492501437896861
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "categories": {
+        "topics": {
+          "support_ops": {
+            "n": 282,
+            "competence": 53.12
+          },
+          "finance_commerce": {
+            "n": 224,
+            "competence": 48.65
+          },
+          "everyday_language": {
+            "n": 115,
+            "competence": 67.17
+          },
+          "safety_security": {
+            "n": 128,
+            "competence": 7.62
+          },
+          "law_policy": {
+            "n": 548,
+            "competence": 17.93
+          },
+          "math": {
+            "n": 235,
+            "competence": 9.04
+          },
+          "coding": {
+            "n": 92,
+            "competence": 36.79
+          }
+        },
+        "usecases": {
+          "customer_support": {
+            "n": 389,
+            "competence": 48.12
+          },
+          "other": {
+            "n": 159,
+            "competence": 8.36
+          },
+          "model_routing": {
+            "n": 132,
+            "competence": 88.46
+          },
+          "ecommerce_marketplaces": {
+            "n": 71,
+            "competence": 58.89
+          },
+          "search_retrieval": {
+            "n": 54,
+            "competence": 51.45
+          },
+          "legal_compliance": {
+            "n": 508,
+            "competence": 25.58
+          },
+          "lead_generation": {
+            "n": 98,
+            "competence": 51.43
+          },
+          "knowledge_graphs": {
+            "n": 15,
+            "competence": 55.4
+          },
+          "risk_assessment": {
+            "n": 78,
+            "competence": 29.17
+          },
+          "llm_guardrails": {
+            "n": 339,
+            "competence": -10.29
+          },
+          "code_linting": {
+            "n": 4,
+            "competence": 0.0
+          },
+          "insurance_claims": {
+            "n": 31,
+            "competence": 19.46
+          },
+          "financial_crime": {
+            "n": 31,
+            "competence": 17.96
+          },
+          "feature_extraction": {
+            "n": 7,
+            "competence": 14.29
+          },
+          "moderation_trust_safety": {
+            "n": 12,
+            "competence": 27.8
+          },
+          "recruiting": {
+            "n": 3,
+            "competence": -83.33
+          },
+          "scientific_discovery": {
+            "n": 1,
+            "competence": 100.0
+          },
+          "advertising": {
+            "n": 2,
+            "competence": 0.0
+          }
+        }
+      },
+      "base_model": "Qwen/Qwen3.5-2B-Base",
+      "source": {
+        "measurement_run": 46,
+        "scorer_sha256": "e80f4ace7525aaed10c9baf680901127192cc47912a9bb1aa43f535481db1435",
+        "raw_sha256": "c273633bac89365f986e753aa20fc96885250bcf0aef9cc43c5d74ef0ea1beda",
+        "scorer_run": 46
+      },
+      "repo": "https://huggingface.co/sora42y/Sev-2B-preview",
+      "model_revision": "sora42y/Sev-2B-preview@c5a31ce9a07729a1b774bb50616fae8feb683439",
+      "licence": "CC BY-NC 4.0 weights (non-commercial); Apache-2.0 code and base",
+      "gpu": "RTX PRO 6000 Blackwell 96 GB",
+      "measured_on": "2026-10-03",
+      "measurement_facts": "Tree Forcing full fine-tune of Qwen3.5-2B-Base, interpolated with base weights using the author WiSE-FT alpha 0.7. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained.",
+      "source_links": [
+        {
+          "url": "https://huggingface.co/sora42y/Sev-2B-preview/blob/c5a31ce9a07729a1b774bb50616fae8feb683439/README.md",
+          "title": "Pinned author model card"
+        }
+      ],
+      "source_metadata_sha256": "04597c34e2aad6d8a189a4cb2f5c7f76d364436f88f22d1377ae99231973a244",
+      "measurement_run": 46
+    },
+    {
+      "key": "decision2-eos-0.8b",
+      "name": "Decision 2.0 Eos-0.8B (vLLM Semantic Router, vllm-sr/Decision-2.0-Eos-0.8B)",
+      "axes": {
+        "calibration": 76.26528828380731,
+        "cost": 78.00098308008789,
+        "intelligence": 19.046752151991267,
+        "speed": 92.63210089155034
+      },
+      "scores": {
+        "A": 6.505035747803978,
+        "B": 5.119198293895587,
+        "C": 4.517385935974985
+      },
+      "capability": 47.65602021789929,
+      "cost_usd_per_1000": 0.005411286945812808,
+      "cost_kind": "estimate",
+      "cost_basis": "price floor: base-model reference price applied",
+      "latency": {
+        "n": 450,
+        "p50_adj": 0.21051446311175823,
+        "p50_raw": 0.030257231555879116,
+        "p95_adj": 0.25912419864907854,
+        "p95_raw": 0.05456209932453926
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "categories": {
+        "topics": {
+          "support_ops": {
+            "n": 282,
+            "competence": 49.59
+          },
+          "finance_commerce": {
+            "n": 224,
+            "competence": 43.8
+          },
+          "everyday_language": {
+            "n": 115,
+            "competence": 61.32
+          },
+          "safety_security": {
+            "n": 128,
+            "competence": 14.95
+          },
+          "law_policy": {
+            "n": 548,
+            "competence": 9.45
+          },
+          "math": {
+            "n": 235,
+            "competence": -6.7
+          },
+          "coding": {
+            "n": 92,
+            "competence": 30.12
+          }
+        },
+        "usecases": {
+          "customer_support": {
+            "n": 389,
+            "competence": 42.89
+          },
+          "other": {
+            "n": 159,
+            "competence": -1.88
+          },
+          "model_routing": {
+            "n": 132,
+            "competence": 76.03
+          },
+          "ecommerce_marketplaces": {
+            "n": 71,
+            "competence": 54.43
+          },
+          "search_retrieval": {
+            "n": 54,
+            "competence": 57.63
+          },
+          "legal_compliance": {
+            "n": 508,
+            "competence": 15.68
+          },
+          "lead_generation": {
+            "n": 98,
+            "competence": 48.34
+          },
+          "knowledge_graphs": {
+            "n": 15,
+            "competence": 37.56
+          },
+          "risk_assessment": {
+            "n": 78,
+            "competence": 27.58
+          },
+          "llm_guardrails": {
+            "n": 339,
+            "competence": -19.14
+          },
+          "code_linting": {
+            "n": 4,
+            "competence": 0.0
+          },
+          "insurance_claims": {
+            "n": 31,
+            "competence": 25.91
+          },
+          "financial_crime": {
+            "n": 31,
+            "competence": 27.76
+          },
+          "feature_extraction": {
+            "n": 7,
+            "competence": 35.71
+          },
+          "moderation_trust_safety": {
+            "n": 12,
+            "competence": 48.45
+          },
+          "recruiting": {
+            "n": 3,
+            "competence": -83.33
+          },
+          "scientific_discovery": {
+            "n": 1,
+            "competence": -33.33
+          },
+          "advertising": {
+            "n": 2,
+            "competence": -100.0
+          }
+        }
+      },
+      "base_model": "Qwen/Qwen3.5-0.8B",
+      "source": {
+        "measurement_run": 45,
+        "scorer_sha256": "44e9effe6145b16a87101527f9a7fae68f850343342b9027f1c3030a2d839c78",
+        "raw_sha256": "82cc7d2aac7f0ec9501cb8231d631486b4c89a01e7413d240d2a8f457c338d32",
+        "scorer_run": 45
+      },
+      "repo": "https://huggingface.co/vllm-sr/Decision-2.0-Eos-0.8B",
+      "model_revision": "vllm-sr/Decision-2.0-Eos-0.8B@3594047d69f476f1d01cf84c593e213fc3a4dfe0",
+      "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+      "gpu": "RTX PRO 6000 Blackwell 96 GB",
+      "measured_on": "2026-10-03",
+      "measurement_facts": "Full fine-tune of Decision-1.0-Eos-0.8B, itself a Qwen3.5-0.8B fine-tune. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained.",
+      "source_links": [
+        {
+          "url": "https://huggingface.co/vllm-sr/Decision-2.0-Eos-0.8B/blob/3594047d69f476f1d01cf84c593e213fc3a4dfe0/README.md",
+          "title": "Pinned author model card"
+        }
+      ],
+      "source_metadata_sha256": "bb75e5701dd8edc0e00f6dd89a873e663789a482c0ab3e3b0fcd6ca051e57d72",
+      "measurement_run": 45
+    },
+    {
+      "key": "kev-27b-v2",
+      "name": "Kev-27B v2 / Kev 1.0 (Jared Palmer, full-weight Qwen3.8-27B + pointer head)",
+      "axes": {
+        "calibration": 88.64246847476025,
+        "cost": 18.77692461394365,
+        "intelligence": 75.43887006708886,
+        "speed": 84.6956074030435
+      },
+      "scores": {
+        "A": 6.295882384788591,
+        "B": 6.855616884139702,
+        "C": 6.295882384788591
+      },
+      "capability": 82.04066927092455,
+      "cost_usd_per_1000": 0.5098422783251232,
+      "cost_kind": "estimate",
+      "cost_basis": "price floor: base-model reference price applied",
+      "latency": {
+        "n": 450,
+        "p50_adj": 0.38319576913490894,
+        "p50_raw": 0.11659788456745446,
+        "p95_adj": 0.8851534253219141,
+        "p95_raw": 0.36757671266095704
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "categories": {
+        "topics": {
+          "support_ops": {
+            "n": 282,
+            "competence": 91.26
+          },
+          "finance_commerce": {
+            "n": 224,
+            "competence": 81.31
+          },
+          "everyday_language": {
+            "n": 115,
+            "competence": 91.87
+          },
+          "safety_security": {
+            "n": 128,
+            "competence": 87.58
+          },
+          "law_policy": {
+            "n": 548,
+            "competence": 80.04
+          },
+          "math": {
+            "n": 235,
+            "competence": 31.9
+          },
+          "coding": {
+            "n": 92,
+            "competence": 88.86
+          }
+        },
+        "usecases": {
+          "customer_support": {
+            "n": 389,
+            "competence": 90.34
+          },
+          "other": {
+            "n": 159,
+            "competence": 19.33
+          },
+          "model_routing": {
+            "n": 132,
+            "competence": 100.0
+          },
+          "ecommerce_marketplaces": {
+            "n": 71,
+            "competence": 87.92
+          },
+          "search_retrieval": {
+            "n": 54,
+            "competence": 91.75
+          },
+          "legal_compliance": {
+            "n": 508,
+            "competence": 80.84
+          },
+          "lead_generation": {
+            "n": 98,
+            "competence": 87.19
+          },
+          "knowledge_graphs": {
+            "n": 15,
+            "competence": 91.08
+          },
+          "risk_assessment": {
+            "n": 78,
+            "competence": 82.2
+          },
+          "llm_guardrails": {
+            "n": 339,
+            "competence": 75.81
+          },
+          "code_linting": {
+            "n": 4,
+            "competence": 100.0
+          },
+          "insurance_claims": {
+            "n": 31,
+            "competence": 69.61
+          },
+          "financial_crime": {
+            "n": 31,
+            "competence": 68.58
+          },
+          "feature_extraction": {
+            "n": 7,
+            "competence": 100.0
+          },
+          "moderation_trust_safety": {
+            "n": 12,
+            "competence": 88.32
+          },
+          "recruiting": {
+            "n": 3,
+            "competence": 100.0
+          },
+          "scientific_discovery": {
+            "n": 1,
+            "competence": 100.0
+          },
+          "advertising": {
+            "n": 2,
+            "competence": 0.0
+          }
+        }
+      },
+      "base_model": "Qwen/Qwen3.8-27B",
+      "source": {
+        "measurement_run": 44,
+        "scorer_sha256": "45f3a277420721ef5d0707bba8c630b0ff39b89cc221f94c344edd96e0234986",
+        "raw_sha256": "094ef8e88f84697397ed98bd28a971d1f2644826e6c49d60ed51b2377df1b5d4",
+        "scorer_run": 44
+      },
+      "repo": "https://huggingface.co/jaredpalmer/kev-27b",
+      "model_revision": "jaredpalmer/kev-27b@28be62e9c5ae0471bda2b7c636a55224b4f4b887 + Qwen/Qwen3.8-27B@1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0",
+      "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+      "gpu": "H100 80 GB",
+      "measured_on": "2026-10-03",
+      "measurement_facts": "Full merged bf16 checkpoint and pointer head; author runtime with KEV_FUSED=0. Stored head temperature retained. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained.",
+      "source_links": [
+        {
+          "url": "https://huggingface.co/jaredpalmer/kev-27b/blob/28be62e9c5ae0471bda2b7c636a55224b4f4b887/README.md",
+          "title": "Pinned author model card"
+        },
+        {
+          "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/README.md",
+          "title": "Pinned runtime or backbone"
+        }
+      ],
+      "source_metadata_sha256": "7d900e0983054681a3aaaa3283db8a0741f50bbe5a502687d8ef0c1f88fb8f9e",
+      "measurement_run": 44
+    },
+    {
+      "key": "janus-08b-gpu",
+      "name": "janus 0.8B (Icarus AI / cmxu, Qwen3.5-0.8B + LoRA r64 and pointer decision head), GPU",
+      "axes": {
+        "calibration": 79.616638669161,
+        "cost": 78.72824878301893,
+        "intelligence": 15.206544851727536,
+        "speed": 94.5598165568891
+      },
+      "scores": {
+        "A": 3.6416098938813977,
+        "B": 2.7633766985869204,
+        "C": 2.52889575963986
+      },
+      "capability": 47.41159176044427,
+      "cost_usd_per_1000": 0.005117506157635467,
+      "cost_kind": "estimate",
+      "cost_basis": "price floor: base-model reference price applied",
+      "latency": {
+        "n": 450,
+        "p50_adj": 0.1767329877242446,
+        "p50_raw": 0.013366493862122297,
+        "p95_adj": 0.19801620133221148,
+        "p95_raw": 0.024008100666105744
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "categories": {
+        "topics": {
+          "support_ops": {
+            "n": 282,
+            "competence": 53.24
+          },
+          "finance_commerce": {
+            "n": 224,
+            "competence": 42.47
+          },
+          "everyday_language": {
+            "n": 115,
+            "competence": 51.85
+          },
+          "safety_security": {
+            "n": 128,
+            "competence": 11.87
+          },
+          "law_policy": {
+            "n": 548,
+            "competence": 16.69
+          },
+          "math": {
+            "n": 235,
+            "competence": -36.29
+          },
+          "coding": {
+            "n": 92,
+            "competence": 27.36
+          }
+        },
+        "usecases": {
+          "customer_support": {
+            "n": 389,
+            "competence": 53.1
+          },
+          "other": {
+            "n": 159,
+            "competence": 5.95
+          },
+          "model_routing": {
+            "n": 132,
+            "competence": 73.36
+          },
+          "ecommerce_marketplaces": {
+            "n": 71,
+            "competence": 46.58
+          },
+          "search_retrieval": {
+            "n": 54,
+            "competence": 45.14
+          },
+          "legal_compliance": {
+            "n": 508,
+            "competence": 20.42
+          },
+          "lead_generation": {
+            "n": 98,
+            "competence": 53.83
+          },
+          "knowledge_graphs": {
+            "n": 15,
+            "competence": 64.32
+          },
+          "risk_assessment": {
+            "n": 78,
+            "competence": 33.6
+          },
+          "llm_guardrails": {
+            "n": 339,
+            "competence": -57.1
+          },
+          "code_linting": {
+            "n": 4,
+            "competence": 50.0
+          },
+          "insurance_claims": {
+            "n": 31,
+            "competence": 28.2
+          },
+          "financial_crime": {
+            "n": 31,
+            "competence": 47.22
+          },
+          "feature_extraction": {
+            "n": 7,
+            "competence": 14.29
+          },
+          "moderation_trust_safety": {
+            "n": 12,
+            "competence": 50.02
+          },
+          "recruiting": {
+            "n": 3,
+            "competence": -33.33
+          },
+          "scientific_discovery": {
+            "n": 1,
+            "competence": -33.33
+          },
+          "advertising": {
+            "n": 2,
+            "competence": -100.0
+          }
+        }
+      },
+      "base_model": "Qwen/Qwen3.5-0.8B",
+      "source": {
+        "measurement_run": 47,
+        "scorer_sha256": "01bbd2008796c0b9ee7ebf921c92b25618383597a4b276e37a0680027841fb0d",
+        "raw_sha256": "e4992c66bb93ab4ea74ad74deb6cf53cd984f9af2f572f1a29f2ca31c028b84f",
+        "scorer_run": 47
+      },
+      "repo": "https://huggingface.co/cmxu/janus-0.8b",
+      "model_revision": "cmxu/janus-0.8b@e6dcba52f5662e14fdc9726c6ec4ec34d18fe8d0 + Qwen/Qwen3.5-0.8B@2fc06364715b967f1860aea9cf38778875588b17",
+      "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+      "gpu": "RTX PRO 6000 Blackwell 96 GB",
+      "measured_on": "2026-10-04",
+      "measurement_facts": "GPU measurement of the pinned Qwen3.5-0.8B checkpoint with rank-64 LoRA and pointer head. The author image lacks causal-conv1d; its reference PyTorch convolution path was retained. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained.",
+      "source_links": [
+        {
+          "url": "https://huggingface.co/cmxu/janus-0.8b/blob/e6dcba52f5662e14fdc9726c6ec4ec34d18fe8d0/README.md",
+          "title": "Pinned author model card"
+        },
+        {
+          "url": "https://huggingface.co/Qwen/Qwen3.5-0.8B/blob/2fc06364715b967f1860aea9cf38778875588b17/README.md",
+          "title": "Pinned runtime or backbone"
+        }
+      ],
+      "source_metadata_sha256": "9093260d828d8114c3a5567da3e647495c402c05841345242686288be6277c9e",
+      "measurement_run": 47
+    },
+    {
+      "key": "decision2-kai-0.6b",
+      "name": "Decision 2.0 Kai-0.6B (vLLM Semantic Router, vllm-sr/Decision-2.0-Kai-0.6B)",
+      "axes": {
+        "calibration": 84.0546106664741,
+        "cost": 78.4447805979913,
+        "intelligence": 0.0,
+        "speed": 94.81639315148016
+      },
+      "scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0
+      },
+      "capability": 42.02730533323705,
+      "cost_usd_per_1000": 0.005230067733990149,
+      "cost_kind": "estimate",
+      "cost_basis": "documented hosted-model estimate; no exact base-model floor applies",
+      "latency": {
+        "n": 450,
+        "p50_adj": 0.17531207539141178,
+        "p50_raw": 0.01265603769570589,
+        "p95_adj": 0.1881693365983665,
+        "p95_raw": 0.019084668299183247
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "categories": {
+        "topics": {
+          "support_ops": {
+            "n": 282,
+            "competence": 36.64
+          },
+          "finance_commerce": {
+            "n": 224,
+            "competence": 27.0
+          },
+          "everyday_language": {
+            "n": 115,
+            "competence": 62.03
+          },
+          "safety_security": {
+            "n": 128,
+            "competence": -25.27
+          },
+          "law_policy": {
+            "n": 548,
+            "competence": -14.49
+          },
+          "math": {
+            "n": 235,
+            "competence": -32.88
+          },
+          "coding": {
+            "n": 92,
+            "competence": 20.24
+          }
+        },
+        "usecases": {
+          "customer_support": {
+            "n": 389,
+            "competence": 27.22
+          },
+          "other": {
+            "n": 159,
+            "competence": 1.02
+          },
+          "model_routing": {
+            "n": 132,
+            "competence": 84.91
+          },
+          "ecommerce_marketplaces": {
+            "n": 71,
+            "competence": 42.97
+          },
+          "search_retrieval": {
+            "n": 54,
+            "competence": 54.66
+          },
+          "legal_compliance": {
+            "n": 508,
+            "competence": -11.47
+          },
+          "lead_generation": {
+            "n": 98,
+            "competence": 36.8
+          },
+          "knowledge_graphs": {
+            "n": 15,
+            "competence": 46.48
+          },
+          "risk_assessment": {
+            "n": 78,
+            "competence": 16.41
+          },
+          "llm_guardrails": {
+            "n": 339,
+            "competence": -77.12
+          },
+          "code_linting": {
+            "n": 4,
+            "competence": 0.0
+          },
+          "insurance_claims": {
+            "n": 31,
+            "competence": 15.09
+          },
+          "financial_crime": {
+            "n": 31,
+            "competence": 31.55
+          },
+          "feature_extraction": {
+            "n": 7,
+            "competence": -7.14
+          },
+          "moderation_trust_safety": {
+            "n": 12,
+            "competence": 3.52
+          },
+          "recruiting": {
+            "n": 3,
+            "competence": -33.33
+          },
+          "scientific_discovery": {
+            "n": 1,
+            "competence": -33.33
+          },
+          "advertising": {
+            "n": 2,
+            "competence": -100.0
+          }
+        }
+      },
+      "base_model": "Qwen/Qwen3-0.6B-Base",
+      "source": {
+        "measurement_run": 45,
+        "scorer_sha256": "44e9effe6145b16a87101527f9a7fae68f850343342b9027f1c3030a2d839c78",
+        "raw_sha256": "0c235bee4065da252683e881cff1a46fce370313ec3fb876ce494c6377cc192b",
+        "scorer_run": 45
+      },
+      "repo": "https://huggingface.co/vllm-sr/Decision-2.0-Kai-0.6B",
+      "model_revision": "vllm-sr/Decision-2.0-Kai-0.6B@cd49ea3813fd8ba0928a9a23ef6c9a0f2f0cd764",
+      "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+      "gpu": "RTX PRO 6000 Blackwell 96 GB",
+      "measured_on": "2026-10-03",
+      "measurement_facts": "Full fine-tune of Qwen3-0.6B-Base with a candidate head trained from scratch; six-checkpoint weight average. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained.",
+      "source_links": [
+        {
+          "url": "https://huggingface.co/vllm-sr/Decision-2.0-Kai-0.6B/blob/cd49ea3813fd8ba0928a9a23ef6c9a0f2f0cd764/README.md",
+          "title": "Pinned author model card"
+        }
+      ],
+      "source_metadata_sha256": "57d5bf9d5596e3a007022f4b9014c48c470553c69269e3bebc8f4a28ed042e4b",
+      "measurement_run": 45
+    },
+    {
+      "key": "jevberta-base",
+      "name": "JevBerta (leobitz, DeBERTa-v3-base + candidate-set attention)",
+      "axes": {
+        "calibration": 69.69295122899061,
+        "cost": 77.9690281606762,
+        "intelligence": 0.0,
+        "speed": 93.08889928969319
+      },
+      "scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0
+      },
+      "capability": 34.846475614495304,
+      "cost_usd_per_1000": 0.0054245751231527094,
+      "cost_kind": "estimate",
+      "cost_basis": "documented hosted-model estimate; no exact base-model floor applies",
+      "latency": {
+        "n": 450,
+        "p50_adj": 0.17718202769756317,
+        "p50_raw": 0.013591013848781586,
+        "p95_adj": 0.27713437862694257,
+        "p95_raw": 0.0635671893134713
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "categories": {
+        "topics": {
+          "support_ops": {
+            "n": 282,
+            "competence": 14.67
+          },
+          "finance_commerce": {
+            "n": 224,
+            "competence": 12.29
+          },
+          "everyday_language": {
+            "n": 115,
+            "competence": 22.56
+          },
+          "safety_security": {
+            "n": 128,
+            "competence": -30.66
+          },
+          "law_policy": {
+            "n": 548,
+            "competence": -26.94
+          },
+          "math": {
+            "n": 235,
+            "competence": -52.94
+          },
+          "coding": {
+            "n": 92,
+            "competence": -22.64
+          }
+        },
+        "usecases": {
+          "customer_support": {
+            "n": 389,
+            "competence": 6.98
+          },
+          "other": {
+            "n": 159,
+            "competence": -10.98
+          },
+          "model_routing": {
+            "n": 132,
+            "competence": 17.43
+          },
+          "ecommerce_marketplaces": {
+            "n": 71,
+            "competence": -2.05
+          },
+          "search_retrieval": {
+            "n": 54,
+            "competence": 23.65
+          },
+          "legal_compliance": {
+            "n": 508,
+            "competence": -21.35
+          },
+          "lead_generation": {
+            "n": 98,
+            "competence": 27.16
+          },
+          "knowledge_graphs": {
+            "n": 15,
+            "competence": 28.64
+          },
+          "risk_assessment": {
+            "n": 78,
+            "competence": 20.05
+          },
+          "llm_guardrails": {
+            "n": 339,
+            "competence": -95.41
+          },
+          "code_linting": {
+            "n": 4,
+            "competence": -30.51
+          },
+          "insurance_claims": {
+            "n": 31,
+            "competence": 4.06
+          },
+          "financial_crime": {
+            "n": 31,
+            "competence": 12.34
+          },
+          "feature_extraction": {
+            "n": 7,
+            "competence": -7.14
+          },
+          "moderation_trust_safety": {
+            "n": 12,
+            "competence": -14.87
+          },
+          "recruiting": {
+            "n": 3,
+            "competence": -16.67
+          },
+          "scientific_discovery": {
+            "n": 1,
+            "competence": -33.33
+          },
+          "advertising": {
+            "n": 2,
+            "competence": -100.0
+          }
+        }
+      },
+      "base_model": "microsoft/deberta-v3-base",
+      "source": {
+        "measurement_run": 45,
+        "scorer_sha256": "44e9effe6145b16a87101527f9a7fae68f850343342b9027f1c3030a2d839c78",
+        "raw_sha256": "3bb65a760544fae69b612289bd80b8c0249c85aee8cc8ae6f643914a8e988abd",
+        "scorer_run": 45
+      },
+      "repo": "https://huggingface.co/leobitz/jev-berta-base-zeroshot-classifier",
+      "model_revision": "leobitz/jev-berta-base-zeroshot-classifier@e1aa6fc182e777f8d622d119b803d3f3307a3c49 + leobitz/jev-berta@52c9e51e",
+      "licence": "MIT weights, code and base",
+      "gpu": "RTX PRO 6000 Blackwell 96 GB",
+      "measured_on": "2026-10-03",
+      "measurement_facts": "198M DeBERTa-v3-base encoder with two candidate-set attention layers and an MLP scoring head. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained.",
+      "source_links": [
+        {
+          "url": "https://huggingface.co/leobitz/jev-berta-base-zeroshot-classifier/blob/e1aa6fc182e777f8d622d119b803d3f3307a3c49/README.md",
+          "title": "Pinned author model card"
+        },
+        {
+          "url": "https://github.com/leobitz/jev-berta/blob/52c9e51e/README.md",
+          "title": "Pinned runtime or backbone"
+        }
+      ],
+      "source_metadata_sha256": "da832bbccd20d8a52bb93c4c0aa263f6b5117f625085c7b79c9ade1fb3f6af55",
+      "measurement_run": 45
+    },
+    {
+      "key": "reflex-instinct-06b",
+      "name": "Reflex Instinct 0.6B (Atlas AI, Qwen3-0.6B + LoRA + pointer head)",
+      "axes": {
+        "calibration": 80.9085420908779,
+        "cost": 79.91216433927804,
+        "intelligence": 0.0,
+        "speed": 94.79583108067845
+      },
+      "scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0
+      },
+      "capability": 40.45427104543895,
+      "cost_usd_per_1000": 0.00467298645320197,
+      "cost_kind": "estimate",
+      "cost_basis": "documented hosted-model estimate; no exact base-model floor applies",
+      "latency": {
+        "n": 450,
+        "p50_adj": 0.17979963086545467,
+        "p50_raw": 0.014899815432727337,
+        "p95_adj": 0.18434361345134676,
+        "p95_raw": 0.017171806725673373
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "categories": {
+        "topics": {
+          "support_ops": {
+            "n": 282,
+            "competence": 12.3
+          },
+          "finance_commerce": {
+            "n": 224,
+            "competence": 9.77
+          },
+          "everyday_language": {
+            "n": 115,
+            "competence": 18.79
+          },
+          "safety_security": {
+            "n": 128,
+            "competence": -29.79
+          },
+          "law_policy": {
+            "n": 548,
+            "competence": -35.34
+          },
+          "math": {
+            "n": 235,
+            "competence": -39.03
+          },
+          "coding": {
+            "n": 92,
+            "competence": -4.67
+          }
+        },
+        "usecases": {
+          "customer_support": {
+            "n": 389,
+            "competence": 3.95
+          },
+          "other": {
+            "n": 159,
+            "competence": -9.56
+          },
+          "model_routing": {
+            "n": 132,
+            "competence": 68.93
+          },
+          "ecommerce_marketplaces": {
+            "n": 71,
+            "competence": 20.62
+          },
+          "search_retrieval": {
+            "n": 54,
+            "competence": 30.68
+          },
+          "legal_compliance": {
+            "n": 508,
+            "competence": -34.07
+          },
+          "lead_generation": {
+            "n": 98,
+            "competence": 24.65
+          },
+          "knowledge_graphs": {
+            "n": 15,
+            "competence": 1.98
+          },
+          "risk_assessment": {
+            "n": 78,
+            "competence": 8.78
+          },
+          "llm_guardrails": {
+            "n": 339,
+            "competence": -98.36
+          },
+          "code_linting": {
+            "n": 4,
+            "competence": -61.02
+          },
+          "insurance_claims": {
+            "n": 31,
+            "competence": -19.88
+          },
+          "financial_crime": {
+            "n": 31,
+            "competence": 19.73
+          },
+          "feature_extraction": {
+            "n": 7,
+            "competence": 35.71
+          },
+          "moderation_trust_safety": {
+            "n": 12,
+            "competence": 4.0
+          },
+          "recruiting": {
+            "n": 3,
+            "competence": -83.33
+          },
+          "scientific_discovery": {
+            "n": 1,
+            "competence": 100.0
+          },
+          "advertising": {
+            "n": 2,
+            "competence": -100.0
+          }
+        }
+      },
+      "base_model": "Qwen/Qwen3-0.6B",
+      "source": {
+        "measurement_run": 44,
+        "scorer_sha256": "b52a19d505f367cde7eb4f0cbf34f7fd2166c4be511b78a0763ad4d924daa0eb",
+        "raw_sha256": "f4616d68d5859921c5ee2f3af297a51f068d9904fc42c6993bd15eeb1da8edf3",
+        "scorer_run": 44
+      },
+      "repo": "https://huggingface.co/Atlas-AI-research/reflex-instinct-0.6b",
+      "model_revision": "Atlas-AI-research/reflex-instinct-0.6b@f29ab7b824371ce917ad4895882658d996bf94e2 + Qwen/Qwen3-0.6B@c1899de289a04d12100db370d81485cdf75e47ca",
+      "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+      "gpu": "RTX 5090",
+      "measured_on": "2026-10-03",
+      "measurement_facts": "Pinned Qwen3-0.6B adapter and decision head, served by the author runtime. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained.",
+      "source_links": [
+        {
+          "url": "https://huggingface.co/Atlas-AI-research/reflex-instinct-0.6b/blob/f29ab7b824371ce917ad4895882658d996bf94e2/README.md",
+          "title": "Pinned author model card"
+        },
+        {
+          "url": "https://huggingface.co/Qwen/Qwen3-0.6B/blob/c1899de289a04d12100db370d81485cdf75e47ca/README.md",
+          "title": "Pinned runtime or backbone"
+        }
+      ],
+      "source_metadata_sha256": "a313ba89fa4c327707b1927bdbbbdc88c0d00f4caff894e143e888891cee3ff3",
+      "measurement_run": 44
+    },
+    {
+      "key": "tachyone-en",
+      "name": "Tachyone (munod, ModernBERT-large 396M + LoRA r16, choice head bank)",
+      "axes": {
+        "calibration": 53.97433720355025,
+        "cost": 84.0554673169287,
+        "intelligence": 0.0,
+        "speed": 58.96108809752258
+      },
+      "scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0
+      },
+      "capability": 26.987168601775124,
+      "cost_usd_per_1000": 0.003400043103448276,
+      "cost_kind": "estimate",
+      "cost_basis": "documented hosted-model estimate; no exact base-model floor applies",
+      "latency": {
+        "n": 450,
+        "p50_adj": 3.002609358727932,
+        "p50_raw": 1.426304679363966,
+        "p95_adj": 42.30506399497389,
+        "p95_raw": 21.077531997486947
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "categories": {
+        "topics": {
+          "support_ops": {
+            "n": 282,
+            "competence": 7.64
+          },
+          "finance_commerce": {
+            "n": 224,
+            "competence": 6.26
+          },
+          "everyday_language": {
+            "n": 115,
+            "competence": -7.82
+          },
+          "safety_security": {
+            "n": 128,
+            "competence": -37.27
+          },
+          "law_policy": {
+            "n": 548,
+            "competence": -15.73
+          },
+          "math": {
+            "n": 235,
+            "competence": -19.2
+          },
+          "coding": {
+            "n": 92,
+            "competence": -6.89
+          }
+        },
+        "usecases": {
+          "customer_support": {
+            "n": 389,
+            "competence": -1.54
+          },
+          "other": {
+            "n": 159,
+            "competence": 19.01
+          },
+          "model_routing": {
+            "n": 132,
+            "competence": 15.66
+          },
+          "ecommerce_marketplaces": {
+            "n": 71,
+            "competence": 1.43
+          },
+          "search_retrieval": {
+            "n": 54,
+            "competence": -8.29
+          },
+          "legal_compliance": {
+            "n": 508,
+            "competence": -16.65
+          },
+          "lead_generation": {
+            "n": 98,
+            "competence": 15.51
+          },
+          "knowledge_graphs": {
+            "n": 15,
+            "competence": -24.78
+          },
+          "risk_assessment": {
+            "n": 78,
+            "competence": 12.92
+          },
+          "llm_guardrails": {
+            "n": 339,
+            "competence": -47.63
+          },
+          "code_linting": {
+            "n": 4,
+            "competence": -30.51
+          },
+          "insurance_claims": {
+            "n": 31,
+            "competence": -13.42
+          },
+          "financial_crime": {
+            "n": 31,
+            "competence": -29.36
+          },
+          "feature_extraction": {
+            "n": 7,
+            "competence": -7.14
+          },
+          "moderation_trust_safety": {
+            "n": 12,
+            "competence": -3.19
+          },
+          "recruiting": {
+            "n": 3,
+            "competence": -33.33
+          },
+          "scientific_discovery": {
+            "n": 1,
+            "competence": -33.33
+          },
+          "advertising": {
+            "n": 2,
+            "competence": 0.0
+          }
+        }
+      },
+      "base_model": "answerdotai/ModernBERT-large",
+      "source": {
+        "measurement_run": 43,
+        "scorer_sha256": "b75b6d5f07a3d62dfbec8dd17337ade76851f414cea1565c1423d0539f9c89b7",
+        "raw_sha256": "686c6527335f07d7f1986d5a437f6d73f62a42727ae14bc4bbcab40cf1057551",
+        "scorer_run": 44
+      },
+      "repo": "https://huggingface.co/munod/tachyone-en",
+      "model_revision": "munod/tachyone-en@1c88ebef8f15f68e8a6583c564d636221f22c29f + answerdotai/ModernBERT-large@45bb4654a4d5aaff24dd11d4781fa46d39bf8c13 + munod/tachyone@538ac68aed2dd36962d242842efbb32bdfa0d41f",
+      "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+      "gpu": "CPU: AMD Zen 2, 6 cores / 12 threads (shared)",
+      "measured_on": "2026-10-03",
+      "measurement_facts": "Author CPU backend on shared AMD Zen 2 hardware (6 cores / 12 threads, AVX2). Recorded CPU load makes Speed a disclosed lower bound; no CUDA fast path was enabled. Self-hosted; serial, one decision per request. Original \u00d72 + 0.15 s latency adjustment retained.",
+      "source_links": [
+        {
+          "url": "https://huggingface.co/munod/tachyone-en/blob/1c88ebef8f15f68e8a6583c564d636221f22c29f/README.md",
+          "title": "Pinned author model card"
+        },
+        {
+          "url": "https://huggingface.co/answerdotai/ModernBERT-large/blob/45bb4654a4d5aaff24dd11d4781fa46d39bf8c13/README.md",
+          "title": "Pinned runtime or backbone"
+        },
+        {
+          "url": "https://github.com/munod/tachyone/blob/538ac68aed2dd36962d242842efbb32bdfa0d41f/README.md",
+          "title": "Pinned runtime or backbone"
+        }
+      ],
+      "source_metadata_sha256": "55b8dbca629fe37ceb32389cce53f2e873047e95fcf69f569a18bde1aa660135",
+      "measurement_run": 43
+    }
+  ],
+  "ranking_gate": {
+    "A": {
+      "before": [
+        "cygnet",
+        "winnow-12b",
+        "jev-1.13.0",
+        "jevk5-v0.3-4b",
+        "vansa-3.4"
+      ],
+      "after": [
+        "cygnet",
+        "winnow-12b",
+        "jev-1.13.0",
+        "jevk5-v0.3-4b",
+        "vansa-3.4"
+      ]
+    },
+    "B": {
+      "before": [
+        "winnow-12b",
+        "cygnet",
+        "jev-1.13.0",
+        "jev-omni",
+        "vansa-3.4"
+      ],
+      "after": [
+        "winnow-12b",
+        "cygnet",
+        "jev-1.13.0",
+        "jev-omni",
+        "vansa-3.4"
+      ]
+    },
+    "C": {
+      "before": [
+        "cygnet",
+        "winnow-12b",
+        "jev-1.13.0",
+        "jev-omni",
+        "spark-s1-4b-v6"
+      ],
+      "after": [
+        "cygnet",
+        "winnow-12b",
+        "jev-1.13.0",
+        "jev-omni",
+        "spark-s1-4b-v6"
+      ]
+    },
+    "capability": {
+      "before": [
+        "jev-1.13.0",
+        "winnow-12b",
+        "cygnet",
+        "surogate-rune-26b-a4b-v3-rtxpro6000-a2",
+        "jev-omni"
+      ],
+      "after": [
+        "jev-1.13.0",
+        "winnow-12b",
+        "cygnet",
+        "surogate-rune-26b-a4b-v3-rtxpro6000-a2",
+        "jev-omni"
+      ],
+      "caps": {
+        "cost_usd_per_1000": 0.06459465517241379,
+        "median_seconds": 1.2329566404223442,
+        "reference": "jev-1.13.0"
+      }
+    }
+  },
+  "measurement_period": {
+    "from": "2026-10-03",
+    "to": "2026-10-04"
+  },
+  "held_keys": [
+    "xor-26b-a4b-nvfp4",
+    "wald-q4b-v11"
+  ]
+}

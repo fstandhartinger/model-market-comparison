@@ -1,0 +1,338 @@
+{
+  "decision2-nox-4b": {
+    "repo": "https://huggingface.co/vllm-sr/Decision-2.0-Nox-4B",
+    "model_revision": "vllm-sr/Decision-2.0-Nox-4B@25e8f67d1b486c647222df3aac640d2d5d736bbe",
+    "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+    "gpu": "RTX PRO 6000 Blackwell 96 GB",
+    "measured_on": "2026-10-03",
+    "measurement_facts": "Merged rank-128 LoRA on all text projections of Qwen3.5-4B-Base plus a new candidate head; eight-seed weight soup. Self-hosted; serial, one decision per request. Original ×2 + 0.15 s latency adjustment retained.",
+    "source_links": [
+      {
+        "url": "https://huggingface.co/vllm-sr/Decision-2.0-Nox-4B/blob/25e8f67d1b486c647222df3aac640d2d5d736bbe/README.md",
+        "title": "Pinned author model card"
+      }
+    ],
+    "source_metadata_sha256": "bd4c5e8a6b0b24d0124dcc39978b769b0fffd7f5118bec96f349c0045d2b4403",
+    "measurement_run": 45
+  },
+  "decision2-lux-9b": {
+    "repo": "https://huggingface.co/vllm-sr/Decision-2.0-Lux-9B",
+    "model_revision": "vllm-sr/Decision-2.0-Lux-9B@78bf3c03d9147aeb30b641edfe0e30ed04887ca5",
+    "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+    "gpu": "RTX PRO 6000 Blackwell 96 GB",
+    "measured_on": "2026-10-03",
+    "measurement_facts": "Full fine-tune of Decision-1.0-Lux-9B with soft targets; Qwen3.5-9B lineage. Self-hosted; serial, one decision per request. Original ×2 + 0.15 s latency adjustment retained.",
+    "source_links": [
+      {
+        "url": "https://huggingface.co/vllm-sr/Decision-2.0-Lux-9B/blob/78bf3c03d9147aeb30b641edfe0e30ed04887ca5/README.md",
+        "title": "Pinned author model card"
+      }
+    ],
+    "source_metadata_sha256": "26778eed712449578288e5e2f24e212466603cc0f827a49651640b02a1de0b7f",
+    "measurement_run": 45
+  },
+  "noma": {
+    "repo": "https://huggingface.co/BlackdromeAILabs/noma",
+    "model_revision": "BlackdromeAILabs/noma@fac0429688a137ce451a27ad34d05e9fd47fb624",
+    "licence": "MPL-2.0 weights and code; Apache-2.0 base",
+    "gpu": "RTX PRO 6000 Blackwell 96 GB",
+    "measured_on": "2026-10-03",
+    "measurement_facts": "First 18 of 32 Qwen3.5-4B-Base layers with a merged LoRA and four bootstrap-trained scorer heads. Self-hosted; serial, one decision per request. Original ×2 + 0.15 s latency adjustment retained.",
+    "source_links": [
+      {
+        "url": "https://huggingface.co/BlackdromeAILabs/noma/blob/fac0429688a137ce451a27ad34d05e9fd47fb624/README.md",
+        "title": "Pinned author model card"
+      }
+    ],
+    "source_metadata_sha256": "aa9386cc6e4181c8551fa4560a09a462524ec54b3d892cacd36164ef8e1c7111",
+    "measurement_run": 46
+  },
+  "fastsem-jev-l16r25": {
+    "repo": "https://github.com/KoshiBebop/fastsem-jev",
+    "model_revision": "Qwen/Qwen3.5-4B@851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a + KoshiBebop/fastsem-jev@1f1f70f61b9b10d3f094d2e24c5ff6e5d6c702c8",
+    "licence": "MIT inference code; Apache-2.0 base weights",
+    "gpu": "RTX PRO 6000 Blackwell 96 GB",
+    "measured_on": "2026-10-04",
+    "measurement_facts": "Training-free inference method on frozen Qwen3.5-4B weights, using the author l16r25 configuration in process. Self-hosted; serial, one decision per request. Original ×2 + 0.15 s latency adjustment retained.",
+    "source_links": [
+      {
+        "url": "https://github.com/KoshiBebop/fastsem-jev/blob/1f1f70f61b9b10d3f094d2e24c5ff6e5d6c702c8/README.md",
+        "title": "Pinned author repository"
+      },
+      {
+        "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/README.md",
+        "title": "Pinned runtime or backbone"
+      }
+    ],
+    "source_metadata_sha256": "6575a0cb2f4f8378b1cbcd97be83152e1822fa386f1fc14177f540619f496792",
+    "measurement_run": 46
+  },
+  "kev-9b-v2": {
+    "repo": "https://huggingface.co/jaredpalmer/kev-9b",
+    "model_revision": "jaredpalmer/kev-9b@b5d8c18e44c60888d138b65cb6507ff0a5a448a0 + Qwen/Qwen3.5-9B-Base@68c46c4b3498877f3ef123c856ecfde50c39f404",
+    "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+    "gpu": "H100 80 GB",
+    "measured_on": "2026-10-03",
+    "measurement_facts": "Rank-16 LoRA and pointer head; author runtime with KEV_FUSED=0 because the published serving lock omits the fused-kernel dependency. Stored head temperature retained. Self-hosted; serial, one decision per request. Original ×2 + 0.15 s latency adjustment retained.",
+    "source_links": [
+      {
+        "url": "https://huggingface.co/jaredpalmer/kev-9b/blob/b5d8c18e44c60888d138b65cb6507ff0a5a448a0/README.md",
+        "title": "Pinned author model card"
+      },
+      {
+        "url": "https://huggingface.co/Qwen/Qwen3.5-9B-Base/blob/68c46c4b3498877f3ef123c856ecfde50c39f404/README.md",
+        "title": "Pinned runtime or backbone"
+      }
+    ],
+    "source_metadata_sha256": "d47f2f4feda3efa11864f81044298d38619df32da5346e8af82bc996e44acc2f",
+    "measurement_run": 44
+  },
+  "janus-35b-a3b": {
+    "repo": "https://huggingface.co/cmxu/janus-35b-a3b",
+    "model_revision": "cmxu/janus-35b-a3b@a79c5af14957b4f4bcc2c950ddd47846201418ba + nvidia/Qwen3.6-35B-A3B-NVFP4@1355db6a052410cfd62085d94b58866fd0f2c3c5",
+    "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+    "gpu": "RTX PRO 6000 Blackwell 96 GB",
+    "measured_on": "2026-10-04",
+    "measurement_facts": "NVFP4 Qwen3.6-35B-A3B backbone with rank-64 LoRA and pointer head, measured on Blackwell hardware required by the routed-expert kernel. Self-hosted; serial, one decision per request. Original ×2 + 0.15 s latency adjustment retained.",
+    "source_links": [
+      {
+        "url": "https://huggingface.co/cmxu/janus-35b-a3b/blob/a79c5af14957b4f4bcc2c950ddd47846201418ba/README.md",
+        "title": "Pinned author model card"
+      },
+      {
+        "url": "https://huggingface.co/nvidia/Qwen3.6-35B-A3B-NVFP4/blob/1355db6a052410cfd62085d94b58866fd0f2c3c5/README.md",
+        "title": "Pinned runtime or backbone"
+      }
+    ],
+    "source_metadata_sha256": "53f9d99f8bedfc1e79b544a1d54334cd5b0cb5ec3fe20512eb6c5dcb2ad8b70e",
+    "measurement_run": 47
+  },
+  "coco-decision-4b-ko": {
+    "repo": "https://huggingface.co/corners-ai/CoCo-Decision-4B-Ko",
+    "model_revision": "corners-ai/CoCo-Decision-4B-Ko@24aea6387d344babb59f1ee26acc7ac37b02aee5 + Qwen/Qwen3.5-4B@851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+    "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+    "gpu": "RTX PRO 6000 Blackwell 96 GB",
+    "measured_on": "2026-10-04",
+    "measurement_facts": "Korean/English rank-16 LoRA served unmerged by the author oh-my-jev engine. The 96 GB card used bf16; the engine's optional nf4 fallback did not trigger. Self-hosted; serial, one decision per request. Original ×2 + 0.15 s latency adjustment retained.",
+    "source_links": [
+      {
+        "url": "https://huggingface.co/corners-ai/CoCo-Decision-4B-Ko/blob/24aea6387d344babb59f1ee26acc7ac37b02aee5/README.md",
+        "title": "Pinned author model card"
+      },
+      {
+        "url": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/README.md",
+        "title": "Pinned runtime or backbone"
+      }
+    ],
+    "source_metadata_sha256": "2de4c51b601175d6b4b7f4ddc1d73f130bcd0a2a67fb73d0d410b5cafe4b0017",
+    "measurement_run": 46
+  },
+  "reflex-reason-2b": {
+    "repo": "https://huggingface.co/Atlas-AI-research/reflex-reason-2b",
+    "model_revision": "Atlas-AI-research/reflex-reason-2b@f69b5637faf157ddd7f336a3999325aa7b36668d + Qwen/Qwen3-VL-2B-Instruct@89644892e4d85e24eaac8bacfd4f463576704203",
+    "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+    "gpu": "RTX 5090",
+    "measured_on": "2026-10-03",
+    "measurement_facts": "Pinned Qwen3-VL-2B-Instruct adapter and decision head, served by the author runtime. Self-hosted; serial, one decision per request. Original ×2 + 0.15 s latency adjustment retained.",
+    "source_links": [
+      {
+        "url": "https://huggingface.co/Atlas-AI-research/reflex-reason-2b/blob/f69b5637faf157ddd7f336a3999325aa7b36668d/README.md",
+        "title": "Pinned author model card"
+      },
+      {
+        "url": "https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct/blob/89644892e4d85e24eaac8bacfd4f463576704203/README.md",
+        "title": "Pinned runtime or backbone"
+      }
+    ],
+    "source_metadata_sha256": "a8904ab018a972adb4e74c8469047dc8935351a7ec8a3a965baee8e987fb3347",
+    "measurement_run": 44
+  },
+  "decision2-vega-27b": {
+    "repo": "https://huggingface.co/vllm-sr/Decision-2.0-Vega-27B",
+    "model_revision": "vllm-sr/Decision-2.0-Vega-27B@7aec49ae11a18741706da549ab626b9052795fe7 + Qwen/Qwen3.8-27B@1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0",
+    "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+    "gpu": "RTX PRO 6000 Blackwell 96 GB",
+    "measured_on": "2026-10-03",
+    "measurement_facts": "Rank-64 LoRA and candidate head on the pinned Qwen3.8-27B backbone; base is loaded separately. Self-hosted; serial, one decision per request. Original ×2 + 0.15 s latency adjustment retained.",
+    "source_links": [
+      {
+        "url": "https://huggingface.co/vllm-sr/Decision-2.0-Vega-27B/blob/7aec49ae11a18741706da549ab626b9052795fe7/README.md",
+        "title": "Pinned author model card"
+      },
+      {
+        "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/README.md",
+        "title": "Pinned runtime or backbone"
+      }
+    ],
+    "source_metadata_sha256": "396b8054e4a3b979d2472f2c3c332ac4bafcc5b43b29664c45eaacfa1eac429f",
+    "measurement_run": 45
+  },
+  "decision2-sol-2b": {
+    "repo": "https://huggingface.co/vllm-sr/Decision-2.0-Sol-2B",
+    "model_revision": "vllm-sr/Decision-2.0-Sol-2B@64235bef55dad29387dd16da7c90e038bf2f0972",
+    "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+    "gpu": "RTX PRO 6000 Blackwell 96 GB",
+    "measured_on": "2026-10-03",
+    "measurement_facts": "Full fine-tune of Decision-1.0-Sol-2B with soft targets; Qwen3.5-2B lineage. Self-hosted; serial, one decision per request. Original ×2 + 0.15 s latency adjustment retained.",
+    "source_links": [
+      {
+        "url": "https://huggingface.co/vllm-sr/Decision-2.0-Sol-2B/blob/64235bef55dad29387dd16da7c90e038bf2f0972/README.md",
+        "title": "Pinned author model card"
+      }
+    ],
+    "source_metadata_sha256": "7edc3f59cf6431b86d80c6c903f49149c6728a99d564e74ed42e9dee33400f61",
+    "measurement_run": 45
+  },
+  "sev-2b-preview": {
+    "repo": "https://huggingface.co/sora42y/Sev-2B-preview",
+    "model_revision": "sora42y/Sev-2B-preview@c5a31ce9a07729a1b774bb50616fae8feb683439",
+    "licence": "CC BY-NC 4.0 weights (non-commercial); Apache-2.0 code and base",
+    "gpu": "RTX PRO 6000 Blackwell 96 GB",
+    "measured_on": "2026-10-03",
+    "measurement_facts": "Tree Forcing full fine-tune of Qwen3.5-2B-Base, interpolated with base weights using the author WiSE-FT alpha 0.7. Self-hosted; serial, one decision per request. Original ×2 + 0.15 s latency adjustment retained.",
+    "source_links": [
+      {
+        "url": "https://huggingface.co/sora42y/Sev-2B-preview/blob/c5a31ce9a07729a1b774bb50616fae8feb683439/README.md",
+        "title": "Pinned author model card"
+      }
+    ],
+    "source_metadata_sha256": "04597c34e2aad6d8a189a4cb2f5c7f76d364436f88f22d1377ae99231973a244",
+    "measurement_run": 46
+  },
+  "decision2-eos-0.8b": {
+    "repo": "https://huggingface.co/vllm-sr/Decision-2.0-Eos-0.8B",
+    "model_revision": "vllm-sr/Decision-2.0-Eos-0.8B@3594047d69f476f1d01cf84c593e213fc3a4dfe0",
+    "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+    "gpu": "RTX PRO 6000 Blackwell 96 GB",
+    "measured_on": "2026-10-03",
+    "measurement_facts": "Full fine-tune of Decision-1.0-Eos-0.8B, itself a Qwen3.5-0.8B fine-tune. Self-hosted; serial, one decision per request. Original ×2 + 0.15 s latency adjustment retained.",
+    "source_links": [
+      {
+        "url": "https://huggingface.co/vllm-sr/Decision-2.0-Eos-0.8B/blob/3594047d69f476f1d01cf84c593e213fc3a4dfe0/README.md",
+        "title": "Pinned author model card"
+      }
+    ],
+    "source_metadata_sha256": "bb75e5701dd8edc0e00f6dd89a873e663789a482c0ab3e3b0fcd6ca051e57d72",
+    "measurement_run": 45
+  },
+  "kev-27b-v2": {
+    "repo": "https://huggingface.co/jaredpalmer/kev-27b",
+    "model_revision": "jaredpalmer/kev-27b@28be62e9c5ae0471bda2b7c636a55224b4f4b887 + Qwen/Qwen3.8-27B@1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0",
+    "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+    "gpu": "H100 80 GB",
+    "measured_on": "2026-10-03",
+    "measurement_facts": "Full merged bf16 checkpoint and pointer head; author runtime with KEV_FUSED=0. Stored head temperature retained. Self-hosted; serial, one decision per request. Original ×2 + 0.15 s latency adjustment retained.",
+    "source_links": [
+      {
+        "url": "https://huggingface.co/jaredpalmer/kev-27b/blob/28be62e9c5ae0471bda2b7c636a55224b4f4b887/README.md",
+        "title": "Pinned author model card"
+      },
+      {
+        "url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/README.md",
+        "title": "Pinned runtime or backbone"
+      }
+    ],
+    "source_metadata_sha256": "7d900e0983054681a3aaaa3283db8a0741f50bbe5a502687d8ef0c1f88fb8f9e",
+    "measurement_run": 44
+  },
+  "janus-08b-gpu": {
+    "repo": "https://huggingface.co/cmxu/janus-0.8b",
+    "model_revision": "cmxu/janus-0.8b@e6dcba52f5662e14fdc9726c6ec4ec34d18fe8d0 + Qwen/Qwen3.5-0.8B@2fc06364715b967f1860aea9cf38778875588b17",
+    "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+    "gpu": "RTX PRO 6000 Blackwell 96 GB",
+    "measured_on": "2026-10-04",
+    "measurement_facts": "GPU measurement of the pinned Qwen3.5-0.8B checkpoint with rank-64 LoRA and pointer head. The author image lacks causal-conv1d; its reference PyTorch convolution path was retained. Self-hosted; serial, one decision per request. Original ×2 + 0.15 s latency adjustment retained.",
+    "source_links": [
+      {
+        "url": "https://huggingface.co/cmxu/janus-0.8b/blob/e6dcba52f5662e14fdc9726c6ec4ec34d18fe8d0/README.md",
+        "title": "Pinned author model card"
+      },
+      {
+        "url": "https://huggingface.co/Qwen/Qwen3.5-0.8B/blob/2fc06364715b967f1860aea9cf38778875588b17/README.md",
+        "title": "Pinned runtime or backbone"
+      }
+    ],
+    "source_metadata_sha256": "9093260d828d8114c3a5567da3e647495c402c05841345242686288be6277c9e",
+    "measurement_run": 47
+  },
+  "decision2-kai-0.6b": {
+    "repo": "https://huggingface.co/vllm-sr/Decision-2.0-Kai-0.6B",
+    "model_revision": "vllm-sr/Decision-2.0-Kai-0.6B@cd49ea3813fd8ba0928a9a23ef6c9a0f2f0cd764",
+    "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+    "gpu": "RTX PRO 6000 Blackwell 96 GB",
+    "measured_on": "2026-10-03",
+    "measurement_facts": "Full fine-tune of Qwen3-0.6B-Base with a candidate head trained from scratch; six-checkpoint weight average. Self-hosted; serial, one decision per request. Original ×2 + 0.15 s latency adjustment retained.",
+    "source_links": [
+      {
+        "url": "https://huggingface.co/vllm-sr/Decision-2.0-Kai-0.6B/blob/cd49ea3813fd8ba0928a9a23ef6c9a0f2f0cd764/README.md",
+        "title": "Pinned author model card"
+      }
+    ],
+    "source_metadata_sha256": "57d5bf9d5596e3a007022f4b9014c48c470553c69269e3bebc8f4a28ed042e4b",
+    "measurement_run": 45
+  },
+  "jevberta-base": {
+    "repo": "https://huggingface.co/leobitz/jev-berta-base-zeroshot-classifier",
+    "model_revision": "leobitz/jev-berta-base-zeroshot-classifier@e1aa6fc182e777f8d622d119b803d3f3307a3c49 + leobitz/jev-berta@52c9e51e",
+    "licence": "MIT weights, code and base",
+    "gpu": "RTX PRO 6000 Blackwell 96 GB",
+    "measured_on": "2026-10-03",
+    "measurement_facts": "198M DeBERTa-v3-base encoder with two candidate-set attention layers and an MLP scoring head. Self-hosted; serial, one decision per request. Original ×2 + 0.15 s latency adjustment retained.",
+    "source_links": [
+      {
+        "url": "https://huggingface.co/leobitz/jev-berta-base-zeroshot-classifier/blob/e1aa6fc182e777f8d622d119b803d3f3307a3c49/README.md",
+        "title": "Pinned author model card"
+      },
+      {
+        "url": "https://github.com/leobitz/jev-berta/blob/52c9e51e/README.md",
+        "title": "Pinned runtime or backbone"
+      }
+    ],
+    "source_metadata_sha256": "da832bbccd20d8a52bb93c4c0aa263f6b5117f625085c7b79c9ade1fb3f6af55",
+    "measurement_run": 45
+  },
+  "reflex-instinct-06b": {
+    "repo": "https://huggingface.co/Atlas-AI-research/reflex-instinct-0.6b",
+    "model_revision": "Atlas-AI-research/reflex-instinct-0.6b@f29ab7b824371ce917ad4895882658d996bf94e2 + Qwen/Qwen3-0.6B@c1899de289a04d12100db370d81485cdf75e47ca",
+    "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+    "gpu": "RTX 5090",
+    "measured_on": "2026-10-03",
+    "measurement_facts": "Pinned Qwen3-0.6B adapter and decision head, served by the author runtime. Self-hosted; serial, one decision per request. Original ×2 + 0.15 s latency adjustment retained.",
+    "source_links": [
+      {
+        "url": "https://huggingface.co/Atlas-AI-research/reflex-instinct-0.6b/blob/f29ab7b824371ce917ad4895882658d996bf94e2/README.md",
+        "title": "Pinned author model card"
+      },
+      {
+        "url": "https://huggingface.co/Qwen/Qwen3-0.6B/blob/c1899de289a04d12100db370d81485cdf75e47ca/README.md",
+        "title": "Pinned runtime or backbone"
+      }
+    ],
+    "source_metadata_sha256": "a313ba89fa4c327707b1927bdbbbdc88c0d00f4caff894e143e888891cee3ff3",
+    "measurement_run": 44
+  },
+  "tachyone-en": {
+    "repo": "https://huggingface.co/munod/tachyone-en",
+    "model_revision": "munod/tachyone-en@1c88ebef8f15f68e8a6583c564d636221f22c29f + answerdotai/ModernBERT-large@45bb4654a4d5aaff24dd11d4781fa46d39bf8c13 + munod/tachyone@538ac68aed2dd36962d242842efbb32bdfa0d41f",
+    "licence": "Apache-2.0 weights and code; base retains its own Apache-2.0 licence",
+    "gpu": "CPU: AMD Zen 2, 6 cores / 12 threads (shared)",
+    "measured_on": "2026-10-03",
+    "measurement_facts": "Author CPU backend on shared AMD Zen 2 hardware (6 cores / 12 threads, AVX2). Recorded CPU load makes Speed a disclosed lower bound; no CUDA fast path was enabled. Self-hosted; serial, one decision per request. Original ×2 + 0.15 s latency adjustment retained.",
+    "source_links": [
+      {
+        "url": "https://huggingface.co/munod/tachyone-en/blob/1c88ebef8f15f68e8a6583c564d636221f22c29f/README.md",
+        "title": "Pinned author model card"
+      },
+      {
+        "url": "https://huggingface.co/answerdotai/ModernBERT-large/blob/45bb4654a4d5aaff24dd11d4781fa46d39bf8c13/README.md",
+        "title": "Pinned runtime or backbone"
+      },
+      {
+        "url": "https://github.com/munod/tachyone/blob/538ac68aed2dd36962d242842efbb32bdfa0d41f/README.md",
+        "title": "Pinned runtime or backbone"
+      }
+    ],
+    "source_metadata_sha256": "55b8dbca629fe37ceb32389cce53f2e873047e95fcf69f569a18bde1aa660135",
+    "measurement_run": 43
+  }
+}

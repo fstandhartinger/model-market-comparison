@@ -1,0 +1,5 @@
+export type HistoricalCell = { n: number; competence: number };
+export type HistoricalRow = { key: string; name: string; axes: Record<string, number>; scores: { A: number; B: number; C: number }; capability: number; cost_usd_per_1000: number; cost_kind: string; cost_basis: string; base_model: string | null; repo: string; model_revision: string; licence: string; gpu: string; measured_on: string; measurement_facts: string; source_links: { url: string; title: string }[]; latency: { p50_adj: number; p50_raw: number }; status: { answered_ok: number; rows: number }; categories: Record<'topics' | 'usecases', Record<string, HistoricalCell>> };
+export type HistoricalSupplement = { published_on: string; measurement_period: { from: string; to: string }; measurement_basis: string; category_min_n: number; category_method: string; category_dimensions: Record<'topics' | 'usecases', { key: string; label: string; covers: string }[]>; systems: HistoricalRow[] };
+export const HISTORICAL_SUPPLEMENT_PATH: string;
+export function readHistoricalJevbenchSupplement(root?: string): Promise<{ artifact: HistoricalSupplement; bytes: Buffer; sha256: string }>;
