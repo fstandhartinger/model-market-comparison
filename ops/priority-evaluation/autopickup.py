@@ -3817,6 +3817,7 @@ def systemd_last_success(effects: Effects, unit: str) -> datetime | None:
 def health(effects: Effects) -> dict[str, Any]:
     now = utcnow()
     problems: list[tuple[str, str]] = []
+    held_orders: list[dict[str, Any]] = []
     for timer in PICKUP_TIMERS:
         result = subprocess.run(["systemctl", "--user", "is-active", timer], text=True, capture_output=True, timeout=15, check=False)
         if result.stdout.strip() != "active":
@@ -3840,15 +3841,35 @@ def health(effects: Effects) -> dict[str, Any]:
             problems.append((f"notice:{rid}", f"order {ref}: urgent payment notice not sent after 20 minutes"))
         if now - paid > timedelta(minutes=45) and row.get("confirmation_status") != "sent":
             problems.append((f"confirm:{rid}", f"order {ref}: confirmation not sent after 45 minutes"))
-        if row.get("evaluation_status") in ("pending", "failed", "exhausted") and now - paid > timedelta(minutes=45) \
-                and not active_hold(row):
-            problems.append((f"eval:{rid}", f"order {ref}: evaluation not running ({row.get('evaluation_status')})"))
-        with contextlib.suppress(PickupError):
+        # The pickup also uses state-only operational holds, which do not pause the SLA.
+        # Only the exact acknowledged recovery handoff is a deliberate review hold.
+        # An arbitrary owner/reason must never hide a stuck paid order.
+        try:
             state = load_state(rid)
-            for name, item in state["steps"].items():
-                if item.get("status") == "exhausted":
-                    problems.append((f"exhausted:{rid}:{name}", f"order {ref}: step {name} exhausted"))
-    report = {"checked_at": iso(now), "problems": [text for _, text in problems]}
+        except PickupError:
+            problems.append((f"state:{rid}", f"order {ref}: pickup state is unreadable"))
+            state = {"steps": {}}
+        operational = state.get("operational_hold")
+        planned_review = (rid == "acad951a-1b9d-4f3c-a449-350d1c04bd23"
+                          and isinstance(operational, dict)
+                          and operational.get("reason") == "source_access_recovered_pending_review"
+                          and operational.get("owner") == "fastlane-acad951a-recovery-20261008"
+                          and operational.get("transient") is False
+                          and step_done(state, "source_access_review_handoff"))
+        if active_hold(row) or planned_review:
+            held_orders.append({"order": ref, "kind": "customer" if active_hold(row) else "operational_review",
+                                "reason": row.get("customer_hold_reason") if active_hold(row) else operational["reason"],
+                                "owner": None if active_hold(row) else operational["owner"],
+                                "deadline": iso(deadline_for(row)),
+                                "sla_paused": bool(active_hold(row))})
+        if row.get("evaluation_status") in ("pending", "failed", "exhausted") and now - paid > timedelta(minutes=45) \
+                and not active_hold(row) and not planned_review:
+            detail = f"; operational hold: {operational.get('reason') or 'unknown'}" if isinstance(operational, dict) else ""
+            problems.append((f"eval:{rid}", f"order {ref}: evaluation not running ({row.get('evaluation_status')}){detail}"))
+        for name, item in state["steps"].items():
+            if item.get("status") == "exhausted":
+                problems.append((f"exhausted:{rid}:{name}", f"order {ref}: step {name} exhausted"))
+    report = {"checked_at": iso(now), "problems": [text for _, text in problems], "held_orders": held_orders}
     if not effects.dry_run:
         atomic_write(STATE_ROOT / "health.json", json.dumps(report, indent=2) + "\n")
     alerts_path = STATE_ROOT / "health-alerts.json"
