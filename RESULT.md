@@ -30,17 +30,18 @@ Container limits: the test module needs host-only scorer files (`/home/flori/job
 `initdb` refuses root. I ran as an unprivileged `tester` user via a scratch runner that stubs only
 `scoring_fixtures.create` (returns `(manifest, None, None)`).
 
-Targeted run (branch): `Ran 4 tests ... OK`.
-Same 4 tests against `main`'s `autopickup.py`: the guard tests ERROR (no guard is invoked), so they catch the regression.
+Targeted run (branch): `Ran 4 tests in 3.422s` / `OK`.
+Same 4 tests against `origin/main` (1f622296) `autopickup.py`: `Ran 4 tests` / `FAILED (failures=4, errors=13)`
+(the rank test fails for ranks 1/2/5/11, the guard tests error because no guard runs), so they catch the regression.
 
-Broader run (`test_autopickup test_refusal_approval test_mail_watch_redaction test_release_render`):
-- branch: `Ran 195 tests`, `FAILED (errors=29, skipped=8)`
-- main:   `Ran 188 tests`, `FAILED (failures=1, errors=48, skipped=5)`
-- No error appears on the branch that is not also on main. The causes I checked (FinalizeTests, refusal_approval,
-  release_render) are all environmental: 20× `TypeError: 'NoneType' object is not subscriptable` from my
-  scoring-fixture stub, 4× `FileNotFoundError: ~/bin/notify_reply_actions.py` (host-only). main's extra
-  Pod* errors and its test count/skip differences were not investigated (outside scope). Treat these
-  numbers as container-only; the full suite needs a host run.
+Broader run (`test_autopickup test_refusal_approval test_mail_watch_redaction test_release_render`), same runner:
+- `origin/main` 1f622296: `Ran 192 tests`, `FAILED (errors=29, skipped=8)`
+- branch:                 `Ran 195 tests`, `FAILED (errors=29, skipped=8)`
+- `diff` of the sorted FAIL/ERROR lists: identical; the only change is the 3 new tests, all passing.
+  The 29 baseline errors are environmental (I sampled FinalizeTests, refusal_approval, release_render): 20x
+  `TypeError: 'NoneType' object is not subscriptable` from my scoring-fixture stub, 4x
+  `FileNotFoundError: ~/bin/notify_reply_actions.py` (host-only tool). The full suite still needs a host run.
+  (An earlier comparison by mistake used a stale local `main` ref; I discarded it and redid it against `origin/main`.)
 
 ## Open doubts / left for Sandy
 - Guard input format is assumed to be `Subject: <subject>\n\n<body>` in one file; confirm it matches what
