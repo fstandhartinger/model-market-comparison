@@ -1,7 +1,7 @@
 # RESULT: delivery-guard
 
 - Branch: `claude/cloud-delivery-guard-9g8zvb`
-- PR: see the PR for this branch (draft, against `main`; not merge-ready; no CR ID allocated)
+- PR: https://github.com/fstandhartinger/model-market-comparison/pull/234 (draft, against `main`; not merge-ready; no CR ID allocated)
 - Changed files: `ops/priority-evaluation/autopickup.py`, `ops/priority-evaluation/test_autopickup.py`, `RESULT.md`
 
 ## Behavior change (narrow)
