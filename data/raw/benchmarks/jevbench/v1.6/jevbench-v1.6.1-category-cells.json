@@ -1,6 +1,6 @@
 {
   "benchmark": "JevBench",
-  "board_revision": "v1.7.12",
+  "board_revision": "v1.7.18",
   "families": [
     {
       "covers": "pick the model, tier or agent that should handle a request (TypeSafe LLM Auto Router focus)",
@@ -122,11 +122,11 @@
     "S": 1200
   },
   "revision": "v1.6.1",
-  "source_sha256": "29c12a26e6faa250ba775986595b309c02e4c6805b7fc2e0bc743881f60bcc73",
+  "source_sha256": "b87bbb8e3b47d0f75eda00639364f3dc1108eb367accd0806fc926a81218e4e1",
   "systems": {
     "autojev-27b": {
-      "category_n_items": 1887,
-      "category_pools": "S+P+L1+L2",
+      "category_n_items": 3005,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -136,42 +136,42 @@
           "jaggedness": 101,
           "llm_router": 453,
           "long_state": 23,
-          "multilingual": 618,
+          "multilingual": 1604,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 147
+          "usecase": 279
         },
         "topics": {
-          "coding": 330,
-          "everyday_language": 52,
-          "finance_commerce": 99,
-          "law_policy": 1011,
-          "math": 234,
-          "safety_security": 48,
-          "support_ops": 113
+          "coding": 382,
+          "everyday_language": 145,
+          "finance_commerce": 223,
+          "law_policy": 1616,
+          "math": 370,
+          "safety_security": 109,
+          "support_ops": 160
         },
         "usecases": {
-          "advertising": 30,
-          "code_linting": 33,
-          "customer_support": 179,
-          "demand_forecasting": 30,
-          "ecommerce_marketplaces": 65,
-          "feature_extraction": 31,
-          "financial_crime": 51,
-          "gaming": 30,
-          "insurance_claims": 63,
-          "knowledge_graphs": 30,
-          "lead_generation": 31,
-          "legal_compliance": 466,
-          "llm_guardrails": 30,
-          "model_routing": 471,
-          "moderation_trust_safety": 47,
-          "other": 148,
-          "recruiting": 30,
-          "risk_assessment": 62,
-          "scientific_discovery": 30,
-          "search_retrieval": 30
+          "advertising": 88,
+          "code_linting": 90,
+          "customer_support": 240,
+          "demand_forecasting": 83,
+          "ecommerce_marketplaces": 119,
+          "feature_extraction": 99,
+          "financial_crime": 101,
+          "gaming": 86,
+          "insurance_claims": 119,
+          "knowledge_graphs": 94,
+          "lead_generation": 95,
+          "legal_compliance": 515,
+          "llm_guardrails": 93,
+          "model_routing": 524,
+          "moderation_trust_safety": 93,
+          "other": 174,
+          "recruiting": 94,
+          "risk_assessment": 118,
+          "scientific_discovery": 90,
+          "search_retrieval": 90
         }
       },
       "families": {
@@ -204,8 +204,8 @@
           "n": 23
         },
         "multilingual": {
-          "competence": 43.89,
-          "n": 618
+          "competence": 33.41,
+          "n": 1604
         },
         "negation_pair_gen": {
           "competence": 27.35,
@@ -220,120 +220,120 @@
           "n": 70
         },
         "usecase": {
-          "competence": 33.69,
-          "n": 147
+          "competence": 58.21,
+          "n": 279
         }
       },
       "topics": {
         "coding": {
-          "competence": 75.92,
-          "n": 330
+          "competence": 71.41,
+          "n": 382
         },
         "everyday_language": {
-          "competence": 54.63,
-          "n": 52
+          "competence": 72.47,
+          "n": 145
         },
         "finance_commerce": {
-          "competence": 50.63,
-          "n": 99
+          "competence": 40.96,
+          "n": 223
         },
         "law_policy": {
-          "competence": 55.9,
-          "n": 1011
+          "competence": 45.71,
+          "n": 1616
         },
         "math": {
-          "competence": 8.12,
-          "n": 234
+          "competence": 1.57,
+          "n": 370
         },
         "safety_security": {
-          "competence": 19.34,
-          "n": 48
+          "competence": 48.74,
+          "n": 109
         },
         "support_ops": {
-          "competence": 40.73,
-          "n": 113
+          "competence": 46.72,
+          "n": 160
         }
       },
       "usecases": {
         "advertising": {
-          "competence": 32.87,
-          "n": 30
+          "competence": 15.97,
+          "n": 88
         },
         "code_linting": {
-          "competence": 39.5,
-          "n": 33
+          "competence": 46.15,
+          "n": 90
         },
         "customer_support": {
-          "competence": 40.66,
-          "n": 179
+          "competence": 40.1,
+          "n": 240
         },
         "demand_forecasting": {
           "competence": 0.0,
-          "n": 30
+          "n": 83
         },
         "ecommerce_marketplaces": {
-          "competence": 50.66,
-          "n": 65
+          "competence": 47.88,
+          "n": 119
         },
         "feature_extraction": {
-          "competence": 19.74,
-          "n": 31
+          "competence": 22.39,
+          "n": 99
         },
         "financial_crime": {
-          "competence": 16.69,
-          "n": 51
+          "competence": 19.4,
+          "n": 101
         },
         "gaming": {
-          "competence": 19.51,
-          "n": 30
+          "competence": 4.06,
+          "n": 86
         },
         "insurance_claims": {
-          "competence": 56.87,
-          "n": 63
+          "competence": 40.69,
+          "n": 119
         },
         "knowledge_graphs": {
-          "competence": 67.73,
-          "n": 30
+          "competence": 59.44,
+          "n": 94
         },
         "lead_generation": {
-          "competence": 57.4,
-          "n": 31
+          "competence": 47.52,
+          "n": 95
         },
         "legal_compliance": {
-          "competence": 61.6,
-          "n": 466
+          "competence": 57.61,
+          "n": 515
         },
         "llm_guardrails": {
-          "competence": 74.17,
-          "n": 30
+          "competence": 83.32,
+          "n": 93
         },
         "model_routing": {
-          "competence": 78.33,
-          "n": 471
+          "competence": 75.16,
+          "n": 524
         },
         "moderation_trust_safety": {
-          "competence": 61.85,
-          "n": 47
+          "competence": 56.51,
+          "n": 93
         },
         "other": {
-          "competence": 2.24,
-          "n": 148
+          "competence": 18.51,
+          "n": 174
         },
         "recruiting": {
           "competence": 0.0,
-          "n": 30
+          "n": 94
         },
         "risk_assessment": {
-          "competence": 17.02,
-          "n": 62
+          "competence": 17.22,
+          "n": 118
         },
         "scientific_discovery": {
-          "competence": 26.32,
-          "n": 30
+          "competence": 12.63,
+          "n": 90
         },
         "search_retrieval": {
-          "competence": 91.35,
-          "n": 30
+          "competence": 88.56,
+          "n": 90
         }
       }
     },
@@ -2119,8 +2119,8 @@
       }
     },
     "decider-2b": {
-      "category_n_items": 1887,
-      "category_pools": "S+P+L1+L2",
+      "category_n_items": 3005,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -2130,42 +2130,42 @@
           "jaggedness": 101,
           "llm_router": 453,
           "long_state": 23,
-          "multilingual": 618,
+          "multilingual": 1604,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 147
+          "usecase": 279
         },
         "topics": {
-          "coding": 330,
-          "everyday_language": 52,
-          "finance_commerce": 99,
-          "law_policy": 1011,
-          "math": 234,
-          "safety_security": 48,
-          "support_ops": 113
+          "coding": 382,
+          "everyday_language": 145,
+          "finance_commerce": 223,
+          "law_policy": 1616,
+          "math": 370,
+          "safety_security": 109,
+          "support_ops": 160
         },
         "usecases": {
-          "advertising": 30,
-          "code_linting": 33,
-          "customer_support": 179,
-          "demand_forecasting": 30,
-          "ecommerce_marketplaces": 65,
-          "feature_extraction": 31,
-          "financial_crime": 51,
-          "gaming": 30,
-          "insurance_claims": 63,
-          "knowledge_graphs": 30,
-          "lead_generation": 31,
-          "legal_compliance": 466,
-          "llm_guardrails": 30,
-          "model_routing": 471,
-          "moderation_trust_safety": 47,
-          "other": 148,
-          "recruiting": 30,
-          "risk_assessment": 62,
-          "scientific_discovery": 30,
-          "search_retrieval": 30
+          "advertising": 88,
+          "code_linting": 90,
+          "customer_support": 240,
+          "demand_forecasting": 83,
+          "ecommerce_marketplaces": 119,
+          "feature_extraction": 99,
+          "financial_crime": 101,
+          "gaming": 86,
+          "insurance_claims": 119,
+          "knowledge_graphs": 94,
+          "lead_generation": 95,
+          "legal_compliance": 515,
+          "llm_guardrails": 93,
+          "model_routing": 524,
+          "moderation_trust_safety": 93,
+          "other": 174,
+          "recruiting": 94,
+          "risk_assessment": 118,
+          "scientific_discovery": 90,
+          "search_retrieval": 90
         }
       },
       "families": {
@@ -2198,8 +2198,8 @@
           "n": 23
         },
         "multilingual": {
-          "competence": 9.93,
-          "n": 618
+          "competence": 1.91,
+          "n": 1604
         },
         "negation_pair_gen": {
           "competence": 0.0,
@@ -2214,126 +2214,126 @@
           "n": 70
         },
         "usecase": {
-          "competence": 0.71,
-          "n": 147
+          "competence": 19.94,
+          "n": 279
         }
       },
       "topics": {
         "coding": {
-          "competence": 41.24,
-          "n": 330
+          "competence": 34.74,
+          "n": 382
         },
         "everyday_language": {
-          "competence": 35.62,
-          "n": 52
+          "competence": 42.79,
+          "n": 145
         },
         "finance_commerce": {
-          "competence": 35.19,
-          "n": 99
+          "competence": 20.17,
+          "n": 223
         },
         "law_policy": {
-          "competence": 13.43,
-          "n": 1011
+          "competence": 6.26,
+          "n": 1616
         },
         "math": {
-          "competence": 0.86,
-          "n": 234
+          "competence": 0.0,
+          "n": 370
         },
         "safety_security": {
-          "competence": 21.55,
-          "n": 48
+          "competence": 24.78,
+          "n": 109
         },
         "support_ops": {
-          "competence": 17.46,
-          "n": 113
+          "competence": 14.98,
+          "n": 160
         }
       },
       "usecases": {
         "advertising": {
           "competence": 0.0,
-          "n": 30
+          "n": 88
         },
         "code_linting": {
           "competence": 0.0,
-          "n": 33
+          "n": 90
         },
         "customer_support": {
-          "competence": 5.99,
-          "n": 179
+          "competence": 5.68,
+          "n": 240
         },
         "demand_forecasting": {
-          "competence": 2.6,
-          "n": 30
+          "competence": 0.0,
+          "n": 83
         },
         "ecommerce_marketplaces": {
-          "competence": 9.54,
-          "n": 65
+          "competence": 10.4,
+          "n": 119
         },
         "feature_extraction": {
-          "competence": 0.0,
-          "n": 31
+          "competence": 0.43,
+          "n": 99
         },
         "financial_crime": {
           "competence": 0.0,
-          "n": 51
+          "n": 101
         },
         "gaming": {
-          "competence": 0.36,
-          "n": 30
+          "competence": 0.0,
+          "n": 86
         },
         "insurance_claims": {
-          "competence": 31.29,
-          "n": 63
+          "competence": 20.62,
+          "n": 119
         },
         "knowledge_graphs": {
           "competence": 0.0,
-          "n": 30
+          "n": 94
         },
         "lead_generation": {
-          "competence": 36.0,
-          "n": 31
+          "competence": 24.61,
+          "n": 95
         },
         "legal_compliance": {
-          "competence": 27.12,
-          "n": 466
+          "competence": 24.65,
+          "n": 515
         },
         "llm_guardrails": {
-          "competence": 0.0,
-          "n": 30
+          "competence": 8.9,
+          "n": 93
         },
         "model_routing": {
-          "competence": 44.94,
-          "n": 471
+          "competence": 39.99,
+          "n": 524
         },
         "moderation_trust_safety": {
-          "competence": 19.07,
-          "n": 47
+          "competence": 2.13,
+          "n": 93
         },
         "other": {
-          "competence": 2.43,
-          "n": 148
+          "competence": 12.74,
+          "n": 174
         },
         "recruiting": {
-          "competence": 2.28,
-          "n": 30
+          "competence": 0.0,
+          "n": 94
         },
         "risk_assessment": {
           "competence": 0.0,
-          "n": 62
+          "n": 118
         },
         "scientific_discovery": {
           "competence": 0.0,
-          "n": 30
+          "n": 90
         },
         "search_retrieval": {
-          "competence": 18.52,
-          "n": 30
+          "competence": 16.27,
+          "n": 90
         }
       }
     },
     "decider-35b-a3b": {
-      "category_n_items": 1887,
-      "category_pools": "S+P+L1+L2",
+      "category_n_items": 3005,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -2343,42 +2343,42 @@
           "jaggedness": 101,
           "llm_router": 453,
           "long_state": 23,
-          "multilingual": 618,
+          "multilingual": 1604,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 147
+          "usecase": 279
         },
         "topics": {
-          "coding": 330,
-          "everyday_language": 52,
-          "finance_commerce": 99,
-          "law_policy": 1011,
-          "math": 234,
-          "safety_security": 48,
-          "support_ops": 113
+          "coding": 382,
+          "everyday_language": 145,
+          "finance_commerce": 223,
+          "law_policy": 1616,
+          "math": 370,
+          "safety_security": 109,
+          "support_ops": 160
         },
         "usecases": {
-          "advertising": 30,
-          "code_linting": 33,
-          "customer_support": 179,
-          "demand_forecasting": 30,
-          "ecommerce_marketplaces": 65,
-          "feature_extraction": 31,
-          "financial_crime": 51,
-          "gaming": 30,
-          "insurance_claims": 63,
-          "knowledge_graphs": 30,
-          "lead_generation": 31,
-          "legal_compliance": 466,
-          "llm_guardrails": 30,
-          "model_routing": 471,
-          "moderation_trust_safety": 47,
-          "other": 148,
-          "recruiting": 30,
-          "risk_assessment": 62,
-          "scientific_discovery": 30,
-          "search_retrieval": 30
+          "advertising": 88,
+          "code_linting": 90,
+          "customer_support": 240,
+          "demand_forecasting": 83,
+          "ecommerce_marketplaces": 119,
+          "feature_extraction": 99,
+          "financial_crime": 101,
+          "gaming": 86,
+          "insurance_claims": 119,
+          "knowledge_graphs": 94,
+          "lead_generation": 95,
+          "legal_compliance": 515,
+          "llm_guardrails": 93,
+          "model_routing": 524,
+          "moderation_trust_safety": 93,
+          "other": 174,
+          "recruiting": 94,
+          "risk_assessment": 118,
+          "scientific_discovery": 90,
+          "search_retrieval": 90
         }
       },
       "families": {
@@ -2411,8 +2411,8 @@
           "n": 23
         },
         "multilingual": {
-          "competence": 38.87,
-          "n": 618
+          "competence": 28.19,
+          "n": 1604
         },
         "negation_pair_gen": {
           "competence": 41.53,
@@ -2427,120 +2427,120 @@
           "n": 70
         },
         "usecase": {
-          "competence": 27.38,
-          "n": 147
+          "competence": 52.9,
+          "n": 279
         }
       },
       "topics": {
         "coding": {
-          "competence": 50.95,
-          "n": 330
+          "competence": 42.95,
+          "n": 382
         },
         "everyday_language": {
-          "competence": 31.57,
-          "n": 52
+          "competence": 64.86,
+          "n": 145
         },
         "finance_commerce": {
-          "competence": 54.29,
-          "n": 99
+          "competence": 47.91,
+          "n": 223
         },
         "law_policy": {
-          "competence": 50.74,
-          "n": 1011
+          "competence": 40.75,
+          "n": 1616
         },
         "math": {
-          "competence": 5.68,
-          "n": 234
+          "competence": 0.0,
+          "n": 370
         },
         "safety_security": {
-          "competence": 65.0,
-          "n": 48
+          "competence": 56.11,
+          "n": 109
         },
         "support_ops": {
-          "competence": 38.43,
-          "n": 113
+          "competence": 45.42,
+          "n": 160
         }
       },
       "usecases": {
         "advertising": {
-          "competence": 44.71,
-          "n": 30
+          "competence": 23.39,
+          "n": 88
         },
         "code_linting": {
           "competence": 0.0,
-          "n": 33
+          "n": 90
         },
         "customer_support": {
-          "competence": 46.86,
-          "n": 179
+          "competence": 44.27,
+          "n": 240
         },
         "demand_forecasting": {
           "competence": 0.0,
-          "n": 30
+          "n": 83
         },
         "ecommerce_marketplaces": {
-          "competence": 40.1,
-          "n": 65
+          "competence": 46.69,
+          "n": 119
         },
         "feature_extraction": {
-          "competence": 16.34,
-          "n": 31
+          "competence": 29.32,
+          "n": 99
         },
         "financial_crime": {
-          "competence": 9.51,
-          "n": 51
+          "competence": 16.87,
+          "n": 101
         },
         "gaming": {
-          "competence": 16.7,
-          "n": 30
+          "competence": 0.0,
+          "n": 86
         },
         "insurance_claims": {
-          "competence": 49.1,
-          "n": 63
+          "competence": 35.87,
+          "n": 119
         },
         "knowledge_graphs": {
-          "competence": 0.0,
-          "n": 30
+          "competence": 6.13,
+          "n": 94
         },
         "lead_generation": {
-          "competence": 59.4,
-          "n": 31
+          "competence": 58.88,
+          "n": 95
         },
         "legal_compliance": {
-          "competence": 61.62,
-          "n": 466
+          "competence": 57.06,
+          "n": 515
         },
         "llm_guardrails": {
-          "competence": 73.47,
-          "n": 30
+          "competence": 73.23,
+          "n": 93
         },
         "model_routing": {
-          "competence": 54.16,
-          "n": 471
+          "competence": 51.46,
+          "n": 524
         },
         "moderation_trust_safety": {
-          "competence": 58.11,
-          "n": 47
+          "competence": 52.22,
+          "n": 93
         },
         "other": {
-          "competence": 9.46,
-          "n": 148
+          "competence": 26.23,
+          "n": 174
         },
         "recruiting": {
-          "competence": 2.9,
-          "n": 30
+          "competence": 5.24,
+          "n": 94
         },
         "risk_assessment": {
-          "competence": 30.71,
-          "n": 62
+          "competence": 27.84,
+          "n": 118
         },
         "scientific_discovery": {
-          "competence": 0.16,
-          "n": 30
+          "competence": 13.83,
+          "n": 90
         },
         "search_retrieval": {
-          "competence": 59.97,
-          "n": 30
+          "competence": 59.98,
+          "n": 90
         }
       }
     },
@@ -3594,8 +3594,8 @@
       }
     },
     "decision-4b-v12": {
-      "category_n_items": 1887,
-      "category_pools": "S+P+L1+L2",
+      "category_n_items": 3005,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -3605,42 +3605,42 @@
           "jaggedness": 101,
           "llm_router": 453,
           "long_state": 23,
-          "multilingual": 618,
+          "multilingual": 1604,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 147
+          "usecase": 279
         },
         "topics": {
-          "coding": 330,
-          "everyday_language": 52,
-          "finance_commerce": 99,
-          "law_policy": 1011,
-          "math": 234,
-          "safety_security": 48,
-          "support_ops": 113
+          "coding": 382,
+          "everyday_language": 145,
+          "finance_commerce": 223,
+          "law_policy": 1616,
+          "math": 370,
+          "safety_security": 109,
+          "support_ops": 160
         },
         "usecases": {
-          "advertising": 30,
-          "code_linting": 33,
-          "customer_support": 179,
-          "demand_forecasting": 30,
-          "ecommerce_marketplaces": 65,
-          "feature_extraction": 31,
-          "financial_crime": 51,
-          "gaming": 30,
-          "insurance_claims": 63,
-          "knowledge_graphs": 30,
-          "lead_generation": 31,
-          "legal_compliance": 466,
-          "llm_guardrails": 30,
-          "model_routing": 471,
-          "moderation_trust_safety": 47,
-          "other": 148,
-          "recruiting": 30,
-          "risk_assessment": 62,
-          "scientific_discovery": 30,
-          "search_retrieval": 30
+          "advertising": 88,
+          "code_linting": 90,
+          "customer_support": 240,
+          "demand_forecasting": 83,
+          "ecommerce_marketplaces": 119,
+          "feature_extraction": 99,
+          "financial_crime": 101,
+          "gaming": 86,
+          "insurance_claims": 119,
+          "knowledge_graphs": 94,
+          "lead_generation": 95,
+          "legal_compliance": 515,
+          "llm_guardrails": 93,
+          "model_routing": 524,
+          "moderation_trust_safety": 93,
+          "other": 174,
+          "recruiting": 94,
+          "risk_assessment": 118,
+          "scientific_discovery": 90,
+          "search_retrieval": 90
         }
       },
       "families": {
@@ -3673,8 +3673,8 @@
           "n": 23
         },
         "multilingual": {
-          "competence": 36.07,
-          "n": 618
+          "competence": 25.22,
+          "n": 1604
         },
         "negation_pair_gen": {
           "competence": 0.0,
@@ -3689,120 +3689,120 @@
           "n": 70
         },
         "usecase": {
-          "competence": 18.34,
-          "n": 147
+          "competence": 42.68,
+          "n": 279
         }
       },
       "topics": {
         "coding": {
-          "competence": 46.32,
-          "n": 330
+          "competence": 40.88,
+          "n": 382
         },
         "everyday_language": {
-          "competence": 17.63,
-          "n": 52
+          "competence": 46.98,
+          "n": 145
         },
         "finance_commerce": {
-          "competence": 44.64,
-          "n": 99
+          "competence": 34.71,
+          "n": 223
         },
         "law_policy": {
-          "competence": 37.04,
-          "n": 1011
+          "competence": 32.0,
+          "n": 1616
         },
         "math": {
-          "competence": 0.01,
-          "n": 234
+          "competence": 0.0,
+          "n": 370
         },
         "safety_security": {
-          "competence": 26.62,
-          "n": 48
+          "competence": 37.15,
+          "n": 109
         },
         "support_ops": {
-          "competence": 24.28,
-          "n": 113
+          "competence": 34.0,
+          "n": 160
         }
       },
       "usecases": {
         "advertising": {
-          "competence": 18.08,
-          "n": 30
+          "competence": 21.15,
+          "n": 88
         },
         "code_linting": {
-          "competence": 33.08,
-          "n": 33
+          "competence": 21.29,
+          "n": 90
         },
         "customer_support": {
-          "competence": 26.83,
-          "n": 179
+          "competence": 30.5,
+          "n": 240
         },
         "demand_forecasting": {
           "competence": 0.0,
-          "n": 30
+          "n": 83
         },
         "ecommerce_marketplaces": {
-          "competence": 23.87,
-          "n": 65
+          "competence": 33.54,
+          "n": 119
         },
         "feature_extraction": {
-          "competence": 1.23,
-          "n": 31
+          "competence": 9.57,
+          "n": 99
         },
         "financial_crime": {
-          "competence": 24.65,
-          "n": 51
+          "competence": 25.88,
+          "n": 101
         },
         "gaming": {
-          "competence": 11.8,
-          "n": 30
+          "competence": 0.0,
+          "n": 86
         },
         "insurance_claims": {
-          "competence": 41.33,
-          "n": 63
+          "competence": 26.63,
+          "n": 119
         },
         "knowledge_graphs": {
           "competence": 0.0,
-          "n": 30
+          "n": 94
         },
         "lead_generation": {
-          "competence": 28.07,
-          "n": 31
+          "competence": 37.15,
+          "n": 95
         },
         "legal_compliance": {
-          "competence": 41.24,
-          "n": 466
+          "competence": 40.93,
+          "n": 515
         },
         "llm_guardrails": {
-          "competence": 56.88,
-          "n": 30
+          "competence": 59.06,
+          "n": 93
         },
         "model_routing": {
-          "competence": 48.63,
-          "n": 471
+          "competence": 45.34,
+          "n": 524
         },
         "moderation_trust_safety": {
-          "competence": 43.37,
-          "n": 47
+          "competence": 40.19,
+          "n": 93
         },
         "other": {
-          "competence": 0.0,
-          "n": 148
+          "competence": 2.52,
+          "n": 174
         },
         "recruiting": {
-          "competence": 2.16,
-          "n": 30
+          "competence": 10.77,
+          "n": 94
         },
         "risk_assessment": {
-          "competence": 27.07,
-          "n": 62
+          "competence": 31.59,
+          "n": 118
         },
         "scientific_discovery": {
-          "competence": 19.02,
-          "n": 30
+          "competence": 2.3,
+          "n": 90
         },
         "search_retrieval": {
-          "competence": 61.61,
-          "n": 30
+          "competence": 57.45,
+          "n": 90
         }
       }
     },
@@ -4659,8 +4659,8 @@
       }
     },
     "eikos-27b": {
-      "category_n_items": 1887,
-      "category_pools": "S+P+L1+L2",
+      "category_n_items": 3005,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -4670,42 +4670,42 @@
           "jaggedness": 101,
           "llm_router": 453,
           "long_state": 23,
-          "multilingual": 618,
+          "multilingual": 1604,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 147
+          "usecase": 279
         },
         "topics": {
-          "coding": 330,
-          "everyday_language": 52,
-          "finance_commerce": 99,
-          "law_policy": 1011,
-          "math": 234,
-          "safety_security": 48,
-          "support_ops": 113
+          "coding": 382,
+          "everyday_language": 145,
+          "finance_commerce": 223,
+          "law_policy": 1616,
+          "math": 370,
+          "safety_security": 109,
+          "support_ops": 160
         },
         "usecases": {
-          "advertising": 30,
-          "code_linting": 33,
-          "customer_support": 179,
-          "demand_forecasting": 30,
-          "ecommerce_marketplaces": 65,
-          "feature_extraction": 31,
-          "financial_crime": 51,
-          "gaming": 30,
-          "insurance_claims": 63,
-          "knowledge_graphs": 30,
-          "lead_generation": 31,
-          "legal_compliance": 466,
-          "llm_guardrails": 30,
-          "model_routing": 471,
-          "moderation_trust_safety": 47,
-          "other": 148,
-          "recruiting": 30,
-          "risk_assessment": 62,
-          "scientific_discovery": 30,
-          "search_retrieval": 30
+          "advertising": 88,
+          "code_linting": 90,
+          "customer_support": 240,
+          "demand_forecasting": 83,
+          "ecommerce_marketplaces": 119,
+          "feature_extraction": 99,
+          "financial_crime": 101,
+          "gaming": 86,
+          "insurance_claims": 119,
+          "knowledge_graphs": 94,
+          "lead_generation": 95,
+          "legal_compliance": 515,
+          "llm_guardrails": 93,
+          "model_routing": 524,
+          "moderation_trust_safety": 93,
+          "other": 174,
+          "recruiting": 94,
+          "risk_assessment": 118,
+          "scientific_discovery": 90,
+          "search_retrieval": 90
         }
       },
       "families": {
@@ -4738,8 +4738,8 @@
           "n": 23
         },
         "multilingual": {
-          "competence": 53.99,
-          "n": 618
+          "competence": 45.19,
+          "n": 1604
         },
         "negation_pair_gen": {
           "competence": 62.61,
@@ -4754,126 +4754,126 @@
           "n": 70
         },
         "usecase": {
-          "competence": 48.12,
-          "n": 147
+          "competence": 67.52,
+          "n": 279
         }
       },
       "topics": {
         "coding": {
-          "competence": 75.59,
-          "n": 330
+          "competence": 75.22,
+          "n": 382
         },
         "everyday_language": {
-          "competence": 50.83,
-          "n": 52
+          "competence": 71.53,
+          "n": 145
         },
         "finance_commerce": {
-          "competence": 55.82,
-          "n": 99
+          "competence": 47.62,
+          "n": 223
         },
         "law_policy": {
-          "competence": 67.15,
-          "n": 1011
+          "competence": 57.7,
+          "n": 1616
         },
         "math": {
-          "competence": 28.35,
-          "n": 234
+          "competence": 19.78,
+          "n": 370
         },
         "safety_security": {
-          "competence": 44.19,
-          "n": 48
+          "competence": 60.13,
+          "n": 109
         },
         "support_ops": {
-          "competence": 39.79,
-          "n": 113
+          "competence": 50.63,
+          "n": 160
         }
       },
       "usecases": {
         "advertising": {
-          "competence": 24.87,
-          "n": 30
+          "competence": 22.02,
+          "n": 88
         },
         "code_linting": {
-          "competence": 73.05,
-          "n": 33
+          "competence": 75.65,
+          "n": 90
         },
         "customer_support": {
-          "competence": 53.77,
-          "n": 179
+          "competence": 52.11,
+          "n": 240
         },
         "demand_forecasting": {
-          "competence": 2.08,
-          "n": 30
+          "competence": 0.0,
+          "n": 83
         },
         "ecommerce_marketplaces": {
-          "competence": 51.34,
-          "n": 65
+          "competence": 49.8,
+          "n": 119
         },
         "feature_extraction": {
-          "competence": 45.98,
-          "n": 31
+          "competence": 37.85,
+          "n": 99
         },
         "financial_crime": {
-          "competence": 39.09,
-          "n": 51
+          "competence": 37.04,
+          "n": 101
         },
         "gaming": {
-          "competence": 23.75,
-          "n": 30
+          "competence": 8.4,
+          "n": 86
         },
         "insurance_claims": {
-          "competence": 57.46,
-          "n": 63
+          "competence": 42.78,
+          "n": 119
         },
         "knowledge_graphs": {
-          "competence": 59.66,
-          "n": 30
+          "competence": 65.78,
+          "n": 94
         },
         "lead_generation": {
-          "competence": 65.51,
-          "n": 31
+          "competence": 62.06,
+          "n": 95
         },
         "legal_compliance": {
-          "competence": 75.87,
-          "n": 466
+          "competence": 72.83,
+          "n": 515
         },
         "llm_guardrails": {
-          "competence": 77.46,
-          "n": 30
+          "competence": 86.61,
+          "n": 93
         },
         "model_routing": {
-          "competence": 75.0,
-          "n": 471
+          "competence": 72.79,
+          "n": 524
         },
         "moderation_trust_safety": {
-          "competence": 72.63,
-          "n": 47
+          "competence": 66.62,
+          "n": 93
         },
         "other": {
-          "competence": 15.2,
-          "n": 148
+          "competence": 28.98,
+          "n": 174
         },
         "recruiting": {
-          "competence": 15.97,
-          "n": 30
+          "competence": 13.18,
+          "n": 94
         },
         "risk_assessment": {
-          "competence": 43.04,
-          "n": 62
+          "competence": 35.81,
+          "n": 118
         },
         "scientific_discovery": {
-          "competence": 41.38,
-          "n": 30
+          "competence": 29.57,
+          "n": 90
         },
         "search_retrieval": {
-          "competence": 89.27,
-          "n": 30
+          "competence": 87.19,
+          "n": 90
         }
       }
     },
     "fastino-gliner-2-5-decide": {
-      "category_n_items": 1887,
-      "category_pools": "S+P+L1+L2",
+      "category_n_items": 2996,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -4883,42 +4883,42 @@
           "jaggedness": 101,
           "llm_router": 453,
           "long_state": 23,
-          "multilingual": 618,
+          "multilingual": 1595,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 147
+          "usecase": 279
         },
         "topics": {
-          "coding": 330,
-          "everyday_language": 52,
-          "finance_commerce": 99,
-          "law_policy": 1011,
-          "math": 234,
-          "safety_security": 48,
-          "support_ops": 113
+          "coding": 382,
+          "everyday_language": 145,
+          "finance_commerce": 221,
+          "law_policy": 1611,
+          "math": 370,
+          "safety_security": 109,
+          "support_ops": 158
         },
         "usecases": {
-          "advertising": 30,
-          "code_linting": 33,
-          "customer_support": 179,
-          "demand_forecasting": 30,
-          "ecommerce_marketplaces": 65,
-          "feature_extraction": 31,
-          "financial_crime": 51,
-          "gaming": 30,
-          "insurance_claims": 63,
-          "knowledge_graphs": 30,
-          "lead_generation": 31,
-          "legal_compliance": 466,
-          "llm_guardrails": 30,
-          "model_routing": 471,
-          "moderation_trust_safety": 47,
-          "other": 148,
-          "recruiting": 30,
-          "risk_assessment": 62,
-          "scientific_discovery": 30,
-          "search_retrieval": 30
+          "advertising": 88,
+          "code_linting": 90,
+          "customer_support": 238,
+          "demand_forecasting": 83,
+          "ecommerce_marketplaces": 119,
+          "feature_extraction": 98,
+          "financial_crime": 100,
+          "gaming": 86,
+          "insurance_claims": 119,
+          "knowledge_graphs": 94,
+          "lead_generation": 93,
+          "legal_compliance": 515,
+          "llm_guardrails": 91,
+          "model_routing": 524,
+          "moderation_trust_safety": 93,
+          "other": 174,
+          "recruiting": 94,
+          "risk_assessment": 117,
+          "scientific_discovery": 90,
+          "search_retrieval": 90
         }
       },
       "families": {
@@ -4952,7 +4952,7 @@
         },
         "multilingual": {
           "competence": 0.0,
-          "n": 618
+          "n": 1595
         },
         "negation_pair_gen": {
           "competence": 0.0,
@@ -4968,119 +4968,119 @@
         },
         "usecase": {
           "competence": 0.0,
-          "n": 147
+          "n": 279
         }
       },
       "topics": {
         "coding": {
-          "competence": 5.46,
-          "n": 330
+          "competence": 1.62,
+          "n": 382
         },
         "everyday_language": {
-          "competence": 0.0,
-          "n": 52
+          "competence": 12.51,
+          "n": 145
         },
         "finance_commerce": {
-          "competence": 2.6,
-          "n": 99
+          "competence": 0.0,
+          "n": 221
         },
         "law_policy": {
           "competence": 0.0,
-          "n": 1011
+          "n": 1611
         },
         "math": {
           "competence": 0.0,
-          "n": 234
+          "n": 370
         },
         "safety_security": {
-          "competence": 3.24,
-          "n": 48
+          "competence": 0.0,
+          "n": 109
         },
         "support_ops": {
           "competence": 0.0,
-          "n": 113
+          "n": 158
         }
       },
       "usecases": {
         "advertising": {
           "competence": 0.0,
-          "n": 30
+          "n": 88
         },
         "code_linting": {
           "competence": 0.0,
-          "n": 33
+          "n": 90
         },
         "customer_support": {
           "competence": 0.0,
-          "n": 179
+          "n": 238
         },
         "demand_forecasting": {
           "competence": 0.0,
-          "n": 30
+          "n": 83
         },
         "ecommerce_marketplaces": {
           "competence": 0.0,
-          "n": 65
+          "n": 119
         },
         "feature_extraction": {
           "competence": 0.0,
-          "n": 31
+          "n": 98
         },
         "financial_crime": {
-          "competence": 3.64,
-          "n": 51
+          "competence": 0.0,
+          "n": 100
         },
         "gaming": {
           "competence": 0.0,
-          "n": 30
+          "n": 86
         },
         "insurance_claims": {
           "competence": 0.0,
-          "n": 63
+          "n": 119
         },
         "knowledge_graphs": {
           "competence": 0.0,
-          "n": 30
+          "n": 94
         },
         "lead_generation": {
-          "competence": 0.78,
-          "n": 31
+          "competence": 0.0,
+          "n": 93
         },
         "legal_compliance": {
           "competence": 0.0,
-          "n": 466
+          "n": 515
         },
         "llm_guardrails": {
-          "competence": 10.5,
-          "n": 30
+          "competence": 13.33,
+          "n": 91
         },
         "model_routing": {
-          "competence": 5.79,
-          "n": 471
+          "competence": 6.31,
+          "n": 524
         },
         "moderation_trust_safety": {
           "competence": 0.0,
-          "n": 47
+          "n": 93
         },
         "other": {
           "competence": 0.0,
-          "n": 148
+          "n": 174
         },
         "recruiting": {
-          "competence": 0.0,
-          "n": 30
+          "competence": 1.0,
+          "n": 94
         },
         "risk_assessment": {
-          "competence": 0.0,
-          "n": 62
+          "competence": 1.0,
+          "n": 117
         },
         "scientific_discovery": {
           "competence": 0.0,
-          "n": 30
+          "n": 90
         },
         "search_retrieval": {
-          "competence": 5.21,
-          "n": 30
+          "competence": 0.0,
+          "n": 90
         }
       }
     },
@@ -7347,8 +7347,8 @@
       }
     },
     "jev-local": {
-      "category_n_items": 1887,
-      "category_pools": "S+P+L1+L2",
+      "category_n_items": 3005,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -7358,42 +7358,42 @@
           "jaggedness": 101,
           "llm_router": 453,
           "long_state": 23,
-          "multilingual": 618,
+          "multilingual": 1604,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 147
+          "usecase": 279
         },
         "topics": {
-          "coding": 330,
-          "everyday_language": 52,
-          "finance_commerce": 99,
-          "law_policy": 1011,
-          "math": 234,
-          "safety_security": 48,
-          "support_ops": 113
+          "coding": 382,
+          "everyday_language": 145,
+          "finance_commerce": 223,
+          "law_policy": 1616,
+          "math": 370,
+          "safety_security": 109,
+          "support_ops": 160
         },
         "usecases": {
-          "advertising": 30,
-          "code_linting": 33,
-          "customer_support": 179,
-          "demand_forecasting": 30,
-          "ecommerce_marketplaces": 65,
-          "feature_extraction": 31,
-          "financial_crime": 51,
-          "gaming": 30,
-          "insurance_claims": 63,
-          "knowledge_graphs": 30,
-          "lead_generation": 31,
-          "legal_compliance": 466,
-          "llm_guardrails": 30,
-          "model_routing": 471,
-          "moderation_trust_safety": 47,
-          "other": 148,
-          "recruiting": 30,
-          "risk_assessment": 62,
-          "scientific_discovery": 30,
-          "search_retrieval": 30
+          "advertising": 88,
+          "code_linting": 90,
+          "customer_support": 240,
+          "demand_forecasting": 83,
+          "ecommerce_marketplaces": 119,
+          "feature_extraction": 99,
+          "financial_crime": 101,
+          "gaming": 86,
+          "insurance_claims": 119,
+          "knowledge_graphs": 94,
+          "lead_generation": 95,
+          "legal_compliance": 515,
+          "llm_guardrails": 93,
+          "model_routing": 524,
+          "moderation_trust_safety": 93,
+          "other": 174,
+          "recruiting": 94,
+          "risk_assessment": 118,
+          "scientific_discovery": 90,
+          "search_retrieval": 90
         }
       },
       "families": {
@@ -7426,8 +7426,8 @@
           "n": 23
         },
         "multilingual": {
-          "competence": 30.62,
-          "n": 618
+          "competence": 23.42,
+          "n": 1604
         },
         "negation_pair_gen": {
           "competence": 8.88,
@@ -7442,120 +7442,120 @@
           "n": 70
         },
         "usecase": {
-          "competence": 22.3,
-          "n": 147
+          "competence": 44.84,
+          "n": 279
         }
       },
       "topics": {
         "coding": {
-          "competence": 57.89,
-          "n": 330
+          "competence": 54.0,
+          "n": 382
         },
         "everyday_language": {
-          "competence": 40.96,
-          "n": 52
+          "competence": 60.21,
+          "n": 145
         },
         "finance_commerce": {
-          "competence": 55.79,
-          "n": 99
+          "competence": 41.03,
+          "n": 223
         },
         "law_policy": {
-          "competence": 37.29,
-          "n": 1011
+          "competence": 30.74,
+          "n": 1616
         },
         "math": {
-          "competence": 7.06,
-          "n": 234
+          "competence": 3.56,
+          "n": 370
         },
         "safety_security": {
-          "competence": 55.41,
-          "n": 48
+          "competence": 42.22,
+          "n": 109
         },
         "support_ops": {
-          "competence": 34.0,
-          "n": 113
+          "competence": 36.91,
+          "n": 160
         }
       },
       "usecases": {
         "advertising": {
-          "competence": 25.52,
-          "n": 30
+          "competence": 26.99,
+          "n": 88
         },
         "code_linting": {
-          "competence": 16.03,
-          "n": 33
+          "competence": 25.82,
+          "n": 90
         },
         "customer_support": {
-          "competence": 25.23,
-          "n": 179
+          "competence": 25.4,
+          "n": 240
         },
         "demand_forecasting": {
-          "competence": 0.0,
-          "n": 30
+          "competence": 2.87,
+          "n": 83
         },
         "ecommerce_marketplaces": {
-          "competence": 21.02,
-          "n": 65
+          "competence": 29.28,
+          "n": 119
         },
         "feature_extraction": {
-          "competence": 5.39,
-          "n": 31
+          "competence": 17.18,
+          "n": 99
         },
         "financial_crime": {
-          "competence": 19.96,
-          "n": 51
+          "competence": 20.37,
+          "n": 101
         },
         "gaming": {
-          "competence": 0.37,
-          "n": 30
+          "competence": 0.0,
+          "n": 86
         },
         "insurance_claims": {
-          "competence": 57.13,
-          "n": 63
+          "competence": 37.05,
+          "n": 119
         },
         "knowledge_graphs": {
-          "competence": 0.0,
-          "n": 30
+          "competence": 14.07,
+          "n": 94
         },
         "lead_generation": {
-          "competence": 57.18,
-          "n": 31
+          "competence": 47.0,
+          "n": 95
         },
         "legal_compliance": {
-          "competence": 45.22,
-          "n": 466
+          "competence": 40.19,
+          "n": 515
         },
         "llm_guardrails": {
-          "competence": 37.39,
-          "n": 30
+          "competence": 26.17,
+          "n": 93
         },
         "model_routing": {
-          "competence": 62.03,
-          "n": 471
+          "competence": 59.16,
+          "n": 524
         },
         "moderation_trust_safety": {
-          "competence": 26.16,
-          "n": 47
+          "competence": 23.63,
+          "n": 93
         },
         "other": {
-          "competence": 3.39,
-          "n": 148
+          "competence": 13.98,
+          "n": 174
         },
         "recruiting": {
-          "competence": 16.78,
-          "n": 30
+          "competence": 18.71,
+          "n": 94
         },
         "risk_assessment": {
-          "competence": 39.44,
-          "n": 62
+          "competence": 38.22,
+          "n": 118
         },
         "scientific_discovery": {
-          "competence": 1.4,
-          "n": 30
+          "competence": 4.98,
+          "n": 90
         },
         "search_retrieval": {
-          "competence": 58.41,
-          "n": 30
+          "competence": 61.77,
+          "n": 90
         }
       }
     },
@@ -7986,8 +7986,8 @@
       }
     },
     "jevk5-v0.3-4b": {
-      "category_n_items": 1887,
-      "category_pools": "S+P+L1+L2",
+      "category_n_items": 3005,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -7997,42 +7997,42 @@
           "jaggedness": 101,
           "llm_router": 453,
           "long_state": 23,
-          "multilingual": 618,
+          "multilingual": 1604,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 147
+          "usecase": 279
         },
         "topics": {
-          "coding": 330,
-          "everyday_language": 52,
-          "finance_commerce": 99,
-          "law_policy": 1011,
-          "math": 234,
-          "safety_security": 48,
-          "support_ops": 113
+          "coding": 382,
+          "everyday_language": 145,
+          "finance_commerce": 223,
+          "law_policy": 1616,
+          "math": 370,
+          "safety_security": 109,
+          "support_ops": 160
         },
         "usecases": {
-          "advertising": 30,
-          "code_linting": 33,
-          "customer_support": 179,
-          "demand_forecasting": 30,
-          "ecommerce_marketplaces": 65,
-          "feature_extraction": 31,
-          "financial_crime": 51,
-          "gaming": 30,
-          "insurance_claims": 63,
-          "knowledge_graphs": 30,
-          "lead_generation": 31,
-          "legal_compliance": 466,
-          "llm_guardrails": 30,
-          "model_routing": 471,
-          "moderation_trust_safety": 47,
-          "other": 148,
-          "recruiting": 30,
-          "risk_assessment": 62,
-          "scientific_discovery": 30,
-          "search_retrieval": 30
+          "advertising": 88,
+          "code_linting": 90,
+          "customer_support": 240,
+          "demand_forecasting": 83,
+          "ecommerce_marketplaces": 119,
+          "feature_extraction": 99,
+          "financial_crime": 101,
+          "gaming": 86,
+          "insurance_claims": 119,
+          "knowledge_graphs": 94,
+          "lead_generation": 95,
+          "legal_compliance": 515,
+          "llm_guardrails": 93,
+          "model_routing": 524,
+          "moderation_trust_safety": 93,
+          "other": 174,
+          "recruiting": 94,
+          "risk_assessment": 118,
+          "scientific_discovery": 90,
+          "search_retrieval": 90
         }
       },
       "families": {
@@ -8065,8 +8065,8 @@
           "n": 23
         },
         "multilingual": {
-          "competence": 33.81,
-          "n": 618
+          "competence": 23.61,
+          "n": 1604
         },
         "negation_pair_gen": {
           "competence": 2.6,
@@ -8081,120 +8081,120 @@
           "n": 70
         },
         "usecase": {
-          "competence": 24.27,
-          "n": 147
+          "competence": 47.82,
+          "n": 279
         }
       },
       "topics": {
         "coding": {
-          "competence": 53.78,
-          "n": 330
+          "competence": 48.79,
+          "n": 382
         },
         "everyday_language": {
-          "competence": 32.82,
-          "n": 52
+          "competence": 54.36,
+          "n": 145
         },
         "finance_commerce": {
-          "competence": 46.33,
-          "n": 99
+          "competence": 40.29,
+          "n": 223
         },
         "law_policy": {
-          "competence": 39.51,
-          "n": 1011
+          "competence": 32.18,
+          "n": 1616
         },
         "math": {
-          "competence": 1.81,
-          "n": 234
+          "competence": 0.0,
+          "n": 370
         },
         "safety_security": {
-          "competence": 35.81,
-          "n": 48
+          "competence": 46.7,
+          "n": 109
         },
         "support_ops": {
-          "competence": 27.48,
-          "n": 113
+          "competence": 30.59,
+          "n": 160
         }
       },
       "usecases": {
         "advertising": {
-          "competence": 33.25,
-          "n": 30
+          "competence": 32.57,
+          "n": 88
         },
         "code_linting": {
-          "competence": 20.76,
-          "n": 33
+          "competence": 23.53,
+          "n": 90
         },
         "customer_support": {
-          "competence": 33.99,
-          "n": 179
+          "competence": 34.43,
+          "n": 240
         },
         "demand_forecasting": {
           "competence": 0.0,
-          "n": 30
+          "n": 83
         },
         "ecommerce_marketplaces": {
-          "competence": 28.13,
-          "n": 65
+          "competence": 30.66,
+          "n": 119
         },
         "feature_extraction": {
-          "competence": 8.04,
-          "n": 31
+          "competence": 15.81,
+          "n": 99
         },
         "financial_crime": {
-          "competence": 20.07,
-          "n": 51
+          "competence": 18.83,
+          "n": 101
         },
         "gaming": {
           "competence": 0.0,
-          "n": 30
+          "n": 86
         },
         "insurance_claims": {
-          "competence": 51.34,
-          "n": 63
+          "competence": 42.51,
+          "n": 119
         },
         "knowledge_graphs": {
-          "competence": 0.0,
-          "n": 30
+          "competence": 8.58,
+          "n": 94
         },
         "lead_generation": {
-          "competence": 58.05,
-          "n": 31
+          "competence": 50.05,
+          "n": 95
         },
         "legal_compliance": {
-          "competence": 47.03,
-          "n": 466
+          "competence": 45.03,
+          "n": 515
         },
         "llm_guardrails": {
-          "competence": 42.19,
-          "n": 30
+          "competence": 38.86,
+          "n": 93
         },
         "model_routing": {
-          "competence": 55.03,
-          "n": 471
+          "competence": 50.96,
+          "n": 524
         },
         "moderation_trust_safety": {
-          "competence": 34.85,
-          "n": 47
+          "competence": 40.11,
+          "n": 93
         },
         "other": {
-          "competence": 0.0,
-          "n": 148
+          "competence": 8.25,
+          "n": 174
         },
         "recruiting": {
-          "competence": 0.0,
-          "n": 30
+          "competence": 0.12,
+          "n": 94
         },
         "risk_assessment": {
-          "competence": 37.07,
-          "n": 62
+          "competence": 31.74,
+          "n": 118
         },
         "scientific_discovery": {
-          "competence": 0.0,
-          "n": 30
+          "competence": 2.31,
+          "n": 90
         },
         "search_retrieval": {
-          "competence": 56.28,
-          "n": 30
+          "competence": 53.59,
+          "n": 90
         }
       }
     },
@@ -8838,8 +8838,8 @@
       }
     },
     "jqv": {
-      "category_n_items": 1887,
-      "category_pools": "S+P+L1+L2",
+      "category_n_items": 3005,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -8849,42 +8849,42 @@
           "jaggedness": 101,
           "llm_router": 453,
           "long_state": 23,
-          "multilingual": 618,
+          "multilingual": 1604,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 147
+          "usecase": 279
         },
         "topics": {
-          "coding": 330,
-          "everyday_language": 52,
-          "finance_commerce": 99,
-          "law_policy": 1011,
-          "math": 234,
-          "safety_security": 48,
-          "support_ops": 113
+          "coding": 382,
+          "everyday_language": 145,
+          "finance_commerce": 223,
+          "law_policy": 1616,
+          "math": 370,
+          "safety_security": 109,
+          "support_ops": 160
         },
         "usecases": {
-          "advertising": 30,
-          "code_linting": 33,
-          "customer_support": 179,
-          "demand_forecasting": 30,
-          "ecommerce_marketplaces": 65,
-          "feature_extraction": 31,
-          "financial_crime": 51,
-          "gaming": 30,
-          "insurance_claims": 63,
-          "knowledge_graphs": 30,
-          "lead_generation": 31,
-          "legal_compliance": 466,
-          "llm_guardrails": 30,
-          "model_routing": 471,
-          "moderation_trust_safety": 47,
-          "other": 148,
-          "recruiting": 30,
-          "risk_assessment": 62,
-          "scientific_discovery": 30,
-          "search_retrieval": 30
+          "advertising": 88,
+          "code_linting": 90,
+          "customer_support": 240,
+          "demand_forecasting": 83,
+          "ecommerce_marketplaces": 119,
+          "feature_extraction": 99,
+          "financial_crime": 101,
+          "gaming": 86,
+          "insurance_claims": 119,
+          "knowledge_graphs": 94,
+          "lead_generation": 95,
+          "legal_compliance": 515,
+          "llm_guardrails": 93,
+          "model_routing": 524,
+          "moderation_trust_safety": 93,
+          "other": 174,
+          "recruiting": 94,
+          "risk_assessment": 118,
+          "scientific_discovery": 90,
+          "search_retrieval": 90
         }
       },
       "families": {
@@ -8917,8 +8917,8 @@
           "n": 23
         },
         "multilingual": {
-          "competence": 21.75,
-          "n": 618
+          "competence": 13.66,
+          "n": 1604
         },
         "negation_pair_gen": {
           "competence": 0.0,
@@ -8933,120 +8933,120 @@
           "n": 70
         },
         "usecase": {
-          "competence": 6.45,
-          "n": 147
+          "competence": 33.79,
+          "n": 279
         }
       },
       "topics": {
         "coding": {
-          "competence": 56.44,
-          "n": 330
+          "competence": 49.89,
+          "n": 382
         },
         "everyday_language": {
-          "competence": 43.81,
-          "n": 52
+          "competence": 59.59,
+          "n": 145
         },
         "finance_commerce": {
-          "competence": 31.83,
-          "n": 99
+          "competence": 25.45,
+          "n": 223
         },
         "law_policy": {
-          "competence": 31.74,
-          "n": 1011
+          "competence": 22.22,
+          "n": 1616
         },
         "math": {
           "competence": 0.0,
-          "n": 234
+          "n": 370
         },
         "safety_security": {
-          "competence": 33.65,
-          "n": 48
+          "competence": 30.85,
+          "n": 109
         },
         "support_ops": {
-          "competence": 21.29,
-          "n": 113
+          "competence": 24.15,
+          "n": 160
         }
       },
       "usecases": {
         "advertising": {
-          "competence": 7.35,
-          "n": 30
+          "competence": 8.32,
+          "n": 88
         },
         "code_linting": {
-          "competence": 1.41,
-          "n": 33
+          "competence": 12.45,
+          "n": 90
         },
         "customer_support": {
-          "competence": 18.05,
-          "n": 179
+          "competence": 16.79,
+          "n": 240
         },
         "demand_forecasting": {
           "competence": 0.0,
-          "n": 30
+          "n": 83
         },
         "ecommerce_marketplaces": {
-          "competence": 8.34,
-          "n": 65
+          "competence": 17.23,
+          "n": 119
         },
         "feature_extraction": {
-          "competence": 4.4,
-          "n": 31
+          "competence": 7.5,
+          "n": 99
         },
         "financial_crime": {
-          "competence": 1.91,
-          "n": 51
+          "competence": 3.11,
+          "n": 101
         },
         "gaming": {
-          "competence": 2.87,
-          "n": 30
+          "competence": 10.06,
+          "n": 86
         },
         "insurance_claims": {
-          "competence": 55.7,
-          "n": 63
+          "competence": 35.93,
+          "n": 119
         },
         "knowledge_graphs": {
-          "competence": 0.0,
-          "n": 30
+          "competence": 14.15,
+          "n": 94
         },
         "lead_generation": {
-          "competence": 37.07,
-          "n": 31
+          "competence": 32.3,
+          "n": 95
         },
         "legal_compliance": {
-          "competence": 43.72,
-          "n": 466
+          "competence": 39.45,
+          "n": 515
         },
         "llm_guardrails": {
-          "competence": 41.37,
-          "n": 30
+          "competence": 30.31,
+          "n": 93
         },
         "model_routing": {
-          "competence": 60.18,
-          "n": 471
+          "competence": 55.97,
+          "n": 524
         },
         "moderation_trust_safety": {
-          "competence": 42.02,
-          "n": 47
+          "competence": 30.38,
+          "n": 93
         },
         "other": {
-          "competence": 0.0,
-          "n": 148
+          "competence": 7.45,
+          "n": 174
         },
         "recruiting": {
-          "competence": 2.17,
-          "n": 30
+          "competence": 0.0,
+          "n": 94
         },
         "risk_assessment": {
-          "competence": 10.52,
-          "n": 62
+          "competence": 7.81,
+          "n": 118
         },
         "scientific_discovery": {
           "competence": 0.0,
-          "n": 30
+          "n": 90
         },
         "search_retrieval": {
-          "competence": 19.53,
-          "n": 30
+          "competence": 38.69,
+          "n": 90
         }
       }
     },
@@ -10313,8 +10313,8 @@
       }
     },
     "laya": {
-      "category_n_items": 1500,
-      "category_pools": "S+P",
+      "category_n_items": 1887,
+      "category_pools": "S+P+L1+L2",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -10322,44 +10322,44 @@
           "composite_gen": 66,
           "fairness": 153,
           "jaggedness": 101,
-          "llm_router": 434,
+          "llm_router": 453,
           "long_state": 23,
-          "multilingual": 264,
+          "multilingual": 618,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 133
+          "usecase": 147
         },
         "topics": {
-          "coding": 302,
-          "everyday_language": 46,
-          "finance_commerce": 66,
-          "law_policy": 763,
-          "math": 193,
-          "safety_security": 37,
-          "support_ops": 93
+          "coding": 330,
+          "everyday_language": 52,
+          "finance_commerce": 99,
+          "law_policy": 1011,
+          "math": 234,
+          "safety_security": 48,
+          "support_ops": 113
         },
         "usecases": {
-          "advertising": 11,
-          "code_linting": 16,
-          "customer_support": 149,
-          "demand_forecasting": 16,
-          "ecommerce_marketplaces": 48,
-          "feature_extraction": 19,
-          "financial_crime": 39,
-          "gaming": 14,
-          "insurance_claims": 41,
-          "knowledge_graphs": 18,
-          "lead_generation": 17,
-          "legal_compliance": 387,
-          "llm_guardrails": 17,
-          "model_routing": 442,
-          "moderation_trust_safety": 32,
-          "other": 145,
-          "recruiting": 13,
-          "risk_assessment": 45,
-          "scientific_discovery": 14,
-          "search_retrieval": 17
+          "advertising": 30,
+          "code_linting": 33,
+          "customer_support": 179,
+          "demand_forecasting": 30,
+          "ecommerce_marketplaces": 65,
+          "feature_extraction": 31,
+          "financial_crime": 51,
+          "gaming": 30,
+          "insurance_claims": 63,
+          "knowledge_graphs": 30,
+          "lead_generation": 31,
+          "legal_compliance": 466,
+          "llm_guardrails": 30,
+          "model_routing": 471,
+          "moderation_trust_safety": 47,
+          "other": 148,
+          "recruiting": 30,
+          "risk_assessment": 62,
+          "scientific_discovery": 30,
+          "search_retrieval": 30
         }
       },
       "families": {
@@ -10385,7 +10385,7 @@
         },
         "llm_router": {
           "competence": 0.0,
-          "n": 434
+          "n": 453
         },
         "long_state": {
           "competence": 0.0,
@@ -10393,7 +10393,7 @@
         },
         "multilingual": {
           "competence": 0.0,
-          "n": 264
+          "n": 618
         },
         "negation_pair_gen": {
           "competence": 0.0,
@@ -10409,103 +10409,119 @@
         },
         "usecase": {
           "competence": 0.0,
-          "n": 133
+          "n": 147
         }
       },
       "topics": {
         "coding": {
           "competence": 0.0,
-          "n": 302
+          "n": 330
         },
         "everyday_language": {
           "competence": 0.0,
-          "n": 46
+          "n": 52
         },
         "finance_commerce": {
           "competence": 0.0,
-          "n": 66
+          "n": 99
         },
         "law_policy": {
           "competence": 0.0,
-          "n": 763
+          "n": 1011
         },
         "math": {
           "competence": 0.0,
-          "n": 193
+          "n": 234
         },
         "safety_security": {
           "competence": 0.0,
-          "n": 37
+          "n": 48
         },
         "support_ops": {
           "competence": 0.0,
-          "n": 93
+          "n": 113
         }
       },
       "usecases": {
+        "advertising": {
+          "competence": 0.0,
+          "n": 30
+        },
         "code_linting": {
           "competence": 0.0,
-          "n": 16
+          "n": 33
         },
         "customer_support": {
           "competence": 0.0,
-          "n": 149
+          "n": 179
         },
         "demand_forecasting": {
           "competence": 0.0,
-          "n": 16
+          "n": 30
         },
         "ecommerce_marketplaces": {
           "competence": 0.0,
-          "n": 48
+          "n": 65
         },
         "feature_extraction": {
           "competence": 0.0,
-          "n": 19
+          "n": 31
         },
         "financial_crime": {
           "competence": 0.0,
-          "n": 39
+          "n": 51
+        },
+        "gaming": {
+          "competence": 0.0,
+          "n": 30
         },
         "insurance_claims": {
           "competence": 0.0,
-          "n": 41
+          "n": 63
         },
         "knowledge_graphs": {
           "competence": 0.0,
-          "n": 18
+          "n": 30
         },
         "lead_generation": {
           "competence": 0.0,
-          "n": 17
+          "n": 31
         },
         "legal_compliance": {
           "competence": 0.0,
-          "n": 387
+          "n": 466
         },
         "llm_guardrails": {
           "competence": 0.0,
-          "n": 17
+          "n": 30
         },
         "model_routing": {
           "competence": 0.0,
-          "n": 442
+          "n": 471
         },
         "moderation_trust_safety": {
           "competence": 0.0,
-          "n": 32
+          "n": 47
         },
         "other": {
           "competence": 0.0,
-          "n": 145
+          "n": 148
+        },
+        "recruiting": {
+          "competence": 0.0,
+          "n": 30
         },
         "risk_assessment": {
           "competence": 0.0,
-          "n": 45
+          "n": 62
+        },
+        "scientific_discovery": {
+          "competence": 0.0,
+          "n": 30
         },
         "search_retrieval": {
-          "competence": 0.27,
-          "n": 17
+          "competence": 0.0,
+          "n": 30
         }
       }
     },
@@ -11362,8 +11378,8 @@
       }
     },
     "liquid-d1": {
-      "category_n_items": 1887,
-      "category_pools": "S+P+L1+L2",
+      "category_n_items": 3005,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -11373,42 +11389,42 @@
           "jaggedness": 101,
           "llm_router": 453,
           "long_state": 23,
-          "multilingual": 618,
+          "multilingual": 1604,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 147
+          "usecase": 279
         },
         "topics": {
-          "coding": 330,
-          "everyday_language": 52,
-          "finance_commerce": 99,
-          "law_policy": 1011,
-          "math": 234,
-          "safety_security": 48,
-          "support_ops": 113
+          "coding": 382,
+          "everyday_language": 145,
+          "finance_commerce": 223,
+          "law_policy": 1616,
+          "math": 370,
+          "safety_security": 109,
+          "support_ops": 160
         },
         "usecases": {
-          "advertising": 30,
-          "code_linting": 33,
-          "customer_support": 179,
-          "demand_forecasting": 30,
-          "ecommerce_marketplaces": 65,
-          "feature_extraction": 31,
-          "financial_crime": 51,
-          "gaming": 30,
-          "insurance_claims": 63,
-          "knowledge_graphs": 30,
-          "lead_generation": 31,
-          "legal_compliance": 466,
-          "llm_guardrails": 30,
-          "model_routing": 471,
-          "moderation_trust_safety": 47,
-          "other": 148,
-          "recruiting": 30,
-          "risk_assessment": 62,
-          "scientific_discovery": 30,
-          "search_retrieval": 30
+          "advertising": 88,
+          "code_linting": 90,
+          "customer_support": 240,
+          "demand_forecasting": 83,
+          "ecommerce_marketplaces": 119,
+          "feature_extraction": 99,
+          "financial_crime": 101,
+          "gaming": 86,
+          "insurance_claims": 119,
+          "knowledge_graphs": 94,
+          "lead_generation": 95,
+          "legal_compliance": 515,
+          "llm_guardrails": 93,
+          "model_routing": 524,
+          "moderation_trust_safety": 93,
+          "other": 174,
+          "recruiting": 94,
+          "risk_assessment": 118,
+          "scientific_discovery": 90,
+          "search_retrieval": 90
         }
       },
       "families": {
@@ -11441,8 +11457,8 @@
           "n": 23
         },
         "multilingual": {
-          "competence": 48.72,
-          "n": 618
+          "competence": 37.65,
+          "n": 1604
         },
         "negation_pair_gen": {
           "competence": 69.19,
@@ -11457,126 +11473,126 @@
           "n": 70
         },
         "usecase": {
-          "competence": 33.39,
-          "n": 147
+          "competence": 59.5,
+          "n": 279
         }
       },
       "topics": {
         "coding": {
-          "competence": 68.7,
-          "n": 330
+          "competence": 64.15,
+          "n": 382
         },
         "everyday_language": {
-          "competence": 53.82,
-          "n": 52
+          "competence": 77.18,
+          "n": 145
         },
         "finance_commerce": {
-          "competence": 55.91,
-          "n": 99
+          "competence": 42.86,
+          "n": 223
         },
         "law_policy": {
-          "competence": 63.86,
-          "n": 1011
+          "competence": 53.49,
+          "n": 1616
         },
         "math": {
-          "competence": 23.59,
-          "n": 234
+          "competence": 11.18,
+          "n": 370
         },
         "safety_security": {
-          "competence": 43.76,
-          "n": 48
+          "competence": 57.05,
+          "n": 109
         },
         "support_ops": {
-          "competence": 44.09,
-          "n": 113
+          "competence": 52.16,
+          "n": 160
         }
       },
       "usecases": {
         "advertising": {
-          "competence": 50.15,
-          "n": 30
+          "competence": 38.22,
+          "n": 88
         },
         "code_linting": {
-          "competence": 33.82,
-          "n": 33
+          "competence": 39.28,
+          "n": 90
         },
         "customer_support": {
-          "competence": 58.78,
-          "n": 179
+          "competence": 56.45,
+          "n": 240
         },
         "demand_forecasting": {
           "competence": 0.0,
-          "n": 30
+          "n": 83
         },
         "ecommerce_marketplaces": {
-          "competence": 57.97,
-          "n": 65
+          "competence": 50.34,
+          "n": 119
         },
         "feature_extraction": {
-          "competence": 27.17,
-          "n": 31
+          "competence": 27.96,
+          "n": 99
         },
         "financial_crime": {
-          "competence": 29.49,
-          "n": 51
+          "competence": 26.89,
+          "n": 101
         },
         "gaming": {
           "competence": 0.0,
-          "n": 30
+          "n": 86
         },
         "insurance_claims": {
-          "competence": 56.36,
-          "n": 63
+          "competence": 37.9,
+          "n": 119
         },
         "knowledge_graphs": {
-          "competence": 23.92,
-          "n": 30
+          "competence": 39.29,
+          "n": 94
         },
         "lead_generation": {
-          "competence": 68.08,
-          "n": 31
+          "competence": 58.38,
+          "n": 95
         },
         "legal_compliance": {
-          "competence": 75.51,
-          "n": 466
+          "competence": 71.23,
+          "n": 515
         },
         "llm_guardrails": {
-          "competence": 70.05,
-          "n": 30
+          "competence": 74.13,
+          "n": 93
         },
         "model_routing": {
-          "competence": 70.17,
-          "n": 471
+          "competence": 67.5,
+          "n": 524
         },
         "moderation_trust_safety": {
-          "competence": 64.29,
-          "n": 47
+          "competence": 61.53,
+          "n": 93
         },
         "other": {
-          "competence": 27.24,
-          "n": 148
+          "competence": 41.0,
+          "n": 174
         },
         "recruiting": {
-          "competence": 20.52,
-          "n": 30
+          "competence": 18.6,
+          "n": 94
         },
         "risk_assessment": {
-          "competence": 37.17,
-          "n": 62
+          "competence": 39.63,
+          "n": 118
         },
         "scientific_discovery": {
-          "competence": 39.68,
-          "n": 30
+          "competence": 30.92,
+          "n": 90
         },
         "search_retrieval": {
-          "competence": 82.86,
-          "n": 30
+          "competence": 78.9,
+          "n": 90
         }
       }
     },
     "litjev": {
-      "category_n_items": 1887,
-      "category_pools": "S+P+L1+L2",
+      "category_n_items": 3005,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -11586,42 +11602,42 @@
           "jaggedness": 101,
           "llm_router": 453,
           "long_state": 23,
-          "multilingual": 618,
+          "multilingual": 1604,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 147
+          "usecase": 279
         },
         "topics": {
-          "coding": 330,
-          "everyday_language": 52,
-          "finance_commerce": 99,
-          "law_policy": 1011,
-          "math": 234,
-          "safety_security": 48,
-          "support_ops": 113
+          "coding": 382,
+          "everyday_language": 145,
+          "finance_commerce": 223,
+          "law_policy": 1616,
+          "math": 370,
+          "safety_security": 109,
+          "support_ops": 160
         },
         "usecases": {
-          "advertising": 30,
-          "code_linting": 33,
-          "customer_support": 179,
-          "demand_forecasting": 30,
-          "ecommerce_marketplaces": 65,
-          "feature_extraction": 31,
-          "financial_crime": 51,
-          "gaming": 30,
-          "insurance_claims": 63,
-          "knowledge_graphs": 30,
-          "lead_generation": 31,
-          "legal_compliance": 466,
-          "llm_guardrails": 30,
-          "model_routing": 471,
-          "moderation_trust_safety": 47,
-          "other": 148,
-          "recruiting": 30,
-          "risk_assessment": 62,
-          "scientific_discovery": 30,
-          "search_retrieval": 30
+          "advertising": 88,
+          "code_linting": 90,
+          "customer_support": 240,
+          "demand_forecasting": 83,
+          "ecommerce_marketplaces": 119,
+          "feature_extraction": 99,
+          "financial_crime": 101,
+          "gaming": 86,
+          "insurance_claims": 119,
+          "knowledge_graphs": 94,
+          "lead_generation": 95,
+          "legal_compliance": 515,
+          "llm_guardrails": 93,
+          "model_routing": 524,
+          "moderation_trust_safety": 93,
+          "other": 174,
+          "recruiting": 94,
+          "risk_assessment": 118,
+          "scientific_discovery": 90,
+          "search_retrieval": 90
         }
       },
       "families": {
@@ -11654,8 +11670,8 @@
           "n": 23
         },
         "multilingual": {
-          "competence": 34.47,
-          "n": 618
+          "competence": 25.0,
+          "n": 1604
         },
         "negation_pair_gen": {
           "competence": 0.0,
@@ -11670,120 +11686,120 @@
           "n": 70
         },
         "usecase": {
-          "competence": 23.35,
-          "n": 147
+          "competence": 51.22,
+          "n": 279
         }
       },
       "topics": {
         "coding": {
-          "competence": 69.86,
-          "n": 330
+          "competence": 66.43,
+          "n": 382
         },
         "everyday_language": {
-          "competence": 42.88,
-          "n": 52
+          "competence": 66.12,
+          "n": 145
         },
         "finance_commerce": {
-          "competence": 39.66,
-          "n": 99
+          "competence": 32.34,
+          "n": 223
         },
         "law_policy": {
-          "competence": 42.1,
-          "n": 1011
+          "competence": 34.11,
+          "n": 1616
         },
         "math": {
-          "competence": 7.17,
-          "n": 234
+          "competence": 0.0,
+          "n": 370
         },
         "safety_security": {
-          "competence": 39.94,
-          "n": 48
+          "competence": 48.43,
+          "n": 109
         },
         "support_ops": {
-          "competence": 25.28,
-          "n": 113
+          "competence": 33.47,
+          "n": 160
         }
       },
       "usecases": {
         "advertising": {
-          "competence": 11.04,
-          "n": 30
+          "competence": 9.15,
+          "n": 88
         },
         "code_linting": {
-          "competence": 14.77,
-          "n": 33
+          "competence": 39.48,
+          "n": 90
         },
         "customer_support": {
-          "competence": 34.52,
-          "n": 179
+          "competence": 34.57,
+          "n": 240
         },
         "demand_forecasting": {
           "competence": 0.0,
-          "n": 30
+          "n": 83
         },
         "ecommerce_marketplaces": {
-          "competence": 15.14,
-          "n": 65
+          "competence": 25.5,
+          "n": 119
         },
         "feature_extraction": {
-          "competence": 9.68,
-          "n": 31
+          "competence": 14.09,
+          "n": 99
         },
         "financial_crime": {
-          "competence": 19.15,
-          "n": 51
+          "competence": 17.8,
+          "n": 101
         },
         "gaming": {
-          "competence": 13.18,
-          "n": 30
+          "competence": 0.0,
+          "n": 86
         },
         "insurance_claims": {
-          "competence": 54.09,
-          "n": 63
+          "competence": 35.58,
+          "n": 119
         },
         "knowledge_graphs": {
-          "competence": 21.58,
-          "n": 30
+          "competence": 25.12,
+          "n": 94
         },
         "lead_generation": {
-          "competence": 24.09,
-          "n": 31
+          "competence": 31.23,
+          "n": 95
         },
         "legal_compliance": {
-          "competence": 46.95,
-          "n": 466
+          "competence": 43.15,
+          "n": 515
         },
         "llm_guardrails": {
-          "competence": 63.97,
-          "n": 30
+          "competence": 64.5,
+          "n": 93
         },
         "model_routing": {
-          "competence": 71.75,
-          "n": 471
+          "competence": 67.08,
+          "n": 524
         },
         "moderation_trust_safety": {
-          "competence": 46.08,
-          "n": 47
+          "competence": 44.51,
+          "n": 93
         },
         "other": {
-          "competence": 3.95,
-          "n": 148
+          "competence": 22.41,
+          "n": 174
         },
         "recruiting": {
-          "competence": 1.08,
-          "n": 30
+          "competence": 0.0,
+          "n": 94
         },
         "risk_assessment": {
-          "competence": 43.36,
-          "n": 62
+          "competence": 40.53,
+          "n": 118
         },
         "scientific_discovery": {
-          "competence": 16.57,
-          "n": 30
+          "competence": 5.97,
+          "n": 90
         },
         "search_retrieval": {
-          "competence": 62.42,
-          "n": 30
+          "competence": 63.71,
+          "n": 90
         }
       }
     },
@@ -12853,8 +12869,8 @@
       }
     },
     "mghafiri-qwen3.5-0.8b-decision-model": {
-      "category_n_items": 1500,
-      "category_pools": "S+P",
+      "category_n_items": 1887,
+      "category_pools": "S+P+L1+L2",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -12862,44 +12878,44 @@
           "composite_gen": 66,
           "fairness": 153,
           "jaggedness": 101,
-          "llm_router": 434,
+          "llm_router": 453,
           "long_state": 23,
-          "multilingual": 264,
+          "multilingual": 618,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 133
+          "usecase": 147
         },
         "topics": {
-          "coding": 302,
-          "everyday_language": 46,
-          "finance_commerce": 66,
-          "law_policy": 763,
-          "math": 193,
-          "safety_security": 37,
-          "support_ops": 93
+          "coding": 330,
+          "everyday_language": 52,
+          "finance_commerce": 99,
+          "law_policy": 1011,
+          "math": 234,
+          "safety_security": 48,
+          "support_ops": 113
         },
         "usecases": {
-          "advertising": 11,
-          "code_linting": 16,
-          "customer_support": 149,
-          "demand_forecasting": 16,
-          "ecommerce_marketplaces": 48,
-          "feature_extraction": 19,
-          "financial_crime": 39,
-          "gaming": 14,
-          "insurance_claims": 41,
-          "knowledge_graphs": 18,
-          "lead_generation": 17,
-          "legal_compliance": 387,
-          "llm_guardrails": 17,
-          "model_routing": 442,
-          "moderation_trust_safety": 32,
-          "other": 145,
-          "recruiting": 13,
-          "risk_assessment": 45,
-          "scientific_discovery": 14,
-          "search_retrieval": 17
+          "advertising": 30,
+          "code_linting": 33,
+          "customer_support": 179,
+          "demand_forecasting": 30,
+          "ecommerce_marketplaces": 65,
+          "feature_extraction": 31,
+          "financial_crime": 51,
+          "gaming": 30,
+          "insurance_claims": 63,
+          "knowledge_graphs": 30,
+          "lead_generation": 31,
+          "legal_compliance": 466,
+          "llm_guardrails": 30,
+          "model_routing": 471,
+          "moderation_trust_safety": 47,
+          "other": 148,
+          "recruiting": 30,
+          "risk_assessment": 62,
+          "scientific_discovery": 30,
+          "search_retrieval": 30
         }
       },
       "families": {
@@ -12925,7 +12941,7 @@
         },
         "llm_router": {
           "competence": 0.0,
-          "n": 434
+          "n": 453
         },
         "long_state": {
           "competence": 0.0,
@@ -12933,7 +12949,7 @@
         },
         "multilingual": {
           "competence": 0.0,
-          "n": 264
+          "n": 618
         },
         "negation_pair_gen": {
           "competence": 0.0,
@@ -12949,103 +12965,119 @@
         },
         "usecase": {
           "competence": 0.0,
-          "n": 133
+          "n": 147
         }
       },
       "topics": {
         "coding": {
           "competence": 0.0,
-          "n": 302
+          "n": 330
         },
         "everyday_language": {
           "competence": 0.0,
-          "n": 46
+          "n": 52
         },
         "finance_commerce": {
-          "competence": 20.15,
-          "n": 66
+          "competence": 4.55,
+          "n": 99
         },
         "law_policy": {
           "competence": 0.0,
-          "n": 763
+          "n": 1011
         },
         "math": {
           "competence": 0.0,
-          "n": 193
+          "n": 234
         },
         "safety_security": {
-          "competence": 2.46,
-          "n": 37
-        },
-        "support_ops": {
-          "competence": 0.0,
-          "n": 93
-        }
-      },
-      "usecases": {
-        "code_linting": {
-          "competence": 3.39,
-          "n": 16
-        },
-        "customer_support": {
-          "competence": 0.0,
-          "n": 149
-        },
-        "demand_forecasting": {
-          "competence": 0.0,
-          "n": 16
-        },
-        "ecommerce_marketplaces": {
           "competence": 0.0,
           "n": 48
         },
+        "support_ops": {
+          "competence": 0.0,
+          "n": 113
+        }
+      },
+      "usecases": {
+        "advertising": {
+          "competence": 0.0,
+          "n": 30
+        },
+        "code_linting": {
+          "competence": 5.3,
+          "n": 33
+        },
+        "customer_support": {
+          "competence": 0.0,
+          "n": 179
+        },
+        "demand_forecasting": {
+          "competence": 0.0,
+          "n": 30
+        },
+        "ecommerce_marketplaces": {
+          "competence": 0.0,
+          "n": 65
+        },
         "feature_extraction": {
           "competence": 0.0,
-          "n": 19
+          "n": 31
         },
         "financial_crime": {
           "competence": 0.0,
-          "n": 39
+          "n": 51
+        },
+        "gaming": {
+          "competence": 0.0,
+          "n": 30
         },
         "insurance_claims": {
           "competence": 0.0,
-          "n": 41
+          "n": 63
         },
         "knowledge_graphs": {
           "competence": 0.0,
-          "n": 18
+          "n": 30
         },
         "lead_generation": {
           "competence": 0.0,
-          "n": 17
+          "n": 31
         },
         "legal_compliance": {
           "competence": 0.0,
-          "n": 387
+          "n": 466
         },
         "llm_guardrails": {
           "competence": 0.0,
-          "n": 17
+          "n": 30
         },
         "model_routing": {
           "competence": 0.0,
-          "n": 442
+          "n": 471
         },
         "moderation_trust_safety": {
-          "competence": 1.66,
-          "n": 32
+          "competence": 0.0,
+          "n": 47
         },
         "other": {
           "competence": 0.0,
-          "n": 145
+          "n": 148
+        },
+        "recruiting": {
+          "competence": 0.0,
+          "n": 30
         },
         "risk_assessment": {
           "competence": 0.0,
-          "n": 45
+          "n": 62
+        },
+        "scientific_discovery": {
+          "competence": 0.0,
+          "n": 30
         },
         "search_retrieval": {
           "competence": 0.0,
-          "n": 17
+          "n": 30
         }
       }
     },
@@ -13651,8 +13683,8 @@
       }
     },
     "nemotron-diffusion-8b": {
-      "category_n_items": 1887,
-      "category_pools": "S+P+L1+L2",
+      "category_n_items": 3005,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -13662,42 +13694,42 @@
           "jaggedness": 101,
           "llm_router": 453,
           "long_state": 23,
-          "multilingual": 618,
+          "multilingual": 1604,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 147
+          "usecase": 279
         },
         "topics": {
-          "coding": 330,
-          "everyday_language": 52,
-          "finance_commerce": 99,
-          "law_policy": 1011,
-          "math": 234,
-          "safety_security": 48,
-          "support_ops": 113
+          "coding": 382,
+          "everyday_language": 145,
+          "finance_commerce": 223,
+          "law_policy": 1616,
+          "math": 370,
+          "safety_security": 109,
+          "support_ops": 160
         },
         "usecases": {
-          "advertising": 30,
-          "code_linting": 33,
-          "customer_support": 179,
-          "demand_forecasting": 30,
-          "ecommerce_marketplaces": 65,
-          "feature_extraction": 31,
-          "financial_crime": 51,
-          "gaming": 30,
-          "insurance_claims": 63,
-          "knowledge_graphs": 30,
-          "lead_generation": 31,
-          "legal_compliance": 466,
-          "llm_guardrails": 30,
-          "model_routing": 471,
-          "moderation_trust_safety": 47,
-          "other": 148,
-          "recruiting": 30,
-          "risk_assessment": 62,
-          "scientific_discovery": 30,
-          "search_retrieval": 30
+          "advertising": 88,
+          "code_linting": 90,
+          "customer_support": 240,
+          "demand_forecasting": 83,
+          "ecommerce_marketplaces": 119,
+          "feature_extraction": 99,
+          "financial_crime": 101,
+          "gaming": 86,
+          "insurance_claims": 119,
+          "knowledge_graphs": 94,
+          "lead_generation": 95,
+          "legal_compliance": 515,
+          "llm_guardrails": 93,
+          "model_routing": 524,
+          "moderation_trust_safety": 93,
+          "other": 174,
+          "recruiting": 94,
+          "risk_assessment": 118,
+          "scientific_discovery": 90,
+          "search_retrieval": 90
         }
       },
       "families": {
@@ -13730,8 +13762,8 @@
           "n": 23
         },
         "multilingual": {
-          "competence": 6.51,
-          "n": 618
+          "competence": 0.0,
+          "n": 1604
         },
         "negation_pair_gen": {
           "competence": 0.0,
@@ -13746,120 +13778,120 @@
           "n": 70
         },
         "usecase": {
-          "competence": 4.24,
-          "n": 147
+          "competence": 19.5,
+          "n": 279
         }
       },
       "topics": {
         "coding": {
-          "competence": 38.93,
-          "n": 330
+          "competence": 31.91,
+          "n": 382
         },
         "everyday_language": {
-          "competence": 17.35,
-          "n": 52
+          "competence": 34.92,
+          "n": 145
         },
         "finance_commerce": {
-          "competence": 14.75,
-          "n": 99
+          "competence": 3.11,
+          "n": 223
         },
         "law_policy": {
-          "competence": 6.1,
-          "n": 1011
+          "competence": 0.44,
+          "n": 1616
         },
         "math": {
           "competence": 0.0,
-          "n": 234
+          "n": 370
         },
         "safety_security": {
-          "competence": 23.87,
-          "n": 48
+          "competence": 17.2,
+          "n": 109
         },
         "support_ops": {
-          "competence": 13.97,
-          "n": 113
+          "competence": 13.77,
+          "n": 160
         }
       },
       "usecases": {
         "advertising": {
-          "competence": 6.78,
-          "n": 30
+          "competence": 1.31,
+          "n": 88
         },
         "code_linting": {
           "competence": 0.0,
-          "n": 33
+          "n": 90
         },
         "customer_support": {
           "competence": 0.0,
-          "n": 179
+          "n": 240
         },
         "demand_forecasting": {
           "competence": 0.0,
-          "n": 30
+          "n": 83
         },
         "ecommerce_marketplaces": {
-          "competence": 0.0,
-          "n": 65
+          "competence": 3.38,
+          "n": 119
         },
         "feature_extraction": {
-          "competence": 11.36,
-          "n": 31
+          "competence": 11.69,
+          "n": 99
         },
         "financial_crime": {
-          "competence": 3.82,
-          "n": 51
+          "competence": 0.0,
+          "n": 101
         },
         "gaming": {
-          "competence": 0.33,
-          "n": 30
+          "competence": 0.0,
+          "n": 86
         },
         "insurance_claims": {
-          "competence": 10.73,
-          "n": 63
+          "competence": 6.03,
+          "n": 119
         },
         "knowledge_graphs": {
           "competence": 0.0,
-          "n": 30
+          "n": 94
         },
         "lead_generation": {
-          "competence": 18.33,
-          "n": 31
+          "competence": 5.41,
+          "n": 95
         },
         "legal_compliance": {
-          "competence": 10.73,
-          "n": 466
+          "competence": 8.82,
+          "n": 515
         },
         "llm_guardrails": {
-          "competence": 18.25,
-          "n": 30
+          "competence": 6.22,
+          "n": 93
         },
         "model_routing": {
-          "competence": 40.06,
-          "n": 471
+          "competence": 35.29,
+          "n": 524
         },
         "moderation_trust_safety": {
-          "competence": 19.05,
-          "n": 47
+          "competence": 3.45,
+          "n": 93
         },
         "other": {
-          "competence": 0.0,
-          "n": 148
+          "competence": 3.99,
+          "n": 174
         },
         "recruiting": {
           "competence": 0.0,
-          "n": 30
+          "n": 94
         },
         "risk_assessment": {
-          "competence": 12.65,
-          "n": 62
+          "competence": 1.22,
+          "n": 118
         },
         "scientific_discovery": {
           "competence": 0.0,
-          "n": 30
+          "n": 90
         },
         "search_retrieval": {
-          "competence": 2.0,
-          "n": 30
+          "competence": 19.57,
+          "n": 90
         }
       }
     },
@@ -14913,8 +14945,8 @@
       }
     },
     "open-jev-json-canvas-joshuasp": {
-      "category_n_items": 1887,
-      "category_pools": "S+P+L1+L2",
+      "category_n_items": 3005,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -14924,42 +14956,42 @@
           "jaggedness": 101,
           "llm_router": 453,
           "long_state": 23,
-          "multilingual": 618,
+          "multilingual": 1604,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 147
+          "usecase": 279
         },
         "topics": {
-          "coding": 330,
-          "everyday_language": 52,
-          "finance_commerce": 99,
-          "law_policy": 1011,
-          "math": 234,
-          "safety_security": 48,
-          "support_ops": 113
+          "coding": 382,
+          "everyday_language": 145,
+          "finance_commerce": 223,
+          "law_policy": 1616,
+          "math": 370,
+          "safety_security": 109,
+          "support_ops": 160
         },
         "usecases": {
-          "advertising": 30,
-          "code_linting": 33,
-          "customer_support": 179,
-          "demand_forecasting": 30,
-          "ecommerce_marketplaces": 65,
-          "feature_extraction": 31,
-          "financial_crime": 51,
-          "gaming": 30,
-          "insurance_claims": 63,
-          "knowledge_graphs": 30,
-          "lead_generation": 31,
-          "legal_compliance": 466,
-          "llm_guardrails": 30,
-          "model_routing": 471,
-          "moderation_trust_safety": 47,
-          "other": 148,
-          "recruiting": 30,
-          "risk_assessment": 62,
-          "scientific_discovery": 30,
-          "search_retrieval": 30
+          "advertising": 88,
+          "code_linting": 90,
+          "customer_support": 240,
+          "demand_forecasting": 83,
+          "ecommerce_marketplaces": 119,
+          "feature_extraction": 99,
+          "financial_crime": 101,
+          "gaming": 86,
+          "insurance_claims": 119,
+          "knowledge_graphs": 94,
+          "lead_generation": 95,
+          "legal_compliance": 515,
+          "llm_guardrails": 93,
+          "model_routing": 524,
+          "moderation_trust_safety": 93,
+          "other": 174,
+          "recruiting": 94,
+          "risk_assessment": 118,
+          "scientific_discovery": 90,
+          "search_retrieval": 90
         }
       },
       "families": {
@@ -14992,8 +15024,8 @@
           "n": 23
         },
         "multilingual": {
-          "competence": 54.6,
-          "n": 618
+          "competence": 47.73,
+          "n": 1604
         },
         "negation_pair_gen": {
           "competence": 43.83,
@@ -15008,120 +15040,120 @@
           "n": 70
         },
         "usecase": {
-          "competence": 45.41,
-          "n": 147
+          "competence": 66.64,
+          "n": 279
         }
       },
       "topics": {
         "coding": {
-          "competence": 71.6,
-          "n": 330
+          "competence": 70.34,
+          "n": 382
         },
         "everyday_language": {
-          "competence": 63.04,
-          "n": 52
+          "competence": 77.26,
+          "n": 145
         },
         "finance_commerce": {
-          "competence": 61.74,
-          "n": 99
+          "competence": 51.4,
+          "n": 223
         },
         "law_policy": {
-          "competence": 59.87,
-          "n": 1011
+          "competence": 55.36,
+          "n": 1616
         },
         "math": {
-          "competence": 35.25,
-          "n": 234
+          "competence": 26.77,
+          "n": 370
         },
         "safety_security": {
-          "competence": 73.27,
-          "n": 48
+          "competence": 71.21,
+          "n": 109
         },
         "support_ops": {
-          "competence": 52.45,
-          "n": 113
+          "competence": 59.46,
+          "n": 160
         }
       },
       "usecases": {
         "advertising": {
-          "competence": 39.4,
-          "n": 30
+          "competence": 28.06,
+          "n": 88
         },
         "code_linting": {
-          "competence": 34.45,
-          "n": 33
+          "competence": 55.44,
+          "n": 90
         },
         "customer_support": {
-          "competence": 51.82,
-          "n": 179
+          "competence": 53.35,
+          "n": 240
         },
         "demand_forecasting": {
           "competence": 0.0,
-          "n": 30
+          "n": 83
         },
         "ecommerce_marketplaces": {
-          "competence": 66.82,
-          "n": 65
+          "competence": 59.47,
+          "n": 119
         },
         "feature_extraction": {
-          "competence": 48.29,
-          "n": 31
+          "competence": 34.22,
+          "n": 99
         },
         "financial_crime": {
-          "competence": 41.84,
-          "n": 51
+          "competence": 37.96,
+          "n": 101
         },
         "gaming": {
-          "competence": 34.13,
-          "n": 30
+          "competence": 37.27,
+          "n": 86
         },
         "insurance_claims": {
-          "competence": 43.92,
-          "n": 63
+          "competence": 38.74,
+          "n": 119
         },
         "knowledge_graphs": {
-          "competence": 42.46,
-          "n": 30
+          "competence": 46.44,
+          "n": 94
         },
         "lead_generation": {
-          "competence": 76.34,
-          "n": 31
+          "competence": 61.97,
+          "n": 95
         },
         "legal_compliance": {
-          "competence": 67.25,
-          "n": 466
+          "competence": 62.2,
+          "n": 515
         },
         "llm_guardrails": {
-          "competence": 79.23,
-          "n": 30
+          "competence": 80.97,
+          "n": 93
         },
         "model_routing": {
-          "competence": 73.41,
-          "n": 471
+          "competence": 72.93,
+          "n": 524
         },
         "moderation_trust_safety": {
-          "competence": 74.28,
-          "n": 47
+          "competence": 73.22,
+          "n": 93
         },
         "other": {
-          "competence": 20.69,
-          "n": 148
+          "competence": 37.07,
+          "n": 174
         },
         "recruiting": {
-          "competence": 63.33,
-          "n": 30
+          "competence": 56.38,
+          "n": 94
         },
         "risk_assessment": {
-          "competence": 56.27,
-          "n": 62
+          "competence": 57.39,
+          "n": 118
         },
         "scientific_discovery": {
-          "competence": 24.92,
-          "n": 30
+          "competence": 31.84,
+          "n": 90
         },
         "search_retrieval": {
-          "competence": 65.35,
-          "n": 30
+          "competence": 76.36,
+          "n": 90
         }
       }
     },
@@ -16798,8 +16830,8 @@
       }
     },
     "plumb-4b": {
-      "category_n_items": 1887,
-      "category_pools": "S+P+L1+L2",
+      "category_n_items": 3005,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -16809,42 +16841,42 @@
           "jaggedness": 101,
           "llm_router": 453,
           "long_state": 23,
-          "multilingual": 618,
+          "multilingual": 1604,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 147
+          "usecase": 279
         },
         "topics": {
-          "coding": 330,
-          "everyday_language": 52,
-          "finance_commerce": 99,
-          "law_policy": 1011,
-          "math": 234,
-          "safety_security": 48,
-          "support_ops": 113
+          "coding": 382,
+          "everyday_language": 145,
+          "finance_commerce": 223,
+          "law_policy": 1616,
+          "math": 370,
+          "safety_security": 109,
+          "support_ops": 160
         },
         "usecases": {
-          "advertising": 30,
-          "code_linting": 33,
-          "customer_support": 179,
-          "demand_forecasting": 30,
-          "ecommerce_marketplaces": 65,
-          "feature_extraction": 31,
-          "financial_crime": 51,
-          "gaming": 30,
-          "insurance_claims": 63,
-          "knowledge_graphs": 30,
-          "lead_generation": 31,
-          "legal_compliance": 466,
-          "llm_guardrails": 30,
-          "model_routing": 471,
-          "moderation_trust_safety": 47,
-          "other": 148,
-          "recruiting": 30,
-          "risk_assessment": 62,
-          "scientific_discovery": 30,
-          "search_retrieval": 30
+          "advertising": 88,
+          "code_linting": 90,
+          "customer_support": 240,
+          "demand_forecasting": 83,
+          "ecommerce_marketplaces": 119,
+          "feature_extraction": 99,
+          "financial_crime": 101,
+          "gaming": 86,
+          "insurance_claims": 119,
+          "knowledge_graphs": 94,
+          "lead_generation": 95,
+          "legal_compliance": 515,
+          "llm_guardrails": 93,
+          "model_routing": 524,
+          "moderation_trust_safety": 93,
+          "other": 174,
+          "recruiting": 94,
+          "risk_assessment": 118,
+          "scientific_discovery": 90,
+          "search_retrieval": 90
         }
       },
       "families": {
@@ -16877,8 +16909,8 @@
           "n": 23
         },
         "multilingual": {
-          "competence": 41.73,
-          "n": 618
+          "competence": 30.49,
+          "n": 1604
         },
         "negation_pair_gen": {
           "competence": 0.55,
@@ -16893,120 +16925,120 @@
           "n": 70
         },
         "usecase": {
-          "competence": 26.89,
-          "n": 147
+          "competence": 50.87,
+          "n": 279
         }
       },
       "topics": {
         "coding": {
-          "competence": 55.09,
-          "n": 330
+          "competence": 48.35,
+          "n": 382
         },
         "everyday_language": {
-          "competence": 24.21,
-          "n": 52
+          "competence": 52.15,
+          "n": 145
         },
         "finance_commerce": {
-          "competence": 48.18,
-          "n": 99
+          "competence": 46.53,
+          "n": 223
         },
         "law_policy": {
-          "competence": 44.28,
-          "n": 1011
+          "competence": 37.8,
+          "n": 1616
         },
         "math": {
-          "competence": 5.49,
-          "n": 234
+          "competence": 0.0,
+          "n": 370
         },
         "safety_security": {
-          "competence": 47.15,
-          "n": 48
+          "competence": 57.84,
+          "n": 109
         },
         "support_ops": {
-          "competence": 44.29,
-          "n": 113
+          "competence": 49.28,
+          "n": 160
         }
       },
       "usecases": {
         "advertising": {
-          "competence": 47.76,
-          "n": 30
+          "competence": 41.48,
+          "n": 88
         },
         "code_linting": {
-          "competence": 25.36,
-          "n": 33
+          "competence": 21.16,
+          "n": 90
         },
         "customer_support": {
-          "competence": 48.97,
-          "n": 179
+          "competence": 46.83,
+          "n": 240
         },
         "demand_forecasting": {
           "competence": 0.0,
-          "n": 30
+          "n": 83
         },
         "ecommerce_marketplaces": {
-          "competence": 17.42,
-          "n": 65
+          "competence": 27.61,
+          "n": 119
         },
         "feature_extraction": {
-          "competence": 14.68,
-          "n": 31
+          "competence": 20.58,
+          "n": 99
         },
         "financial_crime": {
-          "competence": 19.94,
-          "n": 51
+          "competence": 27.13,
+          "n": 101
         },
         "gaming": {
-          "competence": 6.43,
-          "n": 30
+          "competence": 0.0,
+          "n": 86
         },
         "insurance_claims": {
-          "competence": 53.83,
-          "n": 63
+          "competence": 45.25,
+          "n": 119
         },
         "knowledge_graphs": {
-          "competence": 0.0,
-          "n": 30
+          "competence": 0.24,
+          "n": 94
         },
         "lead_generation": {
-          "competence": 48.96,
-          "n": 31
+          "competence": 51.19,
+          "n": 95
         },
         "legal_compliance": {
-          "competence": 51.7,
-          "n": 466
+          "competence": 51.32,
+          "n": 515
         },
         "llm_guardrails": {
-          "competence": 41.8,
-          "n": 30
+          "competence": 50.47,
+          "n": 93
         },
         "model_routing": {
-          "competence": 56.88,
-          "n": 471
+          "competence": 53.03,
+          "n": 524
         },
         "moderation_trust_safety": {
-          "competence": 39.47,
-          "n": 47
+          "competence": 43.4,
+          "n": 93
         },
         "other": {
-          "competence": 1.01,
-          "n": 148
+          "competence": 13.56,
+          "n": 174
         },
         "recruiting": {
-          "competence": 16.14,
-          "n": 30
+          "competence": 16.88,
+          "n": 94
         },
         "risk_assessment": {
-          "competence": 29.19,
-          "n": 62
+          "competence": 34.4,
+          "n": 118
         },
         "scientific_discovery": {
-          "competence": 25.73,
-          "n": 30
+          "competence": 11.46,
+          "n": 90
         },
         "search_retrieval": {
-          "competence": 70.29,
-          "n": 30
+          "competence": 53.25,
+          "n": 90
         }
       }
     },
@@ -20528,203 +20560,6 @@
       }
     },
     "simplejev-qwen3.5-0.8b": {
-      "category_n_items": 1500,
-      "category_pools": "S+P",
-      "category_spoke_n": {
-        "families": {
-          "calibration": 22,
-          "calibration_gen": 59,
-          "composite_gen": 66,
-          "fairness": 153,
-          "jaggedness": 101,
-          "llm_router": 434,
-          "long_state": 23,
-          "multilingual": 264,
-          "negation_pair_gen": 100,
-          "option_order": 75,
-          "perturb_pair": 70,
-          "usecase": 133
-        },
-        "topics": {
-          "coding": 302,
-          "everyday_language": 46,
-          "finance_commerce": 66,
-          "law_policy": 763,
-          "math": 193,
-          "safety_security": 37,
-          "support_ops": 93
-        },
-        "usecases": {
-          "advertising": 11,
-          "code_linting": 16,
-          "customer_support": 149,
-          "demand_forecasting": 16,
-          "ecommerce_marketplaces": 48,
-          "feature_extraction": 19,
-          "financial_crime": 39,
-          "gaming": 14,
-          "insurance_claims": 41,
-          "knowledge_graphs": 18,
-          "lead_generation": 17,
-          "legal_compliance": 387,
-          "llm_guardrails": 17,
-          "model_routing": 442,
-          "moderation_trust_safety": 32,
-          "other": 145,
-          "recruiting": 13,
-          "risk_assessment": 45,
-          "scientific_discovery": 14,
-          "search_retrieval": 17
-        }
-      },
-      "families": {
-        "calibration": {
-          "competence": 7.69,
-          "n": 22
-        },
-        "calibration_gen": {
-          "competence": 4.39,
-          "n": 59
-        },
-        "composite_gen": {
-          "competence": 0.0,
-          "n": 66
-        },
-        "fairness": {
-          "competence": 18.04,
-          "n": 153
-        },
-        "jaggedness": {
-          "competence": 0.0,
-          "n": 101
-        },
-        "llm_router": {
-          "competence": 17.85,
-          "n": 434
-        },
-        "long_state": {
-          "competence": 0.0,
-          "n": 23
-        },
-        "multilingual": {
-          "competence": 13.93,
-          "n": 264
-        },
-        "negation_pair_gen": {
-          "competence": 6.27,
-          "n": 100
-        },
-        "option_order": {
-          "competence": 0.0,
-          "n": 75
-        },
-        "perturb_pair": {
-          "competence": 21.93,
-          "n": 70
-        },
-        "usecase": {
-          "competence": 8.56,
-          "n": 133
-        }
-      },
-      "topics": {
-        "coding": {
-          "competence": 16.52,
-          "n": 302
-        },
-        "everyday_language": {
-          "competence": 4.96,
-          "n": 46
-        },
-        "finance_commerce": {
-          "competence": 18.43,
-          "n": 66
-        },
-        "law_policy": {
-          "competence": 9.96,
-          "n": 763
-        },
-        "math": {
-          "competence": 0.0,
-          "n": 193
-        },
-        "safety_security": {
-          "competence": 26.75,
-          "n": 37
-        },
-        "support_ops": {
-          "competence": 3.17,
-          "n": 93
-        }
-      },
-      "usecases": {
-        "code_linting": {
-          "competence": 14.4,
-          "n": 16
-        },
-        "customer_support": {
-          "competence": 0.0,
-          "n": 149
-        },
-        "demand_forecasting": {
-          "competence": 21.05,
-          "n": 16
-        },
-        "ecommerce_marketplaces": {
-          "competence": 17.59,
-          "n": 48
-        },
-        "feature_extraction": {
-          "competence": 0.0,
-          "n": 19
-        },
-        "financial_crime": {
-          "competence": 20.6,
-          "n": 39
-        },
-        "insurance_claims": {
-          "competence": 16.58,
-          "n": 41
-        },
-        "knowledge_graphs": {
-          "competence": 20.2,
-          "n": 18
-        },
-        "lead_generation": {
-          "competence": 23.85,
-          "n": 17
-        },
-        "legal_compliance": {
-          "competence": 11.5,
-          "n": 387
-        },
-        "llm_guardrails": {
-          "competence": 10.54,
-          "n": 17
-        },
-        "model_routing": {
-          "competence": 17.48,
-          "n": 442
-        },
-        "moderation_trust_safety": {
-          "competence": 30.27,
-          "n": 32
-        },
-        "other": {
-          "competence": 0.0,
-          "n": 145
-        },
-        "risk_assessment": {
-          "competence": 21.61,
-          "n": 45
-        },
-        "search_retrieval": {
-          "competence": 0.0,
-          "n": 17
-        }
-      }
-    },
-    "simplejev-qwen3.8-27b-selfhost": {
       "category_n_items": 1887,
       "category_pools": "S+P+L1+L2",
       "category_spoke_n": {
@@ -20776,6 +20611,219 @@
       },
       "families": {
         "calibration": {
+          "competence": 7.69,
+          "n": 22
+        },
+        "calibration_gen": {
+          "competence": 4.39,
+          "n": 59
+        },
+        "composite_gen": {
+          "competence": 0.0,
+          "n": 66
+        },
+        "fairness": {
+          "competence": 18.04,
+          "n": 153
+        },
+        "jaggedness": {
+          "competence": 0.0,
+          "n": 101
+        },
+        "llm_router": {
+          "competence": 17.5,
+          "n": 453
+        },
+        "long_state": {
+          "competence": 0.0,
+          "n": 23
+        },
+        "multilingual": {
+          "competence": 9.28,
+          "n": 618
+        },
+        "negation_pair_gen": {
+          "competence": 6.27,
+          "n": 100
+        },
+        "option_order": {
+          "competence": 0.0,
+          "n": 75
+        },
+        "perturb_pair": {
+          "competence": 21.93,
+          "n": 70
+        },
+        "usecase": {
+          "competence": 8.68,
+          "n": 147
+        }
+      },
+      "topics": {
+        "coding": {
+          "competence": 14.27,
+          "n": 330
+        },
+        "everyday_language": {
+          "competence": 7.75,
+          "n": 52
+        },
+        "finance_commerce": {
+          "competence": 16.69,
+          "n": 99
+        },
+        "law_policy": {
+          "competence": 9.09,
+          "n": 1011
+        },
+        "math": {
+          "competence": 0.0,
+          "n": 234
+        },
+        "safety_security": {
+          "competence": 16.32,
+          "n": 48
+        },
+        "support_ops": {
+          "competence": 6.83,
+          "n": 113
+        }
+      },
+      "usecases": {
+        "advertising": {
+          "competence": 0.0,
+          "n": 30
+        },
+        "code_linting": {
+          "competence": 4.25,
+          "n": 33
+        },
+        "customer_support": {
+          "competence": 0.0,
+          "n": 179
+        },
+        "demand_forecasting": {
+          "competence": 13.23,
+          "n": 30
+        },
+        "ecommerce_marketplaces": {
+          "competence": 14.44,
+          "n": 65
+        },
+        "feature_extraction": {
+          "competence": 1.42,
+          "n": 31
+        },
+        "financial_crime": {
+          "competence": 20.81,
+          "n": 51
+        },
+        "gaming": {
+          "competence": 30.18,
+          "n": 30
+        },
+        "insurance_claims": {
+          "competence": 7.56,
+          "n": 63
+        },
+        "knowledge_graphs": {
+          "competence": 20.82,
+          "n": 30
+        },
+        "lead_generation": {
+          "competence": 30.56,
+          "n": 31
+        },
+        "legal_compliance": {
+          "competence": 11.2,
+          "n": 466
+        },
+        "llm_guardrails": {
+          "competence": 19.23,
+          "n": 30
+        },
+        "model_routing": {
+          "competence": 16.98,
+          "n": 471
+        },
+        "moderation_trust_safety": {
+          "competence": 13.69,
+          "n": 47
+        },
+        "other": {
+          "competence": 0.0,
+          "n": 148
+        },
+        "recruiting": {
+          "competence": 24.51,
+          "n": 30
+        },
+        "risk_assessment": {
+          "competence": 15.19,
+          "n": 62
+        },
+        "scientific_discovery": {
+          "competence": 0.0,
+          "n": 30
+        },
+        "search_retrieval": {
+          "competence": 0.0,
+          "n": 30
+        }
+      }
+    },
+    "simplejev-qwen3.8-27b-selfhost": {
+      "category_n_items": 3005,
+      "category_pools": "S+P+L1+L2+L3",
+      "category_spoke_n": {
+        "families": {
+          "calibration": 22,
+          "calibration_gen": 59,
+          "composite_gen": 66,
+          "fairness": 153,
+          "jaggedness": 101,
+          "llm_router": 453,
+          "long_state": 23,
+          "multilingual": 1604,
+          "negation_pair_gen": 100,
+          "option_order": 75,
+          "perturb_pair": 70,
+          "usecase": 279
+        },
+        "topics": {
+          "coding": 382,
+          "everyday_language": 145,
+          "finance_commerce": 223,
+          "law_policy": 1616,
+          "math": 370,
+          "safety_security": 109,
+          "support_ops": 160
+        },
+        "usecases": {
+          "advertising": 88,
+          "code_linting": 90,
+          "customer_support": 240,
+          "demand_forecasting": 83,
+          "ecommerce_marketplaces": 119,
+          "feature_extraction": 99,
+          "financial_crime": 101,
+          "gaming": 86,
+          "insurance_claims": 119,
+          "knowledge_graphs": 94,
+          "lead_generation": 95,
+          "legal_compliance": 515,
+          "llm_guardrails": 93,
+          "model_routing": 524,
+          "moderation_trust_safety": 93,
+          "other": 174,
+          "recruiting": 94,
+          "risk_assessment": 118,
+          "scientific_discovery": 90,
+          "search_retrieval": 90
+        }
+      },
+      "families": {
+        "calibration": {
           "competence": 74.87,
           "n": 22
         },
@@ -20804,8 +20852,8 @@
           "n": 23
         },
         "multilingual": {
-          "competence": 47.17,
-          "n": 618
+          "competence": 36.08,
+          "n": 1604
         },
         "negation_pair_gen": {
           "competence": 44.08,
@@ -20820,120 +20868,120 @@
           "n": 70
         },
         "usecase": {
-          "competence": 43.06,
-          "n": 147
+          "competence": 67.72,
+          "n": 279
         }
       },
       "topics": {
         "coding": {
-          "competence": 81.1,
-          "n": 330
+          "competence": 76.95,
+          "n": 382
         },
         "everyday_language": {
-          "competence": 45.32,
-          "n": 52
+          "competence": 74.99,
+          "n": 145
         },
         "finance_commerce": {
-          "competence": 56.61,
-          "n": 99
+          "competence": 45.82,
+          "n": 223
         },
         "law_policy": {
-          "competence": 58.18,
-          "n": 1011
+          "competence": 47.47,
+          "n": 1616
         },
         "math": {
-          "competence": 13.92,
-          "n": 234
+          "competence": 9.8,
+          "n": 370
         },
         "safety_security": {
-          "competence": 62.02,
-          "n": 48
+          "competence": 68.81,
+          "n": 109
         },
         "support_ops": {
-          "competence": 30.55,
-          "n": 113
+          "competence": 33.76,
+          "n": 160
         }
       },
       "usecases": {
         "advertising": {
-          "competence": 27.64,
-          "n": 30
+          "competence": 27.89,
+          "n": 88
         },
         "code_linting": {
-          "competence": 53.85,
-          "n": 33
+          "competence": 57.56,
+          "n": 90
         },
         "customer_support": {
-          "competence": 43.31,
-          "n": 179
+          "competence": 39.09,
+          "n": 240
         },
         "demand_forecasting": {
           "competence": 0.0,
-          "n": 30
+          "n": 83
         },
         "ecommerce_marketplaces": {
-          "competence": 44.99,
-          "n": 65
+          "competence": 44.11,
+          "n": 119
         },
         "feature_extraction": {
-          "competence": 28.22,
-          "n": 31
+          "competence": 26.25,
+          "n": 99
         },
         "financial_crime": {
-          "competence": 23.91,
-          "n": 51
+          "competence": 22.81,
+          "n": 101
         },
         "gaming": {
-          "competence": 44.33,
-          "n": 30
+          "competence": 22.05,
+          "n": 86
         },
         "insurance_claims": {
-          "competence": 57.46,
-          "n": 63
+          "competence": 40.21,
+          "n": 119
         },
         "knowledge_graphs": {
-          "competence": 46.38,
-          "n": 30
+          "competence": 44.57,
+          "n": 94
         },
         "lead_generation": {
-          "competence": 47.56,
-          "n": 31
+          "competence": 50.48,
+          "n": 95
         },
         "legal_compliance": {
-          "competence": 66.35,
-          "n": 466
+          "competence": 62.33,
+          "n": 515
         },
         "llm_guardrails": {
-          "competence": 78.66,
-          "n": 30
+          "competence": 81.28,
+          "n": 93
         },
         "model_routing": {
-          "competence": 79.78,
-          "n": 471
+          "competence": 75.46,
+          "n": 524
         },
         "moderation_trust_safety": {
-          "competence": 55.62,
-          "n": 47
+          "competence": 59.49,
+          "n": 93
         },
         "other": {
-          "competence": 2.23,
-          "n": 148
+          "competence": 21.96,
+          "n": 174
         },
         "recruiting": {
-          "competence": 7.58,
-          "n": 30
+          "competence": 0.0,
+          "n": 94
         },
         "risk_assessment": {
-          "competence": 32.55,
-          "n": 62
+          "competence": 34.53,
+          "n": 118
         },
         "scientific_discovery": {
-          "competence": 12.22,
-          "n": 30
+          "competence": 6.75,
+          "n": 90
         },
         "search_retrieval": {
-          "competence": 86.17,
-          "n": 30
+          "competence": 88.87,
+          "n": 90
         }
       }
     },
@@ -23004,8 +23052,8 @@
       }
     },
     "verdict-small": {
-      "category_n_items": 1500,
-      "category_pools": "S+P",
+      "category_n_items": 1887,
+      "category_pools": "S+P+L1+L2",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -23013,44 +23061,44 @@
           "composite_gen": 66,
           "fairness": 153,
           "jaggedness": 101,
-          "llm_router": 434,
+          "llm_router": 453,
           "long_state": 23,
-          "multilingual": 264,
+          "multilingual": 618,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 133
+          "usecase": 147
         },
         "topics": {
-          "coding": 302,
-          "everyday_language": 46,
-          "finance_commerce": 66,
-          "law_policy": 763,
-          "math": 193,
-          "safety_security": 37,
-          "support_ops": 93
+          "coding": 330,
+          "everyday_language": 52,
+          "finance_commerce": 99,
+          "law_policy": 1011,
+          "math": 234,
+          "safety_security": 48,
+          "support_ops": 113
         },
         "usecases": {
-          "advertising": 11,
-          "code_linting": 16,
-          "customer_support": 149,
-          "demand_forecasting": 16,
-          "ecommerce_marketplaces": 48,
-          "feature_extraction": 19,
-          "financial_crime": 39,
-          "gaming": 14,
-          "insurance_claims": 41,
-          "knowledge_graphs": 18,
-          "lead_generation": 17,
-          "legal_compliance": 387,
-          "llm_guardrails": 17,
-          "model_routing": 442,
-          "moderation_trust_safety": 32,
-          "other": 145,
-          "recruiting": 13,
-          "risk_assessment": 45,
-          "scientific_discovery": 14,
-          "search_retrieval": 17
+          "advertising": 30,
+          "code_linting": 33,
+          "customer_support": 179,
+          "demand_forecasting": 30,
+          "ecommerce_marketplaces": 65,
+          "feature_extraction": 31,
+          "financial_crime": 51,
+          "gaming": 30,
+          "insurance_claims": 63,
+          "knowledge_graphs": 30,
+          "lead_generation": 31,
+          "legal_compliance": 466,
+          "llm_guardrails": 30,
+          "model_routing": 471,
+          "moderation_trust_safety": 47,
+          "other": 148,
+          "recruiting": 30,
+          "risk_assessment": 62,
+          "scientific_discovery": 30,
+          "search_retrieval": 30
         }
       },
       "families": {
@@ -23075,8 +23123,8 @@
           "n": 101
         },
         "llm_router": {
-          "competence": 0.16,
-          "n": 434
+          "competence": 0.02,
+          "n": 453
         },
         "long_state": {
           "competence": 0.0,
@@ -23084,7 +23132,7 @@
         },
         "multilingual": {
           "competence": 0.0,
-          "n": 264
+          "n": 618
         },
         "negation_pair_gen": {
           "competence": 0.0,
@@ -23100,103 +23148,119 @@
         },
         "usecase": {
           "competence": 0.0,
-          "n": 133
+          "n": 147
         }
       },
       "topics": {
         "coding": {
           "competence": 0.0,
-          "n": 302
+          "n": 330
         },
         "everyday_language": {
           "competence": 0.0,
-          "n": 46
+          "n": 52
         },
         "finance_commerce": {
           "competence": 0.0,
-          "n": 66
+          "n": 99
         },
         "law_policy": {
           "competence": 0.0,
-          "n": 763
+          "n": 1011
         },
         "math": {
           "competence": 0.0,
-          "n": 193
+          "n": 234
         },
         "safety_security": {
           "competence": 0.0,
-          "n": 37
+          "n": 48
         },
         "support_ops": {
           "competence": 0.0,
-          "n": 93
+          "n": 113
         }
       },
       "usecases": {
+        "advertising": {
+          "competence": 0.0,
+          "n": 30
+        },
         "code_linting": {
-          "competence": 14.36,
-          "n": 16
+          "competence": 0.0,
+          "n": 33
         },
         "customer_support": {
           "competence": 0.0,
-          "n": 149
+          "n": 179
         },
         "demand_forecasting": {
           "competence": 0.0,
-          "n": 16
+          "n": 30
         },
         "ecommerce_marketplaces": {
-          "competence": 2.43,
-          "n": 48
+          "competence": 5.93,
+          "n": 65
         },
         "feature_extraction": {
           "competence": 0.0,
-          "n": 19
+          "n": 31
         },
         "financial_crime": {
           "competence": 0.0,
-          "n": 39
+          "n": 51
+        },
+        "gaming": {
+          "competence": 10.66,
+          "n": 30
         },
         "insurance_claims": {
           "competence": 0.0,
-          "n": 41
+          "n": 63
         },
         "knowledge_graphs": {
           "competence": 0.0,
-          "n": 18
+          "n": 30
         },
         "lead_generation": {
           "competence": 0.0,
-          "n": 17
+          "n": 31
         },
         "legal_compliance": {
           "competence": 0.0,
-          "n": 387
+          "n": 466
         },
         "llm_guardrails": {
-          "competence": 5.75,
-          "n": 17
+          "competence": 0.55,
+          "n": 30
         },
         "model_routing": {
-          "competence": 0.87,
-          "n": 442
+          "competence": 0.7,
+          "n": 471
         },
         "moderation_trust_safety": {
           "competence": 0.0,
-          "n": 32
+          "n": 47
         },
         "other": {
           "competence": 0.0,
-          "n": 145
+          "n": 148
+        },
+        "recruiting": {
+          "competence": 0.0,
+          "n": 30
         },
         "risk_assessment": {
           "competence": 0.0,
-          "n": 45
+          "n": 62
+        },
+        "scientific_discovery": {
+          "competence": 0.0,
+          "n": 30
         },
         "search_retrieval": {
           "competence": 0.0,
-          "n": 17
+          "n": 30
         }
       }
     },
@@ -23485,8 +23549,8 @@
       }
     },
     "wity-1": {
-      "category_n_items": 1887,
-      "category_pools": "S+P+L1+L2",
+      "category_n_items": 3005,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -23496,42 +23560,42 @@
           "jaggedness": 101,
           "llm_router": 453,
           "long_state": 23,
-          "multilingual": 618,
+          "multilingual": 1604,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 147
+          "usecase": 279
         },
         "topics": {
-          "coding": 330,
-          "everyday_language": 52,
-          "finance_commerce": 99,
-          "law_policy": 1011,
-          "math": 234,
-          "safety_security": 48,
-          "support_ops": 113
+          "coding": 382,
+          "everyday_language": 145,
+          "finance_commerce": 223,
+          "law_policy": 1616,
+          "math": 370,
+          "safety_security": 109,
+          "support_ops": 160
         },
         "usecases": {
-          "advertising": 30,
-          "code_linting": 33,
-          "customer_support": 179,
-          "demand_forecasting": 30,
-          "ecommerce_marketplaces": 65,
-          "feature_extraction": 31,
-          "financial_crime": 51,
-          "gaming": 30,
-          "insurance_claims": 63,
-          "knowledge_graphs": 30,
-          "lead_generation": 31,
-          "legal_compliance": 466,
-          "llm_guardrails": 30,
-          "model_routing": 471,
-          "moderation_trust_safety": 47,
-          "other": 148,
-          "recruiting": 30,
-          "risk_assessment": 62,
-          "scientific_discovery": 30,
-          "search_retrieval": 30
+          "advertising": 88,
+          "code_linting": 90,
+          "customer_support": 240,
+          "demand_forecasting": 83,
+          "ecommerce_marketplaces": 119,
+          "feature_extraction": 99,
+          "financial_crime": 101,
+          "gaming": 86,
+          "insurance_claims": 119,
+          "knowledge_graphs": 94,
+          "lead_generation": 95,
+          "legal_compliance": 515,
+          "llm_guardrails": 93,
+          "model_routing": 524,
+          "moderation_trust_safety": 93,
+          "other": 174,
+          "recruiting": 94,
+          "risk_assessment": 118,
+          "scientific_discovery": 90,
+          "search_retrieval": 90
         }
       },
       "families": {
@@ -23564,8 +23628,8 @@
           "n": 23
         },
         "multilingual": {
-          "competence": 55.92,
-          "n": 618
+          "competence": 47.45,
+          "n": 1604
         },
         "negation_pair_gen": {
           "competence": 62.47,
@@ -23580,126 +23644,126 @@
           "n": 70
         },
         "usecase": {
-          "competence": 52.26,
-          "n": 147
+          "competence": 66.58,
+          "n": 279
         }
       },
       "topics": {
         "coding": {
-          "competence": 71.62,
-          "n": 330
+          "competence": 68.44,
+          "n": 382
         },
         "everyday_language": {
-          "competence": 79.86,
-          "n": 52
+          "competence": 82.43,
+          "n": 145
         },
         "finance_commerce": {
-          "competence": 69.02,
-          "n": 99
+          "competence": 63.33,
+          "n": 223
         },
         "law_policy": {
-          "competence": 65.89,
-          "n": 1011
+          "competence": 55.91,
+          "n": 1616
         },
         "math": {
-          "competence": 74.44,
-          "n": 234
+          "competence": 61.79,
+          "n": 370
         },
         "safety_security": {
-          "competence": 78.12,
-          "n": 48
+          "competence": 63.53,
+          "n": 109
         },
         "support_ops": {
-          "competence": 44.56,
-          "n": 113
+          "competence": 46.19,
+          "n": 160
         }
       },
       "usecases": {
         "advertising": {
-          "competence": 31.91,
-          "n": 30
+          "competence": 33.92,
+          "n": 88
         },
         "code_linting": {
-          "competence": 20.15,
-          "n": 33
+          "competence": 42.8,
+          "n": 90
         },
         "customer_support": {
-          "competence": 75.66,
-          "n": 179
+          "competence": 67.17,
+          "n": 240
         },
         "demand_forecasting": {
-          "competence": 70.05,
-          "n": 30
+          "competence": 62.27,
+          "n": 83
         },
         "ecommerce_marketplaces": {
-          "competence": 59.25,
-          "n": 65
+          "competence": 57.96,
+          "n": 119
         },
         "feature_extraction": {
-          "competence": 50.61,
-          "n": 31
+          "competence": 62.58,
+          "n": 99
         },
         "financial_crime": {
-          "competence": 68.53,
-          "n": 51
+          "competence": 50.08,
+          "n": 101
         },
         "gaming": {
-          "competence": 48.94,
-          "n": 30
+          "competence": 45.48,
+          "n": 86
         },
         "insurance_claims": {
-          "competence": 49.18,
-          "n": 63
+          "competence": 49.84,
+          "n": 119
         },
         "knowledge_graphs": {
-          "competence": 0.0,
-          "n": 30
+          "competence": 16.44,
+          "n": 94
         },
         "lead_generation": {
-          "competence": 76.02,
-          "n": 31
+          "competence": 69.44,
+          "n": 95
         },
         "legal_compliance": {
-          "competence": 74.44,
-          "n": 466
+          "competence": 70.47,
+          "n": 515
         },
         "llm_guardrails": {
-          "competence": 36.38,
-          "n": 30
+          "competence": 39.73,
+          "n": 93
         },
         "model_routing": {
-          "competence": 75.53,
-          "n": 471
+          "competence": 72.21,
+          "n": 524
         },
         "moderation_trust_safety": {
-          "competence": 80.09,
-          "n": 47
+          "competence": 77.66,
+          "n": 93
         },
         "other": {
-          "competence": 77.74,
-          "n": 148
+          "competence": 76.83,
+          "n": 174
         },
         "recruiting": {
-          "competence": 39.23,
-          "n": 30
+          "competence": 27.83,
+          "n": 94
         },
         "risk_assessment": {
-          "competence": 75.41,
-          "n": 62
+          "competence": 64.08,
+          "n": 118
         },
         "scientific_discovery": {
-          "competence": 37.06,
-          "n": 30
+          "competence": 25.02,
+          "n": 90
         },
         "search_retrieval": {
-          "competence": 77.26,
-          "n": 30
+          "competence": 68.0,
+          "n": 90
         }
       }
     },
     "wity-1-always": {
-      "category_n_items": 1887,
-      "category_pools": "S+P+L1+L2",
+      "category_n_items": 3005,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -23709,42 +23773,42 @@
           "jaggedness": 101,
           "llm_router": 453,
           "long_state": 23,
-          "multilingual": 618,
+          "multilingual": 1604,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 147
+          "usecase": 279
         },
         "topics": {
-          "coding": 330,
-          "everyday_language": 52,
-          "finance_commerce": 99,
-          "law_policy": 1011,
-          "math": 234,
-          "safety_security": 48,
-          "support_ops": 113
+          "coding": 382,
+          "everyday_language": 145,
+          "finance_commerce": 223,
+          "law_policy": 1616,
+          "math": 370,
+          "safety_security": 109,
+          "support_ops": 160
         },
         "usecases": {
-          "advertising": 30,
-          "code_linting": 33,
-          "customer_support": 179,
-          "demand_forecasting": 30,
-          "ecommerce_marketplaces": 65,
-          "feature_extraction": 31,
-          "financial_crime": 51,
-          "gaming": 30,
-          "insurance_claims": 63,
-          "knowledge_graphs": 30,
-          "lead_generation": 31,
-          "legal_compliance": 466,
-          "llm_guardrails": 30,
-          "model_routing": 471,
-          "moderation_trust_safety": 47,
-          "other": 148,
-          "recruiting": 30,
-          "risk_assessment": 62,
-          "scientific_discovery": 30,
-          "search_retrieval": 30
+          "advertising": 88,
+          "code_linting": 90,
+          "customer_support": 240,
+          "demand_forecasting": 83,
+          "ecommerce_marketplaces": 119,
+          "feature_extraction": 99,
+          "financial_crime": 101,
+          "gaming": 86,
+          "insurance_claims": 119,
+          "knowledge_graphs": 94,
+          "lead_generation": 95,
+          "legal_compliance": 515,
+          "llm_guardrails": 93,
+          "model_routing": 524,
+          "moderation_trust_safety": 93,
+          "other": 174,
+          "recruiting": 94,
+          "risk_assessment": 118,
+          "scientific_discovery": 90,
+          "search_retrieval": 90
         }
       },
       "families": {
@@ -23777,8 +23841,8 @@
           "n": 23
         },
         "multilingual": {
-          "competence": 55.32,
-          "n": 618
+          "competence": 46.19,
+          "n": 1604
         },
         "negation_pair_gen": {
           "competence": 65.13,
@@ -23793,126 +23857,126 @@
           "n": 70
         },
         "usecase": {
-          "competence": 47.27,
-          "n": 147
+          "competence": 64.54,
+          "n": 279
         }
       },
       "topics": {
         "coding": {
-          "competence": 72.15,
-          "n": 330
+          "competence": 68.07,
+          "n": 382
         },
         "everyday_language": {
-          "competence": 91.33,
-          "n": 52
+          "competence": 86.14,
+          "n": 145
         },
         "finance_commerce": {
-          "competence": 62.51,
-          "n": 99
+          "competence": 57.6,
+          "n": 223
         },
         "law_policy": {
-          "competence": 65.05,
-          "n": 1011
+          "competence": 56.2,
+          "n": 1616
         },
         "math": {
-          "competence": 72.21,
-          "n": 234
+          "competence": 55.34,
+          "n": 370
         },
         "safety_security": {
-          "competence": 81.55,
-          "n": 48
+          "competence": 65.41,
+          "n": 109
         },
         "support_ops": {
-          "competence": 52.78,
-          "n": 113
+          "competence": 51.19,
+          "n": 160
         }
       },
       "usecases": {
         "advertising": {
-          "competence": 33.83,
-          "n": 30
+          "competence": 34.16,
+          "n": 88
         },
         "code_linting": {
-          "competence": 27.85,
-          "n": 33
+          "competence": 41.58,
+          "n": 90
         },
         "customer_support": {
-          "competence": 73.97,
-          "n": 179
+          "competence": 65.89,
+          "n": 240
         },
         "demand_forecasting": {
-          "competence": 67.12,
-          "n": 30
+          "competence": 56.78,
+          "n": 83
         },
         "ecommerce_marketplaces": {
-          "competence": 59.71,
-          "n": 65
+          "competence": 57.17,
+          "n": 119
         },
         "feature_extraction": {
-          "competence": 56.58,
-          "n": 31
+          "competence": 59.58,
+          "n": 99
         },
         "financial_crime": {
-          "competence": 64.74,
-          "n": 51
+          "competence": 57.88,
+          "n": 101
         },
         "gaming": {
-          "competence": 42.38,
-          "n": 30
+          "competence": 21.07,
+          "n": 86
         },
         "insurance_claims": {
-          "competence": 57.23,
-          "n": 63
+          "competence": 54.71,
+          "n": 119
         },
         "knowledge_graphs": {
-          "competence": 0.0,
-          "n": 30
+          "competence": 18.91,
+          "n": 94
         },
         "lead_generation": {
-          "competence": 70.32,
-          "n": 31
+          "competence": 60.67,
+          "n": 95
         },
         "legal_compliance": {
-          "competence": 73.9,
-          "n": 466
+          "competence": 70.62,
+          "n": 515
         },
         "llm_guardrails": {
-          "competence": 34.28,
-          "n": 30
+          "competence": 34.99,
+          "n": 93
         },
         "model_routing": {
-          "competence": 76.11,
-          "n": 471
+          "competence": 72.39,
+          "n": 524
         },
         "moderation_trust_safety": {
-          "competence": 74.0,
-          "n": 47
+          "competence": 63.05,
+          "n": 93
         },
         "other": {
-          "competence": 79.25,
-          "n": 148
+          "competence": 78.05,
+          "n": 174
         },
         "recruiting": {
-          "competence": 36.0,
-          "n": 30
+          "competence": 30.58,
+          "n": 94
         },
         "risk_assessment": {
-          "competence": 79.14,
-          "n": 62
+          "competence": 74.04,
+          "n": 118
         },
         "scientific_discovery": {
-          "competence": 47.62,
-          "n": 30
+          "competence": 32.15,
+          "n": 90
         },
         "search_retrieval": {
-          "competence": 71.66,
-          "n": 30
+          "competence": 73.1,
+          "n": 90
         }
       }
     },
     "wity-1-off": {
-      "category_n_items": 1887,
-      "category_pools": "S+P+L1+L2",
+      "category_n_items": 3005,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
           "calibration": 22,
@@ -23922,42 +23986,42 @@
           "jaggedness": 101,
           "llm_router": 453,
           "long_state": 23,
-          "multilingual": 618,
+          "multilingual": 1604,
           "negation_pair_gen": 100,
           "option_order": 75,
           "perturb_pair": 70,
-          "usecase": 147
+          "usecase": 279
         },
         "topics": {
-          "coding": 330,
-          "everyday_language": 52,
-          "finance_commerce": 99,
-          "law_policy": 1011,
-          "math": 234,
-          "safety_security": 48,
-          "support_ops": 113
+          "coding": 382,
+          "everyday_language": 145,
+          "finance_commerce": 223,
+          "law_policy": 1616,
+          "math": 370,
+          "safety_security": 109,
+          "support_ops": 160
         },
         "usecases": {
-          "advertising": 30,
-          "code_linting": 33,
-          "customer_support": 179,
-          "demand_forecasting": 30,
-          "ecommerce_marketplaces": 65,
-          "feature_extraction": 31,
-          "financial_crime": 51,
-          "gaming": 30,
-          "insurance_claims": 63,
-          "knowledge_graphs": 30,
-          "lead_generation": 31,
-          "legal_compliance": 466,
-          "llm_guardrails": 30,
-          "model_routing": 471,
-          "moderation_trust_safety": 47,
-          "other": 148,
-          "recruiting": 30,
-          "risk_assessment": 62,
-          "scientific_discovery": 30,
-          "search_retrieval": 30
+          "advertising": 88,
+          "code_linting": 90,
+          "customer_support": 240,
+          "demand_forecasting": 83,
+          "ecommerce_marketplaces": 119,
+          "feature_extraction": 99,
+          "financial_crime": 101,
+          "gaming": 86,
+          "insurance_claims": 119,
+          "knowledge_graphs": 94,
+          "lead_generation": 95,
+          "legal_compliance": 515,
+          "llm_guardrails": 93,
+          "model_routing": 524,
+          "moderation_trust_safety": 93,
+          "other": 174,
+          "recruiting": 94,
+          "risk_assessment": 118,
+          "scientific_discovery": 90,
+          "search_retrieval": 90
         }
       },
       "families": {
@@ -23990,8 +24054,8 @@
           "n": 23
         },
         "multilingual": {
-          "competence": 34.77,
-          "n": 618
+          "competence": 23.35,
+          "n": 1604
         },
         "negation_pair_gen": {
           "competence": 21.18,
@@ -24006,120 +24070,120 @@
           "n": 70
         },
         "usecase": {
-          "competence": 31.48,
-          "n": 147
+          "competence": 54.45,
+          "n": 279
         }
       },
       "topics": {
         "coding": {
-          "competence": 64.6,
-          "n": 330
+          "competence": 57.14,
+          "n": 382
         },
         "everyday_language": {
-          "competence": 31.98,
-          "n": 52
+          "competence": 60.51,
+          "n": 145
         },
         "finance_commerce": {
-          "competence": 45.47,
-          "n": 99
+          "competence": 30.7,
+          "n": 223
         },
         "law_policy": {
-          "competence": 42.53,
-          "n": 1011
+          "competence": 33.41,
+          "n": 1616
         },
         "math": {
-          "competence": 19.2,
-          "n": 234
+          "competence": 11.44,
+          "n": 370
         },
         "safety_security": {
-          "competence": 64.53,
-          "n": 48
+          "competence": 58.62,
+          "n": 109
         },
         "support_ops": {
-          "competence": 30.31,
-          "n": 113
+          "competence": 36.26,
+          "n": 160
         }
       },
       "usecases": {
         "advertising": {
-          "competence": 27.26,
-          "n": 30
+          "competence": 24.9,
+          "n": 88
         },
         "code_linting": {
-          "competence": 30.94,
-          "n": 33
+          "competence": 23.38,
+          "n": 90
         },
         "customer_support": {
-          "competence": 37.23,
-          "n": 179
+          "competence": 37.78,
+          "n": 240
         },
         "demand_forecasting": {
-          "competence": 1.43,
-          "n": 30
+          "competence": 9.31,
+          "n": 83
         },
         "ecommerce_marketplaces": {
-          "competence": 18.2,
-          "n": 65
+          "competence": 24.39,
+          "n": 119
         },
         "feature_extraction": {
-          "competence": 17.08,
-          "n": 31
+          "competence": 14.51,
+          "n": 99
         },
         "financial_crime": {
-          "competence": 26.75,
-          "n": 51
+          "competence": 32.0,
+          "n": 101
         },
         "gaming": {
-          "competence": 26.61,
-          "n": 30
+          "competence": 9.78,
+          "n": 86
         },
         "insurance_claims": {
-          "competence": 32.78,
-          "n": 63
+          "competence": 19.53,
+          "n": 119
         },
         "knowledge_graphs": {
-          "competence": 0.0,
-          "n": 30
+          "competence": 3.71,
+          "n": 94
         },
         "lead_generation": {
-          "competence": 61.49,
-          "n": 31
+          "competence": 40.38,
+          "n": 95
         },
         "legal_compliance": {
-          "competence": 53.51,
-          "n": 466
+          "competence": 50.07,
+          "n": 515
         },
         "llm_guardrails": {
-          "competence": 20.11,
-          "n": 30
+          "competence": 32.48,
+          "n": 93
         },
         "model_routing": {
-          "competence": 63.97,
-          "n": 471
+          "competence": 59.74,
+          "n": 524
         },
         "moderation_trust_safety": {
-          "competence": 63.87,
-          "n": 47
+          "competence": 46.85,
+          "n": 93
         },
         "other": {
-          "competence": 16.25,
-          "n": 148
+          "competence": 27.97,
+          "n": 174
         },
         "recruiting": {
-          "competence": 18.85,
-          "n": 30
+          "competence": 7.97,
+          "n": 94
         },
         "risk_assessment": {
-          "competence": 57.44,
-          "n": 62
+          "competence": 47.63,
+          "n": 118
         },
         "scientific_discovery": {
-          "competence": 0.0,
-          "n": 30
+          "competence": 3.59,
+          "n": 90
         },
         "search_retrieval": {
-          "competence": 57.42,
-          "n": 30
+          "competence": 57.81,
+          "n": 90
         }
       }
     },
