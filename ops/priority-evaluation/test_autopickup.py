@@ -686,7 +686,7 @@ class CustomerDataTests(DatabaseTestCase):
                 out = f"ref: refs/heads/main\tHEAD\n{sha}\tHEAD\n"
             elif args[-1] == "HEAD":
                 out = sha + "\n"
-            elif args[-1] == "HEAD^{tree}":
+            elif args[-1] in ("HEAD^{tree}", sha + "^{tree}"):
                 out = "b" * 40 + "\n"
             return subprocess.CompletedProcess(args, 0, out, "")
 
