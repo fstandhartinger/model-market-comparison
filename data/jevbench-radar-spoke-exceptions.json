@@ -75,11 +75,6 @@
     "since": "2026-10-08"
   },
   {
-    "key": "decision-2-0-vega-27b",
-    "reason": "Supplement runs (L1/L2/L3) are scheduled in the current GPU wave; the row updates when they complete.",
-    "since": "2026-10-07"
-  },
-  {
     "key": "diffusion-jev",
     "reason": "Language and category supplements have not been measured for this newly released row; the original current-pool category counts are shown.",
     "since": "2026-10-08"
@@ -115,11 +110,6 @@
     "since": "2026-10-08"
   },
   {
-    "key": "instinct",
-    "reason": "The provider's backend returned HTTP 502 for every request during the L3 run (8 Oct); the run is retried and the row updates when it completes.",
-    "since": "2026-10-07"
-  },
-  {
     "key": "jeff",
     "reason": "Not measured on the current v1.6 item pool (listed from an earlier or incomplete run), so it has no current radar; it is not scheduled for the supplements.",
     "since": "2026-10-07"
@@ -133,11 +123,6 @@
     "key": "jul-fast",
     "reason": "Language and category supplements have not been measured for this newly released row; the original current-pool category counts are shown.",
     "since": "2026-10-08"
-  },
-  {
-    "key": "kev-27b",
-    "reason": "Supplement runs (L1/L2/L3) are scheduled in the current GPU wave; the row updates when they complete.",
-    "since": "2026-10-07"
   },
   {
     "key": "mercury-decide",
@@ -210,11 +195,6 @@
     "since": "2026-10-07"
   },
   {
-    "key": "surogate-rune-26b-a4b-v3-v16",
-    "reason": "Supplement runs (L1/L2/L3) are scheduled in the current GPU wave; the row updates when they complete.",
-    "since": "2026-10-07"
-  },
-  {
     "key": "swanone",
     "reason": "Model weights were withdrawn by the author (Hugging Face now returns 401), so the language and category supplements cannot be run; radar shows the S + P items only.",
     "since": "2026-10-07"
@@ -247,11 +227,6 @@
   {
     "key": "watt-flash-0.1",
     "reason": "Language and category supplements have not been measured for this newly released row; the original current-pool category counts are shown.",
-    "since": "2026-10-08"
-  },
-  {
-    "key": "simplejev-qwen3.8-27b-selfhost",
-    "reason": "Supplement runs (L1/L2/L3) for the self-hosted setup are in progress in the current GPU wave; until v1.7.19 its cells wrongly counted the hosted API row's supplement answers (corrected in v1.7.20).",
     "since": "2026-10-08"
   }
 ]
