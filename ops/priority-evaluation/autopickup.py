@@ -12,6 +12,7 @@ shell or a command-line argument; it is stored only as quoted JSON data for the 
 from __future__ import annotations
 
 import argparse
+import base64
 import contextlib
 import fcntl
 import hashlib
@@ -370,7 +371,7 @@ ROW_FIELDS = (
     "checkout_session_id", "payment_intent_id", "paid_at", "created_at", "review_passed_at",
     "result_delivered_at", "notification_status", "confirmation_status", "board_status",
     "pickup_status", "pickup_owner", "pickup_job_dir", "pickup_attempts", "evaluation_status",
-    "evaluation_attempts", "release_status", "delivery_email_status", "customer_hold_started_at",
+    "evaluation_attempts", "release_attempts", "release_status", "delivery_email_status", "customer_hold_started_at",
     "sla_paused_seconds", "refund_reason", "refund_status", "refund_id", "refunded_at", "result_url", "review_email_status", "refusal_email_status",
     "customer_hold_reason", "amount_total", "refund_decision", "refund_decided_at", "change_request_email_status",
     "resubmission_count",
@@ -4583,6 +4584,105 @@ def resume(rid: str) -> str:
     return f"Order {order_ref(rid)} resumed; the 48-hour clock runs again."
 
 
+def migrate_source_recovery_projection(journal_path: Path, journal: dict[str, Any], row: dict[str, Any],
+                                       approval: dict[str, Any], evidence: dict[str, Any],
+                                       preserved: dict[str, Any]) -> dict[str, Any]:
+    """Correct only the known unobserved projection; never alter a database counter.
+
+    Caller holds cycle and approval locks. A private immutable receipt preserves
+    every original byte; old None means UNOBSERVED, not an observed old zero.
+    """
+    rid = "acad951a-1b9d-4f3c-a449-350d1c04bd23"
+    receipt_path = journal_path.with_name("SOURCE-ACCESS-RECOVERY.release-attempts-migration.json")
+    old_keys = {"request_id", "preserved", "evidence", "original_hold_started_at", "phase", "prepared_at", "approval_before"}
+    def validate_original(value: Any) -> None:
+        if not isinstance(value, dict) or set(value) != old_keys or value.get("request_id") != rid \
+                or value.get("phase") != "prepared" or value.get("evidence") != evidence \
+                or not isinstance(value.get("preserved"), dict) or set(value["preserved"]) != set(preserved) \
+                or value["preserved"].get("release_attempts") is not None \
+                or {k: v for k, v in value["preserved"].items() if k != "release_attempts"} \
+                   != {k: v for k, v in preserved.items() if k != "release_attempts"} \
+                or any(type(value["preserved"][k]) is not type(preserved[k]) for k in preserved if k != "release_attempts"):
+            raise PickupError("legacy source recovery projection is not the exact prepared snapshot")
+        before = value.get("approval_before")
+        if not isinstance(before, dict) or before.get("notification") != "pending" or before.get("decision") is not None \
+                or not isinstance(before.get("draft"), dict) or before["draft"].get("request_id") != rid \
+                or before["draft"].get("kind") != "change_request" \
+                or parse_ts(before["draft"].get("hold_started_at")) != parse_ts(value.get("original_hold_started_at")):
+            raise PickupError("legacy original approval snapshot is malformed")
+    if type(row.get("release_attempts")) is not int or row["release_attempts"] != 0:
+        raise PickupError("release counter migration requires authoritative observed zero")
+    if receipt_path.is_symlink():
+        raise PickupError("unsafe release-counter migration receipt")
+    receipt = None
+    if receipt_path.exists():
+        info = receipt_path.stat()
+        if info.st_uid != os.getuid() or info.st_mode & 0o077:
+            raise PickupError("release-counter migration receipt is not private")
+        receipt = json.loads(receipt_path.read_text())
+        expected_keys = {"schema_version", "request_id", "operation", "prior_observation", "authoritative_release_attempts",
+                         "original_journal_sha256", "original_journal_bytes_base64", "preserved_after", "recorded_at"}
+        if not isinstance(receipt, dict) or set(receipt) != expected_keys or type(receipt.get("schema_version")) is not int or receipt.get("schema_version") != 1 \
+                or receipt.get("request_id") != rid or receipt.get("operation") != "release_attempts_projection_migration" \
+                or receipt.get("prior_observation") != "UNOBSERVED" or type(receipt.get("authoritative_release_attempts")) is not int \
+                or receipt.get("authoritative_release_attempts") != 0 \
+                or receipt.get("preserved_after") != preserved \
+                or any(type(receipt["preserved_after"][k]) is not type(preserved[k]) for k in preserved):
+            raise PickupError("release-counter migration receipt does not match current evidence")
+        try:
+            original_bytes = base64.b64decode(receipt["original_journal_bytes_base64"], validate=True)
+            original = json.loads(original_bytes)
+        except (ValueError, TypeError, KeyError) as exc:
+            raise PickupError("release-counter migration original bytes are malformed") from exc
+        if hashlib.sha256(original_bytes).hexdigest() != receipt["original_journal_sha256"]:
+            raise PickupError("release-counter migration original hash differs")
+        validate_original(original)
+    if journal.get("preserved", {}).get("release_attempts") is not None:
+        if receipt is None or journal.get("preserved") != preserved or journal.get("evidence") != evidence \
+                or journal.get("projection_migration_receipt_sha256") != hashlib.sha256(receipt_path.read_bytes()).hexdigest():
+            raise PickupError("augmented release projection has no matching immutable receipt")
+        return journal
+    validate_original(journal)
+    if row.get("id") != rid or row.get("status") != "paid" or row.get("evaluation_status") != "pending" \
+            or row.get("release_status") != "not_due" or row.get("review_email_status") != "not_due" \
+            or row.get("delivery_email_status") != "not_due" or row.get("review_passed_at") is not None \
+            or row.get("refund_id") or row.get("result_delivered_at") \
+            or row.get("customer_hold_reason") != CHANGE_HOLD_REASON \
+            or row.get("customer_hold_started_at") != journal["original_hold_started_at"] \
+            or approval.get("decision") != "withdrawn" or approval.get("recovery_evidence") != evidence:
+        raise PickupError("legacy release projection cannot be augmented after order state changed")
+    state = load_state(rid)
+    operational = state.get("operational_hold") or {}
+    if operational.get("reason") != "source_access_recovered_pending_review" \
+            or operational.get("owner") != "fastlane-acad951a-recovery-20261008" \
+            or operational.get("transient") is not False or operational.get("recovery_evidence") != evidence:
+        raise PickupError("legacy projection has no matching source/admission hold")
+    current_bytes = journal_path.read_bytes()
+    if receipt is not None:
+        if current_bytes != original_bytes:
+            raise PickupError("prepared journal differs from the immutable migration original")
+    else:
+        receipt = {"schema_version": 1, "request_id": rid, "operation": "release_attempts_projection_migration",
+                   "prior_observation": "UNOBSERVED", "authoritative_release_attempts": 0,
+                   "original_journal_sha256": hashlib.sha256(current_bytes).hexdigest(),
+                   "original_journal_bytes_base64": base64.b64encode(current_bytes).decode("ascii"),
+                   "preserved_after": preserved, "recorded_at": iso(utcnow())}
+        fd, temporary = tempfile.mkstemp(prefix=".release-attempts-migration-", dir=receipt_path.parent)
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as handle:
+                handle.write(json.dumps(receipt, indent=2) + "\n")
+                handle.flush()
+                os.fsync(handle.fileno())
+            # link publishes the full private receipt atomically and never overwrites.
+            os.link(temporary, receipt_path, follow_symlinks=False)
+        finally:
+            os.unlink(temporary)
+    journal = dict(journal, preserved=preserved,
+                   projection_migration_receipt_sha256=hashlib.sha256(receipt_path.read_bytes()).hexdigest())
+    atomic_write(journal_path, json.dumps(journal, indent=2) + "\n")
+    return journal
+
+
 def recover_source_access(rid: str) -> str:
     """Correct this exact operator source-access failure; never resubmit or extend its SLA.
 
@@ -4654,6 +4754,12 @@ def recover_source_access(rid: str) -> str:
             raise PickupError("approval belongs to a different customer hold")
         if journal_path.exists():
             journal = json.loads(journal_path.read_text())
+            if not isinstance(journal, dict) or not isinstance(journal.get("preserved"), dict):
+                raise PickupError("prepared recovery journal is malformed")
+            if journal.get("preserved", {}).get("release_attempts") is None \
+                    or "projection_migration_receipt_sha256" in journal \
+                    or journal_path.with_name("SOURCE-ACCESS-RECOVERY.release-attempts-migration.json").exists():
+                journal = migrate_source_recovery_projection(journal_path, journal, row, approval, evidence, preserved)
             if journal.get("request_id") != rid or journal.get("preserved") != preserved or journal.get("evidence") != evidence:
                 raise PickupError("source-access recovery evidence or original counters changed")
         else:
