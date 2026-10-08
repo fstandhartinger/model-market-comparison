@@ -39,8 +39,8 @@ class Recovery(unittest.TestCase):
   def save_state(state):self.runtime=copy.deepcopy(state)
   def atomic(path,value):Path(path).write_text(value)
   def atomic_approval(path,value):Path(path).write_text(json.dumps(value))
-  self.ns={'Path':Path,'request_id':lambda x:x,'load_row':load_row,'PickupError':ValueError,'job_directory':lambda *x:self.job,'JOB_ROOT':self.base,'subprocess':SimpleNamespace(run=lambda *a,**k:SimpleNamespace(returncode=3,stdout='inactive\n')),'EVAL_UNIT':'eval@{}.service','json':json,'SHA40_RE':re.compile('^[0-9a-f]{40}$'),'parse_ts':lambda x:datetime.datetime.fromisoformat(x) if x else None,'git':lambda d,*args:'a'*40 if args[-1]=='HEAD' else 'b'*40,'STATE_ROOT':self.state,'hashlib':hashlib,'fcntl':fcntl,'CHANGE_HOLD_REASON':'customer_changes','atomic_write':atomic,'utcnow':lambda:datetime.datetime(2026,10,8,10,tzinfo=datetime.timezone.utc),'iso':lambda x:x.isoformat(),'refusal_approval':SimpleNamespace(atomic=atomic_approval),'sql_text':lambda v:"'"+v.replace("'","''")+"'",'update_row':update_row,'Any':object,'load_state':lambda rid:copy.deepcopy(self.runtime),'save_state':save_state,'datetime':datetime.datetime,'Effects':SimpleNamespace,'active_hold':lambda row:bool(row.get('customer_hold_started_at')),'TRANSIENT_HOLD_REASONS':frozenset({'fetch_source_transient'}),'MAX_EVALUATION_ATTEMPTS':3}
-  tree=ast.parse((ROOT/'ops/priority-evaluation/autopickup.py').read_text());nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in ['recover_source_access','hold_retries','set_operational_hold','manage_evaluation']];exec(compile(ast.Module(body=nodes,type_ignores=[]),'trusted-recovery','exec'),self.ns)
+  self.ns={'Path':Path,'re':re,'request_id':lambda x:x,'load_row':load_row,'PickupError':ValueError,'job_directory':lambda *x:self.job,'JOB_ROOT':self.base,'subprocess':SimpleNamespace(run=lambda *a,**k:SimpleNamespace(returncode=3,stdout='inactive\n')),'EVAL_UNIT':'eval@{}.service','json':json,'SHA40_RE':re.compile('^[0-9a-f]{40}$'),'parse_ts':lambda x:datetime.datetime.fromisoformat(x) if x else None,'git':lambda d,*args:'a'*40 if args[-1]=='HEAD' else 'b'*40,'STATE_ROOT':self.state,'hashlib':hashlib,'fcntl':fcntl,'CHANGE_HOLD_REASON':'customer_changes','atomic_write':atomic,'utcnow':lambda:datetime.datetime(2026,10,8,10,tzinfo=datetime.timezone.utc),'iso':lambda x:x.isoformat(),'refusal_approval':SimpleNamespace(atomic=atomic_approval),'sql_text':lambda v:"'"+v.replace("'","''")+"'",'update_row':update_row,'Any':object,'load_state':lambda rid:copy.deepcopy(self.runtime),'save_state':save_state,'datetime':datetime.datetime,'Effects':SimpleNamespace,'active_hold':lambda row:bool(row.get('customer_hold_started_at')),'TRANSIENT_HOLD_REASONS':frozenset({'fetch_source_transient'}),'MAX_EVALUATION_ATTEMPTS':3,'BOARD_HANDOFF_THREAD':'measurements','deadline_for':lambda row:datetime.datetime(2026,10,9,23,31,27,tzinfo=datetime.timezone.utc),'owner_for':lambda rid:'original-synthetic-owner','order_ref':lambda rid:str(rid)[:8],'HOLD_MAX_RETRIES':3}
+  tree=ast.parse((ROOT/'ops/priority-evaluation/autopickup.py').read_text());nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in ['recover_source_access','hold_retries','set_operational_hold','manage_evaluation','operational_escalate','step','step_done','finish_ok']];exec(compile(ast.Module(body=nodes,type_ignores=[]),'trusted-recovery','exec'),self.ns)
  def call(self):return self.ns['recover_source_access'](RID)
  def test_preserves_payment_clock_attempts_and_original_artifacts(self):
   changes=self.changes.read_bytes();self.call();self.assertEqual(self.changes.read_bytes(),changes)
@@ -134,6 +134,31 @@ class Recovery(unittest.TestCase):
   with self.assertRaises(ValueError):self.call()
   self.runtime.pop('operational_hold');self.cas=True;self.call()
   self.assertEqual(self.runtime['operational_hold']['reason'],'source_access_recovered_pending_review');self.assertFalse(self.runtime['operational_hold']['transient'])
+ def test_planned_review_routes_one_board_handoff_and_never_alerts(self):
+  self.call();boards=[];alerts=[]
+  def board(text,owner,**kw):boards.append((text,owner,kw));return True
+  self.ns['alert']=lambda *a,**kw:alerts.append((a,kw));effects=SimpleNamespace(board=board)
+  reason='source_access_recovered_pending_review';now=datetime.datetime(2026,10,8,tzinfo=datetime.timezone.utc)
+  self.ns['operational_escalate'](self.row,self.runtime,effects,now,reason,exhausted=False)
+  self.ns['operational_escalate'](self.row,self.runtime,effects,now,reason,exhausted=False)
+  self.assertEqual(len(boards),1);self.assertEqual(boards[0][1],'fastlane-acad951a-recovery-20261008');self.assertIn('no customer action',boards[0][0]);self.assertEqual(alerts,[])
+  self.assertEqual(self.runtime['stage_attempts'],self.runtime_before['stage_attempts']);self.assertEqual(self.runtime['steps']['evaluation_start'],self.runtime_before['steps']['evaluation_start'])
+ def test_planned_review_failed_board_handoff_still_never_alerts(self):
+  self.call();boards=[];alerts=[]
+  self.ns['alert']=lambda *a,**kw:alerts.append((a,kw));effects=SimpleNamespace(board=lambda *a,**kw:boards.append(a) and False)
+  self.ns['operational_escalate'](self.row,self.runtime,effects,datetime.datetime(2026,10,8,tzinfo=datetime.timezone.utc),'source_access_recovered_pending_review',exhausted=False)
+  self.assertEqual(len(boards),1);self.assertEqual(alerts,[]);self.assertNotEqual(self.runtime['steps']['source_access_review_handoff']['status'],'done')
+ def test_other_order_reason_or_owner_retains_original_escalation(self):
+  self.call();base=copy.deepcopy(self.runtime)
+  for mismatch in ['order','reason','owner']:
+   state=copy.deepcopy(base);row=dict(self.row);reason='source_access_recovered_pending_review'
+   if mismatch=='order':row['id']='00000000-0000-4000-8000-000000000001'
+   if mismatch=='reason':reason='actual_source_failure'
+   if mismatch=='owner':state['operational_hold']['owner']='different-owner'
+   boards=[];alerts=[]
+   self.ns['alert']=lambda *a,**kw:alerts.append((a,kw));effects=SimpleNamespace(board=lambda *a,**kw:boards.append(a) or True)
+   self.ns['operational_escalate'](row,state,effects,datetime.datetime(2026,10,8,tzinfo=datetime.timezone.utc),reason,exhausted=False)
+   self.assertEqual(boards[0][1],'original-synthetic-owner');self.assertEqual(len(alerts),1);self.assertIn('Rescue fast-lane order',alerts[0][1]['text'])
  def test_git_source_drift_refuses(self):
   self.ns['git']=lambda *a:'c'*40
   with self.assertRaises(ValueError):self.call()

@@ -1528,6 +1528,20 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
                          now: datetime, reason: str, *, exhausted: bool) -> None:
     """A hold that will not clear itself gets one urgent card per order+reason plus a #11 handoff."""
     rid = request_id(row.get("id"))
+    operational = state.get("operational_hold")
+    if rid == "acad951a-1b9d-4f3c-a449-350d1c04bd23" \
+            and reason == "source_access_recovered_pending_review" \
+            and isinstance(operational, dict) and operational.get("reason") == reason \
+            and operational.get("owner") == "fastlane-acad951a-recovery-20261008":
+        # A planned review has a real agent owner; it is not a human rescue decision.
+        if not step_done(state, "source_access_review_handoff"):
+            if effects.board("Aplomb 1 source access is repaired. The recovery owner must accept the source review "
+                             "and exact official input/admission before releasing the evaluation hold. "
+                             f"Original payment deadline {deadline_for(row).isoformat()} continues; no customer action. "
+                             f"Evidence: {job_directory(rid, JOB_ROOT)}/review/SOURCE-ACCESS-RECOVERY.json.",
+                             "fastlane-acad951a-recovery-20261008", thread=BOARD_HANDOFF_THREAD):
+                finish_ok(state, "source_access_review_handoff", now)
+        return
     if not step_done(state, "operational_handoff"):
         if effects.board(f"Fast-lane order {order_ref(rid)} requires an official measurement owner: "
                          f"{reason}. Payment deadline "
