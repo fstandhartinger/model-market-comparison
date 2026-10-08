@@ -31,7 +31,7 @@ test('both boards: every measured row appears with a tag; ranked rows have langu
       (scope === 'api' ? [...jevApiRoster(a, []).ranked, ...jevApiRoster(a, []).variants.filter((s) => s.listing !== 'wrapper')] : jevScopeDisplayOrder(a.systems.filter((s) => s.listing !== 'wrapper'))).map((s) => s.key));
     for (const r of rows) {
       assert.ok(live.systems[r.key], r.key);
-      assert.match(languageCoverage(live.systems[r.key]), /^(S|A\d*)\+P(?:\+L[123])*$/);
+      assert.match(languageCoverage(live.systems[r.key]), /^(S|A\d*)\+P(?:\+L[1234])*$/);
       if (r.ranked) assert.ok(Object.keys(live.systems[r.key].languages).length > 0, r.key);
     }
     const firstWrapper = rows.findIndex((r) => r.listing === 'wrapper');
@@ -54,6 +54,31 @@ test('artifact is aggregate-only, without item fields, IDs or private rows', () 
   const bytes = readFileSync(new URL(`../${JEVBENCH_LANGUAGE_CELLS_ARTIFACT}`, import.meta.url), 'utf8');
   assert.doesNotMatch(bytes, /v16-|l3-|"(?:item_ids?|item_text|prompt|question|gold|prediction|task_id|per_item)"/i);
   assert.doesNotMatch(bytes, /"djev(?:-thinking)?"/);
+});
+test('Hindi supplement is scoped to Fastino and excludes failed calls from completion', () => {
+  const key = 'fastino-gliner-2-5-decide';
+  const supplement = cells.row_scoped_supplements.L4;
+  assert.deepEqual(supplement.systems, [key]);
+  assert.equal(supplement.n, 20);
+  assert.equal(supplement.language, 'hi');
+  assert.equal(supplement.headline_eligible, false);
+  assert.match(supplement.origin, /OpenAI author \/ Anthropic blind review/);
+  assert.deepEqual(Object.entries(cells.systems).filter(([, row]) => row.pool_ok?.L4 > 0).map(([key]) => key), [key]);
+  const hi = cells.systems[key].languages.hi;
+  assert.ok(hi.coverage_n >= 60);
+  assert.equal(hi.n, hi.coverage_n + hi.operational_failure_n);
+  assert.equal(hi.coverage_n, hi.response_n + hi.refusal_n);
+  assert.equal(cells.systems[key].pool_ok.L4, 17);
+  for (const language of cells.languages) {
+    const commonSealed = ['S', 'L1', 'L2', 'L3'].reduce((n, pool) => n + language.by_pool[pool], 0);
+    assert.equal(language.sealed, commonSealed, 'common sealed header excludes the row-specific pool');
+    assert.equal(language.n, commonSealed + language.by_pool.P);
+    assert.equal(language.n_api_basis, ['P', 'L1', 'L2', 'L3'].reduce((n, pool) => n + language.by_pool[pool], 0));
+  }
+  const categories = read('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.1-category-cells.json');
+  assert.doesNotMatch(JSON.stringify(categories), /\bL4\b/, 'category scoring must exclude the Hindi supplement');
+  assert.match(languageCoverage(live.systems[key]), /\+L4$/);
+  assert.match(languagePoolNote(live.language_cells), /three HTTP 400 failures.*do not count as completed coverage/);
 });
 test('caption follows interim and final L3 data and has no stale missing-API claim', () => {
   assert.match(languagePoolNote(live.language_cells), new RegExp(`at least ${Math.min(...cells.languages.map((l) => l.n_api_basis))} items`));

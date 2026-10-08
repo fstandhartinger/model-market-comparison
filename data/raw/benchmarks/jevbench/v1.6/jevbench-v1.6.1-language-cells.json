@@ -1,6 +1,6 @@
 {
   "benchmark": "JevBench",
-  "board_revision": "v1.7.22",
+  "board_revision": "v1.7.24",
   "drawn": "2026-10-07",
   "kind": "language-cells",
   "languages": [
@@ -13,6 +13,7 @@
         "L1": 0,
         "L2": 14,
         "L3": 132,
+        "L4": 0,
         "P": 220,
         "S": 940
       },
@@ -33,6 +34,7 @@
         "L1": 18,
         "L2": 3,
         "L3": 40,
+        "L4": 0,
         "P": 2,
         "S": 20
       },
@@ -53,6 +55,7 @@
         "L1": 27,
         "L2": 1,
         "L3": 29,
+        "L4": 0,
         "P": 6,
         "S": 7
       },
@@ -73,6 +76,7 @@
         "L1": 28,
         "L2": 0,
         "L3": 31,
+        "L4": 0,
         "P": 5,
         "S": 7
       },
@@ -93,6 +97,7 @@
         "L1": 19,
         "L2": 4,
         "L3": 38,
+        "L4": 0,
         "P": 2,
         "S": 9
       },
@@ -113,6 +118,7 @@
         "L1": 3,
         "L2": 0,
         "L3": 58,
+        "L4": 0,
         "P": 7,
         "S": 22
       },
@@ -133,6 +139,7 @@
         "L1": 20,
         "L2": 2,
         "L3": 43,
+        "L4": 0,
         "P": 2,
         "S": 8
       },
@@ -153,6 +160,7 @@
         "L1": 22,
         "L2": 2,
         "L3": 41,
+        "L4": 0,
         "P": 1,
         "S": 7
       },
@@ -173,6 +181,7 @@
         "L1": 18,
         "L2": 2,
         "L3": 41,
+        "L4": 0,
         "P": 3,
         "S": 9
       },
@@ -193,6 +202,7 @@
         "L1": 25,
         "L2": 2,
         "L3": 39,
+        "L4": 0,
         "P": 1,
         "S": 4
       },
@@ -213,6 +223,7 @@
         "L1": 21,
         "L2": 1,
         "L3": 38,
+        "L4": 0,
         "P": 2,
         "S": 7
       },
@@ -233,6 +244,7 @@
         "L1": 13,
         "L2": 1,
         "L3": 52,
+        "L4": 0,
         "P": 2,
         "S": 15
       },
@@ -253,6 +265,7 @@
         "L1": 0,
         "L2": 0,
         "L3": 57,
+        "L4": 0,
         "P": 11,
         "S": 20
       },
@@ -273,6 +286,7 @@
         "L1": 18,
         "L2": 1,
         "L3": 44,
+        "L4": 0,
         "P": 2,
         "S": 10
       },
@@ -293,6 +307,7 @@
         "L1": 0,
         "L2": 0,
         "L3": 64,
+        "L4": 0,
         "P": 4,
         "S": 27
       },
@@ -313,6 +328,7 @@
         "L1": 19,
         "L2": 0,
         "L3": 47,
+        "L4": 0,
         "P": 2,
         "S": 9
       },
@@ -333,6 +349,7 @@
         "L1": 17,
         "L2": 0,
         "L3": 42,
+        "L4": 20,
         "P": 3,
         "S": 10
       },
@@ -353,6 +370,7 @@
         "L1": 3,
         "L2": 0,
         "L3": 54,
+        "L4": 0,
         "P": 11,
         "S": 16
       },
@@ -373,6 +391,7 @@
         "L1": 14,
         "L2": 0,
         "L3": 50,
+        "L4": 0,
         "P": 1,
         "S": 15
       },
@@ -393,6 +412,7 @@
         "L1": 19,
         "L2": 0,
         "L3": 45,
+        "L4": 0,
         "P": 2,
         "S": 9
       },
@@ -413,6 +433,7 @@
         "L1": 16,
         "L2": 0,
         "L3": 48,
+        "L4": 0,
         "P": 2,
         "S": 12
       },
@@ -433,6 +454,7 @@
         "L1": 13,
         "L2": 0,
         "L3": 50,
+        "L4": 0,
         "P": 5,
         "S": 12
       },
@@ -453,6 +475,7 @@
         "L1": 21,
         "L2": 0,
         "L3": 35,
+        "L4": 0,
         "P": 4,
         "S": 5
       },
@@ -474,11 +497,23 @@
     "L1": 354,
     "L2": 33,
     "L3": 1118,
+    "L4": 20,
     "P": 300,
     "S": 1200
   },
   "revision": "v1.6.1",
-  "source_sha256": "9ded8f61bfdc735ee9e5000e6381b2a228113dde99f4b81bea0deab57b3b92c1",
+  "row_scoped_supplements": {
+    "L4": {
+      "headline_eligible": false,
+      "language": "hi",
+      "n": 20,
+      "origin": "OpenAI author / Anthropic blind review; prospective pre-seal",
+      "systems": [
+        "fastino-gliner-2-5-decide"
+      ]
+    }
+  },
+  "source_sha256": "0482b5a75d0ffdb67f60e20a26080d9ee0515b0da9758ca4b64351728c6dd057",
   "systems": {
     "aplomb-1": {
       "coverage": "S+P",
@@ -7163,7 +7198,7 @@
       "sealed_basis": "A4"
     },
     "fastino-gliner-2-5-decide": {
-      "coverage": "S+P+L1+L2+L3",
+      "coverage": "S+P+L1+L2+L3+L4",
       "languages": {
         "ar": {
           "competence": 0.0,
@@ -7239,11 +7274,11 @@
         },
         "hi": {
           "competence": 0.0,
-          "coverage_n": 52,
-          "n": 63,
-          "operational_failure_n": 11,
+          "coverage_n": 69,
+          "n": 83,
+          "operational_failure_n": 14,
           "refusal_n": 0,
-          "response_n": 52
+          "response_n": 69
         },
         "id": {
           "competence": 0.0,
@@ -7354,6 +7389,7 @@
         "L1": 349,
         "L2": 33,
         "L3": 1108,
+        "L4": 17,
         "P": 295,
         "S": 1174
       },
@@ -16428,196 +16464,197 @@
       "sealed_basis": "S"
     },
     "mghafiri-qwen3.5-0.8b-decision-model": {
-      "coverage": "S+P+L1+L2",
+      "coverage": "S+P+L1+L2+L3",
       "languages": {
         "ar": {
           "competence": 0.0,
-          "coverage_n": 40,
-          "n": 40,
+          "coverage_n": 71,
+          "n": 71,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 40
+          "response_n": 71
         },
         "cs": {
           "competence": 0.0,
-          "coverage_n": 30,
-          "n": 30,
+          "coverage_n": 75,
+          "n": 75,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 30
+          "response_n": 75
         },
         "da": {
           "competence": 0.0,
-          "coverage_n": 43,
-          "n": 43,
+          "coverage_n": 83,
+          "n": 83,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 43
+          "response_n": 83
         },
         "de": {
-          "competence": 9.85,
-          "coverage_n": 30,
-          "n": 30,
+          "competence": 0.0,
+          "coverage_n": 84,
+          "n": 84,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 30
+          "response_n": 84
         },
         "el": {
           "competence": 0.0,
-          "coverage_n": 30,
-          "n": 30,
+          "coverage_n": 65,
+          "n": 65,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 30
+          "response_n": 65
         },
         "en": {
           "competence": 0.0,
-          "coverage_n": 1174,
-          "n": 1174,
+          "coverage_n": 1306,
+          "n": 1306,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 1174
+          "response_n": 1306
         },
         "es": {
           "competence": 0.0,
-          "coverage_n": 31,
-          "n": 31,
+          "coverage_n": 95,
+          "n": 95,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 31
+          "response_n": 95
         },
         "fi": {
           "competence": 0.0,
-          "coverage_n": 32,
-          "n": 32,
+          "coverage_n": 73,
+          "n": 73,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 32
+          "response_n": 73
         },
         "fr": {
           "competence": 0.0,
-          "coverage_n": 30,
-          "n": 30,
+          "coverage_n": 80,
+          "n": 80,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 30
+          "response_n": 80
         },
         "hi": {
           "competence": 0.0,
-          "coverage_n": 30,
-          "n": 30,
+          "coverage_n": 72,
+          "n": 72,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 30
+          "response_n": 72
         },
         "id": {
           "competence": 0.0,
-          "coverage_n": 32,
-          "n": 32,
+          "coverage_n": 71,
+          "n": 71,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 32
+          "response_n": 71
         },
         "it": {
           "competence": 0.0,
-          "coverage_n": 31,
-          "n": 31,
+          "coverage_n": 83,
+          "n": 83,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 31
+          "response_n": 83
         },
         "ja": {
           "competence": 0.0,
-          "coverage_n": 30,
-          "n": 30,
+          "coverage_n": 80,
+          "n": 80,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 30
+          "response_n": 80
         },
         "ko": {
           "competence": 0.0,
-          "coverage_n": 30,
-          "n": 30,
+          "coverage_n": 77,
+          "n": 77,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 30
+          "response_n": 77
         },
         "mixed": {
-          "competence": 7.2,
-          "coverage_n": 30,
-          "n": 30,
+          "competence": 4.96,
+          "coverage_n": 78,
+          "n": 78,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 30
+          "response_n": 78
         },
         "nl": {
           "competence": 0.0,
-          "coverage_n": 34,
-          "n": 34,
+          "coverage_n": 72,
+          "n": 72,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 34
+          "response_n": 72
         },
         "no": {
           "competence": 0.0,
-          "coverage_n": 31,
-          "n": 31,
+          "coverage_n": 69,
+          "n": 69,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 31
+          "response_n": 69
         },
         "pl": {
-          "competence": 0.88,
-          "coverage_n": 31,
-          "n": 31,
+          "competence": 0.0,
+          "coverage_n": 88,
+          "n": 88,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 31
+          "response_n": 88
         },
         "pt": {
           "competence": 0.0,
-          "coverage_n": 32,
-          "n": 32,
+          "coverage_n": 90,
+          "n": 90,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 32
+          "response_n": 90
         },
         "sv": {
           "competence": 0.0,
-          "coverage_n": 32,
-          "n": 32,
+          "coverage_n": 75,
+          "n": 75,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 32
+          "response_n": 75
         },
         "tr": {
           "competence": 0.0,
-          "coverage_n": 31,
-          "n": 31,
+          "coverage_n": 75,
+          "n": 75,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 31
+          "response_n": 75
         },
         "uk": {
           "competence": 0.0,
-          "coverage_n": 32,
-          "n": 32,
+          "coverage_n": 73,
+          "n": 73,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 32
+          "response_n": 73
         },
         "zh": {
           "competence": 0.0,
-          "coverage_n": 41,
-          "n": 41,
+          "coverage_n": 70,
+          "n": 70,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 41
+          "response_n": 70
         }
       },
       "pool_ok": {
         "L1": 354,
         "L2": 33,
+        "L3": 1118,
         "P": 300,
         "S": 1200
       },
