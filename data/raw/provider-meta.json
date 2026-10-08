@@ -715,6 +715,24 @@
       "note": "Circuit & Chisel, Inc., trading as Unbiased (268 Post Road STE 200 PMB 586312, Fairfield, CT 06824; Delaware law), checked 2026-09-22: its Terms & Policies say \"We are headquartered in the United States\" and that personal information \"will necessarily be accessed and processed in the U.S.\"; the team is described as remote-first across the US and Canada. No EU serving region is published, so it is excluded from the EU-hosted and non-US filters. Its only model, Pareto, is a composite the vendor describes as running \"several models on your request\" and keeping the best answer, so the published price buys that ensemble rather than one model. Customer content is not used for training without written consent and is kept no longer than 30 days for abuse prevention.",
       "url": "https://unbiased.ai/terms/",
       "website": "https://unbiased.ai"
+    },
+    "PrimeIntellect": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "url": "https://www.primeintellect.ai/terms-of-service",
+      "note": "Checked 2026-10-08: Prime Intellect Inc. is registered in Delaware, United States. This describes the provider entity, not compute location; EU inference residency is not verified for this exact route, and marketplace availability is not a residency guarantee.",
+      "hyperscaler": false,
+      "website": "https://www.primeintellect.ai/"
+    },
+    "Tenstorrent": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "url": "https://tenstorrent.com/en/newsroom/tenstorrent-announces-groundbreaking-engineering-training-program-commissioned-by-japanese-governmen",
+      "note": "Checked 2026-10-08: Tenstorrent USA, Inc. is headquartered in Santa Clara, California. This describes corporate location only; EU inference residency is not verified for this exact route.",
+      "hyperscaler": false,
+      "website": "https://tenstorrent.com/"
     }
   },
   "judgments_checked_at": "2026-07-12",
@@ -806,5 +824,5 @@
     ]
   },
   "urls_verified_at": "2026-09-16",
-  "url_provenance": "Official provider websites, CR-42.3 curation 2026-09-16 (opencode-kimi): each URL fetched once (redirects followed) and the final status recorded in /opt/benchmarkheaven/state/ux-evidence/iter86-cr-42-3/provider-urls-verified.json; OpenAI and Perplexity returned 403 to automated clients (own domains, not circumvented); Clarifai and GMICloud were unreachable from the build server (DNS+MX checked); DekaLLM's TLS chain is incomplete (Let's Encrypt cert confirmed via openssl). The 41 pre-existing urls were curated with the original provider-meta pass. Iteration 87 (claude-opus), 2026-09-16: `url` stays the evidence link behind each judgment (often a privacy policy or terms page); the link shown as the official website is `website` when present, else `url`. 15 providers whose `url` was a legal page, an OpenRouter page or an API host got a `website` (homepage fetched once, final URL/title in /opt/benchmarkheaven/state/ux-evidence/iter87-cr-42-3-websites/homepages.json); A cross-check of every website's domain against OpenRouter's own provider API (privacy/terms/status URLs, /api/v1/providers, saved as openrouter-providers.json + domain-crosscheck.txt in the same folder) then corrected 10 more: Sail Research and Makora pointed at openrouter.ai; mara.network is an unrelated company (OpenRouter's Mara is mara.com); ModelRun is operated by Modular (modular.com, per OpenRouter's policy URLs); SiliconFlow, GMICloud, AkashML, OpenInference, Crusoe and Nex AGI now use the domain OpenRouter names. Makora has no homepage confirmed by a primary source, so `website: null` (plain text, nothing manufactured). Remaining domain differences are regional or parent sites of the same company (e.g. Tencent Cloud CN/intl, MiniMax CN/intl, ByteDance Seed vs BytePlus, Meta, Xiaomi MiMo, StepFun)."
+  "url_provenance": "Official provider websites, CR-42.3 curation 2026-09-16 (opencode-kimi): each URL fetched once (redirects followed) and the final status recorded in /opt/benchmarkheaven/state/ux-evidence/iter86-cr-42-3/provider-urls-verified.json; OpenAI and Perplexity returned 403 to automated clients (own domains, not circumvented); Clarifai and GMICloud were unreachable from the build server (DNS+MX checked); DekaLLM's TLS chain is incomplete (Let's Encrypt cert confirmed via openssl). The 41 pre-existing urls were curated with the original provider-meta pass. Iteration 87 (claude-opus), 2026-09-16: `url` stays the evidence link behind each judgment (often a privacy policy or terms page); the link shown as the official website is `website` when present, else `url`. 15 providers whose `url` was a legal page, an OpenRouter page or an API host got a `website` (homepage fetched once, final URL/title in /opt/benchmarkheaven/state/ux-evidence/iter87-cr-42-3-websites/homepages.json); A cross-check of every website's domain against OpenRouter's own provider API (privacy/terms/status URLs, /api/v1/providers, saved as openrouter-providers.json + domain-crosscheck.txt in the same folder) then corrected 10 more: Sail Research and Makora pointed at openrouter.ai; mara.network is an unrelated company (OpenRouter's Mara is mara.com); ModelRun is operated by Modular (modular.com, per OpenRouter's policy URLs); SiliconFlow, GMICloud, AkashML, OpenInference, Crusoe and Nex AGI now use the domain OpenRouter names. Makora has no homepage confirmed by a primary source, so `website: null` (plain text, nothing manufactured). Remaining domain differences are regional or parent sites of the same company (e.g. Tencent Cloud CN/intl, MiniMax CN/intl, ByteDance Seed vs BytePlus, Meta, Xiaomi MiMo, StepFun). On 2026-10-08, PrimeIntellect terms and Tenstorrent's official newsroom page were fetched successfully and added as evidence URLs; their homepages are separately stored in `website`."
 }
