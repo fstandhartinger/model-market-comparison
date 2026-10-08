@@ -30,6 +30,9 @@ SOURCE = "fastlane-refusal-approval"
 CALLBACK_DB = HOME / ".local/state/telegram-reply-broker/updates.sqlite3"
 CALLBACK_STATUS = HOME / ".local/state/telegram-reply-broker/callback-status.d"
 WINDOW = 12 * 3600
+# Exact Effects.mail failure reasons proved to occur before the mail tool, credentials or SMTP.
+KNOWN_UNSENT_MAIL_REASONS = frozenset({"gate_refused", "author_guard_missing", "author_guard_timeout",
+                                       "author_guard_error", "author_guard_refused"})
 
 
 def atomic(path, value):
@@ -356,10 +359,11 @@ def advance(row, to, subject, body, root, effects, now, kind="refusal"):
                 ok, reason = effects.mail(to, subject, body)
             except Exception:
                 ok, reason = False, "unknown_exception"
-            # Shared Effects.mail reports gate_refused only for SystemExit from the
-            # outbound gate before SMTP. Keep the exact approval and retry this known
-            # no-send outcome; exceptions/transport errors remain unknown forever.
-            state["mail"] = "sent" if ok else "gate_blocked" if reason == "gate_refused" else "unknown"
+            # Shared Effects.mail returns these exact reasons only before SMTP: the author
+            # guard runs before the mail tool or any credential is loaded, and gate_refused
+            # is SystemExit from the outbound gate. Keep the exact approval and retry these
+            # known no-send outcomes; exceptions/transport errors remain unknown forever.
+            state["mail"] = "sent" if ok else "gate_blocked" if reason in KNOWN_UNSENT_MAIL_REASONS else "unknown"
             atomic(path, state)
         if state["mail"] == "sent":
             state["resolved"] = resolve_ask(state, path, "sent", now)

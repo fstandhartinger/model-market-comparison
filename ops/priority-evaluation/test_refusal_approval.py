@@ -304,6 +304,46 @@ class ApprovalTests(unittest.TestCase):
         self.assertEqual(self.run_advance()[0], "sent")
         self.assertEqual(self.fx.mail.call_count, 2)
 
+    def test_author_guard_failures_are_known_unsent_and_retry_exact_approval(self):
+        for reason in ("author_guard_missing", "author_guard_timeout", "author_guard_error", "author_guard_refused"):
+            with self.subTest(reason=reason):
+                self.path.unlink(missing_ok=True)
+                self.fx.mail.reset_mock()
+                self.save()
+                approved = prepared()
+                self.fx.mail.return_value = (False, reason)
+                self.assertEqual(self.run_advance([click()])[0], "pending")
+                state = json.loads(self.path.read_text())
+                self.assertEqual(state["mail"], "gate_blocked")
+                self.assertEqual(state["decision"], "send")
+                self.assertEqual((state["draft"], state["digest"]), (approved["draft"], approved["digest"]))
+                # Still refused: stays a known no-send hold, never relabelled as uncertain SMTP.
+                self.assertEqual(self.run_advance()[0], "pending")
+                self.assertEqual(json.loads(self.path.read_text())["mail"], "gate_blocked")
+                # A changed body cannot ride the preserved approval.
+                self.assertNotEqual(self.run_advance(body=BODY + " changed")[0], "sent")
+                self.assertEqual(self.fx.mail.call_count, 2)
+                # Once the guard passes the same exact envelope is sent once.
+                self.fx.mail.return_value = (True, "ok")
+                self.assertEqual(self.run_advance()[0], "sent")
+                self.assertEqual(self.run_advance()[0], "sent")
+                self.assertEqual(self.fx.mail.call_count, 3)
+                self.fx.mail.assert_called_with(TO, SUBJECT, BODY)
+
+    def test_unlisted_failure_reasons_stay_unknown_and_are_not_retried(self):
+        for reason in ("timeout", "SMTPServerDisconnected", "unknown_exception", "author_guard",
+                       "author_guard_refused_after_smtp", "gate_refused ", "mail_tool_unavailable"):
+            with self.subTest(reason=reason):
+                self.path.unlink(missing_ok=True)
+                self.fx.mail.reset_mock()
+                self.save()
+                self.fx.mail.return_value = (False, reason)
+                self.assertEqual(self.run_advance([click()])[0], "unknown")
+                self.fx.mail.return_value = (True, "ok")
+                self.assertEqual(self.run_advance()[0], "unknown")
+                self.assertEqual(json.loads(self.path.read_text())["mail"], "unknown")
+                self.fx.mail.assert_called_once()
+
     def test_readonly_broker_filter(self):
         dbpath = self.root / "broker.sqlite3"
         with sqlite3.connect(dbpath) as db:

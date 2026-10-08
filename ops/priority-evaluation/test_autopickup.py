@@ -9,6 +9,7 @@ Run: python3 -m unittest ops/priority-evaluation/test_autopickup.py -v
 
 from __future__ import annotations
 
+import contextlib
 import hashlib
 import importlib
 import json
@@ -659,15 +660,117 @@ class CustomerDataTests(DatabaseTestCase):
             "        'approved': os.environ.get('MAIL_APPROVED_BY_FLORIAN'), 'cooldown': os.environ.get('MAIL_DOMAIN_COOLDOWN_HOURS')}))\n"
             "    print('DRY RUN - nichts gesendet' if args.dry_run else 'sent from x to y')\n")
         log = TMP / "fake_mail.json"
+        guard = self._fake_guard("guard-pass", 0)
+        real_run = ap.subprocess.run
+
+        def only_guard(command, *args, **kwargs):
+            self.assertEqual(command[0], str(guard))
+            return real_run(command, *args, **kwargs)
         effects = ap.Effects(dry_run=True)
         with mock.patch.object(ap, "MAIL_TOOL", fake_tool), mock.patch.dict(os.environ, {"FAKE_MAIL_LOG": str(log)}), \
-                mock.patch.object(ap.subprocess, "run", side_effect=AssertionError("no subprocess for mail")):
+                mock.patch.object(ap, "AUTHOR_MESSAGE_GUARD", guard), \
+                mock.patch.object(ap.subprocess, "run", side_effect=only_guard):
             ok, _ = effects.mail("author@example.com", "Subject", "Body")
         self.assertTrue(ok)
         record = json.loads(log.read_text())
         self.assertEqual((record["dry"], record["approved"], record["cooldown"]), (True, "1", "1"))
         self.assertNotIn("MAIL_APPROVED_BY_FLORIAN", os.environ)
         self.assertEqual(effects.mail("a@b.example\nBcc: x@y.example", "S", "B"), (False, "invalid_recipient"))
+
+    def _fake_guard(self, name: str, exit_code: int, *, sleep: float = 0) -> Path:
+        """A stand-in for ~/bin/author-message-guard that records argv, stdin and the checked text."""
+        guard = TMP / name
+        seen = TMP / (name + ".seen.json")
+        guard.write_text(
+            "#!/usr/bin/env python3\n"
+            "import json, sys, time\n"
+            f"time.sleep({sleep!r})\n"
+            "text = open(sys.argv[1], encoding='utf-8', newline='').read()\n"
+            f"open({str(seen)!r}, 'w').write(json.dumps({{'argv': sys.argv[1:], 'stdin': sys.stdin.read(), 'text': text}}))\n"
+            f"sys.exit({exit_code})\n")
+        guard.chmod(0o700)
+        seen.unlink(missing_ok=True)
+        return guard
+
+    def _fake_mail_tool(self) -> tuple[Path, Path]:
+        tool, log = TMP / "fake_guarded_mail_tool.py", TMP / "fake_guarded_mail.json"
+        tool.write_text("import json, os\n"
+                        f"open({str(log)!r}, 'w').write('imported')\n"
+                        "def cmd_send(args):\n"
+                        "    print('DRY RUN - nichts gesendet' if args.dry_run else 'sent from x to y')\n")
+        log.unlink(missing_ok=True)
+        return tool, log
+
+    def test_author_guard_checks_exact_subject_and_body_for_dry_run_and_real_mail(self):
+        guard = self._fake_guard("guard-exact", 0)
+        tool, log = self._fake_mail_tool()
+        subject, body = "Benchmark Heaven order ABC: your result", "Hello,\n\nJevBench v1.5.0: score 71.25 \u2014 https://benchmarkheaven.com/jev-models\n"
+        for dry_run in (True, False):
+            with self.subTest(dry_run=dry_run), mock.patch.object(ap, "AUTHOR_MESSAGE_GUARD", guard), \
+                    mock.patch.object(ap, "MAIL_TOOL", tool), mock.patch.object(ap, "gmail_app_password", return_value="x"):
+                ok, reason = ap.Effects(dry_run=dry_run).mail("author@example.com", subject, body)
+                self.assertEqual((ok, reason), (True, "ok"))
+                seen = json.loads((TMP / "guard-exact.seen.json").read_text())
+                self.assertEqual(seen["text"], f"Subject: {subject}\n\n{body}")
+                self.assertEqual(len(seen["argv"]), 1)
+                self.assertEqual(seen["stdin"], "")
+                self.assertFalse(Path(seen["argv"][0]).exists(), "guard input file must be removed")
+                self.assertEqual(log.read_text(), "imported")
+
+    def test_author_guard_block_missing_error_or_timeout_fails_closed_before_any_send_step(self):
+        refusing = self._fake_guard("guard-refuse", 3)
+        not_executable = TMP / "guard-not-executable"
+        not_executable.write_text("#!/bin/sh\nexit 0\n")
+        not_executable.chmod(0o600)
+        cases = [
+            ("refused", {"AUTHOR_MESSAGE_GUARD": refusing}, None, "author_guard_refused"),
+            ("missing", {"AUTHOR_MESSAGE_GUARD": TMP / "no-such-guard"}, None, "author_guard_missing"),
+            ("not_executable", {"AUTHOR_MESSAGE_GUARD": not_executable}, None, "author_guard_missing"),
+            ("timeout", {"AUTHOR_MESSAGE_GUARD": self._fake_guard("guard-slow", 0, sleep=5),
+                         "AUTHOR_GUARD_TIMEOUT_S": 0.5}, None, "author_guard_timeout"),
+            ("exception", {"AUTHOR_MESSAGE_GUARD": self._fake_guard("guard-ok", 0)},
+             OSError("exec failed"), "author_guard_error"),
+        ]
+        for label, patches, run_error, expected in cases:
+            for dry_run in (True, False):
+                tool, log = self._fake_mail_tool()
+                with self.subTest(case=label, dry_run=dry_run), contextlib.ExitStack() as stack:
+                    for name, value in patches.items():
+                        stack.enter_context(mock.patch.object(ap, name, value))
+                    stack.enter_context(mock.patch.object(ap, "MAIL_TOOL", tool))
+                    spec = stack.enter_context(mock.patch.object(ap.importlib.util, "spec_from_file_location",
+                                                                 side_effect=AssertionError("mail tool loaded")))
+                    password = stack.enter_context(mock.patch.object(ap, "gmail_app_password",
+                                                                     side_effect=AssertionError("credentials read")))
+                    if run_error is not None:
+                        stack.enter_context(mock.patch.object(ap.subprocess, "run", side_effect=run_error))
+                    effects = ap.Effects(dry_run=dry_run)
+                    self.assertEqual(effects.mail("author@example.com", "S", "B"), (False, expected))
+                    spec.assert_not_called()
+                    password.assert_not_called()
+                    self.assertFalse(log.exists())
+                    self.assertEqual(effects.log[-1]["error"], expected)
+                    self.assertFalse(effects.log[-1]["ok"])
+
+    def test_public_result_mail_reports_score_and_url_without_any_rank(self):
+        rid = str(uuid.uuid4())
+        url = "https://benchmarkheaven.com/jev-models"
+        for rank, n_ranked in ((1, 12), (2, 12), (5, 12), (11, 12)):
+            summary = {"visibility": "public", "results": [
+                {"benchmark": "jevbench", "version": "v1.5.0", "rank": rank, "n_ranked": n_ranked,
+                 "score": 71.254, "public_url": url}]}
+            with self.subTest(rank=rank):
+                subject, body = ap.result_message({"id": rid}, summary)
+                self.assertIn(f"{ap.BENCHMARK_NAMES['jevbench']} v1.5.0: score 71.25 \u2014 {url}", body)
+                text = subject + "\n" + body
+                self.assertNotIn("#", text)
+                self.assertNotIn(f" of {n_ranked}", text)
+                self.assertIsNone(re.search(r"\b(rank|ranked|place|placed|position|top)\b", text, re.I))
+        private = {"visibility": "private", "results": [
+            {"benchmark": "jevbench", "version": "v1.5.0", "score": 71.254}]}
+        _, body = ap.result_message({"id": rid}, private)
+        self.assertIn(f"{ap.BENCHMARK_NAMES['jevbench']} (v1.5.0 method): score 71.25", body)
+        self.assertNotIn("#", body)
 
     def test_fetch_source_keeps_customer_links_off_the_command_line(self):
         rid = insert_order()
@@ -1431,7 +1534,9 @@ class FinalizeTests(DatabaseTestCase):
         self.assertEqual((current["status"], current["release_status"], current["delivery_email_status"]),
                          ("completed", "verified", "sent"))
         result_mail = [mail for mail in fx.mails if "your result" in mail[1]][0]
-        self.assertIn("JevBench v1.5.2: #2 of 7, score 71.23 — https://benchmarkheaven.com/jev-models", result_mail[2])
+        self.assertIn("JevBench v1.5.2: score 71.23 — https://benchmarkheaven.com/jev-models", result_mail[2])
+        self.assertNotIn("#2", result_mail[2])
+        self.assertNotIn("of 7", result_mail[2])
         self.assertNotIn("Evil", result_mail[2])
         self.assertEqual(fx.started[-1], ap.XPOST_UNIT.format(rid))
         post = (job / "xpost" / "POST.txt").read_text()
