@@ -25,6 +25,7 @@ import host_github
 import public_artifacts
 import measurement_dispatch
 import static_agent
+import source_metadata
 import release_render
 import refusal_approval
 import refund_approval
@@ -120,6 +121,7 @@ REVIEW_GIT_PATTERNS = (
     # Model metadata (3 Oct 2026: order dc725ad4 was wrongly failed for a "missing" adapter_config.json
     # that this checkout had excluded). Small config files only; weights and tokenizer.json stay out.
     "*config.json", "*.jinja", "*.safetensors.index.json",
+    "serving.json", "temperature.json", "MANIFEST.json", "source-pins.json",
 )
 CLAIM_LEASE_MINUTES = 4
 MAX_ROWS_PER_CYCLE = 25
@@ -1179,6 +1181,8 @@ is `held_privately_host_only`, the customer's key is already in host intake: use
 "request" and the origin of the host-validated `access.endpoint` (the fixed driver appends
 `/v1/systemone`). Host-fetched public provider pages (pricing, models, API reference), when
 present, are under `source/public-docs/` with `PUBLIC-DOCS-RECEIPT.json`; cite them for tariffs.
+Host `MODEL-WEIGHT-PINS.json` in that directory records exact pinned Git LFS shard hashes
+and sizes for recipe authoring; it is source identity evidence, never tariff evidence.
 OpenRouter is the fixed ZDR,
 no-fallback official route for text and Image; optional reasoning is low/medium/high. Use real
 public bookable tariffs. Request credentials stay in host intake; never put a key in this file.
@@ -4983,7 +4987,9 @@ def gate(rid: str) -> tuple[bool, str]:
 
 
 def git(dest: Path, *args: str, stdin: str | None = None, timeout: int = 600,
-        hf_repository: str | None = None) -> str:
+        hf_repository: str | None = None, max_pack_bytes: int = MAX_SOURCE_PACK_BYTES) -> str:
+    if not isinstance(max_pack_bytes, int) or not 0 < max_pack_bytes <= MAX_SOURCE_PACK_BYTES:
+        raise PickupError("invalid bounded Git pack limit")
     env = {"PATH": "/usr/bin:/bin", "HOME": "/nonexistent", "GIT_TERMINAL_PROMPT": "0", "GIT_LFS_SKIP_SMUDGE": "1",
            "GIT_CONFIG_NOSYSTEM": "1", "GIT_CONFIG_GLOBAL": "/dev/null", "GIT_CONFIG_SYSTEM": "/dev/null",
            "GIT_ATTR_NOSYSTEM": "1", "LANG": "C.UTF-8"}
@@ -5005,10 +5011,10 @@ def git(dest: Path, *args: str, stdin: str | None = None, timeout: int = 600,
         credential_config = ["-c", "credential.helper=", "-c", "credential.useHttpPath=true", "-c", "http.followRedirects=false",
                              "-c", "credential.helper=!/usr/bin/python3 -I " + shlex.quote(str(helper_file))]
     def limit_git_files() -> None:
-        resource.setrlimit(resource.RLIMIT_FSIZE, (MAX_SOURCE_PACK_BYTES, MAX_SOURCE_PACK_BYTES))
+        resource.setrlimit(resource.RLIMIT_FSIZE, (max_pack_bytes, max_pack_bytes))
 
     result = subprocess.run(["git", "-C", str(dest), *credential_config, "-c", "core.hooksPath=/dev/null", "-c", "protocol.file.allow=never",
-                             "-c", "submodule.recurse=false", *args],
+                             "-c", "submodule.recurse=false", "-c", "fetch.unpackLimit=1", "-c", "transfer.unpackLimit=1", *args],
                             input=stdin, text=True, capture_output=True, timeout=timeout, env=env, check=False,
                             preexec_fn=limit_git_files)
     if result.returncode:
@@ -5077,6 +5083,10 @@ def fetch_source(rid: str, which: str) -> dict[str, Any]:
         if resolved != target:
             raise PickupError("checked-out commit does not match the requested commit")
         tree = git(dest, "rev-parse", "HEAD^{tree}").strip()
+        metadata = source_metadata.inspect_pinned_tree(
+            dest, resolved, tree, git, max_bytes=MAX_REVIEW_SOURCE_BYTES,
+            hf_repository=match.group("path") if match.group("host") == "huggingface.co"
+            and match.group("path") in HF_SOURCE_AUTH_REPOSITORIES else None)
         source_bytes = 0
         for relative in git(dest, "ls-files", "-z").split("\x00"):
             if not relative:
@@ -5094,15 +5104,28 @@ def fetch_source(rid: str, which: str) -> dict[str, Any]:
         if CUSTOMER_FETCH_RE.search(exc.stderr or ""):
             raise FetchPermanentError(f"{which} source repository does not exist or is not accessible") from exc
         raise FetchInfraError(f"{which} source fetch failed: {(exc.stderr or '').splitlines()[-1][:160]}") from exc
-    except PickupError as exc:
+    except (PickupError, source_metadata.MetadataError, UnicodeError) as exc:
         if str(exc) == "could not resolve the repository head":
             raise FetchPermanentError(f"{which} source repository head could not be resolved") from exc
         raise FetchInfraError(str(exc)) from exc
     receipt = {"which": which, "url": url, "commit": resolved, "tree": tree, "pinned": bool(commit),
-               "review_source_bytes": source_bytes, "fetched_at": iso(utcnow()),
+               "review_source_bytes": source_bytes, "archive_objects": metadata["archive_objects"], "fetched_at": iso(utcnow()),
                "credential_repository": match.group("path") if match.group("host") == "huggingface.co"
                and match.group("path") in HF_SOURCE_AUTH_REPOSITORIES else None}
     atomic_write(job_dir / "source" / f"FETCH-RECEIPT-{which}.json", json.dumps(receipt, indent=2) + "\n")
+    if which == "model":
+        docs = job_dir / "source" / "public-docs"
+        if docs.is_symlink() or (docs.exists() and not docs.is_dir()):
+            raise FetchInfraError("unsafe public-docs receipt directory")
+        docs.mkdir(mode=0o700, exist_ok=True)
+        metadata.update({"schema_version": 1, "provenance": "trusted_host_pinned_git_object_inspection",
+                         "url": url, "commit": resolved, "tree": tree,
+                         "fetch_receipt_sha256": hashlib.sha256(
+                             (job_dir / "source" / "FETCH-RECEIPT-model.json").read_bytes()).hexdigest()})
+        receipt_path = docs / "MODEL-WEIGHT-PINS.json"
+        if receipt_path.is_symlink():
+            raise FetchInfraError("unsafe weight receipt path")
+        atomic_write(receipt_path, json.dumps(metadata, indent=2) + "\n")
     return receipt
 
 
