@@ -37,6 +37,8 @@ from pathlib import Path
 import measurement_dispatch
 import execution_source
 import native_admission
+import pod_capacity
+import sys
 
 ROOT = Path(__file__).resolve().parent
 STATE_ROOT = Path(os.environ.get("FASTLANE_STATE_ROOT") or Path.home() / ".local/state/fastlane-autopickup")
@@ -226,6 +228,9 @@ class Provider:
     def release(self, job: str, pod_id: str | None, reservation: str | None) -> None:
         raise NotImplementedError
 
+    def preflight(self, gpu, recipe, benchmarks, capacity_remaining=pod_capacity.MAX_REFUSALS, allow_two_gpu=False):
+        return None
+
     def create(self, gpu: str, ttl_hours: float, budget: float) -> dict:
         raise NotImplementedError
 
@@ -279,16 +284,70 @@ class LiumProvider(Provider):
             argv += ["--reservation-id", reservation]
         if pod_id:
             argv += ["--pod-id", pod_id]
-        _run_cli(argv, timeout=60)
+        result = _run_cli(argv, timeout=60)
+        if result.returncode:
+            raise PodRunError('guard release failed')
+
+    def preflight(self, gpu, recipe, benchmarks, capacity_remaining=pod_capacity.MAX_REFUSALS, allow_two_gpu=False):
+        self._placement = None
+        counts = [1]
+        if allow_two_gpu and recipe['kind'] == 'http_typesafe' and recipe['min_vram_gb'] == 96 and gpu == 'RTXPRO6000' and tuple(benchmarks) == ('jevbench',):
+            counts.append(2)
+        refusals = []
+        counts = counts[:capacity_remaining]
+        try:
+            for count in counts:
+                quote = pod_capacity.quote(gpu, count, _run_cli, LIUM, MAX_HOURLY_USD)
+                if quote.get('refused'):
+                    refusals.append(quote)
+                    continue
+                if (recipe['kind'] == 'aplomb_native' or 'imagejevbench' in benchmarks) and quote['hourly_usd'] != recipe.get('hourly_usd'):
+                    raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed')
+                self._placement = quote
+                return {'quote': quote, 'refusals': refusals}
+        except pod_capacity.CapacityEvidenceError as exc:
+            raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed') from exc
+        return {'quote': None, 'refusals': refusals}
 
     def create(self, gpu, ttl_hours, budget):
         before = self.ps_ids()
-        result = _run_cli([str(LIUM), "up", "--gpu", gpu, "-c", "1", "--ttl", f"{ttl_hours}h",
-                           "--budget", f"{budget:.2f}", "-y", "--json"], timeout=900)
+        placement = getattr(self, '_placement', None)
+        if placement:
+            if (placement['gpu'] != gpu or (datetime.now(timezone.utc) - datetime.fromisoformat(placement['quoted_at'])).total_seconds() > 120):
+                raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed')
+            argv = [sys.executable, str(ROOT / 'lium_bounded_up.py'), gpu, str(placement['gpu_count']),
+                    str(ttl_hours), str(budget), str(MAX_HOURLY_USD)]
+        else:
+            argv = [sys.executable, str(ROOT / 'lium_bounded_up.py'), gpu, '1',
+                    str(ttl_hours), str(budget), str(MAX_HOURLY_USD)]
+        started = datetime.now(timezone.utc).isoformat()
+        result = _run_cli(argv, timeout=900)
         if result.returncode:
-            if self.ps_ids() - before:
+            after = self.ps_ids()
+            if after != before:
                 raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain')
-            raise PodCapacityError('provider confirmed no newly created pod')
+            # A listing alone cannot authenticate a refusal. Only the CLI's
+            # pre-rent selection failure plus its exact provider audit qualifies.
+            try:
+                envelopes = []
+                decoder = json.JSONDecoder()
+                for match in re.finditer(r'\{', result.stderr):
+                    try:
+                        value, _ = decoder.raw_decode(result.stderr[match.start():])
+                        if isinstance(value, dict) and value.get('ok') is False:
+                            envelopes.append(value)
+                    except ValueError:
+                        pass
+                if len(envelopes) != 1 or envelopes[0].get('error', {}).get('code') != 'node_selection_failed':
+                    raise pod_capacity.CapacityEvidenceError('ambiguous provider create failure')
+                request = envelopes[0].get('data', {}).get('request_id')
+                event = pod_capacity.audit_refusal(_run_cli, LIUM, request, started)
+            except (pod_capacity.CapacityEvidenceError, ValueError, TypeError) as exc:
+                raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain') from exc
+            error = PodCapacityError('authenticated provider refused before allocation')
+            error.proof = {'phase': 'create_refused', 'event': event, 'started_at': started}
+            error.before_ids, error.after_ids = before, after
+            raise error
         # `up -y --json` prints the pod as JSON (dict or one-item list); progress lines may
         # surround it. The keys match `lium ps --format json` (id, huid, price_per_hour).
         pod = None
@@ -334,6 +393,7 @@ class LiumProvider(Provider):
             except (json.JSONDecodeError, IndexError, TypeError):
                 pass
         return {"pod_id": str(pod_id), "huid": str(pod.get("huid", "")), "gpu": gpu,
+                "gpu_count": pod.get('gpu_count'),
                 "hourly_usd": float(hourly) if hourly is not None else None}
 
     def exec(self, pod_id, command, timeout=600):
@@ -483,8 +543,29 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
     reservation = None
     try:
         attempts = state.get('creation_attempts', 0)
-        if type(attempts) is not int or not 0 <= attempts < 2:
-            raise PodRunError('original per-order fresh-pod retry budget exhausted')
+        try:
+            allocations = pod_capacity.allocation_count(state, PODS_DIR)
+            if allocations >= pod_capacity.MAX_ALLOCATIONS:
+                raise PodRunError('original per-order fresh-pod retry budget exhausted')
+            if len(state.get('capacity_refusals', [])) >= pod_capacity.MAX_REFUSALS:
+                raise measurement_dispatch.OperationalHold('gpu_pod_capacity')
+            recipe_binding = hashlib.sha256(json.dumps(
+                {'recipe': recipe, 'benchmarks': list(benchmarks)}, sort_keys=True).encode()).hexdigest()
+            allow_two = state.get('two_gpu_placement_recipe_sha256') == recipe_binding
+            selection = provider.preflight(gpu_choice[0], recipe, benchmarks,
+                pod_capacity.MAX_REFUSALS - len(state.get('capacity_refusals', [])), allow_two)
+            if selection is not None:
+                for proof in selection['refusals']:
+                    pod_capacity.store_refusal(state, PODS_DIR, proof)
+                    save_state()
+                if selection['quote'] is None:
+                    raise PodCapacityError('authenticated preflight proved no capacity')
+                if len(state.get('capacity_refusals', [])) >= pod_capacity.MAX_REFUSALS:
+                    raise measurement_dispatch.OperationalHold('gpu_pod_capacity')
+                state['placement_quote'] = selection['quote']
+                save_state()
+        except pod_capacity.CapacityEvidenceError as exc:
+            raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain') from exc
         reservation = provider.reserve(job, "pod-measure", MAX_HOURLY_USD, budget, ttl)
         state['creation_attempts'] = attempts + 1
         state['attempt_started_at'] = datetime.now(timezone.utc).isoformat()
@@ -500,8 +581,19 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         save_state()
         try:
             pod = provider.create(gpu_choice[0], ttl, budget)
-        except PodCapacityError:
-            # Provider contract: capacity means a successful listing proved no pod was created.
+        except PodCapacityError as exc:
+            proof = getattr(exc, 'proof', None)
+            if isinstance(provider, LiumProvider) and proof is None:
+                raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain') from exc
+            # Release must be confirmed before creating an immutable credit.
+            provider.release(job, None, reservation)
+            reservation = None
+            if proof:
+                try:
+                    pod_capacity.store_refusal(state, PODS_DIR, proof, attempt=attempts + 1,
+                        before=exc.before_ids, after=exc.after_ids, released=True)
+                except pod_capacity.CapacityEvidenceError as evidence_error:
+                    raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain') from evidence_error
             state['cleanup_uncertain'] = False
             state['spent_upper_bound_usd'] -= state['attempt_reserved_upper_bound_usd']
             state['attempt_reserved_upper_bound_usd'] = 0.0
@@ -522,6 +614,9 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             raise PodCapacityError(f"pod {pod_id} hourly price {pod.get('hourly_usd')} "
                                    f"exceeds the {MAX_HOURLY_USD} cap")
         if (recipe['kind'] == 'aplomb_native' or 'imagejevbench' in benchmarks) and hourly != recipe.get('hourly_usd'):
+            raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed')
+        placement = state.get('placement_quote') if selection is not None else None
+        if placement and (hourly != placement['hourly_usd'] or pod.get('gpu_count') != placement['gpu_count']):
             raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed')
         provider.attach(reservation, job, pod_id, hourly)
         image = recipe["image"]
@@ -707,6 +802,8 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
         except json.JSONDecodeError:
             raise measurement_dispatch.OperationalHold('partial_measurement_requires_reconciliation') from None
         state = previous
+        if state.get('request_id', rid) != rid:
+            raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain')
         if state.get('pod_id') or state.get('cleanup_uncertain') or (state.get('attempt_started_at') and not state.get('torn_down_at')):
             # A crash may have occurred inside provider.create before exact ID was saved.
             # Retain the precharged full TTL bound and never start another rental.
@@ -753,6 +850,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
     if (output / "raw.jsonl").exists() or any((output / name / 'raw.jsonl').exists() for name in benchmarks):
         # A partial attempt is kept, never resumed (same rule as the API path).
         raise measurement_dispatch.OperationalHold("partial_measurement_requires_reconciliation")
+    state['request_id'] = rid
     budget = min(PER_ORDER_CAP_USD, max_usd)
     prior_spend = state.get('spent_upper_bound_usd', 0.0)
     if isinstance(prior_spend, bool) or not isinstance(prior_spend, (int, float)) or not 0 <= prior_spend <= PER_ORDER_CAP_USD:

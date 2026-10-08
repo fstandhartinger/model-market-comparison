@@ -2592,11 +2592,20 @@ class _FakeLium:
             if argv[1] == "release":
                 self.releases += 1
             return done()
+        if len(argv) > 1 and Path(argv[1]).name == 'lium_bounded_up.py':
+            argv = [str(pod_runner.LIUM), 'up', '--gpu', argv[2], '-c', argv[3],
+                    '--ttl', argv[4] + 'h', '--budget', argv[5], '-y', '--json']
         command = argv[1] if len(argv) > 1 else ""
         if command == "up":
             for pid in self.new_on_up:
                 self.pods[pid] = {"id": pid, "huid": f"h-{pid[:4]}", "price_per_hour": self.hourly}
-            return done(self.up_output)
+            try:
+                output = json.loads(self.up_output)
+                if isinstance(output, dict):
+                    output.setdefault('gpu_count', 1)
+                return done(json.dumps(output))
+            except ValueError:
+                return done(self.up_output)
         if command == "ps":
             if len(argv) > 2 and argv[2] != "--format":
                 row = self.pods.get(argv[2])
@@ -2660,6 +2669,11 @@ class PodUnidentifiedCreateTests(unittest.TestCase):
         patcher = mock.patch.object(pod_runner, "_run_cli", fake.cli)
         patcher.start()
         self.addCleanup(patcher.stop)
+        quote_patcher = mock.patch.object(pod_runner.pod_capacity, 'quote', side_effect=lambda gpu, count, *args: {
+            'gpu': gpu, 'gpu_count': count, 'hourly_usd': min(fake.hourly, 5.0),
+            'node_id': '99999999-9999-4999-8999-999999999999', 'quoted_at': ap.iso(ap.utcnow())})
+        quote_patcher.start()
+        self.addCleanup(quote_patcher.stop)
         return pod_runner.LiumProvider()
 
     def _run(self, provider, max_usd=20.0):
