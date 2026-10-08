@@ -37,9 +37,11 @@ class Health(unittest.TestCase):
   self.row.update(customer_hold_started_at='2026-10-08T10:00:00+00:00',customer_hold_reason='customer_changes');r=self.call();self.assertEqual(r['problems'],[]);self.assertTrue(r['held_orders'][0]['sla_paused'])
  def test_exhausted_step_and_missing_confirmation_still_alarm_on_planned_hold(self):
   self.state['steps']['preparation']={'status':'exhausted'};self.row['confirmation_status']='pending';r=self.call();self.assertEqual(len(r['problems']),2);self.assertTrue(any('step preparation exhausted' in p for p in r['problems']))
+ def test_planned_hold_one_second_before_deadline_has_no_alarm(self):
+  now=dt.datetime(2026,10,9,23,31,26,tzinfo=dt.timezone.utc);self.ns["utcnow"]=lambda:now;self.ns["systemd_last_success"]=lambda *a:now;self.assertEqual(self.call()["problems"],[])
  def test_planned_hold_at_or_after_deadline_still_alarms(self):
   for now in [dt.datetime(2026,10,9,23,31,27,tzinfo=dt.timezone.utc),dt.datetime(2026,10,10,tzinfo=dt.timezone.utc)]:
-   self.ns["utcnow"]=lambda:now;r=self.call();self.assertIn("evaluation not running",r["problems"][0]);self.assertFalse(r["held_orders"][0]["sla_paused"])
+   self.ns["utcnow"]=lambda:now;self.ns["systemd_last_success"]=lambda *a:now;r=self.call();self.assertIn("evaluation not running",r["problems"][0]);self.assertFalse(r["held_orders"][0]["sla_paused"])
  def test_corrupt_state_fails_closed(self):
   self.state=None;r=self.call();self.assertEqual(len(r['problems']),2);self.assertIn('pickup state is unreadable',r['problems'][0])
 unittest.main()
