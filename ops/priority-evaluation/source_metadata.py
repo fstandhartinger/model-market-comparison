@@ -34,12 +34,13 @@ def inspect_pinned_tree(repo, commit, tree, git, *, max_bytes, hf_repository=Non
     # Read objects with an isolated config and no remotes. Git 2.34 predates
     # GIT_NO_LAZY_FETCH; removing promisor configuration prevents lazy network reads.
     objects = repo / ".git" / "objects"
-    if (objects.is_symlink() or (objects / "info" / "alternates").exists()
-            or any(path.is_symlink() for path in objects.rglob("*"))):
+    if (objects.is_symlink() or ((objects / "info" / "alternates").exists() or (objects / "info" / "http-alternates").exists())
+            or any(path.is_symlink() or not (path.is_file() or path.is_dir()) for path in objects.rglob("*"))):
         raise MetadataError("unsafe pinned Git object store")
     with tempfile.TemporaryDirectory(prefix="fastlane-object-inspection-") as tmp:
         isolated = Path(tmp)
         git(isolated, "init", "--bare", "-q")
+        offline_config = (isolated / "config").read_text()
         shutil.rmtree(isolated / "objects")
         (isolated / "objects").symlink_to((repo / ".git" / "objects").resolve(), target_is_directory=True)
         if git(isolated, "rev-parse", commit + "^{tree}").strip() != tree:
@@ -100,6 +101,10 @@ def inspect_pinned_tree(repo, commit, tree, git, *, max_bytes, hf_repository=Non
             git(isolated, "fetch", "--quiet", "--depth=1", "--filter=blob:limit=" + str(max_bytes),
                 "--no-tags", "origin", commit, timeout=600,
                 hf_repository=hf_repository, max_pack_bytes=max_bytes)
+            # A filtered fetch writes promisor/remote configuration. Restore
+            # the empty trusted bare config before inspecting missing objects;
+            # Git 2.34 must never lazily hydrate excluded large weight blobs.
+            (isolated / "config").write_text(offline_config)
             if git(isolated, "rev-parse", commit + "^{tree}").strip() != tree:
                 raise MetadataError("hydrated pinned Git tree differs")
             counts, missing = sizes()
@@ -124,8 +129,10 @@ def inspect_pinned_tree(repo, commit, tree, git, *, max_bytes, hf_repository=Non
             for source in (isolated / "objects").rglob("*"):
                 if source.is_symlink():
                     raise MetadataError("unsafe hydrated Git object store")
-                if not source.is_file():
+                if source.is_dir():
                     continue
+                if not source.is_file():
+                    raise MetadataError("nonregular hydrated Git object")
                 target = objects / source.relative_to(isolated / "objects")
                 target.parent.mkdir(parents=True, exist_ok=True)
                 if target.is_symlink():

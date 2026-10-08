@@ -84,4 +84,39 @@ class SourceMetadataTests(ExecutionSourceTests):
         self.assertEqual(result['archive_objects']['hydrated_blob_count'],1)
         self.assertEqual(self.archive_app(code),b'# synthetic first version\n')
 
+    def test_excluded_blob_refuses_without_lazy_network(self):
+        repo,code=self.fixture()
+        ap.git(repo,'config','remote.origin.url','https://github.com/firstparty/inert')
+        oid=self.git(repo,'rev-parse','HEAD:app.py')
+        path=repo/'.git/objects'/oid[:2]/oid[2:]
+        path.unlink(); fetches=[]; offline_reads=[]
+        def controlled(dest,*args,**kwargs):
+            if args[0]=='fetch':
+                fetches.append(args)
+                shutil.copytree(repo/'.git/objects',dest/'objects',dirs_exist_ok=True)
+                with (dest/'config').open('a') as config:
+                    config.write('\n[extensions]\n\tpartialClone = origin\n[remote "origin"]\n\tpromisor = true\n')
+                return ''
+            if args[0]=='cat-file':
+                config=(dest/'config').read_text()
+                self.assertNotIn('origin',config)
+                self.assertNotIn('partialClone',config)
+                self.assertNotIn('promisor',config)
+                offline_reads.append(args)
+            return ap.git(dest,*args,**kwargs)
+        with self.assertRaisesRegex(sm.MetadataError,'unavailable'):
+            sm.inspect_pinned_tree(repo,code['commit'],code['tree'],controlled,max_bytes=65536)
+        self.assertEqual(len(fetches),1)
+        self.assertEqual(len(offline_reads),2)
+
+    def test_http_alternates_and_fifo_fail_before_git_read(self):
+        repo,code=self.fixture()
+        unsafe=repo/'.git/objects/info/http-alternates'
+        unsafe.write_text('https://example.invalid/objects\n')
+        with self.assertRaisesRegex(sm.MetadataError,'object store'):self.metadata(repo,code)
+        unsafe.unlink()
+        import os
+        os.mkfifo(unsafe)
+        with self.assertRaisesRegex(sm.MetadataError,'object store'):self.metadata(repo,code)
+
 if __name__=='__main__':unittest.main()
