@@ -43,6 +43,15 @@ def preserved_state(original):
     return state
 
 
+def retry_after_owner_window(value):
+    current = datetime.fromisoformat(value)
+    earliest_original = datetime.fromisoformat('2026-10-08T20:45:00+00:00')
+    target = datetime.fromisoformat('2026-10-08T20:56:00+00:00')
+    if current < earliest_original:
+        raise RuntimeError('original retry clock differs')
+    return value if current >= target else target.isoformat()
+
+
 def prepare(revision, acceptance_path):
     config = json.loads(read_regular(ap.STATE_ROOT/'config.json'))
     if config.get('installed_revision') != revision or not ap.SHA40_RE.fullmatch(revision):
@@ -122,7 +131,9 @@ def main(argv=None):
         request_bytes = read_regular(ap.state_path(RID))
         request_state = json.loads(request_bytes)
         hold = request_state.get('operational_hold', {})
-        if hold.get('reason') not in ('gpu_pod_run_failed', 'gpu_pod_capacity') or hold.get('next_retry_at') != '2026-10-08T20:45:00+00:00':
+        if (hold.get('reason') not in ('gpu_pod_run_failed', 'gpu_pod_capacity')
+                or not isinstance(hold.get('next_retry_at'), str)
+                or datetime.fromisoformat(hold['next_retry_at']).tzinfo is None):
             raise RuntimeError('original capacity retry clock differs')
         acceptance = json.loads(read_regular(args.review_acceptance))
         window_path = BASE/'CAPACITY-OWNER-WINDOW.json'
@@ -135,6 +146,7 @@ def main(argv=None):
             raise RuntimeError('confirmed resource-owner availability window differs')
         print(json.dumps({'order': RID, 'raw_creation_attempts': 2, 'after_allocation_count': 1,
                           'spent_upper_bound_usd': 1.25, 'recipe_binding': RECIPE_SHA, 'apply': args.apply}))
+        target_retry = retry_after_owner_window(hold['next_retry_at'])
         if not args.apply:
             return 0
         if pod_path.read_bytes() != original or ap.state_path(RID).read_bytes() != request_bytes or ap.validate_review_gate(ap.JOB_ROOT/RID) != gate:
@@ -149,7 +161,7 @@ def main(argv=None):
                   'source_gate_sha256': sha(read_regular(ap.JOB_ROOT/RID/'review/GATE.json')),
                   'original_request_state_sha256': sha(request_bytes), 'original_request_state': request_state,
                   'original_next_retry_at': hold['next_retry_at'],
-                  'next_retry_at': '2026-10-08T20:56:00+00:00',
+                  'next_retry_at': target_retry,
                   'capacity_owner_window_sha256': sha(window_bytes)}
         evidence = BASE/'CAPACITY-ALLOCATION-MIGRATION.json'
         with evidence.open('x') as stream:
@@ -159,7 +171,7 @@ def main(argv=None):
         pr._save_pod_state(pod_path, state)
         # Preserve the original hold, counters, payment and SLA. Only its retry
         # clock follows the independently confirmed resource-owner window.
-        request_state['operational_hold']['next_retry_at'] = '2026-10-08T20:56:00+00:00'
+        request_state['operational_hold']['next_retry_at'] = target_retry
         if ap.state_path(RID).read_bytes() != request_bytes:
             raise RuntimeError('request changed after pod-state CAS; reconcile durable migration intent')
         ap.save_state(request_state)

@@ -208,6 +208,12 @@ class CapacityTests(unittest.TestCase):
 if __name__=='__main__':unittest.main()
 
 class RecoveryGuardTests(unittest.TestCase):
+    def test_owner_window_never_advances_a_later_existing_retry(self):
+        import recover_wald_capacity as recovery
+        self.assertEqual(recovery.retry_after_owner_window('2026-10-08T20:45:00+00:00'),'2026-10-08T20:56:00+00:00')
+        self.assertEqual(recovery.retry_after_owner_window('2026-10-08T21:30:00+00:00'),'2026-10-08T21:30:00+00:00')
+        with self.assertRaises(RuntimeError):recovery.retry_after_owner_window('2026-10-08T20:10:00+00:00')
+
     def test_historical_cas_and_original_counters_must_match_exactly(self):
         import recover_wald_capacity as recovery
         state={'request_id':recovery.RID,'creation_attempts':2,'spent_upper_bound_usd':1.25,
