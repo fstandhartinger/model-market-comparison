@@ -2117,6 +2117,19 @@ class PodRecipeValidationTests(unittest.TestCase):
     def test_golden_torchcast_recipe_validates(self):
         self.assertEqual(pod_runner.validate_recipe(dict(TORCHCAST_RECIPE), pod_job())["kind"], "http_typesafe")
 
+    def test_documented_96gb_recipe_has_exact_provider_candidate_without_budget_change(self):
+        recipe = json.loads(json.dumps(TORCHCAST_RECIPE))
+        recipe['min_vram_gb'] = 96
+        self.assertEqual(pod_runner.validate_recipe(recipe, pod_job())['min_vram_gb'], 96)
+        self.assertEqual([g for g in pod_runner.GPU_PREFERENCE if g[1] >= recipe['min_vram_gb']],
+                         [('RTXPRO6000', 96)])
+        self.assertEqual(pod_runner.MAX_HOURLY_USD, 5.0)
+        self.assertEqual(pod_runner.PER_ORDER_CAP_USD, 20.0)
+        self.assertEqual(pod_runner.TTL_CAP_HOURS, 3.0)
+        self._rejected(lambda r: r.update(min_vram_gb=True))
+        self._rejected(lambda r: r.update(min_vram_gb=96.0))
+        self._rejected(lambda r: r.update(min_vram_gb=0))
+
     def test_golden_quyet_recipe_validates(self):
         job = pod_job()
         (job / "source" / "FETCH-RECEIPT-model.json").write_text(
@@ -2142,7 +2155,7 @@ class PodRecipeValidationTests(unittest.TestCase):
         self._rejected(lambda r: r["services"][0]["env"].update(SHIM_VLLM="http://10.0.0.1:8890/x"))
         self._rejected(lambda r: r["services"][0]["env"].update(lowercase="x"))            # env key must be [A-Z_][A-Z0-9_]*
         self._rejected(lambda r: r["services"][0]["argv"].append("http://evil.example"))
-        self._rejected(lambda r: r.update(min_vram_gb=81))
+        self._rejected(lambda r: r.update(min_vram_gb=97))
         self._rejected(lambda r: r["weights"][0].update(sha256={}))
         self._rejected(lambda r: r["weights"][0]["sha256"].update(bad="x" * 63))
         self._rejected(lambda r: r.update(endpoint="http://10.0.0.1:8011"))

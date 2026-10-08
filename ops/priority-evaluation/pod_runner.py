@@ -49,7 +49,7 @@ MAX_HOURLY_USD = 5.00  # Florian 6 Oct 2026: paid fast-lane GPU pods up to USD 5
 PER_ORDER_CAP_USD = 20.0  # ... and at most USD 20 per order
 TTL_CAP_HOURS = 3.0
 EXPECTED_ROWS = 1624
-GPU_PREFERENCE = (("H100", 80), ("A100", 80), ("L40S", 48), ("RTX6000", 48))  # lium marketplace names
+GPU_PREFERENCE = (("H100", 80), ("A100", 80), ("L40S", 48), ("RTX6000", 48), ("RTXPRO6000", 96))  # lium marketplace names
 
 IMAGE_RE = re.compile(r"^[A-Za-z0-9._/-]+:[A-Za-z0-9_.-]+@sha256:[0-9a-f]{64}$")
 SHA40_RE = re.compile(r"[0-9a-f]{40}")
@@ -95,7 +95,7 @@ def validate_recipe(recipe, job_dir: Path) -> dict:
     if not isinstance(recipe.get("image"), str) or not IMAGE_RE.fullmatch(recipe["image"]):
         raise measurement_dispatch.OperationalHold("pod_recipe_invalid")
     vram = recipe.get("min_vram_gb")
-    if not isinstance(vram, int) or isinstance(vram, bool) or not 1 <= vram <= 80:
+    if not isinstance(vram, int) or isinstance(vram, bool) or not 1 <= vram <= 96:
         raise measurement_dispatch.OperationalHold("pod_recipe_invalid")
     if 'hourly_usd' in recipe and (isinstance(recipe['hourly_usd'], bool)
             or not isinstance(recipe['hourly_usd'], (int, float))

@@ -29,8 +29,16 @@ scores the result on the host. Your job is to describe how to start the model. W
    - `image`: one public container image pinned by digest (`name:tag@sha256:<64 hex>`). It must contain
      the documented runtime, for example the author's pinned vLLM image. If the author names a pip version
      but no image, use the official upstream image of exactly that version and look up its digest in the
-     fetched docs. If no digest is documented, write a blocker.
-   - `min_vram_gb`: an integer from the documented hardware, at most 80.
+     fetched docs or the host-fetched public registry receipt in `source/public-docs/`.
+     A registry receipt must bind the official upstream repository, the exact runtime version
+     documented by the customer, the manifest bytes and their SHA-256 digest. Cite that receipt
+     in PRICING-REVIEW.md; independent source review pins it together with the recipe. It cannot
+     substitute for the customer's documented runtime/dependency versions. If no authenticated
+     digest or matching runtime is available, write a blocker.
+   - `min_vram_gb`: an integer from the documented hardware, at most 96. The host supports
+     RTXPRO6000 96 GB in addition to its existing GPU choices. Use the documented context and
+     inference settings unchanged; do not lower them to fit a smaller GPU. The same USD 5/hour,
+     USD 20/order, TTL, ownership, source-review and offline container gates apply.
    - `weights`: a list of `{"repo":"org/name","revision":"<40-hex commit>","dir":"<short safe name>",
      "sha256":{"<file>":"<64 hex>"}}`. The revision must equal the host's model fetch receipt. List the
      sha256 of every weight file (`*.safetensors`). These hashes are the LFS oids in the fetched model
