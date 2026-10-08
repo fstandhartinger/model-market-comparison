@@ -63,7 +63,7 @@ test('caption follows interim and final L3 data and has no stale missing-API cla
   assert.match(languagePoolNote(final.language_cells), /at least 60 items/);
   const board = readFileSync(new URL('../components/JevBenchV16Board.tsx', import.meta.url), 'utf8');
   assert.doesNotMatch(board, /not in this view yet/);
-  assert.match(board, /jevLanguageRows\(a.systems, scope\)/);
+  assert.match(board, /jevLanguageRows\(languageRoster\(/);
   assert.match(board, /data-bh-jev16-cell-coverage/);
 });
 

@@ -1,0 +1,2 @@
+export type LanguageRosterMetadata = { key: string; display: string; listing?: string; ranked?: boolean; rank?: number | null; v16: { lane: string }; language_listing?: string; language_listing_note?: string };
+export function languageRoster<T extends LanguageRosterMetadata>(active: T[], notMeasured?: any[], carry?: any[], cells?: Record<string, any>, isApi?: (row: any) => boolean, scope?: string): Array<(T & { language_listing_note?: string }) | LanguageRosterMetadata>;
