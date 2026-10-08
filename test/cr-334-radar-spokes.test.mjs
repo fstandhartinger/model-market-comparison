@@ -55,7 +55,7 @@ test('S-based rows take the new source including d1; API rows retain their own o
 test('page shows exception reasons by row and compare; final language method is complete and data-driven', () => {
   for (const f of ['components/JevCompareV15.tsx','components/JevV15AllDataGrid.tsx','components/JevBenchV16Board.tsx']) assert.match(readFileSync(new URL(`../${f}`,import.meta.url),'utf8'),/data-bh-radar-spoke-exception/);
   const note = languagePoolNote({pools:{S:1200,P:300,A4:300,A5:300,L1:354,L2:33,L3:999},drawn:'2026-10-07',min_api_basis:60});
-  for (const pattern of [/L3 \(999 items\)/,/at least 60 items/,/drawn 2026-10-07/,/Claude Sonnet 5.5/,/solved blind/,/GPT-6.1 Sol/,/second review/,/no gold comes from Jev or any measured API/,/every hosted API row/,/never reused in a headline draw/,/C1 adds English/,/Headline scores are unchanged/]) assert.match(note,pattern);
+  for (const pattern of [/L3 \(999 items\)/,/at least 60 items/,/drawn 2026-10-07/,/Claude Sonnet 5.5/,/solved blind/,/GPT-6.1 Sol/,/second review/,/no gold comes from Jev or any measured API/,/API-facing by design/,/excluded from future headline draws/,/unfinished runs retain their actual coverage tags/,/C1 adds English/,/Headline scores are unchanged/]) assert.match(note,pattern);
 });
 
 test('new S category source is aggregate-only and excludes private systems', () => {
