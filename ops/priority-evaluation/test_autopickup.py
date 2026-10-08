@@ -1048,6 +1048,92 @@ class AgentToolBoundaryTests(unittest.TestCase):
             shutil.rmtree(job_dir.parent, ignore_errors=True)
 
 
+    @unittest.skipUnless(Path("/usr/bin/bwrap").is_file(), "bubblewrap is required")
+    def test_oversized_preparation_falls_back_only_to_measured_bounded_claude(self):
+        rid = str(uuid.uuid4())
+        job = ap.JOB_ROOT / rid / "runner-prepare"
+        job.mkdir(parents=True)
+        (job / "PROMPT.md").write_text("prepare runner")
+        commands = []
+        def quota(command, **kwargs):
+            commands.append(command)
+            answer = "codex" if command[1] == "pick" and command[-1] != "claude" else "claude"
+            return subprocess.CompletedProcess(command, 0, stdout=answer, stderr="")
+        process = mock.Mock(returncode=0)
+        try:
+            with mock.patch.object(ap.static_agent, "packet", side_effect=ap.static_agent.CapacityHold(
+                    "static_source_packet_exceeds_review_capacity")), \
+                    mock.patch.object(ap, "sandbox_agent_command", return_value=(["/usr/bin/bwrap", "--"], [])), \
+                    mock.patch.object(ap.subprocess, "run", side_effect=quota), \
+                    mock.patch.object(ap.subprocess, "Popen", return_value=process) as popen:
+                self.assertEqual(ap.run_agent(job, {"FASTLANE_REQUEST_ID": rid}, 60, file_authoring=True), 0)
+            self.assertEqual([c for c in commands if c[1] == "allow"][0][2], "claude")
+            self.assertIn([str(ap.HOME / "bin/quota-pace"), "pick", "--kind", "judgement", "--order", "claude"], commands)
+            command = popen.call_args.args[0]
+            self.assertEqual(command[command.index("--tools") + 1], "Read,Glob,Grep,Write")
+            self.assertNotIn("--dangerously-skip-permissions", command)
+            self.assertEqual(json.loads((job / ".capacity-route.json").read_text())["reason"],
+                             "static_source_packet_exceeds_review_capacity")
+        finally:
+            shutil.rmtree(job.parent, ignore_errors=True)
+
+    @unittest.skipUnless(Path("/usr/bin/bwrap").is_file(), "bubblewrap is required")
+    def test_small_packet_stays_codex_and_claude_fallback_admission_can_refuse(self):
+        for oversized in (False, True):
+            with self.subTest(oversized=oversized):
+                rid = str(uuid.uuid4())
+                job = ap.JOB_ROOT / rid / "runner-prepare"
+                job.mkdir(parents=True)
+                (job / "PROMPT.md").write_text("prepare runner")
+                def quota(command, **kwargs):
+                    if oversized and command[1] == "allow":
+                        return subprocess.CompletedProcess(command, 1, stdout="denied", stderr="")
+                    answer = "claude" if command[1] == "pick" and command[-1] == "claude" else "codex"
+                    return subprocess.CompletedProcess(command, 0, stdout=answer, stderr="")
+                try:
+                    with mock.patch.object(ap.static_agent, "packet", return_value="small static packet",
+                            side_effect=ap.static_agent.CapacityHold("static_source_packet_exceeds_review_capacity")
+                            if oversized else None), \
+                            mock.patch.object(ap.static_agent, "materialize"), \
+                            mock.patch.object(ap, "sandbox_agent_command", return_value=(["/usr/bin/bwrap", "--"], [])), \
+                            mock.patch.object(ap.subprocess, "run", side_effect=quota), \
+                            mock.patch.object(ap.subprocess, "Popen", return_value=mock.Mock(returncode=0)) as popen:
+                        if oversized:
+                            with self.assertRaisesRegex(ap.static_agent.CapacityHold, "no longer eligible"):
+                                ap.run_agent(job, {"FASTLANE_REQUEST_ID": rid}, 60, file_authoring=True)
+                            popen.assert_not_called()
+                        else:
+                            self.assertEqual(ap.run_agent(job, {"FASTLANE_REQUEST_ID": rid}, 60, file_authoring=True), 0)
+                            self.assertIn("/home/flori/.local/bin/codex", popen.call_args.args[0])
+                            self.assertFalse((job / ".capacity-route.json").exists())
+                finally:
+                    shutil.rmtree(job.parent, ignore_errors=True)
+
+    @unittest.skipUnless(Path("/usr/bin/bwrap").is_file(), "bubblewrap is required")
+    def test_oversized_fallback_preserves_other_holds_and_unavailable_capacity(self):
+        for reason, fallback in (("static_source_packet_has_unreviewable_binary", "claude"),
+                                 ("public_method_source_pin_changed", "claude"),
+                                 ("static_source_packet_exceeds_review_capacity", "none")):
+            with self.subTest(reason=reason):
+                rid = str(uuid.uuid4())
+                job = ap.JOB_ROOT / rid / "runner-prepare"
+                job.mkdir(parents=True)
+                (job / "PROMPT.md").write_text("prepare runner")
+                def quota(command, **kwargs):
+                    answer = fallback if command[1] == "pick" and command[-1] == "claude" else "codex"
+                    return subprocess.CompletedProcess(command, 0, stdout=answer, stderr="")
+                try:
+                    with mock.patch.object(ap.static_agent, "packet", side_effect=ap.static_agent.CapacityHold(reason)), \
+                            mock.patch.object(ap.subprocess, "run", side_effect=quota) as run, \
+                            mock.patch.object(ap.subprocess, "Popen") as popen, \
+                            self.assertRaisesRegex(ap.static_agent.CapacityHold, reason):
+                        ap.run_agent(job, {"FASTLANE_REQUEST_ID": rid}, 60, file_authoring=True)
+                    popen.assert_not_called()
+                    self.assertFalse(any(c.args[0][1] == "allow" for c in run.call_args_list))
+                finally:
+                    shutil.rmtree(job.parent, ignore_errors=True)
+
+
 class EvaluateTests(DatabaseTestCase):
     def test_capacity_hold_does_not_consume_preparation_or_customer_sla(self):
         rid=insert_order();fx=FakeEffects();ap.cycle(fx)
