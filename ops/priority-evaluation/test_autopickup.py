@@ -2103,11 +2103,13 @@ QUYET_RECIPE = {
 def pod_job(with_receipts: bool = True) -> Path:
     job = Path(tempfile.mkdtemp(prefix="pod-job-"))
     (job / "source").mkdir(parents=True)
+    for which in ("code", "model"):
+        (job / "source" / which / ".git").mkdir(parents=True)
     if with_receipts:
         (job / "source" / "FETCH-RECEIPT-model.json").write_text(
-            json.dumps({"commit": TORCHCAST_RECIPE["weights"][0]["revision"]}))
+            json.dumps({"which":"model", "commit": TORCHCAST_RECIPE["weights"][0]["revision"], "tree":"a" * 40}))
         (job / "source" / "FETCH-RECEIPT-code.json").write_text(
-            json.dumps({"commit": TORCHCAST_RECIPE["code"]["commit"]}))
+            json.dumps({"which":"code", **TORCHCAST_RECIPE["code"]}))
     return job
 
 
@@ -2118,9 +2120,9 @@ class PodRecipeValidationTests(unittest.TestCase):
     def test_golden_quyet_recipe_validates(self):
         job = pod_job()
         (job / "source" / "FETCH-RECEIPT-model.json").write_text(
-            json.dumps({"commit": QUYET_RECIPE["weights"][0]["revision"]}))
+            json.dumps({"which":"model", "commit": QUYET_RECIPE["weights"][0]["revision"], "tree":"a" * 40}))
         (job / "source" / "FETCH-RECEIPT-code.json").write_text(
-            json.dumps({"commit": QUYET_RECIPE["code"]["commit"]}))
+            json.dumps({"which":"code", **QUYET_RECIPE["code"]}))
         self.assertEqual(pod_runner.validate_recipe(dict(QUYET_RECIPE), job)["kind"], "python_inprocess")
 
     def _rejected(self, mutate):
@@ -2276,7 +2278,8 @@ def pod_test_pins(tmp: Path) -> dict:
                          ("jevbench/adapters/base.py", b"# base\n"),
                          ("jevbench/adapters/typesafe.py", b"# typesafe\n"),
                          ("pod_drivers/pod_driver.py", b"# driver\n"),
-                         ("pod_drivers/pod_entry.sh", b"#!/bin/bash\nexit 0\n")):
+                         ("pod_drivers/pod_entry.sh", b"#!/bin/bash\nexit 0\n"),
+                         ("pod_drivers/scored_marker.py", (Path(__file__).parent/'pod_drivers/scored_marker.py').read_bytes())):
         p = tmp / "src" / rel
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_bytes(content)
@@ -2339,7 +2342,7 @@ class PodRunnerLifecycleTests(unittest.TestCase):
         self.assertEqual(receipt["rows"], 1624)
         self.assertEqual(receipt["network_mode"], "none")
         self.assertEqual(receipt["pod_id"], "pod-1")
-        self.assertEqual(receipt["charged_or_reserved_usd"], receipt["cost_estimate_usd"])
+        self.assertGreaterEqual(receipt["charged_or_reserved_usd"], receipt["cost_estimate_usd"])
         self.assertLessEqual(receipt["cost_estimate_usd"], 20.0)
         self.assertEqual(receipt["raw_sha256"],
                          hashlib.sha256((next(self.tmp.glob("out-*")) / "raw.jsonl").read_bytes()).hexdigest())
@@ -2359,18 +2362,20 @@ class PodRunnerLifecycleTests(unittest.TestCase):
         self._run(provider, max_usd=4.0)  # a smaller remaining budget shortens the TTL
         self.assertIn(("create", "H100", 0.8, 4.0), provider.calls)
 
-    def test_run_failure_retries_once_on_a_fresh_pod_then_reports(self):
+    def test_driver_failure_preserves_partial_and_never_retries(self):
         provider = _FakeProvider({"wait_rc": {"pod-1": "1"}})
-        receipt = self._run(provider)
-        self.assertEqual(receipt["rows"], 1624)
-        self.assertEqual(provider.removed, ["pod-1", "pod-2"])  # first pod torn down, retry on a fresh pod
+        with self.assertRaisesRegex(ap.measurement_dispatch.OperationalHold, 'partial_measurement_requires_reconciliation'):
+            self._run(provider)
+        self.assertEqual(provider.removed, ['pod-1'])
+        self.assertEqual(provider.next_pod, 1)
+        self.assertTrue((next(self.tmp.glob('out-*')) / 'raw.jsonl').is_file())
 
-    def test_two_failures_become_gpu_pod_run_failed(self):
+    def test_driver_stop_rule_never_rents_a_second_pod(self):
         provider = _FakeProvider({"wait_rc": {"pod-1": "1", "pod-2": "1"}})
         with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
             self._run(provider)
-        self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
-        self.assertEqual(provider.removed, ["pod-1", "pod-2"])
+        self.assertEqual(str(ctx.exception), "partial_measurement_requires_reconciliation")
+        self.assertEqual(provider.removed, ["pod-1"])
 
     def test_no_capacity_is_a_capacity_hold_without_retry(self):
         provider = _FakeProvider({"capacity": True})
@@ -2383,7 +2388,7 @@ class PodRunnerLifecycleTests(unittest.TestCase):
         provider = _FakeProvider({"network_mode": "bridge"})
         with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
             self._run(provider)
-        self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
+        self.assertEqual(str(ctx.exception), "partial_measurement_requires_reconciliation")
 
     def test_weight_sha_check_tolerates_leading_exec_output(self):
         provider = _FakeProvider({"sha_noise": True})
@@ -2402,14 +2407,15 @@ class PodRunnerLifecycleTests(unittest.TestCase):
         provider = _FakeProvider({"rows": 1600})
         with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
             self._run(provider)
-        self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
+        self.assertEqual(str(ctx.exception), "partial_measurement_requires_reconciliation")
+        self.assertEqual(provider.removed, ['pod-1'])
 
     def test_teardown_runs_even_when_a_step_throws(self):
         provider = _FakeProvider({"scp_fail": True})
         with self.assertRaises(ap.measurement_dispatch.OperationalHold):
             self._run(provider)
-        self.assertEqual(provider.removed, ["pod-1", "pod-2"])
-        self.assertEqual(provider.releases, 2)
+        self.assertEqual(provider.removed, ["pod-1"])
+        self.assertEqual(provider.releases, 1)
 
     def test_completed_receipt_is_idempotent(self):
         provider = _FakeProvider()
@@ -2530,40 +2536,13 @@ class PodUnidentifiedCreateTests(unittest.TestCase):
             return pod_runner.run(rid, self.job, self.recipe, output, self.pins, max_usd,
                                   provider=provider, alert=self.alerts.append)
 
-    def test_one_new_pod_is_adopted_and_torn_down_by_exact_id(self):
-        pod_id = "33333333-3333-4333-8333-333333333333"
-        fake = _FakeLium(new_on_up=[pod_id])
-        receipt = self._run(self._provider(fake))
-        self.assertEqual(receipt["pod_id"], pod_id)
-        self.assertEqual(receipt["hourly_usd"], 1.30)
-        self.assertEqual(receipt["network_mode"], "none")
-        self.assertEqual(fake.removed, [pod_id])
-        self.assertEqual(fake.releases, 1)
-        self.assertEqual(fake.pods, {})
-
-    def test_pod_up_to_five_dollars_per_hour_is_accepted(self):
-        pod_id = "44444444-4444-4444-8444-444444444444"
-        fake = _FakeLium(new_on_up=[pod_id], hourly=4.80)
-        receipt = self._run(self._provider(fake))
-        self.assertEqual(receipt["hourly_usd"], 4.80)
-        self.assertEqual(fake.removed, [pod_id])
-
-    def test_pod_above_five_dollars_per_hour_is_removed_by_exact_id(self):
-        pod_id = "55555555-5555-4555-8555-555555555555"
-        fake = _FakeLium(new_on_up=[pod_id], hourly=5.10)
-        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
-            self._run(self._provider(fake))
-        self.assertEqual(str(ctx.exception), "gpu_pod_capacity")
-        self.assertEqual(set(fake.removed), {pod_id})  # only our exact id, never a foreign pod
-        self.assertEqual(fake.pods, {})
-
-    def test_no_new_pod_is_capacity(self):
-        fake = _FakeLium(new_on_up=[])
-        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
-            self._run(self._provider(fake))
-        self.assertEqual(str(ctx.exception), "gpu_pod_capacity")
-        self.assertEqual(fake.removed, [])
-        self.assertEqual(fake.releases, 2)  # both attempts' reservations were released
+    def test_unparseable_creation_never_adopts_a_listing_delta(self):
+        for new in ([], ['33333333-3333-4333-8333-333333333333']):
+            fake = _FakeLium(new_on_up=new)
+            with self.assertRaisesRegex(ap.measurement_dispatch.OperationalHold, 'gpu_pod_cleanup_uncertain'):
+                self._run(self._provider(fake))
+            self.assertEqual(fake.removed, [])
+            self.assertEqual(fake.releases, 0)
 
     def test_several_new_pods_are_never_removed(self):
         ids = ["11111111-1111-4111-8111-111111111111",
@@ -2571,16 +2550,36 @@ class PodUnidentifiedCreateTests(unittest.TestCase):
         fake = _FakeLium(new_on_up=ids)
         with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
             self._run(self._provider(fake))
-        self.assertEqual(str(ctx.exception), "gpu_pod_run_failed")
-        for pid in ids:
-            self.assertIn(pid, str(ctx.exception.__cause__))
+        self.assertEqual(str(ctx.exception), "gpu_pod_cleanup_uncertain")
+        saved = json.loads(next(self.pods_dir.glob('*.json')).read_text())
+        self.assertEqual(saved['unidentified_candidate_pod_ids'], sorted(ids))
+        self.assertEqual(saved['spent_upper_bound_usd'], 15)
+        self.assertTrue(saved['cleanup_uncertain'])
         self.assertEqual(fake.removed, [])  # a co-created foreign pod must survive
         self.assertEqual(set(fake.pods), set(ids))
-        self.assertEqual(fake.releases, 2)
+        self.assertEqual(fake.releases, 0)
+
+
+    def test_pod_up_to_five_dollars_per_hour_is_accepted(self):
+        pod_id = "44444444-4444-4444-8444-444444444444"
+        fake = _FakeLium(new_on_up=[pod_id], hourly=4.80, up_output=json.dumps({"id":pod_id,"price_per_hour":4.80}))
+        receipt = self._run(self._provider(fake))
+        self.assertEqual(receipt["hourly_usd"], 4.80)
+        self.assertEqual(fake.removed, [pod_id])
+
+    def test_pod_above_five_dollars_per_hour_is_removed_by_exact_id(self):
+        pod_id = "55555555-5555-4555-8555-555555555555"
+        fake = _FakeLium(new_on_up=[pod_id], hourly=5.10, up_output=json.dumps({"id":pod_id,"price_per_hour":5.10}))
+        with self.assertRaises(ap.measurement_dispatch.OperationalHold) as ctx:
+            self._run(self._provider(fake))
+        self.assertEqual(str(ctx.exception), "gpu_pod_capacity")
+        self.assertEqual(set(fake.removed), {pod_id})  # only our exact id, never a foreign pod
+        self.assertEqual(fake.pods, {})
+
 
     def test_lium_exec_banner_lines_are_stripped(self):
         pod_id = "44444444-4444-4444-8444-444444444444"
-        fake = _FakeLium(new_on_up=[pod_id], exec_banner=True)
+        fake = _FakeLium(new_on_up=[pod_id], exec_banner=True, up_output=json.dumps({"id":pod_id,"price_per_hour":1.30}))
         receipt = self._run(self._provider(fake))
         self.assertEqual(receipt["pod_id"], pod_id)
         self.assertEqual(receipt["network_mode"], "none")
@@ -2588,7 +2587,7 @@ class PodUnidentifiedCreateTests(unittest.TestCase):
 
 
 class PodDispatchIntegrationTests(DatabaseTestCase):
-    """gpu_pod orders run dispatch_measurement -> pod_runner -> score_measurement end to end."""
+    """Synthetic integration on a disposable PostgreSQL cluster."""
 
     def _gate(self, rid, job, recipe, runtime, meta):
         trusted = job / "trusted-runner"

@@ -48,9 +48,9 @@ def pins():
 
 
 def runtime_spec(value, benchmark):
-    if not isinstance(value, dict) or set(value) - {'backend', 'model', 'endpoint', 'credential', 'reasoning', 'price_input_per_m', 'price_output_per_m'}:
+    if not isinstance(value, dict) or set(value) - {'backend', 'model', 'endpoint', 'credential', 'reasoning', 'price_input_per_m', 'price_output_per_m', 'gpu_usd_h'}:
         raise OperationalHold('unsupported_measurement_runtime')
-    if value.get('backend') not in ('typesafe', 'openrouter', 'gpu_pod') or (benchmark == 'imagejevbench' and value['backend'] != 'openrouter'):
+    if value.get('backend') not in ('typesafe', 'openrouter', 'gpu_pod') or (benchmark == 'imagejevbench' and value['backend'] not in ('openrouter', 'gpu_pod')):
         raise OperationalHold('unsupported_measurement_backend')
     if not isinstance(value.get('model'), str) or not re.fullmatch(r'[A-Za-z0-9_.:/-]{1,160}', value['model']):
         raise OperationalHold('unsupported_measurement_model')
@@ -64,6 +64,10 @@ def runtime_spec(value, benchmark):
         # the customer named — the pod recipe provides the loopback endpoint instead.
         if credential != 'none' or value.get('endpoint') is not None:
             raise OperationalHold('unsupported_gpu_pod_route')
+        if benchmark == 'imagejevbench':
+            rate = value.get('gpu_usd_h')
+            if isinstance(rate, bool) or not isinstance(rate, (int, float)) or not math.isfinite(rate) or not 0 < rate <= 5:
+                raise OperationalHold('unsupported_gpu_pod_route')
     elif value['backend'] == 'openrouter':
         if value.get('endpoint', 'https://openrouter.ai/api/v1') != 'https://openrouter.ai/api/v1' or credential != 'openrouter':
             raise OperationalHold('unsupported_openrouter_route')
@@ -83,7 +87,8 @@ def validate_api_meta(benchmark, meta, runtime):
     official_scoring.validate_meta(benchmark, meta)
     system = meta['system']
     if benchmark == 'imagejevbench':
-        if system != {'kind': 'api'}:
+        expected = {'kind': 'local', 'gpu_usd_h': runtime['gpu_usd_h']} if runtime['backend'] == 'gpu_pod' else {'kind': 'api'}
+        if system != expected:
             raise ValueError('Image API metadata cannot override GPU or receipt pricing')
         return
     allowed = {'support', 'endpoint_kind', 'price_in_per_m', 'price_out_per_m', 'price_kind', 'cost_basis'}

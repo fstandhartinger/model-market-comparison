@@ -24,13 +24,17 @@ def module(name, path):
 
 
 def inprocess_runner(recipe, base):
-    for p in recipe['pythonpath']:
-        if not p.startswith('/code'):
-            raise ValueError('pythonpath outside /code')
-        sys.path.insert(0, p)
-    mod_name, fn_name = recipe['loader'].split(':')
-    loader = getattr(importlib.import_module(mod_name), fn_name)
-    model = loader('/models/' + recipe['model_dir'], **recipe.get('load_kwargs', {}))
+    if recipe['kind'] == 'aplomb_native':
+        from aplomb_loader import load
+        model = load('/models/' + recipe['model_dir'])
+    else:
+        for p in recipe['pythonpath']:
+            if not (p == '/code' or p.startswith('/code/')) or '..' in Path(p).parts:
+                raise ValueError('pythonpath outside /code')
+            sys.path.insert(0, p)
+        mod_name, fn_name = recipe['loader'].split(':')
+        loader = getattr(importlib.import_module(mod_name), fn_name)
+        model = loader('/models/' + recipe['model_dir'], **recipe.get('load_kwargs', {}))
 
     def run(task):
         res = base.DecisionResult(adapter='pod_inprocess', ok=False, probs_source='native', model=recipe['model'])
@@ -38,8 +42,8 @@ def inprocess_runner(recipe, base):
         try:
             out = model.predict(task.state, {'decision': base.build_question(task)})
         except Exception as e:  # noqa: BLE001
-            res.status = 422 if type(e).__name__ == 'QuestionError' else 500
-            res.error = f'{type(e).__name__}: {str(e)[:200]}'
+            res.status = 422 if type(e).__name__ in ('QuestionError', 'RequestError') else 500
+            res.error = 'provider_or_format_error'
             return res
         res.latency_s, res.status = time.perf_counter() - t0, 200
         try:
@@ -63,10 +67,13 @@ def inprocess_runner(recipe, base):
             return res
         res.ok = True
         return res
+    run.model = model
     return run
 
 
 def main():
+    from scored_marker import ScoredDispatchMarker
+    marker = ScoredDispatchMarker(Path('/output'))
     recipe = json.loads(Path('/input/recipe.json').read_text())
     sys.path.insert(0, '/harness')
     text_driver = module('official_text_driver', '/harness/run_v15.py')
@@ -76,17 +83,21 @@ def main():
         if not recipe['endpoint'].startswith('http://127.0.0.1:'):
             raise ValueError('endpoint must be loopback')
         run = TypeSafeAdapter(endpoint=recipe['endpoint'], model=recipe['model'], key_env=None).run
-    elif recipe['kind'] == 'python_inprocess':
+    elif recipe['kind'] in ('python_inprocess', 'aplomb_native'):
         run = inprocess_runner(recipe, base)
     else:
         raise ValueError('unknown recipe kind')
+    run_text(run, text_driver, Path('/inputs/text/items.jsonl'), Path('/output'), COUNT, marker)
+
+
+def run_text(run, text_driver, input_path, output_dir, count, before_scored_dispatch=None):
     inputs = []
-    for line in Path('/inputs/text/items.jsonl').read_text().splitlines():
+    for line in input_path.read_text().splitlines():
         task = json.loads(line)
         if set(task) != {'task_id', 'state', 'question', 'labels'}:
             raise ValueError('label-free input schema changed')
         inputs.append(task)
-    if len(inputs) != COUNT:
+    if len(inputs) != count or len({row['task_id'] for row in inputs}) != count:
         raise ValueError('input count mismatch')
     warm = text_driver.ModelTask('warm-up', {'type': 'noul', 'instructions': 'Is this a warm-up?',
                                              'criteria': {'true': 'yes', 'false': 'no'}}, ['no', 'yes'])
@@ -96,13 +107,18 @@ def main():
         time.sleep(5)
     else:
         raise ValueError('warm-up failed')
-    out = Path('/output/raw.jsonl')
+    output_dir.mkdir(parents=True, exist_ok=True)
+    if before_scored_dispatch is None:
+        from scored_marker import ScoredDispatchMarker
+        before_scored_dispatch = ScoredDispatchMarker(output_dir)
+    out = output_dir / 'raw.jsonl'
     if out.exists():
         raise ValueError('raw output already exists')
     consecutive, t0 = 0, time.time()
     with out.open('x') as stream:
         for i, task in enumerate(inputs, 1):
             model_task = text_driver.ModelTask(task['state'], task['question'], task['labels'])
+            before_scored_dispatch()
             started = time.perf_counter()
             answer = run(model_task)
             row = text_driver.record(task['task_id'], answer, time.perf_counter() - started)
@@ -114,8 +130,8 @@ def main():
             if status in (401, 402, 403, 429) or consecutive >= 3:
                 raise ValueError('official stop rule')
             if i % 200 == 0:
-                print(f'PROGRESS {i}/{COUNT} elapsed_s={time.time() - t0:.0f}', flush=True)
-    Path('/output/receipt.json').write_text(json.dumps({'rows': len(inputs), 'elapsed_s': time.time() - t0}))
+                print(f'PROGRESS {i}/{count} elapsed_s={time.time() - t0:.0f}', flush=True)
+    (output_dir / 'receipt.json').write_text(json.dumps({'rows': len(inputs), 'elapsed_s': time.time() - t0}))
     print('DRIVER_DONE', flush=True)
 
 

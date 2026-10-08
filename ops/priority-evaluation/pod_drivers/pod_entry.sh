@@ -4,7 +4,11 @@
 set -u
 export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 HF_TOKEN= OPENAI_API_KEY= VLLM_NO_USAGE_STATS=1 DO_NOT_TRACK=1 HOME=/tmp
 bash /input/services.sh || { echo SERVICES_FAILED; exit 2; }
-python3 /driver/pod_driver.py
+if [ -f /input/run-config.json ]; then
+  python3 /driver/pod_order_driver.py
+else
+  python3 /driver/pod_driver.py
+fi
 RC=$?
 echo DRIVER_RC=$RC
 exit $RC
