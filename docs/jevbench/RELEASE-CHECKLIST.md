@@ -49,6 +49,13 @@ Release-specific additions (for v1.5: the official headline order with bootstrap
 - Slider presets must include every published `views` entry so readers can reproduce the artifact's alternative rankings.
 - Rows new to the release are marked by diffing against the exact previous release's keys.
 
+## Use-case discrimination review (CR-339)
+
+- Attach `node scripts/check-jevbench-usecase-release.mjs --json` to the release PR; use `--check` to stop automation when review is required.
+- Review displayed spokes where every actually ranked eligible model is <10 or best-minus-median is <5 (strict boundaries), across both live boards with duplicate keys counted once. Resolve missing/low-sample coverage separately; missing cells are never zero.
+- Record the review of each flagged spoke and any coverage gap before publishing. This report changes no scores, ranks or pools. Shipped category values have final clipping 0..100; do not infer negative cells from clipped aggregates.
+- Method, scope and interpretation: [Use-case release review](METHOD-USECASE-RELEASE-REVIEW.md). Run `node --test test/cr-339-usecase-release-review.test.mjs`.
+
 ## Required verification before a release PR
 
 - `node --test test/cr-205-jev-page-structure.test.mjs` must pass — it pins the section list and order on `/jev-models` and every versioned page, verifies the release artifact feeds each section, and fails when a new version route is not registered in it.
