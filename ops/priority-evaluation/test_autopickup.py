@@ -981,6 +981,7 @@ class AgentToolBoundaryTests(unittest.TestCase):
         rid = str(uuid.uuid4())
         args = ap.claude_file_access_args(rid)
         self.assertEqual(args[0], '--settings')
+        self.assertEqual(args[2:], ['--setting-sources', 'user', '--strict-mcp-config', '--mcp-config', '{"mcpServers":{}}'])
         permissions = json.loads(args[1])['permissions']
         request_root = f'/home/flori/jobs/fastlane-evaluations/{rid}'
         self.assertEqual(permissions['additionalDirectories'], [request_root, '/home/flori/official'])
@@ -999,6 +1000,8 @@ class AgentToolBoundaryTests(unittest.TestCase):
             self.assertIn(request_root + '/source/', prep)
             self.assertIn('`../source/`', prep)
             self.assertIn('preparation outputs belong to this directory', prep)
+            self.assertIn(request_root + '/runner-prepare/trusted-runner/', prep)
+            self.assertNotIn('`runner-prepare/trusted-runner/`', prep)
             with mock.patch.object(ap, 'source_review_pins', return_value={'fixture': True}):
                 ap.write_review_prompt(order, job)
             review = (job / 'review/PROMPT.md').read_text()
