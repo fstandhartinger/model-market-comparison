@@ -1,0 +1,22 @@
+[
+  {
+    "id": "aa-critpt::snapshot-2026-09-10",
+    "version": "snapshot-2026-09-10",
+    "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+    "status": "active",
+    "version_status": "snapshot",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Official grading server correctness, pass@1 averaged over five repeats",
+      "unit": "fraction",
+      "range": [
+        0,
+        1
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. Keep raw units; do not normalize before phase-05 validation."
+    },
+    "description": "Tests research-level physics reasoning with Python, symbolic and numerical answers.",
+    "maintainer": "Artificial Analysis"
+  }
+]
