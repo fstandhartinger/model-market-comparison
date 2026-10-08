@@ -28,7 +28,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   else {
     console.log(`${report.revision}: ${report.eligibleKeys.length} distinct ranked eligible models (open ${report.boards.open.length}, API ${report.boards.api.length})`);
     const number = (n) => n == null ? 'missing' : Number(n.toFixed(3));
-    for (const c of report.categories) console.log(`${c.reviewRequired ? 'REVIEW' : 'OK'} ${c.key}: coverage ${c.measured}/${c.eligible}; best ${number(c.best)}; median ${number(c.median)}; best-minus-median ${number(c.bestMinusMedian)}; ${[...c.flags, ...c.coverageIssues].join(', ')}`);
+    for (const c of report.categories) console.log(`${c.reviewRequired ? 'REVIEW' : 'OK'} ${c.key}: coverage ${c.measured}/${c.eligible}; best ${number(c.best)}; median ${number(c.median)}; best-minus-median ${number(c.bestMinusMedian)}; zeros ${c.diagnostics.zeroCount}/${c.measured}; ceiling>85 ${c.diagnostics.ceilingObserved}; ${[...c.flags, ...c.coverageIssues].join(', ')}`);
     console.log(report.methodNote);
   }
   // Report mode always emits findings. Check mode stops release automation pending review.

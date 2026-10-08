@@ -48,7 +48,7 @@ test('empty eligible cohort has null statistics and requires coverage review', (
   assert.deepEqual(c.coverageIssues, ['no_ranked_eligible_models']);
 });
 
-test('both boards contribute ranked eligible models once; wrappers/catalogue/outside caps excluded', () => {
+test('both boards contribute ranked eligible models once; wrappers/catalogue excluded; all ranked cost/latency classes retained', () => {
   const model = (key, extra = {}) => ({ key, display: key, ranked: true, listing: 'ranked',
     axes: { intelligence: 60, calibration: 70, speed: 90 },
     cost: { usd_per_1000: 0.01 }, speed: { p50_s_adjusted: 0.1 }, ...extra });
@@ -57,12 +57,13 @@ test('both boards contribute ranked eligible models once; wrappers/catalogue/out
     model('unmeasured', { ranked: false }), model('expensive', { cost: { usd_per_1000: 1 } }),
     model('slow', { speed: { p50_s_adjusted: 10 } })], not_measured: [model('catalogue')] },
   api: { systems: [api, open] } };
-  assert.deepEqual(rankedEligibleUsecaseKeys(boards), ['api', 'open']);
+  assert.deepEqual(rankedEligibleUsecaseKeys(boards), ['api', 'expensive', 'open', 'slow']);
 });
 
 test('live report uses shipped category values, covers both boards and never mutates scores', async () => {
   const report = await currentUsecaseReleaseReview();
   assert.ok(report.boards.open.length > 0 && report.boards.api.length > 0);
+  assert.deepEqual(report.categories.filter(c => c.flags.length).map(c => ({key:c.key,flags:c.flags})), [], 'Use-case threshold flag requires release review');
   assert.equal(report.eligibleKeys.length, new Set(Object.values(report.boards).flat()).size);
   const view = jevbenchCategoryView(report.revision, report.eligibleKeys, { supplement: true });
   const before = JSON.stringify(view);
@@ -76,4 +77,16 @@ test('live report uses shipped category values, covers both boards and never mut
   }
   usecaseReleaseReview(view, report.eligibleKeys);
   assert.equal(JSON.stringify(view), before);
+});
+
+test('live category metric explains clipped zeros and Score midpoint baseline', () => {
+ const v=jevbenchCategoryView('v1.6.1', ['jev-1.13.0'], {supplement:true});
+ assert.match(v.metric, /at or below/); assert.match(v.metric, /midpoint/);
+ const historical=jevbenchCategoryView('v1.6.1',['jev-1.13.0'], {supplement:false});
+ assert.notEqual(v.metric,historical.metric);
+});
+
+test('diagnostics expose a zero-heavy cohort even when requested thresholds do not trigger', () => {
+ const c=review([0,0,0,100]); assert.deepEqual(c.flags,[]);
+ assert.deepEqual(c.diagnostics,{zeroCount:3,zeroShare:0.75,ceilingObserved:true});
 });

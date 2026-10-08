@@ -5,12 +5,11 @@ and attach the report to the release PR. Run the same command with `--check`
 for a nonzero exit when review is required. Without `--check` it is a report,
 not a pass/fail assertion. The command reads only public repository aggregates.
 
-The cohort is the union of actually ranked, Jev-class eligible models on the
+The cohort is the union of actually ranked models on the
 current open-weights and API boards, deduplicated by system key. It uses the
-current release loader, live A4/A5 overlays, scoped ranking flags and the same
-frozen cost/median-latency caps as the boards. Unmeasured and catalogue rows,
-dated carry, preliminary rows, unranked references, wrappers and models outside
-the caps do not enter the cohort. No ranking, score, eligibility or pool changes
+current release loader, live A4/A5 overlays, scoped ranking flags. Ranked models outside the Capability cost/latency caps
+remain included because they are ranked on the other charts. Unmeasured and catalogue rows,
+dated carry, preliminary rows, unranked references, and wrappers do not enter the cohort. No ranking, score, eligibility or pool changes
 are made by this check. Update the loader with the route if a future release
 changes the live overlay wiring.
 
@@ -38,3 +37,7 @@ unclip the stored values, or treat a missing cell as clipped zero. Review flags
 should lead to a separate audit of labels, gold, scorer and task difficulty,
 with any corrective release independently reviewed. Scores and rankings remain
 unchanged while this report is produced.
+
+Future pools follow the prospective [acceptance requirements](FUTURE-USECASE-POOL-ACCEPTANCE.md). The live category metric now explicitly explains clipped zeros and the Score midpoint baseline; historical artifacts and all numerical results remain unchanged.
+
+The ordinary full test suite also checks the live threshold flags, so a newly flagged complete spoke fails the release gate for review. Incomplete coverage stays explicitly reported alongside the existing per-row spoke exceptions. Zero count/share and observed best >85 are diagnostics, not additional automatic threshold failures. Neither requested threshold alone detects a median of zero with a strong best model. Noul uses a fixed 50% accuracy baseline rather than the majority class; abstentions count as wrong. A clipped category zero refers to the equal-weight type mean, not to every type individually.
