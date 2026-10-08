@@ -29,7 +29,8 @@ test('1: every A4 row is added once with the lane figures unchanged; only the wr
 test('2: API board ranks follow scores in every option and in Capability', () => {
   const api = jevbenchScopeArtifact(merged, 'api', isApi);
   const ranked = api.systems.filter((s) => s.ranked);
-  assert.equal(ranked.length, 4 + [...a4.rows, ...(a4.a5_rows ?? []), ...(a4.full_rows ?? [])].filter((r) => (r.ranked ?? r.listing === 'ranked')).length);
+  // CR-338 adds Mercury Decide and both SPX-CD offerings to the seven already-ranked API rows.
+  assert.equal(ranked.length, 7 + [...a4.rows, ...(a4.a5_rows ?? []), ...(a4.full_rows ?? [])].filter((r) => (r.ranked ?? r.listing === 'ranked')).length);
   for (const o of ['A', 'B', 'C']) {
     const order = [...ranked].sort((x, y) => x.ranks[o] - y.ranks[o]);
     order.forEach((s, i) => { assert.equal(s.ranks[o], i + 1); if (i) assert.ok(order[i - 1].scores[o] >= s.scores[o], `${o}: ${order[i - 1].key} >= ${s.key}`); });

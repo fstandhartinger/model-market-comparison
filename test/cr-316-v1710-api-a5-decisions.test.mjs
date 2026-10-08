@@ -33,8 +33,8 @@ test('2: A4 rows keep the A4 round and offsets', () => {
   assert.deepEqual(inst.v16.equating_offset, a4.a4_offsets);
 });
 
-test('3: it is ranked #5 in API Composite A and never on the open-weights board', () => {
-  assert.equal(api.systems.find((s) => s.key === 'openai-decisions').ranks.A, 5);
+test('3: it is ranked #7 in API Composite A after CR-338 and never on the open-weights board', () => {
+  assert.equal(api.systems.find((s) => s.key === 'openai-decisions').ranks.A, 7);
   assert.ok(isApi(o[0]));
   assert.equal(open.systems.filter((s) => s.key === 'openai-decisions' && s.ranked).length, 0);
 });
