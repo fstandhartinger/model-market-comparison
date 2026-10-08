@@ -304,10 +304,10 @@ class LiumProvider(Provider):
                 if (recipe['kind'] == 'aplomb_native' or 'imagejevbench' in benchmarks) and quote['hourly_usd'] != recipe.get('hourly_usd'):
                     raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed')
                 self._placement = quote
-                return {'quote': quote, 'refusals': refusals}
+                return {'quote': quote, 'refusals': refusals, 'quote_count': len(refusals) + 1}
         except pod_capacity.CapacityEvidenceError as exc:
             raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed') from exc
-        return {'quote': None, 'refusals': refusals}
+        return {'quote': None, 'refusals': refusals, 'quote_count': len(refusals)}
 
     def create(self, gpu, ttl_hours, budget):
         before = self.ps_ids()
@@ -557,10 +557,11 @@ def _teardown(provider, job, pod_id, reservation, alert):
 
 
 def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, ttl, budget,
-               alert, save_state, benchmarks=('jevbench',)):
+               alert, save_state, benchmarks=('jevbench',), quote_budget=None):
     """One pod attempt; raises PodRunError on any step failure (teardown still runs)."""
     pod_id = None
     reservation = None
+    quote_budget = {'remaining': 2} if quote_budget is None else quote_budget
     try:
         attempts = state.get('creation_attempts', 0)
         try:
@@ -570,14 +571,24 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             recipe_binding = hashlib.sha256(json.dumps(
                 {'recipe': recipe, 'benchmarks': list(benchmarks)}, sort_keys=True).encode()).hexdigest()
             allow_two = state.get('two_gpu_placement_recipe_sha256') == recipe_binding
+            if quote_budget['remaining'] <= 0:
+                error = PodCapacityError('original per-run read-only quote budget exhausted')
+                error.read_only_preflight = True
+                raise error
             selection = provider.preflight(gpu_choice[0], recipe, benchmarks,
-                2, allow_two)
+                quote_budget['remaining'], allow_two)
             if selection is not None:
+                used = selection.get('quote_count', len(selection['refusals']) + (1 if selection['quote'] else 0))
+                if type(used) is not int or not 0 < used <= quote_budget['remaining']:
+                    raise pod_capacity.CapacityEvidenceError('read-only quote budget differs')
+                quote_budget['remaining'] -= used
                 for proof in selection['refusals']:
                     pod_capacity.store_refusal(state, PODS_DIR, proof)
                     save_state()
                 if selection['quote'] is None:
-                    raise measurement_dispatch.OperationalHold('gpu_pod_capacity')
+                    error = PodCapacityError('authenticated preflight proved no capacity')
+                    error.read_only_preflight = True
+                    raise error
                 state['placement_quote'] = selection['quote']
                 save_state()
         except pod_capacity.CapacityEvidenceError as exc:
@@ -886,6 +897,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
     save_state = lambda: _save_pod_state(state_path, state)
     try:
         run_error: Exception | None = None
+        quote_budget = {'remaining': 2}
         for attempt in range(2):
             gpu_choice = candidates[attempt % len(candidates)]
             run_spend = state.get('spent_upper_bound_usd', 0.0) - prior_spend
@@ -895,7 +907,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
             ttl = min(TTL_CAP_HOURS, remaining / MAX_HOURLY_USD)
             try:
                 state = _lifecycle(provider, job, recipe, staging_path, output, state,
-                                   gpu_choice, ttl, remaining, alert, save_state, benchmarks)
+                                   gpu_choice, ttl, remaining, alert, save_state, benchmarks, quote_budget)
                 break
             except PodCapacityError:
                 continue  # try the next GPU candidate; capacity only if every attempt was capacity

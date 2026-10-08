@@ -109,8 +109,34 @@ class CapacityTests(unittest.TestCase):
         proof=self.proof('read_only_preflight')
         provider.preflight=lambda *a:{'quote':None,'refusals':[proof]}
         self.state['creation_attempts']=0
-        with patch.object(pr,'PODS_DIR',self.root),self.assertRaisesRegex(pr.measurement_dispatch.OperationalHold,'gpu_pod_capacity'):
+        with patch.object(pr,'PODS_DIR',self.root),self.assertRaises(pr.PodCapacityError):
             pr._lifecycle(provider,'fixture',{},self.root/'stage',self.root/'out',self.state,('RTXPRO6000',96),3,18.75,None,lambda:None)
+        self.assertEqual(self.state['creation_attempts'],0)
+        self.assertEqual(self.state['spent_upper_bound_usd'],1.25)
+
+    def test_alternate_gpu_preflight_uses_one_shared_two_quote_budget(self):
+        provider=pr.LiumProvider();quotes=[];reservations=[]
+        def quote(gpu,count,*args):
+            quotes.append((gpu,count))
+            if gpu=='H100':return {**self.proof('read_only_preflight'),'refused':True}
+            return {'gpu':gpu,'gpu_count':1,'hourly_usd':1.3,'node_id':str(uuid.uuid4()),'quoted_at':datetime.now(timezone.utc).isoformat()}
+        def reserve(*args):
+            reservations.append(args)
+            raise RuntimeError('first-party stop before allocation')
+        provider.reserve=reserve
+        self.state['creation_attempts']=0
+        budget={'remaining':2}
+        with patch.object(pr,'PODS_DIR',self.root),patch.object(pc,'quote',side_effect=quote):
+            with self.assertRaises(pr.PodCapacityError) as refusal:
+                pr._lifecycle(provider,'fixture',{'kind':'http_typesafe','min_vram_gb':80},self.root/'stage',self.root/'out',self.state,('H100',80),3,18.75,None,lambda:None,quote_budget=budget)
+            self.assertTrue(refusal.exception.read_only_preflight)
+            self.assertEqual(budget['remaining'],1)
+            with self.assertRaisesRegex(RuntimeError,'stop'):
+                pr._lifecycle(provider,'fixture',{'kind':'http_typesafe','min_vram_gb':80},self.root/'stage',self.root/'out',self.state,('A100',80),3,18.75,None,lambda:None,quote_budget=budget)
+            with self.assertRaises(pr.PodCapacityError):
+                pr._lifecycle(provider,'fixture',{'kind':'http_typesafe','min_vram_gb':80},self.root/'stage',self.root/'out',self.state,('A100',80),3,18.75,None,lambda:None,quote_budget=budget)
+        self.assertEqual(quotes,[('H100',1),('A100',1)])
+        self.assertEqual(len(reservations),1)
         self.assertEqual(self.state['creation_attempts'],0)
         self.assertEqual(self.state['spent_upper_bound_usd'],1.25)
 
