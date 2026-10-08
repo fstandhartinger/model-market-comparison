@@ -1838,6 +1838,23 @@ def dispatch_measurement(rid: str, job_dir: Path) -> None:
             raise measurement_dispatch.OperationalHold("reviewed_runtime_metadata_invalid") from None
     records = state.setdefault("host_measurement", {})
     spent = sum(record.get("charged_or_reserved_usd", 0) for record in records.values())
+    gpu_names = tuple(name for name in row['benchmarks'] if runtimes[name]['backend'] == 'gpu_pod')
+    combined_records = None
+    recipe = load_json_file(job_dir / 'trusted-runner/POD-RECIPE.json', 100_000) if gpu_names else None
+    native = isinstance(recipe, dict) and recipe.get('kind') == 'aplomb_native'
+    if native or 'imagejevbench' in gpu_names:
+        import native_admission
+        recipe = load_json_file(job_dir / 'trusted-runner/POD-RECIPE.json', 100_000)
+        native_admission.validate_native_admission(job_dir, state, recipe, gpu_names, review['source_pins'])
+        rates = [runtimes[name].get('gpu_usd_h') for name in gpu_names]
+        if any(isinstance(rate, bool) or not isinstance(rate, (int, float))
+               or rate != recipe.get('hourly_usd') for rate in rates):
+            raise measurement_dispatch.OperationalHold('reviewed_runtime_metadata_invalid')
+        bundle = pod_runner.run(rid, job_dir, recipe, STATE_ROOT / 'measurements' / rid / 'gpu-order',
+                                review['source_pins']['official_measurement'],
+                                max(0, pod_runner.PER_ORDER_CAP_USD - spent), benchmarks=gpu_names,
+                                native_source_pins=review['source_pins'])
+        combined_records = bundle['benchmarks']
     for benchmark in row["benchmarks"]:
         runtime = runtimes[benchmark]
         credential = ""
@@ -1861,9 +1878,13 @@ def dispatch_measurement(rid: str, job_dir: Path) -> None:
                 raise measurement_dispatch.OperationalHold("request_endpoint_mismatch")
         output = STATE_ROOT / "measurements" / rid / benchmark
         if runtime["backend"] == "gpu_pod":
-            recipe = load_json_file(job_dir / "trusted-runner" / "POD-RECIPE.json", 100_000)
-            record = pod_runner.run(rid, job_dir, recipe, output, review["source_pins"]["official_measurement"],
-                                    max(0, pod_runner.PER_ORDER_CAP_USD - spent))
+            if combined_records is not None:
+                record = combined_records[benchmark]
+                output = STATE_ROOT / 'measurements' / rid / 'gpu-order' / benchmark
+            else:
+                recipe = load_json_file(job_dir / "trusted-runner" / "POD-RECIPE.json", 100_000)
+                record = pod_runner.run(rid, job_dir, recipe, output, review["source_pins"]["official_measurement"],
+                                        max(0, pod_runner.PER_ORDER_CAP_USD - spent))
         else:
             record = measurement_dispatch.run(benchmark, runtime, credential, output,
                                               review["source_pins"]["official_measurement"], max(0, API_ORDER_CAP_USD - spent))

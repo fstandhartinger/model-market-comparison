@@ -5,8 +5,11 @@ JevBench item to the model from inside a container that has no network, and the 
 scores the result on the host. Your job is to describe how to start the model. Write it as data only.
 
 1. In `RUNTIME.json`, write `{"backend":"gpu_pod","model":"<served model id>","credential":"none",
-   "price_input_per_m":X,"price_output_per_m":Y}` for `jevbench`. ImageJevBench on a GPU pod is not
-   supported yet. For it, write `{"backend":"unsupported"}` and explain why in PRICING-REVIEW.md.
+   "price_input_per_m":X,"price_output_per_m":Y}` for `jevbench`. For an independently reviewed
+   `aplomb_native` recipe, ImageJevBench can use the same offline pod, with `gpu_usd_h` equal to
+   an actual source-reviewed provider quote and recipe `hourly_usd`. The host requires the actual
+   pod rate to equal that quote, exact official custodian input admission and method acceptance;
+   metadata/source preparation is not that admission. Other GPU image recipes remain unsupported.
 2. In `MEASUREMENT-META.json`, use `"endpoint_kind":"gpu"`, `"price_kind":"estimate"` and the same two prices.
    Self-hosted weights have no bookable tariff, so apply the v1.5-M2 base-model reference rule:
    - Use the public OpenRouter list price of the exact base model.
@@ -35,7 +38,9 @@ scores the result on the host. Your job is to describe how to start the model. W
      (`.bin`/`.pt`/`.pkl`) and repositories that need `trust_remote_code` or contain `.py` files that the
      runtime would load are not supported. For those, write a blocker.
    - `code`: `{"commit":"<40 hex>","tree":"<40 hex>"}`, equal to the host's code fetch receipt.
-     The host exports exactly that tree to `/code`.
+     When executable source is in the model repository, add `"source":"model"` and bind exactly
+     to the real model fetch receipt. Never invent a code receipt or change the optional code link.
+     The host exports exactly the selected authenticated tree to `/code`.
    - For `http_typesafe`: `services`, a list of at most 3 entries
      `{"argv":["..."],"env":{"NAME":"value"},"ready_url":"http://127.0.0.1:<port>/<path>"}`, started in
      order. Each service must be ready before the next one starts.
@@ -47,6 +52,13 @@ scores the result on the host. Your job is to describe how to start the model. W
    - For `python_inprocess`: `pythonpath` (a list of paths below `/code`), `loader` (`"module:function"`,
      called as `loader("/models/<dir>", **load_kwargs)`), `model_dir` (one `dir` from `weights`) and
      `load_kwargs` (JSON scalars only, for example `{"device":"cuda"}`).
+   - `aplomb_native` selects only the fixed first-party documented-CLI loader. Use `source:model`,
+     `model_dir` and `model`; do not supply loader/pythonpath/load_kwargs/services/endpoint. It fixes
+     documented debias=True,batch=8, native configured temperatures/abstain bias, local offline
+     weights and no audio notes for text/image inputs. Exact encoded input usage is recorded;
+     no inference parameter or answer is chosen after outputs. Requires independent method review.
+     Gated weights require a separately reviewed host-only acquisition contract; the current
+     source helper never grants credentials to a remote pod. Emit that blocker until resolved.
    - One recipe measures exactly one system. If the order covers several systems, or does not identify
      exactly one model repository, do not pick one. Write a blocker naming the systems you found.
 4. Never put a secret, a token, a network URL other than 127.0.0.1, or an instruction to download
