@@ -15,7 +15,7 @@ function CategoryRadar({ row, artifact, dimension }: { row: HistoricalRow; artif
 export function JevHistoricalSupplement({ artifact, sha256 }: { artifact: HistoricalSupplement; sha256: string }) {
   return <section id="historical-measurements" className="mx-auto max-w-7xl px-4 py-10 sm:px-6" data-jevbench-historical-supplement>
     <h2 className="text-2xl font-bold">Additional historical measurements</h2>
-    <p className="mt-2 bh-muted">Measured 3–4 October 2026; published {artifact.published_on}. {artifact.measurement_basis}</p>
+    <p className="mt-2 bh-muted">Measured {artifact.measurement_period.from} through {artifact.measurement_period.to} (UTC); published {artifact.published_on}. {artifact.measurement_basis}</p>
     <p className="mt-2 bh-muted">{artifact.systems.length} complete measurements join this historical table. The frozen v1.5.7 ranking and its top five remain unchanged. Prices are estimates from the original frozen base-model references; latency includes the original self-hosted adjustment. Decision 2.0 Vega is the version measured in this pool.</p>
     <div className="mt-6 overflow-x-auto"><table className="w-full text-left text-sm"><caption className="sr-only">Historical model measurements, ordered by original composite A score</caption>
       <thead><tr>{['Model', 'Intelligence', 'Calibration', 'Capability', 'Speed', 'Cost axis', 'Composite A', 'USD / 1,000', 'Median seconds', 'Answers'].map(s => <th key={s} className="p-3">{s}</th>)}</tr></thead>
@@ -24,6 +24,10 @@ export function JevHistoricalSupplement({ artifact, sha256 }: { artifact: Histor
         <td className="p-3 tabular">{row.cost_usd_per_1000.toFixed(5)}</td><td className="p-3 tabular">{row.latency.p50_adj.toFixed(3)}</td><td className="p-3 tabular">{row.status.answered_ok}/{row.status.rows}</td></tr>)}</tbody></table></div>
     <p className="mt-4 text-sm bh-muted">Category radars use stored outcomes and the existing historical subject and use-case labels. {artifact.category_method} Samples below {artifact.category_min_n} remain gaps.</p>
     <div className="mt-5 space-y-3">{artifact.systems.map(row => <details key={row.key} id={`historical-${row.key}`} className="rounded-lg border border-line p-4"><summary className="cursor-pointer font-semibold">{row.name}: category radars and measurement details</summary>
+      <p className="mt-3 text-sm bh-muted">Measured {row.measured_on} (UTC) on {row.gpu}. Licence: {row.licence}. <a href={row.repo} className="underline">Model or runtime repository</a>.</p>
+      <p className="mt-2 break-words text-sm bh-muted">Measured revisions: <code>{row.model_revision}</code>.</p>
+      <p className="mt-2 text-sm bh-muted">{row.measurement_facts}</p>
+      <p className="mt-2 text-sm bh-muted">Sources: {row.source_links.map((source, index) => <span key={source.url}>{index > 0 ? ' · ' : ''}<a href={source.url} className="underline">{source.title}</a></span>)}</p>
       <p className="mt-3 text-sm bh-muted">Base model: {row.base_model ?? 'not specified'}. Cost estimate: {row.cost_basis}. Median latency: {row.latency.p50_raw.toFixed(3)} s raw; {row.latency.p50_adj.toFixed(3)} s after ×2 + 0.15 s.</p>
       <div className="grid gap-4 lg:grid-cols-2"><CategoryRadar row={row} artifact={artifact} dimension="topics" /><CategoryRadar row={row} artifact={artifact} dimension="usecases" /></div>
     </details>)}</div>

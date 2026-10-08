@@ -129,7 +129,32 @@
         "jev-omni",
         "spark-s1-4b-v6"
       ]
+    },
+    "capability": {
+      "before": [
+        "jev-1.13.0",
+        "winnow-12b",
+        "cygnet",
+        "surogate-rune-26b-a4b-v3-rtxpro6000-a2",
+        "jev-omni"
+      ],
+      "after": [
+        "jev-1.13.0",
+        "winnow-12b",
+        "cygnet",
+        "surogate-rune-26b-a4b-v3-rtxpro6000-a2",
+        "jev-omni"
+      ],
+      "caps": {
+        "cost_usd_per_1000": 0.06459465517241379,
+        "median_seconds": 1.2329566404223442,
+        "reference": "jev-1.13.0"
+      }
     }
   },
-  "parent_sha256": "8b837b2b760ef238e2a465632a48aa95b53b9ce5d797dfa79b2c24b0a638911e"
+  "parent_sha256": "8b837b2b760ef238e2a465632a48aa95b53b9ce5d797dfa79b2c24b0a638911e",
+  "held_keys": [
+    "xor-26b-a4b-nvfp4",
+    "wald-q4b-v11"
+  ]
 }
