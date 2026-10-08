@@ -7,7 +7,7 @@ import { jevV15LeaderSentence } from '../lib/jevbench-v15-preview.mjs';
 import { jevV15SliderPresets, jevV15BoardSystem, jevV15BoardRow, jevV15CompareRow } from '../lib/jevbench-v15-board.mjs';
 import type { JevV16ReleaseArtifact, JevV16Categories, JevV16Carry } from '../lib/jevbench-v16-release.mjs';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
-import { JEVBENCH_LANGUAGE_META, jevLanguageRows, languagePoolNote, jevbenchCategoryView, JEVBENCH_S_CATEGORY_CELLS_ARTIFACT } from '../lib/jevbench-categories.mjs';
+import { JEVBENCH_LANGUAGE_META, jevLanguageRows, languagePoolNote, jevbenchCategoryView, JEVBENCH_S_CATEGORY_CELLS_ARTIFACT, L3_EXPOSURE_NOTES } from '../lib/jevbench-categories.mjs';
 import { jevV15FilterRows } from '../lib/jevbench-v15-filter-rows.mjs';
 import { JevBenchV16Charts } from './JevBenchV16Charts';
 import { jevClassView } from './jevClassView';
@@ -31,6 +31,7 @@ import apiA4 from '../data/jevbench-api-a4-equated.json';
 // rotation / API-exposure method. Carried v1.5.x rows never enter v1.6 rankings.
 
 const spokeReason = (key: string) => spokeExceptions.find((e) => e.key === key)?.reason;
+const exposureNote = (key: string) => (L3_EXPOSURE_NOTES as Record<string, string>)[key];
 const one = (v: number | null | undefined) => v == null ? '—' : v.toFixed(1);
 const usd = (v: number | null | undefined) => v == null ? '—' : `$${v.toFixed(4)}`;
 const sec = (v: number | null | undefined) => v == null ? '—' : `${v.toFixed(2)} s`;
@@ -99,7 +100,7 @@ function LanguageView({ a, categories, hiddenApi, scope }: { scope: JevScope; a:
       <tbody>{systems.map((s, i) => <Fragment key={s.key}>
         {(s.listing as string) === 'wrapper' && (systems[i - 1]?.listing as string) !== 'wrapper' && <tr {...apiRowProps(s.key, hiddenApi)}><th colSpan={1 + (en ? 1 : 0) + langs.length} className="p-2 pt-4" scope="colgroup">Wrappers (listed, never ranked)</th></tr>}
         <tr data-bh-jev16-language-row={s.key} className="border-t border-line" {...apiRowProps(s.key, hiddenApi)}>
-        <th scope="row" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5 font-normal"><span className="block w-44 whitespace-normal sm:w-auto sm:whitespace-nowrap">{nameLabel(s.display, systems)}<span className="bh-muted"> · {laneTag(s)}</span><span className="bh-thin-tag ml-1" title="Measured item pools used for these language cells" data-bh-jev16-cell-coverage={coverageOf(categories, s.key)}>{coverageOf(categories, s.key)}</span>{categories.supplement && spokeReason(s.key) && <span className="bh-muted block text-xs" data-bh-radar-spoke-exception={s.key}>{spokeReason(s.key)}</span>}</span></th>
+        <th scope="row" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5 font-normal"><span className="block w-44 whitespace-normal sm:w-auto sm:whitespace-nowrap">{nameLabel(s.display, systems)}<span className="bh-muted"> · {laneTag(s)}</span><span className="bh-thin-tag ml-1" title="Measured item pools used for these language cells" data-bh-jev16-cell-coverage={coverageOf(categories, s.key)}>{coverageOf(categories, s.key)}</span>{categories.supplement && spokeReason(s.key) && <span className="bh-muted block text-xs" data-bh-radar-spoke-exception={s.key}>{spokeReason(s.key)}</span>}{exposureNote(s.key) && <span className="bh-muted block text-xs" data-bh-l3-exposure-note={s.key}>{exposureNote(s.key)}</span>}</span></th>
         {[...(en ? [en] : []), ...langs].map((l) => {
           const c = categories.systems[s.key]?.languages?.[l.key];
           if (!c || c.n < minN) {
@@ -140,6 +141,7 @@ function DatedCarry({ carry, hiddenApi, showExceptions }: { carry: JevV16Carry; 
 
 // v1.7.0 (Florian, 5 Oct 2026): open-weights board on /jev-models, API-provider board on /jev-models/api.
 export const JEV_BOARD_REVISIONS: { version: string; date: string; text: string }[] = [
+  { version: 'v1.7.19', date: '2026-10-08', text: `Languages and radars: the open-weights rows were run on the L3 supplement overnight, and most rows that still lacked the earlier L1/L2 supplements got them too. Their language cells and topic/use-case radars now count every item they answered (S + P + L1 + L2 + L3), and Qwen3.8 27B (Chutes) finished its L3 run. L3 items were reviewed by an OpenAI model, so the L3-based language and category cells of OpenAI rows carry that exposure; a note next to those rows says so, and headline scores do not use L3. ${spokeExceptions.length} rows still show a reason instead of a full radar, for example runs still in progress, a provider that is down, withdrawn weights or rows not measured on this pool. Headline scores, Capability, Composite and every rank are unchanged.` },
   { version: 'v1.7.18', date: '2026-10-08', text: `Languages and radars for every row. A new sealed supplement, L3 (1,118 items drawn on 7 Oct 2026: items written natively in 21 languages plus a mixed-language group, and English items for thin radar categories such as everyday language, safety and the "other" use case), gives every language at least 60 items on P ∪ L1 ∪ L2 ∪ L3 (before: as few as 4). The hosted API rows answered it: their language cells and their use-case and topic radars now rest on about 2,100 answered items (3,000 for rows that answered the full sealed set), with at least 69 on every spoke. Open-weights rows are being run on it in the current GPU wave and update as they finish. ${spokeExceptions.length} rows that do not reach 30 items on every spoke yet show the reason next to the row. Headline scores, Capability, Composite and every rank are unchanged.` },
   { version: 'v1.7.17', date: '2026-10-07', text: `Languages now includes every measured row on both boards, with wrappers listed below the models. ${languagePoolNote(JEVBENCH_LANGUAGE_META)} ${Object.values(apiRerunCells.systems as Record<string, { coverage: string; category_pools?: string }>).filter((r) => /^(A4|A5)\+P/.test(r.coverage) && r.category_pools?.includes("L1+L2")).length} API rows re-run on A4/A5 have answered L1/L2 supplements; their category radars count those items too. L3 coverage will follow when measured.` },
   { version: 'v1.7.16', date: '2026-10-07', text: 'Compare view, API board: subject-topic and use-case radars for OpenAI Decisions, the 17 API offerings re-run on A4 ∪ P and the classifier.dev wrapper. Their 600 new sealed items were labelled with the same recipe as every other item (Winnow-12B Q8 on our own GPU pod; uc1 items keep their authoring use case); values are raw and rest on 600 items (300 sealed), so more categories fall under the 30-item spoke minimum and are listed below the radar. Each of these rows also gets a breakdown section on its own page. Every live row now has all breakdown views, and a release check keeps it that way. No score, axis, cost or rank changed.' },

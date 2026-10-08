@@ -66,3 +66,9 @@ test('caption follows interim and final L3 data and has no stale missing-API cla
   assert.match(board, /jevLanguageRows\(a.systems, scope\)/);
   assert.match(board, /data-bh-jev16-cell-coverage/);
 });
+
+test('OpenAI rows carry the L3 exposure note (CoS review of PR #211)', async () => {
+  const { L3_EXPOSURE_NOTES, languagePoolNote, JEVBENCH_LANGUAGE_META } = await import('../lib/jevbench-categories.mjs');
+  for (const key of ['openai-decisions', 'gpt-6-luna', 'gpt-6-luna-low', 'gpt-5.6-luna']) assert.match(L3_EXPOSURE_NOTES[key], /reviewed by an OpenAI model/);
+  assert.match(languagePoolNote(JEVBENCH_LANGUAGE_META), /L3 items were reviewed by an OpenAI model/);
+});
