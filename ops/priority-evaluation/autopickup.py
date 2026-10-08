@@ -4585,7 +4585,7 @@ def recover_source_access(rid: str) -> str:
             or row.get("status") != "paid" or row.get("model_link") != expected_url \
             or row.get("refund_id") or row.get("result_delivered_at") \
             or row.get("evaluation_status") != "pending" \
-            or row.get("change_request_email_status") not in ("approval_required", "not_due") \
+            or row.get("change_request_email_status") not in ("approval_required", "held", "not_due") \
             or row.get("delivery_email_status") in ("sending", "sent"):
         raise PickupError("order state is not eligible for source-access correction")
     job_dir = job_directory(rid, JOB_ROOT)
@@ -4640,7 +4640,7 @@ def recover_source_access(rid: str) -> str:
             raise PickupError("approval belongs to a different customer hold")
         if journal_path.exists():
             journal = json.loads(journal_path.read_text())
-            if journal.get("preserved") != preserved or journal.get("evidence") != evidence:
+            if journal.get("request_id") != rid or journal.get("preserved") != preserved or journal.get("evidence") != evidence:
                 raise PickupError("source-access recovery evidence or original counters changed")
         else:
             if approval.get("decision") is not None or row.get("customer_hold_reason") != CHANGE_HOLD_REASON \
@@ -4650,12 +4650,26 @@ def recover_source_access(rid: str) -> str:
                        "original_hold_started_at": row["customer_hold_started_at"], "phase": "prepared",
                        "prepared_at": iso(utcnow()), "approval_before": approval}
             atomic_write(journal_path, json.dumps(journal, indent=2) + "\n")
+        if row.get("change_request_email_status") == "held" and approval.get("decision") != "withdrawn":
+            raise PickupError("held approval lacks this recovery withdrawal")
         if approval.get("decision") == "withdrawn" and approval.get("recovery_evidence") != evidence:
             raise PickupError("approval withdrawal belongs to a different recovery")
         if approval.get("decision") is None:
             approval.update(decision="withdrawn", withdrawn_reason="operator_source_access_corrected",
                             withdrawn_at=iso(utcnow()), recovery_evidence=evidence)
             refusal_approval.atomic(approval_path, approval)
+        state = load_state(rid)
+        operational = state.get("operational_hold")
+        reason = "source_access_recovered_pending_review"
+        if operational is not None:
+            if not isinstance(operational, dict) or operational.get("reason") != reason \
+                    or operational.get("transient") is not False or operational.get("recovery_evidence") != evidence:
+                raise PickupError("a different operational hold requires owner reconciliation")
+        else:
+            # Persist before the DB hold is removed: the pickup timer must never
+            # resume measurement while source and exact official admission are unresolved.
+            set_operational_hold(state, reason, transient=False,
+                                 owner="fastlane-acad951a-recovery-20261008", recovery_evidence=evidence)
         if not row.get("customer_hold_started_at"):
             if row.get("customer_hold_reason") is not None or row.get("change_request_email_status") != "not_due":
                 raise PickupError("order changed after the recovery claim")
@@ -4666,7 +4680,7 @@ def recover_source_access(rid: str) -> str:
             guard += (" AND status='paid' AND stripe_mode='live' AND synthetic_test=false AND refund_id IS NULL "
                       "AND result_delivered_at IS NULL AND evaluation_status='pending' "
                       "AND COALESCE(delivery_email_status,'not_due') NOT IN ('sending','sent') "
-                      "AND change_request_email_status='approval_required' AND customer_hold_reason='customer_changes' "
+                      "AND change_request_email_status IN ('approval_required','held') AND customer_hold_reason='customer_changes' "
                       f"AND customer_hold_started_at={sql_text(journal['original_hold_started_at'])} "
                       f"AND model_link={sql_text(expected_url)}")
             if not update_row(rid, "customer_hold_started_at=NULL, customer_hold_reason=NULL, change_request_email_status='not_due'", guard):
@@ -4678,7 +4692,7 @@ def recover_source_access(rid: str) -> str:
             raise PickupError("source-access recovery requires final state reconciliation")
         journal.update(phase="complete", completed_at=iso(utcnow()))
         atomic_write(journal_path, json.dumps(journal, indent=2) + "\n")
-    return "Aplomb source-access hold corrected; original SLA and all attempt counters preserved; no email or evaluation started."
+    return "Aplomb source-access hold corrected; original SLA and counters preserved; source/admission operational hold retained; no email or evaluation started."
 
 
 def resubmit(rid: str, model_link: str | None = None, code_link: str | None = None) -> str:
