@@ -68,10 +68,14 @@ class CapacityTests(unittest.TestCase):
             with self.assertRaises(pc.CapacityEvidenceError):self.credit(copy.deepcopy(self.state),proof)
         partial=copy.deepcopy(self.state);partial['input_dispatched']=True
         with self.assertRaises(pc.CapacityEvidenceError):self.credit(partial)
-        for _ in range(4):pc.store_refusal(self.state,self.root,self.proof('read_only_preflight'))
-        with self.assertRaises(pc.CapacityEvidenceError):pc.store_refusal(self.state,self.root,self.proof('read_only_preflight'))
+        for _ in range(12):pc.store_refusal(self.state,self.root,self.proof('read_only_preflight'))
+        self.assertEqual(len(self.state['read_only_capacity_refs']),8)
+        self.assertEqual(self.state['read_only_capacity_checks'],12)
         self.assertEqual(self.state['creation_attempts'],2)
         self.assertEqual(pc.allocation_count(self.state,self.root),2)
+        self.state['creation_attempts']=6
+        for attempt in range(1,5):pc.store_refusal(self.state,self.root,self.proof(),attempt=attempt,before=set(),after=set(),released=True)
+        with self.assertRaises(pc.CapacityEvidenceError):pc.store_refusal(self.state,self.root,self.proof(),attempt=5,before=set(),after=set(),released=True)
 
     def test_release_and_same_listing_are_required(self):
         for kwargs in [dict(before=set(),after={'new'},released=True),dict(before=set(),after=set(),released=False)]:
@@ -105,10 +109,47 @@ class CapacityTests(unittest.TestCase):
         proof=self.proof('read_only_preflight')
         provider.preflight=lambda *a:{'quote':None,'refusals':[proof]}
         self.state['creation_attempts']=0
-        with patch.object(pr,'PODS_DIR',self.root),self.assertRaises(pr.PodCapacityError):
+        with patch.object(pr,'PODS_DIR',self.root),self.assertRaisesRegex(pr.measurement_dispatch.OperationalHold,'gpu_pod_capacity'):
             pr._lifecycle(provider,'fixture',{},self.root/'stage',self.root/'out',self.state,('RTXPRO6000',96),3,18.75,None,lambda:None)
         self.assertEqual(self.state['creation_attempts'],0)
         self.assertEqual(self.state['spent_upper_bound_usd'],1.25)
+
+    def test_real_cli_success_wrapper_and_text_metadata_exact_id(self):
+        pid=str(uuid.uuid4());foreign=str(uuid.uuid4())
+        row={'id':pid,'huid':'synthetic','gpu_count':2,'price_per_hour':2.38}
+        for output in [json.dumps({'pod':row,'termination_time':'2026-10-08T23:00:00'}),
+                       'Pod synthetic (name: inert, id:\n'+pid+') ready']:
+            def cli(argv,**kwargs):
+                if 'lium_bounded_up.py' in ' '.join(map(str,argv)):
+                    return SimpleNamespace(returncode=0,stdout=output,stderr='')
+                if len(argv)>2 and argv[1:3]==['ps',pid]:
+                    return SimpleNamespace(returncode=0,stdout=json.dumps([row]),stderr='')
+                return SimpleNamespace(returncode=0,stdout='[]',stderr='')
+            with patch.object(pr,'_run_cli',side_effect=cli):
+                result=pr.LiumProvider().create('RTXPRO6000',3,18.75)
+            self.assertEqual(result['pod_id'],pid)
+            self.assertEqual(result['gpu_count'],2)
+            self.assertEqual(result['hourly_usd'],2.38)
+            self.assertFalse(result['metadata_invalid'])
+        row['id']=foreign
+        with patch.object(pr,'_run_cli',side_effect=cli):result=pr.LiumProvider().create('RTXPRO6000',3,18.75)
+        self.assertEqual(result['pod_id'],pid)
+        self.assertTrue(result['metadata_invalid'])
+
+    def test_actual_click_entry_is_inert_and_legacy_up_is_blocked(self):
+        from lium.sdk import Lium
+        from lium.cli.cli import cli
+        original_rent=Lium.rent;original_up=Lium.up
+        def invoke(*,args,prog_name):
+            self.assertEqual(args,['up','--gpu','RTXPRO6000','-c','2','--ttl','3.0h','--budget','18.75','-y','--json'])
+            self.assertEqual(prog_name,'lium')
+            with self.assertRaisesRegex(ValueError,'legacy'):Lium.up(object())
+        try:
+            with patch.object(cli,'main',side_effect=invoke) as main:
+                bounded.main(['RTXPRO6000','2','3','18.75','5'])
+                main.assert_called_once()
+        finally:
+            Lium.rent=original_rent;Lium.up=original_up
 
     def test_authenticated_audit_uniqueness_status_and_null_resource(self):
         proof=self.proof();event=proof['event']
@@ -139,3 +180,21 @@ class CapacityTests(unittest.TestCase):
         with self.assertRaises(ValueError):rent(client,gpu_type='H100',gpu_count=2)
 
 if __name__=='__main__':unittest.main()
+
+class RecoveryGuardTests(unittest.TestCase):
+    def test_historical_cas_and_original_counters_must_match_exactly(self):
+        import recover_wald_capacity as recovery
+        state={'request_id':recovery.RID,'creation_attempts':2,'spent_upper_bound_usd':1.25,
+               'input_dispatched':False,'execution_started':False,'measurement_completed':False,
+               'cleanup_uncertain':False,'pod_id':None,'attempt_reserved_upper_bound_usd':0.0,
+               'reservation_id':'gpu-771005577da188e7b57413e2','torn_down_at':'synthetic'}
+        original=json.dumps(state).encode()
+        with patch.object(recovery,'ORIGINAL_SHA',recovery.sha(original)):
+            self.assertEqual(recovery.preserved_state(original),state)
+            with self.assertRaisesRegex(RuntimeError,'CAS'):
+                recovery.preserved_state(original+b' ')
+        for changes in [{'creation_attempts':1},{'input_dispatched':True},{'cleanup_uncertain':True},
+                        {'capacity_refusals':[]},{'two_gpu_placement_recipe_sha256':'a'*64}]:
+            altered=json.dumps({**state,**changes}).encode()
+            with patch.object(recovery,'ORIGINAL_SHA',recovery.sha(altered)),self.assertRaises(RuntimeError):
+                recovery.preserved_state(altered)

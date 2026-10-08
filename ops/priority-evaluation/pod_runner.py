@@ -355,12 +355,14 @@ class LiumProvider(Provider):
         text = result.stdout + "\n" + result.stderr
         start = min((i for i in (text.find("{"), text.find("[")) if i >= 0), default=-1)
         end = max(text.rfind("}"), text.rfind("]")) + 1
-        for candidate in (text, text[start:end] if 0 <= start < end else ""):
+        for candidate in (result.stdout, result.stderr, text, text[start:end] if 0 <= start < end else ""):
             try:
                 value = json.loads(candidate)
             except (json.JSONDecodeError, TypeError):
                 continue
-            if isinstance(value, list) and value and isinstance(value[0], dict):
+            if isinstance(value, dict) and isinstance(value.get('pod'), dict):
+                value = value['pod']
+            if isinstance(value, list) and len(value) == 1 and isinstance(value[0], dict):
                 value = value[0]
             if isinstance(value, dict) and (value.get("id") or value.get("huid")):
                 pod = value
@@ -381,20 +383,38 @@ class LiumProvider(Provider):
             uncertain = measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain')
             uncertain.candidate_pod_ids = sorted(self.ps_ids() - before)
             raise uncertain
-        pod_id = pod.get("id") or pod.get("pod_id") or pod.get("huid")
+        pod_id = pod.get("id") or pod.get("pod_id")
+        try:
+            if str(uuid.UUID(str(pod_id))) != pod_id or pod_id in before:
+                raise ValueError('pod id not a new exact UUID')
+        except (ValueError, TypeError, AttributeError):
+            raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain') from None
         hourly = pod.get("price_per_hour") or pod.get("hourly_price") or pod.get("price")
-        if hourly is None:
-            look = _run_cli([str(LIUM), "ps", str(pod_id), "--format", "json"], timeout=60)
+        count = pod.get('gpu_count')
+        invalid_metadata = False
+        if hourly is None or count is None:
+            look = _run_cli([str(LIUM), "ps", pod_id, "--format", "json"], timeout=60)
             try:
-                rows = json.loads(look.stdout)
-                row = rows[0] if isinstance(rows, list) and rows else rows
-                if isinstance(row, dict):
-                    hourly = row.get("price_per_hour") or row.get("hourly_price") or row.get("price")
-            except (json.JSONDecodeError, IndexError, TypeError):
-                pass
-        return {"pod_id": str(pod_id), "huid": str(pod.get("huid", "")), "gpu": gpu,
-                "gpu_count": pod.get('gpu_count'),
-                "hourly_usd": float(hourly) if hourly is not None else None}
+                if look.returncode:
+                    raise ValueError('exact pod metadata lookup failed')
+                value = json.loads(look.stdout)
+                if isinstance(value, dict) and isinstance(value.get('pod'), dict):
+                    value = value['pod']
+                row = value[0] if isinstance(value, list) and len(value) == 1 else value
+                if not isinstance(row, dict) or row.get('id') != pod_id:
+                    raise ValueError('exact pod metadata identity differs')
+                hourly = row.get("price_per_hour") or row.get("hourly_price") or row.get("price")
+                count = row.get('gpu_count')
+            except (ValueError, TypeError):
+                invalid_metadata = True
+        if type(count) is not int or count < 1:
+            invalid_metadata = True
+        try:
+            rate = float(hourly) if not isinstance(hourly, bool) else None
+        except (TypeError, ValueError):
+            rate = None
+        return {"pod_id": pod_id, "huid": str(pod.get("huid", "")), "gpu": gpu,
+                "gpu_count": count, "hourly_usd": rate, 'metadata_invalid': invalid_metadata}
 
     def exec(self, pod_id, command, timeout=600):
         # `lium exec <pod> "cmd"` takes ONE command string; join the argv safely.
@@ -547,20 +567,16 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             allocations = pod_capacity.allocation_count(state, PODS_DIR)
             if allocations >= pod_capacity.MAX_ALLOCATIONS:
                 raise PodRunError('original per-order fresh-pod retry budget exhausted')
-            if len(state.get('capacity_refusals', [])) >= pod_capacity.MAX_REFUSALS:
-                raise measurement_dispatch.OperationalHold('gpu_pod_capacity')
             recipe_binding = hashlib.sha256(json.dumps(
                 {'recipe': recipe, 'benchmarks': list(benchmarks)}, sort_keys=True).encode()).hexdigest()
             allow_two = state.get('two_gpu_placement_recipe_sha256') == recipe_binding
             selection = provider.preflight(gpu_choice[0], recipe, benchmarks,
-                pod_capacity.MAX_REFUSALS - len(state.get('capacity_refusals', [])), allow_two)
+                2, allow_two)
             if selection is not None:
                 for proof in selection['refusals']:
                     pod_capacity.store_refusal(state, PODS_DIR, proof)
                     save_state()
                 if selection['quote'] is None:
-                    raise PodCapacityError('authenticated preflight proved no capacity')
-                if len(state.get('capacity_refusals', [])) >= pod_capacity.MAX_REFUSALS:
                     raise measurement_dispatch.OperationalHold('gpu_pod_capacity')
                 state['placement_quote'] = selection['quote']
                 save_state()
@@ -606,6 +622,8 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                      hourly_usd=hourly, reservation_id=reservation,
                      created_at=datetime.now(timezone.utc).isoformat())
         save_state()  # persist immediately: a crashed process must find this pod by exact id
+        if pod.get('metadata_invalid'):
+            raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed')
         try:
             hourly = float(hourly)
         except (TypeError, ValueError):

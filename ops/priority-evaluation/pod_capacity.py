@@ -137,6 +137,8 @@ def allocation_count(state, pods_dir):
         try:
             receipt = json.loads(body)
             attempt = validate_receipt(receipt, rid, attempts)
+            if receipt['phase'] != 'create_refused':
+                raise CapacityEvidenceError('read-only quote cannot grant an allocation credit')
             event = receipt['event']['id']
             if event in events or receipt['event']['request_id'] in requests or (attempt is not None and attempt in credited):
                 raise CapacityEvidenceError('reused capacity receipt')
@@ -153,8 +155,11 @@ def store_refusal(state, pods_dir, proof, *, attempt=None, before=None, after=No
     if state.get('input_dispatched') or state.get('execution_started'):
         raise CapacityEvidenceError('dispatched input cannot receive a capacity credit')
     allocation_count(state, pods_dir)  # Validate every existing credit before appending.
-    refs = state.setdefault('capacity_refusals', [])
-    if len(refs) >= MAX_REFUSALS:
+    readonly = proof['phase'] == 'read_only_preflight'
+    refs = state.setdefault('read_only_capacity_refs' if readonly else 'capacity_refusals', [])
+    if not isinstance(refs, list) or len(refs) > (8 if readonly else MAX_REFUSALS):
+        raise CapacityEvidenceError('invalid capacity evidence references')
+    if not readonly and len(refs) >= MAX_REFUSALS:
         raise CapacityEvidenceError('original lifetime capacity refusal budget exhausted')
     receipt = {'schema_version': 1, 'provider': 'lium', 'order_id': state['request_id'],
                'attempt': attempt, 'phase': proof['phase'], 'event': proof['event'],
@@ -166,7 +171,15 @@ def store_refusal(state, pods_dir, proof, *, attempt=None, before=None, after=No
     # An event can never be reused as a second counter credit.
     directory = receipt_dir(pods_dir, state['request_id'])
     for digest in refs:
-        old = json.loads((directory / (digest + '.json')).read_bytes())
+        if not isinstance(digest, str) or not SHA_RE.fullmatch(digest):
+            raise CapacityEvidenceError('invalid capacity evidence reference')
+        old_path = directory / (digest + '.json')
+        if old_path.is_symlink() or not old_path.is_file() or old_path.stat().st_size > 32768:
+            raise CapacityEvidenceError('unsafe capacity evidence reference')
+        old_body = old_path.read_bytes()
+        if hashlib.sha256(old_body).hexdigest() != digest:
+            raise CapacityEvidenceError('capacity evidence hash differs')
+        old = json.loads(old_body)
         if (old['event']['id'] == receipt['event']['id'] or old['event']['request_id'] == receipt['event']['request_id']
                 or (attempt is not None and old.get('attempt') == attempt)):
             raise CapacityEvidenceError('capacity event already accounted')
@@ -182,5 +195,11 @@ def store_refusal(state, pods_dir, proof, *, attempt=None, before=None, after=No
     finally:
         os.close(directory_fd)
     refs.append(digest)
+    if readonly:
+        count = state.get('read_only_capacity_checks', 0)
+        if type(count) is not int or not 0 <= count < 10000:
+            raise CapacityEvidenceError('invalid read-only capacity counter')
+        state['read_only_capacity_checks'] = count + 1
+        del refs[:-8]
     allocation_count(state, pods_dir)
     return digest
