@@ -3817,6 +3817,7 @@ def systemd_last_success(effects: Effects, unit: str) -> datetime | None:
 def health(effects: Effects) -> dict[str, Any]:
     now = utcnow()
     problems: list[tuple[str, str]] = []
+    held_orders: list[dict[str, Any]] = []
     for timer in PICKUP_TIMERS:
         result = subprocess.run(["systemctl", "--user", "is-active", timer], text=True, capture_output=True, timeout=15, check=False)
         if result.stdout.strip() != "active":
@@ -3840,15 +3841,35 @@ def health(effects: Effects) -> dict[str, Any]:
             problems.append((f"notice:{rid}", f"order {ref}: urgent payment notice not sent after 20 minutes"))
         if now - paid > timedelta(minutes=45) and row.get("confirmation_status") != "sent":
             problems.append((f"confirm:{rid}", f"order {ref}: confirmation not sent after 45 minutes"))
-        if row.get("evaluation_status") in ("pending", "failed", "exhausted") and now - paid > timedelta(minutes=45) \
-                and not active_hold(row):
-            problems.append((f"eval:{rid}", f"order {ref}: evaluation not running ({row.get('evaluation_status')})"))
-        with contextlib.suppress(PickupError):
+        # The pickup also uses state-only operational holds, which do not pause the SLA.
+        # Only the exact acknowledged recovery handoff is a deliberate review hold.
+        # An arbitrary owner/reason must never hide a stuck paid order.
+        try:
             state = load_state(rid)
-            for name, item in state["steps"].items():
-                if item.get("status") == "exhausted":
-                    problems.append((f"exhausted:{rid}:{name}", f"order {ref}: step {name} exhausted"))
-    report = {"checked_at": iso(now), "problems": [text for _, text in problems]}
+        except PickupError:
+            problems.append((f"state:{rid}", f"order {ref}: pickup state is unreadable"))
+            state = {"steps": {}}
+        operational = state.get("operational_hold")
+        planned_review = (rid == "acad951a-1b9d-4f3c-a449-350d1c04bd23"
+                          and isinstance(operational, dict)
+                          and operational.get("reason") == "source_access_recovered_pending_review"
+                          and operational.get("owner") == "fastlane-acad951a-recovery-20261008"
+                          and operational.get("transient") is False
+                          and step_done(state, "source_access_review_handoff"))
+        if active_hold(row) or planned_review:
+            held_orders.append({"order": ref, "kind": "customer" if active_hold(row) else "operational_review",
+                                "reason": row.get("customer_hold_reason") if active_hold(row) else operational["reason"],
+                                "owner": None if active_hold(row) else operational["owner"],
+                                "deadline": iso(deadline_for(row)),
+                                "sla_paused": bool(active_hold(row))})
+        if row.get("evaluation_status") in ("pending", "failed", "exhausted") and now - paid > timedelta(minutes=45) \
+                and not active_hold(row) and not (planned_review and now < deadline_for(row)):
+            detail = f"; operational hold: {operational.get('reason') or 'unknown'}" if isinstance(operational, dict) else ""
+            problems.append((f"eval:{rid}", f"order {ref}: evaluation not running ({row.get('evaluation_status')}){detail}"))
+        for name, item in state["steps"].items():
+            if item.get("status") == "exhausted":
+                problems.append((f"exhausted:{rid}:{name}", f"order {ref}: step {name} exhausted"))
+    report = {"checked_at": iso(now), "problems": [text for _, text in problems], "held_orders": held_orders}
     if not effects.dry_run:
         atomic_write(STATE_ROOT / "health.json", json.dumps(report, indent=2) + "\n")
     alerts_path = STATE_ROOT / "health-alerts.json"
@@ -4087,6 +4108,25 @@ def run_agent(job_dir: Path, env: dict[str, str], timeout_hint: int, *, read_onl
         if requires_claude_tools and engine not in ("claude", "codex"):
             atomic_write(job_dir / ".engine", f"unavailable: review/preparation requires the bounded tool allowlist ({engine})\n")
             raise static_agent.CapacityHold("no quota-eligible engine with the required static review boundary")
+    static_packet = None
+    if engine == "codex" and requires_claude_tools:
+        try:
+            static_packet = static_agent.packet(job_dir, file_authoring)
+        except static_agent.CapacityHold as exc:
+            # Preserve the static packet bound and all source/pin refusals. An oversized
+            # preparation can use the existing bounded Claude file-tool sandbox instead.
+            if not file_authoring or str(exc) != "static_source_packet_exceeds_review_capacity":
+                raise
+            picked = subprocess.run([str(HOME / "bin/quota-pace"), "pick", "--kind", "judgement",
+                                     "--order", "claude"], cwd=job_dir, env=env,
+                                    text=True, capture_output=True, timeout=60, check=False)
+            if picked.returncode or picked.stdout.strip() != "claude":
+                raise static_agent.CapacityHold("static_source_packet_exceeds_review_capacity") from None
+            engine = "claude"
+            atomic_write(job_dir / ".capacity-route.json", json.dumps({
+                "at": iso(utcnow()), "reason": str(exc), "from": "codex", "to": "claude",
+                "source_packet_omitted": False, "bounded_tools": "Read,Glob,Grep,Write",
+            }, indent=2) + "\n")
     admitted = subprocess.run([str(HOME / "bin/quota-pace"), "allow", engine, "--kind", "judgement"], cwd=job_dir,
                              env=env, text=True, capture_output=True, timeout=60, check=False)
     if admitted.returncode:
@@ -4094,7 +4134,7 @@ def run_agent(job_dir: Path, env: dict[str, str], timeout_hint: int, *, read_onl
     atomic_write(job_dir / ".engine", f"{engine} (quota-pace pick --kind judgement, {iso(utcnow())})\n")
     prompt = (HOME / "bin/job-preamble.txt").read_text(encoding="utf-8") + "\n" + (job_dir / "PROMPT.md").read_text(encoding="utf-8")
     if engine == "codex" and requires_claude_tools:
-        prompt += static_agent.packet(job_dir, file_authoring)
+        prompt += static_packet
     output_path = job_dir / "OUTPUT.md"
     if engine == "devin":
         prompt_path = job_dir / ".agent-prompt.md"
