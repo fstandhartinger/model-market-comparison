@@ -21719,6 +21719,100 @@
           "excerpt": "User-agent: * Allow: / … Allow: /leaderboard/code/webdev … Allow: /leaderboard/agent — both leaderboard pages are explicitly allowed."
         }
       ]
+    },
+    {
+      "id": "scale-hss::snapshot-2026-10-07",
+      "name": "Humanity’s Sixth Sense (HSS)",
+      "version": "snapshot-2026-10-07",
+      "version_status": "snapshot",
+      "family": "scale-hss",
+      "category": "Vision",
+      "one_sentence_description": "Measures intuitive visual reasoning in 522 open-ended tasks (288 images and 234 videos) across temporal, physical, social and abstract inference; 24 source-labelled results are shown without catalog matches because general effort settings conflict with row labels, Fable 5.1 lacks an explicit effort and remains unknown, and the 388-task agentic subset is excluded.",
+      "scoring": {
+        "metric": "Full-522 rubric pass@1, averaged over three attempts per task",
+        "unit": "%",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Full-522 release: 288 image and 234 video tasks across four domains and eleven subdomains; judge Claude-Opus-5 decides every rubric criterion and all must pass. Pass@1 averages three attempts per task; 95% task-cluster bootstrap intervals. Video has no audio or transcript. Keep the 388-task agentic subset separate; none of its scores are included. Not HSSBench (humanities/social sciences). Scale’s generic settings text says high effort, while explicit row labels vary; source row effort is retained without a catalog join. Claude-Fable-5.1 is omitted because its row has no exact effort; omitted models remain unknown."
+      },
+      "maintainer": "Scale AI, in partnership with Elorian",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://scale.com/leaderboard/hss",
+      "publication_urls": [
+        {
+          "url": "https://labs.scale.com/blog/introducing-humanitys-sixth-sense",
+          "type": "vendor_report",
+          "role": "Launch blog and task methodology"
+        },
+        {
+          "url": "https://labs.scale.com/papers/humanitys-sixth-sense",
+          "type": "vendor_report",
+          "role": "Paper landing page and linked PDF"
+        },
+        {
+          "url": "https://scale.com/leaderboard/hss",
+          "type": "official_leaderboard",
+          "role": "Official full-522 leaderboard and scoring protocol"
+        },
+        {
+          "url": "https://huggingface.co/datasets/ScaleAI/HSS",
+          "type": "huggingface",
+          "role": "Public dataset card and test split"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py data/raw/benchmarks/daily-evidence/2026-10-08-hss/urls.json CAPTURE_DIR; review full-522 protocol and exact text rows before manually updating manual-board-observations.json",
+        "format": "Server-rendered HTML with numeric text rows, not graphic estimates",
+        "locator": "Performance Comparison: p[data-model-name=true] and adjacent numeric text spans; full-522 pass@1 only. Exact effort required; unlabelled effort remains uncollected.",
+        "version_guard": "Pin the launch publication of 2026-10-07 and full 522 tasks (288 images + 234 videos), Claude-Opus-5 rubric judge, all criteria pass, three attempts averaged. Changed task set, judge, harness or scoring requires a new identity; agentic 388 subset never joins this identity.",
+        "notes": "Manual source-label observations preserve published model and effort with model_id null; no guessed catalog joins. No evaluations performed. PDF capture returned HTTP 403; landing page and leaderboard are retained. Stop on access restrictions.",
+        "identity_policy": "source_label"
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule published; launch dated 2026-10-07.",
+        "check_recommendation": "Manually capture and review updates; never overwrite this pinned launch identity."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No saturation claim recorded; the launch reports a substantial gap from human performance."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-10-08",
+      "last_verified": "2026-10-08",
+      "evidence": [
+        {
+          "url": "https://labs.scale.com/blog/introducing-humanitys-sixth-sense",
+          "file": "data/raw/benchmarks/daily-evidence/2026-10-08-hss/3a98f7bd7ebc9e924ef5.gz",
+          "sha256": "8815d4ada12ea2bc784c02052684ab5d0ee984f68f45edde5df18ddca7d51603",
+          "fetched_at": "2026-10-08T18:33:45.880701+00:00",
+          "excerpt": "Published 10/7/2026; 522 open-ended tasks across 288 images and 234 video clips; four domains: Temporal & Causal Dynamics, Physical & Spatial Logic, Social Understanding, Abstract & Contextual Inference. An LLM judge scores against the rubric; a task counts as solved only when every criterion is met. Agentic tools evaluated on a separate 388-task subset."
+        },
+        {
+          "url": "https://labs.scale.com/papers/humanitys-sixth-sense",
+          "file": "data/raw/benchmarks/daily-evidence/2026-10-08-hss/8d7af48b34b1d790fb05.gz",
+          "sha256": "d9723f7f594be96841a12d0860d437cd861ae74aaee353f810a5d6ccf7225594",
+          "fetched_at": "2026-10-08T18:33:50.787313+00:00",
+          "excerpt": "Humanity’s Sixth Sense: Benchmarking Intuitive Visual Reasoning in Multimodal Models; 10/7/2026; introduces HSS, image and video inputs, temporal, spatial, social and abstract structure; View paper links to the PDF recorded in paper/manifest.json (HTTP 403 on capture)."
+        },
+        {
+          "url": "https://scale.com/leaderboard/hss",
+          "file": "data/raw/benchmarks/daily-evidence/2026-10-08-hss/aeac6f1ff12f4ec2fb8e.gz",
+          "sha256": "f281555665650fa6645da2ee05573e34dd1958c6bb16851379dac0e360e1e07e",
+          "fetched_at": "2026-10-08T18:33:53.584490+00:00",
+          "excerpt": "Frozen release of 522 tasks, 288 images and 234 videos. Pass@1 averaged over three attempts per task; ± half-width of 95% cluster bootstrap over tasks. Model outputs graded by Claude-Opus-5. Per-row labels publish effort (max/high/xhigh), despite generic Measuring Settings text saying all models high; retain per-row effort and do not infer an effort for the unlabelled Claude-Fable-5.1 row."
+        },
+        {
+          "url": "https://huggingface.co/datasets/ScaleAI/HSS",
+          "file": "data/raw/benchmarks/daily-evidence/2026-10-08-hss/dabb34a68e58b2d277c8.gz",
+          "sha256": "8367067616245185a771e5ad5646d450f7549bbbf3c089f91f56f770d066e311",
+          "fetched_at": "2026-10-08T18:33:56.845110+00:00",
+          "excerpt": "ScaleAI/HSS dataset; default subset test split has 522 rows; dataset card describes intuitive visual reasoning."
+        }
+      ]
     }
   ],
   "aa_field_map": [

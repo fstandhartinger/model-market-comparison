@@ -1,0 +1,32 @@
+{
+  "artifact_id": "hss-launch",
+  "artifact_sha256": "ae0319d5740f5eb2fd957176f307c316602b327ef365e0aa9875e0c68b8dc018",
+  "round": 3,
+  "verdict": "pass",
+  "coverage_checked": [
+    "All 24 rows were compared with the exact primary HTML: label, effort variant, value, ± half-width, and CI lower and upper bounds (value ∓ half-width). All match. Examples: GPT-6-Astra (max) 53.60±4.10 gives 49.5–57.7; GPT-6-Luna (max) 21.00±3.00 gives 18.0–24.0.",
+    "Each subject.variant matches the explicit effort in the source label (max, high or xhigh). All 24 rows have model_id=null, harness=null, comparison_key=null and basis=measured, with level 0.95.",
+    "The leaderboard lists 25 rows. The 24 labelled rows are included. Claude-Fable-5.1 (40.80±3.60) has no effort label and is correctly omitted, with the omission disclosed in scoring.notes, the protocol text and the evidence excerpt.",
+    "The generic Measuring Settings text says 'high reasoning effort', while row labels vary. The discrepancy is disclosed in scoring.notes, in each row's protocol, and in the one-sentence description. Explicit source labels are preserved with no catalog join.",
+    "Identity: full 522 tasks (288 images + 234 videos), four domains and eleven subdomains, judge Claude-Opus-5 deciding per-criterion rubric verdicts with all required to pass, pass@1 averaged over three attempts, and 95% task-cluster bootstrap. Each is supported by the blog and leaderboard text.",
+    "The 388-task agentic subset is excluded. The blog's 59.3% agentic figure appears in no row. No graphic estimates are used; all values come from numeric text spans.",
+    "Not HSSBench is stated. Rows are labelled evaluator-published by Scale, with no independent Benchmark Heaven measurement; basis=measured follows the third-party-measured convention.",
+    "Hash conventions: observation source.sha256 aeac6f1f… equals the uncompressed body hash in the source receipt and the file-name prefix. The registry evidence sha256 values (e.g. f281555… for the leaderboard .gz) differ from the receipt hashes, which is consistent with the stored-.gz versus body convention. The registry validator reported 295 verified evidence files.",
+    "The round-3 repair of F1 is confirmed. The paper supporting-source locator now reads 'Paper landing page, published 10/7/2026; authors, abstract and HSS description.' It no longer claims a leaderboard link, and the paper page text indeed has none. The blog locator's leaderboard-link claim is supported by the blog's Resources section.",
+    "The PDF capture returned HTTP 403. The receipt is recorded and the PDF is not required. Every scoring, model, effort, metric and date field is supported by the official leaderboard HTML and the blog, so no unsupported field depends on the PDF.",
+    "The caveat entry (judged, field scoring.notes) uses a quote that matches scoring.notes verbatim. Taxonomy adds niche and capability for scale-hss only. The owner receipt reports pre-existing observations byte-equivalent and no dataset changes beyond benchmark_results, so existing ranks are unchanged."
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [
+    "Round-1 F1 (paper supporting-source locator claimed a leaderboard link that the paper landing page does not carry) is repaired in the final artifact."
+  ],
+  "uncertainties": [
+    "The stored .gz files and their hashes were not re-hashed here. Hash checks rest on the supplied receipts and the validator result.",
+    "The leaderboard page carries no date of its own. published_at 2026-10-07 is inherited from the blog and paper dates, which is reasonable, and the leaderboard is described as the launch-frozen release.",
+    "The leaderboard request redirected to labs.scale.com/leaderboard/hss. The observations cite the canonical scale.com/leaderboard/hss URL that the blog links, which is informational only.",
+    "The paper-page evidence excerpt cites 'paper/manifest.json' for the 403 PDF record. That file was not in the packet, but the equivalent PDF RECEIPT was supplied.",
+    "The effort labels (max, high, xhigh) conflict with the page's generic 'all high' statement. This is disclosed and preserved as published, and cross-model comparison at equal effort cannot be assumed."
+  ],
+  "missing_evidence": []
+}

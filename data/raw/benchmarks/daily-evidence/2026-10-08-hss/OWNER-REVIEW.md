@@ -1,0 +1,9 @@
+# HSS launch — CR-345 owner acceptance
+
+The third independent critic round passed using Claude Sonnet 5.5 at medium effort, separate from the OpenAI producer. The owner checked the verdict against the actual captured HTML, recomputed the frozen artifact hash and independently ran registry/evidence/score validation. The only actionable critic finding, in round 2, was a paper-page supporting-source locator that incorrectly said it linked the leaderboard; all 24 copies were corrected. Round 3's fixed list calls it round 1, a harmless review-history label error, not an unresolved data defect.
+
+All 24 included values and interval half-widths are numeric text, with explicit source model and effort labels. No graph measurements or independent model evaluations. Every observation retains model_id=null, so none changes an existing catalog score or rank. The generic settings paragraph contradicts some effort labels; this limitation and the unlabelled Fable 5.1 omission are visible in the registry description. Omitted catalog configurations remain unknown. The full 522 tasks never mix with the 388-task agentic subset.
+
+Primary capture receipts distinguish body SHA-256 (score provenance) from stored gzip SHA-256 (registry validation). Launch dates are supported by the 7 October blog and paper landing page; the leaderboard does not separately print a date. The PDF origin's robots/source request returned HTTP 403; the failure is retained, with no access restriction bypass. The successfully captured official leaderboard supplies the judge, metric, denominator and exact numeric rows needed for this addition.
+
+Round 1 left evidence gaps despite its claimed pass and was not accepted. Round 2 requested the locator repair and was not accepted. Round 3 has no findings or relevant missing evidence; only round 3 is accepted. This acceptance does not infer equal-effort comparability from the conflicting source settings.
