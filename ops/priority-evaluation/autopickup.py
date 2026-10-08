@@ -3863,7 +3863,7 @@ def health(effects: Effects) -> dict[str, Any]:
                                 "deadline": iso(deadline_for(row)),
                                 "sla_paused": bool(active_hold(row))})
         if row.get("evaluation_status") in ("pending", "failed", "exhausted") and now - paid > timedelta(minutes=45) \
-                and not active_hold(row) and not planned_review:
+                and not active_hold(row) and not (planned_review and now < deadline_for(row)):
             detail = f"; operational hold: {operational.get('reason') or 'unknown'}" if isinstance(operational, dict) else ""
             problems.append((f"eval:{rid}", f"order {ref}: evaluation not running ({row.get('evaluation_status')}){detail}"))
         for name, item in state["steps"].items():
