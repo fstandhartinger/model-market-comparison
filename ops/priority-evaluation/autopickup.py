@@ -4087,6 +4087,25 @@ def run_agent(job_dir: Path, env: dict[str, str], timeout_hint: int, *, read_onl
         if requires_claude_tools and engine not in ("claude", "codex"):
             atomic_write(job_dir / ".engine", f"unavailable: review/preparation requires the bounded tool allowlist ({engine})\n")
             raise static_agent.CapacityHold("no quota-eligible engine with the required static review boundary")
+    static_packet = None
+    if engine == "codex" and requires_claude_tools:
+        try:
+            static_packet = static_agent.packet(job_dir, file_authoring)
+        except static_agent.CapacityHold as exc:
+            # Preserve the static packet bound and all source/pin refusals. An oversized
+            # preparation can use the existing bounded Claude file-tool sandbox instead.
+            if not file_authoring or str(exc) != "static_source_packet_exceeds_review_capacity":
+                raise
+            picked = subprocess.run([str(HOME / "bin/quota-pace"), "pick", "--kind", "judgement",
+                                     "--order", "claude"], cwd=job_dir, env=env,
+                                    text=True, capture_output=True, timeout=60, check=False)
+            if picked.returncode or picked.stdout.strip() != "claude":
+                raise static_agent.CapacityHold("static_source_packet_exceeds_review_capacity") from None
+            engine = "claude"
+            atomic_write(job_dir / ".capacity-route.json", json.dumps({
+                "at": iso(utcnow()), "reason": str(exc), "from": "codex", "to": "claude",
+                "source_packet_omitted": False, "bounded_tools": "Read,Glob,Grep,Write",
+            }, indent=2) + "\n")
     admitted = subprocess.run([str(HOME / "bin/quota-pace"), "allow", engine, "--kind", "judgement"], cwd=job_dir,
                              env=env, text=True, capture_output=True, timeout=60, check=False)
     if admitted.returncode:
@@ -4094,7 +4113,7 @@ def run_agent(job_dir: Path, env: dict[str, str], timeout_hint: int, *, read_onl
     atomic_write(job_dir / ".engine", f"{engine} (quota-pace pick --kind judgement, {iso(utcnow())})\n")
     prompt = (HOME / "bin/job-preamble.txt").read_text(encoding="utf-8") + "\n" + (job_dir / "PROMPT.md").read_text(encoding="utf-8")
     if engine == "codex" and requires_claude_tools:
-        prompt += static_agent.packet(job_dir, file_authoring)
+        prompt += static_packet
     output_path = job_dir / "OUTPUT.md"
     if engine == "devin":
         prompt_path = job_dir / ".agent-prompt.md"
