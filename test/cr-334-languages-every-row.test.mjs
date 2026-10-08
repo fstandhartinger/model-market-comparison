@@ -44,8 +44,8 @@ test('language overlay changes no other dimension, preserves unknown rows and fr
   }
   assert.equal(base.language_cells, undefined);
   const catalogue = jevbenchCategoryView('v1.6.1', ['gliner2'], { supplement: true });
-  assert.ok(catalogue.missing.gliner2);
-  assert.equal(catalogue.systems.gliner2, undefined);
+  assert.match(catalogue.spokeExceptions.gliner2, /^Not measured on the current v1\.6 item pool/);
+  assert.ok(catalogue.systems.gliner2.topics.law_policy[1] >= 30);
   const unknown = { languages: {}, coverage: 'A4+P' };
   assert.equal(withLanguageCells({ ...before, systems: { ...before.systems, future: unknown } }).systems.future, unknown);
   assert.equal(languageCoverage({ sealed_basis: 'S', pool_ok: { A2: 300, A3: 300, L1: 2, L3: 0 } }), 'S+P+L1');

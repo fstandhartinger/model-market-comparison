@@ -1,3 +1,4 @@
+import spokeExceptions from '../data/jevbench-radar-spoke-exceptions.json';
 import { Fragment } from 'react';
 import { JevArchitectureMethod } from './JevArchitecture';
 import type { CSSProperties } from 'react';
@@ -6,7 +7,7 @@ import { jevV15LeaderSentence } from '../lib/jevbench-v15-preview.mjs';
 import { jevV15SliderPresets, jevV15BoardSystem, jevV15BoardRow, jevV15CompareRow } from '../lib/jevbench-v15-board.mjs';
 import type { JevV16ReleaseArtifact, JevV16Categories, JevV16Carry } from '../lib/jevbench-v16-release.mjs';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
-import { JEVBENCH_LANGUAGE_META, jevLanguageRows, languagePoolNote, jevbenchCategoryView, JEVBENCH_CELL_SUPPLEMENT_ARTIFACT } from '../lib/jevbench-categories.mjs';
+import { JEVBENCH_LANGUAGE_META, jevLanguageRows, languagePoolNote, jevbenchCategoryView, JEVBENCH_S_CATEGORY_CELLS_ARTIFACT } from '../lib/jevbench-categories.mjs';
 import { jevV15FilterRows } from '../lib/jevbench-v15-filter-rows.mjs';
 import { JevBenchV16Charts } from './JevBenchV16Charts';
 import { jevClassView } from './jevClassView';
@@ -29,6 +30,7 @@ import apiA4 from '../data/jevbench-api-a4-equated.json';
 // v1.6 aggregate artifact, and adds the main-pool language view, dated carry and the
 // rotation / API-exposure method. Carried v1.5.x rows never enter v1.6 rankings.
 
+const spokeReason = (key: string) => spokeExceptions.find((e) => e.key === key)?.reason;
 const one = (v: number | null | undefined) => v == null ? '—' : v.toFixed(1);
 const usd = (v: number | null | undefined) => v == null ? '—' : `$${v.toFixed(4)}`;
 const sec = (v: number | null | undefined) => v == null ? '—' : `${v.toFixed(2)} s`;
@@ -97,7 +99,7 @@ function LanguageView({ a, categories, hiddenApi, scope }: { scope: JevScope; a:
       <tbody>{systems.map((s, i) => <Fragment key={s.key}>
         {(s.listing as string) === 'wrapper' && (systems[i - 1]?.listing as string) !== 'wrapper' && <tr {...apiRowProps(s.key, hiddenApi)}><th colSpan={1 + (en ? 1 : 0) + langs.length} className="p-2 pt-4" scope="colgroup">Wrappers (listed, never ranked)</th></tr>}
         <tr data-bh-jev16-language-row={s.key} className="border-t border-line" {...apiRowProps(s.key, hiddenApi)}>
-        <th scope="row" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5 font-normal"><span className="block w-44 whitespace-normal sm:w-auto sm:whitespace-nowrap">{nameLabel(s.display, systems)}<span className="bh-muted"> · {laneTag(s)}</span><span className="bh-thin-tag ml-1" title="Measured item pools used for these language cells" data-bh-jev16-cell-coverage={coverageOf(categories, s.key)}>{coverageOf(categories, s.key)}</span></span></th>
+        <th scope="row" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5 font-normal"><span className="block w-44 whitespace-normal sm:w-auto sm:whitespace-nowrap">{nameLabel(s.display, systems)}<span className="bh-muted"> · {laneTag(s)}</span><span className="bh-thin-tag ml-1" title="Measured item pools used for these language cells" data-bh-jev16-cell-coverage={coverageOf(categories, s.key)}>{coverageOf(categories, s.key)}</span>{categories.supplement && spokeReason(s.key) && <span className="bh-muted block text-xs" data-bh-radar-spoke-exception={s.key}>{spokeReason(s.key)}</span>}</span></th>
         {[...(en ? [en] : []), ...langs].map((l) => {
           const c = categories.systems[s.key]?.languages?.[l.key];
           if (!c || c.n < minN) {
@@ -112,7 +114,7 @@ function LanguageView({ a, categories, hiddenApi, scope }: { scope: JevScope; a:
   </section>;
 }
 
-function DatedCarry({ carry, hiddenApi }: { carry: JevV16Carry; hiddenApi: ReadonlySet<string> }) {
+function DatedCarry({ carry, hiddenApi, showExceptions }: { carry: JevV16Carry; hiddenApi: ReadonlySet<string>; showExceptions: boolean }) {
   // Review 6 Oct 2026: the date counts follow the default view (hidden API rows are counted separately, and badged when shown).
   const byRelease = carry.releases.map((r) => ({ ...r, n: carry.rows.filter((row) => row.measured_revision === r.revision && !hiddenApi.has(row.key)).length })).filter((r) => r.n > 0);
   const shownByDefault = carry.rows.filter((r) => !hiddenApi.has(r.key)).length;
@@ -125,7 +127,7 @@ function DatedCarry({ carry, hiddenApi }: { carry: JevV16Carry; hiddenApi: Reado
       <caption className="sr-only">Carried JevBench v1.5.x results, not ranked with v1.6 measurements</caption>
       <thead><tr>{['System', 'Measured on', 'Capability (v1.5 scale)', 'v1.5 Composite', 'Cost / 1,000', 'Median latency'].map((h) => <th key={h} scope="col" className="p-2">{h}</th>)}</tr></thead>
       <tbody>{carry.rows.map((r) => <tr key={r.key} className="border-t border-line" data-bh-jev16-carry-row={r.key} {...apiRowProps(r.key, hiddenApi)}>
-        <th scope="row" className="p-2 font-normal"><a className="text-accent underline" href={r.source_url ?? r.repo ?? undefined}>{r.display}</a>{hiddenApi.has(r.key) && <span className="bh-thin-tag bh-flag-tag ml-1">API</span>}{r.note && <span className="bh-muted block text-xs">{r.note}</span>}</th>
+        <th scope="row" className="p-2 font-normal"><a className="text-accent underline" href={r.source_url ?? r.repo ?? undefined}>{r.display}</a>{hiddenApi.has(r.key) && <span className="bh-thin-tag bh-flag-tag ml-1">API</span>}{showExceptions && spokeReason(r.key) && <span className="bh-muted block text-xs" data-bh-radar-spoke-exception={r.key}>{spokeReason(r.key)}</span>}{r.note && <span className="bh-muted block text-xs">{r.note}</span>}</th>
         <td className="p-2 whitespace-nowrap">{r.measured_label}</td>
         <td className="p-2">{one(r.capability)}</td>
         <td className="p-2">{one(r.composite_v15)}{r.v156_rank != null && <span className="bh-muted"> · was #{r.v156_rank} on {r.carried_from}</span>}</td>
@@ -138,6 +140,7 @@ function DatedCarry({ carry, hiddenApi }: { carry: JevV16Carry; hiddenApi: Reado
 
 // v1.7.0 (Florian, 5 Oct 2026): open-weights board on /jev-models, API-provider board on /jev-models/api.
 export const JEV_BOARD_REVISIONS: { version: string; date: string; text: string }[] = [
+  { version: 'v1.7.18', date: '2026-10-08', text: `Languages and radars for every row. A new sealed supplement, L3 (1,118 items drawn on 7 Oct 2026: items written natively in 21 languages plus a mixed-language group, and English items for thin radar categories such as everyday language, safety and the "other" use case), gives every language at least 60 items on P ∪ L1 ∪ L2 ∪ L3 (before: as few as 4). The hosted API rows answered it: their language cells and their use-case and topic radars now rest on about 2,100 answered items (3,000 for rows that answered the full sealed set), with at least 69 on every spoke. Open-weights rows are being run on it in the current GPU wave and update as they finish. ${spokeExceptions.length} rows that do not reach 30 items on every spoke yet show the reason next to the row. Headline scores, Capability, Composite and every rank are unchanged.` },
   { version: 'v1.7.17', date: '2026-10-07', text: `Languages now includes every measured row on both boards, with wrappers listed below the models. ${languagePoolNote(JEVBENCH_LANGUAGE_META)} ${Object.values(apiRerunCells.systems as Record<string, { coverage: string; category_pools?: string }>).filter((r) => /^(A4|A5)\+P/.test(r.coverage) && r.category_pools?.includes("L1+L2")).length} API rows re-run on A4/A5 have answered L1/L2 supplements; their category radars count those items too. L3 coverage will follow when measured.` },
   { version: 'v1.7.16', date: '2026-10-07', text: 'Compare view, API board: subject-topic and use-case radars for OpenAI Decisions, the 17 API offerings re-run on A4 ∪ P and the classifier.dev wrapper. Their 600 new sealed items were labelled with the same recipe as every other item (Winnow-12B Q8 on our own GPU pod; uc1 items keep their authoring use case); values are raw and rest on 600 items (300 sealed), so more categories fall under the 30-item spoke minimum and are listed below the radar. Each of these rows also gets a breakdown section on its own page. Every live row now has all breakdown views, and a release check keeps it that way. No score, axis, cost or rank changed.' },
   { version: 'v1.7.15', date: '2026-10-07', text: 'Compare view, API board: OpenAI Decisions, the 17 API offerings re-run on A4 ∪ P and the classifier.dev wrapper now show competence per request type and per tier on the open and sealed items they answered (300 open + 300 sealed: fewer sealed items than the full set, so wider uncertainty; the view note says so), and Liquid AI d1 shows its subject-topic and use-case radars. Values are raw, computed from the stored per-item results with the same scorer as every other row. Subject-topic and use-case radars for the 600-item rows follow once their 600 new sealed items are labelled. No score, axis, cost or rank changed.' },
@@ -204,7 +207,7 @@ function Method({ categories, a, sha256, categoriesSha256, carrySha256, scope, h
     <h2 id="jev16-method-title" className="text-2xl font-bold">Method · {a.revision}</h2>
     {scope !== 'all' && <BoardSplit scope={scope} history={revisionHistory} preliminary={preliminary} />}
     <JevArchitectureMethod />
-    {categories.language_cells && <p className="bh-muted mt-2 text-sm" data-bh-jev-language-method>{languagePoolNote(categories.language_cells)} L3 is API-facing by design: its items are sent to hosted APIs and are therefore never reused in a headline draw.</p>}
+    {categories.language_cells && <p className="bh-muted mt-2 text-sm" data-bh-jev-language-method>{languagePoolNote(categories.language_cells)}</p>}
     {hiddenApi.size > 0 && <p className="bh-muted mt-2 text-xs" data-bh-jev-method-scope-note>Per-system method lists on this board cover the open-weights systems and the Jev reference; the hosted API offerings&apos; lists are on the <a className="text-accent underline" href="/jev-models/api#jev16-method">API leaderboard</a>.</p>}
     {amendments.length > 0 && <div data-bh-jev16-amendments>
       <h3 className="mt-4 text-lg font-semibold">Method amendments</h3>
@@ -256,7 +259,7 @@ function Method({ categories, a, sha256, categoriesSha256, carrySha256, scope, h
     </div>}
     <h3 className="mt-4 text-lg font-semibold">Provenance</h3>
     {measuredDays.length > 0 && <p className="bh-muted mt-1 text-sm" data-bh-jev16-measured-days>Measured on the v1.6 pool (run completion day, UTC): {measuredDays.map(([day, names]) => `${day}: ${names.join(', ')}`).join(' · ')}.</p>}
-    <p className="bh-muted mt-1 break-all text-xs">Aggregate files: results sha256 {sha256} · categories sha256 {categoriesSha256} · dated carry sha256 {carrySha256}{(a as unknown as { cellSupplementSha256?: string }).cellSupplementSha256 && <> · live language/use-case cell supplement (<code>{JEVBENCH_CELL_SUPPLEMENT_ARTIFACT}</code>) sha256 {(a as unknown as { cellSupplementSha256?: string }).cellSupplementSha256}</>}. Scoring source sha256 {a.source_sha256}. The method, release data and carry artifact are independently hashable.</p>
+    <p className="bh-muted mt-1 break-all text-xs">Aggregate files: results sha256 {sha256} · categories sha256 {categoriesSha256} · dated carry sha256 {carrySha256}{(a as unknown as { cellSupplementSha256?: string }).cellSupplementSha256 && <> · live category union (<code>{JEVBENCH_S_CATEGORY_CELLS_ARTIFACT}</code>) sha256 {(a as unknown as { cellSupplementSha256?: string }).cellSupplementSha256}</>}. Scoring source sha256 {a.source_sha256}. The method, release data and carry artifact are independently hashable.</p>
   </section>;
 }
 
@@ -530,7 +533,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
       {scope === 'open' && <div className="mt-10"><JevGpuCostCalculator systems={ranked.filter((s) => s.v16.lane !== 'api').map((s) => ({
         key: s.key, display: short(s.display), gpu: (s as { gpu?: string | null }).gpu ?? null, p50_s_raw: s.speed?.p50_s_raw ?? null,
         officialUsdPer1000: s.cost?.usd_per_1000 ?? null, ranked: !!s.ranked }))} /></div>}
-      <DatedCarry carry={carry} hiddenApi={hiddenApi} />
+      <DatedCarry carry={carry} hiddenApi={hiddenApi} showExceptions={Boolean(categories.supplement)} />
       <Method categories={categories} a={a} sha256={sha256} categoriesSha256={categoriesSha256} carrySha256={carrySha256} scope={scope} hiddenApi={hiddenApi} preliminary={preliminary} />
     </section>
   </JevV15FilterProvider>;

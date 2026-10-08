@@ -36,3 +36,60 @@ python3 scripts/jevbench-api-rerun-cells/build_api_rerun_cells.py EQUATED SUPPLE
 ```
 
 Run `python3 -m unittest discover -s scripts/jevbench-api-rerun-cells -p 'test_*.py'` for union/receipt/join checks.
+
+## v1.7.18 refresh (L3 includes C1)
+
+Run on Sandy in this order after the lead has reviewed the admitted complete runs. Choose **unused numeric**
+`LANG_N` and `CATS_N` snapshot numbers; existing sealed snapshots are immutable. These commands do no inference.
+L3's release contains C1 English category top-ups; do not add a separate C1 pool for these same items.
+
+```bash
+REPO=/home/flori/wt/jevbench-languages-full-20261007
+WORKERS=/home/flori/jobs/jevbench-languages-full-20261007/workers
+SEALED=/home/flori/jevbench-sealed/v1.6-run
+LANG_N=4  # choose a fresh unused number if this already exists
+CATS_N=2  # choose a fresh unused number if this already exists
+cd "$REPO"
+
+# 1. Language union; public-safe convenience copy excludes private provenance.
+"$WORKERS/lang-cells/tools/cells/rebuild.sh" "$LANG_N" --board-revision v1.7.18 --l3-drawn 2026-10-07
+cp "$WORKERS/lang-cells/language-cells.json" data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.1-language-cells.json
+
+# 2. Overlay category union. Per-type/tier cells retain their original measurement basis.
+python3 scripts/jevbench-api-rerun-cells/build_api_rerun_cells.py \
+  data/jevbench-api-a4-equated.json \
+  data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.1-cells-supplement.json \
+  "$WORKERS/site/r3-api-category-cells.json" \
+  --pool "L1=$SEALED/v1.6.0-L1" --pool "L2=$SEALED/v1.6.0-L2" \
+  --pool "L3=$SEALED/v1.6.0-L3" \
+  --label-file "$SEALED/v1.6.0-L3/labels/labels-l3-ruled.jsonl"
+cp "$WORKERS/site/r3-api-category-cells.json" data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.1-api-rerun-cells.json
+
+# 3. All S-based category unions, with newest overlay for the coverage report.
+"$WORKERS/cats-all/tools/cells/rebuild_cats.sh" "$CATS_N" --board-revision v1.7.18 \
+  --overlay-artifact "$WORKERS/site/r3-api-category-cells.json"
+# Read the builder's invariance and coverage report before accepting the output (see below).
+cp "$WORKERS/cats-all/category-cells.json" data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.1-category-cells.json
+
+# 4. Remove only exceptions whose actual displayed cells now meet all 27 >=30 spokes.
+# Never adds an exception: any new uncovered failure needs an evidenced, reviewed reason.
+node scripts/jevbench-radar-spokes.mjs --prune
+node --test test/cr-334-radar-spokes.test.mjs test/cr-334-languages-every-row.test.mjs
+python3 -m unittest discover -s scripts/jevbench-api-rerun-cells -p 'test_*.py'
+~/bin/heavy npx tsc --noEmit
+~/bin/heavy npm run build
+~/bin/heavy npm test
+```
+
+The S builder currently returns **exit 1** for its strict historical family-invariance check: the historical v1.7.12
+family cells use S+P, whereas this release explicitly requests the full S+P+L1+L2+L3 category union.
+It still writes the aggregate artifacts and report. The lead must verify `historical_schema_pass: true`, inspect
+all strict differences and accept the family-basis change before copying; do not suppress or treat exit 1 as a pass.
+`spoke_report.json` is a diagnostic; the release test reads the shipped cells themselves and the full live roster.
+A coverage reason in `data/jevbench-radar-spoke-exceptions.json` must have `{key, reason, since}` and is shown by
+row in Languages/full table/dated carry and in Compare. It must disappear as soon as the row meets the gate.
+The v1.7.12 supplement and frozen release remain untouched for historical pages.
+
+The final language caption computes every pool count, draw date and minimum P∪L1∪L2∪L3 language count from the
+language artifact. Confirm the refreshed minimum is 60 and the draw date is 2026-10-07 before releasing; the
+interim artifact is deliberately labelled with its actual counts. Headline release results and rankings do not change.
