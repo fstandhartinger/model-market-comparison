@@ -18,9 +18,11 @@ change the order record.
 {{SOURCE_PINS_JSON}}
 ```
 
-The exact source files for review are under `source/`; API-only runner files, when present, are
-under `trusted-runner/`. Host-fetched public provider pages (pricing, models, API reference) may be
-under `source/public-docs/` (pinned as `public_docs`, see `PUBLIC-DOCS-RECEIPT.json`); they are
+The exact source files for review are under `{{REQUEST_ROOT}}/source/` (`../source/`
+from this review directory); runner files, when present, are under `{{REQUEST_ROOT}}/trusted-runner/`
+(`../trusted-runner/`). Paths beginning `source/` or `trusted-runner/` below refer to the order root.
+Host-fetched public provider pages (pricing, models, API reference) may be
+under `{{REQUEST_ROOT}}/source/public-docs/` (pinned as `public_docs`, see `PUBLIC-DOCS-RECEIPT.json`); they are
 public tariff/API evidence, not customer source. `access` in the metadata is host-validated: a
 `held_privately_host_only` credential means the key is in host intake and `credential: "request"`
 is correct; the key itself is never shown to you. The fixed host measurement code pinned under

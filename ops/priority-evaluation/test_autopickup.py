@@ -977,6 +977,40 @@ class RefundDecisionTests(DatabaseTestCase):
 
 
 class AgentToolBoundaryTests(unittest.TestCase):
+    def test_static_claude_access_and_prompt_paths_are_fixed_and_do_not_include_home(self):
+        rid = str(uuid.uuid4())
+        args = ap.claude_file_access_args(rid)
+        self.assertEqual(args[0], '--settings')
+        self.assertEqual(args[2:], ['--setting-sources', 'user', '--strict-mcp-config', '--mcp-config', '{"mcpServers":{}}'])
+        permissions = json.loads(args[1])['permissions']
+        request_root = f'/home/flori/jobs/fastlane-evaluations/{rid}'
+        self.assertEqual(permissions['additionalDirectories'], [request_root, '/home/flori/official'])
+        self.assertEqual(set(permissions['allow']), {
+            'Read(//home/flori/AGENTS.md)', 'Read(//home/flori/DECISIONS.md)',
+            'Read(//home/flori/STATE.md)', 'Read(//home/flori/bin/job-preamble.txt)'})
+        self.assertNotIn('/home/flori', permissions['additionalDirectories'])
+        self.assertNotIn('--add-dir', args)
+        with self.assertRaises(ap.PickupError):
+            ap.claude_file_access_args('../other-order')
+        job = ap.JOB_ROOT / rid
+        job.mkdir(parents=True)
+        try:
+            order = {'id': rid, 'model_name': 'inert', 'benchmarks': ['jevbench']}
+            prep = ap.prepare_runner_prompt(order, job).read_text()
+            self.assertIn(request_root + '/source/', prep)
+            self.assertIn('`../source/`', prep)
+            self.assertIn('preparation outputs belong to this directory', prep)
+            self.assertIn(request_root + '/runner-prepare/trusted-runner/', prep)
+            self.assertNotIn('`runner-prepare/trusted-runner/`', prep)
+            with mock.patch.object(ap, 'source_review_pins', return_value={'fixture': True}):
+                ap.write_review_prompt(order, job)
+            review = (job / 'review/PROMPT.md').read_text()
+            self.assertIn(request_root + '/source/', review)
+            self.assertIn(request_root + '/trusted-runner/', review)
+            self.assertNotIn('{{REQUEST_ROOT}}', review)
+        finally:
+            shutil.rmtree(job, ignore_errors=True)
+
     @unittest.skipUnless(Path("/usr/bin/bwrap").is_file(), "bubblewrap is required")
     def test_evaluation_stage_claude_is_not_restricted_to_read_tools(self):
         # Order a35a4546 (2 Oct 2026): the release agent got only Read,Glob,Grep and could not write RESULT.json.
