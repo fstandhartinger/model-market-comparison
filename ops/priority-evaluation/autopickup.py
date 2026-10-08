@@ -1181,6 +1181,8 @@ is `held_privately_host_only`, the customer's key is already in host intake: use
 "request" and the origin of the host-validated `access.endpoint` (the fixed driver appends
 `/v1/systemone`). Host-fetched public provider pages (pricing, models, API reference), when
 present, are under `source/public-docs/` with `PUBLIC-DOCS-RECEIPT.json`; cite them for tariffs.
+Host `MODEL-WEIGHT-PINS.json` in that directory records exact pinned Git LFS shard hashes
+and sizes for recipe authoring; it is source identity evidence, never tariff evidence.
 OpenRouter is the fixed ZDR,
 no-fallback official route for text and Image; optional reasoning is low/medium/high. Use real
 public bookable tariffs. Request credentials stay in host intake; never put a key in this file.
@@ -5012,7 +5014,7 @@ def git(dest: Path, *args: str, stdin: str | None = None, timeout: int = 600,
         resource.setrlimit(resource.RLIMIT_FSIZE, (max_pack_bytes, max_pack_bytes))
 
     result = subprocess.run(["git", "-C", str(dest), *credential_config, "-c", "core.hooksPath=/dev/null", "-c", "protocol.file.allow=never",
-                             "-c", "submodule.recurse=false", *args],
+                             "-c", "submodule.recurse=false", "-c", "fetch.unpackLimit=1", "-c", "transfer.unpackLimit=1", *args],
                             input=stdin, text=True, capture_output=True, timeout=timeout, env=env, check=False,
                             preexec_fn=limit_git_files)
     if result.returncode:
@@ -5102,7 +5104,7 @@ def fetch_source(rid: str, which: str) -> dict[str, Any]:
         if CUSTOMER_FETCH_RE.search(exc.stderr or ""):
             raise FetchPermanentError(f"{which} source repository does not exist or is not accessible") from exc
         raise FetchInfraError(f"{which} source fetch failed: {(exc.stderr or '').splitlines()[-1][:160]}") from exc
-    except (PickupError, source_metadata.MetadataError) as exc:
+    except (PickupError, source_metadata.MetadataError, UnicodeError) as exc:
         if str(exc) == "could not resolve the repository head":
             raise FetchPermanentError(f"{which} source repository head could not be resolved") from exc
         raise FetchInfraError(str(exc)) from exc
