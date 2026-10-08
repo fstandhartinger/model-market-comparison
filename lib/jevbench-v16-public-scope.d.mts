@@ -1,1 +1,1 @@
-export function isJevbenchV16ExcludedKey(key: string): boolean;
+export function isJevbenchV16ExcludedKey(key: string, revision?: string): boolean;

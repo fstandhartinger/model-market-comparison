@@ -4,6 +4,16 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-10-08 — Completed JevBench submissions (CR-336)
+
+Adds 22 already-measured current-pool rows, including Aplomb 1, both measured
+decisio 12B versions, Watt Flash and Tacet Sonata. All existing scores and category
+cells are preserved. Unpriced APUS 35B, Seb 9B and the hosted BB submission are
+listed with no composite rank. Top-five changes are held for a separate approval.
+The API rows retain their hosted lane; self-hosted Aplomb is labelled with its
+measured revision and custom licence. The older TypeCastLM measurement is retained
+alongside the explicitly versioned 1.4.0 result.
+
 ## 2026-10-07 — Read-only JevBench MCP server and WebMCP tools (CR-335)
 
 New: `POST /api/mcp`, a stateless read-only MCP server (Streamable HTTP, JSON-RPC)

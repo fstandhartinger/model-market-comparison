@@ -1,6 +1,6 @@
 {
   "schema": "jevbench-architecture/1",
-  "checked_utc": "2026-10-07T00:00:00Z",
+  "checked_utc": "2026-10-08T00:00:00Z",
   "benchmarks": {
     "jevbench": {
       "autojev-27b": {
@@ -3906,6 +3906,321 @@
         "badges": {
           "derivation": "fine-tune",
           "params": "4B",
+          "quant": null
+        }
+      },
+      "aplomb-1": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/empiriolabsai/aplomb-1/blob/f8e2dc81f0505db21a3b7a933ea479658e4ebb8f/config.json",
+            "kind": "config.json",
+            "fact": "architectures Qwen3_5ForConditionalGeneration; model_type qwen3_5; checkpoint ships trained decision head and audio sidecar."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "5.3B",
+          "quant": null
+        }
+      },
+      "apus-openjev-v1-35b-a3b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/apus-ailab/APUS-OpenJev-v1-35B-A3B/blob/090388abe2237117cc3b4df6f4250e81cbb36864/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes apus-openjev-v1-35b-a3b; base_model: Qwen/Qwen3.5-35B-A3B."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "35B / 3B active",
+          "quant": null
+        }
+      },
+      "apus-openjev-v1-9b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/apus-ailab/APUS-OpenJev-v1-9B/blob/82c9c56cfa9de8d36704ed91948d4726ef111635/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes apus-openjev-v1-9b; base_model: Qwen/Qwen3.5-9B."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "9B",
+          "quant": null
+        }
+      },
+      "bb-qwen3.5-4b-lora": {
+        "arch": "system",
+        "evidence": [
+          {
+            "url": "https://github.com/fstandhartinger/jevbench/issues/156",
+            "kind": "repo-readme",
+            "fact": "Author-declared LoRA on Qwen3.5-4B-Base, exposed as hosted /v1/systemone."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "classone-gemma4-e2b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/devops-thiago/classone-gemma4-e2b/blob/cd502aa33d288e67f16937c2e125f2297ab7b4ad/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes classone-gemma4-e2b; base_model: google/gemma-4-E2B-it."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "E2B",
+          "quant": null
+        }
+      },
+      "classone-qwen3.5-9b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/devops-thiago/classone-qwen3.5-9b/blob/a45d16f1f5d1840a420f8ede59fa5cca3f079961/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes classone-qwen3.5-9b; base_model: Qwen/Qwen3.5-9B."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "9B",
+          "quant": null
+        }
+      },
+      "coco-decision-4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/corners-ai/CoCo-Decision-4B-Ko/blob/b580ede993493690212a07ed0e6cb972868cc808/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes coco-decision-4b; base_model: Qwen/Qwen3.5-4B."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "decisio-gemma-4-12b-v080": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://github.com/aminry/decisio/blob/5b42101a191d222062a795194b0aedb5003bf6ea/README.md",
+            "kind": "repo-readme",
+            "fact": "Pinned author card describes decisio-gemma-4-12b-v080; base_model: google/gemma-4-12B-it."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "12B",
+          "quant": null
+        }
+      },
+      "decisio-gemma-4-12b-v090": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://github.com/aminry/decisio/blob/333a0a849de7658969a8f8933b34a8097a8c3489/README.md",
+            "kind": "repo-readme",
+            "fact": "Pinned author card describes decisio-gemma-4-12b-v090; base_model: google/gemma-4-12B-it."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "12B",
+          "quant": null
+        }
+      },
+      "diffusion-jev": {
+        "arch": "open-diffusion-lm",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/google/diffusiongemma-26B-A4B-it/blob/f7f5b7f5fa82ffc52addd066915886d497f5517b/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes diffusion-jev; base_model: google/diffusiongemma-26B-A4B-it."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "26B / 4B active",
+          "quant": null
+        }
+      },
+      "exaone-4.0-1.2b-jev-v0.3": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/carrtesy/EXAONE-4.0-1.2B-JEV/blob/v0.3/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes exaone-4.0-1.2b-jev-v0.3; base_model: LGAI-EXAONE/EXAONE-4.0-1.2B."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "1.2B",
+          "quant": null
+        }
+      },
+      "hopper-12b-trained": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/HopitAI/hopper/blob/4b605f25eb903c2cf4d121040ffb097240b3bc37/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes hopper-12b-trained; base_model: google/gemma-4-12B-it."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "12B",
+          "quant": null
+        }
+      },
+      "janus-4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/cmxu/janus-4b/blob/fc86a8fbaa99de8dbac5aee46aaa56d1a853b876/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes janus-4b; base_model: Qwen/Qwen3.5-4B."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "jul-fast": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/usejul/jul-decision-minicpm5-2b/blob/f556a6936089693ea68bfed3080c637e4853a3ff/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes jul-fast; base_model: openbmb/MiniCPM5-2B."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "messier-one-v0.2": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/agentmessier/messier-one/blob/8bbddb84140e8fc732b35713f998ed628fc70306/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes messier-one-v0.2; base_model: Qwen/Qwen3.5-4B."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "seb-9b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/ironbcc/seb-9b/blob/ac57b36bbe978762032d0ad7197778b4bc4a0209/config.json",
+            "kind": "config.json",
+            "fact": "architectures Qwen3_5ForConditionalGeneration; model_type qwen3_5. Exact source checkpoint undisclosed in model-card metadata."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "9B",
+          "quant": null
+        }
+      },
+      "spx-cd-omni": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/SurdAI/SPX-CD-Omni/blob/06a786a13f2ce9b8d1b8f541cf030fae007008fb/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes spx-cd-omni; base_model: google/gemma-4-12B-it."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "12B",
+          "quant": null
+        }
+      },
+      "tacet-sonata": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/codepawl/tacet-sonata/blob/26f447c35881a80020fe557c95ceb8c61bc3fd12/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes tacet-sonata; base_model: jhu-clsp/mmBERT-small."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "144M",
+          "quant": null
+        }
+      },
+      "typecastlm-1.4.0": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/mihailgribov/typecastlm-qwen3.5-3.8b/blob/0984c3e832f7c28495134bc1d22c66bb0e0a555d/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes typecastlm-1.4.0; base_model: Qwen/Qwen3.5-4B."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "3.8B",
+          "quant": null
+        }
+      },
+      "watersheep": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/samratduttaofficial/WaterSheep/blob/ebf3705d2d9dc648d5cc6b4cbca7646c6ab48998/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes watersheep; base_model: answerdotai/ModernBERT-base."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "watt-flash-0.1": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/zaitlabs/watt-flash-0.1/blob/d49a3a880b0201b325f2d2299d4c36ffc8735477/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes watt-flash-0.1; base_model: jhu-clsp/mmBERT-small."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "140M",
           "quant": null
         }
       }
