@@ -1,0 +1,22 @@
+[
+  {
+    "id": "aa-tau3-banking::1.0.1",
+    "version": "1.0.1",
+    "version_guard": "Verify the published version 1.0.1 before reading results.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Backend database success, pass@1 averaged over five repeats",
+      "unit": "fraction",
+      "range": [
+        0,
+        1
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. Keep raw units; do not normalize before phase-05 validation."
+    },
+    "description": "Tests banking support agents that retrieve policies and change account state through tools.",
+    "maintainer": "Artificial Analysis"
+  }
+]

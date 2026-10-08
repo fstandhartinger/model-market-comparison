@@ -1,0 +1,22 @@
+[
+  {
+    "id": "aa-lcr::1.1",
+    "version": "1.1",
+    "version_guard": "Verify the published version 1.1 before reading results.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Equality-checker pass@1 correctness over three repeats",
+      "unit": "fraction",
+      "range": [
+        0,
+        1
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. Keep raw units; do not normalize before phase-05 validation."
+    },
+    "description": "Tests reasoning across multiple long documents with corrected answer keys and grading.",
+    "maintainer": "Artificial Analysis"
+  }
+]

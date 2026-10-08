@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "definition_version": "epoch-eci-2026-09-12",
-  "collected_at": "2026-10-07T14:05:57.802Z",
+  "collected_at": "2026-10-08T00:53:58.872Z",
   "source": {
     "provider": "Epoch AI",
     "license": "CC-BY",
@@ -9,13 +9,13 @@
       "general": "https://epoch.ai/data/eci_scores.csv",
       "performance": "https://epoch.ai/data/processed_data_for_eci.csv",
       "difficulties": "https://epoch.ai/data/edi_scores.csv",
-      "benchmark_catalog": "https://epoch.ai/_astro/benchmarks.-eWfLX-B.js"
+      "benchmark_catalog": "https://epoch.ai/_astro/benchmarks.oUv1lugA.js"
     },
     "sha256": {
       "general": "30844141e711b775a0970cbe0504d1d96f4abd8b8e86b7f9e24ecf70281de159",
       "performance": "84423df0ed6e137365e2d8039f54e16ddb1b4747f8b11793498416b4340c32fe",
       "difficulties": "f8d98e1088e763a1328037bd74b8181875b4f367feac76b81aa8df3b3b423879",
-      "benchmark_catalog": "422f39429dde862b119a3cb089d04366e9e050e98aed545ab5d5ff5ccfc4cd4e"
+      "benchmark_catalog": "12aab58816cbd9b473c35f0c9ecb58fec98f497a24f8624375b5613d5f37d4ce"
     },
     "note": "General ECI is copied from eci_scores.csv. Software engineering ECI is refit from the official processed performance export and EDI parameters using Epoch's public sigmoid least-squares method; at least two software benchmarks are required."
   },

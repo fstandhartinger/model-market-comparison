@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-aa-gdpval-2.1",
+  "artifact_sha256": "8379cfe55f41b7535223839ed9044d8def6e36f35e12e790424a27befda3cf21",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["aa-gdpval::2.1", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I am read-only and cannot recompute row hashes, verify source SHA-256 hashes, or execute transport/qualification checks; those are owner-executed and not numeric source evidence I can include.",
+    "The row's version_guard mentions that v2 values remain under registry id aa-gdpval::2; that successor board's registry entry is not in the packet, which is fine because neither criterion requires the successor entry's version for this row.",
+    "Row range [null,null] is the row declining to claim bounds; the served-value summary (lowest -406.07, highest 1866.24) does not contradict an unbounded claim, so no mismatch arises."
+  ],
+  "missing_evidence": []
+}

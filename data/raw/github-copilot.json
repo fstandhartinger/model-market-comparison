@@ -1,7 +1,7 @@
 {
   "source": "GitHub Copilot (current usage-based billing plus annual-plan legacy request billing)",
-  "collected_at": "2026-10-07",
-  "method": "scripts/fetch-github-copilot-catalog.mjs (2026-10-07): current_models[] = the intersection of the supported-models catalog table (https://docs.github.com/en/copilot/reference/ai-models/supported-models) and the per-token pricing tables (https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing), matched by exact name after footnote markers are removed; Default and Long context tiers are folded into one row (long_context carries the threshold and higher price); promotion end dates come from the pricing footnotes. models[] = the legacy annual-plan multiplier table (https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans) with effective USD per request = multiplier × per_premium_request_usd; the page's \"subject to change\" list sets the note. Plan allowances (plans[]) are documented on separate billing pages and keep plans_checked_at. See github-copilot.method.md.",
+  "collected_at": "2026-10-08",
+  "method": "scripts/fetch-github-copilot-catalog.mjs (2026-10-08): current_models[] = the intersection of the supported-models catalog table (https://docs.github.com/en/copilot/reference/ai-models/supported-models) and the per-token pricing tables (https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing), matched by exact name after footnote markers are removed; Default and Long context tiers are folded into one row (long_context carries the threshold and higher price); promotion end dates come from the pricing footnotes. models[] = the legacy annual-plan multiplier table (https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans) with effective USD per request = multiplier × per_premium_request_usd; the page's \"subject to change\" list sets the note. Plan allowances (plans[]) are documented on separate billing pages and keep plans_checked_at. See github-copilot.method.md.",
   "pricing_model": "ai_credits_per_token_with_legacy_per_premium_request",
   "ai_credit_usd": 0.01,
   "per_premium_request_usd": 0.04,
@@ -276,6 +276,24 @@
       "output_per_1m_usd": 5
     },
     {
+      "model_name": "Claude Haiku 5.5",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Lightweight",
+      "input_per_1m_usd": 0.1,
+      "cached_input_per_1m_usd": 0.01,
+      "cache_write_per_1m_usd": 0.125,
+      "output_per_1m_usd": 0.5,
+      "long_context": {
+        "input_per_1m_usd": 0.5,
+        "cached_input_per_1m_usd": 0.05,
+        "cache_write_per_1m_usd": 0.625,
+        "output_per_1m_usd": 2.5,
+        "threshold_input_tokens_gt": 100000
+      },
+      "mapping": "derived"
+    },
+    {
       "model_name": "Claude Opus 4.8",
       "provider_org": "Anthropic",
       "release_status": "GA",
@@ -343,7 +361,7 @@
       "release_status": "GA",
       "category": "Versatile",
       "input_per_1m_usd": 2,
-      "cached_input_per_1m_usd": 0.2,
+      "cached_input_per_1m_usd": 0.1,
       "cache_write_per_1m_usd": 2.5,
       "output_per_1m_usd": 10,
       "mapping": "derived"
@@ -750,14 +768,18 @@
     "Claude Sonnet 4.6 (2026-09-01)"
   ],
   "response_sha256": {
-    "supported": "944169bf3ed112bacb39b8bb82021b321563e9437f9e9583e55fbf846edc3b34",
-    "pricing": "820f3233f43cb768a464fb187ecb686949f19598303be1e220d3ce4a96bc5e7a",
-    "multipliers": "b8ce85f8a60364d1bd594578a87cb43c049d04e9af153de15932debac05e0c00"
+    "supported": "ca5fa817cc4bcb95e596093fd9785a5d583844725bde860c1ea19b97ee23d3ee",
+    "pricing": "511aa8aa25afd627387673f21a05159b564e23efae02271fbeebed23dfeea910",
+    "multipliers": "29be5fd46641b9a00632c1b0062c433add0162f7611dd4634b02fd783b148c88"
   },
   "diff": {
-    "current_added": [],
+    "current_added": [
+      "Claude Haiku 5.5"
+    ],
     "current_removed": [],
-    "current_price_changed": [],
+    "current_price_changed": [
+      "Claude Sonnet 5.5"
+    ],
     "legacy_added": [],
     "legacy_removed": [],
     "legacy_multiplier_changed": []

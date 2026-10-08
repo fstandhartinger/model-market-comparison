@@ -1,10 +1,10 @@
 {
   "source": "OVHcloud AI Endpoints",
   "region": "eu",
-  "collected_at": "2026-10-07",
+  "collected_at": "2026-10-08",
   "listing_url": "https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/",
-  "method": "scripts/fetch-ovhcloud-catalog.mjs (2026-10-07): one GET of the server-rendered AI Endpoints catalog; every card with both a '/Mtoken(input)' and a '/Mtoken(output)' EUR price is a text-generating LLM/VLM (embeddings, guards, speech, TTS and image generation have other units and are listed in skipped); curated rows kept by model_id or normalized name, new cards mapping=derived; USD = EUR × ECB daily reference rate, rounded to cents. EU-hosted, zero data retention apart from billing. See ovhcloud.method.md.",
-  "currency_note": "Original prices are EUR per 1 million tokens. USD = EUR * 1.1177, rounded to the nearest USD cent consistently across all rows. The official ECB reference-rate date is 2026-10-07, the latest rate published at collection time on 2026-10-07.",
+  "method": "scripts/fetch-ovhcloud-catalog.mjs (2026-10-08): one GET of the server-rendered AI Endpoints catalog; every card with both a '/Mtoken(input)' and a '/Mtoken(output)' EUR price is a text-generating LLM/VLM (embeddings, guards, speech, TTS and image generation have other units and are listed in skipped); curated rows kept by model_id or normalized name, new cards mapping=derived; USD = EUR × ECB daily reference rate, rounded to cents. EU-hosted, zero data retention apart from billing. See ovhcloud.method.md.",
+  "currency_note": "Original prices are EUR per 1 million tokens. USD = EUR * 1.1177, rounded to the nearest USD cent consistently across all rows. The official ECB reference-rate date is 2026-10-07, the latest rate published at collection time on 2026-10-08.",
   "usd_normalization": {
     "status": "applied",
     "eur_to_usd": 1.1177,
@@ -126,7 +126,7 @@
       "catalog_slug": "qwen-2-5-vl-72b-instruct"
     }
   ],
-  "response_sha256": "d1d4632547e953a14fc3f3a3b86e22ffd4a5456d4c10e6b0b15e308310690f4c",
+  "response_sha256": "da6261c0ea6ad1b3b4d4f582d902b2694ba81bc25a977003572aee1a7d551544",
   "skipped": [
     "Qwen3-Embedding-8B",
     "Qwen3Guard-Gen-8B",

@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-10-07T14:04:29.391Z",
+  "collected_at": "2026-10-08T00:52:36.528Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-10-07T14:04:28.777Z",
+      "fetched_at": "2026-10-08T00:52:35.616Z",
       "http_status": 200,
-      "bytes": 4049592,
-      "sha256": "8dd7c06003e556a9fbadbc2810054485729a2ecf98f060f21f8e5dd385ed3196"
+      "bytes": 4089947,
+      "sha256": "aa6fd91987df329891e94dd98ef8c0bac68c79a6da488ec3ecb61f93204f4fb7"
     }
   ],
   "coverage": {
-    "published_rows": 197,
-    "scored_denominator": 682,
+    "published_rows": 202,
+    "scored_denominator": 687,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 197,
+  "count": 202,
   "rows": [
     {
       "source_id": "8215372b-66ff-457b-855e-e8abeafc9571",
@@ -266,6 +266,116 @@
         "basis": "derived",
         "input_output_ratio": 34.791832873527284,
         "reasoning_output_share": 0.562747737027452
+      }
+    },
+    {
+      "source_id": "7d064a11-6e78-4030-b535-cdf940615041",
+      "slug": "claude-haiku-5-5",
+      "name": "Claude Haiku 5.5 (Max)",
+      "variant": "max",
+      "tokens_per_task": {
+        "reasoning": 129046.55340843403,
+        "answer": 33117.63980014857,
+        "output": 162164.1932085826
+      },
+      "canonical_token_counts": {
+        "input": 7733951589,
+        "output": 435183286,
+        "answer": 37597675,
+        "reasoning": 397585611
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 17.771710995812462,
+        "reasoning_output_share": 0.7957771124137667
+      }
+    },
+    {
+      "source_id": "20829974-af06-497e-9f42-77fb958d43b9",
+      "slug": "claude-haiku-5-5-high",
+      "name": "Claude Haiku 5.5 (High)",
+      "variant": "high",
+      "tokens_per_task": {
+        "reasoning": 36975.197053208336,
+        "answer": 18412.621942920476,
+        "output": 55387.818996128815
+      },
+      "canonical_token_counts": {
+        "input": 2817459714,
+        "output": 97096318,
+        "answer": 24244235,
+        "reasoning": 72852083
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 29.01716328728346,
+        "reasoning_output_share": 0.6675691103813389
+      }
+    },
+    {
+      "source_id": "42908ae3-d3bd-4934-be19-fbff93d3fde8",
+      "slug": "claude-haiku-5-5-low",
+      "name": "Claude Haiku 5.5 (Low)",
+      "variant": "low",
+      "tokens_per_task": {
+        "reasoning": 9231.375881062662,
+        "answer": 8054.286459229995,
+        "output": 17285.662340292656
+      },
+      "canonical_token_counts": {
+        "input": 844160517,
+        "output": 32289694,
+        "answer": 14226885,
+        "reasoning": 18062809
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 26.143342114050384,
+        "reasoning_output_share": 0.5340481434457067
+      }
+    },
+    {
+      "source_id": "af26fff4-8120-41be-a5f0-86aaea023f20",
+      "slug": "claude-haiku-5-5-medium",
+      "name": "Claude Haiku 5.5 (Medium)",
+      "variant": "medium",
+      "tokens_per_task": {
+        "reasoning": 19690.171248342453,
+        "answer": 13122.38540438134,
+        "output": 32812.5566527238
+      },
+      "canonical_token_counts": {
+        "input": 1635720213,
+        "output": 53785057,
+        "answer": 19009683,
+        "reasoning": 34775374
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 30.412168439274872,
+        "reasoning_output_share": 0.6000803733990036
+      }
+    },
+    {
+      "source_id": "41b5bf5e-daf6-42d9-b8d1-60e340a3028d",
+      "slug": "claude-haiku-5-5-xhigh",
+      "name": "Claude Haiku 5.5 (Xhigh)",
+      "variant": "xhigh",
+      "tokens_per_task": {
+        "reasoning": 65707.88425503818,
+        "answer": 23685.990532884036,
+        "output": 89393.87478792222
+      },
+      "canonical_token_counts": {
+        "input": 4454825207,
+        "output": 179986858,
+        "answer": 29496266,
+        "reasoning": 150490592
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 24.750836013816077,
+        "reasoning_output_share": 0.7350378805138874
       }
     },
     {
