@@ -61,6 +61,8 @@ JOB_ROOT = Path(os.environ.get("FASTLANE_JOB_ROOT") or HOME / "jobs/fastlane-eva
 SHARE_ROOT = Path(os.environ.get("FASTLANE_SHARE_ROOT") or HOME / ".local/share/priority-evaluation")
 MAIL_TOOL = HOME / ".claude/skills/email-access/mail_tool.py"
 MAIL_SECRET_FILE = HOME / ".config/dev-secrets.env"
+AUTHOR_MESSAGE_GUARD = HOME / "bin/author-message-guard"
+AUTHOR_GUARD_TIMEOUT_S = 60
 STRIPE_ENV_FILE = HOME / ".config/stripe/stripe.env"
 REPO = "fstandhartinger/model-market-comparison"
 SITE = "https://benchmarkheaven.com"
@@ -575,6 +577,12 @@ class Effects:
     def mail(self, to: str, subject: str, body: str, *, outbox_id: str | None = None) -> tuple[bool, str]:
         if not MAIL_RE.fullmatch(to):
             return False, "invalid_recipient"
+        # Binding policy: the exact outbound text passes the host author guard before the mail
+        # tool is loaded or any credential is read, for dry runs and real sends alike.
+        guard_error = author_message_guard(subject, body)
+        if guard_error:
+            self.record("mail", subject=subject, dry_run=self.dry_run, ok=False, error=guard_error)
+            return False, guard_error
         # The recipient and body never reach a command line: the tool is loaded in-process.
         spec = importlib.util.spec_from_file_location("fastlane_mail_tool", MAIL_TOOL)
         if spec is None or spec.loader is None:
@@ -688,6 +696,34 @@ class Effects:
                 return response.read(limit)
         except Exception as exc:
             raise PickupError("public page lookup failed") from exc
+
+
+def author_guard_text(subject: str, body: str) -> str:
+    return f"Subject: {subject}\n\n{body}"
+
+
+def author_message_guard(subject: str, body: str) -> str | None:
+    """Run ~/bin/author-message-guard on the exact subject and body; None only when it passes.
+
+    The text goes through a private temporary file whose path is the only argument; no shell is
+    involved. A missing guard, an exception, a timeout or any nonzero exit fails closed.
+    """
+    guard = AUTHOR_MESSAGE_GUARD
+    try:
+        if not guard.is_file() or not os.access(guard, os.X_OK):
+            return "author_guard_missing"
+        with tempfile.TemporaryDirectory(prefix="fastlane-author-guard-") as scratch:
+            path = Path(scratch) / "message.txt"
+            fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+            with os.fdopen(fd, "w", encoding="utf-8", newline="") as handle:
+                handle.write(author_guard_text(subject, body))
+            result = subprocess.run([str(guard), str(path)], stdin=subprocess.DEVNULL, capture_output=True,
+                                    text=True, timeout=AUTHOR_GUARD_TIMEOUT_S, check=False)
+    except subprocess.TimeoutExpired:
+        return "author_guard_timeout"
+    except Exception:
+        return "author_guard_error"
+    return None if result.returncode == 0 else "author_guard_refused"
 
 
 def read_env_value(path: Path, name: str) -> str:
@@ -2224,7 +2260,8 @@ def result_message(row: dict[str, Any], summary: dict[str, Any]) -> tuple[str, s
     for item in summary["results"]:
         name = BENCHMARK_NAMES[item["benchmark"]]
         if summary["visibility"] == "public":
-            lines.append(f"{name} {item['version']}: #{item['rank']} of {item['n_ranked']}, score {item['score']:.2f} — {item['public_url']}")
+            # Scores and URLs only: author mail makes no placement or rank claim.
+            lines.append(f"{name} {item['version']}: score {item['score']:.2f} — {item['public_url']}")
         else:
             lines.append(f"{name} ({item['version']} method): score {item['score']:.2f}")
     template = "autopickup-result-public-template.txt" if summary["visibility"] == "public" else "autopickup-result-private-template.txt"
