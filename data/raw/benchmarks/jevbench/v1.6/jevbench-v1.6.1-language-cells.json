@@ -1,6 +1,6 @@
 {
   "benchmark": "JevBench",
-  "board_revision": "v1.7.24",
+  "board_revision": "v1.7.25",
   "drawn": "2026-10-07",
   "kind": "language-cells",
   "languages": [
@@ -513,7 +513,7 @@
       ]
     }
   },
-  "source_sha256": "0482b5a75d0ffdb67f60e20a26080d9ee0515b0da9758ca4b64351728c6dd057",
+  "source_sha256": "677cbad7d1831657ea7ce4d34537e4bc8193e8a566fc530fa30f04b89dec319d",
   "systems": {
     "aplomb-1": {
       "coverage": "S+P",
@@ -19847,55 +19847,55 @@
       "sealed_basis": "S"
     },
     "openjev-verdict": {
-      "coverage": "S+P+L3",
+      "coverage": "S+P+L1+L2+L3",
       "languages": {
         "ar": {
           "competence": 0.0,
-          "coverage_n": 43,
-          "n": 43,
+          "coverage_n": 71,
+          "n": 71,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 43
+          "response_n": 71
         },
         "cs": {
           "competence": 0.0,
-          "coverage_n": 56,
-          "n": 56,
+          "coverage_n": 75,
+          "n": 75,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 56
+          "response_n": 75
         },
         "da": {
           "competence": 0.0,
-          "coverage_n": 62,
-          "n": 62,
+          "coverage_n": 83,
+          "n": 83,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 62
+          "response_n": 83
         },
         "de": {
           "competence": 0.0,
-          "coverage_n": 81,
-          "n": 81,
+          "coverage_n": 84,
+          "n": 84,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 81
+          "response_n": 84
         },
         "el": {
           "competence": 0.0,
-          "coverage_n": 44,
-          "n": 44,
+          "coverage_n": 65,
+          "n": 65,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 44
+          "response_n": 65
         },
         "en": {
           "competence": 0.0,
-          "coverage_n": 1292,
-          "n": 1292,
+          "coverage_n": 1306,
+          "n": 1306,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 1292
+          "response_n": 1306
         },
         "es": {
           "competence": 0.0,
@@ -19907,83 +19907,83 @@
         },
         "fi": {
           "competence": 0.0,
-          "coverage_n": 49,
-          "n": 49,
+          "coverage_n": 73,
+          "n": 73,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 49
+          "response_n": 73
         },
         "fr": {
           "competence": 0.0,
-          "coverage_n": 66,
-          "n": 66,
+          "coverage_n": 80,
+          "n": 80,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 66
+          "response_n": 80
         },
         "hi": {
           "competence": 0.0,
-          "coverage_n": 55,
-          "n": 55,
+          "coverage_n": 72,
+          "n": 72,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 55
+          "response_n": 72
         },
         "id": {
           "competence": 0.0,
-          "coverage_n": 44,
-          "n": 44,
+          "coverage_n": 71,
+          "n": 71,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 44
+          "response_n": 71
         },
         "it": {
+          "competence": 0.0,
+          "coverage_n": 83,
+          "n": 83,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 83
+        },
+        "ja": {
+          "competence": 0.0,
+          "coverage_n": 80,
+          "n": 80,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 80
+        },
+        "ko": {
+          "competence": 0.0,
+          "coverage_n": 77,
+          "n": 77,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 77
+        },
+        "mixed": {
+          "competence": 0.0,
+          "coverage_n": 78,
+          "n": 78,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 78
+        },
+        "nl": {
+          "competence": 0.0,
+          "coverage_n": 72,
+          "n": 72,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 72
+        },
+        "no": {
           "competence": 0.0,
           "coverage_n": 69,
           "n": 69,
           "operational_failure_n": 0,
           "refusal_n": 0,
           "response_n": 69
-        },
-        "ja": {
-          "competence": 0.0,
-          "coverage_n": 67,
-          "n": 67,
-          "operational_failure_n": 0,
-          "refusal_n": 0,
-          "response_n": 67
-        },
-        "ko": {
-          "competence": 0.0,
-          "coverage_n": 58,
-          "n": 58,
-          "operational_failure_n": 0,
-          "refusal_n": 0,
-          "response_n": 58
-        },
-        "mixed": {
-          "competence": 0.0,
-          "coverage_n": 62,
-          "n": 62,
-          "operational_failure_n": 0,
-          "refusal_n": 0,
-          "response_n": 62
-        },
-        "nl": {
-          "competence": 0.0,
-          "coverage_n": 49,
-          "n": 49,
-          "operational_failure_n": 0,
-          "refusal_n": 0,
-          "response_n": 49
-        },
-        "no": {
-          "competence": 0.0,
-          "coverage_n": 47,
-          "n": 47,
-          "operational_failure_n": 0,
-          "refusal_n": 0,
-          "response_n": 47
         },
         "pl": {
           "competence": 0.0,
@@ -19995,46 +19995,48 @@
         },
         "pt": {
           "competence": 0.0,
-          "coverage_n": 87,
-          "n": 87,
+          "coverage_n": 90,
+          "n": 90,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 87
+          "response_n": 90
         },
         "sv": {
           "competence": 0.0,
-          "coverage_n": 53,
-          "n": 53,
+          "coverage_n": 75,
+          "n": 75,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 53
+          "response_n": 75
         },
         "tr": {
           "competence": 0.0,
-          "coverage_n": 56,
-          "n": 56,
+          "coverage_n": 75,
+          "n": 75,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 56
+          "response_n": 75
         },
         "uk": {
           "competence": 0.0,
-          "coverage_n": 53,
-          "n": 53,
+          "coverage_n": 73,
+          "n": 73,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 53
+          "response_n": 73
         },
         "zh": {
           "competence": 0.0,
-          "coverage_n": 42,
-          "n": 42,
+          "coverage_n": 70,
+          "n": 70,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 42
+          "response_n": 70
         }
       },
       "pool_ok": {
+        "L1": 354,
+        "L2": 33,
         "L3": 1118,
         "P": 300,
         "S": 1200
@@ -28022,82 +28024,197 @@
       "sealed_basis": "S"
     },
     "watt-flash-0.1": {
-      "coverage": "S+P",
+      "coverage": "S+P+L1+L2+L3",
       "languages": {
-        "da": {
+        "ar": {
           "competence": 0.0,
-          "coverage_n": 22,
-          "n": 22,
+          "coverage_n": 71,
+          "n": 71,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 22
+          "response_n": 71
+        },
+        "cs": {
+          "competence": 0.0,
+          "coverage_n": 75,
+          "n": 75,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 75
+        },
+        "da": {
+          "competence": 0.0,
+          "coverage_n": 83,
+          "n": 83,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 83
         },
         "de": {
           "competence": 0.0,
-          "coverage_n": 27,
-          "n": 27,
+          "coverage_n": 84,
+          "n": 84,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 27
+          "response_n": 84
+        },
+        "el": {
+          "competence": 0.0,
+          "coverage_n": 65,
+          "n": 65,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 65
         },
         "en": {
           "competence": 0.0,
-          "coverage_n": 1160,
-          "n": 1160,
+          "coverage_n": 1306,
+          "n": 1306,
           "operational_failure_n": 0,
           "refusal_n": 23,
-          "response_n": 1137
+          "response_n": 1283
         },
         "es": {
           "competence": 0.0,
-          "coverage_n": 31,
-          "n": 31,
+          "coverage_n": 95,
+          "n": 95,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 31
+          "response_n": 95
+        },
+        "fi": {
+          "competence": 0.0,
+          "coverage_n": 73,
+          "n": 73,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 73
         },
         "fr": {
           "competence": 0.0,
-          "coverage_n": 16,
-          "n": 16,
+          "coverage_n": 80,
+          "n": 80,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 16
+          "response_n": 80
+        },
+        "hi": {
+          "competence": 0.0,
+          "coverage_n": 72,
+          "n": 72,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 72
+        },
+        "id": {
+          "competence": 0.0,
+          "coverage_n": 71,
+          "n": 71,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 71
         },
         "it": {
           "competence": 0.0,
-          "coverage_n": 17,
-          "n": 17,
+          "coverage_n": 83,
+          "n": 83,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 17
+          "response_n": 83
         },
         "ja": {
           "competence": 0.0,
-          "coverage_n": 17,
-          "n": 17,
+          "coverage_n": 80,
+          "n": 80,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 17
+          "response_n": 80
+        },
+        "ko": {
+          "competence": 0.0,
+          "coverage_n": 77,
+          "n": 77,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 77
+        },
+        "mixed": {
+          "competence": 0.0,
+          "coverage_n": 78,
+          "n": 78,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 78
+        },
+        "nl": {
+          "competence": 0.0,
+          "coverage_n": 72,
+          "n": 72,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 72
+        },
+        "no": {
+          "competence": 0.0,
+          "coverage_n": 69,
+          "n": 69,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 69
         },
         "pl": {
           "competence": 0.0,
-          "coverage_n": 31,
-          "n": 31,
+          "coverage_n": 88,
+          "n": 88,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 31
+          "response_n": 88
         },
         "pt": {
           "competence": 0.0,
-          "coverage_n": 29,
-          "n": 29,
+          "coverage_n": 90,
+          "n": 90,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 29
+          "response_n": 90
+        },
+        "sv": {
+          "competence": 0.0,
+          "coverage_n": 75,
+          "n": 75,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 75
+        },
+        "tr": {
+          "competence": 0.0,
+          "coverage_n": 75,
+          "n": 75,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 75
+        },
+        "uk": {
+          "competence": 0.0,
+          "coverage_n": 73,
+          "n": 73,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 73
+        },
+        "zh": {
+          "competence": 0.0,
+          "coverage_n": 70,
+          "n": 70,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 70
         }
       },
       "pool_ok": {
+        "L1": 354,
+        "L2": 33,
+        "L3": 1118,
         "P": 297,
         "S": 1180
       },
