@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "checked_utc": "2026-10-07T00:00:00Z",
+  "checked_utc": "2026-10-08T00:00:00Z",
   "benchmarks": {
     "jevbench": {
       "cygnet": {
@@ -1592,6 +1592,270 @@
         ],
         "cr": "CR-324",
         "checked_utc": "2026-10-07T00:00:00Z"
+      },
+      "aplomb-1": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/empiriolabsai/aplomb-1/blob/f8e2dc81f0505db21a3b7a933ea479658e4ebb8f/README.md",
+            "title": "Pinned author model card",
+            "evidence": "Measurement registry records declared base Qwen/Qwen3.5-4B."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "apus-openjev-v1-35b-a3b": {
+        "label": "Qwen/Qwen3.5-35B-A3B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/apus-ailab/APUS-OpenJev-v1-35B-A3B/blob/090388abe2237117cc3b4df6f4250e81cbb36864/README.md",
+            "title": "Pinned author model card",
+            "evidence": "Pinned model card metadata: base_model: Qwen/Qwen3.5-35B-A3B."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "apus-openjev-v1-9b": {
+        "label": "Qwen/Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/apus-ailab/APUS-OpenJev-v1-9B/blob/82c9c56cfa9de8d36704ed91948d4726ef111635/README.md",
+            "title": "Pinned author model card",
+            "evidence": "Pinned model card metadata: base_model: Qwen/Qwen3.5-9B."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "bb-qwen3.5-4b-lora": {
+        "label": "Qwen/Qwen3.5-4B-Base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/fstandhartinger/jevbench/issues/156",
+            "title": "Author submission",
+            "evidence": "Declared Qwen3.5-4B-Base with revision 1001bb4d."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "classone-gemma4-e2b": {
+        "label": "google/gemma-4-E2B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/devops-thiago/classone-gemma4-e2b/blob/cd502aa33d288e67f16937c2e125f2297ab7b4ad/README.md",
+            "title": "Pinned author model card",
+            "evidence": "Pinned model card metadata: base_model: google/gemma-4-E2B-it."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "classone-qwen3.5-9b": {
+        "label": "Qwen/Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/devops-thiago/classone-qwen3.5-9b/blob/a45d16f1f5d1840a420f8ede59fa5cca3f079961/README.md",
+            "title": "Pinned author model card",
+            "evidence": "Pinned model card metadata: base_model: Qwen/Qwen3.5-9B."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "coco-decision-4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/corners-ai/CoCo-Decision-4B-Ko/blob/b580ede993493690212a07ed0e6cb972868cc808/README.md",
+            "title": "Pinned author model card",
+            "evidence": "Pinned model card metadata: base_model: Qwen/Qwen3.5-4B."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "decisio-gemma-4-12b-v080": {
+        "label": "google/gemma-4-12B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/aminry/decisio/blob/5b42101a191d222062a795194b0aedb5003bf6ea/README.md",
+            "title": "Pinned decisio README",
+            "evidence": "Published profile selects google/gemma-4-12B-it."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "decisio-gemma-4-12b-v090": {
+        "label": "google/gemma-4-12B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/aminry/decisio/blob/333a0a849de7658969a8f8933b34a8097a8c3489/README.md",
+            "title": "Pinned decisio README",
+            "evidence": "Published profile selects google/gemma-4-12B-it."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "diffusion-jev": {
+        "label": "google/diffusiongemma-26B-A4B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/google/diffusiongemma-26B-A4B-it/blob/f7f5b7f5fa82ffc52addd066915886d497f5517b/README.md",
+            "title": "Pinned author model card",
+            "evidence": "Measurement registry records declared base google/diffusiongemma-26B-A4B-it."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "evalengine-decision-4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/evalengine/decision-4b/blob/facac5a59ae44c94edc8d75e135a4fd278c85dc9/README.md",
+            "title": "Pinned source Decision-4B model card",
+            "evidence": "Card metadata base_model: Qwen/Qwen3.5-4B; library_name peft, lora tag."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "exaone-4.0-1.2b-jev-v0.3": {
+        "label": "LGAI-EXAONE/EXAONE-4.0-1.2B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/carrtesy/EXAONE-4.0-1.2B-JEV/blob/v0.3/README.md",
+            "title": "Pinned author model card",
+            "evidence": "Pinned model card metadata: base_model: LGAI-EXAONE/EXAONE-4.0-1.2B."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "hopper-12b-trained": {
+        "label": "google/gemma-4-12B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/HopitAI/hopper/blob/4b605f25eb903c2cf4d121040ffb097240b3bc37/README.md",
+            "title": "Pinned author model card",
+            "evidence": "Pinned model card metadata: base_model: google/gemma-4-12B-it."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "janus-4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/cmxu/janus-4b/blob/fc86a8fbaa99de8dbac5aee46aaa56d1a853b876/README.md",
+            "title": "Pinned author model card",
+            "evidence": "Pinned model card metadata: base_model: Qwen/Qwen3.5-4B."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "jul-fast": {
+        "label": "openbmb/MiniCPM5-2B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/usejul/jul-decision-minicpm5-2b/blob/f556a6936089693ea68bfed3080c637e4853a3ff/README.md",
+            "title": "Pinned author model card",
+            "evidence": "Pinned model card metadata: base_model: openbmb/MiniCPM5-2B."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "messier-one-v0.2": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/agentmessier/messier-one/blob/8bbddb84140e8fc732b35713f998ed628fc70306/README.md",
+            "title": "Pinned author model card",
+            "evidence": "Measurement registry records declared base Qwen/Qwen3.5-4B."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "seb-9b": {
+        "label": "Undisclosed",
+        "status": "undisclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/ironbcc/seb-9b/blob/ac57b36bbe978762032d0ad7197778b4bc4a0209/README.md",
+            "title": "Pinned author model card",
+            "evidence": "No declared base is recorded in the measurement registry."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "spx-cd-omni": {
+        "label": "google/gemma-4-12B-it",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/SurdAI/SPX-CD-Omni/blob/06a786a13f2ce9b8d1b8f541cf030fae007008fb/README.md",
+            "title": "Pinned author model card",
+            "evidence": "Pinned model card metadata: base_model: google/gemma-4-12B-it."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "tacet-sonata": {
+        "label": "jhu-clsp/mmBERT-small",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/codepawl/tacet-sonata/blob/26f447c35881a80020fe557c95ceb8c61bc3fd12/README.md",
+            "title": "Pinned author model card",
+            "evidence": "Pinned model card metadata: base_model: jhu-clsp/mmBERT-small."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "typecastlm-1.4.0": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/mihailgribov/typecastlm-qwen3.5-3.8b/blob/0984c3e832f7c28495134bc1d22c66bb0e0a555d/README.md",
+            "title": "Pinned author model card",
+            "evidence": "Pinned model card metadata: base_model: Qwen/Qwen3.5-4B."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "watersheep": {
+        "label": "answerdotai/ModernBERT-base",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/samratduttaofficial/WaterSheep/blob/ebf3705d2d9dc648d5cc6b4cbca7646c6ab48998/README.md",
+            "title": "Pinned author model card",
+            "evidence": "Pinned model card metadata: base_model: answerdotai/ModernBERT-base."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
+      },
+      "watt-flash-0.1": {
+        "label": "jhu-clsp/mmBERT-small",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/zaitlabs/watt-flash-0.1/blob/d49a3a880b0201b325f2d2299d4c36ffc8735477/README.md",
+            "title": "Pinned author model card",
+            "evidence": "Pinned model card metadata: base_model: jhu-clsp/mmBERT-small."
+          }
+        ],
+        "checked_utc": "2026-10-08T00:00:00Z"
       }
     },
     "imagejevbench": {

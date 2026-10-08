@@ -38,7 +38,7 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
   const a4Count = merged === release_ ? 0 : merged.systems.filter((s) => (s as { a4?: unknown }).a4).length;
   const publishedKeys = new Set([...published.systems, ...published.not_measured, ...publishedCarry.rows].map((row) => row.key));
   const missingPrevious = [...previous.artifact.systems, ...previous.artifact.not_measured]
-    .filter((row) => !isJevbenchV16ExcludedKey(row.key) && !publishedKeys.has(row.key));
+    .filter((row) => !isJevbenchV16ExcludedKey(row.key, revision) && !publishedKeys.has(row.key));
   if (missingPrevious.length) throw new Error(`JevBench ${revision} catalogue omits public prior rows: ${missingPrevious.map((row) => row.key).join(', ')}`);
   const isApi = jevScopeClassifier(published.systems, publishedCarry.rows, previous.artifact.systems, previous.artifact.not_measured);
   const scoped = jevbenchScopeArtifact(published, scope, isApi);
@@ -92,6 +92,6 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
     </header>
     <JevBenchV16Board artifact={artifact} sha256={sha256} categories={categories} categoriesSha256={categoriesSha256}
       carry={carry} carrySha256={carrySha256} scope={scope} apiKeys={apiKeys} apiListed={apiListed}
-      previousKeys={[...previous.artifact.systems, ...previous.artifact.not_measured].filter((row: { key: string }) => !isJevbenchV16ExcludedKey(row.key)).map((row: { key: string }) => row.key)} />
+      previousKeys={[...previous.artifact.systems, ...previous.artifact.not_measured].filter((row: { key: string }) => !isJevbenchV16ExcludedKey(row.key, revision)).map((row: { key: string }) => row.key)} />
   </>;
 }

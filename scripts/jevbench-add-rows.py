@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new self-hosted rows to the published JevBench v1.6.1 board without changing any published row.
+"""Add new same-pool rows to the published JevBench v1.6.1 board without changing any published row.
 
 The new rows were measured on the same frozen v1.6 pool as the published field (same items, same scorer, same fixed G_med), so
 they are added to jevbench-v1.6.1-results.json / -categories.json as an addendum (revision stays v1.6.1; v1.6.2 is reserved for
@@ -148,8 +148,9 @@ def build_row(key, srow, meta, decisive, scorer_sha, label):
     v16.pop('breakdowns', None)  # the per-category aggregates ship in the categories file
     if v16.get('full_set_api') is False:
         v16.pop('full_set_api')  # published self-hosted rows do not carry the key
-    if v16.get('lane') != 'selfhosted' or row.get('api_flag') or row.get('status', {}).get('rows') != 1500:
-        fail(f'{key}: only complete self-hosted rows (1,500 items) can be added')
+    full_api = v16.get('lane') == 'api' and v16.get('full_set_api') is True and not v16.get('equated')
+    if (v16.get('lane') != 'selfhosted' and not full_api) or row.get('status', {}).get('rows') != 1500:
+        fail(f'{key}: only complete same-pool rows (1,500 items; full-set APIs unequated) can be added')
     for f in META_FIELDS:
         if f not in meta:
             fail(f'{key}: meta lacks {f}')
@@ -193,6 +194,7 @@ def main():
     ap.add_argument('--post-registry')
     ap.add_argument('--post-runs')
     ap.add_argument('--dry-run', action='store_true', help='validate and report, write nothing')
+    ap.add_argument('--reuse-metadata', nargs='*', default=[], help='Keep existing architecture/base provenance for historically listed keys')
     args = ap.parse_args()
     keys = args.keys
     if len(set(keys)) != len(keys):
@@ -222,7 +224,9 @@ def main():
         if k not in metas:
             fail(f'{k} has no entry in the meta file')
         # a published not_measured roster row keeps its existing architecture/base-model entries
-        check_entries(k, metas[k], architecture, base_models, roster=k in roster_keys)
+        if k in args.reuse_metadata and (k not in architecture['benchmarks']['jevbench'] and k not in base_models['benchmarks']['jevbench']):
+            fail(f'{k}: no existing metadata to reuse')
+        check_entries(k, metas[k], architecture, base_models, roster=k in roster_keys or k in args.reuse_metadata)
 
     bad = check_reproduction(pub, scorer, pub_cats, scorer_cats)
     if bad:
@@ -256,13 +260,14 @@ def main():
     cats = json.loads(json.dumps(pub_cats))
     for k in keys:
         cats['systems'][k] = scorer_cats['systems'][k]
-        cats['lanes'][k] = 'selfhosted'
+        cats['lanes'][k] = scorer_rows[k]['v16']['lane']
 
     for k in keys:
-        if k in roster_keys and k in architecture['benchmarks']['jevbench']:
-            continue
-        architecture['benchmarks']['jevbench'][k] = metas[k]['architecture']
-        base_models['benchmarks']['jevbench'][k] = {**metas[k]['base_model'], 'checked_utc': f'{args.date}T00:00:00Z'}
+        keep = k in roster_keys or k in args.reuse_metadata
+        if not (keep and k in architecture['benchmarks']['jevbench']):
+            architecture['benchmarks']['jevbench'][k] = metas[k]['architecture']
+        if not (keep and k in base_models['benchmarks']['jevbench']):
+            base_models['benchmarks']['jevbench'][k] = {**metas[k]['base_model'], 'checked_utc': f'{args.date}T00:00:00Z'}
     architecture['checked_utc'] = base_models['checked_utc'] = f'{args.date}T00:00:00Z'
 
     print(f'{len(keys)} rows: ' + ', '.join(f'{k} (rank {next(s for s in res["systems"] if s["key"] == k).get("rank")})' for k in keys))

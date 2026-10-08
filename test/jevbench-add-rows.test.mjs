@@ -32,8 +32,15 @@ test('every addendum keeps the published rows and cells unchanged and is complet
     for (const key of add.keys) {
       const s = rows.get(key);
       assert.ok(s, `${key} is a result row`);
-      assert.equal(s.ranked, true, key);
-      assert.equal(s.v16.lane, 'selfhosted', key);
+      if (!s.ranked) {
+        assert.equal(s.scores.A, null, `${key}: incomplete pricing stays unranked`);
+        assert.ok(s.not_ranked_because, `${key}: unranked reason disclosed`);
+      }
+      assert.ok(['selfhosted', 'api'].includes(s.v16.lane), key);
+      if (s.v16.lane === 'api') {
+        assert.equal(s.v16.full_set_api, true, `${key}: same frozen full set`);
+        assert.ok(!s.v16.equated, `${key}: full-set API is not equated`);
+      }
       assert.equal(s.status.rows, 1500, key);
       assert.equal(s.v16.breakdowns, undefined, `${key}: per-category aggregates ship in the categories file`);
       for (const f of REQUIRED) assert.ok(s[f] !== undefined, `${key}.${f}`);
@@ -42,7 +49,7 @@ test('every addendum keeps the published rows and cells unchanged and is complet
       const cells = categories.systems[key];
       assert.ok(cells, `${key} has category cells`);
       for (const dim of ['topics', 'usecases', 'families', 'languages']) assert.ok(Object.keys(cells[dim]).length >= 3, `${key}.${dim}`);
-      assert.equal(categories.lanes[key], 'selfhosted', key);
+      assert.equal(categories.lanes[key], s.v16.lane, key);
       assert.ok(architecture[key]?.evidence?.length, `${key} architecture entry`);
       assert.ok(baseModels[key]?.label && baseModels[key].sources?.length, `${key} base-model entry`);
     }
