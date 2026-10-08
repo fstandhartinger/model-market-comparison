@@ -31,10 +31,13 @@ def main(argv=None):
             or not 0 < ttl <= 3 or not 0 < budget <= 20 or not 0 < maximum <= 5):
         raise ValueError('bounded rent parameters exceed original caps')
     from lium.sdk import Lium
-    from lium.cli.cli import main as cli_main
+    from lium.cli.cli import cli
     Lium.rent = bounded_rent(Lium.rent, maximum, gpu, count)
+    def no_legacy_up(*args, **kwargs):
+        raise ValueError('uncapped legacy provider up is disabled')
+    Lium.up = no_legacy_up
     # This retains CLI provider TTL scheduling, budget, ready wait and JSON result.
-    cli_main(args=['up', '--gpu', gpu, '-c', str(count), '--ttl', f'{ttl}h',
+    cli.main(args=['up', '--gpu', gpu, '-c', str(count), '--ttl', f'{ttl}h',
                    '--budget', f'{budget:.2f}', '-y', '--json'], prog_name='lium')
 
 
