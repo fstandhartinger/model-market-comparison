@@ -88,6 +88,9 @@ SOURCE_URL_RE = re.compile(
     r"/(?P<path>[A-Za-z0-9][A-Za-z0-9._-]{0,99}/[A-Za-z0-9][A-Za-z0-9._-]{0,99})"
     r"(?:\.git)?(?:/(?:tree|commit)/(?P<ref>[0-9a-f]{40}))?/?$"
 )
+# Explicit operator authorization: only the paid Aplomb1 source-access recovery.
+# Never grant the account token to arbitrary customer-submitted repositories.
+HF_SOURCE_AUTH_REPOSITORIES = frozenset({"empiriolabsai/aplomb-1"})
 HOLD_REASONS = ("customer_access", "customer_reply", "customer_request")
 # Florian, 3 Oct 2026: a fixable customer-source review failure keeps the order and its payment.
 # The order waits on this hold (the 48-hour clock is paused) until the customer resubmits.
@@ -4646,14 +4649,32 @@ def gate(rid: str) -> tuple[bool, str]:
     return True, "ok"
 
 
-def git(dest: Path, *args: str, stdin: str | None = None, timeout: int = 600) -> str:
+def git(dest: Path, *args: str, stdin: str | None = None, timeout: int = 600,
+        hf_repository: str | None = None) -> str:
     env = {"PATH": "/usr/bin:/bin", "HOME": "/nonexistent", "GIT_TERMINAL_PROMPT": "0", "GIT_LFS_SKIP_SMUDGE": "1",
            "GIT_CONFIG_NOSYSTEM": "1", "GIT_CONFIG_GLOBAL": "/dev/null", "GIT_CONFIG_SYSTEM": "/dev/null",
            "GIT_ATTR_NOSYSTEM": "1", "LANG": "C.UTF-8"}
+    credential_config: list[str] = []
+    if hf_repository is not None:
+        if hf_repository not in HF_SOURCE_AUTH_REPOSITORIES:
+            raise PickupError("Hugging Face source repository is not authorized for account credentials")
+        if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,99}/[A-Za-z0-9][A-Za-z0-9._-]{0,99}", hf_repository):
+            raise PickupError("invalid scoped Hugging Face repository")
+        if not args or args[0] not in ("ls-remote", "fetch", "checkout"):
+            raise PickupError("Hugging Face credentials limited to source fetch")  # checkout: lazy blob fetch of the partial clone
+        token_file = HOME / ".cache/huggingface/token"
+        helper_file = Path(__file__).resolve().parent / "hf_git_credential.py"
+        env["HF_CREDENTIAL_TOKEN_FILE"] = str(token_file)
+        env["HF_CREDENTIAL_REPOSITORY"] = hf_repository
+        env["GIT_ALLOW_PROTOCOL"] = "https"
+        # Empty helper first prevents inheritance. Git invokes this trusted helper only;
+        # the token is never part of argv, inherited environment, or model source mounts.
+        credential_config = ["-c", "credential.helper=", "-c", "credential.useHttpPath=true", "-c", "http.followRedirects=false",
+                             "-c", "credential.helper=!/usr/bin/python3 -I " + shlex.quote(str(helper_file))]
     def limit_git_files() -> None:
         resource.setrlimit(resource.RLIMIT_FSIZE, (MAX_SOURCE_PACK_BYTES, MAX_SOURCE_PACK_BYTES))
 
-    result = subprocess.run(["git", "-C", str(dest), "-c", "core.hooksPath=/dev/null", "-c", "protocol.file.allow=never",
+    result = subprocess.run(["git", "-C", str(dest), *credential_config, "-c", "core.hooksPath=/dev/null", "-c", "protocol.file.allow=never",
                              "-c", "submodule.recurse=false", *args],
                             input=stdin, text=True, capture_output=True, timeout=timeout, env=env, check=False,
                             preexec_fn=limit_git_files)
@@ -4699,19 +4720,26 @@ def fetch_source(rid: str, which: str) -> dict[str, Any]:
     config += f'\n[remote "origin"]\n\turl = {url}\n\tfetch = +refs/heads/*:refs/remotes/origin/*\n'
     config_path.write_text(config, encoding="utf-8")
     try:
-        remote_head = git(dest, "ls-remote", "--symref", "origin", "HEAD", timeout=120)
+        remote_head = git(dest, "ls-remote", "--symref", "origin", "HEAD", timeout=120,
+                          hf_repository=match.group("path") if match.group("host") == "huggingface.co"
+                          and match.group("path") in HF_SOURCE_AUTH_REPOSITORIES else None)
         head = next((line.split("\t")[0] for line in remote_head.splitlines() if line.endswith("\tHEAD") and not line.startswith("ref:")), "")
         target = commit or head
         if not SHA40_RE.fullmatch(target):
             raise PickupError("could not resolve the repository head")
         # Fetch trees without blobs, then materialise only code, documentation and manifests.
         # The per-file limit is a final guard if a server ignores the partial-clone filter.
-        git(dest, "fetch", "--quiet", "--depth=1", "--filter=blob:none", "--no-tags", "origin", target, timeout=1800)
+        git(dest, "fetch", "--quiet", "--depth=1", "--filter=blob:none", "--no-tags", "origin", target, timeout=1800,
+            hf_repository=match.group("path") if match.group("host") == "huggingface.co"
+                          and match.group("path") in HF_SOURCE_AUTH_REPOSITORIES else None)
         git(dest, "cat-file", "--batch-check", stdin=target + "\n")
         git(dest, "update-ref", "--no-deref", "--stdin", stdin=f"update HEAD {target}\n")
         git(dest, "sparse-checkout", "init", "--no-cone")
         git(dest, "sparse-checkout", "set", "--no-cone", *REVIEW_GIT_PATTERNS)
-        git(dest, "checkout", "--detach", "-q", target)
+        # Partial clone: checkout lazily fetches the blobs, so it needs the same scoped credential.
+        git(dest, "checkout", "--detach", "-q", target,
+            hf_repository=match.group("path") if match.group("host") == "huggingface.co"
+                          and match.group("path") in HF_SOURCE_AUTH_REPOSITORIES else None)
         resolved = git(dest, "rev-parse", "HEAD").strip()
         if resolved != target:
             raise PickupError("checked-out commit does not match the requested commit")
