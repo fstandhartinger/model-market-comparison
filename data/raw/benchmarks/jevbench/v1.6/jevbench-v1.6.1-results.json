@@ -71,15 +71,19 @@
   "bootstrap_seed": 16,
   "g_med_fixed": true
  },
- "n_ranked": 127,
+ "n_ranked": 135,
  "board": {
   "A": {
    "order": [
     "sage-1.3.0",
     "h2o-lightning-4b",
+    "mercury-decide",
+    "decisio-gemma-4-31b-v080",
     "jev-1.13.0",
     "quyet-1-0-large",
+    "decider-12b",
     "wity-1",
+    "decider-12b-v1",
     "torchcast-decision-12b",
     "winnow-12b",
     "deck31b",
@@ -88,16 +92,20 @@
     "decisio-gemma-4-12b-v090",
     "jev-omni",
     "xor-26b-a4b",
+    "bobcat-flash-1.2",
+    "spx-cd-flash",
     "decider-chat-gemma4-31b",
     "hopper-12b-trained",
     "surogate-rune-26b-a4b-v3-v16",
     "gev-26b-decide",
     "spx-cd-omni",
     "diffusion-jev",
+    "rene-1-31b-fp8",
     "aplomb-1",
     "bespoke-nimble-9b-v3",
     "apus-openjev-v1-9b",
     "plumb-4b",
+    "spx-cd-pro",
     "messier-one-v0.2",
     "spark-s1-4b-v6",
     "swanone",
@@ -210,15 +218,21 @@
    "order": [
     "sage-1.3.0",
     "quyet-1-0-large",
+    "decisio-gemma-4-31b-v080",
+    "mercury-decide",
     "wity-1",
     "jev-1.13.0",
     "h2o-lightning-4b",
     "deck31b",
+    "decider-12b",
+    "decider-12b-v1",
     "torchcast-decision-12b",
+    "bobcat-flash-1.2",
     "winnow-12b",
     "xor-26b-a4b",
     "cygnet",
     "jev-omni",
+    "spx-cd-flash",
     "decider-chat-gemma4-31b",
     "decisio-gemma-4-12b-v080",
     "decisio-gemma-4-12b-v090",
@@ -227,8 +241,10 @@
     "gev-26b-decide",
     "spx-cd-omni",
     "diffusion-jev",
+    "rene-1-31b-fp8",
     "bespoke-nimble-9b-v3",
     "aplomb-1",
+    "spx-cd-pro",
     "apus-openjev-v1-9b",
     "plumb-4b",
     "swanone",
@@ -343,21 +359,29 @@
    "order": [
     "sage-1.3.0",
     "h2o-lightning-4b",
+    "mercury-decide",
+    "decisio-gemma-4-31b-v080",
     "jev-1.13.0",
     "quyet-1-0-large",
+    "decider-12b",
     "wity-1",
+    "decider-12b-v1",
     "torchcast-decision-12b",
     "deck31b",
     "winnow-12b",
+    "bobcat-flash-1.2",
     "xor-26b-a4b",
+    "spx-cd-flash",
     "decider-chat-gemma4-31b",
     "jev-omni",
     "cygnet",
     "surogate-rune-26b-a4b-v3-v16",
+    "rene-1-31b-fp8",
     "decisio-gemma-4-12b-v080",
     "decisio-gemma-4-12b-v090",
     "diffusion-jev",
     "hopper-12b-trained",
+    "spx-cd-pro",
     "bespoke-nimble-9b-v3",
     "gev-26b-decide",
     "spx-cd-omni",
@@ -990,7 +1014,7 @@
     "A": 1,
     "B": 1,
     "C": 1,
-    "capability": 6
+    "capability": 8
    },
    "scores": {
     "A": 74.04992179175468,
@@ -1339,9 +1363,9 @@
    "ranked": true,
    "ranks": {
     "A": 2,
-    "B": 5,
+    "B": 7,
     "C": 2,
-    "capability": 12
+    "capability": 15
    },
    "scores": {
     "A": 72.5232271521435,
@@ -1527,6 +1551,725 @@
    "addendum": null,
    "api_flag": true,
    "api_subset": false,
+   "author": "Inception (API, free on OpenRouter) - Florian work order, 6 Oct 2026",
+   "axes": {
+    "calibration": 81.34341651168008,
+    "cost": 62.08313746631354,
+    "intelligence": 65.90701345473542,
+    "speed": 85.47752366478576
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.11045316563089375,
+      "ece_score": 77.90936687382126,
+      "mean_tvd": null,
+      "n": 737,
+      "n_ece_hard": 307,
+      "n_tvd": 0,
+      "score": 77.90936687382126
+     },
+     "noul": {
+      "abstention_rate": 0.10242587601078168,
+      "brier": 0.10151182638394682,
+      "ece": 0.08813961357701941,
+      "n": 371,
+      "score": 82.37207728459612
+     },
+     "score": {
+      "interval90_coverage": 0.8753387533875339,
+      "interval90_width": 0.1458897922312557,
+      "n": 369,
+      "nrps": 0.06239733540901056,
+      "score": 83.74880537662287,
+      "top_ece": 0.13131327852926614
+     }
+    },
+    "score": 81.34341651168008
+   },
+   "capability": 73.62521498320774,
+   "composite_ci95": {
+    "A": [
+     69.93954261051735,
+     73.87316393178861
+    ],
+    "B": [
+     67.79015712351674,
+     72.99152541270097
+    ],
+    "C": [
+     69.74081685972264,
+     73.87316393178861
+    ]
+   },
+   "cost": {
+    "basis": "LABELLED ESTIMATE, not charged - and nothing WAS charged: usage.cost is 0 on every one of the 1,500 calls. Inception publishes NO paid tariff for Mercury Decide: OpenRouter lists it free-only (prompt 0, completion 0) and the non-free slug inception/mercury-decide has no endpoints at all (404 'No endpoints found', read 7 Oct 2026), so there is nothing bookable. Because the system is API-only with undisclosed weights, the open rows' size-class estimate table cannot apply either. The row is therefore priced from THE SAME OPERATOR'S cheapest published per-token tariff on the SAME platform, inception/mercury-2.5 at USD 0.04 per 1M input and USD 0.15 per 1M output, which IS a key in the frozen 25 Sep snapshot - x this row's own measured tokens. Output tokens are 3 per decision on average (4,434 over 1,477 answers) because the probability is read from the model rather than written out, so the output rate is nearly inert and the Cost axis is set by the input rate alone. RELEASE-LANE LINE, recorded and not acted on, and it is RUN 57'S SHAPE EXACTLY - one mapping line, not a new price: the rate inception/mercury-2.5 (0.04, 0.15) is already IN the dated snapshot; what is missing is only a base-model decision line pointing at it, so pricing_v15.reference() raises on every inception/* string. receipts/COST-ALTERNATIVES-R58.json has the two alternatives' arithmetic already done.",
+    "common_basis": {
+     "n_items": 1477,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.01807942666666667
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.018360961408259987
+   },
+   "display": "Mercury Decide (Inception; System One decisions API, served free on OpenRouter as inception/mercury-decide:free)",
+   "endpoint_kind": "api",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 67.12906498043914,
+    "I_sealed": 64.68496192903172,
+    "base": 65.90701345473542,
+    "excess": -0.12928459103081957,
+    "gap": 2.4441030514074242,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 79.71168908755723,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 92.21621621621622,
+       "hard": 81.12614029569046,
+       "judge": 80.22412656558997,
+       "standard": 69.8618668899121
+      }
+     },
+     "open|noul": {
+      "cc": 58.71014492753623,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 100.0,
+       "hard": 82.6086956521739,
+       "judge": 30.000000000000004,
+       "standard": 33.33333333333333
+      }
+     },
+     "open|score": {
+      "cc": 62.96536092622397,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 62.561695179434636,
+       "hard": 63.165822850913635,
+       "judge": 76.80814242854491,
+       "standard": 42.0020976967579
+      }
+     },
+     "sealed|choice": {
+      "cc": 74.09139259954716,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 77.38526346907102,
+       "hard": 68.43891402714931,
+       "judge": 79.51582867783985,
+       "standard": 75.61276019214189
+      }
+     },
+     "sealed|noul": {
+      "cc": 57.27197132719671,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 87.99999999999999,
+       "hard": 35.92233009708738,
+       "judge": 65.78947368421053,
+       "standard": 71.83098591549295
+      }
+     },
+     "sealed|score": {
+      "cc": 62.691521860351266,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 69.70067055435705,
+       "hard": 51.597448628789465,
+       "judge": 70.50916076191972,
+       "standard": 69.64863562411932
+      }
+     }
+    }
+   },
+   "jevbench_score": 72.36824049637728,
+   "key": "mercury-decide",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 3,
+   "ranked": true,
+   "ranks": {
+    "A": 3,
+    "B": 4,
+    "C": 3,
+    "capability": 19
+   },
+   "scores": {
+    "A": 72.36824049637728,
+    "B": 70.97659528968215,
+    "C": 72.36824049637728
+   },
+   "speed": {
+    "adjustment": "none (API)",
+    "n": 124,
+    "p50_s_adjusted": 0.33213604614138603,
+    "p50_s_raw": 0.33213604614138603,
+    "p95_s_adjusted": 0.8529658075422044,
+    "p95_s_raw": 0.8529658075422044
+   },
+   "status": {
+    "answered_ok": 1477,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "api_subset_tag": null,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      76.84031884046848,
+      84.00969333082946
+     ],
+     "I": [
+      60.19803361460591,
+      70.00098427505237
+     ],
+     "capability": [
+      69.08542722449891,
+      76.48291495498401
+     ],
+     "composite": {
+      "A": [
+       69.93954261051735,
+       73.87316393178861
+      ],
+      "B": [
+       67.79015712351674,
+       72.99152541270097
+      ],
+      "C": [
+       69.74081685972264,
+       73.87316393178861
+      ]
+     },
+     "seed": 91
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "full_set_api": true,
+    "g_med_used": 2.573387642438244,
+    "lane": "api",
+    "metric_basis": "S u P (full set, API lane, v1.6.1 amendment; not equated)",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 81.34341651168008,
+     "capability": 73.62521498320774,
+     "intelligence": 65.90701345473542
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.808,
+      "calibration": 77.90936687382126,
+      "cc": 75.44594223354774,
+      "cc_by_type": {
+       "choice": 75.44594223354774
+      },
+      "cc_tiered": 76.9015408435522,
+      "cc_tiered_open": 79.71168908755723,
+      "cc_tiered_sealed": 74.09139259954716,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 75.44594223354774
+     },
+     "noul": {
+      "accuracy": 0.8026666666666666,
+      "calibration": 82.37207728459612,
+      "cc": 60.53333333333333,
+      "cc_by_type": {
+       "noul": 60.53333333333333
+      },
+      "cc_tiered": 57.99105812736647,
+      "cc_tiered_open": 58.71014492753623,
+      "cc_tiered_sealed": 57.27197132719671,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 60.53333333333333
+     },
+     "score": {
+      "accuracy": 0.712,
+      "calibration": 83.74880537662287,
+      "cc": 62.21714605598172,
+      "cc_by_type": {
+       "score": 62.21714605598172
+      },
+      "cc_tiered": 62.82844139328762,
+      "cc_tiered_open": 62.96536092622397,
+      "cc_tiered_sealed": 62.691521860351266,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 62.21714605598172
+     }
+    },
+    "raw_on_A": null,
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.01733333333333331,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.010666666666666713,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.016000000000000014,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 69.80103192778668,
+    "Emphasis on Accuracy 60:20:20": 68.18948202584015,
+    "Emphasis on Cost 20:20:60": 66.49451324072818,
+    "Emphasis on Speed 20:60:20": 75.32698952826067,
+    "Intelligence only": 65.90701345473542
+   },
+   "class": "Hosted decision API",
+   "open": "closed weights",
+   "licence": null,
+   "repo": "https://openrouter.ai/inception/mercury-decide:free",
+   "gpu": null,
+   "endpoint_condition": "measured 2026-10-07 on the live v1.6.0/v1.6.1 pool (inputs/input-selfhosted-1500.jsonl, sha256 901983ae...), COMPLETE: 1,500 of 1,500 dispatched, 1,477 answered, 23 invalid. Measured through the release lane's reviewed run_api_full_v161.py UNCHANGED, on Florian's 5 Oct amendment (hosted systems answer the same full S u P as self-hosted ones); provider inception, proxy openrouter, every sealed item exposure-logged before the first request. Florian work order of 6 Oct 2026 ('put it on JevBench', under https://x.com/airesearch12/status/2107569862486659111). NO MAPPING DECISION OF OURS: Mercury Decide publishes the same /v1/systemone contract as Jev and all three primitives come back in the canonical shape (noul a float; choice a label plus probabilities keyed by the item's own option labels; score probabilities keyed by level index '0'..'n-1' - 0-based, unlike ClassOne's), so the vendored typesafe adapter's request body, answer mapping and validations are reused UNCHANGED. or_decisions_r58.OpenRouterDecisionsAdapter rewrites ONLY the URL, because OpenRouter serves the contract at POST /api/alpha/decisions rather than /v1/systemone - its own 400 from chat/completions names that path - and it does so by calling the parent run(), so none of the reviewed mapping is duplicated. The pinned harness/vendor tree was NOT edited; the module is reached by PYTHONPATH. THE 23 LONG ITEMS: on this pool exactly 23 of 1,500 items are 77,857-82,318 tokens and the 24th largest is below 2,048 (run 57's own per-item counts on the identical pool, receipt LONGITEM-TOKENS-R58.json). They are also the 23 items the v1.6.1 cost rule excludes. THIS ROW REFUSES THEM: the context window is 32,768 tokens and all 23 came back as HTTP 422 with the provider's own 'upstream_error: Decision service could not complete the request' - a disclosed refusal, which the harness counts as the system's own rather than as an outage. The invalid set is EXACTLY those 23 and nothing else failed in 1,477 answers. RUN IN TWO PASSES BECAUSE OF A FREE-TIER BURST LIMIT, AND IT DOES NOT MOVE THE SPEED FIGURE: items 1-736 ran back to back at ~1.7 req/s until OpenRouter returned a header-less 429 ('rate_limit_exceeded: Request or spending limit exceeded'), which is run_v16's own stop rule; the row was resumed at 1 req/s and completed. The two passes' medians differ by 0.038 s (0.3624 s vs 0.3246 s over 1,477 answers; 0.3624 vs 0.3104 on the 124 items the Speed axis actually uses), and run_v16 sleeps the spacing BEFORE starting the timer, so the pacing is not in the measurement. Receipt LATENCY-SEGMENTS-mercury-R58.txt. Production API, so NO latency adjustment. Serial, one decision per request, no retry, no batching. add-requests run 58",
+   "underlying": null,
+   "model_pin": "provider-reported measurement model slug: inception/mercury-decide:free",
+   "last_measured_on": "2026-10-07",
+   "adapter_id": null,
+   "alt": null,
+   "measurement_date_status": "run output completion day (UTC)",
+   "measured_in": "v1.6.1",
+   "not_ranked_because": null,
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.8975741239892183,
+    "acc_among_decisive": 0.9039039039039038,
+    "valid": 371
+   },
+   "provenance": {
+    "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)",
+    "carried_metadata_from": "Current-pool API measurement registry"
+   }
+  },
+  {
+   "addendum": null,
+   "api_flag": false,
+   "api_subset": false,
+   "author": "Amin Roudaki (@aminry)",
+   "axes": {
+    "calibration": 88.71627256952715,
+    "cost": 51.66530928015878,
+    "intelligence": 70.42321091828492,
+    "speed": 91.18580810090454
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.06150753988606317,
+      "ece_score": 87.69849202278736,
+      "mean_tvd": null,
+      "n": 737,
+      "n_ece_hard": 307,
+      "n_tvd": 0,
+      "score": 87.69849202278736
+     },
+     "noul": {
+      "abstention_rate": 0.06469002695417791,
+      "brier": 0.04879523639868886,
+      "ece": 0.04694201082318837,
+      "n": 371,
+      "score": 90.61159783536232
+     },
+     "score": {
+      "interval90_coverage": 0.9349593495934959,
+      "interval90_width": 0.1980578139114724,
+      "n": 369,
+      "nrps": 0.057879253805657324,
+      "score": 87.83872785043177,
+      "top_ece": 0.09267309459285371
+     }
+    },
+    "score": 88.71627256952715
+   },
+   "capability": 79.56974174390604,
+   "composite_ci95": {
+    "A": [
+     69.85754247280484,
+     72.80874617920621
+    ],
+    "B": [
+     68.87932855683242,
+     73.03493454427631
+    ],
+    "C": [
+     69.85754247280484,
+     72.80874617920621
+    ]
+   },
+   "cost": {
+    "basis": "ESTIMATE (base-model reference; self-hosted open weights, no public tariff) and CLEAN: unlike run 54's FP8 sibling, the frozen pricing snapshot resolves this EXACT base - google/gemma-4-31B-it - to USD 0.09 per 1M input and USD 0.34 per 1M output. Read before the pod and asserted in make_registry_r55.py. x this row's own measured tokens, the deck31b method. Nothing is provisional and no release-lane line is open on it. Estimated, not charged",
+    "common_basis": {
+     "n_items": 1477,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.04022032666666667
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.04084664184157075
+   },
+   "display": "decisio v0.8.0 on gemma-4-31B-it (frozen, FP8 on load, one prefill per state, self-hosted)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 67.59136348711468,
+    "I_sealed": 73.25505834945518,
+    "base": 70.42321091828492,
+    "excess": -8.23708250477875,
+    "gap": -5.663694862340506,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 70.82494232345373,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 96.10810810810811,
+       "hard": 69.80182447310474,
+       "judge": 64.40342781806196,
+       "standard": 69.8618668899121
+      }
+     },
+     "open|noul": {
+      "cc": 73.1207729468599,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 100.0,
+       "hard": 73.91304347826086,
+       "judge": 60.00000000000001,
+       "standard": 77.77777777777777
+      }
+     },
+     "open|score": {
+      "cc": 58.8283751910304,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 71.01492747107596,
+       "hard": 63.1937957087831,
+       "judge": 57.45226814139626,
+       "standard": 46.068418589953396
+      }
+     },
+     "sealed|choice": {
+      "cc": 83.09170328497459,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 90.68804966373514,
+       "hard": 76.07466063348416,
+       "judge": 86.03351955307262,
+       "standard": 88.91489099642814
+      }
+     },
+     "sealed|noul": {
+      "cc": 76.04956278293162,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 87.99999999999999,
+       "hard": 61.165048543689316,
+       "judge": 81.57894736842107,
+       "standard": 91.54929577464787
+      }
+     },
+     "sealed|score": {
+      "cc": 60.62390898045936,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 72.91119795662057,
+       "hard": 56.16498434122372,
+       "judge": 63.285909697701555,
+       "standard": 59.4051126949867
+      }
+     }
+    }
+   },
+   "jevbench_score": 71.6926576652985,
+   "key": "decisio-gemma-4-31b-v080",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 4,
+   "ranked": true,
+   "ranks": {
+    "A": 4,
+    "B": 3,
+    "C": 4,
+    "capability": 4
+   },
+   "scores": {
+    "A": 71.6926576652985,
+    "B": 71.43512018650192,
+    "C": 71.6926576652985
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.24419243037700653,
+    "p50_s_raw": 0.047096215188503265,
+    "p95_s_adjusted": 0.3116642528679222,
+    "p95_s_raw": 0.0808321264339611
+   },
+   "status": {
+    "answered_ok": 1477,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "api_subset_tag": null,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      85.0517072217947,
+      90.77969936508954
+     ],
+     "I": [
+      65.27867139621,
+      74.3007710998681
+     ],
+     "capability": [
+      75.67457118842692,
+      81.98658905786246
+     ],
+     "composite": {
+      "A": [
+       69.85754247280484,
+       72.80874617920621
+      ],
+      "B": [
+       68.87932855683242,
+       73.03493454427631
+      ],
+      "C": [
+       69.85754247280484,
+       72.80874617920621
+      ]
+     },
+     "seed": 41
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted",
+    "metric_basis": "S u P",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 88.71627256952715,
+     "capability": 79.56974174390604,
+     "intelligence": 70.42321091828492
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.8546666666666667,
+      "calibration": 87.69849202278736,
+      "cc": 81.41394238511599,
+      "cc_by_type": {
+       "choice": 81.41394238511599
+      },
+      "cc_tiered": 76.95832280421416,
+      "cc_tiered_open": 70.82494232345373,
+      "cc_tiered_sealed": 83.09170328497459,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 81.41394238511599
+     },
+     "noul": {
+      "accuracy": 0.888,
+      "calibration": 90.61159783536232,
+      "cc": 77.60000000000001,
+      "cc_by_type": {
+       "noul": 77.60000000000001
+      },
+      "cc_tiered": 74.58516786489577,
+      "cc_tiered_open": 73.1207729468599,
+      "cc_tiered_sealed": 76.04956278293162,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 77.60000000000001
+     },
+     "score": {
+      "accuracy": 0.7093333333333334,
+      "calibration": 87.83872785043177,
+      "cc": 60.762544130610976,
+      "cc_by_type": {
+       "score": 60.762544130610976
+      },
+      "cc_tiered": 59.72614208574488,
+      "cc_tiered_open": 58.8283751910304,
+      "cc_tiered_sealed": 60.62390898045936,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 60.762544130610976
+     }
+    },
+    "raw_on_A": {
+     "calibration": 84.78496723140272,
+     "capability": 77.99664929333233,
+     "intelligence": 71.20833135526192
+    },
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.01733333333333331,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.010666666666666713,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.016000000000000014,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 67.38267528356181,
+    "Emphasis on Accuracy 60:20:20": 68.56682969127965,
+    "Emphasis on Cost 20:20:60": 60.07267047173585,
+    "Emphasis on Speed 20:60:20": 75.23880708945377,
+    "Intelligence only": 70.42321091828492
+   },
+   "class": "Jev-compatible decision readout on frozen base",
+   "open": "open weights",
+   "licence": "Apache-2.0 software; Gemma model terms",
+   "repo": "https://github.com/aminry/decisio",
+   "gpu": "H100",
+   "endpoint_condition": "measured 2026-10-06 on the live v1.6.0/v1.6.1 pool. github.com/aminry/decisio tag v0.8.0 (5b42101a191d222062a795194b0aedb5003bf6ea) - the same tag whose other two entries run 54 measured - installed with their own `uv sync --extra serve --frozen` so their lockfile fixes every version, and served with their own `python -m decisio.serve.vllm_engine --base gemma-4-31b`. --base carries google/gemma-4-31B-it@842da379, the official weights, FROZEN: no fine-tuning, no adapter, no task registered; vLLM 0.30.0 quantizes it to FP8 when it loads (30.6 GiB). That profile's measured settings: temperature 4.672 for choice questions and 5.252 for the rest, the 12B entry's prompt unchanged, a system turn, the chat template's own answer position, every single-token form of each letter summed, no tokens generated. New in 0.8.0 on this base and the reason it is worth its own row: several questions of a state are scored in ONE pass after a single prefill. The author's own limit is a 32,768-token prompt, so the pool's 23 items at ~80,000 tokens are a documented capacity limit, not a defect. THE AUTHOR STATES ONE 96 GB CARD; this is one H100 80 GB (Lium) and no flag of theirs was changed to make it fit. Latency axis uses the standard self-hosted x2 + 0.15 s adjustment. add-requests run 55, GitHub #169",
+   "underlying": "google/gemma-4-31B-it",
+   "model_pin": "aminry/decisio@5b42101a191d222062a795194b0aedb5003bf6ea + google/gemma-4-31B-it@842da379",
+   "last_measured_on": "2026-10-06",
+   "adapter_id": null,
+   "alt": null,
+   "measurement_date_status": "run output completion day (UTC)",
+   "measured_in": "v1.6.1",
+   "not_ranked_because": null,
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.9353099730458221,
+    "acc_among_decisive": 0.9596541786743515,
+    "valid": 371
+   },
+   "provenance": {
+    "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)",
+    "carried_metadata_from": "r54/r55/r61 registry and pinned author package"
+   }
+  },
+  {
+   "addendum": null,
+   "api_flag": true,
+   "api_subset": false,
    "author": "TypeSafe AI",
    "axes": {
     "calibration": 90.63220203152369,
@@ -1696,13 +2439,13 @@
    "key": "jev-1.13.0",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 3,
+   "rank": 5,
    "ranked": true,
    "ranks": {
-    "A": 3,
-    "B": 4,
-    "C": 3,
-    "capability": 9
+    "A": 5,
+    "B": 6,
+    "C": 5,
+    "capability": 11
    },
    "scores": {
     "A": 71.49118639284514,
@@ -2050,12 +2793,12 @@
    "key": "quyet-1-0-large",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 4,
+   "rank": 6,
    "ranked": true,
    "ranks": {
-    "A": 4,
+    "A": 6,
     "B": 2,
-    "C": 4,
+    "C": 6,
     "capability": 2
    },
    "scores": {
@@ -2238,6 +2981,363 @@
   },
   {
    "addendum": null,
+   "api_flag": false,
+   "api_subset": false,
+   "author": "Mark Marosi (Mapika)",
+   "axes": {
+    "calibration": 81.98845142422223,
+    "cost": 57.755449421401664,
+    "intelligence": 63.01250112161242,
+    "speed": 90.47583056481872
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.048897499999999955,
+      "ece_score": 90.22050000000002,
+      "mean_tvd": null,
+      "n": 750,
+      "n_ece_hard": 320,
+      "n_tvd": 0,
+      "score": 90.22050000000002
+     },
+     "noul": {
+      "abstention_rate": 0.013333333333333308,
+      "brier": 0.16693694264000003,
+      "ece": 0.1691528,
+      "n": 375,
+      "score": 66.16944000000001
+     },
+     "score": {
+      "interval90_coverage": 0.952,
+      "interval90_width": 0.33711111111111114,
+      "n": 375,
+      "nrps": 0.07347944788000003,
+      "score": 89.57541427266668,
+      "top_ece": 0.06750613333333315
+     }
+    },
+    "score": 81.98845142422223
+   },
+   "capability": 72.50047627291733,
+   "composite_ci95": {
+    "A": [
+     68.54138708333946,
+     72.20753634823356
+    ],
+    "B": [
+     66.06197783195658,
+     71.11572775091496
+    ],
+    "C": [
+     63.43447024505396,
+     72.20753634823356
+    ]
+   },
+   "cost": {
+    "basis": "add-requests run 46 (v1.5 basis, unpublished) documented hosted-model estimate; no exact base-model floor applies",
+    "common_basis": null,
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.025594796798029562
+   },
+   "display": "decider-12b v2 (Mapika)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 62.42359203105606,
+    "I_sealed": 63.601410212168766,
+    "base": 63.01250112161242,
+    "excess": -3.7512058235509493,
+    "gap": -1.1778181811127055,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 75.47889301775673,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 84.43243243243244,
+       "hard": 71.68921044353571,
+       "judge": 76.26895187870797,
+       "standard": 77.39640016743407
+      }
+     },
+     "open|noul": {
+      "cc": 58.42028985507247,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 100.0,
+       "hard": 65.21739130434783,
+       "judge": 30.000000000000004,
+       "standard": 66.66666666666667
+      }
+     },
+     "open|score": {
+      "cc": 53.37159322033899,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 55.93666666666668,
+       "hard": 56.19055555555556,
+       "judge": 47.0086440677966,
+       "standard": 55.995555555555555
+      }
+     },
+     "sealed|choice": {
+      "cc": 73.57708692549191,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 80.04582070800384,
+       "hard": 68.43891402714931,
+       "judge": 77.6536312849162,
+       "standard": 74.50424929178472
+      }
+     },
+     "sealed|noul": {
+      "cc": 61.47997869691321,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 87.99999999999999,
+       "hard": 47.57281553398058,
+       "judge": 60.52631578947369,
+       "standard": 77.46478873239437
+      }
+     },
+     "sealed|score": {
+      "cc": 55.74716501410119,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 69.177304964539,
+       "hard": 52.92137254901961,
+       "judge": 55.79760479041915,
+       "standard": 54.60802030456852
+      }
+     }
+    }
+   },
+   "jevbench_score": 70.87955164338175,
+   "key": "decider-12b",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 7,
+   "ranked": true,
+   "ranks": {
+    "A": 7,
+    "B": 9,
+    "C": 7,
+    "capability": 22
+   },
+   "scores": {
+    "A": 70.87955164338175,
+    "B": 69.15281897628992,
+    "C": 70.87955164338175
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.25826345253735783,
+    "p50_s_raw": 0.054131726268678904,
+    "p95_s_adjusted": 0.3470195889472961,
+    "p95_s_raw": 0.09850979447364806
+   },
+   "status": {
+    "answered_ok": 1500,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "api_subset_tag": null,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      76.76796045055926,
+      83.41866329732498
+     ],
+     "I": [
+      57.71486047412692,
+      67.18786674520106
+     ],
+     "capability": [
+      68.19784274796856,
+      74.82646556669576
+     ],
+     "composite": {
+      "A": [
+       68.54138708333946,
+       72.20753634823356
+      ],
+      "B": [
+       66.06197783195658,
+       71.11572775091496
+      ],
+      "C": [
+       63.43447024505396,
+       72.20753634823356
+      ]
+     },
+     "seed": 16
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted",
+    "metric_basis": "S u P",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 81.98845142422223,
+     "capability": 72.50047627291733,
+     "intelligence": 63.01250112161242
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.7973333333333333,
+      "calibration": 90.22050000000002,
+      "cc": 74.08182791318927,
+      "cc_by_type": {
+       "choice": 74.08182791318927
+      },
+      "cc_tiered": 74.52798997162432,
+      "cc_tiered_open": 75.47889301775673,
+      "cc_tiered_sealed": 73.57708692549191,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 74.08182791318927
+     },
+     "noul": {
+      "accuracy": 0.8213333333333334,
+      "calibration": 66.16944000000001,
+      "cc": 64.26666666666667,
+      "cc_by_type": {
+       "noul": 64.26666666666667
+      },
+      "cc_tiered": 59.95013427599284,
+      "cc_tiered_open": 58.42028985507247,
+      "cc_tiered_sealed": 61.47997869691321,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 64.26666666666667
+     },
+     "score": {
+      "accuracy": 0.6506666666666666,
+      "calibration": 89.57541427266668,
+      "cc": 55.808578947368446,
+      "cc_by_type": {
+       "score": 55.808578947368446
+      },
+      "cc_tiered": 54.55937911722009,
+      "cc_tiered_open": 53.37159322033899,
+      "cc_tiered_sealed": 55.74716501410119,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 55.808578947368446
+     }
+    },
+    "raw_on_A": {
+     "calibration": 81.87902912425925,
+     "capability": 73.03621970023784,
+     "intelligence": 64.19341027621644
+    },
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.0,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.0,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.0,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 67.81664735288307,
+    "Emphasis on Accuracy 60:20:20": 65.80968465261019,
+    "Emphasis on Cost 20:20:60": 63.39892316578739,
+    "Emphasis on Speed 20:60:20": 75.36672286262451,
+    "Intelligence only": 63.01250112161242
+   },
+   "class": "Jev-compatible decision model",
+   "open": "open weights",
+   "licence": "apache-2.0",
+   "repo": "https://huggingface.co/Mapika/decider-12b",
+   "gpu": "RTX PRO6000",
+   "endpoint_condition": "Current frozen 1500-item pool measured 2026-10-04 by coordinator plan P83 on one evaluator-owned Lium RTX PRO6000. Offline contributor image, serial loopback-only requests, no batching or retry; standard selfhosted x2+0.15 s latency adjustment. Current stage receipt verifies the same model pin used by the prior add-request run. Cost is the carried documented estimate recorded in current registry.",
+   "underlying": "google/gemma-4-12B-it",
+   "model_pin": "Mapika/decider-12b@8ac1efa708b71b86ae33b01d2a8d7a3ddcb48e66",
+   "last_measured_on": "2026-10-04",
+   "adapter_id": null,
+   "alt": null,
+   "measurement_date_status": "run output completion day (UTC)",
+   "measured_in": "v1.6.1",
+   "not_ranked_because": null,
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.9866666666666667,
+    "acc_among_decisive": 0.8324324324324325,
+    "valid": 375
+   },
+   "provenance": {
+    "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)",
+    "carried_metadata_from": "run 46 author metadata + current P83 staged pin/measurement receipt"
+   }
+  },
+  {
+   "addendum": null,
    "api_flag": true,
    "api_subset": false,
    "author": "Wity (alphanimble)",
@@ -2409,13 +3509,13 @@
    "key": "wity-1",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 5,
+   "rank": 8,
    "ranked": true,
    "ranks": {
-    "A": 5,
-    "B": 3,
-    "C": 5,
-    "capability": 4
+    "A": 8,
+    "B": 5,
+    "C": 8,
+    "capability": 5
    },
    "scores": {
     "A": 70.76534010331063,
@@ -2608,6 +3708,363 @@
    "addendum": null,
    "api_flag": false,
    "api_subset": false,
+   "author": "Mark Marosi (Mapika)",
+   "axes": {
+    "calibration": 83.7629373406296,
+    "cost": 57.755449421401664,
+    "intelligence": 60.62893554403879,
+    "speed": 90.47654290454523
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.0649509375000001,
+      "ece_score": 87.00981249999998,
+      "mean_tvd": null,
+      "n": 750,
+      "n_ece_hard": 320,
+      "n_tvd": 0,
+      "score": 87.00981249999998
+     },
+     "noul": {
+      "abstention_rate": 0.040000000000000036,
+      "brier": 0.1306117199200001,
+      "ece": 0.12608400000000003,
+      "n": 375,
+      "score": 74.7832
+     },
+     "score": {
+      "interval90_coverage": 0.9893333333333333,
+      "interval90_width": 0.493333333333333,
+      "n": 375,
+      "nrps": 0.07613894289555556,
+      "score": 89.49579952188888,
+      "top_ece": 0.06697253333333336
+     }
+    },
+    "score": 83.7629373406296
+   },
+   "capability": 72.1959364423342,
+   "composite_ci95": {
+    "A": [
+     68.08779334144351,
+     71.63200792040908
+    ],
+    "B": [
+     65.27927398150561,
+     70.07926650409995
+    ],
+    "C": [
+     58.91555277575465,
+     71.63200792040908
+    ]
+   },
+   "cost": {
+    "basis": "add-requests run 46 (v1.5 basis, unpublished) documented hosted-model estimate; no exact base-model floor applies",
+    "common_basis": null,
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.025594796798029562
+   },
+   "display": "decider-12b v1, stock Gemma-4-12B-it (Mapika)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 61.78178227747658,
+    "I_sealed": 59.476088810601,
+    "base": 60.62893554403879,
+    "excess": -0.2676941755626623,
+    "gap": 2.3056934668755815,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 69.97472688448558,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 84.43243243243244,
+       "hard": 66.02705253224286,
+       "judge": 60.44825313117996,
+       "standard": 84.93093344495604
+      }
+     },
+     "open|noul": {
+      "cc": 73.89855072463769,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 100.0,
+       "hard": 73.91304347826086,
+       "judge": 70.0,
+       "standard": 66.66666666666667
+      }
+     },
+     "open|score": {
+      "cc": 41.4720692233065,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 53.67363636363637,
+       "hard": 39.991944444444435,
+       "judge": 43.4459322033898,
+       "standard": 35.370740740740736
+      }
+     },
+     "sealed|choice": {
+      "cc": 66.65509953327584,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 80.04582070800384,
+       "hard": 62.839366515837106,
+       "judge": 66.4804469273743,
+       "standard": 67.8531838896416
+      }
+     },
+     "sealed|noul": {
+      "cc": 60.08887273564741,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 87.99999999999999,
+       "hard": 35.92233009708738,
+       "judge": 65.78947368421053,
+       "standard": 85.91549295774648
+      }
+     },
+     "sealed|score": {
+      "cc": 51.684294162879745,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 65.59943262411348,
+       "hard": 48.76892156862744,
+       "judge": 54.09401197604791,
+       "standard": 46.94289340101522
+      }
+     }
+    }
+   },
+   "jevbench_score": 70.42352588714175,
+   "key": "decider-12b-v1",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 9,
+   "ranked": true,
+   "ranks": {
+    "A": 9,
+    "B": 10,
+    "C": 9,
+    "capability": 25
+   },
+   "scores": {
+    "A": 70.42352588714175,
+    "B": 68.21936151093459,
+    "C": 70.42352588714175
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.25808657668530943,
+    "p50_s_raw": 0.054043288342654705,
+    "p95_s_adjusted": 0.3472004604525864,
+    "p95_s_raw": 0.0986002302262932
+   },
+   "status": {
+    "answered_ok": 1500,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "api_subset_tag": null,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      78.60323827570184,
+      85.08662764834355
+     ],
+     "I": [
+      55.85565047982421,
+      64.5542584209754
+     ],
+     "capability": [
+      67.75349807475966,
+      74.15899513794021
+     ],
+     "composite": {
+      "A": [
+       68.08779334144351,
+       71.63200792040908
+      ],
+      "B": [
+       65.27927398150561,
+       70.07926650409995
+      ],
+      "C": [
+       58.91555277575465,
+       71.63200792040908
+      ]
+     },
+     "seed": 17
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted",
+    "metric_basis": "S u P",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 83.7629373406296,
+     "capability": 72.1959364423342,
+     "intelligence": 60.62893554403879
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.7506666666666667,
+      "calibration": 87.00981249999998,
+      "cc": 68.11382776162101,
+      "cc_by_type": {
+       "choice": 68.11382776162101
+      },
+      "cc_tiered": 68.31491320888071,
+      "cc_tiered_open": 69.97472688448558,
+      "cc_tiered_sealed": 66.65509953327584,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 68.11382776162101
+     },
+     "noul": {
+      "accuracy": 0.832,
+      "calibration": 74.7832,
+      "cc": 66.39999999999999,
+      "cc_by_type": {
+       "noul": 66.39999999999999
+      },
+      "cc_tiered": 66.99371173014255,
+      "cc_tiered_open": 73.89855072463769,
+      "cc_tiered_sealed": 60.08887273564741,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 66.39999999999999
+     },
+     "score": {
+      "accuracy": 0.6453333333333333,
+      "calibration": 89.49579952188888,
+      "cc": 50.03278070175441,
+      "cc_by_type": {
+       "score": 50.03278070175441
+      },
+      "cc_tiered": 46.57818169309312,
+      "cc_tiered_open": 41.4720692233065,
+      "cc_tiered_sealed": 51.684294162879745,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 50.03278070175441
+     }
+    },
+    "raw_on_A": {
+     "calibration": 81.0648832518091,
+     "capability": 71.2842608897069,
+     "intelligence": 61.5036385276047
+    },
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.0,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.0,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.0,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 66.87360828773896,
+    "Emphasis on Accuracy 60:20:20": 64.22748164585495,
+    "Emphasis on Cost 20:20:60": 62.90137869162178,
+    "Emphasis on Speed 20:60:20": 74.66484030090665,
+    "Intelligence only": 60.62893554403879
+   },
+   "class": "Jev-compatible decision model",
+   "open": "open weights",
+   "licence": "apache-2.0",
+   "repo": "https://huggingface.co/Mapika/decider-12b",
+   "gpu": "RTX PRO6000",
+   "endpoint_condition": "Current frozen 1500-item pool measured 2026-10-04 by coordinator plan P83 on one evaluator-owned Lium RTX PRO6000. Offline contributor image, serial loopback-only requests, no batching or retry; standard selfhosted x2+0.15 s latency adjustment. Current stage receipt verifies the same model pin used by the prior add-request run. Cost is the carried documented estimate recorded in current registry.",
+   "underlying": "google/gemma-4-12B-it",
+   "model_pin": "Mapika/decider-12b@09e9e3387fa42fed740233be2290385d18a6044d",
+   "last_measured_on": "2026-10-04",
+   "adapter_id": null,
+   "alt": null,
+   "measurement_date_status": "run output completion day (UTC)",
+   "measured_in": "v1.6.1",
+   "not_ranked_because": null,
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.96,
+    "acc_among_decisive": 0.8666666666666667,
+    "valid": 375
+   },
+   "provenance": {
+    "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)",
+    "carried_metadata_from": "run 46 author metadata + current P83 staged pin/measurement receipt"
+   }
+  },
+  {
+   "addendum": null,
+   "api_flag": false,
+   "api_subset": false,
    "author": "Torchcast AI",
    "axes": {
     "calibration": 82.93469131589123,
@@ -2773,13 +4230,13 @@
    "key": "torchcast-decision-12b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 6,
+   "rank": 10,
    "ranked": true,
    "ranks": {
-    "A": 6,
-    "B": 7,
-    "C": 6,
-    "capability": 18
+    "A": 10,
+    "B": 11,
+    "C": 10,
+    "capability": 26
    },
    "scores": {
     "A": 69.9087143535159,
@@ -3128,13 +4585,13 @@
    "key": "winnow-12b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 7,
+   "rank": 11,
    "ranked": true,
    "ranks": {
-    "A": 7,
-    "B": 8,
-    "C": 8,
-    "capability": 22
+    "A": 11,
+    "B": 13,
+    "C": 12,
+    "capability": 30
    },
    "scores": {
     "A": 68.88542163459404,
@@ -3489,13 +4946,13 @@
    "key": "deck31b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 8,
+   "rank": 12,
    "ranked": true,
    "ranks": {
-    "A": 8,
-    "B": 6,
-    "C": 7,
-    "capability": 7
+    "A": 12,
+    "B": 8,
+    "C": 11,
+    "capability": 9
    },
    "scores": {
     "A": 68.68200118286292,
@@ -3838,13 +5295,13 @@
    "key": "cygnet",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 9,
+   "rank": 13,
    "ranked": true,
    "ranks": {
-    "A": 9,
-    "B": 10,
-    "C": 12,
-    "capability": 23
+    "A": 13,
+    "B": 15,
+    "C": 18,
+    "capability": 31
    },
    "scores": {
     "A": 68.55012424151383,
@@ -4199,13 +5656,13 @@
    "key": "decisio-gemma-4-12b-v080",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 10,
+   "rank": 14,
    "ranked": true,
    "ranks": {
-    "A": 10,
-    "B": 13,
-    "C": 14,
-    "capability": 24
+    "A": 14,
+    "B": 19,
+    "C": 21,
+    "capability": 32
    },
    "scores": {
     "A": 68.17346094077045,
@@ -4560,13 +6017,13 @@
    "key": "decisio-gemma-4-12b-v090",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 11,
+   "rank": 15,
    "ranked": true,
    "ranks": {
-    "A": 11,
-    "B": 14,
-    "C": 15,
-    "capability": 29
+    "A": 15,
+    "B": 20,
+    "C": 22,
+    "capability": 37
    },
    "scores": {
     "A": 67.76072338665118,
@@ -4917,13 +6374,13 @@
    "key": "jev-omni",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 12,
+   "rank": 16,
    "ranked": true,
    "ranks": {
-    "A": 12,
-    "B": 11,
-    "C": 11,
-    "capability": 21
+    "A": 16,
+    "B": 16,
+    "C": 17,
+    "capability": 29
    },
    "scores": {
     "A": 67.74758858028281,
@@ -5278,13 +6735,13 @@
    "key": "xor-26b-a4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 13,
+   "rank": 17,
    "ranked": true,
    "ranks": {
-    "A": 13,
-    "B": 9,
-    "C": 9,
-    "capability": 16
+    "A": 17,
+    "B": 14,
+    "C": 14,
+    "capability": 23
    },
    "scores": {
     "A": 67.3818936950357,
@@ -5470,6 +6927,725 @@
    "addendum": null,
    "api_flag": false,
    "api_subset": false,
+   "author": "Foxl AI / The Bobcat Authors (admin@foxl.ai)",
+   "axes": {
+    "calibration": 81.17269878237248,
+    "cost": 49.68577376542501,
+    "intelligence": 65.81464576505633,
+    "speed": 90.781726629608
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.114937134190201,
+      "ece_score": 77.01257316195979,
+      "mean_tvd": null,
+      "n": 750,
+      "n_ece_hard": 320,
+      "n_tvd": 0,
+      "score": 77.01257316195979
+     },
+     "noul": {
+      "abstention_rate": 0.10666666666666669,
+      "brier": 0.08802311851821586,
+      "ece": 0.07573463232351335,
+      "n": 375,
+      "score": 84.85307353529733
+     },
+     "score": {
+      "interval90_coverage": 0.9066666666666666,
+      "interval90_width": 0.1808888888888889,
+      "n": 375,
+      "nrps": 0.06948590052038994,
+      "score": 81.65244964986034,
+      "top_ece": 0.14873255324120163
+     }
+    },
+    "score": 81.17269878237248
+   },
+   "capability": 73.4936722737144,
+   "composite_ci95": {
+    "A": [
+     65.41706710923236,
+     68.6674732651027
+    ],
+    "B": [
+     64.1802436512738,
+     68.73104866859511
+    ],
+    "C": [
+     65.32359947723424,
+     68.6674732651027
+    ]
+   },
+   "cost": {
+    "basis": "ESTIMATE (base-model reference; self-hosted open weights, no public tariff): OpenRouter google/gemma-4-26b-a4b-it in the frozen 25 Sep snapshot, USD 0.09 per 1M input and USD 0.3 per 1M output x this row's own measured tokens. Estimated, not charged. THIS IS THE REFERENCE, THE RATE AND THE LABEL THE PUBLISHED PAGE ALREADY CARRIES FOR THIS EXACT BASE on three rows published within the last day - xor-26b-a4b, surogate-rune-26b-a4b-v3-v16 and gev-26b-decide - so pricing this row any other way would make it inconsistent with the field it is placed in. RELEASE-LANE LINE, recorded and not acted on: pricing_v15.reference() RAISES on the author's exact declared spelling google/gemma-4-26B-A4B-it, because that string is in none of the three decision tables, while the lowercase google/gemma-4-26b-a4b-it IS in BASE_REFERENCES and in the dated snapshot at (0.09, 0.30). That is a CAPITALISATION gap - one notch tighter than run 56's -Base/instruct gap on Qwen3.5-35B-A3B - and the three published rows say in their own basis string that the frozen module has no explicit listing-decision line for this base. OUTPUT TOKENS ARE 0 BY CONSTRUCTION, not by estimate: their build_response returns usage.output_tokens == 0 and the readout takes candidate logits at the first answer position of one forward pass, so this row's cost depends on the input rate alone and any other decision is reversible by arithmetic from the raw.",
+    "common_basis": {
+     "n_items": 1477,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.15782652
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.04754894380501015
+   },
+   "display": "Bobcat Flash 1.2 (Gemma-4-26B-A4B-it + two merged rank-64 LoRA adapters, typed-decision readout at the first answer position, FP8, self-hosted)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 65.86976952005253,
+    "I_sealed": 65.75952201006011,
+    "base": 65.81464576505633,
+    "excess": -2.4631401324458246,
+    "gap": 0.11024750999241917,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 74.45043236055656,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 100.00000000000001,
+       "hard": 66.02705253224286,
+       "judge": 80.22412656558997,
+       "standard": 69.8618668899121
+      }
+     },
+     "open|noul": {
+      "cc": 66.6425120772947,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 100.0,
+       "hard": 65.21739130434783,
+       "judge": 50.0,
+       "standard": 77.77777777777777
+      }
+     },
+     "open|score": {
+      "cc": 56.516364122306314,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 62.947350572836605,
+       "hard": 60.92245146041372,
+       "judge": 57.42924259191816,
+       "standard": 43.1193785164086
+      }
+     },
+     "sealed|choice": {
+      "cc": 76.1313750303687,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 78.71554208853745,
+       "hard": 67.92986425339366,
+       "judge": 81.3780260707635,
+       "standard": 83.37233649464221
+      }
+     },
+     "sealed|noul": {
+      "cc": 59.790998006434116,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 84.00000000000001,
+       "hard": 37.86407766990292,
+       "judge": 71.05263157894737,
+       "standard": 74.64788732394365
+      }
+     },
+     "sealed|score": {
+      "cc": 61.35619299337752,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 85.14251727623912,
+       "hard": 56.30342200492587,
+       "judge": 54.946113599979476,
+       "standard": 69.18369191894709
+      }
+     }
+    }
+   },
+   "jevbench_score": 67.34032787154446,
+   "key": "bobcat-flash-1.2",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 18,
+   "ranked": true,
+   "ranks": {
+    "A": 18,
+    "B": 12,
+    "C": 13,
+    "capability": 20
+   },
+   "scores": {
+    "A": 67.34032787154446,
+    "B": 66.85676394909423,
+    "C": 67.34032787154446
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.2719114740379155,
+    "p50_s_raw": 0.060955737018957734,
+    "p95_s_adjusted": 0.3071848569670692,
+    "p95_s_raw": 0.0785924284835346
+   },
+   "status": {
+    "answered_ok": 1500,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "api_subset_tag": null,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      77.39295521484306,
+      83.94013345398247
+     ],
+     "I": [
+      60.18260161381281,
+      69.94166977988647
+     ],
+     "capability": [
+      69.50208486636623,
+      76.43509664894793
+     ],
+     "composite": {
+      "A": [
+       65.41706710923236,
+       68.6674732651027
+      ],
+      "B": [
+       64.1802436512738,
+       68.73104866859511
+      ],
+      "C": [
+       65.32359947723424,
+       68.6674732651027
+      ]
+     },
+     "seed": 24
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted",
+    "metric_basis": "S u P",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 81.17269878237248,
+     "capability": 73.4936722737144,
+     "intelligence": 65.81464576505633
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.812,
+      "calibration": 77.01257316195979,
+      "cc": 75.95748510368216,
+      "cc_by_type": {
+       "choice": 75.95748510368216
+      },
+      "cc_tiered": 75.29090369546263,
+      "cc_tiered_open": 74.45043236055656,
+      "cc_tiered_sealed": 76.1313750303687,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 75.95748510368216
+     },
+     "noul": {
+      "accuracy": 0.8213333333333334,
+      "calibration": 84.85307353529733,
+      "cc": 64.26666666666667,
+      "cc_by_type": {
+       "noul": 64.26666666666667
+      },
+      "cc_tiered": 63.2167550418644,
+      "cc_tiered_open": 66.6425120772947,
+      "cc_tiered_sealed": 59.790998006434116,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 64.26666666666667
+     },
+     "score": {
+      "accuracy": 0.696,
+      "calibration": 81.65244964986034,
+      "cc": 62.27325899358171,
+      "cc_by_type": {
+       "score": 62.27325899358171
+      },
+      "cc_tiered": 58.936278557841916,
+      "cc_tiered_open": 56.516364122306314,
+      "cc_tiered_sealed": 61.35619299337752,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 62.27325899358171
+     }
+    },
+    "raw_on_A": {
+     "calibration": 76.73132293335215,
+     "capability": 72.99647962418823,
+     "intelligence": 69.26163631502432
+    },
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.0,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.0,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.0,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 63.93311146268058,
+    "Emphasis on Accuracy 60:20:20": 64.35172177912958,
+    "Emphasis on Cost 20:20:60": 57.02049836458103,
+    "Emphasis on Speed 20:60:20": 72.21838604704122,
+    "Intelligence only": 64.99001759823823
+   },
+   "class": "Jev-compatible decision model",
+   "open": "open weights",
+   "licence": "apache-2.0",
+   "repo": "https://huggingface.co/sanghwa-na/bobcat-flash-1.2",
+   "gpu": "H100 PCIe",
+   "endpoint_condition": "measured 2026-10-07 on the live v1.6.0/v1.6.1 pool (inputs/input-selfhosted-1500.jsonl, sha256 901983ae...). Weights sanghwa-na/bobcat-flash-1.2@58d15456937ce58625b13a5e3d982846554a3aef, Apache-2.0, 51.68 GB BF16 - a merge of two rank-64 LoRA adapters on google/gemma-4-26B-A4B-it@4d7ae4984b7db7de8f8457170b3f1a419ee76d52 (0.6*A + 0.4*B, B being the Flash 1.1 adapter), file-by-file verified against the Hub's own manifest before the engine was started. Code github.com/foxl-ai/bobcat@43387a09bbc0310edcf57e2b21fa59ea81ac4166, Apache-2.0. NO MAPPING DECISION OF OURS EXISTS FOR THIS ROW, which is why it is worth saying so explicitly. The author implements TypeSafe's published System One contract, and their own src/bobcat/protocol.py parse_request accepts the JevBench canonical record EXACTLY as the UNCHANGED jevbench.adapters.typesafe already emits it: choice -> a dict of 1-255 named criteria, so the item's own labels are the keys and its own criteria[label] strings travel verbatim as the descriptions (their protocol renders {name, description} per option); score -> the item's ordered array of levels, which their own parse_request labels '0'..'n-1' - the same keys JevBench uses - with the item's own level text as each description, so the ordinal order is carried; noul -> criteria restricted to {true,false}, and the item's OWN true/false description strings are delivered (unlike run 56's APUS rows, whose runtime required canonical criteria there), with the answer returned as noul = P(yes). Their answer() refuses to reply unless the probabilities sum to one. Nothing was rewritten, no option was dropped, no item type was recorded as a miss, and no shim of ours sits anywhere in the path. STACK: the author's own published install line, verbatim from their model card's Quickstart - a uv-managed Python 3.12 (their note: it ships the headers Triton compiles against) and vllm==0.30.0 LETTING IT RESOLVE ITS OWN STACK, which gave torch 2.13.0+cu130, transformers 5.19.0, tokenizers 0.23.2. Served by THEIR OWN SERVER, bobcat.flash_server, with THEIR OWN published command verbatim: --engine vllm --quantization fp8 (their online dynamic FP8 of these BF16 weights, the served configuration) --temperature choice=0.594604,noul=0.353553,score=0.529732 --max-num-seqs 64 --max-model-len 98368 --schedule all --engine-arg max_num_batched_tokens=16384 --engine-arg attention_backend=TRITON_ATTN, with VLLM_USE_FLASHINFER_SAMPLER=0 as their command sets it. --local only because the server is on loopback on our own pod. One H100 PCIe 80 GB (Lium) - the second of the two cards the author measured. Latency axis uses the standard self-hosted x2 + 0.15 s adjustment. No file of theirs was edited and no prompt of ours exists. CALIBRATION IS THEIR PUBLISHED DEFAULT AND WAS NOT CHOSEN BY US. Their card ships two calibrations: the per-type triple used here, which is the Quickstart's - i.e. the published serve command of this release - and a single product temperature 0.9232 fitted by log-loss on their six product tasks. The triple was bound in PREREG-R57 s3.3 before any item was sent and the alternative was deliberately NOT probed on our items, because the author has ALREADY PUBLISHED both configurations' numbers on JevBench's public 231 (per-type Capability 68.2 = 57.5/78.9; product 68.3 = 54.3/82.3), so there was nothing to learn from our pool and choosing between them from our own measurement would have been exactly the mistake run 56's probe was designed to avoid. The author states the triple was fitted on a held-out split of 8,906 JevBench-FORMAT decisions (generated and public) for the highest JevBench-style Capability, and separately that no JevBench item was used for training, calibration, selection or prompt design, with generated rows audited against JevBench's public items at 0 exact and 0 8-gram overlaps. THE 23 LONG ITEMS: the server's limit is --max-model-len 98368 (their compiler gets max_model_len - 64) against a pool whose longest item is 128,111 BYTES of canonical record, and their RequestLimitError answers 422 with 'Inputs are never truncated' rather than truncating. This row therefore reads every item in full. Serial, one decision per request, no retry, no batching, offline, credential-free. add-requests run 57, benchmarkheaven.com/submit ref 7A714784 (bh-submit e9d576d7-e1f1-49d8-8151-05cdbbdd7ed4)",
+   "underlying": "google/gemma-4-26B-A4B-it",
+   "model_pin": "sanghwa-na/bobcat-flash-1.2@58d15456937ce58625b13a5e3d982846554a3aef",
+   "last_measured_on": "2026-10-07",
+   "adapter_id": null,
+   "alt": null,
+   "measurement_date_status": "run output completion day (UTC)",
+   "measured_in": "v1.6.1",
+   "not_ranked_because": null,
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.8933333333333333,
+    "acc_among_decisive": 0.9194029850746268,
+    "valid": 375
+   },
+   "provenance": {
+    "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)",
+    "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record"
+   }
+  },
+  {
+   "addendum": null,
+   "api_flag": true,
+   "api_subset": false,
+   "author": "SPX AI team (SurdAI, formerly Simplex AI)",
+   "axes": {
+    "calibration": 90.20036269195566,
+    "cost": 52.107175358413464,
+    "intelligence": 58.43051843707937,
+    "speed": 79.39117060033084
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.05772702157730632,
+      "ece_score": 88.45459568453875,
+      "mean_tvd": null,
+      "n": 737,
+      "n_ece_hard": 307,
+      "n_tvd": 0,
+      "score": 88.45459568453875
+     },
+     "noul": {
+      "abstention_rate": 0.18598382749326148,
+      "brier": 0.08492257448407475,
+      "ece": 0.04230529224114798,
+      "n": 371,
+      "score": 91.5389415517704
+     },
+     "score": {
+      "interval90_coverage": 0.9322493224932249,
+      "interval90_width": 0.30013550135501355,
+      "n": 369,
+      "nrps": 0.06769358396529002,
+      "score": 90.60755083955786,
+      "top_ece": 0.06007769962177635
+     }
+    },
+    "score": 90.20036269195566
+   },
+   "capability": 74.31544056451752,
+   "composite_ci95": {
+    "A": [
+     64.36187068361473,
+     67.93122351228547
+    ],
+    "B": [
+     61.80904827802077,
+     66.83209430434223
+    ],
+    "C": [
+     50.5869412571725,
+     67.93122351228547
+    ]
+   },
+   "cost": {
+    "basis": "Operator's own public-beta overage tariff, conservative reading USD 0.04 per 1M input tokens, output USD 0 (the provider's /v1/models payload reports output_price \"0\"): three dated primary readings of the operator's own published overage tariff: 24 Sep 2026 provider console (flash 0.025, pro 0.08 per 1M input), 1 Oct 2026 docs page (flash 0.04, pro 0.02), 6 Oct 2026 docs page AND /v1/models payload agreeing (flash 0.02, pro 0.04). Sources conflict, so the per-model MAXIMUM is used, which is the published fastino-gliner-2-5-decide precedent (\"published sources conflict ... conservative higher\"). Today's agreeing pair would be USD 0.02/M, i.e. half this row's cost. No base-model floor applies: the submitter states the base model stays sealed until a later open release, so no base model exists to reference. Priced on usage.input_tokens as the provider reports them. The provider also reports billable_input_tokens = input_tokens / 2 on every single item (297/297 of the public set, exactly 2.0): its default effort 2 renders the prompt twice and its docs bundle the second pass free during public beta (\"default effort 2 is included at the single-pass input price\"). That bundle is a public-beta promotion, and TASK.md forbids a free or promotional tier setting the price, so the two passes actually consumed are charged. The operator's own billed figure is exactly half of this row's cost",
+    "common_basis": {
+     "n_items": 1477,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.03887914666666666
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.039484576844955994
+   },
+   "display": "SPX-CD Flash (SurdAI, hosted /v1/systemone, Oct-4 checkpoint)",
+   "endpoint_kind": "api",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 59.99669320470862,
+    "I_sealed": 56.86434366945013,
+    "base": 58.43051843707937,
+    "excess": 0.5589618928202476,
+    "gap": 3.1323495352584914,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 75.41749935055667,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 100.00000000000001,
+       "hard": 73.57659641396666,
+       "judge": 68.35860250494396,
+       "standard": 77.39640016743407
+      }
+     },
+     "open|noul": {
+      "cc": 52.89855072463768,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 100.0,
+       "hard": 73.91304347826086,
+       "judge": 0.0,
+       "standard": 66.66666666666667
+      }
+     },
+     "open|score": {
+      "cc": 51.67402953893152,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 54.86207439440385,
+       "hard": 52.93207079861204,
+       "judge": 54.720404668190085,
+       "standard": 42.994361897946476
+      }
+     },
+     "sealed|choice": {
+      "cc": 71.02357528674706,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 80.04582070800384,
+       "hard": 67.92986425339366,
+       "judge": 68.34264432029796,
+       "standard": 76.7212710924991
+      }
+     },
+     "sealed|noul": {
+      "cc": 45.34763039144423,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 76.0,
+       "hard": 20.388349514563096,
+       "judge": 52.63157894736843,
+       "standard": 69.01408450704226
+      }
+     },
+     "sealed|score": {
+      "cc": 54.221825330159106,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 80.5246722641586,
+       "hard": 48.238601087091794,
+       "judge": 55.5539283927005,
+       "standard": 51.038695755481854
+      }
+     }
+    }
+   },
+   "jevbench_score": 66.68017155386212,
+   "key": "spx-cd-flash",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 19,
+   "ranked": true,
+   "ranks": {
+    "A": 19,
+    "B": 17,
+    "C": 15,
+    "capability": 17
+   },
+   "scores": {
+    "A": 66.68017155386212,
+    "B": 64.84899920515487,
+    "C": 63.23735362072274
+   },
+   "speed": {
+    "adjustment": "none (API)",
+    "n": 124,
+    "p50_s_adjusted": 0.9804960675537586,
+    "p50_s_raw": 0.9804960675537586,
+    "p95_s_adjusted": 1.1733756832778452,
+    "p95_s_raw": 1.1733756832778452
+   },
+   "status": {
+    "answered_ok": 1477,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "api_subset_tag": null,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      84.82360765229315,
+      91.10972764372464
+     ],
+     "I": [
+      53.013471055498634,
+      62.79232050259918
+     ],
+     "capability": [
+      69.82626986507542,
+      76.43255727254187
+     ],
+     "composite": {
+      "A": [
+       64.36187068361473,
+       67.93122351228547
+      ],
+      "B": [
+       61.80904827802077,
+       66.83209430434223
+      ],
+      "C": [
+       50.5869412571725,
+       67.93122351228547
+      ]
+     },
+     "seed": 136
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "full_set_api": true,
+    "g_med_used": 2.573387642438244,
+    "lane": "api",
+    "metric_basis": "S u P (full set, API lane, v1.6.1 amendment; not equated)",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 90.20036269195566,
+     "capability": 74.31544056451752,
+     "intelligence": 58.43051843707937
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.7893333333333333,
+      "calibration": 88.45459568453875,
+      "cc": 73.05874217292042,
+      "cc_by_type": {
+       "choice": 73.05874217292042
+      },
+      "cc_tiered": 73.22053731865186,
+      "cc_tiered_open": 75.41749935055667,
+      "cc_tiered_sealed": 71.02357528674706,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 73.05874217292042
+     },
+     "noul": {
+      "accuracy": 0.7546666666666667,
+      "calibration": 91.5389415517704,
+      "cc": 50.933333333333344,
+      "cc_by_type": {
+       "noul": 50.933333333333344
+      },
+      "cc_tiered": 49.12309055804096,
+      "cc_tiered_open": 52.89855072463768,
+      "cc_tiered_sealed": 45.34763039144423,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 50.933333333333344
+     },
+     "score": {
+      "accuracy": 0.6746666666666666,
+      "calibration": 90.60755083955786,
+      "cc": 54.63501832116133,
+      "cc_by_type": {
+       "score": 54.63501832116133
+      },
+      "cc_tiered": 52.94792743454531,
+      "cc_tiered_open": 51.67402953893152,
+      "cc_tiered_sealed": 54.221825330159106,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 54.63501832116133
+     }
+    },
+    "raw_on_A": null,
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.01733333333333331,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.010666666666666713,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.016000000000000014,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 61.34791411142523,
+    "Emphasis on Accuracy 60:20:20": 60.146681111986254,
+    "Emphasis on Cost 20:20:60": 57.28436724874348,
+    "Emphasis on Speed 20:60:20": 67.48263394824296,
+    "Intelligence only": 58.43051843707938
+   },
+   "class": "Hosted decision API",
+   "open": "closed weights",
+   "licence": null,
+   "repo": "https://surd.ai",
+   "gpu": null,
+   "endpoint_condition": "measured 2026-10-06 on the live v1.6.0 S u P (1,500 rows) under Florian's 5 Oct 2026 full-set amendment, through the release lane's own full-set API lane (run_api_full_v161.py, rotation.py expose --full-set logged 1,200 sealed items to provider 'surd' before the first request); stock jevbench.adapters.typesafe with an endpoint override only, reasoning at the provider default, one request at a time, no retries; add-requests run 53, benchmarkheaven.com/submit ref 3FF00545",
+   "underlying": null,
+   "model_pin": "provider-reported measurement model slug: spx-cd-flash",
+   "last_measured_on": "2026-10-06",
+   "adapter_id": null,
+   "alt": null,
+   "measurement_date_status": "run output completion day (UTC)",
+   "measured_in": "v1.6.1",
+   "not_ranked_because": null,
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.8140161725067385,
+    "acc_among_decisive": 0.9370860927152318,
+    "valid": 371
+   },
+   "provenance": {
+    "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)",
+    "carried_metadata_from": "Current-pool API measurement registry"
+   }
+  },
+  {
+   "addendum": null,
+   "api_flag": false,
+   "api_subset": false,
    "author": "Mapika",
    "axes": {
     "calibration": 82.62244964732962,
@@ -5639,13 +7815,13 @@
    "key": "decider-chat-gemma4-31b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 14,
+   "rank": 20,
    "ranked": true,
    "ranks": {
-    "A": 14,
-    "B": 12,
-    "C": 10,
-    "capability": 26
+    "A": 20,
+    "B": 18,
+    "C": 16,
+    "capability": 34
    },
    "scores": {
     "A": 66.07956202755186,
@@ -6000,13 +8176,13 @@
    "key": "hopper-12b-trained",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 15,
+   "rank": 21,
    "ranked": true,
    "ranks": {
-    "A": 15,
-    "B": 16,
-    "C": 17,
-    "capability": 32
+    "A": 21,
+    "B": 22,
+    "C": 24,
+    "capability": 40
    },
    "scores": {
     "A": 65.78419365065008,
@@ -6361,13 +8537,13 @@
    "key": "surogate-rune-26b-a4b-v3-v16",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 16,
+   "rank": 22,
    "ranked": true,
    "ranks": {
-    "A": 16,
-    "B": 15,
-    "C": 13,
-    "capability": 15
+    "A": 22,
+    "B": 21,
+    "C": 19,
+    "capability": 21
    },
    "scores": {
     "A": 65.0490738113794,
@@ -6722,13 +8898,13 @@
    "key": "gev-26b-decide",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 17,
+   "rank": 23,
    "ranked": true,
    "ranks": {
-    "A": 17,
-    "B": 17,
-    "C": 19,
-    "capability": 28
+    "A": 23,
+    "B": 23,
+    "C": 27,
+    "capability": 36
    },
    "scores": {
     "A": 64.2201412904201,
@@ -7083,13 +9259,13 @@
    "key": "spx-cd-omni",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 18,
+   "rank": 24,
    "ranked": true,
    "ranks": {
-    "A": 18,
-    "B": 18,
-    "C": 20,
-    "capability": 33
+    "A": 24,
+    "B": 24,
+    "C": 28,
+    "capability": 41
    },
    "scores": {
     "A": 63.16406085537614,
@@ -7444,13 +9620,13 @@
    "key": "diffusion-jev",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 19,
+   "rank": 25,
    "ranked": true,
    "ranks": {
-    "A": 19,
-    "B": 19,
-    "C": 16,
-    "capability": 64
+    "A": 25,
+    "B": 25,
+    "C": 23,
+    "capability": 72
    },
    "scores": {
     "A": 59.330428224994314,
@@ -7636,6 +9812,367 @@
    "addendum": null,
    "api_flag": false,
    "api_subset": false,
+   "author": "Elon Salfati / salfatigroup",
+   "axes": {
+    "calibration": 90.18677086647014,
+    "cost": 45.963638345890566,
+    "intelligence": 61.72139577013068,
+    "speed": 87.11720932683018
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.043257328990227974,
+      "ece_score": 91.34853420195441,
+      "mean_tvd": null,
+      "n": 737,
+      "n_ece_hard": 307,
+      "n_tvd": 0,
+      "score": 91.34853420195441
+     },
+     "noul": {
+      "abstention_rate": 0.22102425876010778,
+      "brier": 0.06278221024258757,
+      "ece": 0.05196765498652292,
+      "n": 371,
+      "score": 89.60646900269542
+     },
+     "score": {
+      "interval90_coverage": 0.986449864498645,
+      "interval90_width": 0.3859530261969287,
+      "n": 369,
+      "nrps": 0.06312416440831078,
+      "score": 89.60530939476061,
+      "top_ece": 0.07238482384823842
+     }
+    },
+    "score": 90.18677086647014
+   },
+   "capability": 75.9540833183004,
+   "composite_ci95": {
+    "A": [
+     54.25035390810508,
+     56.621792265328125
+    ],
+    "B": [
+     52.791631605081,
+     56.42470571115517
+    ],
+    "C": [
+     47.82528165394186,
+     56.621792265328125
+    ]
+   },
+   "cost": {
+    "basis": "ESTIMATE (base-model reference, not charged). Unmodified pricing_v15.reference resolves google/gemma-4-31B-it to google/gemma-4-31b-it at USD0.09/M input and USD0.34/M output in frozen snapshot. Measured output tokens are 0 by construction (decision_contract.py and release.json); one forward-pass option readout. Common v1.6.1 cost input range applied unchanged.",
+    "common_basis": {
+     "n_items": 1477,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.062301899999999986
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.06327207176709546
+   },
+   "display": "René-1 31B FP8 (salfatigroup, Gemma 4 31B full fine-tune, one-pass option readout)",
+   "endpoint_kind": "gpu",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 62.91896990676746,
+    "I_sealed": 60.523821633493895,
+    "base": 61.72139577013068,
+    "excess": -0.17823936916468108,
+    "gap": 2.3951482732735627,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 78.65680231931067,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 100.00000000000001,
+       "hard": 73.57659641396666,
+       "judge": 84.17930125247197,
+       "standard": 69.8618668899121
+      }
+     },
+     "open|noul": {
+      "cc": 53.325051759834366,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 85.71428571428572,
+       "hard": 65.21739130434783,
+       "judge": 39.99999999999999,
+       "standard": 33.33333333333333
+      }
+     },
+     "open|score": {
+      "cc": 56.77505564115734,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 61.5151515151515,
+       "hard": 65.03703703703704,
+       "judge": 54.15254237288135,
+       "standard": 41.8148148148148
+      }
+     },
+     "sealed|choice": {
+      "cc": 78.92231555231959,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 80.04582070800384,
+       "hard": 71.49321266968325,
+       "judge": 86.96461824953444,
+       "standard": 81.15531469392782
+      }
+     },
+     "sealed|noul": {
+      "cc": 47.36482975523042,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 80.0,
+       "hard": 32.038834951456316,
+       "judge": 50.0,
+       "standard": 57.746478873239425
+      }
+     },
+     "sealed|score": {
+      "cc": 55.28431959293169,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 68.97163120567376,
+       "hard": 50.97549019607843,
+       "judge": 64.15568862275447,
+       "standard": 43.75126903553299
+      }
+     }
+    }
+   },
+   "jevbench_score": 55.84876743320955,
+   "key": "rene-1-31b-fp8",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 26,
+   "ranked": true,
+   "ranks": {
+    "A": 26,
+    "B": 26,
+    "C": 20,
+    "capability": 12
+   },
+   "scores": {
+    "A": 55.84876743320955,
+    "B": 55.06950723833363,
+    "C": 55.84876743320955
+   },
+   "speed": {
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "n": 124,
+    "p50_s_adjusted": 0.3694145163521171,
+    "p50_s_raw": 0.10970725817605853,
+    "p95_s_adjusted": 0.5257328446954489,
+    "p95_s_raw": 0.18786642234772444
+   },
+   "status": {
+    "answered_ok": 1477,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "api_subset_tag": null,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      85.96895555807659,
+      90.68721224415906
+     ],
+     "I": [
+      56.323580074482344,
+      65.99929373375565
+     ],
+     "capability": [
+      72.10629528396096,
+      77.53024725815187
+     ],
+     "composite": {
+      "A": [
+       54.25035390810508,
+       56.621792265328125
+      ],
+      "B": [
+       52.791631605081,
+       56.42470571115517
+      ],
+      "C": [
+       47.82528165394186,
+       56.621792265328125
+      ]
+     },
+     "seed": 128
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "g_med_used": 2.573387642438244,
+    "lane": "selfhosted",
+    "metric_basis": "S u P",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 90.18677086647014,
+     "capability": 75.9540833183004,
+     "intelligence": 61.72139577013068
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.8346666666666667,
+      "calibration": 91.34853420195441,
+      "cc": 78.85622803444389,
+      "cc_by_type": {
+       "choice": 78.85622803444389
+      },
+      "cc_tiered": 78.78955893581514,
+      "cc_tiered_open": 78.65680231931067,
+      "cc_tiered_sealed": 78.92231555231959,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 78.85622803444389
+     },
+     "noul": {
+      "accuracy": 0.7573333333333333,
+      "calibration": 89.60646900269542,
+      "cc": 51.46666666666666,
+      "cc_by_type": {
+       "noul": 51.46666666666666
+      },
+      "cc_tiered": 50.34494075753239,
+      "cc_tiered_open": 53.325051759834366,
+      "cc_tiered_sealed": 47.36482975523042,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 51.46666666666666
+     },
+     "score": {
+      "accuracy": 0.6746666666666666,
+      "calibration": 89.60530939476061,
+      "cc": 55.4684210526316,
+      "cc_by_type": {
+       "score": 55.4684210526316
+      },
+      "cc_tiered": 56.029687617044516,
+      "cc_tiered_open": 56.77505564115734,
+      "cc_tiered_sealed": 55.28431959293169,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 55.4684210526316
+     }
+    },
+    "raw_on_A": {
+     "calibration": 86.48256493925484,
+     "capability": 76.2896760781785,
+     "intelligence": 66.09678721710216
+    },
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.01733333333333331,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.010666666666666713,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.016000000000000014,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 51.281219378577866,
+    "Emphasis on Accuracy 60:20:20": 51.62853971578034,
+    "Emphasis on Cost 20:20:60": 45.45809395907335,
+    "Emphasis on Speed 20:60:20": 58.36507393476142,
+    "Intelligence only": 52.15843207508249
+   },
+   "class": "Jev-compatible decision model",
+   "open": "open weights",
+   "licence": "apache-2.0",
+   "repo": "https://huggingface.co/salfatigroup/rene-1-31b-fp8",
+   "gpu": "RTX PRO6000 Blackwell",
+   "endpoint_condition": "Candidate re-measured on 2026-10-07, current v1.6.0/v1.6.1 1500-item pool (sha256901983ae...). Immutable salfatigroup/rene-1-31b-fp8@bd634489957f8da63ccce858ee33fd6c2929d286, Apache-2.0. Same unmodified reviewed contributor source and run-39 transport shim. Author noul/yesno type mapping only; two-decimal probability rounding retained. One evaluator-owned RTX PRO6000 Blackwell 96GB pod, loopback-only network namespace, offline credential-free inference; no external hosted API, no retry or batching. Unmodified run_v16/typesafe adapter, serial one request at a time, selfhosted x2+0.15s latency adjustment. Missing ATTRIBUTIONS.md and NOTICE disclosed: training-data overlap cannot be checked. Florian GO in DECISIONS.md (go gor it, Apache2.0 confirmed) resolves prior attribution hold; publication remains release lane responsibility. COMPLETE: 1500/1500 distinct input IDs, 1477 HTTP200 native answers,23 HTTP422 refusals under the author's own32768-token state+question /65536-token request budget; every refusal counted wrong. Smoke passed all8 checks. All42 release-manifest files and6 prior source files hash-verified. Raw sha256 a28a8f0068f38b548f064a6e678bf63b13304f9add0a67b448dcc8003c9f38f1. Stack torch2.14.0, transformers5.17.0, compressed-tensors0.19.0, accelerate1.15.0. Provider pod91916684-9980-419c-98b7-c7a714a3912c removed and verified absent; approxUSD0.17. Fresh latest feed places this candidate inside both official caps; material open-board top-five change requires release-lane preview disposition before publication.",
+   "underlying": "google/gemma-4-31B-it",
+   "model_pin": "salfatigroup/rene-1-31b-fp8@bd634489957f8da63ccce858ee33fd6c2929d286",
+   "last_measured_on": "2026-10-07",
+   "adapter_id": null,
+   "alt": null,
+   "measurement_date_status": "run output completion day (UTC)",
+   "measured_in": "v1.6.1",
+   "not_ranked_because": null,
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.7789757412398922,
+    "acc_among_decisive": 0.9826989619377162,
+    "valid": 371
+   },
+   "provenance": {
+    "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)",
+    "carried_metadata_from": "Pinned author release; add-requests r61/score/withrows/REGISTRY.json measurement record"
+   }
+  },
+  {
+   "addendum": null,
+   "api_flag": false,
+   "api_subset": false,
    "author": "EmpirioLabs (@Adam-Dalloul)",
    "axes": {
     "calibration": 89.21801638247211,
@@ -7805,13 +10342,13 @@
    "key": "aplomb-1",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 20,
+   "rank": 27,
    "ranked": true,
    "ranks": {
-    "A": 20,
-    "B": 21,
-    "C": 22,
-    "capability": 36
+    "A": 27,
+    "B": 28,
+    "C": 30,
+    "capability": 44
    },
    "scores": {
     "A": 54.55838408944504,
@@ -8166,13 +10703,13 @@
    "key": "bespoke-nimble-9b-v3",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 21,
+   "rank": 28,
    "ranked": true,
    "ranks": {
-    "A": 21,
-    "B": 20,
-    "C": 18,
-    "capability": 37
+    "A": 28,
+    "B": 27,
+    "C": 26,
+    "capability": 45
    },
    "scores": {
     "A": 53.47656993239491,
@@ -8527,13 +11064,13 @@
    "key": "apus-openjev-v1-9b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 22,
+   "rank": 29,
    "ranked": true,
    "ranks": {
-    "A": 22,
-    "B": 22,
-    "C": 23,
-    "capability": 69
+    "A": 29,
+    "B": 30,
+    "C": 31,
+    "capability": 77
    },
    "scores": {
     "A": 49.17976892452783,
@@ -8884,13 +11421,13 @@
    "key": "plumb-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 23,
+   "rank": 30,
    "ranked": true,
    "ranks": {
-    "A": 23,
-    "B": 23,
-    "C": 24,
-    "capability": 41
+    "A": 30,
+    "B": 31,
+    "C": 32,
+    "capability": 49
    },
    "scores": {
     "A": 48.28224126395837,
@@ -9074,6 +11611,364 @@
   },
   {
    "addendum": null,
+   "api_flag": true,
+   "api_subset": false,
+   "author": "SPX AI team (SurdAI, formerly Simplex AI)",
+   "axes": {
+    "calibration": 92.41334857032513,
+    "cost": 43.076275488494026,
+    "intelligence": 64.85693822910903,
+    "speed": 77.96292698098645
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.037067490257276604,
+      "ece_score": 92.58650194854468,
+      "mean_tvd": null,
+      "n": 737,
+      "n_ece_hard": 307,
+      "n_tvd": 0,
+      "score": 92.58650194854468
+     },
+     "noul": {
+      "abstention_rate": 0.1617250673854448,
+      "brier": 0.07013566233777668,
+      "ece": 0.037583902439496455,
+      "n": 371,
+      "score": 92.48321951210072
+     },
+     "score": {
+      "interval90_coverage": 0.983739837398374,
+      "interval90_width": 0.26445347786811196,
+      "n": 369,
+      "nrps": 0.05200753435023827,
+      "score": 92.17032425033,
+      "top_ece": 0.052292990321580954
+     }
+    },
+    "score": 92.41334857032513
+   },
+   "capability": 78.63514339971708,
+   "composite_ci95": {
+    "A": [
+     46.40578610997944,
+     48.21089390268207
+    ],
+    "B": [
+     45.98130956469153,
+     48.76321124599849
+    ],
+    "C": [
+     45.82343084108345,
+     48.21089390268207
+    ]
+   },
+   "cost": {
+    "basis": "Operator's own public-beta overage tariff, conservative reading USD 0.08 per 1M input tokens, output USD 0: three dated primary readings of the operator's own published overage tariff: 24 Sep 2026 provider console (flash 0.025, pro 0.08 per 1M input), 1 Oct 2026 docs page (flash 0.04, pro 0.02), 6 Oct 2026 docs page AND /v1/models payload agreeing (flash 0.02, pro 0.04). Sources conflict, so the per-model MAXIMUM is used, which is the published fastino-gliner-2-5-decide precedent (\"published sources conflict ... conservative higher\"). Today's agreeing pair would be USD 0.04/M, i.e. half this row's cost. No base-model floor applies: the submitter states the base model stays sealed until a later open release. Priced on usage.input_tokens as the provider reports them. The provider also reports billable_input_tokens = input_tokens / 2 on every single item (297/297 of the public set, exactly 2.0): its default effort 2 renders the prompt twice and its docs bundle the second pass free during public beta (\"default effort 2 is included at the single-pass input price\"). That bundle is a public-beta promotion, and TASK.md forbids a free or promotional tier setting the price, so the two passes actually consumed are charged. The operator's own billed figure is exactly half of this row's cost",
+    "common_basis": {
+     "n_items": 1477,
+     "rule": "common",
+     "usd_per_1000_all_items": 0.07775829333333333
+    },
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.07896915368991199
+   },
+   "display": "SPX-CD Pro (SurdAI, hosted /v1/systemone, Oct-4 checkpoint)",
+   "endpoint_kind": "api",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 65.26225762662179,
+    "I_sealed": 64.45161883159628,
+    "base": 64.85693822910903,
+    "excess": -1.7627488474127326,
+    "gap": 0.8106387950255112,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 77.44982804388046,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 92.21621621621622,
+       "hard": 79.23875432525952,
+       "judge": 80.22412656558997,
+       "standard": 62.32733361239012
+      }
+     },
+     "open|noul": {
+      "cc": 58.726017943409246,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 85.71428571428572,
+       "hard": 82.6086956521739,
+       "judge": 19.999999999999996,
+       "standard": 55.55555555555556
+      }
+     },
+     "open|score": {
+      "cc": 59.61092689257566,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 62.50227372429029,
+       "hard": 68.13445392047002,
+       "judge": 54.627278742003114,
+       "standard": 48.59367164678844
+      }
+     },
+     "sealed|choice": {
+      "cc": 78.81397986232295,
+      "n": {
+       "easy": 96,
+       "hard": 252,
+       "judge": 137,
+       "standard": 115
+      },
+      "tiers": {
+       "easy": 81.37609932747026,
+       "hard": 74.5475113122172,
+       "judge": 77.6536312849162,
+       "standard": 87.80638009607095
+      }
+     },
+     "sealed|noul": {
+      "cc": 53.70130193527029,
+      "n": {
+       "easy": 50,
+       "hard": 103,
+       "judge": 76,
+       "standard": 71
+      },
+      "tiers": {
+       "easy": 84.00000000000001,
+       "hard": 37.86407766990292,
+       "judge": 52.63157894736843,
+       "standard": 71.83098591549295
+      }
+     },
+     "sealed|score": {
+      "cc": 60.83957469719559,
+      "n": {
+       "easy": 43,
+       "hard": 125,
+       "judge": 57,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 66.86467136136848,
+       "hard": 54.98115972463263,
+       "judge": 65.31737432933835,
+       "standard": 62.82715686202089
+      }
+     }
+    }
+   },
+   "jevbench_score": 47.66970820706367,
+   "key": "spx-cd-pro",
+   "listing": "ranked",
+   "planned_weight_denominator": 1.0,
+   "rank": 31,
+   "ranked": true,
+   "ranks": {
+    "A": 31,
+    "B": 29,
+    "C": 25,
+    "capability": 7
+   },
+   "scores": {
+    "A": 47.66970820706367,
+    "B": 47.762738448829694,
+    "C": 47.66970820706367
+   },
+   "speed": {
+    "adjustment": "none (API)",
+    "n": 124,
+    "p50_s_adjusted": 1.1281277425587177,
+    "p50_s_raw": 1.1281277425587177,
+    "p95_s_adjusted": 1.4169320456683636,
+    "p95_s_raw": 1.4169320456683636
+   },
+   "status": {
+    "answered_ok": 1477,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "api_subset_tag": null,
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      87.48842630468798,
+      92.31235357989142
+     ],
+     "I": [
+      59.60847348558619,
+      68.98634831582494
+     ],
+     "capability": [
+      74.38248323784742,
+      79.84438918865506
+     ],
+     "composite": {
+      "A": [
+       46.40578610997944,
+       48.21089390268207
+      ],
+      "B": [
+       45.98130956469153,
+       48.76321124599849
+      ],
+      "C": [
+       45.82343084108345,
+       48.21089390268207
+      ]
+     },
+     "seed": 138
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "full_set_api": true,
+    "g_med_used": 2.573387642438244,
+    "lane": "api",
+    "metric_basis": "S u P (full set, API lane, v1.6.1 amendment; not equated)",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 92.41334857032513,
+     "capability": 78.63514339971708,
+     "intelligence": 64.85693822910903
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.8373333333333334,
+      "calibration": 92.58650194854468,
+      "cc": 79.1972566145335,
+      "cc_by_type": {
+       "choice": 79.1972566145335
+      },
+      "cc_tiered": 78.1319039531017,
+      "cc_tiered_open": 77.44982804388046,
+      "cc_tiered_sealed": 78.81397986232295,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 79.1972566145335
+     },
+     "noul": {
+      "accuracy": 0.7893333333333333,
+      "calibration": 92.48321951210072,
+      "cc": 57.86666666666667,
+      "cc_by_type": {
+       "noul": 57.86666666666667
+      },
+      "cc_tiered": 56.21365993933976,
+      "cc_tiered_open": 58.726017943409246,
+      "cc_tiered_sealed": 53.70130193527029,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 57.86666666666667
+     },
+     "score": {
+      "accuracy": 0.6853333333333333,
+      "calibration": 92.17032425033,
+      "cc": 60.615191123661816,
+      "cc_by_type": {
+       "score": 60.615191123661816
+      },
+      "cc_tiered": 60.225250794885625,
+      "cc_tiered_open": 59.61092689257566,
+      "cc_tiered_sealed": 60.83957469719559,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 60.615191123661816
+     }
+    },
+    "raw_on_A": null,
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.01733333333333331,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.010666666666666713,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.016000000000000014,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 43.27025827744028,
+    "Emphasis on Accuracy 60:20:20": 45.09442248470386,
+    "Emphasis on Cost 20:20:60": 37.91159972444074,
+    "Emphasis on Speed 20:60:20": 48.12587216483719,
+    "Intelligence only": 48.138519063832746
+   },
+   "class": "Hosted decision API",
+   "open": "closed weights",
+   "licence": null,
+   "repo": "https://surd.ai",
+   "gpu": null,
+   "endpoint_condition": "measured 2026-10-06 on the live v1.6.0 S u P (1,500 rows) under Florian's 5 Oct 2026 full-set amendment, same lane, same adapter and same provider default as spx-cd-flash; add-requests run 53, benchmarkheaven.com/submit ref 3FF00545",
+   "underlying": null,
+   "model_pin": "provider-reported measurement model slug: spx-cd-pro",
+   "last_measured_on": "2026-10-06",
+   "adapter_id": null,
+   "alt": null,
+   "measurement_date_status": "run output completion day (UTC)",
+   "measured_in": "v1.6.1",
+   "not_ranked_because": null,
+   "noul_decisive": {
+    "supported": true,
+    "decisive_rate": 0.8382749326145552,
+    "acc_among_decisive": 0.9517684887459807,
+    "valid": 371
+   },
+   "provenance": {
+    "kind": "v1.6.1 addendum a12 (scorer output sha256 4d2833926c2d, method option B / O1S)",
+    "carried_metadata_from": "Current-pool API measurement registry"
+   }
+  },
+  {
+   "addendum": null,
    "api_flag": false,
    "api_subset": false,
    "author": "Messier AI (@agentmessier-ai, agentmessier.ai@gmail.com)",
@@ -9245,13 +12140,13 @@
    "key": "messier-one-v0.2",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 24,
+   "rank": 32,
    "ranked": true,
    "ranks": {
-    "A": 24,
-    "B": 26,
-    "C": 25,
-    "capability": 63
+    "A": 32,
+    "B": 34,
+    "C": 33,
+    "capability": 71
    },
    "scores": {
     "A": 45.29059491870636,
@@ -9602,13 +12497,13 @@
    "key": "spark-s1-4b-v6",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 25,
+   "rank": 33,
    "ranked": true,
    "ranks": {
-    "A": 25,
-    "B": 25,
-    "C": 26,
-    "capability": 76
+    "A": 33,
+    "B": 33,
+    "C": 34,
+    "capability": 84
    },
    "scores": {
     "A": 44.90217636528639,
@@ -9959,13 +12854,13 @@
    "key": "swanone",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 26,
+   "rank": 34,
    "ranked": true,
    "ranks": {
-    "A": 26,
-    "B": 24,
-    "C": 21,
-    "capability": 17
+    "A": 34,
+    "B": 32,
+    "C": 29,
+    "capability": 24
    },
    "scores": {
     "A": 43.78640157551217,
@@ -10316,13 +13211,13 @@
    "key": "quyet-1-0-medium",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 27,
+   "rank": 35,
    "ranked": true,
    "ranks": {
-    "A": 27,
-    "B": 28,
-    "C": 27,
-    "capability": 58
+    "A": 35,
+    "B": 36,
+    "C": 35,
+    "capability": 66
    },
    "scores": {
     "A": 43.58925238992216,
@@ -10671,13 +13566,13 @@
    "key": "lev",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 28,
+   "rank": 36,
    "ranked": true,
    "ranks": {
-    "A": 28,
-    "B": 29,
-    "C": 28,
-    "capability": 54
+    "A": 36,
+    "B": 37,
+    "C": 36,
+    "capability": 62
    },
    "scores": {
     "A": 42.177760514319104,
@@ -11028,13 +13923,13 @@
    "key": "ninfer-qwen3.8-flash-next",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 29,
+   "rank": 37,
    "ranked": true,
    "ranks": {
-    "A": 29,
-    "B": 27,
-    "C": 29,
-    "capability": 30
+    "A": 37,
+    "B": 35,
+    "C": 37,
+    "capability": 38
    },
    "scores": {
     "A": 41.96785076957165,
@@ -11385,13 +14280,13 @@
    "key": "jev-local",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 30,
+   "rank": 38,
    "ranked": true,
    "ranks": {
-    "A": 30,
-    "B": 30,
-    "C": 30,
-    "capability": 65
+    "A": 38,
+    "B": 38,
+    "C": 38,
+    "capability": 73
    },
    "scores": {
     "A": 41.328564334669615,
@@ -11742,13 +14637,13 @@
    "key": "decider-4b-v2",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 31,
+   "rank": 39,
    "ranked": true,
    "ranks": {
-    "A": 31,
-    "B": 31,
-    "C": 31,
-    "capability": 42
+    "A": 39,
+    "B": 39,
+    "C": 39,
+    "capability": 50
    },
    "scores": {
     "A": 41.240894350857424,
@@ -12103,13 +14998,13 @@
    "key": "classone-qwen3.5-9b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 32,
+   "rank": 40,
    "ranked": true,
    "ranks": {
-    "A": 32,
-    "B": 32,
-    "C": 32,
-    "capability": 77
+    "A": 40,
+    "B": 40,
+    "C": 40,
+    "capability": 85
    },
    "scores": {
     "A": 38.54185769307265,
@@ -12460,13 +15355,13 @@
    "key": "jevk5-v0.3-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 33,
+   "rank": 41,
    "ranked": true,
    "ranks": {
-    "A": 33,
-    "B": 36,
-    "C": 33,
-    "capability": 43
+    "A": 41,
+    "B": 44,
+    "C": 41,
+    "capability": 51
    },
    "scores": {
     "A": 37.36493548751909,
@@ -12817,13 +15712,13 @@
    "key": "metask-jev-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 34,
+   "rank": 42,
    "ranked": true,
    "ranks": {
-    "A": 34,
-    "B": 34,
-    "C": 34,
-    "capability": 52
+    "A": 42,
+    "B": 42,
+    "C": 42,
+    "capability": 60
    },
    "scores": {
     "A": 37.34931073616377,
@@ -13178,13 +16073,13 @@
    "key": "deck-4b-v1-0",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 35,
+   "rank": 43,
    "ranked": true,
    "ranks": {
-    "A": 35,
-    "B": 35,
-    "C": 35,
-    "capability": 45
+    "A": 43,
+    "B": 43,
+    "C": 43,
+    "capability": 53
    },
    "scores": {
     "A": 37.26498528662829,
@@ -13527,13 +16422,13 @@
    "key": "clef-flash",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 36,
+   "rank": 44,
    "ranked": true,
    "ranks": {
-    "A": 36,
-    "B": 33,
-    "C": 36,
-    "capability": 44
+    "A": 44,
+    "B": 41,
+    "C": 44,
+    "capability": 52
    },
    "scores": {
     "A": 36.635050479655426,
@@ -13896,13 +16791,13 @@
    "key": "evalengine-decision-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 37,
+   "rank": 45,
    "ranked": true,
    "ranks": {
-    "A": 37,
-    "B": 37,
-    "C": 37,
-    "capability": 59
+    "A": 45,
+    "B": 45,
+    "C": 45,
+    "capability": 67
    },
    "scores": {
     "A": 35.43243109909669,
@@ -14253,13 +17148,13 @@
    "key": "janus-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 38,
+   "rank": 46,
    "ranked": true,
    "ranks": {
-    "A": 38,
-    "B": 39,
-    "C": 38,
-    "capability": 46
+    "A": 46,
+    "B": 47,
+    "C": 46,
+    "capability": 54
    },
    "scores": {
     "A": 35.18351981268845,
@@ -14610,13 +17505,13 @@
    "key": "qwen35-9b-jev-data-mix-v2",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 39,
+   "rank": 47,
    "ranked": true,
    "ranks": {
-    "A": 39,
-    "B": 38,
-    "C": 39,
-    "capability": 56
+    "A": 47,
+    "B": 46,
+    "C": 47,
+    "capability": 64
    },
    "scores": {
     "A": 33.58966697347588,
@@ -14967,13 +17862,13 @@
    "key": "jevk5-v02",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 40,
+   "rank": 48,
    "ranked": true,
    "ranks": {
-    "A": 40,
-    "B": 42,
-    "C": 40,
-    "capability": 47
+    "A": 48,
+    "B": 50,
+    "C": 48,
+    "capability": 55
    },
    "scores": {
     "A": 32.09901620353128,
@@ -15324,13 +18219,13 @@
    "key": "jevone",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 41,
+   "rank": 49,
    "ranked": true,
    "ranks": {
-    "A": 41,
-    "B": 40,
-    "C": 41,
-    "capability": 31
+    "A": 49,
+    "B": 48,
+    "C": 49,
+    "capability": 39
    },
    "scores": {
     "A": 31.14510331640707,
@@ -15681,13 +18576,13 @@
    "key": "kahn1",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 42,
+   "rank": 50,
    "ranked": true,
    "ranks": {
-    "A": 42,
-    "B": 41,
-    "C": 42,
-    "capability": 53
+    "A": 50,
+    "B": 49,
+    "C": 50,
+    "capability": 61
    },
    "scores": {
     "A": 31.117574813020727,
@@ -16042,13 +18937,13 @@
    "key": "typecastlm-1.4.0",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 43,
+   "rank": 51,
    "ranked": true,
    "ranks": {
-    "A": 43,
-    "B": 43,
-    "C": 44,
-    "capability": 72
+    "A": 51,
+    "B": 51,
+    "C": 52,
+    "capability": 80
    },
    "scores": {
     "A": 29.827386072784904,
@@ -16399,13 +19294,13 @@
    "key": "hopper",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 44,
+   "rank": 52,
    "ranked": true,
    "ranks": {
-    "A": 44,
-    "B": 44,
-    "C": 46,
-    "capability": 48
+    "A": 52,
+    "B": 52,
+    "C": 54,
+    "capability": 56
    },
    "scores": {
     "A": 28.852652318563656,
@@ -16756,13 +19651,13 @@
    "key": "imajev-4b-rtx5090-a2",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 45,
+   "rank": 53,
    "ranked": true,
    "ranks": {
-    "A": 45,
-    "B": 45,
-    "C": 47,
-    "capability": 49
+    "A": 53,
+    "B": 53,
+    "C": 55,
+    "capability": 57
    },
    "scores": {
     "A": 28.655751132526984,
@@ -17113,13 +20008,13 @@
    "key": "malkuth-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 46,
+   "rank": 54,
    "ranked": true,
    "ranks": {
-    "A": 46,
-    "B": 48,
-    "C": 51,
-    "capability": 55
+    "A": 54,
+    "B": 56,
+    "C": 59,
+    "capability": 63
    },
    "scores": {
     "A": 26.197476126697616,
@@ -17470,13 +20365,13 @@
    "key": "jqv",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 47,
+   "rank": 55,
    "ranked": true,
    "ranks": {
-    "A": 47,
-    "B": 49,
-    "C": 54,
-    "capability": 50
+    "A": 55,
+    "B": 57,
+    "C": 62,
+    "capability": 58
    },
    "scores": {
     "A": 25.391439220985372,
@@ -17831,13 +20726,13 @@
    "key": "jpt-35b-a3b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 48,
+   "rank": 56,
    "ranked": true,
    "ranks": {
-    "A": 48,
-    "B": 46,
-    "C": 50,
-    "capability": 25
+    "A": 56,
+    "B": 54,
+    "C": 58,
+    "capability": 33
    },
    "scores": {
     "A": 25.357657195103958,
@@ -18188,13 +21083,13 @@
    "key": "decider-35b-a3b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 49,
+   "rank": 57,
    "ranked": true,
    "ranks": {
-    "A": 49,
-    "B": 47,
-    "C": 56,
-    "capability": 39
+    "A": 57,
+    "B": 55,
+    "C": 64,
+    "capability": 47
    },
    "scores": {
     "A": 24.772887446577812,
@@ -18549,13 +21444,13 @@
    "key": "coco-decision-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 50,
+   "rank": 58,
    "ranked": true,
    "ranks": {
-    "A": 50,
-    "B": 53,
-    "C": 57,
-    "capability": 68
+    "A": 58,
+    "B": 61,
+    "C": 65,
+    "capability": 76
    },
    "scores": {
     "A": 24.64791535308594,
@@ -18906,13 +21801,13 @@
    "key": "manchego-v21-v15",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 51,
+   "rank": 59,
    "ranked": true,
    "ranks": {
-    "A": 51,
-    "B": 54,
-    "C": 58,
-    "capability": 62
+    "A": 59,
+    "B": 62,
+    "C": 66,
+    "capability": 70
    },
    "scores": {
     "A": 24.487333472500133,
@@ -19262,13 +22157,13 @@
    "key": "decision-4b-v12",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 52,
+   "rank": 60,
    "ranked": true,
    "ranks": {
-    "A": 52,
-    "B": 55,
-    "C": 59,
-    "capability": 57
+    "A": 60,
+    "B": 63,
+    "C": 67,
+    "capability": 65
    },
    "scores": {
     "A": 24.463556699266523,
@@ -19619,13 +22514,13 @@
    "key": "raw-qwen3-4b-instruct-2507",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 53,
+   "rank": 61,
    "ranked": true,
    "ranks": {
-    "A": 53,
-    "B": 57,
-    "C": 62,
-    "capability": 110
+    "A": 61,
+    "B": 65,
+    "C": 70,
+    "capability": 118
    },
    "scores": {
     "A": 21.792436038282993,
@@ -19980,13 +22875,13 @@
    "key": "jev-27b-autotrust",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 54,
+   "rank": 62,
    "ranked": true,
    "ranks": {
-    "A": 54,
-    "B": 52,
-    "C": 48,
-    "capability": 14
+    "A": 62,
+    "B": 60,
+    "C": 56,
+    "capability": 18
    },
    "scores": {
     "A": 21.291230595611577,
@@ -20341,12 +23236,12 @@
    "key": "torchcast-decision-27b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 55,
+   "rank": 63,
    "ranked": true,
    "ranks": {
-    "A": 55,
-    "B": 50,
-    "C": 43,
+    "A": 63,
+    "B": 58,
+    "C": 51,
     "capability": 3
    },
    "scores": {
@@ -20698,13 +23593,13 @@
    "key": "nimble-9b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 56,
+   "rank": 64,
    "ranked": true,
    "ranks": {
-    "A": 56,
-    "B": 56,
-    "C": 63,
-    "capability": 71
+    "A": 64,
+    "B": 64,
+    "C": 71,
+    "capability": 79
    },
    "scores": {
     "A": 21.082616704957896,
@@ -21055,13 +23950,13 @@
    "key": "reflex-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 57,
+   "rank": 65,
    "ranked": true,
    "ranks": {
-    "A": 57,
-    "B": 64,
-    "C": 64,
-    "capability": 60
+    "A": 65,
+    "B": 72,
+    "C": 72,
+    "capability": 68
    },
    "scores": {
     "A": 20.637311182702398,
@@ -21416,12 +24311,12 @@
    "key": "pplx-decider-v1-1-27b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 58,
+   "rank": 66,
    "ranked": true,
    "ranks": {
-    "A": 58,
-    "B": 51,
-    "C": 45,
+    "A": 66,
+    "B": 59,
+    "C": 53,
     "capability": 1
    },
    "scores": {
@@ -21769,13 +24664,13 @@
    "key": "jade",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 59,
+   "rank": 67,
    "ranked": true,
    "ranks": {
-    "A": 59,
-    "B": 58,
-    "C": 65,
-    "capability": 80
+    "A": 67,
+    "B": 66,
+    "C": 73,
+    "capability": 88
    },
    "scores": {
     "A": 20.194459825016597,
@@ -22126,13 +25021,13 @@
    "key": "typecastlm",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 60,
+   "rank": 68,
    "ranked": true,
    "ranks": {
-    "A": 60,
-    "B": 67,
-    "C": 66,
-    "capability": 70
+    "A": 68,
+    "B": 75,
+    "C": 74,
+    "capability": 78
    },
    "scores": {
     "A": 19.72256430004839,
@@ -22487,13 +25382,13 @@
    "key": "jebadiah-27b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 61,
+   "rank": 69,
    "ranked": true,
    "ranks": {
-    "A": 61,
-    "B": 59,
-    "C": 53,
-    "capability": 27
+    "A": 69,
+    "B": 67,
+    "C": 61,
+    "capability": 35
    },
    "scores": {
     "A": 19.255307672764186,
@@ -22848,13 +25743,13 @@
    "key": "decision-2-0-vega-27b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 62,
+   "rank": 70,
    "ranked": true,
    "ranks": {
-    "A": 62,
-    "B": 60,
-    "C": 49,
-    "capability": 20
+    "A": 70,
+    "B": 68,
+    "C": 57,
+    "capability": 28
    },
    "scores": {
     "A": 18.883756282485887,
@@ -23205,13 +26100,13 @@
    "key": "decision-4b-v11",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 63,
+   "rank": 71,
    "ranked": true,
    "ranks": {
-    "A": 63,
-    "B": 69,
-    "C": 68,
-    "capability": 66
+    "A": 71,
+    "B": 77,
+    "C": 76,
+    "capability": 74
    },
    "scores": {
     "A": 18.718356274892123,
@@ -23562,13 +26457,13 @@
    "key": "autojev-27b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 64,
+   "rank": 72,
    "ranked": true,
    "ranks": {
-    "A": 64,
-    "B": 62,
-    "C": 61,
-    "capability": 19
+    "A": 72,
+    "B": 70,
+    "C": 69,
+    "capability": 27
    },
    "scores": {
     "A": 18.463427917707932,
@@ -23919,13 +26814,13 @@
    "key": "eikos-27b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 65,
+   "rank": 73,
    "ranked": true,
    "ranks": {
-    "A": 65,
-    "B": 61,
-    "C": 52,
-    "capability": 8
+    "A": 73,
+    "B": 69,
+    "C": 60,
+    "capability": 10
    },
    "scores": {
     "A": 18.077889022432696,
@@ -24276,13 +27171,13 @@
    "key": "ninfer-qwen3.8-27b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 66,
+   "rank": 74,
    "ranked": true,
    "ranks": {
-    "A": 66,
-    "B": 65,
-    "C": 67,
-    "capability": 34
+    "A": 74,
+    "B": 73,
+    "C": 75,
+    "capability": 42
    },
    "scores": {
     "A": 17.71600496541158,
@@ -24633,13 +27528,13 @@
    "key": "openjev-thinking",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 67,
+   "rank": 75,
    "ranked": true,
    "ranks": {
-    "A": 67,
-    "B": 63,
-    "C": 55,
-    "capability": 10
+    "A": 75,
+    "B": 71,
+    "C": 63,
+    "capability": 13
    },
    "scores": {
     "A": 17.265218966202397,
@@ -24990,13 +27885,13 @@
    "key": "open-jev-zefan-9b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 68,
+   "rank": 76,
    "ranked": true,
    "ranks": {
-    "A": 68,
-    "B": 68,
-    "C": 69,
-    "capability": 51
+    "A": 76,
+    "B": 76,
+    "C": 77,
+    "capability": 59
    },
    "scores": {
     "A": 17.045611746249723,
@@ -25347,13 +28242,13 @@
    "key": "standardone-8b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 69,
+   "rank": 77,
    "ranked": true,
    "ranks": {
-    "A": 69,
-    "B": 70,
-    "C": 70,
-    "capability": 61
+    "A": 77,
+    "B": 78,
+    "C": 78,
+    "capability": 69
    },
    "scores": {
     "A": 16.917108299009165,
@@ -25704,13 +28599,13 @@
    "key": "clef",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 70,
+   "rank": 78,
    "ranked": true,
    "ranks": {
-    "A": 70,
-    "B": 66,
-    "C": 60,
-    "capability": 11
+    "A": 78,
+    "B": 74,
+    "C": 68,
+    "capability": 14
    },
    "scores": {
     "A": 16.753692861922005,
@@ -26073,13 +28968,13 @@
    "key": "jev-qwen3.5-9b-base-nvfp4",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 71,
+   "rank": 79,
    "ranked": true,
    "ranks": {
-    "A": 71,
-    "B": 71,
-    "C": 71,
-    "capability": 67
+    "A": 79,
+    "B": 79,
+    "C": 79,
+    "capability": 75
    },
    "scores": {
     "A": 15.97555620862577,
@@ -26430,13 +29325,13 @@
    "key": "semif-qwen3.5-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 72,
+   "rank": 80,
    "ranked": true,
    "ranks": {
-    "A": 72,
-    "B": 72,
-    "C": 72,
-    "capability": 73
+    "A": 80,
+    "B": 80,
+    "C": 80,
+    "capability": 81
    },
    "scores": {
     "A": 15.517179498801362,
@@ -26787,13 +29682,13 @@
    "key": "bev-bonsai-27b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 73,
+   "rank": 81,
    "ranked": true,
    "ranks": {
-    "A": 73,
-    "B": 73,
-    "C": 73,
-    "capability": 40
+    "A": 81,
+    "B": 81,
+    "C": 81,
+    "capability": 48
    },
    "scores": {
     "A": 11.7393704396132,
@@ -27143,13 +30038,13 @@
    "key": "litjev",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 74,
+   "rank": 82,
    "ranked": true,
    "ranks": {
-    "A": 74,
-    "B": 74,
-    "C": 74,
-    "capability": 38
+    "A": 82,
+    "B": 82,
+    "C": 82,
+    "capability": 46
    },
    "scores": {
     "A": 11.458886170296882,
@@ -27500,13 +30395,13 @@
    "key": "localjev-qwen3.5-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 75,
+   "rank": 83,
    "ranked": true,
    "ranks": {
-    "A": 75,
-    "B": 76,
-    "C": 75,
-    "capability": 74
+    "A": 83,
+    "B": 84,
+    "C": 83,
+    "capability": 82
    },
    "scores": {
     "A": 11.438161297684031,
@@ -27857,13 +30752,13 @@
    "key": "system-one-sg",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 76,
+   "rank": 84,
    "ranked": true,
    "ranks": {
-    "A": 76,
-    "B": 75,
-    "C": 76,
-    "capability": 118
+    "A": 84,
+    "B": 83,
+    "C": 84,
+    "capability": 126
    },
    "scores": {
     "A": 11.027723483913586,
@@ -28214,13 +31109,13 @@
    "key": "kev-8b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 77,
+   "rank": 85,
    "ranked": true,
    "ranks": {
-    "A": 77,
-    "B": 77,
-    "C": 77,
-    "capability": 78
+    "A": 85,
+    "B": 85,
+    "C": 85,
+    "capability": 86
    },
    "scores": {
     "A": 10.62283914209564,
@@ -28571,13 +31466,13 @@
    "key": "decision-2b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 78,
+   "rank": 86,
    "ranked": true,
    "ranks": {
-    "A": 78,
-    "B": 80,
-    "C": 78,
-    "capability": 75
+    "A": 86,
+    "B": 88,
+    "C": 86,
+    "capability": 83
    },
    "scores": {
     "A": 10.289708493744515,
@@ -28928,13 +31823,13 @@
    "key": "opensourcejev-qwen35-4b-q4km",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 79,
+   "rank": 87,
    "ranked": true,
    "ranks": {
-    "A": 79,
-    "B": 78,
-    "C": 79,
-    "capability": 82
+    "A": 87,
+    "B": 86,
+    "C": 87,
+    "capability": 90
    },
    "scores": {
     "A": 10.263493713193125,
@@ -29285,13 +32180,13 @@
    "key": "open-alternative-jev",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 80,
+   "rank": 88,
    "ranked": true,
    "ranks": {
-    "A": 80,
-    "B": 81,
-    "C": 80,
-    "capability": 81
+    "A": 88,
+    "B": 89,
+    "C": 88,
+    "capability": 89
    },
    "scores": {
     "A": 9.435692571873393,
@@ -29642,13 +32537,13 @@
    "key": "raw-qwen3-8b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 81,
+   "rank": 89,
    "ranked": true,
    "ranks": {
-    "A": 81,
-    "B": 79,
-    "C": 81,
-    "capability": 117
+    "A": 89,
+    "B": 87,
+    "C": 89,
+    "capability": 125
    },
    "scores": {
     "A": 9.30125972789427,
@@ -29999,13 +32894,13 @@
    "key": "decider-2b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 82,
+   "rank": 90,
    "ranked": true,
    "ranks": {
-    "A": 82,
-    "B": 82,
-    "C": 83,
-    "capability": 88
+    "A": 90,
+    "B": 90,
+    "C": 91,
+    "capability": 96
    },
    "scores": {
     "A": 7.6704332123718,
@@ -30356,13 +33251,13 @@
    "key": "nemotron-diffusion-8b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 83,
+   "rank": 91,
    "ranked": true,
    "ranks": {
-    "A": 83,
-    "B": 84,
-    "C": 84,
-    "capability": 86
+    "A": 91,
+    "B": 92,
+    "C": 92,
+    "capability": 94
    },
    "scores": {
     "A": 7.29748476516348,
@@ -30713,13 +33608,13 @@
    "key": "kev-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 84,
+   "rank": 92,
    "ranked": true,
    "ranks": {
-    "A": 84,
-    "B": 85,
-    "C": 85,
-    "capability": 91
+    "A": 92,
+    "B": 93,
+    "C": 93,
+    "capability": 99
    },
    "scores": {
     "A": 6.611791819903415,
@@ -31074,13 +33969,13 @@
    "key": "kev-27b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 85,
+   "rank": 93,
    "ranked": true,
    "ranks": {
-    "A": 85,
-    "B": 83,
-    "C": 82,
-    "capability": 5
+    "A": 93,
+    "B": 91,
+    "C": 90,
+    "capability": 6
    },
    "scores": {
     "A": 5.77223551264444,
@@ -31431,13 +34326,13 @@
    "key": "malkuth-2b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 86,
+   "rank": 94,
    "ranked": true,
    "ranks": {
-    "A": 86,
-    "B": 88,
-    "C": 87,
-    "capability": 85
+    "A": 94,
+    "B": 96,
+    "C": 95,
+    "capability": 93
    },
    "scores": {
     "A": 3.992169201455145,
@@ -31788,13 +34683,13 @@
    "key": "qwen3-reranker-4b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 87,
+   "rank": 95,
    "ranked": true,
    "ranks": {
-    "A": 87,
-    "B": 89,
-    "C": 88,
-    "capability": 87
+    "A": 95,
+    "B": 97,
+    "C": 96,
+    "capability": 95
    },
    "scores": {
     "A": 3.715006798009075,
@@ -32149,13 +35044,13 @@
    "key": "simplejev-qwen3.8-27b-selfhost",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 88,
+   "rank": 96,
    "ranked": true,
    "ranks": {
-    "A": 88,
-    "B": 86,
-    "C": 86,
-    "capability": 13
+    "A": 96,
+    "B": 94,
+    "C": 94,
+    "capability": 16
    },
    "scores": {
     "A": 3.394848880196433,
@@ -32506,13 +35401,13 @@
    "key": "zerank-2",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 89,
+   "rank": 97,
    "ranked": true,
    "ranks": {
-    "A": 89,
-    "B": 91,
-    "C": 89,
-    "capability": 79
+    "A": 97,
+    "B": 99,
+    "C": 97,
+    "capability": 87
    },
    "scores": {
     "A": 3.349795360318651,
@@ -32867,13 +35762,13 @@
    "key": "exaone-4.0-1.2b-jev-v0.3",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 90,
+   "rank": 98,
    "ranked": true,
    "ranks": {
-    "A": 90,
-    "B": 92,
-    "C": 90,
-    "capability": 84
+    "A": 98,
+    "B": 100,
+    "C": 98,
+    "capability": 92
    },
    "scores": {
     "A": 3.266776278413127,
@@ -33224,13 +36119,13 @@
    "key": "open-jev-zefan-2b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 91,
+   "rank": 99,
    "ranked": true,
    "ranks": {
-    "A": 91,
-    "B": 90,
-    "C": 91,
-    "capability": 83
+    "A": 99,
+    "B": 98,
+    "C": 99,
+    "capability": 91
    },
    "scores": {
     "A": 3.2383990318693976,
@@ -33581,13 +36476,13 @@
    "key": "open-jev-zefan-27b-v1.1",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 92,
+   "rank": 100,
    "ranked": true,
    "ranks": {
-    "A": 92,
-    "B": 87,
-    "C": 92,
-    "capability": 35
+    "A": 100,
+    "B": 95,
+    "C": 100,
+    "capability": 43
    },
    "scores": {
     "A": 2.8808671915746493,
@@ -33938,13 +36833,13 @@
    "key": "raw-phi-4-mini",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 93,
+   "rank": 101,
    "ranked": true,
    "ranks": {
-    "A": 93,
-    "B": 93,
-    "C": 93,
-    "capability": 108
+    "A": 101,
+    "B": 101,
+    "C": 101,
+    "capability": 116
    },
    "scores": {
     "A": 2.4794266829120515,
@@ -34295,13 +37190,13 @@
    "key": "simplejev-qwen3.5-0.8b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 94,
+   "rank": 102,
    "ranked": true,
    "ranks": {
-    "A": 94,
-    "B": 94,
-    "C": 94,
-    "capability": 114
+    "A": 102,
+    "B": 102,
+    "C": 102,
+    "capability": 122
    },
    "scores": {
     "A": 2.112084174105171,
@@ -34652,13 +37547,13 @@
    "key": "smalljev",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 95,
+   "rank": 103,
    "ranked": true,
    "ranks": {
-    "A": 95,
-    "B": 95,
-    "C": 95,
-    "capability": 95
+    "A": 103,
+    "B": 103,
+    "C": 103,
+    "capability": 103
    },
    "scores": {
     "A": 0.7719455446134506,
@@ -35009,13 +37904,13 @@
    "key": "kev-0.6b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 96,
+   "rank": 104,
    "ranked": true,
    "ranks": {
-    "A": 96,
-    "B": 96,
-    "C": 96,
-    "capability": 105
+    "A": 104,
+    "B": 104,
+    "C": 104,
+    "capability": 113
    },
    "scores": {
     "A": 0.5431213026023877,
@@ -35370,13 +38265,13 @@
    "key": "jul-fast",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 97,
+   "rank": 105,
    "ranked": true,
    "ranks": {
-    "A": 97,
-    "B": 98,
-    "C": 97,
-    "capability": 96
+    "A": 105,
+    "B": 106,
+    "C": 105,
+    "capability": 104
    },
    "scores": {
     "A": 0.5174168972906218,
@@ -35727,13 +38622,13 @@
    "key": "opendecision",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 98,
+   "rank": 106,
    "ranked": true,
    "ranks": {
-    "A": 98,
-    "B": 99,
-    "C": 98,
-    "capability": 103
+    "A": 106,
+    "B": 107,
+    "C": 106,
+    "capability": 111
    },
    "scores": {
     "A": 0.508795165212109,
@@ -36088,13 +38983,13 @@
    "key": "classone-gemma4-e2b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 99,
+   "rank": 107,
    "ranked": true,
    "ranks": {
-    "A": 99,
-    "B": 97,
-    "C": 99,
-    "capability": 125
+    "A": 107,
+    "B": 105,
+    "C": 107,
+    "capability": 133
    },
    "scores": {
     "A": 0.49351800738768026,
@@ -36445,13 +39340,13 @@
    "key": "mghafiri-qwen3.5-0.8b-decision-model",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 100,
+   "rank": 108,
    "ranked": true,
    "ranks": {
-    "A": 100,
-    "B": 100,
-    "C": 100,
-    "capability": 97
+    "A": 108,
+    "B": 108,
+    "C": 108,
+    "capability": 105
    },
    "scores": {
     "A": 0.47247471382875306,
@@ -36806,13 +39701,13 @@
    "key": "fastino-gliner-2-5-decide",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 101,
+   "rank": 109,
    "ranked": true,
    "ranks": {
-    "A": 101,
-    "B": 101,
-    "C": 101,
-    "capability": 109
+    "A": 109,
+    "B": 109,
+    "C": 109,
+    "capability": 117
    },
    "scores": {
     "A": 0.34332996901846624,
@@ -37157,13 +40052,13 @@
    "key": "deem-0.8-v1",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 102,
+   "rank": 110,
    "ranked": true,
    "ranks": {
-    "A": 102,
-    "B": 102,
-    "C": 102,
-    "capability": 123
+    "A": 110,
+    "B": 110,
+    "C": 110,
+    "capability": 131
    },
    "scores": {
     "A": 0.32342918922131697,
@@ -37513,13 +40408,13 @@
    "key": "decision-fast",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 103,
+   "rank": 111,
    "ranked": true,
    "ranks": {
-    "A": 103,
-    "B": 103,
-    "C": 103,
-    "capability": 100
+    "A": 111,
+    "B": 111,
+    "C": 111,
+    "capability": 108
    },
    "scores": {
     "A": 0.2981489585308357,
@@ -37870,13 +40765,13 @@
    "key": "quyet-1-0-small-en",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 104,
+   "rank": 112,
    "ranked": true,
    "ranks": {
-    "A": 104,
-    "B": 104,
-    "C": 104,
-    "capability": 102
+    "A": 112,
+    "B": 112,
+    "C": 112,
+    "capability": 110
    },
    "scores": {
     "A": 0.29239342204088814,
@@ -38225,13 +41120,13 @@
    "key": "laya-typed-decisions",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 105,
+   "rank": 113,
    "ranked": true,
    "ranks": {
-    "A": 105,
-    "B": 105,
-    "C": 105,
-    "capability": 89
+    "A": 113,
+    "B": 113,
+    "C": 113,
+    "capability": 97
    },
    "scores": {
     "A": 0.21666109526429145,
@@ -38585,13 +41480,13 @@
    "key": "watersheep",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 106,
+   "rank": 114,
    "ranked": true,
    "ranks": {
-    "A": 106,
-    "B": 106,
-    "C": 106,
-    "capability": 106
+    "A": 114,
+    "B": 114,
+    "C": 114,
+    "capability": 114
    },
    "scores": {
     "A": 0.19483758736149703,
@@ -38942,13 +41837,13 @@
    "key": "openjev-verdict-1.4",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 107,
+   "rank": 115,
    "ranked": true,
    "ranks": {
-    "A": 107,
-    "B": 108,
-    "C": 107,
-    "capability": 101
+    "A": 115,
+    "B": 116,
+    "C": 115,
+    "capability": 109
    },
    "scores": {
     "A": 0.17222636557331997,
@@ -39299,13 +42194,13 @@
    "key": "raw-qwen3-0.6b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 108,
+   "rank": 116,
    "ranked": true,
    "ranks": {
-    "A": 108,
-    "B": 107,
-    "C": 108,
-    "capability": 127
+    "A": 116,
+    "B": 115,
+    "C": 116,
+    "capability": 135
    },
    "scores": {
     "A": 0.1673536172919218,
@@ -39656,13 +42551,13 @@
    "key": "lev-350m",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 109,
+   "rank": 117,
    "ranked": true,
    "ranks": {
-    "A": 109,
-    "B": 110,
-    "C": 109,
-    "capability": 93
+    "A": 117,
+    "B": 118,
+    "C": 117,
+    "capability": 101
    },
    "scores": {
     "A": 0.15377137469809216,
@@ -40013,13 +42908,13 @@
    "key": "raw-qwen3-1.7b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 110,
+   "rank": 118,
    "ranked": true,
    "ranks": {
-    "A": 110,
-    "B": 109,
-    "C": 110,
-    "capability": 126
+    "A": 118,
+    "B": 117,
+    "C": 118,
+    "capability": 134
    },
    "scores": {
     "A": 0.13671939226506033,
@@ -40370,13 +43265,13 @@
    "key": "kev-0.5b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 111,
+   "rank": 119,
    "ranked": true,
    "ranks": {
-    "A": 111,
-    "B": 111,
-    "C": 111,
-    "capability": 111
+    "A": 119,
+    "B": 119,
+    "C": 119,
+    "capability": 119
    },
    "scores": {
     "A": 0.131588623265787,
@@ -40727,13 +43622,13 @@
    "key": "openjev-verdict",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 112,
+   "rank": 120,
    "ranked": true,
    "ranks": {
-    "A": 112,
-    "B": 112,
-    "C": 112,
-    "capability": 119
+    "A": 120,
+    "B": 120,
+    "C": 120,
+    "capability": 127
    },
    "scores": {
     "A": 0.09650709186186587,
@@ -41084,13 +43979,13 @@
    "key": "quyet-1-0-small",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 113,
+   "rank": 121,
    "ranked": true,
    "ranks": {
-    "A": 113,
-    "B": 113,
-    "C": 113,
-    "capability": 113
+    "A": 121,
+    "B": 121,
+    "C": 121,
+    "capability": 121
    },
    "scores": {
     "A": 0.08963716950381444,
@@ -41443,13 +44338,13 @@
    "key": "watt-flash-0.1",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 114,
+   "rank": 122,
    "ranked": true,
    "ranks": {
-    "A": 114,
-    "B": 114,
-    "C": 114,
-    "capability": 99
+    "A": 122,
+    "B": 122,
+    "C": 122,
+    "capability": 107
    },
    "scores": {
     "A": 0.07461802002995101,
@@ -41800,13 +44695,13 @@
    "key": "quyet-1-0-tiny",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 115,
+   "rank": 123,
    "ranked": true,
    "ranks": {
-    "A": 115,
-    "B": 115,
-    "C": 115,
-    "capability": 115
+    "A": 123,
+    "B": 123,
+    "C": 123,
+    "capability": 123
    },
    "scores": {
     "A": 0.07064766318734213,
@@ -42155,13 +45050,13 @@
    "key": "open-jev-deberta-v3-large",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 116,
+   "rank": 124,
    "ranked": true,
    "ranks": {
-    "A": 116,
-    "B": 116,
-    "C": 116,
-    "capability": 107
+    "A": 124,
+    "B": 124,
+    "C": 124,
+    "capability": 115
    },
    "scores": {
     "A": 0.03235814777127837,
@@ -42512,13 +45407,13 @@
    "key": "verdict-small",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 117,
+   "rank": 125,
    "ranked": true,
    "ranks": {
-    "A": 117,
-    "B": 117,
-    "C": 117,
-    "capability": 104
+    "A": 125,
+    "B": 125,
+    "C": 125,
+    "capability": 112
    },
    "scores": {
     "A": 0.01899384266854915,
@@ -42873,13 +45768,13 @@
    "key": "tacet-sonata",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 118,
+   "rank": 126,
    "ranked": true,
    "ranks": {
-    "A": 118,
-    "B": 118,
-    "C": 118,
-    "capability": 121
+    "A": 126,
+    "B": 126,
+    "C": 126,
+    "capability": 129
    },
    "scores": {
     "A": 0.016405006835540154,
@@ -43230,13 +46125,13 @@
    "key": "laya",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 119,
+   "rank": 127,
    "ranked": true,
    "ranks": {
-    "A": 119,
-    "B": 119,
-    "C": 119,
-    "capability": 112
+    "A": 127,
+    "B": 127,
+    "C": 127,
+    "capability": 120
    },
    "scores": {
     "A": 0.008560099345041717,
@@ -43587,13 +46482,13 @@
    "key": "mxbai-rerank-base-v2",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 120,
+   "rank": 128,
    "ranked": true,
    "ranks": {
-    "A": 120,
-    "B": 120,
-    "C": 120,
-    "capability": 92
+    "A": 128,
+    "B": 128,
+    "C": 128,
+    "capability": 100
    },
    "scores": {
     "A": 0.002273929358844764,
@@ -43944,13 +46839,13 @@
    "key": "laya-multilingual",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 121,
+   "rank": 129,
    "ranked": true,
    "ranks": {
-    "A": 121,
-    "B": 121,
-    "C": 121,
-    "capability": 124
+    "A": 129,
+    "B": 129,
+    "C": 129,
+    "capability": 132
    },
    "scores": {
     "A": 3.7595668430455566e-05,
@@ -44300,13 +47195,13 @@
    "key": "certo",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 122,
+   "rank": 130,
    "ranked": true,
    "ranks": {
-    "A": 122,
-    "B": 122,
-    "C": 122,
-    "capability": 94
+    "A": 130,
+    "B": 130,
+    "C": 130,
+    "capability": 102
    },
    "scores": {
     "A": 1.3254531668229452e-05,
@@ -44657,13 +47552,13 @@
    "key": "clm-8b",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 123,
+   "rank": 131,
    "ranked": true,
    "ranks": {
-    "A": 123,
-    "B": 123,
-    "C": 123,
-    "capability": 122
+    "A": 131,
+    "B": 131,
+    "C": 131,
+    "capability": 130
    },
    "scores": {
     "A": 3.5510969933114796e-06,
@@ -45014,13 +47909,13 @@
    "key": "bge-reranker-v2-m3",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 124,
+   "rank": 132,
    "ranked": true,
    "ranks": {
-    "A": 124,
-    "B": 124,
-    "C": 124,
-    "capability": 90
+    "A": 132,
+    "B": 132,
+    "C": 132,
+    "capability": 98
    },
    "scores": {
     "A": 4.4076803151681546e-07,
@@ -45371,13 +48266,13 @@
    "key": "gte-reranker-modernbert-base",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 125,
+   "rank": 133,
    "ranked": true,
    "ranks": {
-    "A": 125,
-    "B": 125,
-    "C": 125,
-    "capability": 98
+    "A": 133,
+    "B": 133,
+    "C": 133,
+    "capability": 106
    },
    "scores": {
     "A": 0.0,
@@ -45728,13 +48623,13 @@
    "key": "mirror",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 126,
+   "rank": 134,
    "ranked": true,
    "ranks": {
-    "A": 126,
-    "B": 126,
-    "C": 126,
-    "capability": 120
+    "A": 134,
+    "B": 134,
+    "C": 134,
+    "capability": 128
    },
    "scores": {
     "A": 0.0,
@@ -46060,13 +48955,13 @@
    "key": "open-jev-json-canvas-joshuasp",
    "listing": "ranked",
    "planned_weight_denominator": 1.0,
-   "rank": 127,
+   "rank": 135,
    "ranked": true,
    "ranks": {
-    "A": 127,
-    "B": 127,
-    "C": 127,
-    "capability": 116
+    "A": 135,
+    "B": 135,
+    "C": 135,
+    "capability": 124
    },
    "scores": {
     "A": 0.0,
@@ -48281,7 +51176,7 @@
    "repo": "https://github.com/wfzyx/von"
   }
  ],
- "roster_count": 165,
+ "roster_count": 173,
  "overnight": {
   "round": "score-v161-3 (v1.6.1)",
   "scored_utc": "2026-10-06 00:39:36 UTC",
@@ -48541,6 +51436,25 @@
    "scorer_source_sha256": "4d2833926c2daf284ce98e1fea6d9223dfc08341905778eb77391734638c27d2",
    "baseline_systems_sha256": "20b282fdf8597453965eb1bb6fe2d2fd47fbd07963adb5c9da97df862c309318",
    "baseline_categories_sha256": "07d69bc9f0638886a19c5d63f2473f9b2677b66950b7d2ea79f0d7c7902f4d69",
+   "rule": "Same frozen v1.6 pool, scorer, G_med and cost basis as the published rows; every published row is byte-identical apart from its rank."
+  },
+  {
+   "date": "2026-10-08",
+   "label": "a12",
+   "keys": [
+    "bobcat-flash-1.2",
+    "decider-12b",
+    "decider-12b-v1",
+    "decisio-gemma-4-31b-v080",
+    "mercury-decide",
+    "rene-1-31b-fp8",
+    "spx-cd-flash",
+    "spx-cd-pro"
+   ],
+   "note": "Approval-required completed candidates; current open/API top-five impact reviewed separately.",
+   "scorer_source_sha256": "4d2833926c2daf284ce98e1fea6d9223dfc08341905778eb77391734638c27d2",
+   "baseline_systems_sha256": "e3b67483db81438b8ec1c8adfab8dc8b12d9ef0ddec32617b0dec1d59766fbb2",
+   "baseline_categories_sha256": "25dddf8fab1b6e240bbe68429f5986f74ef6407ee935adc99972390458c05263",
    "rule": "Same frozen v1.6 pool, scorer, G_med and cost basis as the published rows; every published row is byte-identical apart from its rank."
   }
  ]

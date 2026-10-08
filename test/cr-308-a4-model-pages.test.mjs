@@ -11,14 +11,14 @@ test('every A4 key gets a model page with the API-board ranks', async () => {
   assert.deepEqual([...pages.keys()].sort(), [...a4.rows, ...(a4.a5_rows ?? []), ...(a4.full_rows ?? [])].map((r) => r.key).sort());
   assert.equal(pages.get('liquid-d1').full, true);
   assert.equal(pages.get('liquid-d1').nItems, 1500);
-  assert.equal(pages.get('fastino-glide').compositeRank, 11); // v1.7.8: d1 ranks above it; v1.7.10: OpenAI Decisions too
-  assert.equal(pages.get('instinct').compositeRank, 6); // v1.7.10: OpenAI Decisions 62.5 is #5
-  assert.equal(pages.get('instinct').capabilityRank, 5);
+  assert.equal(pages.get('fastino-glide').compositeRank, 14); // CR-338 adds Mercury Decide and SPX-CD to the API board
+  assert.equal(pages.get('instinct').compositeRank, 8);
+  assert.equal(pages.get('instinct').capabilityRank, 7);
   assert.equal(pages.get('openai-decisions').subset, 'A5');
   assert.equal(pages.get('openai-decisions').round, 'score-a5-1');
   assert.equal(pages.get('instinct').row.jevbench_score, 62.24);
   assert.equal(pages.get('classifier-dev-fast').compositeRank, null);
-  assert.equal(pages.get('gpt-6-luna').compositeRank, 10);
+  assert.equal(pages.get('gpt-6-luna').compositeRank, 13);
   assert.ok(pages.get('gpt-6-luna').capabilityOutside);
 });
 

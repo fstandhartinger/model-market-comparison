@@ -25,10 +25,10 @@ test('1: d1 is added once with the lane figures, ranked, full set, not equated',
   assert.equal(d1[0].ranked, true);
 });
 
-// v1.7.10: OpenAI Decisions (A5 u P, 62.5) takes #5 from Instinct (62.2); the first four are unchanged.
-test('2: API board Composite A top 5 is Sage, d1, Jev, wity-1, OpenAI Decisions (lane score-a4-3 + score-a5-1)', () => {
+// CR-338: Mercury Decide joins the API board at #3; OpenAI Decisions moves to #7.
+test('2: API board Composite A top 5 includes Mercury Decide after Sage and d1', () => {
   const top = api.systems.filter((s) => s.ranked).sort((x, y) => x.ranks.A - y.ranks.A).slice(0, 5).map((s) => s.key);
-  assert.deepEqual(top, ['sage-1.3.0', 'liquid-d1', 'jev-1.13.0', 'wity-1', 'openai-decisions']);
+  assert.deepEqual(top, ['sage-1.3.0', 'liquid-d1', 'mercury-decide', 'jev-1.13.0', 'wity-1']);
 });
 
 test('3: d1 never reaches the open-weights board', () => {

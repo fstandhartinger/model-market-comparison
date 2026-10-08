@@ -1,6 +1,6 @@
 {
   "schema": "jevbench-architecture/1",
-  "checked_utc": "2026-10-08T02:16:08Z",
+  "checked_utc": "2026-10-08T08:38:12Z",
   "benchmarks": {
     "jevbench": {
       "autojev-27b": {
@@ -4620,6 +4620,176 @@
           "derivation": "fine-tune",
           "params": "4B",
           "quant": null
+        }
+      },
+      "bobcat-flash-1.2": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/sanghwa-na/bobcat-flash-1.2/blob/58d15456937ce58625b13a5e3d982846554a3aef/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes bobcat-flash-1.2; base_model: google/gemma-4-26B-A4B-it."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "26B / 4B active",
+          "quant": "FP8 on load"
+        }
+      },
+      "decider-12b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Mapika/decider-12b/blob/8ac1efa708b71b86ae33b01d2a8d7a3ddcb48e66/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes decider-12b; base_model: google/gemma-4-12B-it."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "12B",
+          "quant": null
+        }
+      },
+      "decider-12b-v1": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Mapika/decider-12b/blob/09e9e3387fa42fed740233be2290385d18a6044d/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes decider-12b-v1; base_model: google/gemma-4-12B-it."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "12B",
+          "quant": null
+        }
+      },
+      "decisio-gemma-4-31b-v080": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://github.com/aminry/decisio/blob/5b42101a191d222062a795194b0aedb5003bf6ea/README.md",
+            "kind": "repo-readme",
+            "fact": "Pinned author card describes decisio-gemma-4-31b-v080; base_model: google/gemma-4-31B-it."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": "31B",
+          "quant": "FP8 on load"
+        }
+      },
+      "mercury-decide": {
+        "arch": "system",
+        "evidence": [
+          {
+            "url": "https://openrouter.ai/inception/mercury-decide:free",
+            "kind": "provider-docs",
+            "fact": "Hosted decision API; underlying weights undisclosed in measurement record."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "rene-1-31b-fp8": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/salfatigroup/rene-1-31b-fp8/blob/bd634489957f8da63ccce858ee33fd6c2929d286/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card describes rene-1-31b-fp8; base_model: google/gemma-4-31B-it."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "31B",
+          "quant": "FP8"
+        }
+      },
+      "spx-cd-flash": {
+        "arch": "system",
+        "evidence": [
+          {
+            "url": "https://surd.ai",
+            "kind": "provider-docs",
+            "fact": "Hosted decision API; underlying weights undisclosed in measurement record."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "spx-cd-pro": {
+        "arch": "system",
+        "evidence": [
+          {
+            "url": "https://surd.ai",
+            "kind": "provider-docs",
+            "fact": "Hosted decision API; underlying weights undisclosed in measurement record."
+          }
+        ],
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        }
+      },
+      "wald-q4b-v11": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/org2ai/Wald-4B/blob/b1b4c4c00726b296a22b77befe0e1099e741a663/README.md",
+            "kind": "model-card",
+            "fact": "base_model: Qwen/Qwen3.5-4B-Base; base_model_relation: finetune; the pinned card describes 4B parameters and BF16 weights."
+          },
+          {
+            "url": "https://huggingface.co/org2ai/Wald-4B/blob/b1b4c4c00726b296a22b77befe0e1099e741a663/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForCausalLM\"]; model_type: \"qwen3_5_text\""
+          },
+          {
+            "url": "https://huggingface.co/Qwen/Qwen3.5-4B-Base/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+            "kind": "config.json",
+            "fact": "Disclosed base architecture is a Qwen3.5 4B causal language model; the historical supplement pins Wald-Q4B v1.1 to this base."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "xor-26b-a4b-nvfp4": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/juspay/Xor-26B-A4B-NVFP4/blob/b73d35e002eb7d54b4b94e3049792c710b19a804/README.md",
+            "kind": "model-card",
+            "fact": "The pinned card identifies this as the NVFP4 build of Juspay Xor 26B-A4B, a post-trained build of google/gemma-4-26B-A4B-it; it describes quantized routed experts."
+          },
+          {
+            "url": "https://huggingface.co/juspay/Xor-26B-A4B-NVFP4/blob/b73d35e002eb7d54b4b94e3049792c710b19a804/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; quantization_config.quant_algo: \"NVFP4\""
+          },
+          {
+            "url": "https://huggingface.co/google/gemma-4-26B-A4B-it/blob/4d7ae4984b7db7de8f8457170b3f1a419ee76d52/config.json",
+            "kind": "config.json",
+            "fact": "Base architecture: architectures [\"Gemma4ForConditionalGeneration\"]; model_type \"gemma4\"; text_config.model_type \"gemma4_text\"."
+          }
+        ],
+        "badges": {
+          "derivation": "merge",
+          "params": "26B-A4B",
+          "quant": "NVFP4"
         }
       }
     },
