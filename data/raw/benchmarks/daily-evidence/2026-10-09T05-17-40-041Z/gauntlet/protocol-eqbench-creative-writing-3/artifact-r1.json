@@ -1,0 +1,22 @@
+[
+  {
+    "id": "eqbench-creative-writing::3",
+    "version": "3",
+    "version_guard": "Verify the published version 3 before reading results.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Elo Score column in the leaderboard",
+      "unit": "Elo",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "description": "A LLM-judged creative writing benchmark with vocabulary and GPT-slop controls.",
+    "maintainer": "EQ-bench (Sam Paech)"
+  }
+]

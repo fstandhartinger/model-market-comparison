@@ -10,11 +10,11 @@
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 0.3,
       "output_per_1m_usd": 1.2,
-      "region": "us",
+      "region": "eu",
       "model_id": "deepseek-ai/DeepSeek-V4.1-Flash",
       "context_length": 1048000,
       "status": "active",
-      "notes": "flavor: cheap; served region: us-north1 (US); id deepseek-ai/DeepSeek-V4.1-Flash"
+      "notes": "flavor: cheap; served region: eu-north1 (FI); id deepseek-ai/DeepSeek-V4.1-Flash"
     },
     {
       "model_name": "DeepSeek V4 Flash 0731",
@@ -37,17 +37,6 @@
       "context_length": 1048576,
       "status": "active",
       "notes": "flavor: cheap; served region: uk-south1 (UK); id deepseek-ai/DeepSeek-V4-Pro"
-    },
-    {
-      "model_name": "DeepSeek V4 Pro 0813",
-      "provider_org": "DeepSeek",
-      "input_per_1m_usd": 1.32,
-      "output_per_1m_usd": 3.96,
-      "region": "us",
-      "model_id": "deepseek-ai/DeepSeek-V4-Pro-0813",
-      "context_length": 979000,
-      "status": "active",
-      "notes": "flavor: cheap; served region: us-north1 (US); id deepseek-ai/DeepSeek-V4-Pro-0813"
     },
     {
       "model_name": "Gemma 3 27B",
@@ -270,14 +259,18 @@
       "notes": "flavor: cheap; served region: us-north1 (US); id zai-org/GLM-5.3-Flash"
     }
   ],
-  "response_sha256": "2fd49b7b8a49374b1d14b7b329fb215f64f6396bd3a8d3781a8158364bc1ca0b",
+  "response_sha256": "49c80b553007ef025707a8801f309f1960622b3feaf838b6f30838f5fbf59bc0",
   "skipped": [
     "Qwen/Qwen3-Embedding-8B"
   ],
   "diff": {
     "added": [],
-    "removed": [],
+    "removed": [
+      "deepseek-ai/DeepSeek-V4-Pro-0813"
+    ],
     "price_changed": [],
-    "region_changed": []
+    "region_changed": [
+      "deepseek-ai/DeepSeek-V4.1-Flash"
+    ]
   }
 }

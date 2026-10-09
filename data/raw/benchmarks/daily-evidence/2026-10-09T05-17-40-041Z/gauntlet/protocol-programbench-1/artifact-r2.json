@@ -1,0 +1,22 @@
+[
+  {
+    "id": "programbench::1",
+    "version": "1",
+    "version_guard": "Page identity phrases (ProgramBench, the rebuild-from-binary task statement, 200 tasks, mini-SWE-agent, the update stamp); exactly one results literal; the exact ten-field row schema; a unique model per row, scores descending and each score within 0..1; the listed providers; the registry README still naming this repo the authoritative registry and the 200-instance macro-average; the scoring source still defining the same per-test-fraction/200 aggregation. A changed task count, a second agent, a dropped board row or a recomputed metric is a different identity and fails closed.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Mean per-instance score in percent: each of the 200 benchmark instances is scored by the fraction of its hidden behavioral tests passed, the per-instance scores are macro-averaged over the full 200 (an unattempted instance counts as 0), and the board shows the mean rounded to 0.1 percentage points",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Run under the mini-SWE-agent baseline harness in an offline docker container (--network none, 6-hour wall-time limit, 1000-step limit): the agent must architect and implement a fresh codebase that reproduces the reference binary's externally observable behavior; wrapping the binary, reusing an existing implementation or reading the original source is disqualification. Per-instance score = fraction of the instance's behavioral tests passed (registry ignore map applied; 2026-09-21 the map holds 200 empty lists, no ignored tests). The board also publishes Resolved (score = 1.0, fully solved instances) and Almost (score >= 0.95) shares, average API cost and LLM calls and output tokens per task, and each row's publication date; those stay in the protocol. The board's sub-percent per-instance scores are the same metric the package/verify CLI recomputes (src/programbench/submission.py: mean_score = sum(values)/n_total over 200). The board is published by an academic team (Princeton & Meta, arXiv:2605.03546)."
+    },
+    "description": "AI agents rebuild a complete working program from scratch, given only a compiled reference binary and its bundled documentation in an offline container, and the rebuilt program is scored by hidden behavioral tests.",
+    "maintainer": "ProgramBench team (John Yang, Kilian Lieret et al.; Princeton University & Meta)"
+  }
+]
