@@ -2,7 +2,7 @@
   "schema_version": 1,
   "benchmark": "JevBench",
   "revision": "v1.5-supplement",
-  "published_on": "2026-10-08",
+  "published_on": "2026-10-09",
   "measurement_basis": "Historical v1.5 pool: 1,624 decisions per model; scored with the frozen headline-A method and original G_med. These results are independent of v1.6.1 and do not enter its rankings.",
   "parent": {
     "revision": "v1.5.7",
@@ -2686,6 +2686,166 @@
       "measurement_run": 44
     },
     {
+      "key": "gutsy-08b-priced",
+      "name": "gutsy-0.8b v0.3 — v1.5 measurement, v1.6 re-run pending",
+      "axes": {
+        "calibration": 83.98134601478253,
+        "cost": 63.499484293442904,
+        "intelligence": 16.625034099610062,
+        "speed": 61.401488281670765
+      },
+      "scores": {
+        "A": 4.248419895426465,
+        "B": 3.3656582211679185,
+        "C": 2.9502915940461563
+      },
+      "capability": 50.303190057196296,
+      "cost_usd_per_1000": 0.01646963054187192,
+      "cost_kind": "estimate",
+      "cost_basis": "*est. Cost uses measured input tokens at the original declared size-class reference ($0.03 per million input tokens); output tokens are 0 because the pinned native classifier produces probabilities without text generation. Missing output count accepted under the 9 October decision. Historical v1.5 method; do not combine into current v1.6 ranking.",
+      "latency": {
+        "n": 450,
+        "p50_adj": 4.548752175271511,
+        "p50_raw": 2.1993760876357555,
+        "p95_adj": 15.920580372214317,
+        "p95_raw": 7.8852901861071585
+      },
+      "status": {
+        "answered_ok": 1624,
+        "missing": 0,
+        "rows": 1624,
+        "status": "complete"
+      },
+      "categories": {
+        "topics": {
+          "support_ops": {
+            "n": 282,
+            "competence": 53.56
+          },
+          "finance_commerce": {
+            "n": 224,
+            "competence": 44.89
+          },
+          "everyday_language": {
+            "n": 115,
+            "competence": 56.29
+          },
+          "safety_security": {
+            "n": 128,
+            "competence": 3.16
+          },
+          "law_policy": {
+            "n": 548,
+            "competence": 14.02
+          },
+          "math": {
+            "n": 235,
+            "competence": -23.01
+          },
+          "coding": {
+            "n": 92,
+            "competence": 32.72
+          }
+        },
+        "usecases": {
+          "customer_support": {
+            "n": 389,
+            "competence": 51.04
+          },
+          "other": {
+            "n": 159,
+            "competence": -1.66
+          },
+          "model_routing": {
+            "n": 132,
+            "competence": 76.92
+          },
+          "ecommerce_marketplaces": {
+            "n": 71,
+            "competence": 54.24
+          },
+          "search_retrieval": {
+            "n": 54,
+            "competence": 45.48
+          },
+          "legal_compliance": {
+            "n": 508,
+            "competence": 12.88
+          },
+          "lead_generation": {
+            "n": 98,
+            "competence": 50.45
+          },
+          "knowledge_graphs": {
+            "n": 15,
+            "competence": 64.32
+          },
+          "risk_assessment": {
+            "n": 78,
+            "competence": 42.17
+          },
+          "llm_guardrails": {
+            "n": 339,
+            "competence": -42.94
+          },
+          "code_linting": {
+            "n": 4,
+            "competence": 50.0
+          },
+          "insurance_claims": {
+            "n": 31,
+            "competence": 41.31
+          },
+          "financial_crime": {
+            "n": 31,
+            "competence": 32.02
+          },
+          "feature_extraction": {
+            "n": 7,
+            "competence": 57.14
+          },
+          "moderation_trust_safety": {
+            "n": 12,
+            "competence": 42.5
+          },
+          "recruiting": {
+            "n": 3,
+            "competence": -33.33
+          },
+          "scientific_discovery": {
+            "n": 1,
+            "competence": 100.0
+          },
+          "advertising": {
+            "n": 2,
+            "competence": -100.0
+          }
+        }
+      },
+      "base_model": "Qwen/Qwen3.5-0.8B",
+      "repo": "https://huggingface.co/kouhxp/gutsy",
+      "model_revision": "kouhxp/gutsy@d325eb1742cc1c200e04b24417f192a0dbf74f91",
+      "licence": "Apache-2.0",
+      "gpu": "CPU",
+      "measured_on": "2026-10-02",
+      "measurement_facts": "Native option-probability readout without text generation, GGUF Q8_0, CPU with six threads. All 1,624 decisions complete. Original input-token estimate $0.03/M; generated output tokens zero (*est.). Historical v1.5 measurement; fresh v1.6 re-run pending. Probabilities are from the original 1–2 October run; latency is from the admitted 2 October quiet-host Speed-only run. The author reports using Jev API only for comparisons, with no Jev outputs used in training; teacher-written scenarios came from Apache-2.0 Qwen3.8-27B. Public JevBench results informed data design and public items were used for reporting; checkpoint selection used the author’s own held-out development loss.",
+      "source_links": [
+        {
+          "url": "https://huggingface.co/kouhxp/gutsy",
+          "title": "Model and native runtime"
+        },
+        {
+          "url": "https://github.com/fstandhartinger/jevbench/issues/171",
+          "title": "Submission and author disclosures"
+        }
+      ],
+      "source": {
+        "measurement_run": 38,
+        "scorer_sha256": "21add0c57ab86e2f1795ba1725262fa30df7ff9488494d6705cb3d68a660797c",
+        "raw_sha256": "8815d22b7f027a7cb1cc5b9ef2e7ad3036c85cad50cfcedd3d652a441787733e"
+      }
+    },
+    {
       "key": "janus-08b-gpu",
       "name": "janus 0.8B (Icarus AI / cmxu, Qwen3.5-0.8B + LoRA r64 and pointer decision head), GPU",
       "axes": {
@@ -3573,7 +3733,7 @@
     }
   },
   "measurement_period": {
-    "from": "2026-10-03",
+    "from": "2026-10-02",
     "to": "2026-10-04"
   },
   "held_keys": []

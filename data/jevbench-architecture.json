@@ -4871,6 +4871,21 @@
           "params": "4B",
           "quant": null
         }
+      },
+      "gutsy-08b-priced": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/kouhxp/gutsy/blob/d325eb1742cc1c200e04b24417f192a0dbf74f91/README.md",
+            "kind": "model-card",
+            "fact": "Pinned gutsy v0.3 is based on Qwen/Qwen3.5-0.8B with native option-letter probability readout; evaluated author GGUF Q8_0 without text generation."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "0.8B",
+          "quant": "GGUF Q8_0"
+        }
       }
     },
     "imagejevbench": {

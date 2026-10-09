@@ -1,0 +1,77 @@
+{
+  "release": "CR-383",
+  "status": "REVIEWED; fallback publication authorized while fresh v1.6 admission remains blocked",
+  "prior_supplement_sha256": "3e33d6ec8229cd8422f1cead31e717e79a017ab80521e06f4ab01e8d6a7f7c34",
+  "source_results_sha256": "21add0c57ab86e2f1795ba1725262fa30df7ff9488494d6705cb3d68a660797c",
+  "raw_sha256": "8815d22b7f027a7cb1cc5b9ef2e7ad3036c85cad50cfcedd3d652a441787733e",
+  "verified_type_tier_cells": 24,
+  "complete": 1624,
+  "topfive": {
+    "A": {
+      "before": [
+        "cygnet",
+        "winnow-12b",
+        "jev-1.13.0",
+        "jevk5-v0.3-4b",
+        "vansa-3.4"
+      ],
+      "after": [
+        "cygnet",
+        "winnow-12b",
+        "jev-1.13.0",
+        "jevk5-v0.3-4b",
+        "vansa-3.4"
+      ]
+    },
+    "B": {
+      "before": [
+        "winnow-12b",
+        "cygnet",
+        "jev-1.13.0",
+        "xor-26b-a4b-nvfp4",
+        "jev-omni"
+      ],
+      "after": [
+        "winnow-12b",
+        "cygnet",
+        "jev-1.13.0",
+        "xor-26b-a4b-nvfp4",
+        "jev-omni"
+      ]
+    },
+    "C": {
+      "before": [
+        "cygnet",
+        "winnow-12b",
+        "jev-1.13.0",
+        "jev-omni",
+        "xor-26b-a4b-nvfp4"
+      ],
+      "after": [
+        "cygnet",
+        "winnow-12b",
+        "jev-1.13.0",
+        "jev-omni",
+        "xor-26b-a4b-nvfp4"
+      ]
+    },
+    "capability": {
+      "before": [
+        "xor-26b-a4b-nvfp4",
+        "jev-1.13.0",
+        "winnow-12b",
+        "cygnet",
+        "surogate-rune-26b-a4b-v3-rtxpro6000-a2"
+      ],
+      "after": [
+        "xor-26b-a4b-nvfp4",
+        "jev-1.13.0",
+        "winnow-12b",
+        "cygnet",
+        "surogate-rune-26b-a4b-v3-rtxpro6000-a2"
+      ]
+    }
+  },
+  "cost_footnote": "*est. Cost uses measured input tokens at the original declared size-class reference ($0.03 per million input tokens); output tokens are 0 because the pinned native classifier produces probabilities without text generation. Missing output count accepted under the 9 October decision. Historical v1.5 method; do not combine into current v1.6 ranking.",
+  "admission_blocker_evidence": "Reserve custodian board #14879, 2026-10-09T20:24:00Z: zero newly admitted regular-queue items; no new gutsy model/draw/cohort admission; no ETA."
+}
