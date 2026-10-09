@@ -497,6 +497,10 @@ def build_staging(recipe, pins, code_tar: bytes, benchmarks=('jevbench',)) -> di
     if 'jevbench' in benchmarks:
         items = measurement_dispatch.checked(profile["inputs"]["jevbench"]["items"])
         staging["work/inputs/items.jsonl"] = items.read_bytes()
+        if profile.get("method") == "jevbench-v16":
+            if profile["inputs"]["jevbench"]["count"] != 1500:
+                raise measurement_dispatch.OperationalHold("v16_input_count_invalid")
+            staging["work/input/text-config.json"] = json.dumps({"method": "jevbench-v16", "count": 1500}).encode()
     staging["work/code.tar"] = code_tar
     if recipe['kind'] == 'aplomb_native' or 'imagejevbench' in benchmarks:
         if set(benchmarks) - {'jevbench', 'imagejevbench'} or len(set(benchmarks)) != len(benchmarks):
@@ -557,7 +561,7 @@ def _teardown(provider, job, pod_id, reservation, alert):
 
 
 def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, ttl, budget,
-               alert, save_state, benchmarks=('jevbench',), quote_budget=None):
+               alert, save_state, benchmarks=('jevbench',), quote_budget=None, expected_rows=EXPECTED_ROWS):
     """One pod attempt; raises PodRunError on any step failure (teardown still runs)."""
     pod_id = None
     reservation = None
@@ -718,8 +722,8 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         # the canonical receipt.json path.
         provider.scp_from(pod_id, "/work/out/receipt.json", str(output / "pod-receipt.json"))
         rows = (output / "raw.jsonl").read_bytes().count(b"\n")
-        if rows != EXPECTED_ROWS:
-            raise PodRunError(f"raw.jsonl has {rows} rows, expected {EXPECTED_ROWS}")
+        if rows != expected_rows:
+            raise PodRunError(f"raw.jsonl has {rows} rows, expected {expected_rows}")
         state['measurement_completed'] = True
         save_state()
         return state
@@ -785,10 +789,10 @@ def default_alert(text: str) -> None:
 
 
 def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict, max_usd: float,
-        *, provider: Provider | None = None, alert=None, benchmarks=('jevbench',), native_source_pins=None) -> dict:
+        *, provider: Provider | None = None, alert=None, benchmarks=('jevbench',), native_source_pins=None, measurement_pins_factory=None) -> dict:
     """Measure the reviewed recipe on one disposable GPU pod; idempotent via receipt + pod state."""
     validate_recipe(recipe, job_dir)
-    current = measurement_dispatch.pins()
+    current = measurement_pins_factory() if measurement_pins_factory is not None else measurement_dispatch.pins()
     if current != expected_pins:
         raise measurement_dispatch.OperationalHold("measurement_pins_differ_from_review")
     if not benchmarks or len(set(benchmarks)) != len(benchmarks) or set(benchmarks) - {'jevbench', 'imagejevbench'}:
@@ -907,7 +911,8 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
             ttl = min(TTL_CAP_HOURS, remaining / MAX_HOURLY_USD)
             try:
                 state = _lifecycle(provider, job, recipe, staging_path, output, state,
-                                   gpu_choice, ttl, remaining, alert, save_state, benchmarks, quote_budget)
+                                   gpu_choice, ttl, remaining, alert, save_state, benchmarks, quote_budget,
+                                   current['profile']['inputs']['jevbench']['count'])
                 break
             except PodCapacityError:
                 continue  # try the next GPU candidate; capacity only if every attempt was capacity
@@ -942,7 +947,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
                 'charged_or_reserved_usd': receipt['charged_or_reserved_usd'] if index == 0 else 0.0}
             receipt['benchmarks'][name].pop('benchmarks', None)
     else:
-        receipt.update(rows=EXPECTED_ROWS, raw_sha256=hashlib.sha256((output / 'raw.jsonl').read_bytes()).hexdigest())
+        receipt.update(rows=current['profile']['inputs']['jevbench']['count'], raw_sha256=hashlib.sha256((output / 'raw.jsonl').read_bytes()).hexdigest())
     receipt_file.write_text(json.dumps(receipt, indent=2) + "\n")
     state.update(ended_at=ended.isoformat(), cost_estimate_usd=cost)
     save_state()

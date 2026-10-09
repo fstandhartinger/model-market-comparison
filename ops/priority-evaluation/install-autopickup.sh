@@ -35,11 +35,11 @@ install -d -m 700 "$REPLY_GUARD"
 install -m 600 "$SRC/refusal-reply-prompt-template.md" "$REPLY_GUARD/PROMPT.md"
 install -d -m 700 "$SHARE/runtime" "$HOME/wt" "$HOME/.local/state/bh" \
   "$HOME/.local/state/telegram-reply-broker/callback-status.d"
-for f in autopickup.py hf_git_credential.py refusal_approval.py refund_approval.py sla_decision.py pod_runner.py pod_capacity.py lium_bounded_up.py recover_wald_capacity.py execution_source.py source_metadata.py native_admission.py PREP-OPEN-WEIGHTS-PROMPT.txt official_scoring.py official_score.py official-profiles.json release_render.py host_github.py public_artifacts.py measurement_dispatch.py measurement_driver.py measurement-profiles.json static_agent.py MEASUREMENT-CONTRACT.md METHOD-v1.5-ADDENDUM-PRICING.md METHOD-v1.5-ADDENDUM-PRICING-INTERPRETATION-1.md; do
+for f in autopickup.py hf_git_credential.py refusal_approval.py refund_approval.py sla_decision.py pod_runner.py pod_capacity.py lium_bounded_up.py recover_wald_capacity.py execution_source.py source_metadata.py native_admission.py v16_profiles.py official_score_v16.py official_scoring_v16.py PREP-OPEN-WEIGHTS-PROMPT.txt official_scoring.py official_score.py official-profiles.json release_render.py host_github.py public_artifacts.py measurement_dispatch.py measurement_driver.py measurement-profiles.json static_agent.py MEASUREMENT-CONTRACT.md METHOD-v1.5-ADDENDUM-PRICING.md METHOD-v1.5-ADDENDUM-PRICING-INTERPRETATION-1.md; do
   install -m 600 "$SRC/$f" "$SHARE/runtime/$f"
 done
 install -d -m 700 "$SHARE/runtime/pod_drivers"
-for f in pod_driver.py pod_entry.sh pod_order_driver.py native_image.py aplomb_loader.py scored_marker.py; do
+for f in pod_driver_v16.py pod_driver.py pod_entry.sh pod_order_driver.py native_image.py aplomb_loader.py scored_marker.py; do
   install -m 600 "$SRC/pod_drivers/$f" "$SHARE/runtime/pod_drivers/$f"
 done
 python3 - "$SHARE/runtime" <<'VERIFY_PROFILES'
