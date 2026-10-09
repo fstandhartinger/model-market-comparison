@@ -1,0 +1,514 @@
+{
+  "key": "gliner2.5-small",
+  "coverage": "P+L1+L2+L3",
+  "sealed_basis": "none",
+  "headline_or_rank_changed": false,
+  "native_answered_count": 1802,
+  "official_basis_count": 1805,
+  "missing_no_native_response": 3,
+  "missing_native_failure_fabricated": false,
+  "pool_ok": {
+    "P": 297,
+    "L1": 354,
+    "L2": 33,
+    "L3": 1118
+  },
+  "cells": {
+    "families": {
+      "composite_gen": {
+        "n": 17,
+        "competence": 0.0,
+        "coverage_n": 17,
+        "response_n": 17,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "fairness": {
+        "n": 15,
+        "competence": 0.0,
+        "coverage_n": 15,
+        "response_n": 15,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "jaggedness": {
+        "n": 20,
+        "competence": 0.0,
+        "coverage_n": 20,
+        "response_n": 20,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "llm_router": {
+        "n": 104,
+        "competence": 0.0,
+        "coverage_n": 104,
+        "response_n": 104,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "multilingual": {
+        "n": 1398,
+        "competence": 0.0,
+        "coverage_n": 1398,
+        "response_n": 1398,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "negation_pair_gen": {
+        "n": 18,
+        "competence": 0.0,
+        "coverage_n": 18,
+        "response_n": 18,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "option_order": {
+        "n": 21,
+        "competence": 1.54,
+        "coverage_n": 21,
+        "response_n": 21,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "perturb_pair": {
+        "n": 24,
+        "competence": 13.32,
+        "coverage_n": 24,
+        "response_n": 24,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "usecase": {
+        "n": 171,
+        "competence": 0.0,
+        "coverage_n": 171,
+        "response_n": 171,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      }
+    },
+    "languages": {
+      "ar": {
+        "n": 64,
+        "competence": 0.0,
+        "coverage_n": 64,
+        "response_n": 64,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "cs": {
+        "n": 66,
+        "competence": 0.0,
+        "coverage_n": 66,
+        "response_n": 66,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "da": {
+        "n": 63,
+        "competence": 0.0,
+        "coverage_n": 63,
+        "response_n": 63,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "de": {
+        "n": 68,
+        "competence": 0.0,
+        "coverage_n": 68,
+        "response_n": 68,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "el": {
+        "n": 60,
+        "competence": 0.0,
+        "coverage_n": 60,
+        "response_n": 60,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "en": {
+        "n": 363,
+        "competence": 0.0,
+        "coverage_n": 363,
+        "response_n": 363,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "es": {
+        "n": 68,
+        "competence": 0.0,
+        "coverage_n": 68,
+        "response_n": 68,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "fi": {
+        "n": 66,
+        "competence": 0.0,
+        "coverage_n": 66,
+        "response_n": 66,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "fr": {
+        "n": 65,
+        "competence": 0.0,
+        "coverage_n": 65,
+        "response_n": 65,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "hi": {
+        "n": 62,
+        "competence": 0.0,
+        "coverage_n": 62,
+        "response_n": 62,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "id": {
+        "n": 67,
+        "competence": 0.0,
+        "coverage_n": 67,
+        "response_n": 67,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "it": {
+        "n": 68,
+        "competence": 0.0,
+        "coverage_n": 68,
+        "response_n": 68,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "ja": {
+        "n": 68,
+        "competence": 0.0,
+        "coverage_n": 68,
+        "response_n": 68,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "ko": {
+        "n": 68,
+        "competence": 0.0,
+        "coverage_n": 68,
+        "response_n": 68,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "mixed": {
+        "n": 66,
+        "competence": 0.0,
+        "coverage_n": 66,
+        "response_n": 66,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "nl": {
+        "n": 63,
+        "competence": 0.0,
+        "coverage_n": 63,
+        "response_n": 63,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "no": {
+        "n": 62,
+        "competence": 0.0,
+        "coverage_n": 62,
+        "response_n": 62,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "pl": {
+        "n": 68,
+        "competence": 0.0,
+        "coverage_n": 68,
+        "response_n": 68,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "pt": {
+        "n": 68,
+        "competence": 0.0,
+        "coverage_n": 68,
+        "response_n": 68,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "sv": {
+        "n": 67,
+        "competence": 0.0,
+        "coverage_n": 67,
+        "response_n": 67,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "tr": {
+        "n": 65,
+        "competence": 0.0,
+        "coverage_n": 65,
+        "response_n": 65,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "uk": {
+        "n": 64,
+        "competence": 0.0,
+        "coverage_n": 64,
+        "response_n": 64,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "zh": {
+        "n": 63,
+        "competence": 0.0,
+        "coverage_n": 63,
+        "response_n": 63,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      }
+    },
+    "topics": {
+      "coding": {
+        "n": 142,
+        "competence": 0.0,
+        "coverage_n": 142,
+        "response_n": 142,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "everyday_language": {
+        "n": 110,
+        "competence": 0.0,
+        "coverage_n": 110,
+        "response_n": 110,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "finance_commerce": {
+        "n": 169,
+        "competence": 0.0,
+        "coverage_n": 169,
+        "response_n": 169,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "law_policy": {
+        "n": 1004,
+        "competence": 0.0,
+        "coverage_n": 1004,
+        "response_n": 1004,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "math": {
+        "n": 213,
+        "competence": 0.0,
+        "coverage_n": 213,
+        "response_n": 213,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "safety_security": {
+        "n": 78,
+        "competence": 0.0,
+        "coverage_n": 78,
+        "response_n": 78,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "support_ops": {
+        "n": 86,
+        "competence": 0.0,
+        "coverage_n": 86,
+        "response_n": 86,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      }
+    },
+    "usecases": {
+      "advertising": {
+        "n": 80,
+        "competence": 0.0,
+        "coverage_n": 80,
+        "response_n": 80,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "code_linting": {
+        "n": 77,
+        "competence": 0.0,
+        "coverage_n": 77,
+        "response_n": 77,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "customer_support": {
+        "n": 126,
+        "competence": 0.0,
+        "coverage_n": 126,
+        "response_n": 126,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "demand_forecasting": {
+        "n": 70,
+        "competence": 0.0,
+        "coverage_n": 70,
+        "response_n": 70,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "ecommerce_marketplaces": {
+        "n": 80,
+        "competence": 0.0,
+        "coverage_n": 80,
+        "response_n": 80,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "feature_extraction": {
+        "n": 85,
+        "competence": 0.0,
+        "coverage_n": 85,
+        "response_n": 85,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "financial_crime": {
+        "n": 71,
+        "competence": 0.0,
+        "coverage_n": 71,
+        "response_n": 71,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "gaming": {
+        "n": 75,
+        "competence": 0.0,
+        "coverage_n": 75,
+        "response_n": 75,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "insurance_claims": {
+        "n": 87,
+        "competence": 0.0,
+        "coverage_n": 87,
+        "response_n": 87,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "knowledge_graphs": {
+        "n": 79,
+        "competence": 0.0,
+        "coverage_n": 79,
+        "response_n": 79,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "lead_generation": {
+        "n": 82,
+        "competence": 0.0,
+        "coverage_n": 82,
+        "response_n": 82,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "legal_compliance": {
+        "n": 202,
+        "competence": 0.0,
+        "coverage_n": 202,
+        "response_n": 202,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "llm_guardrails": {
+        "n": 81,
+        "competence": 0.0,
+        "coverage_n": 81,
+        "response_n": 81,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "model_routing": {
+        "n": 168,
+        "competence": 0.0,
+        "coverage_n": 168,
+        "response_n": 168,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "moderation_trust_safety": {
+        "n": 68,
+        "competence": 0.0,
+        "coverage_n": 68,
+        "response_n": 68,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "other": {
+        "n": 52,
+        "competence": 0.0,
+        "coverage_n": 52,
+        "response_n": 52,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "recruiting": {
+        "n": 82,
+        "competence": 0.0,
+        "coverage_n": 82,
+        "response_n": 82,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "risk_assessment": {
+        "n": 81,
+        "competence": 0.0,
+        "coverage_n": 81,
+        "response_n": 81,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "scientific_discovery": {
+        "n": 78,
+        "competence": 0.0,
+        "coverage_n": 78,
+        "response_n": 78,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      },
+      "search_retrieval": {
+        "n": 78,
+        "competence": 0.0,
+        "coverage_n": 78,
+        "response_n": 78,
+        "refusal_n": 0,
+        "operational_failure_n": 0
+      }
+    }
+  },
+  "minimum_answered": {
+    "families": 15,
+    "languages": 60,
+    "topics": 78,
+    "usecases": 52
+  },
+  "passes_all_row_thresholds": true,
+  "source_sha256": "b886fb56658ed4d08442abc98c7a50265c78d8bb370c8ee33466067176843f14",
+  "method": "O1S official score_v16/supp_cells exact-selected-pair coverage; P300 original 3OOM missing dispositions retained separately",
+  "aggregate_only": true,
+  "item_text_or_gold_or_probabilities_included": false,
+  "native_profile": "Fastino/gliner2.5-small-v1@7e6f537f10337497069276892a5ef435028252ce; original offline CPU4/fp32/50GiB native distributions",
+  "supplement_count": 1505,
+  "p300_answered_count": 297,
+  "missing_disposition": "Three earlier original-profile P300 OOM outcomes remain missing, contribute no answered coverage, and retain the full P300 denominator in the separately verified official score. No replay or native failed-response records were manufactured.",
+  "coverage_scope": "P300 + L1 + L2 + L3 only; historical S responses are not merged into these cells"
+}
