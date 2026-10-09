@@ -1,7 +1,7 @@
 """First-party metadata and exact reviewed patch bytes only; no ML/customer imports."""
 import hashlib
 import importlib.metadata as metadata
-from importlib.machinery import PathFinder
+from importlib.util import find_spec
 import json
 from pathlib import Path
 import sys
@@ -10,7 +10,7 @@ IMAGE = 'docker.io/underlabsai/decisor-sglang@sha256:60aee212ef25b0d303213b1c144
 ROOT = '/sgl-workspace/sglang/python/sglang'
 PATCHES = {'srt/models/qwen3_5_text.py': 'f4af2297b1c65a48ab331792f99a72169b5b9c32d5b6c6444b5814502daac830',
            'srt/managers/scheduler_components/batch_result_processor.py': 'f225919698d1926543974864ccfb31c5b809b0fab7f82717a09d8b576470919b'}
-REQUIRED = ('sglang', 'torch', 'transformers', 'compressed-tensors', 'safetensors', 'sgl-kernel', 'flashinfer-python')
+REQUIRED = ('sglang', 'torch', 'transformers', 'compressed-tensors', 'safetensors', 'sglang-kernel', 'flashinfer-python')
 
 def inspect():
     failures = []
@@ -21,7 +21,10 @@ def inspect():
             packages[name] = None
             failures.append('missing package: ' + name)
     if packages['sglang'] != '0.5.20': failures.append('SGLang release differs')
-    spec = PathFinder.find_spec('sglang', sys.path)  # resolves root without executing it
+    if packages['sglang-kernel'] != '0.4.7': failures.append('SGLang kernel release differs')
+    # The pinned image installs SGLang with PEP 660 editable metadata. Honor its
+    # image-owned finder; top-level spec lookup does not import SGLang itself.
+    spec = find_spec('sglang')
     origin = spec.origin if spec else None
     if origin != ROOT + '/__init__.py': failures.append('SGLang import root differs')
     observed = {}
