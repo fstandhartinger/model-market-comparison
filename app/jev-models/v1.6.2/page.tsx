@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { readOptionalJevbenchV162Release } from '../../../lib/jevbench-v162-release.mjs';
+import { readOptionalJevbenchV162Release, historicalCatalogue } from '../../../lib/jevbench-v162-release.mjs';
 import { JevBenchV16Board } from '../../../components/JevBenchV16Board';
 import { JevBenchReleaseVersionNav } from '../../../components/JevBenchReleaseVersionNav';
 import { JevHistoryLazy } from '../../../components/JevHistoryLazy';
@@ -10,9 +10,7 @@ export default async function JevModelsV162Page() {
   const release = await readOptionalJevbenchV162Release();
   if (!release) notFound();
   const historical = release.historical;
-  const historicalRows = [...historical.artifact.systems, ...historical.artifact.not_measured, ...historical.carry.rows];
-  const uniqueRows = [...new Map(historicalRows.map(row => [row.key, row])).values()]
-    .sort((a, b) => Number(["wrapper", "subsidized"].includes("listing" in a ? a.listing ?? "" : "")) - Number(["wrapper", "subsidized"].includes("listing" in b ? b.listing ?? "" : "")));
+  const uniqueRows = historicalCatalogue(historical.artifact, historical.carry);
   const oldKeys = uniqueRows.map(row => row.key);
   return <>
     <JevBenchReleaseVersionNav active="v1.6.2" fresh />

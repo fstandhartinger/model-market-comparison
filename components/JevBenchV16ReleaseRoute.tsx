@@ -1,5 +1,4 @@
 import { isJevbenchV16ExcludedKey } from '../lib/jevbench-v16-public-scope.mjs';
-import { readOptionalJevbenchV162Release } from '../lib/jevbench-v162-release.mjs';
 import { readJevbenchV161Release } from '../lib/jevbench-v16-release.mjs';
 import { readJevbenchV157Release, withPublicAdapterIds } from '../lib/jevbench-v15-release.mjs';
 import { jevApiOfferingKeys, jevApiRoster, jevbenchScopeArtifact, jevbenchScopeCarry, jevScopeClassifier, jevWithApiA4Rows, type JevScope } from '../lib/jevbench-scope.mjs';
@@ -19,7 +18,6 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
   /** v1.7: 'open' on /jev-models, 'api' on /jev-models/api, 'all' on the archived release page. */
   scope?: JevScope;
 }) {
-  const fresh = await readOptionalJevbenchV162Release();
   const [{ artifact: release_, sha256, categories: releaseCategories, categoriesSha256, carry: releaseCarry, carrySha256 }, previous] = await Promise.all([
     release ? Promise.resolve(release) : readJevbenchV161Release(), readJevbenchV157Release(),
   ]);
@@ -58,7 +56,7 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
   const apiListed = scope === 'api' ? jevApiRoster(artifact, carry.rows, previous.artifact.systems, previous.artifact.revision as string).listed : [];
 
   return <>
-    <JevBenchReleaseVersionNav active={revision} fresh={Boolean(fresh)} />
+    <JevBenchReleaseVersionNav active={revision} />
     <header className="bh-page-head" data-bh-jev16-release-header data-bh-jev16-live={live ? 'true' : undefined} data-bh-jev-board-scope={scope}>
       <div className="bh-eyebrow flex flex-nowrap items-center" data-bh-jev-frozen-version>
         Official JevBench {revision}{scope !== 'all' && ` · board ${JEV_BOARD_REVISIONS[0].version}`}
