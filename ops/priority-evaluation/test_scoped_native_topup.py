@@ -512,3 +512,20 @@ class FourthScopeTests(unittest.TestCase):
    self.assertEqual(sum(c[0]=='start'for c in calls),1);self.assertEqual(f.a.load_state(f.rid)['scoped_native_topup'],old);self.assertTrue((f.base/'RESTORED.json').exists());self.assertTrue((f.base/'STARTING-ROW-CLAIM.json').exists());self.assertEqual(len(queries),2)
    self.assertIn('to_jsonb(synthetic_table)',f.a.update_row.call_args_list[0].args[2])
   finally:f.tearDown()
+ def test_actual_fourth_continuation_whole_sql_then_native_failure_holds(self):
+  import os,v16_adoption
+  from unittest.mock import patch
+  for drift in (False,True):
+   f=self.fixture()
+   try:
+    scope=g.RYO_FOURTH_SCOPE;key=g.configuration(f.rid,scope)[2];row={'evaluation_status':'starting','id':f.rid,'pickup_owner':'original','pickup_job_dir':str(f.job),'evaluation_attempts':1}
+    f.auth['expected_row']=row;f.write(f.base/'ROOT-AUTHORITY.json',f.auth);f.peer['root_authority_sha256']=g.sha(f.base/'ROOT-AUTHORITY.json');f.write(f.base/'SOURCE-PEER.json',f.peer);f.write(f.base/'ACTIVATION-CLAIM.json',f.claim)
+    old=copy.deepcopy(f.s['scoped_native_topup']);f.s[key]={'authority_sha256':g.sha(f.base/'ROOT-AUTHORITY.json'),'peer_sha256':g.sha(f.base/'SOURCE-PEER.json'),'plan_sha256':g.sha(f.base/'PLAN.json'),'status':'owned','automatic_retry_prohibited':True};f.s.pop('operational_hold');f.write(f.statepath,f.s)
+    f.write(f.base/'STARTING-FULL-ROW.json',row);f.write(f.base/'STARTING-ROW-CLAIM.json',{'plan_sha256':g.sha(f.base/'PLAN.json'),'row_sha256':g.sha(f.base/'STARTING-FULL-ROW.json')})
+    f.a.TABLE='synthetic_table';f.a.sql_json.return_value=dict(row,any_column='changed')if drift else row;f.a.load_row.return_value=row;f.a.sql_text.side_effect=repr;f.a.Effects.return_value.unit_state.return_value={'ActiveState':'active'};drop=f.paths(f.rid)[3];drop.parent.mkdir();drop.write_bytes(f.op.dropbytes(f.rid,scope=scope))
+    with patch.object(f.op,'sysrun',return_value=str(os.getpid())),patch.object(v16_adoption,'selected',return_value=({'generation':g.GENERATION},{},{})),patch.object(v16_adoption.v16_profiles,'measure',side_effect=RuntimeError('synthetic native failure'))as measured:
+     with self.assertRaises(ValueError if drift else RuntimeError):f.op.continuation(f.a,f.rid,scope=scope)
+     if drift:measured.assert_not_called();self.assertFalse((f.base/'ENTRY-CLAIM.json').exists())
+     else:measured.assert_called_once_with(f.job,scoped_topup=scope);self.assertTrue((f.base/'ENTRY-CLAIM.json').exists())
+    self.assertEqual(f.a.load_state(f.rid)['scoped_native_topup'],old);self.assertEqual(f.op.terminal(f.a,f.rid,scope=scope)['status'],'held');self.assertTrue((f.base/'EXIT.json').exists())
+   finally:f.tearDown()
