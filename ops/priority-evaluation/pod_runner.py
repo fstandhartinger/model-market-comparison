@@ -562,7 +562,7 @@ def _teardown(provider, job, pod_id, reservation, alert):
 
 
 def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, ttl, budget,
-               alert, save_state, benchmarks=('jevbench',), quote_budget=None, expected_rows=EXPECTED_ROWS, pre_upload_gate=None):
+               alert, save_state, benchmarks=('jevbench',), quote_budget=None, expected_rows=EXPECTED_ROWS, pre_upload_gate=None, allocation_gate=None):
     """One pod attempt; raises PodRunError on any step failure (teardown still runs)."""
     pod_id = None
     reservation = None
@@ -571,7 +571,10 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         attempts = state.get('creation_attempts', 0)
         try:
             allocations = pod_capacity.allocation_count(state, PODS_DIR)
-            if allocations >= pod_capacity.MAX_ALLOCATIONS:
+            limit = allocation_gate('check', state) if allocation_gate is not None else pod_capacity.MAX_ALLOCATIONS
+            if type(limit) is not int or not 1 <= limit <= 3:
+                raise PodRunError('invalid trusted allocation limit')
+            if allocations >= limit:
                 raise PodRunError('original per-order fresh-pod retry budget exhausted')
             recipe_binding = hashlib.sha256(json.dumps(
                 {'recipe': recipe, 'benchmarks': list(benchmarks)}, sort_keys=True).encode()).hexdigest()
@@ -598,6 +601,8 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 save_state()
         except pod_capacity.CapacityEvidenceError as exc:
             raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain') from exc
+        if allocation_gate is not None:
+            allocation_gate('before_reserve', state)
         reservation = provider.reserve(job, "pod-measure", MAX_HOURLY_USD, budget, ttl)
         state['creation_attempts'] = attempts + 1
         state['attempt_started_at'] = datetime.now(timezone.utc).isoformat()
@@ -612,6 +617,18 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         state['measurement_completed'] = False
         save_state()
         try:
+            if allocation_gate is not None:
+                try:
+                    allocation_gate('before_create', state)
+                except Exception:
+                    # No create call happened. Release only our reservation; keep
+                    # monotonic attempts and full conservative charge/one-use claim.
+                    provider.release(job, None, reservation)
+                    reservation = None
+                    state['cleanup_uncertain'] = False
+                    state['torn_down_at'] = datetime.now(timezone.utc).isoformat()
+                    save_state()
+                    raise
             pod = provider.create(gpu_choice[0], ttl, budget)
         except PodCapacityError as exc:
             proof = getattr(exc, 'proof', None)
@@ -792,7 +809,7 @@ def default_alert(text: str) -> None:
 
 
 def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict, max_usd: float,
-        *, provider: Provider | None = None, alert=None, benchmarks=('jevbench',), native_source_pins=None, measurement_pins_factory=None, pre_upload_gate=None) -> dict:
+        *, provider: Provider | None = None, alert=None, benchmarks=('jevbench',), native_source_pins=None, measurement_pins_factory=None, pre_upload_gate=None, allocation_gate=None) -> dict:
     """Measure the reviewed recipe on one disposable GPU pod; idempotent via receipt + pod state."""
     validate_recipe(recipe, job_dir)
     current = measurement_pins_factory() if measurement_pins_factory is not None else measurement_dispatch.pins()
@@ -915,7 +932,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
             try:
                 state = _lifecycle(provider, job, recipe, staging_path, output, state,
                                    gpu_choice, ttl, remaining, alert, save_state, benchmarks, quote_budget,
-                                   current['profile']['inputs']['jevbench']['count'], pre_upload_gate)
+                                   current['profile']['inputs']['jevbench']['count'], pre_upload_gate, allocation_gate)
                 break
             except PodCapacityError:
                 continue  # try the next GPU candidate; capacity only if every attempt was capacity

@@ -167,8 +167,17 @@ def measure(job_dir):
             if accepted(job) != (admission, measured, scored):
                 raise ValueError('v16 admission changed before upload')
             yield
+    allocation_gate = None
+    state = json.loads((STATE_ROOT / 'requests' / (job.name + '.json')).read_text())
+    if state.get('v16_generation_allocation') is not None:
+        from v16_allocation import FreshAllocation
+        def allocation_recheck():
+            if accepted(job) != (admission, measured, scored):
+                raise ValueError('v16 allocation admission changed')
+            retirement(admission)
+        allocation_gate = FreshAllocation(job, admission, allocation_recheck)
     record = pod_runner.run(job.name, job, recipe, output, measured, pod_runner.PER_ORDER_CAP_USD,
-                            measurement_pins_factory=lambda: accepted(job)[1], pre_upload_gate=pre_upload)
+                            measurement_pins_factory=lambda: accepted(job)[1], pre_upload_gate=pre_upload, allocation_gate=allocation_gate)
     retirement(admission)
     accepted(job)
     return record
