@@ -1,5 +1,5 @@
 // Source-only support for a prospective JevBench v1.6.3 same-draw completed-field addendum. Synthetic fixtures only: no
-// v1.6.3 data, route, manifest or navigation entry exists, and none is created here.
+// v1.6.3 data or manifest exists; prospective routes and conditional navigation remain unavailable without them.
 import test from 'node:test';
 import { jevV15CompareRow } from '../lib/jevbench-v15-board.mjs';
 import assert from 'node:assert/strict';
@@ -88,16 +88,31 @@ test('board dispatches fresh behaviour through the helper and keeps every sectio
   for (const section of ['<JevBenchV16Charts', '<JevScoreChart', '<JevCompareV15', '<JevV15AllDataGrid', '<LanguageView', '<DatedCarry', '<Method ']) assert.ok(board.includes(section), section);
 });
 
-// Replace this absence assertion ONLY in the genuine accepted publication change containing real artifacts and final release proof.
-test('candidate absence: no v1.6.3 data, route, API or navigation entry exists', () => {
+// Source infrastructure may precede data. Publication remains unavailable/inactive until its genuine bundle exists.
+// The final actual-data publication change must replace this preparation-only data absence assertion.
+test('candidate data absent: prospective Source routes stay unavailable and navigation stays conditional', async () => {
   const dir = 'data/raw/benchmarks/jevbench';
   assert.deepEqual(readdirSync(new URL(`../${dir}`, import.meta.url), {recursive:true}).filter((f) => f.includes('1.6.3')), []);
-  assert.equal(existsSync(new URL('../app/jev-models/v1.6.3', import.meta.url)), false);
-  assert.equal(existsSync(new URL('../app/api/jevbench/v1.6.3', import.meta.url)), false);
-  assert.doesNotMatch(read('components/JevBenchReleaseVersionNav.tsx'), /1\.6\.3/);
+  const loaderPath = new URL('../lib/jevbench-v163-release.mjs', import.meta.url);
+  const pagePath = new URL('../app/jev-models/v1.6.3/page.tsx', import.meta.url);
+  const apiPath = new URL('../app/api/jevbench/v1.6.3/route.ts', import.meta.url);
+  const nav = read('components/JevBenchReleaseVersionNav.tsx');
+  if (existsSync(loaderPath)) {
+    assert.ok(existsSync(pagePath) && existsSync(apiPath), 'prospective loader has both guarded routes');
+    const loader = await import(loaderPath.href);
+    assert.equal(await loader.readOptionalJevbenchV163Release(), null);
+    assert.equal(await loader.hasPublishedJevbenchV163Release(process.cwd(), () => assert.fail('absent manifest must not log')), false);
+    assert.match(read('app/jev-models/v1.6.3/page.tsx'), /if \(\!release\) notFound\(\);/);
+    assert.match(read('app/api/jevbench/v1.6.3/route.ts'), /if \(\!release\) return new Response\('Not found', \{ status: 404 \}\)/);
+    assert.match(nav, /const visible163 = fresh163 \?\? await hasPublishedJevbenchV163Release\(\)/);
+    assert.match(nav, /visible163 \? \[\{ version: 'v1\.6\.3'/);
+  } else {
+    assert.equal(existsSync(pagePath), false); assert.equal(existsSync(apiPath), false);
+    assert.doesNotMatch(nav, /1\.6\.3/);
+  }
   assert.doesNotMatch(read('lib/jevbench-categories.mjs'), /jevbench-v1\.6\.3/);
   assert.doesNotMatch(read('lib/decision-benchmark-manifest.mjs'), /v1\.6\.3/);
-  assert.deepEqual(readdirSync(new URL('../lib',import.meta.url)).filter(f=>/jevbench-v163-release/.test(f)), []);
+  assert.doesNotMatch(read('app/jev-models/page.tsx'), /v163|1\.6\.3/);
 });
 
 test('fresh category coverage is mandatory and cannot bring historical overlays', () => {
