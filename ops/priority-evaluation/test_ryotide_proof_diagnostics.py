@@ -47,6 +47,12 @@ class Tests(unittest.TestCase):
   S.retain_parsed_proof(target,{'oversize':huge})
   self.assertFalse(target['native_proof_diagnostics']['parsed_report']['retained'])
   self.assertNotIn('synthetic-secret',S.diagnostic_text('{"HF_TOKEN":"synthetic-secret"}')['text'])
+ def test_parsed_credential_redaction_keeps_validation_value_unmodified(self):
+  value={'HF_TOKEN':'synthetic-secret','nested':{'password':42},'native_field':1}
+  original=copy.deepcopy(value);report={'native_proof_diagnostics':{}}
+  S.retain_parsed_proof(report,value)
+  self.assertEqual(value,original)
+  self.assertEqual(report['native_proof_diagnostics']['parsed_report'],{'HF_TOKEN':'[REDACTED]','nested':{'password':'[REDACTED]'},'native_field':1})
  def test_huge_rejected_proof_keeps_total_diagnostics_under_one_mib(self):
   r=self.report()
   with self.assertRaises(ValueError):self.run_proof(r,{'synthetic':'x'*(2*1024*1024)})

@@ -83,9 +83,14 @@ def observed_proof_exec(report,stage,provider,pod_id,command,timeout=600):
 def retain_parsed_proof(report,value):
  # Serialize for a size bound and credential redaction, without altering validation.
  text=json.dumps(value,sort_keys=True)
- cleaned=diagnostic_text(text)
- if len(text)<=PROOF_PARSED_LIMIT and not cleaned['truncated']:
-  report['native_proof_diagnostics']['parsed_report']=json.loads(cleaned['text'])
+ def redact(v):
+  if isinstance(v,dict):
+   return {k:'[REDACTED]' if re.fullmatch(r'(?i)OPENAI_API_KEY|HF_TOKEN|HUGGING_FACE_HUB_TOKEN|AWS_SECRET_ACCESS_KEY|API_KEY|ACCESS_TOKEN|PASSWORD|AUTHORIZATION',k) else redact(x) for k,x in v.items()}
+  if isinstance(v,list):return [redact(x) for x in v]
+  if isinstance(v,str):return diagnostic_text(v)['text']
+  return v
+ if len(text)<=PROOF_PARSED_LIMIT:
+  report['native_proof_diagnostics']['parsed_report']=redact(value)
  else:
   report['native_proof_diagnostics']['parsed_report']={'retained':False,'reason':'parsed_report_size_limit','original_chars':len(text)}
 
