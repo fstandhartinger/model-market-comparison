@@ -19,4 +19,12 @@ class SafetyTests(unittest.TestCase):
    self.assertEqual(cw.launch_allowance(.1)['requested_usd'],.1)
  def test_disabled_inventory_never_calls_sdk(self):
   with tempfile.TemporaryDirectory() as d, patch.object(cw,'ENABLED',pathlib.Path(d)/'absent'),patch.object(cw,'helper_call',side_effect=AssertionError):self.assertEqual(cw.inventory(),[])
+ def test_month_crossing_refused_before_api(self):
+  real=cw.dt.datetime
+  class MonthEnd(real):
+   @classmethod
+   def now(cls,tz=None):return cls(2026,10,31,23,59,45,tzinfo=cw.dt.timezone.utc)
+  with patch.object(cw.dt,'datetime',MonthEnd),patch.object(cw,'helper_call') as api:
+   with self.assertRaisesRegex(RuntimeError,'crosses allowance cycle'):cw.launch_allowance(.1)
+   api.assert_not_called()
 if __name__=='__main__':unittest.main()

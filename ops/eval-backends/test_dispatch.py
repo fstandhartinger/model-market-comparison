@@ -27,4 +27,12 @@ class BindingTests(unittest.TestCase):
    legacy=Mock()
    with self.assertRaises(sandbox_runner.MeasurementInterrupted):dispatch.evaluate(recipe={'image':'ok@sha256:'+'a'*64,'image_digest':'sha256:'+'a'*64,'max_lifetime_seconds':600,'requested_max_liability_usd':1},state={'started':True,'provider':'lium'},equivalence={},job='x',receipt_dir=d,prepare=None,measure=None,legacy=legacy)
    legacy.assert_not_called()
+ def test_concurrent_owner_refused_before_provider(self):
+  import fcntl
+  from pathlib import Path
+  with tempfile.TemporaryDirectory() as d, (Path(d)/'.dispatch.lock').open('a') as claim:
+   fcntl.flock(claim,fcntl.LOCK_EX|fcntl.LOCK_NB)
+   with patch.object(dispatch.safety,'launch_allowance') as api:
+    with self.assertRaises(sandbox_runner.MeasurementInterrupted):dispatch.evaluate(recipe={},state={},equivalence={},job='x',receipt_dir=d,prepare=None,measure=None,legacy=Mock())
+    api.assert_not_called()
 if __name__=='__main__':unittest.main()
