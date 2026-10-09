@@ -63,6 +63,7 @@ def metadata_matches(value):
             and set(value['packages']) == set(inspector.REQUIRED)
             and all(isinstance(v, str) and bool(v) for v in value['packages'].values())
             and value['packages']['sglang'] == '0.5.20'
+            and value['packages']['sglang-kernel'] == '0.4.7'
             and all(value[k] is False for k in ['customer_source_imported', 'inputs_or_weights_read',
                                              'native_kernels_proven', 'runtime_admitted']))
 
