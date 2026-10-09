@@ -418,26 +418,26 @@ class ActualClosureTests(unittest.TestCase):
   self.assertEqual(drop.read_bytes(),self.op.dropbytes(self.rid));self.assertEqual(sum(c[0]=='daemon-reload' for c in calls),2);self.assertFalse((self.base/'RESTORED.json').exists());self.op.terminal(self.a,self.rid)
 
 class FourthScopeTests(unittest.TestCase):
- def fixture(self):
-  f=ActualClosureTests();f.setUp();oldbase=f.base
+ def fixture(self,rid=g.RYO,scope=g.RYO_FOURTH_SCOPE):
+  f=ActualClosureTests();f.fixture_rid=rid;f.setUp();oldbase=f.base
   # Synthetic immutable custody represents an already failed third attempt.
   f.adopt();anchor=f.s['scoped_native_topup'].copy()
   outcome={'status':'held','plan_sha256':anchor['plan_sha256'],'reason':'continuation_failed'}
   for name in ('ENTRY-CLAIM.json','RESERVE-CLAIM.json','CREATE-CLAIM.json','STATE-BEFORE.json','START-REQUESTED.json'):f.write(oldbase/name,{'synthetic_consumed':name})
   f.write(oldbase/'EXIT.json',{'outcome':outcome});f.write(oldbase/'RESTORED.json',{'terminal_outcome':outcome})
   f.s['scoped_native_topup_outcome']=outcome;f.s['operational_hold']={'reason':'scoped_native_topup_reconciliation_required','transient':False};f.write(f.statepath,f.s)
-  f.ledger.update(creation_attempts=3,spent_upper_bound_usd=25);f.write(f.ledgerpath,f.ledger)
+  n,spent,_,_=g.configuration(rid,scope)[0];f.ledger.update(creation_attempts=n,spent_upper_bound_usd=spent);f.write(f.ledgerpath,f.ledger)
   previous={p.name:{'path':str(p),'sha256':g.sha(p)}for p in oldbase.iterdir()if p.name in {'PLAN.json','ROOT-AUTHORITY.json','SOURCE-PEER.json','ACTIVATION-CLAIM.json','ENTRY-CLAIM.json','RESERVE-CLAIM.json','CREATE-CLAIM.json','STATE-BEFORE.json','START-REQUESTED.json','EXIT.json','RESTORED.json'}}
   hp=Path(f.p['references']['original_history']['path']);history=g.read(hp);history['files'].update({r['path']:r['sha256']for r in previous.values()});f.write(hp,history)
   full=f.root/'full-sql-row.json';f.write(full,{'id':f.rid,'all_columns':'synthetic complete row'});history['files'][str(full)]=g.sha(full);f.write(hp,history)
   f.p['full_sql_row']={'path':str(full),'sha256':g.sha(full)}
   f.p['references']['original_history']['sha256']=g.sha(hp)
-  f.base=f.job/'review/native-small-topup-ryo-fourth';f.base.mkdir()
-  f.p.update(scope=g.RYO_FOURTH_SCOPE,bounds=dict(zip(('old_creation_attempts','old_spend_usd','maximum_lifetime_allocations','maximum_lifetime_usd'),(3,25,4,30))),previous_topup=previous,original_state_sha256=g.sha(f.statepath),original_ledger_sha256=g.sha(f.ledgerpath))
+  f.base=f.job/'review'/g.configuration(rid,scope)[1];f.base.mkdir()
+  f.p.update(scope=scope,bounds=dict(zip(('old_creation_attempts','old_spend_usd','maximum_lifetime_allocations','maximum_lifetime_usd'),g.configuration(rid,scope)[0])),previous_topup=previous,original_state_sha256=g.sha(f.statepath),original_ledger_sha256=g.sha(f.ledgerpath))
   f.write(f.base/'PLAN.json',f.p)
   f.claim.update(plan_sha256=g.sha(f.base/'PLAN.json'),original_state_sha256=f.p['original_state_sha256'],original_ledger_sha256=f.p['original_ledger_sha256'])
   import hashlib
-  f.auth.update(scope=g.RYO_FOURTH_SCOPE,financial_scope=f.p['bounds'],plan_sha256=g.sha(f.base/'PLAN.json'),activation_claim_sha256=hashlib.sha256(json.dumps(f.claim,sort_keys=True,allow_nan=False).encode()).hexdigest())
+  f.auth.update(scope=scope,financial_scope=f.p['bounds'],plan_sha256=g.sha(f.base/'PLAN.json'),activation_claim_sha256=hashlib.sha256(json.dumps(f.claim,sort_keys=True,allow_nan=False).encode()).hexdigest())
   f.write(f.base/'ROOT-AUTHORITY.json',f.auth);f.peer.update(plan_sha256=g.sha(f.base/'PLAN.json'),root_authority_sha256=g.sha(f.base/'ROOT-AUTHORITY.json'));f.write(f.base/'SOURCE-PEER.json',f.peer)
   return f
  def test_literal_scope_no_decisor_or_unknown_extension(self):
@@ -529,3 +529,33 @@ class FourthScopeTests(unittest.TestCase):
      else:measured.assert_called_once_with(f.job,scoped_topup=scope);self.assertTrue((f.base/'ENTRY-CLAIM.json').exists())
     self.assertEqual(f.a.load_state(f.rid)['scoped_native_topup'],old);self.assertEqual(f.op.terminal(f.a,f.rid,scope=scope)['status'],'held');self.assertTrue((f.base/'EXIT.json').exists())
    finally:f.tearDown()
+
+class FifthScopeTests(unittest.TestCase):
+ def test_exact_decisor_fifth_preinput_and_oneuse_finance(self):
+  f=FourthScopeTests().fixture(g.DECISOR,g.DECISOR_FIFTH_SCOPE)
+  try:
+   scope=g.DECISOR_FIFTH_SCOPE;g.previous_failure(f.job,f.s,f.p,rid=g.DECISOR);g.preinput(f.rid,f.ledger,scope=scope)
+   for rid in (g.RYO,'other'):
+    with self.assertRaises(ValueError):g.configuration(rid,scope)
+   _,_,key,_=g.configuration(f.rid,scope);f.write(f.base/'ACTIVATION-CLAIM.json',f.claim)
+   f.s[key]={'authority_sha256':g.sha(f.base/'ROOT-AUTHORITY.json'),'peer_sha256':g.sha(f.base/'SOURCE-PEER.json'),'plan_sha256':g.sha(f.base/'PLAN.json'),'status':'owned','automatic_retry_prohibited':True};f.s.pop('operational_hold');f.write(f.statepath,f.s)
+   x=g.ScopedTopUp(f.job,{'generation':g.GENERATION},lambda:None,scope=scope);self.assertEqual(x.lifetime_cap_usd,29.8);self.assertEqual(x('before_reserve',f.ledger),5)
+   s=copy.deepcopy(f.ledger);s.update(creation_attempts=5,spent_upper_bound_usd=29.8,attempt_ttl_hours=1,attempt_reserved_upper_bound_usd=5,attempt_contingency_usd=0,cleanup_uncertain=True);self.assertEqual(x('before_create',s),5)
+   with self.assertRaises(FileExistsError):x('before_create',s)
+   old=copy.deepcopy(f.s['scoped_native_topup']);f.op.fail(f.a,f.rid,scope=scope);self.assertEqual(f.a.load_state(f.rid)['scoped_native_topup'],old);self.assertEqual(f.op.terminal(f.a,f.rid,scope=scope)['status'],'held')
+  finally:f.tearDown()
+ def test_exact_fifth_late_join_uses_genuine_new_scope_and_original_entry(self):
+  f=FourthScopeTests().fixture(g.DECISOR,g.DECISOR_FIFTH_SCOPE)
+  try:
+   scope=g.DECISOR_FIFTH_SCOPE;_,_,key,_=g.configuration(f.rid,scope);f.write(f.base/'ACTIVATION-CLAIM.json',f.claim);f.s[key]={'authority_sha256':g.sha(f.base/'ROOT-AUTHORITY.json'),'peer_sha256':g.sha(f.base/'SOURCE-PEER.json'),'plan_sha256':g.sha(f.base/'PLAN.json'),'status':'owned','automatic_retry_prohibited':True};f.s.pop('operational_hold')
+   old=f.root/'old-controller.py';old.write_text('# exact retained original controller');current=f.runtime/'autopickup.py'
+   admission=f.job/'review/DECISOR-LATE-COMPLETION-ADMISSION.json';f.write(admission,{'unchanged':'original late admission'});entry=f.job/'review/decisor-late-handoff'/g.GENERATION/'ENTRY-CLAIM.json';entry.parent.mkdir(parents=True);f.write(entry,{'admission_sha256':g.sha(admission)});latepeer=f.job/'review/DECISOR-LATE-COMPLETION-REVIEW.json';f.write(latepeer,{'original':'retained genuine peer fixture'})
+   f.p['decisor_original_late']={n:{'path':str(q),'sha256':g.sha(q)}for n,q in [('admission',admission),('entry',entry),('peer',latepeer)]};original={'path':str(current),'sha256':g.sha(old)};f.p['decisor_late_successors']={'controller':{'original':original,'historical_copy':{'path':str(old),'sha256':g.sha(old)},'current':{'path':str(current),'sha256':g.sha(current)}}}
+   hp=Path(f.p['references']['original_history']['path']);history=g.read(hp);history['files'][str(old)]=g.sha(old);f.write(hp,history);f.p['references']['original_history']['sha256']=g.sha(hp);f.write(f.base/'PLAN.json',f.p)
+   # Rebind only the new synthetic peer/claim/anchor, never original ENTRY/admission.
+   import hashlib
+   f.claim['plan_sha256']=g.sha(f.base/'PLAN.json');f.write(f.base/'ACTIVATION-CLAIM.json',f.claim);f.auth.update(plan_sha256=g.sha(f.base/'PLAN.json'),activation_claim_sha256=hashlib.sha256(json.dumps(f.claim,sort_keys=True,allow_nan=False).encode()).hexdigest());f.write(f.base/'ROOT-AUTHORITY.json',f.auth);f.peer.update(plan_sha256=g.sha(f.base/'PLAN.json'),root_authority_sha256=g.sha(f.base/'ROOT-AUTHORITY.json'));f.write(f.base/'SOURCE-PEER.json',f.peer);f.s[key].update(authority_sha256=g.sha(f.base/'ROOT-AUTHORITY.json'),peer_sha256=g.sha(f.base/'SOURCE-PEER.json'),plan_sha256=g.sha(f.base/'PLAN.json'));f.write(f.statepath,f.s)
+   before=entry.read_bytes();self.assertTrue(g.late_successor(f.job,g.GENERATION,'controller',original,current,admission,entry));self.assertEqual(entry.read_bytes(),before)
+   old.write_text('tampered retained history')
+   with self.assertRaises(ValueError):g.late_successor(f.job,g.GENERATION,'controller',original,current,admission,entry)
+  finally:f.tearDown()

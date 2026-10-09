@@ -8,25 +8,29 @@ RYO='81e785ad-081b-4592-99df-1c3d709fd6c8'
 DECISOR='3687485f-5a51-4964-bd9a-73973f3494d7'
 BOUNDS={RYO:(2,20.0,3,25.0),DECISOR:(3,19.8,4,24.8)}
 RYO_FOURTH_SCOPE='exact-ryo-native-preinput-fourth-small-topup-one-use'
+DECISOR_FIFTH_SCOPE='exact-decisor-native-preinput-fifth-small-topup-one-use'
+EXTRA_SCOPES=(RYO_FOURTH_SCOPE,DECISOR_FIFTH_SCOPE)
 def configuration(rid,scope=SCOPE):
  if scope==SCOPE and rid in BOUNDS:return BOUNDS[rid],'native-small-topup','scoped_native_topup','scoped_native_topup_outcome'
  if scope==RYO_FOURTH_SCOPE and rid==RYO:return (3,25.0,4,30.0),'native-small-topup-ryo-fourth','scoped_native_topup_ryo_fourth','scoped_native_topup_ryo_fourth_outcome'
+ if scope==DECISOR_FIFTH_SCOPE and rid==DECISOR:return (4,24.8,5,29.8),'native-small-topup-decisor-fifth','scoped_native_topup_decisor_fifth','scoped_native_topup_decisor_fifth_outcome'
  raise ValueError('literal order/scope only')
 
-def previous_failure(job,request,plan):
- """Retain, bind and recheck consumed third-attempt custody; never reset it."""
+def previous_failure(job,request,plan,*,rid=RYO):
+ """Retain, bind and recheck consumed preceding-attempt custody; never reset it."""
+ if rid not in (RYO,DECISOR)or Path(job).name!=rid:raise ValueError('previous failure literal order only')
  oldbase=Path(job)/'review/native-small-topup'
  names={'PLAN.json','ROOT-AUTHORITY.json','SOURCE-PEER.json','ACTIVATION-CLAIM.json','ENTRY-CLAIM.json','RESERVE-CLAIM.json','CREATE-CLAIM.json','STATE-BEFORE.json','START-REQUESTED.json','EXIT.json','RESTORED.json'}
  refs=plan.get('previous_topup')
- if not isinstance(refs,dict)or set(refs)!=names:raise ValueError('complete consumed third-attempt custody required')
+ if not isinstance(refs,dict)or set(refs)!=names:raise ValueError('complete consumed preceding-attempt custody required')
  for name,ref in refs.items():
-  if set(ref)!={'path','sha256'}or ref['path']!=str(oldbase/name)or sha(oldbase/name)!=ref['sha256']:raise ValueError('old third-attempt bytes changed')
+  if set(ref)!={'path','sha256'}or ref['path']!=str(oldbase/name)or sha(oldbase/name)!=ref['sha256']:raise ValueError('old preceding-attempt bytes changed')
  anchor={'authority_sha256':refs['ROOT-AUTHORITY.json']['sha256'],'peer_sha256':refs['SOURCE-PEER.json']['sha256'],'plan_sha256':refs['PLAN.json']['sha256'],'status':'owned','automatic_retry_prohibited':True}
  outcome={'status':'held','plan_sha256':anchor['plan_sha256'],'reason':'continuation_failed'}
  if request.get('scoped_native_topup')!=anchor or request.get('scoped_native_topup_outcome')!=outcome:raise ValueError('original failed anchor/outcome must remain')
  oldplan=read(oldbase/'PLAN.json')
- if oldplan.get('scope')!=SCOPE or oldplan.get('order_id')!=RYO or oldplan.get('bounds')!=dict(zip(('old_creation_attempts','old_spend_usd','maximum_lifetime_allocations','maximum_lifetime_usd'),BOUNDS[RYO])):raise ValueError('original third scope differs')
- if read(oldbase/'EXIT.json').get('outcome')!=outcome or read(oldbase/'RESTORED.json').get('terminal_outcome')!=outcome:raise ValueError('authentic third exit/restoration absent')
+ if oldplan.get('scope')!=SCOPE or oldplan.get('order_id')!=rid or oldplan.get('bounds')!=dict(zip(('old_creation_attempts','old_spend_usd','maximum_lifetime_allocations','maximum_lifetime_usd'),BOUNDS[rid])):raise ValueError('original preceding scope differs')
+ if read(oldbase/'EXIT.json').get('outcome')!=outcome or read(oldbase/'RESTORED.json').get('terminal_outcome')!=outcome:raise ValueError('authentic preceding exit/restoration absent')
  history=read(plan['references']['original_history']['path'])['files']
  full=plan.get('full_sql_row')
  if not isinstance(full,dict)or set(full)!={'path','sha256'}or sha(full['path'])!=full['sha256']or history.get(full['path'])!=full['sha256']:raise ValueError('whole SQL capture frozen in history required')
@@ -80,9 +84,9 @@ class ScopedTopUp:
   scope=getattr(self,'scope',SCOPE);bounds,_,anchor_key,_=configuration(self.rid,scope)
   p=read(self.plan_path);a=read(self.auth_path);peer=read(self.peer_path);request=read(STATE/'requests'/f'{self.rid}.json')
   expected={'authority_sha256':sha(self.auth_path),'peer_sha256':sha(self.peer_path),'plan_sha256':sha(self.plan_path),'status':'owned','automatic_retry_prohibited':True}
-  if scope==RYO_FOURTH_SCOPE:
-   previous_failure(self.job,request,p)
-   if prospective and (request.get('operational_hold',{}).get('reason')!='scoped_native_topup_reconciliation_required' or request.get('operational_hold',{}).get('transient')is not False):raise ValueError('known third failure permanent hold required')
+  if scope in EXTRA_SCOPES:
+   previous_failure(self.job,request,p,rid=self.rid)
+   if prospective and (request.get('operational_hold',{}).get('reason')!='scoped_native_topup_reconciliation_required' or request.get('operational_hold',{}).get('transient')is not False):raise ValueError('known preceding failure permanent hold required')
   if prospective:
    if request.get(anchor_key)is not None or sha(STATE/'requests'/f'{self.rid}.json')!=p.get('original_state_sha256')or sha(STATE/'pods'/f'{self.rid}.json')!=p.get('original_ledger_sha256'):raise ValueError('prospective whole original state/ledger CAS')
   elif request.get(anchor_key)!=expected:raise ValueError('Root adopted one-use anchor absent')
@@ -157,10 +161,10 @@ class ScopedTopUp:
   else:raise ValueError('topup lifecycle phase')
   return self.allowed_total
 
-def _late_successor(job,generation,name,original,path,admission_path,entry_path, *, prospective=False):
+def _late_successor(job,generation,name,original,path,admission_path,entry_path, *, prospective=False,scope=SCOPE):
  """Exact old->current source join only; never replace old admission/ENTRY."""
  if Path(job).name!=DECISOR or generation!=GENERATION or name not in {'controller','late_completion','v16_profiles','profile_admission','profile_review','source_pins'}:raise ValueError('late successor scope')
- x=ScopedTopUp.__new__(ScopedTopUp);x.job=Path(job);x.rid=DECISOR;x.n,x.spent,x.allowed_total,x.lifetime_cap_usd=BOUNDS[DECISOR];x.base=x.job/'review/native-small-topup';x.plan_path=x.base/'PLAN.json';x.auth_path=x.base/'ROOT-AUTHORITY.json';x.peer_path=x.base/'SOURCE-PEER.json';x.recheck=lambda:None
+ x=ScopedTopUp.__new__(ScopedTopUp);x.job=Path(job);x.rid=DECISOR;x.scope=scope;x.n,x.spent,x.allowed_total,x.lifetime_cap_usd=configuration(DECISOR,scope)[0];x.base=x.job/'review'/configuration(DECISOR,scope)[1];x.plan_path=x.base/'PLAN.json';x.auth_path=x.base/'ROOT-AUTHORITY.json';x.peer_path=x.base/'SOURCE-PEER.json';x.recheck=lambda:None
  x.verify(prospective=prospective)  # Actual Root adoption, exact authority+peer, complete current source freeze.
  joins=x.plan.get('decisor_late_successors',{})
  if set(joins)-{'controller','late_completion','v16_profiles','profile_admission','profile_review','source_pins'}:raise ValueError('unexpected historical source successor')
@@ -182,6 +186,11 @@ def _late_successor(job,generation,name,original,path,admission_path,entry_path,
 
 
 def late_successor(*args,**kwargs):
+ # Only exact independently authenticated fifth ownership selects the join;
+ # verification still requires genuine new Root/peer/source closure.
+ if 'scope'not in kwargs and args and Path(args[0]).name==DECISOR:
+  request=read(STATE/'requests'/f'{DECISOR}.json')
+  if request.get('scoped_native_topup_decisor_fifth')is not None:kwargs['scope']=DECISOR_FIFTH_SCOPE
  try:return _late_successor(*args,**kwargs)
  except (OSError,KeyError,TypeError,AttributeError) as exc:
   raise ValueError('missing or malformed exact historical source successor') from exc

@@ -4,15 +4,15 @@ Never writes an authority, review verdict, live file, state or ledger.
 """
 import argparse, ast, hashlib, json, os, re, shlex
 from pathlib import Path
-ROOT = Path('/home/flori/jobs/fastlane-v16-finish-20261009/proposals/native-small-topup-ryo-fourth-preparation')
+ROOT = Path('/home/flori/jobs/fastlane-v16-finish-20261009/proposals/native-small-topup-decisor-fifth-preparation')
 RUNTIME = Path('/home/flori/.local/share/priority-evaluation/runtime')
 STATE = Path('/home/flori/.local/state/fastlane-autopickup')
 JOBS = Path('/home/flori/jobs/fastlane-evaluations')
 RYO = '81e785ad-081b-4592-99df-1c3d709fd6c8'
 DECISOR = '3687485f-5a51-4964-bd9a-73973f3494d7'
-BOUNDS = {RYO: (3,25,4,30)}
+BOUNDS = {DECISOR: (4,24.8,5,29.8)}
 GENERATION = 'native-v16-paid-20261009'
-SCOPE = 'exact-ryo-native-preinput-fourth-small-topup-one-use'
+SCOPE = 'exact-decisor-native-preinput-fifth-small-topup-one-use'
 REFS = {'profile_admission','profile_review','gate','standing_decision','original_history','controller','v16_profiles','pod_runner','operator','source_freeze','recipe'}
 LATE_NAMES = {'controller','late_completion','v16_profiles','profile_admission','profile_review','source_pins'}
 def sha(b): return hashlib.sha256(b).hexdigest()
@@ -53,19 +53,49 @@ def check_execstart_source(path):
  for name in ('execstart_binding','execstart_sha256'):
   if installed.get(name)!=copied[name]:raise ValueError('actual installed stable ExecStart algorithm differs')
 
+def decisor_original_expected(path):
+ """Read original Late EXPECTED as data only, without imports/network/effects."""
+ tree=ast.parse(data(path));values={}
+ def literal(node):
+  if isinstance(node,ast.Name)and node.id=='ORDER':return values['ORDER']
+  if isinstance(node,ast.BinOp)and isinstance(node.op,ast.Add):
+   left,right=literal(node.left),literal(node.right)
+   if not isinstance(left,str)or not isinstance(right,str):raise ValueError('original late string expression only')
+   return left+right
+  if isinstance(node,ast.Dict):return {literal(k):literal(v)for k,v in zip(node.keys,node.values)}
+  if isinstance(node,ast.List):return [literal(v)for v in node.elts]
+  return ast.literal_eval(node)
+ for node in tree.body:
+  if isinstance(node,ast.Assign)and len(node.targets)==1 and isinstance(node.targets[0],ast.Name)and node.targets[0].id in ('ORDER','EXPECTED'):
+   values[node.targets[0].id]=literal(node.value)
+ if values.get('ORDER')!=DECISOR or values.get('EXPECTED',{}).get('result_delivered_at')!='2026-10-06T15:08:59+02:00':raise ValueError('exact original historical Decisor delivery source required')
+ return values['EXPECTED']
+
+def check_decisor_original_row(row):
+ from datetime import datetime
+ expected=decisor_original_expected(RUNTIME/'decisor_late_completion.py')
+ for key,value in expected.items():
+  if key in ('paid_at','result_delivered_at'):
+   actual=row.get(key)
+   try:equal=isinstance(actual,str)and datetime.fromisoformat(actual.replace('Z','+00:00'))==datetime.fromisoformat(value.replace('Z','+00:00'))
+   except ValueError:equal=False
+  else:equal=row.get(key)==value
+  if not equal:raise ValueError('original Late row invariant differs: '+key)
+
 def build(spec):
  """Pure metadata in/out except read-only explicit public/source evidence files."""
  rid=spec['order_id']
- if rid!=RYO:raise ValueError('RYO fourth exact order only')
+ if rid!=DECISOR:raise ValueError('Decisor fifth exact order only')
  oldn,oldspent,maxn,maxspent=BOUNDS[rid];job=JOBS/rid
  if spec['generation']!=GENERATION or not re.fullmatch('[0-9a-f]{40}',spec['merged_revision']):raise ValueError('actual merged revision required')
  for name in ('state','ledger','row','full_sql_row','execstart','installation','cache_freeze'):
   checked(spec[name])
  state=read(spec['state']['path']);ledger=read(spec['ledger']['path']);row=read(spec['row']['path'])
- if state.get('id')!=rid or state.get('scoped_native_topup_ryo_fourth')is not None or not isinstance(state.get('operational_hold'),dict) or state['operational_hold'].get('transient')is not False or state['operational_hold'].get('reason')!='scoped_native_topup_reconciliation_required':raise ValueError('exact existing permanent held state required')
+ if state.get('id')!=rid or state.get('scoped_native_topup_decisor_fifth')is not None or not isinstance(state.get('operational_hold'),dict) or state['operational_hold'].get('transient')is not False or state['operational_hold'].get('reason')!='scoped_native_topup_reconciliation_required':raise ValueError('exact existing permanent held state required')
  if ledger.get('request_id')!=rid or type(ledger.get('creation_attempts'))is not int or ledger['creation_attempts']!=oldn or ledger.get('spent_upper_bound_usd')!=oldspent or ledger.get('pod_id')is not None or ledger.get('cleanup_uncertain')is not False or not ledger.get('torn_down_at') or any(ledger.get(k)for k in ('input_dispatched','execution_started','measurement_completed','scored_dispatch_uncertain')):raise ValueError('original consumed financial history required')
  if row.get('id')!=rid or row.get('evaluation_status')!='pending' or row.get('stripe_mode')!='live' or row.get('synthetic_test')is not False or row.get('pickup_job_dir')!=str(job) or row.get('status')not in ('paid','review_passed') or not row.get('paid_at') or any(row.get(k)is not None for k in ('refund_id','refunded_at','customer_hold_started_at','customer_hold_reason')):raise ValueError('whole current original paid pending row required')
- if row.get('result_delivered_at')is not None:raise ValueError('RYO original undelivered row required')
+ if rid==DECISOR:check_decisor_original_row(row)
+ elif row.get('result_delivered_at')is not None:raise ValueError('RYO original undelivered row required')
  if set(spec['references'])!=REFS:raise ValueError('complete final reference set required')
  refs={};provenance={}
  for name,value in spec['references'].items():
@@ -82,7 +112,6 @@ def build(spec):
  peer=read(provenance['profile_review']['path'])
  if peer.get('verdict')!='ACCEPTED' or peer.get('reviewer_engine')!='claude' or peer.get('admission_sha256')!=refs['profile_admission']['sha256']:raise ValueError('genuine final admission peer required; never generated')
  frozen=read(provenance['source_freeze']['path']);files=frozen['files']
- if sha(data(RUNTIME/'ryotide_runtime_supplement.py'))!='67f05404632a16787e70a5b89a0ac39d754494256b8516889700a68251cde066':raise ValueError('exact reviewed CUDA symbol grammar source required')
  actual={str(q):sha(data(q)) for q in RUNTIME.rglob('*') if q.is_file()}
  if any(q.is_symlink()for q in RUNTIME.rglob('*')) or files!=actual:raise ValueError('whole actual runtime/cache membership and bytes required')
  cache=read(spec['cache_freeze']['path'])
@@ -99,14 +128,34 @@ def build(spec):
  stable_sha=execstart_sha256(raw)
  plan={'schema_version':1,'SOURCE_ONLY_PROSPECTIVE_NOT_INSTALLABLE':False,'scope':SCOPE,'order_id':rid,'generation':GENERATION,'bounds':dict(zip(('old_creation_attempts','old_spend_usd','maximum_lifetime_allocations','maximum_lifetime_usd'),BOUNDS[rid])),'max_new_usd':5,'max_ttl_hours':1,'selected_gpu':'RTX6000' if rid==RYO else 'H100','original_state_sha256':spec['state']['sha256'],'original_ledger_sha256':spec['ledger']['sha256'],'original_execstart_sha256':stable_sha,'references':refs}
  plan['previous_topup']=spec['previous_topup'];plan['full_sql_row']=spec['full_sql_row']
- # Validate old custody using pure first-party function AST; never import runtime.
- tree=ast.parse(data(provenance['gate']['path']))
- funcs=[n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='previous_failure']
- if len(funcs)!=1:raise ValueError('actual first-party previous failure validator required')
- namespace={'Path':Path,'sha':lambda p:sha(data(p)),'read':read,'RYO':RYO,'DECISOR':DECISOR,'SCOPE':'exact-native-preinput-small-topup-one-use','BOUNDS':{RYO:(2,20.,3,25.)}}
+ tree=ast.parse(data(provenance['gate']['path']));funcs=[n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='previous_failure']
+ if len(funcs)!=1:raise ValueError('actual first-party previous custody validator required')
+ namespace={'Path':Path,'sha':lambda p:sha(data(p)),'read':read,'RYO':RYO,'DECISOR':DECISOR,'SCOPE':'exact-native-preinput-small-topup-one-use','BOUNDS':{RYO:(2,20.,3,25.),DECISOR:(3,19.8,4,24.8)}}
  exec(compile(ast.Module(body=funcs,type_ignores=[]),'<firstparty previous custody validator>','exec'),namespace)
- namespace['previous_failure'](job,state,plan)
- if read(spec['full_sql_row']['path']).get('id')!=RYO:raise ValueError('whole SQL exact identity required')
+ namespace['previous_failure'](job,state,plan,rid=DECISOR)
+ if read(spec['full_sql_row']['path']).get('id')!=DECISOR:raise ValueError('whole SQL exact identity required')
+ if rid==DECISOR:
+  originals=spec['decisor_original_late'];joins=spec['decisor_late_successors']
+  expected={'admission':job/'review/DECISOR-LATE-COMPLETION-ADMISSION.json','peer':job/'review/DECISOR-LATE-COMPLETION-REVIEW.json','entry':job/'review/decisor-late-handoff'/GENERATION/'ENTRY-CLAIM.json'}
+  if set(originals)!=set(expected):raise ValueError('original late closure required')
+  for n,p in expected.items():
+   checked(originals[n])
+   if originals[n]['path']!=str(p) or history['files'].get(str(p))!=originals[n]['sha256']:raise ValueError('original consumed late objects must be frozen unchanged')
+  late=read(originals['admission']['path']);entry=read(originals['entry']['path'])
+  final=spec['decisor_current_late']
+  if set(final)!=set(late['references']):raise ValueError('complete actual final late reference inventory required')
+  for n,ref in final.items():
+   checked(ref['bytes'])
+   if ref['target']!=late['references'][n]['path']:raise ValueError('same original late reference destination required')
+  if entry.get('admission_sha256')!=originals['admission']['sha256']:raise ValueError('consumed original ENTRY must not be replayed/rebound')
+  changed={n for n,ref in late['references'].items() if final[n]['bytes']['sha256']!=ref['sha256']}
+  if set(joins)!=changed or not changed<=LATE_NAMES:raise ValueError('exact all and only stale allowed late joins required')
+  for n,j in joins.items():
+   if set(j)!={'original','historical_copy','current'}or j['original']!=late['references'][n]:raise ValueError('literal original late ref required')
+   checked(j['historical_copy'])
+   if j['current']!={'path':final[n]['target'],'sha256':final[n]['bytes']['sha256']}:raise ValueError('exact final current bytes required')
+   if j['historical_copy']['sha256']!=j['original']['sha256'] or history['files'].get(j['historical_copy']['path'])!=j['original']['sha256'] or j['current']['path']!=j['original']['path']:raise ValueError('retained authentic historical bytes and same current path required')
+  plan['decisor_original_late']=originals;plan['decisor_late_successors']=joins
  claim={'order_id':rid,'generation':GENERATION,'plan_sha256':sha(encode(plan)),'original_state_sha256':spec['state']['sha256'],'original_ledger_sha256':spec['ledger']['sha256']}
  return {'plan':plan,'ROOT-AUTHORITY-INPUT':{'plan_sha256':sha(encode(plan)),'activation_claim_sha256':sha(json.dumps(claim,sort_keys=True,allow_nan=False).encode()),'financial_scope':plan['bounds'],'selected_gpu':plan['selected_gpu'],'expected_row':row},'provenance':{'input':spec,'reference_bytes':provenance,'scope':'candidate metadata only; no financial/source verdict or authority produced'}}
 def encode(obj):return (json.dumps(obj,sort_keys=True,indent=2,allow_nan=False)+'\n').encode()
