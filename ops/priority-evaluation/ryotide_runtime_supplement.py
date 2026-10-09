@@ -39,7 +39,7 @@ def build(provider,pod_id,recheck,report):
  if CONTEXT_SHA not in r.stdout.split():raise ValueError('transferred context')
  pod_runner._exec(provider,pod_id,['tar','-xf',root+'/context.tar','-C',root])
  result=pod_runner._exec(provider,pod_id,['docker','build','--network','none','--pull=false','--iidfile',root+'/image.iid','-f',root+'/Dockerfile.runtime-supplement',root],timeout=600)
- report.update(build_stdout=result.stdout,build_stderr=result.stderr)
+ report.update(build_stdout=diagnostic_text(result.stdout)['text'],build_stderr=diagnostic_text(result.stderr)['text'])
  image=pod_runner._exec(provider,pod_id,['cat',root+'/image.iid']).stdout.strip()
  if not re.fullmatch('sha256:[a-f0-9]{64}',image):raise ValueError('immutable build identity')
  inventory=pod_runner._exec(provider,pod_id,['docker','image','inspect',image])
@@ -53,23 +53,55 @@ def build(provider,pod_id,recheck,report):
  m=json.loads(r.stdout)
  from ryotide_supplement_metadata import EXPECTED
  if m.get('failures')!=[]or m.get('kind')!='supplement_metadata_only'or set(m.get('packages',{}))!=set(EXPECTED)or any(m['packages'][n].get('version')!=v for n,v in EXPECTED.items())or any(m.get(k)is not False for k in('customer_source_imported','model_loaded','native_kernels_proven','runtime_admitted')):raise ValueError('exact derived metadata')
- report.update(effective_image=image,supplement_binding=b,derived_metadata_accepted=True,derived_metadata=m,derived_image_inspect=image_metadata,build_stdout=result.stdout,build_stderr=result.stderr)
+ report.update(effective_image=image,supplement_binding=b,derived_metadata_accepted=True,derived_metadata=m,derived_image_inspect=image_metadata,build_stdout=diagnostic_text(result.stdout)['text'],build_stderr=diagnostic_text(result.stderr)['text'])
  recheck();return image
 
 def native_command(image,root):
  """Match the pinned measurement service environment, retaining image CUDA libraries."""
  return ['docker','run','--rm','--gpus','all','--network','none','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--shm-size','16g','--tmpfs','/tmp:exec,size=16g','-e','HOME=/tmp','-e','OPENAI_API_KEY=','-e','HF_TOKEN=','-v',root+'/code:/code:ro','-v','/models:/models:ro','-v',root+'/proof.py:/proof.py:ro','--entrypoint','/usr/bin/env',image,'PYTHONPATH=/code/src:/code/vendor/jevbench','HF_HUB_OFFLINE=1','TRANSFORMERS_OFFLINE=1','HF_HUB_DISABLE_TELEMETRY=1','TOKENIZERS_PARALLELISM=false','python3','/proof.py']
 
-# Only the fixed first-party unscored pre-input proof uses these diagnostics.
-# Three fixed observed commands plus a parsed report keep the JSON below 1 MiB.
-PROOF_TEXT_LIMIT=64*1024
-PROOF_PARSED_LIMIT=64*1024
-def diagnostic_text(value):
+# Escaped ASCII JSON byte limits match retain(indent=2, ensure_ascii=True).
+# Nine inherited/build/success text fields, three fixed command observations and
+# bounded parsed payloads leave ample space under the whole 1 MiB receipt budget.
+PROOF_TEXT_LIMIT=16*1024
+PROOF_PARSED_LIMIT=48*1024
+RETAINED_TEXT_FIELDS=('gpu_inventory','gpu_inventory_stderr','image_inspect_stdout','image_inspect_stderr','stdout','stderr','build_stdout','build_stderr','native_proof_stderr')
+RETAINED_JSON_FIELDS=('metadata','derived_metadata','derived_image_inspect','native_proof')
+def redact_text(value):
  text=str(value)
- # The proof command unsets credentials; also redact credential-shaped error text.
- text=re.sub(r"(?i)([\"']?(?:OPENAI_API_KEY|HF_TOKEN|HUGGING_FACE_HUB_TOKEN|AWS_SECRET_ACCESS_KEY|API_KEY|ACCESS_TOKEN|PASSWORD)[\"']?\s*[=:]\s*[\"']?)[^\s,;\"']+",r'\1[REDACTED]',text)
- text=re.sub(r'(?i)(authorization\s*[:=]\s*bearer\s+)[^\s]+',r'\1[REDACTED]',text)
- return {'text':text[:PROOF_TEXT_LIMIT],'truncated':len(text)>PROOF_TEXT_LIMIT,'original_chars':len(text)}
+ keys=r'(?:OPENAI_API_KEY|HF_TOKEN|HUGGING_FACE_HUB_TOKEN|AWS_SECRET_ACCESS_KEY|API_KEY|ACCESS_TOKEN|PASSWORD)'
+ # Quoted values may contain spaces; blank assignments must not consume -e.
+ text=re.sub(r"(?i)([\"']?"+keys+r"[\"']?\s*[=:]\s*)([\"'])(.*?)\2",lambda m:m[1]+m[2]+'[REDACTED]'+m[2],text,flags=re.DOTALL)
+ text=re.sub(r"(?i)([\"']?"+keys+r"[\"']?\s*[=:])([^\s,;\"'-][^\s,;\"']*)",r'\1[REDACTED]',text)
+ text=re.sub(r"(?i)(authorization\s*[:=]\s*(?:bearer|basic)\s+)[^\s,;\"']+",r'\1[REDACTED]',text)
+ text=re.sub(r'\bhf_[A-Za-z0-9]{8,}\b','[REDACTED]',text)
+ return text
+def serialized_size(value):return len(json.dumps(value,indent=2,ensure_ascii=True).encode('utf-8'))
+def diagnostic_text(value):
+ text=redact_text(value);original_chars=len(text)
+ # Binary search the prefix against escaped bytes, including JSON quotes.
+ lo,hi=0,len(text)
+ while lo<hi:
+  mid=(lo+hi+1)//2
+  if serialized_size(text[:mid])<=PROOF_TEXT_LIMIT:lo=mid
+  else:hi=mid-1
+ return {'text':text[:lo],'truncated':lo<original_chars,'original_chars':original_chars}
+def bounded_json(value):
+ def redact(v):
+  if isinstance(v,dict):
+   return {k:'[REDACTED]' if re.fullmatch(r'(?i)OPENAI_API_KEY|HF_TOKEN|HUGGING_FACE_HUB_TOKEN|AWS_SECRET_ACCESS_KEY|API_KEY|ACCESS_TOKEN|PASSWORD|AUTHORIZATION',k) else redact(x) for k,x in v.items()}
+  if isinstance(v,list):return [redact(x) for x in v]
+  if isinstance(v,str):return redact_text(v)
+  return v
+ retained=redact(value);size=serialized_size(retained)
+ if size<=PROOF_PARSED_LIMIT:return retained
+ return {'retained':False,'reason':'parsed_report_size_limit','serialized_bytes':size}
+def bound_retained_payloads(report):
+ # These are display/diagnostic copies; gate predicates use their original locals.
+ for key in RETAINED_TEXT_FIELDS:
+  if key in report:report[key]=diagnostic_text(report[key])['text']
+ for key in RETAINED_JSON_FIELDS:
+  if key in report:report[key]=bounded_json(report[key])
 def observed_proof_exec(report,stage,provider,pod_id,command,timeout=600):
  diag=report['native_proof_diagnostics'];diag['stage']=stage
  try:
@@ -81,20 +113,11 @@ def observed_proof_exec(report,stage,provider,pod_id,command,timeout=600):
  diag['observations'][stage]={'result_available':True,'exit_code':result.returncode,'stdout':diagnostic_text(result.stdout),'stderr':diagnostic_text(result.stderr)}
  return result
 def retain_parsed_proof(report,value):
- # Serialize for a size bound and credential redaction, without altering validation.
- text=json.dumps(value,sort_keys=True)
- def redact(v):
-  if isinstance(v,dict):
-   return {k:'[REDACTED]' if re.fullmatch(r'(?i)OPENAI_API_KEY|HF_TOKEN|HUGGING_FACE_HUB_TOKEN|AWS_SECRET_ACCESS_KEY|API_KEY|ACCESS_TOKEN|PASSWORD|AUTHORIZATION',k) else redact(x) for k,x in v.items()}
-  if isinstance(v,list):return [redact(x) for x in v]
-  if isinstance(v,str):return diagnostic_text(v)['text']
-  return v
- if len(text)<=PROOF_PARSED_LIMIT:
-  report['native_proof_diagnostics']['parsed_report']=redact(value)
- else:
-  report['native_proof_diagnostics']['parsed_report']={'retained':False,'reason':'parsed_report_size_limit','original_chars':len(text)}
+ # Preserve validation value untouched; bound the retained copy's escaped bytes.
+ report['native_proof_diagnostics']['parsed_report']=bounded_json(value)
 
 def prove(provider,pod_id,job,recipe,report,code_tar,recheck):
+ bound_retained_payloads(report)
  report['native_proof_diagnostics']={'schema_version':1,'scope':'fixed_firstparty_synthetic_preinput_unscored','stage':'effective_image','actual_code_archive_sha256':hashlib.sha256(code_tar).hexdigest(),'expected_code_archive_sha256':CODE_SHA,'observations':{}}
  diag=report['native_proof_diagnostics']
  try:
@@ -124,6 +147,8 @@ def prove(provider,pod_id,job,recipe,report,code_tar,recheck):
  except Exception as error:
   diag['exception_type']=type(error).__name__;diag['error']=diagnostic_text(error)
   raise
+ finally:
+  bound_retained_payloads(report)
 
 def proof_matches(v):
  if not isinstance(v,dict)or set(v.get('optional_backend_versions',{}))!={'flash-qla','tilelang','causal-conv1d','flash-attn'}or any(x is not None and (not isinstance(x,str)or not x)for x in v['optional_backend_versions'].values())or not isinstance(v.get('cuda_kernel_names'),list)or not 1<=len(v['cuda_kernel_names'])<=512 or any(not isinstance(n,str)or not n or len(n)>500 for n in v['cuda_kernel_names']):return False
