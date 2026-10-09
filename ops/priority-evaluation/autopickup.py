@@ -1154,8 +1154,15 @@ def source_review_pins(job_dir: Path) -> dict[str, Any]:
     if not order or not order.get("benchmarks"):
         raise PickupError("source review requires the host order benchmark list")
     try:
-        pins["official_methods"] = official_scoring.pins(order["benchmarks"])
-        pins["official_measurement"] = measurement_dispatch.pins()
+        import v16_adoption
+        package = v16_adoption.selected(job_dir, load_state(request_id(job_dir.name)))
+        if package is not None:
+            if order["benchmarks"] != ["jevbench"]:
+                raise ValueError("v16 admission requires text-only order")
+            _, pins["official_measurement"], pins["official_methods"] = package
+        else:
+            pins["official_methods"] = official_scoring.pins(order["benchmarks"])
+            pins["official_measurement"] = measurement_dispatch.pins()
     except (OSError, ValueError, KeyError) as exc:
         raise PickupError("official scoring profile is unavailable or changed") from exc
     trusted = job_dir / "trusted-runner"
@@ -2056,12 +2063,17 @@ def score_measurement(rid: str, job_dir: Path) -> dict[str, Any]:
     if set(metadata) != set(ordered):
         raise PickupError("reviewed measurement metadata does not match ordered benchmarks")
     method_pins = gate_record["source_pins"]["official_methods"]
-    raw_files = {name: within(job_dir, f"results/raw/{name}.jsonl") for name in ordered}
+    import v16_adoption
+    package = v16_adoption.selected(job_dir, load_state(rid))
+    paths = v16_adoption.raw_paths(package[0]) if package else {name: f"results/raw/{name}.jsonl" for name in ordered}
+    raw_files = {name: within(job_dir, paths[name]) for name in ordered}
     raw_hashes = {name: sha256_file(path) for name, path in raw_files.items()}
     inputs = {"raw_hashes": raw_hashes, "metadata_sha256": sha256_file(job_dir / "trusted-runner/MEASUREMENT-META.json"),
               "official_methods": method_pins, "review_sha256": gate_record["review_sha256"]}
+    if package:
+        inputs.update(generation=package[0]["generation"], raw_paths=paths)
     state = load_state(rid)
-    records = state.get("host_measurement", {})
+    records = state.get("v16_host_measurements", {}).get(package[0]["generation"], {}) if package else state.get("host_measurement", {})
     for name, digest in raw_hashes.items():
         if records.get(name, {}).get("raw_sha256") != digest:
             raise PickupError("raw predictions have no matching host measurement receipt")
@@ -2076,18 +2088,24 @@ def score_measurement(rid: str, job_dir: Path) -> dict[str, Any]:
             raise PickupError("reviewed measurement metadata schema is invalid")
         try:
             measurement_dispatch.validate_api_meta(name, meta, runtimes[name])
-            output = official_scoring.run(name, raw_files[name], meta, method_pins)
+            if package:
+                if not v16_adoption.baseline_complete(package):
+                    raise measurement_dispatch.OperationalHold("v16_completed_cohort_baseline_required")
+                _, host_raw = v16_adoption.adopt_raw(job_dir, package)
+                output = v16_adoption.v16_profiles.score(job_dir, host_raw)
+            else:
+                output = official_scoring.run(name, raw_files[name], meta, method_pins)
         except (OSError, ValueError, KeyError, subprocess.TimeoutExpired) as exc:
             raise PickupError("official isolated recomputation failed") from exc
         if output.get("system_key") != meta["system_key"]:
             raise PickupError("official scoring returned a different system")
         finite_number(output.get("score"))
         aggregate = output["aggregate"]
-        if name == "jevbench":
+        if name == "jevbench" and not package:
             for option in ("A", "B", "C"):
                 if not _close_score(aggregate["scores"][option], _jev_v15_composite(aggregate["axes"], option)):
                     raise PickupError("official composite independent check failed")
-        else:
+        elif name != "jevbench":
             for track in aggregate["tracks"].values():
                 comp = track["composite"]
                 independent = comp["harmonic_before_gates"] * math.prod(comp["gates"].values())
@@ -2096,6 +2114,11 @@ def score_measurement(rid: str, job_dir: Path) -> dict[str, Any]:
         aggregates[name] = output
     record = {"request_id": rid, "inputs": inputs, "aggregates": aggregates,
               "scores": {name: output["score"] for name, output in aggregates.items()}, "verdict": "PASS"}
+    if package:
+        prior_record = state.get("official_measurement")
+        if prior_record and prior_record != record:
+            state.setdefault("official_measurement_history", []).append(prior_record)
+        state.setdefault("v16_official_measurements", {})[package[0]["generation"]] = record
     state["official_measurement"] = record
     save_state(state)
     # This is aggregate-only and mounted read-only in the next evaluator phase.
@@ -2103,14 +2126,14 @@ def score_measurement(rid: str, job_dir: Path) -> dict[str, Any]:
     return record
 
 
-def bind_raw_receipts(cited: dict[str, str], raw_hashes: dict[str, str]) -> dict[str, str]:
+def bind_raw_receipts(cited: dict[str, str], raw_hashes: dict[str, str], raw_paths: dict[str, str] | None = None) -> dict[str, str]:
     """Add the host-measured raw scorer inputs to the receipts the release agent cited.
 
     The agent sandbox hides results/raw, so the host binds those hashes itself; a raw receipt the
     agent does cite must still match the host measurement exactly."""
     bound = dict(cited)
     for name, digest in raw_hashes.items():
-        if bound.setdefault(f"results/raw/{name}.jsonl", digest) != digest:
+        if bound.setdefault(raw_paths[name] if raw_paths else f"results/raw/{name}.jsonl", digest) != digest:
             raise PickupError("raw scorer input receipt differs from the host measurement")
     return bound
 
@@ -2141,7 +2164,7 @@ def trusted_recompute(rid: str, job_dir: Path) -> dict[str, Any]:
             raise PickupError("receipt must be below results")
         path = pinned_file(job_dir, entry)
         hashes[path.relative_to(job_dir.resolve()).as_posix()] = entry["sha256"]
-    hashes = bind_raw_receipts(hashes, measured["inputs"]["raw_hashes"])
+    hashes = bind_raw_receipts(hashes, measured["inputs"]["raw_hashes"], measured["inputs"].get("raw_paths"))
     inputs = {"result_sha256": sha256_file(job_dir / "release/RESULT.json"), "receipt_hashes": hashes,
               "review_sha256": measured["inputs"]["review_sha256"]}
     record = {"verdict": "PASS", "request_id": rid, "scores": measured["scores"], "inputs": inputs,
@@ -2204,13 +2227,21 @@ def verify_result(row: dict[str, Any], job_dir: Path, state: dict[str, Any], eff
     if isinstance(recompute, dict):
         official_inputs = recompute.get("official_inputs")
         raw_hashes = official_inputs.get("raw_hashes") if isinstance(official_inputs, dict) else None
+        import v16_adoption
+        package = v16_adoption.selected(job_dir, state)
+        if package and (not isinstance(official_inputs, dict)
+                        or official_inputs.get("generation") != package[0]["generation"]
+                        or official_inputs.get("raw_paths") != v16_adoption.raw_paths(package[0])
+                        or official_inputs.get("official_methods") != package[2]
+                        or official_inputs.get("review_sha256") != review_gate["review_sha256"]):
+            raise PickupError("v16 independent recomputation has stale generation pins")
         if not isinstance(raw_hashes, dict) or not raw_hashes:
             raise PickupError("host-run independent recomputation is missing or stale")
         for name, digest in raw_hashes.items():
-            raw_path = within(job_dir, f"results/raw/{name}.jsonl")
+            raw_path = within(job_dir, (official_inputs.get("raw_paths") or {}).get(name, f"results/raw/{name}.jsonl"))
             if not raw_path.is_file() or raw_path.is_symlink() or sha256_file(raw_path) != digest:
                 raise PickupError("raw scorer input changed after the independent recomputation")
-        current_receipt_hashes = bind_raw_receipts(current_receipt_hashes, raw_hashes)
+        current_receipt_hashes = bind_raw_receipts(current_receipt_hashes, raw_hashes, official_inputs.get("raw_paths"))
     result_sha = sha256_file(job_dir / "release" / "RESULT.json")
     if not isinstance(recompute, dict) or recompute.get("verdict") != "PASS" \
             or recompute.get("request_id") != rid \
@@ -4348,6 +4379,40 @@ def run_agent(job_dir: Path, env: dict[str, str], timeout_hint: int, *, read_onl
     return result.returncode
 
 
+def evaluate_v16_generation(rid: str, job_dir: Path) -> int:
+    """Same owning unit; reviewed generation, no customer agent or legacy release."""
+    import v16_adoption
+    try:
+        validate_review_gate(job_dir)
+        state = load_state(rid)
+        package = v16_adoption.selected(job_dir, state)
+        admission = package[0]
+        generation = admission["generation"]
+        receipt_dir = STATE_ROOT / "measurements" / rid / generation / "jevbench"
+        if not (receipt_dir / "receipt.json").exists():
+            v16_adoption.v16_profiles.measure(job_dir)
+        receipt, _ = v16_adoption.adopt_raw(job_dir, package)
+        state = load_state(rid)
+        state.setdefault("v16_host_measurements", {}).setdefault(generation, {})["jevbench"] = receipt
+        save_state(state)
+        if not v16_adoption.baseline_complete(package):
+            raise measurement_dispatch.OperationalHold("v16_completed_cohort_baseline_required")
+        score_measurement(rid, job_dir)
+        # The existing renderer/delta contract is a v1.5 addendum. A separately
+        # reviewed cohort-tab release must be supplied before normal finalization.
+        raise measurement_dispatch.OperationalHold("v16_cohort_public_release_required")
+    except (ValueError, OSError, KeyError, PickupError) as exc:
+        state = load_state(rid)
+        set_operational_hold(state, "v16_admission_or_generation_reconciliation_required", transient=False)
+        update_row(rid, "evaluation_status='pending'", "evaluation_status IN ('starting','running')")
+        raise PickupError("v16 host generation adoption failed") from exc
+    except measurement_dispatch.OperationalHold as exc:
+        state = load_state(rid)
+        set_operational_hold(state, str(exc), transient=False)
+        update_row(rid, "evaluation_status='pending'", "evaluation_status IN ('starting','running')")
+        return 0
+
+
 def evaluate(rid: str) -> int:
     rid = request_id(rid)
     row = load_row(rid)
@@ -4370,6 +4435,8 @@ def evaluate(rid: str) -> int:
         review_stage = False
     except PickupError:
         review_stage = True
+    if "v16_profile_admission" in state:
+        return evaluate_v16_generation(rid, job_dir)
     if not review_stage and (job_dir / "release" / "RESULT.json").is_file():
         try:
             existing_result = load_result(job_dir)
