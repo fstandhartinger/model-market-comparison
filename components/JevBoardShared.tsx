@@ -9,6 +9,7 @@ import { jevSourceUrl } from './jevSystemLinks';
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 import { BaseModelDisplay, type BaseModelBenchmark } from './BaseModelDisplay';
 import type { JevGate, JevGatePenalty } from '../lib/jevbench-axis-weights.mjs';
+import { UseModelEntry } from './UseModelButton';
 
 // CR-151 (Florian 25 Sep 2026): the pieces the score chart and the axes table share. This module has no Node imports and
 // no client directive, so both the server board and the interactive client views can use it.
@@ -151,6 +152,7 @@ export function JevScoreBar({ row, viewRank, reference = false, metric = 'score'
         {!row.ranked && <span className="bh-muted shrink-0 whitespace-nowrap" title={row.not_ranked_because ?? undefined}> ({NOT_RANKED[row.listing] ?? row.listing})</span>}
         {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1.5 shrink-0 align-middle" title={row.api_exposure_note ?? apiExplanation}>API</span>}
         {isNew && <span className="bh-new-tag ml-1.5 shrink-0 align-middle" data-bh-jev14-new={row.key}>new</span>}
+        {!reference && <UseModelEntry row={row} name={name ?? shortName(row.display)} benchmark={benchmark} />}
       </span>
       {row.listing === 'pending' && row.not_ranked_because && <span className="bh-muted mt-0.5 block whitespace-normal text-[10.5px] sm:text-right" data-bh-jev-pending-note={row.key}>{row.not_ranked_because}</span>}
       {viewRank != null && <span className="bh-muted mt-0.5 block text-[10.5px] sm:text-right" data-bh-jev-view-rank={viewRank} data-bh-jev-official-rank={row.rank ?? undefined}>view #{viewRank} · {row.rank != null ? `official #${row.rank}` : 'not officially ranked'}</span>}

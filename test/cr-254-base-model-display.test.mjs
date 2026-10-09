@@ -189,6 +189,8 @@ const sharedAliases = {
   './jevTypes': await compileTsModule(file('../components/jevTypes.ts')),
   // The isolated SSR render has no page-level filter provider; mirror the hook's default all-visible state.
   './useJevV15VisibleKeys': moduleUrl('export function useJevV15VisibleKeys(keys){return new Set(keys)}'),
+  // CR-377: the preview-only "Use this model" entry renders nothing for visitors, so the isolated render stubs it.
+  './UseModelButton': moduleUrl('export const UseModelEntry=()=>null;'),
 };
 // TypeScript's JSON import has no Node import attribute, so resolve the existing link map directly here.
 sharedAliases['./jevSystemLinks'] = moduleUrl(`import data from ${JSON.stringify(file('../data/raw/benchmarks/jevbench/jev-system-links.json').href)} with {type:'json'};
