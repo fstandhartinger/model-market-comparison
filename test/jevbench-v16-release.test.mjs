@@ -6,10 +6,11 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import {
-  readJevbenchV16Release, JEVBENCH_V16_RELEASE_RESULTS,
+  readJevbenchV16Release, readJevbenchV161Release, JEVBENCH_V16_RELEASE_RESULTS,
   JEVBENCH_V16_RELEASE_CATEGORIES, JEVBENCH_V16_RELEASE_CARRY,
   JEVBENCH_V16_EXCLUDED_KEYS, mentionsPrivateSystem,
 } from '../lib/jevbench-v16-release.mjs';
+import { CURRENT_JEVBENCH_PAGE, CURRENT_JEVBENCH_VERSION, readCurrentJevbench, PUBLISHED_BENCHMARK_VERSIONS } from '../lib/jevbench-current.mjs';
 import { JEVBENCH_V157_RELEASE_ARTIFACT } from '../lib/jevbench-v15-release.mjs';
 
 const read = (p) => readFile(new URL(`../${p}`, import.meta.url), 'utf8');
@@ -172,9 +173,10 @@ test('the live and archived pages use the approved full-page route and keep vers
   assert.match(archive, /canonical: '\/jev-models\/v1\.6\.0'/);
   assert.match(route, /readJevbenchV157Release/);
   assert.match(route, /missingPrevious/);
-  const current = await read('lib/jevbench-current.mjs');
-  assert.match(current, /CURRENT_JEVBENCH_PAGE = '\/jev-models\/v1\.6\.1'/);
-  assert.match(current, /readCurrentJevbench = readJevbenchV161Release/);
+  assert.equal(CURRENT_JEVBENCH_VERSION, 'v1.6.1');
+  assert.equal(CURRENT_JEVBENCH_PAGE, '/jev-models/v1.6.1');
+  assert.equal(readCurrentJevbench, readJevbenchV161Release);
+  assert.equal(readCurrentJevbench, PUBLISHED_BENCHMARK_VERSIONS.jevbench[CURRENT_JEVBENCH_VERSION].read);
   for (const marker of ['<JevBenchV16Charts', '<JevScoreChart', '<JevCompareV15', '<LanguageView', '<NoulAndGate', '<JevV15AllDataGrid', '<DatedCarry', '<Method']) assert.ok(board.includes(marker), marker);
   assert.match(board, /aria-label="low n: fewer than 30 answered items"/);
   assert.match(board, /Not plotted; fewer than \$\{minN\} answered items/);
