@@ -126,7 +126,7 @@ def retirement_lock(admission):
         # Another thread/process must acquire its own descriptor normally.
         actual = os.fstat(held['fd'])
         current = lock.stat()
-        if held['path'] != str(lock.resolve()) or held['thread'] != threading.get_ident() or held['depth'] < 1 or (actual.st_dev, actual.st_ino) != held['inode'] or (current.st_dev, current.st_ino) != held['inode']:
+        if held['path'] != str(lock.resolve()) or held['pid'] != os.getpid() or held['thread'] != threading.get_ident() or held['depth'] < 1 or (actual.st_dev, actual.st_ino) != held['inode'] or (current.st_dev, current.st_ino) != held['inode']:
             raise ValueError('canonical retirement lock custody changed')
         held['depth'] += 1
         try:
@@ -138,7 +138,7 @@ def retirement_lock(admission):
     with lock.open('a') as handle:
         fcntl.flock(handle, fcntl.LOCK_EX)
         actual = os.fstat(handle.fileno())
-        _RETIREMENT_CUSTODY.held = {'fd': handle.fileno(), 'path': str(lock.resolve()), 'inode': (actual.st_dev, actual.st_ino), 'thread': threading.get_ident(), 'depth': 1}
+        _RETIREMENT_CUSTODY.held = {'fd': handle.fileno(), 'path': str(lock.resolve()), 'inode': (actual.st_dev, actual.st_ino), 'pid': os.getpid(), 'thread': threading.get_ident(), 'depth': 1}
         try:
             _retirement_unlocked(admission)
             yield
