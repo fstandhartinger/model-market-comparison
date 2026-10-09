@@ -955,6 +955,9 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 image = ryotide_runtime_supplement.effective_image(job_dir or job, recipe, state['runtime_preflight'])
                 if not callable(getattr(runtime_preflight, 'after_weights', None)):
                     raise PodRunError('supplement requires pre-input native proof')
+        if Path(job_dir or job).name == '3687485f-5a51-4964-bd9a-73973f3494d7':
+            if not callable(getattr(runtime_preflight, 'after_weights', None)):
+                raise PodRunError('Decisor requires fixed native pre-input proof')
         if "host_staging" in recipe:
             _stream_host_weights(provider, pod_id, recipe, weights_streamer)
         else:
@@ -978,6 +981,11 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             image = ryotide_runtime_supplement.effective_image(job_dir or job, recipe, state['runtime_preflight'])
             if state['runtime_preflight'].get('native_proof_accepted') is not True:
                 raise PodRunError('native pre-input proof missing')
+        if Path(job_dir or job).name == '3687485f-5a51-4964-bd9a-73973f3494d7':
+            import decisor_native_preinput
+            state['runtime_preflight'] = runtime_preflight.after_weights(provider, pod_id, state['runtime_preflight'], native_code_archive)
+            save_state()
+            decisor_native_preinput.accepted(job_dir or job, pod_id, recipe, state['runtime_preflight'])
         _exec(provider, pod_id, ["mkdir", "-p", "/work", "/work/out", "/work/code"])
         # Optional trusted context holds the canonical custody lock across upload.
         with pre_upload_gate() if pre_upload_gate is not None else nullcontext():
