@@ -26,7 +26,7 @@ def main(argv=None):
         raise ValueError('invalid bounded rent parameters')
     gpu, count_text, ttl_text, budget_text, maximum_text = argv
     count, ttl, budget, maximum = int(count_text), float(ttl_text), float(budget_text), float(maximum_text)
-    if (gpu not in ('H100', 'A100', 'L40S', 'RTX6000', 'RTXPRO6000') or count not in (1, 2)
+    if (gpu not in ('H100', 'A100', 'L40S', 'RTX6000', 'RTXPRO6000', 'RTX5090') or count not in (1, 2)
             or not all(math.isfinite(x) for x in (ttl, budget, maximum))
             or not 0 < ttl <= 3 or not 0 < budget <= 20 or not 0 < maximum <= 5):
         raise ValueError('bounded rent parameters exceed original caps')
