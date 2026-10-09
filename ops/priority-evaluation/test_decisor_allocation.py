@@ -7,11 +7,11 @@ import tempfile
 import unittest
 from unittest.mock import Mock, patch
 import v16_allocation as a
-from test_v16_allocation import FreshAllocationTests
+import test_v16_allocation as old_tests
 
 class Tests(unittest.TestCase):
-    def scope(self, root, extra=.2):
-        job,pods,admission,old=FreshAllocationTests().setup_scope(root,rid=a.DECISOR)
+    def scope(self, root):
+        job,pods,admission,old=old_tests.FreshAllocationTests().setup_scope(root,rid=a.DECISOR)
         old.update(creation_attempts=2,spent_upper_bound_usd=7.8)
         ledger=pods/(a.DECISOR+'.json');ledger.write_text(json.dumps(old))
         directory=job/'review';history=directory/'decisor-history';history.mkdir()
@@ -24,8 +24,8 @@ class Tests(unittest.TestCase):
         path=directory/'V16-ALLOCATION-REVIEW.json';review=json.loads(path.read_text());review.update(authority_sha256=a.sha(directory/'V16-ALLOCATION-AUTHORITY.json'),decisor_scope_and_financial_authority_verified=True,root_financial_decision_sha256=authority['root_financial_decision_sha256']);path.write_text(json.dumps(review))
         path=root/'requests'/(a.DECISOR+'.json');state=json.loads(path.read_text());state['v16_generation_allocation'].update(authority_sha256=a.sha(directory/'V16-ALLOCATION-AUTHORITY.json'),independent_review_sha256=a.sha(directory/'V16-ALLOCATION-REVIEW.json'));path.write_text(json.dumps(state))
         return job,pods,admission,old
-    def gate(self, root, **kwargs):
-        job,pods,admission,old=self.scope(root,**kwargs)
+    def gate(self, root):
+        job,pods,admission,old=self.scope(root)
         stack=[patch.object(a.pod_runner,'STATE_ROOT',root),patch.object(a.pod_runner,'PODS_DIR',pods),patch.object(a.pod_capacity,'allocation_count',side_effect=lambda state,_:state['creation_attempts'])]
         for item in stack:item.start();self.addCleanup(item.stop)
         return a.FreshAllocation(job,admission,Mock()),old
@@ -39,15 +39,15 @@ class Tests(unittest.TestCase):
             with self.assertRaises((FileExistsError,ValueError)):gate('before_create',reserved)
             with self.assertRaises(ValueError):gate('before_reserve',old)
     def test_ttl_charge_and_additional_fee_refusal(self):
-        for ttl,extra in [(2.44,0),(2.4,.1),(3,0)]:
-            with self.subTest(ttl=ttl,extra=extra),tempfile.TemporaryDirectory() as t:
-                gate,old=self.gate(Path(t),extra=extra);gate('before_reserve',old)
+        for ttl in [2.44,2.4,3]:
+            with self.subTest(ttl=ttl),tempfile.TemporaryDirectory() as t:
+                gate,old=self.gate(Path(t));gate('before_reserve',old)
                 charge=ttl*5
                 with self.assertRaises(ValueError):gate('before_create',dict(old,creation_attempts=3,attempt_ttl_hours=ttl,attempt_reserved_upper_bound_usd=charge,spent_upper_bound_usd=7.8+charge))
                 self.assertFalse(gate.create_claim.exists())
-    def test_verified_fee_allowance_is_precharged_in_total(self):
+    def test_conservative_contingency_is_precharged_in_total(self):
         with tempfile.TemporaryDirectory() as t:
-            gate,old=self.gate(Path(t),extra=.2);gate('before_reserve',old)
+            gate,old=self.gate(Path(t));gate('before_reserve',old)
             charge=11.8;ttl=charge/5
             reserved=dict(old,creation_attempts=3,attempt_ttl_hours=ttl,attempt_reserved_upper_bound_usd=charge,attempt_contingency_usd=.2,spent_upper_bound_usd=19.8)
             gate('before_create',reserved)
@@ -56,9 +56,9 @@ class Tests(unittest.TestCase):
     def test_history_modified_or_cleanup_uncertain_refused(self):
         with tempfile.TemporaryDirectory() as t:
             gate,old=self.gate(Path(t));p=gate.job/'review/decisor-history/state.json';p.write_text('{}')
-            with self.assertRaises(ValueError):a.FreshAllocation(gate.job,{'generation':'v16-paid-cohort'},Mock())
+            with self.assertRaisesRegex(ValueError,'historical receipt changed'):a.FreshAllocation(gate.job,gate.admission,Mock())
     def test_other_order_third_still_refuses(self):
         with tempfile.TemporaryDirectory() as t:
-            root=Path(t);job,pods,admission,old=FreshAllocationTests().setup_scope(root,rid='11111111-1111-4111-8111-111111111111')
+            root=Path(t);job,pods,admission,old=old_tests.FreshAllocationTests().setup_scope(root,rid='11111111-1111-4111-8111-111111111111')
             with patch.object(a.pod_runner,'STATE_ROOT',root),patch.object(a.pod_runner,'PODS_DIR',pods):
                 with self.assertRaisesRegex(ValueError,'bounded'):a.FreshAllocation(job,admission,Mock())
