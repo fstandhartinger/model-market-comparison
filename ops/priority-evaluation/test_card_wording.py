@@ -1,4 +1,5 @@
 """Card clarity regressions; all notification and persistence effects are mocked."""
+import ast
 import importlib.util
 import importlib.machinery
 from pathlib import Path
@@ -87,6 +88,47 @@ class CardWording(unittest.TestCase):
             compact = notify.compact_immediate(card, todos, 'card-wording-test', dry_run=True)
             self.assertLessEqual(len(compact), 500)
             self.assertEqual(notify.card_lint(compact), [])
+
+    @unittest.skipUnless(Path('/home/flori/bin/notify').is_file(), 'installed Sandy notifier is unavailable')
+    def test_every_operational_card_callsite_and_approval_caption(self):
+        loader = importlib.machinery.SourceFileLoader('actual_notify_all_cards', '/home/flori/bin/notify')
+        nspec = importlib.util.spec_from_loader(loader.name, loader)
+        notify = importlib.util.module_from_spec(nspec)
+        loader.exec_module(notify)
+        tree = ast.parse((HERE / 'autopickup.py').read_text())
+        checked = 0
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == 'agent_status_card':
+                # Execute each actual call's presentation arguments with one synthetic order.
+                status = ast.literal_eval(node.args[1])
+                detail = ast.literal_eval(node.args[2])
+                kwargs = {k.arg: ast.literal_eval(k.value) for k in node.keywords}
+                card = c.agent_status_card(ROW, status, detail, **kwargs)
+                level = 'urgent' if kwargs.get('urgent', True) else 'now'
+                todos = notify.validate_format(card, level)
+                self.assertEqual(notify.card_lint(card), [])
+                short = notify.compact_immediate(card, todos, 'card-wording-test', dry_run=True)
+                self.assertEqual(notify.card_lint(short), [])
+                checked += 1
+        self.assertEqual(checked, 9)
+        # Health card deliberately summarizes private details without exposing raw reason keys.
+        health = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'health')
+        assignment = next(n for n in ast.walk(health) if isinstance(n, ast.Assign)
+                          and any(isinstance(t, ast.Name) and t.id == 'message' for t in n.targets))
+        expr = ast.Expression(assignment.value)
+        card = eval(compile(expr, '<health-card>', 'eval'), {'fresh': [1, 2]})
+        notify.validate_format(card, 'now')
+        self.assertEqual(notify.card_lint(card), [])
+        for card in [c.refund_approval.caption(ROW, kind, '10 Oct 12:00 UTC')
+                     for kind in c.refund_approval.REASONS] + [
+                         c.sla_decision.caption(ROW, '10 Oct 12:00 UTC'),
+                         c.refusal_approval.approval_caption(ROW, 'refusal'),
+                         c.refusal_approval.approval_caption(ROW, 'change_request')]:
+            todos = notify.validate_format(card, 'now', ask_minutes=960)
+            self.assertEqual(notify.card_lint(card), [])
+            short = notify.compact_immediate(card, todos, 'card-wording-test', dry_run=True)
+            notify.validate_format(short, 'now', ask_minutes=960)
+            self.assertEqual(notify.card_lint(short), [])
 
     def test_email_fallback_and_unsafe_link(self):
         row = dict(ROW, customer_name=None, model_link='https://host.invalid/model?token=secret')
