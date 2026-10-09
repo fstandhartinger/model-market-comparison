@@ -70,6 +70,11 @@ function coverageOf(categories: JevV16Categories, key: string) {
   return (categories.systems[key] as unknown as { language_coverage?: string; coverage?: string } | undefined)?.language_coverage ?? (categories.systems[key] as unknown as { coverage?: string } | undefined)?.coverage ?? (categories.language_cells ? 'not measured' : 'S+P');
 }
 
+// A row-scoped disclosure published with the row's language cells (how its coverage was completed).
+function languageNoteOf(categories: JevV16Categories, key: string) {
+  return (categories.systems[key] as unknown as { language_coverage_note?: string } | undefined)?.language_coverage_note;
+}
+
 // CR-320: a low-n cell's shade is dimmed in CSS ([data-bh-heat-low-n]); opacity here also faded the number below 4.5:1.
 const completedLanguageN = (cell: { n: number; coverage_n?: number }) => cell.coverage_n ?? cell.n;
 
@@ -104,7 +109,7 @@ function LanguageView({ a, categories, hiddenApi, scope, carry }: { carry: JevV1
       <tbody>{systems.map((s, i) => <Fragment key={s.key}>
         {(s.listing as string) === 'wrapper' && (systems[i - 1]?.listing as string) !== 'wrapper' && <tr {...apiRowProps(s.key, hiddenApi)}><th colSpan={1 + (en ? 1 : 0) + langs.length} className="p-2 pt-4" scope="colgroup">Wrappers (listed, never ranked)</th></tr>}
         <tr data-bh-jev16-language-row={s.key} className="border-t border-line" {...apiRowProps(s.key, hiddenApi)}>
-        <th scope="row" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5 font-normal"><span className="block w-44 whitespace-normal sm:w-auto sm:whitespace-nowrap">{nameLabel(s.display, systems)}<span className="bh-muted"> · {laneTag(s)}</span><span className="bh-thin-tag ml-1" title="Measured item pools used for these language cells" data-bh-jev16-cell-coverage={coverageOf(categories, s.key)}>{coverageOf(categories, s.key)}</span>{categories.supplement && spokeReason(s.key) && <span className="bh-muted block text-xs" data-bh-radar-spoke-exception={s.key}>{spokeReason(s.key)}</span>}{'language_listing_note' in s && s.language_listing_note && <span className="bh-muted block text-xs" data-bh-language-listing={s.key}>{s.language_listing_note}</span>}{exposureNote(s.key) && <span className="bh-muted block text-xs" data-bh-l3-exposure-note={s.key}>{exposureNote(s.key)}</span>}</span></th>
+        <th scope="row" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5 font-normal"><span className="block w-44 whitespace-normal sm:w-auto sm:whitespace-nowrap">{nameLabel(s.display, systems)}<span className="bh-muted"> · {laneTag(s)}</span><span className="bh-thin-tag ml-1" title="Measured item pools used for these language cells" data-bh-jev16-cell-coverage={coverageOf(categories, s.key)}>{coverageOf(categories, s.key)}</span>{categories.supplement && spokeReason(s.key) && <span className="bh-muted block text-xs" data-bh-radar-spoke-exception={s.key}>{spokeReason(s.key)}</span>}{'language_listing_note' in s && s.language_listing_note && <span className="bh-muted block text-xs" data-bh-language-listing={s.key}>{s.language_listing_note}</span>}{exposureNote(s.key) && <span className="bh-muted block text-xs" data-bh-l3-exposure-note={s.key}>{exposureNote(s.key)}</span>}{languageNoteOf(categories, s.key) && <span className="bh-muted block max-w-md whitespace-normal text-xs" data-bh-language-coverage-note={s.key}>{languageNoteOf(categories, s.key)}</span>}</span></th>
         {[...(en ? [en] : []), ...langs].map((l) => {
           const c = categories.systems[s.key]?.languages?.[l.key];
           if (!c || completedLanguageN(c) < minN) {

@@ -3,7 +3,7 @@ export type CategoryDim = { key: string; title: string; note: string; cats: Cate
 /** systems[key][dim][category] = [competence 0–100 (can be negative), scored observations, optional completed supported responses including refusals] */
 export type CompareCategories = {
   revision: string; minN: number; radarMinN: number; metric: string; labelling: string; rules: string[]; splitNames: [string, string] | string[];
-  categoryPools?: Record<string, string>; spokeExceptions?: Record<string, string>; exposureNotes?: Record<string, string>;
+  categoryPools?: Record<string, string>; spokeExceptions?: Record<string, string>; exposureNotes?: Record<string, string>; coverageNotes?: Record<string, string>;
   dims: CategoryDim[]; systems: Record<string, Record<string, Record<string, [number, number, number?]>>>; missing: Record<string, string>;
 };
 export const JEVBENCH_CATEGORY_ARTIFACT: string;

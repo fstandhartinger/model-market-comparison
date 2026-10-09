@@ -527,10 +527,6 @@
       "historical_native_ancestry": "225 supplement observations retain Source24;1280 retain Source26. Original S81 and P299 retain original measurement provenance."
     },
     "mercury-decide": {
-      "aggregate_artifact": "ops/evidence/mercury-language-category-20261009.json",
-      "sha256": "67315b62bf10244bef77ccfc5d108c35bed2c29bc1ef11bf808508fe995e31ce",
-      "basis": "S+P+L1+L2+L3 (L3 partial)",
-      "official_scorer_basis": "S+L1+L2+L3 (L3 partial)",
       "method": "official O1S",
       "historical_S_observed": 1200,
       "historical_P_observed": 300,
@@ -540,20 +536,31 @@
       "historical_P_reviewed422": 3,
       "new_full_S1200_API_exposure": false,
       "parent_public_precedence_unchanged": true,
+      "aggregate_artifact": "ops/evidence/mercury-language-category-complete-20261009.json",
+      "sha256": "991066e3e119058ff361eafd2f8777b2c88c95253d37d8136178ccdf9cea0dc5",
+      "previous_aggregate_artifact": "ops/evidence/mercury-language-category-20261009.json",
+      "previous_sha256": "67315b62bf10244bef77ccfc5d108c35bed2c29bc1ef11bf808508fe995e31ce",
+      "basis": "S+P+L1+L2+L3",
+      "official_scorer_category_pools": "S+P+L1+L2+L3 (L3: free868 + retainedpaid63 + retainedpaid384 + residualpaid101; raw-only429 and blocked reservation missing)",
       "native_complete_claim": false,
       "L3_complete_claim": false,
-      "L3_native_observations": 868,
-      "L3_successful200": 864,
+      "L3_denominator": 1418,
+      "L3_recorded": 1416,
+      "L3_native_successes": 1412,
       "L3_reviewed422": 3,
-      "L3_operational429": 1,
-      "L3_never_issued": 550,
-      "category_scored_observations": 2455,
-      "language_coverage_min": 47,
-      "language_target_complete": false,
-      "languages_below_target60": 18,
-      "topic_coverage_min": 82,
-      "usecase_coverage_min": 57,
-      "headline_or_rank_changed": false
+      "L3_operational429_recorded": 1,
+      "L3_missing_records": 2,
+      "normal98pct_recorded_gate": true,
+      "category_scored_observations": 3003,
+      "language_coverage_min": 64,
+      "language_target_complete": true,
+      "languages_below_target60": 0,
+      "topic_coverage_min": 109,
+      "usecase_coverage_min": 83,
+      "probability_equivalence_claimed": false,
+      "historical_immutable_weights_equality_proven": false,
+      "headline_or_rank_changed": false,
+      "original_row_price_changed": false
     }
   },
   "row_scoped_supplements": {
@@ -16649,191 +16656,191 @@
       "sealed_basis": "S"
     },
     "mercury-decide": {
-      "coverage": "S+P+L1+L2+L3 (L3 partial)",
+      "coverage": "S+P+L1+L2+L3",
       "languages": {
         "ar": {
-          "competence": 59.49,
-          "coverage_n": 55,
-          "n": 55,
+          "competence": 56.08,
+          "coverage_n": 71,
+          "n": 71,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 55
+          "response_n": 71
         },
         "cs": {
-          "competence": 36.63,
-          "coverage_n": 49,
-          "n": 49,
+          "competence": 34.34,
+          "coverage_n": 75,
+          "n": 75,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 49
+          "response_n": 75
         },
         "da": {
-          "competence": 39.68,
-          "coverage_n": 56,
-          "n": 56,
+          "competence": 45.99,
+          "coverage_n": 83,
+          "n": 83,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 56
+          "response_n": 83
         },
         "de": {
-          "competence": 68.68,
-          "coverage_n": 54,
-          "n": 54,
+          "competence": 64.94,
+          "coverage_n": 84,
+          "n": 84,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 54
+          "response_n": 84
         },
         "el": {
-          "competence": 41.58,
-          "coverage_n": 47,
-          "n": 47,
+          "competence": 44.01,
+          "coverage_n": 64,
+          "n": 64,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 47
+          "response_n": 64
         },
         "en": {
-          "competence": 67.49,
-          "coverage_n": 1242,
-          "n": 1242,
+          "competence": 68.93,
+          "coverage_n": 1306,
+          "n": 1306,
           "operational_failure_n": 0,
           "refusal_n": 23,
-          "response_n": 1219
+          "response_n": 1283
         },
         "es": {
-          "competence": 46.09,
+          "competence": 49.28,
+          "coverage_n": 95,
+          "n": 95,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 95
+        },
+        "fi": {
+          "competence": 41.73,
+          "coverage_n": 72,
+          "n": 72,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 72
+        },
+        "fr": {
+          "competence": 66.64,
+          "coverage_n": 80,
+          "n": 80,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 80
+        },
+        "hi": {
+          "competence": 60.4,
+          "coverage_n": 72,
+          "n": 72,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 72
+        },
+        "id": {
+          "competence": 40.07,
+          "coverage_n": 71,
+          "n": 71,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 71
+        },
+        "it": {
+          "competence": 43.73,
+          "coverage_n": 83,
+          "n": 83,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 83
+        },
+        "ja": {
+          "competence": 52.16,
+          "coverage_n": 80,
+          "n": 80,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 80
+        },
+        "ko": {
+          "competence": 42.84,
+          "coverage_n": 76,
+          "n": 77,
+          "operational_failure_n": 1,
+          "refusal_n": 0,
+          "response_n": 76
+        },
+        "mixed": {
+          "competence": 72.04,
+          "coverage_n": 78,
+          "n": 78,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 78
+        },
+        "nl": {
+          "competence": 42.84,
+          "coverage_n": 72,
+          "n": 72,
+          "operational_failure_n": 0,
+          "refusal_n": 0,
+          "response_n": 72
+        },
+        "no": {
+          "competence": 37.75,
           "coverage_n": 69,
           "n": 69,
           "operational_failure_n": 0,
           "refusal_n": 0,
           "response_n": 69
         },
-        "fi": {
-          "competence": 34.63,
-          "coverage_n": 53,
-          "n": 53,
-          "operational_failure_n": 0,
-          "refusal_n": 0,
-          "response_n": 53
-        },
-        "fr": {
-          "competence": 71.17,
-          "coverage_n": 56,
-          "n": 56,
-          "operational_failure_n": 0,
-          "refusal_n": 0,
-          "response_n": 56
-        },
-        "hi": {
-          "competence": 73.46,
-          "coverage_n": 50,
-          "n": 50,
-          "operational_failure_n": 0,
-          "refusal_n": 0,
-          "response_n": 50
-        },
-        "id": {
-          "competence": 48.76,
-          "coverage_n": 51,
-          "n": 51,
-          "operational_failure_n": 0,
-          "refusal_n": 0,
-          "response_n": 51
-        },
-        "it": {
-          "competence": 59.8,
-          "coverage_n": 60,
-          "n": 60,
-          "operational_failure_n": 0,
-          "refusal_n": 0,
-          "response_n": 60
-        },
-        "ja": {
-          "competence": 46.55,
-          "coverage_n": 54,
-          "n": 54,
-          "operational_failure_n": 0,
-          "refusal_n": 0,
-          "response_n": 54
-        },
-        "ko": {
-          "competence": 38.11,
-          "coverage_n": 54,
-          "n": 55,
-          "operational_failure_n": 1,
-          "refusal_n": 0,
-          "response_n": 54
-        },
-        "mixed": {
-          "competence": 77.21,
-          "coverage_n": 54,
-          "n": 54,
-          "operational_failure_n": 0,
-          "refusal_n": 0,
-          "response_n": 54
-        },
-        "nl": {
-          "competence": 43.91,
-          "coverage_n": 54,
-          "n": 54,
-          "operational_failure_n": 0,
-          "refusal_n": 0,
-          "response_n": 54
-        },
-        "no": {
-          "competence": 27.49,
-          "coverage_n": 50,
-          "n": 50,
-          "operational_failure_n": 0,
-          "refusal_n": 0,
-          "response_n": 50
-        },
         "pl": {
-          "competence": 39.65,
-          "coverage_n": 64,
-          "n": 64,
+          "competence": 38.66,
+          "coverage_n": 88,
+          "n": 88,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 64
+          "response_n": 88
         },
         "pt": {
-          "competence": 48.74,
-          "coverage_n": 64,
-          "n": 64,
+          "competence": 49.97,
+          "coverage_n": 90,
+          "n": 90,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 64
+          "response_n": 90
         },
         "sv": {
-          "competence": 40.47,
-          "coverage_n": 55,
-          "n": 55,
+          "competence": 41.96,
+          "coverage_n": 75,
+          "n": 75,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 55
+          "response_n": 75
         },
         "tr": {
-          "competence": 34.03,
-          "coverage_n": 52,
-          "n": 52,
+          "competence": 43.67,
+          "coverage_n": 75,
+          "n": 75,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 52
+          "response_n": 75
         },
         "uk": {
-          "competence": 68.07,
-          "coverage_n": 54,
-          "n": 54,
+          "competence": 58.35,
+          "coverage_n": 73,
+          "n": 73,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 54
+          "response_n": 73
         },
         "zh": {
-          "competence": 49.02,
-          "coverage_n": 57,
-          "n": 57,
+          "competence": 46.06,
+          "coverage_n": 70,
+          "n": 70,
           "operational_failure_n": 0,
           "refusal_n": 0,
-          "response_n": 57
+          "response_n": 70
         }
       },
       "pool_ok": {
@@ -16841,14 +16848,14 @@
         "P": 297,
         "L1": 354,
         "L2": 33,
-        "L3": 567
+        "L3": 1115
       },
       "sealed_basis": null,
-      "language_coverage": "S+P+L1+L2+L3 (L3 partial)",
+      "language_coverage": "S+P+L1+L2+L3",
       "historical_sealed_observed": 1200,
-      "language_target_complete": false,
-      "languages_below_target60": 18,
-      "coverage_note": "L3 remains partial: 550 items were never issued; 18 languages have fewer than 60 completed supported responses (minimum 47). Reviewed 422 refusals count toward answered coverage; the retained 429 does not.",
+      "language_target_complete": true,
+      "languages_below_target60": 0,
+      "coverage_note": "Cells use S+P, L1, L2 and L3. L3 has 1,416 recorded observations on its 1,418 items: 1,412 answers, three input refusals and one rate-limit (429) error, an operational non-answer rather than an answer. The two missing records (a second spent 429 kept only as a transport failure, and one request stopped before sending) are not imputed; the normal 98% recorded-completeness gate applies without exception. Besides 868 original free-route records, L3 uses 447 retained and 101 newly issued paid decisions on the currently declared Inception Mercury Decide 2026-09-30 route. That route qualified on public items only: top labels agreed on 287 of 297 (96.63%), but probabilities differ (one bit-exact vector, maximum absolute difference 0.977543). Equality with the historically measured weights and calibrator, and with the original free responses, is unproven. Headline, rank and original row price are unchanged. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure.",
       "native_complete_claim": false,
       "S1200_complete_claim": false,
       "L3_complete_claim": false,
