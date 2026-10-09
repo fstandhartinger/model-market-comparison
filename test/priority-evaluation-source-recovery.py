@@ -42,7 +42,13 @@ class Recovery(unittest.TestCase):
   def atomic(path,value):Path(path).write_text(value)
   def atomic_approval(path,value):Path(path).write_text(json.dumps(value))
   self.ns={'Path':Path,'re':re,'base64':base64,'os':os,'tempfile':tempfile,'request_id':lambda x:x,'load_row':load_row,'PickupError':ValueError,'job_directory':lambda *x:self.job,'JOB_ROOT':self.base,'subprocess':SimpleNamespace(run=lambda *a,**k:SimpleNamespace(returncode=3,stdout='inactive\n')),'EVAL_UNIT':'eval@{}.service','json':json,'SHA40_RE':re.compile('^[0-9a-f]{40}$'),'parse_ts':lambda x:datetime.datetime.fromisoformat(x) if x else None,'git':lambda d,*args:'a'*40 if args[-1]=='HEAD' else 'b'*40,'STATE_ROOT':self.state,'hashlib':hashlib,'fcntl':fcntl,'CHANGE_HOLD_REASON':'customer_changes','atomic_write':atomic,'utcnow':lambda:datetime.datetime(2026,10,8,10,tzinfo=datetime.timezone.utc),'iso':lambda x:x.isoformat(),'refusal_approval':SimpleNamespace(atomic=atomic_approval),'sql_text':lambda v:"'"+v.replace("'","''")+"'",'update_row':update_row,'Any':object,'load_state':lambda rid:copy.deepcopy(self.runtime),'save_state':save_state,'datetime':datetime.datetime,'Effects':SimpleNamespace,'active_hold':lambda row:bool(row.get('customer_hold_started_at')),'TRANSIENT_HOLD_REASONS':frozenset({'fetch_source_transient'}),'MAX_EVALUATION_ATTEMPTS':3,'BOARD_HANDOFF_THREAD':'measurements','deadline_for':lambda row:datetime.datetime(2026,10,9,23,31,27,tzinfo=datetime.timezone.utc),'owner_for':lambda rid:'original-synthetic-owner','order_ref':lambda rid:str(rid)[:8],'HOLD_MAX_RETRIES':3}
-  tree=ast.parse((ROOT/'ops/priority-evaluation/autopickup.py').read_text());self.ns['ROW_FIELDS']=ast.literal_eval(next(n.value for n in tree.body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='ROW_FIELDS' for t in n.targets)));nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in ['migrate_source_recovery_projection','recover_source_access','row_json_sql','hold_retries','set_operational_hold','manage_evaluation','operational_escalate','step','step_done','finish_ok']];exec(compile(ast.Module(body=nodes,type_ignores=[]),'trusted-recovery','exec'),self.ns)
+  tree=ast.parse((ROOT/'ops/priority-evaluation/autopickup.py').read_text());self.ns['ROW_FIELDS']=ast.literal_eval(next(n.value for n in tree.body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='ROW_FIELDS' for t in n.targets)));nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in ['migrate_source_recovery_projection','recover_source_access','row_json_sql','hold_retries','set_operational_hold','manage_evaluation','operational_escalate','hold_reason_label','card_identity','card_context_line','rescue_card','agent_status_card','step','step_done','finish_ok']];exec(compile(ast.Module(body=nodes,type_ignores=[]),'trusted-recovery','exec'),self.ns)
+  # Presentation dependencies are extracted with the same inert AST harness; no runtime import.
+  for key in ['HOLD_REASON_LABELS','SHORT_HOLD_LABELS']:
+   self.ns[key]=ast.literal_eval(next(n.value for n in tree.body if isinstance(n,ast.Assign)
+                                    and any(isinstance(t,ast.Name) and t.id==key for t in n.targets)))
+  self.ns['SITE']='https://benchmarkheaven.com'
+  self.ns['public_link']=lambda value: URL if value==URL else None
  def call(self):return self.ns['recover_source_access'](RID)
  def test_preserves_payment_clock_attempts_and_original_artifacts(self):
   changes=self.changes.read_bytes();self.call();self.assertEqual(self.changes.read_bytes(),changes)
@@ -153,14 +159,14 @@ class Recovery(unittest.TestCase):
  def test_other_order_reason_or_owner_retains_original_escalation(self):
   self.call();base=copy.deepcopy(self.runtime)
   for mismatch in ['order','reason','owner']:
-   state=copy.deepcopy(base);row=dict(self.row);reason='source_access_recovered_pending_review'
+   state=copy.deepcopy(base);row=dict(self.row,email='aplomb@example.com',model_name='Aplomb1');reason='source_access_recovered_pending_review'
    if mismatch=='order':row['id']='00000000-0000-4000-8000-000000000001'
    if mismatch=='reason':reason='actual_source_failure'
    if mismatch=='owner':state['operational_hold']['owner']='different-owner'
    boards=[];alerts=[]
    self.ns['alert']=lambda *a,**kw:alerts.append((a,kw));effects=SimpleNamespace(board=lambda *a,**kw:boards.append(a) or True)
    self.ns['operational_escalate'](row,state,effects,datetime.datetime(2026,10,8,tzinfo=datetime.timezone.utc),reason,exhausted=False)
-   self.assertEqual(boards[0][1],'original-synthetic-owner');self.assertEqual(len(alerts),1);self.assertIn('Rescue fast-lane order',alerts[0][1]['text'])
+   self.assertEqual(boards[0][1],'original-synthetic-owner');self.assertEqual(len(alerts),1);self.assertIn("Worum geht's: Fast-lane for",alerts[0][1]['text']);self.assertIn('aplomb@example.com',alerts[0][1]['text']);self.assertIn('Aplomb1',alerts[0][1]['text']);self.assertIn('is blocked:',alerts[0][1]['text']);self.assertIn('🤖 Agenten',alerts[0][1]['text']);self.assertNotIn('🧑 Für dich',alerts[0][1]['text']);self.assertNotIn(reason,alerts[0][1]['text'])
  def legacy_prepared(self):
   self.cas=False
   with self.assertRaises(ValueError):self.call()
