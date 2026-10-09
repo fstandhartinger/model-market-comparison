@@ -1727,6 +1727,9 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
 
 
 def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effects, now: datetime) -> None:
+    # Owned one-use topups never enter the ordinary retry/timer lifecycle.
+    if state.get('scoped_native_topup') is not None:
+        return
     rid = request_id(row.get("id"))
     if row.get("result_delivered_at") is not None:
         # A delivered order is done forever: never restart the unit, clear a hold or send a
@@ -4407,6 +4410,8 @@ def evaluate_v16_generation(rid: str, job_dir: Path) -> int:
         generation = admission["generation"]
         receipt_dir = STATE_ROOT / "measurements" / rid / generation / "jevbench"
         if not (receipt_dir / "receipt.json").exists():
+            if state.get('scoped_native_topup') is not None:
+                raise PickupError('owned scoped topup requires exact continuation')
             # Same live paid/hold/deadline CAS as legacy, immediately before
             # creating a measurement. Existing completed raw needs no new rental
             # transition and may wait idempotently for the cohort baseline.
@@ -4463,6 +4468,8 @@ def evaluate(rid: str) -> int:
             or not (job_dir / "PROMPT.md").is_file():
         raise PickupError("the order is not assigned to this pickup")
     state = load_state(rid)
+    if state.get('scoped_native_topup') is not None:
+        raise PickupError('owned scoped topup prohibits ordinary evaluate')
     attempts_before = dict(state.get("stage_attempts", {}))
     # Exact operator/peer-installed late Decisor publication recovery only.
     # Ordinary delivered handling and deadline gate remain unchanged.
