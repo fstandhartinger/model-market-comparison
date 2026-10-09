@@ -61,9 +61,9 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
       <div className="bh-eyebrow flex flex-nowrap items-center" data-bh-jev-frozen-version>
         Official JevBench {revision}{scope !== 'all' && ` · board ${JEV_BOARD_REVISIONS[0].version}`}
       </div>
-      <h1 className="mt-1 text-3xl font-bold tracking-tight">{scope === 'api' ? 'JevBench API leaderboard: hosted decision APIs'
-        : live ? 'JevBench by Benchmark Heaven' : `JevBench ${revision} — Jev alternatives ranking`}</h1>
-      <p className="mt-3 max-w-3xl text-lg" data-bh-jev-own>JevBench is <b>Benchmark Heaven&apos;s own benchmark</b> for Jev-class decision models: state and a bounded rubric in, a typed answer out.</p>
+      <h1 className="mt-1 text-3xl font-bold tracking-tight">{scope === 'api' ? 'JevBench — hosted decision API benchmark'
+        : live ? 'JevBench — decision model benchmark & leaderboard' : `JevBench ${revision} — decision model benchmark`}</h1>
+      <p className="mt-3 max-w-3xl text-lg" data-bh-jev-own>JevBench by Benchmark Heaven is a <b>benchmark for AI decision models</b>, including Jev-compatible systems: state and a bounded rubric in, a typed answer out. Compare accuracy, probability calibration, latency and cost. Maintained independently of TypeSafe AI.</p>
       {scope === 'open' && <p className="mt-3 max-w-3xl text-base" data-bh-jev-scope-intro>This main board ranks <b>open-weights</b> decision models from published weights that we ran ourselves. <b>Jev 1.13.0</b> (TypeSafe) is the only API model kept on this board, as the unranked reference row that defines the genre.</p>}
       {/* v1.7.1 (Florian 6 Oct 2026): one expandable sentence on why the boards are split, with the link and the toggle. */}
       {scope === 'open' && <div className="mt-2 max-w-3xl text-base" data-bh-jev-split-why>
@@ -88,6 +88,7 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
         {scope === 'all' && <span className="bh-muted"> · <a className="text-accent underline" href="/jev-models/api">API leaderboard</a></span>}
         <span className="bh-muted"> · Previous release: <a className="text-accent underline" href={previousHref}>JevBench {previousRelease}</a></span>
       </p>
+      <nav className="mt-3 flex flex-wrap gap-3 text-sm" aria-label="JevBench methodology and data"><a className="text-accent underline" href="/jev-models/methodology">Methodology</a><a className="text-accent underline" href="/jev-models/data">Data card & JSON/CSV</a><a className="text-accent underline" href="/decision-model-benchmarks">Compare decision model benchmarks</a></nav>
       <p className="mt-3 max-w-3xl text-sm" data-bh-image-jev-link-row>Making decisions from images? <a className="text-accent font-semibold underline" href="/image-jev-bench" data-bh-image-jev-link>Explore Image JevBench v0.3.0 and compare its systems</a>.</p>
     </header>
     <JevBenchV16Board artifact={artifact} sha256={sha256} categories={categories} categoriesSha256={categoriesSha256}

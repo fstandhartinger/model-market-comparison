@@ -7,8 +7,8 @@ import { noWidow } from "../lib/typography";
 import { HomeJsonLd } from "../components/HomeJsonLd";
 
 
-export const metadata = previewMetadata({ path: "/", title: "Benchmark Heaven",
-  description: "The most detailed cost–capability analysis in AI. Every model. Every Benchmark. Actual Costs." });
+export const metadata = previewMetadata({ path: "/", title: "Benchmark Heaven — AI benchmarks & decision model evaluation", documentTitle: "Benchmark Heaven — AI benchmarks & decision model evaluation",
+  description: "Compare AI model benchmarks and costs. Home of JevBench by Benchmark Heaven, the decision model benchmark for accuracy, calibration, latency and cost." });
 
 export default async function Home() {
   const ds = await getDataset();
@@ -40,6 +40,7 @@ export default async function Home() {
         <p className="bh-hero-line mt-2 text-sm text-gray-400">
           <span className="tabular">{results.toLocaleString()}</span> results · <span className="tabular">{benchmarks}</span> benchmarks · <span className="tabular">{ds.counts.models.toLocaleString()}</span> models · <span className="whitespace-nowrap">updated {updated}</span>
         </p>
+        <p className="mt-3 text-sm"><a className="text-accent underline" href="/jev-models">JevBench by Benchmark Heaven — the decision model benchmark</a>: compare typed decision accuracy, calibration, latency and cost. <a className="text-accent underline" href="/decision-model-benchmarks">Which benchmark fits your workload?</a></p>
       </section>
 
       {/* CR-62.1: the model and benchmark data arrive as JSON after this shell (the inlined 8 MB page broke link previews). */}

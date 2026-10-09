@@ -27,8 +27,9 @@ export async function ImageJevV03Page() {
   <ImageJevArchiveOpener />
   <header className="bh-page-head max-w-5xl">
    <p className="bh-eyebrow">Image benchmark · v0.3.0</p>
-   <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">Image JevBench</h1>
-   <p className="mt-3 text-lg">JevImageBench Capability Score</p>
+   <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">ImageJevBench — image decision model benchmark</h1>
+   <p className="mt-3 text-lg">ImageJevBench by Benchmark Heaven compares image decision models on accuracy, probability calibration, latency and cost. JevImageBench Capability Score leads within the frozen serving budget.</p>
+   <nav className="mt-3 flex flex-wrap gap-3 text-sm" aria-label="ImageJevBench methodology and data"><a className="text-accent underline" href="/jev-models/methodology">Methodology</a><a className="text-accent underline" href="/jev-models/data">Data card & downloads</a><a className="text-accent underline" href="/decision-model-benchmarks">Compare benchmarks</a></nav>
    <p className="mt-2 bh-muted">{a.ranking.length} measured systems · {a.ranking.filter((r: any) => r.ranked).length} accepted for ranking · {a.carried.length} dated carries. Built {String(a.built_utc).slice(0, 10)}.</p>
    <p className="mt-3 bh-muted" data-bh-imagejev-v03-note>New item pool: 2,441 items on 2,160 images, fresh 300 public / 1,200 sealed draw. Measured rows with unresolved acceptance or equating holds remain unrankable. Carried scores belong to v0.1.5 and are not ranked on the v0.3 scale.</p>
    <nav className="mt-3 flex flex-wrap gap-4" aria-label="Image benchmark versions"><a className="text-accent underline" href="#jev-capability">v0.3.0</a><a className="text-accent underline" href="#imagejev-v015-archive">v0.1.5 archive</a><a className="text-accent underline" href="#imagejev-history-heading">Earlier versions</a></nav>
