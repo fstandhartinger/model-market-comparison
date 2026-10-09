@@ -156,6 +156,10 @@ def measure(job_dir):
     """Guarded first-party native run, with original per-order pod budget intact."""
     job = Path(job_dir)
     admission, measured, scored = accepted(job)
+    late = None
+    if job.name == '3687485f-5a51-4964-bd9a-73973f3494d7':
+        from decisor_late_completion import LateCompletion
+        late = LateCompletion(job, admission['generation'])
     recipe = json.loads((job / 'trusted-runner/POD-RECIPE.json').read_text())
     if recipe.get('kind') not in ('http_typesafe', 'python_inprocess'):
         raise ValueError('v16 route requires reviewed native text recipe')
@@ -163,6 +167,8 @@ def measure(job_dir):
     output = STATE_ROOT / 'measurements' / job.name / admission['generation'] / 'jevbench'
     @contextmanager
     def pre_upload():
+        if late is not None:
+            late.check()
         with retirement_lock(admission):
             if accepted(job) != (admission, measured, scored):
                 raise ValueError('v16 admission changed before upload')
@@ -172,12 +178,16 @@ def measure(job_dir):
     if state.get('v16_generation_allocation') is not None:
         from v16_allocation import FreshAllocation
         def allocation_recheck():
+            if late is not None:
+                late.check()
             if accepted(job) != (admission, measured, scored):
                 raise ValueError('v16 allocation admission changed')
             retirement(admission)
         allocation_gate = FreshAllocation(job, admission, allocation_recheck)
     import jeff_runtime_preflight
     def runtime_recheck():
+        if late is not None:
+            late.check()
         if accepted(job) != (admission, measured, scored):
             raise ValueError('v16 runtime admission changed')
         retirement(admission)
