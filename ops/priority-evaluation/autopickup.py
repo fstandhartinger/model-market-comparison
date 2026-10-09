@@ -1532,7 +1532,7 @@ def advance_intake(row: dict[str, Any], state: dict[str, Any], job_dir: Path, ef
             update_row(rid, "board_status='failed'")
             if finish_fail(state, "handoff", "board_post_failed"):
                 alert(state, "handoff_exhausted", effects, digest=True, text=(
-                    f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: board handoff failed; the evaluation service still runs."))
+                    agent_status_card(row, 'has a failed agent handoff', 'The evaluation service still runs; agents are repairing the handoff.', urgent=False)))
 
     # 5. A customer reply recorded by the mail watcher after a hold started ends the hold.
     row = load_row(rid) or row
@@ -1663,6 +1663,10 @@ def card_context_line(row: dict[str, Any], status: str) -> str:
 def agent_status_card(row: dict[str, Any], status: str, detail: str, *, urgent: bool = True) -> str:
     label = "🚨 DRINGEND" if urgent else "🤖 LÄUFT"
     return f"{label}\n{card_context_line(row, status)}\n\n🤖 Agenten\n- {detail}"
+
+
+def completed_status_card(row: dict[str, Any], status: str, detail: str) -> str:
+    return f"✅ ERLEDIGT\n{card_context_line(row, status)}\n\n{detail}"
 
 
 def rescue_card(row: dict[str, Any], reason: str, *, exhausted: bool = False) -> str:
@@ -3102,8 +3106,7 @@ def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, 
         if summary["outcome"] == "refused":
             update_row(rid, "release_status='refused'")
             alert(state, "refused", effects, digest=True, text=(
-                f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: source review failed. "
-                "The full refund is queued; its exact refusal email approval follows after refund success."))
+                agent_status_card(row, 'is paused: the submitted source failed review', 'Agents are preparing the customer change request; a refund needs separate approval.', urgent=False)))
         else:
             update_row(rid, "release_status='verified'")
         row = load_row(rid) or row
@@ -3169,7 +3172,7 @@ def advance_xpost(row: dict[str, Any], state: dict[str, Any], job_dir: Path, sum
         step(state, "xpost")["status"] = "skipped"
         step(state, "xpost_receipt")["status"] = "skipped"
         save_state(state)
-        effects.notify(f"✅ ERLEDIGT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)} delivered; the published top five did not change, so no X post.",
+        effects.notify(completed_status_card(row, "is complete: the customer received the result", "The published top five did not change, so no X update was needed."),
                        mode="digest")
         return
     if text is None and step(state, "xpost")["status"] == "pending":
@@ -3213,7 +3216,7 @@ def advance_xpost(row: dict[str, Any], state: dict[str, Any], job_dir: Path, sum
             return
         begin_attempt(state, "xpost_receipt", now)
         if status == "posted":
-            message = f"✅ ERLEDIGT\n\nPosted from @airesearch12 (paid fast-lane top-five change, order {order_ref(rid)}): {url}"
+            message = completed_status_card(row, "is complete: its ranking update is published on X", "Posted from @airesearch12: " + str(url))
             sent = effects.notify(message, requested=True)
         else:
             sent = effects.notify(agent_status_card(row, "is blocked: the X post outcome is uncertain",
@@ -3593,8 +3596,7 @@ def advance_refund_notice(row: dict[str, Any], state: dict[str, Any], effects: E
             update_row(rid, "refusal_email_status='held', pickup_status='done'")
         elif outcome == "unknown":
             alert(state, "refusal_outcome_unknown", effects, digest=True, text=(
-                f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: refusal approval or email "
-                "has an uncertain outcome; held for reconciliation without another send."))
+                agent_status_card(row, 'is blocked: the customer email outcome is uncertain', 'Agents are checking the existing approval or email; no automatic resend is permitted.', urgent=False)))
         return
     item = step(state, "refund_notice")
     if item["status"] not in ("done", "exhausted") and step_due(state, "refund_notice", now):
@@ -3610,7 +3612,7 @@ def advance_refund_notice(row: dict[str, Any], state: dict[str, Any], effects: E
                 finish_ok(state, "refund_notice", now)
             elif finish_fail(state, "refund_notice", reason):
                 alert(state, "refund_notice_exhausted", effects, digest=True, text=(
-                    f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)} was refunded at 48 h; the refund email failed and needs a manual send."))
+                    agent_status_card(row, 'needs follow-up: the refund email failed', 'The approved refund completed; agents must repair the customer notification.', urgent=False)))
     if step(state, "refund_notice")["status"] in ("done", "exhausted"):
         update_row(rid, "pickup_status='done'")
 
@@ -3770,8 +3772,7 @@ def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) ->
                 save_state(state)
                 if not ok:
                     alert(state, "delay_note_failed", effects, digest=True, text=(
-                        f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: Florian chose "
-                        "'Send delay note' on the 40-hour card but the delay email failed; retry next cycle."))
+                        agent_status_card(row, 'is blocked: the approved delay email failed', 'Agents must repair the approved customer delay notification; delivery is not confirmed.', urgent=False)))
             if state.get("delay_email_status") == "sent":
                 effects.board(f"Fast-lane order {order_ref(rid)}: Florian sent the delay note on the "
                               "40-hour decision card; the customer was told the new ETA.", owner_for(rid), kind="note")
@@ -3780,12 +3781,10 @@ def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) ->
                           "decision card; the order keeps running.", owner_for(rid), kind="note")
         elif outcome == "exhausted":
             alert(state, "sla40_card_exhausted", effects, digest=True, text=(
-                f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: three 40-hour decision "
-                "cards expired unanswered; nothing was decided. An operator follows up."))
+                agent_status_card(row, 'awaits a decision: the delay or refund cards expired', 'No refund or delay email was authorized; agents are following up.', urgent=False)))
         elif outcome == "unknown":
             alert(state, "sla40_card_unknown", effects, digest=True, text=(
-                f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: the 40-hour decision card "
-                "has an uncertain delivery; held for reconciliation, nothing decided."))
+                agent_status_card(row, 'is blocked: the delay decision card delivery is uncertain', 'Agents are checking the existing card; no refund or delay email is authorized.', urgent=False)))
     return asked
 
 
@@ -3851,12 +3850,10 @@ def refund_decisions(synthetic_id: str | None, job_root: Path, effects: Effects)
                 effects.board(f"Fast-lane order {order_ref(rid)}: Florian {verb}.", owner_for(rid), kind="note")
         elif outcome == "exhausted":
             alert(state, "refund_approval_exhausted", effects, digest=True, text=(
-                f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: three refund approval cards expired "
-                "unanswered; nothing was refunded. An operator follows up."))
+                agent_status_card(row, 'awaits a decision: the refund approval cards expired', 'Nothing was refunded; agents are following up.', urgent=False)))
         elif outcome == "unknown":
             alert(state, "refund_approval_unknown", effects, digest=True, text=(
-                f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: the refund approval card has an uncertain "
-                "delivery; held for reconciliation, nothing refunded."))
+                agent_status_card(row, 'is blocked: the refund card delivery is uncertain', 'Agents are checking the existing card; nothing was refunded.', urgent=False)))
     return asked
 
 
@@ -4678,12 +4675,10 @@ def advance_change_request(row: dict[str, Any], state: dict[str, Any], job_dir: 
     elif outcome == "held":
         update_row(rid, "change_request_email_status='held'", "change_request_email_status='approval_required'")
         alert(state, f"change_request_held_{int(row.get('resubmission_count') or 0)}", effects, digest=True, text=(
-            f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: the change-request email was kept unsent; "
-            "the order stays open on hold, no refund. An owner contacts the customer another way."))
+            agent_status_card(row, 'is paused: the change-request email was kept unsent', 'The order stays open without a refund; agents must contact the customer another way.', urgent=False)))
     elif outcome == "unknown":
         alert(state, "change_request_outcome_unknown", effects, digest=True, text=(
-            f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: change-request approval or email "
-            "has an uncertain outcome; held for reconciliation without another send."))
+            agent_status_card(row, 'is blocked: the change-request email outcome is uncertain', 'Agents are checking the existing approval or email; no automatic resend is permitted.', urgent=False)))
 
 
 def consume_stage_attempt(state: dict[str, Any], name: str, limit: int) -> bool:

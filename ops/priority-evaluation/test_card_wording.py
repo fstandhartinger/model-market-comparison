@@ -110,7 +110,17 @@ class CardWording(unittest.TestCase):
                 short = notify.compact_immediate(card, todos, 'card-wording-test', dry_run=True)
                 self.assertEqual(notify.card_lint(short), [])
                 checked += 1
-        self.assertEqual(checked, 9)
+        self.assertEqual(checked, 20)
+        for status, detail in [('is complete: the customer received the result', 'No X update was needed.'),
+                               ('is complete: its ranking update is published on X',
+                                'Posted from @airesearch12: https://x.com/airesearch12/status/123456789')]:
+            card = c.completed_status_card(ROW, status, detail)
+            todos = notify.validate_format(card, 'now')
+            self.assertEqual(notify.card_lint(card), [])
+            self.assertIn(detail, card)
+            self.assertIn(ROW['model_name'], card)
+            self.assertIn('Metask', card)
+            notify.compact_immediate(card, todos, 'card-wording-test', dry_run=True)
         # Health card deliberately summarizes private details without exposing raw reason keys.
         health = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'health')
         assignment = next(n for n in ast.walk(health) if isinstance(n, ast.Assign)
