@@ -127,13 +127,19 @@ test('rendered default Radar is the legacy 0-100 scale: zeros collapse to the ce
   assert.match(html, /<desc id="lg-d">d<\/desc>/);
 });
 
-test('only the category figures in JevCompareV15 pass the signed domain; V14, ImageJev four-axis and topic radars keep the default', () => {
+test('current competence figures pass the signed domain; score axes, V14 and legacy accuracy radars keep the default', () => {
   const v15 = src('components/JevCompareV15.tsx');
   assert.match(v15, /spokes, domain: RADAR_SIGNED_DOMAIN as RadarDomain, missing:/, 'set on categoryFigures');
-  assert.equal((v15.match(/RADAR_SIGNED_DOMAIN/g) ?? []).length, 2, 'imported once, used once (category figures only)');
+  assert.equal((v15.match(/RADAR_SIGNED_DOMAIN/g) ?? []).length, 5, 'import plus categories, request types and both tier figures');
   assert.match(v15, /domain=\{f\.domain\}/);
   const fixed = v15.match(/const figures:[\s\S]*?\]\.filter/)?.[0] ?? '';
-  assert.ok(fixed && !/domain:/.test(fixed.split('}[] = [')[1]), 'axes, types and tier figures carry no domain (legacy 0-100)');
+  assert.ok(fixed);
+  const axis = fixed.match(/\{ key: "axes"[^\n]+/)?.[0] ?? '';
+  assert.ok(axis && !/domain:/.test(axis), 'the four score axes keep the legacy default');
+  for (const key of ['types', 'tiers-open', 'tiers-sealed']) {
+    const figure = fixed.split(`{ key: "${key}"`)[1]?.split('\n')[0] ?? '';
+    assert.match(figure, /domain: RADAR_SIGNED_DOMAIN/, `${key}: complete measured zeros also require a full shape`);
+  }
   assert.match(v15, /0 = at or below chance; negative averages are reported as 0/, 'a clipped metric never calls 0 exact chance');
   assert.match(v15, /data-bh-radar-zero-note="clipped">A point on the bold 0 ring/);
   for (const f of ['components/JevCompareV14.tsx', 'components/ImageJevRadar.tsx', 'components/JevHistoricalSupplement.tsx']) {

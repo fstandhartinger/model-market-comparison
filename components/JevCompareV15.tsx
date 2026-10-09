@@ -47,7 +47,7 @@ function series(A: JevCompareV15Row, B: JevCompareV15Row): Series[] {
     { name: B.name, stroke: same ? `color-mix(in srgb, ${colour(jevRowArch(B))} 55%, var(--text))` : colour(jevRowArch(B)), dashed: same, square: true }];
 }
 
-/** CR-257: one radar per category dimension. A value below chance draws at the centre and prints its published number — negative
+/** CR-257: one radar per category dimension. A signed value below zero draws inside the zero ring and prints its published number — negative
  *  in the signed v1.5.x / ImageJevBench artifacts; the v1.6 artifacts already clip below-chance means to 0 (see the figure note).
  *  CR-290 correction (Florian 5 Oct 2026 ~20:30): only well-measured categories (radarMinN = 30 items) are spokes; smaller ones go to the
  *  low-sample table. A system that answered fewer than radarMinN items of a spoke's category is printed as n=… and not plotted. */
@@ -214,9 +214,9 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
   });
   const figures: { key: string; title: string; note: string; spokes: Spoke[]; missing: string[]; size: { w: number; h: number; r: number }; dim?: CategoryDim; domain?: RadarDomain }[] = [
     { key: "axes", title: "The four score axes", note: "0–100, the values in the table. An axis a system has no published value for is left as a gap (it counts as 0 in the composite).", spokes: axisSpokes, missing: [], size: { w: 420, h: 320, r: 96 } },
-    { key: "types", title: "Competence per request type, open / sealed", note: `Chance-corrected competence (0 = chance) for Choice, Noul and Score on the ${openDecisions} open and ${sealedDecisions} sealed decisions.`, spokes: typeSpokes, missing: missingFor(typeSpokes), size: { w: 440, h: 340, r: 100 } },
-    { key: "tiers-open", title: "Competence per tier — open set", note: "Per-tier competence, the three request types pooled by their published decision counts.", spokes: openTierSpokes, missing: missingFor(openTierSpokes), size: { w: 440, h: 340, r: 100 } },
-    { key: "tiers-sealed", title: "Competence per tier — sealed set", note: "Per-tier competence on the sealed decisions, types pooled the same way; item text stays private.", spokes: sealedTierSpokes, missing: missingFor(sealedTierSpokes), size: { w: 440, h: 340, r: 100 } },
+    { key: "types", title: "Competence per request type, open / sealed", note: `Chance-corrected competence for Choice, Noul and Score on the ${openDecisions} open and ${sealedDecisions} sealed decisions.`, spokes: typeSpokes, domain: RADAR_SIGNED_DOMAIN, missing: missingFor(typeSpokes), size: { w: 440, h: 340, r: 100 } },
+    { key: "tiers-open", title: "Competence per tier — open set", note: "Per-tier competence, the three request types pooled by their published decision counts.", spokes: openTierSpokes, domain: RADAR_SIGNED_DOMAIN, missing: missingFor(openTierSpokes), size: { w: 440, h: 340, r: 100 } },
+    { key: "tiers-sealed", title: "Competence per tier — sealed set", note: "Per-tier competence on the sealed decisions, types pooled the same way; item text stays private.", spokes: sealedTierSpokes, domain: RADAR_SIGNED_DOMAIN, missing: missingFor(sealedTierSpokes), size: { w: 440, h: 340, r: 100 } },
   ].filter((f) => !axesOnly || f.key === "axes");
   // CR-257: the category radars sit right after the score axes.
   figures.splice(1, 0, ...categoryFigures);

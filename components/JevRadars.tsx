@@ -29,7 +29,7 @@ export function sparseNote(spokes: Spoke[], series: Series[]): string | null {
 }
 export type Spoke = { key: string; lines: string[]; values: (number | null)[]; texts: string[]; thin: boolean[]; tip?: string };
 
-/** `domain` (lead job jevbench-radar-full-areas-20261009): the value range from centre to rim, default 0–100. Only category
+/** `domain` (lead job jevbench-radar-full-areas-20261009): the value range from centre to rim, default 0–100. Current
  *  competence radars pass RADAR_SIGNED_DOMAIN (−100 centre, 0 bold ring at half radius, 100 rim), so a complete series of measured
  *  zeros is a full polygon and a negative value is drawn at its own radius. The domain is fixed by the caller, never by the data. */
 export function Radar({ spokes, series, size, id, title, desc, domain = RADAR_DEFAULT_DOMAIN }: { spokes: Spoke[]; series: Series[]; size: { w: number; h: number; r: number }; id: string; title: string; desc: string; domain?: RadarDomain }) {
