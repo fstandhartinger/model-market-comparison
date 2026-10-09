@@ -1,6 +1,6 @@
 {
   "release": "CR-383",
-  "status": "PREPARED; not published; fallback conditional on v1.6 still blocked",
+  "status": "REVIEWED; fallback publication authorized while fresh v1.6 admission remains blocked",
   "prior_supplement_sha256": "3e33d6ec8229cd8422f1cead31e717e79a017ab80521e06f4ab01e8d6a7f7c34",
   "source_results_sha256": "21add0c57ab86e2f1795ba1725262fa30df7ff9488494d6705cb3d68a660797c",
   "raw_sha256": "8815d22b7f027a7cb1cc5b9ef2e7ad3036c85cad50cfcedd3d652a441787733e",
@@ -72,5 +72,6 @@
       ]
     }
   },
-  "cost_footnote": "*est. Cost uses measured input tokens at the original declared size-class reference ($0.03 per million input tokens); output tokens are 0 because the pinned native classifier produces probabilities without text generation. Missing output count accepted under the 9 October decision. Historical v1.5 method; do not combine into current v1.6 ranking."
+  "cost_footnote": "*est. Cost uses measured input tokens at the original declared size-class reference ($0.03 per million input tokens); output tokens are 0 because the pinned native classifier produces probabilities without text generation. Missing output count accepted under the 9 October decision. Historical v1.5 method; do not combine into current v1.6 ranking.",
+  "admission_blocker_evidence": "Reserve custodian board #14879, 2026-10-09T20:24:00Z: zero newly admitted regular-queue items; no new gutsy model/draw/cohort admission; no ETA."
 }
