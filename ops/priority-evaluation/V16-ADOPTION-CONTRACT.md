@@ -66,7 +66,9 @@ For the fixed Jeff order only, `v16_profiles.measure` requires admission field
 The hashes must match installed first-party `jeff_runtime_inspector.py` and
 `jeff_runtime_preflight.py`; the image must equal the recipe and the actual known
 upstream v0.30.0 digest. Independent admission acceptance binds those fields. The
-inspector is byte-identical to the root candidate reviewed by Claude. No customer
+inspector adds a read-only Python.h existence check to the earlier reviewed root
+candidate. The actual independent final delta review covers these updated bytes;
+the admission must pin their new hash. No customer
 recipe flag or arbitrary callback/script path selects execution.
 
 An optional trusted callback in `pod_runner._lifecycle` runs immediately after

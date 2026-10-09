@@ -8,7 +8,7 @@ import pod_runner
 
 ORDER = '263849ac-16c4-4a89-97d6-91355529c9b3'
 IMAGE_DIGEST = '8a69ffad015f138d7170c4ddc429e230a3bc1c1719f67e14324749df200a4b90'
-# The actual independently reviewed inspector is installed unchanged.
+# The final independent delta review covers the inspector including Python.h.
 INSPECTOR = Path(__file__).parent / 'jeff_runtime_inspector.py'
 
 
