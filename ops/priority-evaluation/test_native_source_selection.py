@@ -95,7 +95,7 @@ class SelectedTests(unittest.TestCase):
   from unittest.mock import Mock
   self.admit(verdict='PROPOSED');provider=Mock()
   recipe={'schema_version':1,'kind':'http_typesafe','image':'example/image:fixed@sha256:'+'a'*64,'min_vram_gb':24,'weights':[{'repo':'example/model','revision':'f'*40,'dir':'model','sha256':{'config.json':'b'*64}}],'code':self.code(),'services':[{'argv':['python3','-m','native'],'env':{},'ready_url':'http://127.0.0.1:8000/health'}],'endpoint':'http://127.0.0.1:8000','model':'fixture'}
-  with self.assertRaises(OperationalHold):pod_runner.run(n.ORDER,self.job,recipe,self.job/'output',{},provider=provider)
+  with self.assertRaises(OperationalHold):pod_runner.run(n.ORDER,self.job,recipe,self.job/'output',{},20,provider=provider)
   self.assertFalse(provider.mock_calls)
 
  def fetch(self):
