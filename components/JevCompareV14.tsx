@@ -171,9 +171,9 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
   const pair = [A, B], s = series(A, B);
   const axisSpokes: Spoke[] = AXES.map(([k, label]) => ({
     key: k, lines: [label], thin: [false, false],
-    // A partial run (Needle 3) publishes no axes at all; it draws at 0 and says so instead of breaking the page.
-    values: pair.map((r) => r.axes?.[k] ?? 0),
-    texts: pair.map((r) => (r.axes == null ? "not scored" : r.axes[k] == null ? "none (0)" : one(r.axes[k]))),
+    // A partial run (Needle 3) publishes no axes at all, a label-only system no calibration: both are gaps that say so, never a 0 vertex.
+    values: pair.map((r) => r.axes?.[k] ?? null),
+    texts: pair.map((r) => (r.axes == null ? "not scored" : r.axes[k] == null ? "none (0 in score)" : one(r.axes[k]))),
   }));
   const tierSpokes = accuracySpokes(pair, TIERS, (r, k) => r.tiers[k as keyof JevCompareRow["tiers"]]);
   const pooled = hardFamilyN && sealedFamilyN ? { hard: hardFamilyN, sealed: sealedFamilyN } : null;
@@ -206,7 +206,7 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
     try { await navigator.clipboard.writeText(u.href); setCopied(true); window.setTimeout(() => setCopied(false), 2000); } catch { window.location.hash = "compare"; }
   };
   const figures: { key: string; title: string; note: string; spokes: Spoke[]; missing: string[]; size: { w: number; h: number; r: number } }[] = [
-    { key: "axes", title: "The four score axes", note: "0–100, the values in the table. A label-only system has no calibration (counted as 0).", spokes: axisSpokes, missing: [], size: { w: 420, h: 320, r: 96 } },
+    { key: "axes", title: "The four score axes", note: "0–100, the values in the table. A label-only system has no calibration: it counts as 0 in the score and is left as a gap on the radar.", spokes: axisSpokes, missing: [], size: { w: 420, h: 320, r: 96 } },
     { key: "tiers", title: "Accuracy per tier, incl. sealed", note: `Share correct per tier; Sealed = the ${sealedDecisions} private decisions, aggregate only.`, spokes: tierSpokes, missing: missingFor(tierSpokes), size: { w: 440, h: 340, r: 100 } },
     pooled
       ? { key: "hard", title: "Current question set by family (hard + sealed)", note: `Share correct per family across the ${hardDecisions} hard-tier decisions (public and held out) and the ${sealedDecisions} sealed decisions of v1.4, pooled; Routing is hard-tier only, Paraphrase and Safety judge sealed only.`, spokes: hardSpokes, missing: partlyMissingFor(hardSpokes), size: { w: 460, h: 370, r: 100 } }
