@@ -14,6 +14,8 @@ def paths(rid):
 def packet(rid):
  job,base,unit,drop=paths(rid);p=gate.read(base/'PLAN.json');auth=gate.read(base/'ROOT-AUTHORITY.json');peer=gate.read(base/'SOURCE-PEER.json')
  if p.get('SOURCE_ONLY_PROSPECTIVE_NOT_INSTALLABLE')is not False or p.get('scope')!=gate.SCOPE or p.get('order_id')!=rid or p.get('generation')!=gate.GENERATION or auth.get('verdict')!='ACCEPTED' or auth.get('root_owner')!=gate.ROOT_OWNER or auth.get('plan_sha256')!=gate.sha(base/'PLAN.json') or auth.get('standing_decision_authenticity_verified')is not True or auth.get('financial_scope')!=p.get('bounds')or peer.get('verdict')!='PASS' or peer.get('reviewer_engine')!='claude' or peer.get('root_authority_sha256')!=gate.sha(base/'ROOT-AUTHORITY.json') or peer.get('plan_sha256')!=gate.sha(base/'PLAN.json') or peer.get('gate_sha256')!=gate.sha(gate.__file__) or peer.get('operator_sha256')!=gate.sha(__file__) or peer.get('standing_decision_authenticity_verified')is not True:raise ValueError('actual combined Root/source peer missing')
+ selected='RTX6000' if rid==gate.RYO else 'H100'
+ if p.get('selected_gpu')!=selected or auth.get('selected_gpu')!=selected:raise ValueError('literal Root-authenticated GPU selection')
  if p.get('bounds')!=dict(zip(('old_creation_attempts','old_spend_usd','maximum_lifetime_allocations','maximum_lifetime_usd'),gate.BOUNDS[rid])) or p.get('max_new_usd')!=5 or p.get('max_ttl_hours')!=1:raise ValueError('exact new topup bounds')
  if set(p.get('references',{}))!=gate.REFS or Path(p['references']['operator']['path']).resolve()!=Path(__file__).resolve():raise ValueError('complete exact operator references')
  for ref in p['references'].values():

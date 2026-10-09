@@ -7,6 +7,11 @@ class Tests(unittest.TestCase):
  def ledger(self,rid):
   n,s,_,_=g.BOUNDS[rid]
   return dict(request_id=rid,creation_attempts=n,spent_upper_bound_usd=s,pod_id=None,cleanup_uncertain=False,torn_down_at='synthetic',input_dispatched=False,execution_started=False,measurement_completed=False,read_only_capacity_checks=2,read_only_capacity_refs=['old1','old2'])
+ def test_exact_scoped_hardware_and_original_recipe_only(self):
+  for rid,pair,minv in [(g.RYO,('RTX6000',48),24),(g.DECISOR,('H100',80),80)]:
+   with tempfile.TemporaryDirectory()as tmp:
+    x=self.instance(rid,Path(tmp));self.assertEqual(x.gpu_choice({'min_vram_gb':minv}),pair)
+    with self.assertRaises(ValueError):x.gpu_choice({'min_vram_gb':96})
  def test_exact_both_current_ledgers(self):
   for rid in g.BOUNDS:g.preinput(rid,self.ledger(rid))
  def test_foreign_reset_unknown_cleanup_and_scored_rejected(self):

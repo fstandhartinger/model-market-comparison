@@ -1280,6 +1280,8 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
     except aplomb_5090_preflight.ProofError:
         raise measurement_dispatch.OperationalHold('aplomb_candidate_shape_unaccepted') from None
     candidates = exact_candidates if exact_candidates is not None else [g for g in GPU_PREFERENCE if g[1] >= recipe["min_vram_gb"]]
+    if scoped:
+        candidates = [allocation_gate.gpu_choice(recipe)]
     if not candidates:
         raise measurement_dispatch.OperationalHold("pod_recipe_invalid")
     started = datetime.now(timezone.utc)
