@@ -1601,6 +1601,59 @@ def set_operational_hold(state: dict[str, Any], reason: str, *, transient: bool,
     save_state(state)
 
 
+# Presentation only: reason keys remain unchanged in state, retries and board handoffs.
+HOLD_REASON_LABELS = {
+    "official_method_retired_requires_admission": (
+        "the old test set is retired and the replacement test set has not been approved for this model",
+        "das alte Testset ist außer Betrieb und das neue Testset ist für dieses Modell noch nicht freigegeben"),
+    "official_measurement_code_pin_changed": ("the official test code changed and needs a new review", "der offizielle Testcode hat sich geändert und muss erneut geprüft werden"),
+    "official_measurement_pin_changed": ("the official test inputs changed and need a new review", "die offiziellen Testdaten haben sich geändert und müssen erneut geprüft werden"),
+    "measurement_pins_differ_from_review": ("the test files differ from the reviewed files", "die Testdateien weichen von den geprüften Dateien ab"),
+    "gpu_pod_capacity": ("no evaluation GPU is currently available", "derzeit ist keine GPU für die Messung verfügbar"),
+    "gpu_pod_run_failed": ("the evaluation GPU run failed", "die Messung auf der GPU ist fehlgeschlagen"),
+    "fetch_source_transient": ("the model source download is temporarily unavailable", "der Download der Modellquellen ist vorübergehend nicht verfügbar"),
+    "fetch_source_failed": ("the model source download failed and needs checking", "der Download der Modellquellen ist fehlgeschlagen und muss geprüft werden"),
+    "source_access_recovered_pending_review": ("model access is repaired but the source and test approval still need review", "der Modellzugriff funktioniert wieder, aber Quellen und Testfreigabe müssen noch geprüft werden"),
+    "source_link_normalized_pending_v16_review": ("the corrected model link still needs source and test approval", "der korrigierte Modelllink braucht noch eine Prüfung der Quellen und eine Testfreigabe"),
+    "customer_access": ("we are waiting for the customer's model access", "wir warten auf den Modellzugriff des Kunden"),
+    "customer_reply": ("we are waiting for the customer's reply", "wir warten auf die Antwort des Kunden"),
+    "customer_request": ("the customer asked to pause the evaluation", "der Kunde hat um eine Pause der Messung gebeten"),
+    "customer_changes": ("the customer needs to correct the submitted model source", "der Kunde muss die eingereichten Modellquellen korrigieren"),
+    "evaluation_exhausted": ("the automatic evaluation attempts failed and an agent must investigate", "die automatischen Messversuche sind fehlgeschlagen und ein Agent muss die Ursache prüfen"),
+}
+
+
+def hold_reason_label(reason: object, *, language: str = "en") -> str:
+    """Do not leak unknown exception text, internal reason keys or paths into cards."""
+    labels = HOLD_REASON_LABELS.get(str(reason))
+    if labels:
+        return labels[1 if language == "de" else 0]
+    return ("die automatische Messung ist gestoppt und ein Agent muss die Ursache prüfen"
+            if language == "de" else "the automatic evaluation is blocked and an agent must investigate the cause")
+
+
+def card_identity(row: dict[str, Any]) -> tuple[str, str, str]:
+    """Name the actual customer and model; only validated public links reach Telegram."""
+    def label(value: object, fallback: str) -> str:
+        clean = re.sub(r"[\x00-\x1f\x7f]+", " ", str(value or "")).strip()
+        return clean[:120] or fallback
+    customer = label(row.get("customer_name") or row.get("email"), "the customer")
+    model = label(row.get("model_name"), "the submitted model")
+    link = public_link(row.get("model_link")) or SITE + "/submit"
+    return customer, model, link
+
+
+def rescue_card(row: dict[str, Any], reason: str, *, exhausted: bool = False) -> str:
+    customer, model, link = card_identity(row)
+    retry = " Automatic retries are used up." if exhausted else ""
+    return (f"🚨 DRINGEND\nWorum geht's: Fast-lane evaluation for {customer}, model {model}, is blocked because {hold_reason_label(reason)}. {link}\n\n"
+            "🧑 Für dich\n- Decide the next step for this customer's evaluation.\n"
+            f"  Why: The result deadline is {deadline_for(row).strftime('%d %b %H:%M UTC')}.{retry}\n"
+            f"  Steps:\n  1. Review the model and the blocker at {link}.\n"
+            "  2. Decide whether the agents should continue the evaluation or prepare a refund approval.\n"
+            "  Time: 15 minutes")
+
+
 def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Effects,
                          now: datetime, reason: str, *, exhausted: bool) -> None:
     """A hold that will not clear itself gets one urgent card per order+reason plus a #11 handoff."""
@@ -1628,14 +1681,8 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
                          owner_for(rid), thread=BOARD_HANDOFF_THREAD):
             finish_ok(state, "operational_handoff", now)
     hold_key = re.sub(r"[^A-Za-z0-9_]+", "_", reason)[:48]
-    why = f"The automatic retry policy is exhausted ({HOLD_MAX_RETRIES} retries)" if exhausted else \
-        "this hold reason has no automatic retry"
-    alert(state, f"operational_hold_{hold_key}", effects, urgent=True, text=(
-        f"🚨 DRINGEND\n\n- Rescue fast-lane order {order_ref(rid)} ({reason}).\n"
-        f"  Why: An operational hold is blocking the measurement and {why}; "
-        f"the 48-hour deadline is {deadline_for(row).strftime('%d %b %H:%M UTC')}.\n"
-        f"  Steps:\n  1. Read STATE.md in {job_directory(rid, JOB_ROOT)}.\n"
-        "  2. Fix the cause and clear the operational hold. No refund happens without your approval card.\n  Time: 15 minutes"))
+    alert(state, f"operational_hold_{hold_key}", effects, urgent=True,
+          text=rescue_card(row, reason, exhausted=exhausted))
 
 
 def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effects, now: datetime) -> None:
@@ -1667,13 +1714,10 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
         else:
             return
     if status == "exhausted":
-        detail = (state.get("evaluation_exhausted") or {}).get("reason") or \
-            f"the evaluation failed {MAX_EVALUATION_ATTEMPTS} times"
-        alert(state, "evaluation_exhausted", effects, urgent=True, text=(
-            f"🚨 DRINGEND\n\n- Rescue fast-lane order {order_ref(rid)}.\n"
-            f"  Why: {detail}; the 48-hour deadline is {deadline_for(row).strftime('%d %b %H:%M UTC')}.\n"
-            f"  Steps:\n  1. Read STATE.md and OUTPUT.md in {job_directory(rid, JOB_ROOT)}.\n"
-            "  2. Start a manual evaluation job. No refund happens without your approval card.\n  Time: 15 minutes"))
+        detail = (state.get("evaluation_exhausted") or {}).get("reason") or "evaluation_exhausted"
+        reason = detail if detail in HOLD_REASON_LABELS else "evaluation_exhausted"
+        alert(state, "evaluation_exhausted", effects, urgent=True,
+              text=rescue_card(row, reason, exhausted=True))
         return
     if status in ("pending", "failed"):
         operational = state.get("operational_hold")
@@ -3816,15 +3860,15 @@ def refund_decisions(synthetic_id: str | None, job_root: Path, effects: Effects)
 
 
 def sla_message(row: dict[str, Any], hours: int) -> str:
-    rid = request_id(row["id"])
     due = deadline_for(row).strftime("%d %b %H:%M UTC")
-    folder = job_directory(rid, JOB_ROOT)
+    customer, model, link = card_identity(row)
     if hours >= 36:
-        return (f"🚨 DRINGEND\n\n- Check fast-lane order {order_ref(rid)}.\n"
-                f"  Why: No result 36 hours after payment; the deadline is {due}. No automatic refund: you will get a refund decision card then.\n"
-                f"  Steps:\n  1. Open {folder}/STATE.md.\n  2. Decide whether to intervene.\n  Time: 10 minutes")
-    return (f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: 24 hours since payment, no result yet. "
-            f"Deadline {due}. Progress: {folder}/STATE.md")
+        return (f"🚨 DRINGEND\nWorum geht's: Fast-lane evaluation for {customer}, model {model}, has no result 36 hours after payment. {link}\n\n"
+                "🧑 Für dich\n- Decide whether to intervene.\n"
+                f"  Why: The result deadline is {due}; a refund needs your approval.\n"
+                f"  Steps:\n  1. Review the model at {link}.\n  2. Decide whether agents should continue or prepare a refund approval.\n  Time: 10 minutes")
+    return (f"🤖 LÄUFT\nWorum geht's: Fast-lane evaluation for {customer}, model {model}, has no result 24 hours after payment. {link}\n\n"
+            f"🤖 Agenten\n- Agents are following up; the result deadline is {due}.")
 
 
 # ---------------------------------------------------------------------------
