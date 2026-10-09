@@ -85,6 +85,17 @@ class T(unittest.TestCase):
         os.remove(os.path.join(hs, 'ctx.tar')); os.symlink('/etc/hostname', os.path.join(hs, 'ctx.tar'))
         with self.assertRaises(G.GlueError): make(job, recipe)
 
+    def test_lium_key_path_reads_key_path_option_and_checks_the_file(self):
+        d = tempfile.mkdtemp(); key = os.path.join(d, 'id_x'); open(key, 'w').write('k'); os.chmod(key, 0o600)
+        cfg = os.path.join(d, 'config.ini')
+        open(cfg, 'w').write('[ssh]\nkey_path = %s\n' % key)
+        self.assertEqual(G.lium_ssh_key_path(cfg), key)
+        for bad in ('[ssh]\nkey = %s\n' % key, '[ssh]\nkey_path = %s.pub\n' % key, '[ssh]\nkey_path = relative\n', '[api]\n'):
+            open(cfg, 'w').write(bad)
+            with self.assertRaises(G.GlueError): G.lium_ssh_key_path(cfg)
+        os.chmod(key, 0o644); open(cfg, 'w').write('[ssh]\nkey_path = %s\n' % key)
+        with self.assertRaises(G.GlueError): G.lium_ssh_key_path(cfg)
+
     def test_tar_directory_deterministic_and_regular_only(self):
         d = tempfile.mkdtemp()
         os.makedirs(os.path.join(d, 'a')); open(os.path.join(d, 'a', 'x'), 'w').write('1'); open(os.path.join(d, 'Dockerfile'), 'w').write('FROM x')

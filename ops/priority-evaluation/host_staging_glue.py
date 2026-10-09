@@ -97,12 +97,16 @@ def tar_directory(directory, out_path):
 
 
 def lium_ssh_key_path(config_path=None):
+    """Path of the Lium account SSH private key from ~/.lium/config.ini ([ssh] key_path); never reads the key."""
     cp = configparser.ConfigParser()
     cp.read(config_path or os.path.expanduser('~/.lium/config.ini'))
-    key = cp.get('ssh', 'key', fallback='')
-    if not key or not os.path.isabs(os.path.expanduser(key)):
+    key = os.path.expanduser(cp.get('ssh', 'key_path', fallback=''))
+    if not key or not os.path.isabs(key) or key.endswith('.pub'):
         raise GlueError('lium ssh key path unavailable')
-    return os.path.expanduser(key)
+    st = os.lstat(key)
+    if not stat.S_ISREG(st.st_mode) or st.st_uid != os.getuid() or st.st_mode & 0o077:
+        raise GlueError('lium ssh key is not a private host-owned regular file')
+    return key
 
 
 def make_callables(job_dir, recipe, module_dir=None, token_file=None, key_path=None):
