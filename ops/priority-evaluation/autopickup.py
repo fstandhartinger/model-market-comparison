@@ -839,8 +839,31 @@ def managed_predicate(alias: str, synthetic_id: str | None, job_root: Path) -> s
             f"AND {ownership}")
 
 
+def ryotide_source_link_recovery_hold(state: dict[str, Any]) -> bool:
+    """One exact operator-correction custody hold; block pickup/mail before any effects."""
+    rid = "81e785ad-081b-4592-99df-1c3d709fd6c8"
+    if state.get("id") != rid:
+        return False
+    operational = state.get("operational_hold")
+    if not isinstance(operational, dict) or operational.get("reason") != "source_link_normalized_pending_v16_review":
+        return False
+    evidence = operational.get("recovery_evidence")
+    if operational.get("owner") != "fastlane-v16-finish-20261009" or operational.get("transient") is not False \
+            or not isinstance(evidence, dict) or evidence.get("request_id") != rid \
+            or evidence.get("operation") != "operator_false_tag_hold_correction" \
+            or evidence.get("tag_url") != "https://github.com/csabag/ryotide/tree/v0.4.0" \
+            or evidence.get("commit") != "94c71a3d9f044ffaba87981e985b66f47de3be80" \
+            or evidence.get("normalized_url") != "https://github.com/csabag/ryotide/tree/94c71a3d9f044ffaba87981e985b66f47de3be80" \
+            or not SHA64_RE.fullmatch(str(evidence.get("changes_sha256", ""))):
+        raise PickupError("RYOTIDE operator correction hold needs owner reconciliation")
+    return True
+
+
 def claim_rows(synthetic_id: str | None, job_root: Path, limit: int = MAX_ROWS_PER_CYCLE) -> list[dict[str, Any]]:
     predicate = managed_predicate("r2", synthetic_id, job_root)
+    # Read correction custody before SQL claim can alter order counters/timestamps.
+    if ryotide_source_link_recovery_hold(load_state("81e785ad-081b-4592-99df-1c3d709fd6c8")):
+        predicate += " AND r2.id <> '81e785ad-081b-4592-99df-1c3d709fd6c8'::uuid"
     rows: list[dict[str, Any]] = []
     for _ in range(max(0, min(limit, 100))):
         exclusion = ""
@@ -3808,6 +3831,8 @@ def process_row(row: dict[str, Any], effects: Effects, job_root: Path, now: date
     if row.get("synthetic_test") is not True and effects.dry_run:
         raise PickupError("dry-run accepts only synthetic orders")
     state = load_state(rid)
+    if ryotide_source_link_recovery_hold(state):
+        return  # preserve correction claim; no intake, approval mail, delivery or unit start
     job_dir = job_directory(rid, job_root)
     if "baseline_page_ids" not in state and not effects.dry_run and "public" == row.get("visibility"):
         with contextlib.suppress(PickupError):
@@ -4951,6 +4976,8 @@ def resubmit(rid: str, model_link: str | None = None, code_link: str | None = No
     48-hour clock restarts now (deadline = now + 48 h). Nothing is refunded.
     """
     rid = request_id(rid)
+    if ryotide_source_link_recovery_hold(load_state(rid)):
+        raise PickupError("RYOTIDE operator correction owns source review; reconcile before customer resubmission")
     row = load_row(rid)
     if not row or row.get("stripe_mode") != "live" or row.get("synthetic_test") is not False:
         raise PickupError("only a real live order can be resubmitted")
