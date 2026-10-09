@@ -195,7 +195,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
   function zeroNote(f: { spokes: Spoke[]; dim?: CategoryDim }) {
     if (!f.dim || !categories) return null;
     const drawn = f.spokes.flatMap((sp) => sp.values.filter((v, k) => plottable(v, sp.thin[k])) as number[]);
-    if (drawn.some((v) => v === 0) && clippedMetric) return <span className="block" data-bh-radar-zero-note="clipped">A point on the bold 0 ring printed 0.0 is a measured value, not a gap: these published cells clip below-chance results to 0, so 0 means at or below chance and nothing is drawn inside that ring.</span>;
+    if (drawn.some((v) => v === 0) && clippedMetric) return <span className="block" data-bh-radar-zero-note="clipped">A point on the bold 0 ring printed 0.0 is a measured value, not a gap: these published cells clip below-chance results to 0, so 0 means at or below chance. Their score markers cannot fall inside that ring.</span>;
     if (drawn.some((v) => v <= 0)) return <span className="block" data-bh-radar-zero-note="signed">A point on the bold 0 ring is a measured value at chance; a point inside it is below chance and prints its negative number.</span>;
     return null;
   }
@@ -209,7 +209,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
     const spokes = categorySpokes(pair, dim, categories!);
     const absent = pair.filter((r) => !categories!.systems[r.key]);
     return { key: `cat-${dim.key}`, title: dim.title, dim,
-      note: `${dim.note} Chance-corrected competence per category (${clippedMetric ? "0 = at or below chance, clipped upstream" : "0 = chance, below chance negative"}, 100 = perfect), ${pair.map((r) => `${r.name}: ${categories!.categoryPools?.[r.key] ?? categories!.splitNames.join("+")}`).join("; ")} items pooled; only categories with at least ${categories!.radarMinN} items are spokes, smaller ones are listed below. Hover a category for its definition and item count.`,
+      note: `${dim.note} Chance-corrected competence per category (${clippedMetric ? "0 = at or below chance; negative averages are reported as 0" : "0 = chance, below chance negative"}, 100 = perfect), ${pair.map((r) => `${r.name}: ${categories!.categoryPools?.[r.key] ?? categories!.splitNames.join("+")}`).join("; ")} items pooled; only categories with at least ${categories!.radarMinN} items are spokes, smaller ones are listed below. Hover a category for its definition and item count.`,
       spokes, domain: RADAR_SIGNED_DOMAIN as RadarDomain, missing: [...pair.filter((r) => categories!.spokeExceptions?.[r.key]).map((r) => `${r.name}: ${categories!.spokeExceptions![r.key]}`), ...pair.filter((r) => categories!.exposureNotes?.[r.key]).map((r) => `${r.name}: ${categories!.exposureNotes![r.key]}`), ...absent.map((r) => `${r.name}: ${categories!.missing[r.key] ?? "no per-category values"}`)], size: { w: 500, h: 400, r: 112 } };
   });
   const figures: { key: string; title: string; note: string; spokes: Spoke[]; missing: string[]; size: { w: number; h: number; r: number }; dim?: CategoryDim; domain?: RadarDomain }[] = [

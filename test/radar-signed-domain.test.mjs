@@ -134,7 +134,7 @@ test('only the category figures in JevCompareV15 pass the signed domain; V14, Im
   assert.match(v15, /domain=\{f\.domain\}/);
   const fixed = v15.match(/const figures:[\s\S]*?\]\.filter/)?.[0] ?? '';
   assert.ok(fixed && !/domain:/.test(fixed.split('}[] = [')[1]), 'axes, types and tier figures carry no domain (legacy 0-100)');
-  assert.match(v15, /0 = at or below chance, clipped upstream/, 'a clipped metric never calls 0 exact chance');
+  assert.match(v15, /0 = at or below chance; negative averages are reported as 0/, 'a clipped metric never calls 0 exact chance');
   assert.match(v15, /data-bh-radar-zero-note="clipped">A point on the bold 0 ring/);
   for (const f of ['components/JevCompareV14.tsx', 'components/ImageJevRadar.tsx', 'components/JevHistoricalSupplement.tsx']) {
     assert.doesNotMatch(src(f), /RADAR_SIGNED_DOMAIN|domain=/, f);
