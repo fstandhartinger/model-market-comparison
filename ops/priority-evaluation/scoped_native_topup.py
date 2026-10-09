@@ -45,10 +45,12 @@ class ScopedTopUp:
   preinput(self.rid,self.original)
   self.reserve_claim=self.base/'RESERVE-CLAIM.json';self.create_claim=self.base/'CREATE-CLAIM.json'
   if self.reserve_claim.exists()or self.create_claim.exists():raise ValueError('topup rental already consumed')
- def verify(self):
+ def verify(self, *, prospective=False):
   p=read(self.plan_path);a=read(self.auth_path);peer=read(self.peer_path);request=read(STATE/'requests'/f'{self.rid}.json')
   expected={'authority_sha256':sha(self.auth_path),'peer_sha256':sha(self.peer_path),'plan_sha256':sha(self.plan_path),'status':'owned','automatic_retry_prohibited':True}
-  if request.get('scoped_native_topup')!=expected:raise ValueError('Root adopted one-use anchor absent')
+  if prospective:
+   if request.get('scoped_native_topup')is not None or sha(STATE/'requests'/f'{self.rid}.json')!=p.get('original_state_sha256')or sha(STATE/'pods'/f'{self.rid}.json')!=p.get('original_ledger_sha256'):raise ValueError('prospective whole original state/ledger CAS')
+  elif request.get('scoped_native_topup')!=expected:raise ValueError('Root adopted one-use anchor absent')
   if p.get('SOURCE_ONLY_PROSPECTIVE_NOT_INSTALLABLE')is not False or p.get('schema_version')!=1 or p.get('scope')!=SCOPE or p.get('order_id')!=self.rid or p.get('generation')!=GENERATION or p.get('bounds')!=dict(zip(('old_creation_attempts','old_spend_usd','maximum_lifetime_allocations','maximum_lifetime_usd'),BOUNDS[self.rid])) or p.get('max_new_usd')!=5 or p.get('max_ttl_hours')!=1:raise ValueError('exact immutable topup scope')
   if a.get('verdict')!='ACCEPTED' or a.get('root_owner')!=ROOT_OWNER or a.get('scope')!=SCOPE or a.get('plan_sha256')!=sha(self.plan_path) or a.get('standing_decision_authenticity_verified')is not True or a.get('financial_scope')!=p['bounds']:raise ValueError('actual Root financial authority absent')
   if peer.get('verdict')!='PASS' or peer.get('reviewer_engine')!='claude' or peer.get('root_authority_sha256')!=sha(self.auth_path) or peer.get('plan_sha256')!=sha(self.plan_path) or peer.get('gate_sha256')!=sha(__file__) or peer.get('standing_decision_authenticity_verified')is not True:raise ValueError('genuine exact independent topup peer absent')
@@ -66,7 +68,10 @@ class ScopedTopUp:
   if not isinstance(history,dict)or not history.get('files'):raise ValueError('all failed/original history required')
   for path,digest in history['files'].items():
    if sha(path)!=digest:raise ValueError('original failed/claim/history changed')
-  if sha(self.base/'ACTIVATION-CLAIM.json')!=a.get('activation_claim_sha256'):raise ValueError('exclusive Root activation custody')
+  if prospective:
+   claim={'order_id':self.rid,'generation':GENERATION,'plan_sha256':sha(self.plan_path),'original_state_sha256':p['original_state_sha256'],'original_ledger_sha256':p['original_ledger_sha256']}
+   if (self.base/'ACTIVATION-CLAIM.json').exists()or hashlib.sha256(json.dumps(claim,sort_keys=True,allow_nan=False).encode()).hexdigest()!=a.get('activation_claim_sha256'):raise ValueError('prospective exclusive claim differs')
+  elif sha(self.base/'ACTIVATION-CLAIM.json')!=a.get('activation_claim_sha256'):raise ValueError('exclusive Root activation custody')
   self.plan=p;self.recheck()
  def recovery_bounds(self,job,state,ttl,budget):
   if Path(job)!=self.job:raise ValueError('foreign supplemented recovery')
@@ -89,3 +94,26 @@ class ScopedTopUp:
    exclusive(self.create_claim,{'plan_sha256':sha(self.plan_path),'creation_attempts':self.n+1})
   else:raise ValueError('topup lifecycle phase')
   return self.allowed_total
+
+def late_successor(job,generation,name,original,path,admission_path,entry_path, *, prospective=False):
+ """Exact old->current source join only; never replace old admission/ENTRY."""
+ if Path(job).name!=DECISOR or generation!=GENERATION or name not in {'controller','late_completion','v16_profiles','profile_admission','profile_review','source_pins'}:raise ValueError('late successor scope')
+ x=ScopedTopUp.__new__(ScopedTopUp);x.job=Path(job);x.rid=DECISOR;x.n,x.spent,x.allowed_total,x.lifetime_cap_usd=BOUNDS[DECISOR];x.base=x.job/'review/native-small-topup';x.plan_path=x.base/'PLAN.json';x.auth_path=x.base/'ROOT-AUTHORITY.json';x.peer_path=x.base/'SOURCE-PEER.json';x.recheck=lambda:None
+ x.verify(prospective=prospective)  # Actual Root adoption, exact authority+peer, complete current source freeze.
+ joins=x.plan.get('decisor_late_successors',{})
+ if set(joins)-{'controller','late_completion','v16_profiles','profile_admission','profile_review','source_pins'}:raise ValueError('unexpected historical source successor')
+ originals=x.plan.get('decisor_original_late',{})
+ expected={'admission':str(admission_path),'entry':str(entry_path),'peer':str(x.job/'review/DECISOR-LATE-COMPLETION-REVIEW.json')}
+ if set(originals)!=set(expected):raise ValueError('original late closure incomplete')
+ for key,actual in expected.items():
+  ref=originals[key]
+  if ref['path']!=actual or sha(actual)!=ref['sha256']:raise ValueError('original late admission/ENTRY/peer changed')
+ entry=read(entry_path)
+ if entry.get('admission_sha256')!=sha(admission_path):raise ValueError('consumed original ENTRY admission differs')
+ join=joins.get(name)
+ if not isinstance(join,dict)or set(join)!={'original','historical_copy','current'}or join['original']!=original or Path(join['current']['path']).resolve()!=Path(path).resolve():raise ValueError('exact declared old/current join')
+ if sha(join['historical_copy']['path'])!=original['sha256'] or join['historical_copy']['sha256']!=original['sha256'] or sha(path)!=join['current']['sha256']:raise ValueError('historical bytes or actual successor differ')
+ # The declared retained copy must belong to the separately pinned full history.
+ history=read(x.plan['references']['original_history']['path'])
+ if history['files'].get(join['historical_copy']['path'])!=original['sha256']:raise ValueError('historical successor copy not frozen')
+ return True

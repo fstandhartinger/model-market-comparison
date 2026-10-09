@@ -134,8 +134,14 @@ class LateCompletion:
                           'handoff': self.job / 'review/decisor-late-handoff' / self.generation / 'HANDOFF.json'}
         for name, path in expected_paths.items():
             pin = pins[name]
-            if Path(pin['path']).resolve() != path.resolve() or sha(path) != pin['sha256']:
-                raise ValueError('late completion source/reference changed: ' + name)
+            if Path(pin['path']).resolve() != path.resolve():
+                raise ValueError('late completion reference path changed: ' + name)
+            if sha(path) != pin['sha256']:
+                # Preserve original admission/ENTRY. Only an authentic separately
+                # Root-adopted exact source successor can join retained old bytes.
+                from scoped_native_topup import late_successor
+                late_successor(self.job,self.generation,name,pin,path,admission_path,
+                               self.job/'review/decisor-late-handoff'/self.generation/'ENTRY-CLAIM.json')
         if pins['root_decision']['sha256'] != ROOT_DECISION_SHA:
             raise ValueError('late completion root decision changed')
         handoff = json.loads(expected_paths['handoff'].read_text())

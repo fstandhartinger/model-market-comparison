@@ -51,6 +51,15 @@ def eligible(a,rid,p,auth):
  if rid==gate.DECISOR:
   import decisor_late_completion as late
   late.row_check(row,('pending',))
+  # Preserve consumed ENTRY/admission. Detect stale original source joins before
+  # creating ANY new activation claim or clearing the archived failure hold.
+  original_late=gate.read(job/'review/DECISOR-LATE-COMPLETION-ADMISSION.json')
+  for ref in original_late['references'].values():
+   if gate.sha(ref['path'])!=ref['sha256']:
+    name=next(k for k,v in original_late['references'].items()if v==ref)
+    gate.late_successor(job,gate.GENERATION,name,ref,Path(ref['path']),job/'review/DECISOR-LATE-COMPLETION-ADMISSION.json',job/'review/decisor-late-handoff'/gate.GENERATION/'ENTRY-CLAIM.json',prospective=True)
+  original_entry=gate.read(job/'review/decisor-late-handoff'/gate.GENERATION/'ENTRY-CLAIM.json')
+  if original_entry.get('admission_sha256')!=gate.sha(job/'review/DECISOR-LATE-COMPLETION-ADMISSION.json'):raise ValueError('original consumed Decisor ENTRY differs; no rebind/replay')
  elif row.get('result_delivered_at')is not None or a.deadline_for(row)<=a.utcnow():raise ValueError('RYO live paid SLA')
  sole(a,rid,p)
  return state,row

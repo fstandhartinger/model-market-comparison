@@ -48,3 +48,32 @@ class Tests(unittest.TestCase):
   fake=type('CustomerFlag',(),{'lifetime_cap_usd':100000,'allowed_total':999})()
   scoped=type(fake)is g.ScopedTopUp;self.assertFalse(scoped);self.assertEqual(fake.lifetime_cap_usd if scoped else 20,20)
 if __name__=='__main__':unittest.main()
+
+class HistoricalSuccessorTests(unittest.TestCase):
+ def fixture(self,root):
+  import hashlib
+  job=root/g.DECISOR;job.mkdir();old=root/'retained.py';old.write_text('old source');current=root/'current.py';current.write_text('new source');admission=root/'ADMISSION.json';admission.write_text('{}');entry=root/'ENTRY.json';entry.write_text(json.dumps({'admission_sha256':g.sha(admission)}));peer=job/'review/DECISOR-LATE-COMPLETION-REVIEW.json';peer.parent.mkdir();peer.write_text('{}');history=root/'HISTORY.json';history.write_text(json.dumps({'files':{str(old):g.sha(old)}}));original={'path':str(current),'sha256':g.sha(old)}
+  plan={'decisor_original_late':{'admission':{'path':str(admission),'sha256':g.sha(admission)},'entry':{'path':str(entry),'sha256':g.sha(entry)},'peer':{'path':str(peer),'sha256':g.sha(peer)}},'decisor_late_successors':{'controller':{'original':original,'historical_copy':{'path':str(old),'sha256':g.sha(old)},'current':{'path':str(current),'sha256':g.sha(current)}}},'references':{'original_history':{'path':str(history)}}}
+  return job,old,current,admission,entry,original,plan
+ def call(self,fixture,name='controller'):
+  from unittest.mock import patch
+  job,old,current,admission,entry,original,plan=fixture
+  def verified(instance,**kw):instance.plan=plan
+  with patch.object(g.ScopedTopUp,'verify',verified):return g.late_successor(job,g.GENERATION,name,original,current,admission,entry)
+ def test_exact_old_current_join_preserves_entry(self):
+  with tempfile.TemporaryDirectory()as t:
+   f=self.fixture(Path(t));before=f[4].read_bytes();self.assertTrue(self.call(f));self.assertEqual(f[4].read_bytes(),before)
+ def test_missing_or_changed_history_current_entry_refuses(self):
+  for kind in ('copy','current','entry','undeclared'):
+   with tempfile.TemporaryDirectory()as t:
+    f=self.fixture(Path(t))
+    if kind=='copy':f[1].write_text('changed')
+    elif kind=='current':f[2].write_text('changed')
+    elif kind=='entry':f[4].write_text('{}')
+    else:f[6]['decisor_late_successors']={}
+    with self.subTest(kind=kind),self.assertRaises(ValueError):self.call(f)
+ def test_no_original_financial_or_handoff_exception(self):
+  with tempfile.TemporaryDirectory()as t:
+   f=self.fixture(Path(t))
+   with self.assertRaises(ValueError):self.call(f,'root_decision')
+   with self.assertRaises(ValueError):self.call(f,'handoff')
