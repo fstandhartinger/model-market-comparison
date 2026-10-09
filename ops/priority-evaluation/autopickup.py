@@ -862,7 +862,14 @@ def ryotide_source_link_recovery_hold(state: dict[str, Any]) -> bool:
 def claim_rows(synthetic_id: str | None, job_root: Path, limit: int = MAX_ROWS_PER_CYCLE) -> list[dict[str, Any]]:
     predicate = managed_predicate("r2", synthetic_id, job_root)
     # Read correction custody before SQL claim can alter order counters/timestamps.
-    if ryotide_source_link_recovery_hold(load_state("81e785ad-081b-4592-99df-1c3d709fd6c8")):
+    try:
+        correction_path = state_path("81e785ad-081b-4592-99df-1c3d709fd6c8")
+        correction_held = (not correction_path.is_file() or correction_path.is_symlink()
+                           or ryotide_source_link_recovery_hold(load_state("81e785ad-081b-4592-99df-1c3d709fd6c8")))
+    except PickupError:
+        # Corrupt custody blocks only this order; unrelated paid claims continue.
+        correction_held = True
+    if correction_held:
         predicate += " AND r2.id <> '81e785ad-081b-4592-99df-1c3d709fd6c8'::uuid"
     rows: list[dict[str, Any]] = []
     for _ in range(max(0, min(limit, 100))):

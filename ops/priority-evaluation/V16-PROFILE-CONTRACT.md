@@ -1,6 +1,6 @@
 # Explicit paid native v1.6 route
 
-`python3 <installed-runtime>/v16_profiles.py inspect|measure|score <job-dir>` is a trusted host command, **not an agent tool**. Original autopickup default, v1.5 scoring/measurement adapter and pod driver bytes remain unchanged. The separate `official_score_v16.py`, `official_scoring_v16.py` and `pod_driver_v16.py` avoid invalidating unrelated accepted legacy pins. The shared pod_runner accepts a trusted callable supplying reviewed pins, stages a host-only text count config, and verifies returned count from the selected profile. Legacy calls retain defaults.
+`python3 <installed-runtime>/v16_profiles.py inspect|measure|score <job-dir>` is a trusted host command, **not an agent tool**. The default measurement methodology, v1.5 scoring/measurement adapter and pod driver bytes remain unchanged. Autopickup adds one exact RYOTIDE operator-correction custody exception: pre-claim, mail and manual-resubmit gates hold only that order while the false source-link hold is repaired. The separate `official_score_v16.py`, `official_scoring_v16.py` and `pod_driver_v16.py` avoid invalidating unrelated accepted legacy pins. The shared pod_runner accepts a trusted callable supplying reviewed pins, stages a host-only text count config, and verifies returned count from the selected profile. Legacy calls retain defaults.
 
 Prerequisites, issued by the actual custodian/root and independently reviewed; this implementation does not issue or authenticate grants beyond the already accepted host-state anchor:
 

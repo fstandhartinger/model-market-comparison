@@ -4,6 +4,7 @@ import importlib.util
 from pathlib import Path
 import sys
 import tempfile
+import json
 from types import SimpleNamespace
 import unittest
 from unittest import mock
@@ -95,6 +96,41 @@ class ExactCorrectionGate(unittest.TestCase):
                 c.resubmit(RID)
         row.assert_not_called()
         update.assert_not_called()
+
+    def test_missing_state_does_not_change_other_order_claims(self):
+        with tempfile.TemporaryDirectory() as temp, \
+             mock.patch.object(c, 'STATE_ROOT', Path(temp)), \
+             mock.patch.object(c, 'managed_predicate', return_value='TRUE'), \
+             mock.patch.object(c, 'sql_json', side_effect=[{'id': '11111111-1111-4111-8111-111111111111'}, None]) as sql:
+            rows = c.claim_rows(None, c.JOB_ROOT)
+        self.assertEqual(len(rows), 1)
+        self.assertIn("AND r2.id <> '" + RID + "'::uuid", sql.call_args_list[0].args[0])
+
+    def test_malformed_json_blocks_only_ryotide_not_other_claims(self):
+        with tempfile.TemporaryDirectory() as temp, \
+             mock.patch.object(c, 'STATE_ROOT', Path(temp)), \
+             mock.patch.object(c, 'managed_predicate', return_value='TRUE'), \
+             mock.patch.object(c, 'sql_json', side_effect=[{'id': '11111111-1111-4111-8111-111111111111'}, None]) as sql:
+            path = c.state_path(RID)
+            path.parent.mkdir()
+            path.write_text('{malformed')
+            rows = c.claim_rows(None, c.JOB_ROOT)
+        self.assertEqual(len(rows), 1)
+        self.assertIn("AND r2.id <> '" + RID + "'::uuid", sql.call_args_list[0].args[0])
+
+    def test_foreign_exact_named_hold_blocks_only_ryotide_not_other_claims(self):
+        with tempfile.TemporaryDirectory() as temp, \
+             mock.patch.object(c, 'STATE_ROOT', Path(temp)), \
+             mock.patch.object(c, 'managed_predicate', return_value='TRUE'), \
+             mock.patch.object(c, 'sql_json', side_effect=[{'id': '11111111-1111-4111-8111-111111111111'}, None]) as sql:
+            path = c.state_path(RID)
+            path.parent.mkdir()
+            state = held()
+            state['operational_hold']['owner'] = 'foreign_owner'
+            path.write_text(json.dumps(state))
+            rows = c.claim_rows(None, c.JOB_ROOT)
+        self.assertEqual(len(rows), 1)
+        self.assertIn("AND r2.id <> '" + RID + "'::uuid", sql.call_args_list[0].args[0])
 
 
 if __name__ == '__main__':
