@@ -562,7 +562,7 @@ def _teardown(provider, job, pod_id, reservation, alert):
 
 
 def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, ttl, budget,
-               alert, save_state, benchmarks=('jevbench',), quote_budget=None, expected_rows=EXPECTED_ROWS, pre_upload_gate=None, allocation_gate=None):
+               alert, save_state, benchmarks=('jevbench',), quote_budget=None, expected_rows=EXPECTED_ROWS, pre_upload_gate=None, allocation_gate=None, runtime_preflight=None):
     """One pod attempt; raises PodRunError on any step failure (teardown still runs)."""
     pod_id = None
     reservation = None
@@ -676,6 +676,9 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                                            "--format", "{{json .RepoDigests}}"])
         if image.split("@", 1)[1] not in inspect.stdout:
             raise PodRunError("pulled image digest does not match the pin")
+        if runtime_preflight is not None:
+            state['runtime_preflight'] = runtime_preflight(provider, pod_id)
+            save_state()
         for entry in recipe["weights"]:
             target = f"/models/{entry['dir']}"
             _exec(provider, pod_id, ["docker", "run", "--rm", "-v", "/models:/models",
@@ -809,7 +812,7 @@ def default_alert(text: str) -> None:
 
 
 def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict, max_usd: float,
-        *, provider: Provider | None = None, alert=None, benchmarks=('jevbench',), native_source_pins=None, measurement_pins_factory=None, pre_upload_gate=None, allocation_gate=None) -> dict:
+        *, provider: Provider | None = None, alert=None, benchmarks=('jevbench',), native_source_pins=None, measurement_pins_factory=None, pre_upload_gate=None, allocation_gate=None, runtime_preflight=None) -> dict:
     """Measure the reviewed recipe on one disposable GPU pod; idempotent via receipt + pod state."""
     validate_recipe(recipe, job_dir)
     current = measurement_pins_factory() if measurement_pins_factory is not None else measurement_dispatch.pins()
@@ -932,7 +935,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
             try:
                 state = _lifecycle(provider, job, recipe, staging_path, output, state,
                                    gpu_choice, ttl, remaining, alert, save_state, benchmarks, quote_budget,
-                                   current['profile']['inputs']['jevbench']['count'], pre_upload_gate, allocation_gate)
+                                   current['profile']['inputs']['jevbench']['count'], pre_upload_gate, allocation_gate, runtime_preflight)
                 break
             except PodCapacityError:
                 continue  # try the next GPU candidate; capacity only if every attempt was capacity

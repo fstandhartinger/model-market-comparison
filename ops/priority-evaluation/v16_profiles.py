@@ -176,8 +176,14 @@ def measure(job_dir):
                 raise ValueError('v16 allocation admission changed')
             retirement(admission)
         allocation_gate = FreshAllocation(job, admission, allocation_recheck)
+    import jeff_runtime_preflight
+    def runtime_recheck():
+        if accepted(job) != (admission, measured, scored):
+            raise ValueError('v16 runtime admission changed')
+        retirement(admission)
+    runtime_preflight = jeff_runtime_preflight.callback(job, admission, recipe, runtime_recheck, output)
     record = pod_runner.run(job.name, job, recipe, output, measured, pod_runner.PER_ORDER_CAP_USD,
-                            measurement_pins_factory=lambda: accepted(job)[1], pre_upload_gate=pre_upload, allocation_gate=allocation_gate)
+                            measurement_pins_factory=lambda: accepted(job)[1], pre_upload_gate=pre_upload, allocation_gate=allocation_gate, runtime_preflight=runtime_preflight)
     retirement(admission)
     accepted(job)
     return record
