@@ -1,0 +1,39 @@
+✔ F-136: ring labels sit at the half-step between spoke 0 and 1, inside the ring, with the F-70 halo (6.521994ms)
+✔ F-137: the topic figcaption shows at most two sentences; the tier mix and the method are in the notes disclosure (0.540619ms)
+✔ F-138: the Swap button is right-aligned and content-wide below sm, in the row at sm+ (0.186317ms)
+✔ radarValue: null, undefined, NaN, ±Infinity and non-numbers are missing; a measured 0 and a negative value stay (1.234836ms)
+✔ plottable: thin (under the per-spoke minimum) or missing is never drawn; a measured 0 is drawn (0.601249ms)
+✔ categoryCell keeps the >= 30 answered per-spoke rule (completed n when published) and never invents a value (1.156007ms)
+✔ the screenshot pair (H2O Lightning 4B vs decisio v0.8.0 on gemma-4-31B-it): gaps stay gaps, the points-only series stays points (3.951844ms)
+✔ every live cell: under-30 or non-finite cells are never plottable; measured zeros remain drawable values (7.476265ms)
+✔ dense radars switch to numbered spokes; badges never overlap and stay on the canvas up to 30 spokes (live max: 20 use cases) (3.12982ms)
+✔ the 20 use-case labels at the old size overlap (the reported bug); full labels are kept only where they fit (2.384254ms)
+✔ rendered Radar: missing, NaN and thin cells produce no marker; 20 spokes render numbered badges plus a key with every value (235.093795ms)
+✔ the shared components route every value through the helpers (no clamp-to-0 or ?? 0 on a missing value) (0.626518ms)
+✔ signed domain: -100 is the centre, 0 is half the radius, 100 is the rim (linear in between) (1.626298ms)
+✔ legacy default stays 0-100: same radii, same five rings and the 50/100 labels (0.291235ms)
+✔ ring label coordinates: half-step angle, apothem minus 3, never past the centre (0.266935ms)
+✔ rendered signed Radar: a complete all-zero series is a full polygon on the 0 ring; a sparse series keeps its gaps (176.853383ms)
+✔ rendered default Radar is the legacy 0-100 scale: zeros collapse to the centre as before, 20-100 rings, 50/100 labels (64.564699ms)
+✔ current competence figures pass the signed domain; score axes, V14 and legacy accuracy radars keep the default (0.915032ms)
+✔ CR-14.2 regression: ~55 on the 0–100 AA Coding Index plots a little past half, not near full (1.02694ms)
+✔ fixed scales: registry range, fraction and percent units, lower-is-better reversed and clamped (0.361453ms)
+✔ open-ended metrics (Elo, ECI) use the measured peer range and say so; unknown direction or value is never drawn (0.660127ms)
+✔ CR-14.3 exact values: fractions as percentages, Elo whole, ECI with unit (0.185267ms)
+✔ CR-14.4 default axes: one per family, newest version, families without data skipped (0.321024ms)
+✔ CR-14.1 default pair: top two current families by AA Intelligence, each via its best-covered configuration (0.51326ms)
+✔ CR-14.5 detailed axes: every plottable axis a compared model has, topics contiguous (9.538475ms)
+✔ live dataset: ECI index axes exist outside view.axes (Benchmaxxing unchanged), picks follow AA data (491.42342ms)
+✔ F-107: on every axis the best compared model is plotted at the largest radius, under both conventions (0.910272ms)
+✔ F-107: percentile positions say so, and too few measured families are never placed (no zero) (0.250645ms)
+✔ F-108 (g): detailed axes put single-axis topics after every multi-axis topic (0.279785ms)
+✔ F-107 live: the leading AA Intelligence Index family sits at p95 or above on the percentile radar (387.891795ms)
+✔ F-107: a narrowed Compare view carries whole-catalog percentiles, a best-of row uses its variant (426.220423ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1470.767237

@@ -1,0 +1,65 @@
+diff --git a/components/JevHistoricalSupplement.tsx b/components/JevHistoricalSupplement.tsx
+index 410b301f..7e650f73 100644
+--- a/components/JevHistoricalSupplement.tsx
++++ b/components/JevHistoricalSupplement.tsx
+@@ -1,16 +1,17 @@
+ 'use client';
+ import { Radar, type Spoke } from './JevRadars';
++import { RADAR_SIGNED_DOMAIN } from '../lib/radar-shape.mjs';
+ import type { HistoricalSupplement, HistoricalRow } from '../lib/jevbench-history-supplement.mjs';
+ function CategoryRadar({ row, artifact, dimension }: { row: HistoricalRow; artifact: HistoricalSupplement; dimension: 'topics' | 'usecases' }) {
+   const spokes: Spoke[] = artifact.category_dimensions[dimension].map(d => {
+     const cell = row.categories[dimension][d.key];
+-    return { key: d.key, lines: [d.label], values: [cell && cell.n >= artifact.category_min_n ? Math.max(0, cell.competence) : null],
++    return { key: d.key, lines: [d.label], values: [cell && cell.n >= artifact.category_min_n ? cell.competence : null],
+       texts: [cell ? `${cell.competence.toFixed(1)} (n=${cell.n})` : 'n/a'], thin: [!cell || cell.n < artifact.category_min_n], tip: d.covers };
+   });
+-  return <div><h4 className="font-semibold">{dimension === 'topics' ? 'Subject topics' : 'Use cases'}</h4><Radar spokes={spokes}
++  return <div><h4 className="font-semibold">{dimension === 'topics' ? 'Subject topics' : 'Use cases'}</h4><Radar spokes={spokes} domain={RADAR_SIGNED_DOMAIN}
+     series={[{ name: row.name, stroke: '#5b9dff', dashed: false, square: false }]}
+     size={{ w: 680, h: 640, r: 180 }} id={`history-${row.key}-${dimension}`} title={`${row.name}: ${dimension}`}
+-    desc="Actual chance-corrected competence over the historical pool. Below-chance values plot at zero; exact values and sample counts appear on each spoke. Missing or small samples remain gaps." /></div>;
++    desc="Actual chance-corrected competence over the historical pool. Zero sits on the bold middle ring; below-chance values plot inside it. Exact values and sample counts appear on each spoke. Missing or small samples remain gaps." /></div>;
+ }
+ export function JevHistoricalSupplement({ artifact, sha256 }: { artifact: HistoricalSupplement; sha256: string }) {
+   return <section id="historical-measurements" className="mx-auto max-w-7xl px-4 py-10 sm:px-6" data-jevbench-historical-supplement>
+diff --git a/components/JevRadars.tsx b/components/JevRadars.tsx
+index 664d625c..906cffff 100644
+--- a/components/JevRadars.tsx
++++ b/components/JevRadars.tsx
+@@ -69,7 +69,7 @@ export function Radar({ spokes, series, size, id, title, desc, domain = RADAR_DE
+         ring (on the polygon's apothem), with the F-70 halo, so the top spoke's own point never strikes them. */}
+     {/* Signed domain: −100 / 0 / 100 at the same half-step via ringLabelPoint (lib/radar-shape.mjs), the 0 label bold. */}
+     {scale.labels.map((v) => { const p = ringLabelPoint(v, { cx, cy, R, n: spokes.length }, domain); return <text key={v} x={r3(p.x)} y={r3(p.y)} textAnchor="start" dominantBaseline="hanging" fontSize={11} fontWeight={v === scale.zero ? 700 : undefined} fill="currentColor" opacity={v === scale.zero ? 0.9 : 0.7} style={{ paintOrder: "stroke", stroke: "var(--surface)", strokeWidth: "3px", strokeLinejoin: "round" }} data-radar-ring>{ringLabelText(v)}</text>; })}
+-    {spokes.map((s, i) => { const [x, y] = at(i, 100); return <line key={s.key} x1={cx} y1={cy} x2={x} y2={y} stroke="rgb(var(--line))" strokeOpacity={0.6} />; })}
++    {spokes.map((s, i) => { const [x, y] = at(i, domain[1]); return <line key={s.key} x1={cx} y1={cy} x2={x} y2={y} stroke="rgb(var(--line))" strokeOpacity={0.6} />; })}
+     {series.map((se, k) => {
+       // CR-290 (Florian 5 Oct 2026): a spoke without a plotted value (unpublished, or under the minimum n) is a gap, never
+       // a 0 and never bridged. CR-290 correction (Florian ~20:30): joining neighbouring points still drew a few dots tied by a line that
+diff --git a/test/radar-signed-domain.test.mjs b/test/radar-signed-domain.test.mjs
+index fd9cec3a..12717100 100644
+--- a/test/radar-signed-domain.test.mjs
++++ b/test/radar-signed-domain.test.mjs
+@@ -13,7 +13,7 @@ import {
+ 
+ // Signed category-competence axis (lead job jevbench-radar-full-areas-20261009, 9 Oct 2026): category radars in JevCompareV15 run
+ // linearly from -100 (centre) through 0 (bold ring, half radius) to 100 (rim), so a complete series of measured zeros is a full
+-// polygon and a negative ImageJevBench cell keeps its own radius. Every other radar keeps the legacy 0-100 default.
++// polygon and a negative ImageJevBench cell keeps its own radius. Historical supplement competence uses the same signed scale. Score-axis and legacy accuracy radars keep the 0-100 default.
+ const require = createRequire(import.meta.url);
+ const src = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
+ 
+@@ -142,9 +142,12 @@ test('current competence figures pass the signed domain; score axes, V14 and leg
+   }
+   assert.match(v15, /0 = at or below chance; negative averages are reported as 0/, 'a clipped metric never calls 0 exact chance');
+   assert.match(v15, /data-bh-radar-zero-note="clipped">A point on the bold 0 ring/);
+-  for (const f of ['components/JevCompareV14.tsx', 'components/ImageJevRadar.tsx', 'components/JevHistoricalSupplement.tsx']) {
++  for (const f of ['components/JevCompareV14.tsx', 'components/ImageJevRadar.tsx']) {
+     assert.doesNotMatch(src(f), /RADAR_SIGNED_DOMAIN|domain=/, f);
+   }
++  const history = src('components/JevHistoricalSupplement.tsx');
++  assert.match(history, /domain=\{RADAR_SIGNED_DOMAIN\}/, 'historical supplement also preserves measured zero areas');
++  assert.doesNotMatch(history, /Math\.max\(0, cell\.competence\)/, 'historical negative competence keeps its real radius');
+   const radars = src('components/JevRadars.tsx');
+   assert.match(radars, /domain = RADAR_DEFAULT_DOMAIN/, 'the Radar default is 0-100');
+   assert.doesNotMatch(radars, /<Radar [^>]*domain=/, 'the hub axis/topic radars and JevPairRadar pass no domain');
