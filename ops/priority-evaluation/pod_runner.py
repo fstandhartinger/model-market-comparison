@@ -503,6 +503,10 @@ def build_staging(recipe, pins, code_tar: bytes, benchmarks=('jevbench',)) -> di
                 raise measurement_dispatch.OperationalHold("v16_input_count_invalid")
             staging["work/input/text-config.json"] = json.dumps({"method": "jevbench-v16", "count": 1500}).encode()
     staging["work/code.tar"] = code_tar
+    if recipe.get('image') == 'docker.io/underlabsai/decisor-sglang@sha256:60aee212ef25b0d303213b1c144b32f01403191b923d93d09a610770f8a6ad60':
+        import decisor_runtime_preflight
+        decisor_runtime_preflight.recipe_shape(recipe)
+        staging['work/driver/decisor_shim.py'] = decisor_runtime_preflight.shim_bytes()
     if recipe['kind'] == 'aplomb_native' or 'imagejevbench' in benchmarks:
         if set(benchmarks) - {'jevbench', 'imagejevbench'} or len(set(benchmarks)) != len(benchmarks):
             raise measurement_dispatch.OperationalHold('unsupported_order_runtime')
@@ -610,7 +614,9 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         state['cleanup_uncertain'] = True
         state['attempt_ttl_hours'] = ttl
         state['attempt_reserved_upper_bound_usd'] = ttl * MAX_HOURLY_USD
-        state['spent_upper_bound_usd'] = state.get('spent_upper_bound_usd', 0.0) + ttl * MAX_HOURLY_USD
+        extra = allocation_gate.contingency_usd if allocation_gate is not None else 0
+        state['attempt_contingency_usd'] = extra
+        state['spent_upper_bound_usd'] = state.get('spent_upper_bound_usd', 0.0) + ttl * MAX_HOURLY_USD + extra
         state['reservation_id'] = reservation
         state['input_dispatched'] = False
         state['execution_started'] = False
@@ -912,6 +918,8 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
     if isinstance(prior_spend, bool) or not isinstance(prior_spend, (int, float)) or not 0 <= prior_spend <= PER_ORDER_CAP_USD:
         raise measurement_dispatch.OperationalHold('partial_measurement_requires_reconciliation')
     budget -= prior_spend
+    if allocation_gate is not None:
+        budget = min(budget, allocation_gate.max_new_usd)
     if budget <= 0:
         raise measurement_dispatch.OperationalHold("gpu_pod_budget_exhausted")
     ttl = min(TTL_CAP_HOURS, budget / MAX_HOURLY_USD)
@@ -925,13 +933,14 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
     try:
         run_error: Exception | None = None
         quote_budget = {'remaining': 2}
-        for attempt in range(2):
+        for attempt in range(1 if rid == '3687485f-5a51-4964-bd9a-73973f3494d7' and allocation_gate is not None else 2):
             gpu_choice = candidates[attempt % len(candidates)]
             run_spend = state.get('spent_upper_bound_usd', 0.0) - prior_spend
             remaining = min(budget - run_spend, PER_ORDER_CAP_USD - state.get('spent_upper_bound_usd', 0.0))
             if remaining <= 0:
                 raise measurement_dispatch.OperationalHold('gpu_pod_budget_exhausted')
-            ttl = min(TTL_CAP_HOURS, remaining / MAX_HOURLY_USD)
+            ttl = min(TTL_CAP_HOURS, remaining / MAX_HOURLY_USD,
+                      allocation_gate.max_ttl_hours if allocation_gate is not None else TTL_CAP_HOURS)
             try:
                 state = _lifecycle(provider, job, recipe, staging_path, output, state,
                                    gpu_choice, ttl, remaining, alert, save_state, benchmarks, quote_budget,

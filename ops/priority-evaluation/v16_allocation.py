@@ -15,6 +15,7 @@ import pod_capacity
 import pod_runner
 
 WALD = '1fb9646e-c44d-4732-b708-8c7c5d16f0fa'
+DECISOR = '3687485f-5a51-4964-bd9a-73973f3494d7'
 
 
 def sha(path):
@@ -65,11 +66,36 @@ class FreshAllocation:
         attempts=authority.get('original_creation_attempts');allocations=authority.get('original_allocations')
         total=authority.get('allowed_total_allocations');spent=authority.get('original_spent_upper_bound_usd')
         if type(attempts) is not int or attempts<0 or type(allocations) is not int or not 0<=allocations<=2 \
-                or type(total) is not int or total!=allocations+1 or total>(3 if self.rid==WALD else 2) \
+                or type(total) is not int or total!=allocations+1 or total>(3 if self.rid in (WALD, DECISOR) else 2) \
                 or type(authority.get('max_additional_allocations')) is not int or authority['max_additional_allocations']!=1 \
                 or isinstance(spent,bool) or not isinstance(spent,(int,float)) \
                 or not math.isfinite(spent) or not 0<=spent<pod_runner.PER_ORDER_CAP_USD:
             raise ValueError('invalid bounded fresh-generation accounting')
+        self.contingency_usd = 0
+        self.max_ttl_hours = pod_runner.TTL_CAP_HOURS
+        self.max_new_usd = pod_runner.PER_ORDER_CAP_USD
+        if self.rid == DECISOR:
+            if (attempts != 2 or allocations != 2 or total != 3 or spent != 7.8
+                    or authority.get('max_new_usd') != 12 or authority.get('max_ttl_hours') != 2.4
+                    or review.get('decisor_scope_and_financial_authority_verified') is not True):
+                raise ValueError('Decisor exact financial scope not independently accepted')
+            financial_path = self.job/'review/DECISOR-ROOT-BOUNDED-COMPLETION-DECISION.json'
+            financial_sha = sha(financial_path)
+            if (financial_sha != '8b0ea8b5a610de118bb035e66009c1c27cae39cee0fd820b87fff56386c4320e'
+                    or authority.get('root_financial_decision_sha256') != financial_sha
+                    or review.get('root_financial_decision_sha256') != financial_sha):
+                raise ValueError('Decisor actual root financial decision differs')
+            # Root retains a conservative contingency within the same new12 cap.
+            # This is reserved liability, not a claim that a provider fee exists.
+            if authority.get('conservative_contingency_usd') != .2:
+                raise ValueError('Decisor conservative contingency differs')
+            extra = .2
+            self.contingency_usd = extra
+            journal_path = self.job/'review/DECISOR-OLD-RENTALS.json'
+            if authority.get('historical_journal_sha256') != sha(journal_path):
+                raise ValueError('Decisor historical journal differs')
+            historical_journal(journal_path)
+            self.max_new_usd, self.max_ttl_hours = 12 - extra, 2.4
         self.authority=authority;self.digest=sha(authority_path)
         self.ledger=pod_runner.PODS_DIR/f'{self.rid}.json'
         self.claim=pod_runner.PODS_DIR/'v16-generation'/self.rid/'single-fresh-generation.json'
@@ -102,13 +128,15 @@ class FreshAllocation:
             if isinstance(ttl,bool) or not isinstance(ttl,(int,float)) or not math.isfinite(ttl) or ttl<=0 \
                     or isinstance(charge,bool) or not isinstance(charge,(int,float)) or not math.isfinite(charge) \
                     or abs(charge-ttl*pod_runner.MAX_HOURLY_USD)>1e-9 \
-                    or abs(state.get('spent_upper_bound_usd',float('inf'))-a['original_spent_upper_bound_usd']-charge)>1e-9:
+                    or state.get('attempt_contingency_usd', 0) != self.contingency_usd \
+                    or abs(state.get('spent_upper_bound_usd',float('inf'))-a['original_spent_upper_bound_usd']-charge-self.contingency_usd)>1e-9:
                 raise ValueError('fresh generation reservation charge differs')
             if json.loads(self.claim.read_text()).get('authority_sha256')!=self.digest \
                     or state.get('creation_attempts')!=a['original_creation_attempts']+1 \
                     or pod_capacity.allocation_count(state,pod_runner.PODS_DIR)!=a['allowed_total_allocations'] \
                     or state.get('spent_upper_bound_usd',0)<a['original_spent_upper_bound_usd'] \
                     or state.get('spent_upper_bound_usd',float('inf'))>pod_runner.PER_ORDER_CAP_USD \
+                    or charge > self.max_new_usd or ttl > self.max_ttl_hours \
                     or state.get('attempt_ttl_hours',float('inf'))>min(pod_runner.TTL_CAP_HOURS,
                        (pod_runner.PER_ORDER_CAP_USD-a['original_spent_upper_bound_usd'])/pod_runner.MAX_HOURLY_USD):
                 raise ValueError('fresh generation reservation exceeds original accounting')
@@ -116,3 +144,25 @@ class FreshAllocation:
         else:
             raise ValueError('invalid fresh-generation lifecycle phase')
         return a['allowed_total_allocations']
+
+
+def historical_journal(path):
+    """Authenticate copied old exact-id receipts, never mutate/reprice their history."""
+    journal = json.loads(Path(path).read_text())
+    expected = [('b11adf4f-dffd-47b7-8d3c-2ea71015f2a6', 'state.json'),
+                ('d0011715-9e61-4641-8676-5c93faa26cee', 'state-run2.json')]
+    if (journal.get('order_id') != DECISOR or journal.get('conservative_spent_upper_bound_usd') != 7.8
+            or journal.get('creation_attempts') != 2 or journal.get('allocations') != 2
+            or len(journal.get('receipts', [])) != 2):
+        raise ValueError('invalid Decisor history scope')
+    for entry, (pod_id, filename) in zip(journal['receipts'], expected):
+        receipt_path = Path(path).parent/'decisor-history'/filename
+        if entry.get('file') != filename or entry.get('sha256') != sha(receipt_path):
+            raise ValueError('Decisor historical receipt changed')
+        old = json.loads(receipt_path.read_text())
+        if (old.get('pod_id') != pod_id or old.get('hourly_usd') != 1.3
+                or old.get('still_listed_after_rm') is not False or not old.get('torn_down_at')
+                or not old.get('reservation_id') or not old.get('created_at')
+                or entry.get('ttl_hours') != 3):
+            raise ValueError('Decisor historical allocation or cleanup unproven')
+    return journal
