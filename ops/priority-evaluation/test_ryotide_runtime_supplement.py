@@ -29,6 +29,30 @@ class Tests(unittest.TestCase):
   self.assertTrue(S.proof_matches(v))
   for k,x in [('cuda_kernel_events',0),('cuda_kernel_events',True),('tested_types',['choice']),('model','remote'),('engine','torch-cpu'),('input_dispatched',True),('temperature',1)]:
    bad=dict(v);bad[k]=x;self.assertFalse(S.proof_matches(bad))
+ def authentic_synthetic_report(self):
+  return json.loads((Path(__file__).parent/'testdata/ryotide-native-synthetic-cuda-symbols.json').read_text())
+ def test_authentic_cpp_kernel_symbols_pass_bounded_metadata_predicate(self):
+  v=self.authentic_synthetic_report();names=v['cuda_kernel_names']
+  self.assertEqual(v['cuda_kernel_events'],13369);self.assertEqual(len(names),71)
+  self.assertEqual(max(map(len,names)),1352);self.assertEqual(sum(len(n)>500 for n in names),15)
+  self.assertLessEqual(S.serialized_size(v),S.PROOF_PARSED_LIMIT);self.assertTrue(S.proof_matches(v))
+ def test_authentic_native_semantics_cannot_be_tampered(self):
+  v=self.authentic_synthetic_report()
+  for k,x in [('input_dispatched',True),('scored',True),('http_listener_replaced_for_proof_only',False),('model','remote'),('revision','wrong'),('engine','torch-cpu'),('cuda_kernel_events',0),('cuda_kernel_events',True),('tested_types',['choice']),('temperature',1),('prompt_hash','wrong')]:
+   with self.subTest(field=k):
+    bad=copy.deepcopy(v);bad[k]=x;self.assertFalse(S.proof_matches(bad))
+ def test_cpp_kernel_name_individual_and_count_limits(self):
+  v=self.authentic_synthetic_report()
+  for names in ([],[''],[None],['x'*(S.PROOF_KERNEL_NAME_LIMIT+1)],['x']*513):
+   with self.subTest(size=len(names)):
+    bad=copy.deepcopy(v);bad['cuda_kernel_names']=names;self.assertFalse(S.proof_matches(bad))
+  edge=copy.deepcopy(v);edge['cuda_kernel_names']=['x'*S.PROOF_KERNEL_NAME_LIMIT];self.assertTrue(S.proof_matches(edge))
+ def test_cpp_kernel_names_aggregate_escaped_byte_bound(self):
+  v=self.authentic_synthetic_report();v['cuda_kernel_names']=['x'*S.PROOF_KERNEL_NAME_LIMIT]*32
+  self.assertGreater(S.serialized_size(v['cuda_kernel_names']),S.PROOF_PARSED_LIMIT);self.assertFalse(S.proof_matches(v))
+  v=self.authentic_synthetic_report();v['cuda_kernel_names']=['\\']*512
+  self.assertTrue(S.proof_matches(v));v['cuda_kernel_names']=['\\'*S.PROOF_KERNEL_NAME_LIMIT]*32
+  self.assertGreater(S.serialized_size(v['cuda_kernel_names']),S.PROOF_PARSED_LIMIT);self.assertFalse(S.proof_matches(v))
  def test_no_foreign_import_in_host_modules(self):
   import ast
   tree=ast.parse(Path(S.__file__).read_text())
