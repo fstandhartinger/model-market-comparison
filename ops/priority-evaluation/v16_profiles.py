@@ -184,6 +184,11 @@ def measure(job_dir):
     if job.name == '81e785ad-081b-4592-99df-1c3d709fd6c8':
         import ryotide_runtime_preflight
         runtime_preflight = ryotide_runtime_preflight.callback(job, admission, recipe, runtime_recheck, output)
+    elif job.name == '3687485f-5a51-4964-bd9a-73973f3494d7':
+        if allocation_gate is None:
+            raise ValueError('Decisor fresh generation requires independent allocation authority')
+        import decisor_runtime_preflight
+        runtime_preflight = decisor_runtime_preflight.callback(job, admission, recipe, runtime_recheck, output)
     else:
         runtime_preflight = jeff_runtime_preflight.callback(job, admission, recipe, runtime_recheck, output)
     record = pod_runner.run(job.name, job, recipe, output, measured, pod_runner.PER_ORDER_CAP_USD,
