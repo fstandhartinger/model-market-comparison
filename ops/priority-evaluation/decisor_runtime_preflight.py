@@ -93,7 +93,8 @@ def callback(job, admission, recipe, recheck, output):
         return None
     shape(job, recipe)
     binding = admission.get('runtime_preflight')
-    expected = {'inspector_sha256': sha(INSPECTOR), 'handler_sha256': sha(__file__), 'image': recipe['image'], 'recipe_sha256': recipe_pin(job, recipe)}
+    import decisor_native_preinput as N
+    expected = {'inspector_sha256': sha(INSPECTOR), 'handler_sha256': sha(__file__), 'image': recipe['image'], 'recipe_sha256': recipe_pin(job, recipe), 'native_preinput': N.binding()}
     if binding != expected or recipe['image'].split('@sha256:', 1)[-1] != IMAGE_DIGEST:
         raise ValueError('Decisor runtime preflight needs exact accepted source/image pins')
 
@@ -166,4 +167,23 @@ def callback(job, admission, recipe, recheck, output):
         if json.dumps(recipe, sort_keys=True) != frozen_recipe:
             raise ValueError('Decisor recipe changed after metadata inspection')
         return report
+    def after_weights(provider, pod_id, report, code_tar):
+        recheck()
+        shape(job, recipe)
+        if admission.get('runtime_preflight') != expected or sha(__file__) != expected['handler_sha256'] or N.binding() != expected['native_preinput']:
+            raise ValueError('Decisor native pre-input accepted pins changed')
+        N.identity(job, pod_id, recipe, report)
+        destination = Path(report['receipt_path']).with_name(Path(report['receipt_path']).stem + '-native.json')
+        # Durable exclusive claim precedes any native service start; a crash is not a retry grant.
+        retain(destination.with_suffix('.claim.json'), {'pod_id': pod_id, 'binding': expected, 'native_proof_started': True})
+        native = dict(report)
+        try:
+            N.prove(provider, pod_id, job, recipe, native, code_tar, recheck)
+        except Exception as error:
+            native['native_collection_error_type'] = type(error).__name__
+            raise
+        finally:
+            retain(destination, native)
+        return native
+    inspect.after_weights = after_weights
     return inspect

@@ -8,6 +8,7 @@ import unittest
 from unittest.mock import Mock, patch
 import decisor_runtime_preflight as preflight
 import decisor_runtime_inspector as inspector
+import decisor_native_preinput as native
 import measurement_dispatch
 import pod_runner as pr
 
@@ -18,7 +19,7 @@ class Tests(unittest.TestCase):
         (job/'trusted-runner/RUNTIME.json').write_text(json.dumps(runtime))
         recipe={'schema_version': 1, 'kind': 'http_typesafe', 'image': 'docker.io/underlabsai/decisor-sglang@sha256:60aee212ef25b0d303213b1c144b32f01403191b923d93d09a610770f8a6ad60', 'min_vram_gb': 80, 'model': 'decisor-4b', 'endpoint': 'http://127.0.0.1:8090', 'code': {'commit': '3fd3d9312bff8ec6eade08ba16ce8a6da793e99a', 'tree': '1f300dede1f6a215f4b8db1982841891947c3180'}, 'weights': [{'repo': 'underlabs/decisor-4b', 'revision': '1e7f195c2c41bbedec7d36b034001ef46476914f', 'dir': 'decisor-4b', 'sha256': {'model.safetensors': 'b7d1c312c3d1a62800f717ce12116433c8ee4df2be0013401e814b1db1b17e60'}}], 'services': [{'argv': ['python3', '-m', 'sglang.launch_server', '--model-path', '/models/decisor-4b', '--host', '127.0.0.1', '--port', '30000', '--mem-fraction-static', '0.80', '--cuda-graph-backend-prefill=disabled', '--disable-radix-cache'], 'env': {'HF_HUB_OFFLINE': '1', 'TRANSFORMERS_OFFLINE': '1', 'HF_HOME': '/tmp/hf', 'TRITON_CACHE_DIR': '/tmp/triton', 'SGLANG_DISABLE_USAGE_STATS': '1', 'DO_NOT_TRACK': '1'}, 'ready_url': 'http://127.0.0.1:30000/health'}, {'argv': ['python3', '/driver/decisor_shim.py'], 'env': {'DECISOR_ENGINE': 'http://127.0.0.1:30000', 'SHIM_PORT': '8090'}, 'ready_url': 'http://127.0.0.1:8090/health'}]}
         (job/'trusted-runner/POD-RECIPE.json').write_text(json.dumps(recipe))
-        admission={'runtime_preflight':dict(image=recipe['image'],inspector_sha256=preflight.sha(preflight.INSPECTOR),handler_sha256=preflight.sha(preflight.__file__),recipe_sha256=preflight.sha(job/'trusted-runner/POD-RECIPE.json'))}
+        admission={'runtime_preflight':dict(image=recipe['image'],inspector_sha256=preflight.sha(preflight.INSPECTOR),handler_sha256=preflight.sha(preflight.__file__),recipe_sha256=preflight.sha(job/'trusted-runner/POD-RECIPE.json'),native_preinput=native.binding())}
         return job,recipe,admission
     def metadata(self, matching=True):
         return dict(schema_version=1,kind='decisor_metadata_and_patch_bytes_only',expected_image=preflight.IMAGE,packages={name:'0.5.20' if name=='sglang' else '1.0.0' for name in inspector.REQUIRED},package_origin=inspector.ROOT+'/__init__.py',patches=inspector.PATCHES.copy(),failures=[] if matching else ['synthetic'],matching=matching,customer_source_imported=False,inputs_or_weights_read=False,native_kernels_proven=False,runtime_admitted=False)
