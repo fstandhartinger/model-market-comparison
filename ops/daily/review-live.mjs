@@ -346,7 +346,8 @@ function orModelProjection(catalogModel, endpoints) {
 async function verifyOr(rawDir, src, runStart, rows) {
   const staged = JSON.parse(await readFile(join(rawDir, 'openrouter.json'), 'utf8'));
   const catalogReceipt = src.requireGet(OR_CATALOG_URL, 'openrouter catalog');
-  const prior = new Map((await baseline(src, 'openrouter.json')).models.map((m) => [m.id, m]));
+  const priorFile = await baseline(src, 'openrouter.json');
+  const prior = new Map(priorFile.models.map((m) => [m.id, m]));
   const catalog = jbody(catalogReceipt, 'or catalog').data;
   if (!Array.isArray(catalog) || !catalog.length) fail('or catalog source has no models');
   if (!Array.isArray(staged.models) || staged.count !== staged.models.length || staged.models.length !== catalog.length) {
@@ -356,6 +357,26 @@ async function verifyOr(rawDir, src, runStart, rows) {
   const withdrawals = staged.withdrawals || { models: [], endpoints: [] };
   const withdrawnEndpoints = new Set(withdrawals.endpoints.map((e) => `${e.model_id} ${e.identity}`));
   for (const m of withdrawals.models) if (byId.has(m.id)) fail(`or withdrawal ${m.id} is still in the captured catalog`);
+  // Withdrawal dates: a carried withdrawal is a prior accepted entry and must equal it byte for byte (original
+  // withdrawn_at/last_seen); only a withdrawal first seen in this run may carry this run's date, and then it must
+  // name an identity the prior baseline published and that baseline's date as last_seen (lib/live-source.mjs).
+  const priorWithdrawals = priorFile.withdrawals || { models: [], endpoints: [] };
+  const checkWithdrawals = (entries, priorEntries, key, publishedBefore, kind) => {
+    const carried = new Map(priorEntries.map((e) => [key(e), e]));
+    for (const e of entries) {
+      if (carried.has(key(e)) && isDeepStrictEqual(e, carried.get(key(e)))) continue;
+      if (e.withdrawn_at !== staged.collected_at || !/^\d{4}-\d{2}-\d{2}$/.test(e.withdrawn_at)
+          || Date.parse(`${e.withdrawn_at}T23:59:59.999Z`) < Date.parse(runStart)) {
+        fail(`or ${kind} withdrawal ${key(e)}: not the prior accepted entry and not dated to this run (${e.withdrawn_at})`);
+      }
+      if (!publishedBefore(e) || e.last_seen !== (priorFile.collected_at ?? null)) {
+        fail(`or ${kind} withdrawal ${key(e)}: new this run but not published in the prior baseline (${priorFile.collected_at}) with that last_seen`);
+      }
+    }
+  };
+  checkWithdrawals(withdrawals.models, priorWithdrawals.models || [], (m) => m.id, (m) => prior.has(m.id), 'model');
+  checkWithdrawals(withdrawals.endpoints, priorWithdrawals.endpoints || [], (e) => `${e.model_id} ${e.identity}`,
+    (e) => (prior.get(e.model_id)?.endpoints || []).some((x) => endpointIdentity(x) === e.identity), 'endpoint');
   for (const id of prior.keys()) {
     if (!byId.has(id) && !withdrawals.models.some((m) => m.id === id)) fail(`or prior model ${id} absent from catalog without a dated withdrawal`);
   }
@@ -369,7 +390,15 @@ async function verifyOr(rawDir, src, runStart, rows) {
     const unavailable = epReceipt.status === 404 && (prior.get(sm.id)?.endpoints || []).every((e) => withdrawnEndpoints.has(`${sm.id} ${endpointIdentity(e)}`));
     if (!unavailable && epReceipt.status !== 200) fail(`Endpoint HTTP ${epReceipt.status}: ${sm.id}`);
     const endpoints = unavailable ? [] : jbody(epReceipt, `or endpoints ${sm.id}`).data?.endpoints;
-    if (unavailable) eq(sm.endpoint_status, { status: 'not_published', http_status: 404, url: epReceipt.url, collected_at: sm.endpoint_status?.collected_at }, `or ${sm.id} absent endpoints status`);
+    if (unavailable) {
+      eq(sm.endpoint_status, { status: 'not_published', http_status: 404, url: epReceipt.url, collected_at: sm.endpoint_status?.collected_at }, `or ${sm.id} absent endpoints status`);
+      // The 404 is this run's own observation (the captured receipt), not a retained value: it must be dated
+      // inside this run, never earlier and never in the future.
+      const observed = Date.parse(sm.endpoint_status.collected_at);
+      if (!Number.isFinite(observed) || observed < Date.parse(runStart) || observed > Date.now()) {
+        fail(`or ${sm.id} absent endpoints status: collected_at ${sm.endpoint_status.collected_at} is not inside this run (started ${runStart})`);
+      }
+    } else if (sm.endpoint_status !== undefined) fail(`or ${sm.id}: endpoint_status without a captured 404`);
     if (!Array.isArray(endpoints)) fail(`or endpoints ${sm.id}: source data.endpoints is not an array`);
     eq(omit(sm, ['endpoint_status']), orModelProjection(hit.model, endpoints), `or ${sm.id} catalog+endpoints projection (price units $/token strings, provider tags exact)`);
     const current = new Set(endpoints.map(endpointIdentity));
