@@ -127,6 +127,8 @@ test('category view, agent feed and the v1.6.1 board describe the release', asyn
   assert.equal(feed.revision, 'v1.6.1');
   assert.equal(feed.source.artifact, '/api/jevbench/v1.6.1');
   assert.equal(feed.source.version_page, '/jev-models/v1.6.1');
+  assert.equal(feed.source.frozen_page, '/jev-models/v1.6.1');
+  assert.equal(feed.source.frozen_page, feed.source.version_page);
   const board = await read('components/JevBenchV16Board.tsx');
   assert.match(board, /data-bh-jev16-amendments/);
   assert.match(board, /data-bh-jev16-revision-history/);
