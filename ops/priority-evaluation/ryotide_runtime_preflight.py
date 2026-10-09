@@ -107,6 +107,11 @@ def callback(job, admission, recipe, recheck, output):
     shape(job, recipe)
     binding = admission.get('runtime_preflight')
     expected = {'inspector_sha256': sha(INSPECTOR), 'handler_sha256': sha(__file__), 'image': recipe['image'], 'recipe_sha256': recipe_pin(job, recipe)}
+    supplemented = isinstance(binding, dict) and 'supplement' in binding
+    if supplemented:
+        import ryotide_runtime_supplement as supplement
+        supplement.check_context()
+        expected['supplement'] = supplement.binding()
     if binding != expected or recipe['image'].split('@sha256:', 1)[-1] != IMAGE_DIGEST:
         raise ValueError('RYOTIDE runtime preflight needs exact accepted source/image pins')
 
@@ -150,6 +155,7 @@ def callback(job, admission, recipe, recheck, output):
                     driver_ok = False
             if not image_ok or not driver_ok:
                 raise measurement_dispatch.OperationalHold('ryotide_runtime_preflight_mismatch')
+            effective = supplement.build(provider, pod_id, recheck, report) if supplemented else recipe['image']
             pod_runner._exec(provider, pod_id, ['mkdir', '-p', '/runtime-preflight'])
             provider.scp_to(pod_id, str(INSPECTOR), '/runtime-preflight/inspector.py')
             remote_hash = pod_runner._exec(provider, pod_id, ['sha256sum', '/runtime-preflight/inspector.py'])
@@ -158,7 +164,7 @@ def callback(job, admission, recipe, recheck, output):
             command = ['docker', 'run', '--rm', '--network', 'none', '--read-only', '--cap-drop', 'ALL',
                        '--security-opt', 'no-new-privileges', '--tmpfs', '/tmp',
                        '-v', '/runtime-preflight/inspector.py:/inspector.py:ro',
-                       '--entrypoint', '/usr/bin/env', recipe['image'], '-i',
+                       '--entrypoint', '/usr/bin/env', effective, '-i',
                        'PATH=/opt/venv/bin:/usr/local/bin:/usr/bin:/bin', 'HF_TOKEN=', 'OPENAI_API_KEY=',
                        'python3', '-I', '/inspector.py']
             # Preserve output even on a metadata mismatch (exit 2).
@@ -179,4 +185,24 @@ def callback(job, admission, recipe, recheck, output):
         if json.dumps(recipe, sort_keys=True) != frozen_recipe:
             raise ValueError('RYOTIDE recipe changed after metadata inspection')
         return report
+    if supplemented:
+        def after_weights(provider, pod_id, report, code_tar):
+            recheck()
+            shape(job, recipe)
+            if admission.get('runtime_preflight') != expected or supplement.binding() != expected['supplement']:
+                raise ValueError('RYOTIDE supplement binding drift')
+            destination = Path(report['receipt_path']).with_name(Path(report['receipt_path']).stem + '-native.json')
+            if destination.exists() or destination.is_symlink():
+                raise measurement_dispatch.OperationalHold('ryotide_native_proof_receipt_exists')
+            native = dict(report)
+            try:
+                supplement.prove(provider, pod_id, job, recipe, native, code_tar, recheck)
+            except Exception as error:
+                native['native_proof_error_type'] = type(error).__name__
+                raise
+            finally:
+                retain(destination, native)
+            return native
+        inspect.after_weights = after_weights
+        inspect.supplemented = True
     return inspect

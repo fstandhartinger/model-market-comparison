@@ -1,0 +1,9 @@
+# CR-367: fixed RYOTIDE runtime supplement
+
+This source supports only the original order's second and final rental, with its first failure and conservative charge retained. It does not grant installation, admission, activation or input dispatch. The frozen recipe, native HTTP measurement, source/model commits, draw and wrapper disposition remain authoritative.
+
+A custodian-reviewed admission may add the exact `ryotide_runtime_supplement.binding()` to the fixed handler's existing runtime binding. The public-only context is independently hash-locked to two pure wheels and the offline/no-deps Dockerfile. Build happens on the owned pod, before customer code or weights. The base RepoDigest and driver, derived immutable image identity/layers, exact package versions and original compiler/header inspector must pass.
+
+After downloaded weight hashes pass, the reviewed selected code archive is uploaded separately from evaluation inputs. A disposable no-network container executes the native server CLI/parser/loader and warm-up; only its listener is replaced for a bounded unscored synthetic proof. All three native request types, CUDA kernel events/names, local model identity and original temperature must pass. Measurement uses the unchanged real HTTP listener and same effective image. Actual container image and network isolation are checked before output acceptance.
+
+No third-party wheel is installed or imported on the host. No extra backend, quantization, dependency upgrades, benchmark-dependent calibration or counter credit is allowed. All stages consume the same remaining one-hour/$5 rental. Missing or failed proof holds before protected transfer. A new source/profile binding must be accepted after merged installation; original admission and failure evidence remain immutable history. Sole-unit recovery and state reconciliation belong to the custodian, outside this source change.

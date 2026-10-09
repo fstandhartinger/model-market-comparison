@@ -812,8 +812,11 @@ def _teardown(provider, job, pod_id, reservation, alert):
 
 
 def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, ttl, budget,
-               alert, save_state, benchmarks=('jevbench',), quote_budget=None, expected_rows=EXPECTED_ROWS, pre_upload_gate=None, allocation_gate=None, runtime_preflight=None, *, job_dir=None, image_context_provider=None, weights_streamer=None):
+               alert, save_state, benchmarks=('jevbench',), quote_budget=None, expected_rows=EXPECTED_ROWS, pre_upload_gate=None, allocation_gate=None, runtime_preflight=None, *, job_dir=None, image_context_provider=None, weights_streamer=None, native_code_archive=None):
     """One pod attempt; raises PodRunError on any step failure (teardown still runs)."""
+    if getattr(runtime_preflight, 'supplemented', False):
+        import ryotide_runtime_supplement
+        ryotide_runtime_supplement.recovery_bounds(job_dir, state, ttl, budget)
     pod_id = None
     reservation = None
     quote_budget = {'remaining': 2} if quote_budget is None else quote_budget
@@ -947,6 +950,11 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         if runtime_preflight is not None:
             state['runtime_preflight'] = runtime_preflight(provider, pod_id)
             save_state()
+            if isinstance(state['runtime_preflight'], dict) and 'effective_image' in state['runtime_preflight']:
+                import ryotide_runtime_supplement
+                image = ryotide_runtime_supplement.effective_image(job_dir or job, recipe, state['runtime_preflight'])
+                if not callable(getattr(runtime_preflight, 'after_weights', None)):
+                    raise PodRunError('supplement requires pre-input native proof')
         if "host_staging" in recipe:
             _stream_host_weights(provider, pod_id, recipe, weights_streamer)
         else:
@@ -963,6 +971,13 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                     if digest not in check.stdout.split():
                         raise PodRunError(f"weight file {entry['dir']}/{relative} sha256 mismatch: "
                                           f"{check.stdout.strip()[-200:]}")
+        if isinstance(state.get('runtime_preflight'), dict) and 'effective_image' in state['runtime_preflight']:
+            state['runtime_preflight'] = runtime_preflight.after_weights(provider, pod_id, state['runtime_preflight'], native_code_archive)
+            save_state()
+            import ryotide_runtime_supplement
+            image = ryotide_runtime_supplement.effective_image(job_dir or job, recipe, state['runtime_preflight'])
+            if state['runtime_preflight'].get('native_proof_accepted') is not True:
+                raise PodRunError('native pre-input proof missing')
         _exec(provider, pod_id, ["mkdir", "-p", "/work", "/work/out", "/work/code"])
         # Optional trusted context holds the canonical custody lock across upload.
         with pre_upload_gate() if pre_upload_gate is not None else nullcontext():
@@ -999,6 +1014,11 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         network_mode = mode.stdout.strip()
         if network_mode != "none":
             raise PodRunError(f"run container network mode is {network_mode!r}, not 'none'")
+        if isinstance(state.get('runtime_preflight'), dict) and 'effective_image' in state['runtime_preflight']:
+            actual = _exec(provider, pod_id, ['docker', 'inspect', 'jev-pod-run', '--format', '{{.Image}}'])
+            if actual.stdout.strip() != image:
+                raise PodRunError('measurement effective image differs')
+            state['effective_image'] = image
         state["network_mode"] = network_mode
         if "host_staging" in recipe:
             # Record the actual run-container isolation flags as evidence (no environment values).
@@ -1249,7 +1269,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
                 state = _lifecycle(provider, job, recipe, staging_path, output, state,
                                    gpu_choice, ttl, remaining, alert, save_state, benchmarks, quote_budget,
                                    current['profile']['inputs']['jevbench']['count'], pre_upload_gate, allocation_gate, runtime_preflight,
-                                   job_dir=job_dir, image_context_provider=image_context_provider, weights_streamer=weights_streamer)
+                                   job_dir=job_dir, image_context_provider=image_context_provider, weights_streamer=weights_streamer, native_code_archive=code_tar)
                 break
             except PodCapacityError:
                 continue  # try the next GPU candidate; capacity only if every attempt was capacity
