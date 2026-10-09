@@ -83,7 +83,7 @@ def _attempt_rate(recipe):
     if "host_staging" in recipe and type(recipe.get("hourly_usd")) in (int, float) and 0 < recipe["hourly_usd"] <= MAX_HOURLY_USD:
         return float(recipe["hourly_usd"])
     return MAX_HOURLY_USD
-IMAGE_RE = re.compile(r"^[A-Za-z0-9._/-]+:[A-Za-z0-9_.-]+@sha256:[0-9a-f]{64}$")
+IMAGE_RE = re.compile(r"^[A-Za-z0-9._/-]+(?::[A-Za-z0-9_.-]+)?@sha256:[0-9a-f]{64}$")
 SHA40_RE = re.compile(r"[0-9a-f]{40}")
 SHA64_RE = re.compile(r"[0-9a-f]{64}")
 DIR_RE = re.compile(r"[A-Za-z0-9_.-]{1,64}")

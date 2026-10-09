@@ -1,0 +1,66 @@
+{
+  "code": {
+    "commit": "3fd3d9312bff8ec6eade08ba16ce8a6da793e99a",
+    "tree": "1f300dede1f6a215f4b8db1982841891947c3180"
+  },
+  "endpoint": "http://127.0.0.1:8090",
+  "image": "docker.io/underlabsai/decisor-sglang@sha256:60aee212ef25b0d303213b1c144b32f01403191b923d93d09a610770f8a6ad60",
+  "kind": "http_typesafe",
+  "min_vram_gb": 80,
+  "model": "decisor-4b",
+  "schema_version": 1,
+  "services": [
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "sglang.launch_server",
+        "--model-path",
+        "/models/decisor-4b",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "30000",
+        "--mem-fraction-static",
+        "0.80",
+        "--cuda-graph-backend-prefill=disabled",
+        "--disable-radix-cache"
+      ],
+      "env": {
+        "DO_NOT_TRACK": "1",
+        "HF_HOME": "/tmp/hf",
+        "HF_HUB_OFFLINE": "1",
+        "SGLANG_DISABLE_USAGE_STATS": "1",
+        "TRANSFORMERS_OFFLINE": "1",
+        "TRITON_CACHE_DIR": "/tmp/triton"
+      },
+      "ready_url": "http://127.0.0.1:30000/health"
+    },
+    {
+      "argv": [
+        "python3",
+        "/driver/decisor_shim.py"
+      ],
+      "env": {
+        "DECISOR_ENGINE": "http://127.0.0.1:30000",
+        "SHIM_PORT": "8090"
+      },
+      "ready_url": "http://127.0.0.1:8090/health"
+    }
+  ],
+  "weights": [
+    {
+      "dir": "decisor-4b",
+      "repo": "underlabs/decisor-4b",
+      "revision": "1e7f195c2c41bbedec7d36b034001ef46476914f",
+      "sha256": {
+        "chat_template.jinja": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+        "config.json": "896f5f8ece30c923711fc825b3253b16c0935e4c138e7265099d4451ad78b479",
+        "generation_config.json": "265579a8b4ae793b451baf40b93fbb5e8c19a197899ad36c787f838ca8303254",
+        "model.safetensors": "b7d1c312c3d1a62800f717ce12116433c8ee4df2be0013401e814b1db1b17e60",
+        "tokenizer.json": "06b9509352d2af50381ab2247e083b80d32d5c0aba91c272ca9ff729b6a0e523",
+        "tokenizer_config.json": "bee8eba30f0eb4af73c0fe2cd06d0f89b657d7819941c438157ec42f7c80ea87"
+      }
+    }
+  ]
+}
