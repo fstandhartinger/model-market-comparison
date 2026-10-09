@@ -52,6 +52,8 @@ class ScopedTopUp:
    if request.get('scoped_native_topup')is not None or sha(STATE/'requests'/f'{self.rid}.json')!=p.get('original_state_sha256')or sha(STATE/'pods'/f'{self.rid}.json')!=p.get('original_ledger_sha256'):raise ValueError('prospective whole original state/ledger CAS')
   elif request.get('scoped_native_topup')!=expected:raise ValueError('Root adopted one-use anchor absent')
   if p.get('SOURCE_ONLY_PROSPECTIVE_NOT_INSTALLABLE')is not False or p.get('schema_version')!=1 or p.get('scope')!=SCOPE or p.get('order_id')!=self.rid or p.get('generation')!=GENERATION or p.get('bounds')!=dict(zip(('old_creation_attempts','old_spend_usd','maximum_lifetime_allocations','maximum_lifetime_usd'),BOUNDS[self.rid])) or p.get('max_new_usd')!=5 or p.get('max_ttl_hours')!=1:raise ValueError('exact immutable topup scope')
+  selected='RTX6000' if self.rid==RYO else 'H100'
+  if p.get('selected_gpu')!=selected or a.get('selected_gpu')!=selected:raise ValueError('literal Root-authenticated scoped GPU selection')
   if a.get('verdict')!='ACCEPTED' or a.get('root_owner')!=ROOT_OWNER or a.get('scope')!=SCOPE or a.get('plan_sha256')!=sha(self.plan_path) or a.get('standing_decision_authenticity_verified')is not True or a.get('financial_scope')!=p['bounds']:raise ValueError('actual Root financial authority absent')
   if peer.get('verdict')!='PASS' or peer.get('reviewer_engine')!='claude' or peer.get('root_authority_sha256')!=sha(self.auth_path) or peer.get('plan_sha256')!=sha(self.plan_path) or peer.get('gate_sha256')!=sha(__file__) or peer.get('standing_decision_authenticity_verified')is not True:raise ValueError('genuine exact independent topup peer absent')
   refs=p.get('references',{})
@@ -73,6 +75,14 @@ class ScopedTopUp:
    if (self.base/'ACTIVATION-CLAIM.json').exists()or hashlib.sha256(json.dumps(claim,sort_keys=True,allow_nan=False).encode()).hexdigest()!=a.get('activation_claim_sha256'):raise ValueError('prospective exclusive claim differs')
   elif sha(self.base/'ACTIVATION-CLAIM.json')!=a.get('activation_claim_sha256'):raise ValueError('exclusive Root activation custody')
   self.plan=p;self.recheck()
+ def gpu_choice(self,recipe):
+  self.verify()
+  from pod_runner import GPU_PREFERENCE
+  selected='RTX6000' if self.rid==RYO else 'H100'
+  required=24 if self.rid==RYO else 80
+  expected=(selected,48 if self.rid==RYO else 80)
+  if type(recipe.get('min_vram_gb'))is not int or recipe['min_vram_gb']!=required or expected not in GPU_PREFERENCE or expected[1]<required:raise ValueError('original immutable recipe and existing GPU preference membership')
+  return expected
  def recovery_bounds(self,job,state,ttl,budget):
   if Path(job)!=self.job:raise ValueError('foreign supplemented recovery')
   self.verify();preinput(self.rid,state,ttl,budget)
