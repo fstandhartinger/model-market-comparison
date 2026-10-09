@@ -11,6 +11,8 @@ import json
 import re
 import uuid
 import fcntl
+import os
+import threading
 from contextlib import contextmanager
 
 import measurement_dispatch
@@ -109,18 +111,39 @@ def accepted(job_dir):
     return admission, measured, scored
 
 
+_RETIREMENT_CUSTODY = threading.local()
+
+
 @contextmanager
 def retirement_lock(admission):
-    """The canonical writer lock remains held through the sealed upload."""
+    """Keep genuine same-thread fd custody through nested, freshly checked gates."""
     lock = ROTATION_TOOL.parent / '.lock'
     if lock.is_symlink():
         raise ValueError('unsafe canonical rotation lock')
-    with lock.open('a') as handle:
-        fcntl.flock(handle, fcntl.LOCK_EX)
+    held = getattr(_RETIREMENT_CUSTODY, 'held', None)
+    if held is not None:
+        # Only this thread's actual outer acquisition establishes custody.
+        # Another thread/process must acquire its own descriptor normally.
+        actual = os.fstat(held['fd'])
+        current = lock.stat()
+        if held['path'] != str(lock.resolve()) or held['pid'] != os.getpid() or held['thread'] != threading.get_ident() or held['depth'] < 1 or (actual.st_dev, actual.st_ino) != held['inode'] or (current.st_dev, current.st_ino) != held['inode']:
+            raise ValueError('canonical retirement lock custody changed')
+        held['depth'] += 1
         try:
             _retirement_unlocked(admission)
             yield
         finally:
+            held['depth'] -= 1
+        return
+    with lock.open('a') as handle:
+        fcntl.flock(handle, fcntl.LOCK_EX)
+        actual = os.fstat(handle.fileno())
+        _RETIREMENT_CUSTODY.held = {'fd': handle.fileno(), 'path': str(lock.resolve()), 'inode': (actual.st_dev, actual.st_ino), 'pid': os.getpid(), 'thread': threading.get_ident(), 'depth': 1}
+        try:
+            _retirement_unlocked(admission)
+            yield
+        finally:
+            del _RETIREMENT_CUSTODY.held
             fcntl.flock(handle, fcntl.LOCK_UN)
 
 
