@@ -45,7 +45,8 @@ def _evaluate(*, recipe, state, equivalence, job, receipt_dir, prepare, measure,
         account=safety.launch_allowance(recipe['requested_max_liability_usd'])
         allowance={'org':account['organization'],'monthly_limit_usd':account['allowance_usd'],
                    'payg':account['pay_as_you_go'],'observed_at':account['observed_at'],
-                   'cycle':account['cycle'],'used_usd':account['used_usd'],'reserved_usd':account['reserved_usd']}
+                   'cycle':account['cycle'],'used_usd':account['used_usd'],'reserved_usd':account['reserved_usd'],
+                   'price_verified':account.get('price_verified',False)}
     except Exception as exc:
         allowance=None
     decision=choose_backend(recipe,state,allowance,equivalence,dt.datetime.now(dt.timezone.utc))

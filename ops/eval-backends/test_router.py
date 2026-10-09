@@ -11,12 +11,18 @@ class RouterTests(unittest.TestCase):
                            torch_version='2.7.0', sm120=True, docker_in_docker=False,
                            requested_max_liability_usd=2, methodology_version='v1', model_revision='abc')
         self.allowance = dict(org='system1models-org', monthly_limit_usd=30,
-                              payg=False, observed_at=self.now, cycle='2026-10', used_usd=0, reserved_usd=0)
+                              payg=False, price_verified=True, observed_at=self.now, cycle='2026-10', used_usd=0, reserved_usd=0)
         self.equivalence = {key: self.recipe[key] for key in ('methodology_version', 'model_revision', 'image_digest')}
         self.equivalence.update(passed=True, measured=True, receipt='measured-run-123')
 
     def route(self, state=None):
         return choose_backend(self.recipe, {} if state is None else state, self.allowance, self.equivalence, self.now)
+
+    def test_unknown_price_routes_legacy(self):
+        self.allowance['price_verified']=False
+        self.assertEqual(self.route()['reason']['code'],'pricing_unverified')
+        self.recipe['diagnostic']=True
+        self.assertEqual(self.route()['backend'],'coreweave')
 
     def test_eligible_and_no_input_mutation(self):
         original = copy.deepcopy((self.recipe, self.allowance, self.equivalence))

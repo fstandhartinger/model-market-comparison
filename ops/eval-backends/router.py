@@ -114,6 +114,8 @@ def choose_backend(recipe, state, allowance, equivalence, now):
     if not all(_number(cost) for cost in costs) or sum(costs) >= 27:
         return reject('allowance_insufficient')
     if not recipe.get('diagnostic', False):
+        if allowance.get('price_verified') is not True:
+            return reject('pricing_unverified')
         if not isinstance(equivalence, dict) or equivalence.get('passed') is not True or equivalence.get('measured') is not True or not isinstance(equivalence.get('receipt'), str) or not equivalence['receipt'].strip():
             return reject('equivalence_unproven')
         for key in ('methodology_version', 'model_revision', 'image_digest'):

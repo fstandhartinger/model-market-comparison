@@ -12,6 +12,7 @@ ENABLED = Path.home() / '.config/coreweave-eval-enabled'
 PYTHON = Path.home() / '.local/share/coreweave-eval/venv/bin/python'
 HELPER = Path.home() / 'bin/coreweave_gpu_safety.py'
 LEDGER = Path.home() / '.local/state/gpu-pods/ledger.jsonl'
+PRICE_RECEIPT = Path.home() / '.config/coreweave-eval-price.json'
 QUERY = '''{ organization(name:"system1models-org") { name subscriptions { subscriptionType status privileges } usageByPeriod(usagePeriod:CURRENT_CYCLE, usageType:SANDBOXES_COST, viewType:CUMULATIVE) { intervals { startDate endDate stackTotal } } } }'''
 
 
@@ -140,7 +141,18 @@ def launch_allowance(requested_usd):
     a=helper_call('allowance'); reserve=reserved_month_usd()
     if not math.isfinite(requested_usd) or requested_usd<=0 or a['used_usd']+reserve+requested_usd>=27:
         raise RuntimeError('CoreWeave 90 percent allowance stop')
-    return {**a,'reserved_usd':reserve,'requested_usd':requested_usd}
+    # Scored traffic needs an owner-accepted account quote or settled billing.
+    # Published cloud GPU prices are not sandbox pricing evidence.
+    price_verified=False
+    if PRICE_RECEIPT.exists():
+        price=json.loads(PRICE_RECEIPT.read_text())
+        total=price.get('total_hourly_usd')
+        price_verified=(price.get('organization')==ORG and price.get('gpu')=='RTXPRO6000'
+            and price.get('cpu')==4 and price.get('memory_gib')==16
+            and price.get('cycle')==a.get('cycle') and price.get('owner_accepted') is True
+            and isinstance(price.get('source'),str) and bool(price['source'].strip())
+            and type(total) in (int,float) and 0<total<=5)
+    return {**a,'reserved_usd':reserve,'requested_usd':requested_usd,'price_verified':price_verified}
 
 
 def conservative_spend():
