@@ -128,6 +128,15 @@ def reserved_month_usd():
 
 
 def launch_allowance(requested_usd):
+    now=dt.datetime.now(dt.timezone.utc)
+    # The declared liability covers the full TTL at the accounting rate.
+    # Hold launches spanning the provider month while the usage meter can lag.
+    try:
+        finish=now+dt.timedelta(seconds=requested_usd*3600/5)
+    except (OverflowError,TypeError):
+        raise RuntimeError('CoreWeave lifetime liability invalid') from None
+    if finish.strftime('%Y-%m')!=now.strftime('%Y-%m'):
+        raise RuntimeError('CoreWeave launch crosses allowance cycle')
     a=helper_call('allowance'); reserve=reserved_month_usd()
     if not math.isfinite(requested_usd) or requested_usd<=0 or a['used_usd']+reserve+requested_usd>=27:
         raise RuntimeError('CoreWeave 90 percent allowance stop')
