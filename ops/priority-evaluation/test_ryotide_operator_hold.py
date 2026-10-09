@@ -132,6 +132,28 @@ class ExactCorrectionGate(unittest.TestCase):
         self.assertEqual(len(rows), 1)
         self.assertIn("AND r2.id <> '" + RID + "'::uuid", sql.call_args_list[0].args[0])
 
+    def test_non_utf8_or_symlink_blocks_only_ryotide(self):
+        for kind in ('non_utf8', 'symlink'):
+            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as temp, \
+                 mock.patch.object(c, 'STATE_ROOT', Path(temp)), \
+                 mock.patch.object(c, 'managed_predicate', return_value='TRUE'), \
+                 mock.patch.object(c, 'sql_json', side_effect=[{'id': '11111111-1111-4111-8111-111111111111'}, None]) as sql:
+                path = c.state_path(RID)
+                path.parent.mkdir()
+                if kind == 'non_utf8':
+                    path.write_bytes(b'\xff')
+                else:
+                    path.symlink_to(Path(temp) / 'missing')
+                self.assertEqual(len(c.claim_rows(None, c.JOB_ROOT)), 1)
+                self.assertIn("AND r2.id <> '" + RID + "'::uuid", sql.call_args_list[0].args[0])
+
+    def test_permission_error_blocks_only_ryotide(self):
+        with mock.patch.object(Path, 'is_file', side_effect=PermissionError('fixture')), \
+             mock.patch.object(c, 'managed_predicate', return_value='TRUE'), \
+             mock.patch.object(c, 'sql_json', side_effect=[{'id': '11111111-1111-4111-8111-111111111111'}, None]) as sql:
+            self.assertEqual(len(c.claim_rows(None, c.JOB_ROOT)), 1)
+        self.assertIn("AND r2.id <> '" + RID + "'::uuid", sql.call_args_list[0].args[0])
+
 
 if __name__ == '__main__':
     unittest.main()

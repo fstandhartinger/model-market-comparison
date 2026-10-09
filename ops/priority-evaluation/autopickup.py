@@ -866,7 +866,7 @@ def claim_rows(synthetic_id: str | None, job_root: Path, limit: int = MAX_ROWS_P
         correction_path = state_path("81e785ad-081b-4592-99df-1c3d709fd6c8")
         correction_held = (not correction_path.is_file() or correction_path.is_symlink()
                            or ryotide_source_link_recovery_hold(load_state("81e785ad-081b-4592-99df-1c3d709fd6c8")))
-    except PickupError:
+    except (PickupError, OSError, ValueError, RecursionError):
         # Corrupt custody blocks only this order; unrelated paid claims continue.
         correction_held = True
     if correction_held:
