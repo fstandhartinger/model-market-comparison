@@ -22,11 +22,11 @@ export async function DecisionMethodology({ version = null }: { version?: string
   const sameApiSet = apiRows === m.counts.selfhosted_input;
   const weights = Object.entries(s.composite.weights).map(([axis, weight]) => `${axis[0].toUpperCase()}${axis.slice(1)} ${weight}%`).join(', ');
   const amendmentNote = m.amendments.length
-    ? `Published addenda ${m.amendments.map((a: { label: string; date: string }) => `${a.label} (${a.date})`).join(', ')}; amended through ${m.amended_through}; latest row measurement ${m.max_row_last_measured_on}. Cite source_sha256 ${m.source_sha256} for these exact result bytes.`
-    : `No post-publication addenda are recorded. Cite source_sha256 ${m.source_sha256} for these result bytes.`;
+    ? `Additions stored in the results file: ${m.amendments.map((a: { label: string; date: string }) => `${a.label} (${a.date})`).join(', ')}; amended through ${m.amended_through}; latest row measurement ${m.max_row_last_measured_on}.`
+    : `No post-publication additions are recorded in the results file.`;
   return <DecisionGuide title={`Decision model benchmark methodology — JevBench ${m.revision}`} intro="JevBench measures typed decisions: application state and a bounded rubric go in; a structured answer and, where supported, probabilities come out. Compare accuracy and calibration alongside measured latency and modeled cost. The open-weights board leads with Capability; the hosted API board leads with Composite.">
     <section className="space-y-3"><h2 className="text-2xl font-semibold">Release and measurement dates</h2>
-      <p>Published release <b>{m.revision}</b>, initially published <time dateTime={m.published_at}>{m.published_at.slice(0,10)}</time>. The <a className="text-accent underline" href={m.version_page}>versioned leaderboard</a> retains its release context. {amendmentNote} {m.current_board_note}</p>
+      <p>Published release <b>{m.revision}</b>, initially published <time dateTime={m.published_at}>{m.published_at.slice(0,10)}</time>. The <a className="text-accent underline" href={m.version_page}>versioned leaderboard</a> retains its release context. {amendmentNote} Cite <code className="break-all">source_sha256 {m.source_sha256}</code> for these exact result bytes. {m.current_board_note}</p>
       <p>The release draw contains {m.counts.S.toLocaleString('en-US')} sealed and {m.counts.P.toLocaleString('en-US')} public decisions. Self-hosted systems answer {m.counts.selfhosted_input.toLocaleString('en-US')} decisions. {sameApiSet ? `The ${m.revision} full-set API rows answer the same set.` : `API rows answer ${apiRows.toLocaleString('en-US')} decisions on this release.`} Older subsets and later reruns are explicitly labeled and may be equated. Missing or refused answers are counted by the scorer, rather than silently removed.</p>
     </section>
     <section className="space-y-3"><h2 className="text-2xl font-semibold">Capability and Composite are different scores</h2>
