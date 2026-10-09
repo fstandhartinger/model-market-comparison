@@ -63,6 +63,23 @@ HOST_MIN_TTL_HOURS = 2.75
 HOST_RUN_RESERVE_S = 3600 + 600
 
 
+HOST_MAX_RAW_BYTES = 256 << 20
+HOST_MAX_RECEIPT_BYTES = 4 << 20
+HOST_MAX_LINE_BYTES = 4 << 20
+SECRETISH_ENV_RE = re.compile(r"(?i)(token|secret|passw|credential|apikey|api_key|auth|private)")
+ORIGIN_SNIPPET = (
+    "import os,sys\n"
+    "seen=[]\n"
+    "for base in sorted({p for p in sys.path if p and os.path.isdir(p) and os.path.realpath(p) not in ('/code','/')}):\n"
+    "    for root,dirs,files in os.walk(base):\n"
+    "        depth=root[len(base):].count(os.sep)\n"
+    "        if depth>=4: dirs[:]=[]\n"
+    "        for n in dirs+files:\n"
+    "            low=n.lower()\n"
+    "            if low.startswith('aplomb') or low.startswith('run_aplomb'): seen.append(os.path.join(root,n))\n"
+    "print('\\n'.join(sorted(set(seen))))\n")
+
+
 def _utcnow():
     return datetime.now(timezone.utc)
 
@@ -348,10 +365,43 @@ def _build_host_image(provider, pod_id, recipe, job_dir, image_context_provider,
                 or re.fullmatch(r"[A-Za-z0-9_.-]+ @ file:///tmp/kernel-wheels/[A-Za-z0-9_.+-]+\.whl", line))
            for line in freeze.splitlines()):
         raise PodRunError("image_pip_freeze_unsafe")
+    # Host-side evidence that the image carries no copy of the customer package outside /code (the customer
+    # process is never started here: plain `python -I -c` over the interpreter's search path only).
+    listing = _exec(provider, pod_id, ["docker", "run", "--rm", "--network", "none", "--entrypoint", "python",
+                                       build["tag"], "-I", "-c", ORIGIN_SNIPPET]).stdout
+    if listing.strip():
+        raise PodRunError("image_contains_customer_package")
+    # Image-level environment is checked BEFORE any sealed dispatch (the run container adds only HOME and two empty keys).
+    image_env_names = _env_names_checked(_exec(provider, pod_id, ["docker", "image", "inspect", build["tag"],
+                                                                   "--format", "{{json .Config.Env}}"]).stdout)
     state["host_staging"].update(image_id=image_id, pip_freeze=freeze,
-        pip_freeze_sha256=hashlib.sha256(freeze.encode()).hexdigest())
+        pip_freeze_sha256=hashlib.sha256(freeze.encode()).hexdigest(),
+        module_origin_listing_sha256=hashlib.sha256(listing.encode()).hexdigest(), image_env_names=image_env_names)
     save_state()
     return build["tag"]
+
+
+def _env_names_checked(raw):
+    """Names of an env list; refuse secret-looking names (HF_TOKEN / OPENAI_API_KEY only when empty)."""
+    try:
+        env = json.loads(raw)
+        if not isinstance(env, list) or not all(isinstance(item, str) and "=" in item for item in env):
+            raise ValueError
+    except (ValueError, TypeError):
+        raise PodRunError("run_container_inspect_invalid") from None
+    names = []
+    for item in env:
+        name, _, value = item.partition("=")
+        names.append(name)
+        if SECRETISH_ENV_RE.search(name) and not (name in ("HF_TOKEN", "OPENAI_API_KEY") and value == ""):
+            raise PodRunError("run_container_env_secret_name")
+    return sorted(set(names))
+
+
+def _bounded_remote_size(provider, pod_id, remote, limit):
+    out = _exec(provider, pod_id, ["stat", "-c", "%s", remote]).stdout.strip()
+    if not out.isdigit() or int(out) > limit:
+        raise PodRunError("host_output_too_large")
 
 
 def _stream_host_weights(provider, pod_id, recipe, weights_streamer):
@@ -966,6 +1016,8 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 raise PodRunError("run_container_inspect_invalid") from None
             state["host_staging"]["run_container"] = {key: host.get(key) for key in (
                 "NetworkMode", "Binds", "Privileged", "CapAdd", "ReadonlyRootfs", "Devices", "PidMode", "IpcMode", "UsernsMode")}
+            state["host_staging"]["run_container"]["env_names"] = _env_names_checked(
+                _exec(provider, pod_id, ["docker", "inspect", "jev-pod-run", "--format", "{{json .Config.Env}}"]).stdout)
             save_state()
         wait = _exec(provider, pod_id, ["docker", "wait", "jev-pod-run"], timeout=3600)
         rc = wait.stdout.strip().splitlines()[-1] if wait.stdout.strip() else ""
@@ -978,8 +1030,13 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             for name in benchmarks:
                 target = output / name
                 target.mkdir(exist_ok=True)
+                if "host_staging" in recipe:
+                    _bounded_remote_size(provider, pod_id, f'/work/out/{name}/raw.jsonl', HOST_MAX_RAW_BYTES)
+                    _bounded_remote_size(provider, pod_id, f'/work/out/{name}/receipt.json', HOST_MAX_RECEIPT_BYTES)
                 provider.scp_from(pod_id, f'/work/out/{name}/raw.jsonl', str(target / 'raw.jsonl'))
                 provider.scp_from(pod_id, f'/work/out/{name}/receipt.json', str(target / 'pod-receipt.json'))
+                if "host_staging" in recipe and max((len(line) for line in (target / 'raw.jsonl').read_bytes().split(b"\n")), default=0) > HOST_MAX_LINE_BYTES:
+                    raise PodRunError("host_output_line_too_long")
                 expected = json.loads((target / 'pod-receipt.json').read_text()).get('rows')
                 count = (target / 'raw.jsonl').read_bytes().count(b'\n')
                 if type(expected) is not int or count != expected:
