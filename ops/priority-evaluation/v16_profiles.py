@@ -176,14 +176,14 @@ def measure(job_dir, *, scoped_topup=False):
     allocation_gate = None
     state = json.loads((STATE_ROOT / 'requests' / (job.name + '.json')).read_text())
     if scoped_topup:
-        from scoped_native_topup import ScopedTopUp
+        from scoped_native_topup import ScopedTopUp, SCOPE
         def topup_recheck():
             if late is not None:
                 late.check()
             if accepted(job) != (admission, measured, scored):
                 raise ValueError('scoped topup original v16 admission changed')
             retirement(admission)
-        allocation_gate = ScopedTopUp(job, admission, topup_recheck)
+        allocation_gate = ScopedTopUp(job, admission, topup_recheck, scope=SCOPE if scoped_topup is True else scoped_topup)
     elif state.get('v16_generation_allocation') is not None:
         from v16_allocation import FreshAllocation
         def allocation_recheck():
