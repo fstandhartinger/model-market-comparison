@@ -2007,10 +2007,18 @@ def dispatch_measurement(rid: str, job_dir: Path) -> None:
         if any(isinstance(rate, bool) or not isinstance(rate, (int, float))
                or rate != recipe.get('hourly_usd') for rate in rates):
             raise measurement_dispatch.OperationalHold('reviewed_runtime_metadata_invalid')
+        host_extra = {}
+        if isinstance(recipe, dict) and 'host_staging' in recipe:
+            try:
+                import host_staging_glue
+                streamer, context_provider = host_staging_glue.make_callables(job_dir, recipe)
+            except Exception:  # config/import/preflight problems all hold before any pod exists
+                raise measurement_dispatch.OperationalHold('host_staging_unaccepted') from None
+            host_extra = {'weights_streamer': streamer, 'image_context_provider': context_provider}
         bundle = pod_runner.run(rid, job_dir, recipe, STATE_ROOT / 'measurements' / rid / 'gpu-order',
                                 review['source_pins']['official_measurement'],
                                 max(0, pod_runner.PER_ORDER_CAP_USD - spent), benchmarks=gpu_names,
-                                native_source_pins=review['source_pins'])
+                                native_source_pins=review['source_pins'], **host_extra)
         combined_records = bundle['benchmarks']
     for benchmark in row["benchmarks"]:
         runtime = runtimes[benchmark]

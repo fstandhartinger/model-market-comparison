@@ -1,0 +1,382 @@
+"""Host staging tests use only local synthetic data and an in-memory provider."""
+import copy
+import hashlib
+import io
+import json
+from pathlib import Path
+import subprocess
+import tarfile
+import unittest
+from unittest import mock
+
+import measurement_dispatch as md
+import pod_runner as pr
+import test_paid_native_order as fixtures
+from test_autopickup import _FakeProvider
+
+RID = '00000000-0000-4000-8000-000000000088'
+
+
+class HostFake(_FakeProvider):
+    def __init__(self, failure=None):
+        super().__init__()
+        self.failure = failure
+        self.commands = []
+
+    def exec(self, pod, command, timeout=600):
+        self.commands.append((command, timeout))
+        out = None
+        if command[:2] == ['docker', 'build'] and self.failure == 'build':
+            return subprocess.CompletedProcess(command, 1, '', 'synthetic build failure')
+        if command[:3] == ['docker', 'image', 'inspect'] and command[-1] == '{{.Id}}':
+            out = 'sha256:' + 'b' * 64 + '\n'
+        elif command[-4:] == ['-m', 'pip', 'freeze', '--all']:
+            out = {'credential': 'x @ https://user:secret@example.invalid/x\n',
+                   'otherfile': 'x @ file:///etc/passwd\n',
+                   'kernelwheel': 'torch==2.8.0\ncausal-conv1d @ file:///tmp/kernel-wheels/causal_conv1d-1.7.0-cp312-cp312-linux_x86_64.whl\n'
+                   }.get(self.failure, 'torch==2.8.0\n')
+        elif command[0] == 'find':
+            if '! ' in ' '.join(command):
+                out = '/models/torchcast/link\n' if self.failure == 'symlink' else ''
+            else:
+                out = '/models/torchcast/model.safetensors\n'
+                if self.failure == 'extra':
+                    out += '/models/torchcast/extra\n'
+        elif command[0] == 'stat':
+            out = '9\n' if self.failure == 'size' else '8\n'
+        elif command[0] == 'sha256sum' and self.failure == 'hash':
+            out = '0' * 64 + '  file\n'
+        if out is not None:
+            self.calls.append(('exec', pod, command[:3]))
+            return subprocess.CompletedProcess(command, 0, out, '')
+        return super().exec(pod, command, timeout)
+
+    def scp_from(self, pod, remote, local):
+        if '/jevbench/' in remote:
+            Path(local).write_text('{"fixture":1}\n{"fixture":2}\n' if remote.endswith('raw.jsonl') else '{"rows":2}')
+        else:
+            super().scp_from(pod, remote, local)
+
+
+class HostStagingTests(unittest.TestCase):
+    def setUp(self):
+        self.fixture = fixtures.NativeOrderTests()
+        self.fixture.setUp()
+        self.root, self.job, self.pins = self.fixture.root, self.fixture.job, self.fixture.pins
+        self.recipe = copy.deepcopy(self.fixture.recipe)
+        self.context = self.root / 'context.tar'
+        with tarfile.open(self.context, 'w') as archive:
+            info = tarfile.TarInfo('Dockerfile')
+            content = b'FROM synthetic AS optimized\n'
+            info.size = len(content)
+            archive.addfile(info, io.BytesIO(content))
+        context_sha = hashlib.sha256(self.context.read_bytes()).hexdigest()
+        self.recipe['host_staging'] = {
+            'weights_manifest': [{'path': 'model.safetensors', 'sha256': self.recipe['weights'][0]['sha256']['model.safetensors'], 'size': 8}],
+            'image_build': {'context_sha256': context_sha, 'target': 'optimized', 'tag': 'aplomb-runtime:' + context_sha[:12]}}
+        self.rehash()
+        self.stream_calls = []
+
+        def streamer(provider, pod_id, manifest, remote_root):
+            self.stream_calls.append((pod_id, manifest, remote_root))
+            statefile = self.root / 'pods' / (RID + '.json')
+            if statefile.exists():
+                state = json.loads(statefile.read_text())
+                self.assertFalse(state['input_dispatched'])
+                self.assertFalse(state['execution_started'])
+        streamer.sha256 = 'c' * 64
+        self.streamer = streamer
+        self.acceptance_path = self.job / 'source/HOST-STAGING-ACCEPTANCE.json'
+        self.acceptance = {'schema_version': 1, 'request_id': RID,
+            'model_commit': self.recipe['weights'][0]['revision'],
+            'weights_manifest_sha256': self.recipe['host_staging']['weights_manifest_sha256'],
+            'image_context_sha256': context_sha, 'streamer_sha256': streamer.sha256,
+            'accepted_by': 'synthetic reviewer', 'accepted_at': '2026-10-09T00:00:00Z'}
+        self.write_acceptance()
+        path = self.job / 'source/FETCH-RECEIPT-model.json'
+        record = json.loads(path.read_text())
+        record['credential_repository'] = 'synthetic-secret-do-not-persist'
+        path.write_text(json.dumps(record))
+        requests = self.root / 'state/requests'
+        requests.mkdir(parents=True)
+        (requests / (RID + '.json')).write_text('{}')
+
+    def tearDown(self):
+        self.fixture.tearDown()
+
+    def rehash(self):
+        stage = self.recipe['host_staging']
+        stage['weights_manifest_sha256'] = hashlib.sha256(json.dumps(sorted(stage['weights_manifest'], key=lambda e: e['path']), sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+
+    def write_acceptance(self):
+        self.acceptance_path.write_text(json.dumps(self.acceptance))
+        self.acceptance_path.chmod(0o600)
+
+    def run_recipe(self, fake, **kwargs):
+        options = dict(image_context_provider=lambda job: self.context, weights_streamer=self.streamer)
+        options.update(kwargs)
+        with mock.patch.object(pr, 'PODS_DIR', self.root / 'pods'), \
+             mock.patch.object(pr, 'STATE_ROOT', self.root / 'state'), \
+             mock.patch.object(md, 'pins', return_value=self.pins), \
+             mock.patch.object(pr.native_admission, 'validate_native_admission', return_value='a' * 64):
+            return pr.run(RID, self.job, self.recipe, self.root / 'out', self.pins, 20,
+                provider=fake, alert=lambda text: None, native_source_pins={'official_measurement': self.pins}, **options)
+
+    def lifecycle(self, fake, **kwargs):
+        state = {'host_staging': {}}
+        options = dict(job_dir=self.job, image_context_provider=lambda job: self.context, weights_streamer=self.streamer)
+        options.update(kwargs)
+        (self.root / 'out').mkdir(exist_ok=True)
+        with mock.patch.object(pr, 'PODS_DIR', self.root / 'pods'):
+            try:
+                pr._lifecycle(fake, 'synthetic', self.recipe, self.root / 'stage.tar', self.root / 'out',
+                    state, ('H100', 80), 3, 20, lambda text: None, lambda: None, **options)
+            finally:
+                self.last_state = state
+
+    def test_valid_schema(self):
+        self.assertIs(pr.validate_recipe(self.recipe, self.job), self.recipe)
+
+    def test_schema_reject_matrix(self):
+        original = copy.deepcopy(self.recipe)
+        changes = [
+            lambda r: r.update(kind='python_inprocess'),
+            lambda r: r['host_staging'].update(unknown=1),
+            lambda r: r.update(host_staging=None),
+            lambda r: r['host_staging'].update(weights_manifest=[]),
+            lambda r: r['host_staging'].update(weights_manifest=[r['host_staging']['weights_manifest'][0]] * 17),
+            lambda r: r['host_staging']['weights_manifest'][0].update(extra=1),
+            lambda r: r['host_staging']['image_build'].update(extra=1),
+            lambda r: r['host_staging']['image_build'].update(target='base'),
+            lambda r: r['host_staging']['image_build'].update(tag='aplomb-runtime:000000000000'),
+            lambda r: r['host_staging']['image_build'].update(context_sha256='bad'),
+            lambda r: r.update(image='unreviewed:latest'),
+            lambda r: r['host_staging'].update(weights_manifest_sha256='0' * 64),
+            lambda r: r['host_staging']['weights_manifest'].append(copy.deepcopy(r['host_staging']['weights_manifest'][0]))]
+        for change in changes:
+            self.recipe = copy.deepcopy(original)
+            change(self.recipe)
+            with self.subTest(change=change), self.assertRaisesRegex(md.OperationalHold, 'pod_recipe_invalid'):
+                pr.validate_recipe(self.recipe, self.job)
+        for path in ('../x', '/x', './x', 'a//b', 'a/../b', 'a/', '', 'x\n', 'a\\b'):
+            self.recipe = copy.deepcopy(original)
+            self.recipe['host_staging']['weights_manifest'][0]['path'] = path
+            self.rehash()
+            with self.subTest(path=path), self.assertRaisesRegex(md.OperationalHold, 'pod_recipe_invalid'):
+                pr.validate_recipe(self.recipe, self.job)
+        for field, values in (('size', [-1, True, 1.0, '8']), ('sha256', ['bad', 'A' * 64, 2])):
+            for value in values:
+                self.recipe = copy.deepcopy(original)
+                self.recipe['host_staging']['weights_manifest'][0][field] = value
+                self.rehash()
+                with self.subTest(field=field, value=value), self.assertRaisesRegex(md.OperationalHold, 'pod_recipe_invalid'):
+                    pr.validate_recipe(self.recipe, self.job)
+        self.recipe = copy.deepcopy(original)
+        self.recipe['weights'][0]['sha256']['extra'] = 'd' * 64
+        with self.assertRaisesRegex(md.OperationalHold, 'pod_recipe_invalid'):
+            pr.validate_recipe(self.recipe, self.job)
+
+    def test_acceptance_missing_or_mismatched_blocks_before_reservation(self):
+        original = dict(self.acceptance)
+        for field in original:
+            self.acceptance = dict(original)
+            self.acceptance[field] = None
+            self.write_acceptance()
+            fake = HostFake()
+            with self.subTest(field=field), self.assertRaisesRegex(md.OperationalHold, 'host_staging_unaccepted'):
+                self.run_recipe(fake)
+            self.assertEqual(fake.calls, [])
+        for field, value in [('model_commit', 'f' * 40), ('request_id', 'other'), ('streamer_sha256', 'a' * 64),
+                ('weights_manifest_sha256', 'b' * 64), ('image_context_sha256', 'b' * 64),
+                ('accepted_by', ' '), ('accepted_at', '2026-10-09'), ('schema_version', True)]:
+            self.acceptance = dict(original)
+            self.acceptance[field] = value
+            self.write_acceptance()
+            with self.subTest(field=field), self.assertRaisesRegex(md.OperationalHold, 'host_staging_unaccepted'):
+                self.run_recipe(HostFake())
+        self.acceptance_path.unlink()
+        with self.assertRaisesRegex(md.OperationalHold, 'host_staging_unaccepted'):
+            self.run_recipe(HostFake())
+
+    def test_acceptance_strict_json_and_host_ownership(self):
+        for raw in ('[]', '{}', '{"schema_version":1,"schema_version":1}', '{'):
+            self.acceptance_path.write_text(raw)
+            with self.subTest(raw=raw), self.assertRaisesRegex(md.OperationalHold, 'host_staging_unaccepted'):
+                self.run_recipe(HostFake())
+        self.write_acceptance()
+        self.acceptance_path.chmod(0o666)
+        with self.assertRaisesRegex(md.OperationalHold, 'host_staging_unaccepted'):
+            self.run_recipe(HostFake())
+        self.acceptance_path.unlink()
+        self.acceptance_path.symlink_to(self.context)
+        with self.assertRaisesRegex(md.OperationalHold, 'host_staging_unaccepted'):
+            self.run_recipe(HostFake())
+
+    def test_streamer_missing_fails_closed_without_upload_or_pod(self):
+        fake = HostFake()
+        with self.assertRaisesRegex(pr.PodRunError, 'weights_streamer_not_configured'):
+            self.run_recipe(fake, weights_streamer=None)
+        self.assertEqual(fake.calls, [])
+        with self.assertRaisesRegex(pr.PodRunError, 'weights_streamer_not_configured'):
+            self.lifecycle(fake, weights_streamer=None)
+        self.assertEqual(fake.removed, ['pod-1'])
+        self.assertFalse(any(call[0] == 'scp_to' for call in fake.calls))
+
+    def test_build_context_hash_mismatch_tears_down_before_upload(self):
+        self.context.write_bytes(b'wrong synthetic context')
+        fake = HostFake()
+        with self.assertRaisesRegex(pr.PodRunError, 'image_build_context_sha256_mismatch'):
+            self.lifecycle(fake)
+        self.assertEqual(fake.removed, ['pod-1'])
+        self.assertFalse(any(call[0] == 'scp_to' for call in fake.calls))
+        self.assertFalse(self.last_state['input_dispatched'])
+
+    def test_pre_dispatch_failures_teardown_and_preserve_charge(self):
+        for failure, reason in [('extra', 'file_set'), ('symlink', 'non_regular'), ('size', 'size_mismatch'),
+                ('hash', 'sha256_mismatch'), ('build', 'pod exec failed'), ('credential', 'pip_freeze_unsafe'), ('otherfile', 'pip_freeze_unsafe')]:
+            fake = HostFake(failure)
+            with self.subTest(failure=failure), self.assertRaisesRegex(pr.PodRunError, reason):
+                self.lifecycle(fake)
+            self.assertEqual(fake.removed, ['pod-1'])
+            self.assertFalse(self.last_state['input_dispatched'])
+            self.assertFalse(self.last_state['execution_started'])
+            self.assertEqual(self.last_state['creation_attempts'], 1)
+            self.assertEqual(self.last_state['spent_upper_bound_usd'], 15)
+            self.assertFalse(any(c[0] == 'scp_to' and c[2] == '/work/stage.tar' for c in fake.calls))
+
+    def test_large_unsorted_manifest_with_empty_file_validates_and_hash_is_order_independent(self):
+        weights = self.recipe['weights'][0]['sha256']
+        entries = [{'path': 'f%03d.json' % i, 'sha256': '%064x' % (i + 7), 'size': 0 if i == 3 else i + 1} for i in range(60)]
+        entries.append({'path': 'model.safetensors', 'sha256': weights['model.safetensors'], 'size': 8})
+        entries.reverse()
+        self.recipe['host_staging']['weights_manifest'] = entries
+        self.recipe['weights'][0]['sha256'] = {e['path']: e['sha256'] for e in entries}
+        self.rehash()
+        pr.validate_recipe(self.recipe, self.job)
+        shuffled = list(reversed(entries))
+        digest = hashlib.sha256(json.dumps(sorted(shuffled, key=lambda e: e['path']), sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+        self.assertEqual(digest, self.recipe['host_staging']['weights_manifest_sha256'])
+
+    def test_streamer_non_podrunerror_is_wrapped_without_text(self):
+        def boom(*a, **k):
+            raise OSError('/secret/path/token-file leaked?')
+        fake = HostFake()
+        with self.assertRaises(pr.PodRunError) as cm:
+            self.lifecycle(fake, weights_streamer=boom)
+        self.assertEqual(str(cm.exception), 'host_weights_stream_failed')
+        self.assertEqual(fake.removed, ['pod-1'])
+
+    def test_context_provider_exception_is_wrapped(self):
+        def boom(job):
+            raise KeyError('/secret')
+        fake = HostFake()
+        with self.assertRaisesRegex(pr.PodRunError, 'image_build_context_unavailable'):
+            self.lifecycle(fake, image_context_provider=boom)
+        self.assertEqual(fake.removed, ['pod-1'])
+
+    def test_missing_context_provider_blocks_before_any_pod(self):
+        fake = HostFake()
+        with self.assertRaisesRegex(pr.PodRunError, 'image_context_provider_not_configured'):
+            self.run_recipe(fake, image_context_provider=None)
+        self.assertFalse(any(c[0] == 'create' for c in fake.calls))
+
+    def test_kernel_wheel_direct_url_in_freeze_is_allowed(self):
+        receipt = self.run_recipe(HostFake('kernelwheel'))
+        self.assertIn('causal-conv1d @ file:///tmp/kernel-wheels/', receipt['host_staging']['pip_freeze'])
+
+    def test_streamer_exception_tears_down_before_dispatch(self):
+        def broken(*args, **kwargs):
+            raise pr.PodRunError('synthetic streamer failure')
+        fake = HostFake()
+        with self.assertRaisesRegex(pr.PodRunError, 'synthetic streamer failure'):
+            self.lifecycle(fake, weights_streamer=broken)
+        self.assertFalse(self.last_state['input_dispatched'])
+        self.assertEqual(fake.removed, ['pod-1'])
+
+    def test_success_records_hashes_image_and_freeze_uses_built_image(self):
+        fake = HostFake()
+        receipt = self.run_recipe(fake)
+        state = json.loads((self.root / 'pods' / (RID + '.json')).read_text())
+        evidence = receipt['host_staging']
+        self.assertEqual(evidence, state['host_staging'])
+        self.assertEqual(evidence['image_id'], 'sha256:' + 'b' * 64)
+        self.assertEqual(evidence['pip_freeze'], 'torch==2.8.0\n')
+        self.assertEqual(evidence['pip_freeze_sha256'], hashlib.sha256(evidence['pip_freeze'].encode()).hexdigest())
+        self.assertEqual(evidence['acceptance_receipt_sha256'], hashlib.sha256(self.acceptance_path.read_bytes()).hexdigest())
+        self.assertEqual(evidence['image_context_sha256'], hashlib.sha256(self.context.read_bytes()).hexdigest())
+        self.assertEqual(evidence['weights_manifest_sha256'], self.recipe['host_staging']['weights_manifest_sha256'])
+        self.assertNotIn('synthetic-secret-do-not-persist', json.dumps([receipt, state]))
+        self.assertEqual(self.stream_calls[0][2], '/models/torchcast')
+        self.assertFalse(any(c[:2] == ['docker', 'pull'] or pr.WEIGHTS_SNIPPET in c for c, timeout in fake.commands))
+        build = next((c, timeout) for c, timeout in fake.commands if c[:2] == ['docker', 'build'])
+        self.assertEqual(build[1], 5400)
+        run = next(c for c, timeout in fake.commands if c[:3] == ['docker', 'run', '-d'])
+        self.assertEqual(run[-2], self.recipe['host_staging']['image_build']['tag'])
+        self.assertEqual(run[run.index('--network') + 1], 'none')
+        self.assertEqual(fake.removed, ['pod-1'])
+        self.assertEqual(fake.next_pod, 1)
+        self.assertEqual(receipt['benchmarks']['jevbench']['host_staging'], evidence)
+
+    def test_host_failure_keeps_existing_cumulative_retry_budget(self):
+        fake = HostFake('size')
+        with self.assertRaisesRegex(md.OperationalHold, 'gpu_pod_run_failed'):
+            self.run_recipe(fake)
+        state = json.loads((self.root / 'pods' / (RID + '.json')).read_text())
+        self.assertEqual(fake.removed, ['pod-1', 'pod-2'])
+        self.assertEqual(state['creation_attempts'], 2)
+        self.assertEqual(state['spent_upper_bound_usd'], 20)
+        self.assertFalse(state['input_dispatched'])
+        self.assertFalse(state['execution_started'])
+        with self.assertRaisesRegex(md.OperationalHold, 'gpu_pod_budget_exhausted'):
+            self.run_recipe(fake)
+        self.assertEqual(fake.next_pod, 2)
+
+    def test_admission_and_quote_gates_still_hold_without_input_upload(self):
+        fake = HostFake()
+        with mock.patch.object(pr, 'STATE_ROOT', self.root / 'state'), \
+             mock.patch.object(md, 'pins', return_value=self.pins), \
+             self.assertRaisesRegex(md.OperationalHold, 'native_admission_pin_mismatch'):
+            pr.run(RID, self.job, self.recipe, self.root / 'out', self.pins, 20,
+                provider=fake, weights_streamer=self.streamer, image_context_provider=lambda job: self.context)
+        self.assertEqual(fake.calls, [])
+        self.recipe['hourly_usd'] = 2.0
+        with self.assertRaisesRegex(md.OperationalHold, 'gpu_pod_quote_changed'):
+            self.lifecycle(fake)
+        self.assertFalse(any(c[0] == 'scp_to' for c in fake.calls))
+        self.assertEqual(fake.removed, ['pod-1'])
+
+    def test_acceptance_drift_cannot_reuse_completed_receipt(self):
+        fake = HostFake()
+        self.run_recipe(fake)
+        self.acceptance['accepted_by'] = 'second synthetic reviewer'
+        self.write_acceptance()
+        with self.assertRaisesRegex(md.OperationalHold, 'existing_measurement_receipt_changed'):
+            self.run_recipe(fake)
+        self.assertEqual(fake.next_pod, 1)
+
+    def test_unsafe_context_tar_fails_before_upload(self):
+        with tarfile.open(self.context, 'w') as archive:
+            member = tarfile.TarInfo('../escape')
+            archive.addfile(member, io.BytesIO(b''))
+        self.recipe['host_staging']['image_build']['context_sha256'] = hashlib.sha256(self.context.read_bytes()).hexdigest()
+        fake = HostFake()
+        with self.assertRaisesRegex(pr.PodRunError, 'image_build_context_unsafe'):
+            self.lifecycle(fake)
+        self.assertFalse(any(c[0] == 'scp_to' for c in fake.calls))
+        self.assertEqual(fake.removed, ['pod-1'])
+
+    def test_legacy_gated_hold_and_pull_path_unchanged(self):
+        del self.recipe['host_staging']
+        fake = HostFake()
+        with self.assertRaisesRegex(md.OperationalHold, 'gated_weights_require_host_acquisition'):
+            self.run_recipe(fake)
+        self.assertEqual(fake.calls, [])
+        fake = _FakeProvider({'sha_bad': True})
+        with self.assertRaises(pr.PodRunError):
+            self.lifecycle(fake)
+        self.assertTrue(any(c[0] == 'exec' and c[2][:2] == ['docker', 'pull'] for c in fake.calls))
+        self.assertTrue(any(c[0] == 'exec' and c[2] == ['docker', 'image', 'inspect'] for c in fake.calls))
+
+
+if __name__ == '__main__':
+    unittest.main()
