@@ -24,6 +24,7 @@ import json
 import os
 import re
 import math
+import stat
 from urllib.parse import urlparse
 import shlex
 import subprocess
@@ -54,6 +55,34 @@ TTL_CAP_HOURS = 3.0
 EXPECTED_ROWS = 1624
 GPU_PREFERENCE = (("H100", 80), ("A100", 80), ("L40S", 48), ("RTX6000", 48), ("RTXPRO6000", 96))  # lium marketplace names
 
+# Host-staged route time budget inside one pod TTL: build <= 30 min, weight stream <= 45 min (streamer),
+# checks/copy/teardown margin 10 min, container wait up to 60 min. A pod attempt needs a TTL of >= 2.75 h, and
+# sealed inputs are only dispatched while (TTL - elapsed) still covers the container wait plus the margin.
+HOST_BUILD_TIMEOUT_S = 1800
+HOST_MIN_TTL_HOURS = 2.75
+HOST_RUN_RESERVE_S = 3600 + 600
+
+
+HOST_MAX_RAW_BYTES = 256 << 20
+HOST_MAX_RECEIPT_BYTES = 4 << 20
+HOST_MAX_LINE_BYTES = 4 << 20
+SECRETISH_ENV_RE = re.compile(r"(?i)(token|secret|passw|credential|apikey|api_key|auth|private)")
+ORIGIN_SNIPPET = "import os,sys,site\nout=[];bases=[p for p in sys.path if p]\ntry: bases+=list(site.getsitepackages())\nexcept Exception: pass\ntry: bases.append(site.getusersitepackages())\nexcept Exception: pass\nbases+=[p for p in os.environ.get('PYTHONPATH','').split(os.pathsep) if p]\nbases.append(os.getcwd())\nif os.environ.get('PYTHONHOME'): out.append('HIT env:PYTHONHOME')\ndef boom(e): raise e\ndone=set();queue=list(bases)\nwhile queue:\n    real=os.path.realpath(queue.pop(0))\n    if real in done or real=='/code': continue\n    done.add(real)\n    if not os.path.exists(real): continue\n    if not os.path.isdir(real):\n        out.append('HIT nondir:'+real); continue\n    out.append('BASE '+real)\n    if real=='/':\n        out+=['HIT /'+n for n in os.listdir('/') if n.lower().startswith(('aplomb','run_aplomb'))]; continue\n    for root,dirs,files in os.walk(real,onerror=boom):\n        if root[len(real):].count(os.sep)>=4: dirs[:]=[]\n        for n in dirs+files:\n            low=n.lower()\n            if low.startswith('aplomb') or low.startswith('run_aplomb'): out.append('HIT '+os.path.join(root,n))\n            if n in ('sitecustomize.py','usercustomize.py') and root==real: out.append('CODE '+os.path.join(root,n))\n            if n.endswith('.pth') and root==real:\n                for line in open(os.path.join(root,n),errors='replace').read().splitlines():\n                    if not line.strip() or line.startswith('#'): continue\n                    if line.startswith(('import ','import\\t')): out.append('CODE pth:'+n+':'+line.strip()[:200])\n                    elif 'aplomb' in line.lower(): out.append('HIT pth:'+n+':'+line.strip()[:200])\n                    else: queue.append(os.path.join(root,line.rstrip()))\nprint('\\n'.join(sorted(set(out))))\n"
+
+
+def _utcnow():
+    return datetime.now(timezone.utc)
+
+
+def _attempt_rate(recipe):
+    """USD/h used for the per-attempt TTL and upper-bound charge.
+
+    Host-staged native recipes pin the exact hourly price (validated 0 < price <= MAX_HOURLY_USD, compared with the live
+    pod price right after creation, hold if the live price exceeds the pin), so the original caps (<= USD 5/h, USD 20/order, 3 h TTL,
+    2 creations) are accounted at that pinned price. All other routes keep the USD 5/h ceiling."""
+    if "host_staging" in recipe and type(recipe.get("hourly_usd")) in (int, float) and 0 < recipe["hourly_usd"] <= MAX_HOURLY_USD:
+        return float(recipe["hourly_usd"])
+    return MAX_HOURLY_USD
 IMAGE_RE = re.compile(r"^[A-Za-z0-9._/-]+:[A-Za-z0-9_.-]+@sha256:[0-9a-f]{64}$")
 SHA40_RE = re.compile(r"[0-9a-f]{40}")
 SHA64_RE = re.compile(r"[0-9a-f]{64}")
@@ -92,7 +121,7 @@ def validate_recipe(recipe, job_dir: Path) -> dict:
     if not isinstance(recipe, dict) or recipe.get("schema_version") != 1:
         raise measurement_dispatch.OperationalHold("pod_recipe_invalid")
     allowed = {"schema_version", "kind", "image", "min_vram_gb", "weights", "code",
-               "services", "endpoint", "model", "pythonpath", "loader", "model_dir", "load_kwargs", "hourly_usd"}
+               "services", "endpoint", "model", "pythonpath", "loader", "model_dir", "load_kwargs", "hourly_usd", "host_staging"}
     if set(recipe) - allowed or recipe.get("kind") not in ("http_typesafe", "python_inprocess", "aplomb_native"):
         raise measurement_dispatch.OperationalHold("pod_recipe_invalid")
     if not isinstance(recipe.get("image"), str) or not IMAGE_RE.fullmatch(recipe["image"]):
@@ -122,6 +151,8 @@ def validate_recipe(recipe, job_dir: Path) -> dict:
                        or not SHA64_RE.fullmatch(str(v)) for k, v in hashes.items()):
             raise measurement_dispatch.OperationalHold("pod_recipe_invalid")
         dirs.add(entry["dir"])
+    if "host_staging" in recipe:
+        _validate_host_staging(recipe)
     code = recipe.get("code")
     if not isinstance(code, dict) or set(code) not in ({"commit", "tree"}, {"source", "commit", "tree"}) \
             or not SHA40_RE.fullmatch(str(code["commit"])) or not SHA40_RE.fullmatch(str(code["tree"])):
@@ -184,6 +215,219 @@ def validate_recipe(recipe, job_dir: Path) -> dict:
     return recipe
 
 
+def _safe_relative(value):
+    return (isinstance(value, str) and bool(re.fullmatch(r"[A-Za-z0-9_./-]{1,200}", value))
+            and all(part not in ("", ".", "..") for part in value.split("/")))
+
+
+def _validate_host_staging(recipe):
+    staging = recipe["host_staging"]
+    invalid = measurement_dispatch.OperationalHold("pod_recipe_invalid")
+    if recipe["kind"] != "aplomb_native" or not isinstance(staging, dict) or set(staging) != {
+            "weights_manifest", "weights_manifest_sha256", "image_build"}:
+        raise invalid
+    manifest = staging["weights_manifest"]
+    if not isinstance(manifest, list) or not 1 <= len(manifest) <= 256:
+        raise invalid
+    paths = set()
+    for entry in manifest:
+        if not isinstance(entry, dict) or set(entry) != {"path", "sha256", "size"} \
+                or not _safe_relative(entry["path"]) or entry["path"] in paths \
+                or not isinstance(entry["sha256"], str) or not SHA64_RE.fullmatch(entry["sha256"]) \
+                or type(entry["size"]) is not int or entry["size"] < 0:
+            raise invalid
+        paths.add(entry["path"])
+    # Canonical form shared with the host streamer: entries sorted by path, sorted keys, compact separators.
+    digest = hashlib.sha256(json.dumps(sorted(manifest, key=lambda e: e["path"]), sort_keys=True,
+                                       separators=(",", ":")).encode()).hexdigest()
+    if staging["weights_manifest_sha256"] != digest:
+        raise invalid
+    # The host manifest must cover exactly the previously reviewed weights hashes.
+    if len(recipe["weights"]) != 1 or not _safe_relative(recipe["weights"][0]["dir"]) or {e["path"]: e["sha256"] for e in manifest} != recipe["weights"][0]["sha256"]:
+        raise invalid
+    build = staging["image_build"]
+    if not isinstance(build, dict) or set(build) != {"context_sha256", "target", "tag"} \
+            or not isinstance(build["context_sha256"], str) or not SHA64_RE.fullmatch(build["context_sha256"]) \
+            or build["target"] != "optimized" or build["tag"] != "aplomb-runtime:" + build["context_sha256"][:12]:
+        raise invalid
+
+
+def _unique_json_pairs(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("duplicate JSON key")
+        result[key] = value
+    return result
+
+
+def _host_staging_acceptance(job_dir, rid, recipe, model_receipt, weights_streamer):
+    """The trusted injected streamer exposes its reviewed source hash as `sha256`.
+
+    Only hashes enter durable runner evidence; acceptance names and source acquisition
+    credentials are never copied. A receipt grants neither admission nor dispatch.
+    """
+    path = job_dir / "source/HOST-STAGING-ACCEPTANCE.json"
+    try:
+        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+        with os.fdopen(fd, "rb") as handle:
+            info = os.fstat(handle.fileno())
+            if not stat.S_ISREG(info.st_mode) or info.st_uid != os.getuid() or info.st_mode & 0o022:
+                raise ValueError("receipt is not host owned")
+            raw = handle.read()
+        accepted = json.loads(raw, object_pairs_hook=_unique_json_pairs)
+        staging = recipe["host_staging"]
+        streamer_sha = getattr(weights_streamer, "sha256", None)
+        if not isinstance(accepted, dict) or set(accepted) != {"schema_version", "request_id", "model_commit",
+                "weights_manifest_sha256", "image_context_sha256", "streamer_sha256", "accepted_by", "accepted_at"} \
+                or type(accepted["schema_version"]) is not int or accepted["schema_version"] != 1 \
+                or accepted["request_id"] != rid or accepted["model_commit"] != model_receipt["commit"] \
+                or accepted["weights_manifest_sha256"] != staging["weights_manifest_sha256"] \
+                or accepted["image_context_sha256"] != staging["image_build"]["context_sha256"] \
+                or not isinstance(accepted["streamer_sha256"], str) or not SHA64_RE.fullmatch(accepted["streamer_sha256"]) \
+                or not isinstance(accepted["accepted_by"], str) or not accepted["accepted_by"].strip() \
+                or not isinstance(accepted["accepted_at"], str) or not accepted["accepted_at"].strip():
+            raise ValueError("acceptance mismatch")
+        timestamp = datetime.fromisoformat(accepted["accepted_at"].replace("Z", "+00:00"))
+        if timestamp.tzinfo is None:
+            raise ValueError("acceptance timestamp lacks timezone")
+        # A missing implementation gets its explicit configuration error, even if
+        # an otherwise valid receipt is already present.
+        if weights_streamer is None:
+            raise PodRunError("weights_streamer_not_configured")
+        if not callable(weights_streamer) or streamer_sha != accepted["streamer_sha256"]:
+            raise ValueError("streamer mismatch")
+        return {"weights_manifest_sha256": staging["weights_manifest_sha256"],
+                "acceptance_receipt_sha256": hashlib.sha256(raw).hexdigest(),
+                "image_context_sha256": staging["image_build"]["context_sha256"],
+                "streamer_sha256": streamer_sha}
+    except (OSError, ValueError, TypeError, KeyError):
+        raise measurement_dispatch.OperationalHold("host_staging_unaccepted") from None
+
+
+def _build_host_image(provider, pod_id, recipe, job_dir, image_context_provider, state, save_state):
+    if image_context_provider is None:
+        raise PodRunError("image_context_provider_not_configured")
+    build = recipe["host_staging"]["image_build"]
+    try:
+        context = Path(image_context_provider(job_dir))
+    except Exception:
+        raise PodRunError("image_build_context_unavailable") from None
+    # Copy and hash the same bytes that will be transferred, preventing a mutable
+    # provider path from changing after the host-side hash check.
+    with tempfile.TemporaryDirectory(prefix="host-image-context-") as temporary:
+        checked = Path(temporary) / "context.tar"
+        digest = hashlib.sha256()
+        try:
+            with context.open("rb") as source, checked.open("wb") as target:
+                for chunk in iter(lambda: source.read(1024 * 1024), b""):
+                    digest.update(chunk)
+                    target.write(chunk)
+        except OSError:
+            raise PodRunError("image_build_context_unavailable") from None
+        if digest.hexdigest() != build["context_sha256"]:
+            raise PodRunError("image_build_context_sha256_mismatch")
+        try:
+            with tarfile.open(checked) as archive:
+                for member in archive:
+                    name = member.name.rstrip("/")
+                    if ((name == "." and not member.isdir())
+                            or (name != "." and not _safe_relative(name.removeprefix("./")))
+                            or not (member.isfile() or member.isdir())):
+                        raise PodRunError("image_build_context_unsafe")
+        except (tarfile.TarError, OSError):
+            raise PodRunError("image_build_context_invalid") from None
+        _exec(provider, pod_id, ["mkdir", "-p", "/work/host-image-context"])
+        provider.scp_to(pod_id, str(checked), "/work/host-image-context.tar")
+    _exec(provider, pod_id, ["tar", "-xf", "/work/host-image-context.tar", "-C", "/work/host-image-context"])
+    _exec(provider, pod_id, ["docker", "build", "--target", build["target"], "-t", build["tag"],
+                            "/work/host-image-context"], timeout=HOST_BUILD_TIMEOUT_S)
+    image_id = _exec(provider, pod_id, ["docker", "image", "inspect", build["tag"], "--format", "{{.Id}}"]).stdout.strip()
+    if not re.fullmatch(r"sha256:[0-9a-f]{64}", image_id):
+        raise PodRunError("image_build_id_invalid")
+    freeze = _exec(provider, pod_id, ["docker", "run", "--rm", "--network", "none", "--entrypoint", "python",
+                                    build["tag"], "-m", "pip", "freeze", "--all"]).stdout
+    # pip direct-URL metadata can contain credentials. Fail closed instead of
+    # persisting such output; standard package/version lines are credential-free.
+    # The only direct-URL form allowed is the build-time kernel wheel directory of the reviewed
+    # Dockerfile (pip records local wheel installs as `name @ file:///...`); no host, query or userinfo.
+    if any(not (re.fullmatch(r"[A-Za-z0-9_.-]+==[A-Za-z0-9_.+!-]+", line)
+                or re.fullmatch(r"[A-Za-z0-9_.-]+ @ file:///tmp/kernel-wheels/[A-Za-z0-9_.+-]+\.whl", line))
+           for line in freeze.splitlines()):
+        raise PodRunError("image_pip_freeze_unsafe")
+    # Host-side evidence that the image carries no copy of the customer package outside /code (the customer
+    # process is never started here: `python -I -S -c`, so no site/.pth/sitecustomize code runs; startup code is listed as CODE).
+    listing = _exec(provider, pod_id, ["docker", "run", "--rm", "--network", "none", "-e", "HOME=/tmp",
+                                       "--entrypoint", "python", build["tag"], "-I", "-S", "-c", ORIGIN_SNIPPET]).stdout
+    if not listing.strip() or any(line.startswith("HIT ") for line in listing.splitlines()):
+        raise PodRunError("image_contains_customer_package")
+    # Image-level environment is checked BEFORE any sealed dispatch (the run container adds only HOME and two empty keys).
+    image_env_names = _env_names_checked(_exec(provider, pod_id, ["docker", "image", "inspect", build["tag"],
+                                                                   "--format", "{{json .Config.Env}}"]).stdout)
+    state["host_staging"].update(image_id=image_id, pip_freeze=freeze,
+        pip_freeze_sha256=hashlib.sha256(freeze.encode()).hexdigest(),
+        module_origin_listing_sha256=hashlib.sha256(listing.encode()).hexdigest(), image_env_names=image_env_names)
+    save_state()
+    return build["tag"]
+
+
+def _env_names_checked(raw):
+    """Names of an env list; refuse secret-looking names (HF_TOKEN / OPENAI_API_KEY only when empty)."""
+    try:
+        env = json.loads(raw)
+        if env is None:
+            env = []
+        if not isinstance(env, list) or not all(isinstance(item, str) and "=" in item for item in env):
+            raise ValueError
+    except (ValueError, TypeError):
+        raise PodRunError("run_container_inspect_invalid") from None
+    names = []
+    for item in env:
+        name, _, value = item.partition("=")
+        names.append(name)
+        if SECRETISH_ENV_RE.search(name) and not (name in ("HF_TOKEN", "OPENAI_API_KEY") and value == ""):
+            raise PodRunError("run_container_env_secret_name")
+    return sorted(set(names))
+
+
+def _bounded_remote_size(provider, pod_id, remote, limit):
+    out = _exec(provider, pod_id, ["env", "LC_ALL=C", "stat", "-c", "%F:%s", remote]).stdout.strip()
+    kind, _, size = out.partition(":")
+    if kind != "regular file" and kind != "regular empty file":
+        raise PodRunError("host_output_not_regular")
+    if not size.isdigit() or int(size) > limit:
+        raise PodRunError("host_output_too_large")
+
+
+def _stream_host_weights(provider, pod_id, recipe, weights_streamer):
+    if weights_streamer is None:
+        raise PodRunError("weights_streamer_not_configured")
+    target = "/models/" + recipe["weights"][0]["dir"]
+    manifest = recipe["host_staging"]["weights_manifest"]
+    try:
+        weights_streamer(provider, pod_id, [dict(e) for e in manifest], remote_root=target)
+    except PodRunError:
+        raise
+    except Exception:
+        # Never surface argv/paths/timeouts from the host streamer; teardown follows from the PodRunError.
+        raise PodRunError("host_weights_stream_failed") from None
+    # Reject symlinks (including directories), devices, FIFOs and every extra file.
+    unexpected = _exec(provider, pod_id, ["find", target, "!", "-type", "d", "!", "-type", "f", "-print"]).stdout
+    if unexpected.strip():
+        raise PodRunError("host_weights_non_regular")
+    files = _exec(provider, pod_id, ["find", target, "-type", "f", "-print"]).stdout.splitlines()
+    if sorted(files) != sorted(target + "/" + e["path"] for e in manifest):
+        raise PodRunError("host_weights_file_set_mismatch")
+    for entry in manifest:
+        filename = target + "/" + entry["path"]
+        check = _exec(provider, pod_id, ["sha256sum", filename])
+        if entry["sha256"] not in check.stdout.split():
+            raise PodRunError("host_weights_sha256_mismatch")
+        size = _exec(provider, pod_id, ["stat", "-c", "%s", filename]).stdout.strip()
+        if size != str(entry["size"]):
+            raise PodRunError("host_weights_size_mismatch")
+
+
 # ---------------------------------------------------------------------------
 # services.sh rendering (host-side, strict quoting)
 # ---------------------------------------------------------------------------
@@ -232,7 +476,7 @@ class Provider:
     def preflight(self, gpu, recipe, benchmarks, capacity_remaining=pod_capacity.MAX_REFUSALS, allow_two_gpu=False):
         return None
 
-    def create(self, gpu: str, ttl_hours: float, budget: float) -> dict:
+    def create(self, gpu: str, ttl_hours: float, budget: float, max_hourly: float = MAX_HOURLY_USD) -> dict:
         raise NotImplementedError
 
     def exec(self, pod_id: str, command: list[str], timeout: int = 600) -> subprocess.CompletedProcess:
@@ -298,7 +542,7 @@ class LiumProvider(Provider):
         counts = counts[:capacity_remaining]
         try:
             for count in counts:
-                quote = pod_capacity.quote(gpu, count, _run_cli, LIUM, MAX_HOURLY_USD)
+                quote = pod_capacity.quote(gpu, count, _run_cli, LIUM, _attempt_rate(recipe))
                 if quote.get('refused'):
                     refusals.append(quote)
                     continue
@@ -310,17 +554,19 @@ class LiumProvider(Provider):
             raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed') from exc
         return {'quote': None, 'refusals': refusals, 'quote_count': len(refusals)}
 
-    def create(self, gpu, ttl_hours, budget):
+    def create(self, gpu, ttl_hours, budget, max_hourly=MAX_HOURLY_USD):
+        if type(max_hourly) not in (int, float) or not 0 < max_hourly <= MAX_HOURLY_USD:
+            raise PodRunError('invalid provider price ceiling')
         before = self.ps_ids()
         placement = getattr(self, '_placement', None)
         if placement:
             if (placement['gpu'] != gpu or (datetime.now(timezone.utc) - datetime.fromisoformat(placement['quoted_at'])).total_seconds() > 120):
                 raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed')
             argv = [sys.executable, str(ROOT / 'lium_bounded_up.py'), gpu, str(placement['gpu_count']),
-                    str(ttl_hours), str(budget), str(MAX_HOURLY_USD)]
+                    str(ttl_hours), str(budget), str(max_hourly)]
         else:
             argv = [sys.executable, str(ROOT / 'lium_bounded_up.py'), gpu, '1',
-                    str(ttl_hours), str(budget), str(MAX_HOURLY_USD)]
+                    str(ttl_hours), str(budget), str(max_hourly)]
         started = datetime.now(timezone.utc).isoformat()
         result = _run_cli(argv, timeout=900)
         if result.returncode:
@@ -459,7 +705,7 @@ class RunPodProvider(Provider):
 
     name = "runpod"
 
-    def create(self, gpu, ttl_hours, budget):
+    def create(self, gpu, ttl_hours, budget, max_hourly=MAX_HOURLY_USD):
         raise measurement_dispatch.OperationalHold("gpu_pod_capacity")
 
 
@@ -566,11 +812,14 @@ def _teardown(provider, job, pod_id, reservation, alert):
 
 
 def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, ttl, budget,
-               alert, save_state, benchmarks=('jevbench',), quote_budget=None, expected_rows=EXPECTED_ROWS, pre_upload_gate=None, allocation_gate=None, runtime_preflight=None):
+               alert, save_state, benchmarks=('jevbench',), quote_budget=None, expected_rows=EXPECTED_ROWS, pre_upload_gate=None, allocation_gate=None, runtime_preflight=None, *, job_dir=None, image_context_provider=None, weights_streamer=None):
     """One pod attempt; raises PodRunError on any step failure (teardown still runs)."""
     pod_id = None
     reservation = None
     quote_budget = {'remaining': 2} if quote_budget is None else quote_budget
+    if "host_staging" in recipe and ttl < HOST_MIN_TTL_HOURS:
+        # Original caps leave this attempt too little TTL for build + stream + run: hold before any quote/reserve/create.
+        raise measurement_dispatch.OperationalHold("host_staging_ttl_too_short")
     try:
         attempts = state.get('creation_attempts', 0)
         try:
@@ -613,10 +862,10 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         state.pop('torn_down_at', None)
         state['cleanup_uncertain'] = True
         state['attempt_ttl_hours'] = ttl
-        state['attempt_reserved_upper_bound_usd'] = ttl * MAX_HOURLY_USD
+        state['attempt_reserved_upper_bound_usd'] = ttl * _attempt_rate(recipe)
         extra = allocation_gate.contingency_usd if allocation_gate is not None else 0
         state['attempt_contingency_usd'] = extra
-        state['spent_upper_bound_usd'] = state.get('spent_upper_bound_usd', 0.0) + ttl * MAX_HOURLY_USD + extra
+        state['spent_upper_bound_usd'] = state.get('spent_upper_bound_usd', 0.0) + ttl * _attempt_rate(recipe) + extra
         state['reservation_id'] = reservation
         state['input_dispatched'] = False
         state['execution_started'] = False
@@ -635,7 +884,12 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                     state['torn_down_at'] = datetime.now(timezone.utc).isoformat()
                     save_state()
                     raise
-            pod = provider.create(gpu_choice[0], ttl, budget)
+            if "host_staging" in recipe:
+                # Provider-side price ceiling = the pinned price the charge is accounted at, so the recorded
+                # upper bound holds even for an unclear create or a failed teardown.
+                pod = provider.create(gpu_choice[0], ttl, budget, max_hourly=_attempt_rate(recipe))
+            else:
+                pod = provider.create(gpu_choice[0], ttl, budget)
         except PodCapacityError as exc:
             proof = getattr(exc, 'proof', None)
             if isinstance(provider, LiumProvider) and proof is None:
@@ -670,37 +924,57 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         if not 0 < hourly <= MAX_HOURLY_USD:
             raise PodCapacityError(f"pod {pod_id} hourly price {pod.get('hourly_usd')} "
                                    f"exceeds the {MAX_HOURLY_USD} cap")
-        if (recipe['kind'] == 'aplomb_native' or 'imagejevbench' in benchmarks) and hourly != recipe.get('hourly_usd'):
+        if (recipe['kind'] == 'aplomb_native' or 'imagejevbench' in benchmarks) and (
+                hourly > recipe.get('hourly_usd') if 'host_staging' in recipe else hourly != recipe.get('hourly_usd')):
+            # Host-staged recipes: the pinned price is the accounted AND provider-side ceiling; a cheaper node is safe
+            # (real spend <= recorded spend), a dearer one can never be created. Other recipes keep exact equality.
             raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed')
         placement = state.get('placement_quote') if selection is not None else None
         if placement and (hourly != placement['hourly_usd'] or pod.get('gpu_count') != placement['gpu_count']):
             raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed')
         provider.attach(reservation, job, pod_id, hourly)
         image = recipe["image"]
-        _exec(provider, pod_id, ["docker", "pull", image], timeout=1800)
-        inspect = _exec(provider, pod_id, ["docker", "image", "inspect", image,
-                                           "--format", "{{json .RepoDigests}}"])
-        if image.split("@", 1)[1] not in inspect.stdout:
-            raise PodRunError("pulled image digest does not match the pin")
+        if "host_staging" in recipe:
+            if weights_streamer is None:
+                raise PodRunError("weights_streamer_not_configured")
+            image = _build_host_image(provider, pod_id, recipe, job_dir, image_context_provider, state, save_state)
+        else:
+            _exec(provider, pod_id, ["docker", "pull", image], timeout=1800)
+            inspect = _exec(provider, pod_id, ["docker", "image", "inspect", image,
+                                               "--format", "{{json .RepoDigests}}"])
+            if image.split("@", 1)[1] not in inspect.stdout:
+                raise PodRunError("pulled image digest does not match the pin")
         if runtime_preflight is not None:
             state['runtime_preflight'] = runtime_preflight(provider, pod_id)
             save_state()
-        for entry in recipe["weights"]:
-            target = f"/models/{entry['dir']}"
-            _exec(provider, pod_id, ["docker", "run", "--rm", "-v", "/models:/models",
-                                     "-e", "HOME=/tmp", "--tmpfs", "/tmp",
-                                     "-e", "HF_HUB_DISABLE_TELEMETRY=1",
-                                     "-e", "HF_TOKEN=", "--entrypoint", "python3", image,
-                                     "-c", WEIGHTS_SNIPPET, entry["repo"], entry["revision"], target],
-                  timeout=5400)
-            for relative, digest in entry["sha256"].items():
-                check = _exec(provider, pod_id, ["sha256sum", f"{target}/{relative}"])
-                if digest not in check.stdout.split():
-                    raise PodRunError(f"weight file {entry['dir']}/{relative} sha256 mismatch: "
-                                      f"{check.stdout.strip()[-200:]}")
+        if "host_staging" in recipe:
+            _stream_host_weights(provider, pod_id, recipe, weights_streamer)
+        else:
+            for entry in recipe["weights"]:
+                target = f"/models/{entry['dir']}"
+                _exec(provider, pod_id, ["docker", "run", "--rm", "-v", "/models:/models",
+                                         "-e", "HOME=/tmp", "--tmpfs", "/tmp",
+                                         "-e", "HF_HUB_DISABLE_TELEMETRY=1",
+                                         "-e", "HF_TOKEN=", "--entrypoint", "python3", image,
+                                         "-c", WEIGHTS_SNIPPET, entry["repo"], entry["revision"], target],
+                      timeout=5400)
+                for relative, digest in entry["sha256"].items():
+                    check = _exec(provider, pod_id, ["sha256sum", f"{target}/{relative}"])
+                    if digest not in check.stdout.split():
+                        raise PodRunError(f"weight file {entry['dir']}/{relative} sha256 mismatch: "
+                                          f"{check.stdout.strip()[-200:]}")
         _exec(provider, pod_id, ["mkdir", "-p", "/work", "/work/out", "/work/code"])
         # Optional trusted context holds the canonical custody lock across upload.
         with pre_upload_gate() if pre_upload_gate is not None else nullcontext():
+            if "host_staging" in recipe:
+                # Checked inside the custody lock, immediately before the sealed transfer becomes durable.
+                try:
+                    started = datetime.fromisoformat(state['attempt_started_at'])
+                    ok = started.tzinfo is not None and (_utcnow() - started).total_seconds() <= ttl * 3600 - HOST_RUN_RESERVE_S
+                except (KeyError, TypeError, ValueError):
+                    ok = False
+                if not ok:
+                    raise PodRunError("host_staging_ttl_margin_insufficient")
             state['input_dispatched'] = True
             save_state()  # dispatch is durable before the first sealed transfer
             provider.scp_to(pod_id, str(staging_path), "/work/stage.tar")
@@ -726,9 +1000,23 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         if network_mode != "none":
             raise PodRunError(f"run container network mode is {network_mode!r}, not 'none'")
         state["network_mode"] = network_mode
+        if "host_staging" in recipe:
+            # Record the actual run-container isolation flags as evidence (no environment values).
+            try:
+                host = json.loads(_exec(provider, pod_id, ["docker", "inspect", "jev-pod-run",
+                                                           "--format", "{{json .HostConfig}}"]).stdout)
+                if not isinstance(host, dict):
+                    raise ValueError
+            except (ValueError, TypeError):
+                raise PodRunError("run_container_inspect_invalid") from None
+            state["host_staging"]["run_container"] = {key: host.get(key) for key in (
+                "NetworkMode", "Binds", "Privileged", "CapAdd", "ReadonlyRootfs", "Devices", "PidMode", "IpcMode", "UsernsMode")}
+            state["host_staging"]["run_container"]["env_names"] = _env_names_checked(
+                _exec(provider, pod_id, ["docker", "inspect", "jev-pod-run", "--format", "{{json .Config.Env}}"]).stdout)
+            save_state()
         wait = _exec(provider, pod_id, ["docker", "wait", "jev-pod-run"], timeout=3600)
         rc = wait.stdout.strip().splitlines()[-1] if wait.stdout.strip() else ""
-        logs = _exec(provider, pod_id, ["docker", "logs", "jev-pod-run"], timeout=120)
+        logs = _exec(provider, pod_id, ["docker", "logs", "--tail", "20000", "jev-pod-run"], timeout=120)
         (output / "pod-driver.log").write_bytes((logs.stdout + logs.stderr).encode(errors="replace"))
         if rc != "0":
             raise PodRunError(f"pod driver exited {rc or 'unknown'}")
@@ -737,8 +1025,13 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             for name in benchmarks:
                 target = output / name
                 target.mkdir(exist_ok=True)
+                if "host_staging" in recipe:
+                    _bounded_remote_size(provider, pod_id, f'/work/out/{name}/raw.jsonl', HOST_MAX_RAW_BYTES)
+                    _bounded_remote_size(provider, pod_id, f'/work/out/{name}/receipt.json', HOST_MAX_RECEIPT_BYTES)
                 provider.scp_from(pod_id, f'/work/out/{name}/raw.jsonl', str(target / 'raw.jsonl'))
                 provider.scp_from(pod_id, f'/work/out/{name}/receipt.json', str(target / 'pod-receipt.json'))
+                if "host_staging" in recipe and max((len(line) for line in (target / 'raw.jsonl').read_bytes().split(b"\n")), default=0) > HOST_MAX_LINE_BYTES:
+                    raise PodRunError("host_output_line_too_long")
                 expected = json.loads((target / 'pod-receipt.json').read_text()).get('rows')
                 count = (target / 'raw.jsonl').read_bytes().count(b'\n')
                 if type(expected) is not int or count != expected:
@@ -818,7 +1111,7 @@ def default_alert(text: str) -> None:
 
 
 def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict, max_usd: float,
-        *, provider: Provider | None = None, alert=None, benchmarks=('jevbench',), native_source_pins=None, measurement_pins_factory=None, pre_upload_gate=None, allocation_gate=None, runtime_preflight=None) -> dict:
+        *, provider: Provider | None = None, alert=None, benchmarks=('jevbench',), native_source_pins=None, measurement_pins_factory=None, pre_upload_gate=None, allocation_gate=None, runtime_preflight=None, image_context_provider=None, weights_streamer=None) -> dict:
     """Measure the reviewed recipe on one disposable GPU pod; idempotent via receipt + pod state."""
     validate_recipe(recipe, job_dir)
     current = measurement_pins_factory() if measurement_pins_factory is not None else measurement_dispatch.pins()
@@ -834,7 +1127,12 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
         raise measurement_dispatch.OperationalHold('pod_recipe_unbound') from None
     # The source helper grants no credential to model processes or remote pods.
     # An explicit host acquisition receipt is a separate reviewed dependency.
-    if model_receipt.get('credential_repository'):
+    host_binding = None
+    if 'host_staging' in recipe:
+        host_binding = _host_staging_acceptance(job_dir, rid, recipe, model_receipt, weights_streamer)
+        if image_context_provider is None:
+            raise PodRunError('image_context_provider_not_configured')
+    if model_receipt.get('credential_repository') and host_binding is None:
         raise measurement_dispatch.OperationalHold('gated_weights_require_host_acquisition')
     admission_binding = None
     if recipe['kind'] == 'aplomb_native':
@@ -904,6 +1202,8 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
         prior = json.loads(receipt_file.read_text())
         if prior.get("pins") != current or prior.get("recipe_sha256") != recipe_sha or prior.get('admission_binding_sha256') != admission_binding:
             raise measurement_dispatch.OperationalHold("existing_measurement_receipt_changed")
+        if host_binding is not None and any(prior.get('host_staging', {}).get(k) != v for k, v in host_binding.items()):
+            raise measurement_dispatch.OperationalHold('existing_measurement_receipt_changed')
         for name, record in prior.get('benchmarks', {'jevbench': prior}).items():
             path = output / name / 'raw.jsonl' if 'benchmarks' in prior else output / 'raw.jsonl'
             if hashlib.sha256(path.read_bytes()).hexdigest() != record.get('raw_sha256'):
@@ -912,6 +1212,10 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
     if (output / "raw.jsonl").exists() or any((output / name / 'raw.jsonl').exists() for name in benchmarks):
         # A partial attempt is kept, never resumed (same rule as the API path).
         raise measurement_dispatch.OperationalHold("partial_measurement_requires_reconciliation")
+    if host_binding is not None:
+        if state.get('host_staging') and any(state['host_staging'].get(k) != v for k, v in host_binding.items()):
+            raise measurement_dispatch.OperationalHold('host_staging_unaccepted')
+        state['host_staging'] = dict(host_binding)
     state['request_id'] = rid
     budget = min(PER_ORDER_CAP_USD, max_usd)
     prior_spend = state.get('spent_upper_bound_usd', 0.0)
@@ -922,7 +1226,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
         budget = min(budget, allocation_gate.max_new_usd)
     if budget <= 0:
         raise measurement_dispatch.OperationalHold("gpu_pod_budget_exhausted")
-    ttl = min(TTL_CAP_HOURS, budget / MAX_HOURLY_USD)
+    ttl = min(TTL_CAP_HOURS, budget / _attempt_rate(recipe))
     candidates = [g for g in GPU_PREFERENCE if g[1] >= recipe["min_vram_gb"]]
     if not candidates:
         raise measurement_dispatch.OperationalHold("pod_recipe_invalid")
@@ -939,12 +1243,13 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
             remaining = min(budget - run_spend, PER_ORDER_CAP_USD - state.get('spent_upper_bound_usd', 0.0))
             if remaining <= 0:
                 raise measurement_dispatch.OperationalHold('gpu_pod_budget_exhausted')
-            ttl = min(TTL_CAP_HOURS, remaining / MAX_HOURLY_USD,
+            ttl = min(TTL_CAP_HOURS, remaining / _attempt_rate(recipe),
                       allocation_gate.max_ttl_hours if allocation_gate is not None else TTL_CAP_HOURS)
             try:
                 state = _lifecycle(provider, job, recipe, staging_path, output, state,
                                    gpu_choice, ttl, remaining, alert, save_state, benchmarks, quote_budget,
-                                   current['profile']['inputs']['jevbench']['count'], pre_upload_gate, allocation_gate, runtime_preflight)
+                                   current['profile']['inputs']['jevbench']['count'], pre_upload_gate, allocation_gate, runtime_preflight,
+                                   job_dir=job_dir, image_context_provider=image_context_provider, weights_streamer=weights_streamer)
                 break
             except PodCapacityError:
                 continue  # try the next GPU candidate; capacity only if every attempt was capacity
@@ -966,6 +1271,8 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
                "started_at": started.isoformat(), "ended_at": ended.isoformat(),
                "cost_estimate_usd": cost, "network_mode": state.get("network_mode", "none"),
                "charged_or_reserved_usd": state['spent_upper_bound_usd']}
+    if host_binding is not None:
+        receipt['host_staging'] = dict(state['host_staging'])
     combined = recipe['kind'] == 'aplomb_native' or 'imagejevbench' in benchmarks
     if combined:
         receipt['benchmarks'] = {}
