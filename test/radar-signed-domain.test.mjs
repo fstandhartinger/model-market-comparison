@@ -13,7 +13,7 @@ import {
 
 // Signed category-competence axis (lead job jevbench-radar-full-areas-20261009, 9 Oct 2026): category radars in JevCompareV15 run
 // linearly from -100 (centre) through 0 (bold ring, half radius) to 100 (rim), so a complete series of measured zeros is a full
-// polygon and a negative ImageJevBench cell keeps its own radius. Every other radar keeps the legacy 0-100 default.
+// polygon and a negative ImageJevBench cell keeps its own radius. Historical supplement competence uses the same signed scale. Score-axis and legacy accuracy radars keep the 0-100 default.
 const require = createRequire(import.meta.url);
 const src = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 
@@ -142,9 +142,12 @@ test('current competence figures pass the signed domain; score axes, V14 and leg
   }
   assert.match(v15, /0 = at or below chance; negative averages are reported as 0/, 'a clipped metric never calls 0 exact chance');
   assert.match(v15, /data-bh-radar-zero-note="clipped">A point on the bold 0 ring/);
-  for (const f of ['components/JevCompareV14.tsx', 'components/ImageJevRadar.tsx', 'components/JevHistoricalSupplement.tsx']) {
+  for (const f of ['components/JevCompareV14.tsx', 'components/ImageJevRadar.tsx']) {
     assert.doesNotMatch(src(f), /RADAR_SIGNED_DOMAIN|domain=/, f);
   }
+  const history = src('components/JevHistoricalSupplement.tsx');
+  assert.match(history, /domain=\{RADAR_SIGNED_DOMAIN\}/, 'historical supplement also preserves measured zero areas');
+  assert.doesNotMatch(history, /Math\.max\(0, cell\.competence\)/, 'historical negative competence keeps its real radius');
   const radars = src('components/JevRadars.tsx');
   assert.match(radars, /domain = RADAR_DEFAULT_DOMAIN/, 'the Radar default is 0-100');
   assert.doesNotMatch(radars, /<Radar [^>]*domain=/, 'the hub axis/topic radars and JevPairRadar pass no domain');

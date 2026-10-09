@@ -1,16 +1,17 @@
 'use client';
 import { Radar, type Spoke } from './JevRadars';
+import { RADAR_SIGNED_DOMAIN } from '../lib/radar-shape.mjs';
 import type { HistoricalSupplement, HistoricalRow } from '../lib/jevbench-history-supplement.mjs';
 function CategoryRadar({ row, artifact, dimension }: { row: HistoricalRow; artifact: HistoricalSupplement; dimension: 'topics' | 'usecases' }) {
   const spokes: Spoke[] = artifact.category_dimensions[dimension].map(d => {
     const cell = row.categories[dimension][d.key];
-    return { key: d.key, lines: [d.label], values: [cell && cell.n >= artifact.category_min_n ? Math.max(0, cell.competence) : null],
+    return { key: d.key, lines: [d.label], values: [cell && cell.n >= artifact.category_min_n ? cell.competence : null],
       texts: [cell ? `${cell.competence.toFixed(1)} (n=${cell.n})` : 'n/a'], thin: [!cell || cell.n < artifact.category_min_n], tip: d.covers };
   });
-  return <div><h4 className="font-semibold">{dimension === 'topics' ? 'Subject topics' : 'Use cases'}</h4><Radar spokes={spokes}
+  return <div><h4 className="font-semibold">{dimension === 'topics' ? 'Subject topics' : 'Use cases'}</h4><Radar spokes={spokes} domain={RADAR_SIGNED_DOMAIN}
     series={[{ name: row.name, stroke: '#5b9dff', dashed: false, square: false }]}
     size={{ w: 680, h: 640, r: 180 }} id={`history-${row.key}-${dimension}`} title={`${row.name}: ${dimension}`}
-    desc="Actual chance-corrected competence over the historical pool. Below-chance values plot at zero; exact values and sample counts appear on each spoke. Missing or small samples remain gaps." /></div>;
+    desc="Actual chance-corrected competence over the historical pool. Zero sits on the bold middle ring; below-chance values plot inside it. Exact values and sample counts appear on each spoke. Missing or small samples remain gaps." /></div>;
 }
 export function JevHistoricalSupplement({ artifact, sha256 }: { artifact: HistoricalSupplement; sha256: string }) {
   return <section id="historical-measurements" className="mx-auto max-w-7xl px-4 py-10 sm:px-6" data-jevbench-historical-supplement>

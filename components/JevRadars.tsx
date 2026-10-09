@@ -69,7 +69,7 @@ export function Radar({ spokes, series, size, id, title, desc, domain = RADAR_DE
         ring (on the polygon's apothem), with the F-70 halo, so the top spoke's own point never strikes them. */}
     {/* Signed domain: −100 / 0 / 100 at the same half-step via ringLabelPoint (lib/radar-shape.mjs), the 0 label bold. */}
     {scale.labels.map((v) => { const p = ringLabelPoint(v, { cx, cy, R, n: spokes.length }, domain); return <text key={v} x={r3(p.x)} y={r3(p.y)} textAnchor="start" dominantBaseline="hanging" fontSize={11} fontWeight={v === scale.zero ? 700 : undefined} fill="currentColor" opacity={v === scale.zero ? 0.9 : 0.7} style={{ paintOrder: "stroke", stroke: "var(--surface)", strokeWidth: "3px", strokeLinejoin: "round" }} data-radar-ring>{ringLabelText(v)}</text>; })}
-    {spokes.map((s, i) => { const [x, y] = at(i, 100); return <line key={s.key} x1={cx} y1={cy} x2={x} y2={y} stroke="rgb(var(--line))" strokeOpacity={0.6} />; })}
+    {spokes.map((s, i) => { const [x, y] = at(i, domain[1]); return <line key={s.key} x1={cx} y1={cy} x2={x} y2={y} stroke="rgb(var(--line))" strokeOpacity={0.6} />; })}
     {series.map((se, k) => {
       // CR-290 (Florian 5 Oct 2026): a spoke without a plotted value (unpublished, or under the minimum n) is a gap, never
       // a 0 and never bridged. CR-290 correction (Florian ~20:30): joining neighbouring points still drew a few dots tied by a line that
