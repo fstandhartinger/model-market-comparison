@@ -9,7 +9,7 @@ export type JevV16ReleaseArtifact = Omit<JevV15Artifact, 'systems' | 'status' | 
   v16: { counts: Record<string, number>; equating: { offsets: Record<'I' | 'C', number>; rule: string; min_pool: number; pool_note: string; [k: string]: unknown };
     g_med_rule: string; item_sets: JevV16ItemSet[]; capability_formula: string; long_items_note?: string; [k: string]: unknown };
 };
-export type JevV16CategoryCell = { n: number; competence: number };
+export type JevV16CategoryCell = { n: number; competence: number; coverage_n?: number };
 export type JevV16CategoryDescriptor = { key: string; label: string; covers: string; n: number; open: number; sealed: number; low_n: boolean };
 export type JevV16Categories = { revision: 'v1.6.0' | 'v1.6.1' | 'v1.6.2' | 'v1.6.3'; provisional: false; source_results_sha256: string; min_n: number; metric: string; labelling: string; rules: string[];
   languages: JevV16CategoryDescriptor[]; lanes: Record<string, 'api' | 'selfhosted'>; lane_note: string;
