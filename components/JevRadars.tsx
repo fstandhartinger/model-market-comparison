@@ -3,7 +3,7 @@ import { JEV_TYPE_LABEL, jevRowArch, jevTypeVarName } from './jevTypes';
 import { useState } from "react";
 import type { JevAxis, JevV12Row } from "../lib/jevbench-v12.mjs";
 import type { JevTopicsView } from "../lib/jevbench-v12-topics.mjs";
-import { radarShape, RADAR_MIN_N } from "../lib/radar-shape.mjs";
+import { radarShape, RADAR_MIN_N, radarValue, plottable, radarRadius, radarLabelMode, fullLabelLayout, numberedLayout, BADGE_R, BADGE_FONT } from "../lib/radar-shape.mjs";
 
 // CR-94 (Florian 2026-09-19 ~17:30 UTC): compare two systems on radars — the four axes of the JevBench Score and accuracy by
 // subject topic (completes CR-90.3). Every value is the table's (axes) or the published topic artifact's; nothing is recomputed.
@@ -21,7 +21,7 @@ export type Series = { name: string; stroke: string; dashed: boolean; square: bo
 /** CR-290 radar correction: the one-line caption for every series the Radar draws as points only (see lib/radar-shape.mjs). */
 export function sparseNote(spokes: Spoke[], series: Series[]): string | null {
   const sparse = series.flatMap((se, k) => {
-    const present = spokes.map((sp) => sp.values[k] !== null && !sp.thin[k]);
+    const present = spokes.map((sp) => plottable(sp.values[k], sp.thin[k]));
     return radarShape(present).kind === "points" ? [`${se.name} has values on ${present.filter(Boolean).length} of ${spokes.length} spokes only, so it is drawn as points, not a shape`] : [];
   });
   return sparse.length ? `${sparse.join("; ")}.` : null;
@@ -29,15 +29,28 @@ export function sparseNote(spokes: Spoke[], series: Series[]): string | null {
 export type Spoke = { key: string; lines: string[]; values: (number | null)[]; texts: string[]; thin: boolean[]; tip?: string };
 
 export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke[]; series: Series[]; size: { w: number; h: number; r: number }; id: string; title: string; desc: string }) {
-  const cx = size.w / 2, cy = size.h / 2 + 4, R = size.r;
+  // Radar display fix (9 Oct 2026): with more than DENSE_SPOKES spokes, or whenever a full name + value label would touch another
+  // label or leave the canvas (lib/radar-shape.mjs), spokes carry a number and the names, values and definitions move into
+  // the key under the radar — the text keeps its size instead of shrinking with a dense SVG on a phone.
+  const shown = (s: Spoke, k: number) => radarValue(s.values[k]) !== null || series.some((_, m) => radarValue(s.values[m]) !== null);
+  const valueText = (s: Spoke) => series.map((_, k) => (shown(s, k) ? (radarValue(s.values[k]) === null ? "n/a" : s.texts[k]) : "")).filter(Boolean).join(" · ");
+  const mode = radarLabelMode(spokes.map((s) => ({ lines: s.lines, value: valueText(s) })), size);
+  const num = mode === "numbered" ? numberedLayout(spokes.length, size) : null;
+  const W = num ? num.w : size.w, H = num ? num.h : size.h;
+  const cx = num ? num.cx : size.w / 2, cy = num ? num.cy : size.h / 2 + 4, R = num ? num.r : size.r;
   // D245: Math.sin/Math.cos may differ in the last ULP between the Node that server-renders and the
   // browser's V8 (spoke 10 of an 11-spoke radar: 172.17492934337636 vs 172.1749293433764), so every
   // ring polygon failed hydration as an attribute mismatch. Three decimals of an SVG user unit is far
   // below a device pixel here and is the precision `BenchmarkRadar` already uses for the same reason.
   const r3 = (n: number) => Number(n.toFixed(3));
-  const at = (i: number, v: number) => { const a = -Math.PI / 2 + (2 * Math.PI * i) / spokes.length; return [r3(cx + (R * v / 100) * Math.cos(a)), r3(cy + (R * v / 100) * Math.sin(a))]; };
+  const at = (i: number, v: number) => { const a = -Math.PI / 2 + (2 * Math.PI * i) / spokes.length; const d = R * radarRadius(v) / 100; return [r3(cx + d * Math.cos(a)), r3(cy + d * Math.sin(a))]; };
   const ring = (v: number) => spokes.map((_, i) => at(i, v).join(",")).join(" ");
-  return <svg viewBox={`0 0 ${size.w} ${size.h}`} className="h-auto w-full" role="img" aria-labelledby={`${id}-t ${id}-d`} data-bh-jev12-radar-svg>
+  // One value slot per series: the coloured value, a muted n=… for an under-minimum cell, a muted "n/a" for no value.
+  const slots = (s: Spoke) => series.map((se, k) => {
+    const missing = radarValue(s.values[k]) === null;
+    return !shown(s, k) ? null : <tspan key={k} fill={missing || s.thin[k] ? "var(--muted)" : se.stroke} fontWeight={missing ? 400 : 700} data-bh-jev12-radar-value={`${k === 0 ? "a" : "b"}:${s.key}`} data-bh-radar-na={missing ? "" : undefined}>{k > 0 && shown(s, k - 1) ? <tspan fill="var(--muted)" fontWeight={400}> · </tspan> : null}{missing ? "n/a" : s.texts[k]}</tspan>;
+  });
+  const svg = <svg viewBox={`0 0 ${W} ${H}`} className={num ? "mx-auto h-auto w-full max-w-[420px]" : "h-auto w-full"} role="img" aria-labelledby={`${id}-t ${id}-d`} data-bh-jev12-radar-svg data-bh-radar-label-mode={mode}>
     <title id={`${id}-t`}>{title}</title><desc id={`${id}-d`}>{desc}</desc>
     {[20, 40, 60, 80, 100].map((v) => <polygon key={v} points={ring(v)} fill="none" stroke="rgb(var(--line))" strokeOpacity={v === 100 ? 0.9 : 0.5} strokeWidth={1} />)}
     {/* F-136 (Fable pass 25, = F-113/F-117 for these radars): ring labels sit at the half-step between spoke 0 and spoke 1, inside their
@@ -49,7 +62,8 @@ export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke
       // a 0 and never bridged. CR-290 correction (Florian ~20:30): joining neighbouring points still drew a few dots tied by a line that
       // read as a shape (Jev 1.13.0, values on 3 of 8 use-case spokes). Only a complete series is a filled polygon; a series
       // with at least half the spokes draws lines only along runs of 3+ adjacent spokes; anything sparser is points only.
-      const byIndex = spokes.map((s, i) => (s.values[k] === null || s.thin[k] ? null : at(i, s.values[k] as number)));
+      // 9 Oct 2026: `plottable` also rejects null/NaN/Infinity that reach here, so no missing cell becomes a vertex at the centre.
+      const byIndex = spokes.map((s, i) => (plottable(s.values[k], s.thin[k]) ? at(i, s.values[k] as number) : null));
       const pts = byIndex.filter((p): p is number[] => p !== null);
       const shape = radarShape(byIndex.map((p) => p !== null));
       return <g key={k} data-bh-jev12-radar-series={k === 0 ? "a" : "b"} data-bh-radar-shape={shape.kind} data-bh-radar-gaps={shape.kind === "polygon" ? undefined : spokes.length - pts.length}>
@@ -59,24 +73,40 @@ export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke
         {pts.map(([x, y], i) => se.square ? <rect key={i} x={x - 3.5} y={y - 3.5} width={7} height={7} fill={se.stroke} stroke="var(--surface)" strokeWidth={1} /> : <circle key={i} cx={x} cy={y} r={3.8} fill={se.stroke} stroke="var(--surface)" strokeWidth={1} />)}
       </g>;
     })}
-    {spokes.map((s, i) => {
-      const a = -Math.PI / 2 + (2 * Math.PI * i) / spokes.length;
-      const cos = Math.cos(a), sin = Math.sin(a);
-      const x = r3(cx + (R + 12) * cos), y0 = r3(cy + (R + 12) * sin);
-      const anchor = Math.abs(cos) < 0.2 ? "middle" : cos > 0 ? "start" : "end";
-      const n = s.lines.length + 1;
-      const y = r3(sin < -0.2 ? y0 - (n - 1) * 14 - 2 : sin > 0.2 ? y0 + 12 : y0 - ((n - 1) * 14) / 2 + 5);
+    {num ? spokes.map((s, i) => {
+      const b = num.badges[i];
+      return <g key={s.key} data-bh-jev12-radar-spoke={s.key} data-bh-radar-spoke-number={i + 1} style={{ cursor: "help" }}>
+        <title>{`${i + 1}. ${s.lines.join(" ")}: ${valueText(s) || "n/a"}${s.tip ? ` — ${s.tip}` : ""}`}</title>
+        <circle cx={r3(b.x)} cy={r3(b.y)} r={BADGE_R} fill="var(--surface)" stroke="rgb(var(--line))" />
+        <text x={r3(b.x)} y={r3(b.y)} textAnchor="middle" dominantBaseline="central" fontSize={BADGE_FONT} fontWeight={700} fill="var(--text)">{i + 1}</text>
+      </g>;
+    }) : fullLabelLayout(spokes.map((s) => ({ lines: s.lines, value: valueText(s) })), size).map(({ x: x0, y: y1, anchor }, i) => {
+      const s = spokes[i], x = r3(x0), y = r3(y1);
       return <text key={s.key} x={x} y={y} textAnchor={anchor} fontSize={13.5} fill="var(--text)" data-bh-jev12-radar-spoke={s.key} style={s.tip ? { cursor: "help" } : undefined}>
         {s.tip && <title>{s.tip}</title>}
         {s.lines.map((l, j) => <tspan key={j} x={x} dy={j === 0 ? 0 : 14} fontWeight={600}>{l}</tspan>)}
         {/* F-216 (Fable pass 40), refined by CR-290: the separator sits between two printed slots; an unpublished value prints "n/a", never a bare "· 74%". */}
         {/* CR-290: when one system has a value and the other has none, the missing one prints a muted "n/a" in its slot, so a gap
             reads as "no value", not as a low score. A spoke neither system has keeps its label alone. */}
-        <tspan x={x} dy={14} fontSize={13}>{series.map((se, k) => { const shown = (j: number) => s.values[j] !== null || series.some((_, m) => s.values[m] !== null);
-          return !shown(k) ? null : <tspan key={k} fill={s.values[k] === null || s.thin[k] ? "var(--muted)" : se.stroke} fontWeight={s.values[k] === null ? 400 : 700} data-bh-jev12-radar-value={`${k === 0 ? "a" : "b"}:${s.key}`} data-bh-radar-na={s.values[k] === null ? "" : undefined}>{k > 0 && shown(k - 1) ? <tspan fill="var(--muted)" fontWeight={400}> · </tspan> : null}{s.values[k] === null ? "n/a" : s.texts[k]}</tspan>; })}</tspan>
+        <tspan x={x} dy={14} fontSize={13}>{slots(s)}</tspan>
       </text>;
     })}
   </svg>;
+  if (!num) return svg;
+  // The key: spoke number, full name (definition and item count on hover / long-press via title), and every series' value in
+  // its colour — the same printed values the labels carried. Two columns from sm up, one on a phone; long names wrap.
+  return <>
+    {svg}
+    <ol className="mt-1 grid gap-x-4 gap-y-0.5 text-[12.5px] leading-snug sm:grid-cols-2" aria-label={`Spoke key: ${title}`} data-bh-radar-key={id}>
+      {spokes.map((s, i) => <li key={s.key} className="flex min-w-0 gap-1.5" title={s.tip} data-bh-radar-key-item={s.key}>
+        <span className="tabular w-5 shrink-0 text-right font-bold" aria-hidden="true">{i + 1}</span>
+        <span className="min-w-0 break-words"><span className="font-semibold">{s.lines.join(" ")}</span>{" "}
+          <span className="whitespace-nowrap">{series.map((se, k) => { const missing = radarValue(s.values[k]) === null; if (!shown(s, k)) return null;
+            return <span key={k} style={{ color: missing || s.thin[k] ? "var(--muted)" : se.stroke }} className={missing ? "" : "font-bold"} data-bh-radar-key-value={`${k === 0 ? "a" : "b"}:${s.key}`}>{k > 0 && shown(s, k - 1) ? <span className="bh-muted font-normal"> · </span> : null}{missing ? "n/a" : s.texts[k]}</span>; })}</span>
+        </span>
+      </li>)}
+    </ol>
+  </>;
 }
 
 // F-167 (Fable pass 32): the per-system page draws the same topic radar for a fixed pair, so the two
@@ -148,8 +178,8 @@ export function JevRadars({ ranked, honorable, partial, topics }: { ranked: JevV
   const min = thinAt(topics);
   const axisSpokes: Spoke[] = AXES.map((k) => ({
     key: k, lines: [AXIS_LABEL[k]], thin: [false, false],
-    values: pair.map((r) => r.axes[k] ?? 0), // label-only systems have no calibration: counted as 0, as in the score
-    texts: pair.map((r) => (r.axes[k] === null ? "none (0)" : one(r.axes[k]))),
+    values: pair.map((r) => r.axes[k]), // label-only systems have no calibration: 0 in the score, a gap on the radar (9 Oct 2026)
+    texts: pair.map((r) => (r.axes[k] === null ? "none (0 in score)" : one(r.axes[k]))),
   }));
   const cells = pair.map((r) => topics.systems[r.key]);
   const missingTopicRows = pair.filter((r) => !topics.systems[r.key]);
@@ -186,7 +216,7 @@ export function JevRadars({ ranked, honorable, partial, topics }: { ranked: JevV
         <figure className="min-w-0" data-bh-jev12-radar="axes">
           <h3 className="text-base font-semibold">The four score axes</h3>
           <Radar spokes={axisSpokes} series={series} size={{ w: 420, h: 320, r: 96 }} id="jev12-radar-axes" title="Radar: the four JevBench Score axes, two systems" desc={axisDesc} />
-          <figcaption className="bh-muted text-[12px]">Speed includes the latency adjustment for self-hosted and demo endpoints — an assumption, see <a href="#limits" className="text-accent underline">Limits</a>. A label-only system has no calibration (counted as 0).</figcaption>
+          <figcaption className="bh-muted text-[12px]">Speed includes the latency adjustment for self-hosted and demo endpoints — an assumption, see <a href="#limits" className="text-accent underline">Limits</a>. A label-only system has no calibration: it counts as 0 in the score and is left as a gap on the radar.</figcaption>
           <details className="mt-2 text-[13px]"><summary className="cursor-pointer text-accent">Values as a table</summary>
             <table className="bh-table mt-2" data-bh-jev12-radar-table="axes"><thead><tr><th scope="col">Axis</th><th scope="col">A: {series[0].name}</th><th scope="col">B: {series[1].name}</th></tr></thead>
               <tbody>{axisSpokes.map((s) => <tr key={s.key}><th scope="row">{s.lines[0]}</th><td className="tabular">{s.texts[0]}</td><td className="tabular">{s.texts[1]}</td></tr>)}
