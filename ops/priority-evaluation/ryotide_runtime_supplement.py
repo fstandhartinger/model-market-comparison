@@ -65,6 +65,9 @@ def native_command(image,root):
 # bounded parsed payloads leave ample space under the whole 1 MiB receipt budget.
 PROOF_TEXT_LIMIT=16*1024
 PROOF_PARSED_LIMIT=48*1024
+# CUDA profiler emits demangled C++ templates; authentic symbols exceed500.
+# Preserve full names within the existing escaped48KiB parsed-proof budget.
+PROOF_KERNEL_NAME_LIMIT=4096
 RETAINED_TEXT_FIELDS=('gpu_inventory','gpu_inventory_stderr','image_inspect_stdout','image_inspect_stderr','stdout','stderr','build_stdout','build_stderr','native_proof_stderr')
 RETAINED_JSON_FIELDS=('metadata','derived_metadata','derived_image_inspect','native_proof')
 def redact_text(value):
@@ -151,5 +154,6 @@ def prove(provider,pod_id,job,recipe,report,code_tar,recheck):
   bound_retained_payloads(report)
 
 def proof_matches(v):
- if not isinstance(v,dict)or set(v.get('optional_backend_versions',{}))!={'flash-qla','tilelang','causal-conv1d','flash-attn'}or any(x is not None and (not isinstance(x,str)or not x)for x in v['optional_backend_versions'].values())or not isinstance(v.get('cuda_kernel_names'),list)or not 1<=len(v['cuda_kernel_names'])<=512 or any(not isinstance(n,str)or not n or len(n)>500 for n in v['cuda_kernel_names']):return False
+ if not isinstance(v,dict)or set(v.get('optional_backend_versions',{}))!={'flash-qla','tilelang','causal-conv1d','flash-attn'}or any(x is not None and (not isinstance(x,str)or not x)for x in v['optional_backend_versions'].values())or not isinstance(v.get('cuda_kernel_names'),list)or not 1<=len(v['cuda_kernel_names'])<=512 or any(not isinstance(n,str)or not n or len(n)>PROOF_KERNEL_NAME_LIMIT for n in v['cuda_kernel_names']):return False
+ if serialized_size(v['cuda_kernel_names'])>PROOF_PARSED_LIMIT:return False
  return isinstance(v,dict)and v.get('schema_version')==1 and v.get('kind')=='ryotide_native_synthetic_preinput'and v.get('model')=='/models/Qwen3.5-9B'and v.get('revision')=='c202236235762e1c871ad0ccb60c8ee5ba337b9a'and str(v.get('engine')).startswith('torch-cuda')and v.get('temperature')==0.667 and v.get('tested_types')==['choice','noul','score']and type(v.get('cuda_kernel_events'))is int and v['cuda_kernel_events']>0 and v.get('input_dispatched')is False and v.get('scored')is False and v.get('http_listener_replaced_for_proof_only')is True and isinstance(v.get('prompt_hash'),str)and re.fullmatch('[a-f0-9]{12}',v['prompt_hash'])is not None
