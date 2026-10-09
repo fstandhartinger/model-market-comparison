@@ -1636,22 +1636,45 @@ def card_identity(row: dict[str, Any]) -> tuple[str, str, str]:
     """Name the actual customer and model; only validated public links reach Telegram."""
     def label(value: object, fallback: str) -> str:
         clean = re.sub(r"[\x00-\x1f\x7f]+", " ", str(value or "")).strip()
-        return clean[:120] or fallback
+        return clean or fallback
     customer = label(row.get("customer_name") or row.get("email"), "the customer")
     model = label(row.get("model_name"), "the submitted model")
     link = public_link(row.get("model_link")) or SITE + "/submit"
     return customer, model, link
 
 
-def rescue_card(row: dict[str, Any], reason: str, *, exhausted: bool = False) -> str:
+SHORT_HOLD_LABELS = {
+    "official_method_retired_requires_admission": "the replacement test set needs approval",
+    "official_measurement_code_pin_changed": "changed test code needs review",
+    "official_measurement_pin_changed": "changed test inputs need review",
+    "measurement_pins_differ_from_review": "test files differ from the reviewed files",
+    "gpu_pod_capacity": "no evaluation GPU is available",
+    "gpu_pod_run_failed": "the GPU evaluation failed",
+    "fetch_source_transient": "the source download is unavailable",
+    "fetch_source_failed": "the source download failed",
+    "source_access_recovered_pending_review": "source and test approval need review",
+    "source_link_normalized_pending_v16_review": "the corrected source link needs review",
+    "evaluation_exhausted": "automatic evaluation attempts failed",
+}
+
+
+def card_context_line(row: dict[str, Any], status: str) -> str:
     customer, model, link = card_identity(row)
+    about = f"Fast-lane for {customer}, model {model}, {status}. {link}"
+    if len(about) > 220:
+        # Use a complete shorter public landing page, never a clipped model name or URL.
+        about = f"Fast-lane for {customer}, model {model}, {status}. {SITE}/submit"
+    return "Worum geht's: " + about
+
+
+def rescue_card(row: dict[str, Any], reason: str, *, exhausted: bool = False) -> str:
+    reason_short = SHORT_HOLD_LABELS.get(reason, "the evaluation needs investigation")
+    context = card_context_line(row, f"is blocked: {reason_short}")
     retry = " Automatic retries are used up." if exhausted else ""
-    return (f"🚨 DRINGEND\nWorum geht's: Fast-lane evaluation for {customer}, model {model}, is blocked because {hold_reason_label(reason)}. {link}\n\n"
-            "🧑 Für dich\n- Decide the next step for this customer's evaluation.\n"
-            f"  Why: The result deadline is {deadline_for(row).strftime('%d %b %H:%M UTC')}.{retry}\n"
-            f"  Steps:\n  1. Review the model and the blocker at {link}.\n"
-            "  2. Decide whether the agents should continue the evaluation or prepare a refund approval.\n"
-            "  Time: 15 minutes")
+    return (f"🚨 DRINGEND\n{context}\n\n🤖 Agenten\n"
+            f"- {hold_reason_label(reason).capitalize()}.{retry}\n"
+            f"- Agents are investigating; the deadline is {deadline_for(row).strftime('%d %b %H:%M UTC')}.\n"
+            "- Refunds require a separate approval card.")
 
 
 def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Effects,
@@ -3861,14 +3884,11 @@ def refund_decisions(synthetic_id: str | None, job_root: Path, effects: Effects)
 
 def sla_message(row: dict[str, Any], hours: int) -> str:
     due = deadline_for(row).strftime("%d %b %H:%M UTC")
-    customer, model, link = card_identity(row)
-    if hours >= 36:
-        return (f"🚨 DRINGEND\nWorum geht's: Fast-lane evaluation for {customer}, model {model}, has no result 36 hours after payment. {link}\n\n"
-                "🧑 Für dich\n- Decide whether to intervene.\n"
-                f"  Why: The result deadline is {due}; a refund needs your approval.\n"
-                f"  Steps:\n  1. Review the model at {link}.\n  2. Decide whether agents should continue or prepare a refund approval.\n  Time: 10 minutes")
-    return (f"🤖 LÄUFT\nWorum geht's: Fast-lane evaluation for {customer}, model {model}, has no result 24 hours after payment. {link}\n\n"
-            f"🤖 Agenten\n- Agents are following up; the result deadline is {due}.")
+    context = card_context_line(row, f"has no result {hours} hours after payment")
+    status = "🚨 DRINGEND" if hours >= 36 else "🤖 LÄUFT"
+    return (f"{status}\n{context}\n\n🤖 Agenten\n"
+            f"- Agents are investigating; the result deadline is {due}.\n"
+            "- Refunds require a separate approval card.")
 
 
 # ---------------------------------------------------------------------------

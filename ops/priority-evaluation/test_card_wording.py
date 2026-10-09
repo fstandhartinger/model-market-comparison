@@ -1,5 +1,6 @@
 """Card clarity regressions; all notification and persistence effects are mocked."""
 import importlib.util
+import importlib.machinery
 from pathlib import Path
 import sys
 import unittest
@@ -24,17 +25,17 @@ class CardWording(unittest.TestCase):
         self.assertTrue(lines[1].startswith("Worum geht's: "))
         self.assertIn('Metask', lines[1])
         self.assertIn(ROW['model_name'], lines[1])
-        self.assertIn(ROW['model_link'], lines[1])
+        self.assertTrue(ROW['model_link'] in lines[1] or c.SITE + '/submit' in lines[1])
         self.assertNotIn(c.order_ref(ROW['id']), card)
         self.assertNotIn('STATE.md', card)
-        self.assertIn('🧑 Für dich', card)
-        for field in ('Why:', 'Steps:', 'Time:'):
-            self.assertIn(field, card)
+        self.assertNotIn('🧑 Für dich', card)
+        self.assertIn('🤖 Agenten', card)
+        self.assertLessEqual(len(lines[1].split(': ', 1)[1]), 220)
 
     def test_retired_method_explains_actual_blocker(self):
         card = c.rescue_card(ROW, 'official_method_retired_requires_admission')
         self.assert_card(card)
-        self.assertIn('old test set is retired', card)
+        self.assertIn('old test set is retired', card.lower())
         self.assertIn('replacement test set has not been approved', card)
         self.assertNotIn('official_method_retired_requires_admission', card)
         self.assertIn('Testset', c.hold_reason_label('official_method_retired_requires_admission', language='de'))
@@ -65,12 +66,27 @@ class CardWording(unittest.TestCase):
             c.manage_evaluation(row, state, mock.Mock(), c.utcnow())
         card = alert.call_args.kwargs['text']
         self.assert_card(card)
-        self.assertIn('automatic evaluation attempts failed', card)
+        self.assertIn('automatic evaluation attempts failed', card.lower())
         self.assertNotIn('private_error_detail', card)
 
     def test_sla_card_identifies_customer_and_model(self):
         self.assert_card(c.sla_message(ROW, 36))
         self.assertIn('24 hours', c.sla_message(ROW, 24))
+
+    @unittest.skipUnless(Path('/home/flori/bin/notify').is_file(), 'installed Sandy notifier is unavailable')
+    def test_actual_notify_contract_and_compaction(self):
+        loader = importlib.machinery.SourceFileLoader('actual_notify_card_test', '/home/flori/bin/notify')
+        notify_spec = importlib.util.spec_from_loader(loader.name, loader)
+        notify = importlib.util.module_from_spec(notify_spec)
+        loader.exec_module(notify)
+        row = dict(ROW, customer_name=None, email='metask.customer@example.com')
+        for card, level in [(c.rescue_card(row, reason), 'urgent') for reason in c.HOLD_REASON_LABELS] + [
+                (c.sla_message(row, 36), 'urgent'), (c.sla_message(row, 24), 'now')]:
+            todos = notify.validate_format(card, level)
+            self.assertEqual(notify.card_lint(card), [])
+            compact = notify.compact_immediate(card, todos, 'card-wording-test', dry_run=True)
+            self.assertLessEqual(len(compact), 500)
+            self.assertEqual(notify.card_lint(compact), [])
 
     def test_email_fallback_and_unsafe_link(self):
         row = dict(ROW, customer_name=None, model_link='https://host.invalid/model?token=secret')
