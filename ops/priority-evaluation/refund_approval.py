@@ -44,8 +44,10 @@ def caption(row: dict, kind: str, deadline: str) -> str:
     rid = str(uuid.UUID(str(row["id"])))
     amount = row.get("amount_total")
     money = f"USD {int(amount) / 100:.2f}" if isinstance(amount, int) and not isinstance(amount, bool) else "the full amount"
-    return ("🧑 DU BIST DRAN\n\n🧑 Für dich\n"
-            f"- Decide the refund for fast-lane order {rid[:8]} ({money}).\n"
+    from autopickup import card_context_line
+    context = card_context_line(row, "needs a refund decision: " + {"sla_missed": "no result arrived by the deadline", "sla_48h_payment": "the result was delivered late", "operator_refusal": "the order cannot be completed", "source_review_failed": "the source review failed"}[kind])
+    return (f"🧑 DU BIST DRAN\n{context}\n\n🧑 Für dich\n"
+            f"- Decide whether to refund this customer ({money}).\n"
             f"  Why: {REASONS[kind].format(deadline=deadline)} Nothing is refunded without your button.\n"
             "  Steps:\n  1. Tap Refund in full or No refund.\n"
             "  Time: 1 minute. Buttons expire in 24 hours. A text reply does not authorize a refund.")

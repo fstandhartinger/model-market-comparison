@@ -236,7 +236,19 @@ def card(path, draft, title_text="Refusal email — exact draft"):
     os.chmod(path, 0o600)
 
 
-def notify_card(state, path, now, kind="refusal"):
+def approval_caption(row, kind):
+    from autopickup import card_context_line
+    status = ("is paused: the customer must correct the submitted source"
+              if kind == "change_request" else "needs email approval: the source review failed")
+    title = "change-request" if kind == "change_request" else "refusal"
+    return (f"🧑 DU BIST DRAN\n{card_context_line(row, status)}\n\n🧑 Für dich\n"
+            f"- Decide whether to send the {title} email to this customer.\n"
+            f"  {KINDS[kind][1][1]}\n"
+            "  Steps:\n  1. Read the email in the overview image.\n  2. Tap Send this email or Keep unsent.\n"
+            "  Time: 1 minute. Buttons expire in 12 hours. A text reply does not authorize sending.")
+
+
+def notify_card(state, path, now, kind="refusal", row=None):
     # Freshness evidence immediately before asking; data is never executed as instructions.
     if state.get("freshness_hold"):
         return  # an owner must reconcile it; inbox reads mark entries read
@@ -252,12 +264,8 @@ def notify_card(state, path, now, kind="refusal"):
     token, chat = telegram_config()
     del token
     state["chat_id"] = chat
-    title_text, (what, why), _ = KINDS[kind]
-    caption = ("🧑 DU BIST DRAN\n\n🧑 Für dich\n"
-               f"- {what.format(ref=state['draft']['request_id'][:8])}\n"
-               f"  {why}\n"
-               "  Steps:\n  1. Read the attached exact email.\n  2. Tap Send this email or Keep unsent.\n"
-               "  Time: 1 minute. Buttons expire in 12 hours. A text reply does not authorize sending.")
+    title_text = KINDS[kind][0]
+    caption = approval_caption(row or {"email": state["draft"]["to"]}, kind)
     image_path = path.with_suffix(".png")
     card(image_path, state["draft"], title_text)
     # This is an explicit Florian-only approval from the 27 Sep fast-lane decision.
@@ -321,7 +329,7 @@ def advance(row, to, subject, body, root, effects, now, kind="refusal"):
             return "held"  # superseded by an operator; never send, never re-ask
         atomic(path, state)
         if state["notification"] == "pending":
-            notify_card(state, path, now, kind)
+            notify_card(state, path, now, kind, row=row)
         if not state.get("message_id"):
             return "unknown" if state["notification"] != "pending" or state.get("freshness_hold") else "pending"
         if not state.get("buttons_attached"):

@@ -1448,11 +1448,8 @@ def send_tracked_mail(row: dict[str, Any], state: dict[str, Any], step_name: str
         return True
     update_row(rid, f"{column}='failed'", f"{column}='sending'")
     if finish_fail(state, step_name, reason):
-        alert(state, f"{step_name}_exhausted", effects, urgent=True, text=(
-            f"🚨 DRINGEND\n\n- Send the {step_name.replace('_', ' ')} for fast-lane order {order_ref(rid)} by hand.\n"
-            f"  Why: The automatic email failed {STEP_LIMITS[step_name]} times ({reason}).\n"
-            f"  Steps:\n  1. Open {job_directory(rid, JOB_ROOT)} and the request in `~/bin/jevbench-review list`.\n"
-            "  2. Send the email and record it on board #9.\n  Time: 5 minutes"))
+        alert(state, f"{step_name}_exhausted", effects, urgent=True, text=agent_status_card(row, "is blocked: the automatic customer email failed",
+                                   "Agents are investigating the failed customer email; the recorded delivery is unchanged."))
     return False
 
 
@@ -1509,11 +1506,7 @@ def advance_intake(row: dict[str, Any], state: dict[str, Any], job_dir: Path, ef
                 finish_ok(state, "paid_at", now)
             except PickupError as exc:
                 if finish_fail(state, "paid_at", str(exc)):
-                    alert(state, "paid_at_exhausted", effects, urgent=True, text=(
-                        f"🚨 DRINGEND\n\n- Check the payment time of fast-lane order {order_ref(rid)}.\n"
-                        "  Why: The pickup could not match the recorded signed Stripe event, so the confirmation and evaluation did not start.\n"
-                        "  Steps:\n  1. Open the Stripe payment for this request.\n"
-                        f"  2. If it is paid, record paid_at and rerun `~/bin/jevbench-autopickup cycle`.\n  Time: 10 minutes"))
+                    alert(state, "paid_at_exhausted", effects, urgent=True, text=agent_status_card(row, "is blocked: the payment time could not be verified", "Agents are checking the signed payment record; confirmation and evaluation have not started."))
         row = load_row(rid) or row
         if not row.get("paid_at"):
             return row
@@ -1539,7 +1532,7 @@ def advance_intake(row: dict[str, Any], state: dict[str, Any], job_dir: Path, ef
             update_row(rid, "board_status='failed'")
             if finish_fail(state, "handoff", "board_post_failed"):
                 alert(state, "handoff_exhausted", effects, digest=True, text=(
-                    f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: board handoff failed; the evaluation service still runs."))
+                    agent_status_card(row, 'has a failed agent handoff', 'The evaluation service still runs; agents are repairing the handoff.', urgent=False)))
 
     # 5. A customer reply recorded by the mail watcher after a hold started ends the hold.
     row = load_row(rid) or row
@@ -1601,6 +1594,91 @@ def set_operational_hold(state: dict[str, Any], reason: str, *, transient: bool,
     save_state(state)
 
 
+# Presentation only: reason keys remain unchanged in state, retries and board handoffs.
+HOLD_REASON_LABELS = {
+    "official_method_retired_requires_admission": (
+        "the old test set is retired and the replacement test set has not been approved for this model",
+        "das alte Testset ist außer Betrieb und das neue Testset ist für dieses Modell noch nicht freigegeben"),
+    "official_measurement_code_pin_changed": ("the official test code changed and needs a new review", "der offizielle Testcode hat sich geändert und muss erneut geprüft werden"),
+    "official_measurement_pin_changed": ("the official test inputs changed and need a new review", "die offiziellen Testdaten haben sich geändert und müssen erneut geprüft werden"),
+    "measurement_pins_differ_from_review": ("the test files differ from the reviewed files", "die Testdateien weichen von den geprüften Dateien ab"),
+    "gpu_pod_capacity": ("no evaluation GPU is currently available", "derzeit ist keine GPU für die Messung verfügbar"),
+    "gpu_pod_run_failed": ("the evaluation GPU run failed", "die Messung auf der GPU ist fehlgeschlagen"),
+    "fetch_source_transient": ("the model source download is temporarily unavailable", "der Download der Modellquellen ist vorübergehend nicht verfügbar"),
+    "fetch_source_failed": ("the model source download failed and needs checking", "der Download der Modellquellen ist fehlgeschlagen und muss geprüft werden"),
+    "source_access_recovered_pending_review": ("model access is repaired but the source and test approval still need review", "der Modellzugriff funktioniert wieder, aber Quellen und Testfreigabe müssen noch geprüft werden"),
+    "source_link_normalized_pending_v16_review": ("the corrected model link still needs source and test approval", "der korrigierte Modelllink braucht noch eine Prüfung der Quellen und eine Testfreigabe"),
+    "customer_access": ("we are waiting for the customer's model access", "wir warten auf den Modellzugriff des Kunden"),
+    "customer_reply": ("we are waiting for the customer's reply", "wir warten auf die Antwort des Kunden"),
+    "customer_request": ("the customer asked to pause the evaluation", "der Kunde hat um eine Pause der Messung gebeten"),
+    "customer_changes": ("the customer needs to correct the submitted model source", "der Kunde muss die eingereichten Modellquellen korrigieren"),
+    "evaluation_exhausted": ("the automatic evaluation attempts failed and an agent must investigate", "die automatischen Messversuche sind fehlgeschlagen und ein Agent muss die Ursache prüfen"),
+}
+
+
+def hold_reason_label(reason: object, *, language: str = "en") -> str:
+    """Do not leak unknown exception text, internal reason keys or paths into cards."""
+    labels = HOLD_REASON_LABELS.get(str(reason))
+    if labels:
+        return labels[1 if language == "de" else 0]
+    return ("die automatische Messung ist gestoppt und ein Agent muss die Ursache prüfen"
+            if language == "de" else "the automatic evaluation is blocked and an agent must investigate the cause")
+
+
+def card_identity(row: dict[str, Any]) -> tuple[str, str, str]:
+    """Name the actual customer and model; only validated public links reach Telegram."""
+    def label(value: object, fallback: str) -> str:
+        clean = re.sub(r"[\x00-\x1f\x7f]+", " ", str(value or "")).strip()
+        return clean or fallback
+    customer = label(row.get("customer_name") or row.get("email"), "the customer")
+    model = label(row.get("model_name"), "the submitted model")
+    link = public_link(row.get("model_link")) or SITE + "/submit"
+    return customer, model, link
+
+
+SHORT_HOLD_LABELS = {
+    "official_method_retired_requires_admission": "the replacement test set needs approval",
+    "official_measurement_code_pin_changed": "changed test code needs review",
+    "official_measurement_pin_changed": "changed test inputs need review",
+    "measurement_pins_differ_from_review": "test files differ from the reviewed files",
+    "gpu_pod_capacity": "no evaluation GPU is available",
+    "gpu_pod_run_failed": "the GPU evaluation failed",
+    "fetch_source_transient": "the source download is unavailable",
+    "fetch_source_failed": "the source download failed",
+    "source_access_recovered_pending_review": "source and test approval need review",
+    "source_link_normalized_pending_v16_review": "the corrected source link needs review",
+    "evaluation_exhausted": "automatic evaluation attempts failed",
+}
+
+
+def card_context_line(row: dict[str, Any], status: str) -> str:
+    customer, model, link = card_identity(row)
+    about = f"Fast-lane for {customer}, model {model}, {status}. {link}"
+    if len(about) > 220:
+        # Use a complete shorter public landing page, never a clipped model name or URL.
+        about = f"Fast-lane for {customer}, model {model}, {status}. {SITE}/submit"
+    return "Worum geht's: " + about
+
+
+def agent_status_card(row: dict[str, Any], status: str, detail: str, *, urgent: bool = True) -> str:
+    label = "🚨 DRINGEND" if urgent else "🤖 LÄUFT"
+    return f"{label}\n{card_context_line(row, status)}\n\n🤖 Agenten\n- {detail}"
+
+
+def completed_status_card(row: dict[str, Any], status: str, detail: str) -> str:
+    return f"✅ ERLEDIGT\n{card_context_line(row, status)}\n\n{detail}"
+
+
+def rescue_card(row: dict[str, Any], reason: str, *, exhausted: bool = False) -> str:
+    reason_short = SHORT_HOLD_LABELS.get(reason, "the evaluation needs investigation")
+    context = card_context_line(row, f"is blocked: {reason_short}")
+    retry = " Automatic retries are used up." if exhausted else ""
+    return (f"🚨 DRINGEND\n{context}\n\n🤖 Agenten\n"
+            f"- {hold_reason_label(reason).capitalize()}.{retry}\n"
+            f"- Agents are investigating; the deadline is {deadline_for(row).strftime('%d %b %H:%M UTC')}.\n"
+            "- Refunds require a separate approval card.")
+
+
 def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Effects,
                          now: datetime, reason: str, *, exhausted: bool) -> None:
     """A hold that will not clear itself gets one urgent card per order+reason plus a #11 handoff."""
@@ -1628,14 +1706,8 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
                          owner_for(rid), thread=BOARD_HANDOFF_THREAD):
             finish_ok(state, "operational_handoff", now)
     hold_key = re.sub(r"[^A-Za-z0-9_]+", "_", reason)[:48]
-    why = f"The automatic retry policy is exhausted ({HOLD_MAX_RETRIES} retries)" if exhausted else \
-        "this hold reason has no automatic retry"
-    alert(state, f"operational_hold_{hold_key}", effects, urgent=True, text=(
-        f"🚨 DRINGEND\n\n- Rescue fast-lane order {order_ref(rid)} ({reason}).\n"
-        f"  Why: An operational hold is blocking the measurement and {why}; "
-        f"the 48-hour deadline is {deadline_for(row).strftime('%d %b %H:%M UTC')}.\n"
-        f"  Steps:\n  1. Read STATE.md in {job_directory(rid, JOB_ROOT)}.\n"
-        "  2. Fix the cause and clear the operational hold. No refund happens without your approval card.\n  Time: 15 minutes"))
+    alert(state, f"operational_hold_{hold_key}", effects, urgent=True,
+          text=rescue_card(row, reason, exhausted=exhausted))
 
 
 def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effects, now: datetime) -> None:
@@ -1667,13 +1739,10 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
         else:
             return
     if status == "exhausted":
-        detail = (state.get("evaluation_exhausted") or {}).get("reason") or \
-            f"the evaluation failed {MAX_EVALUATION_ATTEMPTS} times"
-        alert(state, "evaluation_exhausted", effects, urgent=True, text=(
-            f"🚨 DRINGEND\n\n- Rescue fast-lane order {order_ref(rid)}.\n"
-            f"  Why: {detail}; the 48-hour deadline is {deadline_for(row).strftime('%d %b %H:%M UTC')}.\n"
-            f"  Steps:\n  1. Read STATE.md and OUTPUT.md in {job_directory(rid, JOB_ROOT)}.\n"
-            "  2. Start a manual evaluation job. No refund happens without your approval card.\n  Time: 15 minutes"))
+        detail = (state.get("evaluation_exhausted") or {}).get("reason") or "evaluation_exhausted"
+        reason = detail if detail in HOLD_REASON_LABELS else "evaluation_exhausted"
+        alert(state, "evaluation_exhausted", effects, urgent=True,
+              text=rescue_card(row, reason, exhausted=True))
         return
     if status in ("pending", "failed"):
         operational = state.get("operational_hold")
@@ -1722,11 +1791,7 @@ def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effec
         else:
             update_row(rid, "evaluation_status='failed'", "evaluation_status='starting'")
             if finish_fail(state, "evaluation_start", "systemd_start_failed"):
-                alert(state, "evaluation_start_exhausted", effects, urgent=True, text=(
-                    f"🚨 DRINGEND\n\n- Start the evaluation of fast-lane order {order_ref(rid)} by hand.\n"
-                    f"  Why: systemd refused to start {unit} {STEP_LIMITS['evaluation_start']} times.\n"
-                    f"  Steps:\n  1. Run `systemctl --user status {unit}` and fix the cause.\n"
-                    f"  2. Rerun `~/bin/jevbench-autopickup cycle`.\n  Time: 10 minutes"))
+                alert(state, "evaluation_start_exhausted", effects, urgent=True, text=agent_status_card(row, "is blocked: the evaluation service failed to start", "Agents are investigating the service startup failure."))
 
 
 # ---------------------------------------------------------------------------
@@ -2965,10 +3030,9 @@ def advance_public_release(row: dict[str, Any], job_dir: Path, state: dict[str, 
             release["status"] = "queue_paused"
             state["public_release"] = release
             save_state(state)
-            alert(state, "public_release_queue_paused", effects, urgent=True, text=(
-                f"🚨 DRINGEND\n\n- Resume the site release PR for fast-lane order {order_ref(request_id(row.get('id')))}.\n"
-                "  Why: The merge queue removed `bh-merge-ready`, so the site revision did not pass its gates.\n"
-                f"  Steps:\n  1. Inspect PR #{pr_number} in {REPO}.\n  2. Fix the site revision and reapply `bh-merge-ready` when ready.\n  Time: 15 minutes"))
+            alert(state, "public_release_queue_paused", effects, urgent=True,
+                  text=agent_status_card(row, "is blocked: publication checks failed",
+                                         "Agents are fixing the publication checks; the result is not published yet."))
         return False
     release_commit = (pr.get("merge_commit_sha") or "").lower()
     if not SHA40_RE.fullmatch(release_commit):
@@ -3032,11 +3096,7 @@ def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, 
             reason = str(exc) if isinstance(exc, PickupError) else type(exc).__name__
             if finish_fail(state, "finalize", reason):
                 update_row(rid, "release_status='failed'")
-                alert(state, "finalize_exhausted", effects, urgent=True, text=(
-                    f"🚨 DRINGEND\n\n- Check the result of fast-lane order {order_ref(rid)}.\n"
-                    f"  Why: The result could not be verified ({reason[:120]}), so no result email went out.\n"
-                    f"  Steps:\n  1. Open {job_dir}/release/RESULT.json and STATE.md.\n"
-                    "  2. Fix the release or send the result by hand.\n  Time: 15 minutes"))
+                alert(state, "finalize_exhausted", effects, urgent=True, text=agent_status_card(row, "is blocked: the result could not be verified", "Agents are checking the result before emailing it to the customer."))
             return
         allowed, _reason = gate(rid)
         if not allowed:
@@ -3046,8 +3106,7 @@ def advance_delivery(row: dict[str, Any], state: dict[str, Any], job_dir: Path, 
         if summary["outcome"] == "refused":
             update_row(rid, "release_status='refused'")
             alert(state, "refused", effects, digest=True, text=(
-                f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: source review failed. "
-                "The full refund is queued; its exact refusal email approval follows after refund success."))
+                agent_status_card(row, 'is paused: the submitted source failed review', 'Agents are checking the failed source review; any refund requires separate approval.', urgent=False)))
         else:
             update_row(rid, "release_status='verified'")
         row = load_row(rid) or row
@@ -3113,17 +3172,14 @@ def advance_xpost(row: dict[str, Any], state: dict[str, Any], job_dir: Path, sum
         step(state, "xpost")["status"] = "skipped"
         step(state, "xpost_receipt")["status"] = "skipped"
         save_state(state)
-        effects.notify(f"✅ ERLEDIGT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)} delivered; the published top five did not change, so no X post.",
+        effects.notify(completed_status_card(row, "is complete: the customer received the result", "The published top five did not change, so no X update was needed."),
                        mode="digest")
         return
     if text is None and step(state, "xpost")["status"] == "pending":
         step(state, "xpost")["status"] = "skipped"
         step(state, "xpost_receipt")["status"] = "skipped"
         save_state(state)
-        alert(state, "xpost_text", effects, text=(
-            f"🧑 DU BIST DRAN\n\n🧑 Für dich\n- Post the top-five change from fast-lane order {order_ref(rid)} yourself.\n"
-            "  Why: The automatic post text would exceed 280 characters.\n"
-            f"  Steps:\n  1. Open {summary['results'][0].get('public_url')}.\n  2. Post the new top five from @airesearch12.\n  Time: 5 minutes"))
+        alert(state, "xpost_text", effects, text=agent_status_card(row, "is blocked: the X update exceeds the post length limit", "Agents must shorten the X update; no post was attempted.", urgent=False))
         return
     xdir = job_dir / "xpost"
     if step_due(state, "xpost", now):
@@ -3135,10 +3191,7 @@ def advance_xpost(row: dict[str, Any], state: dict[str, Any], job_dir: Path, sum
         begin_attempt(state, "xpost", now)
         if xdir.is_symlink() or (xdir.exists() and not xdir.is_dir()):
             finish_fail(state, "xpost", "unsafe_xpost_folder")
-            alert(state, "xpost_start", effects, text=(
-                f"🧑 DU BIST DRAN\n\n🧑 Für dich\n- Check the @airesearch12 top-five update for order {order_ref(rid)}.\n"
-                "  Why: The private post folder failed its safety check, so no post was attempted.\n"
-                f"  Steps:\n  1. Inspect {job_dir}/xpost and remove the invalid path.\n  2. Rerun the fast-lane pickup cycle.\n  Time: 5 minutes"))
+            alert(state, "xpost_start", effects, text=agent_status_card(row, "is blocked: the X post folder failed its safety check", "Agents are checking the post folder; no post was attempted.", urgent=False))
             return
         xdir.mkdir(mode=0o700, parents=True, exist_ok=True)
         digest = hashlib.sha256(text.encode("utf-8")).hexdigest()
@@ -3147,10 +3200,7 @@ def advance_xpost(row: dict[str, Any], state: dict[str, Any], job_dir: Path, sum
             finish_ok(state, "xpost", now, text_sha256=digest)
         else:
             finish_fail(state, "xpost", "systemd_start_failed")
-            alert(state, "xpost_start", effects, text=(
-                f"🧑 DU BIST DRAN\n\n🧑 Für dich\n- Post the top-five change from fast-lane order {order_ref(rid)}.\n"
-                "  Why: The X-post service did not start; it is never retried automatically.\n"
-                f"  Steps:\n  1. Post the text in {xdir}/POST.txt from @airesearch12.\n  Time: 5 minutes"))
+            alert(state, "xpost_start", effects, text=agent_status_card(row, "is blocked: the X posting service did not start", "Agents are checking the posting service; no automatic retry is permitted.", urgent=False))
         return
     if step_done(state, "xpost") and not step(state, "xpost_receipt")["status"] in ("done", "exhausted", "skipped"):
         receipt = read_xpost_receipt(rid, step(state, "xpost").get("text_sha256"))
@@ -3166,13 +3216,11 @@ def advance_xpost(row: dict[str, Any], state: dict[str, Any], job_dir: Path, sum
             return
         begin_attempt(state, "xpost_receipt", now)
         if status == "posted":
-            message = f"✅ ERLEDIGT\n\nPosted from @airesearch12 (paid fast-lane top-five change, order {order_ref(rid)}): {url}"
+            message = completed_status_card(row, "is complete: its ranking update is published on X", "Posted from @airesearch12: " + str(url))
             sent = effects.notify(message, requested=True)
         else:
-            sent = effects.notify(
-                f"🧑 DU BIST DRAN\n\n🧑 Für dich\n- Check the @airesearch12 top-five post for fast-lane order {order_ref(rid)}.\n"
-                f"  Why: The post run ended as '{status}'; it is never retried automatically.\n"
-                f"  Steps:\n  1. Look at https://x.com/airesearch12.\n  2. If it is missing, post {xdir}/POST.txt yourself.\n  Time: 5 minutes")
+            sent = effects.notify(agent_status_card(row, "is blocked: the X post outcome is uncertain",
+                                                     "Agents are verifying the existing X post; no automatic retry is permitted.", urgent=False))
         if sent:
             finish_ok(state, "xpost_receipt", now, post_status=status, url=url)
         else:
@@ -3548,8 +3596,7 @@ def advance_refund_notice(row: dict[str, Any], state: dict[str, Any], effects: E
             update_row(rid, "refusal_email_status='held', pickup_status='done'")
         elif outcome == "unknown":
             alert(state, "refusal_outcome_unknown", effects, digest=True, text=(
-                f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: refusal approval or email "
-                "has an uncertain outcome; held for reconciliation without another send."))
+                agent_status_card(row, 'is blocked: the customer email outcome is uncertain', 'Agents are checking the existing approval or email; no automatic resend is permitted.', urgent=False)))
         return
     item = step(state, "refund_notice")
     if item["status"] not in ("done", "exhausted") and step_due(state, "refund_notice", now):
@@ -3565,7 +3612,7 @@ def advance_refund_notice(row: dict[str, Any], state: dict[str, Any], effects: E
                 finish_ok(state, "refund_notice", now)
             elif finish_fail(state, "refund_notice", reason):
                 alert(state, "refund_notice_exhausted", effects, digest=True, text=(
-                    f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)} was refunded at 48 h; the refund email failed and needs a manual send."))
+                    agent_status_card(row, 'needs follow-up: the refund email failed', 'The approved refund completed; agents must repair the customer notification.', urgent=False)))
     if step(state, "refund_notice")["status"] in ("done", "exhausted"):
         update_row(rid, "pickup_status='done'")
 
@@ -3725,8 +3772,7 @@ def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) ->
                 save_state(state)
                 if not ok:
                     alert(state, "delay_note_failed", effects, digest=True, text=(
-                        f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: Florian chose "
-                        "'Send delay note' on the 40-hour card but the delay email failed; retry next cycle."))
+                        agent_status_card(row, 'is blocked: the approved delay email failed', 'Agents must repair the approved customer delay notification; delivery is not confirmed.', urgent=False)))
             if state.get("delay_email_status") == "sent":
                 effects.board(f"Fast-lane order {order_ref(rid)}: Florian sent the delay note on the "
                               "40-hour decision card; the customer was told the new ETA.", owner_for(rid), kind="note")
@@ -3735,12 +3781,10 @@ def sla_decisions(synthetic_id: str | None, job_root: Path, effects: Effects) ->
                           "decision card; the order keeps running.", owner_for(rid), kind="note")
         elif outcome == "exhausted":
             alert(state, "sla40_card_exhausted", effects, digest=True, text=(
-                f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: three 40-hour decision "
-                "cards expired unanswered; nothing was decided. An operator follows up."))
+                agent_status_card(row, 'awaits a decision: the delay or refund cards expired', 'No refund or delay email was authorized; agents are following up.', urgent=False)))
         elif outcome == "unknown":
             alert(state, "sla40_card_unknown", effects, digest=True, text=(
-                f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: the 40-hour decision card "
-                "has an uncertain delivery; held for reconciliation, nothing decided."))
+                agent_status_card(row, 'is blocked: the delay decision card delivery is uncertain', 'Agents are checking the existing card; no refund or delay email is authorized.', urgent=False)))
     return asked
 
 
@@ -3806,25 +3850,20 @@ def refund_decisions(synthetic_id: str | None, job_root: Path, effects: Effects)
                 effects.board(f"Fast-lane order {order_ref(rid)}: Florian {verb}.", owner_for(rid), kind="note")
         elif outcome == "exhausted":
             alert(state, "refund_approval_exhausted", effects, digest=True, text=(
-                f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: three refund approval cards expired "
-                "unanswered; nothing was refunded. An operator follows up."))
+                agent_status_card(row, 'awaits a decision: the refund approval cards expired', 'Nothing was refunded; agents are following up.', urgent=False)))
         elif outcome == "unknown":
             alert(state, "refund_approval_unknown", effects, digest=True, text=(
-                f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: the refund approval card has an uncertain "
-                "delivery; held for reconciliation, nothing refunded."))
+                agent_status_card(row, 'is blocked: the refund card delivery is uncertain', 'Agents are checking the existing card; nothing was refunded.', urgent=False)))
     return asked
 
 
 def sla_message(row: dict[str, Any], hours: int) -> str:
-    rid = request_id(row["id"])
     due = deadline_for(row).strftime("%d %b %H:%M UTC")
-    folder = job_directory(rid, JOB_ROOT)
-    if hours >= 36:
-        return (f"🚨 DRINGEND\n\n- Check fast-lane order {order_ref(rid)}.\n"
-                f"  Why: No result 36 hours after payment; the deadline is {due}. No automatic refund: you will get a refund decision card then.\n"
-                f"  Steps:\n  1. Open {folder}/STATE.md.\n  2. Decide whether to intervene.\n  Time: 10 minutes")
-    return (f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: 24 hours since payment, no result yet. "
-            f"Deadline {due}. Progress: {folder}/STATE.md")
+    context = card_context_line(row, f"has no result {hours} hours after payment")
+    status = "🚨 DRINGEND" if hours >= 36 else "🤖 LÄUFT"
+    return (f"{status}\n{context}\n\n🤖 Agenten\n"
+            f"- Agents are investigating; the result deadline is {due}.\n"
+            "- Refunds require a separate approval card.")
 
 
 # ---------------------------------------------------------------------------
@@ -3959,10 +3998,9 @@ def health(effects: Effects) -> dict[str, Any]:
     fresh = [(key, text) for key, text in problems
              if (parse_ts(sent_before.get(key)) is None or now - parse_ts(sent_before.get(key)) > ALERT_REPEAT)]
     if fresh:
-        lines = "\n".join(f"  {index}. {text}" for index, (_, text) in enumerate(fresh[:6], 1))
-        message = ("🚨 DRINGEND\n\n- Fix the fast-lane pickup health problems.\n"
-                   "  Why: Paid orders may miss their 48-hour promise.\n"
-                   f"  Steps:\n{lines}\n  Time: 15 minutes")
+        message = ("🚨 DRINGEND\nWorum geht's: Benchmark Heaven fast-lane delivery is blocked by service or order problems. https://benchmarkheaven.com/submit\n\n"
+                   f"🤖 Agenten\n- Agents are investigating {len(fresh)} new problems; paid orders may miss their 48-hour deadline.\n"
+                   "- Refunds require a separate approval card.")
         if effects.notify(message) and not effects.dry_run:
             for key, _ in fresh:
                 sent_before[key] = iso(now)
@@ -4637,12 +4675,10 @@ def advance_change_request(row: dict[str, Any], state: dict[str, Any], job_dir: 
     elif outcome == "held":
         update_row(rid, "change_request_email_status='held'", "change_request_email_status='approval_required'")
         alert(state, f"change_request_held_{int(row.get('resubmission_count') or 0)}", effects, digest=True, text=(
-            f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: the change-request email was kept unsent; "
-            "the order stays open on hold, no refund. An owner contacts the customer another way."))
+            agent_status_card(row, 'is paused: the change-request email was kept unsent', 'The order stays open without a refund; agents must contact the customer another way.', urgent=False)))
     elif outcome == "unknown":
         alert(state, "change_request_outcome_unknown", effects, digest=True, text=(
-            f"🤖 LÄUFT\n\n🤖 Agenten\n- Fast-lane order {order_ref(rid)}: change-request approval or email "
-            "has an uncertain outcome; held for reconciliation without another send."))
+            agent_status_card(row, 'is blocked: the change-request email outcome is uncertain', 'Agents are checking the existing approval or email; no automatic resend is permitted.', urgent=False)))
 
 
 def consume_stage_attempt(state: dict[str, Any], name: str, limit: int) -> bool:
