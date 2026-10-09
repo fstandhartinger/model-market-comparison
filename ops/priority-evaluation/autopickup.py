@@ -11,6 +11,13 @@ shell or a command-line argument; it is stored only as quoted JSON data for the 
 
 from __future__ import annotations
 
+# Keep admitted regular-source/cache closures stable for this controller and
+# its trusted Python subprocesses, before loading any project module.
+import sys
+import os
+sys.dont_write_bytecode = True
+os.environ["PYTHONDONTWRITEBYTECODE"] = "1"
+
 import argparse
 import base64
 import contextlib
@@ -32,14 +39,12 @@ import refusal_approval
 import refund_approval
 import sla_decision
 import pod_runner
-import os
 import pwd
 import re
 import resource
 import shlex
 import shutil
 import subprocess
-import sys
 import tempfile
 import time
 import urllib.error
@@ -1728,6 +1733,15 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
 
 def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effects, now: datetime) -> None:
     rid = request_id(row.get("id"))
+    # Keep the existing escalation/SLA supervision, while excluding every
+    # ordinary start/retry/hold-clear branch for the exclusive continuation.
+    if state.get('scoped_native_topup') is not None:
+        operational = state.get('operational_hold')
+        if isinstance(operational, dict):
+            operational_escalate(row, state, effects, now,
+                                 str(operational.get('reason') or 'scoped_native_topup_reconciliation_required'),
+                                 exhausted=False)
+        return
     if row.get("result_delivered_at") is not None:
         # A delivered order is done forever: never restart the unit, clear a hold or send a
         # hold escalation — even when state still carries an operational hold from the hand run.
@@ -4407,6 +4421,8 @@ def evaluate_v16_generation(rid: str, job_dir: Path) -> int:
         generation = admission["generation"]
         receipt_dir = STATE_ROOT / "measurements" / rid / generation / "jevbench"
         if not (receipt_dir / "receipt.json").exists():
+            if state.get('scoped_native_topup') is not None:
+                raise PickupError('owned scoped topup requires exact continuation')
             # Same live paid/hold/deadline CAS as legacy, immediately before
             # creating a measurement. Existing completed raw needs no new rental
             # transition and may wait idempotently for the cohort baseline.
@@ -4463,6 +4479,8 @@ def evaluate(rid: str) -> int:
             or not (job_dir / "PROMPT.md").is_file():
         raise PickupError("the order is not assigned to this pickup")
     state = load_state(rid)
+    if state.get('scoped_native_topup') is not None:
+        raise PickupError('owned scoped topup prohibits ordinary evaluate')
     attempts_before = dict(state.get("stage_attempts", {}))
     # Exact operator/peer-installed late Decisor publication recovery only.
     # Ordinary delivered handling and deadline gate remain unchanged.
