@@ -121,7 +121,7 @@ class ActualClosureTests(unittest.TestCase):
   self.write(Path(refs['original_history']['path']),{'files':{str(retained):g.sha(retained)}})
   self.write(Path(refs['source_freeze']['path']),{'files':{str(p):g.sha(p)for p in self.runtime.rglob('*')if p.is_file()}})
   for r in refs.values():r['sha256']=g.sha(r['path'])
-  self.p={'schema_version':1,'SOURCE_ONLY_PROSPECTIVE_NOT_INSTALLABLE':False,'scope':g.SCOPE,'order_id':self.rid,'generation':g.GENERATION,'bounds':dict(zip(('old_creation_attempts','old_spend_usd','maximum_lifetime_allocations','maximum_lifetime_usd'),g.BOUNDS[self.rid])),'max_new_usd':5,'max_ttl_hours':1,'selected_gpu':'RTX6000' if self.rid==g.RYO else 'H100','references':refs,'original_state_sha256':g.sha(self.statepath),'original_ledger_sha256':g.sha(self.ledgerpath),'original_execstart_sha256':hashlib.sha256(b'original argv\n').hexdigest()}
+  self.p={'schema_version':1,'SOURCE_ONLY_PROSPECTIVE_NOT_INSTALLABLE':False,'scope':g.SCOPE,'order_id':self.rid,'generation':g.GENERATION,'bounds':dict(zip(('old_creation_attempts','old_spend_usd','maximum_lifetime_allocations','maximum_lifetime_usd'),g.BOUNDS[self.rid])),'max_new_usd':5,'max_ttl_hours':1,'selected_gpu':'RTX6000' if self.rid==g.RYO else 'H100','references':refs,'original_state_sha256':g.sha(self.statepath),'original_ledger_sha256':g.sha(self.ledgerpath),'original_execstart_sha256':op.execstart_sha256(self.original_show())}
   self.write(self.base/'PLAN.json',self.p)
   self.claim={'order_id':self.rid,'generation':g.GENERATION,'plan_sha256':g.sha(self.base/'PLAN.json'),'original_state_sha256':self.p['original_state_sha256'],'original_ledger_sha256':self.p['original_ledger_sha256']}
   self.auth={'scope':g.SCOPE,'root_owner':g.ROOT_OWNER,'verdict':'ACCEPTED','standing_decision_authenticity_verified':True,'financial_scope':self.p['bounds'],'selected_gpu':'RTX6000' if self.rid==g.RYO else 'H100','plan_sha256':g.sha(self.base/'PLAN.json'),'activation_claim_sha256':hashlib.sha256(json.dumps(self.claim,sort_keys=True,allow_nan=False).encode()).hexdigest(),'expected_row':{}}
@@ -133,6 +133,17 @@ class ActualClosureTests(unittest.TestCase):
   for p in reversed(self.patches):p.stop()
   self.tmp.cleanup()
  def paths(self,rid):return self.job,self.base,'synthetic-own-unit',self.root/'unit.d/drop.conf'
+ def show(self,binding,*,changed_status=False):
+  import shlex
+  stamp='Fri 2026-10-09 18:54:00 UTC' if changed_status else '[n/a]'
+  return '{ path='+binding['path']+' ; argv[]='+shlex.join(binding['argv'])+' ; ignore_errors='+('yes' if binding['ignore_errors'] else 'no')+' ; start_time='+stamp+' ; stop_time='+stamp+' ; pid='+('91824' if changed_status else '0')+' ; code='+('exited' if changed_status else '(null)')+' ; status='+('1/FAILURE' if changed_status else '0/0')+' }\n'
+ def original_show(self,*,changed_status=False):
+  return self.show({'path':'/usr/bin/python3','argv':['/usr/bin/python3','/home/flori/bin/jevbench-autopickup.py','evaluate',self.rid],'ignore_errors':False},changed_status=changed_status)
+ def system_show(self,*args):
+  if args[0]!='show':return ''
+  if 'Type' in args:return 'exec'
+  if self.paths(self.rid)[3].exists():return self.show(self.op.continuation_binding(self.rid),changed_status=True)
+  return self.original_show(changed_status=True)
  def write(self,p,v):p.write_text(json.dumps(v,sort_keys=True,allow_nan=False))
  def adopt(self):
   self.write(self.base/'ACTIVATION-CLAIM.json',self.claim)
@@ -191,7 +202,7 @@ class ActualClosureTests(unittest.TestCase):
    try:
     f.adopt();drop=f.paths(f.rid)[3];drop.parent.mkdir();drop.write_bytes(f.op.dropbytes(f.rid))
     if timeout:f.a.Effects.return_value.unit_state.side_effect=[{'ActiveState':'active'},{'ActiveState':'inactive'},{'ActiveState':'inactive'}]
-    def system(*args):return 'original argv\n' if args[0]=='show' else ''
+    def system(*args):return f.system_show(*args)
     with patch.object(f.op,'sysrun',side_effect=system):f.op.await_exit(f.a,f.rid,f.p,timeout=0 if timeout else 5)
     f.op.terminal(f.a,f.rid);self.assertTrue((f.base/'RESTORED.json').exists());self.assertTrue((f.base/'SUPERVISOR-EXIT.json').exists());self.assertFalse(drop.exists())
    finally:f.tearDown()
@@ -248,7 +259,7 @@ class ActualClosureTests(unittest.TestCase):
   from unittest.mock import patch
   row={'id':self.rid,'evaluation_status':'pending','synthetic_test':False,'stripe_mode':'live','pickup_job_dir':str(self.job),'pickup_owner':'synthetic-original-owner','evaluation_attempts':1,'status':'paid','paid_at':'2026-10-09T17:00:00Z'}
   auth=dict(self.auth,expected_row=row);self.a.load_row.return_value=row;self.a.deadline_for.return_value=datetime.datetime(2026,10,11,tzinfo=datetime.timezone.utc)
-  with patch.object(v16_adoption,'selected',return_value=({'generation':g.GENERATION},{},{})),patch.object(self.op,'sysrun',side_effect=lambda *args:'exec' if 'Type' in args else ('original argv\n' if args[0]=='show' else '')):
+  with patch.object(v16_adoption,'selected',return_value=({'generation':g.GENERATION},{},{})),patch.object(self.op,'sysrun',side_effect=self.system_show):
    self.op.eligible(self.a,self.rid,self.p,auth)
    self.a.Effects.return_value.unit_state.return_value={'ActiveState':'active'}
    with self.assertRaises(ValueError):self.op.eligible(self.a,self.rid,self.p,auth)
@@ -329,7 +340,7 @@ class ActualClosureTests(unittest.TestCase):
   from unittest.mock import patch
   row={'pickup_owner':'original','pickup_job_dir':str(self.job),'evaluation_attempts':1};self.a.load_row.return_value=row;self.a.sql_text.side_effect=repr
   calls=[]
-  def system(*args):calls.append(args);return 'original argv\n' if args[0]=='show' else ''
+  def system(*args):calls.append(args);return self.system_show(*args)
   with patch.dict('os.environ',{'AGENT_BOARD_NAME':g.ROOT_OWNER}),patch.object(self.op,'eligible',return_value=(self.s,row)),patch.object(self.op,'final_binding'),patch.object(self.op,'sysrun',side_effect=system):
    self.op.apply(self.a,self.rid,True,binding_path='synthetic',binding_sha256='synthetic')
   self.assertEqual(sum(1 for c in calls if c[0]=='start'),1);self.op.terminal(self.a,self.rid);self.assertTrue((self.base/'RESTORED.json').exists());self.assertTrue((self.base/'START-REQUESTED.json').exists())
@@ -347,7 +358,7 @@ class ActualClosureTests(unittest.TestCase):
   with patch.object(self.op,'sysrun',return_value=str(os.getpid())),patch.object(v16_adoption,'selected',return_value=({'generation':g.GENERATION},{},{})),patch.object(v16_adoption.v16_profiles,'measure',side_effect=measured):self.assertEqual(self.op.continuation(self.a,self.rid),0)
   self.assertEqual(self.op.terminal(self.a,self.rid)['status'],'completed');self.assertTrue((self.base/'EXIT.json').exists());self.assertNotIn('operational_hold',g.read(self.statepath))
   self.a.Effects.return_value.unit_state.return_value={'ActiveState':'inactive'}
-  with patch.object(self.op,'sysrun',side_effect=lambda *args:'original argv\n' if args[0]=='show' else ''):self.op.restore(self.a,self.rid,self.p)
+  with patch.object(self.op,'sysrun',side_effect=self.system_show):self.op.restore(self.a,self.rid,self.p)
   self.assertTrue((self.base/'RESTORED.json').exists())
 
  def test_actual_lifecycle_authentic_scoped_fourth_ceiling_and_budget(self):
@@ -375,3 +386,33 @@ class ActualClosureTests(unittest.TestCase):
   self.adopt();(self.base/'ACTIVATION-CLAIM.json').unlink()
   with self.assertRaises(ValueError):self.op.continuation(self.a,self.rid)
   self.op.terminal(self.a,self.rid);self.assertTrue((self.base/'EXIT.json').exists())
+
+ def test_realistic_execstart_ignores_status_binds_executable_argv_and_errors(self):
+  self.assertEqual(self.op.execstart_sha256(self.original_show()),self.op.execstart_sha256(self.original_show(changed_status=True)))
+  binding=self.op.execstart_binding(self.original_show())
+  for field in ('path','argv','ignore_errors'):
+   changed=copy.deepcopy(binding)
+   if field=='path':changed['path']='/usr/bin/other';changed['argv'][0]='/usr/bin/other'
+   elif field=='argv':changed['argv']+=['unexpected']
+   else:changed['ignore_errors']=True
+   self.assertNotEqual(self.op.execstart_sha256(self.show(changed)),self.p['original_execstart_sha256'])
+  for raw in ('original argv\n',self.original_show()+self.original_show(),self.original_show().replace('ignore_errors=no','ignore_errors=unknown')):
+   with self.assertRaises(ValueError):self.op.execstart_sha256(raw)
+ def test_restore_refuses_changed_loaded_argv_before_unlink(self):
+  from unittest.mock import patch
+  self.adopt();self.op.fail(self.a,self.rid);drop=self.paths(self.rid)[3];drop.parent.mkdir();drop.write_bytes(self.op.dropbytes(self.rid))
+  with patch.object(self.op,'sysrun',return_value=self.original_show(changed_status=True))as system:
+   with self.assertRaisesRegex(ValueError,'loaded owned'):self.op.restore(self.a,self.rid,self.p)
+   system.assert_called_once()
+  self.assertEqual(drop.read_bytes(),self.op.dropbytes(self.rid));self.assertFalse((self.base/'RESTORED.json').exists())
+ def test_restore_unexpected_underlying_argv_rolls_back_owned_dropin(self):
+  from unittest.mock import patch
+  self.adopt();self.op.fail(self.a,self.rid);drop=self.paths(self.rid)[3];drop.parent.mkdir();drop.write_bytes(self.op.dropbytes(self.rid));calls=[]
+  def system(*args):
+   calls.append(args)
+   if args[0]!='show':return ''
+   if drop.exists():return self.show(self.op.continuation_binding(self.rid),changed_status=True)
+   changed=self.op.execstart_binding(self.original_show());changed['argv']+=['unexpected'];return self.show(changed,changed_status=True)
+  with patch.object(self.op,'sysrun',side_effect=system):
+   with self.assertRaisesRegex(ValueError,'original argv restore'):self.op.restore(self.a,self.rid,self.p)
+  self.assertEqual(drop.read_bytes(),self.op.dropbytes(self.rid));self.assertEqual(sum(c[0]=='daemon-reload' for c in calls),2);self.assertFalse((self.base/'RESTORED.json').exists());self.op.terminal(self.a,self.rid)

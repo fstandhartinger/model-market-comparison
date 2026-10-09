@@ -4,7 +4,7 @@ Requires genuine peer over final authority and closure. No automatic grants/retr
 import sys, os
 sys.dont_write_bytecode = True
 os.environ["PYTHONDONTWRITEBYTECODE"] = "1"
-import argparse,copy,hashlib,importlib,json,subprocess,time,signal
+import argparse,copy,hashlib,importlib,json,subprocess,time,signal,shlex
 from pathlib import Path
 import scoped_native_topup as gate
 JOBROOT=Path('/home/flori/jobs/fastlane-evaluations')
@@ -34,11 +34,34 @@ def packet(rid):
 
 def dropbytes(rid):
  return ('[Service]\nExecStart=\nExecStart=/usr/bin/python3 -B '+str(Path(__file__).resolve())+' --order '+rid+' --continue\n').encode()
+def execstart_binding(raw):
+ """Stable single-command systemd binding; execution status is not argv."""
+ text=raw.strip()
+ if not text.startswith('{') or not text.endswith('}') or text.count('{')!=1 or text.count('}')!=1:raise ValueError('exact single ExecStart unavailable')
+ fields={}
+ for cell in text[1:-1].split(';'):
+  if '=' not in cell:raise ValueError('malformed ExecStart field')
+  key,value=cell.strip().split('=',1)
+  if key in fields:raise ValueError('duplicate ExecStart field')
+  fields[key]=value.strip()
+ if set(fields)!={'path','argv[]','ignore_errors','start_time','stop_time','pid','code','status'} or fields['ignore_errors'] not in ('yes','no'):raise ValueError('unexpected ExecStart shape')
+ try:argv=shlex.split(fields['argv[]'])
+ except ValueError as exc:raise ValueError('malformed ExecStart argv') from exc
+ path=fields['path']
+ if not path.startswith('/') or any(c.isspace()for c in path) or not argv or argv[0]!=path:raise ValueError('exact executable/argv identity required')
+ return {'path':path,'argv':argv,'ignore_errors':fields['ignore_errors']=='yes'}
+
+def execstart_sha256(raw):
+ return hashlib.sha256(json.dumps(execstart_binding(raw),sort_keys=True,separators=(',',':'),ensure_ascii=True).encode('utf-8')).hexdigest()
+
+def continuation_binding(rid):
+ return {'path':'/usr/bin/python3','argv':['/usr/bin/python3','-B',str(Path(__file__).resolve()),'--order',rid,'--continue'],'ignore_errors':False}
+
 def sole(a,rid,p):
  _,_,unit,_=paths(rid)
  if a.Effects().unit_state(unit).get('ActiveState')not in ('inactive','failed'):raise ValueError('original unit not inactive')
  if sysrun('show',unit,'-p','Type','--value').strip()!='exec':raise ValueError('canonical Type=exec unit required for acknowledged start')
- if hashlib.sha256(sysrun('show',unit,'-p','ExecStart','--value').encode()).hexdigest()!=p['original_execstart_sha256']:raise ValueError('original unit argv changed')
+ if execstart_sha256(sysrun('show',unit,'-p','ExecStart','--value'))!=p['original_execstart_sha256']:raise ValueError('original unit argv changed')
  for line in sysrun('list-units','--all','--no-legend','--plain').splitlines():
   cells=line.split()
   if rid in line and cells and cells[0]!=unit and any(x in cells for x in ('active','activating','deactivating','reloading')):raise ValueError('another owning unit')
@@ -132,8 +155,20 @@ def restore(a,rid,p):
  ledger=gate.read(gate.STATE/'pods'/f'{rid}.json')
  if ledger.get('pod_id')is not None or ledger.get('cleanup_uncertain')is not False:raise ValueError('observable certain cleanup required; Root reconciliation only')
  if drop.read_bytes()!=dropbytes(rid):raise ValueError('owned dropin changed')
- drop.unlink();sysrun('daemon-reload')
- if hashlib.sha256(sysrun('show',unit,'-p','ExecStart','--value').encode()).hexdigest()!=p['original_execstart_sha256']:raise ValueError('original argv restore')
+ # Verify the loaded owning command before removing its exact source bytes.
+ if execstart_binding(sysrun('show',unit,'-p','ExecStart','--value'))!=continuation_binding(rid):raise ValueError('loaded owned continuation argv changed')
+ owned_bytes=dropbytes(rid)
+ drop.unlink()
+ try:
+  sysrun('daemon-reload')
+  if execstart_sha256(sysrun('show',unit,'-p','ExecStart','--value'))!=p['original_execstart_sha256']:raise ValueError('original argv restore')
+ except BaseException:
+  # A failed reload or unexpected underlying argv must retain the owned
+  # override, inactive unit and permanent barrier for explicit reconciliation.
+  fd=os.open(drop,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+  with os.fdopen(fd,'wb') as f:f.write(owned_bytes);f.flush();os.fsync(f.fileno())
+  sysrun('daemon-reload')
+  raise
  gate.exclusive(base/'RESTORED.json',{'unit':unit,'terminal_outcome':terminal(a,rid)})
 
 def await_exit(a,rid,p,*,timeout=3720):
