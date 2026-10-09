@@ -1,6 +1,7 @@
 // Source-only support for a prospective JevBench v1.6.3 same-draw completed-field addendum. Synthetic fixtures only: no
 // v1.6.3 data, route, manifest or navigation entry exists, and none is created here.
 import test from 'node:test';
+import { jevV15CompareRow } from '../lib/jevbench-v15-board.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { JEVBENCH_FRESH_V16_REVISIONS, isFreshJevbenchV16Revision, JEVBENCH_CATEGORY_REVISIONS, freshJevbenchCategoryRows, jevbenchCategoryView } from '../lib/jevbench-categories.mjs';
@@ -15,7 +16,9 @@ function freshCategories(revision, competence) {
   for (const field of ['unavailable', 'supplement', 'live_category_cells', 'language_cells']) delete c[field];
   const keys = Object.keys(c.systems).slice(0, 2);
   c.systems = Object.fromEntries(keys.map((k) => [k, c.systems[k]]));
-  for (const row of Object.values(c.systems)) for (const dim of ['topics', 'usecases']) for (const cell of Object.values(row[dim])) { cell.competence = competence; cell.coverage_n = cell.n; }
+  for (const row of Object.values(c.systems)) for (const dim of ['topics', 'usecases', 'languages']) {
+    row[dim] = Object.fromEntries(c[dim].filter(d => d.n > 0).map(d => [d.key, { n: d.n, competence, coverage_n: d.n }]));
+  }
   // Zero-count fresh taxonomy entry: the category exists on the draw but no item fell into it, so no system has a cell.
   c.usecases.push({ key: 'fixture_zero', label: 'Fixture zero', covers: 'No items in this draw', n: 0, open: 0, sealed: 0, low_n: true });
   return { c, keys };
@@ -85,13 +88,16 @@ test('board dispatches fresh behaviour through the helper and keeps every sectio
   for (const section of ['<JevBenchV16Charts', '<JevScoreChart', '<JevCompareV15', '<JevV15AllDataGrid', '<LanguageView', '<DatedCarry', '<Method ']) assert.ok(board.includes(section), section);
 });
 
+// Replace this absence assertion ONLY in the genuine accepted publication change containing real artifacts and final release proof.
 test('candidate absence: no v1.6.3 data, route, API or navigation entry exists', () => {
-  const dir = 'data/raw/benchmarks/jevbench/v1.6';
-  assert.deepEqual(readdirSync(new URL(`../${dir}`, import.meta.url)).filter((f) => f.includes('1.6.3')), []);
+  const dir = 'data/raw/benchmarks/jevbench';
+  assert.deepEqual(readdirSync(new URL(`../${dir}`, import.meta.url), {recursive:true}).filter((f) => f.includes('1.6.3')), []);
   assert.equal(existsSync(new URL('../app/jev-models/v1.6.3', import.meta.url)), false);
   assert.equal(existsSync(new URL('../app/api/jevbench/v1.6.3', import.meta.url)), false);
   assert.doesNotMatch(read('components/JevBenchReleaseVersionNav.tsx'), /1\.6\.3/);
   assert.doesNotMatch(read('lib/jevbench-categories.mjs'), /jevbench-v1\.6\.3/);
+  assert.doesNotMatch(read('lib/decision-benchmark-manifest.mjs'), /v1\.6\.3/);
+  assert.deepEqual(readdirSync(new URL('../lib',import.meta.url)).filter(f=>/jevbench-v163-release/.test(f)), []);
 });
 
 test('fresh category coverage is mandatory and cannot bring historical overlays', () => {
@@ -112,6 +118,60 @@ test('fresh category view rows preserve native and wrapper cells, wrappers last'
   assert.deepEqual(ordered.map(r => r.key), ['Decisor', 'Jeff', 'RYO', '12B']);
   assert.deepEqual(rows.map(r => r.key), ['RYO', 'Decisor', '12B', 'Jeff']);
   const board = read('components/JevBenchV16Board.tsx');
-  assert.match(board, /const compareSources = fresh \? freshJevbenchCategoryRows\(a.systems\) : ranked/);
-  assert.match(board, /isFreshJevbenchV16Revision\(a.revision\) \? freshJevbenchCategoryRows\(a.systems.filter/);
+  assert.match(board, /const compareSources = a\.revision === 'v1\.6\.3' \? freshJevbenchCategoryRows\(a.systems\) : ranked/);
+  assert.match(board, /a\.revision === 'v1\.6\.3' \? freshJevbenchCategoryRows\(a.systems.filter/);
+});
+
+
+test('six completed rows carry actual topic/usecase/language cells through Compare projection', () => {
+  const { c } = freshCategories('v1.6.3', 41);
+  const original = Object.values(c.systems)[0];
+  const rows = [
+    {key:'RYO', listing:'wrapper', ranked:false}, {key:'D',rank:4,ranked:true},
+    {key:'12B',listing:'wrapper',ranked:false}, {key:'J',rank:1,ranked:true},
+    {key:'W',rank:3,ranked:true}, {key:'M',rank:2,ranked:true},
+  ].map((r, i) => ({...r, display:r.key, jevbench_score:100-i, axes:{}}));
+  c.systems = Object.fromEntries(rows.map((r,i) => {
+    const cells = structuredClone(original);
+    for (const dim of ['topics','usecases','languages']) for (const cell of Object.values(cells[dim])) cell.competence = 31+i;
+    return [r.key, cells];
+  }));
+  const ordered = freshJevbenchCategoryRows(rows);
+  assert.deepEqual(ordered.map(r=>r.key), ['J','M','W','D','RYO','12B']);
+  const projected = ordered.map(jevV15CompareRow);
+  const view = jevbenchCategoryView('v1.6.3', projected.map(r=>r.key), {artifact:c});
+  assert.deepEqual(Object.keys(view.systems), projected.map(r=>r.key));
+  assert.deepEqual(view.missing, {});
+  for (const r of rows) {
+    for (const dim of ['topics','usecases']) {
+      const [key, cell] = Object.entries(c.systems[r.key][dim])[0];
+      assert.deepEqual(view.systems[r.key][dim][key], [cell.competence, cell.n, cell.coverage_n]);
+    }
+    assert.ok(Object.values(c.systems[r.key].languages).every(cell=>cell.coverage_n===cell.n));
+  }
+  assert.deepEqual(projected.slice(-2).map(r=>[r.key,r.rank,r.listing]), [['RYO',null,'wrapper'],['12B',null,'wrapper']]);
+  assert.deepEqual(rows.filter(r=>r.ranked).map(r=>r.key).sort(), ['D','J','M','W']);
+});
+
+test('v163 languages and every nonempty category require complete measured cells', () => {
+  const {c,keys}=freshCategories('v1.6.3',40);
+  for (const dim of ['topics','usecases','languages']) {
+    const bad=structuredClone(c);const category=Object.keys(bad.systems[keys[0]][dim])[0];
+    delete bad.systems[keys[0]][dim][category];
+    assert.throws(()=>jevbenchCategoryView('v1.6.3',keys,{artifact:bad}), /missing completed cell/);
+  }
+  const bad=structuredClone(c);Object.values(bad.systems[keys[0]].languages)[0].coverage_n=undefined;
+  assert.throws(()=>jevbenchCategoryView('v1.6.3',keys,{artifact:bad}), /completed coverage/);
+});
+
+test('restatement is explicit only for v163 and v162 row dispatch is unchanged', () => {
+  const board=read('components/JevBenchV16Board.tsx');
+  assert.match(board, /a.revision === 'v1.6.3' && <p[^>]*>This same-draw addendum rescores/);
+  assert.match(board, /original four systems/);
+  assert.match(board, /restate and supersede v1.6.2/);
+  assert.match(board, /not comparable one-to-one/);
+  // Literal version dispatch preserves existing v162 Compare ranked and Languages listedRow/byBoard paths.
+  assert.match(board, /const compareSources = a.revision === 'v1.6.3' \? freshJevbenchCategoryRows\(a.systems\) : ranked/);
+  assert.match(board, /const systems = a.revision === 'v1.6.3' \? .* : categories.language_cells \?/);
+  assert.match(board, /a.systems.filter\(\(s\) => listedRow\(s\) && categories.systems\[s.key\]\).sort\(byBoard\)/);
 });

@@ -35,4 +35,4 @@ export const JEVBENCH_S_CATEGORY_CELLS_ARTIFACT: string;
 export function withSCategoryCells<T extends { revision: string; systems: Record<string, unknown> }>(base: T, cells?: any): T;
 export function withLiveCategoryCells<T extends { revision: string; systems: Record<string, unknown> }>(base: T): ReturnType<typeof withLanguageCells<T>>;
 
-export function freshJevbenchCategoryRows<T extends { listing?: string }>(systems: T[]): T[];
+export function freshJevbenchCategoryRows<T extends { listing?: string; rank?: number | null; jevbench_score?: number | null }>(systems: T[]): T[];

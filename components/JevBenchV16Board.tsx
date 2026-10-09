@@ -80,7 +80,7 @@ function heat(competence: number): CSSProperties {
 }
 
 function LanguageView({ a, categories, hiddenApi, scope, carry }: { carry: JevV16Carry; scope: JevScope; a: JevV16ReleaseArtifact; categories: JevV16Categories; hiddenApi: ReadonlySet<string> }) {
-  const systems = isFreshJevbenchV16Revision(a.revision) ? freshJevbenchCategoryRows(a.systems.filter(s => categories.systems[s.key])) : categories.language_cells ? jevLanguageRows(languageRoster(a.systems, a.not_measured, carry.rows, categories.systems, jevScopeClassifier(a.systems, carry.rows, a.not_measured), scope), scope) : a.systems.filter((s) => listedRow(s) && categories.systems[s.key]).sort(byBoard);
+  const systems = a.revision === 'v1.6.3' ? freshJevbenchCategoryRows(a.systems.filter(s => categories.systems[s.key])) : categories.language_cells ? jevLanguageRows(languageRoster(a.systems, a.not_measured, carry.rows, categories.systems, jevScopeClassifier(a.systems, carry.rows, a.not_measured), scope), scope) : a.systems.filter((s) => listedRow(s) && categories.systems[s.key]).sort(byBoard);
   const minN = categories.language_cells?.min_n ?? categories.min_n;
   const allLangs = categories.languages.filter((l) => l.key !== 'en').sort((x, y) => y.n - x.n);
   const en = categories.languages.find((l) => l.key === 'en');
@@ -211,7 +211,7 @@ function MethodBody({ categories, a, sha256, categoriesSha256, carrySha256, scop
     <p className="mt-2">Each system answered the same 1,200 freshly drawn sealed decisions and 300 public decisions on an offline GPU pod. Scores use methodology v1.6, O1S, with 1,000 bootstrap samples and seed 16.</p>
     <p className="mt-2">Capability is the mean of Intelligence and Calibration within the frozen Jev-class cost and median-latency caps. Composite is secondary. Failed and refused answers remain in the full 1,500-decision denominator.</p>
     <p className="mt-2">The public-versus-sealed gap reference is the median of this completed native cohort: {one(a.G_med)} points. Historical scores are shown separately with their original dates and do not enter this cohort’s median or ranking. No API equating is applied.</p>
-    {a.revision === 'v1.6.3' && <p className="mt-2">This same-draw addendum retains the original measurements and recomputes the whole completed native field. A newly completed native member can change the field median and normalized scores; wrappers remain excluded from that median.</p>}
+    {a.revision === 'v1.6.3' && <p className="mt-2">This same-draw addendum rescores the whole completed field, including the original four systems, together. The original measurements are retained, but the v1.6.3 scores, ranks and native-field median restate and supersede v1.6.2; normalized values are not comparable one-to-one across these releases. Wrappers remain excluded from the median.</p>}
     <p className="mt-2">Costs use each row’s documented price reference and measured usage on this draw. Subject-topic and use-case radars come from stored per-item results; only aggregates are published.</p>
     <p className="mt-2">Sliders, presets and What-If change your view; they do not change the official result. Wrappers and subsidised systems are listed below the ranking.</p>
     <p className="mt-2 text-xs break-all">Results SHA-256 {sha256} · categories SHA-256 {categoriesSha256} · scoring source SHA-256 {a.source_sha256}.</p>
@@ -530,7 +530,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
   const allDataKeys = [...new Set([...a.systems, ...a.not_measured].map((row) => row.key))];
   const previous = new Set(previousKeys);
   const viewRows = ranked.map((s) => jevV15BoardRow(s, { isNew: previous.size > 0 && !previous.has(s.key), headline: a.headline }));
-  const compareSources = fresh ? freshJevbenchCategoryRows(a.systems) : ranked;
+  const compareSources = a.revision === 'v1.6.3' ? freshJevbenchCategoryRows(a.systems) : ranked;
   const compareRows = compareSources.filter((s) => s.listing !== JEV_PRELIMINARY_LISTING && s.listing !== JEV_PENDING_LISTING).map(jevV15CompareRow);
   const named = new Map(a.systems.map((s) => [s.key, short(s.display)]));
   const leader = jevV15LeaderSentence(v15.board[a.headline], (key) => named.get(key) ?? key);
