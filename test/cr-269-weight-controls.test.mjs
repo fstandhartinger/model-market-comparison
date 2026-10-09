@@ -25,6 +25,8 @@ async function compile(url) {
     let target;
     if (specifier === 'react') target = hooksUrl;
     else if (specifier === 'next/link') target = linkUrl;
+    // CR-373: the preview-only "Use this model" entry renders nothing for visitors, so the isolated render stubs it.
+    else if (specifier === './UseModelButton') target = dataUrl('export const UseModelEntry=()=>null;');
     else if (!specifier.startsWith('.')) target = `file://${require.resolve(specifier)}`;
     else {
       let dependency = new URL(specifier, url);

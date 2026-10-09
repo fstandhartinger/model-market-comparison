@@ -15,6 +15,7 @@ import { apiExplanation } from './JevBoardShared';
 import { BaseModelDisplay, type BaseModelBenchmark } from './BaseModelDisplay';
 import { useJevV15VisibleKeys } from './useJevV15VisibleKeys';
 import { JEV_V15_ELIGIBILITY_CHANGE_EVENT } from '../lib/jevbench-global-filter-events.mjs';
+import { UseModelEntry } from './UseModelButton';
 
 // Florian 25 Sep 2026 (DECISIONS.md): the page headline is the Capability ranking — the mean of Intelligence and
 // Calibration — of Jev-class systems. Jev-class = cost per decision at most 2x Jev 1.13.0's AND median latency at most
@@ -110,6 +111,7 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
       {/* The ⓘ sits outside the truncated name so long names keep their tap target. */}
       <JevCapabilityTip label={`Details for ${row.display}`} title={tipTitle}>{tipBody}</JevCapabilityTip>
       {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1 shrink-0 align-middle" data-bh-jev-capability-api={row.key} title={row.api_exposure_note ?? apiExplanation}>API</span>}
+      <UseModelEntry row={row} name={name} benchmark={benchmark} className="max-sm:!hidden" />
     </span>
     <span className="col-start-2 col-end-7 row-start-2 mt-0.5 flex min-w-0 flex-col justify-center gap-[3px] sm:col-start-3 sm:col-end-4 sm:row-start-1 sm:mt-0">
       <span className="bh-jevc-grid flex h-[10px] rounded-sm" aria-hidden="true"><span className={'bh-jevc-bar' + (row.ranked ? '' : ' is-partial')} style={{ width: percent(Math.max(0, Math.min(100, capability))) }} /></span>
@@ -120,6 +122,8 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
     <span className="tabular col-start-4 row-start-1 text-right sm:col-start-5">{costScore == null ? '—' : one(costScore)}</span>
     <b className="tabular col-start-5 row-start-1 text-right sm:col-start-6 sm:text-base">{one(capability)}</b>
     <span className="tabular col-start-6 row-start-1 text-right font-mono sm:col-start-7">{cost == null ? '—' : usd(cost)}{row.cost?.kind === 'estimate' ? '*' : ''}</span>
+    {/* Phones have no room beside the name: the entry sits on its own line under the bars. */}
+    <UseModelEntry row={row} name={name} benchmark={benchmark} label="Use this model" className="col-start-2 col-end-7 row-start-5 mt-1.5 justify-self-start !ml-0 sm:!hidden" />
     {note && <span className="bh-muted col-start-2 col-end-7 row-start-3 mt-0.5 text-[11px] leading-snug sm:col-start-3 sm:col-end-8 sm:row-start-2" data-bh-jev-capability-note>{note}</span>}
     {basePrice && <span className={`bh-muted col-start-2 col-end-7 ${note ? 'row-start-4 sm:row-start-3' : 'row-start-3 sm:row-start-2'} mt-0.5 text-[11px] leading-snug sm:col-start-3 sm:col-end-8`}
       title={basePrice.detail} data-bh-jev-capability-base-price={basePrice.fits ? 'within-cap' : 'exceeds-cap'} data-bh-jev-capability-base-price-ratio={basePrice.ratio.toFixed(3)}>{basePrice.short}</span>}
