@@ -9,7 +9,7 @@ class Tests(unittest.TestCase):
   f=FourthScopeTests().fixture();self.addCleanup(f.tearDown);p.RUNTIME=f.runtime;p.JOBS=f.root
   # Actual changed first-party source, no installed-runtime imports/execution.
   for name in ('scoped_native_topup.py','scoped_native_topup_operator.py'):(f.runtime/name).write_bytes(Path(__file__).with_name(name).read_bytes())
-  (f.runtime/'ryotide_runtime_supplement.py').write_bytes(Path('/home/flori/wt/fastlane-ryo-kernel-symbols-20261009/ops/priority-evaluation/ryotide_runtime_supplement.py').read_bytes())
+  (f.runtime/'ryotide_runtime_supplement.py').write_bytes(Path(__file__).with_name('ryotide_runtime_supplement.py').read_bytes())
   def ref(path):return {'path':str(path),'sha256':g.sha(path)}
   row=f.root/'row.json';f.write(row,{'id':f.rid,'status':'paid','evaluation_status':'pending','stripe_mode':'live','synthetic_test':False,'pickup_job_dir':str(f.job),'paid_at':'synthetic paid timestamp'})
   argv=f.root/'argv.json';raw=f.original_show();f.write(argv,{'execstart_utf8':raw,'execstart_raw_sha256':p.sha(raw.encode())})
