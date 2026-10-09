@@ -35,6 +35,9 @@ class HostFake(_FakeProvider):
                    'otherfile': 'x @ file:///etc/passwd\n',
                    'kernelwheel': 'torch==2.8.0\ncausal-conv1d @ file:///tmp/kernel-wheels/causal_conv1d-1.7.0-cp312-cp312-linux_x86_64.whl\n'
                    }.get(self.failure, 'torch==2.8.0\n')
+        elif command[:3] == ['docker', 'inspect', 'jev-pod-run'] and command[-1] == '{{json .HostConfig}}':
+            out = json.dumps({'NetworkMode': 'none', 'Binds': ['/models:/models:ro'], 'Privileged': False, 'CapAdd': None,
+                              'ReadonlyRootfs': False, 'Devices': [], 'PidMode': '', 'IpcMode': 'private', 'UsernsMode': '', 'Env': ['SECRET=1']})
         elif command[0] == 'find':
             if '! ' in ' '.join(command):
                 out = '/models/torchcast/link\n' if self.failure == 'symlink' else ''
@@ -306,10 +309,13 @@ class HostStagingTests(unittest.TestCase):
         self.assertEqual(evidence['image_context_sha256'], hashlib.sha256(self.context.read_bytes()).hexdigest())
         self.assertEqual(evidence['weights_manifest_sha256'], self.recipe['host_staging']['weights_manifest_sha256'])
         self.assertNotIn('synthetic-secret-do-not-persist', json.dumps([receipt, state]))
+        self.assertEqual(evidence['run_container']['NetworkMode'], 'none')
+        self.assertEqual(evidence['run_container']['Privileged'], False)
+        self.assertNotIn('Env', evidence['run_container'])
         self.assertEqual(self.stream_calls[0][2], '/models/torchcast')
         self.assertFalse(any(c[:2] == ['docker', 'pull'] or pr.WEIGHTS_SNIPPET in c for c, timeout in fake.commands))
         build = next((c, timeout) for c, timeout in fake.commands if c[:2] == ['docker', 'build'])
-        self.assertEqual(build[1], 5400)
+        self.assertEqual(build[1], pr.HOST_BUILD_TIMEOUT_S)
         run = next(c for c, timeout in fake.commands if c[:3] == ['docker', 'run', '-d'])
         self.assertEqual(run[-2], self.recipe['host_staging']['image_build']['tag'])
         self.assertEqual(run[run.index('--network') + 1], 'none')

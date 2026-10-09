@@ -55,6 +55,8 @@ TTL_CAP_HOURS = 3.0
 EXPECTED_ROWS = 1624
 GPU_PREFERENCE = (("H100", 80), ("A100", 80), ("L40S", 48), ("RTX6000", 48), ("RTXPRO6000", 96))  # lium marketplace names
 
+# Host-staged route: build (<= 45 min) + weight stream (<= 60 min, set by the streamer) keeps >= 70 min of the 3 h TTL for the run.
+HOST_BUILD_TIMEOUT_S = 2700
 IMAGE_RE = re.compile(r"^[A-Za-z0-9._/-]+:[A-Za-z0-9_.-]+@sha256:[0-9a-f]{64}$")
 SHA40_RE = re.compile(r"[0-9a-f]{40}")
 SHA64_RE = re.compile(r"[0-9a-f]{64}")
@@ -313,7 +315,7 @@ def _build_host_image(provider, pod_id, recipe, job_dir, image_context_provider,
         provider.scp_to(pod_id, str(checked), "/work/host-image-context.tar")
     _exec(provider, pod_id, ["tar", "-xf", "/work/host-image-context.tar", "-C", "/work/host-image-context"])
     _exec(provider, pod_id, ["docker", "build", "--target", build["target"], "-t", build["tag"],
-                            "/work/host-image-context"], timeout=5400)
+                            "/work/host-image-context"], timeout=HOST_BUILD_TIMEOUT_S)
     image_id = _exec(provider, pod_id, ["docker", "image", "inspect", build["tag"], "--format", "{{.Id}}"]).stdout.strip()
     if not re.fullmatch(r"sha256:[0-9a-f]{64}", image_id):
         raise PodRunError("image_build_id_invalid")
@@ -912,6 +914,13 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         if network_mode != "none":
             raise PodRunError(f"run container network mode is {network_mode!r}, not 'none'")
         state["network_mode"] = network_mode
+        if "host_staging" in recipe:
+            # Record the actual run-container isolation flags as evidence (no environment values).
+            host = json.loads(_exec(provider, pod_id, ["docker", "inspect", "jev-pod-run",
+                                                       "--format", "{{json .HostConfig}}"]).stdout)
+            state["host_staging"]["run_container"] = {key: host.get(key) for key in (
+                "NetworkMode", "Binds", "Privileged", "CapAdd", "ReadonlyRootfs", "Devices", "PidMode", "IpcMode", "UsernsMode")}
+            save_state()
         wait = _exec(provider, pod_id, ["docker", "wait", "jev-pod-run"], timeout=3600)
         rc = wait.stdout.strip().splitlines()[-1] if wait.stdout.strip() else ""
         logs = _exec(provider, pod_id, ["docker", "logs", "jev-pod-run"], timeout=120)
