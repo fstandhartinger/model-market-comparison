@@ -5,7 +5,7 @@ from types import SimpleNamespace
 sys.dont_write_bytecode=True
 os.environ['PYTHONDONTWRITEBYTECODE']='1'
 sys.path.insert(0,str(Path(__file__).parent/'source'))
-from cohort import BASE,NATIVE,WRAPPERS,FIXED,completed_shape,disposition
+from cohort import BASE,NATIVE,WRAPPERS,FIXED,completed_shape,disposition,PREDECESSOR_COST_SHA256
 from contracts import successor_field_contract,successor_category_contract
 from public_proof import prepare_proof
 import completed_field_builder as F
@@ -40,7 +40,7 @@ class Tests(unittest.TestCase):
   for keys in (BASE,BASE|{'foreign'},(BASE-{'jeff_1_0_large'})|{'decisor_4b','ryotide_qwen9'}):
    with self.assertRaises(ValueError):completed_shape(keys)
  def test_field_contract_preserves_all_original_records(self):
-  old={'roster':roster(),'source_files':{'old':{'path':'/SYNTHETIC','sha256':H}},'input_sha256':INPUT}
+  old={'roster':roster(),'source_files':{'old':{'path':'/SYNTHETIC','sha256':H}},'input_sha256':INPUT,'cost_basis_sha256':PREDECESSOR_COST_SHA256}
   original=copy.deepcopy(old);reg,native=receipts(BASE|{'decisor_4b'})
   new=successor_field_contract(old,reg,native,{},H,H,'/SYNTHETIC/prereg.json','/SYNTHETIC/new-output',H)
   self.assertEqual(old,original)
@@ -49,7 +49,7 @@ class Tests(unittest.TestCase):
   self.assertEqual(new['addendum_membership']['eligible'],sorted(NATIVE))
  def test_incomplete_wrong_draw_or_raw_provenance_refused(self):
   for mutate in ('incomplete','draw','raw','wrapper_rank'):
-   old={'roster':roster(),'source_files':{},'input_sha256':INPUT};reg,native=receipts(BASE|{'ryotide_qwen9'})
+   old={'roster':roster(),'source_files':{},'input_sha256':INPUT,'cost_basis_sha256':PREDECESSOR_COST_SHA256};reg,native=receipts(BASE|{'ryotide_qwen9'})
    if mutate=='incomplete':reg['ryotide_qwen9']['measurement_complete']=False
    if mutate=='draw':native['ryotide_qwen9']['pins']['profile']['inputs']['jevbench']['items']['sha256']=H
    if mutate=='raw':reg['jeff_1_0_large']['raw']['path']='/SYNTHETIC/changed'
@@ -101,6 +101,10 @@ class Tests(unittest.TestCase):
  def test_public_scaffold_rejects_private_body_or_partial_rows(self):
   result={'revision':'v1.6.3','protocol':'jevbench::v1.6','not_measured':[],'bootstrap':{'B':1000,'bootstrap_seed':16,'g_med_fixed':True},'systems':[{'key':k,'ranked':k in NATIVE,'status':{'status':'complete','rows':1500,'missing':0},'full_coverage':True,'v16':{'n_items':1500},'cost':{'common_basis':{'n_items':1479}}}for k in BASE|{'decisor_4b'}]}
   self.assertEqual(len(sanitize(result)['systems']),5)
+  unknown=copy.deepcopy(result);unknown['systems'][0]['cost']['common_basis']['excluded']=['opaque-item-0001']
+  with self.assertRaises(ValueError):sanitize(unknown)
+  unknown=copy.deepcopy(result);unknown['systems'][0]['v16']['arbitrary_records']=[{'id':'SYNTHETIC'}]
+  with self.assertRaises(ValueError):sanitize(unknown)
   duplicate=copy.deepcopy(result);duplicate['systems'].append(copy.deepcopy(result['systems'][0]))
   with self.assertRaises(ValueError):sanitize(duplicate)
   result['systems'][0]['question']='SYNTHETIC private body'
@@ -133,6 +137,68 @@ class Tests(unittest.TestCase):
    previous=art
    raws[next(iter(keys))].pop()
    with self.assertRaises(ValueError):C.aggregate(Scorer,transform,taxonomy,public,goldrows,raws,{k:{}for k in keys},labels,labels)
+ def test_poisoned_predecessor_authority_never_inherited(self):
+  old,a,rows,c=self.proof_fixture(BASE|{'decisor_4b'})
+  old.update(review={'verdict':'PASS'},status='ACCEPTED',manifest_sha256=H,G_med=999,results_sha256=H,financial_authority={'accepted':True})
+  p=prepare_proof(old,a,rows,H,H,H,c)
+  for field in ('review','status','manifest_sha256','G_med','results_sha256','financial_authority'):self.assertNotIn(field,p)
+ def test_output_boundary_and_frozen_cost_mask(self):
+  from cohort import protected_output_path
+  base='/home/flori/jevbench-sealed/v1.6-run/v1.6-fastlane-20261009/'
+  self.assertEqual(str(protected_output_path(base+'fresh')),base+'fresh')
+  for p in (base+'../../../../tmp/evil',base[:-1],'/tmp/evil',base+'fresh/../evil'):
+   with self.assertRaises(ValueError):protected_output_path(p)
+  gold={'SYNTHETIC'+str(i):SimpleNamespace(split='sealed'if i<1200 else'open')for i in range(1500)}
+  keys=BASE|{'decisor_4b'};rows=complete(keys);raw=[{'task_id':k,'ok':False,'error':'SYNTHETIC'}for k in gold]
+  pre={'mandatory_candidates':[{'order_id':r['order_id']}for r in rows]}
+  for n in (0,20,22):
+   cost={'phase':'accepted_common_cost_basis','final_cost_basis_accepted':True,'exclude_opaque_ids':list(gold)[:n]}
+   with self.assertRaises(ValueError):F.prepare(rows,pre,gold,{k:raw for k in keys},cost)
+ def test_all_contract_shapes_and_no_source_pin_rebinding(self):
+  for keys in (BASE|{'decisor_4b'},BASE|{'ryotide_qwen9'},FIXED):
+   old={'roster':roster(),'source_files':{'original':{'path':'/SYNTHETIC','sha256':H}},'input_sha256':INPUT,'cost_basis_sha256':PREDECESSOR_COST_SHA256};reg,native=receipts(keys)
+   c=successor_field_contract(old,reg,native,{},H,H,'/SYNTHETIC/prereg','/SYNTHETIC/out',H)
+   self.assertEqual(c['predecessor_cost_basis_sha256'],PREDECESSOR_COST_SHA256);self.assertEqual(c['proposal_status'],'SOURCE_PROPOSAL_NOT_ACCEPTED')
+   with self.assertRaises(ValueError):successor_field_contract(old,reg,native,{'original':{'path':'/SYNTHETIC/evil','sha256':H}},H,H,'/SYNTHETIC/prereg','/SYNTHETIC/out',H)
+ def test_semantic_profile_admission_and_measurement_join(self):
+  from stage_field_proposal import verify_admitted_join
+  row={'order_id':'SYNTHETIC-order','admission':{'sha256':H}}
+  receipt={'pins':{'manifest_sha256':H}}
+  admission={'schema_version':1,'verdict':'ACCEPTED','order_id':'SYNTHETIC-order','references':{'measurement':{'sha256':H}}}
+  review={'verdict':'ACCEPTED','reviewer_engine':'claude','admission_sha256':H}
+  verify_admitted_join(row,receipt,admission,review)
+  for mutate in ('admission','review','order','profile'):
+   a=copy.deepcopy(admission);r=copy.deepcopy(review);native=copy.deepcopy(receipt)
+   if mutate=='admission':a['verdict']='HOLD'
+   if mutate=='review':r['admission_sha256']='c'*64
+   if mutate=='order':a['order_id']='SYNTHETIC-foreign'
+   if mutate=='profile':native['pins']['manifest_sha256']='c'*64
+   with self.assertRaises(ValueError):verify_admitted_join(row,native,a,r)
+ def test_metadata_custody_hash_and_protected_body_refusal(self):
+  import tempfile,json,hashlib
+  from stage_field_proposal import metadata
+  with tempfile.TemporaryDirectory()as d:
+   p=Path(d)/'synthetic-metadata.json';p.write_text(json.dumps({'SYNTHETIC_METADATA':True}))
+   ref={'path':str(p),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
+   self.assertEqual(metadata(ref),{'SYNTHETIC_METADATA':True})
+   for bad in ({'path':str(p),'sha256':'c'*64},dict(ref,extra=True),{'path':'/home/flori/jevbench-sealed/fake.json','sha256':H}):
+    with self.assertRaises((ValueError,FileNotFoundError)):metadata(bad)
+   link=Path(d)/'symlink.json';link.symlink_to(p)
+   with self.assertRaises(ValueError):metadata({'path':str(link),'sha256':ref['sha256']})
+ def test_stager_accident_guard_precedes_all_io(self):
+  from unittest.mock import patch
+  import stage_field_proposal
+  with patch.dict(os.environ,{'AGENT_BOARD_NAME':'SYNTHETIC-other-owner'}):
+   with self.assertRaises(ValueError):stage_field_proposal.main()
+ def test_public_schema_matches_accepted_predecessor_and_rejects_item_arrays(self):
+  import json,hashlib
+  root=Path(__file__).resolve().parents[2]
+  published=root/'data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.2-results.json'
+  if not published.exists():self.skipTest('contained critic receives separately pinned public dependency fixture')
+  template=json.loads((Path(__file__).parent/'source/PUBLIC-SCHEMA-V162.json').read_text())
+  self.assertEqual(template['source_sha256'],hashlib.sha256(published.read_bytes()).hexdigest())
+  from public_result_scaffold import schema_check
+  schema_check(json.loads(published.read_text()),template['schema'])
  def test_isolated_execution_imports_and_local_source_binding(self):
   src=Path(__file__).parent/'source'
   for p in src.glob('*.py'):ast.parse(p.read_text())

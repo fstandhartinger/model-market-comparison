@@ -22,7 +22,7 @@ def prepare(roster,prereg,gold,raws,cost):
  if len(ids)!=6 or len(roster)!=6 or {r['order_id']for r in roster}!=ids:raise ValueError('fixed six roster')
  if len(gold)!=1500 or sum(g.split=='sealed'for g in gold.values())!=1200 or sum(g.split=='open'for g in gold.values())!=300:raise ValueError('full draw')
  excluded=cost.get('exclude_opaque_ids')
- if cost.get('phase')!='accepted_common_cost_basis' or cost.get('final_cost_basis_accepted')is not True or not isinstance(excluded,list) or len(excluded)>=150 or len(set(excluded))!=len(excluded)or not set(excluded)<=set(gold):raise ValueError('adopted cost basis')
+ if cost.get('phase')!='accepted_common_cost_basis' or cost.get('final_cost_basis_accepted')is not True or not isinstance(excluded,list) or len(excluded)!=21 or len(set(excluded))!=len(excluded)or not set(excluded)<=set(gold):raise ValueError('adopted cost basis')
  if {r['key'] for r in roster} != FIXED:raise ValueError('frozen six public keys')
  completed_shape({r['key'] for r in roster if r['status']=='complete'})
  registry={};eligible=[];pending=[]
@@ -73,6 +73,8 @@ def main():
   if peer!={'schema_version':1,'verdict':'ACCEPTED_SOURCE_COMPLETED_FIELD_BUILDER','reviewer_engine':'claude','source_sha256':ss,'contract_sha256':cs,'scope':'whole_fixed_roster_minTHREE_complete_official_Gmed_all1500_O1S'}:raise ValueError('peer')
   if not isinstance(root.get('cost_basis_sha256'),str)or len(root['cost_basis_sha256'])!=64:raise ValueError('root cost pin')
   if root!={'cost_basis_sha256':root['cost_basis_sha256'],'schema_version':1,'owner':'fastlane-v16-finish-20261009','scope':'BUILD_COMPLETED_FIELD_OFFICIAL_BASELINE_AND_SCORES','source_sha256':ss,'contract_sha256':cs,'per_file_kernel_no_network_sandbox':True,'all1500_scored':True,'no_outcome_field_exclusions':True}:raise ValueError('root')
+  for pin in c['metadata_pins'].values():
+   if sha(bounded(pin['path'],2000000))!=pin['sha256']:raise ValueError('actual completed metadata hash')
   for pin in c['source_files'].values():
    if sha(bounded(pin['path'],500000))!=pin['sha256']:raise ValueError('source hash')
   pr=bounded(Path(c['preregistration_host']),100000)
@@ -84,7 +86,7 @@ def main():
   if sha(gr)!=c['gold_sha256']:raise ValueError('gold pin')
   gold=official.load_gold_rows([json.loads(x)for x in gr.splitlines()])
   costraw=bounded('/custody/cost-basis.json',100000)
-  if sha(costraw)!=root['cost_basis_sha256']:raise ValueError('cost pin')
+  if sha(costraw)!=root['cost_basis_sha256']or root['cost_basis_sha256']!=c['predecessor_cost_basis_sha256']:raise ValueError('unchanged predecessor cost pin')
   cost=json.loads(costraw)
   if any(cost.get(k)!=v for k,v in c['cost_producer_binding'].items()):raise ValueError('cost producer binding')
   raws={}

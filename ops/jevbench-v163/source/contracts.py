@@ -4,7 +4,7 @@ No I/O, raw parsing, inference, acceptance or publication. Root verifies referen
 and obtains genuine new Source acceptance before executing any assembled contract.
 """
 import copy, math
-from cohort import BASE, FIXED, NATIVE, completed_shape, disposition
+from cohort import BASE, FIXED, NATIVE, completed_shape, disposition, PREDECESSOR_COST_SHA256
 
 def successor_field_contract(previous, completed_registry, actual_native_receipts,
                              actual_reference_pins, source_sha256, launcher_sha256,
@@ -17,7 +17,9 @@ def successor_field_contract(previous, completed_registry, actual_native_receipt
     if set(actual_native_receipts) != set(completed_registry):
         raise ValueError('actual native receipt coverage')
     shape = completed_shape(completed_registry)
-    result = copy.deepcopy(previous)
+    inherited={'cost_basis_host','cost_producer_binding','eligibility','gold_host','gold_sha256','input_sha256','later_completion','launcher_sha256','minimum_eligible_complete','output_host','preregistration_sha256','root_pins_actual_cost_basis_hash_after_accepted_adoption','roster','schema_version','scope','scorer_directory','source_files','source_sha256','preregistration_host','predecessor_cost_basis_sha256','cost_basis_sha256'}
+    result = {k:copy.deepcopy(v)for k,v in previous.items()if k in inherited}
+    result['proposal_status']='SOURCE_PROPOSAL_NOT_ACCEPTED'
     result.update(source_sha256=source_sha256, launcher_sha256=launcher_sha256,
                   preregistration_host=preregistration_host, output_host=output_host,
                   cohort_source_sha256=cohort_source_sha256)
@@ -44,7 +46,12 @@ def successor_field_contract(previous, completed_registry, actual_native_receipt
         row.update(status='complete', disposition=disposition(key), system=system,
                    raw_path=actual['raw']['path'], raw_sha256=actual['raw']['sha256'])
         row.pop('reason', None)
-    result['source_files'].update(copy.deepcopy(actual_reference_pins))
+    if set(actual_reference_pins)&set(result['source_files']):
+        raise ValueError('original source pins cannot be overwritten')
+    result['metadata_pins']=copy.deepcopy(actual_reference_pins)
+    pin=previous.get('predecessor_cost_basis_sha256')or previous.get('cost_basis_sha256')or PREDECESSOR_COST_SHA256
+    if pin!=PREDECESSOR_COST_SHA256:raise ValueError('authentic predecessor cost basis hash required')
+    result['predecessor_cost_basis_sha256']=pin
     result['addendum_membership'] = shape
     return result
 
@@ -65,7 +72,9 @@ def successor_category_contract(previous, completed_entries, result_reference,
     for entry in completed_entries:
         if entry['key'] in old and entry != old[entry['key']]:
             raise ValueError('original category raw/source/pricing metadata changed')
-    result = copy.deepcopy(previous)
+    inherited={'G_med','completed','draw_release','gold_host','gold_sha256','input_sha256','launcher_sha256','public_results_host','public_results_sha256','schema_version','scope','source_files','source_results_sha256','source_sha256'}
+    result = {k:copy.deepcopy(v)for k,v in previous.items()if k in inherited}
+    result['proposal_status']='SOURCE_PROPOSAL_NOT_ACCEPTED'
     result.update(source_sha256=source_sha256, launcher_sha256=launcher_sha256,
                   cohort_source_sha256=cohort_source_sha256,
                   completed=copy.deepcopy(completed_entries),

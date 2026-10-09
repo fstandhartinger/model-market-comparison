@@ -20,13 +20,24 @@ def metadata(ref):
     if set(ref)!={'path','sha256'} or re.fullmatch('[a-f0-9]{64}',ref['sha256'])is None:
         raise ValueError('actual pinned metadata reference')
     p=Path(ref['path']).absolute()
-    if '/jevbench-sealed/'in str(p) or p.suffix!='.json' or p.stat().st_size>2000000:
+    if '..'in p.parts or '/jevbench-sealed/'in str(p) or p.suffix!='.json' or p.stat().st_size>2000000:
         raise ValueError('metadata only; no protected bodies')
     for part in (*reversed(p.parents),p):
         m=part.lstat().st_mode
         if not(stat.S_ISREG(m)if part==p else stat.S_ISDIR(m)):raise ValueError('metadata custody path')
     if digest(p)!=ref['sha256']:raise ValueError('metadata hash drift')
-    return json.loads(p.read_text())
+    value=json.loads(p.read_text())
+    if not isinstance(value,dict):raise ValueError('metadata object only, never item arrays')
+    return value
+
+def verify_admitted_join(row,receipt,admission,review):
+    if admission.get('schema_version')!=1 or admission.get('verdict')!='ACCEPTED'or admission.get('order_id')!=row['order_id']:
+        raise ValueError('genuine admitted order receipt required')
+    if review.get('verdict')!='ACCEPTED'or review.get('reviewer_engine')!='claude'or review.get('admission_sha256')!=row['admission']['sha256']:
+        raise ValueError('genuine independent profile admission review required')
+    measurement=admission.get('references',{}).get('measurement',{}).get('sha256')
+    if measurement!=receipt.get('pins',{}).get('manifest_sha256')or not isinstance(measurement,str)or len(measurement)!=64:
+        raise ValueError('admitted measurement profile receipt differs')
 
 def main():
     if os.environ.get('AGENT_BOARD_NAME')!='codex:fastlane-v16-finish-20261009':raise ValueError('Root only')
@@ -42,9 +53,10 @@ def main():
     for key,row in rows.items():
         if row['native_receipt']['sha256']!=request['native_receipts'][key]['sha256']:
             raise ValueError('native receipt registry binding')
+        verify_admitted_join(row,receipts[key],metadata({k:row['admission'][k]for k in ('path','sha256')}),metadata({k:row['profile_review'][k]for k in ('path','sha256')}))
         for field in ('native_receipt','measurement_metadata','source_pins','admission','profile_review'):
             ref={k:row[field][k]for k in ('path','sha256')}
-            metadata(ref)
+            content=metadata(ref)
             bound_pins[key+'_'+field]=ref
     # New source references remain metadata and are independently hash checked.
     for ref in request['additional_metadata_pins'].values():metadata(ref)
@@ -63,7 +75,7 @@ def main():
         if digest(target/name)!=pins[name]:raise ValueError('source changed during staging')
     (target/'COMPLETED-FIELD-CONTRACT.json').write_text(json.dumps(contract,indent=2,sort_keys=True,allow_nan=False)+'\n')
     receipt={'scope':'SOURCE_PROPOSAL_ONLY_NOT_ACCEPTED','source_pins':pins,
-        'contract_sha256':digest(target/'COMPLETED-FIELD-CONTRACT.json'),'completed_registry':request['completed_registry'],
+        'contract_sha256':digest(target/'COMPLETED-FIELD-CONTRACT.json'),'completed_registry':request['completed_registry'],'request':request,
         'benchmark_executed':False,'acceptance_created':False}
     # This receipt lives beside the proposal, not inside its later frozen inventory.
     output=target.with_name(target.name+'-STAGING-RECEIPT.json')

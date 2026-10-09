@@ -17,3 +17,15 @@ def disposition(key):
     if key in WRAPPERS:
         return 'wrapper_unranked'
     raise ValueError('foreign source disposition')
+
+# Guard against accidental output escape; approval remains a separate exact gate.
+def protected_output_path(value):
+    from pathlib import Path
+    p=Path(value)
+    base=Path('/home/flori/jevbench-sealed/v1.6-run/v1.6-fastlane-20261009')
+    if not p.is_absolute()or '..'in p.parts or p==base or base not in p.parents:
+        raise ValueError('fresh protected output boundary')
+    return p
+
+# Actual immutable published v162 proof cost hash, never the mask body.
+PREDECESSOR_COST_SHA256 = '50d582d3976ba79d458756f931764cf6e80bc623fbbe2fa611d8744752e3fc7b'

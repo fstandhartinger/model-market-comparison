@@ -33,10 +33,10 @@ new frozen proposal. Its exact fields are `previous_contract`,
 `completed_registry`, `native_receipts`, `additional_metadata_pins`,
 `preregistration_host`, `output_host`, and `proposal_directory`. References have
 exactly `path` and `sha256`; `native_receipts` is keyed by the actually completed
-public model keys. The current registry must join every completed native receipt,
+public model keys. The stager reads each admission and genuine Claude profile review verdict, verifies its admitted order and admission hash, and joins the native receipt to the admitted measurement manifest. The current registry must join every completed native receipt,
 measurement metadata, Source pins, admission, and profile review. Original
 four-system raw paths/hashes and preregistered order identities cannot change.
-The metadata stager rejects protected-body paths and checks actual bytes:
+Source pins and completion metadata are checked against actual bytes again at isolated execution. Root still independently authenticates the underlying native/runtime/Source approvals and current admitted host state before issuing actual execution authority; an environment variable is only an accident guard. The metadata stager rejects protected-body paths and checks actual bytes:
 
 ```sh
 python3 -B ops/jevbench-v163/source/stage_field_proposal.py "$ACTUAL_REQUEST"
@@ -61,8 +61,7 @@ python3 -B "$CATEGORY_PROPOSAL/category_launcher.py" "$CATEGORY_SOURCE_PEER" "$C
 ```
 
 The first launcher retains the official first-party scorer, O1S, B=1,000,
-seed=16, minimum three eligible native members, all 1,500 items and the accepted
-1,479-item cost mask. It uses per-file read-only custody bindings, a cleared
+seed=16, minimum three eligible native members, all 1,500 items and the exact immutable published predecessor cost-basis hash and its 21 exclusions/1,479-item cost mask. It uses per-file read-only custody bindings, a cleared
 environment, no network and a new protected output directory. Newly completed
 native members may change the whole-field median and normalized headline values
 for all completed rows; original raw measurements and category cells stay fixed.
@@ -72,10 +71,9 @@ Prepare a new category proposal by copying `category_builder.py`,
 `contracts.successor_category_contract` function to create its
 `CATEGORY-CONTRACT.json` from the actual old contract, completed entries,
 sanitized-result path/hash, official-result source hash and actual new G_med.
-Hash the copied source files and bind those hashes. Preserve every original
+Hash the copied source files and bind those hashes. Each generated contract carries `SOURCE_PROPOSAL_NOT_ACCEPTED`; a filename grants no authority. Preserve every original
 completed category-contract entry exactly; append each actual new entry with its
-real raw path/hash and frozen system/pricing/support metadata. Rebind actual
-official scorer/transform/taxonomy source files without changing their methods.
+real raw path/hash and frozen system/pricing/support metadata. Preserve actual official scorer/transform/taxonomy source pins unchanged. New completion metadata pins are separate from executable source pins and cannot overwrite them.
 No contract assembly is execution or acceptance. Root independently reviews and
 freezes this bundle and obtains genuine new Source acceptance before launch.
 
@@ -91,10 +89,9 @@ must have measured nonempty-category cells.
 
 ## Public proof and later publication
 
-Root applies `public_result_scaffold.sanitize` to actual official output and
+The public nested schema is derived from the accepted v1.6.2 aggregate (source hash recorded in `PUBLIC-SCHEMA-V162.json`). Unknown nested fields and item arrays fail closed. Changing this schema for a genuinely new official output field requires a new Source review; it never falls back to old values. Root applies `public_result_scaffold.sanitize` to actual official output and
 `public_proof.prepare_proof` to actual measurement receipts, authentic category
-receipt hashes and the predecessor publication hash. These pure functions create
-no review verdict or publication manifest. They preserve original four-system
+receipt hashes and the predecessor publication hash. These pure functions inherit only explicit frozen draw/method fields and create no review verdict or publication manifest; predecessor review/status/manifest/results hashes cannot carry forward. They preserve original four-system
 measurement provenance, validate full completion, frozen dispositions, native
 median membership and actual Source/baseline hashes. Root's independent final
 review must additionally bind the actual complete artifact bytes, CIs, unchanged
@@ -120,3 +117,5 @@ history. Only genuine native full-run completion, authentic review, correct live
 v1.6.3 bytes and the existing tracked customer-mail rules can complete delivery.
 This addendum provides no deadline reset, refund authority, allocation, budget,
 runtime admission or automatic delivery acceptance.
+
+The Source-only candidate-absence test must be replaced by real bundle/route/nav gating tests in the final publication change; it intentionally rejects introducing nonexistent candidate dependencies now. This Source preparation supplies no new model-success claim.

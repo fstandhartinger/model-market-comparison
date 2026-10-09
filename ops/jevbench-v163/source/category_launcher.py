@@ -31,10 +31,11 @@ def main():
    if not isinstance(h,str)or len(h)!=64 or digest(bounded(p))!=h:raise ValueError('actual input pin')
   for p in c['source_files'].values():
    if digest(bounded(p['path'],500000))!=p['sha256']:raise ValueError('source file')
-  out=Path(root['output_path']).absolute()
+  sys.path.insert(0,str(HERE))
+  from cohort import protected_output_path
+  out=protected_output_path(root['output_path'])
   for p in(*reversed(out.parent.parents),out.parent):
    if not stat.S_ISDIR(p.lstat().st_mode):raise ValueError('output parent')
-  if not str(out).startswith('/home/flori/jevbench-sealed/v1.6-run/v1.6-fastlane-20261009/'):raise ValueError('protected output')
   out.mkdir(mode=0o700,exist_ok=False)
   a=['/usr/bin/bwrap','--unshare-net','--unshare-pid','--unshare-ipc','--unshare-uts','--die-with-parent','--new-session','--clearenv','--setenv','JEV_NOUL_METHOD','O1S','--proc','/proc','--dev','/dev','--tmpfs','/tmp']
   for p in('/usr','/lib','/lib64','/etc/ld.so.cache'):
