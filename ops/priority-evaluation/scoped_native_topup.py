@@ -15,7 +15,13 @@ def sha(path):
  p=Path(path)
  if any(q.is_symlink()for q in (p,*p.parents)) or not p.is_file():raise ValueError('unsafe topup reference')
  return hashlib.sha256(p.read_bytes()).hexdigest()
-def read(path):return json.loads(Path(path).read_text())
+def read(path):
+ try:
+  value=json.loads(Path(path).read_text())
+  if not isinstance(value,dict):raise ValueError('topup object required')
+  return value
+ except (OSError,TypeError,json.JSONDecodeError) as exc:
+  raise ValueError('missing or malformed topup metadata') from exc
 def exclusive(path,value):
  p=Path(path);p.parent.mkdir(parents=True,exist_ok=True)
  if any(q.is_symlink()for q in (p,*p.parents)):raise ValueError('unsafe topup claim')
@@ -55,7 +61,7 @@ class ScopedTopUp:
   selected='RTX6000' if self.rid==RYO else 'H100'
   if p.get('selected_gpu')!=selected or a.get('selected_gpu')!=selected:raise ValueError('literal Root-authenticated scoped GPU selection')
   if a.get('verdict')!='ACCEPTED' or a.get('root_owner')!=ROOT_OWNER or a.get('scope')!=SCOPE or a.get('plan_sha256')!=sha(self.plan_path) or a.get('standing_decision_authenticity_verified')is not True or a.get('financial_scope')!=p['bounds']:raise ValueError('actual Root financial authority absent')
-  if peer.get('verdict')!='PASS' or peer.get('reviewer_engine')!='claude' or peer.get('root_authority_sha256')!=sha(self.auth_path) or peer.get('plan_sha256')!=sha(self.plan_path) or peer.get('gate_sha256')!=sha(__file__) or peer.get('standing_decision_authenticity_verified')is not True:raise ValueError('genuine exact independent topup peer absent')
+  if peer.get('verdict')!='PASS' or peer.get('reviewer_engine')!='claude' or peer.get('root_authority_sha256')!=sha(self.auth_path) or peer.get('plan_sha256')!=sha(self.plan_path) or peer.get('gate_sha256')!=sha(__file__) or peer.get('operator_sha256')!=sha(p.get('references',{}).get('operator',{}).get('path','')) or peer.get('standing_decision_authenticity_verified')is not True:raise ValueError('genuine exact independent topup peer absent')
   refs=p.get('references',{})
   if set(refs)!=REFS:raise ValueError('complete topup reference set')
   for ref in refs.values():
@@ -83,6 +89,23 @@ class ScopedTopUp:
   expected=(selected,48 if self.rid==RYO else 80)
   if type(recipe.get('min_vram_gb'))is not int or recipe['min_vram_gb']!=required or expected not in GPU_PREFERENCE or expected[1]<required:raise ValueError('original immutable recipe and existing GPU preference membership')
   return expected
+ def bind_created_hardware(self,provider,pod_id,state):
+  if self.rid!=RYO:return
+  self.verify()
+  result=provider.exec(pod_id,['nvidia-smi','--query-gpu=name,memory.total,compute_cap','--format=csv,noheader,nounits'],timeout=30)
+  rows=result.stdout.strip().splitlines()
+  if result.returncode!=0 or len(rows)!=1:raise ValueError('scoped Ada48 physical inventory unavailable')
+  fields=[x.strip() for x in rows[0].split(',')]
+  if len(fields)!=3 or fields[0] not in ('NVIDIA RTX 6000 Ada Generation','RTX 6000 Ada Generation') or fields[2]!='8.9':raise ValueError('scoped card is not exact RTX6000 Ada SM8.9')
+  try:memory=float(fields[1])
+  except ValueError:raise ValueError('scoped Ada48 memory invalid') from None
+  if not math.isfinite(memory) or memory<45000:raise ValueError('scoped physical Ada48 memory below 45000 MiB')
+  state['scoped_created_hardware']={'pod_id':pod_id,'name':fields[0],'memory_mib':memory,'compute_cap':'8.9','plan_sha256':sha(self.plan_path)}
+ def check_created_hardware(self,pod_id,state):
+  self.verify()
+  if self.rid!=RYO:return
+  proof=state.get('scoped_created_hardware',{})
+  if proof.get('pod_id')!=pod_id or proof.get('compute_cap')!='8.9' or proof.get('name') not in ('NVIDIA RTX 6000 Ada Generation','RTX 6000 Ada Generation') or type(proof.get('memory_mib')) not in (int,float) or not math.isfinite(proof['memory_mib']) or proof['memory_mib']<45000 or proof.get('plan_sha256')!=sha(self.plan_path):raise ValueError('created Ada48 binding absent before protected input')
  def recovery_bounds(self,job,state,ttl,budget):
   if Path(job)!=self.job:raise ValueError('foreign supplemented recovery')
   self.verify();preinput(self.rid,state,ttl,budget)
@@ -105,7 +128,7 @@ class ScopedTopUp:
   else:raise ValueError('topup lifecycle phase')
   return self.allowed_total
 
-def late_successor(job,generation,name,original,path,admission_path,entry_path, *, prospective=False):
+def _late_successor(job,generation,name,original,path,admission_path,entry_path, *, prospective=False):
  """Exact old->current source join only; never replace old admission/ENTRY."""
  if Path(job).name!=DECISOR or generation!=GENERATION or name not in {'controller','late_completion','v16_profiles','profile_admission','profile_review','source_pins'}:raise ValueError('late successor scope')
  x=ScopedTopUp.__new__(ScopedTopUp);x.job=Path(job);x.rid=DECISOR;x.n,x.spent,x.allowed_total,x.lifetime_cap_usd=BOUNDS[DECISOR];x.base=x.job/'review/native-small-topup';x.plan_path=x.base/'PLAN.json';x.auth_path=x.base/'ROOT-AUTHORITY.json';x.peer_path=x.base/'SOURCE-PEER.json';x.recheck=lambda:None
@@ -127,3 +150,9 @@ def late_successor(job,generation,name,original,path,admission_path,entry_path, 
  history=read(x.plan['references']['original_history']['path'])
  if history['files'].get(join['historical_copy']['path'])!=original['sha256']:raise ValueError('historical successor copy not frozen')
  return True
+
+
+def late_successor(*args,**kwargs):
+ try:return _late_successor(*args,**kwargs)
+ except (OSError,KeyError,TypeError,AttributeError) as exc:
+  raise ValueError('missing or malformed exact historical source successor') from exc

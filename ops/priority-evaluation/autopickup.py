@@ -1732,10 +1732,16 @@ def operational_escalate(row: dict[str, Any], state: dict[str, Any], effects: Ef
 
 
 def manage_evaluation(row: dict[str, Any], state: dict[str, Any], effects: Effects, now: datetime) -> None:
-    # Owned one-use topups never enter the ordinary retry/timer lifecycle.
-    if state.get('scoped_native_topup') is not None:
-        return
     rid = request_id(row.get("id"))
+    # Keep the existing escalation/SLA supervision, while excluding every
+    # ordinary start/retry/hold-clear branch for the exclusive continuation.
+    if state.get('scoped_native_topup') is not None:
+        operational = state.get('operational_hold')
+        if isinstance(operational, dict):
+            operational_escalate(row, state, effects, now,
+                                 str(operational.get('reason') or 'scoped_native_topup_reconciliation_required'),
+                                 exhausted=False)
+        return
     if row.get("result_delivered_at") is not None:
         # A delivered order is done forever: never restart the unit, clear a hold or send a
         # hold escalation — even when state still carries an operational hold from the hand run.

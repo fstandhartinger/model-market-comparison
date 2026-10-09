@@ -942,6 +942,9 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         if placement and (hourly != placement['hourly_usd'] or pod.get('gpu_count') != placement['gpu_count']):
             raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed')
         provider.attach(reservation, job, pod_id, hourly)
+        if type(allocation_gate) is ScopedTopUp:
+            allocation_gate.bind_created_hardware(provider, pod_id, state)
+            save_state()
         image = recipe["image"]
         if "host_staging" in recipe:
             if weights_streamer is None:
@@ -1003,6 +1006,8 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         _exec(provider, pod_id, ["mkdir", "-p", "/work", "/work/out", "/work/code"])
         # Optional trusted context holds the canonical custody lock across upload.
         with pre_upload_gate() if pre_upload_gate is not None else nullcontext():
+            if type(allocation_gate) is ScopedTopUp:
+                allocation_gate.check_created_hardware(pod_id, state)
             if "host_staging" in recipe:
                 # Checked inside the custody lock, immediately before the sealed transfer becomes durable.
                 try:
