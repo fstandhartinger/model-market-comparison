@@ -959,7 +959,7 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                                                            "--format", "{{json .HostConfig}}"]).stdout)
                 if not isinstance(host, dict):
                     raise ValueError
-            except ValueError:
+            except (ValueError, TypeError):
                 raise PodRunError("run_container_inspect_invalid") from None
             state["host_staging"]["run_container"] = {key: host.get(key) for key in (
                 "NetworkMode", "Binds", "Privileged", "CapAdd", "ReadonlyRootfs", "Devices", "PidMode", "IpcMode", "UsernsMode")}

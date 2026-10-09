@@ -294,12 +294,31 @@ class HostStagingTests(unittest.TestCase):
         self.assertEqual(fake.ceilings, [self.recipe['hourly_usd']])
         self.assertLess(self.recipe['hourly_usd'], pr.MAX_HOURLY_USD)
 
-    def test_unclear_create_is_charged_at_most_the_pinned_ceiling_times_ttl(self):
+    def test_successful_run_charge_equals_ttl_times_the_provider_ceiling(self):
         # The provider ceiling equals the accounted rate, so the recorded upper bound cannot be exceeded.
         fake = HostFake()
         self.run_recipe(fake)
         state = json.loads((self.root / 'pods' / (RID + '.json')).read_text())
         self.assertAlmostEqual(state['spent_upper_bound_usd'], state['attempt_ttl_hours'] * fake.ceilings[0])
+
+    def test_lium_create_forwards_the_ceiling_in_both_argv_forms_and_rejects_bad_ceilings(self):
+        seen = []
+        def fake_cli(argv, timeout=600, input_text=None):
+            seen.append(list(argv))
+            if argv[1:2] == ['ps'] or 'ps' in argv[:3]:
+                return subprocess.CompletedProcess(argv, 0, '[]', '')
+            return subprocess.CompletedProcess(argv, 1, '', '')
+        provider = pr.LiumProvider()
+        for placement in (None, {'gpu': 'RTXPRO6000', 'gpu_count': 1, 'quoted_at': pr._utcnow().isoformat(), 'hourly_usd': 1.19}):
+            seen.clear(); provider._placement = placement
+            with mock.patch.object(pr, '_run_cli', fake_cli), self.assertRaises(Exception):
+                provider.create('RTXPRO6000', 3.0, 20.0, max_hourly=1.3)
+            ups = [a for a in seen if any(str(x).endswith('lium_bounded_up.py') for x in a)]
+            self.assertEqual(len(ups), 1)
+            self.assertEqual(ups[0][-1], '1.3')
+        for bad in (True, 0, -1, 5.01, float('nan'), '1.3'):
+            with self.assertRaisesRegex(pr.PodRunError, 'invalid provider price ceiling'):
+                provider.create('RTXPRO6000', 3.0, 20.0, max_hourly=bad)
 
     def test_ttl_too_short_holds_before_any_provider_call(self):
         fake = HostFake()
