@@ -31,7 +31,7 @@ test('both boards: every measured row appears with a tag; ranked rows have langu
       (scope === 'api' ? [...jevApiRoster(a, []).ranked, ...jevApiRoster(a, []).variants.filter((s) => s.listing !== 'wrapper')] : jevScopeDisplayOrder(a.systems.filter((s) => s.listing !== 'wrapper'))).map((s) => s.key));
     for (const r of rows) {
       assert.ok(live.systems[r.key], r.key);
-      assert.match(languageCoverage(live.systems[r.key]), /^(S|A\d*)\+P(?:\+L[12345])*$/);
+      assert.match(languageCoverage(live.systems[r.key]), /^(S|A\d*)\+P(?:\+L[12345])*(?: \(L3 partial\))?$/);
       if (r.ranked) assert.ok(Object.keys(live.systems[r.key].languages).length > 0, r.key);
     }
     const firstWrapper = rows.findIndex((r) => r.listing === 'wrapper');
