@@ -55,7 +55,7 @@ def definite_create_rejection(exc):
     return False
 
 
-def run(job, image, lifetime_seconds, startup_seconds, receipt_path, prepare, measure):
+def run(job, image, lifetime_seconds, startup_seconds, receipt_path, prepare, measure, *, require_verified_price=False):
     """Run once; return callback result only after exact-ID teardown proof.
 
     Uses USD5/h as an accounting liability, not a claim about the provider rate.
@@ -76,6 +76,8 @@ def run(job, image, lifetime_seconds, startup_seconds, receipt_path, prepare, me
     try:
         allowance=safety.launch_allowance(5*lifetime_seconds/3600)
         record['allowance_before']=allowance
+        if require_verified_price and allowance.get('price_verified') is not True:
+            raise PreDispatchUnavailable('scoring price acceptance changed')
         reservation=guard('reserve','--job',job,'--provider','coreweave','--name',job,
             '--hourly-price',5,'--max-hourly-price',5,'--cost-cap',5*lifetime_seconds/3600,
             '--runtime-hours',lifetime_seconds/3600)

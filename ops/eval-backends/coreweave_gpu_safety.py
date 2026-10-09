@@ -133,7 +133,7 @@ def launch_allowance(requested_usd):
     # The declared liability covers the full TTL at the accounting rate.
     # Hold launches spanning the provider month while the usage meter can lag.
     try:
-        finish=now+dt.timedelta(seconds=requested_usd*3600/5)
+        finish=now+dt.timedelta(seconds=requested_usd*3600/5+600)
     except (OverflowError,TypeError):
         raise RuntimeError('CoreWeave lifetime liability invalid') from None
     if finish.strftime('%Y-%m')!=now.strftime('%Y-%m'):

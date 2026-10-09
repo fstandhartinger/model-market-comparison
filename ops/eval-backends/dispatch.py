@@ -57,7 +57,8 @@ def _evaluate(*, recipe, state, equivalence, job, receipt_dir, prepare, measure,
         return decision['backend'],legacy()
     try:
         result=sandbox_runner.run(job,recipe['image'],recipe['max_lifetime_seconds'],
-            recipe.get('startup_seconds',300),root/'coreweave-lifecycle.json',prepare,measure)
+            recipe.get('startup_seconds',300),root/'coreweave-lifecycle.json',prepare,measure,
+            require_verified_price=recipe.get('diagnostic') is not True)
         return 'coreweave',result
     except sandbox_runner.PreDispatchUnavailable as exc:
         decision={'backend':recipe.get('legacy_backend','lium'),
