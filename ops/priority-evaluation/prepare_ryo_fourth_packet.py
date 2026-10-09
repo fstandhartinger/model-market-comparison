@@ -103,7 +103,7 @@ def build(spec):
  tree=ast.parse(data(provenance['gate']['path']))
  funcs=[n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='previous_failure']
  if len(funcs)!=1:raise ValueError('actual first-party previous failure validator required')
- namespace={'Path':Path,'sha':lambda p:sha(data(p)),'read':read,'RYO':RYO,'SCOPE':'exact-native-preinput-small-topup-one-use','BOUNDS':{RYO:(2,20.,3,25.)}}
+ namespace={'Path':Path,'sha':lambda p:sha(data(p)),'read':read,'RYO':RYO,'DECISOR':DECISOR,'SCOPE':'exact-native-preinput-small-topup-one-use','BOUNDS':{RYO:(2,20.,3,25.)}}
  exec(compile(ast.Module(body=funcs,type_ignores=[]),'<firstparty previous custody validator>','exec'),namespace)
  namespace['previous_failure'](job,state,plan)
  if read(spec['full_sql_row']['path']).get('id')!=RYO:raise ValueError('whole SQL exact identity required')

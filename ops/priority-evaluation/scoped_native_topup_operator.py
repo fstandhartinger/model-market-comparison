@@ -66,7 +66,7 @@ def sole(a,rid,p,scope=gate.SCOPE):
   cells=line.split()
   if rid in line and cells and cells[0]!=unit and any(x in cells for x in ('active','activating','deactivating','reloading')):raise ValueError('another owning unit')
 def full_row_guard(a,rid,p,scope,*,ref=None):
- if scope!=gate.RYO_FOURTH_SCOPE:return ''
+ if scope not in gate.EXTRA_SCOPES:return ''
  ref=p.get('full_sql_row')if ref is None else ref
  if not isinstance(ref,dict)or set(ref)!={'path','sha256'}or gate.sha(ref['path'])!=ref['sha256']:raise ValueError('fresh complete SQL capture required')
  expected=gate.read(ref['path'])
@@ -99,7 +99,7 @@ def eligible(a,rid,p,auth,scope=gate.SCOPE):
   for ref in original_late['references'].values():
    if gate.sha(ref['path'])!=ref['sha256']:
     name=next(k for k,v in original_late['references'].items()if v==ref)
-    gate.late_successor(job,gate.GENERATION,name,ref,Path(ref['path']),job/'review/DECISOR-LATE-COMPLETION-ADMISSION.json',job/'review/decisor-late-handoff'/gate.GENERATION/'ENTRY-CLAIM.json',prospective=True)
+    gate.late_successor(job,gate.GENERATION,name,ref,Path(ref['path']),job/'review/DECISOR-LATE-COMPLETION-ADMISSION.json',job/'review/decisor-late-handoff'/gate.GENERATION/'ENTRY-CLAIM.json',prospective=True,scope=scope)
   original_entry=gate.read(job/'review/decisor-late-handoff'/gate.GENERATION/'ENTRY-CLAIM.json')
   if original_entry.get('admission_sha256')!=gate.sha(job/'review/DECISOR-LATE-COMPLETION-ADMISSION.json'):raise ValueError('original consumed Decisor ENTRY differs; no rebind/replay')
  elif row.get('result_delivered_at')is not None or a.deadline_for(row)<=a.utcnow():raise ValueError('RYO live paid SLA')
@@ -228,7 +228,7 @@ def apply(a,rid,do_apply,*,binding_path=None,binding_sha256=None,scope=gate.SCOP
     guard+=f" AND pickup_owner={a.sql_text(row['pickup_owner'])} AND pickup_job_dir={a.sql_text(row['pickup_job_dir'])} AND evaluation_attempts={int(row['evaluation_attempts'])}"
    guard+=full_row_guard(a,rid,p,scope)
    if a.load_row(rid)!=row or gate.sha(gate.STATE/'pods'/f'{rid}.json')!=p['original_ledger_sha256']or not a.update_row(rid,"evaluation_status='starting'",guard):raise ValueError('late same-row/ledger status CAS')
-   if scope==gate.RYO_FOURTH_SCOPE:
+   if scope in gate.EXTRA_SCOPES:
     # Capture the genuine result of the preceding exact all-column SQL CAS.
     starting=a.sql_json('SELECT row_to_json(r)::text FROM '+a.TABLE+" AS r WHERE r.id="+a.sql_text(rid)+"::uuid")
     if not isinstance(starting,dict)or starting.get('id')!=rid or starting.get('evaluation_status')!='starting':raise ValueError('actual starting whole SQL receipt required')
@@ -262,7 +262,7 @@ def continuation(a,rid,scope=gate.SCOPE):
     if row.get('evaluation_status')!='starting' or any(row.get(k)!=original.get(k)for k in ('id','pickup_owner','pickup_job_dir','paid_at','sla_paused_seconds','evaluation_attempts','synthetic_test','stripe_mode')):raise ValueError('RYO original row custody changed')
     guard="status IN ('paid','review_passed') AND evaluation_status='starting' AND synthetic_test=false AND stripe_mode='live' AND customer_hold_started_at IS NULL AND customer_hold_reason IS NULL AND refund_id IS NULL AND refunded_at IS NULL AND result_delivered_at IS NULL AND paid_at IS NOT NULL AND paid_at + COALESCE(sla_paused_seconds,0)*interval '1 second'+interval '48 hours'>now()"
     guard+=f" AND pickup_owner={a.sql_text(original['pickup_owner'])} AND pickup_job_dir={a.sql_text(original['pickup_job_dir'])} AND evaluation_attempts={int(original['evaluation_attempts'])}"
-   if scope==gate.RYO_FOURTH_SCOPE:
+   if scope in gate.EXTRA_SCOPES:
     custody=gate.read(base/'STARTING-ROW-CLAIM.json')
     if custody.get('plan_sha256')!=gate.sha(base/'PLAN.json')or custody.get('row_sha256')!=gate.sha(base/'STARTING-FULL-ROW.json'):raise ValueError('starting whole SQL custody changed')
     guard+=full_row_guard(a,rid,p,scope,ref={'path':str(base/'STARTING-FULL-ROW.json'),'sha256':custody['row_sha256']})
@@ -289,7 +289,7 @@ def continuation(a,rid,scope=gate.SCOPE):
   # hold persistence failed, no EXIT is written; the supervisor must reconcile.
   exit_receipt(a,rid,scope=scope)
 def main():
- parser=argparse.ArgumentParser();parser.add_argument('--order',choices=tuple(gate.BOUNDS),required=True);parser.add_argument('--scope',choices=(gate.SCOPE,gate.RYO_FOURTH_SCOPE),default=gate.SCOPE);parser.add_argument('--binding');parser.add_argument('--binding-sha256');mode=parser.add_mutually_exclusive_group();mode.add_argument('--apply',action='store_true');mode.add_argument('--continue',dest='resume',action='store_true');args=parser.parse_args();sys.dont_write_bytecode=True;sys.path.insert(0,str(gate.RUNTIME));a=importlib.import_module('autopickup')
+ parser=argparse.ArgumentParser();parser.add_argument('--order',choices=tuple(gate.BOUNDS),required=True);parser.add_argument('--scope',choices=(gate.SCOPE,*gate.EXTRA_SCOPES),default=gate.SCOPE);parser.add_argument('--binding');parser.add_argument('--binding-sha256');mode=parser.add_mutually_exclusive_group();mode.add_argument('--apply',action='store_true');mode.add_argument('--continue',dest='resume',action='store_true');args=parser.parse_args();sys.dont_write_bytecode=True;sys.path.insert(0,str(gate.RUNTIME));a=importlib.import_module('autopickup')
  if args.resume:return continuation(a,args.order,scope=args.scope)
  return apply(a,args.order,args.apply,binding_path=args.binding,binding_sha256=args.binding_sha256,scope=args.scope)
 if __name__=='__main__':main()
