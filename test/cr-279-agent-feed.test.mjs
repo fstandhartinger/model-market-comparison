@@ -14,7 +14,7 @@ test('current feed shares the live page release pointer and exactly its publishe
   assert.match(page, /await readCurrentJevbench\(\)/);
   assert.match(page, /versionPath=\{CURRENT_JEVBENCH_PAGE\}/);
   assert.equal(feed.revision, artifact.revision);
-  assert.equal(feed.source.frozen_page, CURRENT_JEVBENCH_PAGE);
+  assert.equal(feed.source.version_page, CURRENT_JEVBENCH_PAGE);
   assert.equal(feed.source.artifact_sha256, sha256);
   assert.deepEqual(feed.systems.map(r => r.key), artifact.systems.map(r => r.key));
   assert.equal(feedHash, createHash('sha256').update(bytes).digest('hex'));

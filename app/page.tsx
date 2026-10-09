@@ -7,7 +7,7 @@ import { noWidow } from "../lib/typography";
 import { HomeJsonLd } from "../components/HomeJsonLd";
 
 
-export const metadata = previewMetadata({ path: "/", title: "Benchmark Heaven — AI benchmarks & decision model evaluation", documentTitle: "Benchmark Heaven — AI benchmarks & decision model evaluation",
+export const metadata = previewMetadata({ path: "/", title: "Benchmark Heaven — AI benchmarks & decision model evaluation", absoluteTitle: "Benchmark Heaven — AI benchmarks & decision model evaluation",
   description: "Compare AI model benchmarks and costs. Home of JevBench by Benchmark Heaven, the decision model benchmark for accuracy, calibration, latency and cost." });
 
 export default async function Home() {

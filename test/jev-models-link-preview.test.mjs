@@ -15,8 +15,8 @@ const frozenV14 = jevbenchV14View(await readJevbenchV14());
 
 test('CR-131: the changing JevBench board has evergreen Open Graph and X metadata', () => {
   const metadata = page.slice(page.indexOf('export async function generateMetadata'), page.indexOf('\nexport default async function'));
-  assert.match(metadata, /JevBench — Jev benchmark & leaderboard/);
-  assert.match(metadata, /open-weight Jev-class models/);
+  assert.match(metadata, /JevBench — AI decision model benchmark & leaderboard/);
+  assert.match(metadata, /open-weights decision models/);
   assert.match(metadata, /intelligence, calibration, speed, and cost/);
   assert.match(metadata, /alternates: \{ canonical: '\/jev-models' \}/);
   assert.match(metadata, /card: 'summary_large_image'/);
@@ -48,7 +48,7 @@ test('CR-134: the frozen /jev-models/v1.4 preview uses the immutable artifact an
 test('CR-131: the Open Graph card is branded and evergreen', () => {
   assert.match(image, /export const size = \{ width: 1200, height: 630 \}/);
   assert.match(image, /JevBench by Benchmark Heaven/);
-  assert.match(image, /Jev-class decision models/);
+  assert.match(image, /AI decision models and Jev-compatible systems/);
   for (const axis of ['Intelligence', 'Calibration', 'Speed', 'Cost']) assert.match(image, new RegExp(axis));
   assert.match(image, /benchmarkheaven\.com/);
   assert.doesNotMatch(image, /v1\.|rank|score|\bleads at\b|view\.|row\.rank|row\.main/i);

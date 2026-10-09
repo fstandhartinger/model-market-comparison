@@ -35,7 +35,7 @@ async function llmsTxt(): Promise<string> {
     `- Model pages: ${u("/jev-models/{system}")} (replace {system} with the public model slug)`,
     `- [Full JevBench data and method](${u("/llms-full.txt")})`,
     "",
-    `- [Decision model benchmarks compared](${u("/decision-model-benchmarks")}): JevBench, Hanno Labs DecisionBench, RewardBench 2, ForecastBench, tau-bench and the separate metamorphic coherence JevBench`,
+    `- [Decision model benchmarks compared](${u("/decision-model-benchmarks")}): JevBench, Hanno Labs DecisionBench, RewardBench, ForecastBench, tau-bench and the separate metamorphic coherence JevBench`,
     `- [Methodology](${u("/jev-models/methodology")}): Capability versus gated harmonic Composite, model versions and reproducibility limits`,
     `- [Data card and own JSON/CSV measurements](${u("/jev-models/data")})`,
     `- [Calibration and reliability](${u("/jev-models/calibration-reliability")})`,

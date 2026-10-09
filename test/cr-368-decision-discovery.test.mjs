@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { readDecisionBenchmarkManifest, manifestMarkdown } from '../lib/decision-benchmark-manifest.mjs';
 import { decisionResults, resultsCsv } from '../lib/decision-result-export.mjs';
 import { readCurrentJevbench } from '../lib/jevbench-current.mjs';
+import { PUBLISHED_BENCHMARK_VERSIONS } from '../lib/jevbench-current.mjs';
+import { decisionResultResponse } from '../lib/decision-result-export.mjs';
 import { jevV15Composite } from '../lib/jevbench-v15-preview.mjs';
 
 test('CR-368 manifest definitions and exported scores reproduce the published scorer', async () => {
@@ -24,7 +26,7 @@ test('CR-368 manifest definitions and exported scores reproduce the published sc
 test('CR-368 only named own releases are exported, with no item-level or AA-derived fields', async () => {
   assert.equal(await decisionResults('artificial-analysis', 'latest'), null);
   assert.equal(await decisionResults('jevbench', 'draft'), null);
-  for (const [key, revision] of [['jevbench','v1.6.1'], ['imagejevbench','v0.3.0']]) {
+  for (const [key, revision] of Object.entries(PUBLISHED_BENCHMARK_VERSIONS).flatMap(([benchmark, versions]) => Object.keys(versions).map((version) => [benchmark, version]))) {
     const data = await decisionResults(key, revision);
     assert.ok(data.rows.length);
     assert.ok(data.rows.some(r => !r.ranked));
@@ -32,6 +34,16 @@ test('CR-368 only named own releases are exported, with no item-level or AA-deri
     const csv = resultsCsv(data);
     assert.equal(csv.split('\r\n').length, data.rows.length + 2);
     assert.match(csv.split('\r\n')[0], /"version"/);
+  }
+});
+
+test('published result JSON and CSV URLs remain available for every registered version', async () => {
+  for (const [benchmark, versions] of Object.entries(PUBLISHED_BENCHMARK_VERSIONS)) for (const version of Object.keys(versions)) {
+    for (const format of ['json', 'csv']) {
+      const response = await decisionResultResponse(benchmark, version, format);
+      assert.equal(response.status, 200, `${benchmark} ${version} ${format}`);
+      assert.match(response.headers.get('content-type'), format === 'json' ? /application\/json/ : /text\/csv/);
+    }
   }
 });
 
