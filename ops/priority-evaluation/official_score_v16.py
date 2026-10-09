@@ -75,8 +75,9 @@ def jevbench_v16(meta, raw, refs, baseline):
             or baseline.get('bootstrap_seed') != 16:
         raise ValueError('invalid v16 baseline')
     gm = baseline.get('G_med')
-    if isinstance(gm, bool) or not isinstance(gm, (int, float)) or not math.isfinite(gm):
-        raise ValueError('invalid v16 cohort gap reference')
+    if baseline.get('phase') != 'completed_cohort' or isinstance(gm, bool) \
+            or not isinstance(gm, (int, float)) or not math.isfinite(gm):
+        raise ValueError('completed independently accepted v16 cohort baseline required')
     # These exact dependencies are host-pinned and mounted by the offline scorer.
     sys.path.insert(0, str(refs))
     os.environ['JEV_NOUL_METHOD'] = 'O1S'

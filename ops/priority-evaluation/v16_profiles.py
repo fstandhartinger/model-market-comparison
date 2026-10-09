@@ -10,6 +10,8 @@ import importlib.util
 import json
 import re
 import uuid
+import fcntl
+from contextlib import contextmanager
 
 import measurement_dispatch
 import official_scoring_v16 as official_scoring
@@ -107,8 +109,30 @@ def accepted(job_dir):
     return admission, measured, scored
 
 
+@contextmanager
+def retirement_lock(admission):
+    """The canonical writer lock remains held through the sealed upload."""
+    lock = ROTATION_TOOL.parent / '.lock'
+    if lock.is_symlink():
+        raise ValueError('unsafe canonical rotation lock')
+    with lock.open('a') as handle:
+        fcntl.flock(handle, fcntl.LOCK_EX)
+        try:
+            _retirement_unlocked(admission)
+            yield
+        finally:
+            fcntl.flock(handle, fcntl.LOCK_UN)
+
+
 def retirement(admission):
+    with retirement_lock(admission):
+        pass
+
+
+def _retirement_unlocked(admission):
     """Current metadata-only check immediately before upload; no cohort exemption."""
+    if _sha(ROTATION_TOOL) != admission.get('rotation_tool_sha256'):
+        raise ValueError('official rotation source changed')
     spec = importlib.util.spec_from_file_location('official_rotation', ROTATION_TOOL)
     rotation = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(rotation)
@@ -131,14 +155,20 @@ def retirement(admission):
 def measure(job_dir):
     """Guarded first-party native run, with original per-order pod budget intact."""
     job = Path(job_dir)
-    admission, measured, _ = accepted(job)
+    admission, measured, scored = accepted(job)
     recipe = json.loads((job / 'trusted-runner/POD-RECIPE.json').read_text())
     if recipe.get('kind') not in ('http_typesafe', 'python_inprocess'):
         raise ValueError('v16 route requires reviewed native text recipe')
     retirement(admission)
     output = STATE_ROOT / 'measurements' / job.name / admission['generation'] / 'jevbench'
+    @contextmanager
+    def pre_upload():
+        with retirement_lock(admission):
+            if accepted(job) != (admission, measured, scored):
+                raise ValueError('v16 admission changed before upload')
+            yield
     record = pod_runner.run(job.name, job, recipe, output, measured, pod_runner.PER_ORDER_CAP_USD,
-                            measurement_pins_factory=lambda: accepted(job)[1])
+                            measurement_pins_factory=lambda: accepted(job)[1], pre_upload_gate=pre_upload)
     retirement(admission)
     accepted(job)
     return record

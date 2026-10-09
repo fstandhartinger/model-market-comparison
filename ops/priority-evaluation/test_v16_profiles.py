@@ -31,7 +31,7 @@ def fixture(root):
                          latency_s=.1, usage={'input_tokens':10,'output_tokens':1}))
     (refs / 'gold.jsonl').write_text('\n'.join(map(json.dumps,gold))+'\n')
     baseline=dict(method='jevbench-v16',protocol='jevbench::v1.6',noul_method='O1S',count=1500,
-                  B=1000,bootstrap_seed=16,G_med=2.5)
+                  B=1000,bootstrap_seed=16,G_med=2.5,phase='completed_cohort')
     (refs / 'baseline.json').write_text(json.dumps(baseline))
     (refs / 'cost-basis.json').write_text(json.dumps({'exclude_opaque_ids':['synthetic-0'],
                                                    'rule':'common','reference':'synthetic'}))
@@ -64,12 +64,28 @@ class V16Tests(unittest.TestCase):
     def test_v16_rejects_wrong_method_and_missing_usage(self):
         with tempfile.TemporaryDirectory() as directory:
             refs,base,manifest,raw,meta=fixture(Path(directory))
+            with self.assertRaisesRegex(ValueError,'completed independently'):
+                official_score.jevbench_v16(meta,raw,refs,{**base,'G_med':None,'phase':'measurement_plan'})
             with self.assertRaisesRegex(ValueError,'baseline'):
                 official_score.jevbench_v16(meta,raw,refs,{**base,'noul_method':'O0'})
             rows=[json.loads(x) for x in raw.read_text().splitlines()];rows[1]['usage']={}
             raw.write_text('\n'.join(map(json.dumps,rows))+'\n')
             with self.assertRaisesRegex(ValueError,'token usage'):
                 official_score.jevbench_v16(meta,raw,refs,base)
+
+    def test_measurement_only_baseline_has_no_invented_gap(self):
+        with tempfile.TemporaryDirectory() as directory:
+            refs,base,manifest,raw,meta=fixture(Path(directory))
+            def phase(value):
+                (refs/'baseline.json').write_text(json.dumps(value))
+                spec=json.loads(manifest.read_text())
+                spec['profiles']['jevbench']['files']['baseline.json']['sha256']=hashlib.sha256((refs/'baseline.json').read_bytes()).hexdigest()
+                manifest.write_text(json.dumps(spec))
+            phase({**base,'phase':'measurement_plan','G_med':None})
+            official_scoring.pins(['jevbench'],manifest)
+            phase({**base,'phase':'measurement_plan','G_med':0})
+            with self.assertRaisesRegex(ValueError,'must not invent'):
+                official_scoring.pins(['jevbench'],manifest)
 
     def test_unaccepted_host_profile_refused_before_reference_or_dispatch(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -122,3 +138,73 @@ class AdmissionBindingTests(unittest.TestCase):
                 put(job/'review/GATE.json',gate)
                 measured['profile']['method']='jevbench-v15'
                 with self.assertRaisesRegex(ValueError,'mixed v16'):v16_profiles.accepted(job)
+
+
+class UploadBoundaryTests(unittest.TestCase):
+    def test_v16_driver_requires_exact_config_before_loading_customer_code(self):
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('synthetic_v16_driver',Path(__file__).parent/'pod_drivers/pod_driver_v16.py')
+        driver=importlib.util.module_from_spec(spec);spec.loader.exec_module(driver)
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/'text-config.json'
+            with self.assertRaisesRegex(ValueError,'missing host'):driver.configured_count(path)
+            path.write_text(json.dumps({'method':'jevbench-v16','count':1624}))
+            with self.assertRaisesRegex(ValueError,'invalid host'):driver.configured_count(path)
+            path.write_text(json.dumps({'method':'jevbench-v16','count':1500}))
+            self.assertEqual(driver.configured_count(path),1500)
+
+    def test_current_retirement_rechecked_under_canonical_lock(self):
+        import fcntl
+        with tempfile.TemporaryDirectory() as directory:
+            tool=Path(directory)/'rotation.py';tool.write_text('# synthetic')
+            checks=[]
+            def check(admission):
+                with (tool.parent/'.lock').open('a') as other:
+                    with self.assertRaises(BlockingIOError):fcntl.flock(other,fcntl.LOCK_EX|fcntl.LOCK_NB)
+                checks.append(admission)
+                if len(checks)>1:raise ValueError('new retirement')
+            with patch.object(v16_profiles,'ROTATION_TOOL',tool),patch.object(v16_profiles,'_retirement_unlocked',side_effect=check):
+                with v16_profiles.retirement_lock({'generation':'synthetic'}):pass
+                with self.assertRaisesRegex(ValueError,'new retirement'):
+                    with v16_profiles.retirement_lock({'generation':'synthetic'}):self.fail('must refuse transfer')
+                self.assertEqual(len(checks),2)
+
+    def test_new_provider_retirement_is_detected_from_current_ledger(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);tool=root/'rotation.py'
+            shutil.copyfile(v16_profiles.ROTATION_TOOL,tool)
+            sealed=[f's{i}' for i in range(1200)];public=[f'p{i}' for i in range(300)]
+            (root/'reserve-index.jsonl').write_text('\n'.join(json.dumps({'id':i,'sha256':i}) for i in sealed+public)+'\n')
+            draw={'type':'draw','release':'synthetic','S':sealed,'P':public,'A':[]}
+            ledger=root/'ledger.jsonl';ledger.write_text(json.dumps(draw)+'\n')
+            mapping=root/'map.json';mapping.write_text(json.dumps({i:{'item_id':i} for i in sealed+public}))
+            admission={'draw_release':'synthetic','rotation_tool_sha256':v16_profiles._sha(tool),
+                       'references':{'id_map':{'path':str(mapping)}}}
+            with patch.object(v16_profiles,'ROTATION_TOOL',tool):
+                v16_profiles.retirement(admission)
+                with ledger.open('a') as stream:
+                    stream.write(json.dumps({'type':'legacy_exposed','ids':['s0'],'providers':['provider-one','provider-two']})+'\n')
+                with self.assertRaisesRegex(ValueError,'currently retired'):
+                    v16_profiles.retirement(admission)
+
+    def test_upload_gate_refusal_precedes_dispatch_state_and_scp(self):
+        from contextlib import contextmanager
+        from types import SimpleNamespace
+        from unittest.mock import Mock
+        import pod_runner as pr
+        @contextmanager
+        def gate():
+            raise ValueError('retired at upload boundary')
+            yield
+        provider=SimpleNamespace(preflight=lambda *a:None,reserve=lambda *a:'reservation',
+                    create=lambda *a:{'pod_id':'synthetic-pod','hourly_usd':1},attach=lambda *a:None,scp_to=Mock())
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);out=root/'out';out.mkdir();state={'request_id':'1c027833-1c49-408d-b4a0-63a4d654249b'}
+            recipe={'kind':'http_typesafe','image':'synthetic@sha256:abc','weights':[]}
+            with patch.object(pr,'_exec',return_value=SimpleNamespace(stdout='sha256:abc')),patch.object(pr,'_teardown'):
+                with self.assertRaisesRegex(ValueError,'retired at upload'):
+                    pr._lifecycle(provider,'synthetic',recipe,root/'stage',out,state,('H100',80),.5,2.5,None,lambda:None,
+                                  pre_upload_gate=gate)
+            provider.scp_to.assert_not_called()
+            self.assertIs(state['input_dispatched'],False)
+            self.assertIs(state['execution_started'],False)

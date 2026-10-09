@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import math
 from pathlib import Path
 import re
 import shutil
@@ -28,6 +29,13 @@ def profile(benchmark, manifest_path=None):
         path = Path(pin['path'])
         if path.is_symlink() or not path.is_file() or digest(path) != pin['sha256']:
             raise ValueError('official reference pin changed')
+    baseline = json.loads(Path(result['files']['baseline.json']['path']).read_text())
+    phase, gm = baseline.get('phase'), baseline.get('G_med')
+    if phase == 'measurement_plan':
+        if gm is not None:
+            raise ValueError('measurement-only v16 baseline must not invent a cohort gap')
+    elif phase != 'completed_cohort' or isinstance(gm, bool) or not isinstance(gm, (int, float)) or not math.isfinite(gm):
+        raise ValueError('invalid completed v16 cohort baseline')
     return result
 
 

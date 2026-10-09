@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fixed first-party JevBench v1.5 pod driver (open-weights fast lane). Runs inside docker --network none.
+"""Fixed first-party JevBench v1.6 pod driver (open-weights fast lane). Runs inside docker --network none.
 
 Same pinned run_v15.py ModelTask/record, pinned adapters, label-free input schema check and stop rule as
 the host API driver (measurement_driver.py). Two recipe kinds:
@@ -12,7 +12,7 @@ One unrecorded warm-up precedes the scored loop. Usage: pod_driver.py  (reads /i
 import importlib, importlib.util, json, sys, time
 from pathlib import Path
 
-COUNT = 1624
+COUNT = 1500
 
 
 def module(name, path):
@@ -71,7 +71,16 @@ def inprocess_runner(recipe, base):
     return run
 
 
+def configured_count(path):
+    if not path.is_file():
+        raise ValueError('missing host v16 text method config')
+    if json.loads(path.read_text()) != {'method': 'jevbench-v16', 'count': 1500}:
+        raise ValueError('invalid host v16 text method config')
+    return COUNT
+
+
 def main():
+    count = configured_count(Path('/input/text-config.json'))
     from scored_marker import ScoredDispatchMarker
     marker = ScoredDispatchMarker(Path('/output'))
     recipe = json.loads(Path('/input/recipe.json').read_text())
@@ -87,13 +96,6 @@ def main():
         run = inprocess_runner(recipe, base)
     else:
         raise ValueError('unknown recipe kind')
-    count = COUNT
-    config_path = Path('/input/text-config.json')
-    if config_path.exists():
-        config = json.loads(config_path.read_text())
-        if config != {'method': 'jevbench-v16', 'count': 1500}:
-            raise ValueError('invalid host text method config')
-        count = 1500
     run_text(run, text_driver, Path('/inputs/text/items.jsonl'), Path('/output'), count, marker)
 
 

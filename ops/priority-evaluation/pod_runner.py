@@ -37,6 +37,7 @@ from pathlib import Path
 import measurement_dispatch
 import execution_source
 import native_admission
+from contextlib import nullcontext
 import pod_capacity
 import sys
 
@@ -561,7 +562,7 @@ def _teardown(provider, job, pod_id, reservation, alert):
 
 
 def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, ttl, budget,
-               alert, save_state, benchmarks=('jevbench',), quote_budget=None, expected_rows=EXPECTED_ROWS):
+               alert, save_state, benchmarks=('jevbench',), quote_budget=None, expected_rows=EXPECTED_ROWS, pre_upload_gate=None):
     """One pod attempt; raises PodRunError on any step failure (teardown still runs)."""
     pod_id = None
     reservation = None
@@ -672,9 +673,11 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                     raise PodRunError(f"weight file {entry['dir']}/{relative} sha256 mismatch: "
                                       f"{check.stdout.strip()[-200:]}")
         _exec(provider, pod_id, ["mkdir", "-p", "/work", "/work/out", "/work/code"])
-        state['input_dispatched'] = True
-        save_state()  # external exposure begins before upload, not at container launch
-        provider.scp_to(pod_id, str(staging_path), "/work/stage.tar")
+        # Optional trusted context holds the canonical custody lock across upload.
+        with pre_upload_gate() if pre_upload_gate is not None else nullcontext():
+            state['input_dispatched'] = True
+            save_state()  # dispatch is durable before the first sealed transfer
+            provider.scp_to(pod_id, str(staging_path), "/work/stage.tar")
         _exec(provider, pod_id, ["tar", "-xf", "/work/stage.tar", "-C", "/"])
         _exec(provider, pod_id, ["tar", "-xf", "/work/code.tar", "-C", "/work/code"])
         state['execution_started'] = True
@@ -789,7 +792,7 @@ def default_alert(text: str) -> None:
 
 
 def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict, max_usd: float,
-        *, provider: Provider | None = None, alert=None, benchmarks=('jevbench',), native_source_pins=None, measurement_pins_factory=None) -> dict:
+        *, provider: Provider | None = None, alert=None, benchmarks=('jevbench',), native_source_pins=None, measurement_pins_factory=None, pre_upload_gate=None) -> dict:
     """Measure the reviewed recipe on one disposable GPU pod; idempotent via receipt + pod state."""
     validate_recipe(recipe, job_dir)
     current = measurement_pins_factory() if measurement_pins_factory is not None else measurement_dispatch.pins()
@@ -912,7 +915,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
             try:
                 state = _lifecycle(provider, job, recipe, staging_path, output, state,
                                    gpu_choice, ttl, remaining, alert, save_state, benchmarks, quote_budget,
-                                   current['profile']['inputs']['jevbench']['count'])
+                                   current['profile']['inputs']['jevbench']['count'], pre_upload_gate)
                 break
             except PodCapacityError:
                 continue  # try the next GPU candidate; capacity only if every attempt was capacity
