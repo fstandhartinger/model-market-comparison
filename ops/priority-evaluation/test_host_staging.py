@@ -40,8 +40,10 @@ class HostFake(_FakeProvider):
                    'otherfile': 'x @ file:///etc/passwd\n',
                    'kernelwheel': 'torch==2.8.0\ncausal-conv1d @ file:///tmp/kernel-wheels/causal_conv1d-1.7.0-cp312-cp312-linux_x86_64.whl\n'
                    }.get(self.failure, 'torch==2.8.0\n')
+        elif command[:2] == ['docker', 'run'] and '-I' in command and '-S' in command:
+            out = 'BASE /usr/lib/python3/site-packages\n' + ('HIT /usr/lib/python3/site-packages/aplomb_evil\n' if self.failure == 'origin' else '')
         elif command[:2] == ['docker', 'run'] and '-I' in command:
-            out = '/usr/lib/python3/site-packages/aplomb_evil\n' if self.failure == 'origin' else ''
+            raise AssertionError('the origin scan must run with -S (no site/.pth/sitecustomize execution)')
         elif command[:3] in (['docker', 'inspect', 'jev-pod-run'], ['docker', 'image', 'inspect']) and command[-1] == '{{json .Config.Env}}':
             env = ['PATH=/usr/bin', 'HF_TOKEN=', 'OPENAI_API_KEY=', 'HF_HUB_OFFLINE=1']
             if self.failure == 'envsecret':
@@ -49,8 +51,8 @@ class HostFake(_FakeProvider):
             if self.failure == 'envtoken':
                 env[1] = 'HF_TOKEN=hf_leak'
             out = json.dumps(env)
-        elif command[0] == 'stat' and self.failure == 'bigoutput' and command[-1].startswith('/work/out/'):
-            out = str(10 ** 12) + '\n'
+        elif command[0] == 'stat' and command[2] == '%F:%s' and command[-1].startswith('/work/out/'):
+            out = {'bigoutput': 'regular file:%d\n' % 10 ** 12, 'symout': 'symbolic link:40\n'}.get(self.failure, 'regular file:8\n')
         elif command[:3] == ['docker', 'inspect', 'jev-pod-run'] and command[-1] == '{{json .HostConfig}}':
             out = json.dumps({'NetworkMode': 'none', 'Binds': ['/models:/models:ro'], 'Privileged': False, 'CapAdd': None,
                               'ReadonlyRootfs': False, 'Devices': [], 'PidMode': '', 'IpcMode': 'private', 'UsernsMode': '', 'Env': ['SECRET=1']})
@@ -334,7 +336,7 @@ class HostStagingTests(unittest.TestCase):
     def test_followup_evidence_origin_listing_env_names_and_output_limits(self):
         receipt = self.run_recipe(HostFake())
         ev = receipt['host_staging']
-        self.assertEqual(ev['module_origin_listing_sha256'], hashlib.sha256(b'').hexdigest())
+        self.assertEqual(ev['module_origin_listing_sha256'], hashlib.sha256(b'BASE /usr/lib/python3/site-packages\n').hexdigest())
         self.assertEqual(ev['run_container']['env_names'], ['HF_HUB_OFFLINE', 'HF_TOKEN', 'OPENAI_API_KEY', 'PATH'])
         self.assertNotIn('hf_leak', json.dumps(receipt))
         self.assertEqual(ev['image_env_names'], ['HF_HUB_OFFLINE', 'HF_TOKEN', 'OPENAI_API_KEY', 'PATH'])
@@ -343,7 +345,8 @@ class HostStagingTests(unittest.TestCase):
         for failure, reason, dispatched in [('origin', 'image_contains_customer_package', False),
                                             ('envsecret', 'run_container_env_secret_name', False),
                                             ('envtoken', 'run_container_env_secret_name', False),
-                                            ('bigoutput', 'host_output_too_large', True)]:
+                                            ('bigoutput', 'host_output_too_large', True),
+                                            ('symout', 'host_output_not_regular', True)]:
             fake = HostFake(failure)
             # After sealed dispatch a failure is a reconciliation hold (partial output is never resumed or rerun).
             error, pattern = (md.OperationalHold, 'partial_measurement_requires_reconciliation') if dispatched else (pr.PodRunError, reason)
@@ -356,15 +359,24 @@ class HostStagingTests(unittest.TestCase):
         with mock.patch.object(pr, 'HOST_MAX_LINE_BYTES', 5), self.assertRaisesRegex(md.OperationalHold, 'partial_measurement_requires_reconciliation'):
             self.lifecycle(HostFake())
 
-    def test_origin_snippet_lists_only_customer_named_entries(self):
+    def test_origin_snippet_finds_names_and_pth_paths_without_executing_anything(self):
         import subprocess as sp, tempfile, os as _os
-        d = tempfile.mkdtemp()
-        _os.makedirs(_os.path.join(d, 'pkg', 'aplomb')); open(_os.path.join(d, 'Run_Aplomb.py'), 'w').write('')
-        r = sp.run(['python3', '-I', '-c', 'import sys;sys.path.insert(0, %r)\n' % d + pr.ORIGIN_SNIPPET], capture_output=True, text=True)
+        d = tempfile.mkdtemp(); marker = _os.path.join(d, 'EXECUTED')
+        _os.makedirs(_os.path.join(d, 'site', 'extra', 'aplomb'))
+        open(_os.path.join(d, 'site', 'Run_Aplomb.py'), 'w').write('')
+        open(_os.path.join(d, 'site', 'evil.pth'), 'w').write('import os; open(%r, "w").write("x")\n%s\n' % (marker, _os.path.join(d, 'site', 'extra')))
+        open(_os.path.join(d, 'site', 'sitecustomize.py'), 'w').write('open(%r, "w").write("x")\n' % marker)
+        code = 'import sys;sys.path.insert(0, %r)\n' % _os.path.join(d, 'site') + pr.ORIGIN_SNIPPET
+        r = sp.run(['python3', '-I', '-S', '-c', code], capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stderr)
-        self.assertTrue(r.stdout.strip().splitlines()[0].endswith('Run_Aplomb.py') or 'aplomb' in r.stdout.lower())
-        clean = sp.run(['python3', '-I', '-c', pr.ORIGIN_SNIPPET], capture_output=True, text=True)
-        self.assertEqual(clean.stdout.strip(), '')
+        hits = [l for l in r.stdout.splitlines() if l.startswith('HIT ')]
+        self.assertTrue(any(h.endswith('Run_Aplomb.py') for h in hits), r.stdout)
+        self.assertTrue(any(h.endswith(_os.path.join('extra', 'aplomb')) for h in hits), r.stdout)  # reached via the .pth path
+        self.assertFalse(_os.path.exists(marker), 'scan executed image code')
+        clean = sp.run(['python3', '-I', '-S', '-c', pr.ORIGIN_SNIPPET], capture_output=True, text=True)
+        self.assertEqual(clean.returncode, 0, clean.stderr)
+        self.assertFalse([l for l in clean.stdout.splitlines() if l.startswith('HIT ')], clean.stdout)
+        self.assertTrue(any(l.startswith('BASE ') for l in clean.stdout.splitlines()))
 
     def test_ttl_too_short_holds_before_any_provider_call(self):
         fake = HostFake()

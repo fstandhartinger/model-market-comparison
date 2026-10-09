@@ -68,16 +68,31 @@ HOST_MAX_RECEIPT_BYTES = 4 << 20
 HOST_MAX_LINE_BYTES = 4 << 20
 SECRETISH_ENV_RE = re.compile(r"(?i)(token|secret|passw|credential|apikey|api_key|auth|private)")
 ORIGIN_SNIPPET = (
-    "import os,sys\n"
-    "seen=[]\n"
-    "for base in sorted({p for p in sys.path if p and os.path.isdir(p) and os.path.realpath(p) not in ('/code','/')}):\n"
-    "    for root,dirs,files in os.walk(base):\n"
-    "        depth=root[len(base):].count(os.sep)\n"
-    "        if depth>=4: dirs[:]=[]\n"
+    "import os,sys,site\n"
+    "bases=[p for p in sys.path if p]\n"
+    "try:\n"
+    "    bases+=list(site.getsitepackages())\n"
+    "except Exception:\n"
+    "    pass\n"
+    "bases+=[p for p in os.environ.get('PYTHONPATH','').split(':') if p]\n"
+    "out=[];done=set();queue=list(bases)\n"
+    "while queue:\n"
+    "    base=queue.pop(0)\n"
+    "    real=os.path.realpath(base)\n"
+    "    if real in done or real in ('/code','/') or not os.path.isdir(real): continue\n"
+    "    done.add(real);out.append('BASE '+real)\n"
+    "    for root,dirs,files in os.walk(real,onerror=lambda e:(_ for _ in ()).throw(e)):\n"
+    "        if root[len(real):].count(os.sep)>=4: dirs[:]=[]\n"
     "        for n in dirs+files:\n"
     "            low=n.lower()\n"
-    "            if low.startswith('aplomb') or low.startswith('run_aplomb'): seen.append(os.path.join(root,n))\n"
-    "print('\\n'.join(sorted(set(seen))))\n")
+    "            if low.startswith('aplomb') or low.startswith('run_aplomb'): out.append('HIT '+os.path.join(root,n))\n"
+    "            if n.endswith('.pth') and root==real:\n"
+    "                for line in open(os.path.join(root,n),errors='replace').read().splitlines():\n"
+    "                    t=line.strip()\n"
+    "                    if not t or t.startswith('#'): continue\n"
+    "                    if 'aplomb' in t.lower(): out.append('HIT pth:'+n+':'+t[:200])\n"
+    "                    elif not t.startswith('import') and os.path.isdir(t): queue.append(t)\n"
+    "print('\\n'.join(sorted(set(out))))\n")
 
 
 def _utcnow():
@@ -88,7 +103,7 @@ def _attempt_rate(recipe):
     """USD/h used for the per-attempt TTL and upper-bound charge.
 
     Host-staged native recipes pin the exact hourly price (validated 0 < price <= MAX_HOURLY_USD, compared with the live
-    pod price right after creation, hold on any difference), so the original caps (<= USD 5/h, USD 20/order, 3 h TTL,
+    pod price right after creation, hold if the live price exceeds the pin), so the original caps (<= USD 5/h, USD 20/order, 3 h TTL,
     2 creations) are accounted at that pinned price. All other routes keep the USD 5/h ceiling."""
     if "host_staging" in recipe and type(recipe.get("hourly_usd")) in (int, float) and 0 < recipe["hourly_usd"] <= MAX_HOURLY_USD:
         return float(recipe["hourly_usd"])
@@ -368,8 +383,8 @@ def _build_host_image(provider, pod_id, recipe, job_dir, image_context_provider,
     # Host-side evidence that the image carries no copy of the customer package outside /code (the customer
     # process is never started here: plain `python -I -c` over the interpreter's search path only).
     listing = _exec(provider, pod_id, ["docker", "run", "--rm", "--network", "none", "--entrypoint", "python",
-                                       build["tag"], "-I", "-c", ORIGIN_SNIPPET]).stdout
-    if listing.strip():
+                                       build["tag"], "-I", "-S", "-c", ORIGIN_SNIPPET]).stdout
+    if not listing.strip() or any(line.startswith("HIT ") for line in listing.splitlines()):
         raise PodRunError("image_contains_customer_package")
     # Image-level environment is checked BEFORE any sealed dispatch (the run container adds only HOME and two empty keys).
     image_env_names = _env_names_checked(_exec(provider, pod_id, ["docker", "image", "inspect", build["tag"],
@@ -385,6 +400,8 @@ def _env_names_checked(raw):
     """Names of an env list; refuse secret-looking names (HF_TOKEN / OPENAI_API_KEY only when empty)."""
     try:
         env = json.loads(raw)
+        if env is None:
+            env = []
         if not isinstance(env, list) or not all(isinstance(item, str) and "=" in item for item in env):
             raise ValueError
     except (ValueError, TypeError):
@@ -399,8 +416,11 @@ def _env_names_checked(raw):
 
 
 def _bounded_remote_size(provider, pod_id, remote, limit):
-    out = _exec(provider, pod_id, ["stat", "-c", "%s", remote]).stdout.strip()
-    if not out.isdigit() or int(out) > limit:
+    out = _exec(provider, pod_id, ["stat", "-c", "%F:%s", remote]).stdout.strip()
+    kind, _, size = out.partition(":")
+    if kind != "regular file" and kind != "regular empty file":
+        raise PodRunError("host_output_not_regular")
+    if not size.isdigit() or int(size) > limit:
         raise PodRunError("host_output_too_large")
 
 
@@ -1021,7 +1041,7 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
             save_state()
         wait = _exec(provider, pod_id, ["docker", "wait", "jev-pod-run"], timeout=3600)
         rc = wait.stdout.strip().splitlines()[-1] if wait.stdout.strip() else ""
-        logs = _exec(provider, pod_id, ["docker", "logs", "jev-pod-run"], timeout=120)
+        logs = _exec(provider, pod_id, ["docker", "logs", "--tail", "20000", "jev-pod-run"], timeout=120)
         (output / "pod-driver.log").write_bytes((logs.stdout + logs.stderr).encode(errors="replace"))
         if rc != "0":
             raise PodRunError(f"pod driver exited {rc or 'unknown'}")
