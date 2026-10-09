@@ -37,6 +37,7 @@ from pathlib import Path
 import measurement_dispatch
 import execution_source
 import native_admission
+from contextlib import nullcontext
 import pod_capacity
 import sys
 
@@ -497,6 +498,10 @@ def build_staging(recipe, pins, code_tar: bytes, benchmarks=('jevbench',)) -> di
     if 'jevbench' in benchmarks:
         items = measurement_dispatch.checked(profile["inputs"]["jevbench"]["items"])
         staging["work/inputs/items.jsonl"] = items.read_bytes()
+        if profile.get("method") == "jevbench-v16":
+            if profile["inputs"]["jevbench"]["count"] != 1500:
+                raise measurement_dispatch.OperationalHold("v16_input_count_invalid")
+            staging["work/input/text-config.json"] = json.dumps({"method": "jevbench-v16", "count": 1500}).encode()
     staging["work/code.tar"] = code_tar
     if recipe['kind'] == 'aplomb_native' or 'imagejevbench' in benchmarks:
         if set(benchmarks) - {'jevbench', 'imagejevbench'} or len(set(benchmarks)) != len(benchmarks):
@@ -557,7 +562,7 @@ def _teardown(provider, job, pod_id, reservation, alert):
 
 
 def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, ttl, budget,
-               alert, save_state, benchmarks=('jevbench',), quote_budget=None):
+               alert, save_state, benchmarks=('jevbench',), quote_budget=None, expected_rows=EXPECTED_ROWS, pre_upload_gate=None, allocation_gate=None):
     """One pod attempt; raises PodRunError on any step failure (teardown still runs)."""
     pod_id = None
     reservation = None
@@ -566,7 +571,10 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         attempts = state.get('creation_attempts', 0)
         try:
             allocations = pod_capacity.allocation_count(state, PODS_DIR)
-            if allocations >= pod_capacity.MAX_ALLOCATIONS:
+            limit = allocation_gate('check', state) if allocation_gate is not None else pod_capacity.MAX_ALLOCATIONS
+            if type(limit) is not int or not 1 <= limit <= 3:
+                raise PodRunError('invalid trusted allocation limit')
+            if allocations >= limit:
                 raise PodRunError('original per-order fresh-pod retry budget exhausted')
             recipe_binding = hashlib.sha256(json.dumps(
                 {'recipe': recipe, 'benchmarks': list(benchmarks)}, sort_keys=True).encode()).hexdigest()
@@ -593,6 +601,8 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 save_state()
         except pod_capacity.CapacityEvidenceError as exc:
             raise measurement_dispatch.OperationalHold('gpu_pod_cleanup_uncertain') from exc
+        if allocation_gate is not None:
+            allocation_gate('before_reserve', state)
         reservation = provider.reserve(job, "pod-measure", MAX_HOURLY_USD, budget, ttl)
         state['creation_attempts'] = attempts + 1
         state['attempt_started_at'] = datetime.now(timezone.utc).isoformat()
@@ -607,6 +617,18 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         state['measurement_completed'] = False
         save_state()
         try:
+            if allocation_gate is not None:
+                try:
+                    allocation_gate('before_create', state)
+                except Exception:
+                    # No create call happened. Release only our reservation; keep
+                    # monotonic attempts and full conservative charge/one-use claim.
+                    provider.release(job, None, reservation)
+                    reservation = None
+                    state['cleanup_uncertain'] = False
+                    state['torn_down_at'] = datetime.now(timezone.utc).isoformat()
+                    save_state()
+                    raise
             pod = provider.create(gpu_choice[0], ttl, budget)
         except PodCapacityError as exc:
             proof = getattr(exc, 'proof', None)
@@ -668,9 +690,11 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                     raise PodRunError(f"weight file {entry['dir']}/{relative} sha256 mismatch: "
                                       f"{check.stdout.strip()[-200:]}")
         _exec(provider, pod_id, ["mkdir", "-p", "/work", "/work/out", "/work/code"])
-        state['input_dispatched'] = True
-        save_state()  # external exposure begins before upload, not at container launch
-        provider.scp_to(pod_id, str(staging_path), "/work/stage.tar")
+        # Optional trusted context holds the canonical custody lock across upload.
+        with pre_upload_gate() if pre_upload_gate is not None else nullcontext():
+            state['input_dispatched'] = True
+            save_state()  # dispatch is durable before the first sealed transfer
+            provider.scp_to(pod_id, str(staging_path), "/work/stage.tar")
         _exec(provider, pod_id, ["tar", "-xf", "/work/stage.tar", "-C", "/"])
         _exec(provider, pod_id, ["tar", "-xf", "/work/code.tar", "-C", "/work/code"])
         state['execution_started'] = True
@@ -718,8 +742,8 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         # the canonical receipt.json path.
         provider.scp_from(pod_id, "/work/out/receipt.json", str(output / "pod-receipt.json"))
         rows = (output / "raw.jsonl").read_bytes().count(b"\n")
-        if rows != EXPECTED_ROWS:
-            raise PodRunError(f"raw.jsonl has {rows} rows, expected {EXPECTED_ROWS}")
+        if rows != expected_rows:
+            raise PodRunError(f"raw.jsonl has {rows} rows, expected {expected_rows}")
         state['measurement_completed'] = True
         save_state()
         return state
@@ -785,10 +809,10 @@ def default_alert(text: str) -> None:
 
 
 def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict, max_usd: float,
-        *, provider: Provider | None = None, alert=None, benchmarks=('jevbench',), native_source_pins=None) -> dict:
+        *, provider: Provider | None = None, alert=None, benchmarks=('jevbench',), native_source_pins=None, measurement_pins_factory=None, pre_upload_gate=None, allocation_gate=None) -> dict:
     """Measure the reviewed recipe on one disposable GPU pod; idempotent via receipt + pod state."""
     validate_recipe(recipe, job_dir)
-    current = measurement_dispatch.pins()
+    current = measurement_pins_factory() if measurement_pins_factory is not None else measurement_dispatch.pins()
     if current != expected_pins:
         raise measurement_dispatch.OperationalHold("measurement_pins_differ_from_review")
     if not benchmarks or len(set(benchmarks)) != len(benchmarks) or set(benchmarks) - {'jevbench', 'imagejevbench'}:
@@ -907,7 +931,8 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
             ttl = min(TTL_CAP_HOURS, remaining / MAX_HOURLY_USD)
             try:
                 state = _lifecycle(provider, job, recipe, staging_path, output, state,
-                                   gpu_choice, ttl, remaining, alert, save_state, benchmarks, quote_budget)
+                                   gpu_choice, ttl, remaining, alert, save_state, benchmarks, quote_budget,
+                                   current['profile']['inputs']['jevbench']['count'], pre_upload_gate, allocation_gate)
                 break
             except PodCapacityError:
                 continue  # try the next GPU candidate; capacity only if every attempt was capacity
@@ -942,7 +967,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
                 'charged_or_reserved_usd': receipt['charged_or_reserved_usd'] if index == 0 else 0.0}
             receipt['benchmarks'][name].pop('benchmarks', None)
     else:
-        receipt.update(rows=EXPECTED_ROWS, raw_sha256=hashlib.sha256((output / 'raw.jsonl').read_bytes()).hexdigest())
+        receipt.update(rows=current['profile']['inputs']['jevbench']['count'], raw_sha256=hashlib.sha256((output / 'raw.jsonl').read_bytes()).hexdigest())
     receipt_file.write_text(json.dumps(receipt, indent=2) + "\n")
     state.update(ended_at=ended.isoformat(), cost_estimate_usd=cost)
     save_state()
