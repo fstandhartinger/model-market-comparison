@@ -1,5 +1,7 @@
 """Synthetic first-party subprocess stubs only; never execute a model/container."""
-import copy,hashlib,json,unittest
+import copy,hashlib,json,tempfile,unittest
+from pathlib import Path
+import ryotide_runtime_preflight as P
 from types import SimpleNamespace
 from unittest.mock import Mock,patch
 import ryotide_runtime_supplement as S
@@ -57,4 +59,43 @@ class Tests(unittest.TestCase):
   r=self.report()
   with self.assertRaises(ValueError):self.run_proof(r,{'synthetic':'x'*(2*1024*1024)})
   d=r['native_proof_diagnostics'];self.assertFalse(d['parsed_report']['retained']);self.assertLess(len(json.dumps(d).encode()),1024*1024);self.assertNotIn('native_proof_accepted',r)
+ def test_escaped_byte_limit_control_and_nonbmp(self):
+  for text in ('\x00\x1b\U0001f9ea'*50000,'é'*100000):
+   out=S.diagnostic_text(text)
+   self.assertTrue(out['truncated']);self.assertLessEqual(len(json.dumps(out['text']).encode()),S.PROOF_TEXT_LIMIT)
+ def test_redacts_basic_bare_hf_and_quoted_spaces_not_empty_flags(self):
+  text='Authorization: Basic c3ludGhldGljOnNlY3JldA== HF_TOKEN="synthetic secret with spaces" hf_syntheticsecret123 OPENAI_API_KEY= -e HF_TOKEN= -v /safe'
+  result=S.diagnostic_text(text)['text']
+  for secret in ('c3ludGhldGljOnNlY3JldA==','synthetic secret','hf_syntheticsecret123'):self.assertNotIn(secret,result)
+  self.assertIn('OPENAI_API_KEY= -e HF_TOKEN= -v /safe',result)
+ def whole_receipt(self,success):
+  payload='\x00\x1b\U0001f9eaé'*50000
+  report=self.report()
+  for key in S.RETAINED_TEXT_FIELDS:report[key]=payload
+  for key in S.RETAINED_JSON_FIELDS:report[key]={'large':[payload]}
+  reply=self.valid();reply['diagnostic_extra']=payload
+  if not success:reply['cuda_kernel_events']=0
+  code=b'PUBLIC_SYNTHETIC_ARCHIVE';digest=hashlib.sha256(code).hexdigest()
+  def execute(provider,pod,command,timeout=600):
+   if command[0]=='sha256sum':out=(digest if command[-1].endswith('code.tar')else'proof-pin')+' '+payload
+   elif command[0]=='docker':out=json.dumps(reply)
+   else:out=''
+   return SimpleNamespace(stdout=out,stderr=payload,returncode=0)
+  with patch.object(S,'CODE_SHA',digest),patch.object(S,'effective_image',return_value='sha256:'+'a'*64),patch.object(R,'_exec',side_effect=execute):
+   if success:S.prove(Mock(),'synthetic-pod','synthetic-job',{},report,code,Mock())
+   else:
+    with self.assertRaisesRegex(ValueError,'native proof failed'):S.prove(Mock(),'synthetic-pod','synthetic-job',{},report,code,Mock())
+  with tempfile.TemporaryDirectory()as directory:
+   dest=Path(directory)/'native.json';P.retain(dest,report);raw=dest.read_bytes()
+   self.assertLess(len(raw),1024*1024);self.assertEqual(json.loads(raw),report)
+  diag=report['native_proof_diagnostics']
+  self.assertEqual(set(diag['observations']),{'code_checksum','proof_checksum','native_process'})
+  for observation in diag['observations'].values():
+   self.assertEqual(observation['exit_code'],0)
+   for key in ('stdout','stderr'):self.assertTrue(observation[key]['truncated'])
+  self.assertFalse(diag['parsed_report']['retained'])
+  if success:self.assertTrue(report['native_proof_accepted']);self.assertFalse(report['native_proof']['retained'])
+  else:self.assertNotIn('native_proof_accepted',report)
+ def test_whole_actual_retained_failure_receipt_escaped_all_stages(self):self.whole_receipt(False)
+ def test_whole_actual_retained_success_receipt_escaped_all_stages(self):self.whole_receipt(True)
 if __name__=='__main__':unittest.main()
