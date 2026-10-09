@@ -1,0 +1,45 @@
+✔ KernelBench-CUDA parser scores only the site-valid cells and cross-checks the published ranked list (170.697134ms)
+✔ KernelBench-CUDA joins: reviewed labels only; unaudited, bug and suspect cells never score (10.039096ms)
+✔ CR-56.1: every tool has a closed JSON schema with caps; invalid and boundary inputs give structured errors (3.763187ms)
+✔ CR-56.2: results carry the published identities, values, units, basis and provenance — and null, never an estimate (42.565851ms)
+✔ WeirdML v3 parser reads prepared data, keeps the protocol and fails closed on schema, mode, tasks and synthetic rows (275.479397ms)
+✔ WeirdML v3 joins: reviewed names only, provider notes never become a setting (18.255958ms)
+✔ MathArena August editions: 57/56 problems, seven rows, release-date flag kept, joins reviewed (211.283794ms)
+✔ worker catalog: one transport failure is retried, the run copy is reused, a 4xx is final (25518.995646ms)
+✔ large worker export survives immediate process exit without a truncated pipe (128.669604ms)
+✔ CR-66.3: a free router worker qualifies by the AA score of the variant it runs, and only while healthy (2.282496ms)
+✔ CR-66.3 + CR-73.4: the free route is spent on the critic; the producer stays paid while one is viable; unhealthy free → paid pair (2.414734ms)
+✔ CR-66.3 + CR-73.4: the daily run report pairs a paid producer with the free different-family critic (0.621608ms)
+✔ CR-67.3: the critic fallback re-offers excluded paid models but never a free route that already failed in this run (0.50903ms)
+✔ vision critic sends actual local pixels with hashed receipts, without weakening model or payload gates (92.863793ms)
+✔ AA fallback requires exact version and matching organization (3.241928ms)
+✔ explicit maximum-effort mapping cannot hide a weak or missing sibling (1.323754ms)
+✔ missing or malformed prices never become free eligibility (0.266995ms)
+✔ unscored transport smoke has a price ceiling and cannot select automatically (0.377313ms)
+✔ critic excludes every producer family including aliases and explicit model pins (12.365512ms)
+✔ daily price ceiling is rechecked against live catalog even for explicit pins (0.53063ms)
+✔ a failed worker is excluded while the next cheapest still needs AA qualification, price cap and a different family (0.706976ms)
+✔ scheduled selection filters the whitelist before choosing the cheapest fallback (0.289025ms)
+✔ critic retry reuses an excluded family only when no other scheduled candidate exists (1.251186ms)
+✔ worker CLI preserves output on provider failures and accepts a large embedded packet (2344.109691ms)
+✔ transport smoke cannot accept arbitrary data work or a reference file (108.742877ms)
+✔ zip members are captured and looked up as their own sources (3.544892ms)
+✔ FrontierSWE relay points at the archive member, and the pinned capture is the same bytes (35.590675ms)
+ℹ tests 2288
+ℹ suites 0
+ℹ pass 2284
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 71809.272397
+✖ failing tests:
+✖ every internal link on the benchmark pages opens a page or an element that exists (876.166325ms)
+  Error: Production server exited:    ▲ Next.js 15.5.25
+  [Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id]
+✖ ImageJevBench production page keeps the shared section order, full roster, pricing and site menu (878.262035ms)
+  Error: Production server exited:    ▲ Next.js 15.5.25
+  [Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id]
+✖ POST /api/mcp speaks MCP over Streamable HTTP and serves the /api/jevbench/latest data (1073.554146ms)
+  Error: Production server exited:    ▲ Next.js 15.5.25
+  [Error: Could not find a production build in the '.next' directory. Try building your app with 'next build' before starting the production server. https://nextjs.org/docs/messages/production-start-no-build-id]

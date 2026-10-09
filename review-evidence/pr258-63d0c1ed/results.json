@@ -1,0 +1,1106 @@
+[
+ {
+  "scenario": "decisio-vs-jev",
+  "viewport": 390,
+  "url": "http://localhost:3917/jev-models?compare=decisio-gemma-4-31b-v080%2Cjev-1.13.0",
+  "pairA": "decisio-gemma-4-31b-v080",
+  "pairB": "jev-1.13.0",
+  "overflowX": -10,
+  "figs": {
+   "cat-usecases": {
+    "svg": true,
+    "domain": "signed",
+    "zeroRing": true,
+    "ringLabels": [
+     "\u2212100",
+     "0",
+     "100"
+    ],
+    "series": [
+     {
+      "k": "a",
+      "shape": "points",
+      "gaps": "11",
+      "markers": 9
+     },
+     {
+      "k": "b",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 20
+     }
+    ],
+    "values": [
+     "a:model_routing=84.4",
+     "b:model_routing=73.0",
+     "a:legal_compliance=81.3",
+     "b:legal_compliance=68.6",
+     "a:customer_support=61.5",
+     "b:customer_support=49.6",
+     "a:other=37.0",
+     "b:other=40.1",
+     "a:ecommerce_marketplaces=64.7",
+     "b:ecommerce_marketplaces=40.5",
+     "a:insurance_claims=76.9",
+     "b:insurance_claims=46.1",
+     "a:risk_assessment=67.8",
+     "b:risk_assessment=32.8",
+     "a:financial_crime=50.1",
+     "b:financial_crime=35.8",
+     "a:feature_extraction=n=19",
+     "b:feature_extraction=28.3",
+     "a:lead_generation=n=17",
+     "b:lead_generation=49.2",
+     "a:recruiting=n/a",
+     "b:recruiting=0.0",
+     "a:knowledge_graphs=n=18",
+     "b:knowledge_graphs=28.8",
+     "a:llm_guardrails=n=17",
+     "b:llm_guardrails=68.0",
+     "a:moderation_trust_safety=62.0",
+     "b:moderation_trust_safety=51.6",
+     "a:code_linting=n=16",
+     "b:code_linting=29.1",
+     "a:search_retrieval=n=17",
+     "b:search_retrieval=80.9",
+     "a:scientific_discovery=n/a",
+     "b:scientific_discovery=21.2",
+     "a:advertising=n/a",
+     "b:advertising=16.4",
+     "a:gaming=n/a",
+     "b:gaming=5.1",
+     "a:demand_forecasting=n=16",
+     "b:demand_forecasting=0.0"
+    ],
+    "scaleCaption": "Linear signed scale: \u2212100 at the centre, 0 on the bold middle ring, 100 at the rim.",
+    "zeroNote": "A point on the bold 0 ring printed 0.0 is a measured value, not a gap: these published cells clip below-chance results to 0, so 0 means at or below chance. Their score markers cannot fall inside that ring.",
+    "figW": 322,
+    "svgW": 322,
+    "tapPressed": "true",
+    "focusPressed": "true",
+    "tooltipText": "\u2212100\n0\n100\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n\nDemand forecasting\n\ndecisio v0.8.0 on gemma-4-31B-it\nn=16 \u2014 too few completed items to plot\nJev 1",
+    "afterEscapePressed": "false"
+   },
+   "cat-topics": {
+    "svg": true,
+    "domain": "signed",
+    "zeroRing": true,
+    "ringLabels": [
+     "\u2212100",
+     "0",
+     "100"
+    ],
+    "series": [
+     {
+      "k": "a",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 7
+     },
+     {
+      "k": "b",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 7
+     }
+    ],
+    "values": [
+     "a:law_policy=79.0",
+     "b:law_policy=49.4",
+     "a:coding=81.7",
+     "b:coding=64.3",
+     "a:math=43.5",
+     "b:math=10.4",
+     "a:finance_commerce=82.7",
+     "b:finance_commerce=40.9",
+     "a:support_ops=42.8",
+     "b:support_ops=48.8",
+     "a:everyday_language=64.1",
+     "b:everyday_language=77.5",
+     "a:safety_security=75.5",
+     "b:safety_security=52.2"
+    ],
+    "scaleCaption": "Linear signed scale: \u2212100 at the centre, 0 on the bold middle ring, 100 at the rim.",
+    "zeroNote": null,
+    "figW": 322,
+    "svgW": 322,
+    "tapPressed": "true",
+    "focusPressed": "true",
+    "tooltipText": "\u2212100\n0\n100\nRules, policy& law79.0 \u00b7 49.4\nCoding &software81.7 \u00b7 64.3\nMath &numbers43.5 \u00b7 10.4\nFinance &commerce82.7 \u00b7 40.9\nSupport &operations42.8 \u00b7 48.8\nEveryd",
+    "afterEscapePressed": "false"
+   },
+   "types": {
+    "svg": true,
+    "domain": "signed",
+    "zeroRing": true,
+    "ringLabels": [
+     "\u2212100",
+     "0",
+     "100"
+    ],
+    "series": [
+     {
+      "k": "a",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 6
+     },
+     {
+      "k": "b",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 6
+     }
+    ],
+    "values": [
+     "a:open|choice=70.8",
+     "b:open|choice=79.0",
+     "a:sealed|choice=83.1",
+     "b:sealed|choice=75.8",
+     "a:open|noul=73.1",
+     "b:open|noul=54.5",
+     "a:sealed|noul=76.0",
+     "b:sealed|noul=46.1",
+     "a:open|score=58.8",
+     "b:open|score=63.3",
+     "a:sealed|score=60.6",
+     "b:sealed|score=63.0"
+    ],
+    "scaleCaption": "Linear signed scale: \u2212100 at the centre, 0 on the bold middle ring, 100 at the rim.",
+    "zeroNote": null,
+    "figW": 322,
+    "svgW": 322,
+    "tapPressed": "true",
+    "focusPressed": "true",
+    "tooltipText": "\u2212100\n0\n100\nChoice \u00b7 open70.8 \u00b7 79.0\nChoice \u00b7sealed83.1 \u00b7 75.8\nNoul \u00b7 open73.1 \u00b7 54.5\nNoul \u00b7 sealed76.0 \u00b7 46.1\nScore \u00b7 open58.8 \u00b7 63.3\nScore \u00b7sealed60.6 \u00b7 63.0\n\n",
+    "afterEscapePressed": "false"
+   }
+  },
+  "referenceButton": true,
+  "compareSections": [
+   [
+    "decisio-gemma-4-31b-v080",
+    "jev-1.13.0"
+   ]
+  ]
+ },
+ {
+  "scenario": "mirror-vs-jev",
+  "viewport": 390,
+  "url": "http://localhost:3917/jev-models?compare=mirror%2Cjev-1.13.0",
+  "pairA": "mirror",
+  "pairB": "jev-1.13.0",
+  "overflowX": -10,
+  "figs": {
+   "types": {
+    "svg": true,
+    "domain": "signed",
+    "zeroRing": true,
+    "ringLabels": [
+     "\u2212100",
+     "0",
+     "100"
+    ],
+    "series": [
+     {
+      "k": "a",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 6
+     },
+     {
+      "k": "b",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 6
+     }
+    ],
+    "values": [
+     "a:open|choice=0.0",
+     "b:open|choice=79.0",
+     "a:sealed|choice=0.0",
+     "b:sealed|choice=75.8",
+     "a:open|noul=0.0",
+     "b:open|noul=54.5",
+     "a:sealed|noul=0.0",
+     "b:sealed|noul=46.1",
+     "a:open|score=0.0",
+     "b:open|score=63.3",
+     "a:sealed|score=0.0",
+     "b:sealed|score=63.0"
+    ],
+    "scaleCaption": "Linear signed scale: \u2212100 at the centre, 0 on the bold middle ring, 100 at the rim.",
+    "zeroNote": null,
+    "figW": 322,
+    "svgW": 322,
+    "tapPressed": "true",
+    "focusPressed": "true",
+    "tooltipText": "\u2212100\n0\n100\nChoice \u00b7 open0.0 \u00b7 79.0\nChoice \u00b7sealed0.0 \u00b7 75.8\nNoul \u00b7 open0.0 \u00b7 54.5\nNoul \u00b7 sealed0.0 \u00b7 46.1\nScore \u00b7 open0.0 \u00b7 63.3\nScore \u00b7sealed0.0 \u00b7 63.0\n\nScore ",
+    "afterEscapePressed": "false"
+   },
+   "tiers-open": {
+    "svg": true,
+    "domain": "signed",
+    "zeroRing": true,
+    "ringLabels": [
+     "\u2212100",
+     "0",
+     "100"
+    ],
+    "series": [
+     {
+      "k": "a",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 4
+     },
+     {
+      "k": "b",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 4
+     }
+    ],
+    "values": [
+     "a:easy=6.1",
+     "b:easy=93.9",
+     "a:standard=-13.4",
+     "b:standard=63.2",
+     "a:judge=-49.7",
+     "b:judge=67.7",
+     "a:hard=-39.4",
+     "b:hard=65.6"
+    ],
+    "scaleCaption": "Linear signed scale: \u2212100 at the centre, 0 on the bold middle ring, 100 at the rim.",
+    "zeroNote": null,
+    "figW": 322,
+    "svgW": 322,
+    "tapPressed": "true",
+    "focusPressed": "true",
+    "tooltipText": "\u2212100\n0\n100\nEasy6.1 \u00b7 93.9\nStandard-13.4 \u00b7 63.2\nJudge-49.7 \u00b7 67.7\nHard-39.4 \u00b7 65.6\n\nHard\n\nJev 1.13.0\n65.6\nMirror\n-39.4",
+    "afterEscapePressed": "false"
+   },
+   "cat-usecases": {
+    "svg": true,
+    "domain": "signed",
+    "zeroRing": true,
+    "ringLabels": [
+     "\u2212100",
+     "0",
+     "100"
+    ],
+    "series": [
+     {
+      "k": "a",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 20
+     },
+     {
+      "k": "b",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 20
+     }
+    ],
+    "values": [
+     "a:model_routing=0.0",
+     "b:model_routing=73.0",
+     "a:legal_compliance=0.0",
+     "b:legal_compliance=68.6",
+     "a:customer_support=0.0",
+     "b:customer_support=49.6",
+     "a:other=0.0",
+     "b:other=40.1",
+     "a:ecommerce_marketplaces=0.0",
+     "b:ecommerce_marketplaces=40.5",
+     "a:insurance_claims=0.0",
+     "b:insurance_claims=46.1",
+     "a:risk_assessment=0.0",
+     "b:risk_assessment=32.8",
+     "a:financial_crime=0.0",
+     "b:financial_crime=35.8",
+     "a:feature_extraction=0.0",
+     "b:feature_extraction=28.3",
+     "a:lead_generation=0.0",
+     "b:lead_generation=49.2",
+     "a:recruiting=0.0",
+     "b:recruiting=0.0",
+     "a:knowledge_graphs=0.0",
+     "b:knowledge_graphs=28.8",
+     "a:llm_guardrails=0.0",
+     "b:llm_guardrails=68.0",
+     "a:moderation_trust_safety=0.0",
+     "b:moderation_trust_safety=51.6",
+     "a:code_linting=0.0",
+     "b:code_linting=29.1",
+     "a:search_retrieval=0.0",
+     "b:search_retrieval=80.9",
+     "a:scientific_discovery=0.0",
+     "b:scientific_discovery=21.2",
+     "a:advertising=0.0",
+     "b:advertising=16.4",
+     "a:gaming=0.0",
+     "b:gaming=5.1",
+     "a:demand_forecasting=0.0",
+     "b:demand_forecasting=0.0"
+    ],
+    "scaleCaption": "Linear signed scale: \u2212100 at the centre, 0 on the bold middle ring, 100 at the rim.",
+    "zeroNote": "A point on the bold 0 ring printed 0.0 is a measured value, not a gap: these published cells clip below-chance results to 0, so 0 means at or below chance. Their score markers cannot fall inside that ring.",
+    "figW": 322,
+    "svgW": 322,
+    "tapPressed": "true",
+    "focusPressed": "true",
+    "tooltipText": "\u2212100\n0\n100\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n\nDemand forecasting\n\nMirror\n0.0\nJev 1.13.0\n0.0\n\nDemand forecasting: purchase intent, product inter",
+    "afterEscapePressed": "false"
+   }
+  },
+  "referenceButton": true,
+  "compareSections": [
+   [
+    "mirror",
+    "jev-1.13.0"
+   ]
+  ]
+ },
+ {
+  "scenario": "gte-vs-jev",
+  "viewport": 390,
+  "url": "http://localhost:3917/jev-models?compare=gte-reranker-modernbert-base%2Cjev-1.13.0",
+  "pairA": "gte-reranker-modernbert-base",
+  "pairB": "jev-1.13.0",
+  "overflowX": -10,
+  "figs": {
+   "types": {
+    "svg": true,
+    "domain": "signed",
+    "zeroRing": true,
+    "ringLabels": [
+     "\u2212100",
+     "0",
+     "100"
+    ],
+    "series": [
+     {
+      "k": "a",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 6
+     },
+     {
+      "k": "b",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 6
+     }
+    ],
+    "values": [
+     "a:open|choice=0.0",
+     "b:open|choice=79.0",
+     "a:sealed|choice=0.0",
+     "b:sealed|choice=75.8",
+     "a:open|noul=0.0",
+     "b:open|noul=54.5",
+     "a:sealed|noul=0.0",
+     "b:sealed|noul=46.1",
+     "a:open|score=0.0",
+     "b:open|score=63.3",
+     "a:sealed|score=0.0",
+     "b:sealed|score=63.0"
+    ],
+    "scaleCaption": "Linear signed scale: \u2212100 at the centre, 0 on the bold middle ring, 100 at the rim.",
+    "zeroNote": null,
+    "figW": 322,
+    "svgW": 322,
+    "tapPressed": "true",
+    "focusPressed": "true",
+    "tooltipText": "\u2212100\n0\n100\nChoice \u00b7 open0.0 \u00b7 79.0\nChoice \u00b7sealed0.0 \u00b7 75.8\nNoul \u00b7 open0.0 \u00b7 54.5\nNoul \u00b7 sealed0.0 \u00b7 46.1\nScore \u00b7 open0.0 \u00b7 63.3\nScore \u00b7sealed0.0 \u00b7 63.0\n\nScore ",
+    "afterEscapePressed": "false"
+   }
+  },
+  "referenceButton": true,
+  "compareSections": [
+   [
+    "gte-reranker-modernbert-base",
+    "jev-1.13.0"
+   ]
+  ]
+ },
+ {
+  "scenario": "omnijev-vs-wity",
+  "viewport": 390,
+  "url": "http://localhost:3917/image-jev-bench?compare=omnijev_9b_v4_tzcfly%2Cwity_1",
+  "pairA": "omnijev_9b_v4_tzcfly",
+  "pairB": "wity_1",
+  "overflowX": -10,
+  "figs": {
+   "cat-capabilities": {
+    "svg": true,
+    "domain": "signed",
+    "zeroRing": true,
+    "ringLabels": [
+     "\u2212100",
+     "0",
+     "100"
+    ],
+    "series": [
+     {
+      "k": "a",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 13
+     },
+     {
+      "k": "b",
+      "shape": "runs",
+      "gaps": "3",
+      "markers": 10
+     }
+    ],
+    "values": [
+     "a:ui_screenshots=92.0",
+     "b:ui_screenshots=100.0",
+     "a:small_text=-3.1",
+     "b:small_text=58.5",
+     "a:spatial=-31.7",
+     "b:spatial=24.1",
+     "a:diagram_reasoning=74.0",
+     "b:diagram_reasoning=76.2",
+     "a:receipt=88.9",
+     "b:receipt=90.9",
+     "a:photo_docs=21.0",
+     "b:photo_docs=57.8",
+     "a:trap_charts=29.3",
+     "b:trap_charts=75.7",
+     "a:multi_panel=20.0",
+     "b:multi_panel=81.9",
+     "a:counting=11.5",
+     "b:counting=58.1",
+     "a:dense_ui=13.5",
+     "b:dense_ui=n=23",
+     "a:agent_safety=31.1",
+     "b:agent_safety=n=26",
+     "a:chart_reasoning=84.4",
+     "b:chart_reasoning=100.0",
+     "a:multilingual=28.3",
+     "b:multilingual=n=14"
+    ],
+    "scaleCaption": "Linear signed scale: \u2212100 at the centre, 0 on the bold middle ring, 100 at the rim.",
+    "zeroNote": "A point on the bold 0 ring is a measured value at chance; a point inside it is below chance and prints its negative number.",
+    "figW": 322,
+    "svgW": 322,
+    "tapPressed": "true",
+    "focusPressed": "true",
+    "tooltipText": "\u2212100\n0\n100\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n\nMultilingual\n\nOmniJev-Qwen3.5-9B-v4\n28.3\nWity-1\nn=14 \u2014 too few completed items to plot\n\nMultilingual: images with non-",
+    "afterEscapePressed": "false"
+   },
+   "cat-usecases": {
+    "svg": true,
+    "domain": "signed",
+    "zeroRing": true,
+    "ringLabels": [
+     "\u2212100",
+     "0",
+     "100"
+    ],
+    "series": [
+     {
+      "k": "a",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 5
+     },
+     {
+      "k": "b",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 5
+     }
+    ],
+    "values": [
+     "a:document_check=31.8",
+     "b:document_check=69.3",
+     "a:diagram_planning=17.8",
+     "b:diagram_planning=49.7",
+     "a:chart_decision=37.4",
+     "b:chart_decision=84.9",
+     "a:ui_agent_action=64.7",
+     "b:ui_agent_action=92.4",
+     "a:count_inspect=23.4",
+     "b:count_inspect=64.5"
+    ],
+    "scaleCaption": "Linear signed scale: \u2212100 at the centre, 0 on the bold middle ring, 100 at the rim.",
+    "zeroNote": null,
+    "figW": 322,
+    "svgW": 322,
+    "tapPressed": "true",
+    "focusPressed": "true",
+    "tooltipText": "\u2212100\n0\n100\nDocumentchecks31.8 \u00b7 69.3\nDiagrams andplanning17.8 \u00b7 49.7\nChartdecisions37.4 \u00b7 84.9\nUI agentactions64.7 \u00b7 92.4\nCounting andinspection23.4 \u00b7 64.5\n\nCou",
+    "afterEscapePressed": "false"
+   }
+  },
+  "referenceButton": false,
+  "compareSections": [
+   [
+    "omnijev_9b_v4_tzcfly",
+    "wity_1"
+   ],
+   [
+    "wity_1",
+    "imajev_4b"
+   ]
+  ]
+ },
+ {
+  "scenario": "decisio-vs-jev",
+  "viewport": 1440,
+  "url": "http://localhost:3917/jev-models?compare=decisio-gemma-4-31b-v080%2Cjev-1.13.0",
+  "pairA": "decisio-gemma-4-31b-v080",
+  "pairB": "jev-1.13.0",
+  "overflowX": -10,
+  "figs": {
+   "cat-usecases": {
+    "svg": true,
+    "domain": "signed",
+    "zeroRing": true,
+    "ringLabels": [
+     "\u2212100",
+     "0",
+     "100"
+    ],
+    "series": [
+     {
+      "k": "a",
+      "shape": "points",
+      "gaps": "11",
+      "markers": 9
+     },
+     {
+      "k": "b",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 20
+     }
+    ],
+    "values": [
+     "a:model_routing=84.4",
+     "b:model_routing=73.0",
+     "a:legal_compliance=81.3",
+     "b:legal_compliance=68.6",
+     "a:customer_support=61.5",
+     "b:customer_support=49.6",
+     "a:other=37.0",
+     "b:other=40.1",
+     "a:ecommerce_marketplaces=64.7",
+     "b:ecommerce_marketplaces=40.5",
+     "a:insurance_claims=76.9",
+     "b:insurance_claims=46.1",
+     "a:risk_assessment=67.8",
+     "b:risk_assessment=32.8",
+     "a:financial_crime=50.1",
+     "b:financial_crime=35.8",
+     "a:feature_extraction=n=19",
+     "b:feature_extraction=28.3",
+     "a:lead_generation=n=17",
+     "b:lead_generation=49.2",
+     "a:recruiting=n/a",
+     "b:recruiting=0.0",
+     "a:knowledge_graphs=n=18",
+     "b:knowledge_graphs=28.8",
+     "a:llm_guardrails=n=17",
+     "b:llm_guardrails=68.0",
+     "a:moderation_trust_safety=62.0",
+     "b:moderation_trust_safety=51.6",
+     "a:code_linting=n=16",
+     "b:code_linting=29.1",
+     "a:search_retrieval=n=17",
+     "b:search_retrieval=80.9",
+     "a:scientific_discovery=n/a",
+     "b:scientific_discovery=21.2",
+     "a:advertising=n/a",
+     "b:advertising=16.4",
+     "a:gaming=n/a",
+     "b:gaming=5.1",
+     "a:demand_forecasting=n=16",
+     "b:demand_forecasting=0.0"
+    ],
+    "scaleCaption": "Linear signed scale: \u2212100 at the centre, 0 on the bold middle ring, 100 at the rim.",
+    "zeroNote": "A point on the bold 0 ring printed 0.0 is a measured value, not a gap: these published cells clip below-chance results to 0, so 0 means at or below chance. Their score markers cannot fall inside that ring.",
+    "figW": 655,
+    "svgW": 420,
+    "hoverPressed": "true",
+    "focusPressed": "true",
+    "tooltipText": "\u2212100\n0\n100\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n\nDemand forecasting\n\ndecisio v0.8.0 on gemma-4-31B-it\nn=16 \u2014 too few completed items to plot\nJev 1",
+    "afterEscapePressed": "false"
+   },
+   "cat-topics": {
+    "svg": true,
+    "domain": "signed",
+    "zeroRing": true,
+    "ringLabels": [
+     "\u2212100",
+     "0",
+     "100"
+    ],
+    "series": [
+     {
+      "k": "a",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 7
+     },
+     {
+      "k": "b",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 7
+     }
+    ],
+    "values": [
+     "a:law_policy=79.0",
+     "b:law_policy=49.4",
+     "a:coding=81.7",
+     "b:coding=64.3",
+     "a:math=43.5",
+     "b:math=10.4",
+     "a:finance_commerce=82.7",
+     "b:finance_commerce=40.9",
+     "a:support_ops=42.8",
+     "b:support_ops=48.8",
+     "a:everyday_language=64.1",
+     "b:everyday_language=77.5",
+     "a:safety_security=75.5",
+     "b:safety_security=52.2"
+    ],
+    "scaleCaption": "Linear signed scale: \u2212100 at the centre, 0 on the bold middle ring, 100 at the rim.",
+    "zeroNote": null,
+    "figW": 655,
+    "svgW": 655,
+    "hoverPressed": "true",
+    "focusPressed": "true",
+    "tooltipText": "\u2212100\n0\n100\nRules, policy& law79.0 \u00b7 49.4\nCoding &software81.7 \u00b7 64.3\nMath &numbers43.5 \u00b7 10.4\nFinance &commerce82.7 \u00b7 40.9\nSupport &operations42.8 \u00b7 48.8\nEveryd",
+    "afterEscapePressed": "false"
+   },
+   "types": {
+    "svg": true,
+    "domain": "signed",
+    "zeroRing": true,
+    "ringLabels": [
+     "\u2212100",
+     "0",
+     "100"
+    ],
+    "series": [
+     {
+      "k": "a",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 6
+     },
+     {
+      "k": "b",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 6
+     }
+    ],
+    "values": [
+     "a:open|choice=70.8",
+     "b:open|choice=79.0",
+     "a:sealed|choice=83.1",
+     "b:sealed|choice=75.8",
+     "a:open|noul=73.1",
+     "b:open|noul=54.5",
+     "a:sealed|noul=76.0",
+     "b:sealed|noul=46.1",
+     "a:open|score=58.8",
+     "b:open|score=63.3",
+     "a:sealed|score=60.6",
+     "b:sealed|score=63.0"
+    ],
+    "scaleCaption": "Linear signed scale: \u2212100 at the centre, 0 on the bold middle ring, 100 at the rim.",
+    "zeroNote": null,
+    "figW": 655,
+    "svgW": 655,
+    "hoverPressed": "true",
+    "focusPressed": "true",
+    "tooltipText": "\u2212100\n0\n100\nChoice \u00b7 open70.8 \u00b7 79.0\nChoice \u00b7sealed83.1 \u00b7 75.8\nNoul \u00b7 open73.1 \u00b7 54.5\nNoul \u00b7 sealed76.0 \u00b7 46.1\nScore \u00b7 open58.8 \u00b7 63.3\nScore \u00b7sealed60.6 \u00b7 63.0\n\n",
+    "afterEscapePressed": "false"
+   }
+  },
+  "referenceButton": true,
+  "compareSections": [
+   [
+    "decisio-gemma-4-31b-v080",
+    "jev-1.13.0"
+   ]
+  ]
+ },
+ {
+  "scenario": "mirror-vs-jev",
+  "viewport": 1440,
+  "url": "http://localhost:3917/jev-models?compare=mirror%2Cjev-1.13.0",
+  "pairA": "mirror",
+  "pairB": "jev-1.13.0",
+  "overflowX": -10,
+  "figs": {
+   "types": {
+    "svg": true,
+    "domain": "signed",
+    "zeroRing": true,
+    "ringLabels": [
+     "\u2212100",
+     "0",
+     "100"
+    ],
+    "series": [
+     {
+      "k": "a",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 6
+     },
+     {
+      "k": "b",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 6
+     }
+    ],
+    "values": [
+     "a:open|choice=0.0",
+     "b:open|choice=79.0",
+     "a:sealed|choice=0.0",
+     "b:sealed|choice=75.8",
+     "a:open|noul=0.0",
+     "b:open|noul=54.5",
+     "a:sealed|noul=0.0",
+     "b:sealed|noul=46.1",
+     "a:open|score=0.0",
+     "b:open|score=63.3",
+     "a:sealed|score=0.0",
+     "b:sealed|score=63.0"
+    ],
+    "scaleCaption": "Linear signed scale: \u2212100 at the centre, 0 on the bold middle ring, 100 at the rim.",
+    "zeroNote": null,
+    "figW": 655,
+    "svgW": 655,
+    "hoverPressed": "true",
+    "focusPressed": "true",
+    "tooltipText": "\u2212100\n0\n100\nChoice \u00b7 open0.0 \u00b7 79.0\nChoice \u00b7sealed0.0 \u00b7 75.8\nNoul \u00b7 open0.0 \u00b7 54.5\nNoul \u00b7 sealed0.0 \u00b7 46.1\nScore \u00b7 open0.0 \u00b7 63.3\nScore \u00b7sealed0.0 \u00b7 63.0\n\nScore ",
+    "afterEscapePressed": "false"
+   },
+   "tiers-open": {
+    "svg": true,
+    "domain": "signed",
+    "zeroRing": true,
+    "ringLabels": [
+     "\u2212100",
+     "0",
+     "100"
+    ],
+    "series": [
+     {
+      "k": "a",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 4
+     },
+     {
+      "k": "b",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 4
+     }
+    ],
+    "values": [
+     "a:easy=6.1",
+     "b:easy=93.9",
+     "a:standard=-13.4",
+     "b:standard=63.2",
+     "a:judge=-49.7",
+     "b:judge=67.7",
+     "a:hard=-39.4",
+     "b:hard=65.6"
+    ],
+    "scaleCaption": "Linear signed scale: \u2212100 at the centre, 0 on the bold middle ring, 100 at the rim.",
+    "zeroNote": null,
+    "figW": 655,
+    "svgW": 655,
+    "hoverPressed": "true",
+    "focusPressed": "true",
+    "tooltipText": "\u2212100\n0\n100\nEasy6.1 \u00b7 93.9\nStandard-13.4 \u00b7 63.2\nJudge-49.7 \u00b7 67.7\nHard-39.4 \u00b7 65.6\n\nHard\n\nJev 1.13.0\n65.6\nMirror\n-39.4",
+    "afterEscapePressed": "false"
+   },
+   "cat-usecases": {
+    "svg": true,
+    "domain": "signed",
+    "zeroRing": true,
+    "ringLabels": [
+     "\u2212100",
+     "0",
+     "100"
+    ],
+    "series": [
+     {
+      "k": "a",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 20
+     },
+     {
+      "k": "b",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 20
+     }
+    ],
+    "values": [
+     "a:model_routing=0.0",
+     "b:model_routing=73.0",
+     "a:legal_compliance=0.0",
+     "b:legal_compliance=68.6",
+     "a:customer_support=0.0",
+     "b:customer_support=49.6",
+     "a:other=0.0",
+     "b:other=40.1",
+     "a:ecommerce_marketplaces=0.0",
+     "b:ecommerce_marketplaces=40.5",
+     "a:insurance_claims=0.0",
+     "b:insurance_claims=46.1",
+     "a:risk_assessment=0.0",
+     "b:risk_assessment=32.8",
+     "a:financial_crime=0.0",
+     "b:financial_crime=35.8",
+     "a:feature_extraction=0.0",
+     "b:feature_extraction=28.3",
+     "a:lead_generation=0.0",
+     "b:lead_generation=49.2",
+     "a:recruiting=0.0",
+     "b:recruiting=0.0",
+     "a:knowledge_graphs=0.0",
+     "b:knowledge_graphs=28.8",
+     "a:llm_guardrails=0.0",
+     "b:llm_guardrails=68.0",
+     "a:moderation_trust_safety=0.0",
+     "b:moderation_trust_safety=51.6",
+     "a:code_linting=0.0",
+     "b:code_linting=29.1",
+     "a:search_retrieval=0.0",
+     "b:search_retrieval=80.9",
+     "a:scientific_discovery=0.0",
+     "b:scientific_discovery=21.2",
+     "a:advertising=0.0",
+     "b:advertising=16.4",
+     "a:gaming=0.0",
+     "b:gaming=5.1",
+     "a:demand_forecasting=0.0",
+     "b:demand_forecasting=0.0"
+    ],
+    "scaleCaption": "Linear signed scale: \u2212100 at the centre, 0 on the bold middle ring, 100 at the rim.",
+    "zeroNote": "A point on the bold 0 ring printed 0.0 is a measured value, not a gap: these published cells clip below-chance results to 0, so 0 means at or below chance. Their score markers cannot fall inside that ring.",
+    "figW": 655,
+    "svgW": 420,
+    "hoverPressed": "true",
+    "focusPressed": "true",
+    "tooltipText": "\u2212100\n0\n100\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n\nDemand forecasting\n\nMirror\n0.0\nJev 1.13.0\n0.0\n\nDemand forecasting: purchase intent, product inter",
+    "afterEscapePressed": "false"
+   }
+  },
+  "referenceButton": true,
+  "compareSections": [
+   [
+    "mirror",
+    "jev-1.13.0"
+   ]
+  ]
+ },
+ {
+  "scenario": "gte-vs-jev",
+  "viewport": 1440,
+  "url": "http://localhost:3917/jev-models?compare=gte-reranker-modernbert-base%2Cjev-1.13.0",
+  "pairA": "gte-reranker-modernbert-base",
+  "pairB": "jev-1.13.0",
+  "overflowX": -10,
+  "figs": {
+   "types": {
+    "svg": true,
+    "domain": "signed",
+    "zeroRing": true,
+    "ringLabels": [
+     "\u2212100",
+     "0",
+     "100"
+    ],
+    "series": [
+     {
+      "k": "a",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 6
+     },
+     {
+      "k": "b",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 6
+     }
+    ],
+    "values": [
+     "a:open|choice=0.0",
+     "b:open|choice=79.0",
+     "a:sealed|choice=0.0",
+     "b:sealed|choice=75.8",
+     "a:open|noul=0.0",
+     "b:open|noul=54.5",
+     "a:sealed|noul=0.0",
+     "b:sealed|noul=46.1",
+     "a:open|score=0.0",
+     "b:open|score=63.3",
+     "a:sealed|score=0.0",
+     "b:sealed|score=63.0"
+    ],
+    "scaleCaption": "Linear signed scale: \u2212100 at the centre, 0 on the bold middle ring, 100 at the rim.",
+    "zeroNote": null,
+    "figW": 655,
+    "svgW": 655,
+    "hoverPressed": "true",
+    "focusPressed": "true",
+    "tooltipText": "\u2212100\n0\n100\nChoice \u00b7 open0.0 \u00b7 79.0\nChoice \u00b7sealed0.0 \u00b7 75.8\nNoul \u00b7 open0.0 \u00b7 54.5\nNoul \u00b7 sealed0.0 \u00b7 46.1\nScore \u00b7 open0.0 \u00b7 63.3\nScore \u00b7sealed0.0 \u00b7 63.0\n\nScore ",
+    "afterEscapePressed": "false"
+   }
+  },
+  "referenceButton": true,
+  "compareSections": [
+   [
+    "gte-reranker-modernbert-base",
+    "jev-1.13.0"
+   ]
+  ]
+ },
+ {
+  "scenario": "omnijev-vs-wity",
+  "viewport": 1440,
+  "url": "http://localhost:3917/image-jev-bench?compare=omnijev_9b_v4_tzcfly%2Cwity_1",
+  "pairA": "omnijev_9b_v4_tzcfly",
+  "pairB": "wity_1",
+  "overflowX": -10,
+  "figs": {
+   "cat-capabilities": {
+    "svg": true,
+    "domain": "signed",
+    "zeroRing": true,
+    "ringLabels": [
+     "\u2212100",
+     "0",
+     "100"
+    ],
+    "series": [
+     {
+      "k": "a",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 13
+     },
+     {
+      "k": "b",
+      "shape": "runs",
+      "gaps": "3",
+      "markers": 10
+     }
+    ],
+    "values": [
+     "a:ui_screenshots=92.0",
+     "b:ui_screenshots=100.0",
+     "a:small_text=-3.1",
+     "b:small_text=58.5",
+     "a:spatial=-31.7",
+     "b:spatial=24.1",
+     "a:diagram_reasoning=74.0",
+     "b:diagram_reasoning=76.2",
+     "a:receipt=88.9",
+     "b:receipt=90.9",
+     "a:photo_docs=21.0",
+     "b:photo_docs=57.8",
+     "a:trap_charts=29.3",
+     "b:trap_charts=75.7",
+     "a:multi_panel=20.0",
+     "b:multi_panel=81.9",
+     "a:counting=11.5",
+     "b:counting=58.1",
+     "a:dense_ui=13.5",
+     "b:dense_ui=n=23",
+     "a:agent_safety=31.1",
+     "b:agent_safety=n=26",
+     "a:chart_reasoning=84.4",
+     "b:chart_reasoning=100.0",
+     "a:multilingual=28.3",
+     "b:multilingual=n=14"
+    ],
+    "scaleCaption": "Linear signed scale: \u2212100 at the centre, 0 on the bold middle ring, 100 at the rim.",
+    "zeroNote": "A point on the bold 0 ring is a measured value at chance; a point inside it is below chance and prints its negative number.",
+    "figW": 655,
+    "svgW": 420,
+    "hoverPressed": "true",
+    "focusPressed": "true",
+    "tooltipText": "\u2212100\n0\n100\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n\nMultilingual\n\nOmniJev-Qwen3.5-9B-v4\n28.3\nWity-1\nn=14 \u2014 too few completed items to plot\n\nMultilingual: images with non-",
+    "afterEscapePressed": "false"
+   },
+   "cat-usecases": {
+    "svg": true,
+    "domain": "signed",
+    "zeroRing": true,
+    "ringLabels": [
+     "\u2212100",
+     "0",
+     "100"
+    ],
+    "series": [
+     {
+      "k": "a",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 5
+     },
+     {
+      "k": "b",
+      "shape": "polygon",
+      "gaps": null,
+      "markers": 5
+     }
+    ],
+    "values": [
+     "a:document_check=31.8",
+     "b:document_check=69.3",
+     "a:diagram_planning=17.8",
+     "b:diagram_planning=49.7",
+     "a:chart_decision=37.4",
+     "b:chart_decision=84.9",
+     "a:ui_agent_action=64.7",
+     "b:ui_agent_action=92.4",
+     "a:count_inspect=23.4",
+     "b:count_inspect=64.5"
+    ],
+    "scaleCaption": "Linear signed scale: \u2212100 at the centre, 0 on the bold middle ring, 100 at the rim.",
+    "zeroNote": null,
+    "figW": 655,
+    "svgW": 655,
+    "hoverPressed": "true",
+    "focusPressed": "true",
+    "tooltipText": "\u2212100\n0\n100\nDocumentchecks31.8 \u00b7 69.3\nDiagrams andplanning17.8 \u00b7 49.7\nChartdecisions37.4 \u00b7 84.9\nUI agentactions64.7 \u00b7 92.4\nCounting andinspection23.4 \u00b7 64.5\n\nCou",
+    "afterEscapePressed": "false"
+   }
+  },
+  "referenceButton": false,
+  "compareSections": [
+   [
+    "omnijev_9b_v4_tzcfly",
+    "wity_1"
+   ],
+   [
+    "wity_1",
+    "imajev_4b"
+   ]
+  ]
+ }
+]
