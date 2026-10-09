@@ -12,7 +12,7 @@ export const IMAGEJEV_CATEGORY_ARTIFACT: string;
 export const JEVBENCH_CATEGORY_REVISIONS: string[];
 export const IMAGEJEV_CATEGORY_REVISIONS: string[];
 export function validateCategoryArtifact(artifact: any, dims: string[]): any;
-export function jevbenchCategoryView(revision: string, keys: string[], options?: { supplement?: boolean }): CompareCategories | null;
+export function jevbenchCategoryView(revision: string, keys: string[], options?: { supplement?: boolean; artifact?: unknown }): CompareCategories | null;
 export const JEVBENCH_CELL_SUPPLEMENT_ARTIFACT: string;
 export function withJevCellSupplement<T extends { revision: string; systems: Record<string, unknown> }>(base: T, supplement?: unknown): T & { supplement: { revision: string; pools: Record<string, number>; pool_items: number; drawn: string; note: string; source_sha256: string } };
 export function imageJevCategoryView(revision: string, keys: string[]): CompareCategories | null;
