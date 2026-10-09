@@ -31,7 +31,7 @@ test('both boards: every measured row appears with a tag; ranked rows have langu
       (scope === 'api' ? [...jevApiRoster(a, []).ranked, ...jevApiRoster(a, []).variants.filter((s) => s.listing !== 'wrapper')] : jevScopeDisplayOrder(a.systems.filter((s) => s.listing !== 'wrapper'))).map((s) => s.key));
     for (const r of rows) {
       assert.ok(live.systems[r.key], r.key);
-      assert.match(languageCoverage(live.systems[r.key]), /^(S|A\d*)\+P(?:\+L[1234])*$/);
+      assert.match(languageCoverage(live.systems[r.key]), /^(S|A\d*)\+P(?:\+L[12345])*$/);
       if (r.ranked) assert.ok(Object.keys(live.systems[r.key].languages).length > 0, r.key);
     }
     const firstWrapper = rows.findIndex((r) => r.listing === 'wrapper');
@@ -96,4 +96,27 @@ test('OpenAI rows carry the L3 exposure note (CoS review of PR #211)', async () 
   const { L3_EXPOSURE_NOTES, languagePoolNote, JEVBENCH_LANGUAGE_META } = await import('../lib/jevbench-categories.mjs');
   for (const key of ['openai-decisions', 'gpt-6-luna', 'gpt-6-luna-low', 'gpt-5.6-luna']) assert.match(L3_EXPOSURE_NOTES[key], /reviewed by an OpenAI model/);
   assert.match(languagePoolNote(JEVBENCH_LANGUAGE_META), /L3 items were reviewed by an OpenAI model/);
+});
+
+test('DeBERTa L5 is confined to three language cells with genuine completed coverage', () => {
+  const key = 'open-jev-deberta-v3-large', row = cells.systems[key];
+  const supplement = cells.row_scoped_supplements.L5;
+  assert.deepEqual(supplement.systems, [key]);
+  assert.deepEqual(supplement.languages, ['ar', 'hi', 'el']);
+  assert.equal(supplement.n, 60);
+  assert.equal(supplement.headline_eligible, false);
+  assert.match(supplement.origin, /OpenAI author \/ Anthropic blind review/);
+  assert.deepEqual(Object.entries(cells.systems).filter(([, r]) => r.pool_ok?.L5 > 0).map(([k]) => k), [key]);
+  assert.equal(row.pool_ok.L5, 60);
+  for (const [lang, scored, completed, oldFailures] of [['ar', 91, 70, 21], ['hi', 92, 73, 19], ['el', 85, 69, 16]]) {
+    assert.equal(row.languages[lang].n, scored);
+    assert.equal(row.languages[lang].coverage_n, completed);
+    assert.equal(row.languages[lang].operational_failure_n, oldFailures);
+  }
+  assert.ok(cells.languages.every(({ key: lang }) => row.languages[lang].coverage_n >= 60));
+  assert.match(languageCoverage(live.systems[key]), /\+L5$/);
+  assert.match(languagePoolNote(live.language_cells), /All 60 native requests succeeded/);
+  assert.match(languagePoolNote(live.language_cells), /L5 is outside headline and category scores and the common header counts/);
+  const categories = read('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.1-category-cells.json');
+  assert.doesNotMatch(JSON.stringify(categories), /\bL5\b/);
 });

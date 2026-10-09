@@ -1,6 +1,6 @@
 {
   "benchmark": "JevBench",
-  "board_revision": "v1.7.26",
+  "board_revision": "v1.7.27",
   "drawn": "2026-10-07",
   "kind": "language-cells",
   "languages": [
@@ -510,6 +510,20 @@
       "origin": "OpenAI author / Anthropic blind review; prospective pre-seal",
       "systems": [
         "fastino-gliner-2-5-decide"
+      ]
+    },
+    "L5": {
+      "headline_eligible": false,
+      "languages": [
+        "ar",
+        "hi",
+        "el"
+      ],
+      "n": 60,
+      "native_contract": "Original DeBERTa tokenizer context512 validated before keeper selection; new items only; previous failures retained",
+      "origin": "OpenAI author / Anthropic blind review; prospective pre-seal",
+      "systems": [
+        "open-jev-deberta-v3-large"
       ]
     }
   },
@@ -18192,15 +18206,15 @@
       "sealed_basis": "S"
     },
     "open-jev-deberta-v3-large": {
-      "coverage": "S+P+L1+L2+L3",
+      "coverage": "S+P+L1+L2+L3+L5",
       "languages": {
         "ar": {
           "competence": 0.0,
-          "coverage_n": 50,
-          "n": 71,
+          "coverage_n": 70,
+          "n": 91,
           "operational_failure_n": 21,
           "refusal_n": 0,
-          "response_n": 50
+          "response_n": 70
         },
         "cs": {
           "competence": 0.0,
@@ -18228,11 +18242,11 @@
         },
         "el": {
           "competence": 0.0,
-          "coverage_n": 49,
-          "n": 65,
+          "coverage_n": 69,
+          "n": 85,
           "operational_failure_n": 16,
           "refusal_n": 0,
-          "response_n": 49
+          "response_n": 69
         },
         "en": {
           "competence": 0.0,
@@ -18268,11 +18282,11 @@
         },
         "hi": {
           "competence": 0.0,
-          "coverage_n": 53,
-          "n": 72,
+          "coverage_n": 73,
+          "n": 92,
           "operational_failure_n": 19,
           "refusal_n": 0,
-          "response_n": 53
+          "response_n": 73
         },
         "id": {
           "competence": 0.0,
@@ -18383,6 +18397,7 @@
         "L1": 307,
         "L2": 33,
         "L3": 1039,
+        "L5": 60,
         "P": 289,
         "S": 1138
       },
