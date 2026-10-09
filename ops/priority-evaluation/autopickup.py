@@ -11,6 +11,13 @@ shell or a command-line argument; it is stored only as quoted JSON data for the 
 
 from __future__ import annotations
 
+# Keep admitted regular-source/cache closures stable for this controller and
+# its trusted Python subprocesses, before loading any project module.
+import sys
+import os
+sys.dont_write_bytecode = True
+os.environ["PYTHONDONTWRITEBYTECODE"] = "1"
+
 import argparse
 import base64
 import contextlib
@@ -32,14 +39,12 @@ import refusal_approval
 import refund_approval
 import sla_decision
 import pod_runner
-import os
 import pwd
 import re
 import resource
 import shlex
 import shutil
 import subprocess
-import sys
 import tempfile
 import time
 import urllib.error

@@ -82,3 +82,16 @@ class HistoricalSuccessorTests(unittest.TestCase):
    f=self.fixture(Path(t))
    with self.assertRaises(ValueError):self.call(f,'root_decision')
    with self.assertRaises(ValueError):self.call(f,'handoff')
+
+class CacheFreezeTests(unittest.TestCase):
+ def test_canonical_preamble_suppresses_project_and_child_cache(self):
+  import subprocess,sys
+  source=Path(__file__).with_name('autopickup.py').read_text()
+  prefix=source[:source.index('import argparse')]
+  self.assertIn('sys.dont_write_bytecode = True',prefix)
+  self.assertIn('PYTHONDONTWRITEBYTECODE',prefix)
+  with tempfile.TemporaryDirectory()as tmp:
+   root=Path(tmp);(root/'synthetic_project.py').write_text('VALUE=1\n')
+   script=root/'controller.py';script.write_text(prefix+'\nimport synthetic_project\nimport subprocess\nsubprocess.run([sys.executable,"-c","import synthetic_project"],check=True)\n')
+   subprocess.run([sys.executable,str(script)],cwd=root,env={'PATH':'/usr/bin:/bin'},check=True,timeout=10)
+   self.assertEqual(list(root.rglob('*.pyc')),[])
