@@ -816,7 +816,11 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
     """One pod attempt; raises PodRunError on any step failure (teardown still runs)."""
     if getattr(runtime_preflight, 'supplemented', False):
         import ryotide_runtime_supplement
-        ryotide_runtime_supplement.recovery_bounds(job_dir, state, ttl, budget)
+        from scoped_native_topup import ScopedTopUp
+        if type(allocation_gate) is ScopedTopUp:
+            allocation_gate.recovery_bounds(job_dir, state, ttl, budget)
+        else:
+            ryotide_runtime_supplement.recovery_bounds(job_dir, state, ttl, budget)
     pod_id = None
     reservation = None
     quote_budget = {'remaining': 2} if quote_budget is None else quote_budget
@@ -828,7 +832,9 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         try:
             allocations = pod_capacity.allocation_count(state, PODS_DIR)
             limit = allocation_gate('check', state) if allocation_gate is not None else pod_capacity.MAX_ALLOCATIONS
-            if type(limit) is not int or not 1 <= limit <= 3:
+            from scoped_native_topup import ScopedTopUp
+            ceiling = allocation_gate.allowed_total if type(allocation_gate) is ScopedTopUp else 3
+            if type(limit) is not int or not 1 <= limit <= ceiling:
                 raise PodRunError('invalid trusted allocation limit')
             if allocations >= limit:
                 raise PodRunError('original per-order fresh-pod retry budget exhausted')
@@ -1253,9 +1259,14 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
             raise measurement_dispatch.OperationalHold('host_staging_unaccepted')
         state['host_staging'] = dict(host_binding)
     state['request_id'] = rid
-    budget = min(PER_ORDER_CAP_USD, max_usd)
+    from scoped_native_topup import ScopedTopUp
+    scoped = type(allocation_gate) is ScopedTopUp
+    cap = allocation_gate.lifetime_cap_usd if scoped else PER_ORDER_CAP_USD
+    if scoped:
+        allocation_gate('check', state)
+    budget = min(cap, max_usd)
     prior_spend = state.get('spent_upper_bound_usd', 0.0)
-    if isinstance(prior_spend, bool) or not isinstance(prior_spend, (int, float)) or not 0 <= prior_spend <= PER_ORDER_CAP_USD:
+    if isinstance(prior_spend, bool) or not isinstance(prior_spend, (int, float)) or not 0 <= prior_spend <= cap:
         raise measurement_dispatch.OperationalHold('partial_measurement_requires_reconciliation')
     budget -= prior_spend
     if allocation_gate is not None:
@@ -1278,10 +1289,10 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
     try:
         run_error: Exception | None = None
         quote_budget = {'remaining': 2}
-        for attempt in range(1 if rid == '3687485f-5a51-4964-bd9a-73973f3494d7' and allocation_gate is not None else 2):
+        for attempt in range(1 if scoped or (rid == '3687485f-5a51-4964-bd9a-73973f3494d7' and allocation_gate is not None) else 2):
             gpu_choice = candidates[attempt % len(candidates)]
             run_spend = state.get('spent_upper_bound_usd', 0.0) - prior_spend
-            remaining = min(budget - run_spend, PER_ORDER_CAP_USD - state.get('spent_upper_bound_usd', 0.0))
+            remaining = min(budget - run_spend, cap - state.get('spent_upper_bound_usd', 0.0))
             if remaining <= 0:
                 raise measurement_dispatch.OperationalHold('gpu_pod_budget_exhausted')
             ttl = min(TTL_CAP_HOURS, remaining / _attempt_rate(recipe),

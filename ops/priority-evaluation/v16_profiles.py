@@ -152,7 +152,7 @@ def _retirement_unlocked(admission):
         raise ValueError('v16 id map differs from admitted draw')
 
 
-def measure(job_dir):
+def measure(job_dir, *, scoped_topup=False):
     """Guarded first-party native run, with original per-order pod budget intact."""
     job = Path(job_dir)
     admission, measured, scored = accepted(job)
@@ -175,7 +175,16 @@ def measure(job_dir):
             yield
     allocation_gate = None
     state = json.loads((STATE_ROOT / 'requests' / (job.name + '.json')).read_text())
-    if state.get('v16_generation_allocation') is not None:
+    if scoped_topup:
+        from scoped_native_topup import ScopedTopUp
+        def topup_recheck():
+            if late is not None:
+                late.check()
+            if accepted(job) != (admission, measured, scored):
+                raise ValueError('scoped topup original v16 admission changed')
+            retirement(admission)
+        allocation_gate = ScopedTopUp(job, admission, topup_recheck)
+    elif state.get('v16_generation_allocation') is not None:
         from v16_allocation import FreshAllocation
         def allocation_recheck():
             if late is not None:
@@ -201,7 +210,7 @@ def measure(job_dir):
         runtime_preflight = decisor_runtime_preflight.callback(job, admission, recipe, runtime_recheck, output)
     else:
         runtime_preflight = jeff_runtime_preflight.callback(job, admission, recipe, runtime_recheck, output)
-    record = pod_runner.run(job.name, job, recipe, output, measured, pod_runner.PER_ORDER_CAP_USD,
+    record = pod_runner.run(job.name, job, recipe, output, measured, allocation_gate.lifetime_cap_usd if scoped_topup else pod_runner.PER_ORDER_CAP_USD,
                             measurement_pins_factory=lambda: accepted(job)[1], pre_upload_gate=pre_upload, allocation_gate=allocation_gate, runtime_preflight=runtime_preflight)
     retirement(admission)
     accepted(job)
