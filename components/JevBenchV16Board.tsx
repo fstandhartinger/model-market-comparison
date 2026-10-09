@@ -199,6 +199,15 @@ function BoardSplit({ scope, history, preliminary }: { scope: JevScope; history:
 }
 
 function Method({ categories, a, sha256, categoriesSha256, carrySha256, scope, hiddenApi, preliminary }: { categories: JevV16Categories; a: JevV16ReleaseArtifact; sha256: string; categoriesSha256: string; carrySha256: string; scope: JevScope; hiddenApi: ReadonlySet<string>; preliminary: boolean }) {
+  if (a.revision === 'v1.6.2') return <section className="mt-10 max-w-4xl" id="jev16-method" data-bh-jev16-method>
+    <h2 className="text-2xl font-bold">Method notes · fresh native cohort</h2>
+    <p className="mt-2">Each system answered the same 1,200 freshly drawn sealed decisions and 300 public decisions on an offline GPU pod. Scores use methodology v1.6, O1S, with 1,000 bootstrap samples and seed 16.</p>
+    <p className="mt-2">Capability is the mean of Intelligence and Calibration within the frozen Jev-class cost and median-latency caps. Composite is secondary. Failed and refused answers remain in the full 1,500-decision denominator.</p>
+    <p className="mt-2">The public-versus-sealed gap reference is the median of this completed native cohort: {one(a.G_med)} points. Historical scores are shown separately with their original dates and do not enter this cohort’s median or ranking. No API equating is applied.</p>
+    <p className="mt-2">Costs use each row’s documented price reference and measured usage on this draw. Subject-topic and use-case radars come from stored per-item results; only aggregates are published.</p>
+    <p className="mt-2">Sliders, presets and What-If change your view; they do not change the official result. Wrappers and subsidised systems are listed below the ranking.</p>
+    <p className="mt-2 text-xs break-all">Results SHA-256 {sha256} · categories SHA-256 {categoriesSha256} · scoring source SHA-256 {a.source_sha256}.</p>
+  </section>;
   const sets = a.v16.item_sets;
   const v161 = a.revision === 'v1.6.1';
   const amendments = (a as unknown as { amendments?: Array<{ date: string; revision: string; text: string }> }).amendments ?? [];
@@ -532,13 +541,13 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
       {scope === 'api' && <ApiRoster a={a} carry={carry} listed={apiListed} eligibility={eligibilityByKey} />}
       {scope === 'api' && <ApiPublicSet measured={measuredKeys} />}
       {scope === 'api' && <JevV15FilterPanel />}
-      <JevCompareV15 rows={compareRows} openDecisions={a.v16.counts.P} sealedDecisions={a.v16.counts.S} categories={jevbenchCategoryView(a.revision, compareRows.map((r) => r.key), { supplement: Boolean(categories.supplement) })} />
+      <JevCompareV15 rows={compareRows} openDecisions={a.v16.counts.P} sealedDecisions={a.v16.counts.S} categories={jevbenchCategoryView(a.revision, compareRows.map((r) => r.key), { supplement: Boolean(categories.supplement), artifact: a.revision === "v1.6.2" ? categories : undefined })} />
       <p className="bh-muted mt-2 max-w-4xl text-xs" data-bh-jev16-radar-note>{categories.supplement ? <>Category radars count each answered item once from the pools named under each radar. API overlay rows use {API_CATEGORY_POOLS}. Raw and unequated; cells under {categories.min_n} answered items are omitted. Per-type and tier radars retain each row&apos;s original measurement pools: A4/A5 rows have 300 open plus 300 sealed items; full-set rows have S {a.v16.counts.S.toLocaleString('en-US')} plus P {a.v16.counts.P}.</> : <>{categories.lane_note} Sealed counts refer to self-hosted S ({a.v16.counts.S.toLocaleString('en-US')}); API rows use their original measured sealed basis.</>}</p>
       <LanguageView carry={carry} scope={scope} a={a} categories={categories} hiddenApi={hiddenApi} />
       <NoulAndGate a={a} hiddenApi={hiddenApi} />
       <JevV15AllDataGrid
         artifact={v15}
-        categoryView={jevbenchCategoryView(a.revision, allDataKeys, { supplement: Boolean(categories.supplement) })}
+        categoryView={jevbenchCategoryView(a.revision, allDataKeys, { supplement: Boolean(categories.supplement), artifact: a.revision === "v1.6.2" ? categories : undefined })}
         previousKeys={previousKeys}
         eligibility={allClass}
         metadata={{ families: baseModelFamilies('jevbench', a.systems) }}
@@ -547,7 +556,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
       {scope === 'open' && <div className="mt-10"><JevGpuCostCalculator systems={ranked.filter((s) => s.v16.lane !== 'api').map((s) => ({
         key: s.key, display: short(s.display), gpu: (s as { gpu?: string | null }).gpu ?? null, p50_s_raw: s.speed?.p50_s_raw ?? null,
         officialUsdPer1000: s.cost?.usd_per_1000 ?? null, ranked: !!s.ranked }))} /></div>}
-      <DatedCarry carry={carry} hiddenApi={hiddenApi} showExceptions={Boolean(categories.supplement)} />
+      {(a.revision !== "v1.6.2" || carry.rows.length > 0) && <DatedCarry carry={carry} hiddenApi={hiddenApi} showExceptions={Boolean(categories.supplement)} />}
       <Method categories={categories} a={a} sha256={sha256} categoriesSha256={categoriesSha256} carrySha256={carrySha256} scope={scope} hiddenApi={hiddenApi} preliminary={preliminary} />
     </section>
   </JevV15FilterProvider>;
