@@ -15,7 +15,11 @@ must already be independently rebound to the accepted profile pins. It grants no
 admission and does not reset attempt, allocation, spending or deadline counters.
 
 `evaluate_v16_generation` executes the trusted native measurement only if the
-admitted generation has no host receipt. Existing receipts are validated instead
+admitted generation has no host receipt, after the same guarded live paid-order
+running transition as legacy: paid/review-passed, starting/failed, no customer
+hold, non-null payment and unexpired original deadline. A failed CAS refuses
+measurement without incrementing or resetting counters. A completed receipt skips
+this rental-only CAS, so baseline waiting remains idempotent. Existing receipts are validated instead
 of re-renting. It adopts the exact receipt/pins/1500-row raw hash into
 `results/raw/<generation>/jevbench.jsonl` and preserves historic raw files.
 Per-generation host receipts are stored under `v16_host_measurements`; official
@@ -73,7 +77,19 @@ remote hash, and runs Python `-I` through `env -i` in a read-only/network-none
 container with a single read-only inspector mount. There are no source, models,
 inputs or credential mounts. Package/Python/gcc/header mismatch or driver below
 R580/less than 79000 MiB returns a permanent operational hold. The same-pod output
-is retained at the host generation's `runtime-preflight.json`, including mismatch
-output. No dependency installs, derived-image substitution, inference or new
+is retained at the host generation's
+`runtime-preflight-<pod-id-hash>-<host-metadata-sha256>.json`, including mismatch
+output. The host identity binds actual pod ID, exact image and accepted inspector
+and handler hashes. Files are created exclusively; a repeated attempt refuses
+before inspection rather than overwriting its previous receipt. No dependency installs, derived-image substitution, inference or new
 allocation authority are granted. Existing teardown and original conservative
 allocation/spending counters remain in force.
+
+
+Review disposition (independent Claude CHANGES_REQUIRED): the missing dispatch
+CAS and overwritable preflight report are fixed with synthetic regressions.
+The v1.6 official scorer remains the numeric authority; it runs twice in isolation
+and is fixture-tested for equivalence against the pinned official native scorer.
+The legacy v1.5 composite check is deliberately not applied to the new method.
+An incomplete-baseline OperationalHold from direct `trusted_recompute` propagates
+fail-closed; the owning evaluate route catches and records that hold.

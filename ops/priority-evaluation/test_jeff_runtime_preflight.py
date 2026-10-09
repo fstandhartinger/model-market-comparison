@@ -34,13 +34,25 @@ class PreflightTests(unittest.TestCase):
             provider=SimpleNamespace(exec=execute,scp_to=Mock())
             with self.assertRaisesRegex(measurement_dispatch.OperationalHold,'mismatch'):
                 self.setup_callback(root)(provider,'owned-pod')
-            report=json.loads((root/'out/runtime-preflight.json').read_text())
+            receipts=list((root/'out').glob('runtime-preflight-*.json'))
+            self.assertEqual(len(receipts),1)
+            report=json.loads(receipts[0].read_text())
             self.assertTrue(report['driver_ok']); self.assertEqual(report['exit_code'],2)
             command=commands[-1]
             self.assertIn('--read-only',command);self.assertIn('none',command)
             self.assertEqual(command[command.index('-v')+1],'/runtime-preflight/inspector.py:/inspector.py:ro')
             self.assertEqual(command.count('-v'),1); self.assertIn('-i',command); self.assertIn('-I',command)
             self.assertFalse(any('/models' in arg or '/code' in arg or '/input' in arg for arg in command))
+            # Same owned pod + accepted metadata may not overwrite its evidence.
+            original=receipts[0].read_bytes()
+            with self.assertRaisesRegex(measurement_dispatch.OperationalHold,'receipt_exists'):
+                self.setup_callback(root)(provider,'owned-pod')
+            self.assertEqual(receipts[0].read_bytes(),original)
+            # A distinct attempt preserves the first pod's mismatch receipt.
+            with self.assertRaisesRegex(measurement_dispatch.OperationalHold,'mismatch'):
+                self.setup_callback(root)(provider,'second-owned-pod')
+            self.assertEqual(len(list((root/'out').glob('runtime-preflight-*.json'))),2)
+            self.assertEqual(receipts[0].read_bytes(),original)
 
     def test_failed_hook_is_after_digest_and_before_weights_source_or_inputs(self):
         provider=SimpleNamespace(preflight=lambda *a:None,reserve=lambda *a:'reservation',

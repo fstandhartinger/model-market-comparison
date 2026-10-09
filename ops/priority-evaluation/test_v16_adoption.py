@@ -47,7 +47,7 @@ class AdoptionTests(unittest.TestCase):
                  patch.object(ap, 'validate_review_gate'), \
                  patch.object(ap, 'load_state', return_value=state), \
                  patch.object(ap, 'save_state') as save, \
-                 patch.object(ap, 'update_row'), \
+                 patch.object(ap, 'update_row') as update, \
                  patch.object(ap, 'set_operational_hold') as hold, \
                  patch.object(ap, 'score_measurement') as score, \
                  patch.object(adoption, 'selected', return_value=package), \
@@ -56,6 +56,7 @@ class AdoptionTests(unittest.TestCase):
                  patch.object(adoption.v16_profiles, 'measure') as measure:
                 self.assertEqual(ap.evaluate_v16_generation('order', job), 0)
                 measure.assert_not_called(); score.assert_not_called()
+                self.assertFalse(any("evaluation_status='running'" == call.args[1] for call in update.call_args_list))
                 self.assertEqual(state['v16_host_measurements']['fresh']['jevbench']['raw_sha256'], 'fresh')
                 hold.assert_called_once_with(state, 'v16_completed_cohort_baseline_required', transient=False)
                 self.assertEqual(state['official_measurement']['inputs'], {'legacy':True})
@@ -76,6 +77,29 @@ class AdoptionTests(unittest.TestCase):
                 ap.evaluate_v16_generation('order',job)
                 measure.assert_called_once_with(job); score.assert_called_once_with('order',job)
                 hold.assert_called_once_with(state,'v16_cohort_public_release_required',transient=False)
+
+    def test_failed_paid_deadline_cas_never_measures_or_changes_counters(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); job=root/'order'; job.mkdir()
+            state={'stage_attempts':{'preparation':2},'official_measurement':{'legacy':True}}
+            package=({'generation':'fresh'}, {}, {})
+            with patch.object(ap,'STATE_ROOT',root), patch.object(ap,'validate_review_gate'), \
+                 patch.object(ap,'load_state',return_value=state), patch.object(ap,'save_state'), \
+                 patch.object(ap,'update_row',return_value=False) as update, \
+                 patch.object(ap,'set_operational_hold'), \
+                 patch.object(adoption,'selected',return_value=package), \
+                 patch.object(adoption,'adopt_raw') as adopt, \
+                 patch.object(adoption.v16_profiles,'measure') as measure:
+                with self.assertRaises(ap.PickupError): ap.evaluate_v16_generation('order',job)
+                measure.assert_not_called(); adopt.assert_not_called()
+                cas=update.call_args_list[0]
+                self.assertEqual(cas.args[1],"evaluation_status='running'")
+                for clause in ("status IN ('paid','review_passed')", "evaluation_status IN ('starting','failed')",
+                               "customer_hold_started_at IS NULL", "paid_at IS NOT NULL", "interval '48 hours' > now()"):
+                    self.assertIn(clause,cas.args[2])
+                self.assertNotIn('evaluation_attempts',cas.args[1])
+                self.assertEqual(state['stage_attempts'],{'preparation':2})
+                self.assertEqual(state['official_measurement'],{'legacy':True})
 
     def test_raw_receipt_binding_uses_generation_and_refuses_conflicting_hash(self):
         paths={'jevbench':'results/raw/fresh/jevbench.jsonl'}

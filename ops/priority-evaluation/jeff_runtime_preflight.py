@@ -33,7 +33,13 @@ def callback(job, admission, recipe, recheck, output):
         if admission.get('runtime_preflight') != expected or sha(INSPECTOR) != expected['inspector_sha256'] \
                 or sha(__file__) != expected['handler_sha256']:
             raise ValueError('Jeff runtime preflight pins changed')
-        report = {'image': recipe['image'], 'binding': expected, 'pod_id': pod_id}
+        identity = {'image': recipe['image'], 'binding': expected, 'pod_id': pod_id}
+        identity_sha = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
+        pod_sha = hashlib.sha256(pod_id.encode()).hexdigest()[:16]
+        destination = Path(output) / f'runtime-preflight-{pod_sha}-{identity_sha}.json'
+        if destination.exists() or destination.is_symlink():
+            raise measurement_dispatch.OperationalHold('jeff_runtime_preflight_receipt_exists')
+        report = dict(identity, host_metadata_sha256=identity_sha, receipt_path=str(destination))
         inventory = provider.exec(pod_id, ['nvidia-smi', '--query-gpu=name,memory.total,driver_version',
                                                        '--format=csv,noheader,nounits'], timeout=60)
         report['gpu_inventory'] = inventory.stdout
@@ -61,9 +67,11 @@ def callback(job, admission, recipe, recheck, output):
         try: metadata = json.loads(result.stdout)
         except (ValueError, TypeError): metadata = {}
         report['metadata'] = metadata
-        destination = Path(output) / 'runtime-preflight.json'
         destination.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
-        destination.write_text(json.dumps(report, indent=2) + '\n')
+        # Exclusive creation retains every pod's mismatch output and refuses
+        # replacing evidence if the same attempt is invoked twice.
+        with destination.open('x') as stream:
+            stream.write(json.dumps(report, indent=2) + '\n')
         if result.returncode != 0 or metadata.get('matching') is not True or not driver_ok:
             raise measurement_dispatch.OperationalHold('jeff_runtime_preflight_mismatch')
         recheck()

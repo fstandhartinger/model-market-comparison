@@ -4390,6 +4390,14 @@ def evaluate_v16_generation(rid: str, job_dir: Path) -> int:
         generation = admission["generation"]
         receipt_dir = STATE_ROOT / "measurements" / rid / generation / "jevbench"
         if not (receipt_dir / "receipt.json").exists():
+            # Same live paid/hold/deadline CAS as legacy, immediately before
+            # creating a measurement. Existing completed raw needs no new rental
+            # transition and may wait idempotently for the cohort baseline.
+            if not update_row(rid, "evaluation_status='running'",
+                              "status IN ('paid','review_passed') AND evaluation_status IN ('starting','failed') "
+                              "AND customer_hold_started_at IS NULL AND paid_at IS NOT NULL "
+                              "AND paid_at + COALESCE(sla_paused_seconds,0) * interval '1 second' + interval '48 hours' > now()"):
+                raise PickupError("the order is not eligible for a fresh v16 measurement")
             v16_adoption.v16_profiles.measure(job_dir)
         receipt, _ = v16_adoption.adopt_raw(job_dir, package)
         state = load_state(rid)
