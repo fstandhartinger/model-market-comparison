@@ -83,7 +83,7 @@ class T(unittest.TestCase):
         self.assertIn(('scp', '/work/non-lfs.tar', h(TAR)), prov.log)
         self.assertTrue(any(l[0] == 'exec' and l[1][:2] == ['sh', '-c'] and l[1][-1] == '/models/aplomb' for l in prov.log))
         argv = calls[1]
-        self.assertEqual(argv[:6], ['/usr/bin/timeout', '-s', 'KILL', str(3600), '/usr/bin/env', '-i'])
+        self.assertEqual(argv[:6], ['/usr/bin/timeout', '-s', 'KILL', str(2700), '/usr/bin/env', '-i'])
         self.assertIn('StrictHostKeyChecking=yes', argv); self.assertIn('root@1.2.3.4', argv); self.assertIn('ConnectTimeout=30', argv)
         self.assertEqual(calls[2], f'[1.2.3.4]:2222 {KEY}\n')
         self.assertEqual(calls[3], ['hf_git_credential.py', 'known_hosts', 'lfs_exact_fetch.py', 'lfs_stream_to_pod.py', 'manifest', 'non-lfs.tar'])

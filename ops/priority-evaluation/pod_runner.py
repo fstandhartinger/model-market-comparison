@@ -55,8 +55,27 @@ TTL_CAP_HOURS = 3.0
 EXPECTED_ROWS = 1624
 GPU_PREFERENCE = (("H100", 80), ("A100", 80), ("L40S", 48), ("RTX6000", 48), ("RTXPRO6000", 96))  # lium marketplace names
 
-# Host-staged route: build (<= 45 min) + weight stream (<= 60 min, set by the streamer) keeps >= 70 min of the 3 h TTL for the run.
-HOST_BUILD_TIMEOUT_S = 2700
+# Host-staged route time budget inside one pod TTL: build <= 30 min, weight stream <= 45 min (streamer),
+# checks/copy/teardown margin 10 min, container wait up to 60 min. A pod attempt needs a TTL of >= 2.5 h, and
+# sealed inputs are only dispatched while (TTL - elapsed) still covers the container wait plus the margin.
+HOST_BUILD_TIMEOUT_S = 1800
+HOST_MIN_TTL_HOURS = 2.5
+HOST_RUN_RESERVE_S = 3600 + 600
+
+
+def _utcnow():
+    return datetime.now(timezone.utc)
+
+
+def _attempt_rate(recipe):
+    """USD/h used for the per-attempt TTL and upper-bound charge.
+
+    Host-staged native recipes pin the exact hourly price (validated 0 < price <= MAX_HOURLY_USD, compared with the live
+    pod price right after creation, hold on any difference), so the original caps (<= USD 5/h, USD 20/order, 3 h TTL,
+    2 creations) are accounted at that pinned price. All other routes keep the USD 5/h ceiling."""
+    if "host_staging" in recipe and type(recipe.get("hourly_usd")) in (int, float) and 0 < recipe["hourly_usd"] <= MAX_HOURLY_USD:
+        return float(recipe["hourly_usd"])
+    return MAX_HOURLY_USD
 IMAGE_RE = re.compile(r"^[A-Za-z0-9._/-]+:[A-Za-z0-9_.-]+@sha256:[0-9a-f]{64}$")
 SHA40_RE = re.compile(r"[0-9a-f]{40}")
 SHA64_RE = re.compile(r"[0-9a-f]{64}")
@@ -751,6 +770,9 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
     pod_id = None
     reservation = None
     quote_budget = {'remaining': 2} if quote_budget is None else quote_budget
+    if "host_staging" in recipe and ttl < HOST_MIN_TTL_HOURS:
+        # Original caps leave this attempt too little TTL for build + stream + run: hold before any quote/reserve/create.
+        raise measurement_dispatch.OperationalHold("host_staging_ttl_too_short")
     try:
         attempts = state.get('creation_attempts', 0)
         try:
@@ -793,10 +815,10 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         state.pop('torn_down_at', None)
         state['cleanup_uncertain'] = True
         state['attempt_ttl_hours'] = ttl
-        state['attempt_reserved_upper_bound_usd'] = ttl * MAX_HOURLY_USD
+        state['attempt_reserved_upper_bound_usd'] = ttl * _attempt_rate(recipe)
         extra = allocation_gate.contingency_usd if allocation_gate is not None else 0
         state['attempt_contingency_usd'] = extra
-        state['spent_upper_bound_usd'] = state.get('spent_upper_bound_usd', 0.0) + ttl * MAX_HOURLY_USD + extra
+        state['spent_upper_bound_usd'] = state.get('spent_upper_bound_usd', 0.0) + ttl * _attempt_rate(recipe) + extra
         state['reservation_id'] = reservation
         state['input_dispatched'] = False
         state['execution_started'] = False
@@ -887,6 +909,10 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                         raise PodRunError(f"weight file {entry['dir']}/{relative} sha256 mismatch: "
                                           f"{check.stdout.strip()[-200:]}")
         _exec(provider, pod_id, ["mkdir", "-p", "/work", "/work/out", "/work/code"])
+        if "host_staging" in recipe:
+            started = datetime.fromisoformat(state['attempt_started_at'])
+            if (_utcnow() - started).total_seconds() > ttl * 3600 - HOST_RUN_RESERVE_S:
+                raise PodRunError("host_staging_ttl_margin_insufficient")
         # Optional trusted context holds the canonical custody lock across upload.
         with pre_upload_gate() if pre_upload_gate is not None else nullcontext():
             state['input_dispatched'] = True
@@ -1128,7 +1154,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
         budget = min(budget, allocation_gate.max_new_usd)
     if budget <= 0:
         raise measurement_dispatch.OperationalHold("gpu_pod_budget_exhausted")
-    ttl = min(TTL_CAP_HOURS, budget / MAX_HOURLY_USD)
+    ttl = min(TTL_CAP_HOURS, budget / _attempt_rate(recipe))
     candidates = [g for g in GPU_PREFERENCE if g[1] >= recipe["min_vram_gb"]]
     if not candidates:
         raise measurement_dispatch.OperationalHold("pod_recipe_invalid")
@@ -1145,7 +1171,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
             remaining = min(budget - run_spend, PER_ORDER_CAP_USD - state.get('spent_upper_bound_usd', 0.0))
             if remaining <= 0:
                 raise measurement_dispatch.OperationalHold('gpu_pod_budget_exhausted')
-            ttl = min(TTL_CAP_HOURS, remaining / MAX_HOURLY_USD,
+            ttl = min(TTL_CAP_HOURS, remaining / _attempt_rate(recipe),
                       allocation_gate.max_ttl_hours if allocation_gate is not None else TTL_CAP_HOURS)
             try:
                 state = _lifecycle(provider, job, recipe, staging_path, output, state,

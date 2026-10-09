@@ -125,7 +125,7 @@ class HostStagingTests(unittest.TestCase):
             return pr.run(RID, self.job, self.recipe, self.root / 'out', self.pins, 20,
                 provider=fake, alert=lambda text: None, native_source_pins={'official_measurement': self.pins}, **options)
 
-    def lifecycle(self, fake, **kwargs):
+    def lifecycle(self, fake, ttl=3, **kwargs):
         state = {'host_staging': {}}
         options = dict(job_dir=self.job, image_context_provider=lambda job: self.context, weights_streamer=self.streamer)
         options.update(kwargs)
@@ -133,7 +133,7 @@ class HostStagingTests(unittest.TestCase):
         with mock.patch.object(pr, 'PODS_DIR', self.root / 'pods'):
             try:
                 pr._lifecycle(fake, 'synthetic', self.recipe, self.root / 'stage.tar', self.root / 'out',
-                    state, ('H100', 80), 3, 20, lambda text: None, lambda: None, **options)
+                    state, ('H100', 80), ttl, 20, lambda text: None, lambda: None, **options)
             finally:
                 self.last_state = state
 
@@ -244,7 +244,7 @@ class HostStagingTests(unittest.TestCase):
             self.assertFalse(self.last_state['input_dispatched'])
             self.assertFalse(self.last_state['execution_started'])
             self.assertEqual(self.last_state['creation_attempts'], 1)
-            self.assertEqual(self.last_state['spent_upper_bound_usd'], 15)
+            self.assertAlmostEqual(self.last_state['spent_upper_bound_usd'], 3 * 1.30)
             self.assertFalse(any(c[0] == 'scp_to' and c[2] == '/work/stage.tar' for c in fake.calls))
 
     def test_large_unsorted_manifest_with_empty_file_validates_and_hash_is_order_independent(self):
@@ -282,6 +282,23 @@ class HostStagingTests(unittest.TestCase):
         with self.assertRaisesRegex(pr.PodRunError, 'image_context_provider_not_configured'):
             self.run_recipe(fake, image_context_provider=None)
         self.assertFalse(any(c[0] == 'create' for c in fake.calls))
+
+    def test_ttl_too_short_holds_before_any_provider_call(self):
+        fake = HostFake()
+        with self.assertRaisesRegex(md.OperationalHold, 'host_staging_ttl_too_short'):
+            self.lifecycle(fake, ttl=1.0)
+        self.assertEqual(fake.calls, [])
+
+    def test_late_staging_refuses_sealed_dispatch_and_tears_down(self):
+        from datetime import timedelta
+        fake = HostFake()
+        late = pr._utcnow() + timedelta(hours=3)
+        with mock.patch.object(pr, '_utcnow', return_value=late), \
+             self.assertRaisesRegex(pr.PodRunError, 'host_staging_ttl_margin_insufficient'):
+            self.lifecycle(fake)
+        self.assertEqual(fake.removed, ['pod-1'])
+        self.assertFalse(self.last_state['input_dispatched'])
+        self.assertFalse(any(c[0] == 'scp_to' and c[2] == '/work/stage.tar' for c in fake.calls))
 
     def test_kernel_wheel_direct_url_in_freeze_is_allowed(self):
         receipt = self.run_recipe(HostFake('kernelwheel'))
@@ -323,19 +340,29 @@ class HostStagingTests(unittest.TestCase):
         self.assertEqual(fake.next_pod, 1)
         self.assertEqual(receipt['benchmarks']['jevbench']['host_staging'], evidence)
 
-    def test_host_failure_keeps_existing_cumulative_retry_budget(self):
+    def test_host_failure_second_attempt_keeps_full_ttl_at_pinned_price_and_caps(self):
+        # Host-staged recipes account TTL and the upper-bound charge at the pinned hourly price (1.30 here), so a
+        # failed staging attempt does not starve the one permitted fresh-pod retry (original caps unchanged).
         fake = HostFake('size')
         with self.assertRaisesRegex(md.OperationalHold, 'gpu_pod_run_failed'):
             self.run_recipe(fake)
         state = json.loads((self.root / 'pods' / (RID + '.json')).read_text())
         self.assertEqual(fake.removed, ['pod-1', 'pod-2'])
         self.assertEqual(state['creation_attempts'], 2)
-        self.assertEqual(state['spent_upper_bound_usd'], 20)
+        self.assertAlmostEqual(state['spent_upper_bound_usd'], 2 * 3 * 1.30)
+        self.assertLessEqual(state['spent_upper_bound_usd'], 20)
+        self.assertAlmostEqual(state['attempt_ttl_hours'], 3)
         self.assertFalse(state['input_dispatched'])
         self.assertFalse(state['execution_started'])
-        with self.assertRaisesRegex(md.OperationalHold, 'gpu_pod_budget_exhausted'):
+        with self.assertRaises(md.OperationalHold):
             self.run_recipe(fake)
-        self.assertEqual(fake.next_pod, 2)
+        self.assertEqual(fake.next_pod, 2)  # no third creation
+
+    def test_legacy_recipes_keep_the_five_dollar_ceiling_accounting(self):
+        self.assertEqual(pr._attempt_rate({'kind': 'aplomb_native', 'hourly_usd': 1.3}), pr.MAX_HOURLY_USD)
+        self.assertEqual(pr._attempt_rate({'host_staging': {}, 'hourly_usd': 1.3}), 1.3)
+        for bad in (True, 0, -1, 5.01, '1.3', None):
+            self.assertEqual(pr._attempt_rate({'host_staging': {}, 'hourly_usd': bad}), pr.MAX_HOURLY_USD)
 
     def test_admission_and_quote_gates_still_hold_without_input_upload(self):
         fake = HostFake()

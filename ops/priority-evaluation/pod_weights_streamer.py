@@ -83,7 +83,7 @@ def host_key(text):
 
 def make_streamer(*, repository, full_manifest_sha256, manifest_path, manifest_sha256, wrapper_path, wrapper_sha256,
                   base_path, base_sha256, helper_path, helper_sha256, nonlfs_tar_path, nonlfs_tar_sha256, token_file, key_path,
-                  timeout_s=3600, run=subprocess.run):
+                  timeout_s=2700, run=subprocess.run):
     """Return weights_streamer(provider, pod_id, entries, remote_root) for pod_runner host_staging.
 
     entries = the full runner manifest (all files, LFS and non-LFS). The pinned non-LFS tar (built offline from the
