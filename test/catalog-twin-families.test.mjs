@@ -22,7 +22,13 @@ test('the twins\' offers and Epoch ECI now belong to the canonical family', () =
   const eci = JSON.parse(readFileSync(new URL('../data/raw/epoch-eci.json', import.meta.url), 'utf8')).models.find((m) => m.source_model_name === 'Nemotron 3 Ultra');
   assert.ok(Number.isFinite(eci?.general));
   assert.equal(byId.get('nemotron-3-ultra-550b-a55b::reasoning').benchmarks.epoch_eci, eci.general);
-  assert.ok(providers('nemotron-3.5-lightning::default').has('TrustedTokens'));
+  // TrustedTokens delisted Lightning on 2026-10-09 (CR-354), so check the join against today's capture as for ECI:
+  // a listed Lightning offer must land on the canonical family, and no twin may carry one.
+  const trustedTokens = JSON.parse(readFileSync(new URL('../data/raw/trustedtokens.json', import.meta.url), 'utf8'));
+  const lightningListed = trustedTokens.models.some((m) => /nemotron[- ]3\.5[- ]lightning/i.test(m.model_name ?? ''));
+  assert.equal(providers('nemotron-3.5-lightning::default').has('TrustedTokens'), lightningListed);
+  assert.ok(!dataset.models.some((m) => m.family_key.startsWith('nemotron-3.5-lightning') && m.id !== 'nemotron-3.5-lightning::default'
+    && m.offers.some((o) => o.provider === 'TrustedTokens')));
   assert.ok(providers('llama-4-maverick::default').has('AWS Bedrock'));
   assert.ok(providers('llama-4-maverick::default').has('Azure AI Foundry'));
   assert.ok(providers('llama-4-scout::default').has('AWS Bedrock'));

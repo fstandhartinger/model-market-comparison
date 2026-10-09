@@ -38,6 +38,7 @@ const stableOpenRouterId = (id) => String(id || "").replace(/^~/, "").replace(/:
 
 const REASONING_CONFIG_RE = /\b(?:non[- ]?reasoning|reasoning|adaptive|thinking|x\s?high|xhigh|high|medium|low|minimal|max)(?:\s+effort)?\b/i;
 const SERVING_ANNOTATION_RE = /^(?:fireworks|azure direct|eu data zone|short context|long context|fast mode|none)$/i;
+const REASONING_PROVENANCE_RE = /^(?:.*\bfallback|based on\b.*)$/i;
 const PRICING_TIER_ANNOTATION_RE = /^(?:[<>≤≥]=?\s*)?\d+(?:\.\d+)?\s*[km](?:\s+(?:input|tokens?))?$/i;
 
 function pricingTier(rawName) {
@@ -89,14 +90,23 @@ function detectVariant(raw) {
 }
 
 // Reduce a raw model label to a canonical family key + display name + org.
-function normalizeFamily(rawName, orgHint) {
+function normalizeFamily(rawName, orgHint, { aaAnnotationIdentity = false } = {}) {
   let x = stripVendor(rawName);
   // Drop only benchmark configuration and serving annotations. Identity-bearing
   // tokens such as instruct/chat/thinking/fast/preview, Vision and release
   // revisions (2512/2507/0528/0905/0613) must survive normalization.
   x = x.replace(/\(([^)]*)\)/g, (_match, annotation) => {
-    if (REASONING_CONFIG_RE.test(annotation) || SERVING_ANNOTATION_RE.test(annotation.trim())
-        || PRICING_TIER_ANNOTATION_RE.test(annotation.trim())) return " ";
+    if (SERVING_ANNOTATION_RE.test(annotation.trim()) || PRICING_TIER_ANNOTATION_RE.test(annotation.trim())) return " ";
+    if (REASONING_CONFIG_RE.test(annotation) && !aaAnnotationIdentity) return " ";
+    if (REASONING_CONFIG_RE.test(annotation)) {
+      // An AA reasoning annotation can also name a distinct SKU: AA lists "GPT-6 Sol (Daybreak Blue, max)"
+      // next to "GPT-6 Sol (Max)" (9 Oct 2026). Drop the effort and the provenance notes
+      // ("Default Fallback", "Based on GLM-5.2"), keep any other comma part as identity. AA names only:
+      // benchmark-board labels such as "Claude Opus 4.6 (120K, High)" keep joining their family.
+      const identity = annotation.split(",").map((part) => part.trim())
+        .filter((part) => part && !REASONING_CONFIG_RE.test(part) && !REASONING_PROVENANCE_RE.test(part));
+      return ` ${identity.join(" ")} `;
+    }
     return ` ${annotation} `;
   });
   // unify version dashes: 4-8 -> 4.8 ; k2-6 stays handled below
@@ -571,7 +581,7 @@ async function build() {
   // AA renames keep the published id (lib/aa-identity.mjs, 17 Sep 2026).
   const aaNaturalKey = (m) => {
     const meta = m.metadata || {};
-    const named = normalizeFamily(m.name, m.model_creator?.name);
+    const named = normalizeFamily(m.name, m.model_creator?.name, { aaAnnotationIdentity: true });
     const routed = meta.openrouter_api_id ? normalizeFamily(meta.openrouter_api_id, m.model_creator?.name) : null;
     return routed && /(?:^|-)(?:thinking|instruct)(?:-|$)/.test(routed.familyKey) ? routed.familyKey : named.familyKey;
   };
@@ -594,7 +604,7 @@ async function build() {
     const openRouterCorrection = AA_OPENROUTER_ID_CORRECTIONS[m.id] || null;
     const openRouterId = openRouterCorrection?.id || meta.openrouter_api_id || null;
     const huggingfaceUrl = hfCorrection?.url || meta.huggingface_url || null;
-    const named = normalizeFamily(m.name, m.model_creator?.name);
+    const named = normalizeFamily(m.name, m.model_creator?.name, { aaAnnotationIdentity: true });
     const routed = meta.openrouter_api_id ? normalizeFamily(meta.openrouter_api_id, m.model_creator?.name) : null;
     // AA sometimes writes a serving checkpoint as a parenthetical config while
     // OpenRouter exposes it as the product id. Thinking/Instruct are priced as
@@ -607,7 +617,7 @@ async function build() {
     // Thinking/Instruct product still take effect; an id already taken this build falls back to the natural key.
     const published = publishedAa.get(m.id);
     const frozen = aaKeyFrozen({ publishedKey: published?.family_key, publishedName: published?.display_name, currentName: m.name,
-      publishedNaturalKey: published ? normalizeFamily(published.display_name, m.model_creator?.name).familyKey : null,
+      publishedNaturalKey: published ? normalizeFamily(published.display_name, m.model_creator?.name, { aaAnnotationIdentity: true }).familyKey : null,
       publishedFreeze: publishedFreezes.get(m.id), knownFreezes });
     if (frozen && !routeDefinesProduct && !stickyRowIds.has(`${published.family_key}::${variant}`)) {
       const stickyKey = stickyAaFamilyKey({ aaId: m.id, naturalKey: familyKey, variant, publishedKey: published.family_key, naturalRowIds });
