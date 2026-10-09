@@ -4,7 +4,7 @@ import { useState } from "react";
 import { RadarHit, RadarTip, type RadarActive, type RadarSeries } from './TopicRadar';
 import type { JevAxis, JevV12Row } from "../lib/jevbench-v12.mjs";
 import type { JevTopicsView } from "../lib/jevbench-v12-topics.mjs";
-import { radarShape, RADAR_MIN_N, radarValue, plottable, radarRadius, radarLabelMode, fullLabelLayout, numberedLayout, BADGE_R, BADGE_FONT } from "../lib/radar-shape.mjs";
+import { radarShape, RADAR_MIN_N, radarValue, plottable, radarRadius, radarScale, ringLabelPoint, ringLabelText, RADAR_DEFAULT_DOMAIN, type RadarDomain, radarLabelMode, fullLabelLayout, numberedLayout, BADGE_R, BADGE_FONT } from "../lib/radar-shape.mjs";
 
 // CR-94 (Florian 2026-09-19 ~17:30 UTC): compare two systems on radars — the four axes of the JevBench Score and accuracy by
 // subject topic (completes CR-90.3). Every value is the table's (axes) or the published topic artifact's; nothing is recomputed.
@@ -29,7 +29,10 @@ export function sparseNote(spokes: Spoke[], series: Series[]): string | null {
 }
 export type Spoke = { key: string; lines: string[]; values: (number | null)[]; texts: string[]; thin: boolean[]; tip?: string };
 
-export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke[]; series: Series[]; size: { w: number; h: number; r: number }; id: string; title: string; desc: string }) {
+/** `domain` (lead job jevbench-radar-full-areas-20261009): the value range from centre to rim, default 0–100. Current
+ *  competence radars pass RADAR_SIGNED_DOMAIN (−100 centre, 0 bold ring at half radius, 100 rim), so a complete series of measured
+ *  zeros is a full polygon and a negative value is drawn at its own radius. The domain is fixed by the caller, never by the data. */
+export function Radar({ spokes, series, size, id, title, desc, domain = RADAR_DEFAULT_DOMAIN }: { spokes: Spoke[]; series: Series[]; size: { w: number; h: number; r: number }; id: string; title: string; desc: string; domain?: RadarDomain }) {
   const [active, setActive] = useState<RadarActive>(null);
   // Radar display fix (9 Oct 2026): with more than DENSE_SPOKES spokes, or whenever a full name + value label would touch another
   // label or leave the canvas (lib/radar-shape.mjs), spokes carry a number and the names, values and definitions move into
@@ -45,25 +48,28 @@ export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke
   // ring polygon failed hydration as an attribute mismatch. Three decimals of an SVG user unit is far
   // below a device pixel here and is the precision `BenchmarkRadar` already uses for the same reason.
   const r3 = (n: number) => Number(n.toFixed(3));
-  const at = (i: number, v: number) => { const a = -Math.PI / 2 + (2 * Math.PI * i) / spokes.length; const d = R * radarRadius(v) / 100; return [r3(cx + d * Math.cos(a)), r3(cy + d * Math.sin(a))]; };
+  const at = (i: number, v: number) => { const a = -Math.PI / 2 + (2 * Math.PI * i) / spokes.length; const d = R * radarRadius(v, domain) / 100; return [r3(cx + d * Math.cos(a)), r3(cy + d * Math.sin(a))]; };
   const tooltipSeries: RadarSeries[] = series.map((se, k) => ({ id: String(k), name: se.name, color: se.stroke,
     points: spokes.map((s) => ({ value: plottable(s.values[k], s.thin[k]) ? s.values[k] : null,
       label: radarValue(s.values[k]) === null ? 'No measured result' : s.thin[k] ? `${s.texts[k]} — too few completed items to plot` : s.texts[k] })) }));
   const tooltipAxes = spokes.map((s) => ({ id: s.key, name: s.lines.join(' '), version: '', category: '', description: s.tip }));
-  const tooltipAt = (k: number, i: number) => at(i, plottable(spokes[i]?.values[k], spokes[i]?.thin[k]) ? spokes[i].values[k] as number : 100) as [number, number];
+  const tooltipAt = (k: number, i: number) => at(i, plottable(spokes[i]?.values[k], spokes[i]?.thin[k]) ? spokes[i].values[k] as number : domain[1]) as [number, number];
+  const scale = radarScale(domain);
+  const scaleText = scale.signed ? `Linear signed scale: ${ringLabelText(domain[0])} at the centre, 0 on the bold middle ring, ${domain[1]} at the rim.` : null;
   const ring = (v: number) => spokes.map((_, i) => at(i, v).join(",")).join(" ");
   // One value slot per series: the coloured value, a muted n=… for an under-minimum cell, a muted "n/a" for no value.
   const slots = (s: Spoke) => series.map((se, k) => {
     const missing = radarValue(s.values[k]) === null;
     return !shown(s, k) ? null : <tspan key={k} fill={missing || s.thin[k] ? "var(--muted)" : se.stroke} fontWeight={missing ? 400 : 700} data-bh-jev12-radar-value={`${k === 0 ? "a" : "b"}:${s.key}`} data-bh-radar-na={missing ? "" : undefined}>{k > 0 && shown(s, k - 1) ? <tspan fill="var(--muted)" fontWeight={400}> · </tspan> : null}{missing ? "n/a" : s.texts[k]}</tspan>;
   });
-  const svg = <svg viewBox={`0 0 ${W} ${H}`} className={num ? "mx-auto h-auto w-full max-w-[420px]" : "h-auto w-full"} role="img" aria-labelledby={`${id}-t ${id}-d`} data-bh-jev12-radar-svg data-bh-radar-label-mode={mode}>
-    <title id={`${id}-t`}>{title}</title><desc id={`${id}-d`}>{desc}</desc>
-    {[20, 40, 60, 80, 100].map((v) => <polygon key={v} points={ring(v)} fill="none" stroke="rgb(var(--line))" strokeOpacity={v === 100 ? 0.9 : 0.5} strokeWidth={1} />)}
+  const svg = <svg viewBox={`0 0 ${W} ${H}`} className={num ? "mx-auto h-auto w-full max-w-[420px]" : "h-auto w-full"} role="img" aria-labelledby={`${id}-t ${id}-d`} data-bh-jev12-radar-svg data-bh-radar-label-mode={mode} data-bh-radar-domain={scale.signed ? "signed" : undefined}>
+    <title id={`${id}-t`}>{title}</title><desc id={`${id}-d`}>{scaleText ? `${desc} ${scaleText}` : desc}</desc>
+    {scale.rings.map((v) => <polygon key={v} points={ring(v)} fill="none" stroke={v === scale.zero ? "currentColor" : "rgb(var(--line))"} strokeOpacity={v === scale.zero ? 0.55 : v === domain[1] ? 0.9 : 0.5} strokeWidth={v === scale.zero ? 1.8 : 1} data-bh-radar-zero-ring={v === scale.zero ? "" : undefined} />)}
     {/* F-136 (Fable pass 25, = F-113/F-117 for these radars): ring labels sit at the half-step between spoke 0 and spoke 1, inside their
         ring (on the polygon's apothem), with the F-70 halo, so the top spoke's own point never strikes them. */}
-    {[50, 100].map((v) => { const a = -Math.PI / 2 + Math.PI / spokes.length; const d = (R * v / 100) * Math.cos(Math.PI / spokes.length) - 3; return <text key={v} x={r3(cx + d * Math.cos(a))} y={r3(cy + d * Math.sin(a))} textAnchor="start" dominantBaseline="hanging" fontSize={11} fill="currentColor" opacity={0.7} style={{ paintOrder: "stroke", stroke: "var(--surface)", strokeWidth: "3px", strokeLinejoin: "round" }} data-radar-ring>{v}</text>; })}
-    {spokes.map((s, i) => { const [x, y] = at(i, 100); return <line key={s.key} x1={cx} y1={cy} x2={x} y2={y} stroke="rgb(var(--line))" strokeOpacity={0.6} />; })}
+    {/* Signed domain: −100 / 0 / 100 at the same half-step via ringLabelPoint (lib/radar-shape.mjs), the 0 label bold. */}
+    {scale.labels.map((v) => { const p = ringLabelPoint(v, { cx, cy, R, n: spokes.length }, domain); return <text key={v} x={r3(p.x)} y={r3(p.y)} textAnchor="start" dominantBaseline="hanging" fontSize={11} fontWeight={v === scale.zero ? 700 : undefined} fill="currentColor" opacity={v === scale.zero ? 0.9 : 0.7} style={{ paintOrder: "stroke", stroke: "var(--surface)", strokeWidth: "3px", strokeLinejoin: "round" }} data-radar-ring>{ringLabelText(v)}</text>; })}
+    {spokes.map((s, i) => { const [x, y] = at(i, domain[1]); return <line key={s.key} x1={cx} y1={cy} x2={x} y2={y} stroke="rgb(var(--line))" strokeOpacity={0.6} />; })}
     {series.map((se, k) => {
       // CR-290 (Florian 5 Oct 2026): a spoke without a plotted value (unpublished, or under the minimum n) is a gap, never
       // a 0 and never bridged. CR-290 correction (Florian ~20:30): joining neighbouring points still drew a few dots tied by a line that
@@ -105,10 +111,10 @@ export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke
     }))}
     {num && spokes.map((s, i) => <RadarHit key={`label-${s.key}`} cx={r3(num.badges[i].x)} cy={r3(num.badges[i].y)} s={0} i={i} active={active} setActive={setActive} label={`${s.lines.join(' ')}: ${tooltipSeries.map((se) => `${se.name}: ${se.points[i].label}`).join('; ')}`} />)}
   </svg>;
-  const chart = <div className={num ? "relative mx-auto w-full max-w-[420px]" : "relative"} data-bh-jev-radar-interactive onPointerLeave={(e) => { if (e.pointerType === 'mouse') setActive(null); }} onClick={() => setActive(null)}>
+  const chart = <><div className={num ? "relative mx-auto w-full max-w-[420px]" : "relative"} data-bh-jev-radar-interactive onPointerLeave={(e) => { if (e.pointerType === 'mouse') setActive(null); }} onClick={() => setActive(null)}>
     {svg}
     <RadarTip active={active} axes={tooltipAxes} series={tooltipSeries} at={tooltipAt} width={W} height={H} />
-  </div>;
+  </div>{scaleText && <p className="bh-muted text-center text-[12px]" data-bh-radar-scale="signed">{scaleText}</p>}</>;
   if (!num) return chart;
   // The key: spoke number, full name (definition and item count on hover / long-press via title), and every series' value in
   // its colour — the same printed values the labels carried. Two columns from sm up, one on a phone; long names wrap.

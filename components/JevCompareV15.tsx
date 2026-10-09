@@ -8,7 +8,7 @@ import { SystemCombobox } from "./JevCompareV14";
 import { jevSourceUrl } from "./jevSystemLinks";
 import type { CompareCategories, CategoryDim } from "../lib/jevbench-categories.mjs";
 import { useJevV15VisibleKeys } from "./useJevV15VisibleKeys";
-import { radarShape, radarValue, plottable, categoryCell } from "../lib/radar-shape.mjs";
+import { radarShape, radarValue, plottable, categoryCell, RADAR_SIGNED_DOMAIN, type RadarDomain } from "../lib/radar-shape.mjs";
 
 // CR-205: the v1.4 board's two-system compare, on v1.5 data. Four radars per pair — the four score axes,
 // chance-corrected competence per request type (open and sealed), and competence per tier on the open and
@@ -47,7 +47,7 @@ function series(A: JevCompareV15Row, B: JevCompareV15Row): Series[] {
     { name: B.name, stroke: same ? `color-mix(in srgb, ${colour(jevRowArch(B))} 55%, var(--text))` : colour(jevRowArch(B)), dashed: same, square: true }];
 }
 
-/** CR-257: one radar per category dimension. A value below chance draws at the centre and prints its published number — negative
+/** CR-257: one radar per category dimension. A signed value below zero draws inside the zero ring and prints its published number — negative
  *  in the signed v1.5.x / ImageJevBench artifacts; the v1.6 artifacts already clip below-chance means to 0 (see the figure note).
  *  CR-290 correction (Florian 5 Oct 2026 ~20:30): only well-measured categories (radarMinN = 30 items) are spokes; smaller ones go to the
  *  low-sample table. A system that answered fewer than radarMinN items of a spoke's category is printed as n=… and not plotted. */
@@ -186,15 +186,17 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
     const why = f.dim && categories ? `Open spokes (n/a or n=…) have fewer than ${categories.radarMinN} answered items for that system or no published value${hosted ? "; hosted APIs answer a smaller item set, so more of their category cells stay under that" : ""}.` : "Open spokes have no published value.";
     return <>{notes.map((g) => <span key={g.k} className="block" data-bh-radar-gap-note={g.points ? "points" : "runs"}>{g.text}.</span>)}<span className="block">Gaps, not zeros: {why}</span>{zeroNote(f)}</>;
   };
-  // Radar display fix (9 Oct 2026): a drawn 0 (or a negative value at the centre) is a measured result, not a missing one. The
+  // Radar display fix (9 Oct 2026): a drawn 0 (or a negative value) is a measured result, not a missing one. The
   // v1.6 category artifacts clip below-chance means to 0 before publication, so their 0 cannot be told apart from "exactly
   // chance"; the signed v1.5.x / ImageJevBench artifacts print the negative number. Display wording only; no value changes.
+  // Signed axis (lead job jevbench-radar-full-areas-20261009): category radars run −100 (centre) … 0 (bold ring) … 100 (rim),
+  // so a measured 0 sits on the bold ring and a negative value inside it.
+  const clippedMetric = Boolean(categories && /clipped|negative means are clipped/i.test(categories.metric));
   function zeroNote(f: { spokes: Spoke[]; dim?: CategoryDim }) {
     if (!f.dim || !categories) return null;
     const drawn = f.spokes.flatMap((sp) => sp.values.filter((v, k) => plottable(v, sp.thin[k])) as number[]);
-    const clipped = /clipped|negative means are clipped/i.test(categories.metric);
-    if (drawn.some((v) => v === 0) && clipped) return <span className="block" data-bh-radar-zero-note="clipped">A point at the centre printed 0.0 is a measured value, not a gap: these published cells clip below-chance results to 0, so 0 means at or below chance.</span>;
-    if (drawn.some((v) => v <= 0)) return <span className="block" data-bh-radar-zero-note="signed">A point at the centre is a measured value at or below chance (0); a negative value prints its number.</span>;
+    if (drawn.some((v) => v === 0) && clippedMetric) return <span className="block" data-bh-radar-zero-note="clipped">A point on the bold 0 ring printed 0.0 is a measured value, not a gap: these published cells clip below-chance results to 0, so 0 means at or below chance. Their score markers cannot fall inside that ring.</span>;
+    if (drawn.some((v) => v <= 0)) return <span className="block" data-bh-radar-zero-note="signed">A point on the bold 0 ring is a measured value at chance; a point inside it is below chance and prints its negative number.</span>;
     return null;
   }
   const desc = (title: string, spokes: Spoke[]) => `${title}, ${s[0].name} vs ${s[1].name}. ` + spokes.map((sp) => `${sp.lines.join(" ")}: ${sp.texts[0]} vs ${sp.texts[1]}`).join("; ") + ".";
@@ -207,14 +209,14 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
     const spokes = categorySpokes(pair, dim, categories!);
     const absent = pair.filter((r) => !categories!.systems[r.key]);
     return { key: `cat-${dim.key}`, title: dim.title, dim,
-      note: `${dim.note} Chance-corrected competence per category (0 = chance, 100 = perfect), ${pair.map((r) => `${r.name}: ${categories!.categoryPools?.[r.key] ?? categories!.splitNames.join("+")}`).join("; ")} items pooled; only categories with at least ${categories!.radarMinN} items are spokes, smaller ones are listed below. Hover a category for its definition and item count.`,
-      spokes, missing: [...pair.filter((r) => categories!.spokeExceptions?.[r.key]).map((r) => `${r.name}: ${categories!.spokeExceptions![r.key]}`), ...pair.filter((r) => categories!.exposureNotes?.[r.key]).map((r) => `${r.name}: ${categories!.exposureNotes![r.key]}`), ...absent.map((r) => `${r.name}: ${categories!.missing[r.key] ?? "no per-category values"}`)], size: { w: 500, h: 400, r: 112 } };
+      note: `${dim.note} Chance-corrected competence per category (${clippedMetric ? "0 = at or below chance; negative averages are reported as 0" : "0 = chance, below chance negative"}, 100 = perfect), ${pair.map((r) => `${r.name}: ${categories!.categoryPools?.[r.key] ?? categories!.splitNames.join("+")}`).join("; ")} items pooled; only categories with at least ${categories!.radarMinN} items are spokes, smaller ones are listed below. Hover a category for its definition and item count.`,
+      spokes, domain: RADAR_SIGNED_DOMAIN as RadarDomain, missing: [...pair.filter((r) => categories!.spokeExceptions?.[r.key]).map((r) => `${r.name}: ${categories!.spokeExceptions![r.key]}`), ...pair.filter((r) => categories!.exposureNotes?.[r.key]).map((r) => `${r.name}: ${categories!.exposureNotes![r.key]}`), ...absent.map((r) => `${r.name}: ${categories!.missing[r.key] ?? "no per-category values"}`)], size: { w: 500, h: 400, r: 112 } };
   });
-  const figures: { key: string; title: string; note: string; spokes: Spoke[]; missing: string[]; size: { w: number; h: number; r: number }; dim?: CategoryDim }[] = [
+  const figures: { key: string; title: string; note: string; spokes: Spoke[]; missing: string[]; size: { w: number; h: number; r: number }; dim?: CategoryDim; domain?: RadarDomain }[] = [
     { key: "axes", title: "The four score axes", note: "0–100, the values in the table. An axis a system has no published value for is left as a gap (it counts as 0 in the composite).", spokes: axisSpokes, missing: [], size: { w: 420, h: 320, r: 96 } },
-    { key: "types", title: "Competence per request type, open / sealed", note: `Chance-corrected competence (0 = chance) for Choice, Noul and Score on the ${openDecisions} open and ${sealedDecisions} sealed decisions.`, spokes: typeSpokes, missing: missingFor(typeSpokes), size: { w: 440, h: 340, r: 100 } },
-    { key: "tiers-open", title: "Competence per tier — open set", note: "Per-tier competence, the three request types pooled by their published decision counts.", spokes: openTierSpokes, missing: missingFor(openTierSpokes), size: { w: 440, h: 340, r: 100 } },
-    { key: "tiers-sealed", title: "Competence per tier — sealed set", note: "Per-tier competence on the sealed decisions, types pooled the same way; item text stays private.", spokes: sealedTierSpokes, missing: missingFor(sealedTierSpokes), size: { w: 440, h: 340, r: 100 } },
+    { key: "types", title: "Competence per request type, open / sealed", note: `Chance-corrected competence for Choice, Noul and Score on the ${openDecisions} open and ${sealedDecisions} sealed decisions.`, spokes: typeSpokes, domain: RADAR_SIGNED_DOMAIN, missing: missingFor(typeSpokes), size: { w: 440, h: 340, r: 100 } },
+    { key: "tiers-open", title: "Competence per tier — open set", note: "Per-tier competence, the three request types pooled by their published decision counts.", spokes: openTierSpokes, domain: RADAR_SIGNED_DOMAIN, missing: missingFor(openTierSpokes), size: { w: 440, h: 340, r: 100 } },
+    { key: "tiers-sealed", title: "Competence per tier — sealed set", note: "Per-tier competence on the sealed decisions, types pooled the same way; item text stays private.", spokes: sealedTierSpokes, domain: RADAR_SIGNED_DOMAIN, missing: missingFor(sealedTierSpokes), size: { w: 440, h: 340, r: 100 } },
   ].filter((f) => !axesOnly || f.key === "axes");
   // CR-257: the category radars sit right after the score axes.
   figures.splice(1, 0, ...categoryFigures);
@@ -239,7 +241,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
           <h3 className="text-base font-semibold">{f.title}</h3>
           {f.missing.length > 0 && <p className="bh-muted mt-1 text-[12px]" data-bh-jev15-radar-missing={f.key}>{f.dim ? f.missing.join(" ") : `${f.missing.join(" and ")} ${f.missing.length === 1 ? "has" : "have"} no published values for this view.`}</p>}
           {missingFor(f.spokes).length < 2
-            ? <Radar spokes={f.spokes} series={s} size={f.size} id={`${idPrefix}-radar-${f.key}`} title={`Radar: ${f.title.toLowerCase()}, two systems`} desc={desc(f.title, f.spokes)} />
+            ? <Radar spokes={f.spokes} series={s} size={f.size} id={`${idPrefix}-radar-${f.key}`} title={`Radar: ${f.title.toLowerCase()}, two systems`} desc={desc(f.title, f.spokes)} domain={f.domain} />
             : <p className="bh-muted mt-3 text-[12px]">Neither selected system has a published series for this view.</p>}
           <figcaption className="bh-muted text-[12px]">{f.note}{f.key !== "axes" && !f.dim && subsetNote && <span data-bh-jev15-subset-note>{subsetNote}</span>}{gapNote(f)}</figcaption>
           {f.dim && categories && <LowSampleTable dim={f.dim} cats={categories} pair={pair} />}
