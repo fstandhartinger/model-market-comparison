@@ -65,6 +65,13 @@ its binding, not its provenance or the parent's full source-review pins.
         receipt.get(key) != recipe_code[key] for key in ("commit", "tree")
     ):
         raise OperationalHold("pod_recipe_mismatched_fetch")
+    import native_source_selection
+    selected = source == "code" and native_source_selection.applicable(
+        job_dir, recipe_code["commit"], recipe_code["tree"])
+    if selected:
+        native_source_selection.validate_receipt(job_dir, repo, receipt)
+    elif "native_selection" in receipt:
+        raise OperationalHold("native_source_selection_wrong_pair")
     return repo
 
 
@@ -138,6 +145,11 @@ hydrated through remotes. Host-owned source/receipts must stay stable while
 export runs, as they must during the parent's source-review gate.
 """
     repo = validate_code_binding(recipe_code, job_dir)
+    import native_source_selection
+    if recipe_code.get("source", "code") == "code" and native_source_selection.applicable(
+            job_dir, recipe_code["commit"], recipe_code["tree"]):
+        return native_source_selection.inspect_selected(
+            job_dir, repo, recipe_code["commit"], recipe_code["tree"], export=True)
     try:
         with tempfile.TemporaryDirectory(prefix="fastlane-source-") as temporary:
             isolated = Path(temporary)
