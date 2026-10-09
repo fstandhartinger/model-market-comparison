@@ -128,9 +128,15 @@ test('the 20 use-case labels at the old size overlap (the reported bug); full la
 async function loadRadar() {
   const url = new URL('../components/JevRadars.tsx', import.meta.url);
   const stub = `data:text/javascript;base64,${Buffer.from('export const JEV_TYPE_LABEL = {}; export const jevRowArch = (r) => r.cls; export const jevTypeVarName = (c) => `--t-${c}`;'.replace('`--t-${c}`', '"--t-" + c')).toString('base64')}`;
-  let code = ts.transpileModule(await readFile(url, 'utf8'), { compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX } }).outputText;
-  code = code.replace(/\bfrom\s*(["'])([^"']+)\1/g, (_, q, spec) => `from ${q}${spec === './jevTypes' ? stub : spec.startsWith('.') ? new URL(spec, url).href : `file://${require.resolve(spec)}`}${q}`);
-  return import(`data:text/javascript;base64,${Buffer.from(code).toString('base64')}`);
+  async function moduleUrl(file) {
+    let code = ts.transpileModule(await readFile(file, 'utf8'), { compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX } }).outputText;
+    for (const [whole, q, spec] of [...code.matchAll(/\bfrom\s*(["'])([^"']+)\1/g)]) {
+      const resolved = spec === './jevTypes' ? stub : spec === './TopicRadar' ? await moduleUrl(new URL('TopicRadar.tsx', file)) : spec === '../lib/version-label' ? await moduleUrl(new URL('../lib/version-label.ts', file)) : spec.startsWith('.') ? new URL(spec, file).href : `file://${require.resolve(spec)}`;
+      code = code.replace(whole, `from ${q}${resolved}${q}`);
+    }
+    return `data:text/javascript;base64,${Buffer.from(code).toString('base64')}`;
+  }
+  return import(await moduleUrl(url));
 }
 
 test('rendered Radar: missing, NaN and thin cells produce no marker; 20 spokes render numbered badges plus a key with every value', async () => {

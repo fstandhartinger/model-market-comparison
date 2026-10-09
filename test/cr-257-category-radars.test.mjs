@@ -98,7 +98,8 @@ test('CR-257: both compare views receive the categories and draw the two categor
   assert.match(compare, /categoryFigures/);
   assert.match(compare, /figures\.splice\(1, 0, \.\.\.categoryFigures\)/, 'category radars sit right after the score axes');
   assert.match(compare, /<CategoryKey /, 'each category radar explains its categories and item counts');
-  assert.match(radar, /\{s\.tip && <title>\{s\.tip\}<\/title>\}/, 'spoke labels carry the category tooltip');
+  assert.match(radar, /description: s\.tip/, 'interactive tooltips carry the category definition and item counts');
+  assert.match(radar, /<RadarTip active=\{active\} axes=\{tooltipAxes\}/, 'every shared radar renders the interactive tooltip');
 });
 
 test('CR-257: category artifacts are aggregate-only and internally consistent', async () => {

@@ -1,6 +1,7 @@
 "use client";
 import { JEV_TYPE_LABEL, jevRowArch, jevTypeVarName } from './jevTypes';
 import { useState } from "react";
+import { RadarHit, RadarTip, type RadarActive, type RadarSeries } from './TopicRadar';
 import type { JevAxis, JevV12Row } from "../lib/jevbench-v12.mjs";
 import type { JevTopicsView } from "../lib/jevbench-v12-topics.mjs";
 import { radarShape, RADAR_MIN_N, radarValue, plottable, radarRadius, radarLabelMode, fullLabelLayout, numberedLayout, BADGE_R, BADGE_FONT } from "../lib/radar-shape.mjs";
@@ -29,6 +30,7 @@ export function sparseNote(spokes: Spoke[], series: Series[]): string | null {
 export type Spoke = { key: string; lines: string[]; values: (number | null)[]; texts: string[]; thin: boolean[]; tip?: string };
 
 export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke[]; series: Series[]; size: { w: number; h: number; r: number }; id: string; title: string; desc: string }) {
+  const [active, setActive] = useState<RadarActive>(null);
   // Radar display fix (9 Oct 2026): with more than DENSE_SPOKES spokes, or whenever a full name + value label would touch another
   // label or leave the canvas (lib/radar-shape.mjs), spokes carry a number and the names, values and definitions move into
   // the key under the radar — the text keeps its size instead of shrinking with a dense SVG on a phone.
@@ -44,6 +46,11 @@ export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke
   // below a device pixel here and is the precision `BenchmarkRadar` already uses for the same reason.
   const r3 = (n: number) => Number(n.toFixed(3));
   const at = (i: number, v: number) => { const a = -Math.PI / 2 + (2 * Math.PI * i) / spokes.length; const d = R * radarRadius(v) / 100; return [r3(cx + d * Math.cos(a)), r3(cy + d * Math.sin(a))]; };
+  const tooltipSeries: RadarSeries[] = series.map((se, k) => ({ id: String(k), name: se.name, color: se.stroke,
+    points: spokes.map((s) => ({ value: plottable(s.values[k], s.thin[k]) ? s.values[k] : null,
+      label: radarValue(s.values[k]) === null ? 'No measured result' : s.thin[k] ? `${s.texts[k]} — too few completed items to plot` : s.texts[k] })) }));
+  const tooltipAxes = spokes.map((s) => ({ id: s.key, name: s.lines.join(' '), version: '', category: '', description: s.tip }));
+  const tooltipAt = (k: number, i: number) => at(i, plottable(spokes[i]?.values[k], spokes[i]?.thin[k]) ? spokes[i].values[k] as number : 100) as [number, number];
   const ring = (v: number) => spokes.map((_, i) => at(i, v).join(",")).join(" ");
   // One value slot per series: the coloured value, a muted n=… for an under-minimum cell, a muted "n/a" for no value.
   const slots = (s: Spoke) => series.map((se, k) => {
@@ -83,7 +90,7 @@ export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke
     }) : fullLabelLayout(spokes.map((s) => ({ lines: s.lines, value: valueText(s) })), size).map(({ x: x0, y: y1, anchor }, i) => {
       const s = spokes[i], x = r3(x0), y = r3(y1);
       return <text key={s.key} x={x} y={y} textAnchor={anchor} fontSize={13.5} fill="var(--text)" data-bh-jev12-radar-spoke={s.key} style={s.tip ? { cursor: "help" } : undefined}>
-        {s.tip && <title>{s.tip}</title>}
+        <title>{`${s.lines.join(' ')}: ${series.map((se, k) => `${se.name}: ${tooltipSeries[k].points[i].label}`).join('; ')}${s.tip ? ` — ${s.tip}` : ''}`}</title>
         {s.lines.map((l, j) => <tspan key={j} x={x} dy={j === 0 ? 0 : 14} fontWeight={600}>{l}</tspan>)}
         {/* F-216 (Fable pass 40), refined by CR-290: the separator sits between two printed slots; an unpublished value prints "n/a", never a bare "· 74%". */}
         {/* CR-290: when one system has a value and the other has none, the missing one prints a muted "n/a" in its slot, so a gap
@@ -91,12 +98,22 @@ export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke
         <tspan x={x} dy={14} fontSize={13}>{slots(s)}</tspan>
       </text>;
     })}
+    {series.map((se, k) => spokes.map((s, i) => {
+      if (!plottable(s.values[k], s.thin[k])) return null;
+      const [x, y] = at(i, s.values[k] as number);
+      return <RadarHit key={`${k}-${s.key}`} cx={x} cy={y} s={k} i={i} active={active} setActive={setActive} label={`${se.name}, ${s.lines.join(' ')}: ${tooltipSeries[k].points[i].label}`} />;
+    }))}
+    {num && spokes.map((s, i) => <RadarHit key={`label-${s.key}`} cx={r3(num.badges[i].x)} cy={r3(num.badges[i].y)} s={0} i={i} active={active} setActive={setActive} label={`${s.lines.join(' ')}: ${tooltipSeries.map((se) => `${se.name}: ${se.points[i].label}`).join('; ')}`} />)}
   </svg>;
-  if (!num) return svg;
+  const chart = <div className={num ? "relative mx-auto w-full max-w-[420px]" : "relative"} data-bh-jev-radar-interactive onPointerLeave={(e) => { if (e.pointerType === 'mouse') setActive(null); }} onClick={() => setActive(null)}>
+    {svg}
+    <RadarTip active={active} axes={tooltipAxes} series={tooltipSeries} at={tooltipAt} width={W} height={H} />
+  </div>;
+  if (!num) return chart;
   // The key: spoke number, full name (definition and item count on hover / long-press via title), and every series' value in
   // its colour — the same printed values the labels carried. Two columns from sm up, one on a phone; long names wrap.
   return <>
-    {svg}
+    {chart}
     <ol className="mt-1 grid gap-x-4 gap-y-0.5 text-[12.5px] leading-snug sm:grid-cols-2" aria-label={`Spoke key: ${title}`} data-bh-radar-key={id}>
       {spokes.map((s, i) => <li key={s.key} className="flex min-w-0 gap-1.5" title={s.tip} data-bh-radar-key-item={s.key}>
         <span className="tabular w-5 shrink-0 text-right font-bold" aria-hidden="true">{i + 1}</span>
