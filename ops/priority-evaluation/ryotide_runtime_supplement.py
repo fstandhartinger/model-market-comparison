@@ -60,21 +60,65 @@ def native_command(image,root):
  """Match the pinned measurement service environment, retaining image CUDA libraries."""
  return ['docker','run','--rm','--gpus','all','--network','none','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--shm-size','16g','--tmpfs','/tmp:exec,size=16g','-e','HOME=/tmp','-e','OPENAI_API_KEY=','-e','HF_TOKEN=','-v',root+'/code:/code:ro','-v','/models:/models:ro','-v',root+'/proof.py:/proof.py:ro','--entrypoint','/usr/bin/env',image,'PYTHONPATH=/code/src:/code/vendor/jevbench','HF_HUB_OFFLINE=1','TRANSFORMERS_OFFLINE=1','HF_HUB_DISABLE_TELEMETRY=1','TOKENIZERS_PARALLELISM=false','python3','/proof.py']
 
+# Only the fixed first-party unscored pre-input proof uses these diagnostics.
+# Three fixed observed commands plus a parsed report keep the JSON below 1 MiB.
+PROOF_TEXT_LIMIT=64*1024
+PROOF_PARSED_LIMIT=64*1024
+def diagnostic_text(value):
+ text=str(value)
+ # The proof command unsets credentials; also redact credential-shaped error text.
+ text=re.sub(r"(?i)([\"']?(?:OPENAI_API_KEY|HF_TOKEN|HUGGING_FACE_HUB_TOKEN|AWS_SECRET_ACCESS_KEY|API_KEY|ACCESS_TOKEN|PASSWORD)[\"']?\s*[=:]\s*[\"']?)[^\s,;\"']+",r'\1[REDACTED]',text)
+ text=re.sub(r'(?i)(authorization\s*[:=]\s*bearer\s+)[^\s]+',r'\1[REDACTED]',text)
+ return {'text':text[:PROOF_TEXT_LIMIT],'truncated':len(text)>PROOF_TEXT_LIMIT,'original_chars':len(text)}
+def observed_proof_exec(report,stage,provider,pod_id,command,timeout=600):
+ diag=report['native_proof_diagnostics'];diag['stage']=stage
+ try:
+  result=pod_runner._exec(provider,pod_id,command,timeout=timeout)
+ except Exception as error:
+  # _exec did not return a result: no invented exit code or transfer observation.
+  diag['observations'][stage]={'result_available':False,'exit_code':None,'exception_type':type(error).__name__,'error':diagnostic_text(error)}
+  raise
+ diag['observations'][stage]={'result_available':True,'exit_code':result.returncode,'stdout':diagnostic_text(result.stdout),'stderr':diagnostic_text(result.stderr)}
+ return result
+def retain_parsed_proof(report,value):
+ # Serialize for a size bound and credential redaction, without altering validation.
+ text=json.dumps(value,sort_keys=True)
+ cleaned=diagnostic_text(text)
+ if len(text)<=PROOF_PARSED_LIMIT and not cleaned['truncated']:
+  report['native_proof_diagnostics']['parsed_report']=json.loads(cleaned['text'])
+ else:
+  report['native_proof_diagnostics']['parsed_report']={'retained':False,'reason':'parsed_report_size_limit','original_chars':len(text)}
+
 def prove(provider,pod_id,job,recipe,report,code_tar,recheck):
- image=effective_image(job,recipe,report);recheck()
- if hashlib.sha256(code_tar).hexdigest()!=CODE_SHA:raise ValueError('exact selected source archive')
- root='/runtime-preflight/ryotide-native';pod_runner._exec(provider,pod_id,['mkdir','-p',root+'/code'])
- with tempfile.NamedTemporaryFile()as f:
-  f.write(code_tar);f.flush();provider.scp_to(pod_id,f.name,root+'/code.tar')
- if CODE_SHA not in pod_runner._exec(provider,pod_id,['sha256sum',root+'/code.tar']).stdout.split():raise ValueError('code transfer')
- pod_runner._exec(provider,pod_id,['tar','-xf',root+'/code.tar','-C',root+'/code'])
- proof=HERE/'ryotide_native_proof.py';provider.scp_to(pod_id,str(proof),root+'/proof.py')
- if report['supplement_binding']['proof_sha256']not in pod_runner._exec(provider,pod_id,['sha256sum',root+'/proof.py']).stdout.split():raise ValueError('proof transfer')
- command=native_command(image,root)
- r=pod_runner._exec(provider,pod_id,command,timeout=900);v=json.loads(r.stdout)
- if not proof_matches(v):raise ValueError('native proof failed')
- report.update(native_proof=v,native_proof_stderr=r.stderr,native_proof_accepted=True,native_code_archive_sha256=CODE_SHA)
- recheck();return report
+ report['native_proof_diagnostics']={'schema_version':1,'scope':'fixed_firstparty_synthetic_preinput_unscored','stage':'effective_image','actual_code_archive_sha256':hashlib.sha256(code_tar).hexdigest(),'expected_code_archive_sha256':CODE_SHA,'observations':{}}
+ diag=report['native_proof_diagnostics']
+ try:
+  image=effective_image(job,recipe,report);recheck()
+  diag['stage']='code_archive_pin'
+  if diag['actual_code_archive_sha256']!=CODE_SHA:raise ValueError('exact selected source archive')
+  root='/runtime-preflight/ryotide-native';pod_runner._exec(provider,pod_id,['mkdir','-p',root+'/code'])
+  diag['stage']='code_transfer'
+  with tempfile.NamedTemporaryFile()as f:
+   f.write(code_tar);f.flush();provider.scp_to(pod_id,f.name,root+'/code.tar')
+  r=observed_proof_exec(report,'code_checksum',provider,pod_id,['sha256sum',root+'/code.tar'])
+  if CODE_SHA not in r.stdout.split():raise ValueError('code transfer')
+  diag['stage']='code_extract'
+  pod_runner._exec(provider,pod_id,['tar','-xf',root+'/code.tar','-C',root+'/code'])
+  diag['stage']='proof_transfer'
+  proof=HERE/'ryotide_native_proof.py';provider.scp_to(pod_id,str(proof),root+'/proof.py')
+  r=observed_proof_exec(report,'proof_checksum',provider,pod_id,['sha256sum',root+'/proof.py'])
+  if report['supplement_binding']['proof_sha256']not in r.stdout.split():raise ValueError('proof transfer')
+  command=native_command(image,root)
+  r=observed_proof_exec(report,'native_process',provider,pod_id,command,timeout=900)
+  diag['stage']='native_json_parse';v=json.loads(r.stdout)
+  retain_parsed_proof(report,v)
+  diag['stage']='native_proof_predicate'
+  if not proof_matches(v):raise ValueError('native proof failed')
+  report.update(native_proof=v,native_proof_stderr=r.stderr,native_proof_accepted=True,native_code_archive_sha256=CODE_SHA)
+  diag['stage']='final_recheck';recheck();diag['stage']='accepted';return report
+ except Exception as error:
+  diag['exception_type']=type(error).__name__;diag['error']=diagnostic_text(error)
+  raise
 
 def proof_matches(v):
  if not isinstance(v,dict)or set(v.get('optional_backend_versions',{}))!={'flash-qla','tilelang','causal-conv1d','flash-attn'}or any(x is not None and (not isinstance(x,str)or not x)for x in v['optional_backend_versions'].values())or not isinstance(v.get('cuda_kernel_names'),list)or not 1<=len(v['cuda_kernel_names'])<=512 or any(not isinstance(n,str)or not n or len(n)>500 for n in v['cuda_kernel_names']):return False
