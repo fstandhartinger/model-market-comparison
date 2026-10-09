@@ -409,11 +409,19 @@ class HostStagingTests(unittest.TestCase):
             pr.run(RID, self.job, self.recipe, self.root / 'out', self.pins, 20,
                 provider=fake, weights_streamer=self.streamer, image_context_provider=lambda job: self.context)
         self.assertEqual(fake.calls, [])
-        self.recipe['hourly_usd'] = 2.0
+        self.recipe['hourly_usd'] = 1.0  # live pod price 1.30 is DEARER than the pin: hold + teardown
         with self.assertRaisesRegex(md.OperationalHold, 'gpu_pod_quote_changed'):
             self.lifecycle(fake)
         self.assertFalse(any(c[0] == 'scp_to' for c in fake.calls))
         self.assertEqual(fake.removed, ['pod-1'])
+
+    def test_cheaper_live_node_than_the_pin_is_accepted_for_host_staged_recipes(self):
+        self.recipe['hourly_usd'] = 2.0  # live 1.30 <= pin: real spend stays below the recorded bound
+        fake = HostFake()
+        receipt = self.run_recipe(fake)
+        self.assertEqual(fake.ceilings, [2.0])
+        self.assertEqual(fake.removed, ['pod-1'])
+        self.assertIn('host_staging', receipt)
 
     def test_acceptance_drift_cannot_reuse_completed_receipt(self):
         fake = HostFake()

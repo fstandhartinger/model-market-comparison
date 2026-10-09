@@ -879,7 +879,10 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         if not 0 < hourly <= MAX_HOURLY_USD:
             raise PodCapacityError(f"pod {pod_id} hourly price {pod.get('hourly_usd')} "
                                    f"exceeds the {MAX_HOURLY_USD} cap")
-        if (recipe['kind'] == 'aplomb_native' or 'imagejevbench' in benchmarks) and hourly != recipe.get('hourly_usd'):
+        if (recipe['kind'] == 'aplomb_native' or 'imagejevbench' in benchmarks) and (
+                hourly > recipe.get('hourly_usd') if 'host_staging' in recipe else hourly != recipe.get('hourly_usd')):
+            # Host-staged recipes: the pinned price is the accounted AND provider-side ceiling; a cheaper node is safe
+            # (real spend <= recorded spend), a dearer one can never be created. Other recipes keep exact equality.
             raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed')
         placement = state.get('placement_quote') if selection is not None else None
         if placement and (hourly != placement['hourly_usd'] or pod.get('gpu_count') != placement['gpu_count']):
