@@ -39,6 +39,13 @@ class Tests(unittest.TestCase):
   self.assertTrue(proof.verify_answer(good,'choice'))
   good['answers']['decision']['probabilities']['A']=float('nan')
   with self.assertRaises(ValueError):proof.verify_answer(good,'choice')
+ def test_native_argv_preserves_image_cuda_environment_and_pinned_service_env(self):
+  cmd=S.native_command('sha256:'+'a'*64,'/runtime-preflight/ryotide-native')
+  self.assertNotIn('-i',cmd);self.assertFalse(any(x.startswith('PATH=')for x in cmd))
+  self.assertIn('OPENAI_API_KEY=',cmd);self.assertIn('HF_TOKEN=',cmd);self.assertIn('--read-only',cmd)
+  self.assertEqual(cmd[cmd.index('--network')+1],'none')
+  tail=cmd[cmd.index('--entrypoint')+3:]
+  self.assertEqual(tail[:5],['PYTHONPATH=/code/src:/code/vendor/jevbench','HF_HUB_OFFLINE=1','TRANSFORMERS_OFFLINE=1','HF_HUB_DISABLE_TELEMETRY=1','TOKENIZERS_PARALLELISM=false'])
  def test_bad_code_archive_before_any_transfer(self):
   provider=Mock()
   with self.assertRaises(ValueError):S.prove(provider,'pod','/job/'+S.ORDER,{},self.report(),b'UNREVIEWED',Mock())

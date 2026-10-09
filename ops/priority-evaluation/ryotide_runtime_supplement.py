@@ -56,6 +56,10 @@ def build(provider,pod_id,recheck,report):
  report.update(effective_image=image,supplement_binding=b,derived_metadata_accepted=True,derived_metadata=m,derived_image_inspect=image_metadata,build_stdout=result.stdout,build_stderr=result.stderr)
  recheck();return image
 
+def native_command(image,root):
+ """Match the pinned measurement service environment, retaining image CUDA libraries."""
+ return ['docker','run','--rm','--gpus','all','--network','none','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--shm-size','16g','--tmpfs','/tmp:exec,size=16g','-e','HOME=/tmp','-e','OPENAI_API_KEY=','-e','HF_TOKEN=','-v',root+'/code:/code:ro','-v','/models:/models:ro','-v',root+'/proof.py:/proof.py:ro','--entrypoint','/usr/bin/env',image,'PYTHONPATH=/code/src:/code/vendor/jevbench','HF_HUB_OFFLINE=1','TRANSFORMERS_OFFLINE=1','HF_HUB_DISABLE_TELEMETRY=1','TOKENIZERS_PARALLELISM=false','python3','/proof.py']
+
 def prove(provider,pod_id,job,recipe,report,code_tar,recheck):
  image=effective_image(job,recipe,report);recheck()
  if hashlib.sha256(code_tar).hexdigest()!=CODE_SHA:raise ValueError('exact selected source archive')
@@ -66,7 +70,7 @@ def prove(provider,pod_id,job,recipe,report,code_tar,recheck):
  pod_runner._exec(provider,pod_id,['tar','-xf',root+'/code.tar','-C',root+'/code'])
  proof=HERE/'ryotide_native_proof.py';provider.scp_to(pod_id,str(proof),root+'/proof.py')
  if report['supplement_binding']['proof_sha256']not in pod_runner._exec(provider,pod_id,['sha256sum',root+'/proof.py']).stdout.split():raise ValueError('proof transfer')
- command=['docker','run','--rm','--gpus','all','--network','none','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--shm-size','16g','--tmpfs','/tmp:exec,size=16g','-v',root+'/code:/code:ro','-v','/models:/models:ro','-v',root+'/proof.py:/proof.py:ro','--entrypoint','/usr/bin/env',image,'-i','PATH=/opt/venv/bin:/usr/local/bin:/usr/bin:/bin','HOME=/tmp','OPENAI_API_KEY=','HF_TOKEN=','PYTHONPATH=/code/src:/code/vendor/jevbench','HF_HUB_OFFLINE=1','TRANSFORMERS_OFFLINE=1','HF_HUB_DISABLE_TELEMETRY=1','TOKENIZERS_PARALLELISM=false','python3','/proof.py']
+ command=native_command(image,root)
  r=pod_runner._exec(provider,pod_id,command,timeout=900);v=json.loads(r.stdout)
  if not proof_matches(v):raise ValueError('native proof failed')
  report.update(native_proof=v,native_proof_stderr=r.stderr,native_proof_accepted=True,native_code_archive_sha256=CODE_SHA)
