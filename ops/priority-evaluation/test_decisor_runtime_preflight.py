@@ -22,7 +22,7 @@ class Tests(unittest.TestCase):
         admission={'runtime_preflight':dict(image=recipe['image'],inspector_sha256=preflight.sha(preflight.INSPECTOR),handler_sha256=preflight.sha(preflight.__file__),recipe_sha256=preflight.sha(job/'trusted-runner/POD-RECIPE.json'),native_preinput=native.binding())}
         return job,recipe,admission
     def metadata(self, matching=True):
-        return dict(schema_version=1,kind='decisor_metadata_and_patch_bytes_only',expected_image=preflight.IMAGE,packages={name:'0.5.20' if name=='sglang' else '1.0.0' for name in inspector.REQUIRED},package_origin=inspector.ROOT+'/__init__.py',patches=inspector.PATCHES.copy(),failures=[] if matching else ['synthetic'],matching=matching,customer_source_imported=False,inputs_or_weights_read=False,native_kernels_proven=False,runtime_admitted=False)
+        return dict(schema_version=1,kind='decisor_metadata_and_patch_bytes_only',expected_image=preflight.IMAGE,packages={name:'0.5.20' if name=='sglang' else '0.4.7' if name=='sglang-kernel' else '1.0.0' for name in inspector.REQUIRED},package_origin=inspector.ROOT+'/__init__.py',patches=inspector.PATCHES.copy(),failures=[] if matching else ['synthetic'],matching=matching,customer_source_imported=False,inputs_or_weights_read=False,native_kernels_proven=False,runtime_admitted=False)
 
     def provider(self, matching=True, memory='80000',driver='580.95.05',digest=None):
         calls=[]
@@ -56,6 +56,8 @@ class Tests(unittest.TestCase):
             bad=self.metadata();bad[key]=value;self.assertFalse(preflight.metadata_matches(bad))
         self.assertFalse(preflight.metadata_matches({'metadata_requirements_satisfied':True}))
         bad=self.metadata();bad['packages']['sglang']='0.5.19';self.assertFalse(preflight.metadata_matches(bad))
+        bad=self.metadata();bad['packages']['sglang-kernel']='0.4.6';self.assertFalse(preflight.metadata_matches(bad))
+        bad=self.metadata();bad['packages']['sgl-kernel']=bad['packages'].pop('sglang-kernel');self.assertFalse(preflight.metadata_matches(bad))
         bad=self.metadata();bad['patches']['srt/models/qwen3_5_text.py']='bad';self.assertFalse(preflight.metadata_matches(bad))
         import ast
         module=ast.parse(Path(inspector.__file__).read_text());imports=[]
@@ -170,13 +172,13 @@ class Tests(unittest.TestCase):
             root=Path(t);relative={'loader.py':b'loader','brp.py':b'guards'}
             for name,body in relative.items():(root/name).write_bytes(body)
             expected={n:hashlib.sha256(v).hexdigest() for n,v in relative.items()}
-            def version(name):return '0.5.20' if name=='sglang' else 'synthetic-present'
-            with patch.object(inspector,'ROOT',str(root)),patch.object(inspector,'PATCHES',expected),patch.object(inspector.metadata,'version',side_effect=version),patch.object(inspector.PathFinder,'find_spec',return_value=SimpleNamespace(origin=str(root/'__init__.py'))):
+            def version(name):return '0.5.20' if name=='sglang' else '0.4.7' if name=='sglang-kernel' else 'synthetic-present'
+            with patch.object(inspector,'ROOT',str(root)),patch.object(inspector,'PATCHES',expected),patch.object(inspector.metadata,'version',side_effect=version),patch.object(inspector,'find_spec',return_value=SimpleNamespace(origin=str(root/'__init__.py'))):
                 self.assertTrue(inspector.inspect()['matching'])
                 (root/'loader.py').write_bytes(b'changed')
                 self.assertFalse(inspector.inspect()['matching'])
                 (root/'loader.py').write_bytes(b'loader')
-                with patch.object(inspector.PathFinder,'find_spec',return_value=SimpleNamespace(origin='/shadow/sglang/__init__.py')):
+                with patch.object(inspector,'find_spec',return_value=SimpleNamespace(origin='/shadow/sglang/__init__.py')):
                     self.assertFalse(inspector.inspect()['matching'])
                 with patch.object(inspector.metadata,'version',return_value='0.5.19'):
                     self.assertFalse(inspector.inspect()['matching'])
