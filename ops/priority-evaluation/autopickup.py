@@ -4402,10 +4402,15 @@ def evaluate_v16_generation(rid: str, job_dir: Path) -> int:
             # Same live paid/hold/deadline CAS as legacy, immediately before
             # creating a measurement. Existing completed raw needs no new rental
             # transition and may wait idempotently for the cohort baseline.
-            if not update_row(rid, "evaluation_status='running'",
-                              "status IN ('paid','review_passed') AND evaluation_status IN ('starting','failed') "
-                              "AND customer_hold_started_at IS NULL AND paid_at IS NOT NULL "
-                              "AND paid_at + COALESCE(sla_paused_seconds,0) * interval '1 second' + interval '48 hours' > now()"):
+            guard = ("status IN ('paid','review_passed') AND evaluation_status IN ('starting','failed') "
+                     "AND customer_hold_started_at IS NULL AND paid_at IS NOT NULL "
+                     "AND paid_at + COALESCE(sla_paused_seconds,0) * interval '1 second' + interval '48 hours' > now()")
+            if rid == '3687485f-5a51-4964-bd9a-73973f3494d7':
+                import decisor_late_completion
+                late = decisor_late_completion.LateCompletion(job_dir, generation, sys.modules[__name__], ('starting',))
+                late.claim_entry()
+                guard = late.sql_guard(('starting',))
+            if not update_row(rid, "evaluation_status='running'", guard):
                 raise PickupError("the order is not eligible for a fresh v16 measurement")
             v16_adoption.v16_profiles.measure(job_dir)
         receipt, _ = v16_adoption.adopt_raw(job_dir, package)
@@ -4429,6 +4434,16 @@ def evaluate_v16_generation(rid: str, job_dir: Path) -> int:
         update_row(rid, "evaluation_status='pending'", "evaluation_status IN ('starting','running')")
         return 0
 
+    except Exception:
+        if rid != '3687485f-5a51-4964-bd9a-73973f3494d7':
+            raise
+        # This exact delivered order is intentionally outside ordinary retry/SLA
+        # loops. Preserve the consumed handoff and durable root reconciliation.
+        state = load_state(rid)
+        set_operational_hold(state, 'decisor_late_generation_reconciliation_required', transient=False)
+        update_row(rid, "evaluation_status='pending'", "evaluation_status IN ('starting','running')")
+        raise
+
 
 def evaluate(rid: str) -> int:
     rid = request_id(rid)
@@ -4441,6 +4456,10 @@ def evaluate(rid: str) -> int:
         raise PickupError("the order is not assigned to this pickup")
     state = load_state(rid)
     attempts_before = dict(state.get("stage_attempts", {}))
+    # Exact operator/peer-installed late Decisor publication recovery only.
+    # Ordinary delivered handling and deadline gate remain unchanged.
+    if rid == '3687485f-5a51-4964-bd9a-73973f3494d7' and 'decisor_late_public_completion' in state:
+        return evaluate_v16_generation(rid, job_dir)
     allowed, _reason = gate(rid)
     if not allowed:
         update_row(rid, "evaluation_status='pending'", "evaluation_status IN ('starting','running')")
