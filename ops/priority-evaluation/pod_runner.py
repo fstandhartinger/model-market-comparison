@@ -56,10 +56,10 @@ EXPECTED_ROWS = 1624
 GPU_PREFERENCE = (("H100", 80), ("A100", 80), ("L40S", 48), ("RTX6000", 48), ("RTXPRO6000", 96))  # lium marketplace names
 
 # Host-staged route time budget inside one pod TTL: build <= 30 min, weight stream <= 45 min (streamer),
-# checks/copy/teardown margin 10 min, container wait up to 60 min. A pod attempt needs a TTL of >= 2.5 h, and
+# checks/copy/teardown margin 10 min, container wait up to 60 min. A pod attempt needs a TTL of >= 2.75 h, and
 # sealed inputs are only dispatched while (TTL - elapsed) still covers the container wait plus the margin.
 HOST_BUILD_TIMEOUT_S = 1800
-HOST_MIN_TTL_HOURS = 2.5
+HOST_MIN_TTL_HOURS = 2.75
 HOST_RUN_RESERVE_S = 3600 + 600
 
 
@@ -431,7 +431,7 @@ class Provider:
     def preflight(self, gpu, recipe, benchmarks, capacity_remaining=pod_capacity.MAX_REFUSALS, allow_two_gpu=False):
         return None
 
-    def create(self, gpu: str, ttl_hours: float, budget: float) -> dict:
+    def create(self, gpu: str, ttl_hours: float, budget: float, max_hourly: float = MAX_HOURLY_USD) -> dict:
         raise NotImplementedError
 
     def exec(self, pod_id: str, command: list[str], timeout: int = 600) -> subprocess.CompletedProcess:
@@ -497,7 +497,7 @@ class LiumProvider(Provider):
         counts = counts[:capacity_remaining]
         try:
             for count in counts:
-                quote = pod_capacity.quote(gpu, count, _run_cli, LIUM, MAX_HOURLY_USD)
+                quote = pod_capacity.quote(gpu, count, _run_cli, LIUM, _attempt_rate(recipe))
                 if quote.get('refused'):
                     refusals.append(quote)
                     continue
@@ -509,17 +509,19 @@ class LiumProvider(Provider):
             raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed') from exc
         return {'quote': None, 'refusals': refusals, 'quote_count': len(refusals)}
 
-    def create(self, gpu, ttl_hours, budget):
+    def create(self, gpu, ttl_hours, budget, max_hourly=MAX_HOURLY_USD):
+        if type(max_hourly) not in (int, float) or not 0 < max_hourly <= MAX_HOURLY_USD:
+            raise PodRunError('invalid provider price ceiling')
         before = self.ps_ids()
         placement = getattr(self, '_placement', None)
         if placement:
             if (placement['gpu'] != gpu or (datetime.now(timezone.utc) - datetime.fromisoformat(placement['quoted_at'])).total_seconds() > 120):
                 raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed')
             argv = [sys.executable, str(ROOT / 'lium_bounded_up.py'), gpu, str(placement['gpu_count']),
-                    str(ttl_hours), str(budget), str(MAX_HOURLY_USD)]
+                    str(ttl_hours), str(budget), str(max_hourly)]
         else:
             argv = [sys.executable, str(ROOT / 'lium_bounded_up.py'), gpu, '1',
-                    str(ttl_hours), str(budget), str(MAX_HOURLY_USD)]
+                    str(ttl_hours), str(budget), str(max_hourly)]
         started = datetime.now(timezone.utc).isoformat()
         result = _run_cli(argv, timeout=900)
         if result.returncode:
@@ -658,7 +660,7 @@ class RunPodProvider(Provider):
 
     name = "runpod"
 
-    def create(self, gpu, ttl_hours, budget):
+    def create(self, gpu, ttl_hours, budget, max_hourly=MAX_HOURLY_USD):
         raise measurement_dispatch.OperationalHold("gpu_pod_capacity")
 
 
@@ -837,7 +839,12 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                     state['torn_down_at'] = datetime.now(timezone.utc).isoformat()
                     save_state()
                     raise
-            pod = provider.create(gpu_choice[0], ttl, budget)
+            if "host_staging" in recipe:
+                # Provider-side price ceiling = the pinned price the charge is accounted at, so the recorded
+                # upper bound holds even for an unclear create or a failed teardown.
+                pod = provider.create(gpu_choice[0], ttl, budget, max_hourly=_attempt_rate(recipe))
+            else:
+                pod = provider.create(gpu_choice[0], ttl, budget)
         except PodCapacityError as exc:
             proof = getattr(exc, 'proof', None)
             if isinstance(provider, LiumProvider) and proof is None:
@@ -909,12 +916,17 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                         raise PodRunError(f"weight file {entry['dir']}/{relative} sha256 mismatch: "
                                           f"{check.stdout.strip()[-200:]}")
         _exec(provider, pod_id, ["mkdir", "-p", "/work", "/work/out", "/work/code"])
-        if "host_staging" in recipe:
-            started = datetime.fromisoformat(state['attempt_started_at'])
-            if (_utcnow() - started).total_seconds() > ttl * 3600 - HOST_RUN_RESERVE_S:
-                raise PodRunError("host_staging_ttl_margin_insufficient")
         # Optional trusted context holds the canonical custody lock across upload.
         with pre_upload_gate() if pre_upload_gate is not None else nullcontext():
+            if "host_staging" in recipe:
+                # Checked inside the custody lock, immediately before the sealed transfer becomes durable.
+                try:
+                    started = datetime.fromisoformat(state['attempt_started_at'])
+                    ok = started.tzinfo is not None and (_utcnow() - started).total_seconds() <= ttl * 3600 - HOST_RUN_RESERVE_S
+                except (KeyError, TypeError, ValueError):
+                    ok = False
+                if not ok:
+                    raise PodRunError("host_staging_ttl_margin_insufficient")
             state['input_dispatched'] = True
             save_state()  # dispatch is durable before the first sealed transfer
             provider.scp_to(pod_id, str(staging_path), "/work/stage.tar")
@@ -942,8 +954,13 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
         state["network_mode"] = network_mode
         if "host_staging" in recipe:
             # Record the actual run-container isolation flags as evidence (no environment values).
-            host = json.loads(_exec(provider, pod_id, ["docker", "inspect", "jev-pod-run",
-                                                       "--format", "{{json .HostConfig}}"]).stdout)
+            try:
+                host = json.loads(_exec(provider, pod_id, ["docker", "inspect", "jev-pod-run",
+                                                           "--format", "{{json .HostConfig}}"]).stdout)
+                if not isinstance(host, dict):
+                    raise ValueError
+            except ValueError:
+                raise PodRunError("run_container_inspect_invalid") from None
             state["host_staging"]["run_container"] = {key: host.get(key) for key in (
                 "NetworkMode", "Binds", "Privileged", "CapAdd", "ReadonlyRootfs", "Devices", "PidMode", "IpcMode", "UsernsMode")}
             save_state()

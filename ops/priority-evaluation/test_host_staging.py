@@ -22,6 +22,11 @@ class HostFake(_FakeProvider):
         super().__init__()
         self.failure = failure
         self.commands = []
+        self.ceilings = []
+
+    def create(self, gpu, ttl_hours, budget, max_hourly=None):
+        self.ceilings.append(max_hourly)
+        return super().create(gpu, ttl_hours, budget)
 
     def exec(self, pod, command, timeout=600):
         self.commands.append((command, timeout))
@@ -283,10 +288,23 @@ class HostStagingTests(unittest.TestCase):
             self.run_recipe(fake, image_context_provider=None)
         self.assertFalse(any(c[0] == 'create' for c in fake.calls))
 
+    def test_provider_price_ceiling_is_the_pinned_price_for_host_staged_recipes(self):
+        fake = HostFake()
+        self.run_recipe(fake)
+        self.assertEqual(fake.ceilings, [self.recipe['hourly_usd']])
+        self.assertLess(self.recipe['hourly_usd'], pr.MAX_HOURLY_USD)
+
+    def test_unclear_create_is_charged_at_most_the_pinned_ceiling_times_ttl(self):
+        # The provider ceiling equals the accounted rate, so the recorded upper bound cannot be exceeded.
+        fake = HostFake()
+        self.run_recipe(fake)
+        state = json.loads((self.root / 'pods' / (RID + '.json')).read_text())
+        self.assertAlmostEqual(state['spent_upper_bound_usd'], state['attempt_ttl_hours'] * fake.ceilings[0])
+
     def test_ttl_too_short_holds_before_any_provider_call(self):
         fake = HostFake()
         with self.assertRaisesRegex(md.OperationalHold, 'host_staging_ttl_too_short'):
-            self.lifecycle(fake, ttl=1.0)
+            self.lifecycle(fake, ttl=2.5)
         self.assertEqual(fake.calls, [])
 
     def test_late_staging_refuses_sealed_dispatch_and_tears_down(self):
