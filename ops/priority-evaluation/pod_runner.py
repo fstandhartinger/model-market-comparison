@@ -812,7 +812,7 @@ def _teardown(provider, job, pod_id, reservation, alert):
 
 
 def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, ttl, budget,
-               alert, save_state, benchmarks=('jevbench',), quote_budget=None, expected_rows=EXPECTED_ROWS, pre_upload_gate=None, allocation_gate=None, runtime_preflight=None, *, job_dir=None, image_context_provider=None, weights_streamer=None, native_code_archive=None):
+               alert, save_state, benchmarks=('jevbench',), quote_budget=None, expected_rows=EXPECTED_ROWS, pre_upload_gate=None, allocation_gate=None, runtime_preflight=None, *, job_dir=None, image_context_provider=None, weights_streamer=None, native_code_archive=None, candidate_pins=None):
     """One pod attempt; raises PodRunError on any step failure (teardown still runs)."""
     if getattr(runtime_preflight, 'supplemented', False):
         import ryotide_runtime_supplement
@@ -960,6 +960,14 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 raise PodRunError('Decisor requires fixed native pre-input proof')
         if "host_staging" in recipe:
             _stream_host_weights(provider, pod_id, recipe, weights_streamer)
+            import aplomb_5090_preflight
+            if aplomb_5090_preflight.active(state.get('request_id'), recipe):
+                try:
+                    state['aplomb_candidate_preinput_proof'] = aplomb_5090_preflight.run(
+                        provider, pod_id, recipe, candidate_pins, image, _exec)
+                except aplomb_5090_preflight.ProofError:
+                    raise measurement_dispatch.OperationalHold('aplomb_candidate_preinput_proof_failed') from None
+                save_state()
         else:
             for entry in recipe["weights"]:
                 target = f"/models/{entry['dir']}"
@@ -1255,7 +1263,12 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
     if budget <= 0:
         raise measurement_dispatch.OperationalHold("gpu_pod_budget_exhausted")
     ttl = min(TTL_CAP_HOURS, budget / _attempt_rate(recipe))
-    candidates = [g for g in GPU_PREFERENCE if g[1] >= recipe["min_vram_gb"]]
+    import aplomb_5090_preflight
+    try:
+        exact_candidates = aplomb_5090_preflight.candidates(rid, recipe, benchmarks, host_binding)
+    except aplomb_5090_preflight.ProofError:
+        raise measurement_dispatch.OperationalHold('aplomb_candidate_shape_unaccepted') from None
+    candidates = exact_candidates if exact_candidates is not None else [g for g in GPU_PREFERENCE if g[1] >= recipe["min_vram_gb"]]
     if not candidates:
         raise measurement_dispatch.OperationalHold("pod_recipe_invalid")
     started = datetime.now(timezone.utc)
@@ -1277,7 +1290,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
                 state = _lifecycle(provider, job, recipe, staging_path, output, state,
                                    gpu_choice, ttl, remaining, alert, save_state, benchmarks, quote_budget,
                                    current['profile']['inputs']['jevbench']['count'], pre_upload_gate, allocation_gate, runtime_preflight,
-                                   job_dir=job_dir, image_context_provider=image_context_provider, weights_streamer=weights_streamer, native_code_archive=code_tar)
+                                   job_dir=job_dir, image_context_provider=image_context_provider, weights_streamer=weights_streamer, native_code_archive=code_tar, candidate_pins=current)
                 break
             except PodCapacityError:
                 continue  # try the next GPU candidate; capacity only if every attempt was capacity
