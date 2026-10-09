@@ -19,7 +19,7 @@ class Tests(unittest.TestCase):
     def test_installer_stages_exact_runtime_trio_and_preserves_selected_source_modules(self):
         source=(Path(__file__).parent/'install-autopickup.sh').read_text()
         loop=source.split('for f in autopickup.py',1)[1].split('; do',1)[0].split()
-        for name in ['decisor_runtime_inspector.py','decisor_runtime_preflight.py','decisor_shim.py']:
+        for name in ['decisor_runtime_inspector.py','decisor_runtime_preflight.py','decisor_shim.py','ryotide_runtime_preflight.py','ryotide_runtime_inspector.py']:
             self.assertEqual(loop.count(name),1)
             self.assertTrue((Path(__file__).parent/name).is_file())
         for name in ['native_source_selection.py','ryotide-native-source-policy.json']:self.assertIn(name,loop)
