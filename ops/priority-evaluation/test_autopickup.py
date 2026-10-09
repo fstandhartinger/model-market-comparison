@@ -2525,7 +2525,8 @@ def pod_test_pins(tmp: Path) -> dict:
     items = tmp / "items.jsonl"
     items.write_text('{"task_id":"t","state":{},"question":{},"labels":[]}\n')
     return {"manifest_sha256": "m", "driver_sha256": "d",
-            "profile": {"code": files, "inputs": {"jevbench": {"count": 1, "items": pin(items)}}}}
+            # The fake provider below emits the legacy 1624-row run.
+            "profile": {"code": files, "inputs": {"jevbench": {"count": 1624, "items": pin(items)}}}}
 
 
 def pod_git_source(job: Path, which: str = "code") -> tuple[str, str]:
