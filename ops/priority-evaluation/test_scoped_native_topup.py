@@ -132,7 +132,7 @@ class ActualClosureTests(unittest.TestCase):
  def tearDown(self):
   for p in reversed(self.patches):p.stop()
   self.tmp.cleanup()
- def paths(self,rid):return self.job,self.base,'synthetic-own-unit',self.root/'unit.d/drop.conf'
+ def paths(self,rid,scope=g.SCOPE):return self.job,self.base,'synthetic-own-unit',self.root/'unit.d/drop.conf'
  def show(self,binding,*,changed_status=False):
   import shlex
   stamp='Fri 2026-10-09 18:54:00 UTC' if changed_status else '[n/a]'
@@ -416,3 +416,99 @@ class ActualClosureTests(unittest.TestCase):
   with patch.object(self.op,'sysrun',side_effect=system):
    with self.assertRaisesRegex(ValueError,'original argv restore'):self.op.restore(self.a,self.rid,self.p)
   self.assertEqual(drop.read_bytes(),self.op.dropbytes(self.rid));self.assertEqual(sum(c[0]=='daemon-reload' for c in calls),2);self.assertFalse((self.base/'RESTORED.json').exists());self.op.terminal(self.a,self.rid)
+
+class FourthScopeTests(unittest.TestCase):
+ def fixture(self):
+  f=ActualClosureTests();f.setUp();oldbase=f.base
+  # Synthetic immutable custody represents an already failed third attempt.
+  f.adopt();anchor=f.s['scoped_native_topup'].copy()
+  outcome={'status':'held','plan_sha256':anchor['plan_sha256'],'reason':'continuation_failed'}
+  for name in ('ENTRY-CLAIM.json','RESERVE-CLAIM.json','CREATE-CLAIM.json','STATE-BEFORE.json','START-REQUESTED.json'):f.write(oldbase/name,{'synthetic_consumed':name})
+  f.write(oldbase/'EXIT.json',{'outcome':outcome});f.write(oldbase/'RESTORED.json',{'terminal_outcome':outcome})
+  f.s['scoped_native_topup_outcome']=outcome;f.s['operational_hold']={'reason':'scoped_native_topup_reconciliation_required','transient':False};f.write(f.statepath,f.s)
+  f.ledger.update(creation_attempts=3,spent_upper_bound_usd=25);f.write(f.ledgerpath,f.ledger)
+  previous={p.name:{'path':str(p),'sha256':g.sha(p)}for p in oldbase.iterdir()if p.name in {'PLAN.json','ROOT-AUTHORITY.json','SOURCE-PEER.json','ACTIVATION-CLAIM.json','ENTRY-CLAIM.json','RESERVE-CLAIM.json','CREATE-CLAIM.json','STATE-BEFORE.json','START-REQUESTED.json','EXIT.json','RESTORED.json'}}
+  hp=Path(f.p['references']['original_history']['path']);history=g.read(hp);history['files'].update({r['path']:r['sha256']for r in previous.values()});f.write(hp,history)
+  full=f.root/'full-sql-row.json';f.write(full,{'id':f.rid,'all_columns':'synthetic complete row'});history['files'][str(full)]=g.sha(full);f.write(hp,history)
+  f.p['full_sql_row']={'path':str(full),'sha256':g.sha(full)}
+  f.p['references']['original_history']['sha256']=g.sha(hp)
+  f.base=f.job/'review/native-small-topup-ryo-fourth';f.base.mkdir()
+  f.p.update(scope=g.RYO_FOURTH_SCOPE,bounds=dict(zip(('old_creation_attempts','old_spend_usd','maximum_lifetime_allocations','maximum_lifetime_usd'),(3,25,4,30))),previous_topup=previous,original_state_sha256=g.sha(f.statepath),original_ledger_sha256=g.sha(f.ledgerpath))
+  f.write(f.base/'PLAN.json',f.p)
+  f.claim.update(plan_sha256=g.sha(f.base/'PLAN.json'),original_state_sha256=f.p['original_state_sha256'],original_ledger_sha256=f.p['original_ledger_sha256'])
+  import hashlib
+  f.auth.update(scope=g.RYO_FOURTH_SCOPE,financial_scope=f.p['bounds'],plan_sha256=g.sha(f.base/'PLAN.json'),activation_claim_sha256=hashlib.sha256(json.dumps(f.claim,sort_keys=True,allow_nan=False).encode()).hexdigest())
+  f.write(f.base/'ROOT-AUTHORITY.json',f.auth);f.peer.update(plan_sha256=g.sha(f.base/'PLAN.json'),root_authority_sha256=g.sha(f.base/'ROOT-AUTHORITY.json'));f.write(f.base/'SOURCE-PEER.json',f.peer)
+  return f
+ def test_literal_scope_no_decisor_or_unknown_extension(self):
+  self.assertEqual(g.BOUNDS[g.RYO],(2,20.,3,25.));self.assertEqual(g.BOUNDS[g.DECISOR],(3,19.8,4,24.8))
+  self.assertEqual(g.configuration(g.RYO,g.RYO_FOURTH_SCOPE)[0],(3,25.,4,30.))
+  for rid,scope in [(g.DECISOR,g.RYO_FOURTH_SCOPE),(g.RYO,'arbitrary')]:
+   with self.assertRaises(ValueError):g.configuration(rid,scope)
+ def test_actual_fourth_verify_and_one_reserve_create(self):
+  f=self.fixture()
+  try:
+   g.previous_failure(f.job,f.s,f.p);f.op.packet(f.rid,scope=g.RYO_FOURTH_SCOPE)
+   f.write(f.base/'ACTIVATION-CLAIM.json',f.claim)
+   _,_,key,_=g.configuration(f.rid,g.RYO_FOURTH_SCOPE)
+   f.s[key]={'authority_sha256':g.sha(f.base/'ROOT-AUTHORITY.json'),'peer_sha256':g.sha(f.base/'SOURCE-PEER.json'),'plan_sha256':g.sha(f.base/'PLAN.json'),'status':'owned','automatic_retry_prohibited':True};f.s.pop('operational_hold');f.write(f.statepath,f.s)
+   x=g.ScopedTopUp(f.job,{'generation':g.GENERATION},lambda:None,scope=g.RYO_FOURTH_SCOPE)
+   self.assertEqual(x('before_reserve',f.ledger),4)
+   with self.assertRaises(ValueError):x('before_reserve',f.ledger)
+   charged=copy.deepcopy(f.ledger);charged.update(creation_attempts=4,spent_upper_bound_usd=30,attempt_ttl_hours=1,attempt_reserved_upper_bound_usd=5,attempt_contingency_usd=0,cleanup_uncertain=True)
+   self.assertEqual(x('before_create',charged),4)
+   with self.assertRaises(FileExistsError):x('before_create',charged)
+   old=copy.deepcopy(f.s['scoped_native_topup']);f.op.fail(f.a,f.rid,scope=g.RYO_FOURTH_SCOPE)
+   self.assertEqual(f.a.load_state(f.rid)['scoped_native_topup'],old)
+   self.assertEqual(f.a.load_state(f.rid)['scoped_native_topup_outcome'],f.s['scoped_native_topup_outcome'])
+   f.op.exit_receipt(f.a,f.rid,scope=g.RYO_FOURTH_SCOPE)
+   self.assertTrue((f.base/'EXIT.json').is_file())
+  finally:f.tearDown()
+ def test_previous_custody_or_finance_mutations_refused(self):
+  for kind in ('anchor','outcome','claim','history','old_scope','old_exit','count','spend','cleanup','input'):
+   f=self.fixture()
+   try:
+    if kind=='anchor':f.s['scoped_native_topup']['plan_sha256']='0'*64
+    elif kind=='outcome':f.s['scoped_native_topup_outcome']['reason']='unknown'
+    elif kind=='claim':Path(f.p['previous_topup']['ENTRY-CLAIM.json']['path']).write_text('{}')
+    elif kind=='history':f.write(Path(f.p['references']['original_history']['path']),{'files':{}})
+    elif kind=='old_scope':f.p['previous_topup'].pop('PLAN.json')
+    elif kind=='old_exit':f.p['previous_topup'].pop('EXIT.json')
+    else:
+     k,v={'count':('creation_attempts',2),'spend':('spent_upper_bound_usd',20),'cleanup':('cleanup_uncertain',True),'input':('input_dispatched',True)}[kind];f.ledger[k]=v
+    with self.subTest(kind=kind),self.assertRaises(ValueError):
+     g.previous_failure(f.job,f.s,f.p);g.preinput(f.rid,f.ledger,scope=g.RYO_FOURTH_SCOPE)
+   finally:f.tearDown()
+ def test_fourth_argv_different_and_original_unchanged(self):
+  import scoped_native_topup_operator as op
+  self.assertNotIn('--scope',op.dropbytes(g.RYO).decode())
+  self.assertIn('--scope '+g.RYO_FOURTH_SCOPE,op.dropbytes(g.RYO,scope=g.RYO_FOURTH_SCOPE).decode())
+  self.assertIn(g.RYO_FOURTH_SCOPE,op.continuation_binding(g.RYO,scope=g.RYO_FOURTH_SCOPE)['argv'])
+
+ def test_actual_whole_sql_guard_refuses_any_column_drift(self):
+  f=self.fixture()
+  try:
+   f.a.TABLE='synthetic_orders';f.a.sql_text.side_effect=lambda x:"'"+x.replace("'","''")+"'";f.a.sql_json.return_value=g.read(f.p['full_sql_row']['path'])
+   self.assertIn('to_jsonb(synthetic_orders)',f.op.full_row_guard(f.a,f.rid,f.p,g.RYO_FOURTH_SCOPE))
+   f.a.sql_json.return_value={**f.a.sql_json.return_value,'any_column':'changed'}
+   with self.assertRaisesRegex(ValueError,'whole SQL'):f.op.full_row_guard(f.a,f.rid,f.p,g.RYO_FOURTH_SCOPE)
+  finally:f.tearDown()
+ def test_actual_fourth_apply_one_start_whole_sql_and_restore(self):
+  from unittest.mock import patch
+  f=self.fixture()
+  try:
+   original=g.read(f.p['full_sql_row']['path']);row={'pickup_owner':'original','pickup_job_dir':str(f.job),'evaluation_attempts':1};f.a.load_row.return_value=row;f.a.TABLE='synthetic_table';f.a.sql_text.side_effect=repr
+   old=f.s['scoped_native_topup'].copy();calls=[];queries=[]
+   def sql(statement):
+    queries.append(statement)
+    return original if len(queries)==1 else dict(original,evaluation_status='starting')
+   f.a.sql_json.side_effect=sql
+   def system(*args):
+    calls.append(args)
+    if args[0]!='show':return ''
+    return f.show(f.op.continuation_binding(f.rid,scope=g.RYO_FOURTH_SCOPE),changed_status=True)if f.paths(f.rid)[3].exists()else f.original_show(changed_status=True)
+   with patch.dict('os.environ',{'AGENT_BOARD_NAME':g.ROOT_OWNER}),patch.object(f.op,'eligible',return_value=(f.s,row)),patch.object(f.op,'final_binding'),patch.object(f.op,'sysrun',side_effect=system):
+    f.op.apply(f.a,f.rid,True,binding_path='synthetic',binding_sha256='synthetic',scope=g.RYO_FOURTH_SCOPE)
+   self.assertEqual(sum(c[0]=='start'for c in calls),1);self.assertEqual(f.a.load_state(f.rid)['scoped_native_topup'],old);self.assertTrue((f.base/'RESTORED.json').exists());self.assertTrue((f.base/'STARTING-ROW-CLAIM.json').exists());self.assertEqual(len(queries),2)
+   self.assertIn('to_jsonb(synthetic_table)',f.a.update_row.call_args_list[0].args[2])
+  finally:f.tearDown()
