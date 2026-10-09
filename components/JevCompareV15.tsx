@@ -8,7 +8,7 @@ import { SystemCombobox } from "./JevCompareV14";
 import { jevSourceUrl } from "./jevSystemLinks";
 import type { CompareCategories, CategoryDim } from "../lib/jevbench-categories.mjs";
 import { useJevV15VisibleKeys } from "./useJevV15VisibleKeys";
-import { radarShape } from "../lib/radar-shape.mjs";
+import { radarShape, radarValue, plottable, categoryCell } from "../lib/radar-shape.mjs";
 
 // CR-205: the v1.4 board's two-system compare, on v1.5 data. Four radars per pair — the four score axes,
 // chance-corrected competence per request type (open and sealed), and competence per tier on the open and
@@ -38,7 +38,7 @@ const TYPE_SPOKES = [
 ] as const;
 const TIERS = [["easy", "Easy"], ["standard", "Standard"], ["judge", "Judge"], ["hard", "Hard"]] as const;
 
-const one = (v: number | null) => (v === null ? "—" : v.toFixed(1));
+const one = (v: number | null | undefined) => (radarValue(v) === null ? "—" : (v as number).toFixed(1));
 const lines = (label: string) => label.split(" ").reduce<string[]>((ls, w) => (ls.length && (ls[ls.length - 1] + " " + w).length <= 13 ? [...ls.slice(0, -1), `${ls[ls.length - 1]} ${w}`] : [...ls, w]), []);
 
 function series(A: JevCompareV15Row, B: JevCompareV15Row): Series[] {
@@ -47,19 +47,22 @@ function series(A: JevCompareV15Row, B: JevCompareV15Row): Series[] {
     { name: B.name, stroke: same ? `color-mix(in srgb, ${colour(jevRowArch(B))} 55%, var(--text))` : colour(jevRowArch(B)), dashed: same, square: true }];
 }
 
-/** CR-257: one radar per category dimension. A value below chance draws at the centre and prints its real (negative) number.
+/** CR-257: one radar per category dimension. A value below chance draws at the centre and prints its published number — negative
+ *  in the signed v1.5.x / ImageJevBench artifacts; the v1.6 artifacts already clip below-chance means to 0 (see the figure note).
  *  CR-290 correction (Florian 5 Oct 2026 ~20:30): only well-measured categories (radarMinN = 30 items) are spokes; smaller ones go to the
  *  low-sample table. A system that answered fewer than radarMinN items of a spoke's category is printed as n=… and not plotted. */
 const completedN = (cell: [number, number, number?]) => cell[2] ?? cell[1];
 
 function categorySpokes(pair: JevCompareV15Row[], dim: CategoryDim, cats: CompareCategories): Spoke[] {
   return dim.cats.filter((c) => c.plotted).map((c) => {
-    const cells = pair.map((r) => cats.systems[r.key]?.[dim.key]?.[c.key] ?? null);
+    // Radar display fix (9 Oct 2026): lib/radar-shape.mjs categoryCell — no cell or a non-finite competence is a gap (never
+    // clamped to 0), an under-radarMinN cell keeps its value for the tables but is thin (printed n=…, not drawn).
+    const cells = pair.map((r) => categoryCell(cats.systems[r.key]?.[dim.key]?.[c.key] ?? null, cats.radarMinN));
     return {
       key: c.key, lines: lines(c.short),
-      thin: cells.map((v) => v !== null && completedN(v) < cats.radarMinN),
-      values: cells.map((v) => (v === null ? null : Math.max(0, Math.min(100, v[0])))),
-      texts: cells.map((v) => (v === null ? "—" : completedN(v) < cats.radarMinN ? `n=${completedN(v)}` : one(v[0]))),
+      thin: cells.map((v) => v.thin),
+      values: cells.map((v) => v.value),
+      texts: cells.map((v) => v.text),
       tip: `${c.label}: ${c.covers}. ${c.n} items (${c.split.a} ${cats.splitNames[0]}, ${c.split.b} ${cats.splitNames[1]}).`,
     };
   });
@@ -105,7 +108,7 @@ function LowSampleTable({ dim, cats, pair }: { dim: CategoryDim; cats: CompareCa
 /** Competence spokes (0–100); a missing cell is neither plotted nor guessed. */
 function ccSpokes(pair: JevCompareV15Row[], items: readonly (readonly [string, string])[], read: (r: JevCompareV15Row, key: string) => number | null): Spoke[] {
   return items.map(([key, label]) => {
-    const values = pair.map((r) => read(r, key));
+    const values = pair.map((r) => radarValue(read(r, key)));
     return { key, lines: lines(label), thin: values.map((v) => v === null), values, texts: values.map(one) };
   });
 }
@@ -117,11 +120,12 @@ function parsePair(search: string, keys: Set<string>): [string, string] | null {
   return a && b && a !== b && keys.has(a) && keys.has(b) ? [a, b] : null;
 }
 
-export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, axesOnly = false, categories = null }: {
+export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, axesOnly = false, categories = null, referenceKey = 'jev-1.13.0', syncUrl = true, idPrefix = 'jev15', comparisonPath }: {
   rows: JevCompareV15Row[]; openDecisions: number; sealedDecisions: number; heading?: string; axesOnly?: boolean; categories?: CompareCategories | null;
+  referenceKey?: string; syncUrl?: boolean; idPrefix?: string; comparisonPath?: string;
 }) {
   const visibleKeys = useJevV15VisibleKeys(rows.map((row) => row.key));
-  const visibleRows = useMemo(() => rows.filter((row) => visibleKeys.has(row.key)), [rows, visibleKeys]);
+  const visibleRows = useMemo(() => rows.filter((row) => row.key === referenceKey || visibleKeys.has(row.key)), [rows, visibleKeys, referenceKey]);
   const ranked = visibleRows.filter((r) => r.rank !== null);
   const unranked = visibleRows.filter((r) => r.rank === null);
   const first = ranked.find((r) => r.key === "jev-1.13.0") ?? ranked[0] ?? visibleRows[0];
@@ -132,21 +136,22 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
   const [copied, setCopied] = useState(false);
   const copiedTimer = useRef<number | null>(null);
   useEffect(() => {
-    const pair = parsePair(window.location.search, new Set(visibleRows.map((r) => r.key)));
+    const pair = syncUrl ? parsePair(window.location.search, new Set(visibleRows.map((r) => r.key))) : null;
     if (pair) { setA(pair[0]); setB(pair[1]); }
     else if (first && second) { setA(first.key); setB(second.key); }
     setReady(true);
-  }, [visibleRows, first?.key, second?.key]);
+  }, [visibleRows, first?.key, second?.key, syncUrl]);
   useEffect(() => {
-    if (!ready || !first || !second) return;
+    if (!syncUrl || !ready || !first || !second) return;
     const u = new URL(window.location.href);
     if (a === first.key && b === second.key) u.searchParams.delete("compare"); else u.searchParams.set("compare", `${a},${b}`);
     if (u.href !== window.location.href) window.history.replaceState(window.history.state, "", u.href);
-  }, [a, b, ready, first, second]);
+  }, [a, b, ready, first, second, syncUrl]);
   if (visibleRows.length < 2 || !first || !second) return <p className="bh-muted text-sm">Fewer than two systems match these filters; adjust them to compare two systems.</p>;
 
   const A = visibleRows.find((r) => r.key === a) ?? first;
   const B = visibleRows.find((r) => r.key === b && r.key !== A.key) ?? visibleRows.find((r) => r.key !== A.key) ?? second;
+  const reference = visibleRows.find((r) => r.key === referenceKey);
   const pair = [A, B], s = series(A, B);
   const axisSpokes: Spoke[] = AXES.map(([k, label]) => ({
     key: k, lines: [label], thin: [false, false],
@@ -162,13 +167,13 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
   const sealedTierSpokes = ccSpokes(pair, TIERS, (r, k) => r.tierCc.sealed[k as "easy"] ?? null);
   // CR-331: a row measured on a 600-item API set (A4 u P / A5 u P) has 300 sealed items instead of the full sealed set.
   const subsetNote = pair.filter((r) => r.subset).map((r) => ` ${r.name} was measured on ${r.subset!.tag} ∪ P (${r.subset!.nItems ?? 600} items: 300 open + 300 sealed), so its sealed per-type and tier values rest on fewer items and carry wider uncertainty.`).join("");
-  const missingFor = (spokes: Spoke[]) => pair.filter((_, k) => spokes.every((sp) => sp.values[k] === null)).map((r) => r.name);
+  const missingFor = (spokes: Spoke[]) => pair.filter((_, k) => spokes.every((sp) => radarValue(sp.values[k]) === null)).map((r) => r.name);
   const status = (r: JevCompareV15Row) => r.rank !== null ? `#${r.rank}` : ({ honorable_mention: "honorable mention", partial: "partial run", unpriced: "unpriced", addendum: "roster addendum", unranked: "not ranked", api_offering: "API offering, ranked on the API leaderboard", reference: "reference, not ranked" } as Record<string, string>)[r.listing] ?? `${r.listing}, not ranked`;
   // CR-290 (Florian 5 Oct 2026): say in the caption which system has gaps and why, instead of letting a partial series
   // read as a small area. CR-290 correction: a series too sparse for lines (radarShape "points") says so in one line.
   const gapNote = (f: { spokes: Spoke[]; dim?: CategoryDim }) => {
     const notes = pair.flatMap((r, k) => {
-      const present = f.spokes.map((sp) => sp.values[k] !== null && !sp.thin[k]);
+      const present = f.spokes.map((sp) => plottable(sp.values[k], sp.thin[k]));
       const shape = radarShape(present);
       if (shape.kind === "polygon" || shape.kind === "none") return [];
       const who = `${k === 0 ? "A" : "B"} (${r.name})`, got = `${present.filter(Boolean).length} of ${f.spokes.length}`;
@@ -176,14 +181,26 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
         ? `${who} is measured on ${got} spokes only, so it is drawn as points, not a shape — measured on fewer items; full radar after the next re-measure`
         : `${who} has values on ${got} spokes; lines join only adjacent measured spokes` }];
     });
-    if (!notes.length) return null;
+    if (!notes.length) return zeroNote(f);
     const hosted = notes.some((g) => g.r.hosted === true);
     const why = f.dim && categories ? `Open spokes (n/a or n=…) have fewer than ${categories.radarMinN} answered items for that system or no published value${hosted ? "; hosted APIs answer a smaller item set, so more of their category cells stay under that" : ""}.` : "Open spokes have no published value.";
-    return <>{notes.map((g) => <span key={g.k} className="block" data-bh-radar-gap-note={g.points ? "points" : "runs"}>{g.text}.</span>)}<span className="block">Gaps, not zeros: {why}</span></>;
+    return <>{notes.map((g) => <span key={g.k} className="block" data-bh-radar-gap-note={g.points ? "points" : "runs"}>{g.text}.</span>)}<span className="block">Gaps, not zeros: {why}</span>{zeroNote(f)}</>;
   };
+  // Radar display fix (9 Oct 2026): a drawn 0 (or a negative value at the centre) is a measured result, not a missing one. The
+  // v1.6 category artifacts clip below-chance means to 0 before publication, so their 0 cannot be told apart from "exactly
+  // chance"; the signed v1.5.x / ImageJevBench artifacts print the negative number. Display wording only; no value changes.
+  function zeroNote(f: { spokes: Spoke[]; dim?: CategoryDim }) {
+    if (!f.dim || !categories) return null;
+    const drawn = f.spokes.flatMap((sp) => sp.values.filter((v, k) => plottable(v, sp.thin[k])) as number[]);
+    const clipped = /clipped|negative means are clipped/i.test(categories.metric);
+    if (drawn.some((v) => v === 0) && clipped) return <span className="block" data-bh-radar-zero-note="clipped">A point at the centre printed 0.0 is a measured value, not a gap: these published cells clip below-chance results to 0, so 0 means at or below chance.</span>;
+    if (drawn.some((v) => v <= 0)) return <span className="block" data-bh-radar-zero-note="signed">A point at the centre is a measured value at or below chance (0); a negative value prints its number.</span>;
+    return null;
+  }
   const desc = (title: string, spokes: Spoke[]) => `${title}, ${s[0].name} vs ${s[1].name}. ` + spokes.map((sp) => `${sp.lines.join(" ")}: ${sp.texts[0]} vs ${sp.texts[1]}`).join("; ") + ".";
   const copy = async () => {
     const u = new URL(window.location.href); u.searchParams.set("compare", `${A.key},${B.key}`); u.hash = "compare";
+    if (comparisonPath) u.pathname = comparisonPath;
     try { await navigator.clipboard.writeText(u.href); setCopied(true); copiedTimer.current = window.setTimeout(() => setCopied(false), 2000); } catch { window.location.hash = "compare"; }
   };
   const categoryFigures = (categories?.dims ?? []).map((dim) => {
@@ -201,18 +218,19 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
   ].filter((f) => !axesOnly || f.key === "axes");
   // CR-257: the category radars sit right after the score axes.
   figures.splice(1, 0, ...categoryFigures);
-  return <section id="compare" className="mt-8 scroll-mt-6" aria-labelledby="jev15-compare" data-bh-jev15-compare data-bh-jev15-compare-a={A.key} data-bh-jev15-compare-b={B.key}>
-    <h2 id="jev15-compare" className="text-2xl font-semibold">{heading ?? 'Compare two systems'}</h2>
+  return <section id={syncUrl ? 'compare' : `${idPrefix}-compare-section`} className="mt-8 scroll-mt-6" aria-labelledby={`${idPrefix}-compare`} data-bh-jev15-compare data-bh-jev15-compare-a={A.key} data-bh-jev15-compare-b={B.key}>
+    <h2 id={`${idPrefix}-compare`} className="text-2xl font-semibold">{heading ?? 'Compare two systems'}</h2>
     <p className="bh-muted mt-1 max-w-3xl text-sm">Pick any two. {axesOnly ? 'Compare the four score axes' : 'Radars for the score axes'}{categoryFigures.length ? `, ${categoryFigures.map((f) => f.title.split(" (")[0].toLowerCase()).join(" and ")}` : ''}{axesOnly ? '; request-type and tier aggregates are not published for this benchmark.' : ', chance-corrected competence per request type on the open and sealed sets, and competence per tier on each set.'} Further out is better on every spoke; the link keeps the pair.</p>
     <div className="bh-panel mt-3 p-3 sm:p-4">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
-        <SystemCombobox id="jev15-compare-a" label="System A" value={A.key} other={B.key} ranked={ranked} unranked={unranked} onChange={setA} />
+        <SystemCombobox id={`${idPrefix}-compare-a`} label="System A" value={A.key} other={B.key} ranked={ranked} unranked={unranked} onChange={setA} />
         <button type="button" className="bh-button shrink-0 self-end text-sm font-semibold sm:self-auto" onClick={() => { setA(B.key); setB(A.key); }} aria-label="Swap system A and system B" data-bh-jev15-compare-swap>⇄ Swap</button>
-        <SystemCombobox id="jev15-compare-b" label="System B" value={B.key} other={A.key} ranked={ranked} unranked={unranked} onChange={setB} />
+        <SystemCombobox id={`${idPrefix}-compare-b`} label="System B" value={B.key} other={A.key} ranked={ranked} unranked={unranked} onChange={setB} />
+        {reference && <button type="button" className="bh-button shrink-0 text-sm" data-bh-jev-reference-compare onClick={() => { if (A.key === reference.key) setA(B.key); setB(reference.key); }}>Compare with Jev <span className="bh-muted text-xs">REFERENCE</span></button>}
       </div>
       <div className="mt-3 flex flex-wrap items-start justify-between gap-2">
         <ul className="space-y-1 text-[13px]" aria-label="Legend" data-bh-jev15-compare-legend>
-          {pair.map((r, k) => <li key={k}><Swatch s={s[k]} /><b>{k === 0 ? "A" : "B"}: {r.repo ? <a href={jevSourceUrl(r.key, r.repo) ?? undefined} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-source={r.key}>{r.name}</a> : r.name}</b> <span className="bh-muted" data-bh-jev15-class={r.cls}>— {JEV_TYPE_LABEL[jevRowArch(r)] ?? <code title="Class named in the artifact; description pending">{r.cls}</code>} · </span><span className="whitespace-nowrap">Score {one(r.score)} ({status(r)})</span>{categories?.spokeExceptions?.[r.key] && <span className="bh-muted block" data-bh-radar-spoke-exception={r.key}>{categories.spokeExceptions[r.key]}</span>}</li>)}
+          {pair.map((r, k) => <li key={k}><Swatch s={s[k]} /><b>{k === 0 ? "A" : "B"}: {r.repo ? <a href={jevSourceUrl(r.key, r.repo) ?? undefined} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-source={r.key}>{r.name}</a> : r.name}</b>{r.key === referenceKey && <span className="bh-thin-tag ml-2" data-bh-jev-reference>REFERENCE · TypeSafe</span>} <span className="bh-muted" data-bh-jev15-class={r.cls}>— {JEV_TYPE_LABEL[jevRowArch(r)] ?? <code title="Class named in the artifact; description pending">{r.cls}</code>} · </span><span className="whitespace-nowrap">Score {one(r.score)} ({status(r)})</span>{categories?.spokeExceptions?.[r.key] && <span className="bh-muted block" data-bh-radar-spoke-exception={r.key}>{categories.spokeExceptions[r.key]}</span>}</li>)}
         </ul>
         <button type="button" className="bh-button text-xs font-semibold" onClick={copy} data-bh-jev15-compare-copy>{copied ? "Link copied" : "Copy link to this pair"}</button>
       </div>
@@ -221,7 +239,7 @@ export function JevCompareV15({ rows, openDecisions, sealedDecisions, heading, a
           <h3 className="text-base font-semibold">{f.title}</h3>
           {f.missing.length > 0 && <p className="bh-muted mt-1 text-[12px]" data-bh-jev15-radar-missing={f.key}>{f.dim ? f.missing.join(" ") : `${f.missing.join(" and ")} ${f.missing.length === 1 ? "has" : "have"} no published values for this view.`}</p>}
           {missingFor(f.spokes).length < 2
-            ? <Radar spokes={f.spokes} series={s} size={f.size} id={`jev15-radar-${f.key}`} title={`Radar: ${f.title.toLowerCase()}, two systems`} desc={desc(f.title, f.spokes)} />
+            ? <Radar spokes={f.spokes} series={s} size={f.size} id={`${idPrefix}-radar-${f.key}`} title={`Radar: ${f.title.toLowerCase()}, two systems`} desc={desc(f.title, f.spokes)} />
             : <p className="bh-muted mt-3 text-[12px]">Neither selected system has a published series for this view.</p>}
           <figcaption className="bh-muted text-[12px]">{f.note}{f.key !== "axes" && !f.dim && subsetNote && <span data-bh-jev15-subset-note>{subsetNote}</span>}{gapNote(f)}</figcaption>
           {f.dim && categories && <LowSampleTable dim={f.dim} cats={categories} pair={pair} />}

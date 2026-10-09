@@ -70,5 +70,7 @@ test('F-215: the pooled family sentence separates an unpublished breakdown (rank
 
 test('F-216 (refined by CR-290): a radar spoke prints its separator only between two printed slots; a missing value is "n/a"', () => {
   const src = read('components/JevRadars.tsx');
-  assert.match(src, /\{k > 0 && shown\(k - 1\) \? <tspan fill="var\(--muted\)" fontWeight=\{400\}> · <\/tspan> : null\}\{s\.values\[k\] === null \? "n\/a" : s\.texts\[k\]\}/);
+  // Radar display fix (9 Oct 2026): "missing" = radarValue(...) === null, so NaN/undefined also print "n/a" (test/radar-display-fix.test.mjs renders it).
+  assert.match(src, /const missing = radarValue\(s\.values\[k\]\) === null;/);
+  assert.match(src, /\{k > 0 && shown\(s, k - 1\) \? <tspan fill="var\(--muted\)" fontWeight=\{400\}> · <\/tspan> : null\}\{missing \? "n\/a" : s\.texts\[k\]\}/);
 });

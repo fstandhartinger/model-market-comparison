@@ -31,7 +31,7 @@ test('CR-241: the public ImageJevBench page keeps the full v0.1.4 structure and 
   // v0.3.0 (6 Oct 2026) leads the page; the full v0.1.5 results page stays below it as the archive.
   const v03 = await read('../components/ImageJevV03Page.tsx');
   assert.match(publicPage, /<ImageJevV03Page \/>/, '/image-jev-bench renders the v0.3.0 release');
-  assert.match(v03, /<MultimodalPreviewContent \/>/, 'the full v0.1.5 results page stays as the archive');
+  assert.match(v03, /<MultimodalPreviewContent embedded \/>/, 'the full v0.1.5 archive stays embedded with its comparison controls isolated');
   assert.match(publicPage, /canonical: '\/image-jev-bench'/);
   assert.doesNotMatch(publicPage, /robots:/, 'the public page stays indexable');
   for (const marker of ['<ScoreBars', 'id="overall-heading"', '<RankingTable', '<JevCompareV15']) {

@@ -155,7 +155,7 @@ function CandidateCoverageTable({ candidates }: { candidates: any[] }) {
   </div>;
 }
 
-export async function MultimodalPreviewContent() {
+export async function MultimodalPreviewContent({ embedded = false }: { embedded?: boolean } = {}) {
   const a: any = await readMultimodalPreview();
   const s = a.split;
   const chartSystems = imageJevBoardSystems(a);
@@ -194,7 +194,7 @@ export async function MultimodalPreviewContent() {
       rows={imageJevBoardRows(a)} rankedCount={a.n_systems} newLabel={null} fairness={null} capabilityHref="#jev-capability"
       presets={imageJevSliderPresets(a)} compactMobile scoreKind="v15" methodLink={{ href: '#method-heading', label: 'Method notes ↓' }} benchmark="imagejevbench" />
     <p className="bh-muted mt-2 max-w-5xl text-sm" data-bh-mm-wity-pricing-note>Wity-1 is ranked at Wity&apos;s own stated API price (USD 0.042 per million input tokens, output free). The striped bar shows the score at the base-model reference price we use for self-hosted open weights of the same base (base model undisclosed at the author&apos;s request). <a className="text-accent underline" href="#imagejev-pricing">See pricing note ↓</a></p>
-    <JevCompareV15 rows={compareRows} openDecisions={s.items_public} sealedDecisions={s.items_sealed} axesOnly categories={imageJevCategoryView(a.revision, compareRows.map((r: { key: string }) => r.key))} />
+    <JevCompareV15 rows={compareRows} openDecisions={s.items_public} sealedDecisions={s.items_sealed} axesOnly categories={imageJevCategoryView(a.revision, compareRows.map((r: { key: string }) => r.key))} syncUrl={!embedded} idPrefix={embedded ? 'imagejev-v015' : 'jev15'} comparisonPath={embedded ? '/jev-models/multimodal-preview' : undefined} />
 
     <section className="mt-10 max-w-none" aria-labelledby="overall-heading">
       <h2 id="overall-heading" className="text-2xl font-semibold">Full ranking</h2>

@@ -1,0 +1,4867 @@
+{
+  "schema": "imagejev-completed-coverage/v1",
+  "criterion": "status ok and valid supported integer answer_index; failures remain in original scored denominator",
+  "systems": {
+    "wity_1": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            66,
+            66
+          ],
+          "surface_inspection": [
+            7,
+            7
+          ],
+          "ui_screenshots": [
+            82,
+            82
+          ],
+          "diagram_reasoning": [
+            56,
+            56
+          ],
+          "chart_reasoning": [
+            31,
+            31
+          ],
+          "photo_docs": [
+            48,
+            48
+          ],
+          "small_text": [
+            72,
+            72
+          ],
+          "dense_ui": [
+            23,
+            23
+          ],
+          "trap_charts": [
+            38,
+            38
+          ],
+          "agent_safety": [
+            26,
+            26
+          ],
+          "counting": [
+            39,
+            39
+          ],
+          "multi_panel": [
+            40,
+            40
+          ],
+          "multilingual": [
+            14,
+            14
+          ],
+          "spatial": [
+            58,
+            58
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            200,
+            200
+          ],
+          "count_inspect": [
+            46,
+            46
+          ],
+          "ui_agent_action": [
+            131,
+            131
+          ],
+          "diagram_planning": [
+            114,
+            114
+          ],
+          "chart_decision": [
+            109,
+            109
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "05c7154b2320de47aabc8757f7e6f6330b3d08d1846c910a5b6566523269347e",
+        "output_sha256": "aec4ea1c27be71d34620f00ea0e59b984ffab3d9d9be93c4371033c30548fbd7",
+        "membership_sha256": "0209fca0aeef68569db57fd0bd27a3e279e80439d9c542d0437c12cb31d1052f",
+        "receipt_sha256": "ab82eadd4ac6bfdc931ad77e76d0b64a48b616535767bf28fcf2d281982b56a1"
+      }
+    },
+    "imajev_4b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            120
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            114
+          ],
+          "small_text": [
+            175,
+            169
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            443
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "58b092af55c176252143808806ce58828e0b3553ab846cf8d6ab80d8fce8315a",
+        "output_sha256": "5bb401cd6dc656551452b167e3db9f0b8580ffb07fd339b13d7fc1cd7f405e77",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "0378bc386fcca87333613c6e0a23528a42146a663207f447fb4fd13d2b5cc41f"
+      }
+    },
+    "surogate_rune_26b_v3": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "78861b98678070ffb114eca3ee322376173279054dcb302e5813d4c636417d2f",
+        "output_sha256": "d332c771da47d20beb0fb3a0ad325bfd528cc01b475bd055cd94a1394d0f31de",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "11258cdf1b68820a8c94241a74489eb425c58a36ea1e7821a07560d4b598b289"
+      }
+    },
+    "kushal_gemma4_31b_it_autoloops": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            66,
+            66
+          ],
+          "surface_inspection": [
+            7,
+            7
+          ],
+          "ui_screenshots": [
+            82,
+            82
+          ],
+          "diagram_reasoning": [
+            56,
+            56
+          ],
+          "chart_reasoning": [
+            31,
+            31
+          ],
+          "photo_docs": [
+            48,
+            48
+          ],
+          "small_text": [
+            72,
+            72
+          ],
+          "dense_ui": [
+            23,
+            23
+          ],
+          "trap_charts": [
+            38,
+            38
+          ],
+          "agent_safety": [
+            26,
+            26
+          ],
+          "counting": [
+            39,
+            39
+          ],
+          "multi_panel": [
+            40,
+            40
+          ],
+          "multilingual": [
+            14,
+            14
+          ],
+          "spatial": [
+            58,
+            58
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            200,
+            200
+          ],
+          "count_inspect": [
+            46,
+            46
+          ],
+          "ui_agent_action": [
+            131,
+            131
+          ],
+          "diagram_planning": [
+            114,
+            114
+          ],
+          "chart_decision": [
+            109,
+            109
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "d27337b423d74f10bbda74bca7d103de88d067f437b5a31da4896ce0825299b5",
+        "output_sha256": "93cd892679b0999bb57fd912fcff39b39cc4aafe52dbc9fe1897e6fb2d430094",
+        "membership_sha256": "0209fca0aeef68569db57fd0bd27a3e279e80439d9c542d0437c12cb31d1052f",
+        "receipt_sha256": "7e4bba6b01916caba68665501fd8b3e3ba24c6aa0db3a30be120dba1e3fda7df"
+      }
+    },
+    "imajev_9b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            120
+          ],
+          "surface_inspection": [
+            19,
+            0
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            114
+          ],
+          "small_text": [
+            175,
+            169
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            443
+          ],
+          "count_inspect": [
+            124,
+            105
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "abfe31931009afd4af611b10d1622afed5d33bc85fcda35c1e9c38b73df4cea7",
+        "output_sha256": "5bee24adb4b37d2e13611e86f4c8e09dbb9e2ba281e467a2db141c426a7cea91",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "fdcba665c2e3cfbde85465d1f1ae0fd711e7daae9b56bfa75c0b931cbbbb248e"
+      }
+    },
+    "wity_1_off": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            66,
+            66
+          ],
+          "surface_inspection": [
+            7,
+            7
+          ],
+          "ui_screenshots": [
+            82,
+            82
+          ],
+          "diagram_reasoning": [
+            56,
+            56
+          ],
+          "chart_reasoning": [
+            31,
+            31
+          ],
+          "photo_docs": [
+            48,
+            48
+          ],
+          "small_text": [
+            72,
+            72
+          ],
+          "dense_ui": [
+            23,
+            23
+          ],
+          "trap_charts": [
+            38,
+            38
+          ],
+          "agent_safety": [
+            26,
+            26
+          ],
+          "counting": [
+            39,
+            39
+          ],
+          "multi_panel": [
+            40,
+            40
+          ],
+          "multilingual": [
+            14,
+            14
+          ],
+          "spatial": [
+            58,
+            58
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            200,
+            200
+          ],
+          "count_inspect": [
+            46,
+            46
+          ],
+          "ui_agent_action": [
+            131,
+            131
+          ],
+          "diagram_planning": [
+            114,
+            114
+          ],
+          "chart_decision": [
+            109,
+            109
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "c7062181094cb2e576c57f075dfb73aaefc34b0bdb7503c643b31c2443f0522d",
+        "output_sha256": "670118a78a9bed51bd3ee0f267e389ec0d449e77e53da7b8a7b794c0fd933356",
+        "membership_sha256": "0209fca0aeef68569db57fd0bd27a3e279e80439d9c542d0437c12cb31d1052f",
+        "receipt_sha256": "ca14b3e5a511786473aaaaf1f3ab3e5cd2d9346a65ed625c58e2d93357dc864c"
+      }
+    },
+    "jev_omni": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "1806ec8667f87bcb1fb5e9214aa156e0c3142aac9d99dd6fb67398465f02e2ef",
+        "output_sha256": "20a7b9c6b408c27bfe8e0a7f03da6099ad1f0867937ad246df357d01e5aa0323",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "f8f1e1134197af2d270efe4554fa93935ac2ab44e5764c7243a6f76470e54f9c"
+      }
+    },
+    "jpt_9b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "046698cdc0f78d02936f6fb4432a851836c4f93df90eb3c8d13bdf87070827fe",
+        "output_sha256": "eaaebbe56e9d6d72c1f91354b30d3cabbe2a27cdd7f5bc4c0e6106c99c2a39ab",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "353e922ccf74bdde1057f22a2326d0018ea34d4ba2b5c6bb3cc664e13b8dac9c"
+      }
+    },
+    "neohorse_jev_4b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            120
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            115
+          ],
+          "small_text": [
+            175,
+            170
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            445
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "65550598e5cc8357ff47c41ee98b27b6b6231ae1913eec70b640a123c364493c",
+        "output_sha256": "20fac5be1e2f7dde37cc2811a93f85e3edcd14d8e8fce0e71a6b526b6c6ec19c",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "eeabe29a96e7cb21811c3ce8cf56de0092fc61633370e885ecf3e64b4461dcb0"
+      }
+    },
+    "jevify_gemma4_26b_a4b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "2d1faa48f1b4a4ebb9f03ac4f58975365b220089a7f53dc87ee5aef21e0fff26",
+        "output_sha256": "6eb3daa35fe719fa217ee774ad68f06cbaa63bcba1d4463ca9b06705d814df60",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "f76b4597306b1d93d3a2bfbd74b2de34b50536bd796f114ea51305bb7bf01077"
+      }
+    },
+    "autojev_27b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "d8d326062e2d8274893ffe2576520d426b20624717688bfa1af13e8175834267",
+        "output_sha256": "6a8fe62589dbe841451a58ca28fe4a849b14e0674ab8637e9bc20a6e6ea22d7a",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "64b643ff019d26beb873a2c66e044680665198ce9ed62f74cd683c64a84d6722"
+      }
+    },
+    "jpt_4b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "df904a742f748d0ed92078698a4dfa884bcde4dd3b11bfaf76d13dcb447bb9fb",
+        "output_sha256": "e158eea754a7896d728cd2cf79c2eb75ebff1a8021ec244af29212f2b01633e9",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "ce1d6af95d65147d487ac5d195a837cc1e83e86066f36d650cbb87a8b94c87e7"
+      }
+    },
+    "seanliu_jev_vision_8b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "dac2f67355d6019a3194f5ee7ea273e28c09731af0f366024a12e6b6607145e3",
+        "output_sha256": "0bd2c074438ca55e5937ed071e63289cc6f0ffc05b6004fde585e20fa72efe2c",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "2f58bcc610e76796f7b18ecce6fd6082dbb1aefaf25c6450a9d4544c3aa389ba"
+      }
+    },
+    "s1-vision": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            66,
+            66
+          ],
+          "surface_inspection": [
+            7,
+            7
+          ],
+          "ui_screenshots": [
+            82,
+            82
+          ],
+          "diagram_reasoning": [
+            56,
+            56
+          ],
+          "chart_reasoning": [
+            31,
+            31
+          ],
+          "photo_docs": [
+            48,
+            48
+          ],
+          "small_text": [
+            72,
+            72
+          ],
+          "dense_ui": [
+            23,
+            23
+          ],
+          "trap_charts": [
+            38,
+            38
+          ],
+          "agent_safety": [
+            26,
+            26
+          ],
+          "counting": [
+            39,
+            39
+          ],
+          "multi_panel": [
+            40,
+            40
+          ],
+          "multilingual": [
+            14,
+            14
+          ],
+          "spatial": [
+            58,
+            58
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            200,
+            200
+          ],
+          "count_inspect": [
+            46,
+            46
+          ],
+          "ui_agent_action": [
+            131,
+            131
+          ],
+          "diagram_planning": [
+            114,
+            114
+          ],
+          "chart_decision": [
+            109,
+            109
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "f051968f28d9854102517aa0d1b2df5a0b8cbd75045d759109777fc6ac2d9410",
+        "output_sha256": "92f5d1271fc07bcdccbd03e64c3e7963ba726e602d864f3de1d31675193edc0e",
+        "membership_sha256": "0209fca0aeef68569db57fd0bd27a3e279e80439d9c542d0437c12cb31d1052f",
+        "receipt_sha256": "3b96409ed5fe8c8a95b772172974ea804244d3b1ed84aa21e312c6f4867b8d01"
+      }
+    },
+    "shisa_de_1": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "07cf3fa74d9dc95fa94f87e09359d77656de64325767946ebe81a6e3a71beaf7",
+        "output_sha256": "79c29fad46090eb4078c5275ab6b74826780f1665adacad2a78ac405e33c0cb6",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "8f7b5ee2cab6f0eec6dba078f2cdffcee3115b1003a8995fc20edb00d9ca1b8a"
+      }
+    },
+    "clef_flash": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "b98b3e2dbeee4e6dd21bfb2ede7354bb116c43797803a0f7412e0b973c355bc3",
+        "output_sha256": "6b1847486a2d214c9298ce1b4d21fa7c39937b47165be319ed7031e6c63f4228",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "41662c3344a5c787090a2b7d68140de6018ba5d033b2ad942a92f775c0ddebcc"
+      }
+    },
+    "clef": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "9a146eca54d2c57f9c36ac476db42baf8e1b56991892ef50bbe5b87f7dd2ddc4",
+        "output_sha256": "70b43103904d9bee28f4832f2ec1dabdb4bcd69796cca657ade4e9ef61d8595f",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "ddce0964eac19f6ed795141a2fe787131bc62241088cdc89259afba32135b550"
+      }
+    },
+    "gpt6_luna_decisions": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            66,
+            65
+          ],
+          "surface_inspection": [
+            7,
+            7
+          ],
+          "ui_screenshots": [
+            82,
+            82
+          ],
+          "diagram_reasoning": [
+            56,
+            56
+          ],
+          "chart_reasoning": [
+            31,
+            31
+          ],
+          "photo_docs": [
+            48,
+            48
+          ],
+          "small_text": [
+            72,
+            72
+          ],
+          "dense_ui": [
+            23,
+            22
+          ],
+          "trap_charts": [
+            38,
+            38
+          ],
+          "agent_safety": [
+            26,
+            26
+          ],
+          "counting": [
+            39,
+            39
+          ],
+          "multi_panel": [
+            40,
+            40
+          ],
+          "multilingual": [
+            14,
+            10
+          ],
+          "spatial": [
+            58,
+            58
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            200,
+            195
+          ],
+          "count_inspect": [
+            46,
+            46
+          ],
+          "ui_agent_action": [
+            131,
+            130
+          ],
+          "diagram_planning": [
+            114,
+            114
+          ],
+          "chart_decision": [
+            109,
+            109
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "d1e68de04671daee21d06fc2a65854f0bf9669e2553255cdc8608bb51a81ee02",
+        "output_sha256": "3b9c4d236b40976b56b19cb245ddb070e14a27faf176921a6185acd8b0fd4155",
+        "membership_sha256": "0209fca0aeef68569db57fd0bd27a3e279e80439d9c542d0437c12cb31d1052f",
+        "receipt_sha256": "dcbe20e9c47d05c8ad9487b8df8812d6780f69fcdb973f4c1b02d6e0df3163bf"
+      }
+    },
+    "winnow_12b_q8": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            116
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            83
+          ],
+          "small_text": [
+            175,
+            135
+          ],
+          "dense_ui": [
+            66,
+            65
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            91
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            374
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            325
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            266
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "c78650395defcae6b8df333a5023de54add58dbb7e639d289b419963ac760786",
+        "output_sha256": "0e897e70348a31ac06e29fcb2b8359a52a6dc017ca9cd8f4a6c6d7912c824017",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "668b5ba61e1f48ce5eb764c02e329dfe8f4601828f5cce845238150cb4dcb920"
+      }
+    },
+    "image_hopper": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            0
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            105
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "4008c8713ebefe682aa52e585bee42065f5eddc0cd69c9a24e4f088deebcbaed",
+        "output_sha256": "27cb2ce40a9baebdd60970a377e020873bc8b66442bcef14028b0c72ed741866",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "5a3c1c41ce5932cbdd97b9070ad3c71fb5ab2ea8f2f174a2e9bf7e7fa126dca3"
+      }
+    },
+    "omnijev_9b_v4_tzcfly": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "e7d11d836c49ead0ba16e37df68137819c01413eaf091a59a11125f6ce8ff2ca",
+        "output_sha256": "b95e9a13e453aa77330656c55588e66817db98b4ec38b069d96147f3a034d270",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "f307391583bd201ae27de1388dd2734fec941109ddcdfbdd094b51866967913b"
+      }
+    },
+    "omnijev_4b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "9f71adec523ac81cb68fabbb2f18f5c000488ae2d0cef1eb645802a3c6058a65",
+        "output_sha256": "7bc8a057787ece2012919221f434334d02deb7ffd9cc07ba5d142fae54a25f51",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "66e726a007a06198b72f4c9c5a27c01465c17529f7b7dd96616e18179cf6c559"
+      }
+    },
+    "reflex_4b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "96caf8b7f80e59fbf271fb23f7e0871b1f72b9c895f35c2131820fcb9283a515",
+        "output_sha256": "d6c1de54314f9d46ebb4b6048f5e22367359a8f44def07c67cbe66039977638c",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "e047089f20f8f2d1bac88633556b0fc992af61f4b9216b284e7ae156e1faf29d"
+      }
+    },
+    "cua_s1_4b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "0beb8b8d11a00314cfbbb05d54e6178e9b139371860d7847f7e541dffab073ec",
+        "output_sha256": "897aa8694a7c0f99466b3bdbddb6744bbbab73642eae7136cf309bd127f4b49c",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "b6adacaa1f65b7b006e07d060cb46049b3a7f7f26e7c65ecad566abe6f3b027d"
+      }
+    },
+    "gpt6_luna": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            66,
+            62
+          ],
+          "surface_inspection": [
+            7,
+            7
+          ],
+          "ui_screenshots": [
+            82,
+            82
+          ],
+          "diagram_reasoning": [
+            56,
+            47
+          ],
+          "chart_reasoning": [
+            31,
+            31
+          ],
+          "photo_docs": [
+            48,
+            42
+          ],
+          "small_text": [
+            72,
+            68
+          ],
+          "dense_ui": [
+            23,
+            23
+          ],
+          "trap_charts": [
+            38,
+            38
+          ],
+          "agent_safety": [
+            26,
+            26
+          ],
+          "counting": [
+            39,
+            26
+          ],
+          "multi_panel": [
+            40,
+            35
+          ],
+          "multilingual": [
+            14,
+            14
+          ],
+          "spatial": [
+            58,
+            47
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            200,
+            186
+          ],
+          "count_inspect": [
+            46,
+            33
+          ],
+          "ui_agent_action": [
+            131,
+            131
+          ],
+          "diagram_planning": [
+            114,
+            94
+          ],
+          "chart_decision": [
+            109,
+            104
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "4ad02a2684968f4d16b8190f29e598552efcb56fc73931124fa54f1db24927d4",
+        "output_sha256": "846d9019c71c41deb2a916a31b4205e9f9ed69034171e24796caf6e45bc9bd89",
+        "membership_sha256": "0209fca0aeef68569db57fd0bd27a3e279e80439d9c542d0437c12cb31d1052f",
+        "receipt_sha256": "aeaf3faec02187667372dd1a5c42c2c138f71a01aab5a730ff02a84e99bf119b"
+      }
+    },
+    "bonsai_2_27b_pq2_0": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "ab786429cb209df995daf7c9e9ce633c8896dbcba768854f8022848572bcab0c",
+        "output_sha256": "970c5072b112911ca89e24bc2b2cce208c14bacb9ae1d67ad51fba9396f92cc2",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "7f2bf73c74eb43a2e6cd53a4b899937c41e07111861a4d8113be765cc49e8433"
+      }
+    },
+    "visual_jev_generic_baseline": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            120
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            114
+          ],
+          "small_text": [
+            175,
+            169
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            443
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "a94e878431564cb073cf8606d57b21e54e73dd9b837dbb9fec922d6f778f0436",
+        "output_sha256": "b52fc0e88d62acf3f0d81801c91e8bc1605f99fe3b3a2bbb9528c296e371ac26",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "1f8ad8e9a2934e7c5780136eb102318d24b4421cfbe2d4e75a411453783cd459"
+      }
+    },
+    "decider_2b_vision": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "9306968e55b46441d773d5b81caf15bab5597f77a3c0c90e107787453bbcf798",
+        "output_sha256": "e60f5f5cabef509481cd82e9dcf81ca5ea451959f2e853bbda6a9b4bdf89a801",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "43cbfb66e2ef5edeb0c3941e59ca7930b46d633af6095d651d85e4e3630d8cf5"
+      }
+    },
+    "vjev_vision": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "c61f2fc7a6d8a1a28d457a9d2573e9dc43b974aae0e7b4b9ba913735a532375c",
+        "output_sha256": "e13f980dbed834a4018d2c9789df11aabc38cd61ba6c3989d80e757861283997",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "962e07072bef74f17a229082705cd0b98e2c294ffe96673478f1028cf696ed5c"
+      }
+    },
+    "visual_jev_4b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "0510c65af0f077826d904deef9460a758f13335a051511eaf3a19b296e45aa5e",
+        "output_sha256": "4ea2b37f317e82f6816d7c6291bd678d54ab751f623d054af2f9d23d384b62e5",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "568e52b31c77691524b25036cb28ccc1805c013005f937ba48e9a1903186589c"
+      }
+    },
+    "gpt56_luna": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            66,
+            65
+          ],
+          "surface_inspection": [
+            7,
+            7
+          ],
+          "ui_screenshots": [
+            82,
+            81
+          ],
+          "diagram_reasoning": [
+            56,
+            51
+          ],
+          "chart_reasoning": [
+            31,
+            31
+          ],
+          "photo_docs": [
+            48,
+            47
+          ],
+          "small_text": [
+            72,
+            69
+          ],
+          "dense_ui": [
+            23,
+            23
+          ],
+          "trap_charts": [
+            38,
+            38
+          ],
+          "agent_safety": [
+            26,
+            26
+          ],
+          "counting": [
+            39,
+            27
+          ],
+          "multi_panel": [
+            40,
+            40
+          ],
+          "multilingual": [
+            14,
+            14
+          ],
+          "spatial": [
+            58,
+            53
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            200,
+            195
+          ],
+          "count_inspect": [
+            46,
+            34
+          ],
+          "ui_agent_action": [
+            131,
+            130
+          ],
+          "diagram_planning": [
+            114,
+            104
+          ],
+          "chart_decision": [
+            109,
+            109
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "b5df4d03e66f94abc99900f693f345e58d38fec0ceb1359f16f2b0f0d33b8e06",
+        "output_sha256": "efff1dca767aa0864b36522c00636a97e310600ab540badafeadfc47165ec3f4",
+        "membership_sha256": "0209fca0aeef68569db57fd0bd27a3e279e80439d9c542d0437c12cb31d1052f",
+        "receipt_sha256": "2977755a2ee3e508c38d1b1448d15d4e1be450328ee1bd99dcb9f6a4ae9803a6"
+      }
+    },
+    "jevify_gemma4_e4b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "b36e579deaaf29c6820afaefdbcb0ddb522707b5e1bec9e96a0509fc2160f0ce",
+        "output_sha256": "dfcdec67f4432caf481c2f2896eddd479336e486a7effe6085c371dc93dae7e0",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "c2be6e82fff3850d924722ba6bcc87e0407850d6b8f20d4b058f0f47e7bc9d78"
+      }
+    },
+    "jpt_0p8b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "723e525cf465e2ab5c957cd5d33a9b1fd9937aa6f54792f9b78dcb9334e2730d",
+        "output_sha256": "46ab85c4e8cbb0b90e85a92785ea46490d5ad6b9e5d15bbed8407a3d31ff53a6",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "33eb7397e2a4a42534ed84b3561d2219f0eddbb68bc69df111e8297d77b15a6e"
+      }
+    },
+    "glance_qwen3vl_4b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            0
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            105
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "c01f694285549578cbae92ff17edd6caf20a77912b4f2969d56b689aacf6991b",
+        "output_sha256": "17cc7a5351967e279cd6577453bd5a4ff8e7264af9ba2455170882bd9c485b1e",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "c9690d845b6cb533bc827c01698a14fcd909919c7903fdf63ed27a0555b27aa6"
+      }
+    },
+    "gemini31_flash_lite": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            66,
+            66
+          ],
+          "surface_inspection": [
+            7,
+            7
+          ],
+          "ui_screenshots": [
+            82,
+            82
+          ],
+          "diagram_reasoning": [
+            56,
+            56
+          ],
+          "chart_reasoning": [
+            31,
+            31
+          ],
+          "photo_docs": [
+            48,
+            48
+          ],
+          "small_text": [
+            72,
+            71
+          ],
+          "dense_ui": [
+            23,
+            23
+          ],
+          "trap_charts": [
+            38,
+            38
+          ],
+          "agent_safety": [
+            26,
+            26
+          ],
+          "counting": [
+            39,
+            39
+          ],
+          "multi_panel": [
+            40,
+            40
+          ],
+          "multilingual": [
+            14,
+            14
+          ],
+          "spatial": [
+            58,
+            58
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            200,
+            199
+          ],
+          "count_inspect": [
+            46,
+            46
+          ],
+          "ui_agent_action": [
+            131,
+            131
+          ],
+          "diagram_planning": [
+            114,
+            114
+          ],
+          "chart_decision": [
+            109,
+            109
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "69aed97d0ba10932369a93737d59ea7e8583ef41d662d55037a0d6865799dd8c",
+        "output_sha256": "892a50e830c946f40f36b5b18b4395a3085253acca5c3f1249cea11593e733c0",
+        "membership_sha256": "0209fca0aeef68569db57fd0bd27a3e279e80439d9c542d0437c12cb31d1052f",
+        "receipt_sha256": "aab13a3f152d2a4eff116f242f4fea057f3d9dc8f1612609b384ecd144a55e20"
+      }
+    },
+    "djev_v10_step160_snowicarus": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            112
+          ],
+          "surface_inspection": [
+            19,
+            0
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            105
+          ],
+          "small_text": [
+            175,
+            149
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            101
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            406
+          ],
+          "count_inspect": [
+            124,
+            105
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            276
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "1b7465ffb3999e8f7eb67b8094fc7930741688c6bf693c137441ff9c813f6011",
+        "output_sha256": "175d7e93b7bab11ee92c943531f0dbc987112c45326fa627b9bad41d63425772",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "e20728ee962484aee9b3d62cd75dfcc68f4cadac82c3ccb54c44c81604fa838f"
+      }
+    },
+    "imajev_2b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            120
+          ],
+          "surface_inspection": [
+            19,
+            0
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            114
+          ],
+          "small_text": [
+            175,
+            169
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            443
+          ],
+          "count_inspect": [
+            124,
+            105
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "718389e334a7271598f4b59e8ef832a3a91d17107ae6055f0f6c21d8e0e065a3",
+        "output_sha256": "e8485b35b17857115f3fdb72a386678f86e529d947f8731ddbfb0218f1116947",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "0601fcad17f488e5fbbfc4f1cb0c1c27bf5e18b847a482b92e4e5e514ebc3011"
+      }
+    },
+    "gevva_e4b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "4bedfe7ace7cb67f841bb8fa7d54478814e282c9a9840cb32424d6f017694353",
+        "output_sha256": "d7764d43e0bba2c0ceb7164a0844e749bae954608b7109a450becf1ad5a6c2fe",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "9ca2353c28415c7e99407fea59ed55d3c614d1d224a6ccb2f9bad66aa54b2342"
+      }
+    },
+    "djev_distill_v4": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            112
+          ],
+          "surface_inspection": [
+            19,
+            0
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            105
+          ],
+          "small_text": [
+            175,
+            149
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            101
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            406
+          ],
+          "count_inspect": [
+            124,
+            105
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            276
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "0ae01b4b38f9f071ba4bd52e4cf663af9e0ac24fe2fba29676f954988439b77e",
+        "output_sha256": "364aa02e9a2c9daf2f0ebdf6a392e93c3598bbdaa608ba2704b769036791a495",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "1c60d82cc092ec83770be17fea96a4111b3bdc17bc21190b8a07d7f5f5fbcf29"
+      }
+    },
+    "jevify_qwen3vl_2b_t2": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "bfe6ca2d6a64c0078c5cdecc06f9770b65bf264a534c6ddc9cacdf5c1117f9e1",
+        "output_sha256": "41a1f8b45a1c6a5a457d52dba22bea9324884fbe4387dd16dc25e5ec50538b2f",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "d5628cc512e54012f7ebde93041ef2be766952ce1f5c0dfe4919780b8e28fa89"
+      }
+    },
+    "omnijev_2b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "e8f6029909a07a5cbae046dde67925b23f57d4f0459be773e4c5ab7b59e0f009",
+        "output_sha256": "4f42da37139dca7e95fbe302a61c1e3a014e2716a2ca3207b72b371b1aeac1be",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "977da0830fcf1a4e6451110f5ffd98b158a0b50bfd90e81a2aa31367339ba5e7"
+      }
+    },
+    "jev_spatial": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "6508b645352d363e207606ffc78c3a8ac9a2c50e6480c0b28120219b9aef4114",
+        "output_sha256": "d458b4c9b3f22f8215c8daefbb32d98ca87702bb251edaecd798334428e67e5e",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "e6b097cf91fee4f1df5b90f0791386c473d5eac76c44517bc5c987e69f380a51"
+      }
+    },
+    "gevva_e2b_multimodal": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "0d99c2930f47fc0fcb6754624d7151d9f3391ccf5311228ea8a56688056e32f9",
+        "output_sha256": "be3bef7856b70d6aaa293900604090784ffd09942b64b8dddec3f54d4d19bf63",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "ac99e61a10423a990b98163187f36865d0ce5484a683e35f9011edfa0ac0dfaa"
+      }
+    },
+    "jevision": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            120
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            453
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "803e38ac5743cbe98054f2d9aa63a20f8ed98a0ac0ad37a6753193083008203e",
+        "output_sha256": "e4d5ad027a5a83df229408a1fb2481e7d9ce699d3341de4f5dab2c9430908310",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "c1cb2f1cc84a8a91e87c7952163886f22068b24b4e2b51864a651265c9bf3eeb"
+      }
+    },
+    "omnijev_0p8b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "b0f37abb1134d5ffc9b5cbcc137d023c8772fa4fc049f0293d3fd00b187946fb",
+        "output_sha256": "7b2fcb40e4f5fb75ec6220433e84604f646d6412ef867aa91c2701026e3c53e5",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "df39f8d71131b2417a4d468b2f61ae17c15021944e77333d17c15d2c9b2c0e35"
+      }
+    },
+    "playjev_0p8b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "2ca22b00b750364af02d8f64ba7d7a08f405890f801cd410354082c4c51ec213",
+        "output_sha256": "cc754e4d1c7c82f4377c90529fdae3947ffb02e86cc8a8fdd2d4d966f694e57c",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "2883365b295af9c00fb343bcbb73ac6cbdb179626172688458c1877fbfa492a5"
+      }
+    },
+    "djev_dev_bf16": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            78
+          ],
+          "surface_inspection": [
+            19,
+            0
+          ],
+          "ui_screenshots": [
+            199,
+            80
+          ],
+          "diagram_reasoning": [
+            141,
+            23
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            105
+          ],
+          "small_text": [
+            175,
+            149
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            101
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            372
+          ],
+          "count_inspect": [
+            124,
+            105
+          ],
+          "ui_agent_action": [
+            326,
+            207
+          ],
+          "diagram_planning": [
+            301,
+            183
+          ],
+          "chart_decision": [
+            284,
+            276
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "23e6142d291ac5fe76c2aab08d3e3e0e9ca0fc1c7ad9b1697756c6a32236c2c4",
+        "output_sha256": "a79db376bc5ff1fe82720568bdc0c603e5fec33ef5af4519853fa16a53bae79e",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "de1d1a4b4f4888bdc1cef939c80c55acb67620c9b5832c329a7b2289cbf109ab"
+      }
+    },
+    "qevi_2b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "7da1439339bb42e96c791f442ae73a829d01c0e27242b38e3043e2230d2749db",
+        "output_sha256": "7e8b87008533649e90955971eb98f86b0abcbf3cb46771a0d3cde28e0d062c02",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "b2b8b8fc649a0254c001446fd44021038cfc4214b15aba953edc00ef2cfd30ab"
+      }
+    },
+    "djev_spark_nvfp4": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            78
+          ],
+          "surface_inspection": [
+            19,
+            0
+          ],
+          "ui_screenshots": [
+            199,
+            80
+          ],
+          "diagram_reasoning": [
+            141,
+            23
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            105
+          ],
+          "small_text": [
+            175,
+            149
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            101
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            372
+          ],
+          "count_inspect": [
+            124,
+            105
+          ],
+          "ui_agent_action": [
+            326,
+            207
+          ],
+          "diagram_planning": [
+            301,
+            183
+          ],
+          "chart_decision": [
+            284,
+            276
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "a03574dca5a1beda8046ab112e9b61cabb737e27d09132bc0fc7e37bdd65a4d0",
+        "output_sha256": "40910444217d8971be62a9ec250f391af2b281c12e9c9f21d5ad44de877f29ce",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "af0436a38392f6bc6b22f503d4efe17445d9562e11ac9e218c9a9f918000c24d"
+      }
+    },
+    "openjev_4b_nli": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            120
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            453
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "03f27404e6c87d9d1abf010cd68e4993e77583e3d39bdda93cd1a460ea549136",
+        "output_sha256": "2de14f83bcaeb0d36e0d5cf6da4da547e66da8687e607513a9abfc01ecce740c",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "5e8b0772a29c2fa35223405e8a1cc6e99110d0da3df1be8bf7bef6973aaca640"
+      }
+    },
+    "openjev_4b_v5": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            120
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            453
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "c282899eefac52c263d36ff413878a212192b6f0c9c06a78a835fb247d8c5176",
+        "output_sha256": "a95e41fb46f91070713bf0e67ea1aeacd97b4f462b3c9f32318142ebf33f055d",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "3d8f967c26c1b9604423d209e2829e12e5a53f07baaeb2db51ced3c60f387867"
+      }
+    },
+    "gemini38_flash": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            66,
+            58
+          ],
+          "surface_inspection": [
+            7,
+            7
+          ],
+          "ui_screenshots": [
+            82,
+            78
+          ],
+          "diagram_reasoning": [
+            56,
+            37
+          ],
+          "chart_reasoning": [
+            31,
+            22
+          ],
+          "photo_docs": [
+            48,
+            16
+          ],
+          "small_text": [
+            72,
+            0
+          ],
+          "dense_ui": [
+            23,
+            7
+          ],
+          "trap_charts": [
+            38,
+            19
+          ],
+          "agent_safety": [
+            26,
+            6
+          ],
+          "counting": [
+            39,
+            0
+          ],
+          "multi_panel": [
+            40,
+            8
+          ],
+          "multilingual": [
+            14,
+            13
+          ],
+          "spatial": [
+            58,
+            0
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            200,
+            87
+          ],
+          "count_inspect": [
+            46,
+            7
+          ],
+          "ui_agent_action": [
+            131,
+            91
+          ],
+          "diagram_planning": [
+            114,
+            37
+          ],
+          "chart_decision": [
+            109,
+            49
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "9a00afda3bf0972902f68be4b9e2a75fffcff84bc14a8fbb51834cb52592d8eb",
+        "output_sha256": "ca363756598db23fc8eb3efec52c836be719aef0f80e0b91f7f0308368501442",
+        "membership_sha256": "0209fca0aeef68569db57fd0bd27a3e279e80439d9c542d0437c12cb31d1052f",
+        "receipt_sha256": "d197e45366bcd4c33ce22b9adf27912ba7e7b179c442a47568a95e7e03d1a969"
+      }
+    },
+    "standard_one_3b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "7c3afb49ea34d09e077dc605bfd308b4c71cb167913a6a676670623f72e04a4d",
+        "output_sha256": "b44b2fd601c8d57839ac2ba023b45184bb12ee31ef3a5d13c88f1968d9ffca74",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "b8c75a970d5b89b893464f62071d813a484cb65017f2643344b11ce580dd9da0"
+      }
+    },
+    "standard_one_8b": {
+      "cells": {
+        "capabilities": {
+          "receipt": [
+            132,
+            132
+          ],
+          "surface_inspection": [
+            19,
+            19
+          ],
+          "ui_screenshots": [
+            199,
+            199
+          ],
+          "diagram_reasoning": [
+            141,
+            141
+          ],
+          "chart_reasoning": [
+            60,
+            60
+          ],
+          "photo_docs": [
+            118,
+            118
+          ],
+          "small_text": [
+            175,
+            175
+          ],
+          "dense_ui": [
+            66,
+            66
+          ],
+          "trap_charts": [
+            115,
+            115
+          ],
+          "agent_safety": [
+            61,
+            61
+          ],
+          "counting": [
+            105,
+            105
+          ],
+          "multi_panel": [
+            109,
+            109
+          ],
+          "multilingual": [
+            40,
+            40
+          ],
+          "spatial": [
+            160,
+            160
+          ]
+        },
+        "usecases": {
+          "document_check": [
+            465,
+            465
+          ],
+          "count_inspect": [
+            124,
+            124
+          ],
+          "ui_agent_action": [
+            326,
+            326
+          ],
+          "diagram_planning": [
+            301,
+            301
+          ],
+          "chart_decision": [
+            284,
+            284
+          ]
+        }
+      },
+      "source": {
+        "public_score_sha256": "b99f757153c8f4a7f5eb92512c14f5fdfafdebf127d02e904a34b1da05726675",
+        "output_sha256": "a09cce786a19842e0fc874d7c205be6f4521df03bdceba414b7968b86717ffad",
+        "membership_sha256": "854791e45326c4f2580504af2175d9157a4b0a885b546c4539b31ea8204222cb",
+        "receipt_sha256": "50d01ac4406e4ca5662c7b221ac5242ef48a57fc725fc0617748b00f5a85eb8b"
+      }
+    }
+  },
+  "original_category_values_denominators_sha256": "8911f6543580b44958828bcb0bf2fa3993b6d2b76dd0742c7e564bd6494ee2e4"
+}
