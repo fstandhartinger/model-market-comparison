@@ -40,7 +40,7 @@ class HostFake(_FakeProvider):
                    'otherfile': 'x @ file:///etc/passwd\n',
                    'kernelwheel': 'torch==2.8.0\ncausal-conv1d @ file:///tmp/kernel-wheels/causal_conv1d-1.7.0-cp312-cp312-linux_x86_64.whl\n'
                    }.get(self.failure, 'torch==2.8.0\n')
-        elif command[:2] == ['docker', 'run'] and '-I' in command and '-S' in command:
+        elif command[:2] == ['docker', 'run'] and '-I' in command and '-S' in command and '-e' in command:
             out = 'BASE /usr/lib/python3/site-packages\n' + ('HIT /usr/lib/python3/site-packages/aplomb_evil\n' if self.failure == 'origin' else '')
         elif command[:2] == ['docker', 'run'] and '-I' in command:
             raise AssertionError('the origin scan must run with -S (no site/.pth/sitecustomize execution)')
@@ -51,7 +51,7 @@ class HostFake(_FakeProvider):
             if self.failure == 'envtoken':
                 env[1] = 'HF_TOKEN=hf_leak'
             out = json.dumps(env)
-        elif command[0] == 'stat' and command[2] == '%F:%s' and command[-1].startswith('/work/out/'):
+        elif command[:3] == ['env', 'LC_ALL=C', 'stat'] and command[-2] == '%F:%s' and command[-1].startswith('/work/out/'):
             out = {'bigoutput': 'regular file:%d\n' % 10 ** 12, 'symout': 'symbolic link:40\n'}.get(self.failure, 'regular file:8\n')
         elif command[:3] == ['docker', 'inspect', 'jev-pod-run'] and command[-1] == '{{json .HostConfig}}':
             out = json.dumps({'NetworkMode': 'none', 'Binds': ['/models:/models:ro'], 'Privileged': False, 'CapAdd': None,
@@ -359,21 +359,43 @@ class HostStagingTests(unittest.TestCase):
         with mock.patch.object(pr, 'HOST_MAX_LINE_BYTES', 5), self.assertRaisesRegex(md.OperationalHold, 'partial_measurement_requires_reconciliation'):
             self.lifecycle(HostFake())
 
-    def test_origin_snippet_finds_names_and_pth_paths_without_executing_anything(self):
-        import subprocess as sp, tempfile, os as _os
-        d = tempfile.mkdtemp(); marker = _os.path.join(d, 'EXECUTED')
-        _os.makedirs(_os.path.join(d, 'site', 'extra', 'aplomb'))
-        open(_os.path.join(d, 'site', 'Run_Aplomb.py'), 'w').write('')
-        open(_os.path.join(d, 'site', 'evil.pth'), 'w').write('import os; open(%r, "w").write("x")\n%s\n' % (marker, _os.path.join(d, 'site', 'extra')))
-        open(_os.path.join(d, 'site', 'sitecustomize.py'), 'w').write('open(%r, "w").write("x")\n' % marker)
-        code = 'import sys;sys.path.insert(0, %r)\n' % _os.path.join(d, 'site') + pr.ORIGIN_SNIPPET
-        r = sp.run(['python3', '-I', '-S', '-c', code], capture_output=True, text=True)
+    def scan(self, d, extra_env=None, cwd=None, code_prefix=''):
+        import subprocess as sp, os as _os
+        env = {'PATH': '/usr/bin:/bin'}
+        env.update(extra_env or {})
+        return sp.run(['python3', '-I', '-S', '-c', code_prefix + pr.ORIGIN_SNIPPET], capture_output=True, text=True,
+                      cwd=cwd or d, env=env)
+
+    def test_origin_snippet_finds_names_pth_relative_paths_zip_pythonhome_cwd_without_executing_anything(self):
+        import tempfile, os as _os, zipfile
+        d = tempfile.mkdtemp(); marker = _os.path.join(d, 'EXECUTED'); clean_cwd = tempfile.mkdtemp()
+        site = _os.path.join(d, 'site')
+        _os.makedirs(_os.path.join(site, 'extra', 'aplomb'))
+        open(_os.path.join(site, 'Run_Aplomb.py'), 'w').write('')
+        open(_os.path.join(site, 'evil.pth'), 'w').write('import os; open(%r, "w").write("x")\nextra\n' % marker)  # relative path line
+        open(_os.path.join(site, 'sitecustomize.py'), 'w').write('open(%r, "w").write("x")\n' % marker)
+        prefix = 'import sys;sys.path.insert(0, %r)\n' % site
+        r = self.scan(d, cwd=clean_cwd, code_prefix=prefix)
         self.assertEqual(r.returncode, 0, r.stderr)
         hits = [l for l in r.stdout.splitlines() if l.startswith('HIT ')]
         self.assertTrue(any(h.endswith('Run_Aplomb.py') for h in hits), r.stdout)
-        self.assertTrue(any(h.endswith(_os.path.join('extra', 'aplomb')) for h in hits), r.stdout)  # reached via the .pth path
+        self.assertTrue(any(h.endswith(_os.path.join('extra', 'aplomb')) for h in hits), r.stdout)  # reached via the RELATIVE .pth line
+        self.assertTrue(any(l.startswith('CODE ') and 'sitecustomize' in l for l in r.stdout.splitlines()), r.stdout)
+        self.assertTrue(any(l.startswith('CODE pth:evil.pth') for l in r.stdout.splitlines()), r.stdout)
         self.assertFalse(_os.path.exists(marker), 'scan executed image code')
-        clean = sp.run(['python3', '-I', '-S', '-c', pr.ORIGIN_SNIPPET], capture_output=True, text=True)
+        # zip on sys.path
+        z = _os.path.join(d, 'x.zip'); zipfile.ZipFile(z, 'w').close()
+        r = self.scan(d, cwd=clean_cwd, code_prefix='import sys;sys.path.insert(0, %r)\n' % z)
+        self.assertIn('HIT nondir:' + _os.path.realpath(z), r.stdout)
+        # PYTHONHOME
+        r = self.scan(d, cwd=clean_cwd, extra_env={'PYTHONHOME': '/usr'})
+        self.assertIn('HIT env:PYTHONHOME', r.stdout)
+        # working directory with aplomb/
+        wd = tempfile.mkdtemp(); _os.makedirs(_os.path.join(wd, 'aplomb'))
+        r = self.scan(d, cwd=wd)
+        self.assertTrue(any(l.startswith('HIT ') and l.endswith('aplomb') for l in r.stdout.splitlines()), r.stdout)
+        # clean run
+        clean = self.scan(d, cwd=clean_cwd)
         self.assertEqual(clean.returncode, 0, clean.stderr)
         self.assertFalse([l for l in clean.stdout.splitlines() if l.startswith('HIT ')], clean.stdout)
         self.assertTrue(any(l.startswith('BASE ') for l in clean.stdout.splitlines()))

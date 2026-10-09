@@ -67,32 +67,7 @@ HOST_MAX_RAW_BYTES = 256 << 20
 HOST_MAX_RECEIPT_BYTES = 4 << 20
 HOST_MAX_LINE_BYTES = 4 << 20
 SECRETISH_ENV_RE = re.compile(r"(?i)(token|secret|passw|credential|apikey|api_key|auth|private)")
-ORIGIN_SNIPPET = (
-    "import os,sys,site\n"
-    "bases=[p for p in sys.path if p]\n"
-    "try:\n"
-    "    bases+=list(site.getsitepackages())\n"
-    "except Exception:\n"
-    "    pass\n"
-    "bases+=[p for p in os.environ.get('PYTHONPATH','').split(':') if p]\n"
-    "out=[];done=set();queue=list(bases)\n"
-    "while queue:\n"
-    "    base=queue.pop(0)\n"
-    "    real=os.path.realpath(base)\n"
-    "    if real in done or real in ('/code','/') or not os.path.isdir(real): continue\n"
-    "    done.add(real);out.append('BASE '+real)\n"
-    "    for root,dirs,files in os.walk(real,onerror=lambda e:(_ for _ in ()).throw(e)):\n"
-    "        if root[len(real):].count(os.sep)>=4: dirs[:]=[]\n"
-    "        for n in dirs+files:\n"
-    "            low=n.lower()\n"
-    "            if low.startswith('aplomb') or low.startswith('run_aplomb'): out.append('HIT '+os.path.join(root,n))\n"
-    "            if n.endswith('.pth') and root==real:\n"
-    "                for line in open(os.path.join(root,n),errors='replace').read().splitlines():\n"
-    "                    t=line.strip()\n"
-    "                    if not t or t.startswith('#'): continue\n"
-    "                    if 'aplomb' in t.lower(): out.append('HIT pth:'+n+':'+t[:200])\n"
-    "                    elif not t.startswith('import') and os.path.isdir(t): queue.append(t)\n"
-    "print('\\n'.join(sorted(set(out))))\n")
+ORIGIN_SNIPPET = "import os,sys,site\nout=[];bases=[p for p in sys.path if p]\ntry: bases+=list(site.getsitepackages())\nexcept Exception: pass\ntry: bases.append(site.getusersitepackages())\nexcept Exception: pass\nbases+=[p for p in os.environ.get('PYTHONPATH','').split(os.pathsep) if p]\nbases.append(os.getcwd())\nif os.environ.get('PYTHONHOME'): out.append('HIT env:PYTHONHOME')\ndef boom(e): raise e\ndone=set();queue=list(bases)\nwhile queue:\n    real=os.path.realpath(queue.pop(0))\n    if real in done or real=='/code': continue\n    done.add(real)\n    if not os.path.exists(real): continue\n    if not os.path.isdir(real):\n        out.append('HIT nondir:'+real); continue\n    out.append('BASE '+real)\n    if real=='/':\n        out+=['HIT /'+n for n in os.listdir('/') if n.lower().startswith(('aplomb','run_aplomb'))]; continue\n    for root,dirs,files in os.walk(real,onerror=boom):\n        if root[len(real):].count(os.sep)>=4: dirs[:]=[]\n        for n in dirs+files:\n            low=n.lower()\n            if low.startswith('aplomb') or low.startswith('run_aplomb'): out.append('HIT '+os.path.join(root,n))\n            if n in ('sitecustomize.py','usercustomize.py') and root==real: out.append('CODE '+os.path.join(root,n))\n            if n.endswith('.pth') and root==real:\n                for line in open(os.path.join(root,n),errors='replace').read().splitlines():\n                    if not line.strip() or line.startswith('#'): continue\n                    if line.startswith(('import ','import\\t')): out.append('CODE pth:'+n+':'+line.strip()[:200])\n                    elif 'aplomb' in line.lower(): out.append('HIT pth:'+n+':'+line.strip()[:200])\n                    else: queue.append(os.path.join(root,line.rstrip()))\nprint('\\n'.join(sorted(set(out))))\n"
 
 
 def _utcnow():
@@ -381,9 +356,9 @@ def _build_host_image(provider, pod_id, recipe, job_dir, image_context_provider,
            for line in freeze.splitlines()):
         raise PodRunError("image_pip_freeze_unsafe")
     # Host-side evidence that the image carries no copy of the customer package outside /code (the customer
-    # process is never started here: plain `python -I -c` over the interpreter's search path only).
-    listing = _exec(provider, pod_id, ["docker", "run", "--rm", "--network", "none", "--entrypoint", "python",
-                                       build["tag"], "-I", "-S", "-c", ORIGIN_SNIPPET]).stdout
+    # process is never started here: `python -I -S -c`, so no site/.pth/sitecustomize code runs; startup code is listed as CODE).
+    listing = _exec(provider, pod_id, ["docker", "run", "--rm", "--network", "none", "-e", "HOME=/tmp",
+                                       "--entrypoint", "python", build["tag"], "-I", "-S", "-c", ORIGIN_SNIPPET]).stdout
     if not listing.strip() or any(line.startswith("HIT ") for line in listing.splitlines()):
         raise PodRunError("image_contains_customer_package")
     # Image-level environment is checked BEFORE any sealed dispatch (the run container adds only HOME and two empty keys).
@@ -416,7 +391,7 @@ def _env_names_checked(raw):
 
 
 def _bounded_remote_size(provider, pod_id, remote, limit):
-    out = _exec(provider, pod_id, ["stat", "-c", "%F:%s", remote]).stdout.strip()
+    out = _exec(provider, pod_id, ["env", "LC_ALL=C", "stat", "-c", "%F:%s", remote]).stdout.strip()
     kind, _, size = out.partition(":")
     if kind != "regular file" and kind != "regular empty file":
         raise PodRunError("host_output_not_regular")
