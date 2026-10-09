@@ -14,7 +14,13 @@ const board=readFileSync(new URL('../components/JevBenchV16Board.tsx',import.met
 // row selection, ordering, actual stored language cells, suppression and wrapper heading remain real Source.
 const functionSource=board.slice(board.indexOf('function LanguageView('),board.indexOf('\nfunction DatedCarry('));
 const actualRowHelpers = board.slice(board.indexOf('const listedRow ='),board.indexOf('function apiRowProps('));
-const code=ts.transpileModule(actualRowHelpers+functionSource+'\nexport {LanguageView};', {compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022}}).outputText;
+// Real languageNoteOf Source (upstream row-scoped coverage note), sliced through its closing brace. An older Board
+// may predate it; then LanguageView must not reference it. Fail closed if referenced but not extractable.
+const noteStart=board.indexOf('\nfunction languageNoteOf(');
+const noteEnd=noteStart<0?-1:board.indexOf('\n}\n',noteStart);
+const actualNoteHelper=noteStart<0||noteEnd<0?'':board.slice(noteStart+1,noteEnd+3);
+if (/\blanguageNoteOf\b/.test(functionSource)) assert.ok(/^function languageNoteOf\(/.test(actualNoteHelper),'LanguageView references languageNoteOf but its actual Source could not be extracted');
+const code=ts.transpileModule(actualRowHelpers+actualNoteHelper+functionSource+'\nexport {LanguageView};', {compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022}}).outputText;
 const module={exports:{}};
 runInNewContext(code,{module,exports:module.exports,require,Fragment:React.Fragment,freshJevbenchCategoryRows,
  JEV_SCOPE_LISTING,
