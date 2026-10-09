@@ -29,7 +29,13 @@ test('CR-257: every JevBench release page from v1.5.0 on is covered by a categor
   const versions = (await readdir(new URL('../app/jev-models/', import.meta.url))).filter((d) => /^v\d+(\.\d+)+$/.test(d));
   const atLeast15 = (v) => { const [maj, min] = v.slice(1).split('.').map(Number); return maj > 1 || (maj === 1 && min >= 5); };
   for (const v of versions.filter(atLeast15)) {
-    assert.ok(JEVBENCH_CATEGORY_REVISIONS.includes(v), `/jev-models/${v} has no per-category artifact: add one and register it in lib/jevbench-categories.mjs`);
+    const categoryRevision = v === 'v1.6' ? 'v1.6.0' : v;
+    if (v === 'v1.6') {
+      const alias = await read('../app/jev-models/v1.6/page.tsx');
+      assert.match(alias, /import \{ permanentRedirect \} from 'next\/navigation'/);
+      assert.match(alias, /permanentRedirect\('\/jev-models\/v1\.6\.0'\)/, 'method alias must resolve to the category-covered release');
+    }
+    assert.ok(JEVBENCH_CATEGORY_REVISIONS.includes(categoryRevision), `/jev-models/${v} has no per-category artifact: add one and register it in lib/jevbench-categories.mjs`);
   }
 });
 

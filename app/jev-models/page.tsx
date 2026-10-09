@@ -7,9 +7,9 @@ import { JevBenchMainJsonLd } from '../../components/JevBenchJsonLd';
 const OG_ART_REVISION = 'og4'; // Keep the live board share card evergreen across releases.
 
 export async function generateMetadata(): Promise<Metadata> {
-  const title = 'JevBench — Jev benchmark & leaderboard of open-weight Jev-class models';
-  const description = 'Independent Jev benchmark and leaderboard: the JevBench Capability Score ranks open-weights decision models within frozen cost and median-latency caps, with Jev as the reference. Compare intelligence, calibration, speed, cost, use cases, topics and languages.';
-  const imageAlt = 'JevBench by Benchmark Heaven: a benchmark for Jev-class decision models across intelligence, calibration, speed, and cost.';
+  const title = 'JevBench — AI decision model benchmark & leaderboard';
+  const description = 'Compare AI decision models on accuracy, probability calibration, latency and cost. JevBench by Benchmark Heaven ranks open-weights decision models by the JevBench Capability Score, with methodology and reproducible aggregate results.';
+  const imageAlt = 'JevBench by Benchmark Heaven: evaluation of AI decision models and Jev-compatible systems across intelligence, calibration, speed, and cost.';
   const image = `https://benchmarkheaven.com/jev-models/opengraph-image?v=${OG_ART_REVISION}`;
   return {
     title, description,

@@ -1,3 +1,5 @@
+# Benchmark Heaven — AI benchmarks & decision model evaluation
+
 ![Benchmark Heaven](public/brand/wordmark.svg)
 
 Every benchmark result for every model — and what each one actually costs.
@@ -32,9 +34,13 @@ USD per 1M tokens.
 
 Explore [benchmark rankings](https://benchmarkheaven.com/benchmarks), compare up to four exact model configurations on [Compare](https://benchmarkheaven.com/compare), or use the standalone [Radar](https://benchmarkheaven.com/radar). Model pages include complete benchmark sheets, source links and dates, missing coverage, and explainable profile signals. Every comparison keeps benchmark versions separate. [Methodology and limitations](docs/benchmark-explorer.md).
 
-### JevBench public and held-out tasks
+### JevBench by Benchmark Heaven — decision model benchmark
 
-**[JevBench](https://benchmarkheaven.com/jev-models)** is our own typed-decision benchmark for Jev-class models. The live board identifies the current release and links its aggregate results and frozen version page. Rankings, per-model pages, an [alternatives guide](https://benchmarkheaven.com/jev-models/alternatives), and a [how-to-choose guide](https://benchmarkheaven.com/jev-models/how-to-choose) are all on the site; this repo hosts the scoring code and data.
+[Methodology](https://benchmarkheaven.com/jev-models/methodology) · [Data card and own JSON/CSV measurements](https://benchmarkheaven.com/jev-models/data) · [Benchmark comparison](https://benchmarkheaven.com/decision-model-benchmarks) · [Authoritative release manifest](https://benchmarkheaven.com/api/jevbench/manifest)
+
+Capability is the mean of Intelligence and Calibration inside the official cost/latency caps. Composite uses a gated weighted harmonic mean; equal 25% weights are not an arithmetic average. Published releases and live board amendments have distinct dates; v1.6.1 includes dated addenda and an exact source hash.
+
+**[JevBench](https://benchmarkheaven.com/jev-models)** is our own typed-decision benchmark for AI decision models, including Jev-compatible systems. The live board identifies the current release and links its aggregate results and versioned page with dated amendments. Rankings, per-model pages, an [alternatives guide](https://benchmarkheaven.com/jev-models/alternatives), and a [how-to-choose guide](https://benchmarkheaven.com/jev-models/how-to-choose) are all on the site; this repo hosts the scoring code and data.
 
 Training on JevBench's public split is allowed and should be declared with each submission. Rankings continue to use all benchmark items. We report held-out results separately so that specialisation on public tasks is visible. Held-out means not publicly released, not guaranteed unseen: hosted systems receive these tasks during evaluation. We periodically issue fresh tasks to reduce the value of prior exposure.
 

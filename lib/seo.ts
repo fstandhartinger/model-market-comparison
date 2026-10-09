@@ -8,8 +8,9 @@ export const BRAND_LINE = "Every model. Every Benchmark. Actual Costs.";
 export const SHARE_IMAGE = { url: "/brand/og-launch.png?v=1", width: 1200, height: 630, alt: `Benchmark Heaven — ${BRAND_CLAIM} ${BRAND_LINE}` };
 export const X_HANDLE = "@benchmarkheaven";
 
-export function previewMetadata({ path, title, description, documentTitle }: { path: string; title: string; description: string; documentTitle?: string }): Metadata {
+export function previewMetadata({ path, title, description, documentTitle, absoluteTitle }: { path: string; title: string; description: string; documentTitle?: string; absoluteTitle?: string }): Metadata {
   return {
+    ...(absoluteTitle ? { title: { absolute: absoluteTitle } } : {}),
     ...(documentTitle ? { title: documentTitle } : {}),
     description,
     alternates: { canonical: path },

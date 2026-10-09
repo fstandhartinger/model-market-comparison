@@ -7,8 +7,8 @@ const version = release.revision;
 const count = release.ranking.length;
 const items = release.method.reserve.toLocaleString('en-US');
 
-const title = `Image JevBench ${version} — JevImageBench Capability Score`;
-const description = `JevImageBench Capability Score ranks image decision systems inside the frozen JevBench cost and latency budget. ${version}: ${items} new items, ${count} measured systems, composite scores and price alternatives.`;
+const title = `ImageJevBench — Image Decision Model Benchmark ${version}`;
+const description = `Compare image decision models on accuracy, probability calibration, latency and cost. ImageJevBench by Benchmark Heaven: ${version}, ${count} measured systems.`;
 const image = 'https://benchmarkheaven.com/image-jev-bench/opengraph-image';
 
 export const metadata: Metadata = {
