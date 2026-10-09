@@ -57,7 +57,8 @@ def prepare_proof(previous, artifact, measurement_rows, baseline_sha256,
             members.append({'key':row['key'],'gap':gap})
     if artifact.get('G_med') != statistics.median(r['gap'] for r in members):
         raise ValueError('whole native field median differs')
-    proof = copy.deepcopy(previous)
+    inherited=('schema_version','method','noul_method','bootstrap','cohort_preregistration_sha256','cohort_roster','completion_rule','cost_basis_sha256','draw_release','freeze_manifest_sha256','frozen_capability_envelope','seed_commitment_sha256','source_dispositions_sha256')
+    proof = {k:copy.deepcopy(previous[k])for k in inherited if k in previous}
     proof.update(revision='v1.6.3', source_sha256=official_source_sha256,
                  completed_baseline_sha256=baseline_sha256, systems=copy.deepcopy(measurement_rows),
                  category_reference=copy.deepcopy(category_reference),
