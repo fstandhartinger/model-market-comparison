@@ -25,8 +25,9 @@ def metadata(ref):
     for part in (*reversed(p.parents),p):
         m=part.lstat().st_mode
         if not(stat.S_ISREG(m)if part==p else stat.S_ISDIR(m)):raise ValueError('metadata custody path')
-    if digest(p)!=ref['sha256']:raise ValueError('metadata hash drift')
-    value=json.loads(p.read_text())
+    raw=p.read_bytes()
+    if hashlib.sha256(raw).hexdigest()!=ref['sha256']:raise ValueError('metadata hash drift')
+    value=json.loads(raw)
     if not isinstance(value,dict):raise ValueError('metadata object only, never item arrays')
     return value
 

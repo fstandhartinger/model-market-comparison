@@ -1,13 +1,21 @@
 """Public metadata-only addendum proof scaffold; no manifest or PASS generation."""
 import copy, math, re, statistics
 from datetime import datetime
-from cohort import BASE, NATIVE, FIXED, completed_shape
+from cohort import BASE, NATIVE, FIXED, completed_shape, PREDECESSOR_COST_SHA256
 
 def hex64(value):
     return isinstance(value, str) and re.fullmatch('[a-f0-9]{64}', value) is not None
 
 def prepare_proof(previous, artifact, measurement_rows, baseline_sha256,
                   official_source_sha256, predecessor_publication_sha256, category_reference):
+    if previous.get('cost_basis_sha256') != PREDECESSOR_COST_SHA256:
+        raise ValueError('immutable published predecessor cost hash required')
+    row_keys={'key','rows','admission','admission_sha256','raw_sha256','native_receipt_sha256','source_review_sha256','scoring_admission_sha256','source_pins_sha256','model_commit','code_commit','model_url','code_url','completed_at','disposition'}
+    category_keys={'scope','evidence_sha256','raw_labels_sha256','ruled_labels_sha256','input_sha256','gold_sha256','validated_label_records','public_handcheck_items'}
+    if any(not isinstance(r,dict)or set(r)!=row_keys for r in measurement_rows):
+        raise ValueError('exact measurement proof fields required')
+    if not isinstance(category_reference,dict)or set(category_reference)-category_keys:
+        raise ValueError('exact category proof fields required')
     keys = [r['key'] for r in artifact['systems']]
     shape = completed_shape(keys)
     if len(keys) != len(set(keys)) or {r['key'] for r in measurement_rows} != set(keys) or len(measurement_rows) != len(keys):
@@ -19,11 +27,11 @@ def prepare_proof(previous, artifact, measurement_rows, baseline_sha256,
     if not isinstance(category_reference,dict) or not isinstance(category_reference.get('evidence_sha256'),dict) or not category_reference['evidence_sha256'] or not all(hex64(h) for h in category_reference['evidence_sha256'].values()):
         raise ValueError('actual successor category receipt hashes required')
     for field in ('raw_labels_sha256','ruled_labels_sha256','input_sha256','gold_sha256'):
-        if category_reference.get(field) != previous['category_reference'].get(field):
+        if not hex64(category_reference.get(field))or not hex64(previous['category_reference'].get(field))or category_reference[field] != previous['category_reference'][field]:
             raise ValueError('unchanged draw and actual label provenance required')
     if category_reference.get('validated_label_records') != 3000 or category_reference.get('public_handcheck_items') != 75:
         raise ValueError('real original3000 validation and75review required')
-    if artifact.get('source_sha256') != official_source_sha256:
+    if 'source_sha256' in artifact and artifact['source_sha256'] != official_source_sha256:
         raise ValueError('actual official source binding')
     if artifact.get('bootstrap') != {'B':1000,'bootstrap_seed':16,'g_med_fixed':True}:
         raise ValueError('unchanged official bootstrap')

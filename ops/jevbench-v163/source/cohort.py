@@ -29,3 +29,8 @@ def protected_output_path(value):
 
 # Actual immutable published v162 proof cost hash, never the mask body.
 PREDECESSOR_COST_SHA256 = '50d582d3976ba79d458756f931764cf6e80bc623fbbe2fa611d8744752e3fc7b'
+
+
+def verify_cost_binding(root, contract):
+    if root.get('cost_basis_sha256') != PREDECESSOR_COST_SHA256 or contract.get('predecessor_cost_basis_sha256') != PREDECESSOR_COST_SHA256:
+        raise ValueError('immutable published predecessor cost hash required')

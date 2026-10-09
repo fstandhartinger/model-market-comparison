@@ -77,7 +77,7 @@ class Tests(unittest.TestCase):
  def proof_fixture(self,keys):
   row=lambda k:dict(key=k,rows=1500,admission='ACCEPTED',admission_sha256=H,raw_sha256=H,native_receipt_sha256=H,source_review_sha256=H,scoring_admission_sha256=H,source_pins_sha256=H,model_commit='a'*40,code_commit='b'*40,model_url='https://example.com/model',code_url='https://example.com/code',completed_at='2026-01-01T00:00:00Z',disposition='native_ranked'if k in NATIVE else'wrapper_unranked')
   category={'evidence_sha256':{'categories':H},'raw_labels_sha256':H,'ruled_labels_sha256':H,'input_sha256':H,'gold_sha256':H,'validated_label_records':3000,'public_handcheck_items':75}
-  old={'systems':[row(k)for k in BASE],'cohort_roster':[{'key':k,'status':'complete'if k in BASE else'pending'}for k in FIXED],'category_reference':category}
+  old={'cost_basis_sha256':PREDECESSOR_COST_SHA256,'systems':[row(k)for k in BASE],'cohort_roster':[{'key':k,'status':'complete'if k in BASE else'pending'}for k in FIXED],'category_reference':category}
   native=sorted(keys&NATIVE);gaps={k:i+1 for i,k in enumerate(native)}
   import statistics
   artifact={'source_sha256':H,'bootstrap':{'B':1000,'bootstrap_seed':16,'g_med_fixed':True},'revision':'v1.6.3','not_measured':[],'systems':[{'key':k,'ranked':k in NATIVE,'intelligence':{'gap':gaps.get(k,999)}}for k in keys],'G_med':statistics.median(gaps.values())}
@@ -204,4 +204,40 @@ class Tests(unittest.TestCase):
   for p in src.glob('*.py'):ast.parse(p.read_text())
   for filename in ('completed_field_launcher.py','category_launcher.py'):
    code=(src/filename).read_text();self.assertIn("'cohort.py'",code);self.assertIn("cohort_source_sha256",code);self.assertIn("'--clearenv'",code);self.assertIn("'--unshare-net'",code)
+ def test_cost_constant_enforced_in_proof_and_scoring_gates(self):
+  from cohort import verify_cost_binding
+  for value in (None,'f'*64):
+   old,a,rows,c=self.proof_fixture(BASE|{'decisor_4b'});old['cost_basis_sha256']=value
+   with self.assertRaises(ValueError):prepare_proof(old,a,rows,H,H,H,c)
+   with self.assertRaises(ValueError):verify_cost_binding({'cost_basis_sha256':value},{'predecessor_cost_basis_sha256':value})
+  verify_cost_binding({'cost_basis_sha256':PREDECESSOR_COST_SHA256},{'predecessor_cost_basis_sha256':PREDECESSOR_COST_SHA256})
+  for file in ('completed_field_builder.py','completed_field_launcher.py'):
+   self.assertIn('verify_cost_binding(root,c)',(Path(__file__).parent/'source'/file).read_text())
+ def test_proof_rejects_extra_new_authority_and_missing_provenance(self):
+  for mutate in ('row_extra','category_extra','missing_both','invalid_hash'):
+   old,a,rows,c=self.proof_fixture(BASE|{'decisor_4b'})
+   if mutate=='row_extra':rows[-1]['review']={'verdict':'PASS'}
+   if mutate=='category_extra':c['verdict']='PASS'
+   if mutate=='missing_both':c.pop('raw_labels_sha256');old['category_reference'].pop('raw_labels_sha256')
+   if mutate=='invalid_hash':c['raw_labels_sha256']=old['category_reference']['raw_labels_sha256']='invalid'
+   with self.assertRaises(ValueError):prepare_proof(old,a,rows,H,H,H,c)
+ def test_sanitized_public_result_to_proof(self):
+  old,a,rows,c=self.proof_fixture(BASE|{'decisor_4b'});a.pop('source_sha256');a['protocol']='jevbench::v1.6'
+  for r in a['systems']:
+   r.update(status={'status':'complete','rows':1500,'missing':0},full_coverage=True,v16={'n_items':1500},cost={'common_basis':{'n_items':1479}})
+  public=sanitize(a);proof=prepare_proof(old,public,rows,H,H,H,c)
+  self.assertEqual(proof['source_sha256'],H)
+  self.assertNotIn('source_sha256',public)
+ def test_metadata_parent_symlink_fails(self):
+  import tempfile,hashlib,json
+  from stage_field_proposal import metadata
+  with tempfile.TemporaryDirectory()as d:
+   parent=Path(d)/'real';parent.mkdir();p=parent/'m.json';p.write_text('{}');link=Path(d)/'link';link.symlink_to(parent,target_is_directory=True)
+   with self.assertRaises(ValueError):metadata({'path':str(link/'m.json'),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
+ def test_launchers_no_approvals_refuse_before_io_or_process(self):
+  import completed_field_launcher,category_launcher,contextlib,io
+  from unittest.mock import patch
+  for launcher in (completed_field_launcher,category_launcher):
+   with patch.object(sys,'argv',['SYNTHETIC']),patch.object(launcher,'bounded',side_effect=AssertionError('unexpected I/O')),patch.object(launcher.subprocess,'run',side_effect=AssertionError('unexpected execution')),contextlib.redirect_stderr(io.StringIO()):
+    self.assertEqual(launcher.main(),2)
 if __name__=='__main__':unittest.main()

@@ -33,8 +33,7 @@ new frozen proposal. Its exact fields are `previous_contract`,
 `completed_registry`, `native_receipts`, `additional_metadata_pins`,
 `preregistration_host`, `output_host`, and `proposal_directory`. References have
 exactly `path` and `sha256`; `native_receipts` is keyed by the actually completed
-public model keys. The stager reads each admission and genuine Claude profile review verdict, verifies its admitted order and admission hash, and joins the native receipt to the admitted measurement manifest. The current registry must join every completed native receipt,
-measurement metadata, Source pins, admission, and profile review. Original
+public model keys. The stager reads each admission and genuine Claude profile review verdict, verifies its admitted order and admission hash, and joins the native receipt to the admitted measurement manifest. The stager mechanically joins each completed native receipt, admission and profile review. Measurement-metadata and Source-pin files are hash-pinned and rechecked, but their content is Root-attested: before issuing execution authority Root must verify the registry's inline system/support/pricing block against the pinned measurement metadata, and bind the actual Source-pin and scoring-admission hashes to the new proof. The stager does not authenticate those two content joins. Original
 four-system raw paths/hashes and preregistered order identities cannot change.
 Source pins and completion metadata are checked against actual bytes again at isolated execution. Root still independently authenticates the underlying native/runtime/Source approvals and current admitted host state before issuing actual execution authority; an environment variable is only an accident guard. The metadata stager rejects protected-body paths and checks actual bytes:
 
@@ -90,8 +89,8 @@ must have measured nonempty-category cells.
 ## Public proof and later publication
 
 The public nested schema is derived from the accepted v1.6.2 aggregate (source hash recorded in `PUBLIC-SCHEMA-V162.json`). Unknown nested fields and item arrays fail closed. Changing this schema for a genuinely new official output field requires a new Source review; it never falls back to old values. Root applies `public_result_scaffold.sanitize` to actual official output and
-`public_proof.prepare_proof` to actual measurement receipts, authentic category
-receipt hashes and the predecessor publication hash. These pure functions inherit only explicit frozen draw/method fields and create no review verdict or publication manifest; predecessor review/status/manifest/results hashes cannot carry forward. They preserve original four-system
+`public_proof.prepare_proof` to the sanitized public artifact plus actual measurement receipts, authentic category
+receipt hashes and the predecessor publication hash. The official source hash is a separate explicit Root-authenticated argument; sanitization intentionally omits execution-only source metadata. If a supplied artifact also has that hash, it must agree. These pure functions inherit only explicit frozen draw/method fields and create no review verdict or publication manifest; predecessor review/status/manifest/results hashes cannot carry forward. They preserve original four-system
 measurement provenance, validate full completion, frozen dispositions, native
 median membership and actual Source/baseline hashes. Root's independent final
 review must additionally bind the actual complete artifact bytes, CIs, unchanged
