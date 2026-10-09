@@ -26,6 +26,7 @@ import public_artifacts
 import measurement_dispatch
 import static_agent
 import source_metadata
+import native_source_selection
 import release_render
 import refusal_approval
 import refund_approval
@@ -1149,6 +1150,14 @@ def source_review_pins(job_dir: Path) -> dict[str, Any]:
             raise PickupError("fetched source no longer matches its review pin")
         pins[which] = {"url": value.get("url"), "commit": head, "tree": tree,
                        "receipt_sha256": sha256_file(receipt_path)}
+        if "native_selection" in value:
+            try:
+                if which != "code":
+                    raise PickupError("native source selection is code-only")
+                pins[which]["native_selection"] = native_source_selection.validate_receipt(
+                    job_dir, repo, value, review_worktree=True)
+            except measurement_dispatch.OperationalHold as exc:
+                raise PickupError("selected source receipt is unaccepted or changed") from exc
 
     order = load_row(request_id(job_dir.name))
     if not order or not order.get("benchmarks"):
@@ -5255,29 +5264,39 @@ def fetch_source(rid: str, which: str) -> dict[str, Any]:
                           and match.group("path") in HF_SOURCE_AUTH_REPOSITORIES else None)
         git(dest, "cat-file", "--batch-check", stdin=target + "\n")
         git(dest, "update-ref", "--no-deref", "--stdin", stdin=f"update HEAD {target}\n")
-        git(dest, "sparse-checkout", "init", "--no-cone")
-        git(dest, "sparse-checkout", "set", "--no-cone", *REVIEW_GIT_PATTERNS)
-        # Partial clone: checkout lazily fetches the blobs, so it needs the same scoped credential.
-        git(dest, "checkout", "--detach", "-q", target,
-            hf_repository=match.group("path") if match.group("host") == "huggingface.co"
-                          and match.group("path") in HF_SOURCE_AUTH_REPOSITORIES else None)
         resolved = git(dest, "rev-parse", "HEAD").strip()
         if resolved != target:
             raise PickupError("checked-out commit does not match the requested commit")
         tree = git(dest, "rev-parse", "HEAD^{tree}").strip()
-        metadata = source_metadata.inspect_pinned_tree(
-            dest, resolved, tree, git, max_bytes=MAX_REVIEW_SOURCE_BYTES,
-            hf_repository=match.group("path") if match.group("host") == "huggingface.co"
-            and match.group("path") in HF_SOURCE_AUTH_REPOSITORIES else None)
-        source_bytes = 0
-        for relative in git(dest, "ls-files", "-z").split("\x00"):
-            if not relative:
-                continue
-            path = dest / relative
-            if path.is_file() and not path.is_symlink():
-                source_bytes += path.stat().st_size
-                if source_bytes > MAX_REVIEW_SOURCE_BYTES:
-                    raise PickupError("reviewable source files exceed the size limit")
+        if which == "code" and native_source_selection.applicable(job_dir, resolved, tree):
+            if url != "https://github.com/csabag/ryotide" or not commit:
+                raise PickupError("native selection requires its pinned source URL")
+            # Exact host-accepted selection only; no fallback or customer switch.
+            # Missing selected objects hold, never lazily hydrate excluded data.
+            metadata = native_source_selection.inspect_selected(job_dir, dest, resolved, tree)
+            source_bytes = metadata["archive_objects"]["selected_bytes"]
+            native_source_selection.materialize_review_worktree(
+                job_dir, dest, {"commit": resolved, "tree": tree, **metadata})
+        else:
+            git(dest, "sparse-checkout", "init", "--no-cone")
+            git(dest, "sparse-checkout", "set", "--no-cone", *REVIEW_GIT_PATTERNS)
+            # Partial clone: checkout lazily fetches the blobs, so it needs the same scoped credential.
+            git(dest, "checkout", "--detach", "-q", target,
+                hf_repository=match.group("path") if match.group("host") == "huggingface.co"
+                              and match.group("path") in HF_SOURCE_AUTH_REPOSITORIES else None)
+            metadata = source_metadata.inspect_pinned_tree(
+                dest, resolved, tree, git, max_bytes=MAX_REVIEW_SOURCE_BYTES,
+                hf_repository=match.group("path") if match.group("host") == "huggingface.co"
+                and match.group("path") in HF_SOURCE_AUTH_REPOSITORIES else None)
+            source_bytes = 0
+            for relative in git(dest, "ls-files", "-z").split("\x00"):
+                if not relative:
+                    continue
+                path = dest / relative
+                if path.is_file() and not path.is_symlink():
+                    source_bytes += path.stat().st_size
+                    if source_bytes > MAX_REVIEW_SOURCE_BYTES:
+                        raise PickupError("reviewable source files exceed the size limit")
     except subprocess.TimeoutExpired as exc:
         raise FetchTransientError(f"{which} source fetch timed out") from exc
     except GitFailure as exc:
@@ -5286,7 +5305,7 @@ def fetch_source(rid: str, which: str) -> dict[str, Any]:
         if CUSTOMER_FETCH_RE.search(exc.stderr or ""):
             raise FetchPermanentError(f"{which} source repository does not exist or is not accessible") from exc
         raise FetchInfraError(f"{which} source fetch failed: {(exc.stderr or '').splitlines()[-1][:160]}") from exc
-    except (PickupError, source_metadata.MetadataError, UnicodeError) as exc:
+    except (PickupError, source_metadata.MetadataError, measurement_dispatch.OperationalHold, UnicodeError) as exc:
         if str(exc) == "could not resolve the repository head":
             raise FetchPermanentError(f"{which} source repository head could not be resolved") from exc
         raise FetchInfraError(str(exc)) from exc
@@ -5294,6 +5313,8 @@ def fetch_source(rid: str, which: str) -> dict[str, Any]:
                "review_source_bytes": source_bytes, "archive_objects": metadata["archive_objects"], "fetched_at": iso(utcnow()),
                "credential_repository": match.group("path") if match.group("host") == "huggingface.co"
                and match.group("path") in HF_SOURCE_AUTH_REPOSITORIES else None}
+    if "native_selection" in metadata:
+        receipt["native_selection"] = metadata["native_selection"]
     atomic_write(job_dir / "source" / f"FETCH-RECEIPT-{which}.json", json.dumps(receipt, indent=2) + "\n")
     if which == "model":
         docs = job_dir / "source" / "public-docs"
