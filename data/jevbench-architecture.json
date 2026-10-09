@@ -4791,6 +4791,86 @@
           "params": "26B-A4B",
           "quant": "NVFP4"
         }
+      },
+      "jeff_1_0_large": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/jgeuter/Jeff-1.0-Large/blob/275325a5eab52cce4f109a09ee3832f2eb89fe2f/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config architectures: [\"Gemma4ForCausalLM\"]; model_type: \"gemma4_text\"."
+          },
+          {
+            "url": "https://huggingface.co/jgeuter/Jeff-1.0-Large/blob/275325a5eab52cce4f109a09ee3832f2eb89fe2f/README.md",
+            "kind": "model-card",
+            "fact": "Pinned card identifies Gemma 4 31B instruction-tuned weights with a merged LoRA adapter and a decision head. This is the fresh Jeff-1.0-Large decoder, distinct from the historical Jeff encoder."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "31B",
+          "quant": null
+        }
+      },
+      "metask-jev-rain-4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/wayfind/metask-jev-4b-policy-mix/blob/ea20fe85b28733b1522721dec119bec50947a869/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"."
+          },
+          {
+            "url": "https://huggingface.co/wayfind/metask-jev-4b-policy-mix/blob/ea20fe85b28733b1522721dec119bec50947a869/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card identifies the typed-decision model backbone as Qwen/Qwen3.5-4B."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "metask_jev_rain_12b": {
+        "arch": "system",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/cyankiwi/gemma-4-12B-it-qat-AWQ-INT4/blob/12deda07c573047b191b63f0768c0412120f3ed4/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config architectures: [\"Gemma4UnifiedForConditionalGeneration\"]; model_type: \"gemma4_unified\"."
+          },
+          {
+            "url": "https://huggingface.co/cyankiwi/gemma-4-12B-it-qat-AWQ-INT4/blob/12deda07c573047b191b63f0768c0412120f3ed4/README.md",
+            "kind": "model-card",
+            "fact": "The evaluated serving wrapper uses this pinned Gemma 4 12B AWQ INT4 repository; it remains an unranked wrapper rather than a native model entry."
+          }
+        ],
+        "badges": {
+          "derivation": "pipeline",
+          "params": "12B",
+          "quant": "AWQ INT4"
+        }
+      },
+      "wald-4b-v2": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/org2ai/Wald-4B/blob/919a9d72a65379271005ed0945bfc72742dad3af/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"."
+          },
+          {
+            "url": "https://huggingface.co/org2ai/Wald-4B/blob/919a9d72a65379271005ed0945bfc72742dad3af/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card identifies Wald-Q4B v2 as a fine-tune of Qwen/Qwen3.5-4B."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        }
       }
     },
     "imagejevbench": {
