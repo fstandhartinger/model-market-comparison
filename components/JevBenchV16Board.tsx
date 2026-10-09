@@ -198,16 +198,22 @@ function BoardSplit({ scope, history, preliminary }: { scope: JevScope; history:
   </div>;
 }
 
-function Method({ categories, a, sha256, categoriesSha256, carrySha256, scope, hiddenApi, preliminary }: { categories: JevV16Categories; a: JevV16ReleaseArtifact; sha256: string; categoriesSha256: string; carrySha256: string; scope: JevScope; hiddenApi: ReadonlySet<string>; preliminary: boolean }) {
-  if (a.revision === 'v1.6.2') return <section className="mt-10 max-w-4xl" id="jev16-method" data-bh-jev16-method>
-    <h2 className="text-2xl font-bold">Method notes · fresh native cohort</h2>
+function Method(props: Parameters<typeof MethodBody>[0]) {
+  return <section className="mt-10 max-w-4xl" aria-labelledby="jev16-method-title" id="jev16-method" data-bh-jev16-method>
+    <h2 id="jev16-method-title" className="text-2xl font-bold">{props.a.revision === 'v1.6.2' ? 'Method notes · fresh native cohort' : `Method · ${props.a.revision}`}</h2>
+    <MethodBody {...props} />
+  </section>;
+}
+
+function MethodBody({ categories, a, sha256, categoriesSha256, carrySha256, scope, hiddenApi, preliminary }: { categories: JevV16Categories; a: JevV16ReleaseArtifact; sha256: string; categoriesSha256: string; carrySha256: string; scope: JevScope; hiddenApi: ReadonlySet<string>; preliminary: boolean }) {
+  if (a.revision === 'v1.6.2') return <>
     <p className="mt-2">Each system answered the same 1,200 freshly drawn sealed decisions and 300 public decisions on an offline GPU pod. Scores use methodology v1.6, O1S, with 1,000 bootstrap samples and seed 16.</p>
     <p className="mt-2">Capability is the mean of Intelligence and Calibration within the frozen Jev-class cost and median-latency caps. Composite is secondary. Failed and refused answers remain in the full 1,500-decision denominator.</p>
     <p className="mt-2">The public-versus-sealed gap reference is the median of this completed native cohort: {one(a.G_med)} points. Historical scores are shown separately with their original dates and do not enter this cohort’s median or ranking. No API equating is applied.</p>
     <p className="mt-2">Costs use each row’s documented price reference and measured usage on this draw. Subject-topic and use-case radars come from stored per-item results; only aggregates are published.</p>
     <p className="mt-2">Sliders, presets and What-If change your view; they do not change the official result. Wrappers and subsidised systems are listed below the ranking.</p>
     <p className="mt-2 text-xs break-all">Results SHA-256 {sha256} · categories SHA-256 {categoriesSha256} · scoring source SHA-256 {a.source_sha256}.</p>
-  </section>;
+  </>;
   const sets = a.v16.item_sets;
   const v161 = a.revision === 'v1.6.1';
   const amendments = (a as unknown as { amendments?: Array<{ date: string; revision: string; text: string }> }).amendments ?? [];
@@ -226,8 +232,7 @@ function Method({ categories, a, sha256, categoriesSha256, carrySha256, scope, h
     return [nameLabel(s.display, methodSystems), Math.round(v.reduce((t, c) => t + c.invalid_rate * c.n, 0)), v.reduce((t, c) => t + c.n, 0)] as [string, number, number];
   });
   const confidenceOnly = methodSystems.filter((s) => { const sup = Object.values((s as unknown as { support?: Record<string, string> }).support ?? {}); return sup.length > 0 && sup.every((x) => x === 'confidence'); }).map((s) => short(s.display));
-  return <section className="mt-10 max-w-4xl" aria-labelledby="jev16-method-title" id="jev16-method" data-bh-jev16-method>
-    <h2 id="jev16-method-title" className="text-2xl font-bold">Method · {a.revision}</h2>
+  return <>
     {scope !== 'all' && <BoardSplit scope={scope} history={revisionHistory} preliminary={preliminary} />}
     <JevArchitectureMethod />
     {categories.language_cells && <p className="bh-muted mt-2 text-sm" data-bh-jev-language-method>{languagePoolNote(categories.language_cells)}</p>}
@@ -283,7 +288,7 @@ function Method({ categories, a, sha256, categoriesSha256, carrySha256, scope, h
     <h3 className="mt-4 text-lg font-semibold">Provenance</h3>
     {measuredDays.length > 0 && <p className="bh-muted mt-1 text-sm" data-bh-jev16-measured-days>Measured on the v1.6 pool (run completion day, UTC): {measuredDays.map(([day, names]) => `${day}: ${names.join(', ')}`).join(' · ')}.</p>}
     <p className="bh-muted mt-1 break-all text-xs">Aggregate files: results sha256 {sha256} · categories sha256 {categoriesSha256} · dated carry sha256 {carrySha256}{(a as unknown as { cellSupplementSha256?: string }).cellSupplementSha256 && <> · live category union (<code>{JEVBENCH_S_CATEGORY_CELLS_ARTIFACT}</code>) sha256 {(a as unknown as { cellSupplementSha256?: string }).cellSupplementSha256}</>}. Scoring source sha256 {a.source_sha256}. The method, release data and carry artifact are independently hashable.</p>
-  </section>;
+  </>;
 }
 
 type OvernightNotes = { round: string; scored_utc: string; a2_note?: string | null; notes?: string[];
