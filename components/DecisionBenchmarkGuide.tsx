@@ -15,8 +15,8 @@ export function DecisionGuide({ title, intro, children, date = '2026-10-09' }: {
   </article>;
 }
 
-export async function DecisionMethodology() {
-  const m = await readDecisionBenchmarkManifest();
+export async function DecisionMethodology({ version = null }: { version?: string | null } = {}) {
+  const m = await readDecisionBenchmarkManifest(process.cwd(), version);
   const s = m.scores;
   return <DecisionGuide title={`Decision model benchmark methodology — JevBench ${m.revision}`} intro="JevBench measures typed decisions: application state and a bounded rubric go in; a structured answer and, where supported, probabilities come out. Compare accuracy and calibration alongside measured latency and modeled cost. The open-weights board leads with Capability; the hosted API board leads with Composite.">
     <section className="space-y-3"><h2 className="text-2xl font-semibold">Release and measurement dates</h2>
