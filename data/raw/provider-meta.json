@@ -1,6 +1,6 @@
 {
   "source": "Hand-curated provider metadata from first-party sources and OpenRouter provider metadata. Judgments (eu_hosted, non_us, hyperscaler, notes) last checked 2026-07-12 (judgments_checked_at); collected_at dates the daily mechanical cross-check of country against OpenRouter's provider table (scripts/check-provider-meta.mjs, openrouter_crosscheck).",
-  "collected_at": "2026-10-08",
+  "collected_at": "2026-10-09",
   "country_disputes": {
     "Cohere": {
       "openrouter": "United States",
@@ -737,9 +737,9 @@
   },
   "judgments_checked_at": "2026-07-12",
   "openrouter_crosscheck": {
-    "checked_against": "data/raw/openrouter-data-policy.json retrieved 2026-10-08T05:28:38.471Z",
+    "checked_against": "data/raw/openrouter-data-policy.json retrieved 2026-10-09T04:21:10.426Z",
     "field": "country vs OpenRouter headquarters",
-    "agree": 45,
+    "agree": 46,
     "explained": [
       {
         "provider": "Cohere",
@@ -820,7 +820,8 @@
       "Tencent",
       "InferenceNet",
       "TrustedTokens",
-      "Stealth"
+      "Stealth",
+      "PrimeIntellect"
     ]
   },
   "urls_verified_at": "2026-09-16",

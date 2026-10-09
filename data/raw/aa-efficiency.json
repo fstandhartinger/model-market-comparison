@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-10-08T05:28:16.569Z",
+  "collected_at": "2026-10-09T04:18:46.455Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-10-08T05:28:16.399Z",
+      "fetched_at": "2026-10-09T04:18:45.713Z",
       "http_status": 200,
-      "bytes": 4105388,
-      "sha256": "fd6f190d80f7a3e772e93971b5a58ffbc6244c732d5e420de37eb6341bf68dc0"
+      "bytes": 4126158,
+      "sha256": "c1af8160b286ceffe8444fbaed6ca6c03337200759c97f6904cf412497281485"
     }
   ],
   "coverage": {
-    "published_rows": 202,
+    "published_rows": 203,
     "scored_denominator": 687,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 202,
+  "count": 203,
   "rows": [
     {
       "source_id": "8215372b-66ff-457b-855e-e8abeafc9571",
@@ -1547,7 +1547,7 @@
     {
       "source_id": "19496b81-9f41-4214-a77a-1df803b3c5ae",
       "slug": "glm-5-3-flash",
-      "name": "GLM 5.3 Flash",
+      "name": "GLM-5.3-Flash",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 46649.4851844942,
@@ -2642,6 +2642,28 @@
         "basis": "derived",
         "input_output_ratio": 3.856822979915191,
         "reasoning_output_share": 0.8895191964378657
+      }
+    },
+    {
+      "source_id": "1071dea1-43e7-4fe9-b936-3034bb622b2e",
+      "slug": "granite-4-2-30b",
+      "name": "Granite 4.2 30B",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 43889.7626460428,
+        "answer": 10012.068245513614,
+        "output": 53901.83089155641
+      },
+      "canonical_token_counts": {
+        "input": 837278030,
+        "output": 103823643,
+        "answer": 14637353,
+        "reasoning": 89186290
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 8.064425460393448,
+        "reasoning_output_share": 0.8142536518721115
       }
     },
     {

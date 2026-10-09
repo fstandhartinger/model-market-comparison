@@ -1,0 +1,22 @@
+[
+  {
+    "id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+    "version": "rtx-pro-6000",
+    "version_guard": "schema_version must stay 1, hardware.name must contain “RTX PRO 6000”, and the problem must stay in the stated four-problem deck. A scored cell must be correct, audited (clean/interesting) and appear in the published per_problem ranked list with the same value. Another hardware board (e.g. H100/B200) is a different identity.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Peak fraction of problem 01’s own ceiling (leaderboard.json `peak_fraction`), geomean over the frozen shape sweep, achieved by one audited agent session; stored here ×100 as a percentage. SPEC.md sets the ceiling per problem: for 01 it is the dense-equivalent FLOP roofline SPEC.md states for problem 01 (\"01, 02: roofline peak_fraction (dense-eq FLOPs where relevant)\").",
+      "unit": "percent of roofline",
+      "range": [
+        0,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Published by Elliot Arledge’s kernelbench.com (independent site, not the Stanford KernelBench); values are baked from the maintainer’s benchmarks/cuda/results/leaderboard.json (schema_version 1, environment v2_containerized, hardware RTX PRO 6000 Blackwell Workstation, sm_120a, 96 GB VRAM). A cell is scored only under the site’s own validity rule: correct and audited (“clean” or “interesting”); flagged, suspect, “bug” (published by the maintainer as unreliable) and unaudited cells are never scored, and the published per_problem ranked list is the cross-check — it still holds the two audited-but-excluded cells the rule rejects, the `suspect` kinetic-claude/kinetic-0715[1m] cell on 03 (peak_fraction 0.0622) and the `bug` muse/muse-spark-1.3 [ultra] cell on 04 (0.2056), so where the ranked list and the validity rule disagree the validity rule wins (cells the maintainer marks `correct: false` are absent from the ranked list anyway, and the `reward_hack` deepseek-claude/deepseek-v4-pro cell on 04 is excluded by both). Published values are `peak_fraction` × 100: the fraction of problem 01’s own ceiling as SPEC.md defines it per problem (dense-equivalent FLOP roofline for 01 and 02, decode-only tok/s for 03, SPS against the 150M `peak_sps` anchor for 04), not latencies (SPEC.md’s latency-anchored standing rule of 2026-07-15 names problem 02 as its example — “dense-equivalent FLOPs that a correct sparse kernel never executes, e.g. 02” — and for such a problem the rule makes milliseconds the maintainer’s headline and the persisted score a geomean speedup against the frozen eager reference, while `peak_fraction` “stays as a context column”; that context column is the number published here for 02. elapsed_seconds stays in each observation’s protocol), and values above 100% mean the measured kernel beat the conservative roofline (Opus 5 reaches 196.10% on 04). One unlimited agent session per cell; the agent harness (codex, claude, grok, kinetic-claude, deepseek-claude, muse, or-fable, or-opus, zai-claude, agy) stays in each observation’s protocol."
+    },
+    "description": "Fuse GLM-5.2’s MoE forward pass (256+shared experts, top-8 routing) as one CUDA kernel over a frozen shape sweep; Triton, vLLM and other DSLs are banned — CUDA/PTX/CUTLASS only.",
+    "maintainer": "Elliot Arledge (kernelbench.com)"
+  }
+]

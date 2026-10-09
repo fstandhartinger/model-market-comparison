@@ -62,7 +62,7 @@
       "input_per_1m_eur": 1,
       "output_per_1m_eur": 3,
       "input_per_1m_usd": 1.12,
-      "output_per_1m_usd": 3.35,
+      "output_per_1m_usd": 3.36,
       "cache_read_per_1m_eur": 0.2,
       "cache_read_per_1m_usd": 0.22,
       "context_length": 163840,
@@ -73,22 +73,22 @@
       "notes": "trustedtokens.eu/api/service/models tngtech/DeepSeek-TNG-R1T2-Chimera; 163840 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
     },
     {
-      "model_name": "Gemma 4 31B It",
+      "model_name": "Gemma 4 26B A4B It",
       "provider_org": "Google",
-      "api_model_id": "google/gemma-4-31B-it",
-      "model_id": "google/gemma-4-31B-it",
+      "api_model_id": "google/gemma-4-26B-A4B-it",
+      "model_id": "google/gemma-4-26B-A4B-it",
       "input_per_1m_eur": 0.3,
       "output_per_1m_eur": 0.8,
       "input_per_1m_usd": 0.34,
       "output_per_1m_usd": 0.89,
       "cache_read_per_1m_eur": 0.05,
       "cache_read_per_1m_usd": 0.06,
-      "context_length": 121984,
+      "context_length": 262144,
       "status": "experimental",
       "eu_hosted": true,
       "hosting_class": "sovereign_germany",
       "region": "eu",
-      "notes": "trustedtokens.eu/api/service/models google/gemma-4-31B-it; 121984 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
+      "notes": "trustedtokens.eu/api/service/models google/gemma-4-26B-A4B-it; 262144 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
     },
     {
       "model_name": "Gpt Oss 120b",
@@ -145,24 +145,6 @@
       "notes": "trustedtokens.eu/api/service/models deepseek-ai/DeepSeek-V4.1-Flash; 1048576 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
     },
     {
-      "model_name": "NVIDIA Nemotron 3.5 Lightning 30B A3B",
-      "provider_org": "NVIDIA",
-      "api_model_id": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B",
-      "model_id": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B",
-      "input_per_1m_eur": 0.2,
-      "output_per_1m_eur": 1.2,
-      "input_per_1m_usd": 0.22,
-      "output_per_1m_usd": 1.34,
-      "cache_read_per_1m_eur": 0.04,
-      "cache_read_per_1m_usd": 0.04,
-      "context_length": 1048576,
-      "status": "unknown",
-      "eu_hosted": true,
-      "hosting_class": "sovereign_germany",
-      "region": "eu",
-      "notes": "trustedtokens.eu/api/service/models nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B; 1048576 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
-    },
-    {
       "model_name": "Qwen3.8 27B",
       "provider_org": "Alibaba",
       "api_model_id": "Qwen/Qwen3.8-27B",
@@ -182,22 +164,27 @@
     }
   ],
   "source": "TrustedTokens — trustedtokens.eu/api/service/models (first-party, public; the endpoint the /models page itself loads)",
-  "collected_at": "2026-10-08",
-  "method": "scripts/fetch-trustedtokens-catalog.mjs (2026-10-08): one unauthenticated GET of /api/service/models plus the ECB daily EUR/USD rate; EUR per-token prices normalized to EUR per 1M tokens (USD = EUR × ECB rate, nearest cent); rows without both token prices skipped; lifecycle from the catalog's attributes (deprecated kept); hosting audited sovereign Germany (see trustedtokens.method.md).",
+  "collected_at": "2026-10-09",
+  "method": "scripts/fetch-trustedtokens-catalog.mjs (2026-10-09): one unauthenticated GET of /api/service/models plus the ECB daily EUR/USD rate; EUR per-token prices normalized to EUR per 1M tokens (USD = EUR × ECB rate, nearest cent); rows without both token prices skipped; lifecycle from the catalog's attributes (deprecated kept); hosting audited sovereign Germany (see trustedtokens.method.md).",
   "currency": "EUR",
-  "currency_note": "Native prices are EUR per token without VAT, shown here per 1M tokens; USD = EUR × ECB 2026-10-07: 1 EUR = 1.1177 USD, rounded to the nearest cent. Access is B2B: plans include monthly usage credit (Starter €50 / Pro €200 / Enterprise €2,000, all without VAT, marked indicative) against which these per-token prices are billed.",
+  "currency_note": "Native prices are EUR per token without VAT, shown here per 1M tokens; USD = EUR × ECB 2026-10-08: 1 EUR = 1.1186 USD, rounded to the nearest cent. Access is B2B: plans include monthly usage credit (Starter €50 / Pro €200 / Enterprise €2,000, all without VAT, marked indicative) against which these per-token prices are billed.",
   "usd_normalization": {
     "status": "applied",
-    "eur_to_usd": 1.1177,
-    "fx_rate_date": "2026-10-07",
+    "eur_to_usd": 1.1186,
+    "fx_rate_date": "2026-10-08",
     "source": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
     "rounding": "nearest USD cent"
   },
-  "response_sha256": "05d420b492e2224210d9f603854021f8c83474aff8bf11044c95c413502ee423",
+  "response_sha256": "77d16582c7c11e7fac8a61ae6dab9d1308052cb18a3c63f274d9d2e72af84c3e",
   "skipped": [],
   "diff": {
-    "added": [],
-    "removed": [],
+    "added": [
+      "google/gemma-4-26B-A4B-it"
+    ],
+    "removed": [
+      "google/gemma-4-31B-it",
+      "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B"
+    ],
     "eur_price_changed": []
   }
 }
