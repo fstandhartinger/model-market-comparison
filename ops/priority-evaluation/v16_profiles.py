@@ -181,7 +181,11 @@ def measure(job_dir):
         if accepted(job) != (admission, measured, scored):
             raise ValueError('v16 runtime admission changed')
         retirement(admission)
-    runtime_preflight = jeff_runtime_preflight.callback(job, admission, recipe, runtime_recheck, output)
+    if job.name == '81e785ad-081b-4592-99df-1c3d709fd6c8':
+        import ryotide_runtime_preflight
+        runtime_preflight = ryotide_runtime_preflight.callback(job, admission, recipe, runtime_recheck, output)
+    else:
+        runtime_preflight = jeff_runtime_preflight.callback(job, admission, recipe, runtime_recheck, output)
     record = pod_runner.run(job.name, job, recipe, output, measured, pod_runner.PER_ORDER_CAP_USD,
                             measurement_pins_factory=lambda: accepted(job)[1], pre_upload_gate=pre_upload, allocation_gate=allocation_gate, runtime_preflight=runtime_preflight)
     retirement(admission)
