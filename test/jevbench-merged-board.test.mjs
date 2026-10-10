@@ -10,8 +10,8 @@ test('every cohort system joins once, from its latest release, with its draw', a
   const { rows } = await readCohortRows();
   const keys = rows.map((r) => r.row.key);
   assert.equal(new Set(keys).size, keys.length);
-  assert.equal(rows.length, 16);
-  assert.deepEqual([...new Set(rows.map((r) => r.draw.release))].sort(), ['v1.6.4', 'v1.6.7']);
+  assert.equal(rows.length, 17);
+  assert.deepEqual([...new Set(rows.map((r) => r.draw.release))].sort(), ['v1.6.4', 'v1.6.8']);
   assert.ok(rows.every((r) => r.draw.id && r.draw.measured_on));
 });
 

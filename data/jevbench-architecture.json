@@ -5067,6 +5067,26 @@
           "params": "26B-A4B",
           "quant": "NVFP4"
         }
+      },
+      "modernbert-jev-v2": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/ksonny4/modernbert-jev-v2/blob/9708136f22a85b29fcf90d3960aa642d9eadcb1c/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config: architectures [\"ModernBertForSequenceClassification\"], model_type \"modernbert\", with per-question-type classifier heads."
+          },
+          {
+            "url": "https://huggingface.co/ksonny4/modernbert-jev-v2/blob/9708136f22a85b29fcf90d3960aa642d9eadcb1c/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: 150M ModernBERT-base NLI (tasksource/ModernBERT-base-nli), fine-tuned with KL distillation, exported to ONNX opset 17 and dynamically quantized with unsigned int8 weights; licence apache-2.0; 1 CPU thread."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "150M",
+          "quant": "ONNX INT8"
+        }
       }
     },
     "imagejevbench": {
