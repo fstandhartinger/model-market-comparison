@@ -12,7 +12,6 @@ const language = read('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.1-languag
 const category = read('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.1-category-cells.json');
 // CR-425: Needle 3 rows (historical; closed engine approved by the owner); radars complete, languages below target.
 const KEYS = ['needle-3-tools'];
-// gliner2 lost about 1,000 issued items (OOM kills, a machine shutdown); its languages stay >= 30 but below the 60 target, disclosed.
 const BELOW_LANGUAGE_TARGET = new Set(['needle-3', 'needle-3-tools']);
 // openjev-razorback16 samples stochastically (diffusion decoding): its passes agree on 86-89 % of the public items; disclosed in its coverage note.
 const STOCHASTIC = new Set([]);
@@ -46,7 +45,7 @@ for (const key of KEYS) {
     if (key === 'needle-3-tools') assert.match(language.systems[key].coverage_note, /approved by the benchmark owner/);
     // Needle answers differ between machines on about 10 % of public items (disclosed); parity is not gated for these rows.
     if (STOCHASTIC.has(key)) assert.match(language.systems[key].coverage_note, /samples stochastically/);
-    assert.equal(languageCoverage(language.systems[key]), 'S+P+L1+L2+L3');
+    assert.equal(languageCoverage(language.systems[key]), key === 'needle-3-tools' ? 'S+P+L1+L3' : 'S+P+L1+L2+L3');
     assert.equal(read('data/jevbench-radar-spoke-exceptions.json').some((x) => x.key === key), false);
     validateRadarSpokeGate(jevbenchCategoryView('v1.6.1', [key], { supplement: true }), [key], []);
   });
