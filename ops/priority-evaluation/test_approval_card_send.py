@@ -126,6 +126,19 @@ class ApprovalCardSend(unittest.TestCase):
                 for key in ('preview_failures', 'preview_error', 'preview_alerted'):
                     self.assertNotIn(key, state)
 
+    def test_capped_preview_records_the_verdict_not_the_card(self):
+        capped = ('[DRY RUN] --florian-only override would be logged: reason\n'
+                  '[DRY RUN] global immediate limit reached; message would be queued:\n\n'
+                  '🧑 DU BIST DRAN\nWorum geht\'s: Fast-lane for owner@example.com\n')
+        path = self.tmp / 'capped.json'
+        state = {}
+        with mock.patch.object(subprocess, 'run', side_effect=AssertionError('no board post yet')), \
+                mock.patch('sys.stderr'):
+            ra.preview_failed(state, path, done([], stdout=capped), 'test')
+        self.assertEqual(state['preview_error'],
+                         'exit 0: [DRY RUN] global immediate limit reached; message would be queued:')
+        self.assertNotIn('example.com', path.read_text())
+
     @unittest.skipUnless(NOTIFY.is_file(), 'installed Sandy notifier is unavailable')
     def test_real_notify_accepts_every_approval_caption(self):
         captions = [rf.caption(ROW, kind, '2026-10-12 12:00 UTC') for kind in rf.REASONS]
