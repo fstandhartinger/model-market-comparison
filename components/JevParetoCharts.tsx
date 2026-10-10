@@ -55,7 +55,7 @@ function ParetoChart({ kind, points, limit, title, unit }: { kind: Kind; points:
   const frontier = useMemo(() => paretoFrontier(plotted.map((p) => ({ id: p.key, x: value(p) as number, y: p.capability }))),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [plotted, kind]);
-  const onFrontier = useMemo(() => new Set(frontier.map((f) => f.id as string)), [frontier]);
+  const onFrontier = useMemo(() => new Set(frontier.map((f: { id: string }) => f.id)), [frontier]);
   const values = plotted.map((p) => value(p) as number);
   const lo = 10 ** Math.floor(Math.log10(Math.min(...values, limit) * 0.9));
   const hi = 10 ** Math.ceil(Math.log10(Math.max(...values, limit) * 1.1));
@@ -63,7 +63,7 @@ function ParetoChart({ kind, points, limit, title, unit }: { kind: Kind; points:
   const x = (v: number) => L + (W - L - R) * (Math.log10(v) - Math.log10(lo)) / (Math.log10(hi) - Math.log10(lo));
   const y = (v: number) => T + (H - T - B) * (1 - (v - yMin) / (100 - yMin));
   const placed: Placed[] = plotted.map((p) => ({ p, v: value(p) as number, cx: x(value(p) as number), cy: y(p.capability) }));
-  const line = frontier.map((f) => `${x(f.x).toFixed(1)},${y(f.y).toFixed(1)}`).join(' ');
+  const line = frontier.map((f: { x: number; y: number }) => `${x(f.x).toFixed(1)},${y(f.y).toFixed(1)}`).join(' ');
   const fs = narrow ? 10 : 11;
 
   // Label every frontier point: try the eight compass positions, keep inside the plot, never over another label.
