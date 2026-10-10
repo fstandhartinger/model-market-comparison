@@ -4886,6 +4886,26 @@
           "params": "0.8B",
           "quant": "GGUF Q8_0"
         }
+      },
+      "decisor_4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/underlabs/decisor-4b/blob/1e7f195c2c41bbedec7d36b034001ef46476914f/README.md",
+            "kind": "model-card",
+            "fact": "Author documentation records base_model Qwen/Qwen3.5-4B with base_model_relation finetune (Qwen3.5-4B backbone); weights are distributed in FP8 with mixed BF16 components."
+          },
+          {
+            "url": "https://huggingface.co/underlabs/decisor-4b/blob/1e7f195c2c41bbedec7d36b034001ef46476914f/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForCausalLM\"]; model_type: \"qwen3_5_text\"; compressed-tensors float8 weight/activation quantization groups"
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": "FP8"
+        }
       }
     },
     "imagejevbench": {

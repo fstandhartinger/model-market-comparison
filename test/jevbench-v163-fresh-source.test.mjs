@@ -89,10 +89,10 @@ test('board dispatches fresh behaviour through the helper and keeps every sectio
 });
 
 // Source infrastructure may precede data. Publication remains unavailable/inactive until its genuine bundle exists.
-// The final actual-data publication change must replace this preparation-only data absence assertion.
-test('candidate data absent: prospective Source routes stay unavailable and navigation stays conditional', async () => {
+// Validate genuine publication when present; missing or malformed bundles remain unavailable/fail closed.
+test('actual candidate presence requires strict validation and navigation stays conditional', async () => {
   const dir = 'data/raw/benchmarks/jevbench';
-  assert.deepEqual(readdirSync(new URL(`../${dir}`, import.meta.url), {recursive:true}).filter((f) => f.includes('1.6.3')), []);
+  const present = readdirSync(new URL(`../${dir}`, import.meta.url), {recursive:true}).filter((f) => f.includes('1.6.3')).sort();
   const loaderPath = new URL('../lib/jevbench-v163-release.mjs', import.meta.url);
   const pagePath = new URL('../app/jev-models/v1.6.3/page.tsx', import.meta.url);
   const apiPath = new URL('../app/api/jevbench/v1.6.3/route.ts', import.meta.url);
@@ -100,13 +100,22 @@ test('candidate data absent: prospective Source routes stay unavailable and navi
   if (existsSync(loaderPath)) {
     assert.ok(existsSync(pagePath) && existsSync(apiPath), 'prospective loader has both guarded routes');
     const loader = await import(loaderPath.href);
-    assert.equal(await loader.readOptionalJevbenchV163Release(), null);
-    assert.equal(await loader.hasPublishedJevbenchV163Release(process.cwd(), () => assert.fail('absent manifest must not log')), false);
+    const release = await loader.readOptionalJevbenchV163Release(); // malformed manifest throws; no catch/skip
+    if (release) {
+      assert.deepEqual(present, [...Object.values(loader.V163_FILES), loader.V163_MANIFEST].map(p => p.slice(`${dir}/`.length)).sort());
+      assert.equal(await loader.hasPublishedJevbenchV163Release(), true);
+      assert.equal(release.artifact.n_ranked, 4);
+      assert.ok([5, 6].includes(release.artifact.systems.length));
+    } else {
+      assert.deepEqual(present, []);
+      assert.equal(await loader.hasPublishedJevbenchV163Release(process.cwd(), () => assert.fail('absent manifest must not log')), false);
+    }
     assert.match(read('app/jev-models/v1.6.3/page.tsx'), /if \(\!release\) notFound\(\);/);
     assert.match(read('app/api/jevbench/v1.6.3/route.ts'), /if \(\!release\) return new Response\('Not found', \{ status: 404 \}\)/);
     assert.match(nav, /const visible163 = fresh163 \?\? await hasPublishedJevbenchV163Release\(\)/);
     assert.match(nav, /visible163 \? \[\{ version: 'v1\.6\.3'/);
   } else {
+    assert.deepEqual(present, []);
     assert.equal(existsSync(pagePath), false); assert.equal(existsSync(apiPath), false);
     assert.doesNotMatch(nav, /1\.6\.3/);
   }

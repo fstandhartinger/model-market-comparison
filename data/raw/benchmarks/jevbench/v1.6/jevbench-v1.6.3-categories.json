@@ -1,0 +1,2343 @@
+{
+  "G_med": 7.088097744249485,
+  "benchmark": "JevBench",
+  "draw_release": "v1.6-fastlane-20261009",
+  "families": [
+    {
+      "covers": "Frozen families authoring category",
+      "key": "llm_router",
+      "label": "Llm router",
+      "low_n": false,
+      "n": 308,
+      "open": 85,
+      "sealed": 223
+    },
+    {
+      "covers": "Frozen families authoring category",
+      "key": "multilingual",
+      "label": "Multilingual",
+      "low_n": false,
+      "n": 285,
+      "open": 58,
+      "sealed": 227
+    },
+    {
+      "covers": "Frozen families authoring category",
+      "key": "usecase",
+      "label": "Usecase",
+      "low_n": false,
+      "n": 204,
+      "open": 25,
+      "sealed": 179
+    },
+    {
+      "covers": "Frozen families authoring category",
+      "key": "jaggedness",
+      "label": "Jaggedness",
+      "low_n": false,
+      "n": 162,
+      "open": 20,
+      "sealed": 142
+    },
+    {
+      "covers": "Frozen families authoring category",
+      "key": "composite_gen",
+      "label": "Composite gen",
+      "low_n": false,
+      "n": 100,
+      "open": 17,
+      "sealed": 83
+    },
+    {
+      "covers": "Frozen families authoring category",
+      "key": "negation_pair_gen",
+      "label": "Negation pair gen",
+      "low_n": false,
+      "n": 98,
+      "open": 18,
+      "sealed": 80
+    },
+    {
+      "covers": "Frozen families authoring category",
+      "key": "calibration_gen",
+      "label": "Calibration gen",
+      "low_n": false,
+      "n": 96,
+      "open": 12,
+      "sealed": 84
+    },
+    {
+      "covers": "Frozen families authoring category",
+      "key": "option_order",
+      "label": "Option order",
+      "low_n": false,
+      "n": 63,
+      "open": 21,
+      "sealed": 42
+    },
+    {
+      "covers": "Frozen families authoring category",
+      "key": "perturb_pair",
+      "label": "Perturb pair",
+      "low_n": false,
+      "n": 62,
+      "open": 24,
+      "sealed": 38
+    },
+    {
+      "covers": "Frozen families authoring category",
+      "key": "fairness",
+      "label": "Fairness",
+      "low_n": false,
+      "n": 42,
+      "open": 15,
+      "sealed": 27
+    },
+    {
+      "covers": "Frozen families authoring category",
+      "key": "ml_usecase",
+      "label": "Ml usecase",
+      "low_n": false,
+      "n": 34,
+      "open": 0,
+      "sealed": 34
+    },
+    {
+      "covers": "Frozen families authoring category",
+      "key": "calibration",
+      "label": "Calibration",
+      "low_n": true,
+      "n": 25,
+      "open": 2,
+      "sealed": 23
+    },
+    {
+      "covers": "Frozen families authoring category",
+      "key": "long_state",
+      "label": "Long state",
+      "low_n": true,
+      "n": 21,
+      "open": 3,
+      "sealed": 18
+    }
+  ],
+  "kind": "category-aggregates",
+  "labelling": "Subject topics and TypeSafe use cases use the actual shared local reference labels, with frozen T1/T2/T3/U1/U2 authoring rules. The original probabilities and model choice remain preserved in protected custody. The genuine 75-public-item handcheck is required. Family, type and language are frozen authoring metadata; non-English machine-authored items are not native-reviewed.",
+  "labels_sha256": "f85616000e58424e1794b0241d004462b7d131c4dd4f94bf70a465164132fdc6",
+  "lane_note": "All completed measurements cover the same fresh 1,500-item draw (1,200 sealed and 300 public); pending candidates are outside this completed category artifact.",
+  "lanes": {
+    "decisor_4b": "selfhosted",
+    "jeff_1_0_large": "selfhosted",
+    "metask-jev-rain-4b": "selfhosted",
+    "metask_jev_rain_12b": "selfhosted",
+    "wald-4b-v2": "selfhosted"
+  },
+  "languages": [
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "en",
+      "label": "En",
+      "low_n": false,
+      "n": 1135,
+      "open": 220,
+      "sealed": 915
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "de",
+      "label": "De",
+      "low_n": false,
+      "n": 40,
+      "open": 11,
+      "sealed": 29
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "pl",
+      "label": "Pl",
+      "low_n": false,
+      "n": 39,
+      "open": 11,
+      "sealed": 28
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "es",
+      "label": "Es",
+      "low_n": false,
+      "n": 30,
+      "open": 4,
+      "sealed": 26
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "hi",
+      "label": "Hi",
+      "low_n": true,
+      "n": 26,
+      "open": 3,
+      "sealed": 23
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "pt",
+      "label": "Pt",
+      "low_n": true,
+      "n": 24,
+      "open": 7,
+      "sealed": 17
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "ja",
+      "label": "Ja",
+      "low_n": true,
+      "n": 22,
+      "open": 5,
+      "sealed": 17
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "ar",
+      "label": "Ar",
+      "low_n": true,
+      "n": 17,
+      "open": 5,
+      "sealed": 12
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "el",
+      "label": "El",
+      "low_n": true,
+      "n": 17,
+      "open": 4,
+      "sealed": 13
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "nl",
+      "label": "Nl",
+      "low_n": true,
+      "n": 17,
+      "open": 2,
+      "sealed": 15
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "da",
+      "label": "Da",
+      "low_n": true,
+      "n": 16,
+      "open": 2,
+      "sealed": 14
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "fr",
+      "label": "Fr",
+      "low_n": true,
+      "n": 16,
+      "open": 1,
+      "sealed": 15
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "mixed",
+      "label": "Mixed",
+      "low_n": true,
+      "n": 15,
+      "open": 2,
+      "sealed": 13
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "it",
+      "label": "It",
+      "low_n": true,
+      "n": 13,
+      "open": 2,
+      "sealed": 11
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "zh",
+      "label": "Zh",
+      "low_n": true,
+      "n": 12,
+      "open": 6,
+      "sealed": 6
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "tr",
+      "label": "Tr",
+      "low_n": true,
+      "n": 11,
+      "open": 2,
+      "sealed": 9
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "cs",
+      "label": "Cs",
+      "low_n": true,
+      "n": 9,
+      "open": 2,
+      "sealed": 7
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "ko",
+      "label": "Ko",
+      "low_n": true,
+      "n": 9,
+      "open": 2,
+      "sealed": 7
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "uk",
+      "label": "Uk",
+      "low_n": true,
+      "n": 9,
+      "open": 3,
+      "sealed": 6
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "sv",
+      "label": "Sv",
+      "low_n": true,
+      "n": 8,
+      "open": 2,
+      "sealed": 6
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "fi",
+      "label": "Fi",
+      "low_n": true,
+      "n": 7,
+      "open": 1,
+      "sealed": 6
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "id",
+      "label": "Id",
+      "low_n": true,
+      "n": 4,
+      "open": 1,
+      "sealed": 3
+    },
+    {
+      "covers": "Frozen languages authoring category",
+      "key": "no",
+      "label": "No",
+      "low_n": true,
+      "n": 4,
+      "open": 2,
+      "sealed": 2
+    }
+  ],
+  "metric": "O1S chance-corrected competence: equal mean over request types present, clipped to 0\u2013100, using the pinned official group_stats function. Recorded failures remain in the denominator. Category scores are descriptive and do not alter headline Intelligence, Calibration, composite score or G_med.",
+  "min_n": 1,
+  "provisional": false,
+  "results_sha256": "fc5dc39a138e4d44931a9336647d5af8047901b12fc6cbd3f687f804e407a7d8",
+  "revision": "v1.6.3",
+  "rules": [
+    "Every nonempty category has a measured cell; zero-count taxonomy categories have no cell.",
+    "Categories below 30 items are indicative only; radar display retains its 30-item minimum.",
+    "No historic overlays, estimated cells, outcome exclusions or private item-level data are included."
+  ],
+  "source_results_sha256": "8b4ac9d7624e797b21cd821df2a9aa04536e4a4fca8ef7df53a3bd0612159a95",
+  "systems": {
+    "decisor_4b": {
+      "families": {
+        "calibration": {
+          "competence": 72.44,
+          "coverage_n": 25,
+          "n": 25
+        },
+        "calibration_gen": {
+          "competence": 0.0,
+          "coverage_n": 96,
+          "n": 96
+        },
+        "composite_gen": {
+          "competence": 11.42,
+          "coverage_n": 100,
+          "n": 100
+        },
+        "fairness": {
+          "competence": 84.89,
+          "coverage_n": 42,
+          "n": 42
+        },
+        "jaggedness": {
+          "competence": 0.61,
+          "coverage_n": 162,
+          "n": 162
+        },
+        "llm_router": {
+          "competence": 66.41,
+          "coverage_n": 308,
+          "n": 308
+        },
+        "long_state": {
+          "competence": 6.47,
+          "coverage_n": 21,
+          "n": 21
+        },
+        "ml_usecase": {
+          "competence": 14.98,
+          "coverage_n": 34,
+          "n": 34
+        },
+        "multilingual": {
+          "competence": 42.01,
+          "coverage_n": 285,
+          "n": 285
+        },
+        "negation_pair_gen": {
+          "competence": 14.51,
+          "coverage_n": 98,
+          "n": 98
+        },
+        "option_order": {
+          "competence": 63.6,
+          "coverage_n": 63,
+          "n": 63
+        },
+        "perturb_pair": {
+          "competence": 76.27,
+          "coverage_n": 62,
+          "n": 62
+        },
+        "usecase": {
+          "competence": 38.83,
+          "coverage_n": 204,
+          "n": 204
+        }
+      },
+      "languages": {
+        "ar": {
+          "competence": 11.48,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "cs": {
+          "competence": 56.32,
+          "coverage_n": 9,
+          "n": 9
+        },
+        "da": {
+          "competence": 24.37,
+          "coverage_n": 16,
+          "n": 16
+        },
+        "de": {
+          "competence": 57.51,
+          "coverage_n": 40,
+          "n": 40
+        },
+        "el": {
+          "competence": 13.02,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "en": {
+          "competence": 36.49,
+          "coverage_n": 1135,
+          "n": 1135
+        },
+        "es": {
+          "competence": 69.54,
+          "coverage_n": 30,
+          "n": 30
+        },
+        "fi": {
+          "competence": 33.74,
+          "coverage_n": 7,
+          "n": 7
+        },
+        "fr": {
+          "competence": 44.54,
+          "coverage_n": 16,
+          "n": 16
+        },
+        "hi": {
+          "competence": 11.61,
+          "coverage_n": 26,
+          "n": 26
+        },
+        "id": {
+          "competence": 34.43,
+          "coverage_n": 4,
+          "n": 4
+        },
+        "it": {
+          "competence": 94.58,
+          "coverage_n": 13,
+          "n": 13
+        },
+        "ja": {
+          "competence": 0.0,
+          "coverage_n": 22,
+          "n": 22
+        },
+        "ko": {
+          "competence": 0.93,
+          "coverage_n": 9,
+          "n": 9
+        },
+        "mixed": {
+          "competence": 99.97,
+          "coverage_n": 15,
+          "n": 15
+        },
+        "nl": {
+          "competence": 50.08,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "no": {
+          "competence": 67.74,
+          "coverage_n": 4,
+          "n": 4
+        },
+        "pl": {
+          "competence": 43.63,
+          "coverage_n": 39,
+          "n": 39
+        },
+        "pt": {
+          "competence": 53.42,
+          "coverage_n": 24,
+          "n": 24
+        },
+        "sv": {
+          "competence": 11.73,
+          "coverage_n": 8,
+          "n": 8
+        },
+        "tr": {
+          "competence": 41.75,
+          "coverage_n": 11,
+          "n": 11
+        },
+        "uk": {
+          "competence": 0.0,
+          "coverage_n": 9,
+          "n": 9
+        },
+        "zh": {
+          "competence": 20.38,
+          "coverage_n": 12,
+          "n": 12
+        }
+      },
+      "topics": {
+        "coding": {
+          "competence": 63.59,
+          "coverage_n": 197,
+          "n": 197
+        },
+        "everyday_language": {
+          "competence": 37.69,
+          "coverage_n": 53,
+          "n": 53
+        },
+        "finance_commerce": {
+          "competence": 57.96,
+          "coverage_n": 79,
+          "n": 79
+        },
+        "law_policy": {
+          "competence": 37.66,
+          "coverage_n": 747,
+          "n": 747
+        },
+        "math": {
+          "competence": 3.55,
+          "coverage_n": 282,
+          "n": 282
+        },
+        "safety_security": {
+          "competence": 49.58,
+          "coverage_n": 42,
+          "n": 42
+        },
+        "support_ops": {
+          "competence": 53.53,
+          "coverage_n": 100,
+          "n": 100
+        }
+      },
+      "types": {
+        "choice": {
+          "competence": 54.95,
+          "coverage_n": 750,
+          "n": 750
+        },
+        "noul": {
+          "competence": 52.0,
+          "coverage_n": 375,
+          "n": 375
+        },
+        "score": {
+          "competence": 6.99,
+          "coverage_n": 375,
+          "n": 375
+        }
+      },
+      "usecases": {
+        "advertising": {
+          "competence": 13.55,
+          "coverage_n": 30,
+          "n": 30
+        },
+        "code_linting": {
+          "competence": 4.37,
+          "coverage_n": 22,
+          "n": 22
+        },
+        "customer_support": {
+          "competence": 35.53,
+          "coverage_n": 158,
+          "n": 158
+        },
+        "demand_forecasting": {
+          "competence": 0.0,
+          "coverage_n": 21,
+          "n": 21
+        },
+        "ecommerce": {
+          "competence": 27.45,
+          "coverage_n": 43,
+          "n": 43
+        },
+        "feature_extraction": {
+          "competence": 35.96,
+          "coverage_n": 16,
+          "n": 16
+        },
+        "financial_crime": {
+          "competence": 19.14,
+          "coverage_n": 54,
+          "n": 54
+        },
+        "gaming": {
+          "competence": 2.33,
+          "coverage_n": 18,
+          "n": 18
+        },
+        "insurance_claims": {
+          "competence": 60.01,
+          "coverage_n": 29,
+          "n": 29
+        },
+        "knowledge_graphs": {
+          "competence": 8.41,
+          "coverage_n": 22,
+          "n": 22
+        },
+        "lead_generation": {
+          "competence": 51.0,
+          "coverage_n": 36,
+          "n": 36
+        },
+        "legal_compliance": {
+          "competence": 33.46,
+          "coverage_n": 343,
+          "n": 343
+        },
+        "llm_guardrails": {
+          "competence": 53.81,
+          "coverage_n": 25,
+          "n": 25
+        },
+        "model_routing": {
+          "competence": 64.18,
+          "coverage_n": 318,
+          "n": 318
+        },
+        "moderation": {
+          "competence": 50.64,
+          "coverage_n": 37,
+          "n": 37
+        },
+        "other": {
+          "competence": 0.0,
+          "coverage_n": 213,
+          "n": 213
+        },
+        "recruiting": {
+          "competence": 52.7,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "risk_assessment": {
+          "competence": 46.38,
+          "coverage_n": 53,
+          "n": 53
+        },
+        "scientific_discovery": {
+          "competence": 23.78,
+          "coverage_n": 21,
+          "n": 21
+        },
+        "search_retrieval": {
+          "competence": 74.18,
+          "coverage_n": 24,
+          "n": 24
+        }
+      }
+    },
+    "jeff_1_0_large": {
+      "families": {
+        "calibration": {
+          "competence": 96.94,
+          "coverage_n": 25,
+          "n": 25
+        },
+        "calibration_gen": {
+          "competence": 57.56,
+          "coverage_n": 96,
+          "n": 96
+        },
+        "composite_gen": {
+          "competence": 79.81,
+          "coverage_n": 100,
+          "n": 100
+        },
+        "fairness": {
+          "competence": 91.5,
+          "coverage_n": 42,
+          "n": 42
+        },
+        "jaggedness": {
+          "competence": 47.15,
+          "coverage_n": 162,
+          "n": 162
+        },
+        "llm_router": {
+          "competence": 85.67,
+          "coverage_n": 308,
+          "n": 308
+        },
+        "long_state": {
+          "competence": 0.0,
+          "coverage_n": 0,
+          "n": 21
+        },
+        "ml_usecase": {
+          "competence": 77.55,
+          "coverage_n": 34,
+          "n": 34
+        },
+        "multilingual": {
+          "competence": 75.39,
+          "coverage_n": 285,
+          "n": 285
+        },
+        "negation_pair_gen": {
+          "competence": 82.11,
+          "coverage_n": 98,
+          "n": 98
+        },
+        "option_order": {
+          "competence": 91.91,
+          "coverage_n": 63,
+          "n": 63
+        },
+        "perturb_pair": {
+          "competence": 82.33,
+          "coverage_n": 62,
+          "n": 62
+        },
+        "usecase": {
+          "competence": 66.35,
+          "coverage_n": 204,
+          "n": 204
+        }
+      },
+      "languages": {
+        "ar": {
+          "competence": 62.11,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "cs": {
+          "competence": 45.98,
+          "coverage_n": 9,
+          "n": 9
+        },
+        "da": {
+          "competence": 55.71,
+          "coverage_n": 16,
+          "n": 16
+        },
+        "de": {
+          "competence": 91.29,
+          "coverage_n": 40,
+          "n": 40
+        },
+        "el": {
+          "competence": 58.66,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "en": {
+          "competence": 71.07,
+          "coverage_n": 1114,
+          "n": 1135
+        },
+        "es": {
+          "competence": 88.55,
+          "coverage_n": 30,
+          "n": 30
+        },
+        "fi": {
+          "competence": 93.92,
+          "coverage_n": 7,
+          "n": 7
+        },
+        "fr": {
+          "competence": 98.41,
+          "coverage_n": 16,
+          "n": 16
+        },
+        "hi": {
+          "competence": 84.11,
+          "coverage_n": 26,
+          "n": 26
+        },
+        "id": {
+          "competence": 100.0,
+          "coverage_n": 4,
+          "n": 4
+        },
+        "it": {
+          "competence": 79.19,
+          "coverage_n": 13,
+          "n": 13
+        },
+        "ja": {
+          "competence": 48.67,
+          "coverage_n": 22,
+          "n": 22
+        },
+        "ko": {
+          "competence": 90.82,
+          "coverage_n": 9,
+          "n": 9
+        },
+        "mixed": {
+          "competence": 99.49,
+          "coverage_n": 15,
+          "n": 15
+        },
+        "nl": {
+          "competence": 76.76,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "no": {
+          "competence": 67.74,
+          "coverage_n": 4,
+          "n": 4
+        },
+        "pl": {
+          "competence": 64.15,
+          "coverage_n": 39,
+          "n": 39
+        },
+        "pt": {
+          "competence": 67.03,
+          "coverage_n": 24,
+          "n": 24
+        },
+        "sv": {
+          "competence": 34.31,
+          "coverage_n": 8,
+          "n": 8
+        },
+        "tr": {
+          "competence": 76.85,
+          "coverage_n": 11,
+          "n": 11
+        },
+        "uk": {
+          "competence": 70.02,
+          "coverage_n": 9,
+          "n": 9
+        },
+        "zh": {
+          "competence": 77.21,
+          "coverage_n": 12,
+          "n": 12
+        }
+      },
+      "topics": {
+        "coding": {
+          "competence": 83.86,
+          "coverage_n": 197,
+          "n": 197
+        },
+        "everyday_language": {
+          "competence": 52.4,
+          "coverage_n": 53,
+          "n": 53
+        },
+        "finance_commerce": {
+          "competence": 74.69,
+          "coverage_n": 79,
+          "n": 79
+        },
+        "law_policy": {
+          "competence": 79.67,
+          "coverage_n": 747,
+          "n": 747
+        },
+        "math": {
+          "competence": 48.34,
+          "coverage_n": 271,
+          "n": 282
+        },
+        "safety_security": {
+          "competence": 90.24,
+          "coverage_n": 42,
+          "n": 42
+        },
+        "support_ops": {
+          "competence": 56.72,
+          "coverage_n": 90,
+          "n": 100
+        }
+      },
+      "types": {
+        "choice": {
+          "competence": 81.18,
+          "coverage_n": 735,
+          "n": 750
+        },
+        "noul": {
+          "competence": 80.27,
+          "coverage_n": 373,
+          "n": 375
+        },
+        "score": {
+          "competence": 55.79,
+          "coverage_n": 371,
+          "n": 375
+        }
+      },
+      "usecases": {
+        "advertising": {
+          "competence": 49.56,
+          "coverage_n": 30,
+          "n": 30
+        },
+        "code_linting": {
+          "competence": 84.2,
+          "coverage_n": 22,
+          "n": 22
+        },
+        "customer_support": {
+          "competence": 66.55,
+          "coverage_n": 149,
+          "n": 158
+        },
+        "demand_forecasting": {
+          "competence": 19.26,
+          "coverage_n": 21,
+          "n": 21
+        },
+        "ecommerce": {
+          "competence": 67.75,
+          "coverage_n": 43,
+          "n": 43
+        },
+        "feature_extraction": {
+          "competence": 71.1,
+          "coverage_n": 16,
+          "n": 16
+        },
+        "financial_crime": {
+          "competence": 62.7,
+          "coverage_n": 54,
+          "n": 54
+        },
+        "gaming": {
+          "competence": 45.33,
+          "coverage_n": 18,
+          "n": 18
+        },
+        "insurance_claims": {
+          "competence": 65.53,
+          "coverage_n": 29,
+          "n": 29
+        },
+        "knowledge_graphs": {
+          "competence": 64.32,
+          "coverage_n": 22,
+          "n": 22
+        },
+        "lead_generation": {
+          "competence": 78.66,
+          "coverage_n": 36,
+          "n": 36
+        },
+        "legal_compliance": {
+          "competence": 84.52,
+          "coverage_n": 343,
+          "n": 343
+        },
+        "llm_guardrails": {
+          "competence": 74.78,
+          "coverage_n": 25,
+          "n": 25
+        },
+        "model_routing": {
+          "competence": 84.44,
+          "coverage_n": 318,
+          "n": 318
+        },
+        "moderation": {
+          "competence": 87.0,
+          "coverage_n": 37,
+          "n": 37
+        },
+        "other": {
+          "competence": 36.72,
+          "coverage_n": 201,
+          "n": 213
+        },
+        "recruiting": {
+          "competence": 66.11,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "risk_assessment": {
+          "competence": 76.24,
+          "coverage_n": 53,
+          "n": 53
+        },
+        "scientific_discovery": {
+          "competence": 59.92,
+          "coverage_n": 21,
+          "n": 21
+        },
+        "search_retrieval": {
+          "competence": 82.17,
+          "coverage_n": 24,
+          "n": 24
+        }
+      }
+    },
+    "metask-jev-rain-4b": {
+      "families": {
+        "calibration": {
+          "competence": 94.84,
+          "coverage_n": 25,
+          "n": 25
+        },
+        "calibration_gen": {
+          "competence": 26.72,
+          "coverage_n": 96,
+          "n": 96
+        },
+        "composite_gen": {
+          "competence": 30.61,
+          "coverage_n": 100,
+          "n": 100
+        },
+        "fairness": {
+          "competence": 96.75,
+          "coverage_n": 42,
+          "n": 42
+        },
+        "jaggedness": {
+          "competence": 24.78,
+          "coverage_n": 162,
+          "n": 162
+        },
+        "llm_router": {
+          "competence": 69.36,
+          "coverage_n": 308,
+          "n": 308
+        },
+        "long_state": {
+          "competence": 0.0,
+          "coverage_n": 21,
+          "n": 21
+        },
+        "ml_usecase": {
+          "competence": 41.08,
+          "coverage_n": 34,
+          "n": 34
+        },
+        "multilingual": {
+          "competence": 51.06,
+          "coverage_n": 285,
+          "n": 285
+        },
+        "negation_pair_gen": {
+          "competence": 36.46,
+          "coverage_n": 98,
+          "n": 98
+        },
+        "option_order": {
+          "competence": 69.67,
+          "coverage_n": 63,
+          "n": 63
+        },
+        "perturb_pair": {
+          "competence": 65.19,
+          "coverage_n": 62,
+          "n": 62
+        },
+        "usecase": {
+          "competence": 40.31,
+          "coverage_n": 204,
+          "n": 204
+        }
+      },
+      "languages": {
+        "ar": {
+          "competence": 0.0,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "cs": {
+          "competence": 35.63,
+          "coverage_n": 9,
+          "n": 9
+        },
+        "da": {
+          "competence": 60.9,
+          "coverage_n": 16,
+          "n": 16
+        },
+        "de": {
+          "competence": 62.42,
+          "coverage_n": 40,
+          "n": 40
+        },
+        "el": {
+          "competence": 73.38,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "en": {
+          "competence": 48.43,
+          "coverage_n": 1135,
+          "n": 1135
+        },
+        "es": {
+          "competence": 65.48,
+          "coverage_n": 30,
+          "n": 30
+        },
+        "fi": {
+          "competence": 0.0,
+          "coverage_n": 7,
+          "n": 7
+        },
+        "fr": {
+          "competence": 29.68,
+          "coverage_n": 16,
+          "n": 16
+        },
+        "hi": {
+          "competence": 40.81,
+          "coverage_n": 26,
+          "n": 26
+        },
+        "id": {
+          "competence": 34.43,
+          "coverage_n": 4,
+          "n": 4
+        },
+        "it": {
+          "competence": 92.98,
+          "coverage_n": 13,
+          "n": 13
+        },
+        "ja": {
+          "competence": 7.88,
+          "coverage_n": 22,
+          "n": 22
+        },
+        "ko": {
+          "competence": 64.53,
+          "coverage_n": 9,
+          "n": 9
+        },
+        "mixed": {
+          "competence": 99.87,
+          "coverage_n": 15,
+          "n": 15
+        },
+        "nl": {
+          "competence": 0.0,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "no": {
+          "competence": 67.74,
+          "coverage_n": 4,
+          "n": 4
+        },
+        "pl": {
+          "competence": 60.22,
+          "coverage_n": 39,
+          "n": 39
+        },
+        "pt": {
+          "competence": 74.11,
+          "coverage_n": 24,
+          "n": 24
+        },
+        "sv": {
+          "competence": 29.79,
+          "coverage_n": 8,
+          "n": 8
+        },
+        "tr": {
+          "competence": 5.55,
+          "coverage_n": 11,
+          "n": 11
+        },
+        "uk": {
+          "competence": 80.82,
+          "coverage_n": 9,
+          "n": 9
+        },
+        "zh": {
+          "competence": 52.23,
+          "coverage_n": 12,
+          "n": 12
+        }
+      },
+      "topics": {
+        "coding": {
+          "competence": 61.05,
+          "coverage_n": 197,
+          "n": 197
+        },
+        "everyday_language": {
+          "competence": 48.02,
+          "coverage_n": 53,
+          "n": 53
+        },
+        "finance_commerce": {
+          "competence": 55.07,
+          "coverage_n": 79,
+          "n": 79
+        },
+        "law_policy": {
+          "competence": 51.16,
+          "coverage_n": 747,
+          "n": 747
+        },
+        "math": {
+          "competence": 29.4,
+          "coverage_n": 282,
+          "n": 282
+        },
+        "safety_security": {
+          "competence": 53.68,
+          "coverage_n": 42,
+          "n": 42
+        },
+        "support_ops": {
+          "competence": 50.94,
+          "coverage_n": 100,
+          "n": 100
+        }
+      },
+      "types": {
+        "choice": {
+          "competence": 61.68,
+          "coverage_n": 750,
+          "n": 750
+        },
+        "noul": {
+          "competence": 58.93,
+          "coverage_n": 375,
+          "n": 375
+        },
+        "score": {
+          "competence": 26.71,
+          "coverage_n": 375,
+          "n": 375
+        }
+      },
+      "usecases": {
+        "advertising": {
+          "competence": 28.12,
+          "coverage_n": 30,
+          "n": 30
+        },
+        "code_linting": {
+          "competence": 28.25,
+          "coverage_n": 22,
+          "n": 22
+        },
+        "customer_support": {
+          "competence": 49.6,
+          "coverage_n": 158,
+          "n": 158
+        },
+        "demand_forecasting": {
+          "competence": 21.86,
+          "coverage_n": 21,
+          "n": 21
+        },
+        "ecommerce": {
+          "competence": 40.36,
+          "coverage_n": 43,
+          "n": 43
+        },
+        "feature_extraction": {
+          "competence": 5.92,
+          "coverage_n": 16,
+          "n": 16
+        },
+        "financial_crime": {
+          "competence": 53.38,
+          "coverage_n": 54,
+          "n": 54
+        },
+        "gaming": {
+          "competence": 25.93,
+          "coverage_n": 18,
+          "n": 18
+        },
+        "insurance_claims": {
+          "competence": 50.93,
+          "coverage_n": 29,
+          "n": 29
+        },
+        "knowledge_graphs": {
+          "competence": 13.43,
+          "coverage_n": 22,
+          "n": 22
+        },
+        "lead_generation": {
+          "competence": 60.62,
+          "coverage_n": 36,
+          "n": 36
+        },
+        "legal_compliance": {
+          "competence": 51.54,
+          "coverage_n": 343,
+          "n": 343
+        },
+        "llm_guardrails": {
+          "competence": 47.72,
+          "coverage_n": 25,
+          "n": 25
+        },
+        "model_routing": {
+          "competence": 68.12,
+          "coverage_n": 318,
+          "n": 318
+        },
+        "moderation": {
+          "competence": 39.91,
+          "coverage_n": 37,
+          "n": 37
+        },
+        "other": {
+          "competence": 23.6,
+          "coverage_n": 213,
+          "n": 213
+        },
+        "recruiting": {
+          "competence": 67.39,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "risk_assessment": {
+          "competence": 40.67,
+          "coverage_n": 53,
+          "n": 53
+        },
+        "scientific_discovery": {
+          "competence": 17.54,
+          "coverage_n": 21,
+          "n": 21
+        },
+        "search_retrieval": {
+          "competence": 70.4,
+          "coverage_n": 24,
+          "n": 24
+        }
+      }
+    },
+    "metask_jev_rain_12b": {
+      "families": {
+        "calibration": {
+          "competence": 96.27,
+          "coverage_n": 25,
+          "n": 25
+        },
+        "calibration_gen": {
+          "competence": 57.07,
+          "coverage_n": 96,
+          "n": 96
+        },
+        "composite_gen": {
+          "competence": 66.42,
+          "coverage_n": 100,
+          "n": 100
+        },
+        "fairness": {
+          "competence": 93.13,
+          "coverage_n": 42,
+          "n": 42
+        },
+        "jaggedness": {
+          "competence": 39.87,
+          "coverage_n": 162,
+          "n": 162
+        },
+        "llm_router": {
+          "competence": 77.84,
+          "coverage_n": 308,
+          "n": 308
+        },
+        "long_state": {
+          "competence": 0.0,
+          "coverage_n": 21,
+          "n": 21
+        },
+        "ml_usecase": {
+          "competence": 54.42,
+          "coverage_n": 34,
+          "n": 34
+        },
+        "multilingual": {
+          "competence": 70.31,
+          "coverage_n": 285,
+          "n": 285
+        },
+        "negation_pair_gen": {
+          "competence": 66.23,
+          "coverage_n": 98,
+          "n": 98
+        },
+        "option_order": {
+          "competence": 89.89,
+          "coverage_n": 63,
+          "n": 63
+        },
+        "perturb_pair": {
+          "competence": 85.3,
+          "coverage_n": 62,
+          "n": 62
+        },
+        "usecase": {
+          "competence": 54.52,
+          "coverage_n": 204,
+          "n": 204
+        }
+      },
+      "languages": {
+        "ar": {
+          "competence": 47.21,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "cs": {
+          "competence": 79.31,
+          "coverage_n": 9,
+          "n": 9
+        },
+        "da": {
+          "competence": 66.82,
+          "coverage_n": 16,
+          "n": 16
+        },
+        "de": {
+          "competence": 82.65,
+          "coverage_n": 40,
+          "n": 40
+        },
+        "el": {
+          "competence": 71.28,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "en": {
+          "competence": 64.42,
+          "coverage_n": 1135,
+          "n": 1135
+        },
+        "es": {
+          "competence": 78.94,
+          "coverage_n": 30,
+          "n": 30
+        },
+        "fi": {
+          "competence": 69.69,
+          "coverage_n": 7,
+          "n": 7
+        },
+        "fr": {
+          "competence": 70.65,
+          "coverage_n": 16,
+          "n": 16
+        },
+        "hi": {
+          "competence": 65.14,
+          "coverage_n": 26,
+          "n": 26
+        },
+        "id": {
+          "competence": 100.0,
+          "coverage_n": 4,
+          "n": 4
+        },
+        "it": {
+          "competence": 85.47,
+          "coverage_n": 13,
+          "n": 13
+        },
+        "ja": {
+          "competence": 41.64,
+          "coverage_n": 22,
+          "n": 22
+        },
+        "ko": {
+          "competence": 90.67,
+          "coverage_n": 9,
+          "n": 9
+        },
+        "mixed": {
+          "competence": 99.45,
+          "coverage_n": 15,
+          "n": 15
+        },
+        "nl": {
+          "competence": 67.0,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "no": {
+          "competence": 17.74,
+          "coverage_n": 4,
+          "n": 4
+        },
+        "pl": {
+          "competence": 54.69,
+          "coverage_n": 39,
+          "n": 39
+        },
+        "pt": {
+          "competence": 77.86,
+          "coverage_n": 24,
+          "n": 24
+        },
+        "sv": {
+          "competence": 31.06,
+          "coverage_n": 8,
+          "n": 8
+        },
+        "tr": {
+          "competence": 40.63,
+          "coverage_n": 11,
+          "n": 11
+        },
+        "uk": {
+          "competence": 64.7,
+          "coverage_n": 9,
+          "n": 9
+        },
+        "zh": {
+          "competence": 13.84,
+          "coverage_n": 12,
+          "n": 12
+        }
+      },
+      "topics": {
+        "coding": {
+          "competence": 74.7,
+          "coverage_n": 197,
+          "n": 197
+        },
+        "everyday_language": {
+          "competence": 61.05,
+          "coverage_n": 53,
+          "n": 53
+        },
+        "finance_commerce": {
+          "competence": 66.12,
+          "coverage_n": 79,
+          "n": 79
+        },
+        "law_policy": {
+          "competence": 71.44,
+          "coverage_n": 747,
+          "n": 747
+        },
+        "math": {
+          "competence": 43.96,
+          "coverage_n": 282,
+          "n": 282
+        },
+        "safety_security": {
+          "competence": 79.08,
+          "coverage_n": 42,
+          "n": 42
+        },
+        "support_ops": {
+          "competence": 55.3,
+          "coverage_n": 100,
+          "n": 100
+        }
+      },
+      "types": {
+        "choice": {
+          "competence": 73.76,
+          "coverage_n": 750,
+          "n": 750
+        },
+        "noul": {
+          "competence": 70.13,
+          "coverage_n": 375,
+          "n": 375
+        },
+        "score": {
+          "competence": 52.99,
+          "coverage_n": 375,
+          "n": 375
+        }
+      },
+      "usecases": {
+        "advertising": {
+          "competence": 44.75,
+          "coverage_n": 30,
+          "n": 30
+        },
+        "code_linting": {
+          "competence": 39.54,
+          "coverage_n": 22,
+          "n": 22
+        },
+        "customer_support": {
+          "competence": 72.2,
+          "coverage_n": 158,
+          "n": 158
+        },
+        "demand_forecasting": {
+          "competence": 13.95,
+          "coverage_n": 21,
+          "n": 21
+        },
+        "ecommerce": {
+          "competence": 41.37,
+          "coverage_n": 43,
+          "n": 43
+        },
+        "feature_extraction": {
+          "competence": 80.19,
+          "coverage_n": 16,
+          "n": 16
+        },
+        "financial_crime": {
+          "competence": 68.23,
+          "coverage_n": 54,
+          "n": 54
+        },
+        "gaming": {
+          "competence": 74.01,
+          "coverage_n": 18,
+          "n": 18
+        },
+        "insurance_claims": {
+          "competence": 67.22,
+          "coverage_n": 29,
+          "n": 29
+        },
+        "knowledge_graphs": {
+          "competence": 28.01,
+          "coverage_n": 22,
+          "n": 22
+        },
+        "lead_generation": {
+          "competence": 70.05,
+          "coverage_n": 36,
+          "n": 36
+        },
+        "legal_compliance": {
+          "competence": 71.68,
+          "coverage_n": 343,
+          "n": 343
+        },
+        "llm_guardrails": {
+          "competence": 64.99,
+          "coverage_n": 25,
+          "n": 25
+        },
+        "model_routing": {
+          "competence": 77.02,
+          "coverage_n": 318,
+          "n": 318
+        },
+        "moderation": {
+          "competence": 76.0,
+          "coverage_n": 37,
+          "n": 37
+        },
+        "other": {
+          "competence": 39.79,
+          "coverage_n": 213,
+          "n": 213
+        },
+        "recruiting": {
+          "competence": 65.24,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "risk_assessment": {
+          "competence": 69.74,
+          "coverage_n": 53,
+          "n": 53
+        },
+        "scientific_discovery": {
+          "competence": 38.96,
+          "coverage_n": 21,
+          "n": 21
+        },
+        "search_retrieval": {
+          "competence": 84.5,
+          "coverage_n": 24,
+          "n": 24
+        }
+      }
+    },
+    "wald-4b-v2": {
+      "families": {
+        "calibration": {
+          "competence": 68.21,
+          "coverage_n": 25,
+          "n": 25
+        },
+        "calibration_gen": {
+          "competence": 43.2,
+          "coverage_n": 96,
+          "n": 96
+        },
+        "composite_gen": {
+          "competence": 27.59,
+          "coverage_n": 100,
+          "n": 100
+        },
+        "fairness": {
+          "competence": 81.41,
+          "coverage_n": 42,
+          "n": 42
+        },
+        "jaggedness": {
+          "competence": 8.82,
+          "coverage_n": 162,
+          "n": 162
+        },
+        "llm_router": {
+          "competence": 64.44,
+          "coverage_n": 308,
+          "n": 308
+        },
+        "long_state": {
+          "competence": 0.0,
+          "coverage_n": 21,
+          "n": 21
+        },
+        "ml_usecase": {
+          "competence": 7.4,
+          "coverage_n": 34,
+          "n": 34
+        },
+        "multilingual": {
+          "competence": 38.09,
+          "coverage_n": 285,
+          "n": 285
+        },
+        "negation_pair_gen": {
+          "competence": 20.52,
+          "coverage_n": 98,
+          "n": 98
+        },
+        "option_order": {
+          "competence": 83.82,
+          "coverage_n": 63,
+          "n": 63
+        },
+        "perturb_pair": {
+          "competence": 72.62,
+          "coverage_n": 62,
+          "n": 62
+        },
+        "usecase": {
+          "competence": 42.33,
+          "coverage_n": 204,
+          "n": 204
+        }
+      },
+      "languages": {
+        "ar": {
+          "competence": 14.12,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "cs": {
+          "competence": 68.97,
+          "coverage_n": 9,
+          "n": 9
+        },
+        "da": {
+          "competence": 50.5,
+          "coverage_n": 16,
+          "n": 16
+        },
+        "de": {
+          "competence": 54.19,
+          "coverage_n": 40,
+          "n": 40
+        },
+        "el": {
+          "competence": 15.39,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "en": {
+          "competence": 43.66,
+          "coverage_n": 1135,
+          "n": 1135
+        },
+        "es": {
+          "competence": 51.08,
+          "coverage_n": 30,
+          "n": 30
+        },
+        "fi": {
+          "competence": 1.97,
+          "coverage_n": 7,
+          "n": 7
+        },
+        "fr": {
+          "competence": 47.28,
+          "coverage_n": 16,
+          "n": 16
+        },
+        "hi": {
+          "competence": 26.25,
+          "coverage_n": 26,
+          "n": 26
+        },
+        "id": {
+          "competence": 34.43,
+          "coverage_n": 4,
+          "n": 4
+        },
+        "it": {
+          "competence": 76.36,
+          "coverage_n": 13,
+          "n": 13
+        },
+        "ja": {
+          "competence": 0.0,
+          "coverage_n": 22,
+          "n": 22
+        },
+        "ko": {
+          "competence": 74.45,
+          "coverage_n": 9,
+          "n": 9
+        },
+        "mixed": {
+          "competence": 95.32,
+          "coverage_n": 15,
+          "n": 15
+        },
+        "nl": {
+          "competence": 8.12,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "no": {
+          "competence": 0.0,
+          "coverage_n": 4,
+          "n": 4
+        },
+        "pl": {
+          "competence": 35.49,
+          "coverage_n": 39,
+          "n": 39
+        },
+        "pt": {
+          "competence": 52.33,
+          "coverage_n": 24,
+          "n": 24
+        },
+        "sv": {
+          "competence": 7.52,
+          "coverage_n": 8,
+          "n": 8
+        },
+        "tr": {
+          "competence": 76.85,
+          "coverage_n": 11,
+          "n": 11
+        },
+        "uk": {
+          "competence": 12.65,
+          "coverage_n": 9,
+          "n": 9
+        },
+        "zh": {
+          "competence": 0.0,
+          "coverage_n": 12,
+          "n": 12
+        }
+      },
+      "topics": {
+        "coding": {
+          "competence": 62.62,
+          "coverage_n": 197,
+          "n": 197
+        },
+        "everyday_language": {
+          "competence": 27.42,
+          "coverage_n": 53,
+          "n": 53
+        },
+        "finance_commerce": {
+          "competence": 63.56,
+          "coverage_n": 79,
+          "n": 79
+        },
+        "law_policy": {
+          "competence": 39.52,
+          "coverage_n": 747,
+          "n": 747
+        },
+        "math": {
+          "competence": 24.77,
+          "coverage_n": 282,
+          "n": 282
+        },
+        "safety_security": {
+          "competence": 53.62,
+          "coverage_n": 42,
+          "n": 42
+        },
+        "support_ops": {
+          "competence": 51.6,
+          "coverage_n": 100,
+          "n": 100
+        }
+      },
+      "types": {
+        "choice": {
+          "competence": 65.48,
+          "coverage_n": 750,
+          "n": 750
+        },
+        "noul": {
+          "competence": 21.6,
+          "coverage_n": 375,
+          "n": 375
+        },
+        "score": {
+          "competence": 40.49,
+          "coverage_n": 375,
+          "n": 375
+        }
+      },
+      "usecases": {
+        "advertising": {
+          "competence": 18.51,
+          "coverage_n": 30,
+          "n": 30
+        },
+        "code_linting": {
+          "competence": 11.54,
+          "coverage_n": 22,
+          "n": 22
+        },
+        "customer_support": {
+          "competence": 39.84,
+          "coverage_n": 158,
+          "n": 158
+        },
+        "demand_forecasting": {
+          "competence": 10.71,
+          "coverage_n": 21,
+          "n": 21
+        },
+        "ecommerce": {
+          "competence": 40.88,
+          "coverage_n": 43,
+          "n": 43
+        },
+        "feature_extraction": {
+          "competence": 14.9,
+          "coverage_n": 16,
+          "n": 16
+        },
+        "financial_crime": {
+          "competence": 27.44,
+          "coverage_n": 54,
+          "n": 54
+        },
+        "gaming": {
+          "competence": 72.89,
+          "coverage_n": 18,
+          "n": 18
+        },
+        "insurance_claims": {
+          "competence": 48.01,
+          "coverage_n": 29,
+          "n": 29
+        },
+        "knowledge_graphs": {
+          "competence": 4.52,
+          "coverage_n": 22,
+          "n": 22
+        },
+        "lead_generation": {
+          "competence": 58.75,
+          "coverage_n": 36,
+          "n": 36
+        },
+        "legal_compliance": {
+          "competence": 37.4,
+          "coverage_n": 343,
+          "n": 343
+        },
+        "llm_guardrails": {
+          "competence": 46.76,
+          "coverage_n": 25,
+          "n": 25
+        },
+        "model_routing": {
+          "competence": 63.25,
+          "coverage_n": 318,
+          "n": 318
+        },
+        "moderation": {
+          "competence": 57.61,
+          "coverage_n": 37,
+          "n": 37
+        },
+        "other": {
+          "competence": 20.57,
+          "coverage_n": 213,
+          "n": 213
+        },
+        "recruiting": {
+          "competence": 66.5,
+          "coverage_n": 17,
+          "n": 17
+        },
+        "risk_assessment": {
+          "competence": 17.43,
+          "coverage_n": 53,
+          "n": 53
+        },
+        "scientific_discovery": {
+          "competence": 11.88,
+          "coverage_n": 21,
+          "n": 21
+        },
+        "search_retrieval": {
+          "competence": 66.29,
+          "coverage_n": 24,
+          "n": 24
+        }
+      }
+    }
+  },
+  "topics": [
+    {
+      "covers": "applying written rules: company policies, contracts, regulations, eligibility",
+      "key": "law_policy",
+      "label": "Rules, policy & law",
+      "low_n": false,
+      "n": 747,
+      "open": 153,
+      "sealed": 594
+    },
+    {
+      "covers": "a calculation decides the answer: arithmetic, word problems, probability, dates, units",
+      "key": "math",
+      "label": "Math & numbers",
+      "low_n": false,
+      "n": 282,
+      "open": 37,
+      "sealed": 245
+    },
+    {
+      "covers": "code, SQL, repositories, developer tools and IT systems",
+      "key": "coding",
+      "label": "Coding & software",
+      "low_n": false,
+      "n": 197,
+      "open": 61,
+      "sealed": 136
+    },
+    {
+      "covers": "support tickets, incidents, logistics, scheduling desks and routing work to a team",
+      "key": "support_ops",
+      "label": "Support & operations",
+      "low_n": false,
+      "n": 100,
+      "open": 22,
+      "sealed": 78
+    },
+    {
+      "covers": "money: payments, refunds, invoices, orders, expenses, insurance payouts",
+      "key": "finance_commerce",
+      "label": "Finance & commerce",
+      "low_n": false,
+      "n": 79,
+      "open": 11,
+      "sealed": 68
+    },
+    {
+      "covers": "short everyday messages: intents, assistant requests, reading a detail out of a text",
+      "key": "everyday_language",
+      "label": "Everyday language",
+      "low_n": false,
+      "n": 53,
+      "open": 10,
+      "sealed": 43
+    },
+    {
+      "covers": "untrusted or injected instructions, fraud, moderation, access and security triage",
+      "key": "safety_security",
+      "label": "Safety & security",
+      "low_n": false,
+      "n": 42,
+      "open": 6,
+      "sealed": 36
+    }
+  ],
+  "types": [
+    {
+      "covers": "Frozen types authoring category",
+      "key": "choice",
+      "label": "Choice",
+      "low_n": false,
+      "n": 750,
+      "open": 150,
+      "sealed": 600
+    },
+    {
+      "covers": "Frozen types authoring category",
+      "key": "noul",
+      "label": "Noul",
+      "low_n": false,
+      "n": 375,
+      "open": 75,
+      "sealed": 300
+    },
+    {
+      "covers": "Frozen types authoring category",
+      "key": "score",
+      "label": "Score",
+      "low_n": false,
+      "n": 375,
+      "open": 75,
+      "sealed": 300
+    }
+  ],
+  "usecases": [
+    {
+      "covers": "contracts, policies, regulations, eligibility rules, checking documents against written requirements",
+      "key": "legal_compliance",
+      "label": "Legal and compliance",
+      "low_n": false,
+      "n": 343,
+      "open": 77,
+      "sealed": 266
+    },
+    {
+      "covers": "deciding which LLM or model tier should handle a prompt; classifying a request's intent, domain, difficulty or risk to pick a model",
+      "key": "model_routing",
+      "label": "Model routing",
+      "low_n": false,
+      "n": 318,
+      "open": 86,
+      "sealed": 232
+    },
+    {
+      "covers": "none of the above: general reasoning, arithmetic or date puzzles, everyday assistant requests without a business workflow",
+      "key": "other",
+      "label": "Other",
+      "low_n": false,
+      "n": 213,
+      "open": 23,
+      "sealed": 190
+    },
+    {
+      "covers": "classifying tickets and customer intents, urgency, refunds, routing cases to a team, checking support replies",
+      "key": "customer_support",
+      "label": "Customer support",
+      "low_n": false,
+      "n": 158,
+      "open": 37,
+      "sealed": 121
+    },
+    {
+      "covers": "suspicious transactions, KYC, fraud alerts, entity matching for investigations",
+      "key": "financial_crime",
+      "label": "Financial crime",
+      "low_n": false,
+      "n": 54,
+      "open": 9,
+      "sealed": 45
+    },
+    {
+      "covers": "estimating probabilities and severity of risks, incidents, vendor or underwriting risk",
+      "key": "risk_assessment",
+      "label": "Risk assessment",
+      "low_n": false,
+      "n": 53,
+      "open": 7,
+      "sealed": 46
+    },
+    {
+      "covers": "product listings, product attributes, orders and deliveries, seller catalog policy",
+      "key": "ecommerce",
+      "label": "E-commerce marketplaces",
+      "low_n": false,
+      "n": 43,
+      "open": 9,
+      "sealed": 34
+    },
+    {
+      "covers": "user content moderation: toxicity, harassment, spam, unsafe advice, personal data exposure",
+      "key": "moderation",
+      "label": "Moderation and trust and safety",
+      "low_n": false,
+      "n": 37,
+      "open": 7,
+      "sealed": 30
+    },
+    {
+      "covers": "matching companies or inbound messages to an ideal customer profile, buyer intent, prioritising and routing sales leads",
+      "key": "lead_generation",
+      "label": "Lead generation",
+      "low_n": false,
+      "n": 36,
+      "open": 4,
+      "sealed": 32
+    },
+    {
+      "covers": "ad creatives, campaign copy, brand safety, prohibited claims in ads",
+      "key": "advertising",
+      "label": "Advertising",
+      "low_n": false,
+      "n": 30,
+      "open": 3,
+      "sealed": 27
+    },
+    {
+      "covers": "first-notice-of-loss reports, claim complexity, missing information, claim triage",
+      "key": "insurance_claims",
+      "label": "Insurance claims",
+      "low_n": true,
+      "n": 29,
+      "open": 8,
+      "sealed": 21
+    },
+    {
+      "covers": "checking LLM inputs, outputs and tool calls: prompt injection, jailbreaks, policy violations, tool-call errors, answer quality",
+      "key": "llm_guardrails",
+      "label": "LLM guardrails",
+      "low_n": true,
+      "n": 25,
+      "open": 5,
+      "sealed": 20
+    },
+    {
+      "covers": "scoring query-to-candidate relevance, reranking results, selecting useful context for RAG",
+      "key": "search_retrieval",
+      "label": "Search and retrieval",
+      "low_n": true,
+      "n": 24,
+      "open": 5,
+      "sealed": 19
+    },
+    {
+      "covers": "checking code or writing against conventions and guidelines, as in CI review of code",
+      "key": "code_linting",
+      "label": "Semantic code linting",
+      "low_n": true,
+      "n": 22,
+      "open": 3,
+      "sealed": 19
+    },
+    {
+      "covers": "entity types, relationships between records, contradictions between facts, multi-step lookups across linked facts",
+      "key": "knowledge_graphs",
+      "label": "Graphs and knowledge graphs",
+      "low_n": true,
+      "n": 22,
+      "open": 3,
+      "sealed": 19
+    },
+    {
+      "covers": "purchase intent, product interest, demand and supply signals for forecasting",
+      "key": "demand_forecasting",
+      "label": "Demand forecasting",
+      "low_n": true,
+      "n": 21,
+      "open": 3,
+      "sealed": 18
+    },
+    {
+      "covers": "screening papers, labelling research passages or survey answers, checking that citations support claims, methodology checks",
+      "key": "scientific_discovery",
+      "label": "Scientific discovery",
+      "low_n": true,
+      "n": 21,
+      "open": 2,
+      "sealed": 19
+    },
+    {
+      "covers": "player reports, in-game chat, game support",
+      "key": "gaming",
+      "label": "Gaming",
+      "low_n": true,
+      "n": 18,
+      "open": 3,
+      "sealed": 15
+    },
+    {
+      "covers": "resumes, applications, interview feedback, matching candidates to roles",
+      "key": "recruiting",
+      "label": "Recruiting",
+      "low_n": true,
+      "n": 17,
+      "open": 1,
+      "sealed": 16
+    },
+    {
+      "covers": "turning natural-language data into probabilistic features or estimates for a downstream prediction",
+      "key": "feature_extraction",
+      "label": "Feature extraction for predictive modeling",
+      "low_n": true,
+      "n": 16,
+      "open": 5,
+      "sealed": 11
+    }
+  ]
+}
