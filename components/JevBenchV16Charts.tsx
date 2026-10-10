@@ -8,6 +8,10 @@ import { JevCapabilityRanking } from './JevCapabilityRanking';
 import { JevBubbleCharts } from './JevBubbleChart';
 import { JevCapabilityLazy } from './JevCapabilityLazy';
 import { jevClassView } from './jevClassView';
+import { JevParetoCharts } from './JevParetoCharts';
+
+// PREVIEW ONLY (10 Oct 2026): the Pareto section renders behind this build-time flag and is not rolled out.
+const PREVIEW_PARETO = process.env.NEXT_PUBLIC_BH_PREVIEW_PARETO === '1';
 
 type CapView = ClassCaps & { costLimit: number; latencyLimit: number };
 
@@ -35,6 +39,7 @@ export function JevBenchV16Charts({ systems, eligibilitySystems, revision, offic
   return <>
     <JevCapabilityRanking systems={systems} eligibilitySystems={eligibilitySystems} revision={revision} officialHref={officialHref} onCapsChange={onCapsChange} referenceLabel={JEV_V16_REFERENCE_LABEL} limits={JEV_V16_CLASS_OPTIONS.limits} nearCapPrecision scopeLabel={scopeLabel} outsideOpen={outsideOpen} headline={headline} />
     <JevBubbleCharts points={current.points} costLimit={selected.costLimit} latencyCap={selected.latencyLimit} costFactor={selected.costFactor} latencyFactor={selected.latencyFactor} referenceName={JEV_V16_REFERENCE_LABEL} scoreKind="v15" scopeLabel={scopeLabel} />
+    {PREVIEW_PARETO && <JevParetoCharts points={current.points} costLimit={selected.costLimit} latencyLimit={selected.latencyLimit} scopeLabel={scopeLabel} />}
     <section className="mt-8 scroll-mt-6" data-bh-jev16-3d-toggle>
       <button type="button" className="text-accent underline" aria-expanded={show3d} aria-controls={show3d ? 'jev16-capability-3d' : undefined} onClick={() => setShow3d((open) => !open)}>{show3d ? 'Hide 3D view' : 'Show 3D view'}</button>
       {show3d && <div id="jev16-capability-3d"><JevCapabilityLazy revision={revision} systems={plotted} only3d classOptions={classOptions} /></div>}
