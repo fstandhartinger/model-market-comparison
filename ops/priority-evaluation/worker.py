@@ -193,7 +193,11 @@ def process_notification() -> bool:
     payment_link = f"https://dashboard.stripe.com{mode_segment}/payments/{payment_id}" if re.fullmatch(r"pi_[A-Za-z0-9]+", str(payment_id)) else "Stripe payment record unavailable"
     amount = row.get("amount_total") or row.get("base_amount") or 0
     benchmarks = ", ".join(row.get("benchmarks") or [])
+    model = str(row.get("model_name", "")).strip() or "unnamed model"
     message = (
+        "🤖 LÄUFT\n"
+        f"Worum geht's: Benchmark Heaven fast-lane order paid for {model} ({row.get('email', '')}). {payment_link}\n\n"
+        "🤖 Agenten\n- The fast-lane pickup confirms the order and starts the evaluation; the 48-hour clock runs from payment.\n\n"
         f"New {mode} priority evaluation payment\n"
         f"From: {row.get('email', '')}\n"
         f"Model: {row.get('model_name', '')}\n"
