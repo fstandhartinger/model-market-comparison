@@ -60,19 +60,24 @@ test('categoryCell keeps the >= 30 answered per-spoke rule (completed n when pub
   }
 });
 
-test('the screenshot pair (H2O Lightning 4B vs decisio v0.8.0 on gemma-4-31B-it): gaps stay gaps, the points-only series stays points', () => {
-  const view = jevbenchCategoryView('v1.6.1', ['h2o-lightning-4b', 'decisio-gemma-4-31b-v080'], { supplement: true });
+// The original screenshot row (decisio v0.8.0 on gemma-4-31B-it) completed its supplements (CR-398); its 12B sibling still has
+// the same original-pool gaps, so it carries this regression.
+test('the screenshot pattern (H2O Lightning 4B vs decisio v0.8.0 on gemma-4-12B-it): gaps stay gaps, the points-only series stays points', () => {
+  const view = jevbenchCategoryView('v1.6.1', ['h2o-lightning-4b', 'decisio-gemma-4-12b-v080'], { supplement: true });
   const uc = view.dims.find((d) => d.key === 'usecases');
-  const spoke = (key) => ['h2o-lightning-4b', 'decisio-gemma-4-31b-v080'].map((s) => categoryCell(view.systems[s].usecases[key] ?? null, view.radarMinN));
+  const spoke = (key) => ['h2o-lightning-4b', 'decisio-gemma-4-12b-v080'].map((s) => categoryCell(view.systems[s].usecases[key] ?? null, view.radarMinN));
   const [gA, gB] = spoke('gaming'), [dA, dB] = spoke('demand_forecasting'), [rA, rB] = spoke('recruiting');
   assert.deepEqual([gA.text, gB.text], ['18.3', '—']);
   assert.deepEqual([dA.text, dB.text], ['21.2', 'n=16']);
   assert.deepEqual([rA.text, rB.text], ['21.7', '—']);
   assert.ok(plottable(gA.value, gA.thin) && plottable(dA.value, dA.thin) && plottable(rA.value, rA.thin), 'A has real values ~20: drawn at their radius');
   for (const c of [gB, dB, rB]) assert.equal(plottable(c.value, c.thin), false, 'B: no marker, no vertex');
-  const present = uc.cats.filter((c) => c.plotted).map((c) => { const x = categoryCell(view.systems['decisio-gemma-4-31b-v080'].usecases[c.key] ?? null, view.radarMinN); return plottable(x.value, x.thin); });
-  assert.equal(present.filter(Boolean).length, 9, 'decisio has >= 30 answered items on 9 of 20 use-case spokes');
+  const present = uc.cats.filter((c) => c.plotted).map((c) => { const x = categoryCell(view.systems['decisio-gemma-4-12b-v080'].usecases[c.key] ?? null, view.radarMinN); return plottable(x.value, x.thin); });
+  assert.equal(present.filter(Boolean).length, 9, 'decisio 12B has >= 30 answered items on 9 of 20 use-case spokes');
   assert.equal(radarShape(present).kind, 'points', 'drawn as points, no fake polygon');
+  const full = jevbenchCategoryView('v1.6.1', ['decisio-gemma-4-31b-v080'], { supplement: true });
+  const drawn = full.dims.find((d) => d.key === 'usecases').cats.filter((c) => c.plotted).map((c) => { const x = categoryCell(full.systems['decisio-gemma-4-31b-v080'].usecases[c.key] ?? null, full.radarMinN); return plottable(x.value, x.thin); });
+  assert.equal(drawn.filter(Boolean).length, 20, 'the completed 31B row draws every use-case spoke');
 });
 
 test('every live cell: under-30 or non-finite cells are never plottable; measured zeros remain drawable values', () => {
