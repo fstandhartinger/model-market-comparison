@@ -51,6 +51,8 @@ def sanitize(result):
  if len(keys)!=len(set(keys)):raise ValueError('duplicate completed key')
  completed_shape(keys)
  if any(r.get('ranked')is not(r['key']in NATIVE)for r in out['systems']):raise ValueError('frozen ranking disposition')
+ offsets=out.get('v16',{}).get('equating',{}).get('offsets')
+ if offsets is not None and (not isinstance(offsets,dict)or set(offsets)!={'I','C'}):raise ValueError('exact equating offsets I/C or null')
  template=json.loads((Path(__file__).parent/'PUBLIC-SCHEMA-V162.json').read_text())
  schema_check(out,template['schema'])
  safe(out)

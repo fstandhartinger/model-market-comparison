@@ -1,9 +1,13 @@
 import { hasPublishedJevbenchV162Release } from '../lib/jevbench-v162-release.mjs';
-type JevRelease = 'v1.6.2' | 'v1.6.1' | 'v1.6.0' | 'v1.5.7' | 'v1.5.6' | 'v1.5.5';
+import { hasPublishedJevbenchV163Release } from '../lib/jevbench-v163-release.mjs';
+type JevRelease = 'v1.6.3' | 'v1.6.2' | 'v1.6.1' | 'v1.6.0' | 'v1.5.7' | 'v1.5.6' | 'v1.5.5';
 
-export async function JevBenchReleaseVersionNav({ active, fresh }: { active: JevRelease; fresh?: boolean }) {
+export async function JevBenchReleaseVersionNav({ active, fresh, fresh163 }: { active: JevRelease; fresh?: boolean; fresh163?: boolean }) {
   const visible = fresh ?? await hasPublishedJevbenchV162Release();
+  // v1.6.3 is shown only for a validated publication; a failed validation omits the tab and keeps older boards working.
+  const visible163 = fresh163 ?? await hasPublishedJevbenchV163Release();
   const versions: Array<{ version: JevRelease; href: string }> = [
+    ...(visible163 ? [{ version: 'v1.6.3' as const, href: '/jev-models/v1.6.3' }] : []),
     ...(visible ? [{ version: 'v1.6.2' as const, href: '/jev-models/v1.6.2' }] : []),
     { version: 'v1.6.1', href: '/jev-models' },
     { version: 'v1.6.0', href: '/jev-models/v1.6.0' },
