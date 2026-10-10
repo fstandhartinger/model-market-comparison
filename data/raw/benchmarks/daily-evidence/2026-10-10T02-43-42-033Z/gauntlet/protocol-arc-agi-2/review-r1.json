@@ -1,0 +1,19 @@
+{
+  "artifact_id": "protocol-arc-agi-2",
+  "artifact_sha256": "4def015e2ee7af9204caf82a96e34ed82c8f210c181e369fb11fb2e504cc1d29",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["arc-agi::2","c1","c2"],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "arc-agi::2-c1",
+      "severity": "blocker",
+      "location": "arc-agi::2",
+      "evidence": "No primary protocol excerpt is present in the packet for criterion c1. The row asserts identity arc-agi::2, version 2, metric 'Semi-Private Evaluation Set accuracy on the ARC Prize Verified Leaderboard', unit percent, range [0,100], and description naming the second-generation ARC-AGI benchmark, but no current primary protocol text or captured maintainer payload is supplied to verify continuity of registry version, benchmark identity, metric, units, description, task set, harness, judges or release version. The row's own fields cannot be compared against any source.",
+      "repair": "Supply the actual current primary protocol excerpt for the ARC Prize Verified Leaderboard (or the captured maintainer payload) so identity, version, metric, units and description can be verified; otherwise do not claim continuity."
+    }]
+    ,
+    "version":"2","version_guard":"Verify the published version 2 before reading results.","status":"active","version_status":"published","superseded_by":"arc-agi::3","scoring":{"metric":"Semi-Private Evaluation Set accuracy on the ARC Prize Verified Leaderboard","unit":"percent","range":[0,100],"higher_better":true,"notes":"A single run is used; scores are not averaged across runs, and tasks for which a model could not produce full test outputs are marked incorrect. Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."},"description":"The second-generation ARC-AGI benchmark of fluid intelligence with visual reasoning puzzles; a model must infer and apply abstract pattern rules from a small number of input/output exemplars in a grid-world environment. No prior claim that this description is current for the current board, so it does not change. The notes: 'single run; scores not averaged; incomplete outputs marked incorrect. Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate.'" 
+
+}

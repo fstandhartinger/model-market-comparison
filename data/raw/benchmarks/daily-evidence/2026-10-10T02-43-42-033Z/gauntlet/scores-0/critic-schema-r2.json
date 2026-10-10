@@ -1,0 +1,127 @@
+{
+  "type": "object",
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "enum": [
+        "scores-0"
+      ]
+    },
+    "artifact_sha256": {
+      "type": "string",
+      "enum": [
+        "2145a69e6f4350ebf28b4857db9755d82d76957503fc91e06dcc17fe0739b585"
+      ]
+    },
+    "round": {
+      "type": "integer",
+      "enum": [
+        2
+      ]
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "revise",
+        "blocked"
+      ]
+    },
+    "coverage_checked": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "public:ff454281975fb38458e25820",
+          "public:e6ea6ce64cca9aa431af4e70",
+          "public:8cd6da39d32572b1c7abd009",
+          "public:2fed4d9d79bfc9fe0f6f0dd8",
+          "public:b333c6d67e79274ecc984033",
+          "public:e8abb432083ff4fbfefc385b",
+          "public:c5d55055832067f71a875f19",
+          "public:57c9044b24f0aa088bf4b992",
+          "public:659c53be425d45a016b6fb4c",
+          "public:53a40b6bcf4b0e34b3191d98",
+          "c1"
+        ]
+      }
+    },
+    "errors_found": {
+      "type": "integer"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 2048
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "blocker",
+              "major",
+              "minor"
+            ]
+          },
+          "location": {
+            "type": "string",
+            "maxLength": 2048
+          },
+          "evidence": {
+            "type": "string",
+            "maxLength": 2048
+          },
+          "repair": {
+            "type": "string",
+            "maxLength": 2048
+          }
+        },
+        "required": [
+          "id",
+          "severity",
+          "location",
+          "evidence",
+          "repair"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "fixed": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 2048
+      }
+    },
+    "uncertainties": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 2048
+      }
+    },
+    "missing_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 2048
+      }
+    }
+  },
+  "required": [
+    "artifact_id",
+    "artifact_sha256",
+    "round",
+    "verdict",
+    "coverage_checked",
+    "errors_found",
+    "findings",
+    "fixed",
+    "uncertainties",
+    "missing_evidence"
+  ],
+  "additionalProperties": false
+}

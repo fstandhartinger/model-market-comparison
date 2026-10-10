@@ -1,7 +1,7 @@
 {
   "source": "Nebius Token Factory — tokenfactory.nebius.com/api/public/models_info (first-party, public catalog)",
   "region": "mixed (eu-north1 / eu-west2 / us-central1 / uk-south1)",
-  "collected_at": "2026-10-09",
+  "collected_at": "2026-10-10",
   "listing_url": "https://tokenfactory.nebius.com/models",
   "method": "scripts/fetch-nebius-catalog.mjs: one GET of the public catalog (allowed by robots.txt); prices are flavors[].input/output_price_per_million_tokens in native USD; region from flavors[].regions[].country_code (EU member state → eu, US → us, UK → uk); non-chat types and zero-output-price rows (embeddings) omitted; curated model_name/provider_org carried over by exact model_id; new ids marked mapping=derived; catalog status kept per row. See nebius.method.md.",
   "models": [
@@ -10,11 +10,11 @@
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 0.3,
       "output_per_1m_usd": 1.2,
-      "region": "eu",
+      "region": "us",
       "model_id": "deepseek-ai/DeepSeek-V4.1-Flash",
       "context_length": 1048000,
       "status": "active",
-      "notes": "flavor: cheap; served region: eu-north1 (FI); id deepseek-ai/DeepSeek-V4.1-Flash"
+      "notes": "flavor: cheap; served region: us-north1 (US); id deepseek-ai/DeepSeek-V4.1-Flash"
     },
     {
       "model_name": "DeepSeek V4 Flash 0731",
@@ -37,6 +37,18 @@
       "context_length": 1048576,
       "status": "active",
       "notes": "flavor: cheap; served region: uk-south1 (UK); id deepseek-ai/DeepSeek-V4-Pro"
+    },
+    {
+      "model_name": "DeepSeek V4 Pro 0813",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 1.32,
+      "output_per_1m_usd": 3.96,
+      "region": "uk",
+      "model_id": "deepseek-ai/DeepSeek-V4-Pro-0813",
+      "context_length": 979000,
+      "status": "active",
+      "notes": "flavor: cheap; served region: uk-south1 (UK); id deepseek-ai/DeepSeek-V4-Pro-0813",
+      "mapping": "derived"
     },
     {
       "model_name": "Gemma 3 27B",
@@ -259,15 +271,15 @@
       "notes": "flavor: cheap; served region: us-north1 (US); id zai-org/GLM-5.3-Flash"
     }
   ],
-  "response_sha256": "49c80b553007ef025707a8801f309f1960622b3feaf838b6f30838f5fbf59bc0",
+  "response_sha256": "6ae551f7efe72ee47c6220c08b6e3ec9399b16ae7670199cf2956890d372b22a",
   "skipped": [
     "Qwen/Qwen3-Embedding-8B"
   ],
   "diff": {
-    "added": [],
-    "removed": [
+    "added": [
       "deepseek-ai/DeepSeek-V4-Pro-0813"
     ],
+    "removed": [],
     "price_changed": [],
     "region_changed": [
       "deepseek-ai/DeepSeek-V4.1-Flash"

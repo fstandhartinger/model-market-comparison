@@ -1,9 +1,9 @@
 {
   "source": "Inceptron",
   "region": "eu (Finland; HQ Sweden)",
-  "collected_at": "2026-10-09",
+  "collected_at": "2026-10-10",
   "listing_url": "https://www.inceptron.io/models",
-  "method": "scripts/fetch-inceptron-catalog.mjs (2026-10-09): the served model list comes from Inceptron's unauthenticated OpenAI-compatible catalog https://api.inceptron.io/v1/models (text output, chat feature, both token prices); the DIRECT price of each model comes from Inceptron's published list https://www.inceptron.io/models (server-rendered; input / output / cache read in USD per 1M tokens; the pricing page www.inceptron.io/pricing says \"Serverless inference: see models page\"). CR-329.1 (7 Oct 2026): the API catalog prices carry an openrouter.slug and equal the OpenRouter Inceptron route, so they are the OpenRouter feed, not the direct price; they are kept per model as api_catalog_price for reference only. A served model missing from the list page gets price_status \"n/a\" and no direct price. Curated rows kept by api_model_id, the id in their notes, or name; new ids mapping=derived; ids no longer listed are dropped. HQ Sweden (SE), datacenter Finland (FI) per OpenRouter provider metadata. See inceptron.method.md.",
+  "method": "scripts/fetch-inceptron-catalog.mjs (2026-10-10): the served model list comes from Inceptron's unauthenticated OpenAI-compatible catalog https://api.inceptron.io/v1/models (text output, chat feature, both token prices); the DIRECT price of each model comes from Inceptron's published list https://www.inceptron.io/models (server-rendered; input / output / cache read in USD per 1M tokens; the pricing page www.inceptron.io/pricing says \"Serverless inference: see models page\"). CR-329.1 (7 Oct 2026): the API catalog prices carry an openrouter.slug and equal the OpenRouter Inceptron route, so they are the OpenRouter feed, not the direct price; they are kept per model as api_catalog_price for reference only. A served model missing from the list page gets price_status \"n/a\" and no direct price. Curated rows kept by api_model_id, the id in their notes, or name; new ids mapping=derived; ids no longer listed are dropped. HQ Sweden (SE), datacenter Finland (FI) per OpenRouter provider metadata. See inceptron.method.md.",
   "models": [
     {
       "model_name": "GLM 5.2",
@@ -14,9 +14,9 @@
       "context_length": 1048576,
       "quantization": "fp4",
       "api_catalog_price": {
-        "input_per_1m_usd": 1.39,
-        "output_per_1m_usd": 4.39,
-        "cache_read_per_1m_usd": 0.25,
+        "input_per_1m_usd": 1.25,
+        "output_per_1m_usd": 5.46,
+        "cache_read_per_1m_usd": 0.2,
         "url": "https://api.inceptron.io/v1/models",
         "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
       },
@@ -25,7 +25,7 @@
       "cache_read_per_1m_usd": 0.26,
       "price_source": {
         "url": "https://www.inceptron.io/models",
-        "date": "2026-10-09",
+        "date": "2026-10-10",
         "basis": "Inceptron list price (direct API)"
       }
     },
@@ -39,7 +39,7 @@
       "quantization": "fp4",
       "api_catalog_price": {
         "input_per_1m_usd": 0.6,
-        "output_per_1m_usd": 3.39,
+        "output_per_1m_usd": 2.2,
         "cache_read_per_1m_usd": 0.2,
         "url": "https://api.inceptron.io/v1/models",
         "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
@@ -49,7 +49,7 @@
       "cache_read_per_1m_usd": 0.26,
       "price_source": {
         "url": "https://www.inceptron.io/models",
-        "date": "2026-10-09",
+        "date": "2026-10-10",
         "basis": "Inceptron list price (direct API)"
       }
     },
@@ -64,7 +64,7 @@
       "api_catalog_price": {
         "input_per_1m_usd": 0.465,
         "output_per_1m_usd": 2.45,
-        "cache_read_per_1m_usd": 0.0975,
+        "cache_read_per_1m_usd": 0.0875,
         "url": "https://api.inceptron.io/v1/models",
         "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
       },
@@ -73,7 +73,7 @@
       "cache_read_per_1m_usd": 0.25,
       "price_source": {
         "url": "https://www.inceptron.io/models",
-        "date": "2026-10-09",
+        "date": "2026-10-10",
         "basis": "Inceptron list price (direct API)"
       }
     },
@@ -97,7 +97,7 @@
       "cache_read_per_1m_usd": 0.2,
       "price_source": {
         "url": "https://www.inceptron.io/models",
-        "date": "2026-10-09",
+        "date": "2026-10-10",
         "basis": "Inceptron list price (direct API)"
       }
     },
@@ -110,8 +110,8 @@
       "context_length": 1048576,
       "quantization": "fp4",
       "api_catalog_price": {
-        "input_per_1m_usd": 0.05,
-        "output_per_1m_usd": 0.65,
+        "input_per_1m_usd": 0.1123,
+        "output_per_1m_usd": 0.6,
         "cache_read_per_1m_usd": 0.027,
         "url": "https://api.inceptron.io/v1/models",
         "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
@@ -121,7 +121,7 @@
       "cache_read_per_1m_usd": 0.03,
       "price_source": {
         "url": "https://www.inceptron.io/models",
-        "date": "2026-10-09",
+        "date": "2026-10-10",
         "basis": "Inceptron list price (direct API)"
       }
     },
@@ -135,9 +135,9 @@
       "mapping": "derived",
       "notes": "Listed by api.inceptron.io/v1/models as zai-org/GLM-5.3-Flash; fp8 quant; 1,048,576 context; text",
       "api_catalog_price": {
-        "input_per_1m_usd": 0.225,
-        "output_per_1m_usd": 0.6,
-        "cache_read_per_1m_usd": 0.09,
+        "input_per_1m_usd": 0.096,
+        "output_per_1m_usd": 0.55,
+        "cache_read_per_1m_usd": 0.099,
         "url": "https://api.inceptron.io/v1/models",
         "note": "provider feed ingested by OpenRouter; equals the OpenRouter route"
       },
@@ -146,12 +146,12 @@
       "cache_read_per_1m_usd": 0.07,
       "price_source": {
         "url": "https://www.inceptron.io/models",
-        "date": "2026-10-09",
+        "date": "2026-10-10",
         "basis": "Inceptron list price (direct API)"
       }
     }
   ],
-  "response_sha256": "03b8b3b69e730949749602571c55c51bbc92c79a4b61e8d64d5ee39d4b9a0ad0",
+  "response_sha256": "3fb2e0b45adac356c048ecfe15710c4a43403ef71e5db9a7c353c79aa6dd6615",
   "skipped": [],
   "diff": {
     "added": [],
