@@ -135,6 +135,7 @@ for (const [name, edit, error] of [
   ['a predecessor that is not v1.6.7', b => { b.previous.manifest = { ...b.previous.manifest, revision: 'v1.6.6' }; }, /predecessor bundle/],
   ['an undefined decisive accuracy on a row that has decisive answers', b => { b.artifact.systems.find(s => s.key === 'wald-4b-v2-1').noul_decisive.acc_among_decisive = null; }, /noul decisiveness/],
   ['a zero-decisive row that claims a decisive accuracy', b => { Object.assign(b.artifact.systems.find(s => s.key === 'modernbert-jev-v2').noul_decisive, { decisive: 1 }); }, /noul decisiveness/],
+  ['a null decisive accuracy with a non-zero decisive rate', b => { Object.assign(b.artifact.systems.find(s => s.key === 'modernbert-jev-v2').noul_decisive, { decisive_rate: 0.5 }); }, /noul decisiveness/],
   ['a wrong predecessor publication hash', b => { b.manifest.predecessor.publication_sha256 = h; }, /predecessor publication hash/],
   ['no predecessor bundle at all', b => { delete b.previous; }, /predecessor bundle/],
   ['a frozen median from a different baseline', b => { b.previous.proof.baseline_sha256 = h; }, /frozen median is not the predecessor/],

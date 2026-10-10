@@ -41,7 +41,7 @@ test('pending draws show the published numbers unchanged; an offset moves the ax
 test('merged board slots ranked cohort rows by score and keeps published rows in order', async () => {
   const { artifact } = await readCurrentJevbench();
   const merged = jevWithCohortRows(artifact, await readCohortRows());
-  assert.equal(merged.systems.length, artifact.systems.length + 16);
+  assert.equal(merged.systems.length, artifact.systems.length + 17);
   for (const o of Object.keys(artifact.board)) {
     const kept = merged.board[o].order.filter((k) => artifact.board[o].order.includes(k));
     assert.deepEqual(kept, artifact.board[o].order);
