@@ -29,7 +29,7 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
   // v1.7.7 (Florian 6 Oct 2026, Part 12b): on the live boards the API lane's full A4 u P re-run rows (equated) join the
   // release as measured API offerings and leave the dated carry; archived release pages show the release as published.
   const a4Meta = new Map<string, unknown>([...previous.artifact.systems, ...releaseCarry.rows].map((r) => [r.key, r]));
-  const addenda = live && scope !== 'open' ? await readApiFullAddenda() : { schema_version: 1, kind: 'jevbench-api-full-addenda', entries: [] };
+  const addenda = live ? await readApiFullAddenda() : { schema_version: 1, kind: 'jevbench-api-full-addenda', entries: [] };
   const historicalMerged = !live || release_.revision !== 'v1.6.1' ? release_ : jevWithApiA4Rows(release_, withApiRerunSplits(apiA4), a4Meta) as typeof release_;
   const withAddenda = addenda.entries.length ? withApiFullAddenda(historicalMerged, addenda) as typeof release_ : historicalMerged;
   // Florian 10 Oct 2026: one merged board. Systems measured on a fresh draw after v1.6.1 join the live boards from their
@@ -96,7 +96,7 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
       carry={carry} carrySha256={carrySha256} scope={scope} apiKeys={apiKeys} apiListed={apiListed} live
       previousKeys={[...previous.artifact.systems, ...previous.artifact.not_measured].filter((row: { key: string }) => !isJevbenchV16ExcludedKey(row.key, revision)).map((row: { key: string }) => row.key)} />
     <JevReleaseHistory />
-    <JevBenchApiAddendumCoverage entries={addenda.entries} />
+    {scope !== 'open' && <JevBenchApiAddendumCoverage entries={addenda.entries} />}
   </>;
 
   return <>
