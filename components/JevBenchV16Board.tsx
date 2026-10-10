@@ -9,7 +9,7 @@ import { jevV15LeaderSentence } from '../lib/jevbench-v15-preview.mjs';
 import { jevV15SliderPresets, jevV15BoardSystem, jevV15BoardRow, jevV15CompareRow } from '../lib/jevbench-v15-board.mjs';
 import type { JevV16ReleaseArtifact, JevV16Categories, JevV16Carry } from '../lib/jevbench-v16-release.mjs';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
-import { JEVBENCH_LANGUAGE_META, jevLanguageRows, languagePoolNote, jevbenchCategoryView, JEVBENCH_S_CATEGORY_CELLS_ARTIFACT, L3_EXPOSURE_NOTES } from '../lib/jevbench-categories.mjs';
+import { JEVBENCH_LANGUAGE_META, jevLanguageRows, languagePoolNote, jevbenchCategoryView, isFreshJevbenchV16Revision, freshJevbenchCategoryRows, JEVBENCH_S_CATEGORY_CELLS_ARTIFACT, L3_EXPOSURE_NOTES } from '../lib/jevbench-categories.mjs';
 import { jevV15FilterRows } from '../lib/jevbench-v15-filter-rows.mjs';
 import { JevBenchV16Charts } from './JevBenchV16Charts';
 import { jevClassView } from './jevClassView';
@@ -85,7 +85,8 @@ function heat(competence: number): CSSProperties {
 }
 
 function LanguageView({ a, categories, hiddenApi, scope, carry }: { carry: JevV16Carry; scope: JevScope; a: JevV16ReleaseArtifact; categories: JevV16Categories; hiddenApi: ReadonlySet<string> }) {
-  const systems = categories.language_cells ? jevLanguageRows(languageRoster(a.systems, a.not_measured, carry.rows, categories.systems, jevScopeClassifier(a.systems, carry.rows, a.not_measured), scope), scope) : a.systems.filter((s) => listedRow(s) && categories.systems[s.key]).sort(byBoard);
+  const systems = a.revision === 'v1.6.3' ? freshJevbenchCategoryRows(a.systems.filter(s => categories.systems[s.key])) : categories.language_cells ? jevLanguageRows(languageRoster(a.systems, a.not_measured, carry.rows, categories.systems, jevScopeClassifier(a.systems, carry.rows, a.not_measured), scope), scope) : a.systems.filter((s) => listedRow(s) && categories.systems[s.key]).sort(byBoard);
+  const belowRanking = (s: { listing?: string } | undefined) => s?.listing === 'wrapper' || s?.listing === 'subsidized';
   const minN = categories.language_cells?.min_n ?? categories.min_n;
   const allLangs = categories.languages.filter((l) => l.key !== 'en').sort((x, y) => y.n - x.n);
   const en = categories.languages.find((l) => l.key === 'en');
@@ -107,7 +108,7 @@ function LanguageView({ a, categories, hiddenApi, scope, carry }: { carry: JevV1
       <thead><tr><th scope="col" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5">System</th>
         {[...(en ? [en] : []), ...langs].map((l) => <th key={l.key} scope="col" className="p-1.5 text-center" title={`${l.label}: ${l.n} items (${l.open} public, ${l.sealed} sealed)`}>{l.key}{l.n < 30 && <sup aria-label="low n">†</sup>}<span className="bh-muted block font-normal">{l.n}</span></th>)}</tr></thead>
       <tbody>{systems.map((s, i) => <Fragment key={s.key}>
-        {(s.listing as string) === 'wrapper' && (systems[i - 1]?.listing as string) !== 'wrapper' && <tr {...apiRowProps(s.key, hiddenApi)}><th colSpan={1 + (en ? 1 : 0) + langs.length} className="p-2 pt-4" scope="colgroup">Wrappers (listed, never ranked)</th></tr>}
+        {(a.revision === 'v1.6.3' ? belowRanking(s) && !belowRanking(systems[i - 1]) : (s.listing as string) === 'wrapper' && (systems[i - 1]?.listing as string) !== 'wrapper') && <tr {...apiRowProps(s.key, hiddenApi)}><th colSpan={1 + (en ? 1 : 0) + langs.length} className="p-2 pt-4" scope="colgroup">{a.revision === 'v1.6.3' ? 'Wrappers and subsidized systems (listed, never ranked)' : 'Wrappers (listed, never ranked)'}</th></tr>}
         <tr data-bh-jev16-language-row={s.key} className="border-t border-line" {...apiRowProps(s.key, hiddenApi)}>
         <th scope="row" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5 font-normal"><span className="block w-44 whitespace-normal sm:w-auto sm:whitespace-nowrap">{nameLabel(s.display, systems)}<span className="bh-muted"> · {laneTag(s)}</span><span className="bh-thin-tag ml-1" title="Measured item pools used for these language cells" data-bh-jev16-cell-coverage={coverageOf(categories, s.key)}>{coverageOf(categories, s.key)}</span>{categories.supplement && spokeReason(s.key) && <span className="bh-muted block text-xs" data-bh-radar-spoke-exception={s.key}>{spokeReason(s.key)}</span>}{'language_listing_note' in s && s.language_listing_note && <span className="bh-muted block text-xs" data-bh-language-listing={s.key}>{s.language_listing_note}</span>}{exposureNote(s.key) && <span className="bh-muted block text-xs" data-bh-l3-exposure-note={s.key}>{exposureNote(s.key)}</span>}{languageNoteOf(categories, s.key) && <span className="bh-muted block max-w-md whitespace-normal text-xs" data-bh-language-coverage-note={s.key}>{languageNoteOf(categories, s.key)}</span>}</span></th>
         {[...(en ? [en] : []), ...langs].map((l) => {
@@ -207,16 +208,17 @@ function BoardSplit({ scope, history, preliminary }: { scope: JevScope; history:
 
 function Method(props: Parameters<typeof MethodBody>[0]) {
   return <section className="mt-10 max-w-4xl" aria-labelledby="jev16-method-title" id="jev16-method" data-bh-jev16-method>
-    <h2 id="jev16-method-title" className="text-2xl font-bold">{props.a.revision === 'v1.6.2' ? 'Method notes · fresh native cohort' : `Method · ${props.a.revision}`}</h2>
+    <h2 id="jev16-method-title" className="text-2xl font-bold">{isFreshJevbenchV16Revision(props.a.revision) ? `Method notes · fresh native cohort${props.a.revision === 'v1.6.2' ? '' : ` · ${props.a.revision}`}` : `Method · ${props.a.revision}`}</h2>
     <MethodBody {...props} />
   </section>;
 }
 
 function MethodBody({ categories, a, sha256, categoriesSha256, carrySha256, scope, hiddenApi, preliminary }: { categories: JevV16Categories; a: JevV16ReleaseArtifact; sha256: string; categoriesSha256: string; carrySha256: string; scope: JevScope; hiddenApi: ReadonlySet<string>; preliminary: boolean }) {
-  if (a.revision === 'v1.6.2') return <>
+  if (isFreshJevbenchV16Revision(a.revision)) return <>
     <p className="mt-2">Each system answered the same 1,200 freshly drawn sealed decisions and 300 public decisions on an offline GPU pod. Scores use methodology v1.6, O1S, with 1,000 bootstrap samples and seed 16.</p>
     <p className="mt-2">Capability is the mean of Intelligence and Calibration within the frozen Jev-class cost and median-latency caps. Composite is secondary. Failed and refused answers remain in the full 1,500-decision denominator.</p>
     <p className="mt-2">The public-versus-sealed gap reference is the median of this completed native cohort: {one(a.G_med)} points. Historical scores are shown separately with their original dates and do not enter this cohort’s median or ranking. No API equating is applied.</p>
+    {a.revision === 'v1.6.3' && <p className="mt-2">This same-draw addendum rescores the whole completed field, including the original four systems, together. The original measurements are retained, but the v1.6.3 scores, ranks and native-field median restate and supersede v1.6.2; normalized values are not comparable one-to-one across these releases. Wrappers remain excluded from the median.</p>}
     <p className="mt-2">Costs use each row’s documented price reference and measured usage on this draw. Subject-topic and use-case radars come from stored per-item results; only aggregates are published.</p>
     <p className="mt-2">Sliders, presets and What-If change your view; they do not change the official result. Wrappers and subsidised systems are listed below the ranking.</p>
     <p className="mt-2 text-xs break-all">Results SHA-256 {sha256} · categories SHA-256 {categoriesSha256} · scoring source SHA-256 {a.source_sha256}.</p>
@@ -497,6 +499,8 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
   /** v1.7: 'open' = open-weights board with the API toggle, 'api' = API leaderboard, 'all' = archived release as published. */
   scope?: JevScope; apiKeys?: string[];
 }) {
+  // Fresh native cohorts (v1.6.2, v1.6.3) only ever use the categories passed from their own release; never a historical artifact.
+  const fresh = isFreshJevbenchV16Revision(a.revision);
   const v15 = a as unknown as JevV15Artifact; // same per-system aggregate schema (score_v16 extends score_v15)
   // v1.7.3: on scoped boards the Jev reference and API offerings sit at their score position in every ranking section.
   // v1.7.5 (Florian 6 Oct 2026, Part 12): the API board also draws preliminary public-set rows (hatched, unranked, at their
@@ -533,7 +537,8 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
   const allDataKeys = [...new Set([...a.systems, ...a.not_measured].map((row) => row.key))];
   const previous = new Set(previousKeys);
   const viewRows = ranked.map((s) => jevV15BoardRow(s, { isNew: previous.size > 0 && !previous.has(s.key), headline: a.headline }));
-  const compareRows = ranked.filter((s) => s.listing !== JEV_PRELIMINARY_LISTING && s.listing !== JEV_PENDING_LISTING).map(jevV15CompareRow);
+  const compareSources = a.revision === 'v1.6.3' ? freshJevbenchCategoryRows(a.systems) : ranked;
+  const compareRows = compareSources.filter((s) => s.listing !== JEV_PRELIMINARY_LISTING && s.listing !== JEV_PENDING_LISTING).map(jevV15CompareRow);
   const named = new Map(a.systems.map((s) => [s.key, short(s.display)]));
   const leader = jevV15LeaderSentence(v15.board[a.headline], (key) => named.get(key) ?? key);
   // v1.7.1 (Florian 6 Oct 2026): ranking headings name the board; the API board leads with the Composite.
@@ -553,13 +558,13 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
       {scope === 'api' && <ApiRoster a={a} carry={carry} listed={apiListed} eligibility={eligibilityByKey} />}
       {scope === 'api' && <ApiPublicSet measured={measuredKeys} />}
       {scope === 'api' && <JevV15FilterPanel />}
-      <JevCompareV15 rows={compareRows} openDecisions={a.v16.counts.P} sealedDecisions={a.v16.counts.S} categories={jevbenchCategoryView(a.revision, compareRows.map((r) => r.key), { supplement: Boolean(categories.supplement), artifact: a.revision === "v1.6.2" ? categories : undefined })} />
+      <JevCompareV15 rows={compareRows} openDecisions={a.v16.counts.P} sealedDecisions={a.v16.counts.S} categories={jevbenchCategoryView(a.revision, compareRows.map((r) => r.key), { supplement: Boolean(categories.supplement), artifact: fresh ? categories : undefined })} />
       <p className="bh-muted mt-2 max-w-4xl text-xs" data-bh-jev16-radar-note>{categories.supplement ? <>Category radars count each answered item once from the pools named under each radar. API overlay rows use {API_CATEGORY_POOLS}. Raw and unequated; cells under {categories.min_n} answered items are omitted. Per-type and tier radars retain each row&apos;s original measurement pools: A4/A5 rows have 300 open plus 300 sealed items; full-set rows have S {a.v16.counts.S.toLocaleString('en-US')} plus P {a.v16.counts.P}.</> : <>{categories.lane_note} Sealed counts refer to self-hosted S ({a.v16.counts.S.toLocaleString('en-US')}); API rows use their original measured sealed basis.</>}</p>
       <LanguageView carry={carry} scope={scope} a={a} categories={categories} hiddenApi={hiddenApi} />
       <NoulAndGate a={a} hiddenApi={hiddenApi} />
       <JevV15AllDataGrid
         artifact={v15}
-        categoryView={jevbenchCategoryView(a.revision, allDataKeys, { supplement: Boolean(categories.supplement), artifact: a.revision === "v1.6.2" ? categories : undefined })}
+        categoryView={jevbenchCategoryView(a.revision, allDataKeys, { supplement: Boolean(categories.supplement), artifact: fresh ? categories : undefined })}
         previousKeys={previousKeys}
         eligibility={allClass}
         metadata={{ families: baseModelFamilies('jevbench', a.systems) }}
@@ -568,7 +573,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
       {scope === 'open' && <div className="mt-10"><JevGpuCostCalculator systems={ranked.filter((s) => s.v16.lane !== 'api').map((s) => ({
         key: s.key, display: short(s.display), gpu: (s as { gpu?: string | null }).gpu ?? null, p50_s_raw: s.speed?.p50_s_raw ?? null,
         officialUsdPer1000: s.cost?.usd_per_1000 ?? null, ranked: !!s.ranked }))} /></div>}
-      {(a.revision !== "v1.6.2" || carry.rows.length > 0) && <DatedCarry carry={carry} hiddenApi={hiddenApi} showExceptions={Boolean(categories.supplement)} />}
+      {(!fresh || carry.rows.length > 0) && <DatedCarry carry={carry} hiddenApi={hiddenApi} showExceptions={Boolean(categories.supplement)} />}
       <Method categories={categories} a={a} sha256={sha256} categoriesSha256={categoriesSha256} carrySha256={carrySha256} scope={scope} hiddenApi={hiddenApi} preliminary={preliminary} />
     </section>
   </JevV15FilterProvider>;

@@ -10,6 +10,9 @@ export const JEVBENCH_CATEGORY_ARTIFACT: string;
 export const L3_EXPOSURE_NOTES: Record<string, string>;
 export const IMAGEJEV_CATEGORY_ARTIFACT: string;
 export const JEVBENCH_CATEGORY_REVISIONS: string[];
+export type JevFreshV16Revision = 'v1.6.2' | 'v1.6.3';
+export const JEVBENCH_FRESH_V16_REVISIONS: JevFreshV16Revision[];
+export function isFreshJevbenchV16Revision(revision: unknown): revision is JevFreshV16Revision;
 export const IMAGEJEV_CATEGORY_REVISIONS: string[];
 export function validateCategoryArtifact(artifact: any, dims: string[]): any;
 export function jevbenchCategoryView(revision: string, keys: string[], options?: { supplement?: boolean; artifact?: unknown }): CompareCategories | null;
@@ -31,3 +34,5 @@ export const JEVBENCH_LANGUAGE_META: LanguageCellsMeta;
 export const JEVBENCH_S_CATEGORY_CELLS_ARTIFACT: string;
 export function withSCategoryCells<T extends { revision: string; systems: Record<string, unknown> }>(base: T, cells?: any): T;
 export function withLiveCategoryCells<T extends { revision: string; systems: Record<string, unknown> }>(base: T): ReturnType<typeof withLanguageCells<T>>;
+
+export function freshJevbenchCategoryRows<T extends { listing?: string; rank?: number | null; jevbench_score?: number | null }>(systems: T[]): T[];
