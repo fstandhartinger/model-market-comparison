@@ -22,6 +22,7 @@ import { JevV15FilterVisibilityBridge } from './JevV15FilterVisibilityBridge';
 import { baseModelFamilies } from '../lib/jev-base-model.mjs';
 import { JevV15AllDataGrid } from './JevV15AllDataGrid';
 import { JevApiOfferingsToggle } from './JevApiOfferingsToggle';
+import { JevLanguageTableControls } from './JevLanguageTableControls';
 import { JevGpuCostCalculator } from './JevGpuCostCalculator';
 import { jevScopeClassifier, JEV_PENDING_LISTING, JEV_PRELIMINARY_LISTING, JEV_REFERENCE_KEY, JEV_SCOPE_LISTING, jevApiPreliminaryRows, jevApiRoster, jevScopeDisplayOrder, type JevApiListedRow, type JevScope } from '../lib/jevbench-scope.mjs';
 import { NOT_RANKED } from './JevBoardShared';
@@ -104,19 +105,7 @@ function LanguageView({ a, categories, hiddenApi, scope, carry }: { carry: JevV1
   // Florian 10 Oct 2026: the mixed-language group is the first column, then English, then the single languages by item count.
   const mixed = langs.find((l) => l.key === 'mixed');
   const columns = [...(mixed ? [mixed] : []), ...(en ? [en] : []), ...langs.filter((l) => l.key !== 'mixed')];
-  return <section className="mt-10" aria-labelledby="jev16-languages" data-bh-jev16-language-view>
-    <h2 id="jev16-languages" className="text-2xl font-bold">Languages</h2>
-    <p className="bh-muted mt-1 max-w-4xl text-sm">Raw chance-corrected competence per item language (0 = chance, 100 = perfect; can be negative), from each system&apos;s own measured items:
-      {' '}{categories.language_cells ? languagePoolNote(categories.language_cells) : `Self-hosted rows use S ${a.v16.counts.S} + P ${a.v16.counts.P}; API rows use their measured sealed subset plus P. Sage (A3) language cells and A2/A3 topic/use-case cells cover public P300 only. Raw and outside the Composite.`} Cells under {minN} completed supported responses are left empty; recorded input refusals count toward coverage. A dagger (†) marks fewer than 30 completed responses. Competence retains all supported scored observations, including failures and refusals.
-      {!categories.language_cells && !categories.supplement && ` Per-language coverage grows with the expanded uc1.1 multilingual pool, a candidate for a later release that is not part of ${a.revision}.`}
-      {en ? `${mixed ? ' The mixed-language group is listed first, then' : ''} English (${en.n.toLocaleString('en-US')} items)${mixed ? '' : ' is listed first'}; the other ${allLangs.filter((l) => l.key !== 'mixed').length} languages${allLangs.some((l) => l.key === 'mixed') ? ' and the mixed-language group' : ''} share ${allLangs.reduce((s, l) => s + l.n, 0)} items.` : ''}
-      {hidden.length > 0 && <span data-bh-jev16-language-hidden={hidden.map((l) => l.key).join(' ')}>{' '}In {hidden.length === 1 ? 'one further group' : `${hidden.length} further groups`} no system reaches the {minN}-item reporting minimum, so {hidden.length === 1 ? 'it gets' : 'they get'} no column (items in the pool shown): {hidden.map((l) => `${l.label} (${l.n})`).join(', ')} — {hidden.reduce((s, l) => s + l.n, 0)} items, scored like every other item.</span>}
-    </p>
-    <div className="mt-3 overflow-x-auto"><table className="text-left text-xs tabular" data-bh-jev16-language-table>
-      <caption className="sr-only">JevBench {a.revision} competence by item language and system</caption>
-      <thead><tr><th scope="col" className="sticky left-0 z-10 bg-[rgb(var(--panel))] p-1.5" title="System and measured item pools. Hover any row header or cell for its full coverage remarks.">System</th>
-        {columns.map((l) => <th key={l.key} scope="col" className="whitespace-nowrap p-1.5 text-center" title={`${l.label}: ${l.n} items (${l.open} public, ${l.sealed} sealed)`}>{l.key}{l.n < 30 && <sup aria-label="low n">†</sup>}<span className="bh-muted block font-normal">{l.n}</span></th>)}</tr></thead>
-      <tbody>{systems.map((s, i) => {
+  const languageRows = systems.map((s, i) => {
         const remarks = [
           categories.supplement && spokeReason(s.key),
           'language_listing_note' in s && s.language_listing_note,
@@ -124,8 +113,8 @@ function LanguageView({ a, categories, hiddenApi, scope, carry }: { carry: JevV1
           languageNoteOf(categories, s.key),
         ].filter(Boolean).join('\n');
         const rowTitle = `${s.display} · ${laneTag(s)}\nMeasured item pools: ${coverageOf(categories, s.key)}${remarks ? `\n${remarks}` : ''}`;
-        return <Fragment key={s.key}>
-        {(['v1.6.3', 'v1.6.4'].includes(a.revision) ? belowRanking(s) && !belowRanking(systems[i - 1]) : (s.listing as string) === 'wrapper' && (systems[i - 1]?.listing as string) !== 'wrapper') && <tr {...apiRowProps(s.key, hiddenApi)}><th colSpan={1 + (en ? 1 : 0) + langs.length} className="p-2 pt-4" scope="colgroup" title="These systems are listed separately and never ranked.">{['v1.6.3', 'v1.6.4'].includes(a.revision) ? 'Wrappers and subsidized systems (listed, never ranked)' : 'Wrappers (listed, never ranked)'}</th></tr>}
+        const node = <Fragment key={s.key}>
+        {(['v1.6.3', 'v1.6.4'].includes(a.revision) ? belowRanking(s) && !belowRanking(systems[i - 1]) : (s.listing as string) === 'wrapper' && (systems[i - 1]?.listing as string) !== 'wrapper') && <tr data-bh-jev16-language-group={s.key} {...apiRowProps(s.key, hiddenApi)}><th colSpan={1 + (en ? 1 : 0) + langs.length} className="p-2 pt-4" scope="colgroup" title="These systems are listed separately and never ranked.">{['v1.6.3', 'v1.6.4'].includes(a.revision) ? 'Wrappers and subsidized systems (listed, never ranked)' : 'Wrappers (listed, never ranked)'}</th></tr>}
         <tr data-bh-jev16-language-row={s.key} className="border-t border-line" {...apiRowProps(s.key, hiddenApi)}>
         <th scope="row" className="sticky left-0 z-10 bg-[rgb(var(--panel))] p-1.5 font-normal" title={rowTitle}>
           <span className="block w-56 truncate">{nameLabel(s.display, systems)}</span>
@@ -144,8 +133,20 @@ function LanguageView({ a, categories, hiddenApi, scope, carry }: { carry: JevV1
           const lowN = completedLanguageN(c) < 30;
           return <td key={l.key} className="bh-heat p-1.5 text-center" style={heat(c.competence)} data-bh-heat-low-n={lowN ? '' : undefined} title={`${l.label}: ${c.competence.toFixed(1)} over ${c.n} scored observations; ${completedLanguageN(c)} completed responses${lowN ? ' (low n)' : ''}\n${rowTitle}`}>{c.competence.toFixed(0)}{lowN && <sup className="ml-0.5 text-[10px]" aria-label="low n: fewer than 30 answered items">†</sup>}</td>;
         })}
-      </tr></Fragment>; })}</tbody>
-    </table></div>
+      </tr></Fragment>;
+        const values = Object.fromEntries(columns.map((l) => { const c = categories.systems[s.key]?.languages?.[l.key]; return [l.key, c && completedLanguageN(c) >= minN ? c.competence : null]; }));
+        return { key: s.key, name: s.display, group: laneTag(s) === 'self-hosted' ? 'open' as const : 'api' as const, index: i, values, node };
+      });
+  const languageColumns = columns.map((l) => ({ key: l.key, label: l.label, n: l.n, lowN: l.n < 30, title: `${l.label}: ${l.n} items (${l.open} public, ${l.sealed} sealed)` }));
+  return <section className="mt-10" aria-labelledby="jev16-languages" data-bh-jev16-language-view>
+    <h2 id="jev16-languages" className="text-2xl font-bold">Languages</h2>
+    <p className="bh-muted mt-1 max-w-4xl text-sm">Raw chance-corrected competence per item language (0 = chance, 100 = perfect; can be negative), from each system&apos;s own measured items:
+      {' '}{categories.language_cells ? languagePoolNote(categories.language_cells) : `Self-hosted rows use S ${a.v16.counts.S} + P ${a.v16.counts.P}; API rows use their measured sealed subset plus P. Sage (A3) language cells and A2/A3 topic/use-case cells cover public P300 only. Raw and outside the Composite.`} Cells under {minN} completed supported responses are left empty; recorded input refusals count toward coverage. A dagger (†) marks fewer than 30 completed responses. Competence retains all supported scored observations, including failures and refusals.
+      {!categories.language_cells && !categories.supplement && ` Per-language coverage grows with the expanded uc1.1 multilingual pool, a candidate for a later release that is not part of ${a.revision}.`}
+      {en ? `${mixed ? ' The mixed-language group is listed first, then' : ''} English (${en.n.toLocaleString('en-US')} items)${mixed ? '' : ' is listed first'}; the other ${allLangs.filter((l) => l.key !== 'mixed').length} languages${allLangs.some((l) => l.key === 'mixed') ? ' and the mixed-language group' : ''} share ${allLangs.reduce((s, l) => s + l.n, 0)} items.` : ''}
+      {hidden.length > 0 && <span data-bh-jev16-language-hidden={hidden.map((l) => l.key).join(' ')}>{' '}In {hidden.length === 1 ? 'one further group' : `${hidden.length} further groups`} no system reaches the {minN}-item reporting minimum, so {hidden.length === 1 ? 'it gets' : 'they get'} no column (items in the pool shown): {hidden.map((l) => `${l.label} (${l.n})`).join(', ')} — {hidden.reduce((s, l) => s + l.n, 0)} items, scored like every other item.</span>}
+    </p>
+    <JevLanguageTableControls columns={languageColumns} rows={languageRows} caption={`JevBench ${a.revision} competence by item language and system`} systemTitle="System and measured item pools. Hover any row header or cell for its full coverage remarks." />
   </section>;
 }
 

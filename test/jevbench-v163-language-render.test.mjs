@@ -27,6 +27,10 @@ runInNewContext(code,{module,exports:module.exports,require,Fragment:React.Fragm
  apiRowProps:()=>({}),nameLabel:s=>s,laneTag:()=> 'self-hosted',coverageOf:()=> 'S+P',spokeReason:key=>key==='compact-test'?'Some radar categories still need more observations.':null,
  exposureNote:key=>key==='compact-test'?'L3 items were reviewed by an OpenAI model; headline scores do not use L3.':null,
  completedLanguageN:c=>c.coverage_n??c.n,heat:()=>({}),languagePoolNote:()=>'',
+ // The sortable client table is stubbed with its server-rendered inputs: header titles plus the real row nodes in board order.
+ JevLanguageTableControls:({columns,rows,systemTitle})=>React.createElement('table',null,
+  React.createElement('thead',null,React.createElement('tr',null,React.createElement('th',{title:systemTitle},'System'),...columns.map(c=>React.createElement('th',{key:c.key,title:c.title},c.key)))),
+  React.createElement('tbody',null,...rows.map(r=>r.node))),
 },{filename:'actual-LanguageView.tsx'});
 const {LanguageView}=module.exports;
 const keys=['RYO','D','12B','J','W','M'];
