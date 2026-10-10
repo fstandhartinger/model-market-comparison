@@ -402,16 +402,16 @@ def notify_florian(event: dict, row: dict, metadata: dict) -> bool:
     model = str(row.get("model_name", "this evaluation"))
     received = metadata["received_at"].strftime("%Y-%m-%d %H:%M UTC")
     # No sender, subject or body excerpt: the private 0600 copy is the only place the content lives.
+    # The board entry routes the reply to the paid order's owner job; Florian gets a digest line.
+    # (notify rejects immediate 🧑 asks without --ask buttons, which left these notices undeliverable.)
     message = (
-        "🧑 DU BIST DRAN\n"
-        f"New customer email for {model} on paid order {event['request_id'][:8]} ({received}).\n"
-        f"🧑 Für dich\n- Review the author's reply\n  Why: It may affect the paid evaluation's publication or rerun.\n"
-        f"  Steps:\n  1. Read the private copy {event['body_file']} on Sandy.\n"
-        f"  2. Decide whether to rerun, publish, or keep the request on hold.\n  Time: 5 min"
+        "🤖 LÄUFT\n"
+        f"Worum geht's: new customer email for {model} on paid Benchmark Heaven fast-lane order "
+        f"{event['request_id'][:8]} ({received}); the owning agent job reviews it (private copy {event['body_file']} on Sandy)."
     )
     env = dict(os.environ)
     env["NOTIFY_SOURCE"] = "fastlane-customer-mail"
-    code = run_delivery([str(HOME / "bin/notify"), "now", "--text-stdin"], input=message, timeout=45, env=env)
+    code = run_delivery([str(HOME / "bin/notify"), "digest", "fastlane-customer-mail", message], timeout=45, env=env)
     return record_delivery(event["gmail_message_id"], "notification_status", code)
 
 
