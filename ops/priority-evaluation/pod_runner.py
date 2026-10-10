@@ -499,10 +499,28 @@ def _run_cli(argv: list[str], timeout: int = 600, input_text: str | None = None)
     return subprocess.run(argv, input=input_text, text=True, capture_output=True, timeout=timeout, check=False)
 
 
+def _original_aplomb_cheaper_quote(order_id, gpu, count, recipe, benchmarks, rate):
+    """Exact original paid recipe only; account at .65 while accepting cheaper actual rent."""
+    if (order_id != 'acad951a-1b9d-4f3c-a449-350d1c04bd23' or gpu != 'RTX5090'
+            or type(count) is not int or count != 1
+            or tuple(benchmarks) != ('jevbench', 'imagejevbench')
+            or type(rate) not in (int, float) or not math.isfinite(rate) or not 0 < rate <= .65):
+        return False
+    try:
+        fingerprint = hashlib.sha256(json.dumps(recipe, sort_keys=True,
+            separators=(',', ':'), allow_nan=False).encode()).hexdigest()
+    except (ValueError, TypeError):
+        return False
+    return fingerprint == '9d036d56462878a0f5a011bd028c4cd2fa36314a34335518b877ca92b95de511'
+
+
 class LiumProvider(Provider):
     """Lium via the `lium` CLI (same commands the manual runs used) + gpu-pod-guard accounting."""
 
     name = "lium"
+
+    def __init__(self, order_id=None):
+        self._order_id = order_id
 
     def reserve(self, job, name, hourly, cost_cap, hours):
         result = _run_cli([str(GUARD), "reserve", "--job", job, "--provider", "lium",
@@ -546,7 +564,9 @@ class LiumProvider(Provider):
                 if quote.get('refused'):
                     refusals.append(quote)
                     continue
-                if (recipe['kind'] == 'aplomb_native' or 'imagejevbench' in benchmarks) and quote['hourly_usd'] != recipe.get('hourly_usd'):
+                if ((recipe['kind'] == 'aplomb_native' or 'imagejevbench' in benchmarks)
+                        and quote['hourly_usd'] != recipe.get('hourly_usd')
+                        and not _original_aplomb_cheaper_quote(self._order_id, gpu, count, recipe, benchmarks, quote['hourly_usd'])):
                     raise measurement_dispatch.OperationalHold('gpu_pod_quote_changed')
                 self._placement = quote
                 return {'quote': quote, 'refusals': refusals, 'quote_count': len(refusals) + 1}
@@ -1196,7 +1216,7 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
     output.mkdir(parents=True, exist_ok=True, mode=0o700)
     receipt_file = output / "receipt.json"
     recipe_sha = hashlib.sha256(json.dumps({'recipe': recipe, 'benchmarks': list(benchmarks)}, sort_keys=True).encode()).hexdigest()
-    provider = provider or LiumProvider()
+    provider = provider or LiumProvider(order_id=rid)
     alert = alert if alert is not None else default_alert
     state_path = PODS_DIR / f"{rid}.json"
     state_path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)

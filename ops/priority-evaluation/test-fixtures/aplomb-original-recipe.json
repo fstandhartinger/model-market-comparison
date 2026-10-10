@@ -1,0 +1,345 @@
+{
+  "code": {
+    "commit": "758ed868fd02b42cc60989064ee41496164271b7",
+    "source": "model",
+    "tree": "f0700fb222bd9f0331cb8a9366485aef3f801555"
+  },
+  "host_staging": {
+    "image_build": {
+      "context_sha256": "234d1d2b1a1597d8c4d4e60b14f1102f33fa40b8a7979047143daff98b1205f4",
+      "tag": "aplomb-runtime:234d1d2b1a15",
+      "target": "optimized"
+    },
+    "weights_manifest": [
+      {
+        "path": ".eval_results/typed-decisions.yaml",
+        "sha256": "19272cd80b291aad4031a593cabb5c3118fdce270b484f0e3640e428736246e4",
+        "size": 2967
+      },
+      {
+        "path": ".gitattributes",
+        "sha256": "fc13ee3665948b180543d148e8cfc980c6d55bf20a90a7b9954e1bcb795c5399",
+        "size": 62
+      },
+      {
+        "path": "LICENSE",
+        "sha256": "c0d7af226ad02f6e6b453baa3ffcbf909fdaad9fd9651779ffb30e8c0aec95d6",
+        "size": 6169
+      },
+      {
+        "path": "LICENSE-APACHE-2.0",
+        "sha256": "bbedc3fda3305820b977265f01b8619d87570a6739de3a5582c3464840f1e57a",
+        "size": 11544
+      },
+      {
+        "path": "LICENSE-MIT",
+        "sha256": "b5d65a59060e68c4ff940e1eddfa6f94b2d68fdf58ed7f4dd57721c997e35e9d",
+        "size": 1063
+      },
+      {
+        "path": "NOTICE",
+        "sha256": "b8ebd162809f060a6d1527fba7bde8ccb42f1666a0295fd5ab09e60a276c8cf6",
+        "size": 967
+      },
+      {
+        "path": "README.md",
+        "sha256": "c5d4409bd466d9ff5a70b0170447f4ab9745bab0ce52bb3ec3a58610e3c47f8e",
+        "size": 17447
+      },
+      {
+        "path": "aplomb/__init__.py",
+        "sha256": "30b80ca1a6b0497776bdb30b893562551810b885d94053d82056b525586fa418",
+        "size": 62
+      },
+      {
+        "path": "aplomb/adapter.py",
+        "sha256": "7a940b8c087b9ce3ef9d4545d82e0be465fb97fede3d423fd4ed3d94e08d035a",
+        "size": 10351
+      },
+      {
+        "path": "aplomb/audio_attach.py",
+        "sha256": "f5414406e3f7e171972da21ed6a6f566b49a303e24569e9a717dcaa6f4ccf3e2",
+        "size": 22198
+      },
+      {
+        "path": "aplomb/audio_notes.py",
+        "sha256": "c2fd6c009f0559a8ac22decebcb9cd2aa98bece5c9499e5c53e70b0fa7f79ab5",
+        "size": 8882
+      },
+      {
+        "path": "aplomb/ced/__init__.py",
+        "sha256": "98c49bfa32d0e0e02ff87dc47893e026538060bf6ec4f623282942f9af3d0655",
+        "size": 205
+      },
+      {
+        "path": "aplomb/ced/configuration_ced.py",
+        "sha256": "17cdc658b889452cde1af115a302969040edd315e067f8f1e91b3495b550ceff",
+        "size": 5773
+      },
+      {
+        "path": "aplomb/ced/feature_extraction_ced.py",
+        "sha256": "d2eff0a8cbc563196f8ccef4180d9e9299d643bfee087a545e97e9c4a9e64cb4",
+        "size": 6482
+      },
+      {
+        "path": "aplomb/ced/modeling_ced.py",
+        "sha256": "6f52feb2df14e585565851a96ae1c61c43fe5b3b075163565a56b04f93b9507e",
+        "size": 20163
+      },
+      {
+        "path": "aplomb/compile.py",
+        "sha256": "6cccc45f32e661d7899c44e04a324151e8e6a55bcd4767cb77998e4f464fb37d",
+        "size": 2728
+      },
+      {
+        "path": "aplomb/decision_head.py",
+        "sha256": "1df1d95f86882ea5a162a9b9a3e4db44d3d8d4a0675134787e438c06357b7895",
+        "size": 7560
+      },
+      {
+        "path": "aplomb/readout.py",
+        "sha256": "48bdf41a15409a57783c826bac7f2c0860650ca8b2dc83b39c82eef1ff4e19f7",
+        "size": 2958
+      },
+      {
+        "path": "aplomb/render.py",
+        "sha256": "50dac5956f4a6b4b30164f805c15cf3c73ae42707a1973d1b7684c67da6eba82",
+        "size": 6161
+      },
+      {
+        "path": "aplomb/schema.py",
+        "sha256": "7cdd098c80183c1891f3433bc35f92fa7d10ef695f2765cfaf6860b780b2ee9d",
+        "size": 5882
+      },
+      {
+        "path": "aplomb/targets.py",
+        "sha256": "f560825588a7f5d02c59ffea94fcac6d3d4ce5f6415b85fa8800397724359f2c",
+        "size": 2146
+      },
+      {
+        "path": "aplomb/tools.py",
+        "sha256": "3c1ad413d709848f977d6e443078137624db9a608bc0e41e75b78cd31bc2541b",
+        "size": 6222
+      },
+      {
+        "path": "audio_attach.safetensors",
+        "sha256": "8d9bae44eef8cc059369ef3109799e32872af66983edbd87e3c089ff35db6ca9",
+        "size": 94402904
+      },
+      {
+        "path": "audio_config.json",
+        "sha256": "e2c4b80493075d0b7514e182873d9bf35e5265cb6ca4e7a16b7de6c4db1bcd1a",
+        "size": 1780
+      },
+      {
+        "path": "audio_encoder/config.json",
+        "sha256": "eab5093d47807aaf894119506b238b2b1cee70d08456e894fee9a012d88f2e0d",
+        "size": 13671
+      },
+      {
+        "path": "audio_encoder/model.safetensors",
+        "sha256": "feb88bf4796b8ff0f258bac1b2b14e30c7071de4749ebbccf6937dfe015b1f9c",
+        "size": 1295918896
+      },
+      {
+        "path": "audio_notes/audioset-labels/class_labels_indices.csv",
+        "sha256": "cdd1049833c4b86127c2773ac0d14a2754b6a6d0d1798002ed5c66e699708429",
+        "size": 14675
+      },
+      {
+        "path": "audio_notes/ced-base/config.json",
+        "sha256": "ac55e3cecfd75f3cd2e1b1a22ad3f74b4b197655efd7e3a14dd5228293b32dfb",
+        "size": 25059
+      },
+      {
+        "path": "audio_notes/ced-base/preprocessor_config.json",
+        "sha256": "668fbf4f00f9e3915de04fc07a621434ef1746b933662840623a9701291ca55a",
+        "size": 384
+      },
+      {
+        "path": "audio_notes/whisper-large-v3-turbo/added_tokens.json",
+        "sha256": "3c51f66c4c21f9e126970078f11ae77a78c74aee8df606ee9daba86e467108e0",
+        "size": 34648
+      },
+      {
+        "path": "audio_notes/whisper-large-v3-turbo/config.json",
+        "sha256": "c5b526b3e3cd64cd8940dabb45e8ba726629e22d8ed389c29b552f9140daf04a",
+        "size": 1256
+      },
+      {
+        "path": "audio_notes/whisper-large-v3-turbo/generation_config.json",
+        "sha256": "cce11bfe3aaa6ae9e072ea2637caaec8795e68d9b67e655a5af16ee509681a4c",
+        "size": 3772
+      },
+      {
+        "path": "audio_notes/whisper-large-v3-turbo/merges.txt",
+        "sha256": "2df2990a395e35e8dfbc7511e08c12d56018d8d04691e0133e5d63b21e154dc6",
+        "size": 493869
+      },
+      {
+        "path": "audio_notes/whisper-large-v3-turbo/normalizer.json",
+        "sha256": "bf1c507dc8724ca9cf9903640dacfb69dae2f00edee4f21ceba106a7392f26dd",
+        "size": 52666
+      },
+      {
+        "path": "audio_notes/whisper-large-v3-turbo/preprocessor_config.json",
+        "sha256": "7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711",
+        "size": 340
+      },
+      {
+        "path": "audio_notes/whisper-large-v3-turbo/special_tokens_map.json",
+        "sha256": "baea4ea09372eb4fca86b4e4346139fd73cb807d5087e9de0948e971739c3e74",
+        "size": 2186
+      },
+      {
+        "path": "audio_notes/whisper-large-v3-turbo/tokenizer.json",
+        "sha256": "297b13372ac43916285644fb9687add3cc62ee2a1adb60da3dc25cc94c1871fd",
+        "size": 2710337
+      },
+      {
+        "path": "audio_notes/whisper-large-v3-turbo/tokenizer_config.json",
+        "sha256": "844b642c73a91359722f47b35705f7174686df33d252695d8572cf9ac03a6389",
+        "size": 282843
+      },
+      {
+        "path": "audio_notes/whisper-large-v3-turbo/vocab.json",
+        "sha256": "e2aa043ef015641d363d8288e7c241c85e36a5c761fb303598e0710233344387",
+        "size": 1036558
+      },
+      {
+        "path": "chat_template.jinja",
+        "sha256": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+        "size": 7756
+      },
+      {
+        "path": "config.json",
+        "sha256": "7c0f3986640b7dbef9b00fb2b567b41afa2144d9e5a32a18f7ec8ca77de78eb4",
+        "size": 2762
+      },
+      {
+        "path": "edm_config.json",
+        "sha256": "2ebdeae7ff67f0e267b3686311e6ba781b70a155d1564d27b9d006dafd47a4ab",
+        "size": 3255
+      },
+      {
+        "path": "merges.txt",
+        "sha256": "a9d356d7bdf1ef4949e3e748e95b8e10ad9d4e2e838eddc38a0a7b6b94d1db8d",
+        "size": 3353259
+      },
+      {
+        "path": "model.safetensors-00001-of-00002.safetensors",
+        "sha256": "f2353f83377e3896880e9bc2348ac6bc11e65bd33cc6355e47455bc1d596ea83",
+        "size": 6601452576
+      },
+      {
+        "path": "model.safetensors-00002-of-00002.safetensors",
+        "sha256": "6d199d688cb56a1f5bcd820158399671352f798f0bbb37c5aacfac3a54a00a8f",
+        "size": 3990429440
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "sha256": "e0f796866ef5e715d90d60e65600ec7d44f92c0288cc10038da62746d4d20e5e",
+        "size": 76267
+      },
+      {
+        "path": "preprocessor_config.json",
+        "sha256": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516",
+        "size": 390
+      },
+      {
+        "path": "run_aplomb.py",
+        "sha256": "72f7a5afd7a31af23106161412a4a33e2309d9760eb445215f58ffcca61cba10",
+        "size": 9861
+      },
+      {
+        "path": "tokenizer.json",
+        "sha256": "d9d7f5003cf5700a05230c9c024c56fd524bd5daa0d61a1e808b3b4f19569bf3",
+        "size": 20037157
+      },
+      {
+        "path": "tokenizer_config.json",
+        "sha256": "66e427c470fe580fe8c7b5725d857af23d8417e37fae62667ec698306a19987b",
+        "size": 1124
+      },
+      {
+        "path": "video_preprocessor_config.json",
+        "sha256": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13",
+        "size": 385
+      },
+      {
+        "path": "vocab.json",
+        "sha256": "ce99b4cb2983d118806ce0a8b777a35b093e2000a503ebde25853284c9dfa003",
+        "size": 6722759
+      }
+    ],
+    "weights_manifest_sha256": "011a4547675a2047180dd56c413073a13159feeefb2ba1041e7e7cb90cf328d2"
+  },
+  "hourly_usd": 0.65,
+  "image": "pytorch/pytorch:2.13.0-cuda13.0-cudnn9-runtime@sha256:db80a41f8428644cebcb3d75b0b62df334ab6c0e75785951eb25f48bfbd42407",
+  "kind": "aplomb_native",
+  "min_vram_gb": 32,
+  "model": "aplomb-1",
+  "model_dir": "aplomb",
+  "schema_version": 1,
+  "weights": [
+    {
+      "dir": "aplomb",
+      "repo": "empiriolabsai/aplomb-1",
+      "revision": "758ed868fd02b42cc60989064ee41496164271b7",
+      "sha256": {
+        ".eval_results/typed-decisions.yaml": "19272cd80b291aad4031a593cabb5c3118fdce270b484f0e3640e428736246e4",
+        ".gitattributes": "fc13ee3665948b180543d148e8cfc980c6d55bf20a90a7b9954e1bcb795c5399",
+        "LICENSE": "c0d7af226ad02f6e6b453baa3ffcbf909fdaad9fd9651779ffb30e8c0aec95d6",
+        "LICENSE-APACHE-2.0": "bbedc3fda3305820b977265f01b8619d87570a6739de3a5582c3464840f1e57a",
+        "LICENSE-MIT": "b5d65a59060e68c4ff940e1eddfa6f94b2d68fdf58ed7f4dd57721c997e35e9d",
+        "NOTICE": "b8ebd162809f060a6d1527fba7bde8ccb42f1666a0295fd5ab09e60a276c8cf6",
+        "README.md": "c5d4409bd466d9ff5a70b0170447f4ab9745bab0ce52bb3ec3a58610e3c47f8e",
+        "aplomb/__init__.py": "30b80ca1a6b0497776bdb30b893562551810b885d94053d82056b525586fa418",
+        "aplomb/adapter.py": "7a940b8c087b9ce3ef9d4545d82e0be465fb97fede3d423fd4ed3d94e08d035a",
+        "aplomb/audio_attach.py": "f5414406e3f7e171972da21ed6a6f566b49a303e24569e9a717dcaa6f4ccf3e2",
+        "aplomb/audio_notes.py": "c2fd6c009f0559a8ac22decebcb9cd2aa98bece5c9499e5c53e70b0fa7f79ab5",
+        "aplomb/ced/__init__.py": "98c49bfa32d0e0e02ff87dc47893e026538060bf6ec4f623282942f9af3d0655",
+        "aplomb/ced/configuration_ced.py": "17cdc658b889452cde1af115a302969040edd315e067f8f1e91b3495b550ceff",
+        "aplomb/ced/feature_extraction_ced.py": "d2eff0a8cbc563196f8ccef4180d9e9299d643bfee087a545e97e9c4a9e64cb4",
+        "aplomb/ced/modeling_ced.py": "6f52feb2df14e585565851a96ae1c61c43fe5b3b075163565a56b04f93b9507e",
+        "aplomb/compile.py": "6cccc45f32e661d7899c44e04a324151e8e6a55bcd4767cb77998e4f464fb37d",
+        "aplomb/decision_head.py": "1df1d95f86882ea5a162a9b9a3e4db44d3d8d4a0675134787e438c06357b7895",
+        "aplomb/readout.py": "48bdf41a15409a57783c826bac7f2c0860650ca8b2dc83b39c82eef1ff4e19f7",
+        "aplomb/render.py": "50dac5956f4a6b4b30164f805c15cf3c73ae42707a1973d1b7684c67da6eba82",
+        "aplomb/schema.py": "7cdd098c80183c1891f3433bc35f92fa7d10ef695f2765cfaf6860b780b2ee9d",
+        "aplomb/targets.py": "f560825588a7f5d02c59ffea94fcac6d3d4ce5f6415b85fa8800397724359f2c",
+        "aplomb/tools.py": "3c1ad413d709848f977d6e443078137624db9a608bc0e41e75b78cd31bc2541b",
+        "audio_attach.safetensors": "8d9bae44eef8cc059369ef3109799e32872af66983edbd87e3c089ff35db6ca9",
+        "audio_config.json": "e2c4b80493075d0b7514e182873d9bf35e5265cb6ca4e7a16b7de6c4db1bcd1a",
+        "audio_encoder/config.json": "eab5093d47807aaf894119506b238b2b1cee70d08456e894fee9a012d88f2e0d",
+        "audio_encoder/model.safetensors": "feb88bf4796b8ff0f258bac1b2b14e30c7071de4749ebbccf6937dfe015b1f9c",
+        "audio_notes/audioset-labels/class_labels_indices.csv": "cdd1049833c4b86127c2773ac0d14a2754b6a6d0d1798002ed5c66e699708429",
+        "audio_notes/ced-base/config.json": "ac55e3cecfd75f3cd2e1b1a22ad3f74b4b197655efd7e3a14dd5228293b32dfb",
+        "audio_notes/ced-base/preprocessor_config.json": "668fbf4f00f9e3915de04fc07a621434ef1746b933662840623a9701291ca55a",
+        "audio_notes/whisper-large-v3-turbo/added_tokens.json": "3c51f66c4c21f9e126970078f11ae77a78c74aee8df606ee9daba86e467108e0",
+        "audio_notes/whisper-large-v3-turbo/config.json": "c5b526b3e3cd64cd8940dabb45e8ba726629e22d8ed389c29b552f9140daf04a",
+        "audio_notes/whisper-large-v3-turbo/generation_config.json": "cce11bfe3aaa6ae9e072ea2637caaec8795e68d9b67e655a5af16ee509681a4c",
+        "audio_notes/whisper-large-v3-turbo/merges.txt": "2df2990a395e35e8dfbc7511e08c12d56018d8d04691e0133e5d63b21e154dc6",
+        "audio_notes/whisper-large-v3-turbo/normalizer.json": "bf1c507dc8724ca9cf9903640dacfb69dae2f00edee4f21ceba106a7392f26dd",
+        "audio_notes/whisper-large-v3-turbo/preprocessor_config.json": "7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711",
+        "audio_notes/whisper-large-v3-turbo/special_tokens_map.json": "baea4ea09372eb4fca86b4e4346139fd73cb807d5087e9de0948e971739c3e74",
+        "audio_notes/whisper-large-v3-turbo/tokenizer.json": "297b13372ac43916285644fb9687add3cc62ee2a1adb60da3dc25cc94c1871fd",
+        "audio_notes/whisper-large-v3-turbo/tokenizer_config.json": "844b642c73a91359722f47b35705f7174686df33d252695d8572cf9ac03a6389",
+        "audio_notes/whisper-large-v3-turbo/vocab.json": "e2aa043ef015641d363d8288e7c241c85e36a5c761fb303598e0710233344387",
+        "chat_template.jinja": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+        "config.json": "7c0f3986640b7dbef9b00fb2b567b41afa2144d9e5a32a18f7ec8ca77de78eb4",
+        "edm_config.json": "2ebdeae7ff67f0e267b3686311e6ba781b70a155d1564d27b9d006dafd47a4ab",
+        "merges.txt": "a9d356d7bdf1ef4949e3e748e95b8e10ad9d4e2e838eddc38a0a7b6b94d1db8d",
+        "model.safetensors-00001-of-00002.safetensors": "f2353f83377e3896880e9bc2348ac6bc11e65bd33cc6355e47455bc1d596ea83",
+        "model.safetensors-00002-of-00002.safetensors": "6d199d688cb56a1f5bcd820158399671352f798f0bbb37c5aacfac3a54a00a8f",
+        "model.safetensors.index.json": "e0f796866ef5e715d90d60e65600ec7d44f92c0288cc10038da62746d4d20e5e",
+        "preprocessor_config.json": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516",
+        "run_aplomb.py": "72f7a5afd7a31af23106161412a4a33e2309d9760eb445215f58ffcca61cba10",
+        "tokenizer.json": "d9d7f5003cf5700a05230c9c024c56fd524bd5daa0d61a1e808b3b4f19569bf3",
+        "tokenizer_config.json": "66e427c470fe580fe8c7b5725d857af23d8417e37fae62667ec698306a19987b",
+        "video_preprocessor_config.json": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13",
+        "vocab.json": "ce99b4cb2983d118806ce0a8b777a35b093e2000a503ebde25853284c9dfa003"
+      }
+    }
+  ]
+}
