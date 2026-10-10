@@ -11,7 +11,7 @@ export function JevBenchApiAddendumCoverage({ entries }: { entries: Entry[] }) {
     <p className="bh-muted text-sm">Valid answers and completed coverage are shown separately. An accepted model/input refusal can count toward coverage while remaining a failed scored answer; authentication, rate-limit and service failures do not.</p>
     {entries.map(e => <details key={e.key} className="mt-4">
       <summary className="cursor-pointer font-semibold">{e.row.display} · all 50 cells</summary>
-      <p className="text-sm">Measured {e.row.last_measured_on ?? 'date recorded in the aggregate'} · O1S reference median {e.provenance.g_med_s.toFixed(4)} seconds · <a className="underline" href={e.provenance.source_url}>Aggregate results</a></p>
+      <p className="text-sm">Measured {e.row.last_measured_on ?? 'date recorded in the aggregate'} · O1S gap reference G_med {e.provenance.g_med_s.toFixed(4)} score points · <a className="underline" href={e.provenance.source_url}>Aggregate results</a></p>
       <p className="bh-muted text-sm">Historical comparators keep their own measurement dates, draws and reference values. This addition does not remeasure them on the new pool.</p>
       {Object.entries(e.coverage).map(([dim, cells]) => <div key={dim} className="mt-3">
         <h3 className="font-semibold">{dimensionTitles[dim] ?? dim}</h3>
