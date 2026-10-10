@@ -350,9 +350,10 @@ def _build_host_image(provider, pod_id, recipe, job_dir, image_context_provider,
     # pip direct-URL metadata can contain credentials. Fail closed instead of
     # persisting such output; standard package/version lines are credential-free.
     # The only direct-URL form allowed is the build-time kernel wheel directory of the reviewed
-    # Dockerfile (pip records local wheel installs as `name @ file:///...`); no host, query or userinfo.
+    # Dockerfile (pip records local wheel installs as `name @ file:///...whl#sha256=<hex>`); no host,
+    # query or userinfo, and the only fragment allowed is pip's own sha256 of the wheel.
     if any(not (re.fullmatch(r"[A-Za-z0-9_.-]+==[A-Za-z0-9_.+!-]+", line)
-                or re.fullmatch(r"[A-Za-z0-9_.-]+ @ file:///tmp/kernel-wheels/[A-Za-z0-9_.+-]+\.whl", line))
+                or re.fullmatch(r"[A-Za-z0-9_.-]+ @ file:///tmp/kernel-wheels/[A-Za-z0-9_.+-]+\.whl(?:#sha256=[0-9a-f]{64})?", line))
            for line in freeze.splitlines()):
         raise PodRunError("image_pip_freeze_unsafe")
     # Host-side evidence that the image carries no copy of the customer package outside /code (the customer
@@ -372,7 +373,8 @@ def _build_host_image(provider, pod_id, recipe, job_dir, image_context_provider,
 
 
 def _env_names_checked(raw):
-    """Names of an env list; refuse secret-looking names (HF_TOKEN / OPENAI_API_KEY only when empty)."""
+    """Names of an env list; refuse secret-looking names (HF_TOKEN / OPENAI_API_KEY only when empty;
+    HF_HUB_DISABLE_IMPLICIT_TOKEN only as the switch value 1, which stops huggingface_hub using a token)."""
     try:
         env = json.loads(raw)
         if env is None:
@@ -385,7 +387,8 @@ def _env_names_checked(raw):
     for item in env:
         name, _, value = item.partition("=")
         names.append(name)
-        if SECRETISH_ENV_RE.search(name) and not (name in ("HF_TOKEN", "OPENAI_API_KEY") and value == ""):
+        if SECRETISH_ENV_RE.search(name) and not ((name in ("HF_TOKEN", "OPENAI_API_KEY") and value == "")
+                                                  or (name == "HF_HUB_DISABLE_IMPLICIT_TOKEN" and value == "1")):
             raise PodRunError("run_container_env_secret_name")
     return sorted(set(names))
 
