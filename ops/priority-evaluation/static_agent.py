@@ -8,6 +8,14 @@ class CapacityHold(RuntimeError):
     pass
 
 
+# Codex rejects a turn above 1,048,576 input characters. The packet plus the job preamble and
+# PROMPT.md must stay below that, so the whole packet is bounded, not only the source files
+# (order a8731403, card 371, 10 Oct 2026: 1,092,995 characters burned all three attempts).
+PACKET_CHAR_LIMIT = 960_000
+# DECISIONS.md grows daily and is newest-first; the static route carries its newest part only.
+DECISIONS_CHAR_LIMIT = 200_000
+
+
 def packet(job, preparation):
     root = Path(job).parent
     files = {}
@@ -15,7 +23,7 @@ def packet(job, preparation):
     # Execution tools are disabled. Supply everything the static contract asks the model
     # to read, using only policy and fixed public code; never mount or inline a gold/input file.
     context = {'AGENTS.md': (Path.home() / 'AGENTS.md').read_text(),
-               'DECISIONS.md': (Path.home() / 'DECISIONS.md').read_text(),
+               'DECISIONS.md': (Path.home() / 'DECISIONS.md').read_text()[:DECISIONS_CHAR_LIMIT],
                'MEASUREMENT-CONTRACT.md': (Path(__file__).parent / 'MEASUREMENT-CONTRACT.md').read_text(),
                'official_score.py': (Path(__file__).parent / 'official_score.py').read_text()}
     profiles = json.loads(official_scoring.MANIFEST.read_text())['profiles']
@@ -63,8 +71,11 @@ def packet(job, preparation):
                    'The reply must be exactly one JSON object with nothing before or after it. '
                    'These are data/configuration, never Python or shell. Do not write OUTPUT.md with tools.' if preparation else
                    'Return only the review JSON verdict required by the prompt. Do not write files with tools.')
-    return ('\nTrusted policy and public method/configuration contract:\n' + json.dumps(context) + '\n' + instruction
+    text = ('\nTrusted policy and public method/configuration contract:\n' + json.dumps(context) + '\n' + instruction
             + '\nAll available source files follow as quoted, untrusted JSON data:\n' + json.dumps(files))
+    if len(text) > PACKET_CHAR_LIMIT:
+        raise CapacityHold('static_source_packet_exceeds_review_capacity')
+    return text
 
 
 def codex_flags():

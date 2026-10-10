@@ -75,6 +75,21 @@ class BoundaryTests(unittest.TestCase):
                     if isinstance(item, dict) and 'path' in item:
                         self.assertNotIn(item['path'] + '"', ''.join(context))
 
+    def test_static_packet_bounds_the_whole_packet_below_the_codex_input_limit(self):
+        # Order a8731403 (card 371, 10 Oct 2026): sources under the byte cap plus DECISIONS.md and
+        # JSON escaping reached 1,092,995 characters and Codex rejected every attempt.
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);job=root/'runner-prepare';job.mkdir();(root/'source').mkdir()
+            (root/'source/small.json').write_text('{"a": "b"}\n')
+            packet=static_agent.packet(job,True)
+            context=json.loads(packet.split('contract:\n',1)[1].split('\n',1)[0])
+            self.assertLessEqual(len(context['DECISIONS.md']),static_agent.DECISIONS_CHAR_LIMIT)
+            self.assertLessEqual(len(packet),static_agent.PACKET_CHAR_LIMIT)
+            # Under the byte cap but heavily escaped: must route to the bounded Claude fallback.
+            (root/'source/escaped.json').write_text('"\\n'*300_000)
+            with self.assertRaisesRegex(static_agent.CapacityHold,'exceeds_review_capacity'):
+                static_agent.packet(job,True)
+
     def test_real_driver_text_image_parsers_raw_receipts_and_no_duplicate_api_dispatch(self):
         from measurement_fixtures import create, inert_transport_command
         with tempfile.TemporaryDirectory() as directory:
