@@ -67,7 +67,7 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
   // v1.7.1: catalogue-only API rows (wrappers, partial runs, not yet measured) for the roster on /jev-models/api.
   const apiListed = scope === 'api' ? jevApiRoster(artifact, carry.rows, previous.artifact.systems, previous.artifact.revision as string).listed : [];
 
-  const cohortRows = artifact.systems.filter((s) => (s as { draw?: unknown }).draw).length;
+  const cohortRows = artifact.systems.filter((s) => (s as { draw?: unknown }).draw && s.ranked).length;
   // Ranked systems per group on the merged board, independent of the current preset.
   const groupCounts = { open: published.systems.filter((s) => s.ranked && !isApi(s)).length, api: published.systems.filter((s) => s.ranked && isApi(s)).length };
   const updated = [...artifact.systems.map((s) => (s as { last_measured_on?: string }).last_measured_on ?? ''), JEV_BOARD_REVISIONS[0].date].sort().at(-1);
@@ -81,7 +81,7 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
       <p className="bh-muted mt-3 max-w-4xl text-xs leading-relaxed" data-bh-jev-meta>
         {scope === 'open' ? `${groupCounts.open} ranked open-weights systems · Jev 1.13.0 shown as reference` : scope === 'api' ? `${groupCounts.api} ranked API offerings` : `${groupCounts.open + groupCounts.api} ranked systems`}
         {' '}· {artifact.v16.counts.selfhosted_input.toLocaleString('en-US')} decisions each{a4Count > 0 && scope !== 'open' && ` (600 for ${a4Count} equated API re-runs)`}
-        {cohortRows > 0 && <> · {cohortRows} newer rows tagged with their draw</>}{carryCount > 0 && <> · {carryCount} older rows dated separately</>} ·
+        {cohortRows > 0 && <> · {cohortRows} newer ranked rows tagged with their draw</>}{carryCount > 0 && <> · {carryCount} older rows dated separately</>} ·
         {' '}<a className="text-accent underline" href="#jev16-method" data-bh-jev-how-it-works>How it works</a> ·
         {' '}<a className="text-accent underline" href="#jev-release-history" data-bh-jev-release-history-link>Release history</a> ·
         {' '}<a className="text-accent underline" href="/jev-models/methodology">Methodology</a> ·

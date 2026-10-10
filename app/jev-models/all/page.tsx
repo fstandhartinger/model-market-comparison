@@ -13,7 +13,17 @@ export const metadata: Metadata = {
 
 export default async function JevModelsAllPage() {
   const release = await readCurrentJevbench();
+  const url = 'https://benchmarkheaven.com/jev-models/all';
+  const jsonLd = { '@context': 'https://schema.org', '@graph': [
+    { '@type': 'WebPage', '@id': `${url}#page`, url, name: 'JevBench: all decision models', isPartOf: { '@id': 'https://benchmarkheaven.com/#website' } },
+    { '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Benchmark Heaven', item: 'https://benchmarkheaven.com' },
+      { '@type': 'ListItem', position: 2, name: 'JevBench', item: 'https://benchmarkheaven.com/jev-models' },
+      { '@type': 'ListItem', position: 3, name: 'All decision models', item: url },
+    ] },
+  ] };
   return <>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
     <JevBenchV16ReleaseRoute live scope="all" release={release} versionPath="/jev-models/all" />
     <JevHistoryLazy />
   </>;
