@@ -143,8 +143,8 @@ test('CR-254 every Image detail route renders published rank, axes, cost, latenc
   const v03Keys = new Set(v03.map((row) => row.key));
   const sources = [...v03.map((row) => ({ row, artifact: current, rows: v03 })),
     ...imageJevBoardSystems(archive).filter((row) => !v03Keys.has(row.key)).map((row, _, rows) => ({ row, artifact: archive, rows: imageJevBoardSystems(archive) }))];
-  assert.equal(v03.length, 54); // CR-333 dated-carry re-run: +6 carries, + Wity-1 reasoning off
-  assert.equal(sources.length, 56);
+  assert.equal(v03.length, 56); // CR-333: +6 carries, + Wity-1 reasoning off; CR-414: + Liquid d1-3B, d1-omni-600M
+  assert.equal(sources.length, 58);
   assert.deepEqual(await detail.generateStaticParams(), sources.map(({ row }) => ({ system: row.key })));
   for (const { row, artifact, rows } of sources) {
     const rankedCount = rows.filter((candidate) => candidate.ranked).length;
