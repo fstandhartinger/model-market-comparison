@@ -27,6 +27,12 @@ test('inventory retains 50 cells; suppressed cells never enter numeric category 
   assert.equal(coverageStatus(e.coverage.topics[2]), 'fewer than 30 completed — table only');
   assert.equal(out.systems[e.key].topics['topics-2'].coverage_n, 29);
   assert.deepEqual(base.systems, {});
+  // Descriptive cells may use a separately admitted pool; the displayed row tag
+  // must preserve that provenance instead of implying they use the headline draw.
+  for (const c of Object.values(e.coverage).flat()) c.pool = 'P+L1+L2+L3 (descriptive)';
+  const supplemented = withApiFullAddendumCategories(base, a).systems[e.key];
+  assert.equal(supplemented.coverage, 'P+L1+L2+L3 (descriptive)');
+  assert.equal(supplemented.languages['languages-2'].pool, supplemented.coverage);
 });
 test('rank insertion preserves old relative order and immutable source; refuses overrides', () => {
   const a = fixture();
