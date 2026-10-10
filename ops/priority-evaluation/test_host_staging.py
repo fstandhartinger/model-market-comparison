@@ -39,6 +39,9 @@ class HostFake(_FakeProvider):
             out = {'credential': 'x @ https://user:secret@example.invalid/x\n',
                    'otherfile': 'x @ file:///etc/passwd\n',
                    'kernelwheel': 'torch==2.8.0\ncausal-conv1d @ file:///tmp/kernel-wheels/causal_conv1d-1.7.0-cp312-cp312-linux_x86_64.whl\n'
+                                  'einops @ file:///tmp/kernel-wheels/einops-0.8.1-py3-none-any.whl#sha256=' + 'e' * 64 + '\n',
+                   'wheelfragment': 'x @ file:///tmp/kernel-wheels/x-1.0-py3-none-any.whl#egg=x\n',
+                   'wheelquery': 'x @ file:///tmp/kernel-wheels/x-1.0-py3-none-any.whl?token=secret\n',
                    }.get(self.failure, 'torch==2.8.0\n')
         elif command[:2] == ['docker', 'run'] and '-I' in command and '-S' in command and '-e' in command:
             out = 'BASE /usr/lib/python3/site-packages\n' + ('HIT /usr/lib/python3/site-packages/aplomb_evil\n' if self.failure == 'origin' else '')
@@ -254,7 +257,8 @@ class HostStagingTests(unittest.TestCase):
 
     def test_pre_dispatch_failures_teardown_and_preserve_charge(self):
         for failure, reason in [('extra', 'file_set'), ('symlink', 'non_regular'), ('size', 'size_mismatch'),
-                ('hash', 'sha256_mismatch'), ('build', 'pod exec failed'), ('credential', 'pip_freeze_unsafe'), ('otherfile', 'pip_freeze_unsafe')]:
+                ('hash', 'sha256_mismatch'), ('build', 'pod exec failed'), ('credential', 'pip_freeze_unsafe'), ('otherfile', 'pip_freeze_unsafe'),
+                ('wheelfragment', 'pip_freeze_unsafe'), ('wheelquery', 'pip_freeze_unsafe')]:
             fake = HostFake(failure)
             with self.subTest(failure=failure), self.assertRaisesRegex(pr.PodRunError, reason):
                 self.lifecycle(fake)
