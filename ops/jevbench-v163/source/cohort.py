@@ -5,9 +5,10 @@ WRAPPERS = frozenset({'metask_jev_rain_12b', 'ryotide_qwen9'})
 FIXED = NATIVE | WRAPPERS
 
 def completed_shape(keys):
-    keys = frozenset(keys)
-    if not BASE <= keys or not keys <= FIXED or len(keys) not in (5, 6):
-        raise ValueError('addendum requires original four plus actual fixed-roster completion(s)')
+    supplied = list(keys)
+    keys = frozenset(supplied)
+    if len(supplied) != len(keys) or keys not in (BASE | {'decisor_4b'}, FIXED):
+        raise ValueError('addendum requires exactly original four plus Decisor, or all six, without duplicates')
     return {'completed': sorted(keys), 'eligible': sorted(keys & NATIVE),
             'wrappers': sorted(keys & WRAPPERS), 'pending': sorted(FIXED - keys)}
 
