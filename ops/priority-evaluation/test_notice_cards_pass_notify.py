@@ -57,5 +57,18 @@ class NoticeCardsPassNotify(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
 
 
+class NotifyExitCodes(unittest.TestCase):
+    def run_with(self, returncode):
+        done = subprocess.CompletedProcess([], returncode, stdout="NOT SENT: pacing cap (queued)\n", stderr="")
+        with patch.object(worker.subprocess, "run", return_value=done):
+            return worker.notify_florian("x")
+
+    def test_queued_card_is_not_retried(self):
+        # A retry after exit 75 only queued duplicate digest entries every five minutes (card 373).
+        self.assertTrue(self.run_with(0))
+        self.assertTrue(self.run_with(worker.NOTIFY_NOT_SENT_EXIT))
+        self.assertFalse(self.run_with(2))
+
+
 if __name__ == "__main__":
     unittest.main()
