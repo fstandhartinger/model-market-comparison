@@ -4,6 +4,13 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-10-10 — Needle 3 (options as tools) cells; ClassOne Gemma reason (CR-425, board note v1.7.40)
+
+`needle-3-tools` (historical row, v1.5 headline kept) now has language and category cells from a partial run on the current
+pools (radars complete; 18 languages below the 60-item target; `partial_completeness_exception: true`). The exception reason of
+`classone-gemma4-e2b` is corrected (identical weights; server output varies between restarts). Headline scores, ranks,
+Composite and prices are unchanged; see `docs/releases/CR-425-needle-3-tools-cells-20261010.md`.
+
 ## 2026-10-10 — GLiNER2 large cells; GLiNER2 update (CR-420, board note v1.7.39)
 
 `gliner2-large` (historical row, v1.5 headline kept) now has language and category cells (S+P+L1+L2+L3). `gliner2` is

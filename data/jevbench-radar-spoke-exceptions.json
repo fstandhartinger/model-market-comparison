@@ -6,16 +6,11 @@
   },
   {
     "key": "classone-gemma4-e2b",
-    "reason": "A supplement run was made, but it does not reproduce this row's original answers closely enough (87.7 % agreement on the 300 public items, below the 95 % bar; the original run fetched unpinned weights). Its language and category supplements are not published; the radar shows the existing S + P items.",
+    "reason": "A supplement run was made with the same weights and serving code, but this model's server gives different answers after each restart (verified on identical weights), so the new run does not reproduce the row's original answers (87.7 % agreement on the 300 public items, below the 95 % bar). Its language and category supplements are not published; the radar shows the existing S + P items.",
     "since": "2026-10-10"
   },
   {
     "key": "needle-3",
-    "reason": "Not measured on the current v1.6 item pool. Its exact historical checkpoint and serving package must be verified before language and category supplements can be measured; coverage remains incomplete.",
-    "since": "2026-10-07"
-  },
-  {
-    "key": "needle-3-tools",
     "reason": "Not measured on the current v1.6 item pool. Its exact historical checkpoint and serving package must be verified before language and category supplements can be measured; coverage remains incomplete.",
     "since": "2026-10-07"
   },
