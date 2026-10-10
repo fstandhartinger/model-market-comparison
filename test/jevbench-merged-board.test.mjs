@@ -10,8 +10,8 @@ test('every cohort system joins once, from its latest release, with its draw', a
   const { rows } = await readCohortRows();
   const keys = rows.map((r) => r.row.key);
   assert.equal(new Set(keys).size, keys.length);
-  assert.equal(rows.length, 15);
-  assert.deepEqual([...new Set(rows.map((r) => r.draw.release))].sort(), ['v1.6.4', 'v1.6.6']);
+  assert.equal(rows.length, 16);
+  assert.deepEqual([...new Set(rows.map((r) => r.draw.release))].sort(), ['v1.6.4', 'v1.6.7']);
   assert.ok(rows.every((r) => r.draw.id && r.draw.measured_on));
 });
 
@@ -41,7 +41,7 @@ test('pending draws show the published numbers unchanged; an offset moves the ax
 test('merged board slots ranked cohort rows by score and keeps published rows in order', async () => {
   const { artifact } = await readCurrentJevbench();
   const merged = jevWithCohortRows(artifact, await readCohortRows());
-  assert.equal(merged.systems.length, artifact.systems.length + 15);
+  assert.equal(merged.systems.length, artifact.systems.length + 16);
   for (const o of Object.keys(artifact.board)) {
     const kept = merged.board[o].order.filter((k) => artifact.board[o].order.includes(k));
     assert.deepEqual(kept, artifact.board[o].order);
