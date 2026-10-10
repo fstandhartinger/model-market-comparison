@@ -9,7 +9,7 @@ import { mkdtemp, readFile, writeFile, rm, cp, mkdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { findBoardRekeys } from '../lib/live-source.mjs';
+import { findBoardRekeys, planOpenRouterWithdrawals } from '../lib/live-source.mjs';
 
 const entry = (displayName, active, agents, provider = 'thinkingmachines') => ({ displayName, provider, active, openSource: true, arenas: { agents } });
 const REGISTRY = {
@@ -112,4 +112,34 @@ test('a re-key beside a corroborated withdrawal still fails closed and leaves th
     assert.match(fixture.result.stderr, /partial response or removal requiring review/);
     assert.equal(await readFile(join(fixture.directory, 'data/raw/designarena.json'), 'utf8'), fixture.before);
   } finally { await rm(fixture.directory, { recursive: true, force: true }); }
+});
+
+// CR-399, second blocker of the same day: eleven Qwen ids that OpenRouter's own catalog had marked
+// `expiration_date: 2026-10-09` left on 2026-10-10 and tripped the ten-model bound. An announced
+// expiry is a dated withdrawal that does not count against the bound; unannounced absences still do.
+test('announced OpenRouter expiries are withdrawals that do not consume the partial-response bound', () => {
+  const prior = Array.from({ length: 100 }, (_, i) => ({ id: `lab/model-${i}`, name: `Model ${i}`, endpoints: [],
+    ...(i < 11 ? { expiration_date: '2026-10-09' } : {}) }));
+  const previous = { collected_at: '2026-10-09', models: prior };
+  const endpointsOf = (models) => new Map(models.map((m) => [m.id, m.endpoints]));
+
+  const expired = prior.slice(11);
+  const plan = planOpenRouterWithdrawals({ previous, models: expired, endpointsById: endpointsOf(expired), date: '2026-10-10' });
+  assert.equal(plan.error, null);
+  assert.equal(plan.run.withdrawn_models.length, 11);
+  assert.ok(plan.run.withdrawn_models.every((m) => m.withdrawn_at === '2026-10-10' && m.last_seen === '2026-10-09' && m.expiration_date === '2026-10-09'));
+
+  // The same eleven plus eleven unannounced absences: the unannounced count alone exceeds the bound.
+  const alsoPartial = prior.slice(22);
+  assert.match(planOpenRouterWithdrawals({ previous, models: alsoPartial, endpointsById: endpointsOf(alsoPartial), date: '2026-10-10' }).error,
+    /11 models absent \(limit 10\).*11 more expired as announced/);
+
+  // An expiration date still in the future is not an announcement for today.
+  const future = prior.map((m, i) => (i < 11 ? { ...m, expiration_date: '2026-10-11' } : m));
+  assert.match(planOpenRouterWithdrawals({ previous: { ...previous, models: future }, models: expired, endpointsById: endpointsOf(expired), date: '2026-10-10' }).error,
+    /11 models absent \(limit 10\)/);
+  // A malformed date is not an announcement either.
+  const malformed = prior.map((m, i) => (i < 11 ? { ...m, expiration_date: 'soon' } : m));
+  assert.match(planOpenRouterWithdrawals({ previous: { ...previous, models: malformed }, models: expired, endpointsById: endpointsOf(expired), date: '2026-10-10' }).error,
+    /11 models absent \(limit 10\)/);
 });
