@@ -1,18 +1,18 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { listedRadarBoards } from '../scripts/jevbench-radar-spokes.mjs';
+import { listedRadarBoards, listedRadarCategoryView } from '../scripts/jevbench-radar-spokes.mjs';
 import { jevbenchCategoryView, withSCategoryCells, withLiveCategoryCells, JEVBENCH_S_CATEGORY_CELLS_ARTIFACT, languagePoolNote } from '../lib/jevbench-categories.mjs';
 import { radarSpokeFailures, validateRadarSpokeGate } from '../lib/jevbench-radar-spoke-gate.mjs';
 const read = (f) => JSON.parse(readFileSync(new URL(`../${f}`, import.meta.url)));
 const exceptions = read('data/jevbench-radar-spoke-exceptions.json');
 const boards = listedRadarBoards(), keys = [...new Set(Object.values(boards).flat())];
-const view = jevbenchCategoryView('v1.6.1', keys, { supplement: true });
+const view = listedRadarCategoryView(keys);
 test('release gate: every listed row on both boards has 20 use-case and 7 topic spokes >=30 or a visible exception', () => {
   validateRadarSpokeGate(view, keys, exceptions);
   for (const [scope, rows] of Object.entries(boards)) {
     assert.ok(rows.length > 20, scope);
-    const scoped = jevbenchCategoryView('v1.6.1', rows, { supplement: true });
+    const scoped = listedRadarCategoryView(rows);
     validateRadarSpokeGate(scoped, rows, exceptions.filter((e) => rows.includes(e.key)));
     assert.equal(scoped.dims.find((d) => d.key === 'usecases').cats.filter((c) => c.plotted).length, 20);
   }

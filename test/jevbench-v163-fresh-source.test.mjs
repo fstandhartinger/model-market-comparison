@@ -1,6 +1,7 @@
 // Source-only support for a prospective JevBench v1.6.3 same-draw completed-field addendum. Synthetic fixtures only: no
 // v1.6.3 data or manifest exists; prospective routes and conditional navigation remain unavailable without them.
 import test from 'node:test';
+import { hasApiFullAddendumCategories, withApiFullAddendumCategories, validateApiFullAddenda } from '../lib/jevbench-api-full-addenda.mjs';
 import { jevV15CompareRow } from '../lib/jevbench-v15-board.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
@@ -80,12 +81,30 @@ test('historical revisions keep their imported artifacts and hide Other', () => 
 test('board dispatches fresh behaviour through the helper and keeps every section', () => {
   const board = read('components/JevBenchV16Board.tsx');
   assert.match(board, /const fresh = isFreshJevbenchV16Revision\(a\.revision\);/);
-  assert.equal([...board.matchAll(/artifact: fresh \? categories : undefined/g)].length, 2, 'Compare and All data both pass only the release categories');
+  assert.equal([...board.matchAll(/artifact: fresh \|\| hasApiFullAddendumCategories\(categories\) \? categories : undefined/g)].length, 2, 'Compare and All data both pass only fresh or authenticated full-addendum categories');
   assert.match(board, /\(!fresh \|\| carry\.rows\.length > 0\) && <DatedCarry/);
   assert.match(board, /if \(isFreshJevbenchV16Revision\(a\.revision\)\) return <>/);
   assert.match(board, /isFreshJevbenchV16Revision\(props\.a\.revision\) \? `Method notes · fresh native cohort\$\{props\.a\.revision === 'v1\.6\.2' \? '' :/);
   assert.doesNotMatch(board, /revision === ["']v1\.6\.2["'] \? categories/);
   for (const section of ['<JevBenchV16Charts', '<JevScoreChart', '<JevCompareV15', '<JevV15AllDataGrid', '<LanguageView', '<DatedCarry', '<Method ']) assert.ok(board.includes(section), section);
+});
+
+test('only genuine validated live category overlay receives the historical dispatch exemption', () => {
+  const registry = validateApiFullAddenda(JSON.parse(read('data/jevbench-api-full-addenda.json')));
+  const historical = structuredClone(v161);
+  assert.equal(hasApiFullAddendumCategories(historical), false);
+  const built = withApiFullAddendumCategories(historical, registry);
+  assert.equal(hasApiFullAddendumCategories(built), registry.entries.length > 0);
+  assert.equal(hasApiFullAddendumCategories(structuredClone(built)), false, 'copied or authored data cannot forge the source-owned category bound');
+  assert.equal(hasApiFullAddendumCategories(freshCategories('v1.6.3', 40).c), false, 'fresh cohorts follow their own guarded release path');
+  for (const entry of registry.entries) {
+    for (const dim of ['topics', 'usecases', 'languages']) {
+      for (const cell of entry.coverage[dim]) {
+        if (cell.n < 15) assert.equal(built.systems[entry.key][dim][cell.key], undefined, 'sparse cell never becomes numeric');
+        else assert.equal(built.systems[entry.key][dim][cell.key].competence, cell.competence, 'actual addendum competence remains unchanged');
+      }
+    }
+  }
 });
 
 // Source infrastructure may precede data. Publication remains unavailable/inactive until its genuine bundle exists.
