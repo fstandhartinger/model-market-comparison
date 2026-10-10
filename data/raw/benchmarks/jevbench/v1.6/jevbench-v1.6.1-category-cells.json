@@ -1101,7 +1101,7 @@
     },
     "needle-3-tools": {
       "aggregate_artifact": "ops/evidence/needle-3-tools-language-category-complete-20261010.json",
-      "sha256": "65d95c62c31f2b2d7710c6c3d16f807f32b40c25d94d8cd1e679ca19119b1c7d",
+      "sha256": "cf3bfa9b10c70d2ad7409c8767e20ce36f65a33353b1eaa4ba7438bc3d8ca3b6",
       "method": "official O1S",
       "basis": "S+P+L1+L3",
       "historical_S_observed": 132,
@@ -1126,6 +1126,35 @@
       "headline_or_rank_changed": false,
       "composite_changed": false,
       "original_row_price_changed": false
+    },
+    "needle-3": {
+      "aggregate_artifact": "ops/evidence/needle-3-language-category-complete-20261010.json",
+      "sha256": "07b07a7650eaf4215f06c9ddc15eeddb3bfd69079195425bfbe3afd0e88e3ec1",
+      "method": "official O1S",
+      "basis": "S+P+L1+L2+L3",
+      "historical_S_observed": 226,
+      "historical_P_observed": 55,
+      "historical_S_successful": 223,
+      "historical_S_http500": 0,
+      "historical_P_successful": 51,
+      "historical_P_http500": 0,
+      "original_http500_retained_unimputed": 0,
+      "P300_carried_by_stable_identity_counted_once": true,
+      "supplemental_records": 1505,
+      "supplemental_L1": 354,
+      "supplemental_L2": 33,
+      "supplemental_L3": 1118,
+      "category_scored_observations": 2031,
+      "language_coverage_min": 19,
+      "language_target_complete": false,
+      "languages_below_target60": 22,
+      "topic_coverage_min": 52,
+      "usecase_coverage_min": 43,
+      "partial_completeness_exception": true,
+      "headline_or_rank_changed": false,
+      "composite_changed": false,
+      "original_row_price_changed": false,
+      "S_P_items_selected_by_usecase_label_other": 128
     }
   },
   "source_sha256": "bea26aa45db9d45fbb5d0cc0ef4792ae1f5d816bd264a155863828d01966cf03",
@@ -33109,131 +33138,365 @@
       }
     },
     "needle-3": {
-      "category_n_items": 153,
-      "category_pools": "S+P",
+      "category_n_items": 2031,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
-          "calibration": 3,
-          "calibration_gen": 6,
-          "composite_gen": 1,
-          "fairness": 15,
-          "jaggedness": 13,
-          "llm_router": 52,
-          "long_state": 2,
-          "multilingual": 25,
-          "negation_pair_gen": 9,
-          "option_order": 7,
-          "perturb_pair": 6,
-          "usecase": 14
+          "calibration_gen": 44,
+          "composite_gen": 18,
+          "fairness": 28,
+          "jaggedness": 80,
+          "llm_router": 146,
+          "long_state": 15,
+          "multilingual": 1416,
+          "negation_pair_gen": 25,
+          "option_order": 45,
+          "perturb_pair": 26,
+          "usecase": 184
         },
         "topics": {
-          "coding": 38,
-          "everyday_language": 6,
-          "finance_commerce": 7,
-          "law_policy": 69,
-          "math": 21,
-          "safety_security": 5,
-          "support_ops": 7
+          "coding": 173,
+          "everyday_language": 126,
+          "finance_commerce": 177,
+          "law_policy": 1073,
+          "math": 307,
+          "safety_security": 82,
+          "support_ops": 93
         },
         "usecases": {
-          "advertising": 2,
-          "code_linting": 2,
-          "customer_support": 12,
-          "demand_forecasting": 2,
-          "ecommerce_marketplaces": 5,
-          "financial_crime": 4,
-          "gaming": 3,
-          "insurance_claims": 3,
-          "knowledge_graphs": 1,
-          "lead_generation": 2,
-          "legal_compliance": 33,
-          "llm_guardrails": 3,
-          "model_routing": 52,
-          "moderation_trust_safety": 3,
-          "other": 17,
-          "recruiting": 3,
-          "risk_assessment": 3,
-          "search_retrieval": 3
+          "advertising": 81,
+          "code_linting": 79,
+          "customer_support": 137,
+          "demand_forecasting": 72,
+          "ecommerce_marketplaces": 84,
+          "feature_extraction": 85,
+          "financial_crime": 74,
+          "gaming": 77,
+          "insurance_claims": 89,
+          "knowledge_graphs": 80,
+          "lead_generation": 84,
+          "legal_compliance": 227,
+          "llm_guardrails": 84,
+          "model_routing": 210,
+          "moderation_trust_safety": 69,
+          "other": 174,
+          "recruiting": 84,
+          "risk_assessment": 83,
+          "scientific_discovery": 78,
+          "search_retrieval": 80
         }
       },
       "families": {
-        "fairness": {
+        "calibration_gen": {
+          "n": 44,
           "competence": 0.0,
-          "coverage_n": 12,
-          "n": 15,
-          "operational_failure_n": 3,
+          "coverage_n": 26,
+          "response_n": 26,
           "refusal_n": 0,
-          "response_n": 12
+          "operational_failure_n": 18
+        },
+        "composite_gen": {
+          "n": 18,
+          "competence": 0.0,
+          "coverage_n": 18,
+          "response_n": 18,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "fairness": {
+          "n": 28,
+          "competence": 0.0,
+          "coverage_n": 25,
+          "response_n": 25,
+          "refusal_n": 0,
+          "operational_failure_n": 3
+        },
+        "jaggedness": {
+          "n": 80,
+          "competence": 0.0,
+          "coverage_n": 47,
+          "response_n": 47,
+          "refusal_n": 0,
+          "operational_failure_n": 33
         },
         "llm_router": {
+          "n": 146,
           "competence": 0.0,
-          "coverage_n": 33,
-          "n": 52,
-          "operational_failure_n": 19,
+          "coverage_n": 79,
+          "response_n": 79,
           "refusal_n": 0,
-          "response_n": 33
+          "operational_failure_n": 67
+        },
+        "long_state": {
+          "n": 15,
+          "competence": 0.0,
+          "coverage_n": 6,
+          "response_n": 6,
+          "refusal_n": 0,
+          "operational_failure_n": 9
         },
         "multilingual": {
+          "n": 1416,
           "competence": 0.0,
-          "coverage_n": 19,
-          "n": 25,
-          "operational_failure_n": 6,
+          "coverage_n": 841,
+          "response_n": 841,
           "refusal_n": 0,
-          "response_n": 19
+          "operational_failure_n": 575
+        },
+        "negation_pair_gen": {
+          "n": 25,
+          "competence": 0.0,
+          "coverage_n": 25,
+          "response_n": 25,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "option_order": {
+          "n": 45,
+          "competence": 0.0,
+          "coverage_n": 45,
+          "response_n": 45,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "perturb_pair": {
+          "n": 26,
+          "competence": 0.0,
+          "coverage_n": 18,
+          "response_n": 18,
+          "refusal_n": 0,
+          "operational_failure_n": 8
+        },
+        "usecase": {
+          "n": 184,
+          "competence": 0.0,
+          "coverage_n": 122,
+          "response_n": 122,
+          "refusal_n": 0,
+          "operational_failure_n": 62
         }
       },
       "topics": {
         "coding": {
+          "n": 173,
           "competence": 0.0,
-          "coverage_n": 25,
-          "n": 38,
-          "operational_failure_n": 13,
+          "coverage_n": 93,
+          "response_n": 93,
           "refusal_n": 0,
-          "response_n": 25
+          "operational_failure_n": 80
+        },
+        "everyday_language": {
+          "n": 126,
+          "competence": 0.0,
+          "coverage_n": 71,
+          "response_n": 71,
+          "refusal_n": 0,
+          "operational_failure_n": 55
+        },
+        "finance_commerce": {
+          "n": 177,
+          "competence": 0.0,
+          "coverage_n": 105,
+          "response_n": 105,
+          "refusal_n": 0,
+          "operational_failure_n": 72
         },
         "law_policy": {
+          "n": 1073,
           "competence": 0.0,
-          "coverage_n": 53,
-          "n": 69,
-          "operational_failure_n": 16,
+          "coverage_n": 711,
+          "response_n": 711,
           "refusal_n": 0,
-          "response_n": 53
+          "operational_failure_n": 362
         },
         "math": {
+          "n": 307,
           "competence": 0.0,
-          "coverage_n": 13,
-          "n": 21,
-          "operational_failure_n": 8,
+          "coverage_n": 169,
+          "response_n": 169,
           "refusal_n": 0,
-          "response_n": 13
+          "operational_failure_n": 138
+        },
+        "safety_security": {
+          "n": 82,
+          "competence": 0.0,
+          "coverage_n": 52,
+          "response_n": 52,
+          "refusal_n": 0,
+          "operational_failure_n": 30
+        },
+        "support_ops": {
+          "n": 93,
+          "competence": 0.0,
+          "coverage_n": 52,
+          "response_n": 52,
+          "refusal_n": 0,
+          "operational_failure_n": 41
         }
       },
       "usecases": {
-        "legal_compliance": {
+        "advertising": {
+          "n": 81,
           "competence": 0.0,
-          "coverage_n": 29,
-          "n": 33,
-          "operational_failure_n": 4,
+          "coverage_n": 49,
+          "response_n": 49,
           "refusal_n": 0,
-          "response_n": 29
+          "operational_failure_n": 32
+        },
+        "code_linting": {
+          "n": 79,
+          "competence": 0.0,
+          "coverage_n": 44,
+          "response_n": 44,
+          "refusal_n": 0,
+          "operational_failure_n": 35
+        },
+        "customer_support": {
+          "n": 137,
+          "competence": 0.0,
+          "coverage_n": 86,
+          "response_n": 86,
+          "refusal_n": 0,
+          "operational_failure_n": 51
+        },
+        "demand_forecasting": {
+          "n": 72,
+          "competence": 0.0,
+          "coverage_n": 44,
+          "response_n": 44,
+          "refusal_n": 0,
+          "operational_failure_n": 28
+        },
+        "ecommerce_marketplaces": {
+          "n": 84,
+          "competence": 0.0,
+          "coverage_n": 49,
+          "response_n": 49,
+          "refusal_n": 0,
+          "operational_failure_n": 35
+        },
+        "feature_extraction": {
+          "n": 85,
+          "competence": 0.0,
+          "coverage_n": 56,
+          "response_n": 56,
+          "refusal_n": 0,
+          "operational_failure_n": 29
+        },
+        "financial_crime": {
+          "n": 74,
+          "competence": 0.0,
+          "coverage_n": 46,
+          "response_n": 46,
+          "refusal_n": 0,
+          "operational_failure_n": 28
+        },
+        "gaming": {
+          "n": 77,
+          "competence": 0.0,
+          "coverage_n": 43,
+          "response_n": 43,
+          "refusal_n": 0,
+          "operational_failure_n": 34
+        },
+        "insurance_claims": {
+          "n": 89,
+          "competence": 0.0,
+          "coverage_n": 45,
+          "response_n": 45,
+          "refusal_n": 0,
+          "operational_failure_n": 44
+        },
+        "knowledge_graphs": {
+          "n": 80,
+          "competence": 0.0,
+          "coverage_n": 56,
+          "response_n": 56,
+          "refusal_n": 0,
+          "operational_failure_n": 24
+        },
+        "lead_generation": {
+          "n": 84,
+          "competence": 0.0,
+          "coverage_n": 59,
+          "response_n": 59,
+          "refusal_n": 0,
+          "operational_failure_n": 25
+        },
+        "legal_compliance": {
+          "n": 227,
+          "competence": 0.0,
+          "coverage_n": 152,
+          "response_n": 152,
+          "refusal_n": 0,
+          "operational_failure_n": 75
+        },
+        "llm_guardrails": {
+          "n": 84,
+          "competence": 0.0,
+          "coverage_n": 58,
+          "response_n": 58,
+          "refusal_n": 0,
+          "operational_failure_n": 26
         },
         "model_routing": {
+          "n": 210,
           "competence": 0.0,
-          "coverage_n": 33,
-          "n": 52,
-          "operational_failure_n": 19,
+          "coverage_n": 131,
+          "response_n": 131,
           "refusal_n": 0,
-          "response_n": 33
+          "operational_failure_n": 79
+        },
+        "moderation_trust_safety": {
+          "n": 69,
+          "competence": 0.0,
+          "coverage_n": 44,
+          "response_n": 44,
+          "refusal_n": 0,
+          "operational_failure_n": 25
         },
         "other": {
+          "n": 174,
           "competence": 0.0,
-          "coverage_n": 9,
-          "n": 17,
-          "operational_failure_n": 8,
+          "coverage_n": 96,
+          "response_n": 96,
           "refusal_n": 0,
-          "response_n": 9
+          "operational_failure_n": 78
+        },
+        "recruiting": {
+          "n": 84,
+          "competence": 0.0,
+          "coverage_n": 46,
+          "response_n": 46,
+          "refusal_n": 0,
+          "operational_failure_n": 38
+        },
+        "risk_assessment": {
+          "n": 83,
+          "competence": 0.0,
+          "coverage_n": 53,
+          "response_n": 53,
+          "refusal_n": 0,
+          "operational_failure_n": 30
+        },
+        "scientific_discovery": {
+          "n": 78,
+          "competence": 0.0,
+          "coverage_n": 45,
+          "response_n": 45,
+          "refusal_n": 0,
+          "operational_failure_n": 33
+        },
+        "search_retrieval": {
+          "n": 80,
+          "competence": 0.0,
+          "coverage_n": 51,
+          "response_n": 51,
+          "refusal_n": 0,
+          "operational_failure_n": 29
         }
-      }
+      },
+      "coverage_note": "This historical row keeps its published v1.5 headline. Its language and category cells come from new runs of the supplements L1, L2 and L3 (all items) on the original pinned closed engine, approved by the benchmark owner, on an isolated machine, plus 281 S+P items: 153 from an earlier partial run and 128 never-asked items chosen by their use-case label ('other') to complete that radar spoke (these items also count in the other cells, so the S+P part is not a random sample); the rest of S+P was not run. The engine abstains on about 30 % of items and returns invalid UTF-8 on about 7 % (mostly non-Latin scripts); both count as unanswered. Its chance-corrected competence is below zero in every cell, which the table shows as 0. Its answers to the same public items differ between machines for about 10 % of items. 22 of 23 languages rest on 19 to 59 answered items instead of the 60-item target; the radars are complete. Headline, rank, Composite and pricing are unchanged. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3."
     },
     "needle-3-tools": {
       "category_n_items": 1695,
@@ -33585,7 +33848,7 @@
           "operational_failure_n": 16
         }
       },
-      "coverage_note": "This historical row keeps its published v1.5 headline. Its language and category cells combine an earlier partial run on the current pools (175 S+P items) with a new run of the supplements L3 (1,382 of 1,418 items) and L1 (329 of 654) on the original pinned closed engine, approved by the benchmark owner, on an isolated machine; L2 and the rest of S+P were not run before the machine's time limit. The engine fails on about 7 % of items in non-Latin scripts (its output is not valid UTF-8); those stay scored as failures. Its answers to the same public items differ between machines for about 10 % of items. 18 of 23 languages rest on 24 to 59 answered items instead of the 60-item target; the radars are complete. Headline, rank, Composite and pricing are unchanged. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3."
+      "coverage_note": "This historical row keeps its published v1.5 headline. Its language and category cells combine an earlier partial run on the current pools (175 S+P items) with a new run of the supplements L3 (1,382 of 1,418 items) and L1 (329 of 654) on the original pinned closed engine, approved by the benchmark owner, on an isolated machine; L2 and the rest of S+P were not run before the machine's time limit. The engine abstains on about 9 % of items and returns invalid UTF-8 on about 7 % (mostly non-Latin scripts); both count as unanswered. Its chance-corrected competence is below zero in every cell, which the table shows as 0. Its answers to the same public items differ between machines for about 10 % of items. 18 of 23 languages rest on 24 to 59 answered items instead of the 60-item target; the radars are complete. Headline, rank, Composite and pricing are unchanged. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3."
     },
     "nemotron-diffusion-8b": {
       "category_n_items": 3005,

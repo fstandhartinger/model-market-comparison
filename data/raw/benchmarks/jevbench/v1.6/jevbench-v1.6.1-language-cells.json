@@ -1481,7 +1481,7 @@
     },
     "needle-3-tools": {
       "aggregate_artifact": "ops/evidence/needle-3-tools-language-category-complete-20261010.json",
-      "sha256": "65d95c62c31f2b2d7710c6c3d16f807f32b40c25d94d8cd1e679ca19119b1c7d",
+      "sha256": "cf3bfa9b10c70d2ad7409c8767e20ce36f65a33353b1eaa4ba7438bc3d8ca3b6",
       "method": "official O1S",
       "basis": "S+P+L1+L3",
       "historical_S_observed": 132,
@@ -1506,6 +1506,35 @@
       "headline_or_rank_changed": false,
       "composite_changed": false,
       "original_row_price_changed": false
+    },
+    "needle-3": {
+      "aggregate_artifact": "ops/evidence/needle-3-language-category-complete-20261010.json",
+      "sha256": "07b07a7650eaf4215f06c9ddc15eeddb3bfd69079195425bfbe3afd0e88e3ec1",
+      "method": "official O1S",
+      "basis": "S+P+L1+L2+L3",
+      "historical_S_observed": 226,
+      "historical_P_observed": 55,
+      "historical_S_successful": 223,
+      "historical_S_http500": 0,
+      "historical_P_successful": 51,
+      "historical_P_http500": 0,
+      "original_http500_retained_unimputed": 0,
+      "P300_carried_by_stable_identity_counted_once": true,
+      "supplemental_records": 1505,
+      "supplemental_L1": 354,
+      "supplemental_L2": 33,
+      "supplemental_L3": 1118,
+      "category_scored_observations": 2031,
+      "language_coverage_min": 19,
+      "language_target_complete": false,
+      "languages_below_target60": 22,
+      "topic_coverage_min": 52,
+      "usecase_coverage_min": 43,
+      "partial_completeness_exception": true,
+      "headline_or_rank_changed": false,
+      "composite_changed": false,
+      "original_row_price_changed": false,
+      "S_P_items_selected_by_usecase_label_other": 128
     }
   },
   "row_scoped_supplements": {
@@ -20909,22 +20938,206 @@
       "sealed_basis": "S"
     },
     "needle-3": {
-      "coverage": "S+P",
+      "coverage": "S+P+L1+L2+L3",
       "languages": {
-        "en": {
+        "ar": {
+          "n": 65,
           "competence": 0.0,
-          "coverage_n": 83,
-          "n": 115,
-          "operational_failure_n": 32,
+          "coverage_n": 30,
+          "response_n": 30,
           "refusal_n": 0,
-          "response_n": 83
+          "operational_failure_n": 35
+        },
+        "cs": {
+          "n": 67,
+          "competence": 0.0,
+          "coverage_n": 43,
+          "response_n": 43,
+          "refusal_n": 0,
+          "operational_failure_n": 24
+        },
+        "da": {
+          "n": 65,
+          "competence": 0.0,
+          "coverage_n": 45,
+          "response_n": 45,
+          "refusal_n": 0,
+          "operational_failure_n": 20
+        },
+        "de": {
+          "n": 68,
+          "competence": 0.0,
+          "coverage_n": 47,
+          "response_n": 47,
+          "refusal_n": 0,
+          "operational_failure_n": 21
+        },
+        "el": {
+          "n": 60,
+          "competence": 0.0,
+          "coverage_n": 19,
+          "response_n": 19,
+          "refusal_n": 0,
+          "operational_failure_n": 41
+        },
+        "en": {
+          "n": 566,
+          "competence": 0.0,
+          "coverage_n": 386,
+          "response_n": 386,
+          "refusal_n": 0,
+          "operational_failure_n": 180
+        },
+        "es": {
+          "n": 71,
+          "competence": 0.0,
+          "coverage_n": 45,
+          "response_n": 45,
+          "refusal_n": 0,
+          "operational_failure_n": 26
+        },
+        "fi": {
+          "n": 67,
+          "competence": 0.0,
+          "coverage_n": 35,
+          "response_n": 35,
+          "refusal_n": 0,
+          "operational_failure_n": 32
+        },
+        "fr": {
+          "n": 67,
+          "competence": 0.0,
+          "coverage_n": 51,
+          "response_n": 51,
+          "refusal_n": 0,
+          "operational_failure_n": 16
+        },
+        "hi": {
+          "n": 63,
+          "competence": 0.0,
+          "coverage_n": 22,
+          "response_n": 22,
+          "refusal_n": 0,
+          "operational_failure_n": 41
+        },
+        "id": {
+          "n": 67,
+          "competence": 0.0,
+          "coverage_n": 54,
+          "response_n": 54,
+          "refusal_n": 0,
+          "operational_failure_n": 13
+        },
+        "it": {
+          "n": 71,
+          "competence": 0.0,
+          "coverage_n": 45,
+          "response_n": 45,
+          "refusal_n": 0,
+          "operational_failure_n": 26
+        },
+        "ja": {
+          "n": 68,
+          "competence": 0.0,
+          "coverage_n": 33,
+          "response_n": 33,
+          "refusal_n": 0,
+          "operational_failure_n": 35
+        },
+        "ko": {
+          "n": 69,
+          "competence": 0.0,
+          "coverage_n": 29,
+          "response_n": 29,
+          "refusal_n": 0,
+          "operational_failure_n": 40
+        },
+        "mixed": {
+          "n": 67,
+          "competence": 0.0,
+          "coverage_n": 58,
+          "response_n": 58,
+          "refusal_n": 0,
+          "operational_failure_n": 9
+        },
+        "nl": {
+          "n": 64,
+          "competence": 0.0,
+          "coverage_n": 46,
+          "response_n": 46,
+          "refusal_n": 0,
+          "operational_failure_n": 18
+        },
+        "no": {
+          "n": 62,
+          "competence": 0.0,
+          "coverage_n": 43,
+          "response_n": 43,
+          "refusal_n": 0,
+          "operational_failure_n": 19
+        },
+        "pl": {
+          "n": 71,
+          "competence": 0.0,
+          "coverage_n": 41,
+          "response_n": 41,
+          "refusal_n": 0,
+          "operational_failure_n": 30
+        },
+        "pt": {
+          "n": 72,
+          "competence": 0.0,
+          "coverage_n": 50,
+          "response_n": 50,
+          "refusal_n": 0,
+          "operational_failure_n": 22
+        },
+        "sv": {
+          "n": 67,
+          "competence": 0.0,
+          "coverage_n": 42,
+          "response_n": 42,
+          "refusal_n": 0,
+          "operational_failure_n": 25
+        },
+        "tr": {
+          "n": 66,
+          "competence": 0.0,
+          "coverage_n": 37,
+          "response_n": 37,
+          "refusal_n": 0,
+          "operational_failure_n": 29
+        },
+        "uk": {
+          "n": 64,
+          "competence": 0.0,
+          "coverage_n": 24,
+          "response_n": 24,
+          "refusal_n": 0,
+          "operational_failure_n": 40
+        },
+        "zh": {
+          "n": 64,
+          "competence": 0.0,
+          "coverage_n": 28,
+          "response_n": 28,
+          "refusal_n": 0,
+          "operational_failure_n": 36
         }
       },
       "pool_ok": {
-        "P": 33,
-        "S": 116
+        "S": 223,
+        "P": 51,
+        "L1": 354,
+        "L2": 33,
+        "L3": 1118
       },
-      "sealed_basis": "S"
+      "sealed_basis": null,
+      "language_coverage": "S+P+L1+L2+L3",
+      "historical_sealed_observed": 226,
+      "language_target_complete": false,
+      "languages_below_target60": 22,
+      "coverage_note": "This historical row keeps its published v1.5 headline. Its language and category cells come from new runs of the supplements L1, L2 and L3 (all items) on the original pinned closed engine, approved by the benchmark owner, on an isolated machine, plus 281 S+P items: 153 from an earlier partial run and 128 never-asked items chosen by their use-case label ('other') to complete that radar spoke (these items also count in the other cells, so the S+P part is not a random sample); the rest of S+P was not run. The engine abstains on about 30 % of items and returns invalid UTF-8 on about 7 % (mostly non-Latin scripts); both count as unanswered. Its chance-corrected competence is below zero in every cell, which the table shows as 0. Its answers to the same public items differ between machines for about 10 % of items. 22 of 23 languages rest on 19 to 59 answered items instead of the 60-item target; the radars are complete. Headline, rank, Composite and pricing are unchanged. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3."
     },
     "needle-3-tools": {
       "coverage": "S+P+L1+L3",
@@ -21126,7 +21339,7 @@
       "historical_sealed_observed": 132,
       "language_target_complete": false,
       "languages_below_target60": 18,
-      "coverage_note": "This historical row keeps its published v1.5 headline. Its language and category cells combine an earlier partial run on the current pools (175 S+P items) with a new run of the supplements L3 (1,382 of 1,418 items) and L1 (329 of 654) on the original pinned closed engine, approved by the benchmark owner, on an isolated machine; L2 and the rest of S+P were not run before the machine's time limit. The engine fails on about 7 % of items in non-Latin scripts (its output is not valid UTF-8); those stay scored as failures. Its answers to the same public items differ between machines for about 10 % of items. 18 of 23 languages rest on 24 to 59 answered items instead of the 60-item target; the radars are complete. Headline, rank, Composite and pricing are unchanged. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3."
+      "coverage_note": "This historical row keeps its published v1.5 headline. Its language and category cells combine an earlier partial run on the current pools (175 S+P items) with a new run of the supplements L3 (1,382 of 1,418 items) and L1 (329 of 654) on the original pinned closed engine, approved by the benchmark owner, on an isolated machine; L2 and the rest of S+P were not run before the machine's time limit. The engine abstains on about 9 % of items and returns invalid UTF-8 on about 7 % (mostly non-Latin scripts); both count as unanswered. Its chance-corrected competence is below zero in every cell, which the table shows as 0. Its answers to the same public items differ between machines for about 10 % of items. 18 of 23 languages rest on 24 to 59 answered items instead of the 60-item target; the radars are complete. Headline, rank, Composite and pricing are unchanged. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3."
     },
     "nemotron-diffusion-8b": {
       "coverage": "S+P+L1+L2+L3",
