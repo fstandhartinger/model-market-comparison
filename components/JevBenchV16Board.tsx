@@ -381,7 +381,7 @@ function NoulAndGate({ a, hiddenApi }: { a: JevV16ReleaseArtifact; hiddenApi: Re
         const d = s.noul_decisive;
         // v1.7.7: A4 re-run rows come as system aggregates without per-type support or decisiveness figures.
         const a4Row = !!(s as { a4?: unknown }).a4;
-        // v1.7.8: rows added after the release (Liquid d1) publish no decisiveness figure.
+        // v1.7.8: rows added after the release show a dash unless they carry the decisive_v16 figures (Liquid d1, Microsoft-Decision-1 since 10 Oct 2026).
         const addon = !!(s as { full_api_addon?: unknown }).full_api_addon;
         return <tr key={s.key} className="border-t border-line" {...apiRowProps(s.key, hiddenApi)}>
           <th scope="row" className="p-2 font-normal whitespace-nowrap">{short(s.display)}{s.listing === JEV_SCOPE_LISTING.reference && <span className="bh-muted"> · reference</span>}</th>
