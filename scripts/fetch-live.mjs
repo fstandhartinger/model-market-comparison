@@ -11,7 +11,7 @@ import { writeJSONAtomic } from "../lib/snapshot.mjs";
 import { refreshAaEfficiency } from "./fetch-aa-efficiency.mjs";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { BOARD_REGISTRY_INCONSISTENT, absentIdentities, assertApprovedIdentityCoverage, assertIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, classifyBoardAbsence, endpointIdentity, planOpenRouterWithdrawals } from '../lib/live-source.mjs';
+import { BOARD_REGISTRY_INCONSISTENT, absentIdentities, assertApprovedIdentityCoverage, assertIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, classifyBoardAbsence, endpointIdentity, findBoardRekeys, planOpenRouterWithdrawals } from '../lib/live-source.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const RAW = join(__dirname, "..", "data", "raw");
@@ -162,7 +162,7 @@ async function fetchDesignArena() {
   // D255: read before the boards, so an absent row can be checked against the source's own record.
   permit(`GET ${baseUrl}/api/registry`);
   const registry = await getJSON(`${baseUrl}/api/registry`);
-  const inconsistencies = [];
+  const inconsistencies = [], rekeys = [];
   for (const q of queries) {
     const data = await getJSON(`${baseUrl}/api/leaderboard`, {
       method: "POST",
@@ -176,18 +176,26 @@ async function fetchDesignArena() {
     } catch (error) {
       // D255: only the missing-identity case is classifiable. An empty, malformed or duplicate-id
       // response is still fatal here, whatever the registry says.
-      const missing = absentIdentities(prior, out[q.key].data, (row) => row.modelId);
-      if (!missing.length) throw error;
-      const { contradicted, corroborated } = classifyBoardAbsence(missing, registry, q.body.category);
-      // A single corroborated withdrawal keeps the whole capture on the review path: publishing the
-      // rest of the board would accept that withdrawal silently.
-      if (corroborated.length || !contradicted.length) throw error;
-      inconsistencies.push({
-        board: q.key, category: q.body.category, label: `DesignArena ${q.key}`,
-        prior_count: prior.length, current_count: out[q.key].data.length,
-        board_last_update: data.metadata?.lastUpdateTime ?? null, board_total_votes: data.metadata?.totalVotes ?? null,
-        contradicted, coverage_error: error.message,
-      });
+      const absent = absentIdentities(prior, out[q.key].data, (row) => row.modelId);
+      if (!absent.length) throw error;
+      // CR-399: a re-key the registry itself records is not an absence at all.
+      const { rekeyed, remaining: missing } = findBoardRekeys(absent, prior, out[q.key].data, registry, q.body.category);
+      for (const r of rekeyed) {
+        rekeys.push({ board: q.key, ...r });
+        console.log(`  ${q.key}: ${r.from} re-keyed to ${r.to} (${r.display_name}; registry: ${r.from} inactive, ${r.to} active; battles ${r.prior.battles} -> ${r.current.battles})`);
+      }
+      if (missing.length) {
+        const { contradicted, corroborated } = classifyBoardAbsence(missing, registry, q.body.category);
+        // A single corroborated withdrawal keeps the whole capture on the review path: publishing the
+        // rest of the board would accept that withdrawal silently.
+        if (corroborated.length || !contradicted.length) throw error;
+        inconsistencies.push({
+          board: q.key, category: q.body.category, label: `DesignArena ${q.key}`,
+          prior_count: prior.length, current_count: out[q.key].data.length,
+          board_last_update: data.metadata?.lastUpdateTime ?? null, board_total_votes: data.metadata?.totalVotes ?? null,
+          contradicted, coverage_error: error.message,
+        });
+      }
     }
     for (const row of out[q.key].data) {
       if (!Number.isFinite(row.elo) || !Number.isSafeInteger(row.battles) || row.battles < 0) throw new Error(`DesignArena invalid Elo/battles: ${row.modelId}`);
@@ -211,6 +219,11 @@ async function fetchDesignArena() {
     if (evidenceDir) await writeJSONAtomic(join(evidenceDir, 'designarena-board-inconsistency.json'), record);
     const names = inconsistencies.flatMap((b) => b.contradicted.map((c) => `${b.board}:${c.id}`)).join(', ');
     throw new Error(`${BOARD_REGISTRY_INCONSISTENT} DesignArena: ${names} absent from the board while the source's own registry still serves them as active for that category. Today's capture is not published; the previously published board (${previous.collected_at ?? 'unknown date'}) stays.`);
+  }
+  if (rekeys.length && process.env.BH_EVIDENCE_DIR) {
+    await writeJSONAtomic(join(process.env.BH_EVIDENCE_DIR, 'designarena-rekeys.json'), {
+      source: 'designarena', determined_at: new Date().toISOString(), registry_endpoint: `GET ${baseUrl}/api/registry`, rekeys,
+    });
   }
   const modelIds = [...new Set(Object.values(out).flatMap((board) => board.data.map((row) => row.modelId)))].sort();
   const missingRegistryIds = modelIds.filter((id) => !registry.models?.[id]);
