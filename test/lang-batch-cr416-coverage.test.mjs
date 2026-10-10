@@ -12,9 +12,7 @@ const language = read('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.1-languag
 const category = read('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.1-category-cells.json');
 // CR-416: historical rows reflex-27b, surogate-rune-26b-a4b-v3-rtxpro6000-a2, jeff (cells only; v1.5 headlines kept).
 const KEYS = ['reflex-27b', 'surogate-rune-26b-a4b-v3-rtxpro6000-a2', 'jeff'];
-// gliner2 lost about 1,000 issued items (OOM kills, a machine shutdown); its languages stay >= 30 but below the 60 target, disclosed.
 const BELOW_LANGUAGE_TARGET = new Set([]);
-// openjev-razorback16 samples stochastically (diffusion decoding): its passes agree on 86-89 % of the public items; disclosed in its coverage note.
 const STOCHASTIC = new Set([]);
 
 for (const key of KEYS) {
