@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { languageCoverage, jevbenchCategoryView, withLiveCategoryCells, L3_EXPOSURE_NOTES } from '../lib/jevbench-categories.mjs';
 import { validateRadarSpokeGate } from '../lib/jevbench-radar-spoke-gate.mjs';
-import { listedRadarBoards } from '../scripts/jevbench-radar-spokes.mjs';
+import { listedRadarBoards, listedRadarCategoryView } from '../scripts/jevbench-radar-spokes.mjs';
 const bytes = (p) => readFileSync(new URL(`../${p}`, import.meta.url));
 const read = (p) => JSON.parse(bytes(p));
 const sha256 = (b) => createHash('sha256').update(b).digest('hex');
@@ -94,7 +94,8 @@ test('Mercury discloses its S+P+L1+L2+L3 pools and meets the listed-row radar ga
   assert.ok(boards.open.includes(key));
   const view = jevbenchCategoryView('v1.6.1', boards.open, { supplement: true });
   assert.equal(view.categoryPools[key], 'S+P+L1+L2+L3');
-  validateRadarSpokeGate(view, boards.open, read('data/jevbench-radar-spoke-exceptions.json'));
+  // Gate on the same addenda-aware view the page and release script use.
+  validateRadarSpokeGate(listedRadarCategoryView(boards.open), boards.open, read('data/jevbench-radar-spoke-exceptions.json'));
 });
 
 test('The coverage note is visible on the language row and the compare radars, in plain public terms', () => {
