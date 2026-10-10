@@ -40,6 +40,8 @@ export function Radar({ spokes, series, size, id, title, desc, domain = RADAR_DE
   // on a canvas fitted to them (lib/radar-shape.mjs endsLayout): one geometry from 600 px up, a wrapped phone geometry below.
   const mode = radarLabelMode(spokes.map((s) => ({ lines: s.lines, value: valueText(s) })), size);
   if (mode === "full") return <RadarCanvas spokes={spokes} series={series} size={size} id={id} title={title} desc={desc} domain={domain} mode="full" />;
+  // Both geometries are server-rendered and CSS picks one, so data-bh-jev12-radar-* hooks appear once per variant: scope DOM
+  // queries to [data-bh-radar-variant].
   return <>
     <div className="hidden min-[600px]:block" data-bh-radar-variant="desktop"><RadarCanvas spokes={spokes} series={series} size={size} id={id} title={title} desc={desc} domain={domain} mode="ends" profile="desktop" /></div>
     <div className="min-[600px]:hidden" data-bh-radar-variant="phone"><RadarCanvas spokes={spokes} series={series} size={size} id={`${id}-m`} title={title} desc={desc} domain={domain} mode="ends" profile="phone" /></div>
@@ -98,11 +100,12 @@ function RadarCanvas({ spokes, series, size, id, title, desc, domain, mode, prof
         {pts.map(([x, y], i) => se.square ? <rect key={i} x={x - 3.5} y={y - 3.5} width={7} height={7} fill={se.stroke} stroke="var(--surface)" strokeWidth={1} /> : <circle key={i} cx={x} cy={y} r={3.8} fill={se.stroke} stroke="var(--surface)" strokeWidth={1} />)}
       </g>;
     })}
+    {ends && ends.items.map((it, i) => it.leader ? <line key={`leader-${spokes[i].key}`} x1={r3(it.ex)} y1={r3(it.ey)} x2={r3(it.x)} y2={r3(it.ly)} stroke="var(--muted)" strokeOpacity={0.45} strokeWidth={0.8} data-bh-radar-leader /> : null)}
     {ends ? ends.items.map((it, i) => {
       const s = spokes[i], x = r3(it.x), y = r3(it.y);
       return <g key={s.key} data-bh-jev12-radar-spoke={s.key} style={{ cursor: "help" }}>
-        {it.leader && <line x1={r3(it.ex)} y1={r3(it.ey)} x2={x} y2={r3(it.ly)} stroke="var(--muted)" strokeOpacity={0.45} strokeWidth={0.8} data-bh-radar-leader />}
-        <text x={x} y={y} textAnchor={it.anchor} fontSize={it.font} fill="var(--text)">
+        {/* The halo (F-70 style) masks any leader line that passes behind a label, so no digit is struck through. */}
+        <text x={x} y={y} textAnchor={it.anchor} fontSize={it.font} fill="var(--text)" style={{ paintOrder: 'stroke', stroke: 'var(--surface, #161b22)', strokeWidth: '4px', strokeLinejoin: 'round' }}>
           <title>{labelTitle(s, i)}</title>
           {it.lines.map((l, j) => <tspan key={j} x={x} dy={j === 0 ? 0 : it.line} fontWeight={600}>{l}</tspan>)}
           <tspan x={x} dy={it.line} fontSize={it.font - 0.5}>{slots(s)}</tspan>
@@ -119,6 +122,8 @@ function RadarCanvas({ spokes, series, size, id, title, desc, domain, mode, prof
         <tspan x={x} dy={14} fontSize={13}>{slots(s)}</tspan>
       </text>;
     })}
+    {/* Tap/keyboard target on every label (the numbered badges had one): opens the spoke's tooltip with every series' value. */}
+    {ends && ends.items.map((it, i) => <RadarHit key={`label-${spokes[i].key}`} cx={r3((it.box.x0 + it.box.x1) / 2)} cy={r3((it.box.y0 + it.box.y1) / 2)} s={0} i={i} active={active} setActive={setActive} label={labelTitle(spokes[i], i)} />)}
     {series.map((se, k) => spokes.map((s, i) => {
       if (!plottable(s.values[k], s.thin[k])) return null;
       const [x, y] = at(i, s.values[k] as number);
@@ -127,7 +132,7 @@ function RadarCanvas({ spokes, series, size, id, title, desc, domain, mode, prof
   </svg>;
   return <><div className="relative" data-bh-jev-radar-interactive onPointerLeave={(e) => { if (e.pointerType === 'mouse') setActive(null); }} onClick={() => setActive(null)}>
     {svg}
-    <RadarTip active={active} axes={tooltipAxes} series={tooltipSeries} at={tooltipAt} width={W} height={H} />
+    <RadarTip active={active} axes={tooltipAxes} series={tooltipSeries} at={tooltipAt} width={r3(W)} height={r3(H)} />
   </div>{scaleText && <p className="bh-muted text-center text-[12px]" data-bh-radar-scale="signed">{scaleText}</p>}</>;
 }
 
