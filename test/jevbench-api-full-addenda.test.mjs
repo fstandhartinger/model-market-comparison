@@ -38,3 +38,68 @@ test('rank insertion preserves old relative order and immutable source; refuses 
   assert.equal(artifact.systems.length, 6);
   assert.throws(() => withApiFullAddenda(out, a), /overridden/);
 });
+test('published addendum model page uses the same scoped board ranks and full-set metadata', async () => {
+  const { mkdtemp, mkdir, symlink, writeFile, rm } = await import('node:fs/promises');
+  const { tmpdir } = await import('node:os');
+  const path = await import('node:path');
+  const { readJevbenchA4ModelPages } = await import('../lib/jevbench-a4-model-pages.mjs');
+  const { readJevbenchV161Release } = await import('../lib/jevbench-v16-release.mjs');
+  const { readJevbenchV157Release } = await import('../lib/jevbench-v15-release.mjs');
+  const { readFile } = await import('node:fs/promises');
+  const { jevWithApiA4Rows, jevScopeClassifier, jevbenchScopeArtifact } = await import('../lib/jevbench-scope.mjs');
+  const { withApiRerunSplits } = await import('../lib/jevbench-api-rerun-cells.mjs');
+  const { jevClassRows, JEV_V16_CLASS_OPTIONS } = await import('../lib/jevbench-jev-class.mjs');
+  const root = await mkdtemp(path.join(tmpdir(), 'bh-cr401-model-page-'));
+  try {
+    await mkdir(path.join(root, 'data'));
+    await symlink(path.resolve('data/raw'), path.join(root, 'data/raw'), 'dir');
+    await symlink(path.resolve('data/jevbench-api-a4-equated.json'), path.join(root, 'data/jevbench-api-a4-equated.json'));
+    const registry = fixture(), entry = registry.entries[0];
+    entry.row.capability = 99; entry.row.scores = { A: 99, B: 99, C: 99 };
+    await writeFile(path.join(root, 'data/jevbench-api-full-addenda.json'), JSON.stringify(registry));
+    const [{ artifact: release, carry }, previous, a4, pages, originalPages] = await Promise.all([
+      readJevbenchV161Release(root), readJevbenchV157Release(root),
+      readFile(path.join(root, 'data/jevbench-api-a4-equated.json'), 'utf8').then(JSON.parse),
+      readJevbenchA4ModelPages(root), readJevbenchA4ModelPages(),
+    ]);
+    const meta = new Map([...previous.artifact.systems, ...carry.rows].map(r => [r.key, r]));
+    const merged = withApiFullAddenda(jevWithApiA4Rows(release, withApiRerunSplits(a4), meta), registry);
+    const board = jevbenchScopeArtifact(merged, 'api', jevScopeClassifier(merged.systems, carry.rows, previous.artifact.systems, previous.artifact.not_measured));
+    const expected = board.systems.find(r => r.key === entry.key);
+    const classRows = jevClassRows(board.systems.filter(r => r.ranked), JEV_V16_CLASS_OPTIONS).rows.filter(r => r.inClass);
+    const page = pages.get(entry.key);
+    assert.ok(page, 'new published key must exist for static params and model-page lookup');
+    assert.deepEqual(page.row, expected);
+    assert.equal(page.compositeRank, expected.rank);
+    assert.equal(page.capabilityRank, classRows.findIndex(r => r.row.key === entry.key) + 1);
+    assert.equal(page.nRanked, board.n_ranked);
+    assert.equal(page.full, true); assert.equal(page.nItems, 1500);
+    assert.equal(page.measuredOn, entry.published_at);
+    assert.equal(page.round, entry.provenance.parent); assert.equal(page.offsets, null);
+    assert.ok(pages.get('instinct').compositeRank > originalPages.get('instinct').compositeRank);
+    assert.equal(originalPages.has(entry.key), false, 'real empty registry remains unchanged');
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+test('nested row aggregates reject arbitrary item fields and scalar-object substitutions', () => {
+  for (const field of ['per_item', 'items', 'gold_labels']) {
+    for (const container of ['cost', 'speed', 'status', 'v16', 'axes', 'scores']) {
+      const a = fixture(); a.entries[0].row[container][field] = [{ secret: 'invented control' }];
+      assert.throws(() => validateApiFullAddenda(a), /API full addendum/);
+    }
+  }
+  for (const mutate of [
+    r => { r.cost.unknown = []; }, r => { r.cost.basis = { arbitrary: [] }; },
+    r => { r.intelligence = { base: { arbitrary: [] } }; },
+    r => { r.calibration = { parts: { choice: { arbitrary: [] } } }; },
+    r => { r.v16.per_type = { choice: { cc_by_type: { arbitrary: [] } } }; },
+    r => { r.model_pin = { unknown: [] }; },
+  ]) {
+    const a = fixture(); mutate(a.entries[0].row);
+    assert.throws(() => validateApiFullAddenda(a), /API full addendum/);
+  }
+});
+test('n15 table denominator includes terminal failures; radar still needs 30 completed', () => {
+  const a = fixture(); a.entries[0].coverage.topics[1].answered_ok = 0; a.entries[0].coverage.topics[1].errors = 15;
+  assert.equal(validateApiFullAddenda(a), a);
+  assert.equal(coverageStatus(a.entries[0].coverage.topics[1]), 'low sample — table only');
+});
