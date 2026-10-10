@@ -589,6 +589,34 @@
       "headline_or_rank_changed": false,
       "composite_changed": false,
       "original_row_price_changed": false
+    },
+    "messier-one-v0.2": {
+      "aggregate_artifact": "ops/evidence/messier-one-v0.2-language-category-complete-20261010.json",
+      "sha256": "e03206ca5efcd1133eb94b7fe82b6a78bdcee4769354473263af0127c128676e",
+      "method": "official O1S",
+      "basis": "S+P+L1+L2+L3",
+      "historical_S_observed": 1200,
+      "historical_P_observed": 300,
+      "historical_S_successful200": 1200,
+      "historical_S_http500": 0,
+      "historical_P_successful200": 300,
+      "historical_P_http500": 0,
+      "original_http500_retained_unimputed": 0,
+      "P300_carried_by_stable_identity_counted_once": true,
+      "supplemental_native_records": 1505,
+      "supplemental_L1": 354,
+      "supplemental_L2": 33,
+      "supplemental_L3": 1118,
+      "category_scored_observations": 3005,
+      "language_coverage_min": 65,
+      "language_target_complete": true,
+      "languages_below_target60": 0,
+      "topic_coverage_min": 109,
+      "usecase_coverage_min": 83,
+      "partial_completeness_exception": false,
+      "headline_or_rank_changed": false,
+      "composite_changed": false,
+      "original_row_price_changed": false
     }
   },
   "row_scoped_supplements": {
@@ -17010,86 +17038,206 @@
       "new_full_S1200_API_exposure": false
     },
     "messier-one-v0.2": {
-      "coverage": "S+P",
+      "coverage": "S+P+L1+L2+L3",
       "languages": {
-        "da": {
-          "competence": 39.12,
-          "coverage_n": 22,
-          "n": 22,
-          "operational_failure_n": 0,
+        "ar": {
+          "n": 71,
+          "competence": 26.55,
+          "coverage_n": 71,
+          "response_n": 71,
           "refusal_n": 0,
-          "response_n": 22
+          "operational_failure_n": 0
+        },
+        "cs": {
+          "n": 75,
+          "competence": 25.41,
+          "coverage_n": 75,
+          "response_n": 75,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "da": {
+          "n": 83,
+          "competence": 26.79,
+          "coverage_n": 83,
+          "response_n": 83,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         },
         "de": {
-          "competence": 67.93,
-          "coverage_n": 27,
-          "n": 27,
-          "operational_failure_n": 0,
+          "n": 84,
+          "competence": 37.13,
+          "coverage_n": 84,
+          "response_n": 84,
           "refusal_n": 0,
-          "response_n": 27
+          "operational_failure_n": 0
+        },
+        "el": {
+          "n": 65,
+          "competence": 20.26,
+          "coverage_n": 65,
+          "response_n": 65,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         },
         "en": {
-          "competence": 42.59,
-          "coverage_n": 1160,
-          "n": 1160,
-          "operational_failure_n": 0,
+          "n": 1306,
+          "competence": 45.34,
+          "coverage_n": 1306,
+          "response_n": 1306,
           "refusal_n": 0,
-          "response_n": 1160
+          "operational_failure_n": 0
         },
         "es": {
-          "competence": 69.93,
-          "coverage_n": 31,
-          "n": 31,
-          "operational_failure_n": 0,
+          "n": 95,
+          "competence": 39.47,
+          "coverage_n": 95,
+          "response_n": 95,
           "refusal_n": 0,
-          "response_n": 31
+          "operational_failure_n": 0
+        },
+        "fi": {
+          "n": 73,
+          "competence": 14.51,
+          "coverage_n": 73,
+          "response_n": 73,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         },
         "fr": {
-          "competence": 42.63,
-          "coverage_n": 16,
-          "n": 16,
-          "operational_failure_n": 0,
+          "n": 80,
+          "competence": 30.8,
+          "coverage_n": 80,
+          "response_n": 80,
           "refusal_n": 0,
-          "response_n": 16
+          "operational_failure_n": 0
+        },
+        "hi": {
+          "n": 72,
+          "competence": 31.87,
+          "coverage_n": 72,
+          "response_n": 72,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "id": {
+          "n": 71,
+          "competence": 46.51,
+          "coverage_n": 71,
+          "response_n": 71,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         },
         "it": {
-          "competence": 38.19,
-          "coverage_n": 17,
-          "n": 17,
-          "operational_failure_n": 0,
+          "n": 83,
+          "competence": 27.11,
+          "coverage_n": 83,
+          "response_n": 83,
           "refusal_n": 0,
-          "response_n": 17
+          "operational_failure_n": 0
         },
         "ja": {
-          "competence": 62.76,
-          "coverage_n": 17,
-          "n": 17,
-          "operational_failure_n": 0,
+          "n": 80,
+          "competence": 57.78,
+          "coverage_n": 80,
+          "response_n": 80,
           "refusal_n": 0,
-          "response_n": 17
+          "operational_failure_n": 0
+        },
+        "ko": {
+          "n": 77,
+          "competence": 33.76,
+          "coverage_n": 77,
+          "response_n": 77,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "mixed": {
+          "n": 78,
+          "competence": 76.2,
+          "coverage_n": 78,
+          "response_n": 78,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "nl": {
+          "n": 72,
+          "competence": 32.89,
+          "coverage_n": 72,
+          "response_n": 72,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "no": {
+          "n": 69,
+          "competence": 28.14,
+          "coverage_n": 69,
+          "response_n": 69,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         },
         "pl": {
-          "competence": 43.31,
-          "coverage_n": 31,
-          "n": 31,
-          "operational_failure_n": 0,
+          "n": 88,
+          "competence": 34.51,
+          "coverage_n": 88,
+          "response_n": 88,
           "refusal_n": 0,
-          "response_n": 31
+          "operational_failure_n": 0
         },
         "pt": {
-          "competence": 52.73,
-          "coverage_n": 29,
-          "n": 29,
-          "operational_failure_n": 0,
+          "n": 90,
+          "competence": 45.03,
+          "coverage_n": 90,
+          "response_n": 90,
           "refusal_n": 0,
-          "response_n": 29
+          "operational_failure_n": 0
+        },
+        "sv": {
+          "n": 75,
+          "competence": 14.07,
+          "coverage_n": 75,
+          "response_n": 75,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "tr": {
+          "n": 75,
+          "competence": 26.13,
+          "coverage_n": 75,
+          "response_n": 75,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "uk": {
+          "n": 73,
+          "competence": 22.82,
+          "coverage_n": 73,
+          "response_n": 73,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "zh": {
+          "n": 70,
+          "competence": 33.08,
+          "coverage_n": 70,
+          "response_n": 70,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         }
       },
       "pool_ok": {
+        "S": 1200,
         "P": 300,
-        "S": 1200
+        "L1": 354,
+        "L2": 33,
+        "L3": 1118
       },
-      "sealed_basis": "S"
+      "sealed_basis": null,
+      "language_coverage": "S+P+L1+L2+L3",
+      "historical_sealed_observed": 1200,
+      "language_target_complete": true,
+      "languages_below_target60": 0,
+      "coverage_note": "Language and category cells use the unchanged original S+P observations and all 1,505 newly completed frozen supplemental items (354 L1, 33 L2, 1,118 L3), answered natively on the original Messier image with the network disabled. Each supplement carries the same original P300 answers by stable item identity; they count once in the union. All 1,505 supplemental requests succeeded. Headline, rank, Composite and original pricing are unchanged. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3."
     },
     "metask-jev-4b": {
       "coverage": "S+P+L1+L2+L3",
