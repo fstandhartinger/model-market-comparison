@@ -4,6 +4,13 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-10-10 — Language and category cells for six more rows (CR-413, board note v1.7.36)
+
+`diffusion-jev`, `spx-cd-omni`, and the historical rows `jobe-qwen3.5-4b`, `autojev-27b-rtxpro6000-a2`,
+`ninfer-qwen3.8-27b-t1.5` and `openjev-razorback16` now have complete language and category cells (S+P+L1+L2+L3), copied
+from `ops/evidence/<row>-language-category-complete-20261010.json`. Historical rows keep their v1.5 headlines. Headline
+scores, ranks, Composite and prices are unchanged; see `docs/releases/CR-413-six-more-complete-cells-20261010.md`.
+
 ## 2026-10-10 — Language and category cells for seven more rows; mixed-language column first (CR-412, board note v1.7.35)
 
 `rene-1-31b-fp8`, `decisio-gemma-4-12b-v080`, `hopper-12b-trained`, `decider-12b`, `decider-12b-v1`, `bobcat-flash-1.2`
