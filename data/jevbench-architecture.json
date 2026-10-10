@@ -5087,6 +5087,106 @@
           "params": "150M",
           "quant": "ONNX INT8"
         }
+      },
+      "jiwo-0.8b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/eljiwo/jiwo-0.8b/blob/52d217f8d68114e853b31ca364f8cb7da1b3c64d/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config: architectures [\"Qwen3_5TextModel\"], model_type \"qwen3_5_text\", 24 hidden layers, hidden size 1024; the decision read-out ships beside it as readout.safetensors."
+          },
+          {
+            "url": "https://huggingface.co/eljiwo/jiwo-0.8b/blob/52d217f8d68114e853b31ca364f8cb7da1b3c64d/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: base_model Qwen/Qwen3.5-0.8B with base_model_relation \"finetune\", library_name jiwo, 0.75B parameters, English only, licence apache-2.0; one forward pass with calibrated native probabilities and no generation."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "0.75B",
+          "quant": null
+        }
+      },
+      "jiwo-4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/eljiwo/jiwo-4b/blob/9adc559ff7ec5baffade3998f7bca85da0d124ed/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config: architectures [\"Qwen3_5TextModel\"], model_type \"qwen3_5_text\", 32 hidden layers, hidden size 2560; the decision read-out ships beside it as readout.safetensors."
+          },
+          {
+            "url": "https://huggingface.co/eljiwo/jiwo-4b/blob/9adc559ff7ec5baffade3998f7bca85da0d124ed/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: base_model Qwen/Qwen3.5-4B with base_model_relation \"finetune\", library_name jiwo, 4.2B parameters, English only, licence apache-2.0; one forward pass with calibrated native probabilities and no generation."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4.2B",
+          "quant": null
+        }
+      },
+      "classone-qwen3.5-2b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/devops-thiago/classone-qwen3.5-2b/blob/fc15401b6ae6d86b8fdf664b40bfdd8055edf374/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config: architectures [\"Qwen3_5Model\"], model_type \"qwen3_5\"; the ClassOne decision heads ship beside it as classone_heads.pt."
+          },
+          {
+            "url": "https://huggingface.co/devops-thiago/classone-qwen3.5-2b/blob/fc15401b6ae6d86b8fdf664b40bfdd8055edf374/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card: base_model Qwen/Qwen3.5-2B, licence apache-2.0; the published weights are merged, from the LoRA adapter (r=16, alpha=32) the card lists under lora_backbone/; one schema-constrained forward pass, no generation."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "2B",
+          "quant": null
+        }
+      },
+      "classone-qwen3.5-4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/devops-thiago/classone-qwen3.5-4b/blob/6626fdea7a3e8786bad8d2d5cc8acded1756a17c/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config: architectures [\"Qwen3_5Model\"], model_type \"qwen3_5\"; the ClassOne decision heads ship beside it as classone_heads.pt."
+          },
+          {
+            "url": "https://huggingface.co/devops-thiago/classone-qwen3.5-4b/blob/6626fdea7a3e8786bad8d2d5cc8acded1756a17c/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card: base_model Qwen/Qwen3.5-4B, licence apache-2.0; the published weights are merged, from the LoRA adapter (r=16, alpha=32) the card lists under lora_backbone/; one schema-constrained forward pass, no generation."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "classone-gemma4-e4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/devops-thiago/classone-gemma4-e4b/blob/74d6e08152878a4956ce9ffc323f6c06f13ca9af/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config: architectures [\"Gemma4Model\"], model_type \"gemma4\"; the ClassOne decision heads ship beside it as classone_heads.pt."
+          },
+          {
+            "url": "https://huggingface.co/devops-thiago/classone-gemma4-e4b/blob/74d6e08152878a4956ce9ffc323f6c06f13ca9af/README.md",
+            "kind": "model-card",
+            "fact": "Pinned author card: base_model google/gemma-4-E4B-it, licence apache-2.0; the published weights are merged, from the LoRA adapter (r=16, alpha=32) the card lists under lora_backbone/; one schema-constrained forward pass, no generation."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "E4B",
+          "quant": null
+        }
       }
     },
     "imagejevbench": {
