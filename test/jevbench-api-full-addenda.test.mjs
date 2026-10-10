@@ -109,3 +109,17 @@ test('n15 table denominator includes terminal failures; radar still needs 30 com
   assert.equal(validateApiFullAddenda(a), a);
   assert.equal(coverageStatus(a.entries[0].coverage.topics[1]), 'low sample — table only');
 });
+test('accepted refusal coverage is separate from valid answers and scored failures', () => {
+  const a = fixture(), e = a.entries[0], cell = e.coverage.topics[2];
+  cell.answered_ok = 20; cell.errors = 10; cell.coverage_n = 30;
+  assert.equal(validateApiFullAddenda(a), a);
+  const taxonomy = Object.fromEntries(Object.entries(e.coverage).map(([d, cs]) => [d, cs.map(c => ({ key: c.key }))]));
+  assert.equal(withApiFullAddendumCategories({ systems: {}, ...taxonomy }, a).systems[e.key].topics[cell.key].coverage_n, 30);
+  assert.equal(coverageStatus(cell), 'radar sample minimum met');
+  cell.coverage_n = 20;
+  assert.equal(coverageStatus(cell), 'fewer than 30 completed — table only');
+  for (const bad of [19, 31, 29.5, true]) {
+    cell.coverage_n = bad;
+    assert.throws(() => validateApiFullAddenda(a), /completed coverage/);
+  }
+});
