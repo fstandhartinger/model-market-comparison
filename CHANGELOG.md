@@ -4,6 +4,14 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-10-10 — Needle 3 cells; corrected Needle failure description (CR-426, board note v1.7.41)
+
+`needle-3` (historical row, v1.5 headline kept) now has language and category cells: all L1/L2/L3 supplement items plus 281
+S+P items (153 earlier, 128 never-asked items selected by use-case label to complete that spoke). Radars complete; 22 languages
+below the 60-item target; `partial_completeness_exception: true`. The coverage notes of both Needle rows now state the
+engine's abstentions (about 30 % / 9 %) and invalid-UTF-8 failures (about 7 %), and that competence is below zero (shown as 0).
+See `docs/releases/CR-426-needle-3-cells-20261010.md`.
+
 ## 2026-10-10 — Needle 3 (options as tools) cells; ClassOne Gemma reason (CR-425, board note v1.7.40)
 
 `needle-3-tools` (historical row, v1.5 headline kept) now has language and category cells from a partial run on the current
