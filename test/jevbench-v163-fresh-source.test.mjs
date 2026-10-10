@@ -25,10 +25,10 @@ function freshCategories(revision, competence) {
 }
 const cat = (view, dim, key) => view.dims.find((d) => d.key === dim).cats.find((x) => x.key === key);
 
-test('fresh-v16 helper covers exactly v1.6.2 and v1.6.3', () => {
-  assert.deepEqual(JEVBENCH_FRESH_V16_REVISIONS, ['v1.6.2', 'v1.6.3']);
-  for (const r of ['v1.6.2', 'v1.6.3']) assert.equal(isFreshJevbenchV16Revision(r), true, r);
-  for (const r of ['v1.6.1', 'v1.6.0', 'v1.5.7', 'v1.5.6', 'v1.5.5', 'v1.5.0', 'v1.6.4', 'v1.6', '', undefined, null]) assert.equal(isFreshJevbenchV16Revision(r), false, String(r));
+test('fresh-v16 helper covers exactly v1.6.2, v1.6.3 and v1.6.4', () => {
+  assert.deepEqual(JEVBENCH_FRESH_V16_REVISIONS, ['v1.6.2', 'v1.6.3', 'v1.6.4']);
+  for (const r of ['v1.6.2', 'v1.6.3', 'v1.6.4']) assert.equal(isFreshJevbenchV16Revision(r), true, r);
+  for (const r of ['v1.6.1', 'v1.6.0', 'v1.5.7', 'v1.5.6', 'v1.5.5', 'v1.5.0', 'v1.6.5', 'v1.6', '', undefined, null]) assert.equal(isFreshJevbenchV16Revision(r), false, String(r));
   assert.ok(JEVBENCH_CATEGORY_REVISIONS.includes('v1.6.3'));
 });
 
@@ -142,8 +142,8 @@ test('fresh category view rows preserve native and wrapper cells, wrappers last'
   assert.deepEqual(ordered.map(r => r.key), ['Decisor', 'Jeff', 'RYO', '12B']);
   assert.deepEqual(rows.map(r => r.key), ['RYO', 'Decisor', '12B', 'Jeff']);
   const board = read('components/JevBenchV16Board.tsx');
-  assert.match(board, /const compareSources = a\.revision === 'v1\.6\.3' \? freshJevbenchCategoryRows\(a.systems\) : ranked/);
-  assert.match(board, /a\.revision === 'v1\.6\.3' \? freshJevbenchCategoryRows\(a.systems.filter/);
+  assert.match(board, /const compareSources = \['v1\.6\.3', 'v1\.6\.4'\]\.includes\(a\.revision\) \? freshJevbenchCategoryRows\(a.systems\) : ranked/);
+  assert.match(board, /\['v1\.6\.3', 'v1\.6\.4'\]\.includes\(a\.revision\) \? freshJevbenchCategoryRows\(a.systems.filter/);
 });
 
 
@@ -188,14 +188,26 @@ test('v163 languages and every nonempty category require complete measured cells
   assert.throws(()=>jevbenchCategoryView('v1.6.3',keys,{artifact:bad}), /completed coverage/);
 });
 
-test('restatement is explicit only for v163 and v162 row dispatch is unchanged', () => {
+test('v163 and v164 restatements are distinct and v162 row dispatch is unchanged', () => {
   const board=read('components/JevBenchV16Board.tsx');
   assert.match(board, /a.revision === 'v1.6.3' && <p[^>]*>This same-draw addendum rescores/);
   assert.match(board, /original four systems/);
   assert.match(board, /restate and supersede v1.6.2/);
   assert.match(board, /not comparable one-to-one/);
-  // Literal version dispatch preserves existing v162 Compare ranked and Languages listedRow/byBoard paths.
-  assert.match(board, /const compareSources = a.revision === 'v1.6.3' \? freshJevbenchCategoryRows\(a.systems\) : ranked/);
-  assert.match(board, /const systems = a.revision === 'v1.6.3' \? .* : categories.language_cells \?/);
+  assert.match(board, /a.revision === 'v1.6.4' && <p[^>]*>This same-draw six-model addendum/);
+  assert.match(board, /five prior measurements, point scores and four-native field median are retained/);
+  // Explicit two-version dispatch preserves existing v162 Compare ranked and Languages listedRow/byBoard paths.
+  assert.match(board, /const compareSources = \['v1\.6\.3', 'v1\.6\.4'\]\.includes\(a\.revision\) \? freshJevbenchCategoryRows\(a.systems\) : ranked/);
+  assert.match(board, /const systems = \['v1\.6\.3', 'v1\.6\.4'\]\.includes\(a\.revision\) \? .* : categories.language_cells \?/);
   assert.match(board, /a.systems.filter\(\(s\) => listedRow\(s\) && categories.systems\[s.key\]\).sort\(byBoard\)/);
+});
+
+test('v1.6.4 uses its own stored cells and refuses missing fresh artifact', () => {
+  const { c, keys } = freshCategories('v1.6.4', 37.75);
+  const view = jevbenchCategoryView('v1.6.4', keys, { artifact: c });
+  const topic = c.topics.find(t => c.systems[keys[0]].topics[t.key]).key;
+  assert.equal(view.systems[keys[0]].topics[topic][0], 37.75);
+  assert.deepEqual(view.spokeExceptions, {});
+  assert.equal(jevbenchCategoryView('v1.6.4', keys), null);
+  assert.throws(() => jevbenchCategoryView('v1.6.4', keys, { artifact: freshCategories('v1.6.3', 40).c }), /revision mismatch/);
 });
