@@ -14,6 +14,15 @@ test('CR-377: the entry is off for everyone unless the preview parameter was ope
   assert.match(button, /if \(!enabled\) return null;/, 'a disabled button renders nothing, not even a wrapper that would shift the row layout');
 });
 
+test('CR-377 (10 Oct): the preview lives only in the tab opened with the private link and always shows a banner', async () => {
+  const [lib, button] = await Promise.all([read('../lib/use-model.ts'), read('../components/UseModelButton.tsx')]);
+  assert.match(lib, /USE_MODEL_TOKEN = '[a-z0-9-]{6,}'/, 'a bare ?bh-pv=1 must not switch it on');
+  assert.doesNotMatch(button, /localStorage\.setItem/, 'Florian 10 Oct: never remembered per browser');
+  assert.match(button, /localStorage\.removeItem\(USE_MODEL_STORAGE_KEY\)/, 'the 9 Oct per-browser flag is cleared');
+  assert.match(button, /sessionStorage\.setItem\(USE_MODEL_STORAGE_KEY, '1'\)/);
+  assert.match(button, /if \(enabled\) \{ stripParam\(\); showBanner\(\); \}/, 'token leaves the address bar and the PREVIEW banner appears');
+});
+
 test('CR-377: slugs come from the Decision Models hub mapping and cover only open-weights keys', async () => {
   const slugs = JSON.parse(await read('../data/use-model-slugs.json'));
   assert.equal(slugs.source_schema, 'decisionmodels-model-map/1');

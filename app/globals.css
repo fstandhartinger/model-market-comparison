@@ -800,7 +800,7 @@ a[data-bh-base-model-footnote-ref] { text-decoration: underline; text-underline-
 /* Low-n language cells (JevBench v1.6+ category view) dim only their heat shade, never the number. */
 .bh-heat[data-bh-heat-low-n] { background-color: rgb(var(--heat) / calc((var(--heat-min) + var(--h, 0) * var(--heat-span)) * .6)); }
 
-/* PREVIEW "Use this model" entry on open-weights rows (lib/use-model.ts; hidden unless ?use-model=1). */
+/* PREVIEW "Use this model" entry on open-weights rows (lib/use-model.ts; hidden unless the private ?bh-pv link). */
 .bh-use-model { display: inline-flex; flex: none; align-items: center; vertical-align: middle; margin-left: 6px; position: relative; }
 .bh-use-model-btn { display: inline-flex; align-items: center; gap: 4px; min-height: 22px; padding: 0 8px 0 6px; border-radius: 999px; border: 1px solid rgb(var(--accent2) / .6); background: rgb(var(--accent2) / .1); color: rgb(var(--accent2)); font-size: 11px; font-weight: 600; line-height: 1; white-space: nowrap; text-decoration: none; transition: background-color .12s, border-color .12s; }
 .bh-use-model-btn:hover, .bh-use-model-btn:focus-visible { background: rgb(var(--accent2) / .22); border-color: rgb(var(--accent2)); }
@@ -820,3 +820,9 @@ a[data-bh-base-model-footnote-ref] { text-decoration: underline; text-underline-
 .bh-use-model-pop-all:hover { text-decoration: underline; }
 /* The row tooltip of the capability chart would sit under our popover; ours wins while it is open. */
 html[data-bh-use-model-open] .bh-jev-cap-tip { display: none !important; }
+.bh-use-model-banner { position: sticky; top: 0; z-index: 90; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 8px 16px; border-bottom: 2px solid #b45309; background: #fef3c7; color: #451a03; font-size: 13px; line-height: 1.35; }
+.bh-use-model-banner p { display: flex; align-items: baseline; gap: 10px; margin: 0; max-width: 760px; }
+.bh-use-model-banner b { flex: none; padding: 2px 7px; border-radius: 6px; background: #b45309; color: #fff; font-size: 11.5px; font-weight: 800; letter-spacing: .12em; }
+.bh-use-model-banner button { flex: none; min-height: 30px; padding: 0 12px; border-radius: 8px; border: 1px solid #92400e; background: #fff; color: #78350f; font-size: 12.5px; font-weight: 700; cursor: pointer; }
+.bh-use-model-banner button:hover, .bh-use-model-banner button:focus-visible { background: #fde68a; }
+@media (max-width: 639px) { .bh-use-model-banner { gap: 8px; padding: 6px 8px; font-size: 11.5px; } .bh-use-model-banner p { gap: 6px; } .bh-use-model-banner button { min-height: 28px; padding: 0 9px; font-size: 11.5px; } }
