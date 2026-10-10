@@ -45,16 +45,6 @@
       "notes": "Added 2026-08-26 from llm.chutes.ai | 2026-09-08: price cut 0.35/2.75->0.32/2.50, cache-read 0.032 (live llm.chutes.ai)"
     },
     {
-      "model_name": "Qwen3.6-27B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.3,
-      "output_per_1m_usd": 2,
-      "cache_read_per_1m_usd": 0.03,
-      "context_length": 262144,
-      "confidential_compute": true,
-      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
-    },
-    {
       "model_name": "GLM-5.1",
       "provider_org": "Z.ai",
       "input_per_1m_usd": 0.98,
@@ -63,6 +53,16 @@
       "context_length": 202752,
       "confidential_compute": true,
       "tee_model_id": "zai-org/GLM-5.1-TEE"
+    },
+    {
+      "model_name": "Qwen3.6-27B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.3,
+      "output_per_1m_usd": 2,
+      "cache_read_per_1m_usd": 0.03,
+      "context_length": 262144,
+      "confidential_compute": true,
+      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
     },
     {
       "model_name": "Kimi-K2.6",
@@ -150,7 +150,7 @@
       "notes": "Added 2026-08-26 from llm.chutes.ai (root nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16)"
     }
   ],
-  "response_sha256": "b37dd56bba4289a5a98c0fcd70f9fdbb32adcbf53bad36827dbb643391a125b3",
+  "response_sha256": "bc8c1636866ce50399bc6f3f9f213ae82f1d7e740a383c495e745c9bdaca9073",
   "diff": {
     "added": [],
     "removed": [],

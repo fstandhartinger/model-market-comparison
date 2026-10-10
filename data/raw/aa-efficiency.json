@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-10-09T05:30:12.233Z",
+  "collected_at": "2026-10-10T05:28:28.045Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,10 +13,10 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-10-09T05:30:12.070Z",
+      "fetched_at": "2026-10-10T05:28:27.842Z",
       "http_status": 200,
-      "bytes": 4126158,
-      "sha256": "c1af8160b286ceffe8444fbaed6ca6c03337200759c97f6904cf412497281485"
+      "bytes": 4187527,
+      "sha256": "91f6093d94890d9707e93d31a4c9085d2ce74c286ebb585a907078a482a1e3c7"
     }
   ],
   "coverage": {
@@ -2431,18 +2431,18 @@
       "variant": null,
       "tokens_per_task": {
         "reasoning": 0,
-        "answer": 3758.0195040692806,
-        "output": 3758.0195040692806
+        "answer": 3760.5390495238253,
+        "output": 3760.5390495238253
       },
       "canonical_token_counts": {
-        "input": 903282818,
-        "output": 6921100,
-        "answer": 6921100,
+        "input": 903361165,
+        "output": 6926643,
+        "answer": 6926643,
         "reasoning": 0
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 130.51145309271647,
+        "input_output_ratio": 130.41832313286537,
         "reasoning_output_share": 0
       }
     },
@@ -3310,20 +3310,20 @@
       "name": "Ling 3.1 Flash",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 66407.72015328896,
-        "answer": 34263.188096260834,
-        "output": 100670.9082495498
+        "reasoning": 67054.38788056168,
+        "answer": 35085.868096260834,
+        "output": 102140.25597682252
       },
       "canonical_token_counts": {
-        "input": 8678386045,
-        "output": 217613455,
-        "answer": 49234112,
-        "reasoning": 168379343
+        "input": 9047462562,
+        "output": 220846020,
+        "answer": 51044008,
+        "reasoning": 169802012
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 39.87982289514221,
-        "reasoning_output_share": 0.6596515448998737
+        "input_output_ratio": 40.967288258126636,
+        "reasoning_output_share": 0.656493242936238
       }
     },
     {
@@ -3398,20 +3398,20 @@
       "name": "MiMo-V2.6-Flash",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 57972.333233273865,
-        "answer": 19819.35984458594,
-        "output": 77791.6930778598
+        "reasoning": 58021.70596054659,
+        "answer": 19831.38848094958,
+        "output": 77853.09444149617
       },
       "canonical_token_counts": {
-        "input": 5520302056,
-        "output": 244547357,
-        "answer": 26122807,
-        "reasoning": 218424550
+        "input": 5537710083,
+        "output": 244682440,
+        "answer": 26149270,
+        "reasoning": 218533170
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 22.57355026740281,
-        "reasoning_output_share": 0.7452252411481876
+        "input_output_ratio": 22.63223336746192,
+        "reasoning_output_share": 0.7452716732299939
       }
     },
     {
@@ -4410,20 +4410,20 @@
       "name": "Solar Mini 4",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 71617.0831052309,
-        "answer": 16683.478650262932,
-        "output": 88300.56175549382
+        "reasoning": 72175.52537795817,
+        "answer": 16777.16092299021,
+        "output": 88952.68630094838
       },
       "canonical_token_counts": {
-        "input": 6081476672,
-        "output": 365015396,
-        "answer": 23322073,
-        "reasoning": 341693323
+        "input": 6156841811,
+        "output": 366450070,
+        "answer": 23528174,
+        "reasoning": 342921896
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 16.660877153795454,
-        "reasoning_output_share": 0.8110603339482727
+        "input_output_ratio": 16.80131159751177,
+        "reasoning_output_share": 0.8113923072966113
       }
     },
     {
