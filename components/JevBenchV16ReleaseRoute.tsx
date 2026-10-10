@@ -96,9 +96,9 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
       <nav className="mt-3 flex flex-wrap gap-3 text-sm" aria-label="JevBench methodology and data"><a className="text-accent underline" href="/jev-models/methodology">Methodology</a><a className="text-accent underline" href="/jev-models/data">Data card & JSON/CSV</a><a className="text-accent underline" href="/decision-model-benchmarks">Compare decision model benchmarks</a></nav>
       <p className="mt-3 max-w-3xl text-sm" data-bh-image-jev-link-row>Making decisions from images? <a className="text-accent font-semibold underline" href="/image-jev-bench" data-bh-image-jev-link>Explore ImageJevBench v0.3.0 and compare its systems</a>.</p>
     </header>
-    <JevBenchApiAddendumCoverage entries={addenda.entries} />
     <JevBenchV16Board artifact={artifact} sha256={sha256} categories={categories} categoriesSha256={categoriesSha256}
       carry={carry} carrySha256={carrySha256} scope={scope} apiKeys={apiKeys} apiListed={apiListed}
       previousKeys={[...previous.artifact.systems, ...previous.artifact.not_measured].filter((row: { key: string }) => !isJevbenchV16ExcludedKey(row.key, revision)).map((row: { key: string }) => row.key)} />
+    <JevBenchApiAddendumCoverage entries={addenda.entries} />
   </>;
 }
