@@ -4,6 +4,15 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-10-10 — decisio 31B language and category cells (CR-398, board note v1.7.30)
+
+`decisio-gemma-4-31b-v080` now has complete language and category cells (S+P+L1+L2+L3)
+in `jevbench-v1.6.1-language-cells.json` and `jevbench-v1.6.1-category-cells.json`,
+copied from the public aggregate in
+`ops/evidence/decisio-gemma-4-31b-language-category-complete-20261010.json`. Its radar
+spoke exception is removed. Headline scores, ranks, Composite, prices and all other rows
+are unchanged; see `docs/releases/CR-398-decisio-gemma-4-31b-complete-20261010.md`.
+
 ## 2026-10-08 — Completed JevBench submissions (CR-336)
 
 Adds 22 already-measured current-pool rows, including Aplomb 1, both measured
