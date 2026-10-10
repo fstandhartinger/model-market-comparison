@@ -8,6 +8,7 @@ import { JevCapabilityRanking } from './JevCapabilityRanking';
 import { JevBubbleCharts } from './JevBubbleChart';
 import { JevCapabilityLazy } from './JevCapabilityLazy';
 import { jevClassView } from './jevClassView';
+import { JevParetoCharts } from './JevParetoCharts';
 
 type CapView = ClassCaps & { costLimit: number; latencyLimit: number };
 
@@ -15,10 +16,12 @@ type CapView = ClassCaps & { costLimit: number; latencyLimit: number };
 // Review 6 Oct 2026: reasons on the v1.6 boards print 2.02× (not 2.0×) when a ratio just exceeds the 2× cap.
 const BOARD_CLASS_OPTIONS: JevClassOptions = { ...JEV_V16_CLASS_OPTIONS, nearCapPrecision: true };
 
-export function JevBenchV16Charts({ systems, eligibilitySystems, revision, officialHref, scopeLabel, outsideOpen = false, headline = true }: {
+export function JevBenchV16Charts({ systems, eligibilitySystems, revision, officialHref, scopeLabel, outsideOpen = false, headline = true, pareto = false }: {
   systems: JevV14System[]; eligibilitySystems: JevV14System[]; revision: string; officialHref: string;
   /** v1.7.1: "open weights" or "API offerings" in the section headings of a split board. */
   scopeLabel?: string; outsideOpen?: boolean; headline?: boolean;
+  /** Live boards only (Florian 10 Oct 2026); archived release pages stay as published. */
+  pareto?: boolean;
 }) {
   // v1.7.5: preliminary/pending API rows appear in the Capability ranking only, not in the scatter or 3D charts.
   const plotted = useMemo(() => systems.filter((s) => s.listing !== 'preliminary' && s.listing !== 'pending'), [systems]);
@@ -35,6 +38,8 @@ export function JevBenchV16Charts({ systems, eligibilitySystems, revision, offic
   return <>
     <JevCapabilityRanking systems={systems} eligibilitySystems={eligibilitySystems} revision={revision} officialHref={officialHref} onCapsChange={onCapsChange} referenceLabel={JEV_V16_REFERENCE_LABEL} limits={JEV_V16_CLASS_OPTIONS.limits} nearCapPrecision scopeLabel={scopeLabel} outsideOpen={outsideOpen} headline={headline} />
     <JevBubbleCharts points={current.points} costLimit={selected.costLimit} latencyCap={selected.latencyLimit} costFactor={selected.costFactor} latencyFactor={selected.latencyFactor} referenceName={JEV_V16_REFERENCE_LABEL} scoreKind="v15" scopeLabel={scopeLabel} />
+    {/* Florian 10 Oct 2026 (GO 18:20Z): Pareto frontier section directly after the synced scatter charts. */}
+    {pareto && <JevParetoCharts points={current.points} costLimit={selected.costLimit} latencyLimit={selected.latencyLimit} scopeLabel={scopeLabel} api={outsideOpen} />}
     <section className="mt-8 scroll-mt-6" data-bh-jev16-3d-toggle>
       <button type="button" className="text-accent underline" aria-expanded={show3d} aria-controls={show3d ? 'jev16-capability-3d' : undefined} onClick={() => setShow3d((open) => !open)}>{show3d ? 'Hide 3D view' : 'Show 3D view'}</button>
       {show3d && <div id="jev16-capability-3d"><JevCapabilityLazy revision={revision} systems={plotted} only3d classOptions={classOptions} /></div>}
