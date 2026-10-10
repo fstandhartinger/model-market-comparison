@@ -36,10 +36,15 @@ class BoundaryTests(unittest.TestCase):
         base={'MEASUREMENT-META.json':'{}','RUNTIME.json':'{}','PRICING-REVIEW.md':'x'}
         with tempfile.TemporaryDirectory() as directory:
             folder=Path(directory)
-            # Order 1c027833 (6 Oct 2026): a valid envelope followed by one stray brace.
-            (folder/'OUTPUT.md').write_text(json.dumps({'files':base})+'}')
+            # Orders 1c027833/a8731403: a valid envelope followed by stray closing braces is accepted;
+            # other trailing text still fails as a named error.
+            (folder/'OUTPUT.md').write_text(json.dumps({'files':base})+'x')
             with self.assertRaisesRegex(ValueError,'not one JSON object'):
                 static_agent.materialize(folder)
+            (folder/'OUTPUT.md').write_text(json.dumps({'files':base})+'}\n')
+            static_agent.materialize(folder)
+            self.assertEqual((folder/'trusted-runner'/'PRICING-REVIEW.md').read_text(),'x')
+            shutil.rmtree(folder/'trusted-runner')
             for bad in ([], {'files':[]}, {'files':dict(base,**{'POD-RECIPE.json':'[]'})},
                         {'files':dict(base,**{'POD-RECIPE.json':'{'})}, {'files':dict(base,**{'run.py':'x'})}):
                 with self.subTest(bad=bad):
@@ -74,6 +79,21 @@ class BoundaryTests(unittest.TestCase):
                 for item in (pin.values() if isinstance(pin, dict) else []):
                     if isinstance(item, dict) and 'path' in item:
                         self.assertNotIn(item['path'] + '"', ''.join(context))
+
+    def test_static_packet_bounds_the_whole_packet_below_the_codex_input_limit(self):
+        # Order a8731403 (card 371, 10 Oct 2026): sources under the byte cap plus DECISIONS.md and
+        # JSON escaping reached 1,092,995 characters and Codex rejected every attempt.
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);job=root/'runner-prepare';job.mkdir();(root/'source').mkdir()
+            (root/'source/small.json').write_text('{"a": "b"}\n')
+            packet=static_agent.packet(job,True)
+            context=json.loads(packet.split('contract:\n',1)[1].split('\n',1)[0])
+            self.assertLessEqual(len(context['DECISIONS.md']),static_agent.DECISIONS_CHAR_LIMIT)
+            self.assertLessEqual(len(packet),static_agent.PACKET_CHAR_LIMIT)
+            # Under the byte cap but heavily escaped: must route to the bounded Claude fallback.
+            (root/'source/escaped.json').write_text('"\\n'*300_000)
+            with self.assertRaisesRegex(static_agent.CapacityHold,'exceeds_review_capacity'):
+                static_agent.packet(job,True)
 
     def test_real_driver_text_image_parsers_raw_receipts_and_no_duplicate_api_dispatch(self):
         from measurement_fixtures import create, inert_transport_command
