@@ -33,11 +33,11 @@ def receipts(keys):
   native[k]={'rows':1500,'raw_sha256':H,'pins':{'profile':{'inputs':{'jevbench':{'items':{'sha256':INPUT}}}}}}
  return rows,native
 class Tests(unittest.TestCase):
- def test_all_three_completion_orders(self):
-  for extra,native,wrappers in [({'decisor_4b'},4,1),({'ryotide_qwen9'},3,2),({'decisor_4b','ryotide_qwen9'},4,2)]:
+ def test_both_admitted_completion_shapes(self):
+  for extra,native,wrappers in [({'decisor_4b'},4,1),({'decisor_4b','ryotide_qwen9'},4,2)]:
    s=completed_shape(BASE|extra);self.assertEqual(len(s['eligible']),native);self.assertEqual(len(s['wrappers']),wrappers)
  def test_no_foreign_or_missing_original_or_placeholder_completion(self):
-  for keys in (BASE,BASE|{'foreign'},(BASE-{'jeff_1_0_large'})|{'decisor_4b','ryotide_qwen9'}):
+  for keys in (BASE,BASE|{'ryotide_qwen9'},BASE|{'foreign'},(BASE-{'jeff_1_0_large'})|{'decisor_4b','ryotide_qwen9'}):
    with self.assertRaises(ValueError):completed_shape(keys)
  def test_field_contract_preserves_all_original_records(self):
   old={'roster':roster(),'source_files':{'old':{'path':'/SYNTHETIC','sha256':H}},'input_sha256':INPUT,'cost_basis_sha256':PREDECESSOR_COST_SHA256}
@@ -49,7 +49,7 @@ class Tests(unittest.TestCase):
   self.assertEqual(new['addendum_membership']['eligible'],sorted(NATIVE))
  def test_incomplete_wrong_draw_or_raw_provenance_refused(self):
   for mutate in ('incomplete','draw','raw','wrapper_rank'):
-   old={'roster':roster(),'source_files':{},'input_sha256':INPUT,'cost_basis_sha256':PREDECESSOR_COST_SHA256};reg,native=receipts(BASE|{'ryotide_qwen9'})
+   old={'roster':roster(),'source_files':{},'input_sha256':INPUT,'cost_basis_sha256':PREDECESSOR_COST_SHA256};reg,native=receipts(FIXED)
    if mutate=='incomplete':reg['ryotide_qwen9']['measurement_complete']=False
    if mutate=='draw':native['ryotide_qwen9']['pins']['profile']['inputs']['jevbench']['items']['sha256']=H
    if mutate=='raw':reg['jeff_1_0_large']['raw']['path']='/SYNTHETIC/changed'
@@ -65,7 +65,7 @@ class Tests(unittest.TestCase):
  def test_full1500_errors_not_dropped_and_wrapper_not_native(self):
   gold={'SYNTHETIC'+str(i):SimpleNamespace(split='sealed'if i<1200 else'open')for i in range(1500)}
   raw=[dict(task_id=i,ok=False,error='SYNTHETIC failure')for i in gold]
-  for keys in (BASE|{'decisor_4b'},BASE|{'ryotide_qwen9'},FIXED):
+  for keys in (BASE|{'decisor_4b'},FIXED):
    rows=complete(keys);pre={'mandatory_candidates':[{'order_id':r['order_id']}for r in rows]};cost={'phase':'accepted_common_cost_basis','final_cost_basis_accepted':True,'exclude_opaque_ids':list(gold)[:21]}
    reg,eligible,pending=F.prepare(rows,pre,gold,{k:raw for k in keys},cost)
    self.assertEqual(set(reg),set(keys));self.assertEqual(set(eligible),keys&NATIVE)
@@ -83,7 +83,7 @@ class Tests(unittest.TestCase):
   artifact={'source_sha256':H,'bootstrap':{'B':1000,'bootstrap_seed':16,'g_med_fixed':True},'revision':'v1.6.3','not_measured':[],'systems':[{'key':k,'ranked':k in NATIVE,'intelligence':{'gap':gaps.get(k,999)}}for k in keys],'G_med':statistics.median(gaps.values())}
   return old,artifact,[row(k)for k in keys],copy.deepcopy(category)
  def test_proof_all_actual_completions_and_native_median(self):
-  for keys in (BASE|{'decisor_4b'},BASE|{'ryotide_qwen9'},FIXED):
+  for keys in (BASE|{'decisor_4b'},FIXED):
    old,a,rows,c=self.proof_fixture(keys);p=prepare_proof(old,a,rows,H,H,H,c)
    self.assertEqual(len(p['systems']),len(keys));self.assertEqual({r['key']for r in p['field_median']['members']},keys&NATIVE)
    self.assertNotIn('review',p);self.assertNotIn('status',p)
@@ -123,7 +123,7 @@ class Tests(unittest.TestCase):
   transform=SimpleNamespace(validate_labels=lambda r,g:None,apply_rules=lambda r,g:r)
   taxonomy=SimpleNamespace(TOPICS=[('fixture','Fixture','Synthetic'),('zero','Zero','Synthetic')],USE_CASES=[('fixture','Fixture','Synthetic'),('zero','Zero','Synthetic')])
   previous=None
-  for keys in (BASE|{'decisor_4b'},BASE|{'ryotide_qwen9'},FIXED):
+  for keys in (BASE|{'decisor_4b'},FIXED):
    raws={k:[{'task_id':oid,'ok':i!=0,'error':'SYNTHETIC'if i==0 else None}for i,oid in enumerate(gold)]for k in keys}
    status={'status':'complete','rows':1500,'missing':0,'answered_ok':1499}
    public={'systems':[{'key':k,'status':status,'v16':{'breakdowns':{d:{v:{'n':1500,'score':42.0}}for d,v in [('family','fixture'),('lang','en'),('type','choice')]}}}for k in keys]}
@@ -155,7 +155,7 @@ class Tests(unittest.TestCase):
    cost={'phase':'accepted_common_cost_basis','final_cost_basis_accepted':True,'exclude_opaque_ids':list(gold)[:n]}
    with self.assertRaises(ValueError):F.prepare(rows,pre,gold,{k:raw for k in keys},cost)
  def test_all_contract_shapes_and_no_source_pin_rebinding(self):
-  for keys in (BASE|{'decisor_4b'},BASE|{'ryotide_qwen9'},FIXED):
+  for keys in (BASE|{'decisor_4b'},FIXED):
    old={'roster':roster(),'source_files':{'original':{'path':'/SYNTHETIC','sha256':H}},'input_sha256':INPUT,'cost_basis_sha256':PREDECESSOR_COST_SHA256};reg,native=receipts(keys)
    c=successor_field_contract(old,reg,native,{},H,H,'/SYNTHETIC/prereg','/SYNTHETIC/out',H)
    self.assertEqual(c['predecessor_cost_basis_sha256'],PREDECESSOR_COST_SHA256);self.assertEqual(c['proposal_status'],'SOURCE_PROPOSAL_NOT_ACCEPTED')
