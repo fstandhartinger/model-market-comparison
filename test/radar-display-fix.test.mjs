@@ -8,7 +8,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import {
   radarValue, plottable, radarRadius, categoryCell, radarShape, RADAR_MIN_N, DENSE_SPOKES,
-  fullLabelLayout, numberedLayout, labelCollisions, radarLabelMode,
+  fullLabelLayout, labelCollisions, radarLabelMode, endsLayout, ENDS_PROFILES,
 } from '../lib/radar-shape.mjs';
 import { jevbenchCategoryView, withLiveCategoryCells } from '../lib/jevbench-categories.mjs';
 import jevV161 from '../data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.1-categories.json' with { type: 'json' };
@@ -95,17 +95,28 @@ test('every live cell: under-30 or non-finite cells are never plottable; measure
   assert.match(view.metric, /clipped/, 'the live metric states that below-chance means are clipped to 0 upstream');
 });
 
-test('dense radars switch to numbered spokes; badges never overlap and stay on the canvas up to 30 spokes (live max: 20 use cases)', () => {
-  const labels = (n) => Array.from({ length: n }, (_, i) => ({ lines: lines(`Category number ${i}`), value: '88.8 · n=16' }));
-  for (let n = DENSE_SPOKES + 1; n <= 30; n++) {
-    assert.equal(radarLabelMode(labels(n), { w: 500, h: 400, r: 112 }), 'numbered', `${n} spokes`);
-    for (const size of [{ w: 500, h: 400, r: 112 }, { w: 680, h: 640, r: 180 }, { w: 300, h: 260, r: 80 }]) {
-      const lay = numberedLayout(n, size);
-      const c = labelCollisions(lay.badges, lay.w, lay.h);
-      assert.deepEqual(c, { overlaps: [], outside: [] }, `${n} spokes at ${size.w}x${size.h}`);
-      assert.ok(lay.r >= 140, 'numbered mode gives the plot a larger radius, not a smaller font');
+test('layout A (Florian #16968): dense radars keep horizontal labels at the spoke ends; no overlap, nothing off-canvas or over the plot, up to 30 spokes', () => {
+  const live = withLiveCategoryCells(jevV161).usecases.map((c) => c.label);
+  const synthetic = (n) => Array.from({ length: n }, (_, i) => `Category number ${i}`);
+  const cases = [live, ...Array.from({ length: 30 - DENSE_SPOKES }, (_, k) => synthetic(DENSE_SPOKES + 1 + k))];
+  assert.equal(live.length, 20);
+  for (const names of cases) {
+    assert.equal(radarLabelMode(names.map((nm) => ({ lines: lines(nm), value: '88.8 · n=16' })), { w: 500, h: 400, r: 112 }), 'ends', `${names.length} spokes`);
+    for (const [pname, profile] of Object.entries(ENDS_PROFILES)) {
+      const lay = endsLayout(names.map((name) => ({ name, value: '100.0 · 100.0' })), profile);
+      assert.deepEqual(labelCollisions(lay.items, lay.w, lay.h), { overlaps: [], outside: [] }, `${pname} ${names.length} spokes`);
+      for (const it of lay.items) {
+        assert.ok(it.lines.join(' ').length >= 1 && it.lines.every((l) => l.length <= Math.max(profile.wrap, ...l.split(' ').map((w) => w.length))), 'names wrap, never truncate');
+        // The label box never reaches into the plot: its nearest point to the centre lies outside the 100 ring.
+        const nx = Math.max(it.box.x0, Math.min(lay.cx, it.box.x1)), ny = Math.max(it.box.y0, Math.min(lay.cy, it.box.y1));
+        assert.ok(Math.hypot(nx - lay.cx, ny - lay.cy) >= lay.r, `${pname} ${names.length}: ${it.lines.join(' ')} clear of the plot`);
+      }
     }
   }
+  // Desktop: labels stay at their spoke ends for the live 20 use cases; few need a leader.
+  const desk = endsLayout(live.map((name) => ({ name, value: '100.0 · 100.0' })), ENDS_PROFILES.desktop);
+  assert.ok(desk.items.filter((it) => it.leader).length <= 10);
+  assert.ok(desk.items.every((it) => it.lines.length <= 2), 'desktop prints every use-case name on at most two lines');
 });
 
 test('the 20 use-case labels at the old size overlap (the reported bug); full labels are kept only where they fit', () => {
@@ -125,9 +136,9 @@ test('the 20 use-case labels at the old size overlap (the reported bug); full la
     assert.equal(radarLabelMode(L, size), 'full', names.join(','));
     assert.deepEqual(labelCollisions(fullLabelLayout(L, size), size.w, size.h), { overlaps: [], outside: [] }, names.join(','));
   }
-  // A full label that would leave the canvas falls back to numbered spokes rather than clipping or overlapping.
+  // A full label that would leave the canvas falls back to layout A on a fitted canvas rather than clipping or overlapping.
   const wide = ['Intelligence', 'Calibration', 'Speed', 'Cost'].map((nm) => ({ lines: [nm], value: 'none (0 in score) · none (0 in score)' }));
-  assert.equal(radarLabelMode(wide, { w: 420, h: 320, r: 96 }), 'numbered');
+  assert.equal(radarLabelMode(wide, { w: 420, h: 320, r: 96 }), 'ends');
 });
 
 async function loadRadar() {
@@ -144,7 +155,7 @@ async function loadRadar() {
   return import(await moduleUrl(url));
 }
 
-test('rendered Radar: missing, NaN and thin cells produce no marker; 20 spokes render numbered badges plus a key with every value', async () => {
+test('rendered Radar: missing, NaN and thin cells produce no marker; 20 spokes render layout A labels with every value', async () => {
   const { Radar } = await loadRadar();
   const series = [{ name: 'A', stroke: 'red', dashed: false, square: false }, { name: 'B', stroke: 'blue', dashed: true, square: true }];
   const spokes = Array.from({ length: 20 }, (_, i) => ({
@@ -153,22 +164,25 @@ test('rendered Radar: missing, NaN and thin cells produce no marker; 20 spokes r
     thin: [false, i % 4 === 2], texts: [i === 3 ? '0.0' : `${40 + i}.0`, i % 4 === 0 ? '—' : i % 4 === 1 ? 'n/a' : i % 4 === 2 ? 'n=16' : '70.0'],
   }));
   const html = renderToStaticMarkup(React.createElement(Radar, { spokes, series, size: { w: 500, h: 400, r: 112 }, id: 't', title: 'Use cases', desc: 'd' }));
-  assert.match(html, /data-bh-radar-label-mode="numbered"/);
-  const b = html.split('data-bh-jev12-radar-series="b"')[1].split('</g>')[0];
+  assert.match(html, /data-bh-radar-label-mode="ends"/);
+  assert.match(html, /data-bh-radar-variant="desktop"[^>]*>.*data-bh-radar-profile="desktop"/s);
+  assert.match(html, /data-bh-radar-variant="phone"[^>]*>.*data-bh-radar-profile="phone"/s);
+  const desktop = html.split('data-bh-radar-variant="phone"')[0];
+  const b = desktop.split('data-bh-jev12-radar-series="b"')[1].split('</g>')[0];
   assert.equal((b.match(/<rect /g) ?? []).length, 5, 'B: only the 5 spokes with a finite, well-measured value get a marker');
   assert.match(b, /data-bh-radar-shape="points"/, 'B is under half: points, no polygon');
   assert.doesNotMatch(html, /NaN/, 'no NaN coordinate or text reaches the SVG');
-  const a = html.split('data-bh-jev12-radar-series="a"')[1].split('</g>')[0];
+  const a = desktop.split('data-bh-jev12-radar-series="a"')[1].split('</g>')[0];
   assert.match(a, /<polygon /, 'A, complete, keeps its filled polygon — including its measured 0 vertex');
   assert.equal((a.match(/<circle /g) ?? []).length, 20);
-  assert.equal((html.match(/data-bh-radar-spoke-number=/g) ?? []).length, 20);
-  assert.equal((html.match(/data-bh-radar-key-item=/g) ?? []).length, 20, 'one key row per spoke');
-  assert.match(html, /title="Definition 7\. 90 items\."/, 'definition and item count stay reachable from the key');
-  assert.match(html, /data-bh-radar-key-value="b:c2"[^>]*>(?:<span[^>]*> · <\/span>)?n=16/, 'thin cell prints n=16 in the key');
-  assert.match(html, /data-bh-radar-key-value="b:c0"[^>]*>(?:<span[^>]*> · <\/span>)?n\/a/, 'missing cell prints n/a in the key');
+  assert.equal((desktop.match(/data-bh-jev12-radar-spoke=/g) ?? []).length, 20, 'one label per spoke');
+  assert.doesNotMatch(html, /data-bh-radar-key=|data-bh-radar-spoke-number=/, 'no numbered badges or key any more');
+  assert.match(desktop, /Definition 7\. 90 items\./, 'definition and item count stay reachable from the label');
+  assert.match(desktop, /data-bh-jev12-radar-value="b:c2"[^>]*>(?:<tspan[^>]*> · <\/tspan>)?n=16/, 'thin cell prints n=16 at its spoke end');
+  assert.match(desktop, /data-bh-jev12-radar-value="b:c0"[^>]*>(?:<tspan[^>]*> · <\/tspan>)?n\/a/, 'missing cell prints n/a at its spoke end');
   const four = renderToStaticMarkup(React.createElement(Radar, { spokes: spokes.slice(0, 4).map((s) => ({ ...s, values: [s.values[0], null], texts: [s.texts[0], '—'] })), series, size: { w: 420, h: 320, r: 96 }, id: 'u', title: 'Axes', desc: 'd' }));
   assert.match(four, /data-bh-radar-label-mode="full"/);
-  assert.doesNotMatch(four, /data-bh-radar-key=/, 'sparse radars keep their labels and need no key');
+  assert.doesNotMatch(four, /data-bh-radar-variant=/, 'sparse radars keep their single full-label canvas');
   assert.doesNotMatch(four.split('data-bh-jev12-radar-series="b"')[1].split('</g>')[0], /<rect /, 'all-null series draws nothing');
 });
 
