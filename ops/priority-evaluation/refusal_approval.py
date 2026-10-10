@@ -18,6 +18,7 @@ import re
 import secrets
 import sqlite3
 import subprocess
+import sys
 import tempfile
 import textwrap
 import urllib.error
@@ -53,6 +54,44 @@ def atomic(path, value):
     finally:
         with contextlib.suppress(FileNotFoundError):
             os.unlink(name)
+
+
+# notify (10 Oct 2026) rejects a decision card without --choices. These approval cards attach
+# their own exact secret-key keyboard after delivery, so notify's nonce buttons must not be
+# added; notify's sanctioned opt-out for a caller-owned answer channel is NOTIFY_FREE_TEXT_ASK.
+CALLER_BUTTONS_ENV = {"NOTIFY_FREE_TEXT_ASK": "1"}
+PREVIEW_ALERT_AFTER = 6  # consecutive failed previews (about 30 minutes of pickup cycles)
+
+
+def preview_failed(state, path, preview, source):
+    """Record a refused notify preview and tell the pickup owner once if it keeps failing.
+
+    A cap or dedup clears within a few cycles; a persistent refusal must never stay silent.
+    """
+    output = next((value for value in (getattr(preview, "stderr", None), getattr(preview, "stdout", None))
+                   if isinstance(value, str) and value.strip()), "no output")
+    reason = output.strip().splitlines()[0][:240]
+    state["preview_failures"] = state.get("preview_failures", 0) + 1
+    state["preview_error"] = f"exit {preview.returncode}: {reason}"
+    atomic(path, state)
+    print(f"{source}: notify preview not sendable ({state['preview_failures']}x) "
+          f"for {path.stem}: {state['preview_error']}", file=sys.stderr)
+    if state["preview_failures"] < PREVIEW_ALERT_AFTER or state.get("preview_alerted"):
+        return
+    message = (f"{source}: the approval card for {path.stem} has failed the notify preview "
+               f"{state['preview_failures']} cycles in a row and is not reaching Florian.\n"
+               f"Last refusal: {state['preview_error']}\nState: {path}")
+    result = subprocess.run([str(HOME / "bin/agent-board"), "--as", "fastlane-autopickup", "post", "11", "-",
+                             "--kind", "warning"],  # never --to itself: its inbox gates refusal cards
+                            input=message, text=True, capture_output=True, timeout=60, check=False)
+    if result.returncode == 0:
+        state["preview_alerted"] = True
+        atomic(path, state)
+
+
+def preview_passed(state):
+    for key in ("preview_failures", "preview_error", "preview_alerted"):
+        state.pop(key, None)
 
 
 KINDS = {
@@ -277,11 +316,13 @@ def notify_card(state, path, now, kind="refusal", row=None):
     reply_job_dir = str(HOME / "jobs" / "fastlane-refusal-reply-guard-20260929")
     env = {**os.environ, "NOTIFY_SOURCE": SOURCE,
            "AGENT_BOARD_JOBDIR": reply_job_dir,
-           "NOTIFY_REPLY_JOB_DIR": reply_job_dir}
+           "NOTIFY_REPLY_JOB_DIR": reply_job_dir, **CALLER_BUTTONS_ENV}
     preview = subprocess.run(command + ["--dry-run"], input=caption, text=True, capture_output=True,
                              timeout=45, env=env, check=False)
     if preview.returncode or "[DRY RUN] would send to the" not in preview.stdout:
+        preview_failed(state, path, preview, SOURCE)
         return  # cap/dedup: no queued duplicates, retry preview next cycle
+    preview_passed(state)
     state.update(notification="attempted", created_at=int(now), expires_at=int(now) + WINDOW)
     atomic(path, state)  # unknown outcome is held, never blindly resent
     result = subprocess.run(command, input=caption, text=True, capture_output=True,

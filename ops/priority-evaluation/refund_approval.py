@@ -113,11 +113,13 @@ def _send_card(state: dict, path: Path, text: str, now: float) -> None:
                "--ask", str(WINDOW // 60), "--text-stdin"]
     reply_job_dir = str(ra.HOME / "jobs" / "fastlane-refusal-reply-guard-20260929")
     env = {**os.environ, "NOTIFY_SOURCE": SOURCE, "AGENT_BOARD_JOBDIR": reply_job_dir,
-           "NOTIFY_REPLY_JOB_DIR": reply_job_dir}
+           "NOTIFY_REPLY_JOB_DIR": reply_job_dir, **ra.CALLER_BUTTONS_ENV}
     preview = subprocess.run(command + ["--dry-run"], input=text, text=True, capture_output=True,
                              timeout=45, env=env, check=False)
     if preview.returncode or "[DRY RUN] would send to the" not in preview.stdout:
+        ra.preview_failed(state, path, preview, SOURCE)
         return  # cap/dedup: retry the preview next cycle
+    ra.preview_passed(state)
     state.update(notification="attempted", created_at=int(now), expires_at=int(now) + WINDOW)
     ra.atomic(path, state)  # an unknown outcome is held, never blindly resent
     result = subprocess.run(command, input=text, text=True, capture_output=True,
