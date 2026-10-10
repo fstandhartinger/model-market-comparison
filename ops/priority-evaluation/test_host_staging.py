@@ -359,6 +359,13 @@ class HostStagingTests(unittest.TestCase):
             self.assertEqual(fake.removed, ['pod-1'])
             self.assertEqual(self.last_state['input_dispatched'], dispatched)
 
+    def test_hf_disable_implicit_token_switch_is_allowed_only_as_1(self):
+        self.assertEqual(pr._env_names_checked(json.dumps(['PATH=/usr/bin', 'HF_HUB_DISABLE_IMPLICIT_TOKEN=1'])),
+                         ['HF_HUB_DISABLE_IMPLICIT_TOKEN', 'PATH'])
+        for value in ('0', 'hf_leak', ''):
+            with self.subTest(value=value), self.assertRaisesRegex(pr.PodRunError, 'run_container_env_secret_name'):
+                pr._env_names_checked(json.dumps(['HF_HUB_DISABLE_IMPLICIT_TOKEN=' + value]))
+
     def test_long_output_line_is_refused(self):
         with mock.patch.object(pr, 'HOST_MAX_LINE_BYTES', 5), self.assertRaisesRegex(md.OperationalHold, 'partial_measurement_requires_reconciliation'):
             self.lifecycle(HostFake())
