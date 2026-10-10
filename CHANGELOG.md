@@ -4,6 +4,18 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-10-10 — Microsoft-Decision-1 complete language and category cells (CR-401 follow-up, board note v1.7.32)
+
+Microsoft-Decision-1 now has complete topic, use-case and language cells on the
+same S+P+L1+L2+L3 basis as other completed rows: its S1200+P300 headline run plus
+the sealed supplements L1 354, L2 33 and L3 1118, answered in a separate native
+Azure Foundry run (3,005 stable items, each once; 22 recorded failures stay scored).
+Every language has at least 64 items and every use case at least 88, so its radar
+spoke exception is removed. Headline scores, ranks, Composite and prices are
+unchanged. Public aggregate:
+`ops/evidence/microsoft-decision-1-language-category-complete-20261010.json`; see
+`docs/releases/CR-401-microsoft-decision-1-complete-cells-20261010.md`.
+
 ## 2026-10-10 — Microsoft-Decision-1 native API addendum (CR-401, board note v1.7.31)
 
 Adds Microsoft-Decision-1 to the hosted API board and its model page, with
