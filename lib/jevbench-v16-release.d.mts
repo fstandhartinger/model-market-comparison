@@ -1,6 +1,6 @@
 import type { JevV15Artifact, JevV15System } from './jevbench-v15-preview.mjs';
 export type JevV16ItemSet = { set: 'S' | 'A' | 'P'; name: string; items: number; by_type: Record<'choice' | 'noul' | 'score', number>; answered_by: string };
-export type JevV16ReleaseSystem = JevV15System & { capability: number; measured_in: 'v1.6.0' | 'v1.6.1' | 'v1.6.2' | 'v1.6.3'; last_measured_on?: string | null;
+export type JevV16ReleaseSystem = JevV15System & { capability: number; measured_in: 'v1.6.0' | 'v1.6.1' | 'v1.6.2' | 'v1.6.3' | 'v1.6.4'; last_measured_on?: string | null;
   noul_decisive?: { supported: boolean; decisive_rate?: number | null; acc_among_decisive?: number | null; valid?: number } | null; v16: { lane: 'api' | 'selfhosted'; [k: string]: unknown } };
 export type JevV16ReleaseArtifact = Omit<JevV15Artifact, 'systems' | 'status' | 'run_kind'> & {
   provisional: false; status: 'published'; run_kind: 'scheduled-refresh' | 'paid-fast-lane'; label: string; source_note: string; G_med_api_basis_P_vs_A: number;
@@ -11,7 +11,7 @@ export type JevV16ReleaseArtifact = Omit<JevV15Artifact, 'systems' | 'status' | 
 };
 export type JevV16CategoryCell = { n: number; competence: number; coverage_n?: number };
 export type JevV16CategoryDescriptor = { key: string; label: string; covers: string; n: number; open: number; sealed: number; low_n: boolean };
-export type JevV16Categories = { revision: 'v1.6.0' | 'v1.6.1' | 'v1.6.2' | 'v1.6.3'; provisional: false; source_results_sha256: string; min_n: number; metric: string; labelling: string; rules: string[];
+export type JevV16Categories = { revision: 'v1.6.0' | 'v1.6.1' | 'v1.6.2' | 'v1.6.3' | 'v1.6.4'; provisional: false; source_results_sha256: string; min_n: number; metric: string; labelling: string; rules: string[];
   languages: JevV16CategoryDescriptor[]; lanes: Record<string, 'api' | 'selfhosted'>; lane_note: string;
   language_cells?: import("./jevbench-categories.mjs").LanguageCellsMeta;
   supplement?: { revision: string; pools: Record<string, number>; pool_items: number; drawn: string; note: string; source_sha256: string };
