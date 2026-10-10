@@ -19,7 +19,7 @@ async function fixture() {
   const [manifest, artifact, categories, proof] = await Promise.all(
     [read('publication'), read('results'), read('categories'), read('proof')]);
   manifest.review = { engine: 'claude', verdict: 'PASS', receipt_sha256: h };
-  const previous = { manifest: await read165('publication'), artifact: await read165('results'),
+  const previous = { manifest: await read165('publication'), artifact: await read165('results'), proof: await read165('proof'),
     manifestSha256: createHash('sha256').update(await readFile(`${V}/jevbench-v1.6.5-publication.json`)).digest('hex') };
   return { manifest, artifact, categories, proof, historicalSha256: manifest.historical_results_sha256, previous };
 }
@@ -57,7 +57,7 @@ test('the field median is recomputable from the published gaps and is flagged ab
             'a flagged field median must be disclosed in the measurement notes');
 });
 
-test('v1.6.5 ships the topic radar labelled for its own draw', async () => {
+test('v1.6.6 ships the topic radar labelled for its own draw', async () => {
   const { categories } = await fixture();
   assert.ok(Array.isArray(categories.topics) && categories.topics.length === 7);
   assert.equal(categories.labels_draw_release, V166_DRAW_RELEASE);
@@ -124,6 +124,8 @@ for (const [name, edit, error] of [
   ['an earlier row whose cost moved', b => { const s = b.artifact.systems.find(s => s.key === 'gutsy-0.8b-v0.3'); s.cost.usd_per_1000 *= 2; }, /earlier row capability\/cost/],
   ['a new row stamped as measured in v1.6.5', b => { b.artifact.systems.find(s => s.key === 'clef-omni').measured_in = 'v1.6.5'; }, /measurement stamp/],
   ['a wrong predecessor publication hash', b => { b.manifest.predecessor.publication_sha256 = h; }, /predecessor publication hash/],
+  ['no predecessor bundle at all', b => { delete b.previous; }, /predecessor bundle/],
+  ['a frozen median from a different baseline', b => { b.previous.proof.baseline_sha256 = h; }, /frozen median is not the predecessor/],
   ['an undisclosed flagged median', b => { b.artifact.measurement_notes = ['nothing to see']; }, /disclosed in the measurement notes/],
   ['a dropped abandoned-draw disclosure', b => { b.proof.abandoned_draw_note = 'none'; }, /abandoned-draw disclosure/],
   ['a wrong penalty threshold', b => { b.proof.gap_penalty_threshold = 1; }, /gap penalty threshold/],
