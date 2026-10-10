@@ -5027,6 +5027,26 @@
           "params": "4B",
           "quant": null
         }
+      },
+      "clef-omni": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Cloudflare/clef-omni/blob/0db1cd2607d76a7bdb2a382f659e7b313079f84b/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config model_type: \"qwen3_omni_moe\" (Qwen3-Omni thinker: 48 layers, 128 experts, 8 active per token)."
+          },
+          {
+            "url": "https://huggingface.co/Cloudflare/clef-omni/blob/0db1cd2607d76a7bdb2a382f659e7b313079f84b/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: a decision model on Qwen3-Omni-30B-A3B-Instruct with a joint schema head; one forward pass, no text generation; Apache-2.0."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "30B-A3B",
+          "quant": null
+        }
       }
     },
     "imagejevbench": {

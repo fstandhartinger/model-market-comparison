@@ -299,6 +299,14 @@ test('CR-205: fail-closed v1.6.5 regular draw uses the shared board, its own met
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
 });
 
+test('CR-205: fail-closed v1.6.6 same-draw addition uses the shared board, its own method notes and the full history', async () => {
+  const route = await read('../app/jev-models/v1.6.6/page.tsx');
+  assert.match(route, /readOptionalJevbenchV166Release\(\)/);
+  assert.match(route, /if \(!release\) notFound\(\)/);
+  ordered(route, ['<JevBenchV16Board', 'data-bh-jev166-method', 'data-bh-jev166-measurement-notes', '<JevHistoryLazy'], 'v1.6.6 same-draw page');
+  assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
+});
+
 test('CR-205: every versioned JevBench route is covered by this test', async () => {
   const entries = await readdir(new URL('../app/jev-models', import.meta.url), { withFileTypes: true });
   const versionDirs = entries.filter((e) => e.isDirectory() && /^v[\d.]+$/.test(e.name)).map((e) => e.name).sort();
@@ -307,7 +315,7 @@ test('CR-205: every versioned JevBench route is covered by this test', async () 
   assert.match(alias, /import \{ permanentRedirect \} from 'next\/navigation'/);
   assert.match(alias, /permanentRedirect\('\/jev-models\/v1\.6\.0'\)/);
   // A new versioned page must be added to the structure assertions above — not silently reduced.
-  assert.deepEqual(versionDirs, ['v1', 'v1.4', 'v1.4.1', 'v1.4.2', 'v1.4.2.1', 'v1.4.2.2', 'v1.5.0', 'v1.5.1', 'v1.5.2', 'v1.5.3', 'v1.5.4', 'v1.5.5', 'v1.5.6', 'v1.5.7', 'v1.6', 'v1.6.0', 'v1.6.1', 'v1.6.2', 'v1.6.3', 'v1.6.4', 'v1.6.5'].sort());
+  assert.deepEqual(versionDirs, ['v1', 'v1.4', 'v1.4.1', 'v1.4.2', 'v1.4.2.1', 'v1.4.2.2', 'v1.5.0', 'v1.5.1', 'v1.5.2', 'v1.5.3', 'v1.5.4', 'v1.5.5', 'v1.5.6', 'v1.5.7', 'v1.6', 'v1.6.0', 'v1.6.1', 'v1.6.2', 'v1.6.3', 'v1.6.4', 'v1.6.5', 'v1.6.6'].sort());
 });
 
 test('CR-205: the board sections are fed by the pinned v1.5 release artifact', async () => {
