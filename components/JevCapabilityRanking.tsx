@@ -111,6 +111,7 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
       {/* The ⓘ sits outside the truncated name so long names keep their tap target. */}
       <JevCapabilityTip label={`Details for ${row.display}`} title={tipTitle}>{tipBody}</JevCapabilityTip>
       {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1 shrink-0 align-middle" data-bh-jev-capability-api={row.key} title={row.api_exposure_note ?? apiExplanation}>API</span>}
+      <JevDrawTag tag={(row as unknown as { draw?: JevDrawTagData | null }).draw} rowKey={row.key} className="ml-1 shrink-0 align-middle" />
       <UseModelEntry row={row} name={name} benchmark={benchmark} className="max-sm:!hidden" />
     </span>
     <span className="col-start-2 col-end-7 row-start-2 mt-0.5 flex min-w-0 flex-col justify-center gap-[3px] sm:col-start-3 sm:col-end-4 sm:row-start-1 sm:mt-0">
@@ -304,4 +305,12 @@ export function JevCapabilityRanking({ systems, eligibilitySystems = systems, re
       {' '}The <a className="text-accent underline" href="#jev-bubbles">charts below</a> show speed and cost beside Capability Score; the <a className="text-accent underline" href={officialHref}>official {benchName} Score</a> weighs all four axes.
     </p>
   </section>;
+}
+
+type JevDrawTagData = { release: string; measured_on: string; label: string };
+/** Florian 10 Oct 2026 (merged board): a row measured on a fresh draw after v1.6.1 names its draw and date. */
+function JevDrawTag({ tag, rowKey, className = 'ml-2 align-middle' }: { tag?: JevDrawTagData | null; rowKey: string; className?: string }) {
+  if (!tag) return null;
+  return <span className={`bh-thin-tag ${className}`} data-bh-jev-draw-tag={rowKey}
+    title={`Measured on the ${tag.label} (${tag.release}), ${tag.measured_on}; put on the v1.6.1 scale by the draw's anchor offset (see How it works).`}>{tag.release} draw</span>;
 }

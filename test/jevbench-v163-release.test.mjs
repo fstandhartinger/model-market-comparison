@@ -380,21 +380,21 @@ test('five-system page renders one measured wrapper and truthful pending status 
   assert.ok(!html.includes('data-bh-jev163-wrapper-row="ryotide_qwen9"'));
   assert.equal((html.match(/data-bh-jev163-historical-row=/g) ?? []).length, 173);
 });
-test('navigation shows v1.6.3 only for a validated publication and keeps older boards working', async t => {
+test('release history shows v1.6.3 only for a validated publication and keeps older releases', async t => {
   const { root, path } = await diskBundle(t);
   const logs = [];
-  const nav = await compiled('../components/JevBenchReleaseVersionNav.tsx', {
+  const hist = await compiled('../components/JevReleaseHistory.tsx', {
     '../lib/jevbench-v162-release.mjs': { hasPublishedJevbenchV162Release: () => hasPublishedJevbenchV162Release(root, () => {}) },
     '../lib/jevbench-v163-release.mjs': { hasPublishedJevbenchV163Release: async () => { try { return Boolean(await readOptionalJevbenchV163Release(root, { genericSupport: supported })); } catch { logs.push('omitted'); return false; } } },
   });
-  for (const active of ['v1.6.2', 'v1.6.1', 'v1.5.7']) assert.match(renderToStaticMarkup(await nav.JevBenchReleaseVersionNav({ active })), /href="\/jev-models\/v1.6.3"/);
+  assert.match(renderToStaticMarkup(await hist.JevReleaseHistory()), /href="\/jev-models\/v1.6.3"/);
   await writeFile(path('proof'), '{broken');
-  const html = renderToStaticMarkup(await nav.JevBenchReleaseVersionNav({ active: 'v1.6.1' }));
+  const html = renderToStaticMarkup(await hist.JevReleaseHistory());
   assert.ok(!html.includes('/jev-models/v1.6.3')); assert.match(html, /href="\/jev-models\/v1.6.2"/); assert.equal(logs.length, 1);
 });
-test('actual navigation follows validated publication and keeps v1.6.2', async () => {
+test('actual release history follows validated publication and keeps v1.6.2', async () => {
   const release = await readOptionalJevbenchV163Release();
-  const nav = await compiled('../components/JevBenchReleaseVersionNav.tsx', {});
-  const html = renderToStaticMarkup(await nav.JevBenchReleaseVersionNav({ active: 'v1.6.1' }));
+  const hist = await compiled('../components/JevReleaseHistory.tsx', {});
+  const html = renderToStaticMarkup(await hist.JevReleaseHistory());
   assert.equal(html.includes('/jev-models/v1.6.3'), Boolean(release)); assert.match(html, /href="\/jev-models\/v1.6.2"/);
 });

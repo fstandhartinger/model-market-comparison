@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "kind": "jevbench-draw-equating",
+  "decided": "Florian, 10 Oct 2026: one merged leaderboard; rows from fresh draws join it as soon as they are measured, put on the reference scale by anchor equating; no re-evaluation of earlier systems.",
+  "reference": {
+    "release": "v1.6.1",
+    "draw": "v1.6.0",
+    "drawn_on": "2026-10-01",
+    "G_med": 2.573387642438244
+  },
+  "method": "Every draw shares the same 300 public items (P, manifest 6b2321f8...). A fresh draw is equated to the reference draw with fixed anchor systems measured on both draws: offset = median over anchors of (metric on the reference S u P) - (metric on the new draw S u P), for Intelligence and Calibration, with a bootstrap 95% interval over anchors and items. A row from that draw is shown as published plus the offset; Capability and Composite follow from the equated axes. Until the anchor runs of a draw are complete its offset is 0 and the draw is marked 'anchor runs pending'.",
+  "anchor_pool": [
+    "hopper",
+    "kev-0.6b",
+    "kev-4b",
+    "kev-8b",
+    "localjev-qwen3.5-4b",
+    "malkuth-4b",
+    "metask-jev-4b",
+    "raw-phi-4-mini",
+    "raw-qwen3-1.7b",
+    "raw-qwen3-4b-instruct-2507",
+    "raw-qwen3-8b",
+    "typecastlm"
+  ],
+  "anchor_evidence": "The same 12 anchors answered two sealed draws of v1.6.0 (S and the A2 supplement): median difference -0.29 Intelligence and +1.56 Calibration points (v1.6.1 results, v16.equating_A2).",
+  "public_anchor_check": "On the shared public items, systems on both new draws score 6 to 13 sealed points below the reference field's sealed-vs-public line (reference residual SD 3.8). Either the new sealed draws are harder or their cohorts are tuned on the public items; only anchor runs can separate the two. Until then their rows are, if anything, understated.",
+  "draws": [
+    {
+      "draw": "v1.6-fastlane-20261009",
+      "label": "Fast-lane draw",
+      "drawn_on": "2026-10-09",
+      "releases": [
+        "v1.6.2",
+        "v1.6.3",
+        "v1.6.4"
+      ],
+      "latest_release": "v1.6.4",
+      "status": "anchor-runs-pending",
+      "offset": {
+        "I": 0,
+        "C": 0
+      },
+      "offset_ci95": null,
+      "anchors": []
+    },
+    {
+      "draw": "v1.6-regular-20261010-a2",
+      "label": "Regular draw",
+      "drawn_on": "2026-10-10",
+      "releases": [
+        "v1.6.5",
+        "v1.6.6",
+        "v1.6.7"
+      ],
+      "latest_release": "v1.6.7",
+      "status": "anchor-runs-pending",
+      "offset": {
+        "I": 0,
+        "C": 0
+      },
+      "offset_ci95": null,
+      "anchors": []
+    }
+  ]
+}

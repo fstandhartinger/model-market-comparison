@@ -28,6 +28,7 @@ import { NOT_RANKED } from './JevBoardShared';
 import { apiRerunCells } from '../lib/jevbench-api-rerun-cells.mjs';
 import apiPublicSet from '../data/jevbench-api-public-set.json';
 import apiA4 from '../data/jevbench-api-a4-equated.json';
+import drawEquating from '../data/jevbench-draw-equating.json';
 
 // JevBench v1.6.0 release board. Reuses the established interactive charts on the
 // v1.6 aggregate artifact, and adds the main-pool language view, dated carry and the
@@ -64,6 +65,10 @@ function apiRowProps(key: string, hiddenApi: ReadonlySet<string>) {
 function laneTag(s: { key: string; listing?: string; v16: { lane: string } }) {
   if (s.listing === JEV_SCOPE_LISTING.reference) return 'reference · API';
   return s.v16.lane === 'api' ? 'API' : 'self-hosted';
+}
+/** Draw tag of a row that joined the merged board from a fresh draw after v1.6.1. */
+function drawTag(s: { draw?: { release: string; measured_on: string } }) {
+  return s.draw ? `${s.draw.release} draw · ${s.draw.measured_on}` : null;
 }
 
 // v1.7.12: which item pools a row's category cells cover (S+P, S+P+L1 or S+P+L1+L2).
@@ -170,6 +175,7 @@ function DatedCarry({ carry, hiddenApi, showExceptions }: { carry: JevV16Carry; 
 
 // v1.7.0 (Florian, 5 Oct 2026): open-weights board on /jev-models, API-provider board on /jev-models/api.
 export const JEV_BOARD_REVISIONS: { version: string; date: string; text: string }[] = [
+  { version: 'v1.7.42', date: '2026-10-10', text: 'One merged board. The version tabs are gone: /jev-models is always the current board with every system’s latest measurement, and releases are listed under Release history (old version pages keep their URLs). The 16 systems measured on the two fresh draws after v1.6.1 (fast-lane draw v1.6.2–v1.6.4, regular draw v1.6.5–v1.6.7) join the boards with their published scores and a draw tag; each draw is put on the v1.6.1 scale by an anchor offset that stays 0 until the anchor systems have run on it (see How it works). A filter on top switches between Open weights, API and All (both groups, ranked by Capability). Header text is shortened; the details moved into How it works. Jeff 1.0 Large (fast-lane draw) enters the open-weights Capability top 5 at #2.' },
   { version: 'v1.7.41', date: '2026-10-10', text: 'Needle 3 now has language and category cells on the current pools. It keeps its published v1.5 headline. With the benchmark owner\'s approval its closed engine was sent all supplement items (L1, L2, L3) once more on an isolated machine, plus 128 never-asked S+P items chosen by their use-case label to complete the last radar spoke (these also count in the other cells, so its S+P part is not a random sample); together with an earlier partial run both radars reach at least 30 answered items per spoke (52 per subject topic, 43 per use case). The engine abstains on about 30 % of items and returns invalid UTF-8 on about 7 %; both count as unanswered, so 22 languages stay below the 60-item target (19 to 59 answered items). Its answers to the same public items differ between machines on about 10 %. Its chance-corrected competence is below zero in every cell, shown as 0. The v1.7.40 note for Needle 3 (options as tools) is corrected the same way. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3. Headline scores, Capability, Composite, ranks and pricing are unchanged.' },
   { version: 'v1.7.40', date: '2026-10-10', text: 'Needle 3, options as tools, now has language and category cells on the current pools. It keeps its published v1.5 headline. With the benchmark owner\'s approval its closed engine ran once more on an isolated machine; the run covered most of L3 and half of L1 before the machine\'s time limit and is combined with an earlier partial run. Both radars are complete (at least 58 per subject topic and 43 per use case). The engine abstains on about 9 % of items and returns invalid UTF-8 on about 7 % (mostly non-Latin scripts); both count as unanswered, so 18 languages stay below the 60-item target (24 to 59 answered items; columns under 30 carry the low-n mark). Its chance-corrected competence is below zero in every cell, shown as 0. ClassOne Gemma 4 E2B keeps its exception with a corrected reason: its weights were identical, but its server gives different answers after each restart. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3. Headline scores, Capability, Composite, ranks and pricing are unchanged.' },
   { version: 'v1.7.39', date: '2026-10-10', text: 'GLiNER2 large now has language and category cells on the current pools: at least 62 completed responses in every language, 98 in every subject topic and 80 in every use case. It keeps its published v1.5 headline; the cells come from a new run with the original pinned model on an isolated machine. GLiNER2 gained 180 more answered items that had been reserved earlier but never sent: its languages now rest on 50 to 59 answered items where they are below the 60-item target (17 of 23), and its radars on at least 69 per topic and 56 per use case. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3. Headline scores, Capability, Composite, ranks and pricing are unchanged.' },
@@ -214,11 +220,45 @@ export const JEV_BOARD_REVISIONS: { version: string; date: string; text: string 
   { version: 'v1.6.0', date: '2026-10-05', text: 'Rotating sealed item sets, API-exposure rule, Noul decisiveness (method B), language view and dated carry.' },
 ];
 
+type DrawRow = { draw: string; label: string; drawn_on: string; releases: string[]; status: string; offset: { I: number; C: number }; offset_ci95: { I: [number, number]; C: [number, number] } | null; anchors: string[] };
+// Florian 10 Oct 2026: one merged board; fresh draws join it through anchor equating (data/jevbench-draw-equating.json).
+function MergedBoardMethod() {
+  const t = drawEquating as unknown as { method: string; anchor_pool: string[]; anchor_evidence: string; public_anchor_check: string; reference: { release: string; draw: string; G_med: number }; draws: DrawRow[] };
+  const sign = (v: number) => `${v >= 0 ? '+' : ''}${v.toFixed(2)}`;
+  return <div data-bh-jev-merged-method>
+    <h3 className="mt-4 text-lg font-semibold">One merged board: how newer draws join it</h3>
+    <p className="bh-muted mt-1 text-sm">Each system appears once, with its latest valid measurement; earlier systems are not re-measured. The reference scale is {t.reference.release} (draw {t.reference.draw}). {t.method}</p>
+    <div className="mt-2 overflow-x-auto"><table className="text-left text-sm tabular" data-bh-jev-draw-equating>
+      <thead><tr>{['Draw', 'Drawn', 'Releases', 'Anchor offset (Intelligence / Calibration)', 'Status'].map((h) => <th key={h} scope="col" className="p-2">{h}</th>)}</tr></thead>
+      <tbody>
+        <tr className="border-t border-line"><th scope="row" className="p-2 font-normal">{t.reference.draw} (reference)</th><td className="p-2">2026-10-01</td><td className="p-2">v1.6.0, v1.6.1</td><td className="p-2">0 / 0</td><td className="p-2">reference scale · G_med {t.reference.G_med.toFixed(2)}</td></tr>
+        {t.draws.map((d) => <tr key={d.draw} className="border-t border-line" data-bh-jev-draw={d.draw}><th scope="row" className="p-2 font-normal">{d.label} · {d.draw}</th><td className="p-2">{d.drawn_on}</td><td className="p-2">{d.releases.join(', ')}</td>
+          <td className="p-2">{sign(d.offset.I)} / {sign(d.offset.C)}{d.offset_ci95 && <span className="bh-muted block text-xs">95% CI I {sign(d.offset_ci95.I[0])}…{sign(d.offset_ci95.I[1])}, C {sign(d.offset_ci95.C[0])}…{sign(d.offset_ci95.C[1])}</span>}</td>
+          <td className="p-2">{d.status === 'equated' ? `equated with ${d.anchors.length} anchors` : 'anchor runs pending: shown as published'}</td></tr>)}
+      </tbody>
+    </table></div>
+    <ul className="bh-muted mt-2 list-disc space-y-1 pl-5 text-sm">
+      <li>Anchor pool: {t.anchor_pool.join(', ')}. {t.anchor_evidence}</li>
+      <li>{t.public_anchor_check}</li>
+      <li>Rows from a newer draw keep the gap-penalty reference (G_med) their release was scored with; the row tooltip and tag name the draw and date. Their topic, use-case and language cells use their own draw’s item set and labels, so they are shown on their release page (linked from the draw tag in Release history), not in the radars and language table here.</li>
+    </ul>
+  </div>;
+}
+
 function BoardSplit({ scope, history, preliminary }: { scope: JevScope; history: Array<{ revision: string; date: string; summary: string }>; preliminary: boolean }) {
   const boardOnly = JEV_BOARD_REVISIONS.filter((r) => r.version.startsWith('v1.7'));
   const revisions = history.length > 0 ? [...boardOnly, ...history.map((r) => ({ version: r.revision, date: r.date, text: r.summary }))] : JEV_BOARD_REVISIONS;
   return <div data-bh-jev-board-split>
+    <MergedBoardMethod />
     <h3 className="mt-4 text-lg font-semibold">Open weights and API offerings (board {JEV_BOARD_REVISIONS[0].version})</h3>
+    <details className="bh-muted mt-1 text-sm" data-bh-jev-split-why-more><summary className="cursor-pointer text-accent">Why open weights and APIs are compared in separate groups</summary>
+      <ul className="mt-2 list-disc space-y-1 pl-5">
+        <li><b>Fair cost and speed.</b> We run every open-weights model on hardware we rent and operate, so cost and latency compare on the same terms. The GPU cost calculator prices your own setup: own hardware, on-demand or long-term rental.</li>
+        <li><b>API prices can change.</b> An API price is the vendor&apos;s decision. It can be subsidised (for example on top-end GPUs) and raised later, and readers cannot reproduce it.</li>
+        <li><b>Different fairness needs.</b> A hosted endpoint chooses its own hardware and sees the benchmark inputs, so API offerings are compared with each other.</li>
+        <li><b>Open-source focus.</b> JevBench exists to make open decision models comparable and reproducible. Every score and the method are identical in every view; the All view ranks both groups together by Capability.</li>
+      </ul>
+    </details>
     <ul className="bh-muted mt-1 list-disc space-y-1 pl-5 text-sm">
       <li>{scope === 'open' ? 'This board' : 'The main board at /jev-models'} ranks <b>open-weights systems</b>: published weights that we ran ourselves, on GPU or CPU machines we rent and operate. A system we measured through an endpoint we do not run (vendor API, author-hosted or third-party-hosted endpoint, for example Qwen3.8 27B via Chutes) is an <b>API offering</b>, even when its base weights are open; API offerings are ranked on {scope === 'api' ? 'this board' : <a className="text-accent underline" href="/jev-models/api">the API leaderboard</a>}.</li>
       <li>Why separate boards: open weights can be compared on equal hosting terms, while an API price is a vendor decision that can be subsidised or raised later and is not reproducible by readers. Every score and measurement is the same on both boards; only the set of ranked rows differs, and ranks are the published order filtered to that set.</li>
@@ -238,12 +278,12 @@ function BoardSplit({ scope, history, preliminary }: { scope: JevScope; history:
 
 function Method(props: Parameters<typeof MethodBody>[0]) {
   return <section className="mt-10 max-w-4xl" aria-labelledby="jev16-method-title" id="jev16-method" data-bh-jev16-method>
-    <h2 id="jev16-method-title" className="text-2xl font-bold">{isFreshJevbenchV16Revision(props.a.revision) ? `Method notes · fresh native cohort${props.a.revision === 'v1.6.2' ? '' : ` · ${props.a.revision}`}` : `Method · ${props.a.revision}`}</h2>
+    <h2 id="jev16-method-title" className="text-2xl font-bold">{isFreshJevbenchV16Revision(props.a.revision) ? `Method notes · fresh native cohort${props.a.revision === 'v1.6.2' ? '' : ` · ${props.a.revision}`}` : props.live ? 'How it works' : `Method · ${props.a.revision}`}</h2>
     <MethodBody {...props} />
   </section>;
 }
 
-function MethodBody({ categories, a, sha256, categoriesSha256, carrySha256, scope, hiddenApi, preliminary }: { categories: JevV16Categories; a: JevV16ReleaseArtifact; sha256: string; categoriesSha256: string; carrySha256: string; scope: JevScope; hiddenApi: ReadonlySet<string>; preliminary: boolean }) {
+function MethodBody({ categories, a, sha256, categoriesSha256, carrySha256, scope, hiddenApi, preliminary, live = false }: { categories: JevV16Categories; a: JevV16ReleaseArtifact; sha256: string; categoriesSha256: string; carrySha256: string; scope: JevScope; hiddenApi: ReadonlySet<string>; preliminary: boolean; live?: boolean }) {
   if (isFreshJevbenchV16Revision(a.revision)) return <>
     <p className="mt-2">Each system answered the same 1,200 freshly drawn sealed decisions and 300 public decisions on an offline GPU pod. Scores use methodology v1.6, O1S, with 1,000 bootstrap samples and seed 16.</p>
     <p className="mt-2">Capability is the mean of Intelligence and Calibration within the frozen Jev-class cost and median-latency caps. Composite is secondary. Failed and refused answers remain in the full 1,500-decision denominator.</p>
@@ -273,7 +313,7 @@ function MethodBody({ categories, a, sha256, categoriesSha256, carrySha256, scop
   });
   const confidenceOnly = methodSystems.filter((s) => { const sup = Object.values((s as unknown as { support?: Record<string, string> }).support ?? {}); return sup.length > 0 && sup.every((x) => x === 'confidence'); }).map((s) => short(s.display));
   return <>
-    {scope !== 'all' && <BoardSplit scope={scope} history={revisionHistory} preliminary={preliminary} />}
+    {(scope !== 'all' || live) && <BoardSplit scope={scope} history={revisionHistory} preliminary={preliminary} />}
     <JevArchitectureMethod />
     {categories.language_cells && <p className="bh-muted mt-2 text-sm" data-bh-jev-language-method>{languagePoolNote(categories.language_cells)}</p>}
     {hiddenApi.size > 0 && <p className="bh-muted mt-2 text-xs" data-bh-jev-method-scope-note>Per-system method lists on this board cover the open-weights systems and the Jev reference; the hosted API offerings&apos; lists are on the <a className="text-accent underline" href="/jev-models/api#jev16-method">API leaderboard</a>.</p>}
@@ -524,8 +564,10 @@ function ApiPublicSet({ measured }: { measured: ReadonlySet<string> }) {
   </section>;
 }
 
-export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSha256, carry, carrySha256, previousKeys, scope = 'all', apiKeys = [], apiListed = [] }: {
+export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSha256, carry, carrySha256, previousKeys, scope = 'all', apiKeys = [], apiListed = [], live = false }: {
   apiListed?: JevApiListedRow[];
+  /** Florian 10 Oct 2026: the live merged board (open / api / all presets); false on archived release pages. */
+  live?: boolean;
   artifact: JevV16ReleaseArtifact; sha256: string; categories: JevV16Categories; categoriesSha256: string; carry: JevV16Carry; carrySha256: string; previousKeys: string[];
   /** v1.7: 'open' = open-weights board with the API toggle, 'api' = API leaderboard, 'all' = archived release as published. */
   scope?: JevScope; apiKeys?: string[];
@@ -573,17 +615,17 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
   const named = new Map(a.systems.map((s) => [s.key, short(s.display)]));
   const leader = jevV15LeaderSentence(v15.board[a.headline], (key) => named.get(key) ?? key);
   // v1.7.1 (Florian 6 Oct 2026): ranking headings name the board; the API board leads with the Composite.
-  const scopeLabel = scope === 'open' ? 'open weights' : scope === 'api' ? 'API offerings' : undefined;
-  const capabilityCharts = <JevBenchV16Charts systems={chartSystems} eligibilitySystems={allChartSystems} revision={a.revision} officialHref="#jev16-method"
+  const scopeLabel = scope === 'open' ? 'open weights' : scope === 'api' ? 'API offerings' : live ? 'all groups' : undefined;
+  const capabilityCharts = <JevBenchV16Charts systems={chartSystems} eligibilitySystems={allChartSystems} revision={live ? 'board' : a.revision} officialHref="#jev16-method"
     scopeLabel={scopeLabel} outsideOpen={scope === 'api'} headline={scope !== 'api'} />;
   return <JevV15FilterProvider rows={filterRows} apiKeys={scope === 'open' ? apiKeys : undefined}>
     <section data-bh-jevbench-v16-release data-bh-jev-scope={scope}>
       <JevV15FilterVisibilityBridge />
-      {scope === 'open' && <JevApiOfferingsToggle measured={a.systems.filter((s) => (s as { scope?: string; listing?: string }).scope === 'api' && (s as { listing?: string }).listing !== 'listed').length} />}
+      {(scope === 'open' || live) && <JevApiOfferingsToggle scope={scope} measured={a.systems.filter((s) => (s as { scope?: string; listing?: string }).scope === 'api' && (s as { listing?: string }).listing !== 'listed').length} />}
       {scope !== 'api' && capabilityCharts}
       {scope !== 'api' && <JevV15FilterPanel />}
       {scope === 'api' && extra.length > 0 && <p className="mt-6 max-w-4xl text-sm" data-bh-jev-api-preliminary-note><span className="bh-thin-tag bh-partial-tag mr-1.5 align-middle">preliminary</span><b>Hatched rows are preliminary:</b> API offerings scored on the 300 public v1.6 items only (no sealed items, so no gap penalty; Calibration reads a few points lower on 300 items than on 1,500). They are not ranked and compare strictly only with the anchor rows in the public-set table; each row is replaced by its full result once it has been run on a fresh sealed set. <span className="bh-thin-tag bh-partial-tag mx-1 align-middle">pending</span>Greyed rows have no v1.6 figure yet; their v1.5 score is in the tooltip and in the <a className="text-accent underline" href="#jev-api-public-set">public-set table</a>.</p>}
-      <JevScoreChart revision={a.revision} rows={viewRows} rankedCount={a.n_ranked} newLabel={null} fairness={null} approvedNote={leader} tieNote={null} capabilityHref="#jev-capability" presets={jevV15SliderPresets(v15)} compactMobile scoreKind="v15" methodLink={{ href: '#jev16-method', label: 'Method notes ↓' }}
+      <JevScoreChart revision={live ? 'board' : a.revision} rows={viewRows} rankedCount={a.n_ranked} newLabel={null} fairness={null} approvedNote={leader} tieNote={null} capabilityHref="#jev-capability" presets={jevV15SliderPresets(v15)} compactMobile scoreKind="v15" methodLink={{ href: '#jev16-method', label: 'Method notes ↓' }}
         scoreLabel={scopeLabel ? `JevBench Composite Score (${scopeLabel})` : undefined} headline={scope === 'api'} capabilityLabel={scope === 'api' ? 'Capability ↓' : undefined} />
       {scope === 'api' && capabilityCharts}
       {scope === 'api' && <ApiRoster a={a} carry={carry} listed={apiListed} eligibility={eligibilityByKey} />}
@@ -605,7 +647,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
         key: s.key, display: short(s.display), gpu: (s as { gpu?: string | null }).gpu ?? null, p50_s_raw: s.speed?.p50_s_raw ?? null,
         officialUsdPer1000: s.cost?.usd_per_1000 ?? null, ranked: !!s.ranked }))} /></div>}
       {(!fresh || carry.rows.length > 0) && <DatedCarry carry={carry} hiddenApi={hiddenApi} showExceptions={Boolean(categories.supplement)} />}
-      <Method categories={categories} a={a} sha256={sha256} categoriesSha256={categoriesSha256} carrySha256={carrySha256} scope={scope} hiddenApi={hiddenApi} preliminary={preliminary} />
+      <Method categories={categories} a={a} sha256={sha256} categoriesSha256={categoriesSha256} carrySha256={carrySha256} scope={scope} hiddenApi={hiddenApi} preliminary={preliminary} live={live} />
     </section>
   </JevV15FilterProvider>;
 }

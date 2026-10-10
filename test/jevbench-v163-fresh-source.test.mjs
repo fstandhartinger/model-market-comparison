@@ -115,7 +115,7 @@ test('actual candidate presence requires strict validation and navigation stays 
   const loaderPath = new URL('../lib/jevbench-v163-release.mjs', import.meta.url);
   const pagePath = new URL('../app/jev-models/v1.6.3/page.tsx', import.meta.url);
   const apiPath = new URL('../app/api/jevbench/v1.6.3/route.ts', import.meta.url);
-  const nav = read('components/JevBenchReleaseVersionNav.tsx');
+  const nav = read('components/JevReleaseHistory.tsx'); // Florian 10 Oct 2026: release history replaced the version tabs
   if (existsSync(loaderPath)) {
     assert.ok(existsSync(pagePath) && existsSync(apiPath), 'prospective loader has both guarded routes');
     const loader = await import(loaderPath.href);
@@ -131,8 +131,8 @@ test('actual candidate presence requires strict validation and navigation stays 
     }
     assert.match(read('app/jev-models/v1.6.3/page.tsx'), /if \(\!release\) notFound\(\);/);
     assert.match(read('app/api/jevbench/v1.6.3/route.ts'), /if \(\!release\) return new Response\('Not found', \{ status: 404 \}\)/);
-    assert.match(nav, /const visible163 = fresh163 \?\? await hasPublishedJevbenchV163Release\(\)/);
-    assert.match(nav, /visible163 \? \[\{ version: 'v1\.6\.3'/);
+    assert.match(nav, /hasPublishedJevbenchV163Release\(\)/);
+    assert.match(nav, /!v163 && 'v1\.6\.3'/);
   } else {
     assert.deepEqual(present, []);
     assert.equal(existsSync(pagePath), false); assert.equal(existsSync(apiPath), false);

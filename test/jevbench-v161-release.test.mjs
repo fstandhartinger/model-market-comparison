@@ -33,9 +33,11 @@ test('v1.6.1 is the live release, v1.6.0 stays reachable unchanged', async () =>
   assert.match(await read('app/jev-models/v1.6.0/page.tsx'), /readJevbenchV16Release\(\)/);
   assert.match(await read('app/jev-models/v1.6.1/page.tsx'), /canonical: '\/jev-models\/v1\.6\.1'/);
   assert.match(await read('app/sitemap.ts'), /"\/jev-models\/v1\.6\.0", "\/jev-models\/v1\.6\.1"/);
-  const nav = await read('components/JevBenchReleaseVersionNav.tsx');
-  assert.match(nav, /version: 'v1\.6\.1', href: '\/jev-models'/);
-  assert.match(nav, /version: 'v1\.6\.0', href: '\/jev-models\/v1\.6\.0'/);
+  // Florian 10 Oct 2026: versions live in the release history; /jev-models is the merged board.
+  const releases = await read('lib/jevbench-releases.mjs');
+  assert.match(releases, /version: 'v1\.6\.1', date: '2026-10-06', href: '\/jev-models\/v1\.6\.1'/);
+  assert.match(releases, /version: 'v1\.6\.0', date: '2026-10-05', href: '\/jev-models\/v1\.6\.0'/);
+  assert.match(await read('components/JevBenchReleaseVersionNav.tsx'), /href="\/jev-models" data-bh-jev-live-link/);
 });
 
 test('self-hosted rows are identical to v1.6.0 (scores, axes, intelligence, calibration, cost, speed)', () => {
