@@ -1098,6 +1098,34 @@
       "headline_or_rank_changed": false,
       "composite_changed": false,
       "original_row_price_changed": false
+    },
+    "needle-3-tools": {
+      "aggregate_artifact": "ops/evidence/needle-3-tools-language-category-complete-20261010.json",
+      "sha256": "65d95c62c31f2b2d7710c6c3d16f807f32b40c25d94d8cd1e679ca19119b1c7d",
+      "method": "official O1S",
+      "basis": "S+P+L1+L3",
+      "historical_S_observed": 132,
+      "historical_P_observed": 43,
+      "historical_S_successful": 130,
+      "historical_S_http500": 0,
+      "historical_P_successful": 41,
+      "historical_P_http500": 0,
+      "original_http500_retained_unimputed": 0,
+      "P300_carried_by_stable_identity_counted_once": true,
+      "supplemental_records": 1263,
+      "supplemental_L1": 177,
+      "supplemental_L2": 0,
+      "supplemental_L3": 1086,
+      "category_scored_observations": 1695,
+      "language_coverage_min": 24,
+      "language_target_complete": false,
+      "languages_below_target60": 18,
+      "topic_coverage_min": 58,
+      "usecase_coverage_min": 43,
+      "partial_completeness_exception": true,
+      "headline_or_rank_changed": false,
+      "composite_changed": false,
+      "original_row_price_changed": false
     }
   },
   "source_sha256": "bea26aa45db9d45fbb5d0cc0ef4792ae1f5d816bd264a155863828d01966cf03",
@@ -33208,148 +33236,356 @@
       }
     },
     "needle-3-tools": {
-      "category_n_items": 175,
-      "category_pools": "S+P",
+      "category_n_items": 1695,
+      "category_pools": "S+P+L1+L3",
       "category_spoke_n": {
         "families": {
-          "calibration": 3,
-          "calibration_gen": 6,
-          "composite_gen": 3,
-          "fairness": 17,
-          "jaggedness": 16,
-          "llm_router": 57,
-          "long_state": 2,
-          "multilingual": 27,
-          "negation_pair_gen": 10,
-          "option_order": 9,
-          "perturb_pair": 9,
-          "usecase": 16
+          "calibration_gen": 17,
+          "composite_gen": 20,
+          "fairness": 30,
+          "jaggedness": 33,
+          "llm_router": 138,
+          "multilingual": 1201,
+          "negation_pair_gen": 26,
+          "option_order": 26,
+          "perturb_pair": 29,
+          "usecase": 168
         },
         "topics": {
-          "coding": 43,
-          "everyday_language": 6,
-          "finance_commerce": 7,
-          "law_policy": 82,
-          "math": 22,
-          "safety_security": 5,
-          "support_ops": 10
+          "coding": 154,
+          "everyday_language": 110,
+          "finance_commerce": 150,
+          "law_policy": 926,
+          "math": 199,
+          "safety_security": 77,
+          "support_ops": 79
         },
         "usecases": {
-          "advertising": 2,
-          "code_linting": 3,
-          "customer_support": 14,
-          "demand_forecasting": 2,
-          "ecommerce_marketplaces": 7,
-          "financial_crime": 4,
-          "gaming": 3,
-          "insurance_claims": 5,
-          "knowledge_graphs": 1,
-          "lead_generation": 2,
-          "legal_compliance": 39,
-          "llm_guardrails": 4,
-          "model_routing": 57,
-          "moderation_trust_safety": 3,
-          "other": 19,
-          "recruiting": 3,
-          "risk_assessment": 3,
-          "scientific_discovery": 1,
-          "search_retrieval": 3
+          "advertising": 71,
+          "code_linting": 64,
+          "customer_support": 127,
+          "demand_forecasting": 61,
+          "ecommerce_marketplaces": 71,
+          "feature_extraction": 76,
+          "financial_crime": 71,
+          "gaming": 66,
+          "insurance_claims": 79,
+          "knowledge_graphs": 69,
+          "lead_generation": 71,
+          "legal_compliance": 188,
+          "llm_guardrails": 76,
+          "model_routing": 195,
+          "moderation_trust_safety": 63,
+          "other": 65,
+          "recruiting": 72,
+          "risk_assessment": 77,
+          "scientific_discovery": 66,
+          "search_retrieval": 67
         }
       },
       "families": {
-        "fairness": {
-          "competence": 0.0,
-          "coverage_n": 15,
+        "calibration_gen": {
           "n": 17,
-          "operational_failure_n": 2,
+          "competence": 0.0,
+          "coverage_n": 17,
+          "response_n": 17,
           "refusal_n": 0,
-          "response_n": 15
+          "operational_failure_n": 0
+        },
+        "composite_gen": {
+          "n": 20,
+          "competence": 0.0,
+          "coverage_n": 19,
+          "response_n": 19,
+          "refusal_n": 0,
+          "operational_failure_n": 1
+        },
+        "fairness": {
+          "n": 30,
+          "competence": 0.0,
+          "coverage_n": 28,
+          "response_n": 28,
+          "refusal_n": 0,
+          "operational_failure_n": 2
         },
         "jaggedness": {
+          "n": 33,
           "competence": 0.0,
-          "coverage_n": 12,
-          "n": 16,
-          "operational_failure_n": 4,
+          "coverage_n": 25,
+          "response_n": 25,
           "refusal_n": 0,
-          "response_n": 12
+          "operational_failure_n": 8
         },
         "llm_router": {
+          "n": 138,
           "competence": 0.0,
-          "coverage_n": 50,
-          "n": 57,
-          "operational_failure_n": 7,
+          "coverage_n": 119,
+          "response_n": 119,
           "refusal_n": 0,
-          "response_n": 50
+          "operational_failure_n": 19
         },
         "multilingual": {
+          "n": 1201,
           "competence": 0.0,
-          "coverage_n": 22,
-          "n": 27,
-          "operational_failure_n": 5,
+          "coverage_n": 1013,
+          "response_n": 1013,
           "refusal_n": 0,
-          "response_n": 22
+          "operational_failure_n": 188
+        },
+        "negation_pair_gen": {
+          "n": 26,
+          "competence": 0.0,
+          "coverage_n": 25,
+          "response_n": 25,
+          "refusal_n": 0,
+          "operational_failure_n": 1
+        },
+        "option_order": {
+          "n": 26,
+          "competence": 0.0,
+          "coverage_n": 25,
+          "response_n": 25,
+          "refusal_n": 0,
+          "operational_failure_n": 1
+        },
+        "perturb_pair": {
+          "n": 29,
+          "competence": 0.0,
+          "coverage_n": 26,
+          "response_n": 26,
+          "refusal_n": 0,
+          "operational_failure_n": 3
         },
         "usecase": {
+          "n": 168,
           "competence": 0.0,
-          "coverage_n": 13,
-          "n": 16,
-          "operational_failure_n": 3,
+          "coverage_n": 116,
+          "response_n": 116,
           "refusal_n": 0,
-          "response_n": 13
+          "operational_failure_n": 52
         }
       },
       "topics": {
         "coding": {
+          "n": 154,
           "competence": 0.0,
-          "coverage_n": 39,
-          "n": 43,
-          "operational_failure_n": 4,
+          "coverage_n": 139,
+          "response_n": 139,
           "refusal_n": 0,
-          "response_n": 39
+          "operational_failure_n": 15
+        },
+        "everyday_language": {
+          "n": 110,
+          "competence": 0.0,
+          "coverage_n": 75,
+          "response_n": 75,
+          "refusal_n": 0,
+          "operational_failure_n": 35
+        },
+        "finance_commerce": {
+          "n": 150,
+          "competence": 0.0,
+          "coverage_n": 123,
+          "response_n": 123,
+          "refusal_n": 0,
+          "operational_failure_n": 27
         },
         "law_policy": {
+          "n": 926,
           "competence": 0.0,
-          "coverage_n": 69,
-          "n": 82,
-          "operational_failure_n": 13,
+          "coverage_n": 794,
+          "response_n": 794,
           "refusal_n": 0,
-          "response_n": 69
+          "operational_failure_n": 132
         },
         "math": {
+          "n": 199,
           "competence": 0.0,
-          "coverage_n": 19,
-          "n": 22,
-          "operational_failure_n": 3,
+          "coverage_n": 166,
+          "response_n": 166,
           "refusal_n": 0,
-          "response_n": 19
+          "operational_failure_n": 33
+        },
+        "safety_security": {
+          "n": 77,
+          "competence": 0.0,
+          "coverage_n": 58,
+          "response_n": 58,
+          "refusal_n": 0,
+          "operational_failure_n": 19
+        },
+        "support_ops": {
+          "n": 79,
+          "competence": 0.0,
+          "coverage_n": 64,
+          "response_n": 64,
+          "refusal_n": 0,
+          "operational_failure_n": 15
         }
       },
       "usecases": {
-        "legal_compliance": {
+        "advertising": {
+          "n": 71,
           "competence": 0.0,
-          "coverage_n": 35,
-          "n": 39,
-          "operational_failure_n": 4,
+          "coverage_n": 66,
+          "response_n": 66,
           "refusal_n": 0,
-          "response_n": 35
+          "operational_failure_n": 5
+        },
+        "code_linting": {
+          "n": 64,
+          "competence": 0.0,
+          "coverage_n": 61,
+          "response_n": 61,
+          "refusal_n": 0,
+          "operational_failure_n": 3
+        },
+        "customer_support": {
+          "n": 127,
+          "competence": 0.0,
+          "coverage_n": 110,
+          "response_n": 110,
+          "refusal_n": 0,
+          "operational_failure_n": 17
+        },
+        "demand_forecasting": {
+          "n": 61,
+          "competence": 2.48,
+          "coverage_n": 55,
+          "response_n": 55,
+          "refusal_n": 0,
+          "operational_failure_n": 6
+        },
+        "ecommerce_marketplaces": {
+          "n": 71,
+          "competence": 0.0,
+          "coverage_n": 58,
+          "response_n": 58,
+          "refusal_n": 0,
+          "operational_failure_n": 13
+        },
+        "feature_extraction": {
+          "n": 76,
+          "competence": 0.0,
+          "coverage_n": 62,
+          "response_n": 62,
+          "refusal_n": 0,
+          "operational_failure_n": 14
+        },
+        "financial_crime": {
+          "n": 71,
+          "competence": 0.0,
+          "coverage_n": 61,
+          "response_n": 61,
+          "refusal_n": 0,
+          "operational_failure_n": 10
+        },
+        "gaming": {
+          "n": 66,
+          "competence": 0.0,
+          "coverage_n": 49,
+          "response_n": 49,
+          "refusal_n": 0,
+          "operational_failure_n": 17
+        },
+        "insurance_claims": {
+          "n": 79,
+          "competence": 0.0,
+          "coverage_n": 63,
+          "response_n": 63,
+          "refusal_n": 0,
+          "operational_failure_n": 16
+        },
+        "knowledge_graphs": {
+          "n": 69,
+          "competence": 0.0,
+          "coverage_n": 52,
+          "response_n": 52,
+          "refusal_n": 0,
+          "operational_failure_n": 17
+        },
+        "lead_generation": {
+          "n": 71,
+          "competence": 0.0,
+          "coverage_n": 62,
+          "response_n": 62,
+          "refusal_n": 0,
+          "operational_failure_n": 9
+        },
+        "legal_compliance": {
+          "n": 188,
+          "competence": 0.0,
+          "coverage_n": 164,
+          "response_n": 164,
+          "refusal_n": 0,
+          "operational_failure_n": 24
+        },
+        "llm_guardrails": {
+          "n": 76,
+          "competence": 0.0,
+          "coverage_n": 64,
+          "response_n": 64,
+          "refusal_n": 0,
+          "operational_failure_n": 12
         },
         "model_routing": {
+          "n": 195,
           "competence": 0.0,
-          "coverage_n": 50,
-          "n": 57,
-          "operational_failure_n": 7,
+          "coverage_n": 169,
+          "response_n": 169,
           "refusal_n": 0,
-          "response_n": 50
+          "operational_failure_n": 26
+        },
+        "moderation_trust_safety": {
+          "n": 63,
+          "competence": 0.0,
+          "coverage_n": 46,
+          "response_n": 46,
+          "refusal_n": 0,
+          "operational_failure_n": 17
         },
         "other": {
+          "n": 65,
           "competence": 0.0,
-          "coverage_n": 15,
-          "n": 19,
-          "operational_failure_n": 4,
+          "coverage_n": 43,
+          "response_n": 43,
           "refusal_n": 0,
-          "response_n": 15
+          "operational_failure_n": 22
+        },
+        "recruiting": {
+          "n": 72,
+          "competence": 0.0,
+          "coverage_n": 58,
+          "response_n": 58,
+          "refusal_n": 0,
+          "operational_failure_n": 14
+        },
+        "risk_assessment": {
+          "n": 77,
+          "competence": 0.0,
+          "coverage_n": 72,
+          "response_n": 72,
+          "refusal_n": 0,
+          "operational_failure_n": 5
+        },
+        "scientific_discovery": {
+          "n": 66,
+          "competence": 0.0,
+          "coverage_n": 53,
+          "response_n": 53,
+          "refusal_n": 0,
+          "operational_failure_n": 13
+        },
+        "search_retrieval": {
+          "n": 67,
+          "competence": 0.0,
+          "coverage_n": 51,
+          "response_n": 51,
+          "refusal_n": 0,
+          "operational_failure_n": 16
         }
-      }
+      },
+      "coverage_note": "This historical row keeps its published v1.5 headline. Its language and category cells combine an earlier partial run on the current pools (175 S+P items) with a new run of the supplements L3 (1,382 of 1,418 items) and L1 (329 of 654) on the original pinned closed engine, approved by the benchmark owner, on an isolated machine; L2 and the rest of S+P were not run before the machine's time limit. The engine fails on about 7 % of items in non-Latin scripts (its output is not valid UTF-8); those stay scored as failures. Its answers to the same public items differ between machines for about 10 % of items. 18 of 23 languages rest on 24 to 59 answered items instead of the 60-item target; the radars are complete. Headline, rank, Composite and pricing are unchanged. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3."
     },
     "nemotron-diffusion-8b": {
       "category_n_items": 3005,

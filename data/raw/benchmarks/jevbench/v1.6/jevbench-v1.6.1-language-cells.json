@@ -1478,6 +1478,34 @@
       "headline_or_rank_changed": false,
       "composite_changed": false,
       "original_row_price_changed": false
+    },
+    "needle-3-tools": {
+      "aggregate_artifact": "ops/evidence/needle-3-tools-language-category-complete-20261010.json",
+      "sha256": "65d95c62c31f2b2d7710c6c3d16f807f32b40c25d94d8cd1e679ca19119b1c7d",
+      "method": "official O1S",
+      "basis": "S+P+L1+L3",
+      "historical_S_observed": 132,
+      "historical_P_observed": 43,
+      "historical_S_successful": 130,
+      "historical_S_http500": 0,
+      "historical_P_successful": 41,
+      "historical_P_http500": 0,
+      "original_http500_retained_unimputed": 0,
+      "P300_carried_by_stable_identity_counted_once": true,
+      "supplemental_records": 1263,
+      "supplemental_L1": 177,
+      "supplemental_L2": 0,
+      "supplemental_L3": 1086,
+      "category_scored_observations": 1695,
+      "language_coverage_min": 24,
+      "language_target_complete": false,
+      "languages_below_target60": 18,
+      "topic_coverage_min": 58,
+      "usecase_coverage_min": 43,
+      "partial_completeness_exception": true,
+      "headline_or_rank_changed": false,
+      "composite_changed": false,
+      "original_row_price_changed": false
     }
   },
   "row_scoped_supplements": {
@@ -20899,22 +20927,206 @@
       "sealed_basis": "S"
     },
     "needle-3-tools": {
-      "coverage": "S+P",
+      "coverage": "S+P+L1+L3",
       "languages": {
-        "en": {
+        "ar": {
+          "n": 52,
           "competence": 0.0,
-          "coverage_n": 116,
-          "n": 133,
-          "operational_failure_n": 17,
+          "coverage_n": 36,
+          "response_n": 36,
           "refusal_n": 0,
-          "response_n": 116
+          "operational_failure_n": 16
+        },
+        "cs": {
+          "n": 55,
+          "competence": 0.0,
+          "coverage_n": 50,
+          "response_n": 50,
+          "refusal_n": 0,
+          "operational_failure_n": 5
+        },
+        "da": {
+          "n": 52,
+          "competence": 0.0,
+          "coverage_n": 49,
+          "response_n": 49,
+          "refusal_n": 0,
+          "operational_failure_n": 3
+        },
+        "de": {
+          "n": 65,
+          "competence": 0.0,
+          "coverage_n": 57,
+          "response_n": 57,
+          "refusal_n": 0,
+          "operational_failure_n": 8
+        },
+        "el": {
+          "n": 46,
+          "competence": 0.0,
+          "coverage_n": 26,
+          "response_n": 26,
+          "refusal_n": 0,
+          "operational_failure_n": 20
+        },
+        "en": {
+          "n": 454,
+          "competence": 0.0,
+          "coverage_n": 372,
+          "response_n": 372,
+          "refusal_n": 0,
+          "operational_failure_n": 82
+        },
+        "es": {
+          "n": 71,
+          "competence": 4.38,
+          "coverage_n": 68,
+          "response_n": 68,
+          "refusal_n": 0,
+          "operational_failure_n": 3
+        },
+        "fi": {
+          "n": 54,
+          "competence": 0.0,
+          "coverage_n": 46,
+          "response_n": 46,
+          "refusal_n": 0,
+          "operational_failure_n": 8
+        },
+        "fr": {
+          "n": 61,
+          "competence": 0.0,
+          "coverage_n": 61,
+          "response_n": 61,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "hi": {
+          "n": 53,
+          "competence": 0.0,
+          "coverage_n": 32,
+          "response_n": 32,
+          "refusal_n": 0,
+          "operational_failure_n": 21
+        },
+        "id": {
+          "n": 54,
+          "competence": 0.0,
+          "coverage_n": 52,
+          "response_n": 52,
+          "refusal_n": 0,
+          "operational_failure_n": 2
+        },
+        "it": {
+          "n": 63,
+          "competence": 0.0,
+          "coverage_n": 50,
+          "response_n": 50,
+          "refusal_n": 0,
+          "operational_failure_n": 13
+        },
+        "ja": {
+          "n": 60,
+          "competence": 0.0,
+          "coverage_n": 45,
+          "response_n": 45,
+          "refusal_n": 0,
+          "operational_failure_n": 15
+        },
+        "ko": {
+          "n": 60,
+          "competence": 0.0,
+          "coverage_n": 42,
+          "response_n": 42,
+          "refusal_n": 0,
+          "operational_failure_n": 18
+        },
+        "mixed": {
+          "n": 58,
+          "competence": 0.0,
+          "coverage_n": 51,
+          "response_n": 51,
+          "refusal_n": 0,
+          "operational_failure_n": 7
+        },
+        "nl": {
+          "n": 46,
+          "competence": 0.0,
+          "coverage_n": 44,
+          "response_n": 44,
+          "refusal_n": 0,
+          "operational_failure_n": 2
+        },
+        "no": {
+          "n": 52,
+          "competence": 3.4,
+          "coverage_n": 52,
+          "response_n": 52,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "pl": {
+          "n": 71,
+          "competence": 0.0,
+          "coverage_n": 67,
+          "response_n": 67,
+          "refusal_n": 0,
+          "operational_failure_n": 4
+        },
+        "pt": {
+          "n": 69,
+          "competence": 0.0,
+          "coverage_n": 67,
+          "response_n": 67,
+          "refusal_n": 0,
+          "operational_failure_n": 2
+        },
+        "sv": {
+          "n": 55,
+          "competence": 0.0,
+          "coverage_n": 48,
+          "response_n": 48,
+          "refusal_n": 0,
+          "operational_failure_n": 7
+        },
+        "tr": {
+          "n": 52,
+          "competence": 0.0,
+          "coverage_n": 46,
+          "response_n": 46,
+          "refusal_n": 0,
+          "operational_failure_n": 6
+        },
+        "uk": {
+          "n": 47,
+          "competence": 0.0,
+          "coverage_n": 24,
+          "response_n": 24,
+          "refusal_n": 0,
+          "operational_failure_n": 23
+        },
+        "zh": {
+          "n": 45,
+          "competence": 0.0,
+          "coverage_n": 34,
+          "response_n": 34,
+          "refusal_n": 0,
+          "operational_failure_n": 11
         }
       },
       "pool_ok": {
+        "S": 130,
         "P": 41,
-        "S": 130
+        "L1": 177,
+        "L2": 0,
+        "L3": 1086
       },
-      "sealed_basis": "S"
+      "sealed_basis": null,
+      "language_coverage": "S+P+L1+L3",
+      "historical_sealed_observed": 132,
+      "language_target_complete": false,
+      "languages_below_target60": 18,
+      "coverage_note": "This historical row keeps its published v1.5 headline. Its language and category cells combine an earlier partial run on the current pools (175 S+P items) with a new run of the supplements L3 (1,382 of 1,418 items) and L1 (329 of 654) on the original pinned closed engine, approved by the benchmark owner, on an isolated machine; L2 and the rest of S+P were not run before the machine's time limit. The engine fails on about 7 % of items in non-Latin scripts (its output is not valid UTF-8); those stay scored as failures. Its answers to the same public items differ between machines for about 10 % of items. 18 of 23 languages rest on 24 to 59 answered items instead of the 60-item target; the radars are complete. Headline, rank, Composite and pricing are unchanged. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3."
     },
     "nemotron-diffusion-8b": {
       "coverage": "S+P+L1+L2+L3",
