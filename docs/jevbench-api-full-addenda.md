@@ -1,0 +1,11 @@
+# Full-set hosted API addenda (CR-401 preparation)
+
+This change ships an **empty** `data/jevbench-api-full-addenda.json`. It contains no Microsoft scores, admissions, publication approval or row. It does not change any frozen release/export, board revision, existing paid cohort or model row.
+
+Future publication may add a genuinely accepted aggregate-only entry after complete scoring, review and any required top-five GO. The loader refuses drafts, partial runs, equated rows, absent provenance digests, non-native timing, private record fields, duplicate/overriding rows and incomplete 7-topic/20-use-case/23-language inventories. Provenance names the fresh parent, O1S method, same-parent G_med_S, S1200/P300 counts and common1479 cost mask. Receipt hashes are references to independently reviewed actual receipts; structural validation is not authentication or a custody/execution grant.
+
+Entries are applied only to the live API scope. Historical pages, the main open-weights board and frozen v1.6.1 JSON/CSV exports are unchanged. The separate aggregate endpoint is `/api/jevbench/api-addenda`; its registry filename is `jevbench-api-full-addenda.json`. Integration reuses the existing full-row rank insertion then API scope/class eligibility handling. No alternate/base-model bar is added.
+
+The visible expandable inventory retains all 50 labels and actual completed/error/type/pool counts. Scores below n15 are null/N-A. n15–29 stay table-only. Numeric radar qualification additionally needs 30 completed responses; category projection preserves `coverage_n`, so failed responses do not falsely meet the radar gate. This is separate from stronger full-coverage completion targets. Existing category taxonomies must match; no inferred label or baseline cell is imported.
+
+Preparation checks: four synthetic-public aggregate tests plus existing API display/copy and frozen v1.6.1 release tests (22 tests total); TypeScript `--noEmit --incremental false` passes. No production build, browser, benchmark inference, sealed data, Gold, deployment or publication was used. Future real data, version history, native-cost/CI displays, eventual release tests and actual top-five comparison remain Root's release work.
