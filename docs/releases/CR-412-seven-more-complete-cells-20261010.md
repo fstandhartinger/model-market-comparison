@@ -8,7 +8,7 @@ Mica v0.1 4B.
 - Public-item (P300) agreement with the original runs: 100 % for René, Hopper, decider-12b v1/v2 in every pool; decisio 12B
   99.7 % (L1); Bobcat 99.3-99.7 %.
 - Mica v0.1 4B is a historical row: it keeps its v1.5 headline. It had no run on the current pools, so it answered S+P (1,500)
-  plus the supplements on its original llama.cpp setup; its P300 answers agree 100 % across the four pools. These cells are
+  plus the supplements on its original llama.cpp setup; its P300 answers in each of the three supplements agree 100 % with its new S+P run. These cells are
   descriptive only.
 - Minima per row: languages 65 (23), topics 109 (7), use cases 83 (20). Long-input refusals stay scored as before.
 - Layout (Florian, 10 Oct): the mixed-language group is the first column of the Languages table, then English, then the other
