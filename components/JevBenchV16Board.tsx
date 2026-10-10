@@ -106,22 +106,37 @@ function LanguageView({ a, categories, hiddenApi, scope, carry }: { carry: JevV1
     </p>
     <div className="mt-3 overflow-x-auto"><table className="text-left text-xs tabular" data-bh-jev16-language-table>
       <caption className="sr-only">JevBench {a.revision} competence by item language and system</caption>
-      <thead><tr><th scope="col" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5">System</th>
-        {[...(en ? [en] : []), ...langs].map((l) => <th key={l.key} scope="col" className="p-1.5 text-center" title={`${l.label}: ${l.n} items (${l.open} public, ${l.sealed} sealed)`}>{l.key}{l.n < 30 && <sup aria-label="low n">†</sup>}<span className="bh-muted block font-normal">{l.n}</span></th>)}</tr></thead>
-      <tbody>{systems.map((s, i) => <Fragment key={s.key}>
-        {(['v1.6.3', 'v1.6.4'].includes(a.revision) ? belowRanking(s) && !belowRanking(systems[i - 1]) : (s.listing as string) === 'wrapper' && (systems[i - 1]?.listing as string) !== 'wrapper') && <tr {...apiRowProps(s.key, hiddenApi)}><th colSpan={1 + (en ? 1 : 0) + langs.length} className="p-2 pt-4" scope="colgroup">{['v1.6.3', 'v1.6.4'].includes(a.revision) ? 'Wrappers and subsidized systems (listed, never ranked)' : 'Wrappers (listed, never ranked)'}</th></tr>}
+      <thead><tr><th scope="col" className="sticky left-0 z-10 bg-[rgb(var(--panel))] p-1.5" title="System and measured item pools. Hover any row header or cell for its full coverage remarks.">System</th>
+        {[...(en ? [en] : []), ...langs].map((l) => <th key={l.key} scope="col" className="whitespace-nowrap p-1.5 text-center" title={`${l.label}: ${l.n} items (${l.open} public, ${l.sealed} sealed)`}>{l.key}{l.n < 30 && <sup aria-label="low n">†</sup>}<span className="bh-muted block font-normal">{l.n}</span></th>)}</tr></thead>
+      <tbody>{systems.map((s, i) => {
+        const remarks = [
+          categories.supplement && spokeReason(s.key),
+          'language_listing_note' in s && s.language_listing_note,
+          exposureNote(s.key),
+          languageNoteOf(categories, s.key),
+        ].filter(Boolean).join('\n');
+        const rowTitle = `${s.display} · ${laneTag(s)}\nMeasured item pools: ${coverageOf(categories, s.key)}${remarks ? `\n${remarks}` : ''}`;
+        return <Fragment key={s.key}>
+        {(['v1.6.3', 'v1.6.4'].includes(a.revision) ? belowRanking(s) && !belowRanking(systems[i - 1]) : (s.listing as string) === 'wrapper' && (systems[i - 1]?.listing as string) !== 'wrapper') && <tr {...apiRowProps(s.key, hiddenApi)}><th colSpan={1 + (en ? 1 : 0) + langs.length} className="p-2 pt-4" scope="colgroup" title="These systems are listed separately and never ranked.">{['v1.6.3', 'v1.6.4'].includes(a.revision) ? 'Wrappers and subsidized systems (listed, never ranked)' : 'Wrappers (listed, never ranked)'}</th></tr>}
         <tr data-bh-jev16-language-row={s.key} className="border-t border-line" {...apiRowProps(s.key, hiddenApi)}>
-        <th scope="row" className="sticky left-0 bg-[rgb(var(--panel))] p-1.5 font-normal"><span className="block w-44 whitespace-normal sm:w-auto sm:whitespace-nowrap">{nameLabel(s.display, systems)}<span className="bh-muted"> · {laneTag(s)}</span><span className="bh-thin-tag ml-1" title="Measured item pools used for these language cells" data-bh-jev16-cell-coverage={coverageOf(categories, s.key)}>{coverageOf(categories, s.key)}</span>{categories.supplement && spokeReason(s.key) && <span className="bh-muted block text-xs" data-bh-radar-spoke-exception={s.key}>{spokeReason(s.key)}</span>}{'language_listing_note' in s && s.language_listing_note && <span className="bh-muted block text-xs" data-bh-language-listing={s.key}>{s.language_listing_note}</span>}{exposureNote(s.key) && <span className="bh-muted block text-xs" data-bh-l3-exposure-note={s.key}>{exposureNote(s.key)}</span>}{languageNoteOf(categories, s.key) && <span className="bh-muted block max-w-md whitespace-normal text-xs" data-bh-language-coverage-note={s.key}>{languageNoteOf(categories, s.key)}</span>}</span></th>
+        <th scope="row" className="sticky left-0 z-10 bg-[rgb(var(--panel))] p-1.5 font-normal" title={rowTitle}>
+          <span className="block w-56 truncate">{nameLabel(s.display, systems)}</span>
+          <span className="bh-muted block w-56 truncate">{laneTag(s)} · <span data-bh-jev16-cell-coverage={coverageOf(categories, s.key)}>{coverageOf(categories, s.key)}</span>{remarks && <span aria-hidden="true"> · ⓘ</span>}</span>
+          {categories.supplement && spokeReason(s.key) && <span className="sr-only" data-bh-radar-spoke-exception={s.key}>{spokeReason(s.key)}</span>}
+          {'language_listing_note' in s && s.language_listing_note && <span className="sr-only" data-bh-language-listing={s.key}>{s.language_listing_note}</span>}
+          {exposureNote(s.key) && <span className="sr-only" data-bh-l3-exposure-note={s.key}>{exposureNote(s.key)}</span>}
+          {languageNoteOf(categories, s.key) && <span className="sr-only" data-bh-language-coverage-note={s.key}>{languageNoteOf(categories, s.key)}</span>}
+        </th>
         {[...(en ? [en] : []), ...langs].map((l) => {
           const c = categories.systems[s.key]?.languages?.[l.key];
           if (!c || completedLanguageN(c) < minN) {
             const status = c ? `${completedLanguageN(c)} completed responses; below the ${minN}-item reporting minimum` : `Not plotted; fewer than ${minN} answered items`;
-            return <td key={l.key} className="p-1.5 text-center bh-muted" title={`${l.label}: ${status}`} aria-label={`${l.label}: ${status}`} data-bh-jev16-language-suppressed>{!c ? '—' : '·'}</td>;
+            return <td key={l.key} className="p-1.5 text-center bh-muted" title={`${l.label}: ${status}\n${rowTitle}`} aria-label={`${l.label}: ${status}\n${rowTitle}`} data-bh-jev16-language-suppressed>{!c ? '—' : '·'}</td>;
           }
           const lowN = completedLanguageN(c) < 30;
-          return <td key={l.key} className="bh-heat p-1.5 text-center" style={heat(c.competence)} data-bh-heat-low-n={lowN ? '' : undefined} title={`${l.label}: ${c.competence.toFixed(1)} over ${c.n} scored observations; ${completedLanguageN(c)} completed responses${lowN ? ' (low n)' : ''}`}>{c.competence.toFixed(0)}{lowN && <sup className="ml-0.5 text-[10px]" aria-label="low n: fewer than 30 answered items">†</sup>}</td>;
+          return <td key={l.key} className="bh-heat p-1.5 text-center" style={heat(c.competence)} data-bh-heat-low-n={lowN ? '' : undefined} title={`${l.label}: ${c.competence.toFixed(1)} over ${c.n} scored observations; ${completedLanguageN(c)} completed responses${lowN ? ' (low n)' : ''}\n${rowTitle}`}>{c.competence.toFixed(0)}{lowN && <sup className="ml-0.5 text-[10px]" aria-label="low n: fewer than 30 answered items">†</sup>}</td>;
         })}
-      </tr></Fragment>)}</tbody>
+      </tr></Fragment>; })}</tbody>
     </table></div>
   </section>;
 }
