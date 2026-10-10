@@ -37,8 +37,9 @@ const capturePool = await acceptedCaptures({
 // Dated, hashed primary fixtures support the 2026-10-07 method review without
 // claiming that the daily collector has already published from these bytes.
 const vulcanReview = JSON.parse(await readFile('test/fixtures/vulcanbench-frontier-2026-10-07/manifest.json', 'utf8'));
+const vulcanReview323 = JSON.parse(await readFile('test/fixtures/vulcanbench-frontier-2026-10-10/manifest.json', 'utf8'));
 const captures = capturePool.accepted;
-const reviewPool = { ...capturePool, accepted: [...capturePool.accepted, ...vulcanReview]
+const reviewPool = { ...capturePool, accepted: [...capturePool.accepted, ...vulcanReview, ...vulcanReview323]
   .sort((a, b) => a.retrieved_at.localeCompare(b.retrieved_at)) };
 const newestCapture = (url) => newestAccepted(reviewPool, url);
 const bytesOf = async (receipt) => {

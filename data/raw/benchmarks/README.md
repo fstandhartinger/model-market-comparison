@@ -95,3 +95,17 @@ and v3.18 match the reviewed judges, rubric and 23 task IDs and enter the closed
 allow-list. Existing full-denominator rules still withhold GPT-6 Sol at medium.
 Primary GET bytes, SHA-256 hashes and retrieval times are test fixtures under
 `test/fixtures/vulcanbench-frontier-2026-10-07/`; no generated scores change here.
+
+### VulcanBench Frontier review — 2026-10-10
+
+v3.23 — the Claude Sonnet 5.5 population (115 runs, 23 task ids × 5 efforts,
+Claude Code 2.1.291–2.1.293) — joins the reviewed set. Its published
+judge-protocols.json keeps every frozen invariant byte-identical to the v3.18
+bundle (rubric, system prompt, instructions, weights, gates, repeats, seed,
+control-source hashes, scored panel) over the v3…v3.15 amendment chain, and the
+board itself groups it with the family. Disclosed, not guarded: Grok 4.6 judged
+through the self-updating Cursor CLI 2026.10.01-e373342 (calibration passed),
+and task content entered through a committed hash bridge for a pre-worktree-rule
+sweep. Primary GET bytes, SHA-256 hashes and retrieval times are test fixtures
+under `test/fixtures/vulcanbench-frontier-2026-10-10/`; the arm leaves
+quarantine and publishes five Sonnet 5.5 rows.
