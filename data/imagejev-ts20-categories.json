@@ -1,0 +1,5246 @@
+{
+ "schema": "imagejev-ts20-categories-1",
+ "revision": "TypeSafe-20 image bank, 10 Oct 2026",
+ "dim": {
+  "key": "typesafe",
+  "title": "Use cases (TypeSafe categories)",
+  "note": "Measured on a separate sealed 600-item TypeSafe-20 image bank (30 items per use case, frozen 10 Oct 2026). Not part of the v0.3 score or rank.",
+  "cats": [
+   {
+    "key": "model_routing",
+    "label": "Model routing",
+    "short": "Model routing",
+    "covers": "deciding which LLM or model tier should handle a prompt; classifying a request's intent, domain, difficulty or risk to pick a model",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   },
+   {
+    "key": "legal_compliance",
+    "label": "Legal & compliance",
+    "short": "Legal & compliance",
+    "covers": "contracts, policies, regulations, eligibility rules, checking documents against written requirements",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   },
+   {
+    "key": "customer_support",
+    "label": "Customer support",
+    "short": "Customer support",
+    "covers": "classifying tickets and customer intents, urgency, refunds, routing cases to a team, checking support replies",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   },
+   {
+    "key": "other",
+    "label": "Other",
+    "short": "Other",
+    "covers": "none of the above: general reasoning, arithmetic or date puzzles, everyday assistant requests without a business workflow",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   },
+   {
+    "key": "ecommerce_marketplaces",
+    "label": "E-commerce",
+    "short": "E-commerce",
+    "covers": "product listings, product attributes, orders and deliveries, seller catalog policy",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   },
+   {
+    "key": "risk_assessment",
+    "label": "Risk assessment",
+    "short": "Risk assessment",
+    "covers": "estimating probabilities and severity of risks, incidents, vendor or underwriting risk",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   },
+   {
+    "key": "insurance_claims",
+    "label": "Insurance claims",
+    "short": "Insurance claims",
+    "covers": "first-notice-of-loss reports, claim complexity, missing information, claim triage",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   },
+   {
+    "key": "financial_crime",
+    "label": "Financial crime",
+    "short": "Financial crime",
+    "covers": "suspicious transactions, KYC, fraud alerts, entity matching for investigations",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   },
+   {
+    "key": "moderation_trust_safety",
+    "label": "Moderation",
+    "short": "Moderation",
+    "covers": "user content moderation: toxicity, harassment, spam, unsafe advice, personal data exposure",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   },
+   {
+    "key": "feature_extraction",
+    "label": "Feature extraction",
+    "short": "Feature extraction",
+    "covers": "turning natural-language data into probabilistic features or estimates for a downstream prediction",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   },
+   {
+    "key": "knowledge_graphs",
+    "label": "Knowledge graphs",
+    "short": "Knowledge graphs",
+    "covers": "entity types, relationships between records, contradictions between facts, multi-step lookups across linked facts",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   },
+   {
+    "key": "llm_guardrails",
+    "label": "LLM guardrails",
+    "short": "LLM guardrails",
+    "covers": "checking LLM inputs, outputs and tool calls: prompt injection, jailbreaks, policy violations, tool-call errors, answer quality",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   },
+   {
+    "key": "search_retrieval",
+    "label": "Search & retrieval",
+    "short": "Search & retrieval",
+    "covers": "scoring query-to-candidate relevance, reranking results, selecting useful context for RAG",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   },
+   {
+    "key": "lead_generation",
+    "label": "Lead generation",
+    "short": "Lead generation",
+    "covers": "matching companies or inbound messages to an ideal customer profile, buyer intent, prioritising and routing sales leads",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   },
+   {
+    "key": "code_linting",
+    "label": "Code linting",
+    "short": "Code linting",
+    "covers": "checking code or writing against conventions and guidelines, as in CI review of code",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   },
+   {
+    "key": "demand_forecasting",
+    "label": "Demand forecasting",
+    "short": "Demand forecasting",
+    "covers": "purchase intent, product interest, demand and supply signals for forecasting",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   },
+   {
+    "key": "gaming",
+    "label": "Gaming",
+    "short": "Gaming",
+    "covers": "player reports, in-game chat, game support",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   },
+   {
+    "key": "scientific_discovery",
+    "label": "Science",
+    "short": "Science",
+    "covers": "screening papers, labelling research passages or survey answers, checking that citations support claims, methodology checks",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   },
+   {
+    "key": "recruiting",
+    "label": "Recruiting",
+    "short": "Recruiting",
+    "covers": "resumes, applications, interview feedback, matching candidates to roles",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   },
+   {
+    "key": "advertising",
+    "label": "Advertising",
+    "short": "Advertising",
+    "covers": "ad creatives, campaign copy, brand safety, prohibited claims in ads",
+    "n": 30,
+    "split": {
+     "a": 0,
+     "b": 30
+    },
+    "plotted": true,
+    "lowSample": false
+   }
+  ]
+ },
+ "metric": "Chance-corrected accuracy (0 = chance, 100 = perfect) over the use case's 30 items; errors count as wrong.",
+ "radarMinN": 30,
+ "systems": {
+  "autojev_27b": {
+   "typesafe": {
+    "legal_compliance": [
+     82.22,
+     30,
+     30
+    ],
+    "advertising": [
+     77.78,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     91.11,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     86.67,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     64.44,
+     30,
+     30
+    ],
+    "financial_crime": [
+     95.56,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     77.78,
+     30,
+     30
+    ],
+    "recruiting": [
+     73.33,
+     30,
+     30
+    ],
+    "lead_generation": [
+     86.67,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     77.78,
+     30,
+     30
+    ],
+    "model_routing": [
+     73.33,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     86.67,
+     30,
+     30
+    ],
+    "other": [
+     60.0,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     77.78,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     86.67,
+     30,
+     30
+    ],
+    "code_linting": [
+     86.67,
+     30,
+     30
+    ],
+    "gaming": [
+     68.89,
+     30,
+     30
+    ],
+    "customer_support": [
+     82.22,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     95.56,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     95.56,
+     30,
+     30
+    ]
+   }
+  },
+  "cua_s1_4b": {
+   "typesafe": {
+    "legal_compliance": [
+     42.22,
+     30,
+     30
+    ],
+    "advertising": [
+     51.11,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     68.89,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     55.56,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     55.56,
+     30,
+     30
+    ],
+    "financial_crime": [
+     64.44,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     46.67,
+     30,
+     30
+    ],
+    "recruiting": [
+     51.11,
+     30,
+     30
+    ],
+    "lead_generation": [
+     46.67,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     55.56,
+     30,
+     30
+    ],
+    "model_routing": [
+     64.44,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     68.89,
+     30,
+     30
+    ],
+    "other": [
+     55.56,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     55.56,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     64.44,
+     30,
+     30
+    ],
+    "code_linting": [
+     60.0,
+     30,
+     30
+    ],
+    "gaming": [
+     46.67,
+     30,
+     30
+    ],
+    "customer_support": [
+     68.89,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     73.33,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     64.44,
+     30,
+     30
+    ]
+   }
+  },
+  "gevva_e2b_multimodal": {
+   "typesafe": {
+    "legal_compliance": [
+     28.89,
+     30,
+     30
+    ],
+    "advertising": [
+     33.33,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     64.44,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     37.78,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     33.33,
+     30,
+     30
+    ],
+    "financial_crime": [
+     55.56,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     37.78,
+     30,
+     30
+    ],
+    "recruiting": [
+     51.11,
+     30,
+     30
+    ],
+    "lead_generation": [
+     33.33,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     37.78,
+     30,
+     30
+    ],
+    "model_routing": [
+     15.56,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     51.11,
+     30,
+     30
+    ],
+    "other": [
+     24.44,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     42.22,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     42.22,
+     30,
+     30
+    ],
+    "code_linting": [
+     33.33,
+     30,
+     30
+    ],
+    "gaming": [
+     46.67,
+     30,
+     30
+    ],
+    "customer_support": [
+     55.56,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     37.78,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     42.22,
+     30,
+     30
+    ]
+   }
+  },
+  "gevva_e4b": {
+   "typesafe": {
+    "legal_compliance": [
+     33.33,
+     30,
+     30
+    ],
+    "advertising": [
+     24.44,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     68.89,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     55.56,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     46.67,
+     30,
+     30
+    ],
+    "financial_crime": [
+     60.0,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     28.89,
+     30,
+     30
+    ],
+    "recruiting": [
+     51.11,
+     30,
+     30
+    ],
+    "lead_generation": [
+     55.56,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     37.78,
+     30,
+     30
+    ],
+    "model_routing": [
+     42.22,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     68.89,
+     30,
+     30
+    ],
+    "other": [
+     33.33,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     37.78,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     42.22,
+     30,
+     30
+    ],
+    "code_linting": [
+     73.33,
+     30,
+     30
+    ],
+    "gaming": [
+     28.89,
+     30,
+     30
+    ],
+    "customer_support": [
+     51.11,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     60.0,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     51.11,
+     30,
+     30
+    ]
+   }
+  },
+  "glance_qwen3vl_4b": {
+   "typesafe": {
+    "legal_compliance": [
+     42.22,
+     30,
+     30
+    ],
+    "advertising": [
+     51.11,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     73.33,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     51.11,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     55.56,
+     30,
+     30
+    ],
+    "financial_crime": [
+     68.89,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     73.33,
+     30,
+     30
+    ],
+    "recruiting": [
+     60.0,
+     30,
+     30
+    ],
+    "lead_generation": [
+     55.56,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     37.78,
+     30,
+     30
+    ],
+    "model_routing": [
+     33.33,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     73.33,
+     30,
+     30
+    ],
+    "other": [
+     37.78,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     42.22,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     68.89,
+     30,
+     30
+    ],
+    "code_linting": [
+     46.67,
+     30,
+     30
+    ],
+    "gaming": [
+     55.56,
+     30,
+     30
+    ],
+    "customer_support": [
+     64.44,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     68.89,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     60.0,
+     30,
+     30
+    ]
+   }
+  },
+  "imajev_2b": {
+   "typesafe": {
+    "legal_compliance": [
+     46.67,
+     30,
+     30
+    ],
+    "advertising": [
+     42.22,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     64.44,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     28.89,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     42.22,
+     30,
+     30
+    ],
+    "financial_crime": [
+     64.44,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     55.56,
+     30,
+     30
+    ],
+    "recruiting": [
+     60.0,
+     30,
+     30
+    ],
+    "lead_generation": [
+     46.67,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     28.89,
+     30,
+     30
+    ],
+    "model_routing": [
+     42.22,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     73.33,
+     30,
+     30
+    ],
+    "other": [
+     28.89,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     51.11,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     51.11,
+     30,
+     30
+    ],
+    "code_linting": [
+     46.67,
+     30,
+     30
+    ],
+    "gaming": [
+     51.11,
+     30,
+     30
+    ],
+    "customer_support": [
+     60.0,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     68.89,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     86.67,
+     30,
+     30
+    ]
+   }
+  },
+  "imajev_9b": {
+   "typesafe": {
+    "legal_compliance": [
+     60.0,
+     30,
+     30
+    ],
+    "advertising": [
+     73.33,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     73.33,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     73.33,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     68.89,
+     30,
+     30
+    ],
+    "financial_crime": [
+     82.22,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     82.22,
+     30,
+     30
+    ],
+    "recruiting": [
+     73.33,
+     30,
+     30
+    ],
+    "lead_generation": [
+     82.22,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     82.22,
+     30,
+     30
+    ],
+    "model_routing": [
+     77.78,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     100.0,
+     30,
+     30
+    ],
+    "other": [
+     73.33,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     68.89,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     64.44,
+     30,
+     30
+    ],
+    "code_linting": [
+     73.33,
+     30,
+     30
+    ],
+    "gaming": [
+     64.44,
+     30,
+     30
+    ],
+    "customer_support": [
+     73.33,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     73.33,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     95.56,
+     30,
+     30
+    ]
+   }
+  },
+  "jevify_gemma4_26b_a4b": {
+   "typesafe": {
+    "legal_compliance": [
+     73.33,
+     30,
+     30
+    ],
+    "advertising": [
+     91.11,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     86.67,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     73.33,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     82.22,
+     30,
+     30
+    ],
+    "financial_crime": [
+     82.22,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     68.89,
+     30,
+     30
+    ],
+    "recruiting": [
+     82.22,
+     30,
+     30
+    ],
+    "lead_generation": [
+     82.22,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     86.67,
+     30,
+     30
+    ],
+    "model_routing": [
+     82.22,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     91.11,
+     30,
+     30
+    ],
+    "other": [
+     60.0,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     82.22,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     82.22,
+     30,
+     30
+    ],
+    "code_linting": [
+     77.78,
+     30,
+     30
+    ],
+    "gaming": [
+     77.78,
+     30,
+     30
+    ],
+    "customer_support": [
+     73.33,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     82.22,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     77.78,
+     30,
+     30
+    ]
+   }
+  },
+  "jevify_gemma4_e4b": {
+   "typesafe": {
+    "legal_compliance": [
+     42.22,
+     30,
+     30
+    ],
+    "advertising": [
+     33.33,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     60.0,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     42.22,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     60.0,
+     30,
+     30
+    ],
+    "financial_crime": [
+     60.0,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     24.44,
+     30,
+     30
+    ],
+    "recruiting": [
+     51.11,
+     30,
+     30
+    ],
+    "lead_generation": [
+     46.67,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     42.22,
+     30,
+     30
+    ],
+    "model_routing": [
+     46.67,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     64.44,
+     30,
+     30
+    ],
+    "other": [
+     46.67,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     64.44,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     42.22,
+     30,
+     30
+    ],
+    "code_linting": [
+     55.56,
+     30,
+     30
+    ],
+    "gaming": [
+     33.33,
+     30,
+     30
+    ],
+    "customer_support": [
+     82.22,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     51.11,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     68.89,
+     30,
+     30
+    ]
+   }
+  },
+  "jevify_qwen3vl_2b_t2": {
+   "typesafe": {
+    "legal_compliance": [
+     20.0,
+     30,
+     30
+    ],
+    "advertising": [
+     37.78,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     55.56,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     24.44,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     15.56,
+     30,
+     30
+    ],
+    "financial_crime": [
+     60.0,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     28.89,
+     30,
+     30
+    ],
+    "recruiting": [
+     46.67,
+     30,
+     30
+    ],
+    "lead_generation": [
+     46.67,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     33.33,
+     30,
+     30
+    ],
+    "model_routing": [
+     11.11,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     37.78,
+     30,
+     30
+    ],
+    "other": [
+     28.89,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     37.78,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     28.89,
+     30,
+     30
+    ],
+    "code_linting": [
+     28.89,
+     30,
+     30
+    ],
+    "gaming": [
+     37.78,
+     30,
+     30
+    ],
+    "customer_support": [
+     37.78,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     37.78,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     37.78,
+     30,
+     30
+    ]
+   }
+  },
+  "jevision": {
+   "typesafe": {
+    "legal_compliance": [
+     15.56,
+     30,
+     30
+    ],
+    "advertising": [
+     6.67,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     33.33,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     46.67,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     20.0,
+     30,
+     30
+    ],
+    "financial_crime": [
+     42.22,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     37.78,
+     30,
+     30
+    ],
+    "recruiting": [
+     46.67,
+     30,
+     30
+    ],
+    "lead_generation": [
+     37.78,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     37.78,
+     30,
+     30
+    ],
+    "model_routing": [
+     28.89,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     51.11,
+     30,
+     30
+    ],
+    "other": [
+     20.0,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     28.89,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     33.33,
+     30,
+     30
+    ],
+    "code_linting": [
+     46.67,
+     30,
+     30
+    ],
+    "gaming": [
+     46.67,
+     30,
+     30
+    ],
+    "customer_support": [
+     60.0,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     46.67,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     55.56,
+     30,
+     30
+    ]
+   }
+  },
+  "jev_spatial": {
+   "typesafe": {
+    "legal_compliance": [
+     68.89,
+     30,
+     30
+    ],
+    "advertising": [
+     37.78,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     64.44,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     64.44,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     42.22,
+     30,
+     30
+    ],
+    "financial_crime": [
+     64.44,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     51.11,
+     30,
+     30
+    ],
+    "recruiting": [
+     77.78,
+     30,
+     30
+    ],
+    "lead_generation": [
+     46.67,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     51.11,
+     30,
+     30
+    ],
+    "model_routing": [
+     51.11,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     73.33,
+     30,
+     30
+    ],
+    "other": [
+     55.56,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     33.33,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     51.11,
+     30,
+     30
+    ],
+    "code_linting": [
+     42.22,
+     30,
+     30
+    ],
+    "gaming": [
+     46.67,
+     30,
+     30
+    ],
+    "customer_support": [
+     60.0,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     46.67,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     37.78,
+     30,
+     30
+    ]
+   }
+  },
+  "jpt_0p8b": {
+   "typesafe": {
+    "legal_compliance": [
+     24.44,
+     30,
+     30
+    ],
+    "advertising": [
+     20.0,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     68.89,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     37.78,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     33.33,
+     30,
+     30
+    ],
+    "financial_crime": [
+     51.11,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     42.22,
+     30,
+     30
+    ],
+    "recruiting": [
+     60.0,
+     30,
+     30
+    ],
+    "lead_generation": [
+     46.67,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     33.33,
+     30,
+     30
+    ],
+    "model_routing": [
+     42.22,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     51.11,
+     30,
+     30
+    ],
+    "other": [
+     28.89,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     42.22,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     46.67,
+     30,
+     30
+    ],
+    "code_linting": [
+     46.67,
+     30,
+     30
+    ],
+    "gaming": [
+     42.22,
+     30,
+     30
+    ],
+    "customer_support": [
+     51.11,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     51.11,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     64.44,
+     30,
+     30
+    ]
+   }
+  },
+  "jpt_4b": {
+   "typesafe": {
+    "legal_compliance": [
+     68.89,
+     30,
+     30
+    ],
+    "advertising": [
+     60.0,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     77.78,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     73.33,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     68.89,
+     30,
+     30
+    ],
+    "financial_crime": [
+     68.89,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     60.0,
+     30,
+     30
+    ],
+    "recruiting": [
+     77.78,
+     30,
+     30
+    ],
+    "lead_generation": [
+     68.89,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     60.0,
+     30,
+     30
+    ],
+    "model_routing": [
+     68.89,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     86.67,
+     30,
+     30
+    ],
+    "other": [
+     64.44,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     60.0,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     73.33,
+     30,
+     30
+    ],
+    "code_linting": [
+     73.33,
+     30,
+     30
+    ],
+    "gaming": [
+     42.22,
+     30,
+     30
+    ],
+    "customer_support": [
+     82.22,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     73.33,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     86.67,
+     30,
+     30
+    ]
+   }
+  },
+  "jpt_9b": {
+   "typesafe": {
+    "legal_compliance": [
+     68.89,
+     30,
+     30
+    ],
+    "advertising": [
+     77.78,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     82.22,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     77.78,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     73.33,
+     30,
+     30
+    ],
+    "financial_crime": [
+     91.11,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     82.22,
+     30,
+     30
+    ],
+    "recruiting": [
+     73.33,
+     30,
+     30
+    ],
+    "lead_generation": [
+     73.33,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     73.33,
+     30,
+     30
+    ],
+    "model_routing": [
+     77.78,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     95.56,
+     30,
+     30
+    ],
+    "other": [
+     68.89,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     68.89,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     77.78,
+     30,
+     30
+    ],
+    "code_linting": [
+     73.33,
+     30,
+     30
+    ],
+    "gaming": [
+     60.0,
+     30,
+     30
+    ],
+    "customer_support": [
+     95.56,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     73.33,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     91.11,
+     30,
+     30
+    ]
+   }
+  },
+  "omnijev_0p8b": {
+   "typesafe": {
+    "legal_compliance": [
+     28.89,
+     30,
+     30
+    ],
+    "advertising": [
+     55.56,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     46.67,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     28.89,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     37.78,
+     30,
+     30
+    ],
+    "financial_crime": [
+     37.78,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     33.33,
+     30,
+     30
+    ],
+    "recruiting": [
+     46.67,
+     30,
+     30
+    ],
+    "lead_generation": [
+     37.78,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     20.0,
+     30,
+     30
+    ],
+    "model_routing": [
+     20.0,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     28.89,
+     30,
+     30
+    ],
+    "other": [
+     11.11,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     33.33,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     6.67,
+     30,
+     30
+    ],
+    "code_linting": [
+     37.78,
+     30,
+     30
+    ],
+    "gaming": [
+     24.44,
+     30,
+     30
+    ],
+    "customer_support": [
+     20.0,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     51.11,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     28.89,
+     30,
+     30
+    ]
+   }
+  },
+  "omnijev_2b": {
+   "typesafe": {
+    "legal_compliance": [
+     24.44,
+     30,
+     30
+    ],
+    "advertising": [
+     33.33,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     46.67,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     24.44,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     28.89,
+     30,
+     30
+    ],
+    "financial_crime": [
+     55.56,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     42.22,
+     30,
+     30
+    ],
+    "recruiting": [
+     51.11,
+     30,
+     30
+    ],
+    "lead_generation": [
+     37.78,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     15.56,
+     30,
+     30
+    ],
+    "model_routing": [
+     37.78,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     46.67,
+     30,
+     30
+    ],
+    "other": [
+     20.0,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     51.11,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     42.22,
+     30,
+     30
+    ],
+    "code_linting": [
+     42.22,
+     30,
+     30
+    ],
+    "gaming": [
+     28.89,
+     30,
+     30
+    ],
+    "customer_support": [
+     51.11,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     42.22,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     28.89,
+     30,
+     30
+    ]
+   }
+  },
+  "omnijev_4b": {
+   "typesafe": {
+    "legal_compliance": [
+     60.0,
+     30,
+     30
+    ],
+    "advertising": [
+     46.67,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     68.89,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     51.11,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     55.56,
+     30,
+     30
+    ],
+    "financial_crime": [
+     64.44,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     73.33,
+     30,
+     30
+    ],
+    "recruiting": [
+     42.22,
+     30,
+     30
+    ],
+    "lead_generation": [
+     64.44,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     24.44,
+     30,
+     30
+    ],
+    "model_routing": [
+     33.33,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     73.33,
+     30,
+     30
+    ],
+    "other": [
+     28.89,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     51.11,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     55.56,
+     30,
+     30
+    ],
+    "code_linting": [
+     55.56,
+     30,
+     30
+    ],
+    "gaming": [
+     51.11,
+     30,
+     30
+    ],
+    "customer_support": [
+     77.78,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     60.0,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     68.89,
+     30,
+     30
+    ]
+   }
+  },
+  "omnijev_9b_v4_tzcfly": {
+   "typesafe": {
+    "legal_compliance": [
+     46.67,
+     30,
+     30
+    ],
+    "advertising": [
+     33.33,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     68.89,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     60.0,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     60.0,
+     30,
+     30
+    ],
+    "financial_crime": [
+     82.22,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     55.56,
+     30,
+     30
+    ],
+    "recruiting": [
+     51.11,
+     30,
+     30
+    ],
+    "lead_generation": [
+     55.56,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     60.0,
+     30,
+     30
+    ],
+    "model_routing": [
+     68.89,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     77.78,
+     30,
+     30
+    ],
+    "other": [
+     46.67,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     60.0,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     73.33,
+     30,
+     30
+    ],
+    "code_linting": [
+     77.78,
+     30,
+     30
+    ],
+    "gaming": [
+     42.22,
+     30,
+     30
+    ],
+    "customer_support": [
+     55.56,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     68.89,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     77.78,
+     30,
+     30
+    ]
+   }
+  },
+  "openjev_4b_v5": {
+   "typesafe": {
+    "legal_compliance": [
+     73.33,
+     30,
+     30
+    ],
+    "advertising": [
+     82.22,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     77.78,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     60.0,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     55.56,
+     30,
+     30
+    ],
+    "financial_crime": [
+     60.0,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     37.78,
+     30,
+     30
+    ],
+    "recruiting": [
+     68.89,
+     30,
+     30
+    ],
+    "lead_generation": [
+     73.33,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     64.44,
+     30,
+     30
+    ],
+    "model_routing": [
+     55.56,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     100.0,
+     30,
+     30
+    ],
+    "other": [
+     55.56,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     68.89,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     82.22,
+     30,
+     30
+    ],
+    "code_linting": [
+     73.33,
+     30,
+     30
+    ],
+    "gaming": [
+     46.67,
+     30,
+     30
+    ],
+    "customer_support": [
+     60.0,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     73.33,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     68.89,
+     30,
+     30
+    ]
+   }
+  },
+  "playjev_0p8b": {
+   "typesafe": {
+    "legal_compliance": [
+     -11.11,
+     30,
+     30
+    ],
+    "advertising": [
+     6.67,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     -2.22,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     2.22,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     -11.11,
+     30,
+     30
+    ],
+    "financial_crime": [
+     6.67,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     -15.56,
+     30,
+     30
+    ],
+    "recruiting": [
+     -6.67,
+     30,
+     30
+    ],
+    "lead_generation": [
+     20.0,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     -2.22,
+     30,
+     30
+    ],
+    "model_routing": [
+     20.0,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     2.22,
+     30,
+     30
+    ],
+    "other": [
+     2.22,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     6.67,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     -20.0,
+     30,
+     30
+    ],
+    "code_linting": [
+     11.11,
+     30,
+     30
+    ],
+    "gaming": [
+     -15.56,
+     30,
+     30
+    ],
+    "customer_support": [
+     20.0,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     20.0,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     6.67,
+     30,
+     30
+    ]
+   }
+  },
+  "qevi_2b": {
+   "typesafe": {
+    "legal_compliance": [
+     15.56,
+     30,
+     30
+    ],
+    "advertising": [
+     28.89,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     46.67,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     24.44,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     33.33,
+     30,
+     30
+    ],
+    "financial_crime": [
+     42.22,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     20.0,
+     30,
+     30
+    ],
+    "recruiting": [
+     55.56,
+     30,
+     30
+    ],
+    "lead_generation": [
+     20.0,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     33.33,
+     30,
+     30
+    ],
+    "model_routing": [
+     15.56,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     33.33,
+     30,
+     30
+    ],
+    "other": [
+     6.67,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     42.22,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     15.56,
+     30,
+     30
+    ],
+    "code_linting": [
+     20.0,
+     30,
+     30
+    ],
+    "gaming": [
+     33.33,
+     30,
+     30
+    ],
+    "customer_support": [
+     28.89,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     33.33,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     42.22,
+     30,
+     30
+    ]
+   }
+  },
+  "seanliu_jev_vision_8b": {
+   "typesafe": {
+    "legal_compliance": [
+     60.0,
+     30,
+     30
+    ],
+    "advertising": [
+     51.11,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     73.33,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     68.89,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     51.11,
+     30,
+     30
+    ],
+    "financial_crime": [
+     64.44,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     60.0,
+     30,
+     30
+    ],
+    "recruiting": [
+     64.44,
+     30,
+     30
+    ],
+    "lead_generation": [
+     60.0,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     64.44,
+     30,
+     30
+    ],
+    "model_routing": [
+     46.67,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     77.78,
+     30,
+     30
+    ],
+    "other": [
+     55.56,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     68.89,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     77.78,
+     30,
+     30
+    ],
+    "code_linting": [
+     64.44,
+     30,
+     30
+    ],
+    "gaming": [
+     60.0,
+     30,
+     30
+    ],
+    "customer_support": [
+     64.44,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     68.89,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     68.89,
+     30,
+     30
+    ]
+   }
+  },
+  "shisa_de_1": {
+   "typesafe": {
+    "legal_compliance": [
+     73.33,
+     30,
+     30
+    ],
+    "advertising": [
+     68.89,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     95.56,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     77.78,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     82.22,
+     30,
+     30
+    ],
+    "financial_crime": [
+     82.22,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     60.0,
+     30,
+     30
+    ],
+    "recruiting": [
+     73.33,
+     30,
+     30
+    ],
+    "lead_generation": [
+     68.89,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     64.44,
+     30,
+     30
+    ],
+    "model_routing": [
+     77.78,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     91.11,
+     30,
+     30
+    ],
+    "other": [
+     77.78,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     82.22,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     82.22,
+     30,
+     30
+    ],
+    "code_linting": [
+     91.11,
+     30,
+     30
+    ],
+    "gaming": [
+     60.0,
+     30,
+     30
+    ],
+    "customer_support": [
+     77.78,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     73.33,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     68.89,
+     30,
+     30
+    ]
+   }
+  },
+  "standard_one_3b": {
+   "typesafe": {
+    "legal_compliance": [
+     15.56,
+     30,
+     30
+    ],
+    "advertising": [
+     24.44,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     60.0,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     51.11,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     37.78,
+     30,
+     30
+    ],
+    "financial_crime": [
+     42.22,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     20.0,
+     30,
+     30
+    ],
+    "recruiting": [
+     51.11,
+     30,
+     30
+    ],
+    "lead_generation": [
+     46.67,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     46.67,
+     30,
+     30
+    ],
+    "model_routing": [
+     37.78,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     60.0,
+     30,
+     30
+    ],
+    "other": [
+     37.78,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     37.78,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     37.78,
+     30,
+     30
+    ],
+    "code_linting": [
+     37.78,
+     30,
+     30
+    ],
+    "gaming": [
+     15.56,
+     30,
+     30
+    ],
+    "customer_support": [
+     55.56,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     51.11,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     60.0,
+     30,
+     30
+    ]
+   }
+  },
+  "standard_one_8b": {
+   "typesafe": {
+    "legal_compliance": [
+     60.0,
+     30,
+     30
+    ],
+    "advertising": [
+     68.89,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     73.33,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     73.33,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     42.22,
+     30,
+     30
+    ],
+    "financial_crime": [
+     64.44,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     46.67,
+     30,
+     30
+    ],
+    "recruiting": [
+     77.78,
+     30,
+     30
+    ],
+    "lead_generation": [
+     77.78,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     68.89,
+     30,
+     30
+    ],
+    "model_routing": [
+     64.44,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     82.22,
+     30,
+     30
+    ],
+    "other": [
+     33.33,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     55.56,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     68.89,
+     30,
+     30
+    ],
+    "code_linting": [
+     77.78,
+     30,
+     30
+    ],
+    "gaming": [
+     55.56,
+     30,
+     30
+    ],
+    "customer_support": [
+     82.22,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     77.78,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     64.44,
+     30,
+     30
+    ]
+   }
+  },
+  "visual_jev_4b": {
+   "typesafe": {
+    "legal_compliance": [
+     55.56,
+     30,
+     30
+    ],
+    "advertising": [
+     46.67,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     73.33,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     42.22,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     51.11,
+     30,
+     30
+    ],
+    "financial_crime": [
+     73.33,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     60.0,
+     30,
+     30
+    ],
+    "recruiting": [
+     64.44,
+     30,
+     30
+    ],
+    "lead_generation": [
+     51.11,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     37.78,
+     30,
+     30
+    ],
+    "model_routing": [
+     37.78,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     82.22,
+     30,
+     30
+    ],
+    "other": [
+     37.78,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     51.11,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     82.22,
+     30,
+     30
+    ],
+    "code_linting": [
+     51.11,
+     30,
+     30
+    ],
+    "gaming": [
+     51.11,
+     30,
+     30
+    ],
+    "customer_support": [
+     64.44,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     60.0,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     64.44,
+     30,
+     30
+    ]
+   }
+  },
+  "visual_jev_generic_baseline": {
+   "typesafe": {
+    "legal_compliance": [
+     64.44,
+     30,
+     30
+    ],
+    "advertising": [
+     51.11,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     51.11,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     68.89,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     64.44,
+     30,
+     30
+    ],
+    "financial_crime": [
+     64.44,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     42.22,
+     30,
+     30
+    ],
+    "recruiting": [
+     68.89,
+     30,
+     30
+    ],
+    "lead_generation": [
+     46.67,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     46.67,
+     30,
+     30
+    ],
+    "model_routing": [
+     46.67,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     68.89,
+     30,
+     30
+    ],
+    "other": [
+     60.0,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     42.22,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     64.44,
+     30,
+     30
+    ],
+    "code_linting": [
+     60.0,
+     30,
+     30
+    ],
+    "gaming": [
+     37.78,
+     30,
+     30
+    ],
+    "customer_support": [
+     82.22,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     60.0,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     68.89,
+     30,
+     30
+    ]
+   }
+  },
+  "vjev_vision": {
+   "typesafe": {
+    "legal_compliance": [
+     37.78,
+     30,
+     30
+    ],
+    "advertising": [
+     37.78,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     60.0,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     42.22,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     33.33,
+     30,
+     30
+    ],
+    "financial_crime": [
+     46.67,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     37.78,
+     30,
+     30
+    ],
+    "recruiting": [
+     60.0,
+     30,
+     30
+    ],
+    "lead_generation": [
+     60.0,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     37.78,
+     30,
+     30
+    ],
+    "model_routing": [
+     55.56,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     68.89,
+     30,
+     30
+    ],
+    "other": [
+     33.33,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     60.0,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     55.56,
+     30,
+     30
+    ],
+    "code_linting": [
+     46.67,
+     30,
+     30
+    ],
+    "gaming": [
+     24.44,
+     30,
+     30
+    ],
+    "customer_support": [
+     64.44,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     51.11,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     60.0,
+     30,
+     30
+    ]
+   }
+  },
+  "clef_flash": {
+   "typesafe": {
+    "legal_compliance": [
+     82.22,
+     30,
+     30
+    ],
+    "advertising": [
+     68.89,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     82.22,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     64.44,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     64.44,
+     30,
+     30
+    ],
+    "financial_crime": [
+     82.22,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     68.89,
+     30,
+     30
+    ],
+    "recruiting": [
+     82.22,
+     30,
+     30
+    ],
+    "lead_generation": [
+     73.33,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     64.44,
+     30,
+     30
+    ],
+    "model_routing": [
+     73.33,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     95.56,
+     30,
+     30
+    ],
+    "other": [
+     82.22,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     60.0,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     86.67,
+     30,
+     30
+    ],
+    "code_linting": [
+     68.89,
+     30,
+     30
+    ],
+    "gaming": [
+     55.56,
+     30,
+     30
+    ],
+    "customer_support": [
+     86.67,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     73.33,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     68.89,
+     30,
+     30
+    ]
+   }
+  },
+  "clef": {
+   "typesafe": {
+    "legal_compliance": [
+     82.22,
+     30,
+     30
+    ],
+    "advertising": [
+     91.11,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     100.0,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     73.33,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     82.22,
+     30,
+     30
+    ],
+    "financial_crime": [
+     82.22,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     82.22,
+     30,
+     30
+    ],
+    "recruiting": [
+     86.67,
+     30,
+     30
+    ],
+    "lead_generation": [
+     77.78,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     73.33,
+     30,
+     30
+    ],
+    "model_routing": [
+     82.22,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     91.11,
+     30,
+     30
+    ],
+    "other": [
+     68.89,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     82.22,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     77.78,
+     30,
+     30
+    ],
+    "code_linting": [
+     91.11,
+     30,
+     30
+    ],
+    "gaming": [
+     42.22,
+     30,
+     30
+    ],
+    "customer_support": [
+     91.11,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     91.11,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     91.11,
+     30,
+     30
+    ]
+   }
+  },
+  "djev_distill_v4": {
+   "typesafe": {
+    "legal_compliance": [
+     11.11,
+     30,
+     30
+    ],
+    "advertising": [
+     64.44,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     46.67,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     55.56,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     68.89,
+     30,
+     30
+    ],
+    "financial_crime": [
+     55.56,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     60.0,
+     30,
+     30
+    ],
+    "recruiting": [
+     55.56,
+     30,
+     30
+    ],
+    "lead_generation": [
+     55.56,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     55.56,
+     30,
+     30
+    ],
+    "model_routing": [
+     68.89,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     60.0,
+     30,
+     30
+    ],
+    "other": [
+     24.44,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     51.11,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     64.44,
+     30,
+     30
+    ],
+    "code_linting": [
+     37.78,
+     30,
+     30
+    ],
+    "gaming": [
+     42.22,
+     30,
+     30
+    ],
+    "customer_support": [
+     60.0,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     51.11,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     42.22,
+     30,
+     30
+    ]
+   }
+  },
+  "djev_v10_step160_snowicarus": {
+   "typesafe": {
+    "legal_compliance": [
+     28.89,
+     30,
+     30
+    ],
+    "advertising": [
+     60.0,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     42.22,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     60.0,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     55.56,
+     30,
+     30
+    ],
+    "financial_crime": [
+     46.67,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     51.11,
+     30,
+     30
+    ],
+    "recruiting": [
+     60.0,
+     30,
+     30
+    ],
+    "lead_generation": [
+     60.0,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     46.67,
+     30,
+     30
+    ],
+    "model_routing": [
+     68.89,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     68.89,
+     30,
+     30
+    ],
+    "other": [
+     42.22,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     46.67,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     77.78,
+     30,
+     30
+    ],
+    "code_linting": [
+     37.78,
+     30,
+     30
+    ],
+    "gaming": [
+     42.22,
+     30,
+     30
+    ],
+    "customer_support": [
+     60.0,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     42.22,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     37.78,
+     30,
+     30
+    ]
+   }
+  },
+  "image_hopper": {
+   "typesafe": {
+    "legal_compliance": [
+     51.11,
+     30,
+     30
+    ],
+    "advertising": [
+     55.56,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     82.22,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     64.44,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     55.56,
+     30,
+     30
+    ],
+    "financial_crime": [
+     82.22,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     46.67,
+     30,
+     30
+    ],
+    "recruiting": [
+     73.33,
+     30,
+     30
+    ],
+    "lead_generation": [
+     46.67,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     64.44,
+     30,
+     30
+    ],
+    "model_routing": [
+     73.33,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     77.78,
+     30,
+     30
+    ],
+    "other": [
+     51.11,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     46.67,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     64.44,
+     30,
+     30
+    ],
+    "code_linting": [
+     73.33,
+     30,
+     30
+    ],
+    "gaming": [
+     51.11,
+     30,
+     30
+    ],
+    "customer_support": [
+     77.78,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     68.89,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     64.44,
+     30,
+     30
+    ]
+   }
+  },
+  "neohorse_jev_4b": {
+   "typesafe": {
+    "legal_compliance": [
+     60.0,
+     30,
+     30
+    ],
+    "advertising": [
+     46.67,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     73.33,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     73.33,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     60.0,
+     30,
+     30
+    ],
+    "financial_crime": [
+     64.44,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     60.0,
+     30,
+     30
+    ],
+    "recruiting": [
+     86.67,
+     30,
+     30
+    ],
+    "lead_generation": [
+     55.56,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     46.67,
+     30,
+     30
+    ],
+    "model_routing": [
+     60.0,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     82.22,
+     30,
+     30
+    ],
+    "other": [
+     24.44,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     60.0,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     77.78,
+     30,
+     30
+    ],
+    "code_linting": [
+     77.78,
+     30,
+     30
+    ],
+    "gaming": [
+     55.56,
+     30,
+     30
+    ],
+    "customer_support": [
+     86.67,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     73.33,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     60.0,
+     30,
+     30
+    ]
+   }
+  },
+  "liquid_d1_3b": {
+   "typesafe": {
+    "legal_compliance": [
+     55.56,
+     30,
+     30
+    ],
+    "advertising": [
+     42.22,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     51.11,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     33.33,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     55.56,
+     30,
+     30
+    ],
+    "financial_crime": [
+     42.22,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     42.22,
+     30,
+     30
+    ],
+    "recruiting": [
+     55.56,
+     30,
+     30
+    ],
+    "lead_generation": [
+     46.67,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     51.11,
+     30,
+     30
+    ],
+    "model_routing": [
+     28.89,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     55.56,
+     30,
+     30
+    ],
+    "other": [
+     37.78,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     51.11,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     60.0,
+     30,
+     30
+    ],
+    "code_linting": [
+     33.33,
+     30,
+     30
+    ],
+    "gaming": [
+     42.22,
+     30,
+     30
+    ],
+    "customer_support": [
+     64.44,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     42.22,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     51.11,
+     30,
+     30
+    ]
+   }
+  },
+  "gemini31_flash_lite": {
+   "typesafe": {
+    "legal_compliance": [
+     68.89,
+     30,
+     30
+    ],
+    "advertising": [
+     77.78,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     86.67,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     68.89,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     73.33,
+     30,
+     30
+    ],
+    "financial_crime": [
+     91.11,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     64.44,
+     30,
+     30
+    ],
+    "recruiting": [
+     86.67,
+     30,
+     30
+    ],
+    "lead_generation": [
+     73.33,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     60.0,
+     30,
+     30
+    ],
+    "model_routing": [
+     86.67,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     91.11,
+     30,
+     30
+    ],
+    "other": [
+     68.89,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     64.44,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     82.22,
+     30,
+     30
+    ],
+    "code_linting": [
+     86.67,
+     30,
+     30
+    ],
+    "gaming": [
+     68.89,
+     30,
+     30
+    ],
+    "customer_support": [
+     77.78,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     82.22,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     73.33,
+     30,
+     30
+    ]
+   }
+  },
+  "gemini38_flash": {
+   "typesafe": {
+    "legal_compliance": [
+     60.0,
+     30,
+     30
+    ],
+    "advertising": [
+     73.33,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     73.33,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     64.44,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     82.22,
+     30,
+     30
+    ],
+    "financial_crime": [
+     51.11,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     55.56,
+     30,
+     30
+    ],
+    "recruiting": [
+     68.89,
+     30,
+     30
+    ],
+    "lead_generation": [
+     82.22,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     73.33,
+     30,
+     30
+    ],
+    "model_routing": [
+     73.33,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     91.11,
+     30,
+     30
+    ],
+    "other": [
+     60.0,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     77.78,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     64.44,
+     30,
+     30
+    ],
+    "code_linting": [
+     77.78,
+     30,
+     30
+    ],
+    "gaming": [
+     51.11,
+     30,
+     30
+    ],
+    "customer_support": [
+     73.33,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     55.56,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     86.67,
+     30,
+     30
+    ]
+   }
+  },
+  "gpt56_luna": {
+   "typesafe": {
+    "legal_compliance": [
+     95.56,
+     30,
+     30
+    ],
+    "advertising": [
+     91.11,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     77.78,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     95.56,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     95.56,
+     30,
+     30
+    ],
+    "financial_crime": [
+     86.67,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     95.56,
+     30,
+     30
+    ],
+    "recruiting": [
+     82.22,
+     30,
+     30
+    ],
+    "lead_generation": [
+     82.22,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     95.56,
+     30,
+     30
+    ],
+    "model_routing": [
+     100.0,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     86.67,
+     30,
+     30
+    ],
+    "other": [
+     77.78,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     86.67,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     95.56,
+     30,
+     30
+    ],
+    "code_linting": [
+     95.56,
+     30,
+     30
+    ],
+    "gaming": [
+     86.67,
+     30,
+     30
+    ],
+    "customer_support": [
+     91.11,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     95.56,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     91.11,
+     30,
+     30
+    ]
+   }
+  },
+  "gpt6_luna_decisions": {
+   "typesafe": {
+    "legal_compliance": [
+     64.44,
+     30,
+     30
+    ],
+    "advertising": [
+     73.33,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     95.56,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     73.33,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     51.11,
+     30,
+     30
+    ],
+    "financial_crime": [
+     86.67,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     82.22,
+     30,
+     30
+    ],
+    "recruiting": [
+     68.89,
+     30,
+     30
+    ],
+    "lead_generation": [
+     64.44,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     82.22,
+     30,
+     30
+    ],
+    "model_routing": [
+     68.89,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     82.22,
+     30,
+     30
+    ],
+    "other": [
+     68.89,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     73.33,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     82.22,
+     30,
+     30
+    ],
+    "code_linting": [
+     73.33,
+     30,
+     30
+    ],
+    "gaming": [
+     51.11,
+     30,
+     30
+    ],
+    "customer_support": [
+     77.78,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     77.78,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     73.33,
+     30,
+     30
+    ]
+   }
+  },
+  "gpt6_luna": {
+   "typesafe": {
+    "legal_compliance": [
+     95.56,
+     30,
+     30
+    ],
+    "advertising": [
+     95.56,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     86.67,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     100.0,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     95.56,
+     30,
+     30
+    ],
+    "financial_crime": [
+     91.11,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     91.11,
+     30,
+     30
+    ],
+    "recruiting": [
+     100.0,
+     30,
+     30
+    ],
+    "lead_generation": [
+     100.0,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     95.56,
+     30,
+     30
+    ],
+    "model_routing": [
+     100.0,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     95.56,
+     30,
+     30
+    ],
+    "other": [
+     95.56,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     100.0,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     100.0,
+     30,
+     30
+    ],
+    "code_linting": [
+     100.0,
+     30,
+     30
+    ],
+    "gaming": [
+     86.67,
+     30,
+     30
+    ],
+    "customer_support": [
+     95.56,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     95.56,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     100.0,
+     30,
+     30
+    ]
+   }
+  },
+  "jev-1.13.0": {
+   "typesafe": {
+    "legal_compliance": [
+     60.0,
+     30,
+     30
+    ],
+    "advertising": [
+     77.78,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     82.22,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     82.22,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     82.22,
+     30,
+     30
+    ],
+    "financial_crime": [
+     68.89,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     68.89,
+     30,
+     30
+    ],
+    "recruiting": [
+     77.78,
+     30,
+     30
+    ],
+    "lead_generation": [
+     95.56,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     77.78,
+     30,
+     30
+    ],
+    "model_routing": [
+     73.33,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     91.11,
+     30,
+     30
+    ],
+    "other": [
+     64.44,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     64.44,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     73.33,
+     30,
+     30
+    ],
+    "code_linting": [
+     77.78,
+     30,
+     30
+    ],
+    "gaming": [
+     42.22,
+     30,
+     30
+    ],
+    "customer_support": [
+     77.78,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     77.78,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     73.33,
+     30,
+     30
+    ]
+   }
+  },
+  "kushal_gemma4_31b_it_autoloops": {
+   "typesafe": {
+    "legal_compliance": [
+     86.67,
+     30,
+     30
+    ],
+    "advertising": [
+     100.0,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     95.56,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     86.67,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     86.67,
+     30,
+     30
+    ],
+    "financial_crime": [
+     95.56,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     86.67,
+     30,
+     30
+    ],
+    "recruiting": [
+     77.78,
+     30,
+     30
+    ],
+    "lead_generation": [
+     100.0,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     82.22,
+     30,
+     30
+    ],
+    "model_routing": [
+     86.67,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     100.0,
+     30,
+     30
+    ],
+    "other": [
+     91.11,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     95.56,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     91.11,
+     30,
+     30
+    ],
+    "code_linting": [
+     91.11,
+     30,
+     30
+    ],
+    "gaming": [
+     82.22,
+     30,
+     30
+    ],
+    "customer_support": [
+     95.56,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     100.0,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     86.67,
+     30,
+     30
+    ]
+   }
+  },
+  "s1-vision": {
+   "typesafe": {
+    "legal_compliance": [
+     73.33,
+     30,
+     30
+    ],
+    "advertising": [
+     91.11,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     91.11,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     82.22,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     77.78,
+     30,
+     30
+    ],
+    "financial_crime": [
+     86.67,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     73.33,
+     30,
+     30
+    ],
+    "recruiting": [
+     91.11,
+     30,
+     30
+    ],
+    "lead_generation": [
+     91.11,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     86.67,
+     30,
+     30
+    ],
+    "model_routing": [
+     95.56,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     95.56,
+     30,
+     30
+    ],
+    "other": [
+     82.22,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     91.11,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     86.67,
+     30,
+     30
+    ],
+    "code_linting": [
+     95.56,
+     30,
+     30
+    ],
+    "gaming": [
+     68.89,
+     30,
+     30
+    ],
+    "customer_support": [
+     86.67,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     86.67,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     95.56,
+     30,
+     30
+    ]
+   }
+  },
+  "wity_1_off": {
+   "typesafe": {
+    "legal_compliance": [
+     51.11,
+     30,
+     30
+    ],
+    "advertising": [
+     64.44,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     86.67,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     64.44,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     64.44,
+     30,
+     30
+    ],
+    "financial_crime": [
+     82.22,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     60.0,
+     30,
+     30
+    ],
+    "recruiting": [
+     55.56,
+     30,
+     30
+    ],
+    "lead_generation": [
+     51.11,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     51.11,
+     30,
+     30
+    ],
+    "model_routing": [
+     73.33,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     60.0,
+     30,
+     30
+    ],
+    "other": [
+     55.56,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     73.33,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     77.78,
+     30,
+     30
+    ],
+    "code_linting": [
+     86.67,
+     30,
+     30
+    ],
+    "gaming": [
+     42.22,
+     30,
+     30
+    ],
+    "customer_support": [
+     77.78,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     73.33,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     55.56,
+     30,
+     30
+    ]
+   }
+  },
+  "wity_1": {
+   "typesafe": {
+    "legal_compliance": [
+     86.67,
+     30,
+     30
+    ],
+    "advertising": [
+     95.56,
+     30,
+     30
+    ],
+    "llm_guardrails": [
+     95.56,
+     30,
+     30
+    ],
+    "moderation_trust_safety": [
+     82.22,
+     30,
+     30
+    ],
+    "ecommerce_marketplaces": [
+     82.22,
+     30,
+     30
+    ],
+    "financial_crime": [
+     91.11,
+     30,
+     30
+    ],
+    "risk_assessment": [
+     100.0,
+     30,
+     30
+    ],
+    "recruiting": [
+     100.0,
+     30,
+     30
+    ],
+    "lead_generation": [
+     95.56,
+     30,
+     30
+    ],
+    "demand_forecasting": [
+     95.56,
+     30,
+     30
+    ],
+    "model_routing": [
+     86.67,
+     30,
+     30
+    ],
+    "knowledge_graphs": [
+     95.56,
+     30,
+     30
+    ],
+    "other": [
+     86.67,
+     30,
+     30
+    ],
+    "insurance_claims": [
+     91.11,
+     30,
+     30
+    ],
+    "search_retrieval": [
+     91.11,
+     30,
+     30
+    ],
+    "code_linting": [
+     95.56,
+     30,
+     30
+    ],
+    "gaming": [
+     86.67,
+     30,
+     30
+    ],
+    "customer_support": [
+     86.67,
+     30,
+     30
+    ],
+    "scientific_discovery": [
+     100.0,
+     30,
+     30
+    ],
+    "feature_extraction": [
+     82.22,
+     30,
+     30
+    ]
+   }
+  }
+ },
+ "summary": {
+  "autojev_27b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "cua_s1_4b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "gevva_e2b_multimodal": {
+   "rows": 600,
+   "errors": 0
+  },
+  "gevva_e4b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "glance_qwen3vl_4b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "imajev_2b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "imajev_9b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "jevify_gemma4_26b_a4b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "jevify_gemma4_e4b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "jevify_qwen3vl_2b_t2": {
+   "rows": 600,
+   "errors": 0
+  },
+  "jevision": {
+   "rows": 600,
+   "errors": 0
+  },
+  "jev_spatial": {
+   "rows": 600,
+   "errors": 0
+  },
+  "jpt_0p8b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "jpt_4b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "jpt_9b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "omnijev_0p8b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "omnijev_2b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "omnijev_4b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "omnijev_9b_v4_tzcfly": {
+   "rows": 600,
+   "errors": 0
+  },
+  "openjev_4b_v5": {
+   "rows": 600,
+   "errors": 0
+  },
+  "playjev_0p8b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "qevi_2b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "seanliu_jev_vision_8b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "shisa_de_1": {
+   "rows": 600,
+   "errors": 0
+  },
+  "standard_one_3b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "standard_one_8b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "visual_jev_4b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "visual_jev_generic_baseline": {
+   "rows": 600,
+   "errors": 0
+  },
+  "vjev_vision": {
+   "rows": 600,
+   "errors": 0
+  },
+  "clef_flash": {
+   "rows": 600,
+   "errors": 0
+  },
+  "clef": {
+   "rows": 600,
+   "errors": 0
+  },
+  "djev_distill_v4": {
+   "rows": 600,
+   "errors": 0
+  },
+  "djev_v10_step160_snowicarus": {
+   "rows": 600,
+   "errors": 0
+  },
+  "image_hopper": {
+   "rows": 600,
+   "errors": 0
+  },
+  "neohorse_jev_4b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "liquid_d1_3b": {
+   "rows": 600,
+   "errors": 0
+  },
+  "gemini31_flash_lite": {
+   "rows": 600,
+   "errors": 0
+  },
+  "gemini38_flash": {
+   "rows": 600,
+   "errors": 136
+  },
+  "gpt56_luna": {
+   "rows": 600,
+   "errors": 8
+  },
+  "gpt6_luna_decisions": {
+   "rows": 600,
+   "errors": 4
+  },
+  "gpt6_luna": {
+   "rows": 600,
+   "errors": 9
+  },
+  "jev-1.13.0": {
+   "rows": 600,
+   "errors": 9
+  },
+  "kushal_gemma4_31b_it_autoloops": {
+   "rows": 600,
+   "errors": 0
+  },
+  "s1-vision": {
+   "rows": 600,
+   "errors": 0
+  },
+  "wity_1_off": {
+   "rows": 600,
+   "errors": 0
+  },
+  "wity_1": {
+   "rows": 600,
+   "errors": 0
+  }
+ },
+ "reference": null
+}
