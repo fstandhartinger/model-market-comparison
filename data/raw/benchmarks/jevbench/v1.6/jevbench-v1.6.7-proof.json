@@ -1,0 +1,423 @@
+{
+ "G_med": 10.073244581339713,
+ "G_med_flag_gt10": true,
+ "abandoned_draw_note": "The first draw of this set, v1.6-regular-20261010, was abandoned with a recorded ledger reason: freeze_v16.py requires the standard release shape S=1200/A=300/P=300 and that draw was made with A=0 on a chief-of-staff instruction. Its 1,200 items each carry one scored use without having been measured, per the rotation policy's anti-cherry-picking rule. Nothing was exported, dispatched or measured from it. Board #16630, #16631.",
+ "authority": "Chief-of-staff decisions #16539 (v1.6.5 release owner), #16625 (draw GO, batching to 13:45Z), #16415 (RSI-Jev sealed run on Florian's YES); Florian 9 Oct zero-output-token cost rule; Florian 24 Sep estimate-from-base-model rule; #16771/#16791 (Wald-4b v2.1 joins before review), release-owner decision #16809; v1.6.6: Florian X order 9 Oct for Clef-omni (board #16827), CoS #16771 same-draw g_med_fixed rule; v1.6.7: Florian 10 Oct order for Blink (DECISIONS 14:40Z, licence OK), handoff #16903. No top-five change: the highest composite in this release is 61.1606 against 71.4912 for the live board's fifth place (leader 74.0499), and the highest within-caps capability of a new row (Blink, 69.945) is below 74.996 for the open board's fifth capability place (live feed read 2026-10-10 15:4xZ), so the top-five preview rule does not trigger.",
+ "baseline_sha256": "279efaa2fef1e8cbae2413adc7a452bf80e04cdc9cd041999a9bbca5bb298074",
+ "bootstrap": {
+  "B": 1000,
+  "seed": 16
+ },
+ "cost_basis_sha256": "3ed31ed0c0c3b24651c126836e8580f078d34739baefdcf78de2380a246d0c42",
+ "draw_counts": {
+  "A": 300,
+  "P": 300,
+  "S": 1200,
+  "api_input": 600,
+  "api_smoke_public": 5,
+  "core": 900,
+  "selfhosted_input": 1500
+ },
+ "draw_digests": {
+  "A": "a0fe704bdba955ab6f5b847f5c87d4fac801945c17454a73028abdb1682f8de9",
+  "P": "7fa9e2592fcfaf24a959bf56eb247bda8adf60e7b2a1bf7c0a46156189820f68",
+  "S": "66c9d7e43e8db2ca346eee887aee46203dc307fa55d1e7fa28355d7162e97600",
+  "core": "545ebfea24bde76dc92e4068bb4c01b41074375fb0f3b1bf88c9ca9dd95877c7"
+ },
+ "draw_release": "v1.6-regular-20261010-a2",
+ "drawn_at": "2026-10-10T10:33:01Z",
+ "field_median": {
+  "G_med": 10.073244581339713,
+  "g_med_fixed": true,
+  "members": [
+   {
+    "gap": 0.9386454977550258,
+    "key": "gutsy-0.8b-v0.3"
+   },
+   {
+    "gap": 11.433257532554101,
+    "key": "liquid-d1-3b"
+   },
+   {
+    "gap": 2.063270917213234,
+    "key": "liquid-d1-omni-600m"
+   },
+   {
+    "gap": 13.843961585445314,
+    "key": "rsi-jev-v6.1-vl-27b"
+   },
+   {
+    "gap": 16.389862065293332,
+    "key": "standard_one_8b_sh"
+   },
+   {
+    "gap": 2.0264383488214266,
+    "key": "vegaml-0.8b"
+   },
+   {
+    "gap": 10.668629644363318,
+    "key": "vegaml-4b"
+   },
+   {
+    "gap": 9.477859518316109,
+    "key": "wald-4b-v2-1"
+   }
+  ],
+  "rule": "frozen v1.6.5 value: the median Intelligence gap over the eight ranked complete full-coverage self-hosted v1.6.5 systems of this draw; later same-draw rows are scored against it (g_med_fixed)"
+ },
+ "freeze_manifest_sha256": "e100afd2cc1d80819761a344592578cafd0ca8b6a79e9d9c706a562f70b29feb",
+ "g_med_fixed_from": {
+  "G_med": 10.073244581339713,
+  "baseline_sha256": "279efaa2fef1e8cbae2413adc7a452bf80e04cdc9cd041999a9bbca5bb298074",
+  "revision": "v1.6.5"
+ },
+ "gap_penalty_threshold": 18.073245,
+ "input_sha256": {
+  "api": "dfa1416098f65210c2576a902a559fb09f81334fa4b160b9208b75c3d4e1e574",
+  "selfhosted": "16a58033190ddcc2720cab052890978c6e5b0f507dc7e0db432b66441ea36d61"
+ },
+ "method": "jevbench::v1.6",
+ "noul_method": {
+  "applied": "O1S",
+  "native_method_source_sha256": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0"
+ },
+ "raw_sha256": {
+  "blink-v0-3-26b-a4b-nvfp4": "6d8bd9dc757bc20a0a7bdae1f4629f77a1ecf7d3055d77a502d630362e99158c",
+  "clef-omni": "e5ee55edf4eee21d2f142e22abe0bc4d763f60ae58457cd52d66933ea28c7489",
+  "gutsy-0.8b-v0.3": "4fde07db7a19e9f642a8fa7d5a701eeae0c6161339d46d84143f398e646cda28",
+  "liquid-d1-3b": "224f23152788fa45d2622cc48244242c397557429dc38968bd38b549d4bdebf3",
+  "liquid-d1-omni-600m": "f2f1b042286e0deaa166616555df094cec4bef031fd5cfa05a127a88f42a3846",
+  "rsi-jev-v6.1-vl-27b": "cd7f7a37cc7876fcb8ebc69bbe26e4034e8f7cba908a838eea8a1dea6158f612",
+  "standard_one_8b_sh": "ca90bc49e8b63ee0c8a71d2a59fdc24cafb9245a43094be8001cedd37542e4eb",
+  "vegaml-0.8b": "48dbe477596845729706a27e663c87b7c012385b470dbfa3b44417733fc74d0d",
+  "vegaml-4b": "d81688073a01da8be264d0747556559f9c5df689cd15613baa840042a3d6509f",
+  "wald-4b-v2-1": "ad2ab071f36e9a26ecdb920cb5a4157167a5d19f49e754695ce555cb855acffb"
+ },
+ "registry_sha256": "f7e8c14380e38052dd1cfb5bac330197ecda9a2c0f6b54c8d0da8ee8633d5faa",
+ "revision": "v1.6.7",
+ "schema_version": 1,
+ "scorer_sources_sha256": {
+  "noul_method_v16.py": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "score_v15.py": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA.py": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16.py": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9"
+ },
+ "seed_commitment": "2926f8a975d7f3f51068ed770b8ed0710aa56121bdb5a4e91119de7dff14fff2",
+ "set_manifest_sha256": {
+  "A": "442364621a9755bd3ea9831c50c720a7ff8d05b1a79dcc0cb69da0cb46bb7f50",
+  "P": "6b2321f8359d87769a95c8e52135542d95ccdc353197e1e5c96abb9b616ce5ba",
+  "S": "8814e4943c5440e7c932111b05b2205acc4019ef45dd0671223bee4c63dd3f01"
+ },
+ "systems": [
+  {
+   "answered_ok": 1471,
+   "axes": {
+    "calibration": 90.67498392881862,
+    "cost": 49.62845783533821,
+    "intelligence": 49.21581563112197,
+    "speed": 91.48151024194223
+   },
+   "capability": 69.9453997799703,
+   "composite_A": 61.16059214787521,
+   "cost_kind": "estimate",
+   "display": "Blink v0.3 26B-A4B",
+   "key": "blink-v0-3-26b-a4b-nvfp4",
+   "measured_by": "jevbench-push-by-4pm-20261010 (Florian 10 Oct order, DECISIONS 14:40Z; handoff board #16903)",
+   "model_pin": "PixilabAI/Blink-v0.3-26B-A4B-NVFP4@08caad20c1574fb76341ca809ff38fdb081f7d4a",
+   "noul_decisive": {
+    "acc_among_decisive": 0.9467213114754098,
+    "decisive": 244,
+    "decisive_rate": 0.6703296703296703,
+    "n": 375,
+    "supported": true,
+    "valid": 364
+   },
+   "rank": 1,
+   "raw_sha256": "6d8bd9dc757bc20a0a7bdae1f4629f77a1ecf7d3055d77a502d630362e99158c",
+   "rows": 1500,
+   "source_review_note": "Code review by the measuring operator (CODE-REVIEW.md in its handoff, board #16903): the model runs in plain vLLM 0.30.0 from the card's own serve command; the only code executed besides vLLM is our loopback shim reproducing the card's decide() reference client. Licence check: Apache-2.0 (card tag), base Apache-2.0.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.04775858
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 82.15469329918429,
+    "cost": 26.792900075221908,
+    "intelligence": 34.47716016566848,
+    "speed": 86.7880661703893
+   },
+   "capability": 58.315926732426384,
+   "composite_A": 6.06640325953113,
+   "cost_kind": "estimate",
+   "display": "Clef-omni",
+   "key": "clef-omni",
+   "measured_by": "jevbench-add-requests-20260919 (Florian X order 9 Oct, board #16827)",
+   "model_pin": "Cloudflare/clef-omni@0db1cd2607d76a7bdb2a382f659e7b313079f84b",
+   "noul_decisive": {
+    "acc_among_decisive": 0.8565573770491803,
+    "decisive": 244,
+    "decisive_rate": 0.6506666666666666,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 6,
+   "raw_sha256": "e5ee55edf4eee21d2f142e22abe0bc4d763f60ae58457cd52d66933ea28c7489",
+   "rows": 1500,
+   "source_review_note": "Static review in this job (r87/CLEFOMNI-PLAN.md): the one .py file has no env, credential, subprocess, exec, eval or pickle access; its only network call fetches media URLs, which text items never reach. Its sha256 21d05ebb... was re-checked on the pod before it ran.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.275573
+  },
+  {
+   "answered_ok": 1471,
+   "axes": {
+    "calibration": 77.50040036924202,
+    "cost": 78.3542548810428,
+    "intelligence": 8.600978834309654,
+    "speed": 72.8877498600171
+   },
+   "capability": 43.05068960177584,
+   "composite_A": 0.7604367004496922,
+   "cost_kind": "estimate",
+   "display": "Gutsy 0.8B v0.3",
+   "key": "gutsy-0.8b-v0.3",
+   "measured_by": "jevbench-add-requests-20260919 (ask A124, GitHub #171)",
+   "model_pin": "kouhxp/gutsy@d325eb1742cc1c200e04b24417f192a0dbf74f91",
+   "noul_decisive": {
+    "acc_among_decisive": 0.7383177570093458,
+    "decisive": 107,
+    "decisive_rate": 0.29395604395604397,
+    "n": 375,
+    "supported": true,
+    "valid": 364
+   },
+   "rank": 8,
+   "raw_sha256": "4fde07db7a19e9f642a8fa7d5a701eeae0c6161339d46d84143f398e646cda28",
+   "rows": 1500,
+   "source_review_note": "The author's own gutsy-inference 0.3.0 at the pinned revision, settings unchanged; run 52 reviewed it and run r86 re-verified the GGUF digest on the pod before serving.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.0052665333333333335
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 76.87411794897184,
+    "cost": 50.56108621702079,
+    "intelligence": 22.13919485880221,
+    "speed": 94.32773191369529
+   },
+   "capability": 49.50665640388703,
+   "composite_A": 8.855712627780655,
+   "cost_kind": "estimate",
+   "display": "Liquid AI d1-3B",
+   "key": "liquid-d1-3b",
+   "measured_by": "jevbench-push-by-4pm-20261010",
+   "model_pin": "LiquidAI/d1-3B@051bcc464b01b9f92942b364d9586b0ef5912432",
+   "noul_decisive": {
+    "acc_among_decisive": 0.8315217391304348,
+    "decisive": 184,
+    "decisive_rate": 0.49066666666666664,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 5,
+   "raw_sha256": "224f23152788fa45d2622cc48244242c397557429dc38968bd38b549d4bdebf3",
+   "rows": 1500,
+   "source_review_note": "Code review PASS at intake by the measuring operator (board #16537 packet).",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.044459420000000006
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 62.32062493293682,
+    "cost": 73.1039158657426,
+    "intelligence": 3.2615852143588597,
+    "speed": 94.0744546594334
+   },
+   "capability": 32.79110507364784,
+   "composite_A": 0.049057448753865106,
+   "cost_kind": "estimate",
+   "display": "Liquid AI d1-omni-600M",
+   "key": "liquid-d1-omni-600m",
+   "measured_by": "jevbench-push-by-4pm-20261010",
+   "model_pin": "LiquidAI/d1-omni-600M@02b55d7076f15129e59ab3f94783f32c4b088674",
+   "noul_decisive": {
+    "acc_among_decisive": 0.56,
+    "decisive": 100,
+    "decisive_rate": 0.26666666666666666,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 9,
+   "raw_sha256": "f2f1b042286e0deaa166616555df094cec4bef031fd5cfa05a127a88f42a3846",
+   "rows": 1500,
+   "source_review_note": "Code review PASS at intake by the measuring operator (board #16537 packet).",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.00788018
+  },
+  {
+   "answered_ok": 1471,
+   "axes": {
+    "calibration": 85.34979344070516,
+    "cost": 31.141652902933714,
+    "intelligence": 61.564156247760415,
+    "speed": 84.71397705257328
+   },
+   "capability": 73.45697484423279,
+   "composite_A": 21.58850717988564,
+   "cost_kind": "estimate",
+   "display": "RSI-Jev v6.1-VL 27B",
+   "key": "rsi-jev-v6.1-vl-27b",
+   "measured_by": "jevbench-add-requests-20260919 (ask A109, Florian GO)",
+   "model_pin": "shgao/rsi-jev-v6.1-vl-27b@d0dccc052ee844ab7481ddfacad1b7335ab394e0",
+   "noul_decisive": {
+    "acc_among_decisive": 0.9102990033222591,
+    "decisive": 301,
+    "decisive_rate": 0.8269230769230769,
+    "n": 375,
+    "supported": true,
+    "valid": 364
+   },
+   "rank": 3,
+   "raw_sha256": "cd7f7a37cc7876fcb8ebc69bbe26e4034e8f7cba908a838eea8a1dea6158f612",
+   "rows": 1500,
+   "source_review_note": "Independent static review in this job (r75/INDEPENDENT-REVIEW.md); it recommended HOLD on env/key/path access and network-capable fallbacks, which is why the run was sealed under chief-of-staff decision #16415 rather than run normally.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.19736867999999996
+  },
+  {
+   "answered_ok": 1471,
+   "axes": {
+    "calibration": 85.49831885164681,
+    "cost": 43.21124696592469,
+    "intelligence": 34.464905061466695,
+    "speed": 84.28099014807135
+   },
+   "capability": 59.981611956556755,
+   "composite_A": 18.74677558938401,
+   "cost_kind": "estimate",
+   "display": "Standard One 8B SH (Standard Thinking)",
+   "key": "standard_one_8b_sh",
+   "measured_by": "fastlane-standardone-native (paid fast lane, order a8731403)",
+   "model_pin": "StandardThinking/StandardOne-8B-SH@25e5739bd9635b54f925cf9ba2daa2ec42afd19e",
+   "noul_decisive": {
+    "acc_among_decisive": 0.8828828828828829,
+    "decisive": 222,
+    "decisive_rate": 0.6098901098901099,
+    "n": 375,
+    "supported": true,
+    "valid": 364
+   },
+   "rank": 4,
+   "raw_sha256": "ca90bc49e8b63ee0c8a71d2a59fdc24cafb9245a43094be8001cedd37542e4eb",
+   "rows": 1500,
+   "source_review_note": "Source review PASS by the measuring operator (board #16538); receipt in its order folder.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.0781553
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 62.93608607777928,
+    "cost": 61.47445744011434,
+    "intelligence": 3.0532964296406795,
+    "speed": 89.45598874418484
+   },
+   "capability": 32.99469125370998,
+   "composite_A": 0.04022166962784317,
+   "cost_kind": "estimate",
+   "display": "Vega 0.8B",
+   "key": "vegaml-0.8b",
+   "measured_by": "jevbench-push-by-4pm-20261010",
+   "model_pin": "nandakishorm/vega-08b-public-intents@73a76a4f6c4fe672e0daa2d45ddc355afc5bc9dd",
+   "noul_decisive": {
+    "acc_among_decisive": 0.6333333333333333,
+    "decisive": 120,
+    "decisive_rate": 0.32,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 10,
+   "raw_sha256": "48dbe477596845729706a27e663c87b7c012385b470dbfa3b44417733fc74d0d",
+   "rows": 1500,
+   "source_review_note": "Code review PASS at intake by the measuring operator (board #16537 packet).",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.019239100000000002
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 58.68489087403218,
+    "cost": 47.16081979852447,
+    "intelligence": 16.689214224692094,
+    "speed": 84.39386641436894
+   },
+   "capability": 37.687052549362136,
+   "composite_A": 3.603902446043355,
+   "cost_kind": "estimate",
+   "display": "Vega 4B",
+   "key": "vegaml-4b",
+   "measured_by": "jevbench-push-by-4pm-20261010",
+   "model_pin": "nandakishorm/vega-08b-public-intents@73a76a4f6c4fe672e0daa2d45ddc355afc5bc9dd",
+   "noul_decisive": {
+    "acc_among_decisive": 0.6819923371647509,
+    "decisive": 261,
+    "decisive_rate": 0.696,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 7,
+   "raw_sha256": "d81688073a01da8be264d0747556559f9c5df689cd15613baa840042a3d6509f",
+   "rows": 1500,
+   "source_review_note": "Code review PASS at intake by the measuring operator (board #16537 packet).",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.057717300000000006
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 86.58998638479137,
+    "cost": 46.287007162302075,
+    "intelligence": 51.951877017848766,
+    "speed": 93.07746270925374
+   },
+   "capability": 69.27093170132007,
+   "composite_A": 54.28713266716134,
+   "cost_kind": "estimate",
+   "display": "Wald 4B v2.1",
+   "key": "wald-4b-v2-1",
+   "measured_by": "fastlane-wald21-native-20261010 (paid fast lane, order 83a7b726)",
+   "model_pin": "org2ai/Wald-4B@ce3286f7efd332530e5dccd8a17d6496e029f714",
+   "noul_decisive": {
+    "acc_among_decisive": 0.7813333333333333,
+    "decisive": 375,
+    "decisive_rate": 1.0,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 2,
+   "raw_sha256": "ad2ab071f36e9a26ecdb920cb5a4157167a5d19f49e754695ce555cb855acffb",
+   "rows": 1500,
+   "source_review_note": "Measured by its paid-lane operator; independent critic PASS on the handoff (board #16787).",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.06172102
+  }
+ ]
+}
