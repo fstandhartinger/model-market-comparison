@@ -53,6 +53,6 @@ test('4: measured rows leave the preliminary set; the route skips archived pages
   const left = [...prelim, ...pending].filter((r) => !measured.has(r.key)).map((r) => r.key);
   assert.deepEqual(left, []); // v1.7.10: OpenAI Decisions now has its A5 u P result (v1.7.9 showed it as preliminary)
   const route = readFileSync(new URL('../components/JevBenchV16ReleaseRoute.tsx', import.meta.url), 'utf8');
-  assert.match(route, /scope === 'all' \|\| release_\.revision !== 'v1\.6\.1' \? release_ : jevWithApiA4Rows/);
+  assert.match(route, /!live \|\| release_\.revision !== 'v1\.6\.1' \? release_ : jevWithApiA4Rows/);
   assert.match(readFileSync(new URL('../components/JevBenchV16Board.tsx', import.meta.url), 'utf8'), /version: 'v1\.7\.7'/);
 });

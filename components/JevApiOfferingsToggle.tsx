@@ -22,8 +22,8 @@ export function JevApiOfferingsToggle({ measured }: { measured: number }) {
     </button>
     <span className="bh-muted min-w-0 flex-1 basis-64">
       {showApi
-        ? <>API offerings are mixed in for comparison, badged <span className="bh-thin-tag bh-flag-tag">API</span> and not ranked here. Their ranking: <a className="text-accent underline" href="/jev-models/api">JevBench API leaderboard</a>.</>
-        : <>This board ranks open-weights systems that we ran ourselves; Jev 1.13.0 is shown as the reference. Hosted APIs are ranked on the <a className="text-accent underline" href="/jev-models/api">JevBench API leaderboard</a>.</>}
+        ? <>API rows mixed in, tagged <span className="bh-thin-tag bh-flag-tag">API</span>, not ranked here (<a className="text-accent underline" href="/jev-models/all">All</a> ranks both).</>
+        : <>Mix the API rows into this view without ranking them.</>}
     </span>
   </div>;
 }

@@ -153,11 +153,13 @@ test('historical catalogue rejects measured/carry duplicate rather than dropping
  const p=await readJevbenchV161Release();assert.throws(()=>historicalCatalogue(p.artifact,{...p.carry,rows:[{...p.carry.rows[0],key:p.artifact.systems[0].key}]}),/historical duplicate/);
 });
 
-test('version navigation uses one isolated availability path for all old version callers',async t=>{
+test('release history uses one isolated availability path; archived pages point to the live board',async t=>{
  const {root,paths}=await diskBundle(t);
- const nav=await compiled('../components/JevBenchReleaseVersionNav.tsx',{'../lib/jevbench-v162-release.mjs':{hasPublishedJevbenchV162Release:()=>hasPublishedJevbenchV162Release(root,()=>{})}});
- for(const active of ['v1.6.1','v1.6.0','v1.5.7','v1.5.6','v1.5.5'])assert.match(renderToStaticMarkup(await nav.JevBenchReleaseVersionNav({active})),/href="\/jev-models\/v1.6.2"/);
+ const hist=await compiled('../components/JevReleaseHistory.tsx',{'../lib/jevbench-v162-release.mjs':{hasPublishedJevbenchV162Release:()=>hasPublishedJevbenchV162Release(root,()=>{})}});
+ assert.match(renderToStaticMarkup(await hist.JevReleaseHistory()),/href="\/jev-models\/v1.6.2"/);
  await writeFile(paths.proof,'{broken');
- const html=renderToStaticMarkup(await nav.JevBenchReleaseVersionNav({active:'v1.5.7'}));
+ const html=renderToStaticMarkup(await hist.JevReleaseHistory());
  assert.ok(!html.includes('/jev-models/v1.6.2'));assert.match(html,/JevBench v1.5.7/);
+ const nav=await compiled('../components/JevBenchReleaseVersionNav.tsx',{});
+ for(const active of ['v1.6.1','v1.6.0','v1.5.7','v1.5.6','v1.5.5'])assert.match(renderToStaticMarkup(await nav.JevBenchReleaseVersionNav({active})),new RegExp(`Archived release JevBench ${active.replace(/\./g,'\\.')}[^<]*</span>.*href="/jev-models"`));
 });

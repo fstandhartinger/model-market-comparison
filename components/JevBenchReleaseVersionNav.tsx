@@ -1,37 +1,15 @@
-import { hasPublishedJevbenchV167Release } from '../lib/jevbench-v167-release.mjs';
-import { hasPublishedJevbenchV166Release } from '../lib/jevbench-v166-release.mjs';
-import { hasPublishedJevbenchV165Release } from '../lib/jevbench-v165-release.mjs';
-import { hasPublishedJevbenchV164Release } from '../lib/jevbench-v164-release.mjs';
-import { hasPublishedJevbenchV162Release } from '../lib/jevbench-v162-release.mjs';
-import { hasPublishedJevbenchV163Release } from '../lib/jevbench-v163-release.mjs';
+import { jevbenchRelease } from '../lib/jevbench-releases.mjs';
 type JevRelease = 'v1.6.7' | 'v1.6.6' | 'v1.6.5' | 'v1.6.4' | 'v1.6.3' | 'v1.6.2' | 'v1.6.1' | 'v1.6.0' | 'v1.5.7' | 'v1.5.6' | 'v1.5.5';
 
-export async function JevBenchReleaseVersionNav({ active, fresh, fresh163, fresh164, fresh165, fresh166, fresh167 }: { active: JevRelease; fresh?: boolean; fresh163?: boolean; fresh164?: boolean; fresh165?: boolean; fresh166?: boolean; fresh167?: boolean }) {
-  const visible = fresh ?? await hasPublishedJevbenchV162Release();
-  // v1.6.3 is shown only for a validated publication; a failed validation omits the tab and keeps older boards working.
-  const visible163 = fresh163 ?? await hasPublishedJevbenchV163Release();
-  const visible164 = fresh164 ?? await hasPublishedJevbenchV164Release();
-  const visible165 = fresh165 ?? await hasPublishedJevbenchV165Release();
-  const visible166 = fresh166 ?? await hasPublishedJevbenchV166Release();
-  const visible167 = fresh167 ?? await hasPublishedJevbenchV167Release();
-  const versions: Array<{ version: JevRelease; href: string }> = [
-    ...(visible167 ? [{ version: 'v1.6.7' as const, href: '/jev-models/v1.6.7' }] : []),
-    ...(visible166 ? [{ version: 'v1.6.6' as const, href: '/jev-models/v1.6.6' }] : []),
-    ...(visible165 ? [{ version: 'v1.6.5' as const, href: '/jev-models/v1.6.5' }] : []),
-    ...(visible164 ? [{ version: 'v1.6.4' as const, href: '/jev-models/v1.6.4' }] : []),
-    ...(visible163 ? [{ version: 'v1.6.3' as const, href: '/jev-models/v1.6.3' }] : []),
-    ...(visible ? [{ version: 'v1.6.2' as const, href: '/jev-models/v1.6.2' }] : []),
-    { version: 'v1.6.1', href: '/jev-models' },
-    { version: 'v1.6.0', href: '/jev-models/v1.6.0' },
-    { version: 'v1.5.7', href: '/jev-models/v1.5.7' },
-    { version: 'v1.5.6', href: '/jev-models/v1.5.6' },
-    { version: 'v1.5.5', href: '/jev-models/v1.5.5' },
-  ];
-  return <nav aria-label="JevBench release versions" className="mb-5 flex flex-wrap gap-2" data-bh-jev-version-tabs>
-    {versions.map(({ version, href }) => <a key={version} href={href}
-      aria-current={active === version ? 'page' : undefined}
-      className={`rounded border px-3 py-1.5 text-sm ${active === version ? 'bh-release-tab-active border-accent bg-accent' : 'border-line text-accent hover:bg-panel'}`}>
-      JevBench {version}{active === version ? ' · selected' : ''}
-    </a>)}
+/** Florian 10 Oct 2026: archived release pages keep their URL; the version tabs became this one-line bar. The live
+ *  board (/jev-models) is always the merged board with every system's latest measurement; releases are listed in
+ *  its Release history (lib/jevbench-releases.mjs). The fresh* flags of older callers are accepted and ignored. */
+export async function JevBenchReleaseVersionNav({ active }: { active: JevRelease; fresh?: boolean; fresh163?: boolean; fresh164?: boolean; fresh165?: boolean; fresh166?: boolean; fresh167?: boolean }) {
+  const r = jevbenchRelease(active);
+  return <nav aria-label="JevBench release" className="bh-panel mb-5 flex flex-wrap items-center gap-x-3 gap-y-1 p-3 text-sm" data-bh-jev-archive-bar={active}>
+    <span className="font-semibold">Archived release JevBench {active}{r ? ` · ${r.date}` : ''}</span>
+    <span className="bh-muted">shown as published</span>
+    <a className="text-accent font-semibold underline" href="/jev-models" data-bh-jev-live-link>Current board (all systems) →</a>
+    <a className="text-accent underline" href="/jev-models#jev-release-history">Release history</a>
   </nav>;
 }

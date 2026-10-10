@@ -435,6 +435,7 @@ function SystemName({ row, benchmark = 'jevbench' }: { row: JevBoardViewRow; ben
     </span>
     {row.priority_run === true && <span className="bh-thin-tag ml-2 align-middle" data-bh-jev14-priority-run={row.key}>priority run</span>}
     {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-2 align-middle" data-bh-jev14-api-flag={row.key} title={row.api_exposure_note ?? apiExplanation} aria-label={apiExplanation}>API</span>}
+    <JevDrawTag tag={(row as unknown as { draw_tag?: JevDrawTagData | null }).draw_tag} rowKey={row.key} />
     {row.isNew && <span className="bh-new-tag ml-2 align-middle" data-bh-jev14-new={row.key}>new</span>}
     <span className="bh-muted block text-[11px] leading-tight">by {row.author}{variant ? ` · ${variant}` : ''}{href !== page && <> · <Link href={page} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-details={row.key}>details</Link></>}</span>
     {/* CR-254 (2026-10-01): the cited base-model overlay, presentation only; every row keeps it, ranked or not. */}
@@ -518,4 +519,12 @@ export function JevAxesTable({ rows, publicDecisions, sealedDecisions, newLabel,
     </div>
     <p id={captionId} className="sr-only" aria-live="polite">{`${shown.length} of ${rows.length} systems, sorted by ${SORT_LABEL[sort.key]}, ${dirWords(sort)}.`}</p>
   </>;
+}
+
+type JevDrawTagData = { release: string; measured_on: string; label: string };
+/** Florian 10 Oct 2026 (merged board): a row measured on a fresh draw after v1.6.1 names its draw and date. */
+function JevDrawTag({ tag, rowKey, className = 'ml-2 align-middle' }: { tag?: JevDrawTagData | null; rowKey: string; className?: string }) {
+  if (!tag) return null;
+  return <span className={`bh-thin-tag ${className}`} data-bh-jev-draw-tag={rowKey}
+    title={`Measured on the ${tag.label} (${tag.release}), ${tag.measured_on}; put on the v1.6.1 scale by the draw's anchor offset (see How it works).`}>{tag.release} draw</span>;
 }
