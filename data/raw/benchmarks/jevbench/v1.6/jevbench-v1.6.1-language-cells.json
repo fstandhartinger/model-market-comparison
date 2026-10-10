@@ -1313,7 +1313,7 @@
     },
     "gliner2": {
       "aggregate_artifact": "ops/evidence/gliner2-language-category-complete-20261010.json",
-      "sha256": "e4418749de19b5e94dc869fdb5f4054075987d766cf3bc90f90bc5455da0e7ce",
+      "sha256": "d97c4343db9e026c5e2fc03180f96e4f77884023dcd29a252c880bfacbed866e",
       "method": "official O1S",
       "basis": "S+P+L1+L2+L3",
       "historical_S_observed": 862,
@@ -1324,16 +1324,16 @@
       "historical_P_http500": 0,
       "original_http500_retained_unimputed": 0,
       "P300_carried_by_stable_identity_counted_once": true,
-      "supplemental_records": 614,
+      "supplemental_records": 794,
       "supplemental_L1": 257,
       "supplemental_L2": -64,
-      "supplemental_L3": 421,
-      "category_scored_observations": 1970,
-      "language_coverage_min": 42,
+      "supplemental_L3": 601,
+      "category_scored_observations": 2150,
+      "language_coverage_min": 50,
       "language_target_complete": false,
-      "languages_below_target60": 22,
-      "topic_coverage_min": 57,
-      "usecase_coverage_min": 45,
+      "languages_below_target60": 17,
+      "topic_coverage_min": 69,
+      "usecase_coverage_min": 56,
       "partial_completeness_exception": false,
       "headline_or_rank_changed": false,
       "composite_changed": false,
@@ -1446,6 +1446,34 @@
       "languages_below_target60": 0,
       "topic_coverage_min": 109,
       "usecase_coverage_min": 83,
+      "partial_completeness_exception": false,
+      "headline_or_rank_changed": false,
+      "composite_changed": false,
+      "original_row_price_changed": false
+    },
+    "gliner2-large": {
+      "aggregate_artifact": "ops/evidence/gliner2-large-language-category-complete-20261010.json",
+      "sha256": "1088a66eee4e244417d9cb0d15fd36c8c85b1a86e75bfabf55415b00dcc06352",
+      "method": "official O1S",
+      "basis": "S+P+L1+L2+L3",
+      "historical_S_observed": 839,
+      "historical_P_observed": 187,
+      "historical_S_successful": 839,
+      "historical_S_http500": 0,
+      "historical_P_successful": 187,
+      "historical_P_http500": 0,
+      "original_http500_retained_unimputed": 0,
+      "P300_carried_by_stable_identity_counted_once": true,
+      "supplemental_records": 1166,
+      "supplemental_L1": 241,
+      "supplemental_L2": -80,
+      "supplemental_L3": 1005,
+      "category_scored_observations": 2531,
+      "language_coverage_min": 62,
+      "language_target_complete": true,
+      "languages_below_target60": 0,
+      "topic_coverage_min": 98,
+      "usecase_coverage_min": 80,
       "partial_completeness_exception": false,
       "headline_or_rank_changed": false,
       "composite_changed": false,
@@ -10377,102 +10405,78 @@
       "coverage": "S+P+L1+L2+L3",
       "languages": {
         "ar": {
-          "n": 49,
+          "n": 55,
           "competence": 0.0,
-          "coverage_n": 49,
-          "response_n": 49,
+          "coverage_n": 55,
+          "response_n": 55,
           "refusal_n": 0,
           "operational_failure_n": 0
         },
         "cs": {
-          "n": 53,
+          "n": 58,
           "competence": 0.0,
-          "coverage_n": 53,
-          "response_n": 53,
+          "coverage_n": 58,
+          "response_n": 58,
           "refusal_n": 0,
           "operational_failure_n": 0
         },
         "da": {
-          "n": 57,
+          "n": 61,
           "competence": 0.0,
-          "coverage_n": 57,
-          "response_n": 57,
+          "coverage_n": 61,
+          "response_n": 61,
           "refusal_n": 0,
           "operational_failure_n": 0
         },
         "de": {
-          "n": 44,
+          "n": 50,
           "competence": 0.0,
-          "coverage_n": 44,
-          "response_n": 44,
+          "coverage_n": 50,
+          "response_n": 50,
           "refusal_n": 0,
           "operational_failure_n": 0
         },
         "el": {
-          "n": 45,
-          "competence": 10.5,
-          "coverage_n": 45,
-          "response_n": 45,
+          "n": 52,
+          "competence": 10.16,
+          "coverage_n": 52,
+          "response_n": 52,
           "refusal_n": 0,
           "operational_failure_n": 0
         },
         "en": {
-          "n": 896,
+          "n": 916,
           "competence": 0.0,
-          "coverage_n": 896,
-          "response_n": 896,
+          "coverage_n": 916,
+          "response_n": 916,
           "refusal_n": 0,
           "operational_failure_n": 0
         },
         "es": {
-          "n": 42,
+          "n": 60,
           "competence": 0.0,
-          "coverage_n": 42,
-          "response_n": 42,
+          "coverage_n": 60,
+          "response_n": 60,
           "refusal_n": 0,
           "operational_failure_n": 0
         },
         "fi": {
-          "n": 47,
+          "n": 55,
           "competence": 0.0,
-          "coverage_n": 47,
-          "response_n": 47,
+          "coverage_n": 55,
+          "response_n": 55,
           "refusal_n": 0,
           "operational_failure_n": 0
         },
         "fr": {
-          "n": 54,
-          "competence": 12.34,
-          "coverage_n": 54,
-          "response_n": 54,
+          "n": 59,
+          "competence": 13.76,
+          "coverage_n": 59,
+          "response_n": 59,
           "refusal_n": 0,
           "operational_failure_n": 0
         },
         "hi": {
-          "n": 46,
-          "competence": 0.0,
-          "coverage_n": 46,
-          "response_n": 46,
-          "refusal_n": 0,
-          "operational_failure_n": 0
-        },
-        "id": {
-          "n": 51,
-          "competence": 9.85,
-          "coverage_n": 51,
-          "response_n": 51,
-          "refusal_n": 0,
-          "operational_failure_n": 0
-        },
-        "it": {
-          "n": 53,
-          "competence": 0.0,
-          "coverage_n": 53,
-          "response_n": 53,
-          "refusal_n": 0,
-          "operational_failure_n": 0
-        },
-        "ja": {
           "n": 52,
           "competence": 0.0,
           "coverage_n": 52,
@@ -10480,83 +10484,107 @@
           "refusal_n": 0,
           "operational_failure_n": 0
         },
+        "id": {
+          "n": 58,
+          "competence": 11.63,
+          "coverage_n": 58,
+          "response_n": 58,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "it": {
+          "n": 62,
+          "competence": 0.0,
+          "coverage_n": 62,
+          "response_n": 62,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "ja": {
+          "n": 59,
+          "competence": 0.0,
+          "coverage_n": 59,
+          "response_n": 59,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
         "ko": {
-          "n": 47,
-          "competence": 0.2,
-          "coverage_n": 47,
-          "response_n": 47,
+          "n": 54,
+          "competence": 0.0,
+          "coverage_n": 54,
+          "response_n": 54,
           "refusal_n": 0,
           "operational_failure_n": 0
         },
         "mixed": {
-          "n": 48,
-          "competence": 14.91,
-          "coverage_n": 48,
-          "response_n": 48,
+          "n": 59,
+          "competence": 11.1,
+          "coverage_n": 59,
+          "response_n": 59,
           "refusal_n": 0,
           "operational_failure_n": 0
         },
         "nl": {
-          "n": 51,
+          "n": 54,
           "competence": 0.0,
-          "coverage_n": 51,
-          "response_n": 51,
+          "coverage_n": 54,
+          "response_n": 54,
           "refusal_n": 0,
           "operational_failure_n": 0
         },
         "no": {
-          "n": 44,
-          "competence": 0.0,
-          "coverage_n": 44,
-          "response_n": 44,
-          "refusal_n": 0,
-          "operational_failure_n": 0
-        },
-        "pl": {
-          "n": 51,
-          "competence": 0.0,
-          "coverage_n": 51,
-          "response_n": 51,
-          "refusal_n": 0,
-          "operational_failure_n": 0
-        },
-        "pt": {
           "n": 50,
-          "competence": 5.57,
+          "competence": 0.0,
           "coverage_n": 50,
           "response_n": 50,
           "refusal_n": 0,
           "operational_failure_n": 0
         },
-        "sv": {
-          "n": 48,
+        "pl": {
+          "n": 61,
           "competence": 0.0,
-          "coverage_n": 48,
-          "response_n": 48,
+          "coverage_n": 61,
+          "response_n": 61,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "pt": {
+          "n": 61,
+          "competence": 0.0,
+          "coverage_n": 61,
+          "response_n": 61,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "sv": {
+          "n": 57,
+          "competence": 0.0,
+          "coverage_n": 57,
+          "response_n": 57,
           "refusal_n": 0,
           "operational_failure_n": 0
         },
         "tr": {
-          "n": 51,
+          "n": 53,
           "competence": 0.0,
-          "coverage_n": 51,
-          "response_n": 51,
+          "coverage_n": 53,
+          "response_n": 53,
           "refusal_n": 0,
           "operational_failure_n": 0
         },
         "uk": {
-          "n": 45,
-          "competence": 6.01,
-          "coverage_n": 45,
-          "response_n": 45,
+          "n": 53,
+          "competence": 0.0,
+          "coverage_n": 53,
+          "response_n": 53,
           "refusal_n": 0,
           "operational_failure_n": 0
         },
         "zh": {
-          "n": 46,
-          "competence": 2.31,
-          "coverage_n": 46,
-          "response_n": 46,
+          "n": 51,
+          "competence": 0.0,
+          "coverage_n": 51,
+          "response_n": 51,
           "refusal_n": 0,
           "operational_failure_n": 0
         }
@@ -10566,32 +10594,216 @@
         "P": 203,
         "L1": 257,
         "L2": -64,
-        "L3": 421
+        "L3": 601
       },
       "sealed_basis": null,
       "language_coverage": "S+P+L1+L2+L3",
       "historical_sealed_observed": 862,
       "language_target_complete": false,
-      "languages_below_target60": 22,
-      "coverage_note": "This historical row keeps its published v1.5 headline. Its language and category cells come from a new measurement on the current item pools (S+P, L1, L2, L3), run with the original pinned model and serving setup on an isolated machine; each item was sent once and failed requests stay scored as failures. About 1,000 issued items were lost to out-of-memory kills and a machine shutdown; they stay counted as spent and are never re-asked, so 22 of 23 languages rest on 42 to 59 answered items instead of the 60-item target. Headline, rank, Composite and pricing are unchanged. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3."
+      "languages_below_target60": 17,
+      "coverage_note": "This historical row keeps its published v1.5 headline. Its language and category cells come from a new measurement on the current item pools (S+P, L1, L2, L3), run with the original pinned model and serving setup on an isolated machine; each item was sent once and failed requests stay scored as failures. About 1,000 issued items were lost to out-of-memory kills and a machine shutdown; they stay counted as spent and are never re-asked, so 17 of 23 languages rest on 50 to 59 answered items instead of the 60-item target. Headline, rank, Composite and pricing are unchanged. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3."
     },
     "gliner2-large": {
-      "coverage": "S+P",
+      "coverage": "S+P+L1+L2+L3",
       "languages": {
-        "en": {
-          "competence": 5.59,
-          "coverage_n": 255,
-          "n": 255,
-          "operational_failure_n": 0,
+        "ar": {
+          "n": 68,
+          "competence": 0.0,
+          "coverage_n": 68,
+          "response_n": 68,
           "refusal_n": 0,
-          "response_n": 255
+          "operational_failure_n": 0
+        },
+        "cs": {
+          "n": 73,
+          "competence": 6.6,
+          "coverage_n": 73,
+          "response_n": 73,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "da": {
+          "n": 77,
+          "competence": 0.0,
+          "coverage_n": 77,
+          "response_n": 77,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "de": {
+          "n": 72,
+          "competence": 0.0,
+          "coverage_n": 72,
+          "response_n": 72,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "el": {
+          "n": 64,
+          "competence": 0.0,
+          "coverage_n": 64,
+          "response_n": 64,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "en": {
+          "n": 943,
+          "competence": 9.33,
+          "coverage_n": 943,
+          "response_n": 943,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "es": {
+          "n": 80,
+          "competence": 1.42,
+          "coverage_n": 80,
+          "response_n": 80,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "fi": {
+          "n": 72,
+          "competence": 0.0,
+          "coverage_n": 72,
+          "response_n": 72,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "fr": {
+          "n": 76,
+          "competence": 0.0,
+          "coverage_n": 76,
+          "response_n": 76,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "hi": {
+          "n": 66,
+          "competence": 10.06,
+          "coverage_n": 66,
+          "response_n": 66,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "id": {
+          "n": 70,
+          "competence": 8.45,
+          "coverage_n": 70,
+          "response_n": 70,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "it": {
+          "n": 78,
+          "competence": 0.0,
+          "coverage_n": 78,
+          "response_n": 78,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "ja": {
+          "n": 76,
+          "competence": 0.0,
+          "coverage_n": 76,
+          "response_n": 76,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "ko": {
+          "n": 72,
+          "competence": 0.0,
+          "coverage_n": 72,
+          "response_n": 72,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "mixed": {
+          "n": 76,
+          "competence": 6.69,
+          "coverage_n": 76,
+          "response_n": 76,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "nl": {
+          "n": 68,
+          "competence": 0.0,
+          "coverage_n": 68,
+          "response_n": 68,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "no": {
+          "n": 65,
+          "competence": 0.0,
+          "coverage_n": 65,
+          "response_n": 65,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "pl": {
+          "n": 75,
+          "competence": 0.0,
+          "coverage_n": 75,
+          "response_n": 75,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "pt": {
+          "n": 83,
+          "competence": 0.0,
+          "coverage_n": 83,
+          "response_n": 83,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "sv": {
+          "n": 74,
+          "competence": 0.0,
+          "coverage_n": 74,
+          "response_n": 74,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "tr": {
+          "n": 72,
+          "competence": 9.09,
+          "coverage_n": 72,
+          "response_n": 72,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "uk": {
+          "n": 69,
+          "competence": 0.0,
+          "coverage_n": 69,
+          "response_n": 69,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "zh": {
+          "n": 62,
+          "competence": 8.31,
+          "coverage_n": 62,
+          "response_n": 62,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         }
       },
       "pool_ok": {
-        "P": 62,
-        "S": 272
+        "S": 839,
+        "P": 187,
+        "L1": 241,
+        "L2": -80,
+        "L3": 1005
       },
-      "sealed_basis": "S"
+      "sealed_basis": null,
+      "language_coverage": "S+P+L1+L2+L3",
+      "historical_sealed_observed": 839,
+      "language_target_complete": true,
+      "languages_below_target60": 0,
+      "coverage_note": "This historical row keeps its published v1.5 headline. Its language and category cells come from a new measurement on the current item pools (S+P, L1, L2, L3), run with the original pinned model and serving setup on an isolated machine; each item was sent once and failed requests stay scored as failures. Headline, rank, Composite and pricing are unchanged. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3."
     },
     "gliner2.5-multi": {
       "coverage": "S+P+L1+L2+L3",

@@ -4,6 +4,13 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-10-10 — GLiNER2 large cells; GLiNER2 update (CR-420, board note v1.7.39)
+
+`gliner2-large` (historical row, v1.5 headline kept) now has language and category cells (S+P+L1+L2+L3). `gliner2` is
+updated with 180 more answered items (reserved earlier, never sent): languages 50-59 where below the 60 target (17 of 23),
+topics >= 69, use cases >= 56. Evidence in `ops/evidence/`. Headline scores, ranks, Composite and prices are unchanged;
+see `docs/releases/CR-420-gliner2-large-cells-20261010.md`.
+
 ## 2026-10-10 — Language and category cells for reflex-27b, Surogate Rune A2 and jeff (CR-416, board note v1.7.38)
 
 Historical rows `reflex-27b`, `surogate-rune-26b-a4b-v3-rtxpro6000-a2` and `jeff` (v1.5 headlines kept) now have language and
