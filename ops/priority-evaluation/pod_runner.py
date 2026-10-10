@@ -979,6 +979,12 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                                                "--format", "{{json .RepoDigests}}"])
             if image.split("@", 1)[1] not in inspect.stdout:
                 raise PodRunError("pulled image digest does not match the pin")
+            import standardone_runtime_supplement
+            if standardone_runtime_supplement.active(job_dir or job, recipe):
+                # Fixed-order offline build of the documented stack on the pinned base, before weights/inputs.
+                state['runtime_supplement'] = standardone_runtime_supplement.build(provider, pod_id)
+                image = state['runtime_supplement']['effective_image']
+                save_state()
         if runtime_preflight is not None:
             state['runtime_preflight'] = runtime_preflight(provider, pod_id)
             save_state()
@@ -1355,6 +1361,8 @@ def run(rid: str, job_dir: Path, recipe: dict, output: Path, expected_pins: dict
                "charged_or_reserved_usd": state['spent_upper_bound_usd']}
     if host_binding is not None:
         receipt['host_staging'] = dict(state['host_staging'])
+    if state.get('runtime_supplement'):
+        receipt['runtime_supplement'] = dict(state['runtime_supplement'])
     combined = recipe['kind'] == 'aplomb_native' or 'imagejevbench' in benchmarks
     if combined:
         receipt['benchmarks'] = {}
