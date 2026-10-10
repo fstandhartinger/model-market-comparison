@@ -59,7 +59,8 @@ test('merged board slots ranked cohort rows by score and keeps published rows in
 test('live pages: filter presets, no version tabs, release history; archived pages keep their URLs', () => {
   const route = readFileSync(new URL('../components/JevBenchV16ReleaseRoute.tsx', import.meta.url), 'utf8');
   const live = route.slice(route.indexOf('if (live) return'), route.indexOf('\n  return <>'));
-  assert.match(live, /<JevBoardFilterBar/); assert.match(live, /<JevReleaseHistory \/>/); assert.doesNotMatch(live, /JevBenchReleaseVersionNav/);
-  assert.match(readFileSync(new URL('../components/JevBoardFilterBar.tsx', import.meta.url), 'utf8'), /href: '\/jev-models\/all'/);
+  assert.match(live, /<JevReleaseHistory \/>/); assert.doesNotMatch(live, /JevBenchReleaseVersionNav/);
+  const notice = readFileSync(new URL('../components/JevApiOfferingsToggle.tsx', import.meta.url), 'utf8');
+  assert.match(notice, /Show all mixed/); assert.match(notice, /'\/jev-models\/all'/); assert.match(notice, /API-hosted/);
   assert.match(readFileSync(new URL('../app/jev-models/all/page.tsx', import.meta.url), 'utf8'), /scope="all"/);
 });

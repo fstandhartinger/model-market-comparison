@@ -13,7 +13,6 @@ import { JevBenchReleaseVersionNav } from './JevBenchReleaseVersionNav';
 import { readApiFullAddenda, withApiFullAddenda, withApiFullAddendumCategories } from '../lib/jevbench-api-full-addenda.mjs';
 import { JevBenchApiAddendumCoverage } from './JevBenchApiAddendumCoverage';
 import { readCohortRows, jevWithCohortRows, jevLiveAllArtifact } from '../lib/jevbench-cohort-merge.mjs';
-import { JevBoardFilterBar } from './JevBoardFilterBar';
 import { JevReleaseHistory } from './JevReleaseHistory';
 
 type ReleaseData = Awaited<ReturnType<typeof readJevbenchV161Release>>;
@@ -77,7 +76,6 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
       <div className="bh-eyebrow flex flex-nowrap items-center" data-bh-jev-frozen-version>JevBench · board {JEV_BOARD_REVISIONS[0].version} · updated {updated}</div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">{scope === 'api' ? 'JevBench — hosted decision API benchmark' : scope === 'all' ? 'JevBench — all decision models' : 'JevBench — decision model benchmark & leaderboard'}</h1>
       <p className="mt-2 max-w-3xl text-lg" data-bh-jev-own>A <b>benchmark for AI decision models</b>: state and rubric in, typed answer out. We compare accuracy, calibration, latency and cost, independently of TypeSafe AI.</p>
-      <JevBoardFilterBar active={scope === 'all' ? 'all' : scope} counts={{ open: groupCounts.open, api: groupCounts.api, all: groupCounts.open + groupCounts.api }} />
       <p className="bh-muted mt-3 max-w-4xl text-xs leading-relaxed" data-bh-jev-meta>
         {scope === 'open' ? `${groupCounts.open} ranked open-weights systems · Jev 1.13.0 shown as reference` : scope === 'api' ? `${groupCounts.api} ranked API offerings` : `${groupCounts.open + groupCounts.api} ranked systems`}
         {' '}· {artifact.v16.counts.selfhosted_input.toLocaleString('en-US')} decisions each{a4Count > 0 && scope !== 'open' && ` (600 for ${a4Count} equated API re-runs)`}

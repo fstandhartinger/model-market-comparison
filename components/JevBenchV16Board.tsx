@@ -621,7 +621,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
   return <JevV15FilterProvider rows={filterRows} apiKeys={scope === 'open' ? apiKeys : undefined}>
     <section data-bh-jevbench-v16-release data-bh-jev-scope={scope}>
       <JevV15FilterVisibilityBridge />
-      {scope === 'open' && <JevApiOfferingsToggle measured={a.systems.filter((s) => (s as { scope?: string; listing?: string }).scope === 'api' && (s as { listing?: string }).listing !== 'listed').length} />}
+      {(scope === 'open' || live) && <JevApiOfferingsToggle scope={scope} measured={a.systems.filter((s) => (s as { scope?: string; listing?: string }).scope === 'api' && (s as { listing?: string }).listing !== 'listed').length} />}
       {scope !== 'api' && capabilityCharts}
       {scope !== 'api' && <JevV15FilterPanel />}
       {scope === 'api' && extra.length > 0 && <p className="mt-6 max-w-4xl text-sm" data-bh-jev-api-preliminary-note><span className="bh-thin-tag bh-partial-tag mr-1.5 align-middle">preliminary</span><b>Hatched rows are preliminary:</b> API offerings scored on the 300 public v1.6 items only (no sealed items, so no gap penalty; Calibration reads a few points lower on 300 items than on 1,500). They are not ranked and compare strictly only with the anchor rows in the public-set table; each row is replaced by its full result once it has been run on a fresh sealed set. <span className="bh-thin-tag bh-partial-tag mx-1 align-middle">pending</span>Greyed rows have no v1.6 figure yet; their v1.5 score is in the tooltip and in the <a className="text-accent underline" href="#jev-api-public-set">public-set table</a>.</p>}
