@@ -1,3 +1,4 @@
+import { hasApiFullAddendumCategories } from '../lib/jevbench-api-full-addenda.mjs';
 import { COMPOSITE_DEFINITION } from '../lib/decision-benchmark-manifest.mjs';
 import spokeExceptions from '../data/jevbench-radar-spoke-exceptions.json';
 import { Fragment } from 'react';
@@ -151,6 +152,7 @@ function DatedCarry({ carry, hiddenApi, showExceptions }: { carry: JevV16Carry; 
 
 // v1.7.0 (Florian, 5 Oct 2026): open-weights board on /jev-models, API-provider board on /jev-models/api.
 export const JEV_BOARD_REVISIONS: { version: string; date: string; text: string }[] = [
+  { version: 'v1.7.31', date: '2026-10-10', text: 'Microsoft-Decision-1 joins the hosted API board after a native Azure Foundry measurement on 1,200 sealed plus 300 public observations: Capability 70.78, Calibration 84.40 and Composite A 69.11. Its 21 context-limit failures remain in the scored denominator. Native median latency is 459 ms on the 124-request speed subset. This new full-set O1S run uses its completed-field reference median of 7.088 seconds; historical rows retain their own dates, pools and references rather than being remeasured or converted. The existing top five on Composite A and capped Capability are unchanged. All 50 topic/use-case/language cells are recorded; thin cells stay suppressed or table-only, and qualified supplemental coverage remains pending.' },
   { version: 'v1.7.30', date: '2026-10-10', text: 'decisio v0.8.0 on gemma-4-31B-it now covers S+P+L1+L2+L3, with all 1,505 supplemental items answered natively: at least 65 completed responses in every language, 109 in every subject topic and 83 in every use case. The original P300 answers recur in each supplement and count once. The original 23 HTTP 500 errors remain operational non-answers and are not imputed. L3 items were reviewed by an OpenAI model, so its cells based on L3 carry that exposure; this row is the original locally served Gemma offering. Headline scores, Composite, ranks and original row pricing are unchanged.' },
   { version: 'v1.7.29', date: '2026-10-09', text: 'Mercury Decide now has at least 64 completed observations in every language, 109 in every subject topic and 83 in every use case, using S+P+L1+L2+L3. L3 retains 1,416 records on its full 1,418-item denominator, including original refusals and operational failures; two spent failures remain missing. Paid supplemental decisions use the currently declared Inception 2026-09-30 offering and the original native protocol. Public top labels agree on 96.63%, with differing probabilities and unproven historical weights/calibrator equality; the row coverage note gives the comparison. Headline scores, Composite, ranks and original row pricing are unchanged.' },
   { version: 'v1.7.28', date: '2026-10-09', text: 'GLiNER 2.5 Small now covers P300 + L1 + L2 + L3 with 1,802 completed native responses: at least 60 in each of 23 languages, 78 in every subject topic and 52 in every use case. Its original offline CPU/fp32 profile is unchanged. Three earlier public-item OOM outcomes remain missing and contribute no completed coverage; no requests were replayed. These cells exclude historical S answers and stay outside headline scores. Headline scores, Capability, Composite and every rank are unchanged.' },
@@ -560,13 +562,13 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
       {scope === 'api' && <ApiRoster a={a} carry={carry} listed={apiListed} eligibility={eligibilityByKey} />}
       {scope === 'api' && <ApiPublicSet measured={measuredKeys} />}
       {scope === 'api' && <JevV15FilterPanel />}
-      <JevCompareV15 rows={compareRows} openDecisions={a.v16.counts.P} sealedDecisions={a.v16.counts.S} categories={jevbenchCategoryView(a.revision, compareRows.map((r) => r.key), { supplement: Boolean(categories.supplement), artifact: fresh ? categories : undefined })} />
+      <JevCompareV15 rows={compareRows} openDecisions={a.v16.counts.P} sealedDecisions={a.v16.counts.S} categories={jevbenchCategoryView(a.revision, compareRows.map((r) => r.key), { supplement: Boolean(categories.supplement), artifact: fresh || hasApiFullAddendumCategories(categories) ? categories : undefined })} />
       <p className="bh-muted mt-2 max-w-4xl text-xs" data-bh-jev16-radar-note>{categories.supplement ? <>Category radars count each answered item once from the pools named under each radar. API overlay rows use {API_CATEGORY_POOLS}. Raw and unequated; cells under {categories.min_n} answered items are omitted. Per-type and tier radars retain each row&apos;s original measurement pools: A4/A5 rows have 300 open plus 300 sealed items; full-set rows have S {a.v16.counts.S.toLocaleString('en-US')} plus P {a.v16.counts.P}.</> : <>{categories.lane_note} Sealed counts refer to self-hosted S ({a.v16.counts.S.toLocaleString('en-US')}); API rows use their original measured sealed basis.</>}</p>
       <LanguageView carry={carry} scope={scope} a={a} categories={categories} hiddenApi={hiddenApi} />
       <NoulAndGate a={a} hiddenApi={hiddenApi} />
       <JevV15AllDataGrid
         artifact={v15}
-        categoryView={jevbenchCategoryView(a.revision, allDataKeys, { supplement: Boolean(categories.supplement), artifact: fresh ? categories : undefined })}
+        categoryView={jevbenchCategoryView(a.revision, allDataKeys, { supplement: Boolean(categories.supplement), artifact: fresh || hasApiFullAddendumCategories(categories) ? categories : undefined })}
         previousKeys={previousKeys}
         eligibility={allClass}
         metadata={{ families: baseModelFamilies('jevbench', a.systems) }}

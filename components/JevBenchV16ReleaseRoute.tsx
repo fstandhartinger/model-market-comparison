@@ -10,6 +10,8 @@ import { withLiveCategoryCells, JEVBENCH_S_CATEGORY_CELLS_ARTIFACT } from '../li
 import { withApiRerunSplits } from '../lib/jevbench-api-rerun-cells.mjs';
 import { JevBenchV16Board, JEV_BOARD_REVISIONS } from './JevBenchV16Board';
 import { JevBenchReleaseVersionNav } from './JevBenchReleaseVersionNav';
+import { readApiFullAddenda, withApiFullAddenda, withApiFullAddendumCategories } from '../lib/jevbench-api-full-addenda.mjs';
+import { JevBenchApiAddendumCoverage } from './JevBenchApiAddendumCoverage';
 
 type ReleaseData = Awaited<ReturnType<typeof readJevbenchV161Release>>;
 
@@ -24,9 +26,12 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
   // v1.7.7 (Florian 6 Oct 2026, Part 12b): on the live boards the API lane's full A4 u P re-run rows (equated) join the
   // release as measured API offerings and leave the dated carry; archived release pages show the release as published.
   const a4Meta = new Map<string, unknown>([...previous.artifact.systems, ...releaseCarry.rows].map((r) => [r.key, r]));
-  const merged = scope === 'all' || release_.revision !== 'v1.6.1' ? release_ : jevWithApiA4Rows(release_, withApiRerunSplits(apiA4), a4Meta) as typeof release_;
+  const addenda = live && scope === 'api' ? await readApiFullAddenda() : { schema_version: 1, kind: 'jevbench-api-full-addenda', entries: [] };
+  const historicalMerged = scope === 'all' || release_.revision !== 'v1.6.1' ? release_ : jevWithApiA4Rows(release_, withApiRerunSplits(apiA4), a4Meta) as typeof release_;
+  const merged = addenda.entries.length ? withApiFullAddenda(historicalMerged, addenda) as typeof release_ : historicalMerged;
   // v1.7.12 (Part B): the live boards show language/use-case cells with the sealed L1/L2 supplements; archived pages stay as published.
-  const categories = merged === release_ ? releaseCategories : withLiveCategoryCells(releaseCategories);
+  const historicalCategories = merged === release_ ? releaseCategories : withLiveCategoryCells(releaseCategories);
+  const categories = withApiFullAddendumCategories(historicalCategories, addenda);
   const cellSupplementSha256 = merged === release_ ? undefined : createHash('sha256').update(await readFile(path.join(process.cwd(), JEVBENCH_S_CATEGORY_CELLS_ARTIFACT))).digest('hex');
   const a4Keys = new Set(merged.systems.map((s) => s.key));
   const published = merged === release_ ? release_ : { ...merged, not_measured: merged.not_measured.filter((r) => !a4Keys.has(r.key)) };
@@ -94,5 +99,6 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
     <JevBenchV16Board artifact={artifact} sha256={sha256} categories={categories} categoriesSha256={categoriesSha256}
       carry={carry} carrySha256={carrySha256} scope={scope} apiKeys={apiKeys} apiListed={apiListed}
       previousKeys={[...previous.artifact.systems, ...previous.artifact.not_measured].filter((row: { key: string }) => !isJevbenchV16ExcludedKey(row.key, revision)).map((row: { key: string }) => row.key)} />
+    <JevBenchApiAddendumCoverage entries={addenda.entries} />
   </>;
 }

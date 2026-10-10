@@ -9,12 +9,13 @@ const repo = path.resolve(arg('--repo', fileURLToPath(new URL('..', import.meta.
 const outputArg = arg('--output', null);
 const output = outputArg ? path.resolve(outputArg) : null;
 const load = (file) => import(pathToFileURL(path.join(repo, file)));
-const { listedRadarBoards } = await load('scripts/jevbench-radar-spokes.mjs');
+const { listedRadarBoards, listedRadarCategoryView, listedLanguageCells, listedFullAddenda } = await load('scripts/jevbench-radar-spokes.mjs');
 const { jevbenchCategoryView, JEVBENCH_LANGUAGE_CELLS_ARTIFACT } = await load('lib/jevbench-categories.mjs');
-const cells = JSON.parse(fs.readFileSync(path.join(repo, JEVBENCH_LANGUAGE_CELLS_ARTIFACT), 'utf8'));
+const registry = listedFullAddenda?.();
+const cells = listedLanguageCells ? listedLanguageCells(registry) : JSON.parse(fs.readFileSync(path.join(repo, JEVBENCH_LANGUAGE_CELLS_ARTIFACT), 'utf8'));
 const languageKeys = cells.languages.map((l) => l.key);
 if (languageKeys.length !== 23 || new Set(languageKeys).size !== 23) throw new Error('Expected all 23 unique language cells');
-const boards = listedRadarBoards();
+const boards = listedRadarBoards(registry);
 const report = {
   checked_at: new Date().toISOString(), repo, thresholds: { language: 60, topic: 30, usecase: 30 },
   denominator: 'Completed supported responses including reviewed input refusals; operational failures do not count as answered. Official scored n and scores remain unchanged.',
@@ -23,7 +24,7 @@ const report = {
 };
 for (const [scope, keys] of Object.entries(boards)) {
   if (!keys.length) throw new Error(`Empty board: ${scope}`);
-  const view = jevbenchCategoryView('v1.6.1', keys, { supplement: true });
+  const view = listedRadarCategoryView ? listedRadarCategoryView(keys, registry) : jevbenchCategoryView('v1.6.1', keys, { supplement: true });
   for (const [dim, expected] of [['topics', 7], ['usecases', 20]]) {
     const cats = view.dims.find((d) => d.key === dim)?.cats;
     if (cats?.length !== expected || new Set(cats.map((c) => c.key)).size !== expected) throw new Error(`${dim}: expected ${expected} spokes`);
@@ -35,7 +36,7 @@ for (const [scope, keys] of Object.entries(boards)) {
     }));
     const radar = Object.fromEntries(['topics', 'usecases'].map((dim) => [dim, Object.fromEntries(view.dims.find((d) => d.key === dim).cats.map((cat) => {
       const cell = view.systems[key]?.[dim]?.[cat.key];
-      return [cat.key, { n: Number.isInteger(cell?.[2]) && cell[2] >= 0 && cell[2] <= cell[1] ? cell[2] : 0, scored_n: cell?.[1] ?? 0, finite_score: Number.isFinite(cell?.[0]), pool_n: cat.n }];
+      return [cat.key, { n: Number.isInteger(cell?.[2]) && cell[2] >= 0 && cell[2] <= cell[1] ? cell[2] : 0, scored_n: cell?.[1] ?? 0, finite_score: Number.isFinite(cell?.[0]), pool_n: view.rowCategoryPoolSizes?.[key]?.[dim]?.[cat.key] ?? cat.n }];
     }))]));
     const gaps = {
       languages: Object.keys(language).filter((k) => language[k].n < 60 || !language[k].finite_score),

@@ -1,0 +1,1092 @@
+{
+  "schema_version": 1,
+  "kind": "jevbench-api-full-addenda",
+  "entries": [
+    {
+      "key": "microsoft-decision-1",
+      "published_at": null,
+      "prepared_at": "2026-10-10T05:10:18.790981+00:00",
+      "publication_status": "approved_for_publication",
+      "release": "CR-401 Microsoft-Decision-1 full native API addendum",
+      "provenance": {
+        "parent": "v1.6-fastlane-20261009",
+        "method": "O1S",
+        "g_med_s": 7.088097744249485,
+        "counts": {
+          "P": 300,
+          "S": 1200
+        },
+        "cost_n": 1479,
+        "input_sha256": "6833e921ae525a328a4cf199a3e8145fa657fe2c9a9fe520e2953aab6da60ee6",
+        "run_sha256": "cadf99e94de455277604759b31028cfb14663f3b815555e5ea7909e0bb891c27",
+        "scorer_sha256": "83398383da9d011cc30236d0a241a9c125fc5efbbfc041f5564e7c5f699d896e",
+        "categories_sha256": "575f8e3e9e16987f18c2571264799fba7207b80c20d638b07e9c902efb84d989",
+        "acceptance_sha256": "1a21b7d132e77af0196edebb1c4f9060e2eb3067aa04ec5ed99cb94bdbc808ce",
+        "cost_mask_sha256": "50d582d3976ba79d458756f931764cf6e80bc623fbbe2fa611d8744752e3fc7b",
+        "source_url": "https://benchmarkheaven.com/api/jevbench/api-addenda",
+        "release_authorization_sha256": "ea7e7d50d31ba80c47bdba27f9b32f35f03dabfd2bb1fe6264f6e9d5588023a3"
+      },
+      "row": {
+        "api_flag": true,
+        "author": "Microsoft",
+        "axes": {
+          "calibration": 84.39873071167106,
+          "cost": 61.452075716621465,
+          "intelligence": 57.16958510591244,
+          "speed": 81.54517543213291
+        },
+        "calibration": {
+          "parts": {
+            "choice": {
+              "ece_hard": 0.09636174358194516,
+              "ece_score": 80.72765128361097,
+              "mean_tvd": null,
+              "n": 735,
+              "n_ece_hard": 307,
+              "n_tvd": 0,
+              "score": 80.72765128361097
+            },
+            "noul": {
+              "abstention_rate": 0.2278820375335121,
+              "brier": 0.10202697897728127,
+              "ece": 0.05824671413738715,
+              "n": 373,
+              "score": 88.35065717252257
+            },
+            "score": {
+              "interval90_coverage": 0.9056603773584906,
+              "interval90_width": 0.21495956873315356,
+              "n": 371,
+              "nrps": 0.07658334569212163,
+              "score": 84.11788367887968,
+              "top_ece": 0.12052949036514232
+            }
+          },
+          "score": 84.39873071167106
+        },
+        "capability": 70.78415790879176,
+        "capability_ci95": [
+          65.79924499904618,
+          73.0808555865328
+        ],
+        "composite_ci95": {
+          "A": [
+            66.02436050159598,
+            70.40957825472715
+          ],
+          "B": [
+            62.32949160874876,
+            68.09460025172818
+          ],
+          "C": [
+            46.743685735358696,
+            70.27466026550705
+          ]
+        },
+        "cost": {
+          "basis": "Advertised Azure Foundry tariff .042/M input, output free; genuine native usage, billed invoice unknown",
+          "common_basis": "{\"n_items\": 1479, \"rule\": \"common\", \"usd_per_1000_all_items\": 0.019002368000000002}",
+          "kind": "tariff",
+          "usage_estimated_rows": 0,
+          "usd_per_1000": 0.0192721784989858
+        },
+        "display": "Microsoft-Decision-1 (Azure Foundry)",
+        "endpoint_kind": "api",
+        "intelligence": {
+          "I_open": 65.54484720922025,
+          "I_sealed": 49.68435126148425,
+          "base": 57.61459923535225,
+          "excess": 8.772398203486514,
+          "gap": 15.860495947735998,
+          "penalty": 0.9922760179651349,
+          "per_type_split": {
+            "open|choice": {
+              "cc": 82.42557001849185,
+              "n": {
+                "easy": 33,
+                "hard": 68,
+                "judge": 32,
+                "standard": 17
+              },
+              "tiers": {
+                "easy": 100.00000000000001,
+                "hard": 75.46398238439761,
+                "judge": 84.17930125247199,
+                "standard": 84.93093344495604
+              }
+            },
+            "open|noul": {
+              "cc": 51.46376811594203,
+              "n": {
+                "easy": 14,
+                "hard": 23,
+                "judge": 20,
+                "standard": 18
+              },
+              "tiers": {
+                "easy": 100.0,
+                "hard": 47.82608695652173,
+                "judge": 30.000000000000004,
+                "standard": 66.66666666666667
+              }
+            },
+            "open|score": {
+              "cc": 62.74520349322689,
+              "n": {
+                "easy": 9,
+                "hard": 29,
+                "judge": 21,
+                "standard": 16
+              },
+              "tiers": {
+                "easy": 51.19290622964672,
+                "hard": 67.62102226028924,
+                "judge": 74.3930948447687,
+                "standard": 41.29787756357959
+              }
+            },
+            "sealed|choice": {
+              "cc": 65.77933402862911,
+              "n": {
+                "easy": 73,
+                "hard": 254,
+                "judge": 141,
+                "standard": 132
+              },
+              "tiers": {
+                "easy": 85.18366087045993,
+                "hard": 59.4822734946539,
+                "judge": 65.37585421412302,
+                "standard": 69.27651139742319
+              }
+            },
+            "sealed|noul": {
+              "cc": 37.62824744344246,
+              "n": {
+                "easy": 48,
+                "hard": 116,
+                "judge": 67,
+                "standard": 69
+              },
+              "tiers": {
+                "easy": 54.16666666666667,
+                "hard": 25.86206896551724,
+                "judge": 31.343283582089555,
+                "standard": 62.318840579710155
+              }
+            },
+            "sealed|score": {
+              "cc": 45.6454723123812,
+              "n": {
+                "easy": 36,
+                "hard": 111,
+                "judge": 74,
+                "standard": 79
+              },
+              "tiers": {
+                "easy": 68.67980276922125,
+                "hard": 32.88780129611539,
+                "judge": 46.813302889415894,
+                "standard": 57.89190325094079
+              }
+            }
+          }
+        },
+        "jevbench_score": 69.11289175277149,
+        "key": "microsoft-decision-1",
+        "last_measured_on": "2026-10-10",
+        "listing": "ranked",
+        "model_pin": {
+          "deployment": "decision-1",
+          "model": "Microsoft-Decision-1",
+          "provider": "Microsoft/Azure Foundry",
+          "response_model": "microsoft-decision-1",
+          "version": "1"
+        },
+        "ranked": true,
+        "repo": "https://commandline.microsoft.com/microsoft-decision-1-model-foundry/",
+        "scores": {
+          "A": 69.11289175277149,
+          "B": 66.34102888286164,
+          "C": 62.74608663211473
+        },
+        "speed": {
+          "adjustment": "none (API)",
+          "n": 124,
+          "p50_s_adjusted": 0.45925578847527504,
+          "p50_s_raw": 0.45925578847527504,
+          "p95_s_adjusted": 1.5255548182874916,
+          "p95_s_raw": 1.5255548182874916
+        },
+        "status": {
+          "answered_ok": 1479,
+          "missing": 0,
+          "rows": 1500,
+          "status": "complete"
+        },
+        "v16": {
+          "api_subset": false,
+          "api_subset_tag": null,
+          "breakdowns_equated": false,
+          "ci95": {
+            "B": 1000,
+            "C": [
+              79.38267975134342,
+              86.54667450947431
+            ],
+            "I": [
+              50.44641980227999,
+              60.43490499481045
+            ],
+            "capability": [
+              65.79924499904618,
+              73.0808555865328
+            ],
+            "composite": {
+              "A": [
+                66.02436050159598,
+                70.40957825472715
+              ],
+              "B": [
+                62.32949160874876,
+                68.09460025172818
+              ],
+              "C": [
+                46.743685735358696,
+                70.27466026550705
+              ]
+            },
+            "seed": 16
+          },
+          "ci95_n": 1200,
+          "complete": true,
+          "equated": false,
+          "equating_flag": null,
+          "equating_offset": null,
+          "full_set_api": true,
+          "g_med_used": 7.088097744249485,
+          "lane": "api",
+          "metric_basis": "S u P (full set, API lane, v1.6.1 amendment; not equated)",
+          "n_items": 1500,
+          "n_public": 300,
+          "n_sealed_side": 1200,
+          "on_S": {
+            "calibration": 84.39873071167106,
+            "capability": 70.78415790879176,
+            "intelligence": 57.16958510591244
+          },
+          "per_type": {
+            "choice": {
+              "accuracy": 0.7653333333333333,
+              "calibration": 80.72765128361097,
+              "cc": 69.61967049617368,
+              "cc_by_type": {
+                "choice": 69.61967049617368
+              },
+              "cc_tiered": 74.10245202356049,
+              "cc_tiered_open": 82.42557001849185,
+              "cc_tiered_sealed": 65.77933402862911,
+              "low_n": false,
+              "n": 750,
+              "n_by_type": {
+                "choice": 750
+              },
+              "score": 69.61967049617368
+            },
+            "noul": {
+              "accuracy": 0.7173333333333334,
+              "calibration": 88.35065717252257,
+              "cc": 43.466666666666676,
+              "cc_by_type": {
+                "noul": 43.466666666666676
+              },
+              "cc_tiered": 44.546007779692246,
+              "cc_tiered_open": 51.46376811594203,
+              "cc_tiered_sealed": 37.62824744344246,
+              "low_n": false,
+              "n": 375,
+              "n_by_type": {
+                "noul": 375
+              },
+              "score": 43.466666666666676
+            },
+            "score": {
+              "accuracy": 0.6933333333333334,
+              "calibration": 84.11788367887968,
+              "cc": 51.165347833026,
+              "cc_by_type": {
+                "score": 51.165347833026
+              },
+              "cc_tiered": 54.19533790280404,
+              "cc_tiered_open": 62.74520349322689,
+              "cc_tiered_sealed": 45.6454723123812,
+              "low_n": false,
+              "n": 375,
+              "n_by_type": {
+                "score": 375
+              },
+              "score": 51.165347833026
+            }
+          },
+          "raw_on_A": null,
+          "run_sha256": "cadf99e94de455277604759b31028cfb14663f3b815555e5ea7909e0bb891c27",
+          "set": "S+P"
+        }
+      },
+      "coverage": {
+        "languages": [
+          {
+            "answered_ok": 1114,
+            "competence": 52.64,
+            "coverage_n": 1135,
+            "errors": 21,
+            "key": "en",
+            "label": "English",
+            "n": 1135,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 40,
+            "competence": 74.35,
+            "coverage_n": 40,
+            "errors": 0,
+            "key": "de",
+            "label": "German",
+            "n": 40,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 16,
+            "competence": 72.78,
+            "coverage_n": 16,
+            "errors": 0,
+            "key": "fr",
+            "label": "French",
+            "n": 16,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 30,
+            "competence": 75.7,
+            "coverage_n": 30,
+            "errors": 0,
+            "key": "es",
+            "label": "Spanish",
+            "n": 30,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 13,
+            "competence": null,
+            "coverage_n": 13,
+            "errors": 0,
+            "key": "it",
+            "label": "Italian",
+            "n": 13,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 24,
+            "competence": 74.75,
+            "coverage_n": 24,
+            "errors": 0,
+            "key": "pt",
+            "label": "Portuguese",
+            "n": 24,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 17,
+            "competence": 46.82,
+            "coverage_n": 17,
+            "errors": 0,
+            "key": "nl",
+            "label": "Dutch",
+            "n": 17,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 16,
+            "competence": 63.55,
+            "coverage_n": 16,
+            "errors": 0,
+            "key": "da",
+            "label": "Danish",
+            "n": 16,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 8,
+            "competence": null,
+            "coverage_n": 8,
+            "errors": 0,
+            "key": "sv",
+            "label": "Swedish",
+            "n": 8,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 4,
+            "competence": null,
+            "coverage_n": 4,
+            "errors": 0,
+            "key": "no",
+            "label": "Norwegian",
+            "n": 4,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul"
+            ]
+          },
+          {
+            "answered_ok": 7,
+            "competence": null,
+            "coverage_n": 7,
+            "errors": 0,
+            "key": "fi",
+            "label": "Finnish",
+            "n": 7,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 39,
+            "competence": 46.51,
+            "coverage_n": 39,
+            "errors": 0,
+            "key": "pl",
+            "label": "Polish",
+            "n": 39,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 9,
+            "competence": null,
+            "coverage_n": 9,
+            "errors": 0,
+            "key": "cs",
+            "label": "Czech",
+            "n": 9,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul"
+            ]
+          },
+          {
+            "answered_ok": 17,
+            "competence": 33.72,
+            "coverage_n": 17,
+            "errors": 0,
+            "key": "el",
+            "label": "Greek",
+            "n": 17,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 11,
+            "competence": null,
+            "coverage_n": 11,
+            "errors": 0,
+            "key": "tr",
+            "label": "Turkish",
+            "n": 11,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 9,
+            "competence": null,
+            "coverage_n": 9,
+            "errors": 0,
+            "key": "uk",
+            "label": "Ukrainian",
+            "n": 9,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 17,
+            "competence": 35.18,
+            "coverage_n": 17,
+            "errors": 0,
+            "key": "ar",
+            "label": "Arabic",
+            "n": 17,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 26,
+            "competence": 30.48,
+            "coverage_n": 26,
+            "errors": 0,
+            "key": "hi",
+            "label": "Hindi",
+            "n": 26,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 12,
+            "competence": null,
+            "coverage_n": 12,
+            "errors": 0,
+            "key": "zh",
+            "label": "Chinese",
+            "n": 12,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 22,
+            "competence": 16.17,
+            "coverage_n": 22,
+            "errors": 0,
+            "key": "ja",
+            "label": "Japanese",
+            "n": 22,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 9,
+            "competence": null,
+            "coverage_n": 9,
+            "errors": 0,
+            "key": "ko",
+            "label": "Korean",
+            "n": 9,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 4,
+            "competence": null,
+            "coverage_n": 4,
+            "errors": 0,
+            "key": "id",
+            "label": "Indonesian",
+            "n": 4,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice"
+            ]
+          },
+          {
+            "answered_ok": 15,
+            "competence": 99.87,
+            "coverage_n": 15,
+            "errors": 0,
+            "key": "mixed",
+            "label": "Mixed-language",
+            "n": 15,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          }
+        ],
+        "topics": [
+          {
+            "answered_ok": 271,
+            "competence": 30.44,
+            "coverage_n": 282,
+            "errors": 11,
+            "key": "math",
+            "label": "Math & numbers",
+            "n": 282,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 197,
+            "competence": 70.78,
+            "coverage_n": 197,
+            "errors": 0,
+            "key": "coding",
+            "label": "Coding & software",
+            "n": 197,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 747,
+            "competence": 59.21,
+            "coverage_n": 747,
+            "errors": 0,
+            "key": "law_policy",
+            "label": "Rules, policy & law",
+            "n": 747,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 79,
+            "competence": 67.53,
+            "coverage_n": 79,
+            "errors": 0,
+            "key": "finance_commerce",
+            "label": "Finance & commerce",
+            "n": 79,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 90,
+            "competence": 43.6,
+            "coverage_n": 100,
+            "errors": 10,
+            "key": "support_ops",
+            "label": "Support & operations",
+            "n": 100,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 53,
+            "competence": 39.41,
+            "coverage_n": 53,
+            "errors": 0,
+            "key": "everyday_language",
+            "label": "Everyday language",
+            "n": 53,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 42,
+            "competence": 45.5,
+            "coverage_n": 42,
+            "errors": 0,
+            "key": "safety_security",
+            "label": "Safety & security",
+            "n": 42,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          }
+        ],
+        "usecases": [
+          {
+            "answered_ok": 24,
+            "competence": 85.03,
+            "coverage_n": 24,
+            "errors": 0,
+            "key": "search_retrieval",
+            "label": "Search and retrieval",
+            "n": 24,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 21,
+            "competence": 59.02,
+            "coverage_n": 21,
+            "errors": 0,
+            "key": "scientific_discovery",
+            "label": "Scientific discovery",
+            "n": 21,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 318,
+            "competence": 67.68,
+            "coverage_n": 318,
+            "errors": 0,
+            "key": "model_routing",
+            "label": "Model routing",
+            "n": 318,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 25,
+            "competence": 52.57,
+            "coverage_n": 25,
+            "errors": 0,
+            "key": "llm_guardrails",
+            "label": "LLM guardrails",
+            "n": 25,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 22,
+            "competence": 0.0,
+            "coverage_n": 22,
+            "errors": 0,
+            "key": "code_linting",
+            "label": "Semantic code linting",
+            "n": 22,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 16,
+            "competence": 43.11,
+            "coverage_n": 16,
+            "errors": 0,
+            "key": "feature_extraction",
+            "label": "Feature extraction for predictive modeling",
+            "n": 16,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 17,
+            "competence": 45.08,
+            "coverage_n": 17,
+            "errors": 0,
+            "key": "recruiting",
+            "label": "Recruiting",
+            "n": 17,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 36,
+            "competence": 70.16,
+            "coverage_n": 36,
+            "errors": 0,
+            "key": "lead_generation",
+            "label": "Lead generation",
+            "n": 36,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 149,
+            "competence": 58.5,
+            "coverage_n": 158,
+            "errors": 9,
+            "key": "customer_support",
+            "label": "Customer support",
+            "n": 158,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 29,
+            "competence": 57.12,
+            "coverage_n": 29,
+            "errors": 0,
+            "key": "insurance_claims",
+            "label": "Insurance claims",
+            "n": 29,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 54,
+            "competence": 27.53,
+            "coverage_n": 54,
+            "errors": 0,
+            "key": "financial_crime",
+            "label": "Financial crime",
+            "n": 54,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 343,
+            "competence": 65.84,
+            "coverage_n": 343,
+            "errors": 0,
+            "key": "legal_compliance",
+            "label": "Legal and compliance",
+            "n": 343,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 43,
+            "competence": 61.34,
+            "coverage_n": 43,
+            "errors": 0,
+            "key": "ecommerce_marketplaces",
+            "label": "E-commerce marketplaces",
+            "n": 43,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 37,
+            "competence": 63.9,
+            "coverage_n": 37,
+            "errors": 0,
+            "key": "moderation_trust_safety",
+            "label": "Moderation and trust and safety",
+            "n": 37,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 30,
+            "competence": 14.89,
+            "coverage_n": 30,
+            "errors": 0,
+            "key": "advertising",
+            "label": "Advertising",
+            "n": 30,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 18,
+            "competence": 0.0,
+            "coverage_n": 18,
+            "errors": 0,
+            "key": "gaming",
+            "label": "Gaming",
+            "n": 18,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 53,
+            "competence": 38.39,
+            "coverage_n": 53,
+            "errors": 0,
+            "key": "risk_assessment",
+            "label": "Risk assessment",
+            "n": 53,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 21,
+            "competence": 0.0,
+            "coverage_n": 21,
+            "errors": 0,
+            "key": "demand_forecasting",
+            "label": "Demand forecasting",
+            "n": 21,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 22,
+            "competence": 20.55,
+            "coverage_n": 22,
+            "errors": 0,
+            "key": "knowledge_graphs",
+            "label": "Graphs and knowledge graphs",
+            "n": 22,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          },
+          {
+            "answered_ok": 201,
+            "competence": 36.76,
+            "coverage_n": 213,
+            "errors": 12,
+            "key": "other",
+            "label": "Other",
+            "n": 213,
+            "pool": "S1200+P300; full native Foundry union",
+            "types": [
+              "choice",
+              "noul",
+              "score"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

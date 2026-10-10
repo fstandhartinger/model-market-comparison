@@ -1,0 +1,2246 @@
+{
+  "benchmark": "jevbench",
+  "releaseKind": "addendum",
+  "releaseLabel": "CR-401",
+  "releaseDate": "2026-10-10",
+  "refreshIndex": 0,
+  "policy": {
+    "top_n": 10,
+    "rank_basis": "composite",
+    "slow_cadence": {
+      "every_nth_refresh": 3,
+      "max_age_days": 30
+    },
+    "release_kinds": {
+      "addendum": "measure only new entrants and paid fast-lane runs",
+      "refresh": "re-measure top_n + paid + due slow-cadence rows; carry the rest forward with last-measured marker",
+      "method_change": "re-measure every row"
+    }
+  },
+  "remeasure": [],
+  "carryForward": [
+    {
+      "key": "cygnet",
+      "name": "Cygnet (blockbrain, frozen Gemma-4-12B-it)",
+      "rank": 1,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "winnow-12b",
+      "name": "Winnow-12B Q8",
+      "rank": 2,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "jev-1.13.0",
+      "name": "Jev 1.13.0 (TypeSafe AI)",
+      "rank": 3,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "jevk5-v0.3-4b",
+      "name": "JevK5 v0.3 (4B)",
+      "rank": 4,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "plumb-4b",
+      "name": "Plumb-4B (crh225, JevK5 v0.2 + LoRA)",
+      "rank": 5,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "jev-omni",
+      "name": "Jev-Omni (akhilaaa3, Gemma-4-12B merged)",
+      "rank": 6,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "decider-4b-v2",
+      "name": "decider-4b v2 (Mapika)",
+      "rank": 7,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "decision-4b-v12",
+      "name": "Decision 4B v1.2 (FlyMyJev, Qwen3.5-4B + LoRA)",
+      "rank": 8,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "imajev-4b-rtx5090-a2",
+      "name": "Imajev-4B (RTX 5090)",
+      "rank": 9,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "decision-4b-v11",
+      "name": "Decision 4B v1.1 (FlyMyJev, Qwen3.5-4B + LoRA)",
+      "rank": 10,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "manchego-v21-v15",
+      "name": "Manchego v2.1",
+      "rank": 11,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "semif-qwen3.5-4b",
+      "name": "SemIf, formerly OpenJev (Qwen3.5-4B, TheoLeeCJ)",
+      "rank": 12,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "spark-s1-4b-v6",
+      "name": "spark-s1-4b-v6 (Open Spark Jev, abhishek085)",
+      "rank": 13,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "metask-jev-4b",
+      "name": "metask-jev-4b",
+      "rank": 14,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "hopper",
+      "name": "Hopper",
+      "rank": 15,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "malkuth-4b",
+      "name": "Malkuth-4B (newfull5, Kev post-train)",
+      "rank": 16,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "surogate-rune-26b-a4b-v3-rtxpro6000-a2",
+      "name": "Surogate Rune 26B-A4B v3 (RTX PRO 6000)",
+      "rank": 17,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "reflex-4b",
+      "name": "reflex 4B (kshetrajna12)",
+      "rank": 18,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "jev-local",
+      "name": "jev-local (Qwen3.5-9B)",
+      "rank": 19,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "djev",
+      "name": "djev (Maisa, diffusion-gemma)",
+      "rank": 20,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "raw-qwen3-4b-instruct-2507",
+      "name": "Raw Qwen3 4B Instruct 2507 direct logits",
+      "rank": 21,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "jqv",
+      "name": "jqv (Qwen3-32B zero-shot)",
+      "rank": 22,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "jevk5-v02",
+      "name": "JevK5 v0.2.0",
+      "rank": 23,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "qwen35-9b-jev-data-mix-v2",
+      "name": "Qwen3.5-9B Jev-like data-mix v2",
+      "rank": 24,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "standardone-8b",
+      "name": "Standard One 8B (Standard Thinking)",
+      "rank": 25,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "ninfer-qwen3.8-flash-next",
+      "name": "NInfer Qwen3.8-Flash-Next mixed",
+      "rank": 26,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "instinct-dual-4b",
+      "name": "Instinct Dual 4B",
+      "rank": 27,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "swanone",
+      "name": "swanOne (blockbrain, Qwen3.8-Flash-Next NVFP4)",
+      "rank": 28,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "raw-qwen3-8b",
+      "name": "Raw Qwen3 8B direct logits",
+      "rank": 29,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "decider-2b",
+      "name": "decider-2b (Mapika)",
+      "rank": 30,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "system-one-sg",
+      "name": "system-one (Qwen3-8B, Sean Goedecke)",
+      "rank": 31,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "system-one-open",
+      "name": "system-one-open (Gemma 4 E2B LoRA on an L4)",
+      "rank": 32,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "kushal-gemma4-31b-it-autoloops",
+      "name": "Autoloops – Gemma 4 31B IT",
+      "rank": 33,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "gpt-6-luna-low",
+      "name": "GPT-6 Luna (low reasoning effort)",
+      "rank": 34,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "gpt-6-luna",
+      "name": "GPT-6 Luna (default medium reasoning effort)",
+      "rank": 35,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "jevone",
+      "name": "JevOne",
+      "rank": 36,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "kev-4b",
+      "name": "kev 4B (research preview)",
+      "rank": 37,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "kev-8b",
+      "name": "kev 8B (research preview)",
+      "rank": 38,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "open-alternative-jev",
+      "name": "open-alternative-jev (Qwen3.5-4B, IkerMoel)",
+      "rank": 39,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "nimble-9b",
+      "name": "Bespoke Nimble 9B (Bespoke Labs)",
+      "rank": 40,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "malkuth-2b",
+      "name": "Malkuth-2B (newfull5, Kev post-train)",
+      "rank": 41,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "openjev-sglang",
+      "name": "openjev-sglang (Qwen3.6-35B-A3B on SGLang)",
+      "rank": 42,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "decider-35b-a3b",
+      "name": "decider-35b-a3b (Mapika)",
+      "rank": 43,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "localjev-qwen3.5-4b",
+      "name": "local-jev Qwen3.5-4B",
+      "rank": 44,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "nemotron-diffusion-8b",
+      "name": "Nemotron Diffusion 8B (pst2154, optimized vLLM)",
+      "rank": 45,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "open-jev-zefan-9b",
+      "name": "Open-Jev 9B (Zefan Cai)",
+      "rank": 46,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "decision-2b",
+      "name": "Decision 2B (FlyMy.AI, v59)",
+      "rank": 47,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "gpt-5.6-luna",
+      "name": "GPT-5.6 Luna (low reasoning effort)",
+      "rank": 48,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "typecastlm",
+      "name": "typecastlm (Mikhail Gribov, Qwen3.5-4B computed head)",
+      "rank": 49,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "jev-qwen3.5-9b-base-nvfp4",
+      "name": "JEV Qwen3.5-9B Base NVFP4",
+      "rank": 50,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "gemini-3.1-flash-lite",
+      "name": "Gemini 3.1 Flash-Lite",
+      "rank": 51,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "autojev-27b",
+      "name": "AutoJev-27B (denis-pplx, Qwen3.8-27B)",
+      "rank": 52,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "autojev-27b-rtxpro6000-a2",
+      "name": "AutoJev-27B (RTX PRO 6000)",
+      "rank": 53,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "ninfer-qwen3.8-27b",
+      "name": "NInfer Qwen3.8-27B NVFP4",
+      "rank": 54,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "eikos-27b",
+      "name": "Eikos-27B (caiovicentino1, Qwen3.8-27B)",
+      "rank": 55,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "ninfer-qwen3.8-27b-t1.5",
+      "name": "NInfer Qwen3.8-27B NVFP4 (T=1.5)",
+      "rank": 56,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "instinct",
+      "name": "Instinct (ZooWork, Qwen3.8-27B)",
+      "rank": 57,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "openjev-thinking",
+      "name": "OpenJev (thinking, BF16)",
+      "rank": 58,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "djev-thinking",
+      "name": "djev (thinking)",
+      "rank": 59,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "litjev",
+      "name": "LitJev (Qwen3.8-27B)",
+      "rank": 60,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "bev-bonsai-27b",
+      "name": "Bev / Bonsai 27B",
+      "rank": 61,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "raw-phi-4-mini",
+      "name": "Raw Phi-4 mini direct logits",
+      "rank": 62,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "opensourcejev-qwen35-4b-q4km",
+      "name": "OpenSourceJev (Qwen3.5-4B Q4_K_M, native llama.cpp)",
+      "rank": 63,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "reflex-27b",
+      "name": "reflex-27b (Qwen3.8-27B)",
+      "rank": 64,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "open-jev-zefan-2b",
+      "name": "Open-Jev 2B (Zefan Cai)",
+      "rank": 65,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "gliner2-large",
+      "name": "GLiNER2 large (Fastino)",
+      "rank": 66,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "qwen3-reranker-4b",
+      "name": "Qwen3-Reranker-4B",
+      "rank": 67,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "deepseek-flash",
+      "name": "DeepSeek V4.1 Flash (thinking default)",
+      "rank": 68,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "simplejev-qwen3.5-0.8b",
+      "name": "SimpleJev (Qwen3.5-0.8B, CPU)",
+      "rank": 69,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "simplejev-qwen3.8-27b",
+      "name": "SimpleJev Qwen3.8-27B",
+      "rank": 70,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "decision-machine-1",
+      "name": "decision-machine-1 (milliseconds.ai)",
+      "rank": 71,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "gliner2.5-multi",
+      "name": "GLiNER2.5 multi (Fastino, 287M)",
+      "rank": 72,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "bosun-v31-0.6b",
+      "name": "Bosun v3.1 0.6B",
+      "rank": 73,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "gliner2",
+      "name": "GLiNER2 (Fastino, gliner2.5-base)",
+      "rank": 74,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "deem-0.8-v1",
+      "name": "Deem 0.8B v1",
+      "rank": 75,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "jevact",
+      "name": "JevAct (einptein, jev1-2b-v2)",
+      "rank": 76,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "clm-8b",
+      "name": "CLM-8B (Contrastive-LM, clm-latest)",
+      "rank": 77,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "kev-0.6b",
+      "name": "kev 0.6B (research preview)",
+      "rank": 78,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "raw-qwen3-0.6b",
+      "name": "Raw Qwen3 0.6B direct logits",
+      "rank": 79,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "gliner2.5-small",
+      "name": "GLiNER2.5 small (Fastino, 74M)",
+      "rank": 80,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "raw-qwen3-1.7b",
+      "name": "Raw Qwen3 1.7B direct logits",
+      "rank": 81,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "mirror",
+      "name": "Mirror",
+      "rank": 82,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "zerank-2",
+      "name": "ZeroEntropy zerank-2",
+      "rank": 83,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "jeff",
+      "name": "jeff (Logan Markewich, GLiFormer 400M)",
+      "rank": 84,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "smalljev",
+      "name": "smalljev semantic-v9",
+      "rank": 85,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "laya-multilingual",
+      "name": "Laya multilingual",
+      "rank": 86,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "opendecision",
+      "name": "OpenDecision (ModernBERT-large zero-shot)",
+      "rank": 87,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "bge-reranker-v2-m3",
+      "name": "BAAI bge-reranker-v2-m3",
+      "rank": 88,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "certo",
+      "name": "Certo v1 (AltSlate Labs)",
+      "rank": 89,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "decision-fast",
+      "name": "Decision Fast (FlyMy.AI, v53a)",
+      "rank": 90,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "gte-reranker-modernbert-base",
+      "name": "Alibaba GTE Reranker ModernBERT-base",
+      "rank": 91,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "kev-0.5b",
+      "name": "kev 0.5B",
+      "rank": 92,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "laya",
+      "name": "Laya (Convai Innovations, ModernBERT-large 421M)",
+      "rank": 93,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "lev-350m",
+      "name": "lev-350m (Franck Verrot, LFM2.5-350M)",
+      "rank": 94,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "mghafiri-qwen3.5-0.8b-decision-model",
+      "name": "Qwen3.5-0.8B Decision Model (Mourad Ghafiri)",
+      "rank": 95,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "mxbai-rerank-base-v2",
+      "name": "Mixedbread mxbai-rerank-base-v2",
+      "rank": 96,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "needle-3",
+      "name": "Needle 3 (Cactus, 2-bit, local CPU)",
+      "rank": 97,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "needle-3-tools",
+      "name": "Needle 3, options as tools (post-hoc adapter mode)",
+      "rank": 98,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "open-jev-deberta-v3-large",
+      "name": "open-jev-deberta-v3-large (local CPU)",
+      "rank": 99,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "open-jev-json-canvas-joshuasp",
+      "name": "Open Jev JSON Canvas (JoshuaSP)",
+      "rank": 100,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "openjev-verdict",
+      "name": "openJev Verdict (heman10x, ModernBERT-base 151M)",
+      "rank": 101,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "openjev-verdict-1.4",
+      "name": "openJev Verdict 1.4",
+      "rank": 102,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "qwen3.8-27b",
+      "name": "Qwen3.8 27B (Chutes TEE)",
+      "rank": 103,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "verdict-small",
+      "name": "verdict-small (Manavarya09, multilingual-e5-small 118M)",
+      "rank": 104,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "von-395m",
+      "name": "Von (wfzyx, Option-Marker 395M)",
+      "rank": 105,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    },
+    {
+      "key": "laya-typed-decisions",
+      "name": "Laya typed-decisions",
+      "rank": 106,
+      "lastMeasured": {
+        "release": "v1.5.4",
+        "date": "2026-09-29"
+      },
+      "dueBy": {
+        "refreshIndex": 3,
+        "date": "2026-10-29"
+      }
+    }
+  ],
+  "newEntrants": [],
+  "ledgerUpdate": {
+    "refreshCounter": {
+      "jevbench": 0,
+      "imagejevbench": 0,
+      "audiojevbench": 0
+    },
+    "jevbench": {
+      "cygnet": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "winnow-12b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "jev-1.13.0": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "jev-omni": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "decider-4b-v2": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "semif-qwen3.5-4b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "spark-s1-4b-v6": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "metask-jev-4b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "hopper": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "malkuth-4b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "reflex-4b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "jev-local": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "djev": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "raw-qwen3-4b-instruct-2507": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "jqv": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "jevk5-v02": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "qwen35-9b-jev-data-mix-v2": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "standardone-8b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "ninfer-qwen3.8-flash-next": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "swanone": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "raw-qwen3-8b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "decider-2b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "system-one-sg": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "system-one-open": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "kushal-gemma4-31b-it-autoloops": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "gpt-6-luna-low": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "gpt-6-luna": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "jevone": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "kev-4b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "kev-8b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "open-alternative-jev": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "nimble-9b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "malkuth-2b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "openjev-sglang": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "decider-35b-a3b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "localjev-qwen3.5-4b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "open-jev-zefan-9b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "decision-2b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "gpt-5.6-luna": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "typecastlm": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "jev-qwen3.5-9b-base-nvfp4": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "gemini-3.1-flash-lite": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "ninfer-qwen3.8-27b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "ninfer-qwen3.8-27b-t1.5": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "instinct": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "openjev-thinking": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "djev-thinking": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "litjev": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "raw-phi-4-mini": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "opensourcejev-qwen35-4b-q4km": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "reflex-27b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "open-jev-zefan-2b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "gliner2-large": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "qwen3-reranker-4b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "deepseek-flash": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "simplejev-qwen3.5-0.8b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "simplejev-qwen3.8-27b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "decision-machine-1": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "gliner2.5-multi": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "gliner2": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "jevact": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "clm-8b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "kev-0.6b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "raw-qwen3-0.6b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "gliner2.5-small": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "raw-qwen3-1.7b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "mirror": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "zerank-2": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "jeff": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "smalljev": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "opendecision": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "bge-reranker-v2-m3": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "certo": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "decision-fast": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "gte-reranker-modernbert-base": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "kev-0.5b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "laya": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "lev-350m": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "mghafiri-qwen3.5-0.8b-decision-model": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "mxbai-rerank-base-v2": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "needle-3": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "needle-3-tools": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "open-jev-deberta-v3-large": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "open-jev-json-canvas-joshuasp": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "openjev-verdict": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "openjev-verdict-1.4": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "qwen3.8-27b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "verdict-small": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "von-395m": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "jevk5-v0.3-4b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "plumb-4b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "decision-4b-v12": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "imajev-4b-rtx5090-a2": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "decision-4b-v11": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "surogate-rune-26b-a4b-v3-rtxpro6000-a2": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "autojev-27b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "autojev-27b-rtxpro6000-a2": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "eikos-27b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "nemotron-diffusion-8b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "bev-bonsai-27b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "deem-0.8-v1": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "instinct-dual-4b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "bosun-v31-0.6b": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "laya-multilingual": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "laya-typed-decisions": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      },
+      "manchego-v21-v15": {
+        "release": "v1.5.4",
+        "date": "2026-09-29",
+        "refreshIndex": 0
+      }
+    },
+    "imagejevbench": {
+      "wity_1": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "imajev_4b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "jev_omni": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "neohorse_jev_4b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "visual_jev_4b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "jpt_4b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "imajev_2b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "glance_qwen3vl_4b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "autojev_27b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "decider_2b_vision": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "jev_spatial": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "jpt_9b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "omnijev_4b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "reflex_4b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "omnijev_9b_v4_tzcfly": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "jevify_gemma4_26b_a4b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "surogate_rune_26b_v3": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "jevany_27b_sft": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "jevany_27b_rlcr": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "seanliu_jev_vision_8b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "shisa_de_1": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "omnijev_2b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "cua_s1_4b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "standard_one_8b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "jevify_qwen3vl_2b_t2": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "imajev_9b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "visual_jev_generic_baseline": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "djev_distill_v4": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "djev_spark_nvfp4": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "djev_v10_step160_snowicarus": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "vjev_vision": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "kushal_gemma4_31b_it_autoloops": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "djev_dev_bf16": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "winnow_12b_q8": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "jpt_0p8b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "jevify_gemma4_e4b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "standard_one_3b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "gevva_e4b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "omnijev_0p8b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "gevva_e2b_multimodal": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "jevision": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "bonsai_2_27b_pq2_0": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "qevi_2b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "gpt6_luna": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "gpt56_luna": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "gemini31_flash_lite": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "playjev_0p8b": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "gemini38_flash": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "openjev_4b_nli": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      },
+      "openjev_4b_v5": {
+        "release": "v0.1.5",
+        "date": "2026-10-01",
+        "refreshIndex": 0
+      }
+    },
+    "audiojevbench": {
+      "qwen3-omni-30b-a3b-instruct (pod)": {
+        "release": "v0.1",
+        "date": "2026-09-26",
+        "refreshIndex": 0
+      },
+      "qwen2.5-omni-7b (pod)": {
+        "release": "v0.1",
+        "date": "2026-09-26",
+        "refreshIndex": 0
+      },
+      "qwen2.5-omni-3b (pod)": {
+        "release": "v0.1",
+        "date": "2026-09-26",
+        "refreshIndex": 0
+      },
+      "voxtral-mini-3b-2507 (pod)": {
+        "release": "v0.1",
+        "date": "2026-09-26",
+        "refreshIndex": 0
+      },
+      "cascade whisper-large-v3-turbo -> qwen3-4b-instruct-2507 (pod, cascade)": {
+        "release": "v0.1",
+        "date": "2026-09-26",
+        "refreshIndex": 0
+      },
+      "moss-audio-4b-instruct (pod)": {
+        "release": "v0.1",
+        "date": "2026-09-26",
+        "refreshIndex": 0
+      },
+      "audiojev (mocomoco AudioJev-AudioDecisionModel edge ONNX, local-cpu, faithful)": {
+        "release": "v0.1",
+        "date": "2026-09-26",
+        "refreshIndex": 0
+      },
+      "qwen2-audio-7b-instruct (pod)": {
+        "release": "v0.1",
+        "date": "2026-09-26",
+        "refreshIndex": 0
+      },
+      "ultravox-v0_5-llama-3_2-1b (pod)": {
+        "release": "v0.1",
+        "date": "2026-09-26",
+        "refreshIndex": 0
+      }
+    }
+  },
+  "summary": {
+    "rows": 106,
+    "remeasure": 0,
+    "carryForward": 106,
+    "newEntrants": 0
+  }
+}
