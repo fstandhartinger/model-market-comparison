@@ -4768,56 +4768,6 @@
           "quant": null
         }
       },
-      "wald-q4b-v11": {
-        "arch": "open-llm-decoder",
-        "evidence": [
-          {
-            "url": "https://huggingface.co/org2ai/Wald-4B/blob/b1b4c4c00726b296a22b77befe0e1099e741a663/README.md",
-            "kind": "model-card",
-            "fact": "base_model: Qwen/Qwen3.5-4B-Base; base_model_relation: finetune; the pinned card describes 4B parameters and BF16 weights."
-          },
-          {
-            "url": "https://huggingface.co/org2ai/Wald-4B/blob/b1b4c4c00726b296a22b77befe0e1099e741a663/config.json",
-            "kind": "config.json",
-            "fact": "architectures: [\"Qwen3_5ForCausalLM\"]; model_type: \"qwen3_5_text\""
-          },
-          {
-            "url": "https://huggingface.co/Qwen/Qwen3.5-4B-Base/blob/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
-            "kind": "config.json",
-            "fact": "Disclosed base architecture is a Qwen3.5 4B causal language model; the historical supplement pins Wald-Q4B v1.1 to this base."
-          }
-        ],
-        "badges": {
-          "derivation": "fine-tune",
-          "params": "4B",
-          "quant": null
-        }
-      },
-      "xor-26b-a4b-nvfp4": {
-        "arch": "open-llm-decoder",
-        "evidence": [
-          {
-            "url": "https://huggingface.co/juspay/Xor-26B-A4B-NVFP4/blob/b73d35e002eb7d54b4b94e3049792c710b19a804/README.md",
-            "kind": "model-card",
-            "fact": "The pinned card identifies this as the NVFP4 build of Juspay Xor 26B-A4B, a post-trained build of google/gemma-4-26B-A4B-it; it describes quantized routed experts."
-          },
-          {
-            "url": "https://huggingface.co/juspay/Xor-26B-A4B-NVFP4/blob/b73d35e002eb7d54b4b94e3049792c710b19a804/config.json",
-            "kind": "config.json",
-            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; quantization_config.quant_algo: \"NVFP4\""
-          },
-          {
-            "url": "https://huggingface.co/google/gemma-4-26B-A4B-it/blob/4d7ae4984b7db7de8f8457170b3f1a419ee76d52/config.json",
-            "kind": "config.json",
-            "fact": "Base architecture: architectures [\"Gemma4ForConditionalGeneration\"]; model_type \"gemma4\"; text_config.model_type \"gemma4_text\"."
-          }
-        ],
-        "badges": {
-          "derivation": "merge",
-          "params": "26B-A4B",
-          "quant": "NVFP4"
-        }
-      },
       "jeff_1_0_large": {
         "arch": "open-llm-decoder",
         "evidence": [
@@ -4931,6 +4881,151 @@
           "derivation": "fine-tune",
           "params": "4B",
           "quant": "FP8"
+        }
+      },
+      "standard_one_8b_sh": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/StandardThinking/StandardOne-8B-SH/blob/25e5739bd9635b54f925cf9ba2daa2ec42afd19e/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config architectures: [\"Mistral3ForConditionalGeneration\"]; model_type: \"mistral3\"; text_config.model_type: \"ministral3\"."
+          },
+          {
+            "url": "https://huggingface.co/StandardThinking/StandardOne-8B-SH/blob/25e5739bd9635b54f925cf9ba2daa2ec42afd19e/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: Standard One 8B v2.2 backbone (Ministral 3 8B text + Pixtral vision tower), fine-tuned for a joint schema head and merged into the shipped weights."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "8B",
+          "quant": null
+        }
+      },
+      "rsi-jev-v6.1-vl-27b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/shgao/rsi-jev-v6.1-vl-27b/blob/d0dccc052ee844ab7481ddfacad1b7335ab394e0/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"."
+          },
+          {
+            "url": "https://huggingface.co/shgao/rsi-jev-v6.1-vl-27b/blob/d0dccc052ee844ab7481ddfacad1b7335ab394e0/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: the weight-for-weight average of two LoRA fine-tunes of Qwen/Qwen3.8-27B (adapters merged into the bf16 tower), 26.66B parameters, decision heads at layers 48, 56 and 64."
+          }
+        ],
+        "badges": {
+          "derivation": "merge",
+          "params": "27B",
+          "quant": null
+        }
+      },
+      "liquid-d1-3b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/LiquidAI/d1-3B/blob/051bcc464b01b9f92942b364d9586b0ef5912432/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config architectures: [\"Lfm2VlForConditionalGeneration\"]; model_type: \"lfm2_vl\"; text_config.model_type: \"lfm2\"."
+          },
+          {
+            "url": "https://huggingface.co/LiquidAI/d1-3B/blob/051bcc464b01b9f92942b364d9586b0ef5912432/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: decision model with base_model LiquidAI/LFM2.5-VL-3B, 3.12B total parameters."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "3B",
+          "quant": null
+        }
+      },
+      "liquid-d1-omni-600m": {
+        "arch": "open-encoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/LiquidAI/d1-omni-600M/blob/02b55d7076f15129e59ab3f94783f32c4b088674/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config architectures: [\"D1OmniModel\"]; model_type: \"d1_omni\"."
+          },
+          {
+            "url": "https://huggingface.co/LiquidAI/d1-omni-600M/blob/02b55d7076f15129e59ab3f94783f32c4b088674/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: 587M-parameter decision model built on the encoder LiquidAI/LFM2.5-Encoder-350M (381M shared trunk and decision head), plus a SigLIP2 vision tower and a FastConformer audio encoder."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "600M",
+          "quant": null
+        }
+      },
+      "vegaml-0.8b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/nandakishorm/vega-08b-public-intents/blob/73a76a4f6c4fe672e0daa2d45ddc355afc5bc9dd/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: frozen, SHA-256-pinned Qwen/Qwen3.5-0.8B backbone that is never trained; the learned part is a 14.3M-parameter engine plus gated task adapters on top (0.8B at the repository root)."
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "0.8B",
+          "quant": null
+        }
+      },
+      "vegaml-4b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/nandakishorm/vega-08b-public-intents/blob/73a76a4f6c4fe672e0daa2d45ddc355afc5bc9dd/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: frozen, SHA-256-pinned Qwen/Qwen3.5-4B backbone that is never trained; the learned part is a 30.9M-parameter engine plus gated task adapters on top (4B under 4b/ in the same repository)."
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        }
+      },
+      "gutsy-0.8b-v0.3": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/kouhxp/gutsy/blob/d325eb1742cc1c200e04b24417f192a0dbf74f91/README.md",
+            "kind": "model-card",
+            "fact": "Pinned gutsy v0.3 model card: full fine-tune of Qwen/Qwen3.5-0.8B with native option-letter probability readout from one forward pass; it does not generate text. Evaluated as the author GGUF Q8_0."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "0.8B",
+          "quant": "GGUF Q8_0"
+        }
+      },
+      "wald-4b-v2-1": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/org2ai/Wald-4B/blob/ce3286f7efd332530e5dccd8a17d6496e029f714/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"."
+          },
+          {
+            "url": "https://huggingface.co/org2ai/Wald-4B/blob/ce3286f7efd332530e5dccd8a17d6496e029f714/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: base_model Qwen/Qwen3.5-4B, base_model_relation finetune."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
         }
       }
     },
