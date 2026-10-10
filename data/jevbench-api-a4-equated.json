@@ -1155,7 +1155,12 @@
       "repo": "https://www.liquid.ai/blog/d1-decision-model",
       "endpoint_condition": "Liquid AI hosted API, text only, measured from Sandy (Helsinki) on 6 Oct 2026; full set 1,200 sealed + P300 (v1.6.1), not equated.",
       "last_measured_on": "2026-10-06",
-      "noul_decisive": null,
+      "noul_decisive": {
+        "supported": true,
+        "decisive_rate": 0.8266666666666667,
+        "acc_among_decisive": 0.9258064516129032,
+        "valid": 375
+      },
       "full_api_addon": {
         "round": "a4-3",
         "results_sha256": "e8af18a525745185563af558f24c97605cc4c5402d945dc9ce8ad5598ffe2606",

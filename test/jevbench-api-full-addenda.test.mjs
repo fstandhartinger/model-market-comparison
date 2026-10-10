@@ -171,3 +171,27 @@ test('approved staged release uses authorization and preparation time without cl
     const a = fixture(); mutate(a.entries[0]); assert.throws(() => validateApiFullAddenda(a), /API full addendum/);
   }
 });
+
+// Florian 10 Oct 2026: addon rows carry the decisive_v16 Noul figures instead of dashes on /jev-models/api.
+test('addon rows publish per-type support and Noul decisiveness as aggregates', async () => {
+  const live = await readApiFullAddenda();
+  for (const e of live.entries) {
+    assert.deepEqual(e.row.support, { choice: 'native', noul: 'native', score: 'native' });
+    const d = e.row.noul_decisive;
+    assert.equal(d.supported, true);
+    // decisive rate = 1 - Noul abstention rate of the same scored rows
+    assert.ok(Math.abs(d.decisive_rate - (1 - e.row.calibration.parts.noul.abstention_rate)) < 1e-3);
+  }
+  const { readFile } = await import('node:fs/promises');
+  const a4 = JSON.parse(await readFile(new URL('../data/jevbench-api-a4-equated.json', import.meta.url), 'utf8'));
+  for (const r of a4.full_rows) {
+    assert.equal(r.noul_decisive?.supported, true, r.key);
+    assert.ok(Math.abs(r.noul_decisive.decisive_rate - (1 - r.calibration.parts.noul.abstention_rate)) < 1e-3, r.key);
+  }
+  for (const mutate of [e => { e.row.noul_decisive = { supported: true, decisive_rate: 1.2, acc_among_decisive: .9, valid: 1 }; },
+    e => { e.row.noul_decisive = { supported: true, decisive_rate: .8, acc_among_decisive: .9, valid: 1, per_item: [] }; },
+    e => { e.row.support = { choice: 'native', noul: 'guess', score: 'native' }; }]) {
+    const reg = fixture(); mutate(reg.entries[0]);
+    assert.throws(() => validateApiFullAddenda(reg));
+  }
+});
