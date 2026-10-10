@@ -1,11 +1,14 @@
 // "Use this model" entry on JevBench (open weights) and ImageJevBench rows. PREVIEW: hidden from visitors until
-// Florian's GO. Flip USE_MODEL_PUBLIC to true to roll it out; until then it only renders for a visitor who opened a
-// page with ?use-model=1 (remembered in this browser; ?use-model=0 switches it off again).
+// Florian's GO (not before the Decision Models unstealth). Flip USE_MODEL_PUBLIC to true to roll it out; until then it
+// only renders in a tab opened with the unpublished ?bh-pv=<token> link. It lasts for that tab only (sessionStorage),
+// always shows a PREVIEW banner, and any other ?bh-pv value or the banner's exit button switches it off (10 Oct 2026).
 
 import slugs from '../data/use-model-slugs.json';
 
 export const USE_MODEL_PUBLIC = false;
-export const USE_MODEL_PARAM = 'use-model';
+export const USE_MODEL_PARAM = 'bh-pv';
+export const USE_MODEL_TOKEN = 'dm-use-7q';
+/** sessionStorage key; the 9 Oct preview kept the same key in localStorage, which is now cleared on every visit. */
 export const USE_MODEL_STORAGE_KEY = 'bh-use-model-preview';
 export const USE_MODEL_HUB = 'https://decisionmodels.io/models';
 

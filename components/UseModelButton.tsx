@@ -3,23 +3,62 @@
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
 import {
-  USE_MODEL_PARAM, USE_MODEL_PUBLIC, USE_MODEL_STORAGE_KEY, useModelEligible, useModelHref,
+  USE_MODEL_PARAM, USE_MODEL_PUBLIC, USE_MODEL_STORAGE_KEY, USE_MODEL_TOKEN, useModelEligible, useModelHref,
   type UseModelBenchmark, type UseModelTarget,
 } from '../lib/use-model';
 
 // Preview flag. The server snapshot is always "off" so the HTML every visitor and crawler gets never changes.
+// Only the unpublished ?bh-pv=<token> link turns it on, for this tab only; it never persists in localStorage.
 
+let legacyCleared = false;
 function readFlag(): boolean {
   if (USE_MODEL_PUBLIC) return true;
   try {
+    if (!legacyCleared) { legacyCleared = true; window.localStorage.removeItem(USE_MODEL_STORAGE_KEY); }
     const param = new URL(window.location.href).searchParams.get(USE_MODEL_PARAM);
-    if (param === '0' || param === 'off') window.localStorage.removeItem(USE_MODEL_STORAGE_KEY);
-    else if (param) window.localStorage.setItem(USE_MODEL_STORAGE_KEY, '1');
-    return window.localStorage.getItem(USE_MODEL_STORAGE_KEY) === '1';
+    if (param === USE_MODEL_TOKEN) window.sessionStorage.setItem(USE_MODEL_STORAGE_KEY, '1');
+    else if (param !== null) window.sessionStorage.removeItem(USE_MODEL_STORAGE_KEY);
+    return window.sessionStorage.getItem(USE_MODEL_STORAGE_KEY) === '1';
   } catch { return false; }
 }
-const subscribe = (cb: () => void) => { window.addEventListener('storage', cb); return () => window.removeEventListener('storage', cb); };
+const listeners = new Set<() => void>();
+const subscribe = (cb: () => void) => { listeners.add(cb); return () => { listeners.delete(cb); }; };
 const usePreviewEnabled = () => useSyncExternalStore(subscribe, readFlag, () => false);
+
+/** Drops the token from the address bar, so a copied or shared URL never carries the preview to anyone else. */
+function stripParam() {
+  try {
+    const url = new URL(window.location.href);
+    if (!url.searchParams.has(USE_MODEL_PARAM)) return;
+    url.searchParams.delete(USE_MODEL_PARAM);
+    window.history.replaceState(window.history.state, '', url);
+  } catch { /* the flag itself still works */ }
+}
+
+function exitPreview() {
+  try { window.sessionStorage.removeItem(USE_MODEL_STORAGE_KEY); } catch { /* nothing to undo */ }
+  stripParam();
+  document.getElementById(BANNER_ID)?.remove();
+  listeners.forEach((cb) => cb());
+}
+
+// One unmistakable banner per page while the preview is on, so nobody mistakes the preview for the public site.
+const BANNER_ID = 'bh-use-model-preview-banner';
+function showBanner() {
+  if (USE_MODEL_PUBLIC || document.getElementById(BANNER_ID)) return;
+  const bar = document.createElement('div');
+  bar.id = BANNER_ID;
+  bar.className = 'bh-use-model-banner';
+  bar.setAttribute('role', 'status');
+  const text = document.createElement('p');
+  text.innerHTML = '<b>PREVIEW</b><span>Not public. The \u201cUse\u201d buttons show only in this tab, opened with the private link.</span>';
+  const exit = document.createElement('button');
+  exit.type = 'button';
+  exit.textContent = 'Exit preview';
+  exit.addEventListener('click', exitPreview);
+  bar.append(text, exit);
+  document.body.prepend(bar);
+}
 
 function track(target: UseModelTarget, model: string, benchmark: UseModelBenchmark) {
   const body = JSON.stringify({ name: 'use_model_click', page: benchmark === 'imagejevbench' ? 'image-jev-bench' : 'jev-models', model, target });
@@ -101,6 +140,7 @@ export function UseModelButton({ modelKey, name, benchmark = 'jevbench', classNa
     return () => { document.documentElement.removeAttribute('data-bh-use-model-open'); window.removeEventListener('keydown', esc); window.removeEventListener('scroll', away, true); window.removeEventListener('resize', away); };
   }, [pos, close]);
   useEffect(() => () => clearTimeout(timer.current), []);
+  useEffect(() => { if (enabled) { stripParam(); showBanner(); } }, [enabled]);
 
   if (!enabled) return null;
   const onNavigate = (t: UseModelTarget) => { track(t, modelKey, benchmark); close(); };
