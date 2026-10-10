@@ -1,0 +1,674 @@
+{
+ "kind": "LEAD_OFFICIAL_O1S_SUPPLEMENT_PUBLIC_AGGREGATES",
+ "system": "needle-3-tools",
+ "method": "O1S",
+ "languages": {
+  "ar": {
+   "n": 52,
+   "competence": 0.0,
+   "coverage_n": 36,
+   "response_n": 36,
+   "refusal_n": 0,
+   "operational_failure_n": 16
+  },
+  "cs": {
+   "n": 55,
+   "competence": 0.0,
+   "coverage_n": 50,
+   "response_n": 50,
+   "refusal_n": 0,
+   "operational_failure_n": 5
+  },
+  "da": {
+   "n": 52,
+   "competence": 0.0,
+   "coverage_n": 49,
+   "response_n": 49,
+   "refusal_n": 0,
+   "operational_failure_n": 3
+  },
+  "de": {
+   "n": 65,
+   "competence": 0.0,
+   "coverage_n": 57,
+   "response_n": 57,
+   "refusal_n": 0,
+   "operational_failure_n": 8
+  },
+  "el": {
+   "n": 46,
+   "competence": 0.0,
+   "coverage_n": 26,
+   "response_n": 26,
+   "refusal_n": 0,
+   "operational_failure_n": 20
+  },
+  "en": {
+   "n": 454,
+   "competence": 0.0,
+   "coverage_n": 372,
+   "response_n": 372,
+   "refusal_n": 0,
+   "operational_failure_n": 82
+  },
+  "es": {
+   "n": 71,
+   "competence": 4.38,
+   "coverage_n": 68,
+   "response_n": 68,
+   "refusal_n": 0,
+   "operational_failure_n": 3
+  },
+  "fi": {
+   "n": 54,
+   "competence": 0.0,
+   "coverage_n": 46,
+   "response_n": 46,
+   "refusal_n": 0,
+   "operational_failure_n": 8
+  },
+  "fr": {
+   "n": 61,
+   "competence": 0.0,
+   "coverage_n": 61,
+   "response_n": 61,
+   "refusal_n": 0,
+   "operational_failure_n": 0
+  },
+  "hi": {
+   "n": 53,
+   "competence": 0.0,
+   "coverage_n": 32,
+   "response_n": 32,
+   "refusal_n": 0,
+   "operational_failure_n": 21
+  },
+  "id": {
+   "n": 54,
+   "competence": 0.0,
+   "coverage_n": 52,
+   "response_n": 52,
+   "refusal_n": 0,
+   "operational_failure_n": 2
+  },
+  "it": {
+   "n": 63,
+   "competence": 0.0,
+   "coverage_n": 50,
+   "response_n": 50,
+   "refusal_n": 0,
+   "operational_failure_n": 13
+  },
+  "ja": {
+   "n": 60,
+   "competence": 0.0,
+   "coverage_n": 45,
+   "response_n": 45,
+   "refusal_n": 0,
+   "operational_failure_n": 15
+  },
+  "ko": {
+   "n": 60,
+   "competence": 0.0,
+   "coverage_n": 42,
+   "response_n": 42,
+   "refusal_n": 0,
+   "operational_failure_n": 18
+  },
+  "mixed": {
+   "n": 58,
+   "competence": 0.0,
+   "coverage_n": 51,
+   "response_n": 51,
+   "refusal_n": 0,
+   "operational_failure_n": 7
+  },
+  "nl": {
+   "n": 46,
+   "competence": 0.0,
+   "coverage_n": 44,
+   "response_n": 44,
+   "refusal_n": 0,
+   "operational_failure_n": 2
+  },
+  "no": {
+   "n": 52,
+   "competence": 3.4,
+   "coverage_n": 52,
+   "response_n": 52,
+   "refusal_n": 0,
+   "operational_failure_n": 0
+  },
+  "pl": {
+   "n": 71,
+   "competence": 0.0,
+   "coverage_n": 67,
+   "response_n": 67,
+   "refusal_n": 0,
+   "operational_failure_n": 4
+  },
+  "pt": {
+   "n": 69,
+   "competence": 0.0,
+   "coverage_n": 67,
+   "response_n": 67,
+   "refusal_n": 0,
+   "operational_failure_n": 2
+  },
+  "sv": {
+   "n": 55,
+   "competence": 0.0,
+   "coverage_n": 48,
+   "response_n": 48,
+   "refusal_n": 0,
+   "operational_failure_n": 7
+  },
+  "tr": {
+   "n": 52,
+   "competence": 0.0,
+   "coverage_n": 46,
+   "response_n": 46,
+   "refusal_n": 0,
+   "operational_failure_n": 6
+  },
+  "uk": {
+   "n": 47,
+   "competence": 0.0,
+   "coverage_n": 24,
+   "response_n": 24,
+   "refusal_n": 0,
+   "operational_failure_n": 23
+  },
+  "zh": {
+   "n": 45,
+   "competence": 0.0,
+   "coverage_n": 34,
+   "response_n": 34,
+   "refusal_n": 0,
+   "operational_failure_n": 11
+  }
+ },
+ "families": {
+  "calibration_gen": {
+   "n": 17,
+   "competence": 0.0,
+   "coverage_n": 17,
+   "response_n": 17,
+   "refusal_n": 0,
+   "operational_failure_n": 0
+  },
+  "composite_gen": {
+   "n": 20,
+   "competence": 0.0,
+   "coverage_n": 19,
+   "response_n": 19,
+   "refusal_n": 0,
+   "operational_failure_n": 1
+  },
+  "fairness": {
+   "n": 30,
+   "competence": 0.0,
+   "coverage_n": 28,
+   "response_n": 28,
+   "refusal_n": 0,
+   "operational_failure_n": 2
+  },
+  "jaggedness": {
+   "n": 33,
+   "competence": 0.0,
+   "coverage_n": 25,
+   "response_n": 25,
+   "refusal_n": 0,
+   "operational_failure_n": 8
+  },
+  "llm_router": {
+   "n": 138,
+   "competence": 0.0,
+   "coverage_n": 119,
+   "response_n": 119,
+   "refusal_n": 0,
+   "operational_failure_n": 19
+  },
+  "multilingual": {
+   "n": 1201,
+   "competence": 0.0,
+   "coverage_n": 1013,
+   "response_n": 1013,
+   "refusal_n": 0,
+   "operational_failure_n": 188
+  },
+  "negation_pair_gen": {
+   "n": 26,
+   "competence": 0.0,
+   "coverage_n": 25,
+   "response_n": 25,
+   "refusal_n": 0,
+   "operational_failure_n": 1
+  },
+  "option_order": {
+   "n": 26,
+   "competence": 0.0,
+   "coverage_n": 25,
+   "response_n": 25,
+   "refusal_n": 0,
+   "operational_failure_n": 1
+  },
+  "perturb_pair": {
+   "n": 29,
+   "competence": 0.0,
+   "coverage_n": 26,
+   "response_n": 26,
+   "refusal_n": 0,
+   "operational_failure_n": 3
+  },
+  "usecase": {
+   "n": 168,
+   "competence": 0.0,
+   "coverage_n": 116,
+   "response_n": 116,
+   "refusal_n": 0,
+   "operational_failure_n": 52
+  }
+ },
+ "topics": {
+  "coding": {
+   "n": 154,
+   "competence": 0.0,
+   "coverage_n": 139,
+   "response_n": 139,
+   "refusal_n": 0,
+   "operational_failure_n": 15
+  },
+  "everyday_language": {
+   "n": 110,
+   "competence": 0.0,
+   "coverage_n": 75,
+   "response_n": 75,
+   "refusal_n": 0,
+   "operational_failure_n": 35
+  },
+  "finance_commerce": {
+   "n": 150,
+   "competence": 0.0,
+   "coverage_n": 123,
+   "response_n": 123,
+   "refusal_n": 0,
+   "operational_failure_n": 27
+  },
+  "law_policy": {
+   "n": 926,
+   "competence": 0.0,
+   "coverage_n": 794,
+   "response_n": 794,
+   "refusal_n": 0,
+   "operational_failure_n": 132
+  },
+  "math": {
+   "n": 199,
+   "competence": 0.0,
+   "coverage_n": 166,
+   "response_n": 166,
+   "refusal_n": 0,
+   "operational_failure_n": 33
+  },
+  "safety_security": {
+   "n": 77,
+   "competence": 0.0,
+   "coverage_n": 58,
+   "response_n": 58,
+   "refusal_n": 0,
+   "operational_failure_n": 19
+  },
+  "support_ops": {
+   "n": 79,
+   "competence": 0.0,
+   "coverage_n": 64,
+   "response_n": 64,
+   "refusal_n": 0,
+   "operational_failure_n": 15
+  }
+ },
+ "usecases": {
+  "advertising": {
+   "n": 71,
+   "competence": 0.0,
+   "coverage_n": 66,
+   "response_n": 66,
+   "refusal_n": 0,
+   "operational_failure_n": 5
+  },
+  "code_linting": {
+   "n": 64,
+   "competence": 0.0,
+   "coverage_n": 61,
+   "response_n": 61,
+   "refusal_n": 0,
+   "operational_failure_n": 3
+  },
+  "customer_support": {
+   "n": 127,
+   "competence": 0.0,
+   "coverage_n": 110,
+   "response_n": 110,
+   "refusal_n": 0,
+   "operational_failure_n": 17
+  },
+  "demand_forecasting": {
+   "n": 61,
+   "competence": 2.48,
+   "coverage_n": 55,
+   "response_n": 55,
+   "refusal_n": 0,
+   "operational_failure_n": 6
+  },
+  "ecommerce_marketplaces": {
+   "n": 71,
+   "competence": 0.0,
+   "coverage_n": 58,
+   "response_n": 58,
+   "refusal_n": 0,
+   "operational_failure_n": 13
+  },
+  "feature_extraction": {
+   "n": 76,
+   "competence": 0.0,
+   "coverage_n": 62,
+   "response_n": 62,
+   "refusal_n": 0,
+   "operational_failure_n": 14
+  },
+  "financial_crime": {
+   "n": 71,
+   "competence": 0.0,
+   "coverage_n": 61,
+   "response_n": 61,
+   "refusal_n": 0,
+   "operational_failure_n": 10
+  },
+  "gaming": {
+   "n": 66,
+   "competence": 0.0,
+   "coverage_n": 49,
+   "response_n": 49,
+   "refusal_n": 0,
+   "operational_failure_n": 17
+  },
+  "insurance_claims": {
+   "n": 79,
+   "competence": 0.0,
+   "coverage_n": 63,
+   "response_n": 63,
+   "refusal_n": 0,
+   "operational_failure_n": 16
+  },
+  "knowledge_graphs": {
+   "n": 69,
+   "competence": 0.0,
+   "coverage_n": 52,
+   "response_n": 52,
+   "refusal_n": 0,
+   "operational_failure_n": 17
+  },
+  "lead_generation": {
+   "n": 71,
+   "competence": 0.0,
+   "coverage_n": 62,
+   "response_n": 62,
+   "refusal_n": 0,
+   "operational_failure_n": 9
+  },
+  "legal_compliance": {
+   "n": 188,
+   "competence": 0.0,
+   "coverage_n": 164,
+   "response_n": 164,
+   "refusal_n": 0,
+   "operational_failure_n": 24
+  },
+  "llm_guardrails": {
+   "n": 76,
+   "competence": 0.0,
+   "coverage_n": 64,
+   "response_n": 64,
+   "refusal_n": 0,
+   "operational_failure_n": 12
+  },
+  "model_routing": {
+   "n": 195,
+   "competence": 0.0,
+   "coverage_n": 169,
+   "response_n": 169,
+   "refusal_n": 0,
+   "operational_failure_n": 26
+  },
+  "moderation_trust_safety": {
+   "n": 63,
+   "competence": 0.0,
+   "coverage_n": 46,
+   "response_n": 46,
+   "refusal_n": 0,
+   "operational_failure_n": 17
+  },
+  "other": {
+   "n": 65,
+   "competence": 0.0,
+   "coverage_n": 43,
+   "response_n": 43,
+   "refusal_n": 0,
+   "operational_failure_n": 22
+  },
+  "recruiting": {
+   "n": 72,
+   "competence": 0.0,
+   "coverage_n": 58,
+   "response_n": 58,
+   "refusal_n": 0,
+   "operational_failure_n": 14
+  },
+  "risk_assessment": {
+   "n": 77,
+   "competence": 0.0,
+   "coverage_n": 72,
+   "response_n": 72,
+   "refusal_n": 0,
+   "operational_failure_n": 5
+  },
+  "scientific_discovery": {
+   "n": 66,
+   "competence": 0.0,
+   "coverage_n": 53,
+   "response_n": 53,
+   "refusal_n": 0,
+   "operational_failure_n": 13
+  },
+  "search_retrieval": {
+   "n": 67,
+   "competence": 0.0,
+   "coverage_n": 51,
+   "response_n": 51,
+   "refusal_n": 0,
+   "operational_failure_n": 16
+  }
+ },
+ "category_pools": "Original S+P + completed L1+L2+L3; P300 carried from the original run",
+ "category_n_items": 1695,
+ "category_spoke_n": {
+  "families": {
+   "calibration": 4,
+   "calibration_gen": 17,
+   "composite_gen": 20,
+   "fairness": 30,
+   "jaggedness": 33,
+   "llm_router": 138,
+   "long_state": 3,
+   "multilingual": 1201,
+   "negation_pair_gen": 26,
+   "option_order": 26,
+   "perturb_pair": 29,
+   "usecase": 168
+  },
+  "topics": {
+   "coding": 154,
+   "everyday_language": 110,
+   "finance_commerce": 150,
+   "law_policy": 926,
+   "math": 199,
+   "safety_security": 77,
+   "support_ops": 79
+  },
+  "usecases": {
+   "advertising": 71,
+   "code_linting": 64,
+   "customer_support": 127,
+   "demand_forecasting": 61,
+   "ecommerce_marketplaces": 71,
+   "feature_extraction": 76,
+   "financial_crime": 71,
+   "gaming": 66,
+   "insurance_claims": 79,
+   "knowledge_graphs": 69,
+   "lead_generation": 71,
+   "legal_compliance": 188,
+   "llm_guardrails": 76,
+   "model_routing": 195,
+   "moderation_trust_safety": 63,
+   "other": 65,
+   "recruiting": 72,
+   "risk_assessment": 77,
+   "scientific_discovery": 66,
+   "search_retrieval": 67
+  }
+ },
+ "answered_counts": {
+  "languages": {
+   "ar": 36,
+   "cs": 50,
+   "da": 49,
+   "de": 57,
+   "el": 26,
+   "en": 372,
+   "es": 68,
+   "fi": 46,
+   "fr": 61,
+   "hi": 32,
+   "id": 52,
+   "it": 50,
+   "ja": 45,
+   "ko": 42,
+   "mixed": 51,
+   "nl": 44,
+   "no": 52,
+   "pl": 67,
+   "pt": 67,
+   "sv": 48,
+   "tr": 46,
+   "uk": 24,
+   "zh": 34
+  },
+  "topics": {
+   "coding": 139,
+   "everyday_language": 75,
+   "finance_commerce": 123,
+   "law_policy": 794,
+   "math": 166,
+   "safety_security": 58,
+   "support_ops": 64
+  },
+  "usecases": {
+   "advertising": 66,
+   "code_linting": 61,
+   "customer_support": 110,
+   "demand_forecasting": 55,
+   "ecommerce_marketplaces": 58,
+   "feature_extraction": 62,
+   "financial_crime": 61,
+   "gaming": 49,
+   "insurance_claims": 63,
+   "knowledge_graphs": 52,
+   "lead_generation": 62,
+   "legal_compliance": 164,
+   "llm_guardrails": 64,
+   "model_routing": 169,
+   "moderation_trust_safety": 46,
+   "other": 43,
+   "recruiting": 58,
+   "risk_assessment": 72,
+   "scientific_discovery": 53,
+   "search_retrieval": 51
+  }
+ },
+ "gates": {
+  "languages23_ge60": false,
+  "topics7_usecases20_ge30": true
+ },
+ "pool_counts": {
+  "S": {
+   "denominator": 1500,
+   "recorded": 175,
+   "ok": 171,
+   "official_status": {
+    "status": "partial",
+    "rows": 175,
+    "missing": 1325,
+    "answered_ok": 150
+   }
+  },
+  "L1": {
+   "denominator": 654,
+   "recorded": 346,
+   "ok": 316,
+   "official_status": {
+    "status": "partial",
+    "rows": 346,
+    "missing": 308,
+    "answered_ok": 297
+   }
+  },
+  "L2": {
+   "denominator": 333,
+   "recorded": 43,
+   "ok": 41,
+   "official_status": {
+    "status": "partial",
+    "rows": 43,
+    "missing": 290,
+    "answered_ok": 37
+   }
+  },
+  "L3": {
+   "denominator": 1418,
+   "recorded": 1383,
+   "ok": 1279,
+   "official_status": {
+    "status": "partial",
+    "rows": 1383,
+    "missing": 35,
+    "answered_ok": 1157
+   }
+  }
+ },
+ "p300_parity": {
+  "L1": {
+   "p300_compared": 26,
+   "p300_argmax_agree": 26,
+   "pct": 100.0,
+   "supplement_records": 329
+  },
+  "L2": {
+   "p300_compared": 0,
+   "p300_argmax_agree": 0,
+   "pct": null,
+   "supplement_records": 0
+  },
+  "L3": {
+   "p300_compared": 42,
+   "p300_argmax_agree": 42,
+   "pct": 100.0,
+   "supplement_records": 1382
+  }
+ },
+ "coverage_note": "This historical row keeps its published v1.5 headline. Its language and category cells combine an earlier partial run on the current pools (175 S+P items) with a new run of the supplements L3 (1,382 of 1,418 items) and L1 (329 of 654) on the original pinned closed engine, approved by the benchmark owner, on an isolated machine; L2 and the rest of S+P were not run before the machine's time limit. The engine fails on about 7 % of items in non-Latin scripts (its output is not valid UTF-8); those stay scored as failures. Its answers to the same public items differ between machines for about 10 % of items. 18 of 23 languages rest on 24 to 59 answered items instead of the 60-item target; the radars are complete. Headline, rank, Composite and pricing are unchanged. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3.",
+ "headline_changed": false,
+ "rank_changed": false,
+ "Composite_changed": false
+}
