@@ -68,9 +68,12 @@ def preview_failed(state, path, preview, source):
 
     A cap or dedup clears within a few cycles; a persistent refusal must never stay silent.
     """
-    output = next((value for value in (getattr(preview, "stderr", None), getattr(preview, "stdout", None))
-                   if isinstance(value, str) and value.strip()), "no output")
-    reason = output.strip().splitlines()[0][:240]
+    # notify's error, else its last "[DRY RUN]" verdict line; never the echoed card text (customer data).
+    stderr, stdout = getattr(preview, "stderr", None), getattr(preview, "stdout", None)
+    lines = stderr.strip().splitlines() if isinstance(stderr, str) and stderr.strip() else []
+    if not lines and isinstance(stdout, str):
+        lines = [line for line in stdout.splitlines() if line.startswith("[DRY RUN]")][-1:]
+    reason = (lines[0] if lines else "no output")[:240]
     state["preview_failures"] = state.get("preview_failures", 0) + 1
     state["preview_error"] = f"exit {preview.returncode}: {reason}"
     atomic(path, state)
