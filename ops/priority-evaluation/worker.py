@@ -173,13 +173,21 @@ def claim_notification() -> dict | None:
     """)
 
 
+NOTIFY_NOT_SENT_EXIT = 75
+
+
 def notify_florian(message: str) -> bool:
     env = dict(os.environ)
     env["NOTIFY_SOURCE"] = "jevbench-priority-evaluation"
     result = subprocess.run(
         [str(HOME / "bin/notify"), "now", "--requested", "--text-stdin"],
-        input=message, text=True, capture_output=True, timeout=30, env=env,
+        input=message, text=True, capture_output=True, timeout=90, env=env,
     )
+    # 75 = NOT SENT right now (pacing cap, quiet mode, digest deferral, duplicate): notify keeps the card
+    # queued and never drops it, so a retry would only queue duplicates.
+    if result.returncode == NOTIFY_NOT_SENT_EXIT:
+        print("Notification queued by notify (not sent immediately): " + (result.stdout.strip()[:200] or "no reason"), file=sys.stderr)
+        return True
     return result.returncode == 0
 
 
@@ -193,7 +201,10 @@ def process_notification() -> bool:
     payment_link = f"https://dashboard.stripe.com{mode_segment}/payments/{payment_id}" if re.fullmatch(r"pi_[A-Za-z0-9]+", str(payment_id)) else "Stripe payment record unavailable"
     amount = row.get("amount_total") or row.get("base_amount") or 0
     benchmarks = ", ".join(row.get("benchmarks") or [])
+    model = str(row.get("model_name", "")).strip() or "unnamed model"
     message = (
+        "✅ ERLEDIGT\n"
+        f"Worum geht's: the Benchmark Heaven fast-lane order for {model} ({row.get('email', '')}) is paid. {payment_link}\n\n"
         f"New {mode} priority evaluation payment\n"
         f"From: {row.get('email', '')}\n"
         f"Model: {row.get('model_name', '')}\n"
