@@ -4,6 +4,16 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-10-10 — Messier One v0.2 language and category cells (CR-410, board note v1.7.33)
+
+`messier-one-v0.2` now has complete language and category cells (S+P+L1+L2+L3) in
+`jevbench-v1.6.1-language-cells.json` and `jevbench-v1.6.1-category-cells.json`, copied
+from the public aggregate in
+`ops/evidence/messier-one-v0.2-language-category-complete-20261010.json`. Its radar
+spoke exception ("newly released row") is removed. Headline scores, ranks, Composite,
+prices and all other rows are unchanged; see
+`docs/releases/CR-410-messier-one-v02-complete-cells-20261010.md`.
+
 ## 2026-10-10 — Microsoft-Decision-1 complete language and category cells (CR-401 follow-up, board note v1.7.32)
 
 Microsoft-Decision-1 now has complete topic, use-case and language cells on the
