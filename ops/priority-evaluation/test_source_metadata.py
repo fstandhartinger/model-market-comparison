@@ -56,6 +56,32 @@ class SourceMetadataTests(ExecutionSourceTests):
             with self.assertRaises(sm.MetadataError): sm.lfs_pointer(body,oid)
         with self.assertRaises(sm.MetadataError): sm.lfs_pointer(canonical,'c'*40)
 
+    def test_contained_relative_symlinks_are_inert_metadata(self):
+        repo, _=self.fixture()
+        (repo/'sub/deep').mkdir(parents=True)
+        (repo/'LICENSE').write_text('MIT\n');(repo/'.gitignore').write_text('*.pyc\n')
+        (repo/'sub/deep/LICENSE').symlink_to('../../LICENSE')
+        (repo/'.dockerignore').symlink_to('.gitignore')
+        self.git(repo,'add','-A');self.git(repo,'commit','-qm','relative symlinks')
+        code={'commit':self.git(repo,'rev-parse','HEAD'),'tree':self.git(repo,'rev-parse','HEAD^{tree}')}
+        meta=self.metadata(repo,code)
+        self.assertEqual(meta['symlinks'],{'.dockerignore':'.gitignore','sub/deep/LICENSE':'LICENSE'})
+        for bad in ('../outside','sub/../../x','.git/config','a\\b','sub','missing.txt','.dockerignore','/etc/passwd'):
+            (repo/'link.txt').unlink(missing_ok=True)
+            (repo/'link.txt').symlink_to(bad)
+            self.git(repo,'add','link.txt');self.git(repo,'commit','-qm','bad symlink')
+            code={'commit':self.git(repo,'rev-parse','HEAD'),'tree':self.git(repo,'rev-parse','HEAD^{tree}')}
+            with self.assertRaisesRegex(sm.MetadataError,'unsafe pinned Git symlink'):self.metadata(repo,code)
+
+    def test_total_bound_separate_from_blob_bound(self):
+        repo,_=self.fixture()
+        code=self.commit_files(repo,{'a.py':b'a'*3000,'b.py':b'b'*3000})
+        with self.assertRaisesRegex(sm.MetadataError,'byte limit'):self.metadata(repo,code,limit=4096)
+        meta=sm.inspect_pinned_tree(repo,code['commit'],code['tree'],ap.git,max_bytes=4096,max_total_bytes=8192)
+        self.assertGreater(meta['archive_objects']['bytes'],4096)
+        with self.assertRaisesRegex(sm.MetadataError,'byte limit'):
+            sm.inspect_pinned_tree(repo,code['commit'],code['tree'],ap.git,max_bytes=2048,max_total_bytes=8192)
+
     def test_symlink_and_alternate_rejection(self):
         repo, _=self.fixture()
         (repo/'escape.py').symlink_to('/etc/passwd')

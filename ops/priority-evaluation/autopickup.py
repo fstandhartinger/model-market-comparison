@@ -120,6 +120,8 @@ MAX_SOURCE_REVIEW_ATTEMPTS = 3
 MAX_PICKUP_ATTEMPTS = 60
 MAX_SOURCE_PACK_BYTES = 100 * 1024 * 1024
 MAX_REVIEW_SOURCE_BYTES = 64 * 1024 * 1024
+# Whole pinned code tree / checked-out review files; each blob stays under the bound above.
+MAX_REVIEW_TREE_BYTES = 256 * 1024 * 1024
 REVIEW_GIT_PATTERNS = (
     "*.py", "*.pyi", "*.md", "*.rst", "*.txt", "*.sh", "*.bash", "*.js", "*.mjs", "*.cjs",
     "*.ts", "*.tsx", "*.jsx", "*.java", "*.go", "*.rs", "*.c", "*.h", "*.cc", "*.cpp",
@@ -5330,7 +5332,7 @@ def fetch_source(rid: str, which: str) -> dict[str, Any]:
                 hf_repository=match.group("path") if match.group("host") == "huggingface.co"
                               and match.group("path") in HF_SOURCE_AUTH_REPOSITORIES else None)
             metadata = source_metadata.inspect_pinned_tree(
-                dest, resolved, tree, git, max_bytes=MAX_REVIEW_SOURCE_BYTES,
+                dest, resolved, tree, git, max_bytes=MAX_REVIEW_SOURCE_BYTES, max_total_bytes=MAX_REVIEW_TREE_BYTES,
                 hf_repository=match.group("path") if match.group("host") == "huggingface.co"
                 and match.group("path") in HF_SOURCE_AUTH_REPOSITORIES else None)
             source_bytes = 0
@@ -5340,7 +5342,7 @@ def fetch_source(rid: str, which: str) -> dict[str, Any]:
                 path = dest / relative
                 if path.is_file() and not path.is_symlink():
                     source_bytes += path.stat().st_size
-                    if source_bytes > MAX_REVIEW_SOURCE_BYTES:
+                    if source_bytes > MAX_REVIEW_TREE_BYTES:
                         raise PickupError("reviewable source files exceed the size limit")
     except subprocess.TimeoutExpired as exc:
         raise FetchTransientError(f"{which} source fetch timed out") from exc
