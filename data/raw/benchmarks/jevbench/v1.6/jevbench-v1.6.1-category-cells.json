@@ -902,6 +902,90 @@
       "headline_or_rank_changed": false,
       "composite_changed": false,
       "original_row_price_changed": false
+    },
+    "von-395m": {
+      "aggregate_artifact": "ops/evidence/von-395m-language-category-complete-20261010.json",
+      "sha256": "946c694214c63e862c380f8e09597f92449a034162ad1d45909210962d5b02a8",
+      "method": "official O1S",
+      "basis": "S+P+L1+L2+L3",
+      "historical_S_observed": 1200,
+      "historical_P_observed": 300,
+      "historical_S_successful": 1148,
+      "historical_S_http500": 0,
+      "historical_P_successful": 289,
+      "historical_P_http500": 0,
+      "original_http500_retained_unimputed": 0,
+      "P300_carried_by_stable_identity_counted_once": true,
+      "supplemental_records": 1505,
+      "supplemental_L1": 354,
+      "supplemental_L2": 33,
+      "supplemental_L3": 1118,
+      "category_scored_observations": 3005,
+      "language_coverage_min": 65,
+      "language_target_complete": true,
+      "languages_below_target60": 0,
+      "topic_coverage_min": 108,
+      "usecase_coverage_min": 82,
+      "partial_completeness_exception": false,
+      "headline_or_rank_changed": false,
+      "composite_changed": false,
+      "original_row_price_changed": false
+    },
+    "gliner2": {
+      "aggregate_artifact": "ops/evidence/gliner2-language-category-complete-20261010.json",
+      "sha256": "e4418749de19b5e94dc869fdb5f4054075987d766cf3bc90f90bc5455da0e7ce",
+      "method": "official O1S",
+      "basis": "S+P+L1+L2+L3",
+      "historical_S_observed": 862,
+      "historical_P_observed": 203,
+      "historical_S_successful": 862,
+      "historical_S_http500": 0,
+      "historical_P_successful": 203,
+      "historical_P_http500": 0,
+      "original_http500_retained_unimputed": 0,
+      "P300_carried_by_stable_identity_counted_once": true,
+      "supplemental_records": 614,
+      "supplemental_L1": 257,
+      "supplemental_L2": -64,
+      "supplemental_L3": 421,
+      "category_scored_observations": 1970,
+      "language_coverage_min": 42,
+      "language_target_complete": false,
+      "languages_below_target60": 22,
+      "topic_coverage_min": 57,
+      "usecase_coverage_min": 45,
+      "partial_completeness_exception": false,
+      "headline_or_rank_changed": false,
+      "composite_changed": false,
+      "original_row_price_changed": false
+    },
+    "gliner2.5-multi": {
+      "aggregate_artifact": "ops/evidence/gliner2.5-multi-language-category-complete-20261010.json",
+      "sha256": "6f2e891a7c32f93ee56ba051a8e3fead8f51ade198c9bfbf711b58d4a1efc04e",
+      "method": "official O1S",
+      "basis": "S+P+L1+L2+L3",
+      "historical_S_observed": 895,
+      "historical_P_observed": 218,
+      "historical_S_successful": 895,
+      "historical_S_http500": 0,
+      "historical_P_successful": 218,
+      "historical_P_http500": 0,
+      "original_http500_retained_unimputed": 0,
+      "P300_carried_by_stable_identity_counted_once": true,
+      "supplemental_records": 1249,
+      "supplemental_L1": 272,
+      "supplemental_L2": -49,
+      "supplemental_L3": 1026,
+      "category_scored_observations": 2608,
+      "language_coverage_min": 61,
+      "language_target_complete": true,
+      "languages_below_target60": 0,
+      "topic_coverage_min": 100,
+      "usecase_coverage_min": 80,
+      "partial_completeness_exception": false,
+      "headline_or_rank_changed": false,
+      "composite_changed": false,
+      "original_row_price_changed": false
     }
   },
   "source_sha256": "bea26aa45db9d45fbb5d0cc0ef4792ae1f5d816bd264a155863828d01966cf03",
@@ -15963,104 +16047,365 @@
       }
     },
     "gliner2": {
-      "category_n_items": 92,
-      "category_pools": "S+P",
+      "category_n_items": 1970,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
-          "calibration": 2,
-          "calibration_gen": 2,
-          "composite_gen": 1,
-          "fairness": 11,
-          "jaggedness": 7,
-          "llm_router": 30,
-          "multilingual": 17,
-          "negation_pair_gen": 4,
-          "option_order": 5,
-          "perturb_pair": 3,
-          "usecase": 10
+          "calibration": 16,
+          "calibration_gen": 44,
+          "composite_gen": 51,
+          "fairness": 112,
+          "jaggedness": 78,
+          "llm_router": 334,
+          "multilingual": 1002,
+          "negation_pair_gen": 73,
+          "option_order": 53,
+          "perturb_pair": 48,
+          "usecase": 159
         },
         "topics": {
-          "coding": 21,
-          "everyday_language": 3,
-          "finance_commerce": 2,
-          "law_policy": 48,
-          "math": 10,
-          "safety_security": 4,
-          "support_ops": 4
+          "coding": 269,
+          "everyday_language": 83,
+          "finance_commerce": 152,
+          "law_policy": 1061,
+          "math": 240,
+          "safety_security": 57,
+          "support_ops": 108
         },
         "usecases": {
-          "advertising": 2,
-          "code_linting": 1,
-          "customer_support": 7,
-          "demand_forecasting": 1,
-          "ecommerce_marketplaces": 4,
-          "financial_crime": 2,
-          "knowledge_graphs": 1,
-          "lead_generation": 2,
-          "legal_compliance": 22,
-          "llm_guardrails": 3,
-          "model_routing": 30,
-          "moderation_trust_safety": 2,
-          "other": 9,
-          "recruiting": 2,
-          "risk_assessment": 2,
-          "search_retrieval": 2
+          "advertising": 57,
+          "code_linting": 57,
+          "customer_support": 160,
+          "demand_forecasting": 52,
+          "ecommerce_marketplaces": 80,
+          "feature_extraction": 48,
+          "financial_crime": 58,
+          "gaming": 45,
+          "insurance_claims": 85,
+          "knowledge_graphs": 48,
+          "lead_generation": 56,
+          "legal_compliance": 386,
+          "llm_guardrails": 63,
+          "model_routing": 376,
+          "moderation_trust_safety": 56,
+          "other": 115,
+          "recruiting": 47,
+          "risk_assessment": 73,
+          "scientific_discovery": 49,
+          "search_retrieval": 59
         }
       },
       "families": {
-        "llm_router": {
-          "competence": 17.59,
-          "coverage_n": 30,
-          "n": 30,
-          "operational_failure_n": 0,
+        "calibration": {
+          "n": 16,
+          "competence": 0.0,
+          "coverage_n": 16,
+          "response_n": 16,
           "refusal_n": 0,
-          "response_n": 30
+          "operational_failure_n": 0
+        },
+        "calibration_gen": {
+          "n": 44,
+          "competence": 0.0,
+          "coverage_n": 44,
+          "response_n": 44,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "composite_gen": {
+          "n": 51,
+          "competence": 16.38,
+          "coverage_n": 51,
+          "response_n": 51,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "fairness": {
+          "n": 112,
+          "competence": 5.71,
+          "coverage_n": 112,
+          "response_n": 112,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "jaggedness": {
+          "n": 78,
+          "competence": 0.0,
+          "coverage_n": 78,
+          "response_n": 78,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "llm_router": {
+          "n": 334,
+          "competence": 0.0,
+          "coverage_n": 334,
+          "response_n": 334,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         },
         "multilingual": {
-          "competence": 23.97,
-          "coverage_n": 17,
-          "n": 17,
-          "operational_failure_n": 0,
+          "n": 1002,
+          "competence": 0.0,
+          "coverage_n": 1002,
+          "response_n": 1002,
           "refusal_n": 0,
-          "response_n": 17
+          "operational_failure_n": 0
+        },
+        "negation_pair_gen": {
+          "n": 73,
+          "competence": 5.09,
+          "coverage_n": 73,
+          "response_n": 73,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "option_order": {
+          "n": 53,
+          "competence": 12.66,
+          "coverage_n": 53,
+          "response_n": 53,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "perturb_pair": {
+          "n": 48,
+          "competence": 7.73,
+          "coverage_n": 48,
+          "response_n": 48,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "usecase": {
+          "n": 159,
+          "competence": 0.0,
+          "coverage_n": 159,
+          "response_n": 159,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         }
       },
       "topics": {
         "coding": {
-          "competence": 24.79,
-          "coverage_n": 21,
-          "n": 21,
-          "operational_failure_n": 0,
+          "n": 269,
+          "competence": 0.0,
+          "coverage_n": 269,
+          "response_n": 269,
           "refusal_n": 0,
-          "response_n": 21
+          "operational_failure_n": 0
+        },
+        "everyday_language": {
+          "n": 83,
+          "competence": 3.79,
+          "coverage_n": 83,
+          "response_n": 83,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "finance_commerce": {
+          "n": 152,
+          "competence": 0.0,
+          "coverage_n": 152,
+          "response_n": 152,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         },
         "law_policy": {
+          "n": 1061,
           "competence": 0.0,
-          "coverage_n": 48,
-          "n": 48,
-          "operational_failure_n": 0,
+          "coverage_n": 1061,
+          "response_n": 1061,
           "refusal_n": 0,
-          "response_n": 48
+          "operational_failure_n": 0
+        },
+        "math": {
+          "n": 240,
+          "competence": 0.0,
+          "coverage_n": 240,
+          "response_n": 240,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "safety_security": {
+          "n": 57,
+          "competence": 14.19,
+          "coverage_n": 57,
+          "response_n": 57,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "support_ops": {
+          "n": 108,
+          "competence": 0.0,
+          "coverage_n": 108,
+          "response_n": 108,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         }
       },
       "usecases": {
-        "legal_compliance": {
+        "advertising": {
+          "n": 57,
           "competence": 0.0,
-          "coverage_n": 22,
-          "n": 22,
-          "operational_failure_n": 0,
+          "coverage_n": 57,
+          "response_n": 57,
           "refusal_n": 0,
-          "response_n": 22
+          "operational_failure_n": 0
+        },
+        "code_linting": {
+          "n": 57,
+          "competence": 0.0,
+          "coverage_n": 57,
+          "response_n": 57,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "customer_support": {
+          "n": 160,
+          "competence": 4.38,
+          "coverage_n": 160,
+          "response_n": 160,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "demand_forecasting": {
+          "n": 52,
+          "competence": 0.0,
+          "coverage_n": 52,
+          "response_n": 52,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "ecommerce_marketplaces": {
+          "n": 80,
+          "competence": 0.0,
+          "coverage_n": 80,
+          "response_n": 80,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "feature_extraction": {
+          "n": 48,
+          "competence": 0.15,
+          "coverage_n": 48,
+          "response_n": 48,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "financial_crime": {
+          "n": 58,
+          "competence": 3.03,
+          "coverage_n": 58,
+          "response_n": 58,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "gaming": {
+          "n": 45,
+          "competence": 0.0,
+          "coverage_n": 45,
+          "response_n": 45,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "insurance_claims": {
+          "n": 85,
+          "competence": 0.0,
+          "coverage_n": 85,
+          "response_n": 85,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "knowledge_graphs": {
+          "n": 48,
+          "competence": 0.0,
+          "coverage_n": 48,
+          "response_n": 48,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "lead_generation": {
+          "n": 56,
+          "competence": 12.64,
+          "coverage_n": 56,
+          "response_n": 56,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "legal_compliance": {
+          "n": 386,
+          "competence": 0.53,
+          "coverage_n": 386,
+          "response_n": 386,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "llm_guardrails": {
+          "n": 63,
+          "competence": 0.0,
+          "coverage_n": 63,
+          "response_n": 63,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         },
         "model_routing": {
-          "competence": 17.59,
-          "coverage_n": 30,
-          "n": 30,
-          "operational_failure_n": 0,
+          "n": 376,
+          "competence": 0.0,
+          "coverage_n": 376,
+          "response_n": 376,
           "refusal_n": 0,
-          "response_n": 30
+          "operational_failure_n": 0
+        },
+        "moderation_trust_safety": {
+          "n": 56,
+          "competence": 4.07,
+          "coverage_n": 56,
+          "response_n": 56,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "other": {
+          "n": 115,
+          "competence": 0.0,
+          "coverage_n": 115,
+          "response_n": 115,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "recruiting": {
+          "n": 47,
+          "competence": 7.79,
+          "coverage_n": 47,
+          "response_n": 47,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "risk_assessment": {
+          "n": 73,
+          "competence": 0.0,
+          "coverage_n": 73,
+          "response_n": 73,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "scientific_discovery": {
+          "n": 49,
+          "competence": 0.0,
+          "coverage_n": 49,
+          "response_n": 49,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "search_retrieval": {
+          "n": 59,
+          "competence": 0.0,
+          "coverage_n": 59,
+          "response_n": 59,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         }
-      }
+      },
+      "coverage_note": "This historical row keeps its published v1.5 headline. Its language and category cells come from a new measurement on the current item pools (S+P, L1, L2, L3), run with the original pinned model and serving setup on an isolated machine; each item was sent once and failed requests stay scored as failures. About 1,000 issued items were lost to out-of-memory kills and a machine shutdown; they stay counted as spent and are never re-asked, so 22 of 23 languages rest on 42 to 59 answered items instead of the 60-item target. Headline, rank, Composite and pricing are unchanged. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3."
     },
     "gliner2-large": {
       "category_n_items": 334,
@@ -16271,147 +16616,365 @@
       }
     },
     "gliner2.5-multi": {
-      "category_n_items": 184,
-      "category_pools": "S+P",
+      "category_n_items": 2608,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
-          "calibration": 3,
-          "calibration_gen": 5,
-          "composite_gen": 4,
-          "fairness": 19,
-          "jaggedness": 16,
-          "llm_router": 67,
-          "multilingual": 22,
-          "negation_pair_gen": 10,
-          "option_order": 10,
-          "perturb_pair": 10,
-          "usecase": 18
+          "calibration": 17,
+          "calibration_gen": 47,
+          "composite_gen": 51,
+          "fairness": 118,
+          "jaggedness": 77,
+          "llm_router": 344,
+          "multilingual": 1523,
+          "negation_pair_gen": 79,
+          "option_order": 57,
+          "perturb_pair": 52,
+          "usecase": 243
         },
         "topics": {
-          "coding": 47,
-          "everyday_language": 6,
-          "finance_commerce": 9,
-          "law_policy": 85,
-          "math": 21,
-          "safety_security": 6,
-          "support_ops": 10
+          "coding": 299,
+          "everyday_language": 133,
+          "finance_commerce": 212,
+          "law_policy": 1424,
+          "math": 308,
+          "safety_security": 100,
+          "support_ops": 132
         },
         "usecases": {
-          "advertising": 1,
-          "code_linting": 3,
-          "customer_support": 13,
-          "demand_forecasting": 2,
-          "ecommerce_marketplaces": 8,
-          "financial_crime": 3,
-          "gaming": 2,
-          "insurance_claims": 4,
-          "knowledge_graphs": 1,
-          "lead_generation": 2,
-          "legal_compliance": 43,
-          "llm_guardrails": 4,
-          "model_routing": 67,
-          "moderation_trust_safety": 3,
-          "other": 18,
-          "recruiting": 2,
-          "risk_assessment": 4,
-          "scientific_discovery": 1,
-          "search_retrieval": 3
+          "advertising": 84,
+          "code_linting": 83,
+          "customer_support": 198,
+          "demand_forecasting": 80,
+          "ecommerce_marketplaces": 109,
+          "feature_extraction": 89,
+          "financial_crime": 91,
+          "gaming": 82,
+          "insurance_claims": 114,
+          "knowledge_graphs": 85,
+          "lead_generation": 91,
+          "legal_compliance": 419,
+          "llm_guardrails": 90,
+          "model_routing": 413,
+          "moderation_trust_safety": 86,
+          "other": 128,
+          "recruiting": 90,
+          "risk_assessment": 107,
+          "scientific_discovery": 85,
+          "search_retrieval": 84
         }
       },
       "families": {
-        "fairness": {
+        "calibration": {
+          "n": 17,
           "competence": 0.0,
-          "coverage_n": 19,
-          "n": 19,
-          "operational_failure_n": 0,
+          "coverage_n": 17,
+          "response_n": 17,
           "refusal_n": 0,
-          "response_n": 19
+          "operational_failure_n": 0
+        },
+        "calibration_gen": {
+          "n": 47,
+          "competence": 0.0,
+          "coverage_n": 47,
+          "response_n": 47,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "composite_gen": {
+          "n": 51,
+          "competence": 0.0,
+          "coverage_n": 51,
+          "response_n": 51,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "fairness": {
+          "n": 118,
+          "competence": 0.0,
+          "coverage_n": 118,
+          "response_n": 118,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         },
         "jaggedness": {
+          "n": 77,
           "competence": 0.0,
-          "coverage_n": 16,
-          "n": 16,
-          "operational_failure_n": 0,
+          "coverage_n": 77,
+          "response_n": 77,
           "refusal_n": 0,
-          "response_n": 16
+          "operational_failure_n": 0
         },
         "llm_router": {
-          "competence": 1.92,
-          "coverage_n": 67,
-          "n": 67,
-          "operational_failure_n": 0,
+          "n": 344,
+          "competence": 0.0,
+          "coverage_n": 344,
+          "response_n": 344,
           "refusal_n": 0,
-          "response_n": 67
+          "operational_failure_n": 0
         },
         "multilingual": {
+          "n": 1523,
           "competence": 0.0,
-          "coverage_n": 22,
-          "n": 22,
-          "operational_failure_n": 0,
+          "coverage_n": 1523,
+          "response_n": 1523,
           "refusal_n": 0,
-          "response_n": 22
+          "operational_failure_n": 0
+        },
+        "negation_pair_gen": {
+          "n": 79,
+          "competence": 6.48,
+          "coverage_n": 79,
+          "response_n": 79,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "option_order": {
+          "n": 57,
+          "competence": 2.49,
+          "coverage_n": 57,
+          "response_n": 57,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "perturb_pair": {
+          "n": 52,
+          "competence": 0.0,
+          "coverage_n": 52,
+          "response_n": 52,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         },
         "usecase": {
+          "n": 243,
           "competence": 0.0,
-          "coverage_n": 18,
-          "n": 18,
-          "operational_failure_n": 0,
+          "coverage_n": 243,
+          "response_n": 243,
           "refusal_n": 0,
-          "response_n": 18
+          "operational_failure_n": 0
         }
       },
       "topics": {
         "coding": {
-          "competence": 5.75,
-          "coverage_n": 47,
-          "n": 47,
-          "operational_failure_n": 0,
+          "n": 299,
+          "competence": 0.0,
+          "coverage_n": 299,
+          "response_n": 299,
           "refusal_n": 0,
-          "response_n": 47
+          "operational_failure_n": 0
+        },
+        "everyday_language": {
+          "n": 133,
+          "competence": 0.0,
+          "coverage_n": 133,
+          "response_n": 133,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "finance_commerce": {
+          "n": 212,
+          "competence": 0.0,
+          "coverage_n": 212,
+          "response_n": 212,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         },
         "law_policy": {
+          "n": 1424,
           "competence": 0.0,
-          "coverage_n": 85,
-          "n": 85,
-          "operational_failure_n": 0,
+          "coverage_n": 1424,
+          "response_n": 1424,
           "refusal_n": 0,
-          "response_n": 85
+          "operational_failure_n": 0
         },
         "math": {
+          "n": 308,
           "competence": 0.0,
-          "coverage_n": 21,
-          "n": 21,
-          "operational_failure_n": 0,
+          "coverage_n": 308,
+          "response_n": 308,
           "refusal_n": 0,
-          "response_n": 21
+          "operational_failure_n": 0
+        },
+        "safety_security": {
+          "n": 100,
+          "competence": 0.0,
+          "coverage_n": 100,
+          "response_n": 100,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "support_ops": {
+          "n": 132,
+          "competence": 0.0,
+          "coverage_n": 132,
+          "response_n": 132,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         }
       },
       "usecases": {
-        "legal_compliance": {
+        "advertising": {
+          "n": 84,
           "competence": 0.0,
-          "coverage_n": 43,
-          "n": 43,
-          "operational_failure_n": 0,
+          "coverage_n": 84,
+          "response_n": 84,
           "refusal_n": 0,
-          "response_n": 43
+          "operational_failure_n": 0
+        },
+        "code_linting": {
+          "n": 83,
+          "competence": 0.0,
+          "coverage_n": 83,
+          "response_n": 83,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "customer_support": {
+          "n": 198,
+          "competence": 0.0,
+          "coverage_n": 198,
+          "response_n": 198,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "demand_forecasting": {
+          "n": 80,
+          "competence": 0.0,
+          "coverage_n": 80,
+          "response_n": 80,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "ecommerce_marketplaces": {
+          "n": 109,
+          "competence": 0.0,
+          "coverage_n": 109,
+          "response_n": 109,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "feature_extraction": {
+          "n": 89,
+          "competence": 0.0,
+          "coverage_n": 89,
+          "response_n": 89,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "financial_crime": {
+          "n": 91,
+          "competence": 0.0,
+          "coverage_n": 91,
+          "response_n": 91,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "gaming": {
+          "n": 82,
+          "competence": 0.0,
+          "coverage_n": 82,
+          "response_n": 82,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "insurance_claims": {
+          "n": 114,
+          "competence": 0.0,
+          "coverage_n": 114,
+          "response_n": 114,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "knowledge_graphs": {
+          "n": 85,
+          "competence": 0.0,
+          "coverage_n": 85,
+          "response_n": 85,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "lead_generation": {
+          "n": 91,
+          "competence": 0.0,
+          "coverage_n": 91,
+          "response_n": 91,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "legal_compliance": {
+          "n": 419,
+          "competence": 0.0,
+          "coverage_n": 419,
+          "response_n": 419,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "llm_guardrails": {
+          "n": 90,
+          "competence": 0.0,
+          "coverage_n": 90,
+          "response_n": 90,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         },
         "model_routing": {
-          "competence": 1.92,
-          "coverage_n": 67,
-          "n": 67,
-          "operational_failure_n": 0,
+          "n": 413,
+          "competence": 0.0,
+          "coverage_n": 413,
+          "response_n": 413,
           "refusal_n": 0,
-          "response_n": 67
+          "operational_failure_n": 0
+        },
+        "moderation_trust_safety": {
+          "n": 86,
+          "competence": 0.0,
+          "coverage_n": 86,
+          "response_n": 86,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         },
         "other": {
+          "n": 128,
           "competence": 0.0,
-          "coverage_n": 18,
-          "n": 18,
-          "operational_failure_n": 0,
+          "coverage_n": 128,
+          "response_n": 128,
           "refusal_n": 0,
-          "response_n": 18
+          "operational_failure_n": 0
+        },
+        "recruiting": {
+          "n": 90,
+          "competence": 2.79,
+          "coverage_n": 90,
+          "response_n": 90,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "risk_assessment": {
+          "n": 107,
+          "competence": 0.0,
+          "coverage_n": 107,
+          "response_n": 107,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "scientific_discovery": {
+          "n": 85,
+          "competence": 0.0,
+          "coverage_n": 85,
+          "response_n": 85,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "search_retrieval": {
+          "n": 84,
+          "competence": 0.0,
+          "coverage_n": 84,
+          "response_n": 84,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         }
-      }
+      },
+      "coverage_note": "This historical row keeps its published v1.5 headline. Its language and category cells come from a new measurement on the current item pools (S+P, L1, L2, L3), run with the original pinned model and serving setup on an isolated machine; each item was sent once and failed requests stay scored as failures. Headline, rank, Composite and pricing are unchanged. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3."
     },
     "gliner2.5-small": {
       "category_n_items": 1802,
@@ -51823,95 +52386,374 @@
       }
     },
     "von-395m": {
-      "category_n_items": 85,
-      "category_pools": "S+P",
+      "category_n_items": 3005,
+      "category_pools": "S+P+L1+L2+L3",
       "category_spoke_n": {
         "families": {
-          "calibration": 2,
-          "calibration_gen": 2,
-          "composite_gen": 1,
-          "fairness": 11,
-          "jaggedness": 7,
-          "llm_router": 29,
-          "long_state": 1,
-          "multilingual": 14,
-          "negation_pair_gen": 3,
-          "option_order": 5,
-          "perturb_pair": 3,
-          "usecase": 7
+          "calibration": 22,
+          "calibration_gen": 59,
+          "composite_gen": 66,
+          "fairness": 153,
+          "jaggedness": 101,
+          "llm_router": 453,
+          "long_state": 23,
+          "multilingual": 1604,
+          "negation_pair_gen": 100,
+          "option_order": 75,
+          "perturb_pair": 70,
+          "usecase": 279
         },
         "topics": {
-          "coding": 20,
-          "everyday_language": 3,
-          "finance_commerce": 3,
-          "law_policy": 42,
-          "math": 11,
-          "safety_security": 3,
-          "support_ops": 3
+          "coding": 382,
+          "everyday_language": 145,
+          "finance_commerce": 223,
+          "law_policy": 1616,
+          "math": 370,
+          "safety_security": 109,
+          "support_ops": 160
         },
         "usecases": {
-          "advertising": 1,
-          "code_linting": 1,
-          "customer_support": 7,
-          "demand_forecasting": 1,
-          "ecommerce_marketplaces": 4,
-          "financial_crime": 2,
-          "lead_generation": 2,
-          "legal_compliance": 20,
-          "llm_guardrails": 2,
-          "model_routing": 29,
-          "moderation_trust_safety": 2,
-          "other": 10,
-          "risk_assessment": 2,
-          "search_retrieval": 2
+          "advertising": 88,
+          "code_linting": 90,
+          "customer_support": 240,
+          "demand_forecasting": 83,
+          "ecommerce_marketplaces": 119,
+          "feature_extraction": 99,
+          "financial_crime": 101,
+          "gaming": 86,
+          "insurance_claims": 119,
+          "knowledge_graphs": 94,
+          "lead_generation": 95,
+          "legal_compliance": 515,
+          "llm_guardrails": 93,
+          "model_routing": 524,
+          "moderation_trust_safety": 93,
+          "other": 174,
+          "recruiting": 94,
+          "risk_assessment": 118,
+          "scientific_discovery": 90,
+          "search_retrieval": 90
         }
       },
       "families": {
-        "llm_router": {
+        "calibration": {
+          "n": 22,
           "competence": 0.0,
-          "coverage_n": 28,
-          "n": 29,
-          "operational_failure_n": 1,
+          "coverage_n": 22,
+          "response_n": 22,
           "refusal_n": 0,
-          "response_n": 28
+          "operational_failure_n": 0
+        },
+        "calibration_gen": {
+          "n": 59,
+          "competence": 0.0,
+          "coverage_n": 56,
+          "response_n": 56,
+          "refusal_n": 0,
+          "operational_failure_n": 3
+        },
+        "composite_gen": {
+          "n": 66,
+          "competence": 0.0,
+          "coverage_n": 65,
+          "response_n": 65,
+          "refusal_n": 0,
+          "operational_failure_n": 1
+        },
+        "fairness": {
+          "n": 153,
+          "competence": 0.0,
+          "coverage_n": 150,
+          "response_n": 150,
+          "refusal_n": 0,
+          "operational_failure_n": 3
+        },
+        "jaggedness": {
+          "n": 101,
+          "competence": 0.0,
+          "coverage_n": 97,
+          "response_n": 97,
+          "refusal_n": 0,
+          "operational_failure_n": 4
+        },
+        "llm_router": {
+          "n": 453,
+          "competence": 0.0,
+          "coverage_n": 444,
+          "response_n": 444,
+          "refusal_n": 0,
+          "operational_failure_n": 9
+        },
+        "long_state": {
+          "n": 23,
+          "competence": 0.0,
+          "coverage_n": 0,
+          "response_n": 0,
+          "refusal_n": 0,
+          "operational_failure_n": 23
+        },
+        "multilingual": {
+          "n": 1604,
+          "competence": 0.0,
+          "coverage_n": 1588,
+          "response_n": 1588,
+          "refusal_n": 0,
+          "operational_failure_n": 16
+        },
+        "negation_pair_gen": {
+          "n": 100,
+          "competence": 0.0,
+          "coverage_n": 98,
+          "response_n": 98,
+          "refusal_n": 0,
+          "operational_failure_n": 2
+        },
+        "option_order": {
+          "n": 75,
+          "competence": 8.93,
+          "coverage_n": 74,
+          "response_n": 74,
+          "refusal_n": 0,
+          "operational_failure_n": 1
+        },
+        "perturb_pair": {
+          "n": 70,
+          "competence": 0.0,
+          "coverage_n": 68,
+          "response_n": 68,
+          "refusal_n": 0,
+          "operational_failure_n": 2
+        },
+        "usecase": {
+          "n": 279,
+          "competence": 0.0,
+          "coverage_n": 274,
+          "response_n": 274,
+          "refusal_n": 0,
+          "operational_failure_n": 5
         }
       },
       "topics": {
         "coding": {
+          "n": 382,
           "competence": 0.0,
-          "coverage_n": 20,
-          "n": 20,
-          "operational_failure_n": 0,
+          "coverage_n": 375,
+          "response_n": 375,
           "refusal_n": 0,
-          "response_n": 20
+          "operational_failure_n": 7
+        },
+        "everyday_language": {
+          "n": 145,
+          "competence": 0.0,
+          "coverage_n": 143,
+          "response_n": 143,
+          "refusal_n": 0,
+          "operational_failure_n": 2
+        },
+        "finance_commerce": {
+          "n": 223,
+          "competence": 0.0,
+          "coverage_n": 220,
+          "response_n": 220,
+          "refusal_n": 0,
+          "operational_failure_n": 3
         },
         "law_policy": {
+          "n": 1616,
           "competence": 0.0,
-          "coverage_n": 41,
-          "n": 42,
-          "operational_failure_n": 1,
+          "coverage_n": 1592,
+          "response_n": 1592,
           "refusal_n": 0,
-          "response_n": 41
+          "operational_failure_n": 24
+        },
+        "math": {
+          "n": 370,
+          "competence": 0.0,
+          "coverage_n": 350,
+          "response_n": 350,
+          "refusal_n": 0,
+          "operational_failure_n": 20
+        },
+        "safety_security": {
+          "n": 109,
+          "competence": 0.0,
+          "coverage_n": 108,
+          "response_n": 108,
+          "refusal_n": 0,
+          "operational_failure_n": 1
+        },
+        "support_ops": {
+          "n": 160,
+          "competence": 0.0,
+          "coverage_n": 148,
+          "response_n": 148,
+          "refusal_n": 0,
+          "operational_failure_n": 12
         }
       },
       "usecases": {
-        "legal_compliance": {
+        "advertising": {
+          "n": 88,
           "competence": 0.0,
-          "coverage_n": 20,
-          "n": 20,
-          "operational_failure_n": 0,
+          "coverage_n": 87,
+          "response_n": 87,
           "refusal_n": 0,
-          "response_n": 20
+          "operational_failure_n": 1
+        },
+        "code_linting": {
+          "n": 90,
+          "competence": 0.0,
+          "coverage_n": 90,
+          "response_n": 90,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "customer_support": {
+          "n": 240,
+          "competence": 0.0,
+          "coverage_n": 225,
+          "response_n": 225,
+          "refusal_n": 0,
+          "operational_failure_n": 15
+        },
+        "demand_forecasting": {
+          "n": 83,
+          "competence": 0.0,
+          "coverage_n": 82,
+          "response_n": 82,
+          "refusal_n": 0,
+          "operational_failure_n": 1
+        },
+        "ecommerce_marketplaces": {
+          "n": 119,
+          "competence": 0.0,
+          "coverage_n": 118,
+          "response_n": 118,
+          "refusal_n": 0,
+          "operational_failure_n": 1
+        },
+        "feature_extraction": {
+          "n": 99,
+          "competence": 0.0,
+          "coverage_n": 98,
+          "response_n": 98,
+          "refusal_n": 0,
+          "operational_failure_n": 1
+        },
+        "financial_crime": {
+          "n": 101,
+          "competence": 0.0,
+          "coverage_n": 99,
+          "response_n": 99,
+          "refusal_n": 0,
+          "operational_failure_n": 2
+        },
+        "gaming": {
+          "n": 86,
+          "competence": 0.0,
+          "coverage_n": 86,
+          "response_n": 86,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "insurance_claims": {
+          "n": 119,
+          "competence": 0.0,
+          "coverage_n": 119,
+          "response_n": 119,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "knowledge_graphs": {
+          "n": 94,
+          "competence": 0.0,
+          "coverage_n": 92,
+          "response_n": 92,
+          "refusal_n": 0,
+          "operational_failure_n": 2
+        },
+        "lead_generation": {
+          "n": 95,
+          "competence": 0.0,
+          "coverage_n": 94,
+          "response_n": 94,
+          "refusal_n": 0,
+          "operational_failure_n": 1
+        },
+        "legal_compliance": {
+          "n": 515,
+          "competence": 0.0,
+          "coverage_n": 505,
+          "response_n": 505,
+          "refusal_n": 0,
+          "operational_failure_n": 10
+        },
+        "llm_guardrails": {
+          "n": 93,
+          "competence": 0.0,
+          "coverage_n": 93,
+          "response_n": 93,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         },
         "model_routing": {
+          "n": 524,
           "competence": 0.0,
-          "coverage_n": 28,
-          "n": 29,
-          "operational_failure_n": 1,
+          "coverage_n": 515,
+          "response_n": 515,
           "refusal_n": 0,
-          "response_n": 28
+          "operational_failure_n": 9
+        },
+        "moderation_trust_safety": {
+          "n": 93,
+          "competence": 0.0,
+          "coverage_n": 93,
+          "response_n": 93,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "other": {
+          "n": 174,
+          "competence": 0.0,
+          "coverage_n": 154,
+          "response_n": 154,
+          "refusal_n": 0,
+          "operational_failure_n": 20
+        },
+        "recruiting": {
+          "n": 94,
+          "competence": 0.0,
+          "coverage_n": 91,
+          "response_n": 91,
+          "refusal_n": 0,
+          "operational_failure_n": 3
+        },
+        "risk_assessment": {
+          "n": 118,
+          "competence": 0.0,
+          "coverage_n": 117,
+          "response_n": 117,
+          "refusal_n": 0,
+          "operational_failure_n": 1
+        },
+        "scientific_discovery": {
+          "n": 90,
+          "competence": 0.0,
+          "coverage_n": 90,
+          "response_n": 90,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "search_retrieval": {
+          "n": 90,
+          "competence": 0.0,
+          "coverage_n": 88,
+          "response_n": 88,
+          "refusal_n": 0,
+          "operational_failure_n": 2
         }
-      }
+      },
+      "coverage_note": "This historical row keeps its published v1.5 headline. Its language and category cells come from a new measurement on the current item pools (S+P, L1, L2, L3), run with the original pinned model and serving setup on an isolated machine; each item was sent once and failed requests stay scored as failures. Headline, rank, Composite and pricing are unchanged. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3."
     },
     "watersheep": {
       "category_n_items": 3005,

@@ -4,6 +4,14 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-10-10 — Language and category cells for Von, GLiNER2 and GLiNER2.5 multi; concrete reasons for blocked rows (CR-415, board note v1.7.37)
+
+`von-395m`, `gliner2` and `gliner2.5-multi` (historical rows, v1.5 headlines kept) now have language and category cells
+(S+P+L1+L2+L3) from `ops/evidence/<row>-language-category-complete-20261010.json`. `gliner2` is below the 60-item
+language target in 22 languages (`language_target_complete: false`, disclosed in its note). The radar exceptions of
+`aplomb-1` and `classone-gemma4-e2b` now state their concrete reasons. Headline scores, ranks, Composite and prices are
+unchanged; see `docs/releases/CR-415-historical-gliner-von-cells-20261010.md`.
+
 ## 2026-10-10 — Language and category cells for nine more rows (CR-413, board note v1.7.36)
 
 `diffusion-jev`, `spx-cd-omni`, `seb-9b`, `apus-openjev-v1-9b`, `apus-openjev-v1-35b-a3b`, and the historical rows `jobe-qwen3.5-4b`, `autojev-27b-rtxpro6000-a2`,

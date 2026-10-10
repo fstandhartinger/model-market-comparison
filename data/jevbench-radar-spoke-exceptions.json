@@ -1,26 +1,16 @@
 [
   {
     "key": "aplomb-1",
-    "reason": "Language and category supplements have not been measured for this newly released row; the original current-pool category counts are shown.",
-    "since": "2026-10-08"
+    "reason": "The supplement run could not reproduce the measured model: the pinned Hugging Face revision of its code and weights was deleted upstream (the repository history was rewritten), so the same files cannot be fetched. The radar shows the existing S + P items.",
+    "since": "2026-10-10"
   },
   {
     "key": "classone-gemma4-e2b",
-    "reason": "Language and category supplements have not been measured for this newly released row; the original current-pool category counts are shown.",
-    "since": "2026-10-08"
-  },
-  {
-    "key": "gliner2",
-    "reason": "Not measured on the current v1.6 item pool. Its exact historical checkpoint and serving package must be verified before language and category supplements can be measured; coverage remains incomplete.",
-    "since": "2026-10-07"
+    "reason": "A supplement run was made, but it does not reproduce this row's original answers closely enough (87.7 % agreement on the 300 public items, below the 95 % bar; the original run fetched unpinned weights). Its language and category supplements are not published; the radar shows the existing S + P items.",
+    "since": "2026-10-10"
   },
   {
     "key": "gliner2-large",
-    "reason": "Not measured on the current v1.6 item pool. Its exact historical checkpoint and serving package must be verified before language and category supplements can be measured; coverage remains incomplete.",
-    "since": "2026-10-07"
-  },
-  {
-    "key": "gliner2.5-multi",
     "reason": "Not measured on the current v1.6 item pool. Its exact historical checkpoint and serving package must be verified before language and category supplements can be measured; coverage remains incomplete.",
     "since": "2026-10-07"
   },
@@ -52,11 +42,6 @@
   {
     "key": "swanone",
     "reason": "The pinned model weights cannot currently be accessed (Hugging Face returned HTTP 401). Supplement measurements remain pending access recovery; the radar shows the existing S + P items.",
-    "since": "2026-10-07"
-  },
-  {
-    "key": "von-395m",
-    "reason": "Not measured on the current v1.6 item pool. Its exact historical checkpoint and serving package must be verified before language and category supplements can be measured; coverage remains incomplete.",
     "since": "2026-10-07"
   }
 ]

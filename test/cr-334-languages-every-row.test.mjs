@@ -43,9 +43,10 @@ test('language overlay changes no other dimension, preserves unknown rows and fr
     assert.deepEqual(live.systems[key][dim], row[dim], `${key}.${dim}`);
   }
   assert.equal(base.language_cells, undefined);
-  const catalogue = jevbenchCategoryView('v1.6.1', ['gliner2'], { supplement: true });
-  assert.match(catalogue.spokeExceptions.gliner2, /^Not measured on the current v1\.6 item pool/);
-  assert.ok(catalogue.systems.gliner2.topics.law_policy[1] >= 30);
+  // CR-415: gliner2 now has measured cells; swanOne (weights HTTP 401) keeps an exception with its S + P cells.
+  const catalogue = jevbenchCategoryView('v1.6.1', ['swanone'], { supplement: true });
+  assert.match(catalogue.spokeExceptions.swanone, /HTTP 401/);
+  assert.ok(catalogue.systems.swanone.topics.law_policy[1] >= 30);
   const unknown = { languages: {}, coverage: 'A4+P' };
   assert.equal(withLanguageCells({ ...before, systems: { ...before.systems, future: unknown } }).systems.future, unknown);
   assert.equal(languageCoverage({ sealed_basis: 'S', pool_ok: { A2: 300, A3: 300, L1: 2, L3: 0 } }), 'S+P+L1');
