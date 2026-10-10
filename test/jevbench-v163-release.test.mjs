@@ -136,11 +136,21 @@ async function diskBundle(t, edit = () => {}, includeRyo = true) {
   return { root, b, path: key => join(root, key === 'publication' ? V163_MANIFEST : V163_FILES[key]) };
 }
 
-// ---- Actual repository: v1.6.3 is unavailable and inactive.
-test('actual repository has no v1.6.3 data, so the release is unavailable and not the default', async () => {
-  assert.deepEqual((await readdir(BASE_DIR)).filter(f => f.includes('1.6.3')), []);
-  assert.equal(await readOptionalJevbenchV163Release(), null);
-  assert.equal(await hasPublishedJevbenchV163Release(process.cwd(), () => assert.fail('no log for an absent release')), false);
+// ---- Actual repository: only an independently validated bundle becomes available; default stays unchanged.
+test('actual repository availability follows its validated bundle and preserves the default', async () => {
+  const release = await readOptionalJevbenchV163Release(); // malformed or incomplete manifest must throw
+  const present = (await readdir(BASE_DIR)).filter(f => f.includes('1.6.3')).sort();
+  if (release) {
+    assert.deepEqual(present, [...Object.values(V163_FILES), V163_MANIFEST].map(p => p.slice(BASE_DIR.length)).sort());
+    assert.equal(release.manifest.review.verdict, 'PASS');
+    assert.equal(release.artifact.n_ranked, 4);
+    assert.ok([5, 6].includes(release.artifact.systems.length));
+    assert.equal(await hasPublishedJevbenchV163Release(), true);
+    assert.equal(digest(release.bytes), release.manifest.files.results.sha256);
+  } else {
+    assert.deepEqual(present, []);
+    assert.equal(await hasPublishedJevbenchV163Release(process.cwd(), () => assert.fail('no log for an absent release')), false);
+  }
   assert.doesNotMatch(await readFile('app/jev-models/page.tsx', 'utf8'), /1\.6\.3|v163/);
   assert.doesNotMatch(await readFile('app/api/jevbench/latest/route.ts', 'utf8').catch(() => ''), /1\.6\.3|v163/);
   // Existing v1.6.2 publication stays byte-identical and is the pinned predecessor.
@@ -308,11 +318,33 @@ async function pageModule(root, read = loaderFor(root)) {
     '../../../components/JevHistoryLazy': { JevHistoryLazy: () => React.createElement('div', { 'data-history-lazy': true }) },
   });
 }
-test('actual repository: API returns 404 and page invokes notFound', async () => {
+test('actual repository: API and page follow the genuine validated bundle', async () => {
+  const release = await readOptionalJevbenchV163Release();
   const api = await compiled('../app/api/jevbench/v1.6.3/route.ts', { '../../../../lib/jevbench-v163-release.mjs': { readOptionalJevbenchV163Release: () => readOptionalJevbenchV163Release() } });
-  assert.equal((await api.GET()).status, 404);
+  const response = await api.GET();
   const page = await pageModule(process.cwd(), { readOptionalJevbenchV163Release: () => readOptionalJevbenchV163Release(), v163BoardInput });
-  await assert.rejects(page.default(), /NEXT_NOT_FOUND/);
+  if (release) {
+    assert.equal(response.status, 200);
+    assert.deepEqual(Buffer.from(await response.arrayBuffer()), release.bytes);
+    assert.equal(response.headers.get('X-Content-SHA256'), release.sha256);
+    const html = renderToStaticMarkup(await page.default());
+    assert.match(html, /data-category-revision="v1.6.3"/);
+    assert.equal((html.match(/data-bh-jev163-wrapper-row=/g) ?? []).length, release.artifact.systems.filter(r => !r.ranked).length);
+    assert.ok(html.indexOf('data-fixture-board') < html.indexOf('data-bh-jev163-wrappers'));
+    assert.ok(html.indexOf('data-bh-jev163-wrappers') < html.indexOf('data-bh-jev163-history'));
+    assert.equal((html.match(/data-bh-jev163-historical-row=/g) ?? []).length, 173);
+  } else {
+    assert.equal(response.status, 404);
+    await assert.rejects(page.default(), /NEXT_NOT_FOUND/);
+  }
+});
+test('missing-manifest temporary root retains API404 and pageNotFound after publication', async t => {
+  const root = await mkdtemp(join(tmpdir(), 'bh-v163-absent-'));
+  t.after(() => rm(root, {recursive:true, force:true}));
+  assert.equal(await readOptionalJevbenchV163Release(root), null);
+  const api = await compiled('../app/api/jevbench/v1.6.3/route.ts', { '../../../../lib/jevbench-v163-release.mjs': loaderFor(root) });
+  assert.equal((await api.GET()).status, 404);
+  await assert.rejects((await pageModule(root)).default(), /NEXT_NOT_FOUND/);
 });
 test('API serves exact synthetic result bytes with their SHA-256', async t => {
   const { root, path } = await diskBundle(t);
@@ -360,8 +392,9 @@ test('navigation shows v1.6.3 only for a validated publication and keeps older b
   const html = renderToStaticMarkup(await nav.JevBenchReleaseVersionNav({ active: 'v1.6.1' }));
   assert.ok(!html.includes('/jev-models/v1.6.3')); assert.match(html, /href="\/jev-models\/v1.6.2"/); assert.equal(logs.length, 1);
 });
-test('actual navigation module omits v1.6.3 in the actual repository and keeps v1.6.2', async () => {
+test('actual navigation follows validated publication and keeps v1.6.2', async () => {
+  const release = await readOptionalJevbenchV163Release();
   const nav = await compiled('../components/JevBenchReleaseVersionNav.tsx', {});
   const html = renderToStaticMarkup(await nav.JevBenchReleaseVersionNav({ active: 'v1.6.1' }));
-  assert.ok(!html.includes('v1.6.3')); assert.match(html, /href="\/jev-models\/v1.6.2"/);
+  assert.equal(html.includes('/jev-models/v1.6.3'), Boolean(release)); assert.match(html, /href="\/jev-models\/v1.6.2"/);
 });
