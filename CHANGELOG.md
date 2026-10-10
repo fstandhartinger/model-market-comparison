@@ -4,6 +4,14 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-10-10 — Language and category cells for seven more rows; mixed-language column first (CR-412, board note v1.7.35)
+
+`rene-1-31b-fp8`, `decisio-gemma-4-12b-v080`, `hopper-12b-trained`, `decider-12b`, `decider-12b-v1`, `bobcat-flash-1.2`
+and `mica-v01-4b` now have complete language and category cells (S+P+L1+L2+L3), copied from
+`ops/evidence/<row>-language-category-complete-20261010.json`. `mica-v01-4b` keeps its v1.5 headline; its cells use a new
+v1.6 run. The Languages table lists the mixed-language group as its first column. Headline scores, ranks, Composite and
+prices are unchanged; see `docs/releases/CR-412-seven-more-complete-cells-20261010.md`.
+
 ## 2026-10-10 — Language and category cells for seven self-hosted rows (CR-411, board note v1.7.34)
 
 `typecastlm-1.4.0`, `coco-decision-4b`, `classone-qwen3.5-9b`, `exaone-4.0-1.2b-jev-v0.3`, `jul-fast`, `watersheep`
