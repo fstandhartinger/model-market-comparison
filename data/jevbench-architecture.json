@@ -5047,6 +5047,26 @@
           "params": "30B-A3B",
           "quant": null
         }
+      },
+      "blink-v0-3-26b-a4b-nvfp4": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/PixilabAI/Blink-v0.3-26B-A4B-NVFP4/blob/08caad20c1574fb76341ca809ff38fdb081f7d4a/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config model_type: \"gemma4\", architectures [\"Gemma4ForConditionalGeneration\"] (30 layers, 128 experts, 8 active per token); quantization_config: 4-bit float weights and activations, group size 16 (NVFP4)."
+          },
+          {
+            "url": "https://huggingface.co/PixilabAI/Blink-v0.3-26B-A4B-NVFP4/blob/08caad20c1574fb76341ca809ff38fdb081f7d4a/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: base_model google/gemma-4-26B-A4B-it, licence apache-2.0, tagged nvfp4; Blackwell build of Blink v0.3 (an FP8 build exists separately)."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "26B-A4B",
+          "quant": "NVFP4"
+        }
       }
     },
     "imagejevbench": {
