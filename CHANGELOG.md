@@ -4,6 +4,15 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-10-10 — Language and category cells for seven self-hosted rows (CR-411, board note v1.7.34)
+
+`typecastlm-1.4.0`, `coco-decision-4b`, `classone-qwen3.5-9b`, `exaone-4.0-1.2b-jev-v0.3`, `jul-fast`, `watersheep`
+and `tacet-sonata` now have complete language and category cells (S+P+L1+L2+L3) in
+`jevbench-v1.6.1-language-cells.json` and `jevbench-v1.6.1-category-cells.json`, copied from the public aggregates in
+`ops/evidence/<row>-language-category-complete-20261010.json`. Their radar spoke exceptions are removed. Headline
+scores, ranks, Composite, prices and all other rows are unchanged; see
+`docs/releases/CR-411-seven-selfhosted-complete-cells-20261010.md`.
+
 ## 2026-10-10 — Messier One v0.2 language and category cells (CR-410, board note v1.7.33)
 
 `messier-one-v0.2` now has complete language and category cells (S+P+L1+L2+L3) in
