@@ -1,8 +1,8 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { paretoFrontier } from '../lib/pareto.mjs';
 import { useJevV15VisibleKeys } from './useJevV15VisibleKeys';
-import type { JevBubblePoint } from './JevBubbleChart';
+import { publishJevHighlight, useJevHighlight, type JevBubblePoint } from './JevBubbleChart';
 
 // Florian 10 Oct 2026 (GO 18:20Z, after the preview): Pareto views of the board, after the Decision Index charts —
 // capability against cost and against median latency, both on a log axis, with the nondominated systems joined by a
@@ -42,12 +42,29 @@ function logTicks(min: number, max: number, pxPerDecade: number) {
   return out;
 }
 
-function ParetoChart({ kind, points, limit, title, unit }: { kind: Kind; points: JevBubblePoint[]; limit: number; title: string; unit: string }) {
+function ParetoChart({ kind, points, limit, title, unit, active, setActive, expanded, setExpanded }: { kind: Kind; points: JevBubblePoint[]; limit: number; title: string; unit: string;
+  active: string | null; setActive: (key: string | null) => void; expanded: boolean; setExpanded: (value: boolean) => void }) {
   const { ref, width: W } = useWidth();
   const narrow = W < 440;
-  const H = Math.round(Math.max(320, Math.min(480, W * (narrow ? 1.05 : 0.7))));
+  const [viewportHeight, setViewportHeight] = useState(900);
+  useEffect(() => {
+    const update = () => setViewportHeight(window.innerHeight);
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+  // Florian 10 Oct 2026: expand to fullscreen like the bubble charts (Escape or the button closes it).
+  const expandButton = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!expanded) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const escape = (event: KeyboardEvent) => { if (event.key === 'Escape') setExpanded(false); };
+    window.addEventListener('keydown', escape);
+    return () => { document.body.style.overflow = previousOverflow; window.removeEventListener('keydown', escape); };
+  }, [expanded, setExpanded]);
+  const H = expanded ? Math.max(360, Math.min(900, viewportHeight - 190)) : Math.round(Math.max(320, Math.min(480, W * (narrow ? 1.05 : 0.7))));
   const L = narrow ? 34 : 44, R = 14, T = 16, B = 44;
-  const [active, setActive] = useState<string | null>(null);
   const value = (p: JevBubblePoint) => (kind === 'cost' ? p.cost : p.latency);
   const plotted = useMemo(() => points.filter((p) => { const v = value(p); return v != null && Number.isFinite(v) && v > 0; }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,10 +74,10 @@ function ParetoChart({ kind, points, limit, title, unit }: { kind: Kind; points:
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [plotted, kind]);
   const onFrontier = useMemo(() => new Set(frontier.map((f: { id: string }) => f.id)), [frontier]);
-  const values = plotted.map((p) => value(p) as number);
+  const values = plotted.length ? plotted.map((p) => value(p) as number) : [limit];
   const lo = 10 ** Math.floor(Math.log10(Math.min(...values, limit) * 0.9));
   const hi = 10 ** Math.ceil(Math.log10(Math.max(...values, limit) * 1.1));
-  const yMin = Math.max(0, Math.floor(Math.min(...plotted.map((p) => p.capability)) / 10) * 10);
+  const yMin = plotted.length ? Math.max(0, Math.floor(Math.min(...plotted.map((p) => p.capability)) / 10) * 10) : 0;
   const x = (v: number) => L + (W - L - R) * (Math.log10(v) - Math.log10(lo)) / (Math.log10(hi) - Math.log10(lo));
   const y = (v: number) => T + (H - T - B) * (1 - (v - yMin) / (100 - yMin));
   const placed: Placed[] = plotted.map((p) => ({ p, v: value(p) as number, cx: x(value(p) as number), cy: y(p.capability) }));
@@ -98,8 +115,16 @@ function ParetoChart({ kind, points, limit, title, unit }: { kind: Kind; points:
   };
   const capX = x(limit);
 
-  return <figure className="bh-panel min-w-0 p-3" data-bh-jev-pareto={kind}>
-    <figcaption className="mb-2 text-sm font-semibold">{title}</figcaption>
+  return <figure className={`bh-panel min-w-0 p-3 ${expanded ? 'fixed inset-0 z-[100] overflow-y-auto rounded-none p-4 sm:p-6' : ''}`}
+    style={expanded ? { background: 'var(--surface)' } : undefined} data-bh-jev-pareto={kind} data-bh-expanded={expanded}
+    role={expanded ? 'dialog' : undefined} aria-modal={expanded ? true : undefined} aria-label={expanded ? title : undefined}>
+    <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+      <figcaption className="text-sm font-semibold">{title}</figcaption>
+      <button ref={expandButton} type="button" className="bh-jev-preset" data-bh-jev-pareto-expand
+        onClick={() => { setExpanded(!expanded); if (expanded) requestAnimationFrame(() => expandButton.current?.focus()); }}>
+        {expanded ? 'Close fullscreen' : 'Expand / Show fullscreen'}
+      </button>
+    </div>
     <div ref={ref} className="relative w-full">
       <svg width={W} height={H} role="img" aria-label={`${title}: ${frontier.length} systems on the Pareto frontier`}
         onPointerMove={(e) => { const r = e.currentTarget.getBoundingClientRect(); setActive(nearest(e.clientX - r.left, e.clientY - r.top)); }}
@@ -128,7 +153,7 @@ function ParetoChart({ kind, points, limit, title, unit }: { kind: Kind; points:
         {labels.filter((l) => Math.abs(l.y - l.ly) > 6).map((l) => <line key={`lead-${l.key}`} x1={l.lx} y1={l.ly} x2={l.anchor === 'start' ? l.x - 2 : l.x + 2} y2={l.y} stroke={FRONTIER} strokeOpacity={0.55} strokeWidth={1} />)}
         {labels.map((l) => <text key={l.key} x={l.x} y={l.y + fs / 3} textAnchor={l.anchor} fontSize={fs} fontWeight={600}
           fill="var(--text)" stroke="var(--surface)" strokeWidth={3} paintOrder="stroke">{l.text}</text>)}
-        {hit && <circle cx={hit.cx} cy={hit.cy} r={8} fill="none" stroke="var(--text)" strokeWidth={1.5} />}
+        {hit && <circle cx={hit.cx} cy={hit.cy} r={8} fill="none" stroke="var(--text)" strokeWidth={1.5} data-bh-jev-pareto-highlight={hit.p.key} />}
       </svg>
       {hit && <div role="status" className="bh-panel pointer-events-none absolute z-10 max-w-[260px] p-2 text-xs shadow-lg"
         style={{ left: Math.min(Math.max(4, hit.cx + 12), W - 264), top: Math.max(4, hit.cy - 70) }}>
@@ -143,13 +168,26 @@ function ParetoChart({ kind, points, limit, title, unit }: { kind: Kind; points:
 
 export function JevParetoCharts({ points, costLimit, latencyLimit, scopeLabel, api = false }: { points: JevBubblePoint[]; costLimit: number; latencyLimit: number; scopeLabel?: string; api?: boolean }) {
   const visibleKeys = useJevV15VisibleKeys(points.map((p) => p.key));
-  const visible = useMemo(() => points.filter((p) => visibleKeys.has(p.key)), [points, visibleKeys]);
+  // Florian 10 Oct 2026: same "Show models that don't qualify as Jev-class" switch as the bubble charts (off by default).
+  const [showOutside, setShowOutside] = useState(false);
+  const visible = useMemo(() => points.filter((p) => visibleKeys.has(p.key) && (showOutside || p.inClass)), [points, visibleKeys, showOutside]);
+  // Synchronized highlight: both Pareto charts and the bubble charts show the same system.
+  const [active, setActiveLocal] = useState<string | null>(null);
+  const setActive = useCallback((key: string | null) => { setActiveLocal(key); publishJevHighlight(key, 'pareto'); }, []);
+  useJevHighlight('pareto', setActiveLocal);
+  const [expandedKind, setExpandedKind] = useState<Kind | null>(null);
   return <section id="jev-pareto" className="mt-8 scroll-mt-6" aria-labelledby="jev-pareto-title" data-bh-jev-pareto>
     <h2 id="jev-pareto-title" className="text-xl font-semibold">Pareto frontier: capability against cost and speed{scopeLabel && ` (${scopeLabel})`}</h2>
     <p className="bh-muted mt-1 max-w-4xl text-sm">The red line joins the systems nobody beats on both axes at once{api ? ' (provider list price, measured endpoint latency)' : ''}; hover or tap a point for the system that beats it. Shaded: beyond the Jev-class cap.</p>
+    <label className="mt-3 flex min-h-10 w-fit cursor-pointer items-center gap-2 text-sm">
+      <input type="checkbox" checked={showOutside} onChange={(e) => { setShowOutside(e.target.checked); setActive(null); }} data-bh-jev-pareto-show-outside />
+      Show models that don&apos;t qualify as Jev-class
+    </label>
     <div className="mt-4 grid min-w-0 gap-4 lg:grid-cols-2">
-      <ParetoChart kind="cost" points={visible} limit={costLimit} title="Capability vs cost ($ per 1,000 decisions)" unit={api ? '$ per 1,000 decisions (list price)' : '$ per 1,000 decisions'} />
-      <ParetoChart kind="latency" points={visible} limit={latencyLimit} title="Capability vs speed (median latency)" unit={api ? 'Median endpoint latency' : 'Median latency'} />
+      <ParetoChart kind="cost" points={visible} limit={costLimit} title="Capability vs cost ($ per 1,000 decisions)" unit={api ? '$ per 1,000 decisions (list price)' : '$ per 1,000 decisions'}
+        active={active} setActive={setActive} expanded={expandedKind === 'cost'} setExpanded={(value) => setExpandedKind(value ? 'cost' : null)} />
+      <ParetoChart kind="latency" points={visible} limit={latencyLimit} title="Capability vs speed (median latency)" unit={api ? 'Median endpoint latency' : 'Median latency'}
+        active={active} setActive={setActive} expanded={expandedKind === 'latency'} setExpanded={(value) => setExpandedKind(value ? 'latency' : null)} />
     </div>
   </section>;
 }
