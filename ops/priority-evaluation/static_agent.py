@@ -92,8 +92,13 @@ def materialize(folder):
     path = Path(folder) / 'OUTPUT.md'
     if path.stat().st_size > 200_000:
         raise ValueError('static preparation output too large')
+    text = path.read_text().strip()
     try:
-        value = json.loads(path.read_text())
+        value, end = json.JSONDecoder().raw_decode(text)
+        # Codex sometimes closes the envelope twice (orders 1c027833, a8731403); stray closing
+        # braces after one complete object are dropped, any other trailing text is still an error.
+        if text[end:].strip('}' + chr(32) + chr(10) + chr(13) + chr(9)):
+            raise json.JSONDecodeError('Extra data', text, end)
     except json.JSONDecodeError as exc:
         # The model's reply is the whole envelope; a stray character must fail as a named schema error.
         raise ValueError(f'static preparation output is not one JSON object ({exc.msg} at char {exc.pos})') from None

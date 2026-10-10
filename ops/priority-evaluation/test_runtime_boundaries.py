@@ -36,10 +36,15 @@ class BoundaryTests(unittest.TestCase):
         base={'MEASUREMENT-META.json':'{}','RUNTIME.json':'{}','PRICING-REVIEW.md':'x'}
         with tempfile.TemporaryDirectory() as directory:
             folder=Path(directory)
-            # Order 1c027833 (6 Oct 2026): a valid envelope followed by one stray brace.
-            (folder/'OUTPUT.md').write_text(json.dumps({'files':base})+'}')
+            # Orders 1c027833/a8731403: a valid envelope followed by stray closing braces is accepted;
+            # other trailing text still fails as a named error.
+            (folder/'OUTPUT.md').write_text(json.dumps({'files':base})+'x')
             with self.assertRaisesRegex(ValueError,'not one JSON object'):
                 static_agent.materialize(folder)
+            (folder/'OUTPUT.md').write_text(json.dumps({'files':base})+'}\n')
+            static_agent.materialize(folder)
+            self.assertEqual((folder/'trusted-runner'/'PRICING-REVIEW.md').read_text(),'x')
+            shutil.rmtree(folder/'trusted-runner')
             for bad in ([], {'files':[]}, {'files':dict(base,**{'POD-RECIPE.json':'[]'})},
                         {'files':dict(base,**{'POD-RECIPE.json':'{'})}, {'files':dict(base,**{'run.py':'x'})}):
                 with self.subTest(bad=bad):
