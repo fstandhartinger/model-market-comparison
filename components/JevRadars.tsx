@@ -4,7 +4,7 @@ import { useState } from "react";
 import { RadarHit, RadarTip, type RadarActive, type RadarSeries } from './TopicRadar';
 import type { JevAxis, JevV12Row } from "../lib/jevbench-v12.mjs";
 import type { JevTopicsView } from "../lib/jevbench-v12-topics.mjs";
-import { radarShape, RADAR_MIN_N, radarValue, plottable, radarRadius, radarScale, ringLabelPoint, ringLabelText, RADAR_DEFAULT_DOMAIN, type RadarDomain, radarLabelMode, fullLabelLayout, numberedLayout, BADGE_R, BADGE_FONT } from "../lib/radar-shape.mjs";
+import { radarShape, RADAR_MIN_N, radarValue, plottable, radarRadius, radarScale, ringLabelPoint, ringLabelText, RADAR_DEFAULT_DOMAIN, type RadarDomain, radarLabelMode, fullLabelLayout, endsLayout, ENDS_PROFILES } from "../lib/radar-shape.mjs";
 
 // CR-94 (Florian 2026-09-19 ~17:30 UTC): compare two systems on radars — the four axes of the JevBench Score and accuracy by
 // subject topic (completes CR-90.3). Every value is the table's (axes) or the published topic artifact's; nothing is recomputed.
@@ -33,16 +33,26 @@ export type Spoke = { key: string; lines: string[]; values: (number | null)[]; t
  *  competence radars pass RADAR_SIGNED_DOMAIN (−100 centre, 0 bold ring at half radius, 100 rim), so a complete series of measured
  *  zeros is a full polygon and a negative value is drawn at its own radius. The domain is fixed by the caller, never by the data. */
 export function Radar({ spokes, series, size, id, title, desc, domain = RADAR_DEFAULT_DOMAIN }: { spokes: Spoke[]; series: Series[]; size: { w: number; h: number; r: number }; id: string; title: string; desc: string; domain?: RadarDomain }) {
-  const [active, setActive] = useState<RadarActive>(null);
-  // Radar display fix (9 Oct 2026): with more than DENSE_SPOKES spokes, or whenever a full name + value label would touch another
-  // label or leave the canvas (lib/radar-shape.mjs), spokes carry a number and the names, values and definitions move into
-  // the key under the radar — the text keeps its size instead of shrinking with a dense SVG on a phone.
   const shown = (s: Spoke, k: number) => radarValue(s.values[k]) !== null || series.some((_, m) => radarValue(s.values[m]) !== null);
   const valueText = (s: Spoke) => series.map((_, k) => (shown(s, k) ? (radarValue(s.values[k]) === null ? "n/a" : s.texts[k]) : "")).filter(Boolean).join(" · ");
+  // Radar display fix (9 Oct 2026) + layout A (Florian, Telegram #16968, 10 Oct 2026): with more than DENSE_SPOKES spokes, or
+  // whenever a full label would touch another or leave the caller's canvas, labels stay at their spoke ends as horizontal text
+  // on a canvas fitted to them (lib/radar-shape.mjs endsLayout): one geometry from 600 px up, a wrapped phone geometry below.
   const mode = radarLabelMode(spokes.map((s) => ({ lines: s.lines, value: valueText(s) })), size);
-  const num = mode === "numbered" ? numberedLayout(spokes.length, size) : null;
-  const W = num ? num.w : size.w, H = num ? num.h : size.h;
-  const cx = num ? num.cx : size.w / 2, cy = num ? num.cy : size.h / 2 + 4, R = num ? num.r : size.r;
+  if (mode === "full") return <RadarCanvas spokes={spokes} series={series} size={size} id={id} title={title} desc={desc} domain={domain} mode="full" />;
+  return <>
+    <div className="hidden min-[600px]:block" data-bh-radar-variant="desktop"><RadarCanvas spokes={spokes} series={series} size={size} id={id} title={title} desc={desc} domain={domain} mode="ends" profile="desktop" /></div>
+    <div className="min-[600px]:hidden" data-bh-radar-variant="phone"><RadarCanvas spokes={spokes} series={series} size={size} id={`${id}-m`} title={title} desc={desc} domain={domain} mode="ends" profile="phone" /></div>
+  </>;
+}
+
+function RadarCanvas({ spokes, series, size, id, title, desc, domain, mode, profile = "desktop" }: { spokes: Spoke[]; series: Series[]; size: { w: number; h: number; r: number }; id: string; title: string; desc: string; domain: RadarDomain; mode: "full" | "ends"; profile?: "desktop" | "phone" }) {
+  const [active, setActive] = useState<RadarActive>(null);
+  const shown = (s: Spoke, k: number) => radarValue(s.values[k]) !== null || series.some((_, m) => radarValue(s.values[m]) !== null);
+  const valueText = (s: Spoke) => series.map((_, k) => (shown(s, k) ? (radarValue(s.values[k]) === null ? "n/a" : s.texts[k]) : "")).filter(Boolean).join(" · ");
+  const ends = mode === "ends" ? endsLayout(spokes.map((s) => ({ name: s.lines.join(" "), value: valueText(s) })), ENDS_PROFILES[profile]) : null;
+  const W = ends ? ends.w : size.w, H = ends ? ends.h : size.h;
+  const cx = ends ? ends.cx : size.w / 2, cy = ends ? ends.cy : size.h / 2 + 4, R = ends ? ends.r : size.r;
   // D245: Math.sin/Math.cos may differ in the last ULP between the Node that server-renders and the
   // browser's V8 (spoke 10 of an 11-spoke radar: 172.17492934337636 vs 172.1749293433764), so every
   // ring polygon failed hydration as an attribute mismatch. Three decimals of an SVG user unit is far
@@ -62,7 +72,9 @@ export function Radar({ spokes, series, size, id, title, desc, domain = RADAR_DE
     const missing = radarValue(s.values[k]) === null;
     return !shown(s, k) ? null : <tspan key={k} fill={missing || s.thin[k] ? "var(--muted)" : se.stroke} fontWeight={missing ? 400 : 700} data-bh-jev12-radar-value={`${k === 0 ? "a" : "b"}:${s.key}`} data-bh-radar-na={missing ? "" : undefined}>{k > 0 && shown(s, k - 1) ? <tspan fill="var(--muted)" fontWeight={400}> · </tspan> : null}{missing ? "n/a" : s.texts[k]}</tspan>;
   });
-  const svg = <svg viewBox={`0 0 ${W} ${H}`} className={num ? "mx-auto h-auto w-full max-w-[420px]" : "h-auto w-full"} role="img" aria-labelledby={`${id}-t ${id}-d`} data-bh-jev12-radar-svg data-bh-radar-label-mode={mode} data-bh-radar-domain={scale.signed ? "signed" : undefined}>
+  const fullLabels = ends ? null : fullLabelLayout(spokes.map((s) => ({ lines: s.lines, value: valueText(s) })), size);
+  const labelTitle = (s: Spoke, i: number) => `${s.lines.join(' ')}: ${series.map((se, k) => `${se.name}: ${tooltipSeries[k].points[i].label}`).join('; ')}${s.tip ? ` — ${s.tip}` : ''}`;
+  const svg = <svg viewBox={`0 0 ${r3(W)} ${r3(H)}`} className="h-auto w-full" role="img" aria-labelledby={`${id}-t ${id}-d`} data-bh-jev12-radar-svg data-bh-radar-label-mode={mode} data-bh-radar-profile={ends ? profile : undefined} data-bh-radar-domain={scale.signed ? "signed" : undefined}>
     <title id={`${id}-t`}>{title}</title><desc id={`${id}-d`}>{scaleText ? `${desc} ${scaleText}` : desc}</desc>
     {scale.rings.map((v) => <polygon key={v} points={ring(v)} fill="none" stroke={v === scale.zero ? "currentColor" : "rgb(var(--line))"} strokeOpacity={v === scale.zero ? 0.55 : v === domain[1] ? 0.9 : 0.5} strokeWidth={v === scale.zero ? 1.8 : 1} data-bh-radar-zero-ring={v === scale.zero ? "" : undefined} />)}
     {/* F-136 (Fable pass 25, = F-113/F-117 for these radars): ring labels sit at the half-step between spoke 0 and spoke 1, inside their
@@ -86,17 +98,20 @@ export function Radar({ spokes, series, size, id, title, desc, domain = RADAR_DE
         {pts.map(([x, y], i) => se.square ? <rect key={i} x={x - 3.5} y={y - 3.5} width={7} height={7} fill={se.stroke} stroke="var(--surface)" strokeWidth={1} /> : <circle key={i} cx={x} cy={y} r={3.8} fill={se.stroke} stroke="var(--surface)" strokeWidth={1} />)}
       </g>;
     })}
-    {num ? spokes.map((s, i) => {
-      const b = num.badges[i];
-      return <g key={s.key} data-bh-jev12-radar-spoke={s.key} data-bh-radar-spoke-number={i + 1} style={{ cursor: "help" }}>
-        <title>{`${i + 1}. ${s.lines.join(" ")}: ${valueText(s) || "n/a"}${s.tip ? ` — ${s.tip}` : ""}`}</title>
-        <circle cx={r3(b.x)} cy={r3(b.y)} r={BADGE_R} fill="var(--surface)" stroke="rgb(var(--line))" />
-        <text x={r3(b.x)} y={r3(b.y)} textAnchor="middle" dominantBaseline="central" fontSize={BADGE_FONT} fontWeight={700} fill="var(--text)">{i + 1}</text>
+    {ends ? ends.items.map((it, i) => {
+      const s = spokes[i], x = r3(it.x), y = r3(it.y);
+      return <g key={s.key} data-bh-jev12-radar-spoke={s.key} style={{ cursor: "help" }}>
+        {it.leader && <line x1={r3(it.ex)} y1={r3(it.ey)} x2={x} y2={r3(it.ly)} stroke="var(--muted)" strokeOpacity={0.45} strokeWidth={0.8} data-bh-radar-leader />}
+        <text x={x} y={y} textAnchor={it.anchor} fontSize={it.font} fill="var(--text)">
+          <title>{labelTitle(s, i)}</title>
+          {it.lines.map((l, j) => <tspan key={j} x={x} dy={j === 0 ? 0 : it.line} fontWeight={600}>{l}</tspan>)}
+          <tspan x={x} dy={it.line} fontSize={it.font - 0.5}>{slots(s)}</tspan>
+        </text>
       </g>;
-    }) : fullLabelLayout(spokes.map((s) => ({ lines: s.lines, value: valueText(s) })), size).map(({ x: x0, y: y1, anchor }, i) => {
+    }) : fullLabels!.map(({ x: x0, y: y1, anchor }, i) => {
       const s = spokes[i], x = r3(x0), y = r3(y1);
       return <text key={s.key} x={x} y={y} textAnchor={anchor} fontSize={13.5} fill="var(--text)" data-bh-jev12-radar-spoke={s.key} style={s.tip ? { cursor: "help" } : undefined}>
-        <title>{`${s.lines.join(' ')}: ${series.map((se, k) => `${se.name}: ${tooltipSeries[k].points[i].label}`).join('; ')}${s.tip ? ` — ${s.tip}` : ''}`}</title>
+        <title>{labelTitle(s, i)}</title>
         {s.lines.map((l, j) => <tspan key={j} x={x} dy={j === 0 ? 0 : 14} fontWeight={600}>{l}</tspan>)}
         {/* F-216 (Fable pass 40), refined by CR-290: the separator sits between two printed slots; an unpublished value prints "n/a", never a bare "· 74%". */}
         {/* CR-290: when one system has a value and the other has none, the missing one prints a muted "n/a" in its slot, so a gap
@@ -109,27 +124,11 @@ export function Radar({ spokes, series, size, id, title, desc, domain = RADAR_DE
       const [x, y] = at(i, s.values[k] as number);
       return <RadarHit key={`${k}-${s.key}`} cx={x} cy={y} s={k} i={i} active={active} setActive={setActive} label={`${se.name}, ${s.lines.join(' ')}: ${tooltipSeries[k].points[i].label}`} />;
     }))}
-    {num && spokes.map((s, i) => <RadarHit key={`label-${s.key}`} cx={r3(num.badges[i].x)} cy={r3(num.badges[i].y)} s={0} i={i} active={active} setActive={setActive} label={`${s.lines.join(' ')}: ${tooltipSeries.map((se) => `${se.name}: ${se.points[i].label}`).join('; ')}`} />)}
   </svg>;
-  const chart = <><div className={num ? "relative mx-auto w-full max-w-[420px]" : "relative"} data-bh-jev-radar-interactive onPointerLeave={(e) => { if (e.pointerType === 'mouse') setActive(null); }} onClick={() => setActive(null)}>
+  return <><div className="relative" data-bh-jev-radar-interactive onPointerLeave={(e) => { if (e.pointerType === 'mouse') setActive(null); }} onClick={() => setActive(null)}>
     {svg}
     <RadarTip active={active} axes={tooltipAxes} series={tooltipSeries} at={tooltipAt} width={W} height={H} />
   </div>{scaleText && <p className="bh-muted text-center text-[12px]" data-bh-radar-scale="signed">{scaleText}</p>}</>;
-  if (!num) return chart;
-  // The key: spoke number, full name (definition and item count on hover / long-press via title), and every series' value in
-  // its colour — the same printed values the labels carried. Two columns from sm up, one on a phone; long names wrap.
-  return <>
-    {chart}
-    <ol className="mt-1 grid gap-x-4 gap-y-0.5 text-[12.5px] leading-snug sm:grid-cols-2" aria-label={`Spoke key: ${title}`} data-bh-radar-key={id}>
-      {spokes.map((s, i) => <li key={s.key} className="flex min-w-0 gap-1.5" title={s.tip} data-bh-radar-key-item={s.key}>
-        <span className="tabular w-5 shrink-0 text-right font-bold" aria-hidden="true">{i + 1}</span>
-        <span className="min-w-0 break-words"><span className="font-semibold">{s.lines.join(" ")}</span>{" "}
-          <span className="whitespace-nowrap">{series.map((se, k) => { const missing = radarValue(s.values[k]) === null; if (!shown(s, k)) return null;
-            return <span key={k} style={{ color: missing || s.thin[k] ? "var(--muted)" : se.stroke }} className={missing ? "" : "font-bold"} data-bh-radar-key-value={`${k === 0 ? "a" : "b"}:${s.key}`}>{k > 0 && shown(s, k - 1) ? <span className="bh-muted font-normal"> · </span> : null}{missing ? "n/a" : s.texts[k]}</span>; })}</span>
-        </span>
-      </li>)}
-    </ol>
-  </>;
 }
 
 // F-167 (Fable pass 32): the per-system page draws the same topic radar for a fixed pair, so the two
