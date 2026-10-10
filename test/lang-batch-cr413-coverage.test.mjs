@@ -11,7 +11,7 @@ const sha256 = (b) => createHash('sha256').update(b).digest('hex');
 const language = read('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.1-language-cells.json');
 const category = read('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.1-category-cells.json');
 // CR-413: six more rows; jobe, autojev, ninfer and razorback are historical rows (new S+P run, cells only).
-const KEYS = ['diffusion-jev', 'jobe-qwen3.5-4b', 'spx-cd-omni', 'autojev-27b-rtxpro6000-a2', 'ninfer-qwen3.8-27b-t1.5', 'openjev-razorback16'];
+const KEYS = ['diffusion-jev', 'jobe-qwen3.5-4b', 'spx-cd-omni', 'autojev-27b-rtxpro6000-a2', 'ninfer-qwen3.8-27b-t1.5', 'openjev-razorback16', 'seb-9b', 'apus-openjev-v1-9b', 'apus-openjev-v1-35b-a3b'];
 // openjev-razorback16 samples stochastically (diffusion decoding): its passes agree on 86-89 % of the public items; disclosed in its coverage note.
 const STOCHASTIC = new Set(['openjev-razorback16']);
 
