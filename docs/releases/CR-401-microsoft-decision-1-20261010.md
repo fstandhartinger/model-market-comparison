@@ -2,7 +2,7 @@
 
 Measured on 10 October 2026 through the existing Azure Foundry deployment, using the full 1,200 sealed plus 300 public observations. Capability 70.7841579088; Composite A/B/C 69.1128917528/66.3410288829/62.7460866321; Intelligence 57.1695851059; Calibration 84.3987307117. All 21 context-limit outcomes remain scored. Native speed subset n124: median 0.4592557885 seconds, p95 1.5255548183 seconds. Advertised input tariff USD0.042 per million, output free; the fixed common mask contains 1,479 genuine known-usage rows and gives USD0.0192721785 per 1,000 decisions. This is tariff accounting, not a billed invoice.
 
-Stock O1S scoring and 1,000 bootstrap samples with seed16 are retained. This run uses its completed-six reference median 7.088097744249485 seconds. Historical board rows retain their own draws, dates and reference medians; the frozen historical reference is 2.573387642438244 seconds. No matched-pool recomputation or score conversion is implied.
+Stock O1S scoring and 1,000 bootstrap samples with seed16 are retained. This run uses its completed-six median gap reference 7.088097744249485 score points. Historical board rows retain their own draws, dates and gap references; the frozen historical reference is 2.573387642438244 score points. No matched-pool recomputation or score conversion is implied.
 
 Fresh public API comparison at 05:08 UTC places this stored-score insertion sixth on Composite A and seventh on capped Capability. Both public top-five orders are unchanged, so the normal release queue applies. Open and archived boards do not load this addendum. Aggregate provenance includes actual input/run/scorer/category/cost-mask/acceptance hashes, with release authorization recorded separately from observed publication.
 
