@@ -8,8 +8,10 @@ function fixture() {
   const coverage = Object.fromEntries([['topics', 7], ['usecases', 20], ['languages', 23]].map(([dim, count]) => [dim, Array.from({ length: count }, (_, i) => ({ key: `${dim}-${i}`, label: `Synthetic ${i}`, n: i === 0 ? 0 : i === 1 ? 15 : 30, answered_ok: i === 0 ? 0 : i === 1 ? 15 : 29, errors: i < 2 ? 0 : 1, competence: i === 0 ? null : 50, types: ['choice'], pool: 'S+P' }))]));
   return { schema_version: 1, kind: 'jevbench-api-full-addenda', entries: [{ key: 'synthetic-public-fixture', release: 'synthetic-test', publication_status: 'published', published_at: '2026-10-10T00:00:00Z', provenance: { parent: 'synthetic-parent', method: 'O1S', g_med_s: 7, counts: { S: 1200, P: 300 }, cost_n: 1479, input_sha256: hash, run_sha256: hash, scorer_sha256: hash, categories_sha256: hash, acceptance_sha256: hash, publication_receipt_sha256: hash, cost_mask_sha256: hash, source_url: 'https://example.com/synthetic-aggregate' }, row: { key: 'synthetic-public-fixture', display: 'Synthetic test', api_flag: true, ranked: true, listing: 'ranked', capability: 50, scores: { A: 50, B: 50, C: 50 }, axes: { intelligence: 50, calibration: 50, speed: 50, cost: 50 }, speed: { p50_s_raw: 1, p50_s_adjusted: 1, adjustment: 'none (API)' }, cost: { usd_per_1000: .01, basis: 'synthetic tariff' }, status: { rows: 1500, answered_ok: 1497, status: 'complete' }, v16: { lane: 'api', full_set_api: true, equated: false, n_items: 1500, run_sha256: hash } }, coverage }] };
 }
-test('actual shipped registry is empty and has no Microsoft score/admission', async () => {
-  assert.deepEqual((await readApiFullAddenda()).entries, []);
+test('actual registry satisfies the admitted aggregate release contract', async () => {
+  const registry = await readApiFullAddenda();
+  assert.equal(validateApiFullAddenda(registry), registry);
+  assert.equal(new Set(registry.entries.map(e => e.key)).size, registry.entries.length);
 });
 test('full provenance required; unpublished/incomplete/equated/private bundles refuse', () => {
   assert.equal(validateApiFullAddenda(fixture()).entries.length, 1);
@@ -61,6 +63,13 @@ test('published addendum model page uses the same scoped board ranks and full-se
     await symlink(path.resolve('data/raw'), path.join(root, 'data/raw'), 'dir');
     await symlink(path.resolve('data/jevbench-api-a4-equated.json'), path.join(root, 'data/jevbench-api-a4-equated.json'));
     const registry = fixture(), entry = registry.entries[0];
+    const { jevbenchCategoryView, JEVBENCH_LANGUAGE_CELLS_ARTIFACT } = await import('../lib/jevbench-categories.mjs');
+    const taxonomy = jevbenchCategoryView('v1.6.1', [], { supplement: true });
+    const languageKeys = JSON.parse(await readFile(JEVBENCH_LANGUAGE_CELLS_ARTIFACT, 'utf8')).languages.map(c => c.key);
+    for (const dim of ['topics', 'usecases', 'languages']) {
+      const keys = dim === 'languages' ? languageKeys : taxonomy.dims.find(d => d.key === dim).cats.map(c => c.key);
+      entry.coverage[dim].forEach((c, i) => { c.key = keys[i]; });
+    }
     entry.row.capability = 99; entry.row.scores = { A: 99, B: 99, C: 99 };
     await writeFile(path.join(root, 'data/jevbench-api-full-addenda.json'), JSON.stringify(registry));
     const [{ artifact: release, carry }, previous, a4, pages, originalPages] = await Promise.all([
@@ -74,6 +83,8 @@ test('published addendum model page uses the same scoped board ranks and full-se
     const expected = board.systems.find(r => r.key === entry.key);
     const classRows = jevClassRows(board.systems.filter(r => r.ranked), JEV_V16_CLASS_OPTIONS).rows.filter(r => r.inClass);
     const page = pages.get(entry.key);
+    assert.ok(page.categoryView.systems[entry.key], 'model detail receives authenticated addendum cells');
+    assert.equal(page.categoryView.systems[entry.key].topics[entry.coverage.topics[0].key], undefined, 'n0 cells stay suppressed');
     assert.ok(page, 'new published key must exist for static params and model-page lookup');
     assert.deepEqual(page.row, expected);
     assert.equal(page.compositeRank, expected.rank);
@@ -82,8 +93,10 @@ test('published addendum model page uses the same scoped board ranks and full-se
     assert.equal(page.full, true); assert.equal(page.nItems, 1500);
     assert.equal(page.measuredOn, entry.published_at);
     assert.equal(page.round, entry.provenance.parent); assert.equal(page.offsets, null);
-    assert.ok(pages.get('instinct').compositeRank > originalPages.get('instinct').compositeRank);
-    assert.equal(originalPages.has(entry.key), false, 'real empty registry remains unchanged');
+    const baselineArtifact = jevWithApiA4Rows(release, withApiRerunSplits(a4), meta);
+    const baselineBoard = jevbenchScopeArtifact(baselineArtifact, 'api', jevScopeClassifier(baselineArtifact.systems, carry.rows, previous.artifact.systems, previous.artifact.not_measured));
+    assert.equal(pages.get('instinct').compositeRank, baselineBoard.systems.find(r => r.key === 'instinct').rank + 1, 'fixture inserts above the isolated historical baseline, independently of the real registry');
+    assert.equal(originalPages.has(entry.key), false, 'synthetic fixture never enters the real registry');
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 test('nested row aggregates reject arbitrary item fields and scalar-object substitutions', () => {
@@ -121,5 +134,40 @@ test('accepted refusal coverage is separate from valid answers and scored failur
   for (const bad of [19, 31, 29.5, true]) {
     cell.coverage_n = bad;
     assert.throws(() => validateApiFullAddenda(a), /completed coverage/);
+  }
+});
+
+test('stock below-chance category competence remains negative, headline axes remain bounded', () => {
+  for (const value of [-100, -0.01, 0, 100]) {
+    const a = fixture(); a.entries[0].coverage.topics[1].competence = value;
+    assert.equal(validateApiFullAddenda(a), a);
+    const taxonomy = Object.fromEntries(Object.entries(a.entries[0].coverage).map(([d, cs]) => [d, cs.map(c => ({ key: c.key }))]));
+    assert.equal(withApiFullAddendumCategories({ systems: {}, ...taxonomy }, a).systems[a.entries[0].key].topics['topics-1'].competence, value);
+  }
+  for (const value of [-100.01, 100.01, NaN, Infinity, 'negative']) {
+    const a = fixture(); a.entries[0].coverage.topics[1].competence = value;
+    assert.throws(() => validateApiFullAddenda(a), /official cell minimum/);
+  }
+  const a = fixture(); a.entries[0].row.axes.intelligence = -1;
+  assert.throws(() => validateApiFullAddenda(a), /invalid score axes/);
+});
+
+test('approved staged release uses authorization and preparation time without claiming live publication', () => {
+  const staged = () => {
+    const a = fixture(), e = a.entries[0];
+    e.publication_status = 'approved_for_publication'; e.published_at = null; e.prepared_at = '2026-10-10T05:00:00Z';
+    delete e.provenance.publication_receipt_sha256; e.provenance.release_authorization_sha256 = 'b'.repeat(64);
+    return a;
+  };
+  assert.equal(validateApiFullAddenda(staged()).entries[0].published_at, null);
+  const absent = staged(); delete absent.entries[0].published_at; assert.equal(validateApiFullAddenda(absent), absent);
+  for (const mutate of [
+    e => { delete e.provenance.release_authorization_sha256; }, e => { delete e.prepared_at; },
+    e => { e.prepared_at = 'invalid'; }, e => { e.publication_status = 'unpublished'; },
+    e => { e.published_at = '2026-10-10T05:00:00Z'; }, e => { e.provenance.publication_receipt_sha256 = 'c'.repeat(64); },
+  ]) { const a = staged(); mutate(a.entries[0]); assert.throws(() => validateApiFullAddenda(a), /API full addendum/); }
+  assert.equal(validateApiFullAddenda(fixture()).entries[0].publication_status, 'published');
+  for (const mutate of [e => { delete e.published_at; }, e => { e.published_at = null; }, e => { delete e.provenance.publication_receipt_sha256; }]) {
+    const a = fixture(); mutate(a.entries[0]); assert.throws(() => validateApiFullAddenda(a), /API full addendum/);
   }
 });

@@ -109,7 +109,7 @@ function describeRow(row: JevV12Row, view: JevV12View, all: JevV12Row[]): string
 // CR-291: systems of the current JevBench release (and their dated history) render from the SEO data layer, which reads the
 // release pointer in lib/jevbench-current.mjs, so the page never shows a frozen older release as current.
 type SeoRow = Awaited<ReturnType<typeof readJevbenchSeoData>>['systems'][number];
-type A4Page = { row: unknown; ranked: boolean; compositeRank: number | null; capabilityRank: number | null; capabilityOutside: string | null;
+type A4Page = { categoryView?: ReturnType<typeof jevbenchCategoryView>; row: unknown; ranked: boolean; compositeRank: number | null; capabilityRank: number | null; capabilityOutside: string | null;
   nRanked: number; nCapability: number; nItems: number; measuredOn: string; round: string; offsets: { I: number; C: number }; subset?: string; full: boolean };
 const a4CostLabel = (kind: string | undefined) => kind === 'estimate' ? 'estimated' : 'public tariff';
 // Review 6 Oct 2026: the 17 API rows re-run on A4 ∪ P (v1.7.7) show the API-board figures; the older figure moves to a labelled block.
@@ -118,7 +118,7 @@ const a4CostLabel = (kind: string | undefined) => kind === 'estimate' ? 'estimat
 function A4Breakdowns({ s, page }: { s: any; page: A4Page }) {
   const split = s.intelligence?.per_type_split ?? {};
   const types = (['choice', 'noul', 'score'] as const).filter((t) => split[`open|${t}`] || split[`sealed|${t}`]);
-  const cats = jevbenchCategoryView('v1.6.1', [s.key], { supplement: true });
+  const cats = page.categoryView ?? jevbenchCategoryView('v1.6.1', [s.key], { supplement: true });
   const cell = cats?.systems[s.key];
   const sets = page.full ? `the full set (${page.nItems} items)` : `${page.subset} ∪ P (${page.nItems} items: 300 open + 300 sealed; fewer sealed items than the full set, so wider uncertainty)`;
   const pct = (v: number | null | undefined) => (v == null ? '—' : v.toFixed(1));

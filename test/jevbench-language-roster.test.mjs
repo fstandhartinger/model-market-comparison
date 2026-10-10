@@ -16,14 +16,24 @@ assert.deepEqual(languageRoster([],pending,carry,cells,r=>r.api_flag===true,'api
 import { readFileSync } from 'node:fs';
 import { jevWithApiA4Rows, jevbenchScopeArtifact, jevbenchScopeCarry, jevScopeClassifier } from '../lib/jevbench-scope.mjs';
 import { jevLanguageRows } from '../lib/jevbench-categories.mjs';
-import { listedRadarBoards } from '../scripts/jevbench-radar-spokes.mjs';
+import { listedRadarBoards, listedFullAddenda, listedLanguageCells } from '../scripts/jevbench-radar-spokes.mjs';
 const read = f => JSON.parse(readFileSync(new URL('../'+f, import.meta.url)));
 const rel=read('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.1-results.json');
 const dated=read('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.0-dated-carry.json');
-const aggregate=read('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.1-language-cells.json');
-const merged=jevWithApiA4Rows(rel,read('data/jevbench-api-a4-equated.json'),new Map(dated.rows.map(r=>[r.key,r])));
+import { withApiFullAddenda } from '../lib/jevbench-api-full-addenda.mjs';
+const addenda=listedFullAddenda();
+const aggregate=listedLanguageCells(addenda);
+const historicalMerged=jevWithApiA4Rows(rel,read('data/jevbench-api-a4-equated.json'),new Map(dated.rows.map(r=>[r.key,r])));
+const frozenBefore=JSON.stringify(historicalMerged);
+const merged=withApiFullAddenda(historicalMerged,addenda);
+assert.equal(JSON.stringify(historicalMerged),frozenBefore,'live insertion cannot change historical headline input');
 const isApi=jevScopeClassifier(merged.systems,dated.rows,merged.not_measured);
-const expected=listedRadarBoards();
+const expected=listedRadarBoards(addenda);
+const historicalRoster=listedRadarBoards({schema_version:1,kind:'jevbench-api-full-addenda',entries:[]});
+const addendumKeys=new Set(addenda.entries.map(e=>e.key));
+// The established open language catalogue includes API listings too; preserve its old roster/order.
+assert.deepEqual(expected.open.filter(k=>!addendumKeys.has(k)),historicalRoster.open,'live insertion must retain every prior language catalogue entry');
+for(const e of addenda.entries) { assert.ok(expected.api.includes(e.key)); assert.equal(Object.keys(aggregate.systems[e.key].languages).length,23); }
 for(const scope of ['open','api']) {
  const artifact=jevbenchScopeArtifact(merged,scope,isApi);
  const scopedCarry=jevbenchScopeCarry(dated,scope==='open'?'all':'api',isApi);

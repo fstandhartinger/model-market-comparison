@@ -4,6 +4,17 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-10-10 — Microsoft-Decision-1 native API addendum (CR-401, board note v1.7.31)
+
+Adds Microsoft-Decision-1 to the hosted API board and its model page, with
+Capability 70.78 and Composite A 69.11 from its full native S1200+P300 run.
+All 21 context-limit outcomes remain scored. The new aggregate endpoint is
+`/api/jevbench/api-addenda`; frozen historical exports remain unchanged.
+All 50 category/language inventory cells are recorded, with low-sample gaps
+shown explicitly and supplemental coverage still pending. Both existing top
+fives are unchanged. Historical rows retain their own pools and reference
+medians; see `docs/releases/CR-401-microsoft-decision-1-20261010.md`.
+
 ## 2026-10-10 — decisio 31B language and category cells (CR-398, board note v1.7.30)
 
 `decisio-gemma-4-31b-v080` now has complete language and category cells (S+P+L1+L2+L3)
