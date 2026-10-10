@@ -430,9 +430,12 @@ export function JevBubbleCharts({ points, costLimit, latencyCap, costFactor = 2,
   const visibleKeys = useJevV15VisibleKeys(points.map((point) => point.key));
   const [weights, setWeights] = useState<JevWeights>(OFFICIAL_WEIGHTS);
   const [showOutside, setShowOutside] = useState(false);
-  const [active, setActive] = useState<string | null>(null);
+  const [active, setActiveLocal] = useState<string | null>(null);
   const [pinned, setPinned] = useState(false);
   const [expandedKind, setExpandedKind] = useState<Kind | null>(null);
+  // Florian 10 Oct 2026: the highlighted system is shared with the Pareto charts (and back).
+  const setActive = useCallback((key: string | null) => { setActiveLocal(key); publishJevHighlight(key, 'bubbles'); }, []);
+  useJevHighlight('bubbles', useCallback((key: string | null) => { setActiveLocal(key); setPinned(false); }, []));
   useEffect(() => {
     if (scoreKind !== 'v15') return;
     const onWeights = (event: Event) => {
@@ -472,4 +475,28 @@ export function JevBubbleCharts({ points, costLimit, latencyCap, costFactor = 2,
       <li><span className="mr-1.5 inline-block h-2.5 w-2.5 rounded-full border align-middle opacity-60" style={{ borderColor: 'var(--muted)' }} aria-hidden="true" />faint = outside Jev-class</li>
     </ul>
   </section>;
+}
+
+// Florian 10 Oct 2026: synchronized hover/highlight across the JevBench charts — hovering or tapping a system in one
+// chart highlights the same system in the others (bubble charts and Pareto charts). A tiny window event bus, so the
+// charts stay independent components.
+const EVENT = 'jevbench-chart-highlight';
+type Detail = { key: string | null; source: string };
+
+export function publishJevHighlight(key: string | null, source: string) {
+  if (typeof window === 'undefined') return;
+  window.dispatchEvent(new CustomEvent<Detail>(EVENT, { detail: { key, source } }));
+}
+
+/** Calls `onKey` when another chart group highlights a system (or clears the highlight). */
+export function useJevHighlight(source: string, onKey: (key: string | null) => void) {
+  useEffect(() => {
+    const handler = (event: Event) => {
+      const detail = (event as CustomEvent<Detail>).detail;
+      if (!detail || detail.source === source) return;
+      onKey(detail.key);
+    };
+    window.addEventListener(EVENT, handler);
+    return () => window.removeEventListener(EVENT, handler);
+  }, [source, onKey]);
 }
