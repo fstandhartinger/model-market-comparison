@@ -373,7 +373,8 @@ def _build_host_image(provider, pod_id, recipe, job_dir, image_context_provider,
 
 
 def _env_names_checked(raw):
-    """Names of an env list; refuse secret-looking names (HF_TOKEN / OPENAI_API_KEY only when empty)."""
+    """Names of an env list; refuse secret-looking names (HF_TOKEN / OPENAI_API_KEY only when empty;
+    HF_HUB_DISABLE_IMPLICIT_TOKEN only as the switch value 1, which stops huggingface_hub using a token)."""
     try:
         env = json.loads(raw)
         if env is None:
@@ -386,7 +387,8 @@ def _env_names_checked(raw):
     for item in env:
         name, _, value = item.partition("=")
         names.append(name)
-        if SECRETISH_ENV_RE.search(name) and not (name in ("HF_TOKEN", "OPENAI_API_KEY") and value == ""):
+        if SECRETISH_ENV_RE.search(name) and not ((name in ("HF_TOKEN", "OPENAI_API_KEY") and value == "")
+                                                  or (name == "HF_HUB_DISABLE_IMPLICIT_TOKEN" and value == "1")):
             raise PodRunError("run_container_env_secret_name")
     return sorted(set(names))
 
