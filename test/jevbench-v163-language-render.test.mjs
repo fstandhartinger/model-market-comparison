@@ -24,7 +24,8 @@ const code=ts.transpileModule(actualRowHelpers+actualNoteHelper+functionSource+'
 const module={exports:{}};
 runInNewContext(code,{module,exports:module.exports,require,Fragment:React.Fragment,freshJevbenchCategoryRows,
  JEV_SCOPE_LISTING,
- apiRowProps:()=>({}),nameLabel:s=>s,laneTag:()=> 'self-hosted',coverageOf:()=> 'S+P',spokeReason:()=>null,exposureNote:()=>null,
+ apiRowProps:()=>({}),nameLabel:s=>s,laneTag:()=> 'self-hosted',coverageOf:()=> 'S+P',spokeReason:key=>key==='compact-test'?'Some radar categories still need more observations.':null,
+ exposureNote:key=>key==='compact-test'?'L3 items were reviewed by an OpenAI model; headline scores do not use L3.':null,
  completedLanguageN:c=>c.coverage_n??c.n,heat:()=>({}),languagePoolNote:()=>'',
 },{filename:'actual-LanguageView.tsx'});
 const {LanguageView}=module.exports;
@@ -56,4 +57,42 @@ test('actual LanguageView labels a mixed subsidized/wrapper lower group exactly 
  assert.equal((html.match(/Wrappers and subsidized systems \(listed, never ranked\)/g)??[]).length,1);
  assert.ok(html.indexOf('Wrappers and subsidized systems')<html.indexOf('data-bh-jev16-language-row="subsidized"'));
  assert.match(html,/English: 77\.0 over 40 scored observations; 40 completed responses/);
+});
+
+
+test('compact language headers and every measured or pending cell retain full row remarks',()=>{
+ const f=fixture('v1.6.3');
+ const display='A very long model name with its exact original revision and configuration';
+ f.a.systems[0]={...f.a.systems[0],key:'compact-test',display,language_listing_note:'Historical headline · measured language cells'};
+ f.categories.supplement={};
+ f.categories.min_n=15;
+ f.categories.languages.push({key:'fr',label:'French',n:40,open:8,sealed:32},{key:'de',label:'German',n:40,open:8,sealed:32});
+ f.categories.systems.J.languages.fr={n:40,coverage_n:40,competence:42};
+ f.categories.systems.J.languages.de={n:40,coverage_n:40,competence:43};
+ f.categories.systems['compact-test']={
+  language_coverage_note:'Measured on the original stored pools; the supplement is partial and missing items remain unanswered.',
+  languages:{en:{n:40,coverage_n:40,competence:54},fr:{n:20,coverage_n:9,competence:20}},
+ };
+ const before=JSON.stringify(f);
+ const html=renderToStaticMarkup(React.createElement(LanguageView,f));
+ assert.equal(JSON.stringify(f),before,'rendering must not alter rows or measurements');
+ const row=html.match(/<tr data-bh-jev16-language-row="compact-test"[\s\S]*?<\/tr>/)[0];
+ const remarks=[display,'Measured item pools: S+P','Some radar categories still need more observations.',
+  'Historical headline · measured language cells','L3 items were reviewed by an OpenAI model; headline scores do not use L3.',
+  f.categories.systems['compact-test'].language_coverage_note];
+ const titles=[...row.matchAll(/<(?:th|td)\b[^>]*title="([^"]+)"/g)].map(m=>m[1]);
+ assert.equal(titles.length,4,'row header and every language cell have tooltips');
+ for(const title of titles)for(const remark of remarks)assert.ok(title.includes(remark),remark);
+ assert.match(row,/block w-56 truncate/,'long labels have a bounded column width on all screens');
+ assert.doesNotMatch(row,/whitespace-normal|sm:w-auto/,'remarks cannot widen the sticky column');
+ for(const marker of ['radar-spoke-exception','language-listing','l3-exposure-note','language-coverage-note']) {
+  assert.match(row,new RegExp(`class="sr-only" data-bh-${marker}`),'full remarks remain accessible without tall rows');
+ }
+ assert.match(row,/English: 54\.0 over 40 scored observations; 40 completed responses/);
+ assert.match(row,/French: 9 completed responses; below the 15-item reporting minimum/);
+ assert.match(row,/German: Not plotted; fewer than 15 answered items/);
+ assert.equal((row.match(/data-bh-jev16-language-suppressed/g)??[]).length,2);
+ const headers=html.match(/<thead>[\s\S]*?<\/thead>/)[0];
+ assert.equal((headers.match(/title="[^"]+"/g)??[]).length,4,'every column header has a tooltip');
+ assert.match(headers,/French: 40 items \(8 public, 32 sealed\)/);
 });
