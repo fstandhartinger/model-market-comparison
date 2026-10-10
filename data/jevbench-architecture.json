@@ -3,6 +3,32 @@
   "checked_utc": "2026-10-08T08:38:12Z",
   "benchmarks": {
     "jevbench": {
+      "ryotide_qwen9": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "pipeline",
+          "params": "9B",
+          "quant": "BF16"
+        },
+        "evidence": [
+          {
+            "fact": "The pinned RYOTIDE-Qwen9 preset uses frozen Qwen/Qwen3.5-9B revision c2022362 with a typed-decision readout pipeline; the author states no training and documents CUDA bf16.",
+            "kind": "model-card",
+            "url": "https://github.com/csabag/ryotide/blob/94c71a3d9f044ffaba87981e985b66f47de3be80/README.md"
+          },
+          {
+            "fact": "Pinned base config: architectures [Qwen3_5ForConditionalGeneration], model_type qwen3_5, text_config.model_type qwen3_5_text and text_config.dtype bfloat16; no quantization_config.",
+            "kind": "config.json",
+            "url": "https://huggingface.co/Qwen/Qwen3.5-9B/blob/c202236235762e1c871ad0ccb60c8ee5ba337b9a/config.json"
+          },
+          {
+            "fact": "The pinned official Qwen3.5-9B model card identifies 9B parameters.",
+            "kind": "model-card",
+            "url": "https://huggingface.co/Qwen/Qwen3.5-9B/blob/c202236235762e1c871ad0ccb60c8ee5ba337b9a/README.md"
+          }
+        ],
+        "note": "Unranked serving wrapper over one frozen open-weights decoder, not a RYOTIDE fine-tune. Pipeline denotes the typed-decision wrapper; BF16 denotes runtime precision, not compressed quantization. Ranking disposition remains wrapper_unranked."
+      },
       "autojev-27b": {
         "arch": "open-llm-decoder",
         "evidence": [

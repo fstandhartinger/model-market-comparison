@@ -10,7 +10,7 @@ export const JEVBENCH_CATEGORY_ARTIFACT: string;
 export const L3_EXPOSURE_NOTES: Record<string, string>;
 export const IMAGEJEV_CATEGORY_ARTIFACT: string;
 export const JEVBENCH_CATEGORY_REVISIONS: string[];
-export type JevFreshV16Revision = 'v1.6.2' | 'v1.6.3';
+export type JevFreshV16Revision = 'v1.6.2' | 'v1.6.3' | 'v1.6.4';
 export const JEVBENCH_FRESH_V16_REVISIONS: JevFreshV16Revision[];
 export function isFreshJevbenchV16Revision(revision: unknown): revision is JevFreshV16Revision;
 export const IMAGEJEV_CATEGORY_REVISIONS: string[];

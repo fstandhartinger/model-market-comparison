@@ -1,0 +1,1461 @@
+{
+  "schema": {
+    "G_med": "n",
+    "G_med_api_basis_P_vs_A": "n",
+    "G_med_flag_gt10": "b",
+    "benchmark": "s",
+    "board": {
+      "A": {
+        "markers": [
+          "!"
+        ],
+        "order": [
+          "s"
+        ]
+      },
+      "B": {
+        "markers": [
+          "!"
+        ],
+        "order": [
+          "s"
+        ]
+      },
+      "C": {
+        "markers": [
+          "!"
+        ],
+        "order": [
+          "s"
+        ]
+      },
+      "capability": {
+        "order": [
+          "s"
+        ]
+      }
+    },
+    "bootstrap": {
+      "B": "n",
+      "bootstrap_seed": "n",
+      "g_med_fixed": "b"
+    },
+    "headline": "s",
+    "label": "s",
+    "measurement_notes": [
+      "s"
+    ],
+    "n_ranked": "n",
+    "not_measured": [
+      "!"
+    ],
+    "noul_method": {
+      "applied": "s",
+      "native_method_source_sha256": "s"
+    },
+    "options": {
+      "A": {
+        "intelligence_floor": "n",
+        "weights": {
+          "calibration": "n",
+          "cost": "n",
+          "intelligence": "n",
+          "speed": "n"
+        }
+      },
+      "B": {
+        "intelligence_floor": "n",
+        "weights": {
+          "calibration": "n",
+          "cost": "n",
+          "intelligence": "n",
+          "speed": "n"
+        }
+      },
+      "C": {
+        "intelligence_floor": "n",
+        "weights": {
+          "calibration": "n",
+          "cost": "n",
+          "intelligence": "n",
+          "speed": "n"
+        }
+      }
+    },
+    "protocol": "s",
+    "provisional": "b",
+    "revision": "s",
+    "roster_count": "n",
+    "run_kind": "s",
+    "sample": {
+      "open": "n",
+      "published_open": "n",
+      "sealed": "n",
+      "total": "n"
+    },
+    "sealed_share_of_intelligence": "n",
+    "source_note": "s",
+    "source_sha256": "s",
+    "status": "s",
+    "systems": [
+      {
+        "addendum": "z",
+        "api_flag": "b",
+        "api_subset": "b",
+        "author": "z",
+        "axes": {
+          "calibration": "n",
+          "cost": "n",
+          "intelligence": "n",
+          "speed": "n"
+        },
+        "calibration": {
+          "parts": {
+            "choice": {
+              "ece_hard": "n",
+              "ece_score": "n",
+              "mean_tvd": "z",
+              "n": "n",
+              "n_ece_hard": "n",
+              "n_tvd": "n",
+              "score": "n"
+            },
+            "noul": {
+              "abstention_rate": "n",
+              "brier": "n",
+              "ece": "n",
+              "n": "n",
+              "score": "n"
+            },
+            "score": {
+              "interval90_coverage": "n",
+              "interval90_width": "n",
+              "n": "n",
+              "nrps": "n",
+              "score": "n",
+              "top_ece": "n"
+            }
+          },
+          "score": "n"
+        },
+        "capability": "n",
+        "composite_ci95": {
+          "A": [
+            "n"
+          ],
+          "B": [
+            "n"
+          ],
+          "C": [
+            "n"
+          ]
+        },
+        "cost": {
+          "basis": "s",
+          "common_basis": {
+            "n_items": "n",
+            "rule": "s",
+            "usd_per_1000_all_items": "n"
+          },
+          "kind": "s",
+          "usage_estimated_rows": "n",
+          "usd_per_1000": "n"
+        },
+        "display": "s",
+        "endpoint_kind": "s",
+        "full_coverage": "b",
+        "intelligence": {
+          "I_open": "n",
+          "I_sealed": "n",
+          "base": "n",
+          "excess": "n",
+          "gap": "n",
+          "penalty": "n",
+          "per_type_split": {
+            "open|choice": {
+              "cc": "n",
+              "n": {
+                "easy": "n",
+                "hard": "n",
+                "judge": "n",
+                "standard": "n"
+              },
+              "tiers": {
+                "easy": "n",
+                "hard": "n",
+                "judge": "n",
+                "standard": "n"
+              }
+            },
+            "open|noul": {
+              "cc": "n",
+              "n": {
+                "easy": "n",
+                "hard": "n",
+                "judge": "n",
+                "standard": "n"
+              },
+              "tiers": {
+                "easy": "n",
+                "hard": "n",
+                "judge": "n",
+                "standard": "n"
+              }
+            },
+            "open|score": {
+              "cc": "n",
+              "n": {
+                "easy": "n",
+                "hard": "n",
+                "judge": "n",
+                "standard": "n"
+              },
+              "tiers": {
+                "easy": "n",
+                "hard": "n",
+                "judge": "n",
+                "standard": "n"
+              }
+            },
+            "sealed|choice": {
+              "cc": "n",
+              "n": {
+                "easy": "n",
+                "hard": "n",
+                "judge": "n",
+                "standard": "n"
+              },
+              "tiers": {
+                "easy": "n",
+                "hard": "n",
+                "judge": "n",
+                "standard": "n"
+              }
+            },
+            "sealed|noul": {
+              "cc": "n",
+              "n": {
+                "easy": "n",
+                "hard": "n",
+                "judge": "n",
+                "standard": "n"
+              },
+              "tiers": {
+                "easy": "n",
+                "hard": "n",
+                "judge": "n",
+                "standard": "n"
+              }
+            },
+            "sealed|score": {
+              "cc": "n",
+              "n": {
+                "easy": "n",
+                "hard": "n",
+                "judge": "n",
+                "standard": "n"
+              },
+              "tiers": {
+                "easy": "n",
+                "hard": "n",
+                "judge": "n",
+                "standard": "n"
+              }
+            }
+          }
+        },
+        "jevbench_score": "n",
+        "key": "s",
+        "last_measured_on": "s",
+        "listing": "s",
+        "measured_in": "s",
+        "measurement_date_status": "s",
+        "model_pin": "s",
+        "not_ranked_because": "s",
+        "planned_weight_denominator": "n",
+        "rank": {
+          "__union__": [
+            "n",
+            "z"
+          ]
+        },
+        "ranked": "b",
+        "ranks": {
+          "A": "n",
+          "B": "n",
+          "C": "n",
+          "capability": "n"
+        },
+        "repo": "s",
+        "scores": {
+          "A": "n",
+          "B": "n",
+          "C": "n"
+        },
+        "speed": {
+          "adjustment": "s",
+          "n": "n",
+          "p50_s_adjusted": "n",
+          "p50_s_raw": "n",
+          "p95_s_adjusted": "n",
+          "p95_s_raw": "n"
+        },
+        "status": {
+          "answered_ok": "n",
+          "missing": "n",
+          "rows": "n",
+          "status": "s"
+        },
+        "support": {
+          "choice": "s",
+          "noul": "s",
+          "score": "s"
+        },
+        "v16": {
+          "api_subset": "b",
+          "api_subset_tag": "z",
+          "breakdowns": {
+            "family": {
+              "calibration": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "calibration_gen": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "composite_gen": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "fairness": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "jaggedness": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "llm_router": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "long_state": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "ml_usecase": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "multilingual": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "negation_pair_gen": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "option_order": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n"
+                },
+                "score": "n"
+              },
+              "perturb_pair": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "usecase": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              }
+            },
+            "lang": {
+              "ar": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "cs": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n"
+                },
+                "score": "n"
+              },
+              "da": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "de": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "el": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "en": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "es": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "fi": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "fr": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "hi": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "id": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n"
+                },
+                "score": "n"
+              },
+              "it": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "ja": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "ko": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "mixed": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "nl": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "no": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n"
+                },
+                "score": "n"
+              },
+              "pl": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "pt": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "sv": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "tr": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "uk": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "zh": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              }
+            },
+            "type": {
+              "choice": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n"
+                },
+                "score": "n"
+              },
+              "noul": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "noul": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "noul": "n"
+                },
+                "score": "n"
+              },
+              "score": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "score": "n"
+                },
+                "score": "n"
+              }
+            },
+            "usecase": {
+              "advertising": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "code_linting": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "customer_support": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "demand_forecasting": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "ecommerce_marketplaces": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "feature_extraction": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "financial_crime": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "gaming": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "insurance_claims": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "knowledge_graphs": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "lead_generation": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "legal_compliance": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "llm_guardrails": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "model_routing": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "moderation_trust_safety": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "recruiting": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "risk_assessment": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "scientific_discovery": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              },
+              "search_retrieval": {
+                "accuracy": "n",
+                "cc": "n",
+                "cc_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "low_n": "b",
+                "n": "n",
+                "n_by_type": {
+                  "choice": "n",
+                  "noul": "n",
+                  "score": "n"
+                },
+                "score": "n"
+              }
+            }
+          },
+          "breakdowns_equated": "b",
+          "ci95": {
+            "B": "n",
+            "C": [
+              "n"
+            ],
+            "I": [
+              "n"
+            ],
+            "capability": [
+              "n"
+            ],
+            "composite": {
+              "A": [
+                "n"
+              ],
+              "B": [
+                "n"
+              ],
+              "C": [
+                "n"
+              ]
+            },
+            "seed": "n"
+          },
+          "ci95_n": "n",
+          "complete": "b",
+          "equated": "z",
+          "equating_flag": "z",
+          "equating_offset": "z",
+          "full_set_api": "b",
+          "g_med_used": "n",
+          "lane": "s",
+          "metric_basis": "s",
+          "n_items": "n",
+          "n_public": "n",
+          "n_sealed_side": "n",
+          "on_S": {
+            "calibration": "n",
+            "capability": "n",
+            "intelligence": "n"
+          },
+          "per_type": {
+            "choice": {
+              "accuracy": "n",
+              "calibration": "n",
+              "cc": "n",
+              "cc_by_type": {
+                "choice": "n"
+              },
+              "cc_tiered": "n",
+              "cc_tiered_open": "n",
+              "cc_tiered_sealed": "n",
+              "low_n": "b",
+              "n": "n",
+              "n_by_type": {
+                "choice": "n"
+              },
+              "score": "n"
+            },
+            "noul": {
+              "accuracy": "n",
+              "calibration": "n",
+              "cc": "n",
+              "cc_by_type": {
+                "noul": "n"
+              },
+              "cc_tiered": "n",
+              "cc_tiered_open": "n",
+              "cc_tiered_sealed": "n",
+              "low_n": "b",
+              "n": "n",
+              "n_by_type": {
+                "noul": "n"
+              },
+              "score": "n"
+            },
+            "score": {
+              "accuracy": "n",
+              "calibration": "n",
+              "cc": "n",
+              "cc_by_type": {
+                "score": "n"
+              },
+              "cc_tiered": "n",
+              "cc_tiered_open": "n",
+              "cc_tiered_sealed": "n",
+              "low_n": "b",
+              "n": "n",
+              "n_by_type": {
+                "score": "n"
+              },
+              "score": "n"
+            }
+          },
+          "raw_on_A": {
+            "calibration": "n",
+            "capability": "n",
+            "intelligence": "n"
+          },
+          "set": "s"
+        },
+        "validity": {
+          "choice": {
+            "invalid_rate": "n",
+            "n": "n"
+          },
+          "noul": {
+            "invalid_rate": "n",
+            "n": "n"
+          },
+          "score": {
+            "invalid_rate": "n",
+            "n": "n"
+          }
+        },
+        "views": {
+          "Balanced 33:33:33": "n",
+          "Emphasis on Accuracy 60:20:20": "n",
+          "Emphasis on Cost 20:20:60": "n",
+          "Emphasis on Speed 20:60:20": "n",
+          "Intelligence only": "n"
+        }
+      }
+    ],
+    "tier_weights": {
+      "easy": "n",
+      "hard": "n",
+      "judge": "n",
+      "standard": "n"
+    },
+    "types": {
+      "choice": "n",
+      "noul": "n",
+      "score": "n"
+    },
+    "v16": {
+      "capability_formula": "s",
+      "counts": {
+        "A": "n",
+        "P": "n",
+        "S": "n",
+        "api_input": "n",
+        "api_smoke_public": "n",
+        "core": "n",
+        "selfhosted_input": "n"
+      },
+      "draw_release": "s",
+      "equating": {
+        "equating_flag": "z",
+        "min_pool": "n",
+        "offsets": {"__union__": ["z", {"I": "n", "C": "n"}]},
+        "pool": [
+          "s"
+        ],
+        "pool_n": "n",
+        "rule": "s"
+      },
+      "equating_A2": "z",
+      "freeze_manifest_sha256": "s",
+      "g_med_rule": "s",
+      "offset_bootstrap_B": "n",
+      "ranked_selfhosted": [
+        "s"
+      ]
+    },
+    "views": [
+      "s"
+    ]
+  },
+  "source_revision": "v1.6.2",
+  "source_sha256": "4464184cb5a867f2694ae709d1daf36185f615a08807bb2e5f11f7a6d852eead"
+}
