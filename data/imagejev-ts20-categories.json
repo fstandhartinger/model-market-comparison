@@ -5,6 +5,7 @@
   "key": "typesafe",
   "title": "Use cases (TypeSafe categories)",
   "note": "Measured on a separate sealed 600-item TypeSafe-20 image bank (30 items per use case, frozen 10 Oct 2026). Not part of the v0.3 score or rank.",
+  "poolNote": "both systems: the same 600 sealed TypeSafe-20 items",
   "cats": [
    {
     "key": "model_routing",
@@ -5242,5 +5243,9 @@
    "errors": 0
   }
  },
- "reference": null
+ "reference": {
+  "key": "jev-1.13.0",
+  "pipeline": "offline Qwen3-VL-4B caption (greedy, 2,048-token cap) -> Jev 1.13.0 on question + options + caption",
+  "note": "Of its 600 items, 9 count as wrong: 7 captions hit the 2,048-token cap and 2 Jev responses whose probabilities did not sum to 1 were rejected by the pre-registered strict parser."
+ }
 }

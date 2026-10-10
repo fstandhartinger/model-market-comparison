@@ -45,7 +45,8 @@ test('the Jev reference row is unranked, has no v0.3 axes and only exists when i
   assert.equal(row.key, 'jev-1.13.0');
   assert.equal(row.rank, null);
   assert.match(row.name, /REFERENCE/);
-  assert.ok(Object.values(row.axes).every((v) => v === null));
+  assert.equal(row.axes, null, 'not scored on the v0.3 axes');
+  assert.equal(row.hosted, false);
   assert.equal(ts20ReferenceRow({ systems: {} }, template), null);
 });
 
