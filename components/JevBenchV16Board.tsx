@@ -23,6 +23,8 @@ import { baseModelFamilies } from '../lib/jev-base-model.mjs';
 import { JevV15AllDataGrid } from './JevV15AllDataGrid';
 import { JevApiOfferingsToggle } from './JevApiOfferingsToggle';
 import { JevLanguageTableControls } from './JevLanguageTableControls';
+import { JevLatencyValue, JevLatencyLegend, JevLatencyMethodNote } from './JevLatency';
+import { isSelfHostedAdjustment } from '../lib/jev-latency.mjs';
 import { JevGpuCostCalculator } from './JevGpuCostCalculator';
 import { jevScopeClassifier, JEV_PENDING_LISTING, JEV_PRELIMINARY_LISTING, JEV_REFERENCE_KEY, JEV_SCOPE_LISTING, jevApiPreliminaryRows, jevApiRoster, jevScopeDisplayOrder, type JevApiListedRow, type JevScope } from '../lib/jevbench-scope.mjs';
 import { NOT_RANKED } from './JevBoardShared';
@@ -168,14 +170,16 @@ function DatedCarry({ carry, hiddenApi, showExceptions }: { carry: JevV16Carry; 
         <td className="p-2">{one(r.capability)}</td>
         <td className="p-2">{one(r.composite_v15)}{r.v156_rank != null && <span className="bh-muted"> · was #{r.v156_rank} on {r.carried_from}</span>}</td>
         <td className="p-2">{usd(r.cost?.usd_per_1000)}<span className="bh-muted block text-xs">{r.cost?.kind ?? ''}</span></td>
-        <td className="p-2">{sec(r.speed.p50_s_adjusted)}</td>
+        <td className="p-2"><JevLatencyValue speed={r.speed} kind={(r as { endpoint_kind?: string | null }).endpoint_kind} /></td>
       </tr>)}</tbody>
     </table></div>
+    <JevLatencyLegend />
   </section>;
 }
 
 // v1.7.0 (Florian, 5 Oct 2026): open-weights board on /jev-models, API-provider board on /jev-models/api.
 export const JEV_BOARD_REVISIONS: { version: string; date: string; text: string }[] = [
+  { version: 'v1.7.45', date: '2026-10-11', text: 'Display: self-hosted rows now show the measured p50 next to the network-including estimate (2× measured + 150 ms), which the ranking continues to use. No score or rank changed.' },
   { version: 'v1.7.44', date: '2026-10-10', text: 'Display only: the Pareto charts get the same “Show models that don’t qualify as Jev-class” switch as the scatter charts (off by default, so the frontier is drawn over Jev-class systems), expand to fullscreen, and share the highlighted system with the scatter charts (hover or tap one system and it is marked in all four charts). No score or rank changed.' },
   { version: 'v1.7.43', date: '2026-10-10', text: 'Display only: a Pareto frontier section after the two scatter charts on both boards — Capability against cost per 1,000 decisions and against median latency (log axes; list price and measured endpoint latency on the API board). The red line joins the systems no other system beats on both axes. No score or rank changed.' },
   { version: 'v1.7.42', date: '2026-10-10', text: 'One merged board. The version tabs are gone: /jev-models is always the current board with every system’s latest measurement, and releases are listed under Release history (old version pages keep their URLs). The 16 systems measured on the two fresh draws after v1.6.1 (fast-lane draw v1.6.2–v1.6.4, regular draw v1.6.5–v1.6.7) join the boards with their published scores and a draw tag; each draw is put on the v1.6.1 scale by an anchor offset that stays 0 until the anchor systems have run on it (see How it works). A filter on top switches between Open weights, API and All (both groups, ranked by Capability). Header text is shortened; the details moved into How it works. Jeff 1.0 Large (fast-lane draw) enters the open-weights Capability top 5 at #2.' },
@@ -293,6 +297,7 @@ function MethodBody({ categories, a, sha256, categoriesSha256, carrySha256, scop
     <p className="mt-2">The public-versus-sealed gap reference is the median of this completed native cohort: {one(a.G_med)} points. Historical scores are shown separately with their original dates and do not enter this cohort’s median or ranking. No API equating is applied.</p>
     {a.revision === 'v1.6.4' && <p className="mt-2">This same-draw six-model addendum adds the measured RYOTIDE wrapper to v1.6.3. The five prior measurements, point scores and four-native field median are retained. The standard scorer recalculates confidence intervals for the expanded roster. Wrappers remain listed below ranking and excluded from the median.</p>}
     {a.revision === 'v1.6.3' && <p className="mt-2">This same-draw addendum rescores the whole completed field, including the original four systems, together. The original measurements are retained, but the v1.6.3 scores, ranks and native-field median restate and supersede v1.6.2; normalized values are not comparable one-to-one across these releases. Wrappers remain excluded from the median.</p>}
+    <JevLatencyMethodNote />
     <p className="mt-2">Costs use each row’s documented price reference and measured usage on this draw. Subject-topic and use-case radars come from stored per-item results; only aggregates are published.</p>
     <p className="mt-2">Sliders, presets and What-If change your view; they do not change the official result. Wrappers and subsidised systems are listed below the ranking.</p>
     <p className="mt-2 text-xs break-all">Results SHA-256 {sha256} · categories SHA-256 {categoriesSha256} · scoring source SHA-256 {a.source_sha256}.</p>
@@ -351,6 +356,7 @@ function MethodBody({ categories, a, sha256, categoriesSha256, carrySha256, scop
     {!v161 && <p className="bh-muted mt-1 text-sm">{a.v16.equating.rule.charAt(0).toUpperCase() + a.v16.equating.rule.slice(1)}. Offsets in this run: Intelligence {off.I >= 0 ? '+' : ''}{off.I.toFixed(2)}, Calibration {off.C >= 0 ? '+' : ''}{off.C.toFixed(2)}. {a.v16.equating.pool_note} Category and language values stay raw and unequated.</p>}
     <h3 className="mt-4 text-lg font-semibold">Headline and Composite</h3>
     <p className="bh-muted mt-1 text-sm">Capability = mean(Intelligence, Calibration) for systems within twice the Jev 1.13.0 cost and median latency (the official caps; the sliders change only your view). {scope === 'all' ? `The Composite (option ${a.headline}) is the equal-weight harmonic mean of Intelligence, Calibration, Speed and Cost with the v1.5 low-axis gates; it remains secondary.` : `Composite (option ${a.headline}): ${COMPOSITE_DEFINITION} It leads the API board and is secondary on open weights.`} Request types Choice, Noul and Score weigh equally; tiers weigh easy {a.tier_weights.easy}, standard {a.tier_weights.standard}, hard {a.tier_weights.hard}, judge {a.tier_weights.judge}.</p>
+    <JevLatencyMethodNote />
     <p className="bh-muted mt-1 text-sm" data-bh-jev16-class-reference>Jev-class caps use a fixed reference: Jev 1.13.0 as measured in v1.5 (p50 0.62 s, USD 0.0323 per 1,000 decisions); caps = 2x (1.23 s, USD 0.0646). Jev&apos;s own v1.6 p50 is 0.24 s.</p>
     <p id="jev-costs" className="bh-muted mt-1 text-sm">Costs of v1.6-measured systems carry each system&apos;s published v1.5.4 cost per 1,000 decisions (pricing rules unchanged; v1.6 item lengths differ) unless the row says otherwise; Fastino&apos;s is an estimate from its published tariff and measured tokens.</p>
     {a.noul_method?.applied === 'O1S' && <>
@@ -466,7 +472,7 @@ function ApiRoster({ a, carry, listed, eligibility }: { a: JevV16ReleaseArtifact
     <th scope="row" className="p-2 font-normal">{name(s.display, s.repo, s.key, s.endpoint_kind)}</th>
     <td className="p-2 bh-muted">{rosterStatus(s.listing, s.not_ranked_because ?? null)}<span className="block text-xs">{basisLine(s as { a4?: { n_items: number } }, a.v16.counts.selfhosted_input)}</span></td>
     <td className="p-2">{one(s.jevbench_score)}</td><td className="p-2">{rosterCapability(s)}</td>
-    <td className="p-2">{costCell(s.cost)}</td><td className="p-2">{sec(s.speed?.p50_s_adjusted)}</td></tr>;
+    <td className="p-2">{costCell(s.cost)}</td><td className="p-2"><JevLatencyValue speed={s.speed} kind={(s as { endpoint_kind?: string | null }).endpoint_kind} /></td></tr>;
   const head = (label: string, n: number) => <tr className="border-t border-line"><th colSpan={6} scope="colgroup" className="p-2 pt-4 text-left text-sm font-semibold">{label} ({n})</th></tr>;
   const name = (display: string, href: string | null | undefined, key: string, endpoint: string | null | undefined) => <>
     {href ? <a className="text-accent underline" href={href} target={href.startsWith('/') ? undefined : '_blank'} rel={href.startsWith('/') ? undefined : 'noopener noreferrer'} data-bh-jev-api-roster-row={key}>{display}</a>
@@ -485,7 +491,7 @@ function ApiRoster({ a, carry, listed, eligibility }: { a: JevV16ReleaseArtifact
           <th scope="row" className="p-2 font-normal">{name(s.display, s.repo, s.key, s.endpoint_kind)}</th>
           <td className="p-2">Composite #{s.rank}<span className="bh-muted block text-xs" data-bh-jev-api-roster-basis>{basisLine(s as { a4?: { n_items: number } }, a.v16.counts.selfhosted_input)}</span>{e?.status === 'outside' && <span className="bh-muted block text-xs">outside Jev-class caps: {e.reason}</span>}</td>
           <td className="p-2">{one(s.jevbench_score)}</td><td className="p-2">{rosterCapability(s)}</td>
-          <td className="p-2">{costCell(s.cost)}</td><td className="p-2">{sec(s.speed?.p50_s_adjusted)}</td></tr>; })}
+          <td className="p-2">{costCell(s.cost)}</td><td className="p-2"><JevLatencyValue speed={s.speed} kind={(s as { endpoint_kind?: string | null }).endpoint_kind} /></td></tr>; })}
         {configVariants.length > 0 && head(`Also measured on ${a.revision}, listed, not ranked`, configVariants.length)}
         {configVariants.map(variantRow)}
         {wrappers.length > 0 && head('Wrappers that serve Jev (listed, never ranked, not class-assessed)', wrappers.length)}
@@ -497,7 +503,7 @@ function ApiRoster({ a, carry, listed, eligibility }: { a: JevV16ReleaseArtifact
           <th scope="row" className="p-2 font-normal">{name(r.display, r.source_url ?? r.repo, r.key, (r as { endpoint_kind?: string | null }).endpoint_kind)}</th>
           <td className="p-2 bh-muted">{r.measured_label}{PUBLIC_SET.get(r.key) && <a className="text-accent block text-xs underline" href="#jev-api-public-set" data-bh-jev-api-roster-public={r.key}>v1.6 public set ({PUBLIC_SET.get(r.key)!.measured_on}): Capability {one(PUBLIC_SET.get(r.key)!.capability)}</a>}</td>
           <td className="p-2">{one(r.composite_v15)}<span className="bh-muted"> (v1.5)</span></td><td className="p-2">{one(r.capability)}<span className="bh-muted"> (v1.5)</span></td>
-          <td className="p-2">{usd(r.cost?.usd_per_1000)}</td><td className="p-2">{sec(r.speed.p50_s_adjusted)}</td></tr>)}
+          <td className="p-2">{usd(r.cost?.usd_per_1000)}</td><td className="p-2"><JevLatencyValue speed={r.speed} kind={(r as { endpoint_kind?: string | null }).endpoint_kind} /></td></tr>)}
         {listed.length > 0 && head('Listed only, never ranked (wrappers, partial runs)', listed.length)}
         {listed.map((w) => <tr key={w.key} className="border-t border-line">
           <th scope="row" className="p-2 font-normal">{name(w.display, w.href, w.key, w.endpoint_kind)}</th>
@@ -505,6 +511,7 @@ function ApiRoster({ a, carry, listed, eligibility }: { a: JevV16ReleaseArtifact
           <td className="p-2">{one(w.composite_v15)}{w.composite_v15 != null && <span className="bh-muted"> (v1.5)</span>}</td><td className="p-2">—</td><td className="p-2">—</td><td className="p-2">—</td></tr>)}
       </tbody>
     </table></div>
+    <JevLatencyLegend />
   </section>;
 }
 
@@ -558,10 +565,11 @@ function ApiPublicSet({ measured }: { measured: ReadonlySet<string> }) {
         <td className="p-2 whitespace-nowrap">{r.measured_on}</td>
         <td className="p-2">{r.n_ok}/{r.n_items}</td>
         <td className="p-2">{usd(r.usd_per_1000)}{r.cost_kind === 'estimate' && <span className="bh-muted block text-xs">estimate, as in v1.5</span>}</td>
-        <td className="p-2">{sec(r.p50_s_adjusted)}{r.latency_adjustment && <span className="bh-muted block text-xs">raw {sec(r.p50_s)}, ×2 demo adjustment</span>}</td>
+        <td className="p-2">{isSelfHostedAdjustment(r.latency_adjustment) ? <JevLatencyValue speed={{ p50_s_raw: r.p50_s, p50_s_adjusted: r.p50_s_adjusted, adjustment: r.latency_adjustment }} /> : <>{sec(r.p50_s_adjusted)}{r.latency_adjustment && <span className="bh-muted block text-xs">raw {sec(r.p50_s)}, ×2 demo adjustment</span>}</>}</td>
         <td className="p-2 bh-muted">{r.role === 'anchor' ? 'ranked above on the full v1.6.1 set' : r.v15_capability != null || r.v15_composite != null ? <>{r.v15_capability != null && <>Capability {one(r.v15_capability)} · </>}Composite {one(r.v15_composite)}<span className="block text-xs">{r.v15_measured ?? 'v1.5'}, older method</span></> : '—'}</td>
       </tr>)])}</tbody>
     </table></div>
+    <JevLatencyLegend />
     <p className="bh-muted mt-2 text-xs">Rows are ordered by public-set Capability for reading only; the order is not a rank.</p>
     {pending.length > 0 && <p className="bh-muted mt-2 max-w-4xl text-sm" data-bh-jev-api-public-pending>No public-set figure yet: {pending.map((x, i) => <span key={x.key}>{i > 0 && '; '}<b>{x.display}</b> ({x.reason})</span>)}. Their dated v1.5 scores stay in the list above.</p>}
   </section>;

@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { jevLatencyView } from '../lib/jev-latency.mjs';
+import { JevLatencyValue, JevLatencyLegend } from './JevLatency';
 import { isOpenWeightJevRow } from '../lib/jevbench-seo.mjs';
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 import { one, usdPerThousand, costBasisLabel, boardRankText, type SeoRow } from './JevBenchSeoBlocks';
@@ -16,7 +18,7 @@ export function JevBenchRankingTable({rows, locale = 'en'}: {rows: SeoRow[]; loc
       <td className="p-2"><Link className="text-accent underline" href={jevSystemPath(r.key)}>{r.display}</Link></td>
       <td className="p-2">{num(r.capability)}</td><td className="p-2">{num(r.axes.intelligence)}</td><td className="p-2">{num(r.axes.calibration)}</td>
       <td className="p-2">{de ? usdPerThousandDe(r.cost?.usd_per_1000) : usdPerThousand(r.cost?.usd_per_1000)} ({de ? costBasisLabelDe(r.cost?.kind) : costBasisLabel(r.cost?.kind)})</td>
-      <td className="p-2">{num(r.speed?.p50_s_adjusted ?? r.speed?.p50_s_raw)} s</td>
+      <td className="p-2">{jevLatencyView(r.speed).adjusted ? <JevLatencyValue speed={r.speed} locale={locale} kind={(r as { endpoint_kind?: string | null }).endpoint_kind} /> : <>{num(r.speed?.p50_s_adjusted ?? r.speed?.p50_s_raw)} s</>}</td>
       <td className="p-2">{isOpenWeightJevRow(r) || r.open === 'yes' || r.open === 'weights' || r.open === 'open weights' || r.open === true ? yes : r.open === 'no' || r.open === false ? no : unknown}</td>
-    </tr>)}</tbody></table></div>;
+    </tr>)}</tbody></table>{rows.some((r) => jevLatencyView(r.speed).adjusted) && <JevLatencyLegend locale={locale} className="bh-muted mt-2 text-xs" />}</div>;
 }

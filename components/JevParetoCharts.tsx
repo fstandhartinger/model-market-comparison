@@ -158,7 +158,7 @@ function ParetoChart({ kind, points, limit, title, unit, active, setActive, expa
       {hit && <div role="status" className="bh-panel pointer-events-none absolute z-10 max-w-[260px] p-2 text-xs shadow-lg"
         style={{ left: Math.min(Math.max(4, hit.cx + 12), W - 264), top: Math.max(4, hit.cy - 70) }}>
         <div className="font-semibold">{hit.p.name}</div>
-        <div>Capability {hit.p.capability.toFixed(1)} · {kind === 'cost' ? `${usd(hit.v)} per 1,000 decisions` : `median ${secs(hit.v)}`}</div>
+        <div>Capability {hit.p.capability.toFixed(1)} · {kind === 'cost' ? `${usd(hit.v)} per 1,000 decisions` : `median ${secs(hit.v)}${hit.p.latencyMeasured != null ? ` est. incl. network (2x + 150 ms); measured ${secs(hit.p.latencyMeasured)}` : ''}`}</div>
         <div className="bh-muted">{onFrontier.has(hit.p.key) ? 'On the Pareto frontier' : dominator ? `Beaten by ${dominator.p.name} (${fmt(kind, dominator.v)}, ${dominator.p.capability.toFixed(1)})` : ''}{hit.p.inClass ? '' : ' · outside Jev class'}</div>
       </div>}
     </div>
@@ -179,6 +179,7 @@ export function JevParetoCharts({ points, costLimit, latencyLimit, scopeLabel, a
   return <section id="jev-pareto" className="mt-8 scroll-mt-6" aria-labelledby="jev-pareto-title" data-bh-jev-pareto>
     <h2 id="jev-pareto-title" className="text-xl font-semibold">Pareto frontier: capability against cost and speed{scopeLabel && ` (${scopeLabel})`}</h2>
     <p className="bh-muted mt-1 max-w-4xl text-sm">The red line joins the systems nobody beats on both axes at once{api ? ' (provider list price, measured endpoint latency)' : ''}; hover or tap a point for the system that beats it. Shaded: beyond the Jev-class cap.</p>
+    {!api && <p className="bh-muted mt-1 max-w-4xl text-xs" data-bh-jev-latency-legend>Speed axis: self-hosted systems are plotted at est. incl. network (2x measured + 150 ms), the value the ranking and cap use; the measured loopback p50 is in each point&apos;s tooltip.</p>}
     <label className="mt-3 flex min-h-10 w-fit cursor-pointer items-center gap-2 text-sm">
       <input type="checkbox" checked={showOutside} onChange={(e) => { setShowOutside(e.target.checked); setActive(null); }} data-bh-jev-pareto-show-outside />
       Show models that don&apos;t qualify as Jev-class

@@ -1,3 +1,4 @@
+import { jevLatencyView } from '../../../lib/jev-latency.mjs';
 import { jevRowArch, JEV_TYPE_LABEL } from '../../../components/jevTypes';
 import { JevArchitectureBadge } from '../../../components/JevArchitecture';
 import type { Metadata } from 'next';
@@ -84,7 +85,7 @@ export default async function ImageJevSystemPage({ params }: { params: Promise<{
         <div><dt className="font-semibold">Cost per 1,000 decisions</dt><dd className="tabular-nums">{row.cost?.usd_per_1000 == null ? 'Not measured' : `USD ${number(row.cost.usd_per_1000, 6)}`}</dd></div>
         <div><dt className="font-semibold">Cost basis</dt><dd className="bh-muted">{row.cost?.basis ?? 'Not reported'}</dd></div>
         <div><dt className="font-semibold">Measured latency · p50 / p95</dt><dd className="tabular-nums">{number(row.speed?.p50_s_raw)} s / {number(row.speed?.p95_s_raw)} s</dd></div>
-        <div><dt className="font-semibold">Adjusted latency · p50 / p95</dt><dd className="tabular-nums">{number(row.speed?.p50_s_adjusted)} s / {number(row.speed?.p95_s_adjusted)} s</dd></div>
+        <div title={jevLatencyView(row.speed, 2, (row as { endpoint_kind?: string | null }).endpoint_kind).tooltip ?? undefined} data-bh-jev-latency-detail={jevLatencyView(row.speed).adjusted ? 'self-hosted' : undefined}><dt className="font-semibold">{jevLatencyView(row.speed).adjusted ? `Estimate incl. network (2x + 150 ms) · p50 / p95` : 'Adjusted latency · p50 / p95'}</dt><dd className="tabular-nums">{number(row.speed?.p50_s_adjusted)} s / {number(row.speed?.p95_s_adjusted)} s{jevLatencyView(row.speed).adjusted && <span className="bh-muted block text-xs">The ranking and the latency cap use this estimate; the measured values above come from loopback on our GPU, without a network.</span>}</dd></div>
         <div><dt className="font-semibold">Latency adjustment</dt><dd className="bh-muted">{row.speed?.adjustment ?? 'Not reported'}</dd></div>
         {row.public_accuracy != null && <div><dt className="font-semibold">Public accuracy</dt><dd className="tabular-nums">{number(row.public_accuracy * 100, 1)}%</dd></div>}
         {row.sealed_accuracy != null && <div><dt className="font-semibold">Sealed accuracy</dt><dd className="tabular-nums">{number(row.sealed_accuracy * 100, 1)}%</dd></div>}
