@@ -62,7 +62,8 @@ test('CR-439 helper: only x2 + 0.15 s rows are self-hosted; demo x2 rows keep th
   assert.equal(jevLatencyView(null).estimate, null);
   assert.deepEqual(jevLatencyJsonFields(null), {});
   assert.equal(jevLatencyView(H2O, 2, 'cpu').tooltip.includes('our CPU host'), true);
-  assert.equal(jevLatencyText(H2O, 'plain', { unit: false }), '0.029 measured on-GPU, no network · 0.21 est. incl. network (2x + 150 ms)');
+  assert.equal(jevLatencyText(H2O, 'plain', { unit: false }), '0.029 measured own hardware, no network · 0.21 est. incl. network (2x + 150 ms)');
+  assert.equal(jevLatencyText(H2O, 'plain', { unit: false, kind: 'gpu' }), '0.029 measured on-GPU, no network · 0.21 est. incl. network (2x + 150 ms)');
   assert.equal(jevLatencyText(H2O, 'plain', { unit: false, kind: 'cpu' }), '0.029 measured on-CPU, no network · 0.21 est. incl. network (2x + 150 ms)');
   assert.equal(jevLatencyJsonFields(H2O, 'gpu').p50_s_measured_condition, 'on-GPU, no network');
   assert.equal(jevLatencyJsonFields(API).p50_s_measured_condition, undefined);

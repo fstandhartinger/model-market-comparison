@@ -158,7 +158,7 @@ function ParetoChart({ kind, points, limit, title, unit, active, setActive, expa
       {hit && <div role="status" className="bh-panel pointer-events-none absolute z-10 max-w-[260px] p-2 text-xs shadow-lg"
         style={{ left: Math.min(Math.max(4, hit.cx + 12), W - 264), top: Math.max(4, hit.cy - 70) }}>
         <div className="font-semibold">{hit.p.name}</div>
-        <div>Capability {hit.p.capability.toFixed(1)} · {kind === 'cost' ? `${usd(hit.v)} per 1,000 decisions` : `median ${secs(hit.v)}${hit.p.latencyMeasured != null ? ` est. incl. network (2x + 150 ms); measured ${secs(hit.p.latencyMeasured)} ${hit.p.latencyMeasuredTag ?? 'on-GPU, no network'}` : ''}`}</div>
+        <div>Capability {hit.p.capability.toFixed(1)} · {kind === 'cost' ? `${usd(hit.v)} per 1,000 decisions` : `median ${secs(hit.v)}${hit.p.latencyMeasured != null ? ` est. incl. network (2x + 150 ms); measured ${secs(hit.p.latencyMeasured)} ${hit.p.latencyMeasuredTag ?? 'no network'}` : ''}`}</div>
         <div className="bh-muted">{onFrontier.has(hit.p.key) ? 'On the Pareto frontier' : dominator ? `Beaten by ${dominator.p.name} (${fmt(kind, dominator.v)}, ${dominator.p.capability.toFixed(1)})` : ''}{hit.p.inClass ? '' : ' · outside Jev class'}</div>
       </div>}
     </div>
