@@ -27,7 +27,7 @@ export async function JevComparisonPage({rivalKey,path,label}: {rivalKey:string;
     ['Composite (secondary)',one(jev.jevbench_score),one(rival.jevbench_score)],
     ...(['intelligence','calibration','speed','cost'] as const).map((axis) => [axis,one(jev.axes[axis]),one(rival.axes[axis])]),
     ['USD per 1,000 decisions',usdPerThousand(jev.cost?.usd_per_1000),usdPerThousand(rival.cost?.usd_per_1000)],
-    ['p50 latency (seconds)',jevLatencyText(jev.speed,one(jev.speed?.p50_s_adjusted ?? jev.speed?.p50_s_raw),{unit:false}),jevLatencyText(rival.speed,one(rival.speed?.p50_s_adjusted ?? rival.speed?.p50_s_raw),{unit:false})],
+    ['p50 latency (seconds)',jevLatencyText(jev.speed,one(jev.speed?.p50_s_adjusted ?? jev.speed?.p50_s_raw),{unit:false,kind:(jev as {endpoint_kind?: string | null}).endpoint_kind}),jevLatencyText(rival.speed,one(rival.speed?.p50_s_adjusted ?? rival.speed?.p50_s_raw),{unit:false,kind:(rival as {endpoint_kind?: string | null}).endpoint_kind})],
     ['Last measured',jev.last_measured_on ?? 'unknown',rival.last_measured_on ?? 'unknown'],
   ];
   return <>
