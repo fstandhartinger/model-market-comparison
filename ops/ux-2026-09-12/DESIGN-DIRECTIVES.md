@@ -196,6 +196,34 @@ v0.1.2 (frozen); Image JevBench's three "preview" words (the Computer Use and Br
 6. **A label never covers the data it names (F-225):** on a phone the label column goes where the points are not, and a tick that would sit under a
    label is dropped, not overprinted.
 
+## CR-239 design follow-up — 2026-09-29
+
+**Sources:** the independent live review `REVIEW-20260929T200005Z.md` (CR-233, deployed revision `72b7231e`); CR-11.3 and CR-11.5 in
+`04-CR-BRIEF.md`; the `/jev-models` structure and wrapper placement in `/home/flori/AGENTS.md`. These are open design directives; no implementation
+or verification status is implied.
+
+### F-227 — Pareto annotation and model labels stay clear of chart marks `[judgment]`
+
+*Where:* `/charts`, the Pareto chart annotation and its model-name labels.
+*What:* Keep the small “Most attractive quadrant” annotation in the top-right region, with enough separation from data, controls, legend and tooltips.
+Place visible model labels so they are neither clipped nor crossed by the Pareto line, and do not overlap points or each other. Keep the chart's 15-label
+maximum; unlabeled models remain reachable through the existing table and tooltip interactions.
+*Accept:* at 1440 and 390 px in light and dark, the annotation overlaps none of the data, controls, legend or tooltips (CR-11.3); no visible model label is
+clipped, crossed by the frontier line, or overlaps another label or point (CR-11.5). The CR-233 review recorded desktop line/label collision and phone
+annotation/point-label collisions; check those cases explicitly.
+
+### F-228 — Keep the required `/jev-models` section order and put 3D on the synced chart pair `[judgment]`
+
+*Where:* the `/jev-models` overview.
+*What:* Preserve this order: capability bar chart; the synced Capability-vs-speed and Capability-vs-cost charts; main Composite score chart; direct
+comparison; full table; method notes; presets; What-If; Revision history. Put a visible 3D toggle with the synced chart pair so it switches that view
+between the paired charts and their shared 3D view. Keep wrappers and subsidised entries in a separately labelled section below the rankings; the review
+found this separation already present, so retain it through the layout change. Give the existing historical board an explicit “Revision history” section
+heading. The What-If generator remains owned outside this worktree; this directive records its required placement without changing its source.
+*Accept:* all named sections remain reachable in the listed order; the 3D control is adjacent to the chart pair and the displayed model/filter state stays
+synchronized across views; wrappers/subsidised entries remain separately labelled below the rankings; the historical section is visibly titled “Revision
+history”. The CR-233 review found the 3D view as a separate lazy section and the history named only “Historical v1.3.0 board”.
+
 ## Verdict on the live site — pass 41 (2026-09-28), the three copy changes since pass 40 and the v1.5 preview at r5
 
 **The quick views hold and the three changed sentences say the true thing.** Simple, Advanced, Guided, Benchmaxxing, the model page and the Benchmarks
