@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-blueprint-bench-2",
+  "artifact_sha256": "722df570d1b42099388a6368ad394968faac31c042a5cbb3e7fca39eaa4378bc",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["blueprint-bench::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute the captured-payload SHA-256 or the per-row canonical SHA-256; I rely on the supplied owner hashes and captured excerpts, which is a limitation of my read-only position, not missing source evidence.",
+    "The generated value-scale summary (33 values, lowest 0, highest 0.544) is used only for the criterion-c1 unit/range check, as instructed; it does not independently establish metric meaning or calculation.",
+    "The protocol text's 'Key findings' sentence naming 'GPT 5.5, Gemini 3.1 Pro, Claude Opus 4.7' as top three conflicts with the rendered leaderboard, but no candidate row field asserts that statement, so it is immaterial to these criteria."
+  ],
+  "missing_evidence": []
+}

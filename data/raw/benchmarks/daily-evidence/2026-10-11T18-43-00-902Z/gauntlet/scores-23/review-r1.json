@@ -1,0 +1,33 @@
+{
+  "artifact_id": "scores-23",
+  "artifact_sha256": "438fb6e7f7954df5b63fad8f47c2312fa4b0d2f86c59bd6b2698614f5b66ab4e",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:977ea26330c03544b6b6161b",
+    "public:e9bdf440b017d87027693fb3",
+    "public:c4b80538c1f6470d5865ebe2",
+    "public:20a4bce7816584167555137e",
+    "public:e0f45a53b1314b3e5d10b6d0",
+    "public:630dcb0961bf5a3a6379e7fd",
+    "public:dbf68e78cf6afcd8a14a2538",
+    "public:1eaf61fc41201691fabf3d4a",
+    "public:f1c8354305071d7a957932e5",
+    "public:64ec147eb5ffe2e08bee3051",
+    "public:cf39fecd0171ce90446bdd4c",
+    "public:a25379b2f3f231dd590d3532",
+    "public:faab3b240bc0ed8ea528faaa",
+    "public:6928be3fa8cd777dc7c2dea8",
+    "public:99a40920e5ea73460d9a0dbc",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute the owner's hash, transport, or qualification checks; I rely on the owner-provided per-row canonical SHA-256 values and the artifact-level SHA-256 as binding, which I do not recompute.",
+    "The packet provides native_source_row evidence only for the 15 candidate rows (source rows 49-63 of the 68-row table); I verified every candidate row against its exact corresponding primary source entry, and the full-page text in SOURCE 2 independently confirms each value.",
+    "Basis 'self_reported' is consistent with values being published as served by the maintainer (Cursor) on its own board; generated summaries (sources 4-5) state the values are exactly what the maintainer serves, which aligns with the basis label."
+  ],
+  "missing_evidence": []
+}

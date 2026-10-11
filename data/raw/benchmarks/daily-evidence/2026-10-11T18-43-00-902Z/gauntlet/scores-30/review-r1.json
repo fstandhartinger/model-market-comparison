@@ -1,0 +1,33 @@
+{
+  "artifact_id": "scores-30",
+  "artifact_sha256": "ca0ef2d54c2c71018433da4e0797853785f2ab5d6b19b61815e8de886a1389f7",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:70db5ef084793062fa815a14",
+    "public:c1de8f45158c41170f67b2e1",
+    "public:ed1cf182d9c608cef00d15bb",
+    "public:810266fea1a0f90c0b528f0a",
+    "public:3c0ede99384319a0de58546d",
+    "public:29e34b319420f5870c1fd5ac",
+    "public:2ba94552313d1732585f8827",
+    "public:34f91b28c11942086e299ce7",
+    "public:12f782d326a88dcc3eca66ae",
+    "public:b31d441d409f2442971b4f16",
+    "public:1d6098f72ac799c8932419d4",
+    "public:63d319c37383bb1594706cf4",
+    "public:42e47ba4283a92d1af9b2146",
+    "public:af7c8c7bd9e5255a2e8f1956",
+    "public:439086190c468d9c8f000420",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "SHA-256 and transport/qualification checks are owner-executed; I could not independently recompute hashes or fetch URLs. All source data needed for field verification is present in the packet.",
+    "Derived values reflect floating-point multiplication of exact source decimals (e.g., 0.2933 * 100 = 29.330000000000002). These are consistent with the source 'new_score' fields.",
+    "Benchmark version 1.1 and protocol text are corroborated by published methodology sources (S2/S3/S5); no discrepancies found in the checked rows."
+  ],
+  "missing_evidence": []
+}

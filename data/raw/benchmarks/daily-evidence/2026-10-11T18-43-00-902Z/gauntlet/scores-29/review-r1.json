@@ -1,0 +1,23 @@
+{
+  "artifact_id": "scores-29",
+  "artifact_sha256": "729938c1477f14e00a5a431486c223ca7dc7139623111b8ab3238a8e9cac4e3b",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:86155bfbda28191f36c7dabd",
+    "public:65a96f19e814c925a7b3bb80",
+    "public:19255c7beec38f9b9b0c9b94",
+    "public:f83c4cdb7336b150e40e0b9e",
+    "public:182571f29e3ce97dcbf67861",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner performed hash verification and transport checks; I cannot recompute hashes or fetch live content, so those are not independently verified here.",
+    "The 'published_at' is null for all rows; the source page does not expose a publication date, and the changelog timestamps are not source publication dates for the table itself. This is not a missing field per the protocol.",
+    "The file path (data/raw/...) is recorded by the producer and matches the evidence naming pattern; its physical existence was not verified independently."
+  ],
+  "missing_evidence": []
+}

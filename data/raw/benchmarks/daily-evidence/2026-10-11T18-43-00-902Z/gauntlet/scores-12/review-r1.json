@@ -1,0 +1,35 @@
+{
+  "artifact_id": "scores-12",
+  "artifact_sha256": "10dc51f1650997245c652732e2edadf33fbb56fb36583a016fa2a00f7e1a20ec",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:e7d99667eed88e735f7d62a2",
+    "public:64173afb3ffb56c524851e40",
+    "public:0d5d846f874e92317b21634a",
+    "public:4cd136fc833fb34965a8007b",
+    "public:5090015ecd2516ed73a21fe5",
+    "public:76eb33a1c4092dc48991f62d",
+    "public:a22065d757274d6f433b3d43",
+    "public:ede1b34befda15bfd63d9981",
+    "public:62e66b5fb95d6b962d70ba1d",
+    "public:37c68b846a9bae0dc0777744",
+    "public:ee000f9c206e66322abac132",
+    "public:de9738ec3b1e1a5b7cd0979d",
+    "public:aabe1c4bbbc4b2c30602605a",
+    "public:fbe70ede20d98ad8a5fa052d",
+    "public:f3710eae7808ffa3c4b7f7b5",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute row hashes or verify artifact hash; owner executes those checks and they are not reproducible in this read-only review.",
+    "Transport/qualification checks (e.g., actual capture network retrieval, gzip integrity) are performed by owner; not executed here.",
+    "Basis 'measured' is inferred from the published-board nature of the values; the board itself does not label self_reported vs measured, but the artifact claims 'measured' and no contradicting evidence exists.",
+    "Protocol string concatenates context fields (Prompt Template, Test Date, Model Link, Is Thinking Model) from the source row; these were manually compared to the source values and match, but the formatting itself is an artifact convention.",
+    "The W/10 composite derivation (W/10-Direct and W/10-Adherence weighting) is not verified by the board; the artifact does not claim to verify it, and registry notes state it is unverified."
+  ],
+  "missing_evidence": []
+}

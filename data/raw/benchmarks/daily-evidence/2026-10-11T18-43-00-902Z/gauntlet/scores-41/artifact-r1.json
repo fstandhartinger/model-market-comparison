@@ -1,0 +1,76 @@
+[
+  {
+    "id": "public:5a3b909291aaf46659b6f787",
+    "benchmark_id": "mcp-atlas::snapshot-2026-09-21",
+    "subject": {
+      "source_id": "gpt-5.1 (high)",
+      "name": "gpt-5.1 (high)",
+      "model_id": "gpt-5.1::high",
+      "variant": null,
+      "harness": null
+    },
+    "value": 50.1,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://labs.scale.com/leaderboard/mcp_atlas",
+      "retrieved_at": "2026-10-11T18:47:20.027999+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/eeb5ba3a9be74179989d.gz",
+      "sha256": "eeb5ba3a9be74179989d08f82652ea496cc10151e7cde54cf2769c109e1a99ba",
+      "locator": "scale_swepro; source row 31; gpt-5.1 (high); field score"
+    },
+    "protocol": "MCP Atlas (Scale AI), 2026-09-21 snapshot; pass rate over all 1,000 tasks (500 public + 500 held out), a task passes at ≥ 75 % claim coverage under the April 2026 judge, retry handling and 100 tool-call budget; effort as stated in the source label; rank=32; confidenceInterval_upper=3.1; createdAt=2025-09-10T15:38:26.000Z; contaminationMessage=",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-21: label states model gpt-5.1 and setting high; exact catalog configuration gpt-5.1::high"
+  },
+  {
+    "id": "public:b237d45775abc6afad06ebe8",
+    "benchmark_id": "mcp-atlas::snapshot-2026-09-21",
+    "subject": {
+      "source_id": "o3-pro",
+      "name": "o3-pro",
+      "model_id": "o3-pro::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 44.5,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://labs.scale.com/leaderboard/mcp_atlas",
+      "retrieved_at": "2026-10-11T18:47:20.027999+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/eeb5ba3a9be74179989d.gz",
+      "sha256": "eeb5ba3a9be74179989d08f82652ea496cc10151e7cde54cf2769c109e1a99ba",
+      "locator": "scale_swepro; source row 32; o3-pro; field score"
+    },
+    "protocol": "MCP Atlas (Scale AI), 2026-09-21 snapshot; pass rate over all 1,000 tasks (500 public + 500 held out), a task passes at ≥ 75 % claim coverage under the April 2026 judge, retry handling and 100 tool-call budget; effort as stated in the source label; rank=33; confidenceInterval_upper=3.1; createdAt=2025-09-10T15:38:26.000Z; contaminationMessage=",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-21: label names o3-pro without a setting; the catalog has exactly one configuration, the default (o3-pro::default)"
+  },
+  {
+    "id": "public:2ec9f1004746016fa780d487",
+    "benchmark_id": "mcp-atlas::snapshot-2026-09-21",
+    "subject": {
+      "source_id": "claude-haiku-4-5",
+      "name": "claude-haiku-4-5",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 40.2,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://labs.scale.com/leaderboard/mcp_atlas",
+      "retrieved_at": "2026-10-11T18:47:20.027999+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/eeb5ba3a9be74179989d.gz",
+      "sha256": "eeb5ba3a9be74179989d08f82652ea496cc10151e7cde54cf2769c109e1a99ba",
+      "locator": "scale_swepro; source row 33; claude-haiku-4-5; field score"
+    },
+    "protocol": "MCP Atlas (Scale AI), 2026-09-21 snapshot; pass rate over all 1,000 tasks (500 public + 500 held out), a task passes at ≥ 75 % claim coverage under the April 2026 judge, retry handling and 100 tool-call budget; effort as stated in the source label; rank=34; confidenceInterval_upper=3; createdAt=2025-09-10T15:38:26.000Z; contaminationMessage=",
+    "comparison_key": null
+  }
+]

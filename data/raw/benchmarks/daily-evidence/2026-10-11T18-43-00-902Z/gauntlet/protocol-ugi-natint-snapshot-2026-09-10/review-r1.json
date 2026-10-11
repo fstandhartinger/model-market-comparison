@@ -1,0 +1,21 @@
+{
+  "artifact_id": "protocol-ugi-natint-snapshot-2026-09-10",
+  "artifact_sha256": "e8c5fbf22b910a838194bcb65eebffca49c38a4d0aa0ea7ac52b6a1ef07c9120",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "ugi-natint::snapshot-2026-09-10",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Snapshot version date 2026-09-10 differs from retrieval date 2026-10-11. Acceptance criteria describe snapshot-<date> as the identity written on the day the methodology was observed; the criteria do not explicitly require equality with the retrieval timestamp, and the artifact id itself uses that date, so I treat this as a naming/cycle uncertainty rather than a mismatch.",
+    "The row's unit 'score' is not explicitly stated in the protocol text; it is inferred from the served numeric values (0.56–81.9). No contradiction with the served scale exists, and the acceptance criteria permit such an inference for unit/range consistency.",
+    "I cannot recompute hashes or verify transport/qualification checks; these are owner-executed and outside my read-only scope.",
+    "The raw CSV payload is not included in the packet; only the generated value-scale and activity summaries are provided. These summaries are sufficient for the specific judgements they are admissible for (unit/range scale and status activity), so no missing numeric source evidence results."
+  ],
+  "missing_evidence": []
+}

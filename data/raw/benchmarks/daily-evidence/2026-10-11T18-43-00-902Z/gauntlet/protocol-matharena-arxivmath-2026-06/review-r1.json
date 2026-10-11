@@ -1,0 +1,19 @@
+{
+  "artifact_id": "protocol-matharena-arxivmath-2026-06",
+  "artifact_sha256": "653cc34734e8044952544da6af3e4c2a92a1ed3a6f8ab7bff19e27c82d8137d5",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "matharena-arxivmath::2026-06",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute row/artifact hashes or run transport/qualification checks; owner executes those.",
+    "The monthly edition label '06/2026' is treated as the published release identifier supporting version_status 'published'; no other version string appears in the protocol pages."
+  ],
+  "missing_evidence": []
+}

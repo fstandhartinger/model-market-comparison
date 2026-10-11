@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-terminal-bench-4.0",
+  "artifact_sha256": "0bfce44f6bf34ef729d65953412db0eb357464e80f1c92a021b1a13d667071b4",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["terminal-bench::4.0", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Reviewer cannot recompute row SHA-256 or execute transport/hash checks; relies on owner-bound hashes and receipt.",
+    "Source excerpts are bounded; full page not inspected, but relevant identity/version/metric/scale/lifecycle fields are covered in SOURCE 1-3 and generated summaries.",
+    "The value-scale summary (SOURCE 5) is admissible only for unit/range alignment and the activity summary (SOURCE 4) only for status active; neither settles methodology or task-set identity."
+  ],
+  "missing_evidence": []
+}

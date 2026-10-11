@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-arc-agi-2",
+  "artifact_sha256": "4def015e2ee7af9204caf82a96e34ed82c8f210c181e369fb11fb2e504cc1d29",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["arc-agi::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Protocol text uses 'score' rather than the literal word 'accuracy' for the metric; served value range (0-95) and policy scoring description are consistent with percent accuracy, so no mismatch. Wording quibble only.",
+    "superseded_by is inferred from the protocol's evolution statement and series numbering naming ARC-AGI-3 as the next generation; the protocol names ARC-AGI-3 but does not explicitly state 'supersedes'. Acceptable per criterion as the protocol names the successor.",
+    "As a read-only reviewer, I cannot recompute hashes or execute transport/qualification checks; those are executed by the owner. No relevant source evidence is missing."
+  ],
+  "missing_evidence": []
+}

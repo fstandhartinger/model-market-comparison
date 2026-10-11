@@ -1,0 +1,22 @@
+{
+  "artifact_id": "protocol-gso-opt1-102",
+  "artifact_sha256": "eedef18bb298a4ecee13a356eb383d9eb5c33428b80c95017bb7ef88b2383f9f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["gso::opt1-102", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "gso::opt1-102",
+      "severity": "blocker",
+      "location": "version / version_status",
+      "evidence": "Neither source 1 (https://gso-bench.github.io/) nor source 2 (leaderboard.json) publishes a release identifier for this board; the protocol page states '102 tasks · 10 codebases · 5 languages' and leaderboard metadata contains only 'last_updated' and 'total_tasks': 102. The row sets version_status 'published' and version 'opt1-102', but per criterion c2, when the maintainer publishes no release identifier for the board, version_status must be 'snapshot' and version must be a dated snapshot identity (e.g. snapshot-2026-10-11). The 'opt1-102' string does not appear in any primary source and is not a published identifier.",
+      "repair": "Set version_status to 'snapshot' and version to the dated snapshot identity per the retrieval date (e.g. snapshot-2026-10-11), or provide primary evidence of a published release identifier. Keep version_guard unchanged if it remains an internal identity guard. Re-evaluate the row after the fix."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I could not execute SHA-256 hashing or transport checks; hashes and retrieval are accepted as owner-provided. No additional uncertainties affect the findings."
+  ],
+  "missing_evidence": []
+}

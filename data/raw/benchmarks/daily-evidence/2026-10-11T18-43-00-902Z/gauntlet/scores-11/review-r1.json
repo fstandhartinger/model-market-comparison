@@ -1,0 +1,36 @@
+{
+  "artifact_id": "scores-11",
+  "artifact_sha256": "f89c70e0ec6342d394472b2dff85918707d5768a70ef435532c4a277a50c7504",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:beaa3c080406cb7255541689",
+    "public:712cde6715e1d677a3c407be",
+    "public:0653cbacf169fbb7711e2a14",
+    "public:4642d05017b15cac1da8e048",
+    "public:47c6db07ab34cfa629940d24",
+    "public:2a234f79933b326ea2c2734d",
+    "public:840beb011ee119879adff72a",
+    "public:0bdb39b2720b845e1f88e338",
+    "public:173815251aa45f679c0d79c1",
+    "public:7ea6af835ac2de1b991b5ca5",
+    "public:7bfb43a85f71fd2978f4ba09",
+    "public:38c99919a1e3af81865a764d",
+    "public:e8708b86bbe773bcd4fdf61c",
+    "public:ae87de57a2f82fff00471483",
+    "public:b13557bfbe02c7cdf210d494",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-side hash and transport/qualification checks cannot be executed here; row SHA-256 bindings were taken as given.",
+    "W/10 👍 is a published composite (W/10-Direct + W/10-Adherence) whose weighting is not verified; source states all test questions are private, so the task set cannot be inspected.",
+    "The maintainer does not publish a harness; subject.harness is null in all rows, which is consistent with the source and not a fabricated value.",
+    "source.published_at is null in all rows; only retrieved_at is available from the packet.",
+    "The observed scale summary (0–10, 1326 values) is a generated read of the captured payload, not maintainer protocol text; it supports units but not metric meaning.",
+    "All rows were matched to the exact source rows cited (1295–1309) in the hash-verified payload; no alias inference was performed beyond the documented exact parenthesized model-configuration strings in the source labels."
+  ],
+  "missing_evidence": []
+}

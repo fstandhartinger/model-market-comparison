@@ -1,0 +1,34 @@
+{
+  "artifact_id": "scores-31",
+  "artifact_sha256": "248dd7f007a6fa6cdb523fecbb55e8baaaac77393eff633a12933c004a22a8d8",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "public:eee1bb4cf7339a7f0787eadf",
+    "public:10b3ff905e16d57de59473c9",
+    "public:ef020a7d41ace07a04e285db",
+    "public:358d44beee4efa9bd744096c",
+    "public:258cfa14905c1570569bf8db",
+    "public:4e4ec6f0ff567f0c99c0f765",
+    "public:661391649231a47ca86b076e",
+    "public:62314161863b996dc87ac2b7",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "public:4e4ec6f0ff567f0c99c0f765",
+      "severity": "minor",
+      "location": "value field / derivation output",
+      "evidence": "Source SOURCE 16 new_score=0.4798; derivation formula is Source value × 100, so expected registry value is 47.98. Frozen artifact stores value 47.980000000000004, an IEEE-754 floating point artifact of unbounded multiplication, inconsistent with the two-decimal percent values used in all other rows.",
+      "repair": "Round the derived value to the registry's decimal precision (47.98) before persisting, or otherwise normalize derived percentages to avoid floating point artifacts."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Could not independently recompute owner-provided row hashes or re-execute transport/qualification checks; accepted those as execution boundaries.",
+    "Unit percent is inferred from served fractional scores and the published FrontierCode methodology/registry, consistent with Source 11's caveat that served values alone cannot define the metric.",
+    "All other row values, model/effort/harness identities, benchmark version, locators, and retained source metadata matched the provided primary sources."
+  ],
+  "missing_evidence": []
+}

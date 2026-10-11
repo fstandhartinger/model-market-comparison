@@ -1,0 +1,17 @@
+{
+  "artifact_id": "scores-7",
+  "artifact_sha256": "929e5c453bc26ef2c68cd456e1159c7f368f47a95a9761af04e2d39c45be1667",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["public:e16223a39efe1381c77e4103", "public:323ffa5b3e341a9268090ca7", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute SHA-256 hashing, transport integrity, or the producer qualification checks; these are owner-executed per the packet and are not missing numeric source evidence.",
+    "The candidate sets basis=self_reported for values served on the maintainer's live board (Stanford/Harbor/Laude), which is consistent with the source being a published results board rather than an independent measurement.",
+    "published_at is null in the candidate; the row-specific publication date (2026-09-22 and 2026-09-02) is carried in the protocol context and retrieved_at is captured, so the source date requirement is satisfied without separate published_at.",
+    "Source value-scale summary (low 11.21, high 64.85) is consistent with candidate values 16.36 and 14.55; this summary is a generated read of the capture and adds no new verification burden."
+  ],
+  "missing_evidence": []
+}

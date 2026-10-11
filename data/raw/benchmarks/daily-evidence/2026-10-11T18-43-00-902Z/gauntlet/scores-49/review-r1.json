@@ -1,0 +1,21 @@
+{
+  "artifact_id": "scores-49",
+  "artifact_sha256": "5ca57c726b1d0a22cdc121223a0d69d56723f309466f2a364080c183e4bd0aa6",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute canonical row SHA-256 hashes or verify transport/qualification checks; these are owner-executed and not verifiable from the packet.",
+    "Benchmark version label 'tau2-bench::2' is the product mapping; the source lists TAU2-Retail/Airline/Telecom without an explicit version string, so version identity relies on the product's accepted mapping rather than the source row alone.",
+    "The source does not explicitly state a harness; rows set harness to null and protocol describes the evaluation as 'Own-column self-reported vendor evaluation', consistent with the absence of a declared harness."
+  ],
+  "missing_evidence": []
+}

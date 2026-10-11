@@ -1,0 +1,33 @@
+{
+  "artifact_id": "scores-25",
+  "artifact_sha256": "539dcb71997153e82d65a7b2ca7aae503c5dc7e67d688a85e0f44a8f719933e7",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:e1c125c2795c8781bbceb5c1",
+    "public:d627852c2fdd914465fdedda",
+    "public:298b2520c9e41c9944568cca",
+    "public:d365ec7d25a75db28e44e05c",
+    "public:02177de2d04f54b1887f7dbc",
+    "public:a9f3015e2aaa339ced7fd5f6",
+    "public:b82d40d64097e84b251d4e46",
+    "public:3473ff04c6b113d7c351c6a4",
+    "public:80294afa848c744ace002e2c",
+    "public:a2fe71667a6b0fa7e5ed9d77",
+    "public:60f9c009781a2c12761ad47b",
+    "public:6131db35dbad4f8c154c5107",
+    "public:09a4fd23b5bf5a541c93b954",
+    "public:55c370b624c6f96d993118a6",
+    "public:892a24e4e070d591de69dec1",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently recompute row-level SHA-256 values or verify transport/qualification; those are accepted from the owner-supplied hashes and receipt.",
+    "The artifact's source.file path is not present in the primary evidence; it is an internal pipeline field and not a benchmark-observation value, so it is not required for comparison.",
+    "Numeric equivalence accepted for values serialized as 1.2 vs 1.20 and 9 vs 9.00 in the source material."
+  ],
+  "missing_evidence": []
+}

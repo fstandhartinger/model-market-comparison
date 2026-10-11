@@ -1,0 +1,132 @@
+{
+  "type": "object",
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "enum": [
+        "scores-8"
+      ]
+    },
+    "artifact_sha256": {
+      "type": "string",
+      "enum": [
+        "e9bf657d255263c31b325437d67ed747b92dfa34a3caeeef6a18732499b5175a"
+      ]
+    },
+    "round": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "revise",
+        "blocked"
+      ]
+    },
+    "coverage_checked": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "public:bcb66e19a941de41dd8ec3bc",
+          "public:713c3cf59f50361b41629f50",
+          "public:a460a19dafd7892a40ab2b2a",
+          "public:60ea9e5b1ba4a546b9d0fd84",
+          "public:1d9b451e068142ff30e0caa2",
+          "public:26413fabb04c572b8ee8691e",
+          "public:82d9fcd7cfc5582dded5f9ae",
+          "public:07192377423213bb538aed5f",
+          "public:69c3229ce9efec94475f8c80",
+          "public:8a2d3d4ddbfdfcc5259c2ebf",
+          "public:c301e472795a95ace2a653a3",
+          "public:98cd4c7c9bfba6b7366c11a9",
+          "public:5303cdd23c6ec0c06e769d72",
+          "public:8f467fd90bc22108b1b149c8",
+          "public:3c0d43a6b330643c82b7f544",
+          "c1"
+        ]
+      }
+    },
+    "errors_found": {
+      "type": "integer"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 2048
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "blocker",
+              "major",
+              "minor"
+            ]
+          },
+          "location": {
+            "type": "string",
+            "maxLength": 2048
+          },
+          "evidence": {
+            "type": "string",
+            "maxLength": 2048
+          },
+          "repair": {
+            "type": "string",
+            "maxLength": 2048
+          }
+        },
+        "required": [
+          "id",
+          "severity",
+          "location",
+          "evidence",
+          "repair"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "fixed": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 2048
+      }
+    },
+    "uncertainties": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 2048
+      }
+    },
+    "missing_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 2048
+      }
+    }
+  },
+  "required": [
+    "artifact_id",
+    "artifact_sha256",
+    "round",
+    "verdict",
+    "coverage_checked",
+    "errors_found",
+    "findings",
+    "fixed",
+    "uncertainties",
+    "missing_evidence"
+  ],
+  "additionalProperties": false
+}

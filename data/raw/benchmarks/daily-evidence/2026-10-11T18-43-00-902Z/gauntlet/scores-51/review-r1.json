@@ -1,0 +1,45 @@
+{
+  "artifact_id": "scores-51",
+  "artifact_sha256": "a0688269d7e91f73b1fe08804494f9989aaacc6a65bb5de7986692b3f504b8ed",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "location": "row[vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10].benchmark_id / benchmark version",
+      "evidence": "Primary source Table 6 lists only 'SWE Verified (Resolved)' with no snapshot qualifier; arXiv 2412.19437v2 predates 2026-09-10. The 'snapshot-2026-09-10' component is unsupported and cannot be verified against supplied evidence.",
+      "repair": "Remove the snapshot suffix or supply primary evidence for a dataset snapshot matching the reported 42.0 result; if intended as a version alias, it must be explicitly backed by evidence."
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "location": "row[vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10].source.published_at / source date",
+      "evidence": "Row sets published_at null; the primary packet contains no publication date for arXiv 2412.19437v2. Acceptance criterion c1 requires verifying source date, which cannot be done.",
+      "repair": "Add the arXiv publication date from metadata or explicitly designate retrieved_at as the source date; either way the value must be present in evidence."
+    },
+    {
+      "id": "F3",
+      "severity": "minor",
+      "location": "row[vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10].subject.model_id / variant",
+      "evidence": "model_id 'deepseek-v3-dec-24::default' includes a 'default' variant not present in the primary source; source only identifies DeepSeek-V3 chat model. This is an unverified alias/variant.",
+      "repair": "Either substantiate the 'default' variant from the subject's prior identity registration or remove the variant to align model_id with the evidence."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot recompute SHA-256 or execute transport/locator checks; supplied hashes are treated as binding.",
+    "retrieved_at in row matches primary header.",
+    "'self_reported' basis is consistent with the paper's own evaluation of its model.",
+    "The 'default' variant may originate from a prior identity registry not included in this packet."
+  ],
+  "missing_evidence": [
+    "Primary evidence for SWE-bench Verified snapshot-2026-09-10 (dataset version matching Table 6 result)",
+    "Publication date of arXiv 2412.19437v2 (source.published_at)"
+  ]
+}

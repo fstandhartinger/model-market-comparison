@@ -1,0 +1,24 @@
+{
+  "artifact_id": "scores-24",
+  "artifact_sha256": "e447867ee1aeed8a9480dd0fe7364353f82ec291be723fc76362b61088242904",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:99dd554d23b5241cbd3a0e9a",
+    "public:4663ac6a22aa05da61dbea82",
+    "public:d1ab68ef753235cc7ce29b27",
+    "public:ed2bfd02e514848b88146b8d",
+    "public:30ac7d4eb95df34e209e5377",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Limited to supplied evidence; could not independently execute SHA-256 hash binding or transport/robots qualification checks, which the owner performs separately.",
+    "CursorBench page does not expose an explicit 'published_at' timestamp; artifact records published_at null. retrieved_at matches the packet. This is noted as a caveat, not missing evidence.",
+    "Reasoning-effort configuration (e.g., 'Low', 'Minimal') is captured only in the name field; variant/harness are null and comparison_key is null. No alias inference or unknown-config comparison_key is made.",
+    "The 'Config' challenge is that the page's changelog (e.g., Oct 7, 2026 pricing adjustments) may affect values, but the artifact's values match the captured rows exactly."
+  ],
+  "missing_evidence": []
+}

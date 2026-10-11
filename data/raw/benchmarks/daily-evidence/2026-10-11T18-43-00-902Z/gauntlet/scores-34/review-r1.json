@@ -1,0 +1,34 @@
+{
+  "artifact_id": "scores-34",
+  "artifact_sha256": "c41e430c17aa2da2b61a419885a41aedbe0906d7c1747d8b8fe8dd0b482c272c",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:84cc601f7490e6c444cd675a",
+    "public:df112a6ecfcb89258b03f5ed",
+    "public:829c8f5ecaef8696a560fbe2",
+    "public:733a5d2c1e32af7b56afba92",
+    "public:5f71d5e4fbd01a9ac10449c4",
+    "public:befe93df5d39cdb1aa8e179e",
+    "public:5a7af23568b18377e4cbe9ca",
+    "public:71b68487ee3b7bc8582e52c0",
+    "public:70777bb628faa848bac7d939",
+    "public:d1b3b0fa6ab1e4d0f5cf00ce",
+    "public:44da979d49f82a26de6ca58c",
+    "public:263c8cf61231d40cf6a9d810",
+    "public:e04c39b0dc5fb3702bf373b3",
+    "public:c06b40b48737eaede426e967",
+    "public:50ee704b13efe765f8c28b58",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Identity mapping (e.g., 'GPT-6 Astra (max)' -> 'gpt-6-astra::max') is asserted via join_note from the owner's prior reviewed identity map; this packet does not contain that map, so I cannot independently confirm it is a fixed prior rather than an inference. This does not affect the primary numeric transcription and is a limitation of available evidence.",
+    "Owner-executed SHA-256 hashes and transport/qualification checks (including row and artifact hashes) were not independently verifiable in this review; this is a limitation, not missing numeric source evidence.",
+    "The competitions page excerpt (SOURCE 2) confirms BrokenArXiv 06/2026 has 54 problems, but not the full table; the protocol locator and supplied source rows are consistent with the excerpts provided.",
+    "MathArena does not publish a named harness string; the protocol text describes the published methodology (LLM judge, 0-2 scale). I did not demand a harness name not claimed by the source."
+  ],
+  "missing_evidence": []
+}

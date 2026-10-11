@@ -1,0 +1,34 @@
+{
+  "artifact_id": "scores-18",
+  "artifact_sha256": "234efa3307639d64de6e36242e899650cbaaa49c10bf8067ccf72d3ecdb13e05",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:e6daefd20f6d59bc7fd2cd74",
+    "public:db3f86205fb908a2c55f895c",
+    "public:70c770002bda599ca3144011",
+    "public:97d3eeae8cfe936a20d93a99",
+    "public:67e41c6fa2e35ffac66baf22",
+    "public:96233d5ba14f68d929ff8363",
+    "public:34d301efbc12e4ddb9d77edb",
+    "public:346fde30cdd52fc91d121c28",
+    "public:d91385cbf5dc78e5d54e9685",
+    "public:ba0e6022b8f2e9f16cfec8db",
+    "public:830b7457de5732cc7c44b18c",
+    "public:7226f24e0ac40d4d4b3df579",
+    "public:c4fc29f07f983269360d334c",
+    "public:47ece9bd191ef59d7dbe5cd9",
+    "public:0baf39544a14a6c9125c20ec",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot independently recompute SHA-256 hashes or re-execute network/transport captures; I rely on owner-provided hashes and on the captured source content supplied in the packet.",
+    "The source does not explicitly label each value as 'measured' vs 'self_reported'; the artifact's 'measured' basis is consistent with a third-party maintained leaderboard that runs its own tests, but that label is inferred rather than directly stated in the source.",
+    "The source does not publish a harness, and the artifact correctly leaves harness null; no harness claim is made.",
+    "The UGI metric's internal weighting is not independently verifiable from the source (the registry notes this), but this does not affect the direct transcription of the published 'UGI 🏆' values."
+  ],
+  "missing_evidence": []
+}

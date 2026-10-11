@@ -1,0 +1,20 @@
+{
+  "artifact_id": "scores-45",
+  "artifact_sha256": "acf70c2eccf849e7c3514969d946b87cfe6277d63898154ea78f49170015ab42",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:48366a90bcaccfe593c717af",
+    "public:5fbc1c5760a7294c2c867c6b",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute SHA-256 hashes or verify transport/qualification; relied on owner-provided hashes and receipt as instructed.",
+    "source date is represented by retrieved_at (2026-10-11T18:51:56Z) since published_at is null; this is consistent with the primary evidence and does not introduce ambiguity.",
+    "basis=measured reflects the maintainer's board publishing a score for the named model; no independent re-measurement was performed, but the criterion accepts measured values as published."
+  ],
+  "missing_evidence": []
+}

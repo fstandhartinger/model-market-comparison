@@ -1,0 +1,21 @@
+{
+  "artifact_id": "protocol-simple-bench-snapshot-2026-09-26",
+  "artifact_sha256": "c8df6b2b4a4f473f482313a7148dc11059283b983be1eb5e339cbc5cd6150502",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "simple-bench::snapshot-2026-09-26",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Hash and transport/qualification checks are owner-executed and cannot be recomputed in this read-only review.",
+    "The page text does not literally define 'Score (AVG@5)' as 'percent accuracy'; the label, temperature/top-p settings, and the served scale 8–88.4 support the unit and higher-better direction, but the wording is an inference.",
+    "The version_guard's statement about 'snapshot-2026-09-10' and 'CR-34.2' is not independently evidenced in the packet; it is not a field required by the acceptance criteria.",
+    "The visible page excerpt contains no explicit release identifier, which supports version_status 'snapshot'; absence of such text was treated as evidence of no published identifier."
+  ],
+  "missing_evidence": []
+}

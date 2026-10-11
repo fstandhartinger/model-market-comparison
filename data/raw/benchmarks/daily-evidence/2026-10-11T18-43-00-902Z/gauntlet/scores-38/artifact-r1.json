@@ -1,0 +1,71 @@
+[
+  {
+    "id": "public:f63fd9f16aff718fec19f3ad",
+    "benchmark_id": "posttrainbench::1.1",
+    "subject": {
+      "source_id": "fable-5",
+      "name": "Fable 5",
+      "model_id": "claude-fable-5::max",
+      "variant": null,
+      "harness": "Claude Code"
+    },
+    "value": 41.79,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://posttrainbench.com/scores.js",
+      "retrieved_at": "2026-10-11T18:47:44.233322+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/fca4764402b81b0033ef.gz",
+      "sha256": "fca4764402b81b0033ef16d592f69a6c784a0615d95773069199a38ca490856c",
+      "locator": "posttrainbench_js; source row 0; fable-5; field average_score"
+    },
+    "protocol": "PostTrainBench v1.1 (aisa-group, Ben Rank et al.; verified by Epoch AI): agents retrain four small base models (gemma-3-4b-pt, SmolLM3-3B-Base, Qwen3-1.7B-Base, Qwen3-4B-Base) for each of 7 benchmark families (AIME 2025, Arena-Hard Writing, BFCL, GPQA-Main, GSM8K, HealthBench, HumanEval); the leaderboard average is the weighted mean over base models × benchmarks (published weights, sum 1), aggregated over the 2–3 listed runs per agent; baselines (official instruct, base, human) are references; Fable 5's GPQA cells use an Opus 4.8 Max fallback after refusals (site footnote ‡). Not a Composite input.; source row: {\"scaffold\":\"Claude Code\",\"reasoning_effort\":\"Max\",\"reprompted\":false,\"n_runs\":2,\"std\":1.74,\"base_models\":[\"Qwen3-1.7B-Base\",\"Qwen3-4B-Base\",\"SmolLM3-3B-Base\",\"gemma-3-4b-pt\"],\"benchmarks\":[\"aime2025\",\"arenahardwriting\",\"bfcl\",\"gpqamain\",\"gsm8k\",\"healthbench\",\"humaneval\"],\"is_external\":false,\"footnote_marker\":null,\"verification_note\":null}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://posttrainbench.com/config.js",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/e7310a54e93da21579da.gz",
+        "sha256": "e7310a54e93da21579dac453910bacaf1001ecd32499d3a448932875fdd427c9",
+        "retrieved_at": "2026-10-11T18:47:47.001380+00:00",
+        "published_at": null,
+        "locator": "config_source"
+      }
+    ],
+    "join_note": "Reviewed identity map 2026-09-19: label states model claude-fable-5 and setting max; exact catalog configuration claude-fable-5::max"
+  },
+  {
+    "id": "public:f7334e431ee31c118d7ebeb6",
+    "benchmark_id": "posttrainbench::1.1",
+    "subject": {
+      "source_id": "locus",
+      "name": "Locus",
+      "model_id": null,
+      "variant": null,
+      "harness": "Intology · Opus 5"
+    },
+    "value": 45.58,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://posttrainbench.com/scores.js",
+      "retrieved_at": "2026-10-11T18:47:44.233322+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/fca4764402b81b0033ef.gz",
+      "sha256": "fca4764402b81b0033ef16d592f69a6c784a0615d95773069199a38ca490856c",
+      "locator": "posttrainbench_js; source row 8; locus; field average_score"
+    },
+    "protocol": "PostTrainBench v1.1 (aisa-group, Ben Rank et al.; verified by Epoch AI): agents retrain four small base models (gemma-3-4b-pt, SmolLM3-3B-Base, Qwen3-1.7B-Base, Qwen3-4B-Base) for each of 7 benchmark families (AIME 2025, Arena-Hard Writing, BFCL, GPQA-Main, GSM8K, HealthBench, HumanEval); the leaderboard average is the weighted mean over base models × benchmarks (published weights, sum 1), aggregated over the 2–3 listed runs per agent; baselines (official instruct, base, human) are references; Fable 5's GPQA cells use an Opus 4.8 Max fallback after refusals (site footnote ‡). Not a Composite input.; source row: {\"scaffold\":\"Intology · Opus 5\",\"reasoning_effort\":\"not stated\",\"reprompted\":false,\"n_runs\":3,\"std\":0.75,\"base_models\":[\"Qwen3-1.7B-Base\",\"Qwen3-4B-Base\",\"SmolLM3-3B-Base\",\"gemma-3-4b-pt\"],\"benchmarks\":[\"aime2025\",\"arenahardwriting\",\"bfcl\",\"gpqamain\",\"gsm8k\",\"healthbench\",\"humaneval\"],\"is_external\":true,\"footnote_marker\":null,\"verification_note\":\"Run by Intology and reviewed by PostTrainBench.\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://posttrainbench.com/config.js",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/e7310a54e93da21579da.gz",
+        "sha256": "e7310a54e93da21579dac453910bacaf1001ecd32499d3a448932875fdd427c9",
+        "retrieved_at": "2026-10-11T18:47:47.001380+00:00",
+        "published_at": null,
+        "locator": "config_source"
+      }
+    ]
+  }
+]

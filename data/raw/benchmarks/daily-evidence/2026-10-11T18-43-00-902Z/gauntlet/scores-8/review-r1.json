@@ -1,0 +1,34 @@
+{
+  "artifact_id": "scores-8",
+  "artifact_sha256": "e9bf657d255263c31b325437d67ed747b92dfa34a3caeeef6a18732499b5175a",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:bcb66e19a941de41dd8ec3bc",
+    "public:713c3cf59f50361b41629f50",
+    "public:a460a19dafd7892a40ab2b2a",
+    "public:60ea9e5b1ba4a546b9d0fd84",
+    "public:1d9b451e068142ff30e0caa2",
+    "public:26413fabb04c572b8ee8691e",
+    "public:82d9fcd7cfc5582dded5f9ae",
+    "public:07192377423213bb538aed5f",
+    "public:69c3229ce9efec94475f8c80",
+    "public:8a2d3d4ddbfdfcc5259c2ebf",
+    "public:c301e472795a95ace2a653a3",
+    "public:98cd4c7c9bfba6b7366c11a9",
+    "public:5303cdd23c6ec0c06e769d72",
+    "public:8f467fd90bc22108b1b149c8",
+    "public:3c0d43a6b330643c82b7f544",
+    "c1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row hashes are owner-computed; I cannot recompute SHA-256, and transport/qualification checks are outside my execution scope.",
+    "For openai/gpt-6-astra rows (c301e472, 98cd4c7c, 5303cdd2, 8f467fd9), model_id values (gpt-6-astra::low/medium/high/xhigh) come from join_note mapping without a separate catalog primary source in the packet; relying on the explicit reasoning_effort label as exact configuration.",
+    "NatInt 💡 is a published composite of Textbook, Pop Culture and World Model whose weighting was not independently verified; basis 'measured' reflects direct transcription of the served value.",
+    "Board does not publish a harness field; protocol records only the published context fields (Prompt Template, Test Date, Model Link, Is Thinking Model), which is the available evidence."
+  ],
+  "missing_evidence": []
+}
