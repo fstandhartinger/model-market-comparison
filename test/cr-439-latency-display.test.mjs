@@ -175,3 +175,11 @@ export const jevSourceUrl=(key,repo)=>data.links[key]?.url??repo??null;`),
   assert.doesNotMatch(api, /est\. /);
   assert.match(html, /data-bh-jev-latency-legend/);
 });
+
+test('CR-439 review: v1.2 board labels only x2 + 0.15 s rows as network estimates; CSV headers unchanged', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const v12 = await readFile(new URL('../components/JevModelsV12.tsx', import.meta.url), 'utf8');
+  assert.match(v12, /isSelfHostedAdjustment\(r\.adjustment\) \? 'est\. incl\. network \(2x \+ 150 ms\)' : 'adjusted'/);
+  const grid = await readFile(new URL('../lib/jevbench-all-data-grid.mjs', import.meta.url), 'utf8');
+  for (const label of ['p50 raw (s)', 'p95 raw (s)', 'p50 adjusted (s)', 'p95 adjusted (s)']) assert.ok(grid.includes(`'${label}'`), label);
+});

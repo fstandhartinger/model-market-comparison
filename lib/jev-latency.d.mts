@@ -5,7 +5,7 @@ export const JEV_LATENCY_HOSTED_OPTION: string;
 export type JevSpeedLike = { p50_s_raw?: number | null; p50_s_adjusted?: number | null; adjustment?: string | null; [k: string]: unknown } | null | undefined;
 export interface JevLatencyView {
   adjusted: boolean; measured: number | null; estimate: number | null;
-  label: string | null; tooltip: string | null; basis: 'measured-loopback' | 'api-end-to-end'; note: string | null;
+  label: string | null; tooltip: string | null; basis: 'measured-loopback' | 'api-end-to-end' | 'demo-endpoint-x2'; note: string | null;
 }
 export function isSelfHostedAdjustment(adjustment: unknown): boolean;
 export function latencySeconds(value: number | null | undefined, digits?: number): string;
