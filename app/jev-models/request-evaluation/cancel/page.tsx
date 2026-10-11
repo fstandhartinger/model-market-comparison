@@ -11,6 +11,6 @@ export default function PriorityEvaluationCancelPage() {
     <p className="bh-eyebrow">Priority evaluation request</p>
     <h1 className="mt-1 text-3xl font-bold tracking-tight">Checkout cancelled</h1>
     <p className="bh-muted mt-4">No payment was completed and no evaluation request was submitted. You can return to the request form whenever you are ready.</p>
-    <p className="mt-5"><Link className="text-accent underline" href="/jev-models/request-evaluation">Return to the request form</Link></p>
+    <p className="mt-5"><Link className="text-accent underline" href="/submit">Return to the submission form</Link></p>
   </article>;
 }

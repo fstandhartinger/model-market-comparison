@@ -68,7 +68,7 @@ test('CR-167.2/D207: the collapsed bar keeps Florian\'s copy and both controls o
   assert.match(tsx, /Are you a model developer\?<\/strong> Priority evaluations/, 'the teaser must name the audience');
   assert.match(tsx, /Don&apos;t show again/);
   assert.match(tsx, /Request an evaluation/);
-  assert.match(tsx, /href="\/jev-models\/request-evaluation"/);
+  assert.match(tsx, /href="\/submit"/);
   // The collapsed bar hides the offer, never the close control.
   const hidden = phoneBlock.match(/\[data-bh-fastlane-expanded="no"\][^{]*\{[^}]*display:\s*none/g) ?? [];
   assert.ok(hidden.some((rule) => rule.includes('.bh-fastlane-body')), 'the collapsed bar must hide the offer body');

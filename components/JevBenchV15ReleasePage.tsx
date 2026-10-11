@@ -102,6 +102,6 @@ export async function JevBenchV15ReleasePage({ artifact: releaseArtifact, sha256
       </p>
     </header>
     <JevBenchV15 artifact={artifact} sha256={sha256} previousKeys={previousKeys} />
-    <p className="bh-muted mt-6 text-sm" data-bh-priority-evaluation-link>Model author? <a className="text-accent underline" href="/jev-models/request-evaluation">Request a priority evaluation</a> · <a className="text-accent underline" href="/submit" data-bh-submit-link>Submit a model for evaluation →</a></p>
+    <p className="bh-muted mt-6 text-sm" data-bh-priority-evaluation-link>Model author? <a className="text-accent underline" href="/submit" data-bh-submit-link>Submit a model for evaluation (free queue or fast lane) →</a></p>
   </>;
 }

@@ -108,7 +108,7 @@ export function FastlaneBanner() {
             <button type="button" className="bh-fastlane-primary" onClick={() => dismiss(true)}>
               Don&apos;t show again
             </button>
-            <Link className="bh-fastlane-secondary" href="/jev-models/request-evaluation" onClick={() => track("fastlane_banner_click", pathname)}>
+            <Link className="bh-fastlane-secondary" href="/submit" onClick={() => track("fastlane_banner_click", pathname)}>
               Request an evaluation <span aria-hidden="true">→</span>
             </Link>
           </div>
