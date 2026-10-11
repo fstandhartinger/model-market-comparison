@@ -120,7 +120,7 @@ test('CR-251 fast lane: subset, pricing, audio exclusion, required choices', () 
 
 test('CR-251 fast lane: the mapped priority request passes the existing validator and carries no secret', () => {
   const key = 'sk-supersecretvalue123456';
-  for (const o of [{}, { apiUrl: 'https://api.example.com/v1', apiKey: key, huggingfaceUrl: 'https://huggingface.co/a/b' }]) {
+  for (const o of [{}, { apiUrl: 'https://api.example.com/v1', apiKey: key, huggingfaceUrl: 'https://huggingface.co/a/b' }, { apiUrl: 'https://api.example.com/v1' }]) {
     const v = validateModelSubmission(base({ fastLane: true, pricingTier: 'api_or_small_open', visibility: 'private', termsAccepted: true, benchmarks: ['imagejevbench', 'audiojevbench'], ...o }), { followups }).value;
     const body = toPriorityBody(v, submissionReference(v.submissionId));
     const p = validatePrioritySubmission(body);
@@ -129,7 +129,8 @@ test('CR-251 fast lane: the mapped priority request passes the existing validato
     assert.equal(p.value.submissionId, v.submissionId);
     assert.equal(p.value.accessType, v.apiUrl ? 'api_endpoint' : 'open_weights');
     assert.ok(!JSON.stringify(body).includes(key));
-    if (v.apiUrl) assert.match(body.accessInstructions, /^Submitted via \/submit \(ref [0-9A-F]{8}\)\. API URL: https:\/\/api\.example\.com\/v1 API key: stored encrypted in the submission record\.$/);
+    if (v.apiUrl && v.apiKey) assert.match(body.accessInstructions, /^Submitted via \/submit \(ref [0-9A-F]{8}\)\. API URL: https:\/\/api\.example\.com\/v1 API key: stored encrypted in the submission record\.$/);
+    else if (v.apiUrl) assert.match(body.accessInstructions, /^Submitted via \/submit \(ref [0-9A-F]{8}\)\. API URL: https:\/\/api\.example\.com\/v1 API key: none submitted\.$/);
     else assert.equal(body.accessInstructions, 'Open weights at the links above.');
   }
   const long = validateModelSubmission(base({ fastLane: true, pricingTier: 'api_or_small_open', visibility: 'public', termsAccepted: true, apiUrl: 'https://api.example.com/' + 'a'.repeat(1500), description: 'd'.repeat(2000) }), { followups }).value;
