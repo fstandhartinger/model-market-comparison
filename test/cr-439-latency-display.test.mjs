@@ -49,8 +49,10 @@ test('CR-439 helper: self-hosted rows are adjusted, API rows are not', () => {
   assert.equal(a.tooltip, null);
 });
 
-test('CR-439 helper: x2 variants count, missing data does not invent an estimate', () => {
-  assert.ok(isSelfHostedAdjustment('x2 (demo endpoint)'));
+test('CR-439 helper: only x2 + 0.15 s rows are self-hosted; demo x2 rows keep their display; missing data does not invent an estimate', () => {
+  assert.ok(!isSelfHostedAdjustment('x2 (demo endpoint)'));
+  assert.ok(!isSelfHostedAdjustment('x2 demo-endpoint adjustment (assumption, not measured)'));
+  assert.equal(jevLatencyView({ p50_s_raw: 0.5, p50_s_adjusted: 1, adjustment: 'x2 (not a production API; no +0.15 s)' }).basis, 'demo-endpoint-x2');
   assert.ok(isSelfHostedAdjustment('x2 + 0.15 s (assumption, not measured)'));
   assert.ok(!isSelfHostedAdjustment('none (API)'));
   assert.ok(!isSelfHostedAdjustment(undefined));
