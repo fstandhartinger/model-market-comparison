@@ -30,7 +30,7 @@ function viewRow(row: JevV14System, note: string | null, previousKeys: Set<strin
     axes: { intelligence: row.axes?.intelligence ?? null, calibration: row.axes?.calibration ?? null, speed: row.axes?.speed ?? null, cost: row.axes?.cost ?? null },
     public_accuracy: row.public_accuracy, sealed_accuracy: row.sealed_accuracy, public_minus_sealed_gap_pp: row.public_minus_sealed_gap_pp,
     cost: { kind: row.cost?.kind, usd_per_1000: row.cost?.usd_per_1000 ?? null, basis: row.cost?.basis },
-    speed: { p50_s_raw: row.speed?.p50_s_raw ?? null, ...(row.speed?.adjustment ? { adjustment: row.speed.adjustment } : {}) },
+    speed: { p50_s_raw: row.speed?.p50_s_raw ?? null, p50_s_adjusted: row.speed?.p50_s_adjusted ?? null, ...(row.speed?.adjustment ? { adjustment: row.speed.adjustment } : {}) },
     endpoint_kind: row.endpoint_kind, endpoint_condition: row.endpoint_condition,
     note, openSource: openSource(row), isNew: previousKeys !== null && !previousKeys.has(row.key),
   };

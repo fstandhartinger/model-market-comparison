@@ -185,6 +185,8 @@ test('CR-254 every text detail branch and shared leaderboard surface includes th
 const sharedAliases = {
   'next/link': linkStub,
   './BaseModelDisplay': await compileReactModule(componentUrl),
+  // CR-439: the shared latency cell (measured value + labelled estimate) is imported by the board table.
+  './JevLatency': await compileReactModule(file('../components/JevLatency.tsx')),
   './JevArchitecture': await compileReactModule(file('../components/JevArchitecture.tsx')),
   './jevTypes': await compileTsModule(file('../components/jevTypes.ts')),
   // The isolated SSR render has no page-level filter provider; mirror the hook's default all-visible state.

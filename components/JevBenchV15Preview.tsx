@@ -1,4 +1,6 @@
 import { JevArchitectureBadge } from './JevArchitecture';
+import { jevLatencyView } from '../lib/jev-latency.mjs';
+import { JevLatencyLegend } from './JevLatency';
 import { jevRowArch } from './jevTypes';
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 import Link from 'next/link';
@@ -236,7 +238,9 @@ function AxesView({ a, rows, view }: { a: JevV15Artifact; rows: JevV15System[]; 
               {JEVBENCH_V15_TYPES.map((t) => <td key={t} className="whitespace-nowrap p-2 text-right tabular-nums" title={sup(row, t) ? `support: ${sup(row, t)}` : undefined}>
                 {sup(row, t) === 'unsupported' || sup(row, t) === 'not supported' ? <span className="bh-muted">not supported</span> : <>{f0(cc(row, 'open', t))} / {f0(cc(row, 'sealed', t))}</>}
               </td>)}
-              <td className="whitespace-nowrap p-2 text-right tabular-nums" title={row.speed.adjustment ? `Adjustment: ${row.speed.adjustment}; raw p50 ${secs(row.speed.p50_s_raw)}, p95 ${secs(row.speed.p95_s_raw)}` : undefined}>{secs(row.speed.p50_s_adjusted)} / {secs(row.speed.p95_s_adjusted)}</td>
+              <td className="whitespace-nowrap p-2 text-right tabular-nums" title={jevLatencyView(row.speed, 2, row.endpoint_kind).tooltip ?? (row.speed.adjustment ? `Adjustment: ${row.speed.adjustment}; raw p50 ${secs(row.speed.p50_s_raw)}, p95 ${secs(row.speed.p95_s_raw)}` : undefined)}>{jevLatencyView(row.speed).adjusted
+                ? <><span data-bh-jev-latency-measured>{secs(row.speed.p50_s_raw)} / {secs(row.speed.p95_s_raw)}</span><span className="bh-muted block text-xs" data-bh-jev-latency-estimate>est. {secs(row.speed.p50_s_adjusted)} / {secs(row.speed.p95_s_adjusted)}*</span></>
+                : <>{secs(row.speed.p50_s_adjusted)} / {secs(row.speed.p95_s_adjusted)}</>}</td>
               <td className="whitespace-nowrap p-2 text-right tabular-nums">{costCell(row)}</td>
               <td className="bh-muted whitespace-nowrap p-2 text-xs" title={row.endpoint_condition ?? undefined}>{row.endpoint_kind === 'gpu' ? `GPU pod${row.gpu ? ` (${row.gpu})` : ''}` : row.endpoint_kind === 'cpu' ? (row.addendum?.id === 'A4' ? 'CPU (shared host)' : 'CPU container') : row.endpoint_kind === 'demo' ? 'author demo endpoint' : row.endpoint_kind === 'api' ? 'hosted API' : '—'}</td>
             </>}
@@ -247,6 +251,7 @@ function AxesView({ a, rows, view }: { a: JevV15Artifact; rows: JevV15System[]; 
     {/* The cost legend and the API note explain columns that only the second view prints. */}
     {!isAxes && <>
       <p className="bh-muted mt-2 text-xs" data-bh-jev15-cost-legend>{COST_LEGEND}</p>
+      {rows.some((r) => jevLatencyView(r.speed).adjusted) && <JevLatencyLegend className="bh-muted mt-2 text-xs" />}
       <p className="bh-muted mt-2 text-xs" data-bh-jev15-api-note>API = the operator&apos;s endpoint received sealed item text during evaluation, without answers. Sealed item text, answers and item-level results stay private; only system-level aggregates appear here. Hover a cost for its price basis and a latency for its raw values and adjustment.</p>
     </>}
   </>;

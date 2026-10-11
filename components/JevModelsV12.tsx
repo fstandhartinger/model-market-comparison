@@ -1,5 +1,6 @@
 "use client";
 import { JevArchitectureBadge } from './JevArchitecture';
+import { isSelfHostedAdjustment } from '../lib/jev-latency.mjs';
 import { JEV_ARCH_CLASSES } from '../lib/jevbench-architecture.mjs';
 import { jevRowArch, jevLegendTypes, jevTypeVarName } from './jevTypes';
 import Link from "next/link";
@@ -235,7 +236,7 @@ function Table({ view, rows, honorableRows, partialRows, w, scope }: { view: Jev
     <td className="tabular"><CostValue r={r} /></td>
     {TIER_ORDER.map((t) => <td key={t} className="tabular">{pct(r.tiers[t])}</td>)}
     <td className="tabular" title={`${r.endpoint}. Adjustment: ${r.adjustment}.`} data-bh-jev12-latency>
-      {sec(r.p50)} <span className="bh-muted">raw</span>{r.p50Adj !== r.p50 && <span className="bh-muted block text-[11px]">→ {sec(r.p50Adj)} adjusted</span>}
+      {sec(r.p50)} <span className="bh-muted">raw</span>{r.p50Adj !== r.p50 && <span className="bh-muted block text-[11px]">→ {sec(r.p50Adj)} {isSelfHostedAdjustment(r.adjustment) ? 'est. incl. network (2x + 150 ms)' : 'adjusted'}</span>}
       <span className="bh-muted block text-[11px]">p95 {sec(r.p95)} raw{r.p95Adj !== r.p95 ? ` → ${sec(r.p95Adj)}` : ""}</span></td>
     <td className="text-[12px]" title={r.endpoint}>{r.endpointKind === "api" ? "production API" : r.endpointKind === "gpu" ? "our RunPod GPU" : r.endpointKind === "demo" ? "author's demo server" : "our CPU"}</td>
   </tr>;

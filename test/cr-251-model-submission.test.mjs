@@ -250,7 +250,7 @@ test('CR-251 site wiring: sitemap, menus, benchmark-page links and the re-evalua
   const [sitemap, nav, jev, release, image, audio, request] = await Promise.all([
     read('../app/sitemap.ts'), read('../components/Nav.tsx'), read('../components/JevBenchV15Preview.tsx'),
     read('../components/JevBenchV15ReleasePage.tsx'), read('../app/jev-models/multimodal-preview/page.tsx'),
-    read('../app/audio-jev-bench/page.tsx'), read('../app/jev-models/request-evaluation/page.tsx'),
+    read('../app/audio-jev-bench/page.tsx'), read('../app/submit/page.tsx'),
   ]);
   assert.match(sitemap, /"\/submit"/);
   assert.match(nav, /\["\/submit", "Submit a model"\]/);
@@ -260,7 +260,7 @@ test('CR-251 site wiring: sitemap, menus, benchmark-page links and the re-evalua
   for (const [name, src] of [['jev', jev], ['image', image], ['audio', audio]]) {
     assert.match(src, /Every release re-evaluates the current top 10 on the composite score\. Models ranked #11 and below are re-evaluated on a slower cadence — at least monthly, or with every third scheduled refresh release, whichever comes first — and their score is shown as last measured on its release\. A material method change re-evaluates every model\. Paid fast-lane runs are evaluated within 48 hours of payment, and new submissions are evaluated in the order received\./, `${name} method notes`);
   }
-  assert.match(request, /New: submit any model \(free regular queue or fast lane\) at/);
+  assert.match(request, /Fast-lane fees/);
 });
 
 test('CR-251 schema: the runtime copy equals the migration and stays idempotent', async () => {

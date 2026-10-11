@@ -13,8 +13,10 @@ const nextConfig = {
   // (a cross-origin frame never gets them; unknown to browsers without WebMCP).
   // CR-170: renamed JevBench system pages keep their old URL as a permanent redirect.
   // The /image-jev-bench/v0.1.4 archive URL existed only during the 29-30 Sep v0.2 page (rolled back).
+  // CR-439: /submit is the single submission flow; the old priority-request form redirects there (query string kept).
+  // The /success and /cancel pages stay for Stripe sessions created before the merge.
   async redirects() {
-    return [...JEV_SYSTEM_SLUG_REDIRECTS, { source: "/image-jev-bench/v0.1.4", destination: "/image-jev-bench", permanent: false }];
+    return [...JEV_SYSTEM_SLUG_REDIRECTS, { source: "/jev-models/request-evaluation", destination: "/submit", permanent: true }, { source: "/image-jev-bench/v0.1.4", destination: "/image-jev-bench", permanent: false }];
   },
   async headers() {
     return [

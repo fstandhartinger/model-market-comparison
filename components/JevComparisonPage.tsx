@@ -1,3 +1,5 @@
+import { jevLatencyView, jevLatencyText } from '../lib/jev-latency.mjs';
+import { JevLatencyLegend } from './JevLatency';
 import type { JevV15System } from '../lib/jevbench-v15-preview.mjs';
 import Link from 'next/link';
 import { readJevbenchSeoData } from '../lib/jevbench-seo.mjs';
@@ -25,7 +27,7 @@ export async function JevComparisonPage({rivalKey,path,label}: {rivalKey:string;
     ['Composite (secondary)',one(jev.jevbench_score),one(rival.jevbench_score)],
     ...(['intelligence','calibration','speed','cost'] as const).map((axis) => [axis,one(jev.axes[axis]),one(rival.axes[axis])]),
     ['USD per 1,000 decisions',usdPerThousand(jev.cost?.usd_per_1000),usdPerThousand(rival.cost?.usd_per_1000)],
-    ['p50 latency (seconds)',one(jev.speed?.p50_s_adjusted ?? jev.speed?.p50_s_raw),one(rival.speed?.p50_s_adjusted ?? rival.speed?.p50_s_raw)],
+    ['p50 latency (seconds)',jevLatencyText(jev.speed,one(jev.speed?.p50_s_adjusted ?? jev.speed?.p50_s_raw),{unit:false}),jevLatencyText(rival.speed,one(rival.speed?.p50_s_adjusted ?? rival.speed?.p50_s_raw),{unit:false})],
     ['Last measured',jev.last_measured_on ?? 'unknown',rival.last_measured_on ?? 'unknown'],
   ];
   return <>
@@ -38,6 +40,7 @@ export async function JevComparisonPage({rivalKey,path,label}: {rivalKey:string;
       categories={jevbenchCategoryView(data.artifact.revision,[jev.key,rival.key],{ supplement: true })} heading={`Jev and ${label}: published axes and category radars`}/>
     <section className="bh-panel mt-6 p-5"><h2 className="text-xl font-semibold">Published values</h2>
       <div className="overflow-x-auto"><table className="w-full text-left text-sm" data-bh-jev-comparison-table><thead><tr><th>Measure</th><th>{jev.display}</th><th>{rival.display}</th></tr></thead><tbody>{measures.map(([name,a,b]) => <tr className="border-t" key={name}><th className="py-2">{name}</th><td>{a}</td><td>{b}</td></tr>)}</tbody></table></div>
+      {(jevLatencyView(jev.speed).adjusted || jevLatencyView(rival.speed).adjusted) && <JevLatencyLegend className="bh-muted mt-2 text-xs" />}
     </section>
     <section className="mt-6 grid gap-4 md:grid-cols-2">{[jev,rival].map((row) => <article className="bh-panel p-5" key={row.key}><h2><Link className="text-accent underline" href={jevSystemPath(row.key)}>{row.display}</Link></h2>
       <p>{row.licence || 'Licence not stated'}</p>{row.repo && <a className="text-accent underline" href={row.repo}>Published source</a>}

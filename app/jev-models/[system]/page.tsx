@@ -1,3 +1,4 @@
+import { JevLatencyDetail } from '../../../components/JevLatency';
 import { jevRowArch, JEV_TYPE_LABEL } from '../../../components/jevTypes';
 import { JevArchitectureBadge } from '../../../components/JevArchitecture';
 import { BaseModelDisplay } from '../../../components/BaseModelDisplay';
@@ -160,7 +161,7 @@ function A4System({ data, page, previous }: { data: Awaited<ReturnType<typeof re
     <section className="bh-panel mt-6 p-5"><h2 className="font-semibold">Composite (secondary)</h2><p data-bh-jev-a4-composite>{seoOne(s.jevbench_score)} · {page.compositeRank == null ? 'Not ranked' : `Composite rank #${page.compositeRank} of ${page.nRanked} on the API leaderboard`}</p></section>
     <section className="bh-panel mt-6 p-5"><h2 className="font-semibold">Cost and measurement conditions</h2>
       <p data-bh-jev-a4-cost>{usdPerThousand(s.cost?.usd_per_1000)} ({a4CostLabel(s.cost?.kind)})</p><p className="bh-muted mt-2">{s.cost?.basis ?? 'Cost basis not published'}</p>
-      <p className="mt-3">p50 latency: {seoOne(s.speed?.p50_s_adjusted ?? s.speed?.p50_s_raw)} s</p>
+      <JevLatencyDetail speed={s.speed} kind={(s as { endpoint_kind?: string | null }).endpoint_kind} plain={`p50 latency: ${seoOne(s.speed?.p50_s_adjusted ?? s.speed?.p50_s_raw)} s`} />
       <p className="bh-muted">{s.speed?.adjustment ?? 'Latency adjustment not stated'}</p>
     </section>
     <A4Breakdowns s={s} page={page} />
@@ -195,7 +196,7 @@ function CurrentReleaseSystem({ data, row }: { data: Awaited<ReturnType<typeof r
     <section className="bh-panel mt-6 p-5"><h2 className="font-semibold">Composite (secondary)</h2><p>{seoOne(row.jevbench_score)} · {row.composite_rank == null || row.board !== 'open' ? 'Not ranked on this board' : `Composite rank #${row.composite_rank}`}</p></section>
     <section className="bh-panel mt-6 p-5"><h2 className="font-semibold">Cost and measurement conditions</h2>
       <p>{usdPerThousand(price)} ({costBasisLabel(row.cost?.kind)})</p><p className="bh-muted mt-2">{row.cost?.basis ?? 'Cost basis not published'}</p>
-      <p className="mt-3">p50 latency: {seoOne(row.speed?.p50_s_adjusted ?? row.speed?.p50_s_raw)} s</p>
+      <JevLatencyDetail speed={row.speed} kind={(row as { endpoint_kind?: string | null }).endpoint_kind} plain={`p50 latency: ${seoOne(row.speed?.p50_s_adjusted ?? row.speed?.p50_s_raw)} s`} />
       <p className="bh-muted">{row.speed?.adjustment ?? 'Latency adjustment not stated'}</p>
       <p className="bh-muted">{row.speed?.hardware ?? row.endpoint_condition ?? row.speed?.measured_where ?? 'Setup not stated'}</p>
     </section>

@@ -16,6 +16,8 @@ export type JevBubblePoint = {
   capability: number; intelligence: number | null; calibration: number | null;
   cost: number | null; costKind: string; speed: number | null; latency: number | null; medianSpeed: number | null; score: number | null;
   officialScore?: number | null;
+  /** CR-439: measured loopback p50 (s) of a self-hosted row whose `latency` is the network-including estimate. */
+  latencyMeasured?: number | null;
   scoreAxes?: { intelligence: number | null; calibration: number | null; speed: number | null; cost: number | null };
   inClass: boolean; classRank: number | null; isReference: boolean; outsideBecause: string | null;
 };
@@ -368,7 +370,7 @@ export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, costFa
         </button>
       </div>
     </div>
-    <p className="bh-muted mt-1 text-sm">{hint} {kind === 'cost' ? `Cost is USD per 1,000 decisions on a log scale. ${limitX == null ? 'No cost cap is selected, so no limit line is drawn.' : `The dashed line is ${costFactor}× Jev’s cost.`}` : 'Speed here is the median-latency speed — the same adjusted median (p50) latency the Jev-class limit uses — a log scale, so each 20 points is 10× faster (median under the numbers). ' + (latencyLimitX == null ? 'No latency cap is selected, so no limit line is drawn.' : `The dashed line is ${latencyFactor}× Jev’s median latency.`)}</p>
+    <p className="bh-muted mt-1 text-sm">{hint} {kind === 'cost' ? `Cost is USD per 1,000 decisions on a log scale. ${limitX == null ? 'No cost cap is selected, so no limit line is drawn.' : `The dashed line is ${costFactor}× Jev’s cost.`}` : 'Speed here is the median-latency speed — the same adjusted median (p50) latency the Jev-class limit uses — a log scale, so each 20 points is 10× faster (median under the numbers). Self-hosted systems are plotted at the est. incl. network latency (2x measured + 150 ms); their measured loopback p50 is in the tooltip. ' + (latencyLimitX == null ? 'No latency cap is selected, so no limit line is drawn.' : `The dashed line is ${latencyFactor}× Jev’s median latency.`)}</p>
     {expanded && <p className="bh-muted mt-1 text-xs">Wheel or pinch to zoom. Drag to pan. Use Reset view to return to the full chart.</p>}
     <div ref={ref} className="relative mt-3 w-full" onPointerLeave={(e) => { if (e.pointerType === 'mouse' && !pinned && pointers.current.size === 0) setActive(null); }}>
       <svg ref={svgRef} width={W} height={H} viewBox={`0 0 ${W} ${H}`} className={`block select-none ${expanded ? 'cursor-grab touch-none active:cursor-grabbing' : 'touch-manipulation'}`}
@@ -417,7 +419,7 @@ export function JevBubbleChart({ id, kind, points, costLimit, latencyCap, costFa
         <b className="block text-[13px] leading-tight">{activeDot.p.name}</b>
         <span className="block">Capability <b>{one(activeDot.p.capability)}</b> <span className="bh-muted">(I {one(activeDot.p.intelligence)} · C {one(activeDot.p.calibration)})</span></span>
         <span className="block">Cost {activeDot.p.cost == null ? '—' : `${usd(activeDot.p.cost)}${activeDot.p.costKind === 'estimate' ? ' est.' : ''}`} <span className="bh-muted">/ 1,000 decisions</span></span>
-        <span className="block">Speed {kind === 'speed' ? one(plotSpeed(activeDot.p)) : one(activeDot.p.speed)}{kind === 'speed' && activeDot.p.medianSpeed != null && <span className="bh-muted"> (median)</span>}{kind === 'speed' && activeDot.p.medianSpeed == null && <span className="bh-muted"> (Speed-axis fallback)</span>}{activeDot.p.latency != null && <span className="bh-muted"> · median {secs(activeDot.p.latency)}</span>}</span>
+        <span className="block">Speed {kind === 'speed' ? one(plotSpeed(activeDot.p)) : one(activeDot.p.speed)}{kind === 'speed' && activeDot.p.medianSpeed != null && <span className="bh-muted"> (median)</span>}{kind === 'speed' && activeDot.p.medianSpeed == null && <span className="bh-muted"> (Speed-axis fallback)</span>}{activeDot.p.latency != null && <span className="bh-muted"> · median {activeDot.p.latencyMeasured != null ? `${secs(activeDot.p.latency)} est. incl. network (2x + 150 ms); measured ${activeDot.p.latencyMeasured < 0.1 ? `${(activeDot.p.latencyMeasured * 1000).toFixed(0)} ms` : secs(activeDot.p.latencyMeasured)}` : secs(activeDot.p.latency)}</span>}</span>
         <span className="block">{scoreLabel} {one(activeDot.p.score)}{customScore && activeDot.p.officialScore != null && <span className="bh-muted"> · official {one(activeDot.p.officialScore)}</span>}{activeDot.p.rank != null ? <span className="bh-muted"> · official #{activeDot.p.rank}</span> : <span className="bh-muted"> · not ranked</span>}</span>
         <span className="block">{activeDot.p.inClass ? <>Jev-class{activeDot.p.classRank != null ? ` · Capability #${activeDot.p.classRank}` : ''}</> : <span className="bh-muted">Outside Jev-class: {activeDot.p.outsideBecause}</span>}</span>
       </div>}

@@ -1,4 +1,5 @@
 'use client';
+import { jevLatencyView, latencySeconds, JEV_LATENCY_LABEL, type JevSpeedLike } from '../lib/jev-latency.mjs';
 import { jevRowArch } from './jevTypes';
 import { JEV_SCOPE_LISTING } from '../lib/jevbench-scope.mjs';
 
@@ -78,6 +79,7 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
 }) {
   const { row, capability, cost, latency } = item;
   const basePrice = basePriceCheck(row, reference, costCap, referenceLabel);
+  const latencyView = jevLatencyView((row as { speed?: JevSpeedLike }).speed, 2, (row as { endpoint_kind?: string | null }).endpoint_kind);
   const intelligence = row.axes?.intelligence;
   const calibration = row.axes?.calibration;
   const costScore = row.axes?.cost;
@@ -96,7 +98,8 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
     <dt className="text-gray-400">Calibration</dt><dd className="tabular">{calibration == null ? 'unknown' : one(calibration)}</dd>
     <dt className="text-gray-400">Cost Score</dt><dd className="tabular">{costScore == null ? 'unknown' : one(costScore)}</dd>
     <dt className="text-gray-400">Cost vs cap</dt><dd className="tabular"><RatioDetail value={cost == null ? 'unknown' : `${usd(cost)} per 1,000 decisions`} ratio={item.costRatio} factor={costFactor} referenceLabel={referenceLabel} kind="cost" /></dd>
-    <dt className="text-gray-400">Latency vs cap</dt><dd className="tabular"><RatioDetail value={latency != null ? secs(latency) : latencyRatio != null ? `${secs(latencyRatio * reference.latency)} equivalent (derived from Speed axis; p50 not reported)` : 'not reported'} ratio={latencyRatio} factor={latencyFactor} referenceLabel={referenceLabel} kind="latency" /></dd>
+    <dt className="text-gray-400">Latency vs cap</dt><dd className="tabular"><RatioDetail value={latency != null ? (latencyView.adjusted ? `measured p50 ${latencySeconds(latencyView.measured, 3)} · ${JEV_LATENCY_LABEL}: ${secs(latency)}` : secs(latency)) : latencyRatio != null ? `${secs(latencyRatio * reference.latency)} equivalent (derived from Speed axis; p50 not reported)` : 'not reported'} ratio={latencyRatio} factor={latencyFactor} referenceLabel={referenceLabel} kind="latency" /></dd>
+    {latencyView.adjusted && <><dt className="text-gray-400">Latency basis</dt><dd data-bh-jev-latency-tip>{latencyView.tooltip}</dd></>}
     {basePrice && <><dt className="text-gray-400">Pricing</dt><dd data-bh-jev-capability-base-price-tip>{basePrice.detail}</dd></>}
     <dt className="text-gray-400">Rank</dt><dd className="tabular">Capability Score {rank || `outside ${classLabel}`} · official {row.rank == null ? 'unranked' : `#${row.rank}`}</dd>
     <dt className="text-gray-400">Colours</dt><dd>Green ≤ reference; amber ≤ cap; red &gt; cap. Shorter is cheaper or faster.</dd>

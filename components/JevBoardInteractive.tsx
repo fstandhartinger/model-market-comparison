@@ -14,6 +14,8 @@ import { withFieldNames } from './jevFieldNames';
 import { imageJevSystemPath, imageJevSourceUrl } from '../lib/imagejev-system-links.mjs';
 import { jevSourceUrl } from './jevSystemLinks';
 import { jevSystemPath } from '../lib/jev-system-slug.mjs';
+import { jevLatencyView } from '../lib/jev-latency.mjs';
+import { JevLatencyValue, JevLatencyLegend } from './JevLatency';
 import { BaseModelDisplay, BaseModelFootnotes, type BaseModelBenchmark } from './BaseModelDisplay';
 import { baseModelFootnotes } from '../lib/jev-base-model.mjs';
 import { useJevV15VisibleKeys } from './useJevV15VisibleKeys';
@@ -482,7 +484,7 @@ function Row({ row, heat, benchmark = 'jevbench' }: { row: JevBoardViewRow; heat
     <td className="tabular whitespace-nowrap">{percentagePoints(row.public_minus_sealed_gap_pp)}</td>
     {/* CR-176.5: no green heat on the $/1k column. */}
     <td className="tabular whitespace-nowrap text-right" data-bh-jev14-usd><CostValue row={row} /></td>
-    <HeatTd heat={heat} column="latency" row={row} className="whitespace-nowrap"><span title={row.speed?.adjustment ?? undefined}>{seconds(row.speed?.p50_s_raw)}</span></HeatTd>
+    <HeatTd heat={heat} column="latency" row={row} className="whitespace-nowrap">{jevLatencyView(row.speed).adjusted ? <JevLatencyValue speed={row.speed} kind={row.endpoint_kind} /> : <span title={row.speed?.adjustment ?? undefined}>{seconds(row.speed?.p50_s_raw)}</span>}</HeatTd>
     <td className="text-[12px]" title={row.endpoint_condition}>{endpointLabel(row.endpoint_kind)}</td>
   </tr>;
 }
@@ -504,6 +506,7 @@ export function JevAxesTable({ rows, publicDecisions, sealedDecisions, newLabel,
   return <>
     <FilterBar rows={rows} filters={filters} setFilters={setFilters} shown={shown.length} newLabel={newLabel} idPrefix="table" />
     <p className="bh-muted mt-2 text-xs"><HeatLegend latency /> Badges: <span className="bh-thin-tag bh-flag-tag">API</span> sealed text went to the operator&apos;s endpoint · <span className="bh-thin-tag bh-est-tag">est.</span> estimated price · <span className="bh-thin-tag">ann.</span> announced price not yet bookable · <span className="bh-thin-tag bh-partial-tag">not ranked</span> partial run or honorable mention{newLabel ? <> · <span className="bh-new-tag">new</span> first listed in {newLabel}</> : null}.</p>
+    <JevLatencyLegend className="bh-muted mt-1 text-xs" />
     <div className="bh-table-wrap mt-3">
       <table className="bh-table bh-jev-table" data-bh-jev14-table aria-describedby={captionId}>
         <thead><tr>

@@ -22,7 +22,7 @@ export type JevBoardRow = {
   axes: { intelligence: number | null; calibration: number | null; speed: number | null; cost: number | null };
   public_accuracy: number | null; sealed_accuracy: number | null; public_minus_sealed_gap_pp: number | null;
   cost: { kind: string; usd_per_1000: number | null; basis: string };
-  speed: { p50_s_raw: number | null; adjustment?: string };
+  speed: { p50_s_raw: number | null; p50_s_adjusted?: number | null; adjustment?: string };
   endpoint_kind?: string; endpoint_condition?: string;
   // F-223: the headline option's paired-bootstrap 95% interval, when the release publishes one (v1.5 onwards).
   ci?: [number, number] | null;
