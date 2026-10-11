@@ -60,7 +60,7 @@ export default async function SubmitPage() {
 
     <section className="mt-6 rounded-xl border border-line p-5" aria-labelledby="submit-hosted">
       <h2 id="submit-hosted" className="text-lg font-semibold">Hosted-endpoint timing (on request)</h2>
-      <p className="bh-muted mt-2 text-sm" data-bh-hosted-endpoint-note>Self-hosted models are timed on our own hardware over loopback, and the ranking uses an estimate of 2× measured + 150 ms for network. If you prefer, give us a hosted endpoint and we time it exactly like an API, network included, with no assumption. Mention it in the notes field below or email <a className="text-accent underline" href="mailto:info@productivity-boost.com?subject=Hosted-endpoint%20timing">info@productivity-boost.com</a>.</p>
+      <p className="bh-muted mt-2 text-sm" data-bh-hosted-endpoint-note>Self-hosted models are timed on our own hardware over loopback (on-GPU, no network), which is not directly comparable with API latency, so the ranking uses the same estimate for all of them: 2× measured + 150 ms for network. If you prefer, give us a hosted endpoint and we time it exactly like an API, network included, with no assumption. Mention it in the notes field below or email <a className="text-accent underline" href="mailto:info@productivity-boost.com?subject=Hosted-endpoint%20timing">info@productivity-boost.com</a>.</p>
     </section>
 
     <section className="mt-8 rounded-xl border border-line bg-panel p-5" aria-labelledby="submit-form">

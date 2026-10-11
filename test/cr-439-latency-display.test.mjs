@@ -39,7 +39,9 @@ test('CR-439 helper: self-hosted rows are adjusted, API rows are not', () => {
   assert.equal(v.basis, 'measured-loopback');
   assert.equal(v.label, 'est. incl. network (2x + 150 ms)');
   assert.equal(JEV_LATENCY_LABEL, v.label);
-  assert.match(v.tooltip, /measured p50 0\.029 s on our GPU over loopback \(no network\)/);
+  assert.match(v.tooltip, /measured p50 0\.029 s on-GPU, no network \(timed on our GPU over loopback\)/);
+  assert.match(v.tooltip, /Not directly comparable with API latency/);
+  assert.equal(v.measuredTag, 'on-GPU, no network');
   assert.match(v.tooltip, /2 × measured \+ 150 ms = 0\.21 s/);
   assert.match(v.tooltip, /time a hosted endpoint instead \(on request\)/);
   const a = jevLatencyView(API);
@@ -60,7 +62,11 @@ test('CR-439 helper: only x2 + 0.15 s rows are self-hosted; demo x2 rows keep th
   assert.equal(jevLatencyView(null).estimate, null);
   assert.deepEqual(jevLatencyJsonFields(null), {});
   assert.equal(jevLatencyView(H2O, 2, 'cpu').tooltip.includes('our CPU host'), true);
-  assert.equal(jevLatencyText(H2O, 'plain', { unit: false }), '0.029 measured · 0.21 est. incl. network (2x + 150 ms)');
+  assert.equal(jevLatencyText(H2O, 'plain', { unit: false }), '0.029 measured own hardware, no network · 0.21 est. incl. network (2x + 150 ms)');
+  assert.equal(jevLatencyText(H2O, 'plain', { unit: false, kind: 'gpu' }), '0.029 measured on-GPU, no network · 0.21 est. incl. network (2x + 150 ms)');
+  assert.equal(jevLatencyText(H2O, 'plain', { unit: false, kind: 'cpu' }), '0.029 measured on-CPU, no network · 0.21 est. incl. network (2x + 150 ms)');
+  assert.equal(jevLatencyJsonFields(H2O, 'gpu').p50_s_measured_condition, 'on-GPU, no network');
+  assert.equal(jevLatencyJsonFields(API).p50_s_measured_condition, undefined);
   assert.equal(jevLatencyText(API, 'plain'), 'plain');
 });
 
@@ -69,7 +75,8 @@ test('CR-439 render: table cell shows measured value, est. line and tooltip; API
   const cell = renderToStaticMarkup(React.createElement(JevLatencyValue, { speed: H2O, kind: 'gpu' }));
   assert.match(cell, /0\.029 s/);
   assert.match(cell, /est\. 0\.21 s\*/);
-  assert.match(cell, /title="Self-hosted model: measured p50 0\.029 s on our GPU over loopback/);
+  assert.match(cell, /title="Self-hosted model: measured p50 0\.029 s on-GPU, no network \(timed on our GPU over loopback/);
+  assert.match(cell, /data-bh-jev-latency-measured-tag="true">on-GPU, no network</);
   assert.equal(renderToStaticMarkup(React.createElement(JevLatencyValue, { speed: API })), '0.15 s');
   const roomy = renderToStaticMarkup(React.createElement(JevLatencyValue, { speed: H2O, compact: false }));
   assert.match(roomy, /measured/);
@@ -170,7 +177,8 @@ export const jevSourceUrl=(key,repo)=>data.links[key]?.url??repo??null;`),
   const h2o = html.match(/<tr id="jev14-row-h2o-lightning-4b".*?<\/tr>/s)[0];
   assert.match(h2o, /0\.029 s/);
   assert.match(h2o, /est\. 0\.21 s\*/);
-  assert.match(h2o, /title="Self-hosted model: measured p50 0\.029 s on our GPU over loopback/);
+  assert.match(h2o, /title="Self-hosted model: measured p50 0\.029 s on-GPU, no network \(timed on our GPU over loopback/);
+  assert.match(h2o, />on-GPU, no network</);
   const api = html.match(/<tr id="jev14-row-sage-1\.3\.0".*?<\/tr>/s)[0];
   assert.doesNotMatch(api, /est\. /);
   assert.match(html, /data-bh-jev-latency-legend/);
