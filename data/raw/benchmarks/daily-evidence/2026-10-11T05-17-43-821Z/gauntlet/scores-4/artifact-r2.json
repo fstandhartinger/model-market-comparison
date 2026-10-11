@@ -1,0 +1,467 @@
+[
+  {
+    "id": "public:4190d1e3324111508ded0aeb",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-6-1-sol-medium",
+      "name": "GPT-6.1 Sol (Medium)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 10.568764673656194,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-10-11T05:27:18.091443+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/14af19188025b6b1f38e.gz",
+      "sha256": "14af19188025b6b1f38ed2dfb3757dcfdc9ff4d40148ad0372e790e5d806a8be",
+      "locator": "json; source row 72; openai-gpt-6-1-sol-medium; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-6-1-sol; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-6-1-sol; cost=7369.782166; modelReleaseDate=2026-09-29T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.10568764673656195
+      ]
+    }
+  },
+  {
+    "id": "public:c5a68e01296647ecd3e7b55a",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-6-1-sol-low",
+      "name": "GPT-6.1 Sol (Low)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 3.9243846587314177,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-10-11T05:27:18.091443+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/14af19188025b6b1f38e.gz",
+      "sha256": "14af19188025b6b1f38ed2dfb3757dcfdc9ff4d40148ad0372e790e5d806a8be",
+      "locator": "json; source row 73; openai-gpt-6-1-sol-low; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-6-1-sol; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-6-1-sol; cost=7110.559762; modelReleaseDate=2026-09-29T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.039243846587314175
+      ]
+    }
+  },
+  {
+    "id": "public:8d71192dbd022f96279b808f",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-6-1-sol-max-provider-adapter",
+      "name": "GPT-6.1 Sol - Provider Adapter (Max)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 96.17739071933946,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-10-11T05:27:18.091443+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/14af19188025b6b1f38e.gz",
+      "sha256": "14af19188025b6b1f38ed2dfb3757dcfdc9ff4d40148ad0372e790e5d806a8be",
+      "locator": "json; source row 74; openai-gpt-6-1-sol-max-provider-adapter; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-6-1-sol-provider-adapter; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-6-1-sol; cost=3816.796008; modelReleaseDate=2026-09-29T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.9617739071933946
+      ]
+    }
+  },
+  {
+    "id": "public:27b4d99692690f5e91622eae",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-6-1-sol-xhigh-provider-adapter",
+      "name": "GPT-6.1 Sol - Provider Adapter (XHigh)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 96.37493342875182,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-10-11T05:27:18.091443+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/14af19188025b6b1f38e.gz",
+      "sha256": "14af19188025b6b1f38ed2dfb3757dcfdc9ff4d40148ad0372e790e5d806a8be",
+      "locator": "json; source row 75; openai-gpt-6-1-sol-xhigh-provider-adapter; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-6-1-sol-provider-adapter; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-6-1-sol; cost=4360.206418; modelReleaseDate=2026-09-29T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.9637493342875182
+      ]
+    }
+  },
+  {
+    "id": "public:1a27925290211167c7378d5f",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-6-1-sol-high-provider-adapter",
+      "name": "GPT-6.1 Sol - Provider Adapter (High)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 94.99362560053225,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-10-11T05:27:18.091443+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/14af19188025b6b1f38e.gz",
+      "sha256": "14af19188025b6b1f38ed2dfb3757dcfdc9ff4d40148ad0372e790e5d806a8be",
+      "locator": "json; source row 76; openai-gpt-6-1-sol-high-provider-adapter; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-6-1-sol-provider-adapter; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-6-1-sol; cost=5403.981038; modelReleaseDate=2026-09-29T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.9499362560053226
+      ]
+    }
+  },
+  {
+    "id": "public:67f65f699682ff847237fde1",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-6-1-sol-medium-provider-adapter",
+      "name": "GPT-6.1 Sol - Provider Adapter (Medium)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 91.02346102095301,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-10-11T05:27:18.091443+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/14af19188025b6b1f38e.gz",
+      "sha256": "14af19188025b6b1f38ed2dfb3757dcfdc9ff4d40148ad0372e790e5d806a8be",
+      "locator": "json; source row 77; openai-gpt-6-1-sol-medium-provider-adapter; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-6-1-sol-provider-adapter; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-6-1-sol; cost=5834.913158; modelReleaseDate=2026-09-29T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.9102346102095301
+      ]
+    }
+  },
+  {
+    "id": "public:edd79dd61dd80d2729b372f6",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "openai-gpt-6-1-sol-low-provider-adapter",
+      "name": "GPT-6.1 Sol - Provider Adapter (Low)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 82.7870673049169,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-10-11T05:27:18.091443+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/14af19188025b6b1f38e.gz",
+      "sha256": "14af19188025b6b1f38ed2dfb3757dcfdc9ff4d40148ad0372e790e5d806a8be",
+      "locator": "json; source row 78; openai-gpt-6-1-sol-low-provider-adapter; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=openai-gpt-6-1-sol-provider-adapter; providerId=OpenAI; display=True; resultsUrl=/results/openai-gpt-6-1-sol; cost=6622.199092; modelReleaseDate=2026-09-29T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.8278706730491691
+      ]
+    }
+  },
+  {
+    "id": "public:67d5d9d1da218fdebbb5d4ff",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "xai-grok-4-7-xhigh",
+      "name": "Grok 4.7 (XHigh)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1.8162526536637038,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-10-11T05:27:18.091443+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/14af19188025b6b1f38e.gz",
+      "sha256": "14af19188025b6b1f38ed2dfb3757dcfdc9ff4d40148ad0372e790e5d806a8be",
+      "locator": "json; source row 79; xai-grok-4-7-xhigh; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=xai-grok-4-7; providerId=xAI; display=True; resultsUrl=/results/xai-grok-4-7; cost=2731.577506; modelReleaseDate=2026-09-21T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.01816252653663704
+      ]
+    }
+  },
+  {
+    "id": "public:50b30110746d97d01d67c572",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "xai-grok-4-7-high",
+      "name": "Grok 4.7 (High)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1.7332202934667684,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-10-11T05:27:18.091443+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/14af19188025b6b1f38e.gz",
+      "sha256": "14af19188025b6b1f38ed2dfb3757dcfdc9ff4d40148ad0372e790e5d806a8be",
+      "locator": "json; source row 80; xai-grok-4-7-high; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=xai-grok-4-7; providerId=xAI; display=True; resultsUrl=/results/xai-grok-4-7; cost=3741.649478; modelReleaseDate=2026-09-21T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.017332202934667685
+      ]
+    }
+  },
+  {
+    "id": "public:c6024384929e42701af0317a",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "xai-grok-4-7-medium",
+      "name": "Grok 4.7 (Medium)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1.7056643767835524,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-10-11T05:27:18.091443+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/14af19188025b6b1f38e.gz",
+      "sha256": "14af19188025b6b1f38ed2dfb3757dcfdc9ff4d40148ad0372e790e5d806a8be",
+      "locator": "json; source row 81; xai-grok-4-7-medium; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=xai-grok-4-7; providerId=xAI; display=True; resultsUrl=/results/xai-grok-4-7; cost=3795.4947700000002; modelReleaseDate=2026-09-21T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.017056643767835524
+      ]
+    }
+  },
+  {
+    "id": "public:9b65404f9408a64e713d1e89",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "xai-grok-4-7-low",
+      "name": "Grok 4.7 (Low)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.24696281908456538,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-10-11T05:27:18.091443+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/14af19188025b6b1f38e.gz",
+      "sha256": "14af19188025b6b1f38ed2dfb3757dcfdc9ff4d40148ad0372e790e5d806a8be",
+      "locator": "json; source row 82; xai-grok-4-7-low; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=xai-grok-4-7; providerId=xAI; display=True; resultsUrl=/results/xai-grok-4-7; cost=4814.88162; modelReleaseDate=2026-09-21T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0024696281908456537
+      ]
+    }
+  },
+  {
+    "id": "public:90f5fc4f6f2afb2a7792e1b6",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "xai-grok-4-7-xhigh-provider-adapter",
+      "name": "Grok 4.7 - Provider Adapter (XHigh)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 7.016486895838931,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-10-11T05:27:18.091443+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/14af19188025b6b1f38e.gz",
+      "sha256": "14af19188025b6b1f38ed2dfb3757dcfdc9ff4d40148ad0372e790e5d806a8be",
+      "locator": "json; source row 83; xai-grok-4-7-xhigh-provider-adapter; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=xai-grok-4-7-provider-adapter; providerId=xAI; display=True; resultsUrl=/results/xai-grok-4-7; cost=4575.921274; modelReleaseDate=2026-09-21T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0701648689583893
+      ]
+    }
+  },
+  {
+    "id": "public:88baf1656cadca6b0a6c66e4",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "xai-grok-4-7-high-provider-adapter",
+      "name": "Grok 4.7 - Provider Adapter (High)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 10.047981644646995,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-10-11T05:27:18.091443+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/14af19188025b6b1f38e.gz",
+      "sha256": "14af19188025b6b1f38ed2dfb3757dcfdc9ff4d40148ad0372e790e5d806a8be",
+      "locator": "json; source row 84; xai-grok-4-7-high-provider-adapter; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=xai-grok-4-7-provider-adapter; providerId=xAI; display=True; resultsUrl=/results/xai-grok-4-7; cost=4773.782536; modelReleaseDate=2026-09-21T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.10047981644646996
+      ]
+    }
+  },
+  {
+    "id": "public:ecb1a6a91f6a2e0c0f60949a",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "xai-grok-4-7-medium-provider-adapter",
+      "name": "Grok 4.7 - Provider Adapter (Medium)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 8.373637088154913,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-10-11T05:27:18.091443+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/14af19188025b6b1f38e.gz",
+      "sha256": "14af19188025b6b1f38ed2dfb3757dcfdc9ff4d40148ad0372e790e5d806a8be",
+      "locator": "json; source row 85; xai-grok-4-7-medium-provider-adapter; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=xai-grok-4-7-provider-adapter; providerId=xAI; display=True; resultsUrl=/results/xai-grok-4-7; cost=5059.930398; modelReleaseDate=2026-09-21T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.08373637088154913
+      ]
+    }
+  },
+  {
+    "id": "public:137a8c40d9980c0db013e72f",
+    "benchmark_id": "arc-agi::3",
+    "subject": {
+      "source_id": "xai-grok-4-7-low-provider-adapter",
+      "name": "Grok 4.7 - Provider Adapter (Low)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.7739582026314942,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "retrieved_at": "2026-10-11T05:27:18.091443+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/14af19188025b6b1f38e.gz",
+      "sha256": "14af19188025b6b1f38ed2dfb3757dcfdc9ff4d40148ad0372e790e5d806a8be",
+      "locator": "json; source row 86; xai-grok-4-7-low-provider-adapter; field score"
+    },
+    "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=xai-grok-4-7-provider-adapter; providerId=xAI; display=True; resultsUrl=/results/xai-grok-4-7; cost=5753.573154; modelReleaseDate=2026-09-21T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.007739582026314942
+      ]
+    }
+  }
+]

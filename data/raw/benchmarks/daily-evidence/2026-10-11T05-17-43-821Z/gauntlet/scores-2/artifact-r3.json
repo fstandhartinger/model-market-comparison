@@ -1,0 +1,343 @@
+[
+  {
+    "id": "public:608aee179d488785f7be1334",
+    "benchmark_id": "arc-agi::2",
+    "subject": {
+      "source_id": "alibaba-qwen3-8-27b-medium",
+      "name": "Qwen3.8-27B (Medium)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 13.194444444444445,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v2.json",
+      "retrieved_at": "2026-10-11T05:27:15.304309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/cecd1febf0659b234567.gz",
+      "sha256": "cecd1febf0659b234567d3ee1b7240d92000f848a5f8d0cfb713444aa54f2a99",
+      "locator": "json; source row 262; alibaba-qwen3-8-27b-medium; field score"
+    },
+    "protocol": "ARC-AGI 2; v2_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=alibaba-qwen3-8-27b; providerId=Alibaba; display=True; resultsUrl=/results/alibaba-qwen3-8-27b; costPerTask=0.2862669347916667; modelReleaseDate=2026-08-14T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.13194444444444445
+      ]
+    }
+  },
+  {
+    "id": "public:f481f22405901e8365bb73c6",
+    "benchmark_id": "arc-agi::2",
+    "subject": {
+      "source_id": "alibaba-qwen3-8-27b-low",
+      "name": "Qwen3.8-27B (Low)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 22.77777777777778,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v2.json",
+      "retrieved_at": "2026-10-11T05:27:15.304309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/cecd1febf0659b234567.gz",
+      "sha256": "cecd1febf0659b234567d3ee1b7240d92000f848a5f8d0cfb713444aa54f2a99",
+      "locator": "json; source row 263; alibaba-qwen3-8-27b-low; field score"
+    },
+    "protocol": "ARC-AGI 2; v2_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=alibaba-qwen3-8-27b; providerId=Alibaba; display=True; resultsUrl=/results/alibaba-qwen3-8-27b; costPerTask=0.2380080077083332; modelReleaseDate=2026-08-14T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.22777777777777777
+      ]
+    }
+  },
+  {
+    "id": "public:5d7b1403482424607186e7c2",
+    "benchmark_id": "arc-agi::2",
+    "subject": {
+      "source_id": "alibaba-qwen3-8-27b-none",
+      "name": "Qwen3.8-27B (None)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1.5277777777777777,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v2.json",
+      "retrieved_at": "2026-10-11T05:27:15.304309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/cecd1febf0659b234567.gz",
+      "sha256": "cecd1febf0659b234567d3ee1b7240d92000f848a5f8d0cfb713444aa54f2a99",
+      "locator": "json; source row 264; alibaba-qwen3-8-27b-none; field score"
+    },
+    "protocol": "ARC-AGI 2; v2_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=alibaba-qwen3-8-27b; providerId=Alibaba; display=True; resultsUrl=/results/alibaba-qwen3-8-27b; costPerTask=0.05891859291666669; modelReleaseDate=2026-08-14T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.015277777777777777
+      ]
+    }
+  },
+  {
+    "id": "public:e23f9a0c37868fba4e4cb36e",
+    "benchmark_id": "arc-agi::2",
+    "subject": {
+      "source_id": "deepseek-v4-1-flash-max",
+      "name": "DeepSeek V4.1 Flash (Max)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 72.91666666666666,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v2.json",
+      "retrieved_at": "2026-10-11T05:27:15.304309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/cecd1febf0659b234567.gz",
+      "sha256": "cecd1febf0659b234567d3ee1b7240d92000f848a5f8d0cfb713444aa54f2a99",
+      "locator": "json; source row 265; deepseek-v4-1-flash-max; field score"
+    },
+    "protocol": "ARC-AGI 2; v2_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=deepseek-v4-1-flash; providerId=DeepSeek; display=True; resultsUrl=/results/deepseek-v4-1-flash; costPerTask=0.12938378500000003; modelReleaseDate=2026-09-10T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.7291666666666666
+      ]
+    }
+  },
+  {
+    "id": "public:fbc98acc334900bab68872b0",
+    "benchmark_id": "arc-agi::2",
+    "subject": {
+      "source_id": "deepseek-v4-1-flash-high",
+      "name": "DeepSeek V4.1 Flash (High)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 67.5,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v2.json",
+      "retrieved_at": "2026-10-11T05:27:15.304309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/cecd1febf0659b234567.gz",
+      "sha256": "cecd1febf0659b234567d3ee1b7240d92000f848a5f8d0cfb713444aa54f2a99",
+      "locator": "json; source row 266; deepseek-v4-1-flash-high; field score"
+    },
+    "protocol": "ARC-AGI 2; v2_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=deepseek-v4-1-flash; providerId=DeepSeek; display=True; resultsUrl=/results/deepseek-v4-1-flash; costPerTask=0.13341649249999996; modelReleaseDate=2026-09-10T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.675
+      ]
+    }
+  },
+  {
+    "id": "public:d2941b16265b460c05bcf7eb",
+    "benchmark_id": "arc-agi::2",
+    "subject": {
+      "source_id": "deepseek-v4-1-flash-low",
+      "name": "DeepSeek V4.1 Flash (Low)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 60.55555555555555,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v2.json",
+      "retrieved_at": "2026-10-11T05:27:15.304309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/cecd1febf0659b234567.gz",
+      "sha256": "cecd1febf0659b234567d3ee1b7240d92000f848a5f8d0cfb713444aa54f2a99",
+      "locator": "json; source row 267; deepseek-v4-1-flash-low; field score"
+    },
+    "protocol": "ARC-AGI 2; v2_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=deepseek-v4-1-flash; providerId=DeepSeek; display=True; resultsUrl=/results/deepseek-v4-1-flash; costPerTask=0.11904162500000005; modelReleaseDate=2026-09-10T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.6055555555555555
+      ]
+    }
+  },
+  {
+    "id": "public:28bfb61d78fd64c5c8e28d63",
+    "benchmark_id": "arc-agi::2",
+    "subject": {
+      "source_id": "deepseek-v4-1-flash-none",
+      "name": "DeepSeek V4.1 Flash (None)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 1.25,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v2.json",
+      "retrieved_at": "2026-10-11T05:27:15.304309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/cecd1febf0659b234567.gz",
+      "sha256": "cecd1febf0659b234567d3ee1b7240d92000f848a5f8d0cfb713444aa54f2a99",
+      "locator": "json; source row 268; deepseek-v4-1-flash-none; field score"
+    },
+    "protocol": "ARC-AGI 2; v2_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=deepseek-v4-1-flash; providerId=DeepSeek; display=True; resultsUrl=/results/deepseek-v4-1-flash; costPerTask=0.010176125000000005; modelReleaseDate=2026-09-10T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0125
+      ]
+    }
+  },
+  {
+    "id": "public:e73d0159e8083d644f82cadd",
+    "benchmark_id": "arc-agi::2",
+    "subject": {
+      "source_id": "xai-grok-4-7-xhigh",
+      "name": "Grok 4.7 (XHigh)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 61.38888888888888,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v2.json",
+      "retrieved_at": "2026-10-11T05:27:15.304309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/cecd1febf0659b234567.gz",
+      "sha256": "cecd1febf0659b234567d3ee1b7240d92000f848a5f8d0cfb713444aa54f2a99",
+      "locator": "json; source row 269; xai-grok-4-7-xhigh; field score"
+    },
+    "protocol": "ARC-AGI 2; v2_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=xai-grok-4-7; providerId=xAI; display=True; resultsUrl=/results/xai-grok-4-7; costPerTask=2.0149060666666663; modelReleaseDate=2026-09-21T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.6138888888888888
+      ]
+    }
+  },
+  {
+    "id": "public:758749eb8e8d10f669020d14",
+    "benchmark_id": "arc-agi::2",
+    "subject": {
+      "source_id": "xai-grok-4-7-high",
+      "name": "Grok 4.7 (High)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 58.333333333333336,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v2.json",
+      "retrieved_at": "2026-10-11T05:27:15.304309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/cecd1febf0659b234567.gz",
+      "sha256": "cecd1febf0659b234567d3ee1b7240d92000f848a5f8d0cfb713444aa54f2a99",
+      "locator": "json; source row 270; xai-grok-4-7-high; field score"
+    },
+    "protocol": "ARC-AGI 2; v2_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=xai-grok-4-7; providerId=xAI; display=True; resultsUrl=/results/xai-grok-4-7; costPerTask=1.549013099999999; modelReleaseDate=2026-09-21T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.5833333333333334
+      ]
+    }
+  },
+  {
+    "id": "public:971aa7b913d13766cb2b4517",
+    "benchmark_id": "arc-agi::2",
+    "subject": {
+      "source_id": "xai-grok-4-7-medium",
+      "name": "Grok 4.7 (Medium)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 58.75,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v2.json",
+      "retrieved_at": "2026-10-11T05:27:15.304309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/cecd1febf0659b234567.gz",
+      "sha256": "cecd1febf0659b234567d3ee1b7240d92000f848a5f8d0cfb713444aa54f2a99",
+      "locator": "json; source row 271; xai-grok-4-7-medium; field score"
+    },
+    "protocol": "ARC-AGI 2; v2_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=xai-grok-4-7; providerId=xAI; display=True; resultsUrl=/results/xai-grok-4-7; costPerTask=1.4759098000000002; modelReleaseDate=2026-09-21T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.5875
+      ]
+    }
+  },
+  {
+    "id": "public:5528256c90c448ed4ac6fdae",
+    "benchmark_id": "arc-agi::2",
+    "subject": {
+      "source_id": "xai-grok-4-7-low",
+      "name": "Grok 4.7 (Low)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 16.666666666666664,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://arcprize.org/media/data/leaderboard/v2.json",
+      "retrieved_at": "2026-10-11T05:27:15.304309+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/cecd1febf0659b234567.gz",
+      "sha256": "cecd1febf0659b234567d3ee1b7240d92000f848a5f8d0cfb713444aa54f2a99",
+      "locator": "json; source row 272; xai-grok-4-7-low; field score"
+    },
+    "protocol": "ARC-AGI 2; v2_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.; modelType=CoT; modelGroup=xai-grok-4-7; providerId=xAI; display=True; resultsUrl=/results/xai-grok-4-7; costPerTask=0.17369760000000004; modelReleaseDate=2026-09-21T00:00:00.000Z",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.16666666666666666
+      ]
+    }
+  }
+]

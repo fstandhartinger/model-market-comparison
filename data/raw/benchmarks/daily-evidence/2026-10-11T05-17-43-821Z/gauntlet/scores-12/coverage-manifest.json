@@ -1,0 +1,171 @@
+{
+  "artifact_id": "scores-12",
+  "rounds_used": 3,
+  "rows": {
+    "total": 15,
+    "accepted": [],
+    "quarantined": [
+      "public:bcb66e19a941de41dd8ec3bc",
+      "public:713c3cf59f50361b41629f50",
+      "public:a460a19dafd7892a40ab2b2a",
+      "public:60ea9e5b1ba4a546b9d0fd84",
+      "public:1d9b451e068142ff30e0caa2",
+      "public:26413fabb04c572b8ee8691e",
+      "public:82d9fcd7cfc5582dded5f9ae",
+      "public:07192377423213bb538aed5f",
+      "public:69c3229ce9efec94475f8c80",
+      "public:8a2d3d4ddbfdfcc5259c2ebf",
+      "public:c301e472795a95ace2a653a3",
+      "public:98cd4c7c9bfba6b7366c11a9",
+      "public:5303cdd23c6ec0c06e769d72",
+      "public:8f467fd90bc22108b1b149c8",
+      "public:3c0d43a6b330643c82b7f544"
+    ]
+  },
+  "producer_flagged": [],
+  "second_opinion": null,
+  "criteria": [
+    "c1"
+  ],
+  "coverage": {
+    "producer": null,
+    "critic": [],
+    "final": {
+      "rows_covered": 0,
+      "criteria_covered": 0,
+      "complete": false
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.00089172666,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/gauntlet/scores-12/producer-r1.json",
+      "output_sha256": "08de35f8dfa97259cf90b003540f5d6f8fcfb9cc16b309472fd167fbaeeec201",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.5,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 36834,
+        "completion_tokens": 1044,
+        "total_tokens": 37878,
+        "cost": 0.00089172666,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 34993,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.000900734,
+          "upstream_inference_prompt_cost": 0.000430934,
+          "upstream_inference_completions_cost": 0.0004698
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 169,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 2,
+      "role": "producer",
+      "reused_from_round": 1,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/gauntlet/scores-12/producer-r1.json",
+      "output_sha256": "08de35f8dfa97259cf90b003540f5d6f8fcfb9cc16b309472fd167fbaeeec201",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.5,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": null,
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 3,
+      "role": "producer",
+      "reused_from_round": 1,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/gauntlet/scores-12/producer-r1.json",
+      "output_sha256": "08de35f8dfa97259cf90b003540f5d6f8fcfb9cc16b309472fd167fbaeeec201",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.5,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": null,
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

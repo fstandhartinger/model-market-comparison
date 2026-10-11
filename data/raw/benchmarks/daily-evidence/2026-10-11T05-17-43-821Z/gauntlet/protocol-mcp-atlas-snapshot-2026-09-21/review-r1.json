@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-mcp-atlas-snapshot-2026-09-21",
+  "artifact_sha256": "9349407c23d58eee8dd28185ec59bb20ba00b2091b27da5f7a95958eb3e0e518",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["mcp-atlas::snapshot-2026-09-21","c1","c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "mcp-atlas::snapshot-2026-09-21",
+      "severity": "blocker",
+      "location": "Candidate rows JSON (single row mcp-atlas::snapshot-2026-09-21)",
+      "evidence": "The artifact packet supplies the row's canonical sha256 (e4a56e7f41f55fa6e2fc8ae8e104921e1c969ab8cb3d58e05e6efd48648c18ea) and a JSON.stringify of the rows, but the actual JSON.stringify bytes were not reproduced in the packet, so I cannot compare the row's claimed fields (id, version, version_guard, unit, range, status, version_status, superseded_by) to the corresponding primary fields. The raw API catalog/telemetry text and this run's generated summary of served values/counts that the criteria admit as evidence are also absent from the packet. REQUIRED_ROW_ID mcp-atlas::snapshot-2026-09-21 and REQUIRED_COVERAGE_IDS c1,c2 cannot be checked against the supplied excerpt because no primary protocol excerpt is present.",
+"repair":"Provide the captured maintainer payload excerpt (protocol text for MCP Atlas) and this run's generated summary of served values (count, lowest, highest) and of added/changed model rows, so criteria c1 and c2 can be checked against primary evidence."
+}]
+		}

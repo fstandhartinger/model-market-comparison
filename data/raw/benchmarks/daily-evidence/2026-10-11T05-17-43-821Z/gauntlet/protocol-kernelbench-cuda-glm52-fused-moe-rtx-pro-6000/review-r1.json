@@ -1,0 +1,18 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-glm52-fused-moe-rtx-pro-6000",
+  "artifact_sha256": "6aafe8f39bf09b836a09a197e283d2d81bad768a70baedba626edb70633514b9",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["kernelbench-cuda-glm52-fused-moe::rtx-pro-6000", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "location": "packet / criterion c1, c2 — row kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "evidence": "The candidate row is a single JSON row with only the fields id, version, version_guard. There is no protocol text, no registry-version excerpt, no metric/units/range, no lifecycle fields (status, version_status, superseded_by), and no per-run summary of served values. The packet supplies criteria c1 and c2 and the row hash, but no primary protocol excerpt or captured maintainer payload is included, so continuity of registry version/benchmark identity/metric/units and the lifecycle state cannot be checked against the actual primary protocol.",
+      "repair": "Supply the relevant primary protocol excerpt (registry version, board identity, metric, units, range) and the lifecycle evidence (status, version_status, superseded_by, release-identifier presence, successor naming), then re-run the review. Do not guess values."
+}
+]
+                    , "fixed": [], "uncertainties": ["As a read-only critic I cannot recompute row hashes or execute the owner's hash/transport/qualification checks; per instructions these are limitations and not missing evidence.","The packet defines each criterion's field mapping, but the single row in this packet carries only id/version/version_guard and no served values; my c1/c2 checks were therefore made against explicit acceptance-criteria instructions and this artifact's declared row set, and I treated absence of payload detail as a packet limitation rather than inferring values."]
+        , "errors_found": 3, "missing_evidence": ["registry version", "metric/units/range row fields", "lifecycle fields"], "fixed": [], "coverage_checked": ["kernelbench-cuda-glm52-fused-moe::rtx-pro-6000","c1","c2"] }

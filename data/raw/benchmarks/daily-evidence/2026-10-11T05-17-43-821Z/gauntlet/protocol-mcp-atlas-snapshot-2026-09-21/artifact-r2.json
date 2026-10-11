@@ -1,0 +1,22 @@
+[
+  {
+    "id": "mcp-atlas::snapshot-2026-09-21",
+    "version": "snapshot-2026-09-21",
+    "version_guard": "Page title \"Scale Labs Leaderboard: MCP Atlas\", exactly one embedded entries array with model and score, and the page's own statements of the metric (\"the percentage of all tasks where the model produces a sufficiently correct final answer\", a pass at coverage \"75% or higher\"), of the scope (\"1,000 human-authored tasks\", \"36 real MCP servers\") and of the April 2026 re-scoring. No public version: this identity freezes the 2026-09-21 snapshot of that methodology. A changed task set, judge, tool-call budget or metric needs a new identity.",
+    "status": "active",
+    "version_status": "snapshot",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Pass rate in percent over all 1,000 tasks; the published ± is the confidence half-width",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Scale AI runs every listed configuration itself (measured): \"We evaluate the model's response against a ground-truth answer that is split into a list of claims for easier verification via an LLM judge.\" Each claim scores 1 / 0.5 / 0, coverage is the mean of the per-claim scores for a task, and a task passes when coverage is \"75% or higher\" — the ground truth decides, the judge only checks the answer against it. The dataset is 1,000 human-authored tasks over 36 real MCP servers and 220 tools, 3–6 tool calls per task; the 500-task public subset is on Hugging Face and the other 500 are held out. The board value is the pass rate over all 1,000 tasks: for every one of the 20 models the page's own coverage table also lists, its \"Pass Rate % (All 1000)\" column equals this board value exactly, and the separate \"Pass Rate % (Public 500)\" column is never ingested. April 2026 methodology update, in the page's own words: an upgraded scoring judge, retry handling for transient tool errors, the 20-turn limit replaced by \"a tool call budget of 100 max tool calls per task\", and \"We re-scored all leaderboard models.\" The effort setting is part of each model label. The page's \"Key Metrics at a Glance\" card says \"83.6% Top Pass Rate\" while the board's own top row is 88.1 % — the stat card is stale and is never ingested. A footnote \"*Evaluations for these models were run using Fireworks AI for inference\" sits under the coverage table but marks no row in this snapshot."
+    },
+    "description": "How reliably a model completes realistic multi-step workflows over real Model Context Protocol servers: discovering the right tool in a noisy tool menu, calling it with correct parameters, recovering from errors and synthesising the results into an accurate final answer.",
+    "maintainer": "Scale AI"
+  }
+]

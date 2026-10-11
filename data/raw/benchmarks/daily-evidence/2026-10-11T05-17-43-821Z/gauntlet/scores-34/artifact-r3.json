@@ -1,0 +1,617 @@
+[
+  {
+    "id": "public:70db5ef084793062fa815a14",
+    "benchmark_id": "frontiercode::1.1",
+    "subject": {
+      "source_id": "Claude Sonnet 5.5|low",
+      "name": "Claude Sonnet 5.5 · low",
+      "model_id": null,
+      "variant": null,
+      "harness": "claude-code"
+    },
+    "value": 29.330000000000002,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-11T05:20:00.903891+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/913a7befb74bf6facf49.gz",
+      "sha256": "913a7befb74bf6facf490099cbe982dc17972ee5c4a5ff859eb918d2c5e4d3bf",
+      "locator": "effort_runs_json; source row 5; Claude Sonnet 5.5|low; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Claude Sonnet 5.5\",\"effort\":\"low\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.2933,\"correct\":0.328,\"flagged_rate\":0,\"cost\":0.194,\"tokens\":6353}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.2933
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/2e9aae7135f7b3ab58e7.gz",
+        "sha256": "2e9aae7135f7b3ab58e79d7f5fcc91a49200f31e73681d6d2f322bcdadc7fb73",
+        "retrieved_at": "2026-10-11T05:19:09.697139+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:c1de8f45158c41170f67b2e1",
+    "benchmark_id": "frontiercode::1.1",
+    "subject": {
+      "source_id": "Claude Sonnet 5.5|medium",
+      "name": "Claude Sonnet 5.5 · medium",
+      "model_id": null,
+      "variant": null,
+      "harness": "claude-code"
+    },
+    "value": 36.480000000000004,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-11T05:20:00.903891+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/913a7befb74bf6facf49.gz",
+      "sha256": "913a7befb74bf6facf490099cbe982dc17972ee5c4a5ff859eb918d2c5e4d3bf",
+      "locator": "effort_runs_json; source row 6; Claude Sonnet 5.5|medium; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Claude Sonnet 5.5\",\"effort\":\"medium\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.3648,\"correct\":0.406,\"flagged_rate\":0,\"cost\":0.2365,\"tokens\":7597}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.3648
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/2e9aae7135f7b3ab58e7.gz",
+        "sha256": "2e9aae7135f7b3ab58e79d7f5fcc91a49200f31e73681d6d2f322bcdadc7fb73",
+        "retrieved_at": "2026-10-11T05:19:09.697139+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:ed1cf182d9c608cef00d15bb",
+    "benchmark_id": "frontiercode::1.1",
+    "subject": {
+      "source_id": "Claude Sonnet 5.5|high",
+      "name": "Claude Sonnet 5.5 · high",
+      "model_id": null,
+      "variant": null,
+      "harness": "claude-code"
+    },
+    "value": 49.38,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-11T05:20:00.903891+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/913a7befb74bf6facf49.gz",
+      "sha256": "913a7befb74bf6facf490099cbe982dc17972ee5c4a5ff859eb918d2c5e4d3bf",
+      "locator": "effort_runs_json; source row 7; Claude Sonnet 5.5|high; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Claude Sonnet 5.5\",\"effort\":\"high\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.4938,\"correct\":0.5435,\"flagged_rate\":0,\"cost\":0.4175,\"tokens\":13003}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.4938
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/2e9aae7135f7b3ab58e7.gz",
+        "sha256": "2e9aae7135f7b3ab58e79d7f5fcc91a49200f31e73681d6d2f322bcdadc7fb73",
+        "retrieved_at": "2026-10-11T05:19:09.697139+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:810266fea1a0f90c0b528f0a",
+    "benchmark_id": "frontiercode::1.1",
+    "subject": {
+      "source_id": "Claude Sonnet 5.5|xhigh",
+      "name": "Claude Sonnet 5.5 · xhigh",
+      "model_id": null,
+      "variant": null,
+      "harness": "claude-code"
+    },
+    "value": 52.09,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-11T05:20:00.903891+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/913a7befb74bf6facf49.gz",
+      "sha256": "913a7befb74bf6facf490099cbe982dc17972ee5c4a5ff859eb918d2c5e4d3bf",
+      "locator": "effort_runs_json; source row 8; Claude Sonnet 5.5|xhigh; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Claude Sonnet 5.5\",\"effort\":\"xhigh\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.5209,\"correct\":0.572,\"flagged_rate\":0,\"cost\":1.5881,\"tokens\":47385}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.5209
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/2e9aae7135f7b3ab58e7.gz",
+        "sha256": "2e9aae7135f7b3ab58e79d7f5fcc91a49200f31e73681d6d2f322bcdadc7fb73",
+        "retrieved_at": "2026-10-11T05:19:09.697139+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:3c0ede99384319a0de58546d",
+    "benchmark_id": "frontiercode::1.1",
+    "subject": {
+      "source_id": "Claude Sonnet 5.5|max",
+      "name": "Claude Sonnet 5.5 · max",
+      "model_id": null,
+      "variant": null,
+      "harness": "claude-code"
+    },
+    "value": 46.21,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-11T05:20:00.903891+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/913a7befb74bf6facf49.gz",
+      "sha256": "913a7befb74bf6facf490099cbe982dc17972ee5c4a5ff859eb918d2c5e4d3bf",
+      "locator": "effort_runs_json; source row 9; Claude Sonnet 5.5|max; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Claude Sonnet 5.5\",\"effort\":\"max\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.4621,\"correct\":0.5115,\"flagged_rate\":0.0465,\"cost\":20.7818,\"tokens\":595651}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.4621
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/2e9aae7135f7b3ab58e7.gz",
+        "sha256": "2e9aae7135f7b3ab58e79d7f5fcc91a49200f31e73681d6d2f322bcdadc7fb73",
+        "retrieved_at": "2026-10-11T05:19:09.697139+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:29e34b319420f5870c1fd5ac",
+    "benchmark_id": "frontiercode::1.1",
+    "subject": {
+      "source_id": "Claude Haiku 5.5|low",
+      "name": "Claude Haiku 5.5 · low",
+      "model_id": null,
+      "variant": null,
+      "harness": "claude-code"
+    },
+    "value": 34.760000000000005,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-11T05:20:00.903891+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/913a7befb74bf6facf49.gz",
+      "sha256": "913a7befb74bf6facf490099cbe982dc17972ee5c4a5ff859eb918d2c5e4d3bf",
+      "locator": "effort_runs_json; source row 10; Claude Haiku 5.5|low; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Claude Haiku 5.5\",\"effort\":\"low\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.3476,\"correct\":0.385,\"flagged_rate\":null,\"cost\":0.0596,\"tokens\":23868}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.3476
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/2e9aae7135f7b3ab58e7.gz",
+        "sha256": "2e9aae7135f7b3ab58e79d7f5fcc91a49200f31e73681d6d2f322bcdadc7fb73",
+        "retrieved_at": "2026-10-11T05:19:09.697139+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:2ba94552313d1732585f8827",
+    "benchmark_id": "frontiercode::1.1",
+    "subject": {
+      "source_id": "Claude Haiku 5.5|medium",
+      "name": "Claude Haiku 5.5 · medium",
+      "model_id": null,
+      "variant": null,
+      "harness": "claude-code"
+    },
+    "value": 41.63,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-11T05:20:00.903891+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/913a7befb74bf6facf49.gz",
+      "sha256": "913a7befb74bf6facf490099cbe982dc17972ee5c4a5ff859eb918d2c5e4d3bf",
+      "locator": "effort_runs_json; source row 11; Claude Haiku 5.5|medium; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Claude Haiku 5.5\",\"effort\":\"medium\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.4163,\"correct\":0.462,\"flagged_rate\":null,\"cost\":0.13,\"tokens\":36172}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.4163
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/2e9aae7135f7b3ab58e7.gz",
+        "sha256": "2e9aae7135f7b3ab58e79d7f5fcc91a49200f31e73681d6d2f322bcdadc7fb73",
+        "retrieved_at": "2026-10-11T05:19:09.697139+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:34f91b28c11942086e299ce7",
+    "benchmark_id": "frontiercode::1.1",
+    "subject": {
+      "source_id": "Claude Haiku 5.5|high",
+      "name": "Claude Haiku 5.5 · high",
+      "model_id": null,
+      "variant": null,
+      "harness": "claude-code"
+    },
+    "value": 41.89,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-11T05:20:00.903891+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/913a7befb74bf6facf49.gz",
+      "sha256": "913a7befb74bf6facf490099cbe982dc17972ee5c4a5ff859eb918d2c5e4d3bf",
+      "locator": "effort_runs_json; source row 12; Claude Haiku 5.5|high; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Claude Haiku 5.5\",\"effort\":\"high\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.4189,\"correct\":0.466,\"flagged_rate\":null,\"cost\":0.256,\"tokens\":55149}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.4189
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/2e9aae7135f7b3ab58e7.gz",
+        "sha256": "2e9aae7135f7b3ab58e79d7f5fcc91a49200f31e73681d6d2f322bcdadc7fb73",
+        "retrieved_at": "2026-10-11T05:19:09.697139+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:12f782d326a88dcc3eca66ae",
+    "benchmark_id": "frontiercode::1.1",
+    "subject": {
+      "source_id": "Claude Haiku 5.5|xhigh",
+      "name": "Claude Haiku 5.5 · xhigh",
+      "model_id": null,
+      "variant": null,
+      "harness": "claude-code"
+    },
+    "value": 45.83,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-11T05:20:00.903891+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/913a7befb74bf6facf49.gz",
+      "sha256": "913a7befb74bf6facf490099cbe982dc17972ee5c4a5ff859eb918d2c5e4d3bf",
+      "locator": "effort_runs_json; source row 13; Claude Haiku 5.5|xhigh; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Claude Haiku 5.5\",\"effort\":\"xhigh\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.4583,\"correct\":0.508,\"flagged_rate\":null,\"cost\":0.6297,\"tokens\":100847}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.4583
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/2e9aae7135f7b3ab58e7.gz",
+        "sha256": "2e9aae7135f7b3ab58e79d7f5fcc91a49200f31e73681d6d2f322bcdadc7fb73",
+        "retrieved_at": "2026-10-11T05:19:09.697139+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:b31d441d409f2442971b4f16",
+    "benchmark_id": "frontiercode::1.1",
+    "subject": {
+      "source_id": "Claude Haiku 5.5|max",
+      "name": "Claude Haiku 5.5 · max",
+      "model_id": null,
+      "variant": null,
+      "harness": "claude-code"
+    },
+    "value": 46.36,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-11T05:20:00.903891+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/913a7befb74bf6facf49.gz",
+      "sha256": "913a7befb74bf6facf490099cbe982dc17972ee5c4a5ff859eb918d2c5e4d3bf",
+      "locator": "effort_runs_json; source row 14; Claude Haiku 5.5|max; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Claude Haiku 5.5\",\"effort\":\"max\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.4636,\"correct\":0.5165,\"flagged_rate\":null,\"cost\":1.3284,\"tokens\":181387}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.4636
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/2e9aae7135f7b3ab58e7.gz",
+        "sha256": "2e9aae7135f7b3ab58e79d7f5fcc91a49200f31e73681d6d2f322bcdadc7fb73",
+        "retrieved_at": "2026-10-11T05:19:09.697139+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:1d6098f72ac799c8932419d4",
+    "benchmark_id": "frontiercode::1.1",
+    "subject": {
+      "source_id": "SWE-2|medium",
+      "name": "SWE-2 · medium",
+      "model_id": null,
+      "variant": null,
+      "harness": "devin"
+    },
+    "value": 43.09,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-11T05:20:00.903891+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/913a7befb74bf6facf49.gz",
+      "sha256": "913a7befb74bf6facf490099cbe982dc17972ee5c4a5ff859eb918d2c5e4d3bf",
+      "locator": "effort_runs_json; source row 25; SWE-2|medium; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"SWE-2\",\"effort\":\"medium\",\"subset\":\"main\",\"harness\":\"devin\",\"new_score\":0.4309,\"correct\":0.4833,\"flagged_rate\":0.0,\"cost\":0.3712,\"tokens\":25701.5}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.4309
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/2e9aae7135f7b3ab58e7.gz",
+        "sha256": "2e9aae7135f7b3ab58e79d7f5fcc91a49200f31e73681d6d2f322bcdadc7fb73",
+        "retrieved_at": "2026-10-11T05:19:09.697139+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:63d319c37383bb1594706cf4",
+    "benchmark_id": "frontiercode::1.1",
+    "subject": {
+      "source_id": "SWE-2|high",
+      "name": "SWE-2 · high",
+      "model_id": null,
+      "variant": null,
+      "harness": "devin"
+    },
+    "value": 47.199999999999996,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-11T05:20:00.903891+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/913a7befb74bf6facf49.gz",
+      "sha256": "913a7befb74bf6facf490099cbe982dc17972ee5c4a5ff859eb918d2c5e4d3bf",
+      "locator": "effort_runs_json; source row 26; SWE-2|high; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"SWE-2\",\"effort\":\"high\",\"subset\":\"main\",\"harness\":\"devin\",\"new_score\":0.472,\"correct\":0.5235,\"flagged_rate\":0.0,\"cost\":0.7813,\"tokens\":52821.9}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.472
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/2e9aae7135f7b3ab58e7.gz",
+        "sha256": "2e9aae7135f7b3ab58e79d7f5fcc91a49200f31e73681d6d2f322bcdadc7fb73",
+        "retrieved_at": "2026-10-11T05:19:09.697139+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:42e47ba4283a92d1af9b2146",
+    "benchmark_id": "frontiercode::1.1",
+    "subject": {
+      "source_id": "SWE-2|max",
+      "name": "SWE-2 · max",
+      "model_id": null,
+      "variant": null,
+      "harness": "devin"
+    },
+    "value": 50,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-11T05:20:00.903891+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/913a7befb74bf6facf49.gz",
+      "sha256": "913a7befb74bf6facf490099cbe982dc17972ee5c4a5ff859eb918d2c5e4d3bf",
+      "locator": "effort_runs_json; source row 27; SWE-2|max; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"SWE-2\",\"effort\":\"max\",\"subset\":\"main\",\"harness\":\"devin\",\"new_score\":0.5,\"correct\":0.5547,\"flagged_rate\":0.0,\"cost\":1.1761,\"tokens\":72764.7}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.5
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/2e9aae7135f7b3ab58e7.gz",
+        "sha256": "2e9aae7135f7b3ab58e79d7f5fcc91a49200f31e73681d6d2f322bcdadc7fb73",
+        "retrieved_at": "2026-10-11T05:19:09.697139+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:af7c8c7bd9e5255a2e8f1956",
+    "benchmark_id": "frontiercode::1.1",
+    "subject": {
+      "source_id": "GPT-6 Astra|low",
+      "name": "GPT-6 Astra · low",
+      "model_id": null,
+      "variant": null,
+      "harness": "codex"
+    },
+    "value": 45.269999999999996,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-11T05:20:00.903891+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/913a7befb74bf6facf49.gz",
+      "sha256": "913a7befb74bf6facf490099cbe982dc17972ee5c4a5ff859eb918d2c5e4d3bf",
+      "locator": "effort_runs_json; source row 118; GPT-6 Astra|low; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"GPT-6 Astra\",\"effort\":\"low\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.4527,\"correct\":0.5,\"flagged_rate\":0.0,\"cost\":1.7,\"tokens\":6760.0}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.4527
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/2e9aae7135f7b3ab58e7.gz",
+        "sha256": "2e9aae7135f7b3ab58e79d7f5fcc91a49200f31e73681d6d2f322bcdadc7fb73",
+        "retrieved_at": "2026-10-11T05:19:09.697139+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:439086190c468d9c8f000420",
+    "benchmark_id": "frontiercode::1.1",
+    "subject": {
+      "source_id": "GPT-6 Astra|medium",
+      "name": "GPT-6 Astra · medium",
+      "model_id": null,
+      "variant": null,
+      "harness": "codex"
+    },
+    "value": 48.83,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+      "retrieved_at": "2026-10-11T05:20:00.903891+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/913a7befb74bf6facf49.gz",
+      "sha256": "913a7befb74bf6facf490099cbe982dc17972ee5c4a5ff859eb918d2c5e4d3bf",
+      "locator": "effort_runs_json; source row 119; GPT-6 Astra|medium; field new_score"
+    },
+    "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"GPT-6 Astra\",\"effort\":\"medium\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.4883,\"correct\":0.536,\"flagged_rate\":0.0,\"cost\":2.4259,\"tokens\":10630.0}",
+    "comparison_key": null,
+    "source_basis": "self_reported",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.4883
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://cognition.com/frontiercode",
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/2e9aae7135f7b3ab58e7.gz",
+        "sha256": "2e9aae7135f7b3ab58e79d7f5fcc91a49200f31e73681d6d2f322bcdadc7fb73",
+        "retrieved_at": "2026-10-11T05:19:09.697139+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  }
+]

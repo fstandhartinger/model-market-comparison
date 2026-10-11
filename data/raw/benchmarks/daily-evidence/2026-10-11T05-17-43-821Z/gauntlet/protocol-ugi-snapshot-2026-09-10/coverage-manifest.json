@@ -1,0 +1,150 @@
+{
+  "artifact_id": "protocol-ugi-snapshot-2026-09-10",
+  "rounds_used": 1,
+  "rows": {
+    "total": 1,
+    "accepted": [
+      "ugi::snapshot-2026-09-10"
+    ],
+    "quarantined": []
+  },
+  "producer_flagged": [],
+  "second_opinion": null,
+  "criteria": [
+    "c1",
+    "c2"
+  ],
+  "coverage": {
+    "producer": {
+      "complete": true,
+      "model": "z-ai/glm-5.3-flash",
+      "rows_covered": 1
+    },
+    "critic": [
+      {
+        "round": 1,
+        "verdict": "pass",
+        "coverage_complete": true,
+        "missing_rows": [],
+        "missing_criteria": []
+      }
+    ],
+    "final": {
+      "rows_covered": 1,
+      "criteria_covered": 2,
+      "complete": true
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.00031741776,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/gauntlet/protocol-ugi-snapshot-2026-09-10/producer-r1.json",
+      "output_sha256": "b9e1f334d0a61c80853e92a741e3ac6ea7d3022eefd358f5b98379c0689f654b",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.5,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 16603,
+        "completion_tokens": 331,
+        "total_tokens": 16934,
+        "cost": 0.00031741776,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 16437,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.000320624,
+          "upstream_inference_prompt_cost": 0.000171674,
+          "upstream_inference_completions_cost": 0.00014895
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 175,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 1,
+      "role": "critic",
+      "requested_model": "chutes/moonshotai/Kimi-K3-TEE",
+      "model": "moonshotai/Kimi-K3-TEE",
+      "route": "router:fw-kimi-k3",
+      "attempt": 1,
+      "cost_usd": 0,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-11T05-17-43-821Z/gauntlet/protocol-ugi-snapshot-2026-09-10/review-r1.json",
+      "output_sha256": "21e8f0ce723cf3e638cabad7b4388e262ffa8a2e6d6e381c1a8f466e2465f7c2",
+      "qualification": {
+        "id": "chutes/moonshotai/Kimi-K3-TEE",
+        "family": "moonshotai",
+        "free": true,
+        "input_per_1m": 0,
+        "output_per_1m": 0,
+        "context": null,
+        "aa_intelligence_index": 43.6,
+        "aa_source": "exact_variant",
+        "matched_model_ids": [
+          "kimi-k3::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "kimi-k3::max",
+            "index": 43.6
+          }
+        ],
+        "transport": "router",
+        "router_model": "fw-kimi-k3",
+        "provider_model": "moonshotai/Kimi-K3-TEE",
+        "reasoning_effort": "max",
+        "allowed_as": "moonshotai/kimi-k3",
+        "healthy": true
+      },
+      "usage": {
+        "completion_tokens": 2992,
+        "prompt_tokens": 17460,
+        "total_tokens": 20452,
+        "completion_tokens_details": {
+          "reasoning_tokens": 2683,
+          "text_tokens": 309
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "cost": 0
+      },
+      "reasoning": {
+        "effort": "max"
+      }
+    }
+  ]
+}

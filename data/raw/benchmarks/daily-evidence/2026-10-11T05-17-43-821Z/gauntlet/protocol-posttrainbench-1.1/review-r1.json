@@ -1,0 +1,25 @@
+{
+  "artifact_id": "protocol-posttrainbench-1.1",
+  "artifact_sha256": "b0b4f16cec8e064977be46b0e8e6b6ce217c422a2557c52550a3bc839bf461e1",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["posttrainbench::1.1", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "posttrainbench::1.1-effort-claim",
+      "severity": "minor",
+      "location": "row posttrainbench::1.1 version_guard and scoring.notes",
+      "evidence": "scores.js aggregatedScores includes locus (avg 45.58, n=3) and opus-5 (avg 35.04). config.js agentInfo defines 'locus' with scaffold 'Intology · Opus 5' but no reasoningEffort, and 'opus-5' with scaffold 'Claude Code' but no reasoningEffort. Thus version_guard's 'every aggregated agent present in agentInfo with a stated scaffold and effort' and scoring.notes' 'config.js states each agent’s ... reasoning effort' are contradicted by the supplied source.",
+      "repair": "Amend the version_guard and scoring.notes to require a stated scaffold for every agent and reasoning effort only when the source provides one, or add the missing reasoningEffort values if they exist on the full page; otherwise soften the universal claim."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The row's notes quote 'Verified by Epoch AI' and a 'site footnote ‡'; neither phrase appears in the provided bounded source excerpt, so those specific wordings could not be verified (the underlying Fable 5 GPQA Opus 4.8 Max fallback is confirmed by sourceLabel in scores.js and the changelog).",
+    "Version is recorded as '1.1' while the maintainer publishes 'v1.1'; I treated the leading 'v' as formatting, not a different identity.",
+    "The primary source may be bounded; the full pages could contain text not present in the excerpt.",
+    "I cannot independently execute the owner's hash/transport/qualification checks; row binding relies on the supplied row SHA d77334de0a45993896448ec0479c68b5a593f070ab8fc385b87acfdaf0631364."
+  ],
+  "missing_evidence": []
+}
