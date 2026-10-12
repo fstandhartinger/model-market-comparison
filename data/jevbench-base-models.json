@@ -1028,6 +1028,30 @@
         "checked_utc": "2026-10-05T17:00:00Z",
         "cr": "CR-290"
       },
+      "ryotide_qwen9": {
+        "label": "Qwen/Qwen3.5-9B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://github.com/csabag/ryotide/blob/94c71a3d9f044ffaba87981e985b66f47de3be80/README.md",
+            "title": "RYOTIDE README (pinned commit 94c71a3d)",
+            "evidence": "frozen Qwen/Qwen3.5-9B revision c2022362, no training"
+          }
+        ],
+        "checked_utc": "2026-10-12T00:00:00Z"
+      },
+      "decisor_4b": {
+        "label": "Qwen/Qwen3.5-4B",
+        "status": "disclosed",
+        "sources": [
+          {
+            "url": "https://huggingface.co/underlabs/decisor-4b/blob/1e7f195c2c41bbedec7d36b034001ef46476914f/README.md",
+            "title": "Author model card",
+            "evidence": "Model card base_model metadata: Qwen/Qwen3.5-4B (base_model_relation finetune)"
+          }
+        ],
+        "checked_utc": "2026-10-12T00:00:00Z"
+      },
       "surogate-rune-26b-a4b-v3-rtxpro6000-a2": {
         "label": "google/gemma-4-26B-A4B-it",
         "status": "disclosed",
