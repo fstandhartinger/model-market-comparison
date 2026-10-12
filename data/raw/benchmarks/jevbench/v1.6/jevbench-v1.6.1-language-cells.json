@@ -1535,6 +1535,38 @@
       "composite_changed": false,
       "original_row_price_changed": false,
       "S_P_items_selected_by_usecase_label_other": 128
+    },
+    "aplomb-1": {
+      "aggregate_artifact": "ops/evidence/aplomb-1-language-category-complete-20261012.json",
+      "sha256": "2cf02d3e892fcb133f52039640bac9f3def317fcb7301fd42645c782c6647471",
+      "method": "official O1S",
+      "basis": "S+P+L1+L2+L3",
+      "historical_S_observed": 1200,
+      "historical_P_observed": 300,
+      "historical_S_successful": 1200,
+      "historical_S_http500": 0,
+      "historical_P_successful": 300,
+      "historical_P_http500": 0,
+      "original_http500_retained_unimputed": 0,
+      "P300_carried_by_stable_identity_counted_once": true,
+      "supplemental_records": 1505,
+      "supplemental_L1": 354,
+      "supplemental_L2": 33,
+      "supplemental_L3": 1118,
+      "category_scored_observations": 3005,
+      "language_coverage_min": 65,
+      "language_target_complete": true,
+      "languages_below_target60": 0,
+      "topic_coverage_min": 109,
+      "usecase_coverage_min": 83,
+      "partial_completeness_exception": false,
+      "headline_or_rank_changed": false,
+      "composite_changed": false,
+      "original_row_price_changed": false,
+      "supplement_model_revision": "d6743291",
+      "original_pin_deleted_upstream": "f8e2dc81",
+      "p300_parity_vs_original_pct": 98.0,
+      "headline_items_argmax_agreement_pct": 97.5
     }
   },
   "row_scoped_supplements": {
@@ -1565,86 +1597,206 @@
   "source_sha256": "bd1d6bd55e3362a625f095dfe6ec5969a98ff15bb830e03d58c58360fe0e0128",
   "systems": {
     "aplomb-1": {
-      "coverage": "S+P",
+      "coverage": "S+P+L1+L2+L3",
       "languages": {
-        "da": {
-          "competence": 13.48,
-          "coverage_n": 22,
-          "n": 22,
-          "operational_failure_n": 0,
+        "ar": {
+          "n": 71,
+          "competence": 43.37,
+          "coverage_n": 71,
+          "response_n": 71,
           "refusal_n": 0,
-          "response_n": 22
+          "operational_failure_n": 0
+        },
+        "cs": {
+          "n": 75,
+          "competence": 28.42,
+          "coverage_n": 75,
+          "response_n": 75,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "da": {
+          "n": 83,
+          "competence": 21.26,
+          "coverage_n": 83,
+          "response_n": 83,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         },
         "de": {
-          "competence": 67.96,
-          "coverage_n": 27,
-          "n": 27,
-          "operational_failure_n": 0,
+          "n": 84,
+          "competence": 41.07,
+          "coverage_n": 84,
+          "response_n": 84,
           "refusal_n": 0,
-          "response_n": 27
+          "operational_failure_n": 0
+        },
+        "el": {
+          "n": 65,
+          "competence": 2.21,
+          "coverage_n": 65,
+          "response_n": 65,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         },
         "en": {
-          "competence": 44.38,
-          "coverage_n": 1160,
-          "n": 1160,
-          "operational_failure_n": 0,
+          "n": 1306,
+          "competence": 46.94,
+          "coverage_n": 1306,
+          "response_n": 1306,
           "refusal_n": 0,
-          "response_n": 1160
+          "operational_failure_n": 0
         },
         "es": {
-          "competence": 84.07,
-          "coverage_n": 31,
-          "n": 31,
-          "operational_failure_n": 0,
+          "n": 95,
+          "competence": 43.3,
+          "coverage_n": 95,
+          "response_n": 95,
           "refusal_n": 0,
-          "response_n": 31
+          "operational_failure_n": 0
+        },
+        "fi": {
+          "n": 73,
+          "competence": 10.89,
+          "coverage_n": 73,
+          "response_n": 73,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         },
         "fr": {
-          "competence": 72.34,
-          "coverage_n": 16,
-          "n": 16,
-          "operational_failure_n": 0,
+          "n": 80,
+          "competence": 43.55,
+          "coverage_n": 80,
+          "response_n": 80,
           "refusal_n": 0,
-          "response_n": 16
+          "operational_failure_n": 0
+        },
+        "hi": {
+          "n": 72,
+          "competence": 25.17,
+          "coverage_n": 72,
+          "response_n": 72,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "id": {
+          "n": 71,
+          "competence": 32.96,
+          "coverage_n": 71,
+          "response_n": 71,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         },
         "it": {
-          "competence": 52.35,
-          "coverage_n": 17,
-          "n": 17,
-          "operational_failure_n": 0,
+          "n": 83,
+          "competence": 21.78,
+          "coverage_n": 83,
+          "response_n": 83,
           "refusal_n": 0,
-          "response_n": 17
+          "operational_failure_n": 0
         },
         "ja": {
-          "competence": 25.67,
-          "coverage_n": 17,
-          "n": 17,
-          "operational_failure_n": 0,
+          "n": 80,
+          "competence": 27.2,
+          "coverage_n": 80,
+          "response_n": 80,
           "refusal_n": 0,
-          "response_n": 17
+          "operational_failure_n": 0
+        },
+        "ko": {
+          "n": 77,
+          "competence": 21.62,
+          "coverage_n": 77,
+          "response_n": 77,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "mixed": {
+          "n": 78,
+          "competence": 68.7,
+          "coverage_n": 78,
+          "response_n": 78,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "nl": {
+          "n": 72,
+          "competence": 27.43,
+          "coverage_n": 72,
+          "response_n": 72,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "no": {
+          "n": 69,
+          "competence": 12.92,
+          "coverage_n": 69,
+          "response_n": 69,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         },
         "pl": {
-          "competence": 41.96,
-          "coverage_n": 31,
-          "n": 31,
-          "operational_failure_n": 0,
+          "n": 88,
+          "competence": 26.37,
+          "coverage_n": 88,
+          "response_n": 88,
           "refusal_n": 0,
-          "response_n": 31
+          "operational_failure_n": 0
         },
         "pt": {
-          "competence": 50.04,
-          "coverage_n": 29,
-          "n": 29,
-          "operational_failure_n": 0,
+          "n": 90,
+          "competence": 36.43,
+          "coverage_n": 90,
+          "response_n": 90,
           "refusal_n": 0,
-          "response_n": 29
+          "operational_failure_n": 0
+        },
+        "sv": {
+          "n": 75,
+          "competence": 14.45,
+          "coverage_n": 75,
+          "response_n": 75,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "tr": {
+          "n": 75,
+          "competence": 24.17,
+          "coverage_n": 75,
+          "response_n": 75,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "uk": {
+          "n": 73,
+          "competence": 27.23,
+          "coverage_n": 73,
+          "response_n": 73,
+          "refusal_n": 0,
+          "operational_failure_n": 0
+        },
+        "zh": {
+          "n": 70,
+          "competence": 38.39,
+          "coverage_n": 70,
+          "response_n": 70,
+          "refusal_n": 0,
+          "operational_failure_n": 0
         }
       },
       "pool_ok": {
+        "S": 1200,
         "P": 300,
-        "S": 1200
+        "L1": 354,
+        "L2": 33,
+        "L3": 1118
       },
-      "sealed_basis": "S"
+      "sealed_basis": null,
+      "language_coverage": "S+P+L1+L2+L3",
+      "historical_sealed_observed": 1200,
+      "language_target_complete": true,
+      "languages_below_target60": 0,
+      "coverage_note": "The headline keeps the original published measurement. Its originally pinned Hugging Face revision (f8e2dc81) was later deleted upstream, so the language and category supplements (L1, L2, L3) were measured on 12 Oct 2026 with the current upstream revision d6743291 (all file hashes recorded) on an isolated pod. That revision reproduces the original answers: 98 % agreement on the 300 public items (published bar 95 %) and 97.5 % on all 1,500 headline items. Each supplement carries the original P300 answers by stable item identity; they count once. All new (sealed) supplement items were answered; the only failed requests (3 public items, GPU out-of-memory) are covered by the original P300 answers. Headline, rank, Composite and pricing are unchanged. L3 items were reviewed by an OpenAI model, so cells based on L3 carry that exposure; headline scores do not use L3."
     },
     "apus-openjev-v1-35b-a3b": {
       "coverage": "S+P+L1+L2+L3",
