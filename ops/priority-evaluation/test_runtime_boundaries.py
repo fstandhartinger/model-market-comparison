@@ -355,4 +355,28 @@ pathlib.Path('/output/probe.json').write_text(json.dumps({'request_credential_on
             self.assertIsNone(ap.MEASUREMENT_CODE_NAME_RE.fullmatch(bad), bad)
 
 
+class ClaudeAccountCredentialsTest(unittest.TestCase):
+    """Paid reviews must use the Claude login quota-pace admitted, not always ~/.claude (account B)."""
+
+    def _run(self, outputs):
+        calls = iter(outputs)
+        def fake_run(argv, **kwargs):
+            code, out = next(calls)
+            return subprocess.CompletedProcess(argv, code, out, '')
+        with mock.patch.object(ap.subprocess, 'run', side_effect=fake_run):
+            return ap.claude_credentials_path()
+
+    def test_admitted_account_login_is_bound(self):
+        with tempfile.TemporaryDirectory() as directory:
+            (Path(directory) / '.credentials.json').write_text('{}')
+            self.assertEqual(self._run([(0, 'A\n'), (0, directory + '\n')]),
+                             Path(directory) / '.credentials.json')
+
+    def test_falls_back_to_default_login(self):
+        default = ap.HOME / '.claude/.credentials.json'
+        self.assertEqual(self._run([(1, '')]), default)
+        self.assertEqual(self._run([(0, 'A\n'), (0, '/nonexistent-claude-dir\n')]), default)
+        self.assertEqual(self._run([(0, 'bad label\n')]), default)
+
+
 if __name__ == '__main__': unittest.main()
