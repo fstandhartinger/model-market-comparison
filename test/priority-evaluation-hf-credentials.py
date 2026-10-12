@@ -61,7 +61,7 @@ class GitWiring(unittest.TestCase):
   for n in ast.walk(f):
    if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='git' and len(n.args)>1 and isinstance(n.args[1],ast.Constant) and n.args[1].value in ['ls-remote','fetch','checkout']:
     v=next(k.value for k in n.keywords if k.arg=='hf_repository');self.assertIsInstance(v,ast.IfExp);self.assertIn('HF_SOURCE_AUTH_REPOSITORIES',ast.unparse(v.test));self.assertIn('huggingface.co',ast.unparse(v.test));self.assertIsNone(v.orelse.value);calls.append(n.args[1].value)
-  self.assertCountEqual(calls,['ls-remote','fetch','checkout'])
+  self.assertCountEqual(calls,['ls-remote','ls-remote','fetch','checkout'])  # HEAD + named branch/tag (CR-448)
  def test_install_includes_private_helper(self):
   src=HELPER.with_name('install-autopickup.sh').read_text();self.assertIn('autopickup.py hf_git_credential.py refusal_approval.py',src);self.assertIn('install -m 600 "$SRC/$f" "$SHARE/runtime/$f"',src)
 
