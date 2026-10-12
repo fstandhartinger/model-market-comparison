@@ -5287,6 +5287,26 @@
           "params": "4B",
           "quant": null
         }
+      },
+      "torchcast-decision-4b-v1.1": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/torchcast-ai/torchcast-decision-4b/blob/f4a34e7aedbf22917f6c85b8c4e03a3da49c1baf/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config architectures [\"Qwen3_5ForConditionalGeneration\"], model_type qwen3_5; text_config has 32 layers, hidden size 2560, bfloat16, linear attention with full attention every fourth layer. Config also includes a vision component; this evaluation uses the text decision interface."
+          },
+          {
+            "url": "https://huggingface.co/torchcast-ai/torchcast-decision-4b/blob/f4a34e7aedbf22917f6c85b8c4e03a3da49c1baf/README.md",
+            "kind": "model-card",
+            "fact": "Pinned card: Qwen/Qwen3.5-4B fine-tune, Torchcast Decision 4B (v1.1), weights CC BY-NC 4.0. Native readout takes option-letter probabilities at the answer position without generation; choices over 26 options use grouped passes. decision_config temperature 0.9, noul floor 0.801; head+tail truncation over 16,384 tokens."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        }
       }
     },
     "imagejevbench": {
