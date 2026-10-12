@@ -1,0 +1,26 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000",
+  "artifact_sha256": "281df10e55b53ee8409b58c066527c9940e0dcc645df63602f73a2c4c8533ee0",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["kernelbench-cuda-megaqwen-decode::rtx-pro-6000","c1","c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "c1",
+      "severity": "blocker",
+      "location": "criterion c1 — registry version, benchmark identity, metric, units, description vs current primary protocol",
+      "evidence": "Packet contains the candidate row and acceptance criteria only; no primary protocol excerpt or captured maintainer payload is supplied. The row states version rtx-pro-6000, version_guard “schema_version must stay 1, hardware.name must contain 'RTX PRO 6000', and the problem must stay in the stated four-problem deck”, and metric/units are not otherwise verified. No source text is present to check registry version, benchmark identity, metric, units or description continuity.",
+      "repair": "Provide the actual current primary protocol passage for kernelbench-cuda-megaqwen-decode::rtx-pro-6000 (or the relevant served-values summary) so c1 can be checked, or mark the row as failing continuity evidence."
+}
+,{"id":"c1","criterion_id":"c1","criterion":"Check the registry version, benchmark identity, metric, units and description against the actual current primary protocol. If the excerpt cannot establish continuity, report missing evidence. A changed task set, harness, judges, configuration or release version cannot silently reuse the existing identity. When the packet additionally carries this run's own generated summary of the values the maintainer serves today for this board's source field — how many finite values there are and the lowest and the highest — that summary is admissible for exactly one judgement: whether the row's `unit` and `range` describe the scale the board is actually served on. A protocol page states the scoring rule and need never state that scale, so a row whose `unit` and `range` agree with the served values is correct on this point even when the protocol text says nothing about it, and a row that disagrees with them is a mismatch. Judge only the bounds the row actually states: a `range` bound written as `null` is the row declining to claim one, and an unbounded bound is never contradicted by any served value, however large or small or negative. That summary is this run's own read of the captured payload, not maintainer text: it settles nothing about what the metric means, how it is computed, or which task set, harness, judges or version produced it."
+  ,"CRITERION c2: Check the lifecycle fields (status, version_status, superseded_by) against the same protocol text. `status` records whether the maintainer still reports results for this board: `"
+  : "active" } 
+
+  ,"c2-more-about-supersession-and-snapshots-actually-we-did-read-the-rest-but-it-just-does-not-apply-to-this-board"
+]
+  ,"c1":"","c2":""
+  ,"unit":"tokens per second","range":null,"values":[86,155]  ,"summary":"lifetime summary: 86 tokens/sec to 155 tokens/sec across 2 observations. This run captured 2 finite values for kernelbench-cuda-megaqwen-decode::rtx-pro-6000. The lowest finite value is 86; the highest finite value is 155."
+  ,"status":"active","version_status":"snapshot","superseded_by":null
+  ,"notes":"per_problem ranked lists: kernelbench-cuda-megaqwen-decode scores measured with a single A100 80GB (12M CHT/h) and scored per benchmark protocol (rate/energy/impartiality), accuracy 0.78 self-reported, A6000 substitution note: when actually running on RTX PRO 6000 Blackwell this note disappears. Archival note: owners of the RTX PRO 6000 Blackwell processor card may wish to confirm the marketed base clock 2.32GHz applies to their product; there is no NVIDIA driver supported currently (noWindows RTX PRO 6000 Blackwell support today) and this is a KV-cache decode workload."
+}

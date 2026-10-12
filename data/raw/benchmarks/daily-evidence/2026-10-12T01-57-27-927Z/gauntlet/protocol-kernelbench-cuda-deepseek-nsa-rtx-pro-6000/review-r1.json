@@ -1,0 +1,27 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["kernelbench-cuda-deepseek-nsa::rtx-pro-6000","c1","c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "missing-primary-evidence",
+      "severity": "blocker",
+      "location": "packet-level",
+      "evidence": "The review packet contains only the artifact header, acceptance criteria, required IDs, and the single candidate row. It contains no primary protocol page/excerpt, no maintainer payload, and no owner hash-verified response projection to compare against. Every acceptance criterion (c1 continuity of registry version/benchmark identity/metric/units/description, c2 lifecycle status/version_status/superseded_by) depends on such primary evidence.",
+      "repair": "Supply the actual current primary protocol text for kernelbench-cuda-deepseek-nsa (or the exact projected fields from the owner hash-verified complete response) so the row's version, identity, metric, units, description and lifecycle fields can be compared. Re-run this review round after adding the evidence."
+}
+]
+ 
+  ,
+"findings": [],
+"fixed": [],
+"uncertainties": [
+  "I could not execute the owner's hash verification or transport/qualification checks myself; I am a read-only critic with no execution tools, so those are outside my coverage."
+],
+"missing_evidence": [
+  "Primary protocol text for board kernelbench-cuda-deepseek-nsa::rtx-pro-6000 is absent from the packet."
+]
+}

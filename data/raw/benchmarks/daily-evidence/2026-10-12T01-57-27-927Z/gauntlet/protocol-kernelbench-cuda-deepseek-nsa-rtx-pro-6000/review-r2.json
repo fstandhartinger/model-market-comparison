@@ -1,0 +1,21 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "artifact_sha256": "106e3ed5770f2399032cd76ef25ac0ad13ad843f58eaa616992a43c991185a9c",
+  "round": 2,
+  "verdict": "blocked",
+  "coverage_checked": ["kernelbench-cuda-deepseek-nsa::rtx-pro-6000","c1","c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "location": "row kernelbench-cuda-deepseek-nsa::rtx-pro-6000, field `version`",
+      "evidence": "Protocol page in the packet (p1) publishes release identifier 'deepseek-nsa v1.3' for this board. The candidate row sets version to \"rtx-pro-6000\", which is not the published release identifier and not a snapshot-<date> identity; version_status is not supplied in the packet so it cannot show `published` with a copied release identifier. The protocol text contradicts the row's version field.",
+      "repair": "Set the row's version to the published release identifier from the protocol (e.g. 'deepseek-nsa v1.3'), or, if no release identifier exists, set version to snapshot-<date> and version_status to 'snapshot'. Do not freeze an identifier absent from the protocol."
+    }
+]
+       
+
+      ,
+      "ARTIFACT_DESCRIPTION": "Candidate rows for review. The JSON is the frozen artifact file content: JSON.stringify(rows) produced by the pipeline. Row `version` maps to version_status as: if a protocol page publishes a release identifier for this board, the version is " 	,		 " "		: "snapshot"		, "version"		: "snapshot-<date>"		, 	"retained"		: "a published identifier we deliberately no longer refresh from the current page"
+			}

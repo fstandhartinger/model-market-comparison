@@ -1,0 +1,19 @@
+{
+  "artifact_id": "protocol-arc-agi-2",
+  "artifact_sha256": "4def015e2ee7af9204caf82a96e34ed82c8f210c181e369fb11fb2e504cc1d29",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["arc-agi::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "arc-agi::2: I cannot recompute the owner-bound row SHA-256 (d807a5fd...) or execute source payload hash/transport checks; those are owner-executed and I treat the packet hash bindings as given, which is a limitation of my read-only role, not missing numeric evidence.",
+    "arc-agi::2 c1: Sources 4 and 5 are this run's own generated summaries of the captured v2.json payload (15 added 'score' values; 301 finite values, min 0, max 95); I accept them as packet evidence per the criteria and cannot independently inspect the raw JSON payload.",
+    "arc-agi::2 c1: The protocol excerpts do not literally print the word 'percent' for the leaderboard score, but Source 3's 'reach 85% accuracy' framing plus the served scale (0-95) agrees with unit 'percent' and range [0,100]; per c1 the served-scale summary is admissible for exactly this judgement and nothing else.",
+    "arc-agi::2 c2: version_status 'published' rests on the maintainer's published identifier 'ARC-AGI-2' (Source 3 page '/arc-agi/2', 'ARC-AGI-2 2025'); the row's version '2' copies its numeric component, and no other fine-grained release identifier (e.g. v2.x) appears in the excerpts.",
+    "arc-agi::2 c2: superseded_by 'arc-agi::3' is supported by Source 1's evolution statement ('ARC-AGI has evolved from ... ARC-AGI-1 and 2 ... to ARC-AGI-3') and the series ordering 1/2/3 in Source 3; per c2, status 'active' alongside a named successor is coherent, and Source 4's nonzero added-value count affirmatively supports 'active'.",
+    "arc-agi::2 c1: scoring.notes track the sources closely but not verbatim singular/plural: 'A single run is used; scores not averaged' matches Source 2 ('A single run is used, we do not average scores across runs'), and unproduced full test outputs marked incorrect matches Source 1 ('models that were not able to produce full test out puts, remaining tasks were marked as incorrect'); judged supported, minor wording variance only."
+  ],
+  "missing_evidence": []
+}
