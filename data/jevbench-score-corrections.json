@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "kind": "jevbench-score-corrections",
+  "note": "Reviewed score corrections for the live merged boards (/jev-models, /jev-models/all, /jev-models/api), applied by lib/jevbench-cohort-merge.mjs on top of a published cohort row. Unlike a listing correction this restates one input (here the cost axis) and the composite, interval and views that follow; it needs a re-score receipt, applies only when every other stored field equals the published row, and otherwise the published row is shown unchanged. Published release artifacts and archived release pages never read this file.",
+  "corrections": [
+    {
+      "key": "decisor_4b",
+      "release": "v1.6.4",
+      "decided_on": "2026-10-12",
+      "reason": "Standing exact-base rule (same reference as imajev-4b, aplomb-1, Uniphore): the model card names base_model Qwen/Qwen3.5-4B, so the frozen 25 Sep DeepInfra snapshot price applies instead of the Qwen3.5-9B proxy used at publication. Official scorer path re-run on the stored raw usage; only the cost axis moves.",
+      "note": "Cost re-estimated 12 Oct 2026 with the exact base-model reference (Qwen/Qwen3.5-4B, frozen DeepInfra 25 Sep snapshot, USD 0.03/0.15 per 1M, listing since deprecated) instead of the 9B proxy; composite A 33.52 → 35.34; Intelligence, Calibration, Speed unchanged.",
+      "published": {
+        "scores": {
+          "A": 33.51963655001747,
+          "B": 31.333881331679464,
+          "C": 23.27752538195658
+        },
+        "axes_cost": 51.35109809189328,
+        "usd_per_1000": 0.04184369844489519,
+        "basis_sha256": "30c432a875b34c29a6fbec15a7a264749d9b7d9b653718141fd644b8db0de205",
+        "composite_ci95": {
+          "A": [
+            23.54664202937882,
+            43.43075242179646
+          ],
+          "B": [
+            21.491047145911537,
+            41.13808580347834
+          ],
+          "C": [
+            16.351834742624177,
+            30.160244737358653
+          ]
+        }
+      },
+      "unchanged": {
+        "axes": {
+          "intelligence": 39.60641807869822,
+          "calibration": 51.86891657577944,
+          "speed": 91.94556701350172
+        },
+        "capability": 45.737667327238825,
+        "g_med": 7.088097744249485,
+        "status": {
+          "answered_ok": 1500,
+          "missing": 0,
+          "rows": 1500,
+          "status": "complete"
+        }
+      },
+      "cost": {
+        "kind": "estimate",
+        "usd_per_1000": 0.015792636916835696,
+        "basis": "ESTIMATE (base-model reference; self-hosted open weights with no per-token tariff of their own). Exact base model Qwen/Qwen3.5-4B (author model card base_model, revision 1e7f195c) resolved under the v1.5-M2 base-model reference rule to deepinfra:Qwen/Qwen3.5-4B at USD 0.03 per 1M input and USD 0.15 per 1M output in the frozen 25 Sep 2026 price cut-off snapshot (METHOD-v1.5-ADDENDUM-PRICING-INTERPRETATION-1 I-2/I-3); the listing was deprecated after the cut-off and stays the frozen reference. Output tokens priced at the reference output price. Replaces the larger-base proxy used at publication (Qwen3.5-9B Darkbloom endpoint, USD 0.08/0.13 per 1M). This row's usage on the common cost basis (1,479 items): 771,182 input and 1,479 output tokens. Estimated, not charged.",
+        "common_basis": {
+          "rule": "common",
+          "n_items": 1479,
+          "usd_per_1000_all_items": 0.04855274
+        },
+        "usage_estimated_rows": 0
+      },
+      "axes": {
+        "intelligence": 39.60641807869822,
+        "calibration": 51.86891657577944,
+        "speed": 91.94556701350172,
+        "cost": 64.04636047691767
+      },
+      "scores": {
+        "A": 35.341565591640844,
+        "B": 32.590313637312704,
+        "C": 24.542753883083925
+      },
+      "jevbench_score": 35.341565591640844,
+      "composite_ci95": {
+        "A": [
+          24.74558117984167,
+          45.875966423832466
+        ],
+        "B": [
+          22.27609201764905,
+          42.88135890458357
+        ],
+        "C": [
+          17.184431374890043,
+          31.858310016550323
+        ]
+      },
+      "capability": 45.737667327238825,
+      "receipt": {
+        "path": "data/jevbench-score-corrections-receipts/decisor_4b-new-boot.json",
+        "sha256": "382b2a72e0cdab165a8b771051c58a368ec483283007a389420df783519045e1"
+      }
+    }
+  ]
+}

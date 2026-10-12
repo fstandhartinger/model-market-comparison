@@ -27,7 +27,7 @@
             "url": "https://huggingface.co/Qwen/Qwen3.5-9B/blob/c202236235762e1c871ad0ccb60c8ee5ba337b9a/README.md"
           }
         ],
-        "note": "Unranked serving wrapper over one frozen open-weights decoder, not a RYOTIDE fine-tune. Pipeline denotes the typed-decision wrapper; BF16 denotes runtime precision, not compressed quantization. Ranking disposition remains wrapper_unranked."
+        "note": "Training-free typed-decision readout over one frozen, unmodified open-weights decoder (no fine-tune). Pipeline denotes the typed-decision readout; BF16 denotes runtime precision, not compressed quantization. Reclassified 12 Oct 2026 from wrapper to ranked native on the live boards; the archived v1.6.3 and v1.6.4 releases are unchanged."
       },
       "autojev-27b": {
         "arch": "open-llm-decoder",
