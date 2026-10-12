@@ -97,8 +97,10 @@ PUBLIC_URL_RE = re.compile(r"^https://benchmarkheaven\.com/[A-Za-z0-9/_.-]{0,120
 SOURCE_URL_RE = re.compile(
     r"^https://(?P<host>github\.com|gitlab\.com|huggingface\.co|codeberg\.org)"
     r"/(?P<path>[A-Za-z0-9][A-Za-z0-9._-]{0,99}/[A-Za-z0-9][A-Za-z0-9._-]{0,99})"
-    r"(?:\.git)?(?:/(?:tree|commit)/(?P<ref>[0-9a-f]{40}))?/?$"
+    r"(?:\.git)?(?:/(?:tree|commit)/(?P<ref>[0-9a-f]{40})|/tree/(?P<named_ref>[A-Za-z0-9][A-Za-z0-9._-]{0,99}))?/?$"
 )
+# 12 Oct 2026: a branch or tag link (huggingface.co/h2oai/h2o-lightning-4b/tree/image, order d608112b) was
+# treated as a customer error and held for two days. A named ref is resolved to its commit at fetch time.
 # Explicit operator authorization: only the paid Aplomb1 source-access recovery.
 # Never grant the account token to arbitrary customer-submitted repositories.
 HF_SOURCE_AUTH_REPOSITORIES = frozenset({"empiriolabsai/aplomb-1"})
@@ -133,6 +135,9 @@ REVIEW_GIT_PATTERNS = (
     # that this checkout had excluded). Small config files only; weights and tokenizer.json stay out.
     "*config.json", "*.jinja", "*.safetensors.index.json",
     "serving.json", "temperature.json", "MANIFEST.json", "source-pins.json",
+    # 12 Oct 2026: order 4b3cb7b8 (Uniphore) burned all 3 preparations partly because the review checkout hid the
+    # documented runtime pins and calibration file the README names. Small metadata only.
+    "temperatures.json", "*versions.json", "merge_info.json", "submission_provenance.json", "example*.json",
 )
 CLAIM_LEASE_MINUTES = 4
 MAX_ROWS_PER_CYCLE = 25
@@ -5374,6 +5379,19 @@ def fetch_source(rid: str, which: str) -> dict[str, Any]:
                           hf_repository=match.group("path") if match.group("host") == "huggingface.co"
                           and match.group("path") in HF_SOURCE_AUTH_REPOSITORIES else None)
         head = next((line.split("\t")[0] for line in remote_head.splitlines() if line.endswith("\tHEAD") and not line.startswith("ref:")), "")
+        named = match.group("named_ref")
+        named_resolved = None
+        if named and not commit:
+            refs = git(dest, "ls-remote", "origin", f"refs/heads/{named}", f"refs/tags/{named}",
+                       f"refs/tags/{named}^{{}}", timeout=120,
+                       hf_repository=match.group("path") if match.group("host") == "huggingface.co"
+                       and match.group("path") in HF_SOURCE_AUTH_REPOSITORIES else None)
+            found = {line.split("\t")[1]: line.split("\t")[0] for line in refs.splitlines() if "\t" in line}
+            commit = (found.get(f"refs/heads/{named}") or found.get(f"refs/tags/{named}^{{}}")
+                      or found.get(f"refs/tags/{named}"))
+            if not commit:
+                raise PickupError("could not resolve the repository head")  # -> FetchPermanentError below
+            named_resolved = commit
         target = commit or head
         if not SHA40_RE.fullmatch(target):
             raise PickupError("could not resolve the repository head")
@@ -5389,7 +5407,7 @@ def fetch_source(rid: str, which: str) -> dict[str, Any]:
             raise PickupError("checked-out commit does not match the requested commit")
         tree = git(dest, "rev-parse", "HEAD^{tree}").strip()
         if which == "code" and native_source_selection.applicable(job_dir, resolved, tree):
-            if url != "https://github.com/csabag/ryotide" or not commit:
+            if url != "https://github.com/csabag/ryotide" or not commit or named_resolved:
                 raise PickupError("native selection requires its pinned source URL")
             # Exact host-accepted selection only; no fallback or customer switch.
             # Missing selected objects hold, never lazily hydrate excluded data.
@@ -5429,7 +5447,8 @@ def fetch_source(rid: str, which: str) -> dict[str, Any]:
         if str(exc) == "could not resolve the repository head":
             raise FetchPermanentError(f"{which} source repository head could not be resolved") from exc
         raise FetchInfraError(str(exc)) from exc
-    receipt = {"which": which, "url": url, "commit": resolved, "tree": tree, "pinned": bool(commit),
+    receipt = {"which": which, "url": url, "commit": resolved, "tree": tree, "pinned": bool(commit) and commit != named_resolved,
+               "named_ref": match.group("named_ref") if named_resolved else None,
                "review_source_bytes": source_bytes, "archive_objects": metadata["archive_objects"], "fetched_at": iso(utcnow()),
                "credential_repository": match.group("path") if match.group("host") == "huggingface.co"
                and match.group("path") in HF_SOURCE_AUTH_REPOSITORIES else None}

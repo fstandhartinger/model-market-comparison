@@ -804,6 +804,54 @@ class CustomerDataTests(DatabaseTestCase):
         config = (ap.JOB_ROOT / rid / "source" / "code" / ".git" / "config").read_text()
         self.assertIn("url = https://github.com/owner-x/repo.y", config)
 
+    def test_fetch_source_resolves_a_branch_or_tag_link(self):
+        # Order d608112b linked huggingface.co/h2oai/h2o-lightning-4b/tree/image (a tag); it must fetch, not hold.
+        rid = insert_order()
+        ap.cycle(FakeEffects())
+        head, tagged = "a" * 40, "c" * 40
+        calls: list[list[str]] = []
+
+        def fake_run(args, **kwargs):
+            calls.append(list(args))
+            out = ""
+            if "ls-remote" in args and "--symref" in args:
+                out = f"ref: refs/heads/main\tHEAD\n{head}\tHEAD\n"
+            elif "ls-remote" in args:
+                out = f"{tagged}\trefs/tags/image\n" if "refs/tags/image" in args else ""
+            elif args[-1] == "HEAD":
+                out = tagged + "\n"
+            elif args[-1] in ("HEAD^{tree}", tagged + "^{tree}"):
+                out = "b" * 40 + "\n"
+            return subprocess.CompletedProcess(args, 0, out, "")
+
+        real_run = subprocess.run
+        patch = lambda: mock.patch.object(ap.subprocess, "run", side_effect=lambda args, **kw: fake_run(args, **kw)
+                                          if args[0] == "git" and "init" not in args else real_run(args, **kw))
+        ap.sql(f"UPDATE {ap.TABLE} SET code_link={q('https://huggingface.co/owner-x/repo.y/tree/image')} WHERE id='{rid}'")
+        with patch():
+            receipt = ap.fetch_source(rid, "code")
+        self.assertEqual((receipt["commit"], receipt["pinned"], receipt["named_ref"]), (tagged, False, "image"))
+        self.assertTrue(any("fetch" in c and tagged in c for c in calls))
+        # Annotated tag: ls-remote lists the tag object and, with the ^{} pattern, the peeled commit.
+        tag_object = "d" * 40
+
+        def annotated(args, **kwargs):
+            if "ls-remote" in args and "--symref" not in args:
+                out = (f"{tag_object}\trefs/tags/image\n{tagged}\trefs/tags/image^{{}}\n"
+                       if "refs/tags/image^{}" in args else f"{tag_object}\trefs/tags/image\n")
+                return subprocess.CompletedProcess(args, 0, out, "")
+            return fake_run(args, **kwargs)
+
+        import shutil
+        shutil.rmtree(ap.JOB_ROOT / rid / "source", ignore_errors=True)
+        with mock.patch.object(ap.subprocess, "run", side_effect=lambda args, **kw: annotated(args, **kw)
+                               if args[0] == "git" and "init" not in args else real_run(args, **kw)):
+            receipt = ap.fetch_source(rid, "code")
+        self.assertEqual(receipt["commit"], tagged)
+        ap.sql(f"UPDATE {ap.TABLE} SET code_link={q('https://huggingface.co/owner-x/repo.y/tree/missing')} WHERE id='{rid}'")
+        with patch(), self.assertRaises(ap.FetchPermanentError):
+            ap.fetch_source(rid, "code")
+
 
 class SyntheticGuardTests(DatabaseTestCase):
     def test_dry_run_and_synthetic_id_are_only_accepted_together(self):

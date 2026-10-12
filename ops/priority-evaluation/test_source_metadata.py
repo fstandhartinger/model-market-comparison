@@ -26,7 +26,7 @@ class SourceMetadataTests(ExecutionSourceTests):
     def test_metadata_sparse_lfs_and_offline_archive(self):
         repo, _ = self.fixture()
         pointer = ('version https://git-lfs.github.com/spec/v1\noid sha256:'+'a'*64+'\nsize 9876543210\n').encode()
-        names = ['serving.json','temperature.json','MANIFEST.json','native_reference/source-pins.json']
+        names = ['serving.json','temperature.json','temperatures.json','runtime_versions.json','MANIFEST.json','native_reference/source-pins.json']
         code = self.commit_files(repo, {**{n:b'{}\n' for n in names}, 'model.safetensors':pointer, 'example.png':b'inert image'})
         ap.git(repo, 'sparse-checkout', 'init', '--no-cone')
         ap.git(repo, 'sparse-checkout', 'set', '--no-cone', *ap.REVIEW_GIT_PATTERNS)
