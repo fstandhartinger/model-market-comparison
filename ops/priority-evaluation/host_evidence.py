@@ -14,8 +14,10 @@ Stdlib only. No customer code is imported or executed; no JevBench item, key or 
 from __future__ import annotations
 
 import hashlib
+import ipaddress
 import json
 import os
+import socket
 import re
 import urllib.error
 import urllib.parse
@@ -46,6 +48,37 @@ def _offline() -> bool:
     return os.environ.get(OFFLINE_ENV) == "1"
 
 
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, *args, **kwargs):  # never follow a redirect off the validated origin
+        return None
+
+
+def _public_opener(request, timeout):
+    """urlopen that refuses redirects and hosts resolving to non-global addresses."""
+    host = urllib.parse.urlsplit(request.full_url).hostname or ""
+    try:
+        addresses = {info[4][0] for info in socket.getaddrinfo(host, 443, proto=socket.IPPROTO_TCP)}
+    except OSError as exc:
+        raise urllib.error.URLError("unresolvable host") from exc
+    if not addresses or any(not ipaddress.ip_address(a.split("%", 1)[0]).is_global for a in addresses):
+        raise urllib.error.URLError("host resolves to a non-public address")
+    return urllib.request.build_opener(_NoRedirect).open(request, timeout=timeout)
+
+
+def _bounded(value: object, limit: int = 64) -> str | None:
+    return None if value is None else str(value)[:limit]
+
+
+def _cached(path: Path) -> dict[str, Any] | None:
+    if path.is_file() and not path.is_symlink():
+        try:
+            value = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            return None
+        return value if isinstance(value, dict) else None
+    return None
+
+
 def _now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
@@ -72,12 +105,13 @@ def fetch_openrouter_models(job_dir: Path, *, opener: Opener | None = None) -> d
     A failure never blocks preparation; the preparer then writes an honest blocker as before."""
     docs = _docs_dir(job_dir)
     target = docs / "OPENROUTER-MODELS.json"
-    if target.is_file() and not target.is_symlink():
-        return json.loads(target.read_text(encoding="utf-8"))
+    cached = _cached(target)
+    if cached is not None:
+        return cached
     if opener is None:
         if _offline():
             return None
-        opener = urllib.request.urlopen
+        opener = _public_opener
     request = urllib.request.Request(OPENROUTER_MODELS_URL, headers={"User-Agent": USER_AGENT})
     try:
         with opener(request, timeout=TIMEOUT_S) as response:
@@ -90,9 +124,11 @@ def fetch_openrouter_models(job_dir: Path, *, opener: Opener | None = None) -> d
         models = []
         for item in data:
             pricing = item.get("pricing") or {}
+            created = item.get("created")
             models.append({"id": str(item["id"])[:200], "name": str(item.get("name") or "")[:200],
-                           "created": item.get("created"), "hugging_face_id": item.get("hugging_face_id"),
-                           "pricing": {k: pricing.get(k) for k in ("prompt", "completion", "input_cache_read")
+                           "created": created if isinstance(created, int) and not isinstance(created, bool) else None,
+                           "hugging_face_id": _bounded(item.get("hugging_face_id"), 200),
+                           "pricing": {k: _bounded(pricing.get(k)) for k in ("prompt", "completion", "input_cache_read")
                                        if k in pricing}})
     except (OSError, ValueError, KeyError, TypeError, urllib.error.URLError):
         return None
@@ -143,13 +179,14 @@ def probe_api_access(job_dir: Path, endpoint: str, model: object, *,
     result: keyless_ok (HTTP 200 with an answers object), key_required (HTTP 401/403), or unknown."""
     docs = _docs_dir(job_dir)
     target = docs / "ACCESS-PROBE.json"
-    if target.is_file() and not target.is_symlink():
-        return json.loads(target.read_text(encoding="utf-8"))
+    origin = probe_origin(endpoint)
+    cached = _cached(target)
+    if cached is not None and origin is not None and cached.get("url") == origin + "/v1/systemone":
+        return cached
     if opener is None:
         if _offline():
             return {"result": "unknown", "detail": "offline test mode"}
-        opener = urllib.request.urlopen
-    origin = probe_origin(endpoint)
+        opener = _public_opener
     record: dict[str, Any] = {"schema_version": 1, "at": _now(), "credential_sent": False,
                               "request": PROBE_BODY, "result": "unknown", "http_status": None}
     if origin is None:
