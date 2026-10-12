@@ -133,6 +133,9 @@ REVIEW_GIT_PATTERNS = (
     # that this checkout had excluded). Small config files only; weights and tokenizer.json stay out.
     "*config.json", "*.jinja", "*.safetensors.index.json",
     "serving.json", "temperature.json", "MANIFEST.json", "source-pins.json",
+    # 12 Oct 2026: order 4b3cb7b8 (Uniphore) burned all 3 preparations partly because the review checkout hid the
+    # documented runtime pins and calibration file the README names. Small metadata only.
+    "temperatures.json", "*versions.json", "merge_info.json", "submission_provenance.json", "example*.json",
 )
 CLAIM_LEASE_MINUTES = 4
 MAX_ROWS_PER_CYCLE = 25
