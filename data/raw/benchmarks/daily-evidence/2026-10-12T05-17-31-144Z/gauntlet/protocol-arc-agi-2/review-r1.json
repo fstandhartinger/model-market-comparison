@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-arc-agi-2",
+  "artifact_sha256": "4def015e2ee7af9204caf82a96e34ed82c8f210c181e369fb11fb2e504cc1d29",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["arc-agi::2","c1","c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute the owner's hash/transport/qualification checks; row identity is accepted via the owner-provided row SHA-256 binding.",
+    "The packet supplies only one board row (arc-agi::2); continuity to predecessor/successor registry entries beyond the supersession name is not independently verifiable from this excerpt, but the criteria do not require it."
+  ],
+  "missing_evidence": [],
+  "verdict": "pass"
+}

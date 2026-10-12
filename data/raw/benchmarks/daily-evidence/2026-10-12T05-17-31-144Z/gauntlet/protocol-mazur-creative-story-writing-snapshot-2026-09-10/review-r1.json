@@ -1,0 +1,14 @@
+{
+  "artifact_id": "protocol-mazur-creative-story-writing-snapshot-2026-09-10",
+  "artifact_sha256": "d0bedc67f03020a1918d640a6c576ae6937e5130eb4cf9579a6d457ab8fc7a3e",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["mazur-creative-story-writing::snapshot-2026-09-10","c1","c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "mazur-creative-story-writing::snapshot-2026-09-10",
+      "severity": "blocker",
+      "location": "row mazur-creative-story-writing::snapshot-2026-09-10, field version_guard",
+      "evidence": "The candidate row carries version_guard text ("  }]
+}

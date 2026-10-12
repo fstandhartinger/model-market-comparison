@@ -56,6 +56,17 @@
       "notes": " | 2026-07-31: price cut 1.40/4.40->1.25/3.95, cache-read 0.625 (live llm.chutes.ai)."
     },
     {
+      "model_name": "Kimi-K2.6",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 0.5,
+      "output_per_1m_usd": 2.85,
+      "cache_read_per_1m_usd": 0.05,
+      "context_length": 262144,
+      "confidential_compute": true,
+      "tee_model_id": "moonshotai/Kimi-K2.6-TEE",
+      "notes": "2026-08-26: price cut 0.66/3.5->0.58/3.4 (live llm.chutes.ai)."
+    },
+    {
       "model_name": "Qwen3.5-397B-A17B",
       "provider_org": "Alibaba",
       "input_per_1m_usd": 0.45,
@@ -75,17 +86,6 @@
       "context_length": 1048576,
       "tee_model_id": "deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
       "notes": "Added 2026-08-26 from llm.chutes.ai"
-    },
-    {
-      "model_name": "Kimi-K2.6",
-      "provider_org": "Moonshot AI",
-      "input_per_1m_usd": 0.5,
-      "output_per_1m_usd": 2.85,
-      "cache_read_per_1m_usd": 0.05,
-      "context_length": 262144,
-      "confidential_compute": true,
-      "tee_model_id": "moonshotai/Kimi-K2.6-TEE",
-      "notes": "2026-08-26: price cut 0.66/3.5->0.58/3.4 (live llm.chutes.ai)."
     },
     {
       "model_name": "Kimi K3",
@@ -150,7 +150,7 @@
       "notes": "Added 2026-08-26 from llm.chutes.ai (root nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16)"
     }
   ],
-  "response_sha256": "800a735bfa07a193c388da83f0e41610b6934dd63e7af6c242f74f8b22f09efc",
+  "response_sha256": "946373fd71a441897ad1afdb883b95602075d6862cdf2262ebafd7c2aaa0fe6d",
   "diff": {
     "added": [],
     "removed": [],
