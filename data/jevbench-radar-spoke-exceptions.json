@@ -1,12 +1,7 @@
 [
   {
-    "key": "aplomb-1",
-    "reason": "The supplement run could not reproduce the measured model: the pinned Hugging Face revision of its code and weights was deleted upstream (the repository history was rewritten), so the same files cannot be fetched. The radar shows the existing S + P items.",
-    "since": "2026-10-10"
-  },
-  {
     "key": "classone-gemma4-e2b",
-    "reason": "A supplement run was made with the same weights and serving code, but this model's server gives different answers after each restart (verified on identical weights), so the new run does not reproduce the row's original answers (87.7 % agreement on the 300 public items, below the 95 % bar). Its language and category supplements are not published; the radar shows the existing S + P items.",
+    "reason": "This model's server gives different answers after each restart, so a supplement run cannot reproduce the row's original answers (87.7 % agreement on the 300 public items, below the 95 % bar). Cause (verified 12 Oct 2026): the published model has no trained embeddings for its 12 decision delimiter tokens, so they are randomly initialised at every server start. Its language and category supplements are not published; the radar shows the existing S + P items.",
     "since": "2026-10-10"
   },
   {

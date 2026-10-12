@@ -65,7 +65,7 @@ test('CR-420 rows meet the listed-row radar gate on the addenda-aware view', () 
 
 test('CR-420: blocked rows keep exceptions with their concrete reasons', () => {
   const ex = Object.fromEntries(read('data/jevbench-radar-spoke-exceptions.json').map((x) => [x.key, x.reason]));
-  assert.match(ex['aplomb-1'], /pinned Hugging Face revision .* was deleted upstream/);
+  assert.equal(ex['aplomb-1'], undefined); // CR-447: re-measured on revision d6743291, full radar
   assert.match(ex['classone-gemma4-e2b'], /87\.7 % agreement/);
   assert.match(ex.swanone, /HTTP 401/);
 });
