@@ -9,6 +9,8 @@ Run: python3 -m unittest ops/priority-evaluation/test_autopickup.py -v
 
 from __future__ import annotations
 
+import os
+os.environ["FASTLANE_HOST_EVIDENCE_OFFLINE"] = "1"  # host_evidence never reaches the network in tests
 import contextlib
 import hashlib
 import importlib

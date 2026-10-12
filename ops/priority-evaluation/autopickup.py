@@ -29,6 +29,7 @@ import json
 import math
 import official_scoring
 import host_github
+import host_evidence
 import public_artifacts
 import measurement_dispatch
 import static_agent
@@ -1270,6 +1271,10 @@ is `held_privately_host_only`, the customer's key is already in host intake: use
 "request" and the origin of the host-validated `access.endpoint` (the fixed driver appends
 `/v1/systemone`). Host-fetched public provider pages (pricing, models, API reference), when
 present, are under `source/public-docs/` with `PUBLIC-DOCS-RECEIPT.json`; cite them for tariffs.
+`source/public-docs/OPENROUTER-MODELS.json` is the host's dated OpenRouter model/price snapshot (USD per
+token) for the base-model reference rule. When `source/public-docs/ACCESS-PROBE.json` has `result`
+`keyless_ok`, the host sent one synthetic request without any key and the endpoint answered: use
+credential "none" with the origin of `access.endpoint`; do not ask the customer for a key.
 Host `MODEL-WEIGHT-PINS.json` in that directory records exact pinned Git LFS shard hashes
 and sizes for recipe authoring; it is source identity evidence, never tariff evidence.
 OpenRouter is the fixed ZDR,
@@ -1635,6 +1640,7 @@ HOLD_REASON_LABELS = {
     "customer_reply": ("we are waiting for the customer's reply", "wir warten auf die Antwort des Kunden"),
     "customer_request": ("the customer asked to pause the evaluation", "der Kunde hat um eine Pause der Messung gebeten"),
     "customer_changes": ("the customer needs to correct the submitted model source", "der Kunde muss die eingereichten Modellquellen korrigieren"),
+    "api_key_needs_private_intake": ("the API endpoint needs a key and the order text seems to contain one; an agent must move it into private intake", "der API-Endpunkt braucht einen Schlüssel und der Auftragstext scheint einen zu enthalten; ein Agent muss ihn in die private Ablage übernehmen"),
     "evaluation_exhausted": ("the automatic evaluation attempts failed and an agent must investigate", "die automatischen Messversuche sind fehlgeschlagen und ein Agent muss die Ursache prüfen"),
 }
 
@@ -4562,6 +4568,9 @@ def evaluate(rid: str) -> int:
                                               f"at {iso(utcnow())}; fetch skipped "
                                               f"(access_type {row.get('access_type')}).\n")
                         continue
+                if host_pre_preparation(rid, row, job_dir, state):
+                    update_row(rid, "evaluation_status='pending'", "evaluation_status IN ('starting','running')")
+                    return 0
                 if not consume_stage_attempt(state, "preparation", MAX_PREPARATION_ATTEMPTS):
                     mark_evaluation_exhausted(state, "the measurement-adapter preparation retry budget is exhausted")
                     update_row(rid, "evaluation_status='exhausted'", "evaluation_status IN ('starting','running')")
@@ -4733,6 +4742,70 @@ def fail_source_link(rid: str, job_dir: Path, which: str) -> None:
                  + f"\n\nUnusable {which} link at {iso(utcnow())}: {summary} "
                    "No refund: the order waits for the customer's new link (48-hour clock paused). "
                    "The change-request email goes out after Florian's Send button.\n")
+
+
+API_KEY_MISSING_FINDING = (
+    "API key: your endpoint {endpoint} answers HTTP {status} to a request without a key, and your submission did not "
+    "include one. Please create a dedicated, revocable evaluation key with credit for about 1,500 requests and enter "
+    "it in the encrypted API key field at https://benchmarkheaven.com/submit (fast lane off, same model and API URL, "
+    "order ref in the description). Please do not send the key by email.")
+
+
+def host_pre_preparation(rid: str, row: dict[str, Any], job_dir: Path, state: dict[str, Any]) -> bool:
+    """Host evidence before an adapter preparation (card 377). True when the order is now held.
+
+    The preparer is read-only and offline, so the host records a dated OpenRouter price snapshot and, for an
+    API order without a host-held key, one credential-free synthetic probe. A key the endpoint demands but the
+    order lacks goes straight to the customer change request instead of burning three preparations; text that
+    seems to carry a pasted key becomes an agent intake hold. No preparation attempt is consumed here."""
+    try:
+        host_evidence.fetch_openrouter_models(job_dir)
+    except OSError as exc:
+        raise PickupError("unsafe public-docs directory") from exc
+    if row.get("access_type") != "api_endpoint":
+        return False
+    access = redacted_access(row.get("access_instructions"))
+    if access["credential"] == "held_privately_host_only" or not access["endpoint"]:
+        return False
+    try:
+        probe = host_evidence.probe_api_access(job_dir, access["endpoint"], row.get("model_name"))
+    except OSError as exc:
+        raise PickupError("unsafe public-docs directory") from exc
+    if probe.get("result") == "keyless_ok":
+        append_state(job_dir, f"\n\nHost access probe at {probe.get('at')}: {access['endpoint']} answered a synthetic "
+                              "System One request without any key (source/public-docs/ACCESS-PROBE.json).\n")
+        return False
+    if probe.get("result") != "key_required":
+        return False
+    if host_evidence.raw_text_has_key_like(row.get("access_instructions")):
+        set_operational_hold(state, "api_key_needs_private_intake", transient=False)
+        append_state(job_dir, f"\n\nHost access probe at {probe.get('at')}: the endpoint needs a key and the order's "
+                              "access text seems to contain one. An agent must move it into private host intake "
+                              "before any preparation; no preparation attempt was used.\n")
+        return True
+    fail_api_key_missing(rid, job_dir, access["endpoint"], probe.get("http_status"))
+    return True
+
+
+def fail_api_key_missing(rid: str, job_dir: Path, endpoint: str, status: object) -> None:
+    """An API endpoint that demands a key the order does not carry takes the change-request path."""
+    summary = ("The API-endpoint order cannot be measured yet: the endpoint needs an API key, and the "
+               "submission did not include one.")
+    finding = API_KEY_MISSING_FINDING.format(endpoint=endpoint, status=status if status in (401, 403) else 401)
+    review_dir = job_dir / "review"
+    review_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
+    atomic_write(review_dir / "CHANGES-REQUESTED.json", json.dumps({
+        "reason": "api_key_missing", "summary": summary, "findings": [clean_finding(finding)],
+        "requested_at": iso(utcnow())}, indent=2) + "\n")
+    held = update_row(rid, f"customer_hold_started_at=now(), customer_hold_reason={sql_text(CHANGE_HOLD_REASON)}, "
+                           "evaluation_status='pending', change_request_email_status='approval_required'",
+                      "status IN ('paid','review_passed') AND result_delivered_at IS NULL AND refund_id IS NULL "
+                      "AND customer_hold_started_at IS NULL")
+    if not held:
+        raise PickupError("change request was not recorded: no row matched the guard")
+    append_state(job_dir, f"\n\nAPI key missing at {iso(utcnow())}: {summary} No refund: the order waits for the "
+                          "customer's key (48-hour clock paused). The change-request email goes out after Florian's "
+                          "Send button.\n")
 
 
 def fail_source_review(rid: str, job_dir: Path, reason: str) -> None:
