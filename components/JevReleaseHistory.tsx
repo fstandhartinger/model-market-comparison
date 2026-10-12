@@ -9,12 +9,13 @@ import { hasPublishedJevbenchV168Release } from '../lib/jevbench-v168-release.mj
 import { hasPublishedJevbenchV169Release } from '../lib/jevbench-v169-release.mjs';
 import { hasPublishedJevbenchV1610Release } from '../lib/jevbench-v1610-release.mjs';
 import { hasPublishedJevbenchV1611Release } from '../lib/jevbench-v1611-release.mjs';
+import { hasPublishedJevbenchV1612Release } from '../lib/jevbench-v1612-release.mjs';
 
 /** Dated release history of the live board (Florian 10 Oct 2026: versions move here from the tabs on top). Fresh-draw
  *  releases are listed only for a validated publication; a failed validation omits the entry and keeps the rest. */
 export async function JevReleaseHistory() {
-  const [v162, v163, v164, v165, v166, v167, v168, v169, v1610, v1611] = await Promise.all([hasPublishedJevbenchV162Release(), hasPublishedJevbenchV163Release(), hasPublishedJevbenchV164Release(), hasPublishedJevbenchV165Release(), hasPublishedJevbenchV166Release(), hasPublishedJevbenchV167Release(), hasPublishedJevbenchV168Release(), hasPublishedJevbenchV169Release(), hasPublishedJevbenchV1610Release(), hasPublishedJevbenchV1611Release()]);
-  const hidden = new Set([!v162 && 'v1.6.2', !v163 && 'v1.6.3', !v164 && 'v1.6.4', !v165 && 'v1.6.5', !v166 && 'v1.6.6', !v167 && 'v1.6.7', !v168 && 'v1.6.8', !v169 && 'v1.6.9', !v1610 && 'v1.6.10', !v1611 && 'v1.6.11'].filter(Boolean));
+  const [v162, v163, v164, v165, v166, v167, v168, v169, v1610, v1611, v1612] = await Promise.all([hasPublishedJevbenchV162Release(), hasPublishedJevbenchV163Release(), hasPublishedJevbenchV164Release(), hasPublishedJevbenchV165Release(), hasPublishedJevbenchV166Release(), hasPublishedJevbenchV167Release(), hasPublishedJevbenchV168Release(), hasPublishedJevbenchV169Release(), hasPublishedJevbenchV1610Release(), hasPublishedJevbenchV1611Release(), hasPublishedJevbenchV1612Release()]);
+  const hidden = new Set([!v162 && 'v1.6.2', !v163 && 'v1.6.3', !v164 && 'v1.6.4', !v165 && 'v1.6.5', !v166 && 'v1.6.6', !v167 && 'v1.6.7', !v168 && 'v1.6.8', !v169 && 'v1.6.9', !v1610 && 'v1.6.10', !v1611 && 'v1.6.11', !v1612 && 'v1.6.12'].filter(Boolean));
   const releases = JEVBENCH_RELEASES.filter((r) => !hidden.has(r.version));
   return <section className="mt-10 max-w-4xl" id="jev-release-history" aria-labelledby="jev-release-history-title" data-bh-jev-release-history>
     <h2 id="jev-release-history-title" className="text-2xl font-bold">Release history</h2>
