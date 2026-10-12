@@ -4102,6 +4102,30 @@ PRIVATE_HOST_DIRS = ("customer-mail", "private-intake")
 PRICING_METHOD_DOCS = measurement_dispatch.PRICING_METHOD_DOCS
 
 
+def claude_credentials_path() -> Path:
+    """Login of the Claude account quota-pace admits for judgement work (A/B/C on Sandy).
+
+    ~/.claude is account B; binding it unconditionally made paid reviews fail with
+    "weekly limit" while quota-pace had admitted Claude because account A or C was eligible.
+    """
+    default = HOME / ".claude/.credentials.json"
+    try:
+        account = subprocess.run([str(HOME / "bin/quota-pace"), "account", "--kind", "judgement"],
+                                 text=True, capture_output=True, timeout=60, check=False)
+        label = (account.stdout.strip().splitlines() or [""])[-1].strip()
+        if account.returncode or not re.fullmatch(r"[A-Z]", label):
+            return default
+        config = subprocess.run([str(HOME / "bin/claude-dual"), "dir", label],
+                                text=True, capture_output=True, timeout=60, check=False)
+        directory = Path((config.stdout.strip().splitlines() or [""])[-1].strip())
+        candidate = directory / ".credentials.json"
+        if config.returncode or not directory.is_absolute() or not candidate.is_file():
+            return default
+        return candidate
+    except (OSError, subprocess.SubprocessError):
+        return default
+
+
 def sandbox_agent_command(job_dir: Path, rid: str, engine: str, stage_home: Path) -> tuple[list[str], list[int]]:
     """Expose one order, its optional release checkout, and only the selected LLM login."""
     request_root = job_directory(rid, JOB_ROOT)
@@ -4234,7 +4258,7 @@ def sandbox_agent_command(job_dir: Path, rid: str, engine: str, stage_home: Path
         target.unlink()
         target.symlink_to("/home/flori/.codex/packages/standalone/current/bin/codex")
     elif engine == "claude":
-        bind(HOME / ".claude/.credentials.json", ".claude/.credentials.json")
+        bind(claude_credentials_path(), ".claude/.credentials.json")
         binary = (HOME / ".local/bin/claude").resolve(strict=True)
         relative = str(binary.relative_to(HOME))
         bind(binary, relative)
