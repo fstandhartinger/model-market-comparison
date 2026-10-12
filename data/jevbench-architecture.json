@@ -5267,6 +5267,26 @@
           "params": "2B",
           "quant": null
         }
+      },
+      "uniphore-4b-decider": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Uniphore/uniphore-4b-decider/blob/2e22ed63ae0f9de590bbd368f3bfa7c678f78e9d/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config architectures: [\"Qwen3_5ForCausalLM\"]; model_type: \"qwen3_5_text\", 32 hidden layers (linear-attention layers with a full-attention layer every fourth), hidden size 2560, bfloat16; text-only, no vision encoder."
+          },
+          {
+            "url": "https://huggingface.co/Uniphore/uniphore-4b-decider/blob/2e22ed63ae0f9de590bbd368f3bfa7c678f78e9d/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: base_model Qwen/Qwen3.5-4B; a full merged text-only checkpoint of a LoRA fine-tune (not an adapter), loaded with Qwen3_5ForCausalLM; native readout is a single causal forward pass with softmax over single-token option codes, no text generation; no licence field (the card grants no new redistribution licence; base-model terms apply)."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        }
       }
     },
     "imagejevbench": {
