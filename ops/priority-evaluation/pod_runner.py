@@ -991,6 +991,12 @@ def _lifecycle(provider, job, recipe, staging_path, output, state, gpu_choice, t
                 state['runtime_supplement'] = krino_runtime_supplement.build(provider, pod_id)
                 image = state['runtime_supplement']['effective_image']
                 save_state()
+            import torchcast_runtime_supplement
+            if torchcast_runtime_supplement.active(job_dir or job, recipe):
+                # Fixed-order offline build of Torchcast's documented torch 2.9.1/fla stack before weights/inputs.
+                state['runtime_supplement'] = torchcast_runtime_supplement.build(provider, pod_id)
+                image = state['runtime_supplement']['effective_image']
+                save_state()
         if runtime_preflight is not None:
             state['runtime_preflight'] = runtime_preflight(provider, pod_id)
             save_state()
