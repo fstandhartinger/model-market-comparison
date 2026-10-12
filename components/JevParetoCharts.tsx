@@ -74,9 +74,11 @@ function ParetoChart({ kind, points, limit, title, unit, active, setActive, expa
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [plotted, kind]);
   const onFrontier = useMemo(() => new Set(frontier.map((f: { id: string }) => f.id)), [frontier]);
-  const values = plotted.length ? plotted.map((p) => value(p) as number) : [limit];
-  const lo = 10 ** Math.floor(Math.log10(Math.min(...values, limit) * 0.9));
-  const hi = 10 ** Math.ceil(Math.log10(Math.max(...values, limit) * 1.1));
+  // With "no cap" (?costcap=none) the limit is Infinity; it must not stretch the domain (logTicks would loop forever).
+  const limits = Number.isFinite(limit) && limit > 0 ? [limit] : [];
+  const values = plotted.length ? plotted.map((p) => value(p) as number) : limits.length ? limits : [1];
+  const lo = 10 ** Math.floor(Math.log10(Math.min(...values, ...limits) * 0.9));
+  const hi = 10 ** Math.ceil(Math.log10(Math.max(...values, ...limits) * 1.1));
   const yMin = plotted.length ? Math.max(0, Math.floor(Math.min(...plotted.map((p) => p.capability)) / 10) * 10) : 0;
   const x = (v: number) => L + (W - L - R) * (Math.log10(v) - Math.log10(lo)) / (Math.log10(hi) - Math.log10(lo));
   const y = (v: number) => T + (H - T - B) * (1 - (v - yMin) / (100 - yMin));
