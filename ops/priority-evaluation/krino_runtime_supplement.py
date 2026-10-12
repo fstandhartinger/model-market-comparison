@@ -17,7 +17,7 @@ import pod_runner
 ORDER = '8c7dbe11-5695-45d7-b701-cf92dab3ada7'
 BASE_IMAGE = 'pytorch/pytorch:2.11.0-cuda12.8-cudnn9-runtime@sha256:eee11b3b3872a8c838e35ef48f08b2d5def2080902c7f666831310ca1a0ef2be'
 CONTEXT = Path('/home/flori/jobs/fastlane-backlog-today-20261012/supplement/PUBLIC-BUILD-CONTEXT.tar')
-CONTEXT_SHA = '0f1ed27192b0a23120221a7a33f6f86f99a7b796ba7383837fe599afd14c060a'
+CONTEXT_SHA = '40aa44b6329909231d6890e25153afcf53a8922d66dbf3fb127eea33496de320'
 FILES = {
     "Dockerfile.runtime-supplement": "19796a36c7c9af14d4b7eaa8823b5a60430f07199a195ef9374f0e52109ec6ff",
     "kev-source/LICENSE": "6b08bb37982c233aa12bcbdf19106da12f3f4fcf800773ea42e28ebeddd34fb8",
@@ -97,20 +97,8 @@ FILES = {
     "wheels/narwhals-2.26.0-py3-none-any.whl": "29326d74f107c347fd1009bd58e38d9f7c7c5b51e6de97bc93dbc325d9038b54",
     "wheels/networkx-3.6.1-py3-none-any.whl": "d47fbf302e7d9cbbb9e2555a0d267983d2aa476bac30e90dfbe5669bd57f3762",
     "wheels/numpy-2.5.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": "b7e18c623bb5c95acb3b3328861272816ba199fb531921c5d6d0b675f1fde9e3",
-    "wheels/nvidia_cublas_cu12-12.8.4.1-py3-none-manylinux_2_27_x86_64.whl": "8ac4e771d5a348c551b2a426eda6193c19aa630236b418086020df5ba9667142",
-    "wheels/nvidia_cuda_cupti_cu12-12.8.90-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl": "ea0cb07ebda26bb9b29ba82cda34849e73c166c18162d3913575b0c9db9a6182",
-    "wheels/nvidia_cuda_nvrtc_cu12-12.8.93-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl": "a7756528852ef889772a84c6cd89d41dfa74667e24cca16bb31f8f061e3e9994",
-    "wheels/nvidia_cuda_runtime_cu12-12.8.90-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl": "adade8dcbd0edf427b7204d480d6066d33902cab2a4707dcfc48a2d0fd44ab90",
     "wheels/nvidia_cudnn_cu12-9.10.2.21-py3-none-manylinux_2_27_x86_64.whl": "949452be657fa16687d0930933f032835951ef0892b37d2d53824d1a84dc97a8",
-    "wheels/nvidia_cufft_cu12-11.3.3.83-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl": "4d2dd21ec0b88cf61b62e6b43564355e5222e4a3fb394cac0db101f2dd0d4f74",
-    "wheels/nvidia_cufile_cu12-1.13.1.3-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl": "1d069003be650e131b21c932ec3d8969c1715379251f8d23a1860554b1cb24fc",
-    "wheels/nvidia_curand_cu12-10.3.9.90-py3-none-manylinux_2_27_x86_64.whl": "b32331d4f4df5d6eefa0554c565b626c7216f87a06a4f56fab27c3b68a830ec9",
-    "wheels/nvidia_cusolver_cu12-11.7.3.90-py3-none-manylinux_2_27_x86_64.whl": "4376c11ad263152bd50ea295c05370360776f8c3427b30991df774f9fb26c450",
-    "wheels/nvidia_cusparse_cu12-12.5.8.93-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl": "1ec05d76bbbd8b61b06a80e1eaf8cf4959c3d4ce8e711b65ebd0443bb0ebb13b",
-    "wheels/nvidia_cusparselt_cu12-0.7.1-py3-none-manylinux2014_x86_64.whl": "f1bb701d6b930d5a7cea44c19ceb973311500847f81b634d802b7b539dc55623",
     "wheels/nvidia_nccl_cu12-2.27.3-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl": "adf27ccf4238253e0b826bce3ff5fa532d65fc42322c8bfdfaf28024c0fbe039",
-    "wheels/nvidia_nvjitlink_cu12-12.8.93-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl": "81ff63371a7ebd6e6451970684f916be2eab07321b73c9d244dc2b4da7f73b88",
-    "wheels/nvidia_nvtx_cu12-12.8.90-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl": "5b17e2001cc0d751a5bc2c6ec6d26ad95913324a4adb86788c944f8ce9ba441f",
     "wheels/packaging-26.3-py3-none-any.whl": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
     "wheels/pandas-3.0.5-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl": "d373ce03ffd84010ed9839fa73672a9c8256990532e158440c0085db7d914b34",
     "wheels/peft-0.21.0-py3-none-any.whl": "b64eb75fd9dece7401c70e675b8d9de024993b70483691b41c62876f0c7809b7",
@@ -131,7 +119,6 @@ FILES = {
     "wheels/shellingham-1.5.4-py2.py3-none-any.whl": "7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686",
     "wheels/six-1.17.0-py2.py3-none-any.whl": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
     "wheels/starlette-1.6.0-py3-none-any.whl": "a86dd39d14bb45f85a3d18525215a9ef0cfd1f192ac793220e72598c90335f0c",
-    "wheels/sympy-1.14.0-py3-none-any.whl": "e091cc3e99d2141a0ba2847328f5479b05d94a6635cb96148ccb3f34671bd8f5",
     "wheels/tenacity-9.1.4-py3-none-any.whl": "6095a360c919085f28c6527de529e76a06ad89b23659fa881ae0649b867a9d55",
     "wheels/threadpoolctl-3.7.0-py3-none-any.whl": "cd8b60b5641b45c67bbf73c64c843235fc2d8a480c87389f52f5dbee893b86be",
     "wheels/tokenizers-0.23.2-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "41c2f84d172449b4dadb9cdc508e3e364076613c35b16e76ecfe47a60d1e3305",
@@ -153,6 +140,7 @@ MEMBER_LIMIT = 1073741824
 CONTEXT_LIMIT = 6442450944
 REMOTE_ROOT = '/runtime-supplement/krino'
 BUILD_TIMEOUT_S = 5400
+SCP_TIMEOUT_S = 2700
 
 def _sha256_stream(stream):
     digest = hashlib.sha256()
@@ -205,7 +193,8 @@ def build(provider, pod_id, context=CONTEXT):
     except (OSError, ValueError, tarfile.TarError):
         raise measurement_dispatch.OperationalHold('runtime_supplement_unaccepted') from None
     pod_runner._exec(provider, pod_id, ['mkdir', '-p', REMOTE_ROOT])
-    provider.scp_to(pod_id, str(context), REMOTE_ROOT + '/context.tar')
+    # ~2.2 GB of pinned public wheels: a slow pod uplink must not hit the 900 s default (8c7dbe11 attempt 1).
+    provider.scp_to(pod_id, str(context), REMOTE_ROOT + '/context.tar', timeout=SCP_TIMEOUT_S)
     transferred = pod_runner._exec(provider, pod_id, ['sha256sum', REMOTE_ROOT + '/context.tar'])
     if CONTEXT_SHA not in transferred.stdout.split():
         raise pod_runner.PodRunError('runtime supplement context changed in transfer')

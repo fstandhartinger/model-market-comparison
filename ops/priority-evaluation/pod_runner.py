@@ -485,7 +485,7 @@ class Provider:
     def exec(self, pod_id: str, command: list[str], timeout: int = 600) -> subprocess.CompletedProcess:
         raise NotImplementedError
 
-    def scp_to(self, pod_id: str, local: str, remote: str) -> None:
+    def scp_to(self, pod_id: str, local: str, remote: str, timeout: int = 900) -> None:
         raise NotImplementedError
 
     def scp_from(self, pod_id: str, remote: str, local: str) -> None:
@@ -694,8 +694,8 @@ class LiumProvider(Provider):
                                 if not line.startswith("Executing on "))
         return result
 
-    def scp_to(self, pod_id, local, remote):
-        result = _run_cli([str(LIUM), "scp", pod_id, local, remote], timeout=900)
+    def scp_to(self, pod_id, local, remote, timeout=900):
+        result = _run_cli([str(LIUM), "scp", pod_id, local, remote], timeout=timeout)
         if result.returncode:
             raise PodRunError(f"scp upload failed: {result.stderr.strip()[-200:]}")
 
