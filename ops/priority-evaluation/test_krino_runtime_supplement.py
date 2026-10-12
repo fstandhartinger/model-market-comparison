@@ -38,7 +38,7 @@ class FakeProvider:
             out = self.inspected + '\n'
         return SimpleNamespace(returncode=0, stdout=out, stderr='')
 
-    def scp_to(self, pod_id, local, remote):
+    def scp_to(self, pod_id, local, remote, timeout=None):
         self.calls.append(('scp_to', local, remote))
 
 
@@ -72,13 +72,15 @@ class Tests(unittest.TestCase):
         self.assertTrue(pod_runner.IMAGE_RE.fullmatch(S.BASE_IMAGE))
 
     def test_context_inventory_is_public_wheels_lock_dockerfile_and_pinned_kev_tree(self):
-        self.assertEqual(len(S.FILES), 129)
+        self.assertEqual(len(S.FILES), 116)
+        # nvidia wheels the base image already ships at the identical version are not re-sent (pip: already satisfied)
+        self.assertFalse(any(name.startswith("wheels/nvidia_cublas_cu12-") for name in S.FILES))
         for name in S.FILES:
             self.assertTrue(name in ('Dockerfile.runtime-supplement',
                                      'runtime-supplement-requirements.lock.txt')
                             or (name.startswith('wheels/') and name.endswith('.whl') and '/' not in name[7:])
                             or name.startswith('kev-source/'))
-        self.assertEqual(sum(name.startswith('wheels/') for name in S.FILES), 91)
+        self.assertEqual(sum(name.startswith('wheels/') for name in S.FILES), 78)
         self.assertIn('kev-source/kev/serve.py', S.FILES)
         self.assertIn('wheels/torch-2.8.0-cp312-cp312-manylinux_2_28_x86_64.whl', S.FILES)
         self.assertIn('wheels/triton-3.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl', S.FILES)
