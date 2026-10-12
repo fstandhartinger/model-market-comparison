@@ -66,6 +66,13 @@ class Tests(unittest.TestCase):
         self.assertFalse(S.active(job, recipe(image=S.BASE_IMAGE.split('@')[0])))
         self.assertFalse(S.active(job, None))
 
+    def test_active_for_exactly_the_listed_orders(self):
+        self.assertEqual(S.ORDERS, {S.ORDER, '3a081599-3695-4382-9218-97d1208f9552'})
+        for rid in S.ORDERS:
+            self.assertTrue(S.active('/home/flori/jobs/fastlane-evaluations/' + rid, recipe()))
+        self.assertFalse(S.active('/home/flori/jobs/fastlane-evaluations/3a081599', recipe()))
+        self.assertFalse(S.active('/home/flori/jobs/fastlane-evaluations/8c7dbe11-5695-45d7-b701-cf92dab3ada7', recipe()))
+
     def test_base_image_is_digest_pinned_and_valid_recipe_image(self):
         self.assertTrue(pod_runner.IMAGE_RE.fullmatch(S.BASE_IMAGE))
 
