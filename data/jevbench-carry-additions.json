@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "kind": "jevbench-carry-additions",
+  "note": "Dated v1.5-method rows measured after the v1.6.0 dated carry was frozen and listed publicly at the owner's request. Merged into the live boards' dated carry by lib/jevbench-carry-additions.mjs; the frozen carry artifacts are never edited and archived release pages do not read this file. Rows are never ranked and never enter a median.",
+  "rows": [
+    {
+      "key": "drex_v1_5",
+      "display": "Drex v1.5",
+      "author": "Nace.ai",
+      "class": "decision-api",
+      "open": "no",
+      "licence": "hosted API",
+      "repo": null,
+      "endpoint_kind": "api",
+      "api_flag": true,
+      "axes": {
+        "intelligence": 66.21949723066754,
+        "calibration": 82.10198258530266,
+        "speed": 89.96586478639364,
+        "cost": 58.9106566304505
+      },
+      "capability": 74.1607399079851,
+      "composite_v15": 72.23939309258634,
+      "v156_rank": null,
+      "cost": {
+        "kind": "public",
+        "usd_per_1000": 0.023423121921182264,
+        "basis": "Public standard tariff: USD 0.05 per million input tokens and USD 0 per million output tokens. Drex Pricing and Models docs, fetched 2026-10-02: https://drex.nace.ai/docs/reference/pricing and https://drex.nace.ai/docs/reference/models. No identifiable public base model is listed in those docs, so no base-model price floor is applied."
+      },
+      "speed": {
+        "p50_s_adjusted": 0.25098056346178055,
+        "p95_s_adjusted": 0.4015812538564205,
+        "n": 450,
+        "adjustment": "none (production API)"
+      },
+      "measured_revision": "v1.5.4",
+      "measured_label": "measured on 2026-10-02 (v1.5.4 method)",
+      "date_basis": "actual measurement day of a paid-lane evaluation run with the v1.5.4 scorer, listed publicly at the customer's request; not re-scored on v1.6",
+      "carried_from": "v1.5.4-method",
+      "note": "Hosted API (Nace.ai). Measured 2 Oct 2026 on the v1.5.4 method, 1,624 of 1,624 decisions answered; no public weights or repository are listed, so no source link is shown. Dated v1.5-scale score, not comparable with v1.6-measured rows and never ranked with them.",
+      "source_url": null
+    }
+  ]
+}
