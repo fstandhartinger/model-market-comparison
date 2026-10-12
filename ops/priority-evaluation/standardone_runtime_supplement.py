@@ -1,4 +1,4 @@
-"""Fixed-order offline runtime supplement for Standard One 8B SH (paid fast-lane order a8731403).
+"""Fixed-order offline runtime supplement for Standard One SH (paid fast-lane orders a8731403 8B, 3a081599 3B).
 
 The author documents one stack: PyTorch 2.11 / CUDA 12.8 plus `pip install -r code/requirements.txt`
 (torch>=2.4, transformers==5.12.1, peft==0.21.0, safetensors). No public image carries it (vLLM v0.30.0 has
@@ -20,6 +20,9 @@ import measurement_dispatch
 import pod_runner
 
 ORDER = 'a8731403-9731-4d57-98b4-0c5d93952ad2'
+# Standard One 3B SH (same customer): its model-repo code/ (requirements, server, head) is byte-identical to the
+# reviewed 8B code, so the same pinned stack serves it. Every order stays explicitly listed.
+ORDERS = frozenset({ORDER, '3a081599-3695-4382-9218-97d1208f9552'})
 BASE_IMAGE = ('pytorch/pytorch:2.11.0-cuda12.8-cudnn9-runtime'
               '@sha256:eee11b3b3872a8c838e35ef48f08b2d5def2080902c7f666831310ca1a0ef2be')
 CONTEXT = Path('/home/flori/jobs/fastlane-standardone-native-20261010/supplement/PUBLIC-BUILD-CONTEXT.tar')
@@ -61,8 +64,8 @@ def sha256(path):
 
 
 def active(job, recipe):
-    """Only this order's reviewed http_typesafe recipe on the exact pinned base selects the supplement."""
-    return (Path(job).name == ORDER and isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
+    """Only a listed order's reviewed http_typesafe recipe on the exact pinned base selects the supplement."""
+    return (Path(job).name in ORDERS and isinstance(recipe, dict) and recipe.get('kind') == 'http_typesafe'
             and recipe.get('image') == BASE_IMAGE)
 
 
