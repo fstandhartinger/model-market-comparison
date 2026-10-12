@@ -1,0 +1,168 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtemp, rm, readFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { validateJevbenchV1613Bundle, readOptionalJevbenchV1613Release, hasPublishedJevbenchV1613Release,
+         V1613_KEYS, V1613_NEW_KEYS, V1613_DIMS, V1613_BASE_DIMS, v1613Dims, V1613_DRAW_RELEASE, V1613_COST_CAP, V1613_FIXED_G_MED } from '../lib/jevbench-v1613-release.mjs';
+import { V1610_KEYS } from '../lib/jevbench-v1610-release.mjs';
+import { V1612_KEYS } from '../lib/jevbench-v1612-release.mjs';
+import { createHash } from 'node:crypto';
+
+const V = 'data/raw/benchmarks/jevbench/v1.6';
+const h = 'a'.repeat(64);
+const read = async name => JSON.parse(await readFile(`${V}/jevbench-v1.6.13-${name}.json`, 'utf8'));
+const read1611 = async name => JSON.parse(await readFile(`${V}/jevbench-v1.6.12-${name}.json`, 'utf8'));
+
+/** The real published bundle, with only the independent-review verdict stubbed: the verdict is written
+ *  by the reviewer, not by this job, and the loader must fail closed until it is PASS. */
+async function fixture() {
+  const [manifest, artifact, categories, proof] = await Promise.all(
+    [read('publication'), read('results'), read('categories'), read('proof')]);
+  manifest.review = { engine: 'claude', verdict: 'PASS', receipt_sha256: h };
+  const previous = { manifest: await read1611('publication'), artifact: await read1611('results'), proof: await read1611('proof'),
+    manifestSha256: createHash('sha256').update(await readFile(`${V}/jevbench-v1.6.12-publication.json`)).digest('hex') };
+  return { manifest, artifact, categories, proof, historicalSha256: manifest.historical_results_sha256, previous };
+}
+
+test('missing publication artifact keeps the release unavailable', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'jev1613-'));
+  try { assert.equal(await readOptionalJevbenchV1613Release(root), null); }
+  finally { await rm(root, { recursive: true }); }
+});
+
+test('the published seven-system same-draw cohort validates', async () => assert.ok(validateJevbenchV1613Bundle(await fixture())));
+
+test('the published bundle really is the seven paid rows on the drawn set', async () => {
+  const { artifact, proof, previous } = await fixture();
+  assert.deepEqual(artifact.systems.map(s => s.key).toSorted(), [...V1613_KEYS].toSorted());
+  assert.equal(artifact.run_kind, 'regular-queue');
+  assert.equal(artifact.v16.draw_release, V1613_DRAW_RELEASE);
+  assert.equal(proof.draw_release, V1613_DRAW_RELEASE);
+  for (const s of artifact.systems) {
+    assert.equal(s.status.rows, 1500, s.key);
+    assert.equal(s.status.status, 'complete', s.key);
+    assert.ok(s.ranked, s.key);
+    // Not one price here is a tariff these systems issued.
+    assert.equal(s.cost.kind, 'estimate', s.key);
+    assert.ok(s.cost.usd_per_1000 <= V1613_COST_CAP, s.key);
+    assert.equal(s.measured_in, V1613_NEW_KEYS.includes(s.key) ? 'v1.6.13' : previous.artifact.systems.find(p => p.key === s.key).measured_in, s.key);
+  }
+  assert.equal(proof.abandoned_draw_note, null);
+});
+
+test('the six v1.6.12 rows keep their published point scores, and the median stays frozen', async () => {
+  const { artifact, proof, previous } = await fixture();
+  assert.equal(artifact.G_med, V1613_FIXED_G_MED);
+  assert.equal(previous.artifact.G_med, V1613_FIXED_G_MED);
+  assert.deepEqual(proof.field_median.members.map(m => m.key).toSorted(), [...V1610_KEYS].toSorted());
+  for (const key of V1612_KEYS) {
+    const a = previous.artifact.systems.find(s => s.key === key), b = artifact.systems.find(s => s.key === key);
+    assert.deepEqual(b.scores, a.scores, key); assert.deepEqual(b.axes, a.axes, key); assert.equal(b.capability, a.capability, key);
+    assert.deepEqual(b.cost, a.cost, key); assert.equal(b.measured_in, a.measured_in, key);
+  }
+  assert.deepEqual(V1613_NEW_KEYS, ['attest-31b-v1.0']);
+});
+
+test('the field median is recomputable from the published gaps and its flag is consistent', async () => {
+  const { artifact, proof } = await fixture();
+  const gaps = proof.field_median.members.map(m => m.gap).toSorted((a, b) => a - b);
+  const median = gaps.length % 2 ? gaps[(gaps.length - 1) / 2] : (gaps[gaps.length / 2 - 1] + gaps[gaps.length / 2]) / 2;
+  assert.ok(Math.abs(artifact.G_med - median) < 1e-9);
+  assert.equal(artifact.G_med_flag_gt10, artifact.G_med > 10);
+  if (artifact.G_med_flag_gt10) assert.ok(artifact.measurement_notes.some(n => n.includes('G_med_flag_gt10')),
+            'a flagged field median must be disclosed in the measurement notes');
+});
+
+test('v1.6.13 ships without a topic radar and says so', async () => {
+  const { artifact, categories } = await fixture();
+  assert.equal('topics' in categories, false);
+  assert.ok(artifact.measurement_notes.some(n => n.includes('topic')));
+});
+
+test('every published dimension has at least five categories', async () => {
+  const { categories } = await fixture();
+  for (const dim of v1613Dims(categories)) assert.ok(Array.isArray(categories[dim]) && categories[dim].length >= 5, dim);
+  for (const dim of V1613_BASE_DIMS) assert.ok(dim in categories, dim);
+});
+
+test('the topic radar is optional, and its absence is disclosed rather than silent', async () => {
+  const { artifact, categories } = await fixture();
+  if ('topics' in categories) {
+    assert.match(categories.labels_sha256, /^[a-f0-9]{64}$/);
+    assert.equal(categories.labels_draw_release, V1613_DRAW_RELEASE);
+  } else {
+    assert.ok(artifact.measurement_notes.some(n => n.includes('topic')),
+              'without a topic radar the release must say so');
+  }
+});
+
+test('a pending review verdict keeps the release unavailable and the nav tab hidden', async () => {
+  const manifest = await read('publication');
+  if (manifest.review.verdict === 'PASS') return;   // after the review has landed
+  await assert.rejects(readOptionalJevbenchV1613Release(), /independent release review/);
+  assert.equal(await hasPublishedJevbenchV1613Release(process.cwd(), () => {}), false);
+});
+
+for (const [name, edit, error] of [
+  ['pending review verdict', b => { b.manifest.review.verdict = 'PENDING'; }, /independent release review/],
+  ['wrong revision', b => { b.artifact.revision = 'v1.6.10'; }, /regular-queue identity/],
+  ['wrong run kind', b => { b.artifact.run_kind = 'paid-fast-lane'; }, /regular-queue identity/],
+  // the shared v1.6 roster check fires before the v1.6.13 cohort check; either way it fails closed
+  ['a row dropped from the cohort', b => { b.artifact.systems.pop(); }, /roster|exact seven-system cohort/],
+  ['the new API row disguised as self-hosted', b => { b.artifact.systems.find(s => s.key === 'attest-31b-v1.0').v16.lane = 'selfhosted'; }, /lane/],
+  ['a full-set API row relabelled as a subset', b => { b.artifact.systems.find(s => s.key === 'attest-31b-v1.0').v16.full_set_api = false; }, /full-set API lane|item count/],
+  ['API latency adjusted like a GPU', b => { b.artifact.systems.find(s => s.key === 'attest-31b-v1.0').speed.p50_s_adjusted *= 2; }, /API latency/],
+  ['a partial row', b => { b.artifact.systems[0].status.status = 'partial'; }, /complete 1500 rows/],
+  ['an unranked row', b => { b.artifact.systems[0].ranked = false; }, /n_ranked|ranked and fully covered/],
+  ['a price relabelled as measured', b => { b.artifact.systems[0].cost.kind = 'measured'; }, /labelled cost estimate/],
+  ['an undocumented cost basis', b => { b.artifact.systems[0].cost.basis = 'registry'; }, /documented cost basis/],
+  ['an unpinned model', b => { b.artifact.systems[0].model_pin = 'owner/model'; }, /pinned revision/],
+  ['a missing decisiveness figure', b => { delete b.artifact.systems[0].noul_decisive; }, /noul decisiveness/],
+  ['a foreign draw', b => { b.artifact.v16.draw_release = 'v1.6-somebody-elses'; }, /draw identity/],
+  ['a proof that disagrees with its row', b => { b.proof.systems[0].composite_A += 1; }, /proof agrees with the row/],
+  ['a proof row without a raw digest', b => { b.proof.systems[0].raw_sha256 = 'nope'; }, /system proof/],
+  ['a silently absent source review', b => { delete b.proof.systems[0].source_review_note; }, /source review note/],
+  ['a field median that is not the frozen v1.6.10 value', b => { b.artifact.G_med = 4; }, /frozen v1\.6\.10 G_med|cohort G_med/],
+  ['a median recomputed over the seven rows', b => { b.proof.field_median.members.push({ key: 'attest-31b-v1.0', gap: b.artifact.systems.find(s => s.key === 'attest-31b-v1.0').intelligence.gap }); }, /field median cohort/],
+  ['a median that is not marked as fixed', b => { b.proof.field_median.g_med_fixed = false; }, /frozen field median provenance/],
+  ['an earlier row that differs from its published v1.6.12 score', b => { b.previous.artifact.systems.find(s => s.key === 'krino-2b').scores.A += 1e-9; }, /earlier row point score/],
+  ['an earlier row axis that moved', b => { b.previous.artifact.systems.find(s => s.key === 'standard_one_3b_sh').axes.speed += 1e-9; }, /earlier row axis/],
+  ['an earlier row whose cost moved', b => { b.artifact.systems.find(s => s.key === 'krino-2b').cost.usd_per_1000 *= 2; }, /earlier row capability\/cost|cost above/],
+  ['the new row stamped as measured in v1.6.10', b => { b.artifact.systems.find(s => s.key === 'attest-31b-v1.0').measured_in = 'v1.6.10'; }, /measurement stamp/],
+  ['an earlier row restamped as new', b => { b.artifact.systems.find(s => s.key === 'krino-2b').measured_in = 'v1.6.13'; }, /measurement stamp/],
+  ['a predecessor that is not v1.6.12', b => { b.previous.manifest = { ...b.previous.manifest, revision: 'v1.6.9' }; }, /predecessor bundle/],
+  ['a wrong predecessor publication hash', b => { b.manifest.predecessor.publication_sha256 = h; }, /predecessor publication hash/],
+  ['no predecessor bundle at all', b => { delete b.previous; }, /predecessor bundle/],
+  ['a frozen median from a different baseline', b => { b.previous.proof.baseline_sha256 = h; }, /frozen median is not the predecessor/],
+  ['an undisclosed flagged median', b => { b.artifact.G_med_flag_gt10 = true; b.artifact.G_med = 11; b.proof.field_median.G_med = 11; b.artifact.measurement_notes = ['nothing to see']; }, /frozen v1\.6\.10 G_med|cohort G_med|disclosed in the measurement notes/],
+  ['a cost above the published ceiling', b => { b.artifact.systems[0].cost.usd_per_1000 = 0.07; }, /cost above the published ceiling/],
+  ['a row stamped as measured in another release', b => { b.artifact.systems[0].measured_in = 'v1.6.9'; }, /measurement stamp/],
+  ['an invented abandoned-draw note', b => { b.proof.abandoned_draw_note = 'v1.6-regular-20261012 was abandoned'; }, /abandoned-draw disclosure/],
+  ['a wrong penalty threshold', b => { b.proof.gap_penalty_threshold = 1; }, /gap penalty threshold/],
+  ['a topic radar without its labelling provenance', b => { b.categories.topics = b.categories.families; }, /labels digest/],
+  ['a silent omission of the topic radar', b => { delete b.categories.topics; b.artifact.measurement_notes = b.artifact.measurement_notes.filter(n => !n.includes('topic')); }, /must say so in its measurement notes/],
+  ['a historical overlay in the categories', b => { b.categories.unavailable = {}; }, /historical category overlay/],
+  ['a predecessor category lane changed to API', b => { b.categories.lanes[V1613_KEYS[0]] = 'api'; }, /category lanes/],
+  ['a language denominator that is not 1500', b => { b.categories.languages[0].n += 1; }, /category (descriptor|language denominator)/],
+  ['a broken file binding', b => { b.manifest.files.results.sha256 = 'nope'; }, /file binding/],
+  ['a changed historical source', b => { b.manifest.historical_results_sha256 = h; }, /historical source binding/],
+  ['item-level data in the proof', b => { b.proof.systems[0].task_id = 'x'; }, /private\/item-level field/],
+]) {
+  test(`published evidence fails closed: ${name}`, async () => {
+    const bundle = await fixture();
+    edit(bundle);
+    assert.throws(() => validateJevbenchV1613Bundle(bundle), error);
+  });
+}
+
+test('the shared category view renders a fresh release without a topic radar, and still with one', async () => {
+  const { jevbenchCategoryView } = await import('../lib/jevbench-categories.mjs');
+  const { artifact, categories } = await fixture();
+  const keys = artifact.systems.map(s => s.key);
+  const v = jevbenchCategoryView('v1.6.13', keys, { artifact: categories });
+  assert.deepEqual(v.dims.map(d => d.key), ['usecases']);
+  assert.deepEqual(Object.keys(v.systems).toSorted(), [...keys].toSorted());
+  const withTopics = { ...categories, topics: categories.families, systems: Object.fromEntries(Object.entries(categories.systems).map(([k, r]) => [k, { ...r, topics: r.families }])) };
+  assert.deepEqual(jevbenchCategoryView('v1.6.13', keys, { artifact: withTopics }).dims.map(d => d.key), ['topics', 'usecases']);
+});

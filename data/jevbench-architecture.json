@@ -5307,6 +5307,21 @@
           "params": "4B",
           "quant": null
         }
+      },
+      "attest-31b-v1.0": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://attest.engineering/model",
+            "kind": "provider-docs",
+            "fact": "Vendor declares frozen google/gemma-4-31B-it @842da3794eaa0b77d5f08bae87a17459d91ff475, unmodified bf16, no fine-tune/adapter/quantization, one forward pass reading option labels with one fitted temperature. Deployed checkpoint/method not independently inspected; hosted API row."
+          }
+        ],
+        "badges": {
+          "derivation": "base",
+          "params": "31B",
+          "quant": null
+        }
       }
     },
     "imagejevbench": {
