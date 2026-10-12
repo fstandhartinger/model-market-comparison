@@ -122,3 +122,14 @@ for (const [name, edit, error] of [
     assert.throws(() => validateJevbenchV1610Bundle(bundle), error);
   });
 }
+
+test('the shared category view renders a fresh release without a topic radar, and still with one', async () => {
+  const { jevbenchCategoryView } = await import('../lib/jevbench-categories.mjs');
+  const { artifact, categories } = await fixture();
+  const keys = artifact.systems.map(s => s.key);
+  const v = jevbenchCategoryView('v1.6.10', keys, { artifact: categories });
+  assert.deepEqual(v.dims.map(d => d.key), ['usecases']);
+  assert.deepEqual(Object.keys(v.systems).toSorted(), [...keys].toSorted());
+  const withTopics = { ...categories, topics: categories.families, systems: Object.fromEntries(Object.entries(categories.systems).map(([k, r]) => [k, { ...r, topics: r.families }])) };
+  assert.deepEqual(jevbenchCategoryView('v1.6.10', keys, { artifact: withTopics }).dims.map(d => d.key), ['topics', 'usecases']);
+});
