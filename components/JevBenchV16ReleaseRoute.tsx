@@ -13,6 +13,7 @@ import { JevBenchReleaseVersionNav } from './JevBenchReleaseVersionNav';
 import { readApiFullAddenda, withApiFullAddenda, withApiFullAddendumCategories } from '../lib/jevbench-api-full-addenda.mjs';
 import { JevBenchApiAddendumCoverage } from './JevBenchApiAddendumCoverage';
 import { readCohortRows, jevWithCohortRows, jevLiveAllArtifact } from '../lib/jevbench-cohort-merge.mjs';
+import { readCarryAdditions, withCarryAdditions } from '../lib/jevbench-carry-additions.mjs';
 import { JevReleaseHistory } from './JevReleaseHistory';
 
 type ReleaseData = Awaited<ReturnType<typeof readJevbenchV161Release>>;
@@ -41,7 +42,9 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
   const cellSupplementSha256 = merged === release_ ? undefined : createHash('sha256').update(await readFile(path.join(process.cwd(), JEVBENCH_S_CATEGORY_CELLS_ARTIFACT))).digest('hex');
   const a4Keys = new Set(merged.systems.map((s) => s.key));
   const published = merged === release_ ? release_ : { ...merged, not_measured: merged.not_measured.filter((r) => !a4Keys.has(r.key)) };
-  const publishedCarry = merged === release_ ? releaseCarry : { ...releaseCarry, rows: releaseCarry.rows.filter((r) => !a4Keys.has(r.key)) };
+  // 12 Oct 2026: dated v1.5-method rows listed after the frozen carry (live boards only; archived pages show it as published).
+  const carryBase = merged === release_ ? releaseCarry : withCarryAdditions(releaseCarry, await readCarryAdditions(), a4Keys) as typeof releaseCarry;
+  const publishedCarry = merged === release_ ? releaseCarry : { ...carryBase, rows: carryBase.rows.filter((r) => !a4Keys.has(r.key)) };
   const revision = published.revision as 'v1.6.0' | 'v1.6.1';
   const previousRelease = revision === 'v1.6.1' ? 'v1.6.0' : 'v1.5.7';
   const previousHref = revision === 'v1.6.1' ? '/jev-models/v1.6.0' : '/jev-models/v1.5.7';
