@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { assertRetainedDate, assertRetainedCache, assertRetainedFieldOmitted, buildLiveEvidence } from '../ops/daily/review-live.mjs';
+import { assertRetainedDate, assertRetainedCache, retainedCacheEndpoint, assertRetainedFieldOmitted, buildLiveEvidence } from '../ops/daily/review-live.mjs';
 import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -81,4 +81,17 @@ test('CR-285: AA metadata may be retained only while the current leaderboard omi
   const enriched = enrichArtificialAnalysis([model], new Map([['synthetic', { licenseName: 'New' }]]), previous).models[0].metadata;
   assert.equal(enriched.license_name, 'New');
   assert.equal(enriched.retained_fields, undefined);
+});
+
+test('CR-444: a retained OpenRouter cache label without a hit rate matches the collector output exactly', () => {
+  const page = { or_model_id: 'synthetic/m', endpoint_tag: 'openai/fast', provider: 'OpenAI', endpoint_id: 'e1', cache_read_per_1m: 0.4, cache_write_per_1m: 5,
+    cache_hit_rate: null, cache_status: 'not_published_in_payload', cache_note: 'page note' };
+  const prior = { ...page, cache_status: 'not_in_effective_pricing' };
+  // What scripts/fetch-openrouter-efficiency.mjs stages after a partial cache fetch, after the JSON round trip.
+  const staged = JSON.parse(JSON.stringify({ ...page, cache_hit_rate: prior.cache_hit_rate, cache_status: prior.cache_status, total_tokens: prior.total_tokens,
+    source_provider_name: prior.source_provider_name, source_provider_slug: prior.source_provider_slug, cache_note: prior.cache_note }));
+  assert.deepStrictEqual(retainedCacheEndpoint(page, prior), staged);
+  assert.notDeepStrictEqual(retainedCacheEndpoint(page, prior), { ...staged, cache_status: 'available' });
+  const measured = { ...prior, cache_hit_rate: 0.5, cache_status: 'available', total_tokens: 10, source_provider_name: 'OpenAI', source_provider_slug: 'openai' };
+  assert.deepStrictEqual(retainedCacheEndpoint(page, measured), { ...page, cache_hit_rate: 0.5, cache_status: 'available', total_tokens: 10, source_provider_name: 'OpenAI', source_provider_slug: 'openai', cache_note: 'page note' });
 });

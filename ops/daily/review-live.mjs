@@ -215,6 +215,14 @@ async function verifyAa(rawDir, src, runStart, rows, report) {
 
 const pick = (obj, keys) => Object.fromEntries(keys.filter((k) => Object.hasOwn(obj || {}, k)).map((k) => [k, obj[k]]));
 
+// Mirrors scripts/fetch-openrouter-efficiency.mjs after a failed/partial cache fetch: the page row
+// with the prior endpoint's cache fields (JSON drops absent fields, so undefined keys are omitted).
+export function retainedCacheEndpoint(pageEndpoint, prior) {
+  const merged = { ...pageEndpoint, cache_hit_rate: prior.cache_hit_rate, cache_status: prior.cache_status, source_provider_name: prior.source_provider_name,
+    source_provider_slug: prior.source_provider_slug, total_tokens: prior.total_tokens, cache_note: prior.cache_note };
+  return Object.fromEntries(Object.entries(merged).filter(([, v]) => v !== undefined));
+}
+
 export function assertRetainedCache(cache, previous, runStart, hasRates = false) {
   if (!hasRates && !cache?.retained_after_failure && !cache?.provenance) return; // No measured cache statistic is being retained.
   if (cache?.retained_after_failure !== true) fail('retained cache is missing its explicit retained_after_failure marker');
@@ -542,11 +550,13 @@ async function verifyOrEfficiency(rawDir, src, runStart, rows) {
       for (const se of model.endpoints) {
         const p = base.get(se.endpoint_id);
         if (!p) fail(`or-efficiency ${id}: staged endpoint ${se.endpoint_id} absent from captured page`);
-        if (se.cache_hit_rate == null && !se.source_provider_name && !se.source_provider_slug) eq(se, p, `or-efficiency ${id} endpoint ${se.endpoint_id}`);
+        const old = prior.models?.[id]?.endpoints?.find((e) => e.endpoint_id === se.endpoint_id && e.endpoint_tag === se.endpoint_tag && e.provider === se.provider);
+        // A retained cache summary also carries prior labels without a rate (e.g. not_in_effective_pricing).
+        const retainedLabel = old && model.cache?.retained_after_failure === true && isDeepStrictEqual(se, retainedCacheEndpoint(p, old));
+        if (se.cache_hit_rate == null && !se.source_provider_name && !se.source_provider_slug && !retainedLabel) eq(se, p, `or-efficiency ${id} endpoint ${se.endpoint_id}`);
         else {
-          const old = prior.models?.[id]?.endpoints?.find((e) => e.endpoint_id === se.endpoint_id && e.endpoint_tag === se.endpoint_tag && e.provider === se.provider);
           if (!old) fail(`Missing prior cache endpoint ${id}/${se.endpoint_id}`);
-          eq(se, { ...p, cache_hit_rate: old.cache_hit_rate, cache_status: old.cache_status, source_provider_name: old.source_provider_name, source_provider_slug: old.source_provider_slug, total_tokens: old.total_tokens, cache_note: old.cache_note }, `or-efficiency ${id} retained cache endpoint`);
+          eq(se, retainedCacheEndpoint(p, old), `or-efficiency ${id} retained cache endpoint`);
           mergedRetained++;
         }
       }
