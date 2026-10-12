@@ -1,4 +1,6 @@
 """Synthetic dual-benchmark orchestration; no customer code, inputs or provider."""
+import os
+os.environ["FASTLANE_HOST_EVIDENCE_OFFLINE"] = "1"  # host_evidence never reaches the network in tests
 import copy
 import hashlib
 import json
