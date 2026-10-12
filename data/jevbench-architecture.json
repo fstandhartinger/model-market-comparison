@@ -5187,6 +5187,86 @@
           "params": "E4B",
           "quant": null
         }
+      },
+      "standard_one_3b_sh": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/StandardThinking/StandardOne-3B-SH/blob/bead20e94b7c96045a19dc4d43af48a66c8911ea/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config architectures: [\"Mistral3ForConditionalGeneration\"]; model_type: \"mistral3\"; text_config.model_type: \"ministral3\", 26 hidden layers, hidden size 3072."
+          },
+          {
+            "url": "https://huggingface.co/StandardThinking/StandardOne-3B-SH/blob/bead20e94b7c96045a19dc4d43af48a66c8911ea/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: Standard One 3B v2.2 backbone (Ministral 3 3B text + Pixtral vision tower), fine-tuned for a joint schema head and merged; the float32 head ships in head/ and reads the final layer and layer 19; licence apache-2.0."
+          }
+        ],
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "3B",
+          "quant": null
+        }
+      },
+      "metask_jev_rain_12b_trained": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/MeTask-Rain/metask-jev-rain-12B-trained/blob/cf3706fdd57e23025a8c97fbde86bd5b4a547010/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config architectures: [\"Gemma4UnifiedForConditionalGeneration\"]; model_type: \"gemma4_unified\", 48 hidden layers; quantization_config format pack-quantized, 4-bit weights."
+          },
+          {
+            "url": "https://huggingface.co/MeTask-Rain/metask-jev-rain-12B-trained/blob/cf3706fdd57e23025a8c97fbde86bd5b4a547010/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: base google/gemma-4-12B-it; the repository root is an int4 compressed-tensors W4A16 (AWQ, group size 32) quantization of google/gemma-4-12B-it-qat-q4_0-unquantized at revision b6ed8627, and adapter/ holds the authors' own LoRA (PEFT, rank 16, alpha 32) loaded with it, not merged; licence apache-2.0 (base under the Gemma 4 licence)."
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "12B",
+          "quant": "W4A16 INT4"
+        }
+      },
+      "metask_jev_rain_31b_trained": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/MeTask-Rain/metask-jev-rain-31B-trained/blob/da56acc0bb607cc214c184ad9f1e9231a0d63dee/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\", 60 hidden layers; quantization_config format pack-quantized, 4-bit weights."
+          },
+          {
+            "url": "https://huggingface.co/MeTask-Rain/metask-jev-rain-31B-trained/blob/da56acc0bb607cc214c184ad9f1e9231a0d63dee/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: base google/gemma-4-31B-it; the repository root is Google's official compressed-tensors W4A16 checkpoint google/gemma-4-31B-it-qat-w4a16-ct at revision 52f3f65b, byte for byte, and adapter/ holds the authors' own LoRA (PEFT, rank 16, alpha 32) loaded with it, not merged; licence apache-2.0 (base under the Gemma 4 licence)."
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "31B",
+          "quant": "W4A16 INT4"
+        }
+      },
+      "krino-2b": {
+        "arch": "open-llm-decoder",
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Guru0381/krino-2b/blob/ff185abf129206174c67ebbe6058cab4cc9ccaed/adapter_config.json",
+            "kind": "config.json",
+            "fact": "Pinned PEFT adapter config: base_model_name_or_path \"Qwen/Qwen3.5-2B-Base\"; LoRA adapter, inference mode."
+          },
+          {
+            "url": "https://huggingface.co/Guru0381/krino-2b/blob/ff185abf129206174c67ebbe6058cab4cc9ccaed/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: base_model Qwen/Qwen3.5-2B-Base with base_model_relation \"adapter\", library_name peft, licence apache-2.0; a Kev-architecture decision model (LoRA plus pointer head) with native probabilities and no free-form generation."
+          }
+        ],
+        "badges": {
+          "derivation": "adapter",
+          "params": "2B",
+          "quant": null
+        }
       }
     },
     "imagejevbench": {
