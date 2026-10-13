@@ -5527,6 +5527,26 @@
             "fact": "Submission declares base Qwen/Qwen3.8-27B and open weights at mukaddamzaid/amos-1-large (Apache-2.0); the measured row is the vendor-hosted api.amos.scira.ai endpoint, whose deployed weights were not independently inspected."
           }
         ]
+      },
+      "purplemist-mini-1.0": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "2B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/olaverse/PurpleMIST-Mini-1.0/blob/8072361ec4b632b3b8a73899022281d5de3c639b/purplemist_config.json",
+            "kind": "config.json",
+            "fact": "Pinned author config: base_model \"Qwen/Qwen3.5-2B-Base\", backbone \"full\", lora_r null (a fully fine-tuned backbone with a projection head), inference_dtype float32."
+          },
+          {
+            "url": "https://huggingface.co/olaverse/PurpleMIST-Mini-1.0/blob/8072361ec4b632b3b8a73899022281d5de3c639b/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config: architectures [\"Qwen3_5TextModel\"], model_type \"qwen3_5_text\", 24 hidden layers, hidden size 2048."
+          }
+        ]
       }
     },
     "imagejevbench": {
