@@ -1,0 +1,24 @@
+{
+  "artifact_id": "protocol-mazur-creative-story-writing-snapshot-2026-09-10",
+  "artifact_sha256": "d0bedc67f03020a1918d640a6c576ae6937e5130eb4cf9579a6d457ab8fc7a3e",
+  "round": 2,
+  "verdict": "blocked",
+  "coverage_checked": ["mazur-creative-story-writing::snapshot-2026-09-10","c1","c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "c1-metric-units-range",
+      "severity": "blocker",
+      "location": "row mazur-creative-story-writing::snapshot-2026-09-10; c1",
+      "evidence": "Packet contains no actual primary protocol text or current-source payload excerpt for this row (no protocol passage, no served-values summary of finite count/min/max for the source field). Without the protocol text I cannot verify the registry version, benchmark identity, metric, units, description or served scale for the row. Only an owner-computed row sha256 and the row JSON are present; no primary source field for this board appears in the packet.",
+      "repair": "Supply the exact protocol excerpt (and this run's served-values summary if the row states a range) for mazur-creative-story-writing so criterion c1 can be checked field by field; otherwise the row cannot be accepted."
+    },
+    {
+      "id": "c2-missing-evidence",
+      "severity": "blocker",
+      "location": "row mazur-creative-story-writing::snapshot-2026-09-10, fields status/version_status/superseded_by",
+      "evidence": "Candidate row: version=snapshot-2026-09-10, version_guard present, status=", "active" 
+      : "missing_evidence"
+    }
+  ]
+}

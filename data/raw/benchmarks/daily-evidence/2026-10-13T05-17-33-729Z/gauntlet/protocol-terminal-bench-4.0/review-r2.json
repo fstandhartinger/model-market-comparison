@@ -1,0 +1,19 @@
+{
+  "artifact_id": "protocol-terminal-bench-4.0",
+  "artifact_sha256": "0bfce44f6bf34ef729d65953412db0eb357464e80f1c92a021b1a13d667071b4",
+  "round": 2,
+  "verdict": "blocked",
+  "coverage_checked": ["terminal-bench::4.0", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "terminal-bench::4.0-c1",
+      "severity": "blocker",
+      "location": "row terminal-bench::4.0, scoring fields and description",
+      "evidence": "No primary protocol excerpt is present in the packet. The only evidence for identity/version/metric is the row itself (version "  , "status active, version_status published) and an owner row hash. The acceptance criterion c1 requires checking the registry version, benchmark identity, metric, units and description against the actual current primary protocol; no protocol text is supplied, so continuity cannot be established and the excerpt cannot settle the criterion. CRITERION c1 instructs to report missing evidence when the excerpt cannot establish continuity. Additionally, criterion c2's snapshot rule says version_status "  : "published"  , " means the maintainer publishes a release identifier for this board and `version` copies it; with no protocol text at all, there is no evidence that the maintainer publishes a release identifier, so `version_status: ":"published"  , "` (sic) cannot be verified and the lifecycle fields cannot be checked. No allowed repair can fix absent primary evidence from inside the packet; the producer must supply the protocol excerpt (or the run's generated summary covering served bounds) before re-review. The `range`/`unit` claim (percent, 0–100) cannot be checked for continuity either without the captured payload summary or protocol scale, so it also rests on missing evidence. The candidate row asserts `status:":"active"  , "version_status":"published"  , "superseded_by":null, "unit":"percent", "range":[0,100]  ,"higher_better":true, "metric": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run" , "description":"A benchmark to measure and evolve with the frontier of agent work, whose homepage reports 4.0 results.` Here the trailing apostrophe is an artifact of the excerpt boundary. While the rest of the protocol suggests high-level continuity, we cannot settle version_guard, status, version_status, superseded_by, unit, range, higher_better, metric and description from this excerpt. Unresolved finding; the row fails."
+}]
+     ,"protocol_pages":"terminal-bench::4.0: https://terminal-bench.ai/; https://terminal-bench.ai/#metrics"
+   ,"summary_unrelated":"please ignore this field (meta:field is unrelated to any benchmark row)"
+   ,"captured_snapshot_count": 1,
+   "retained_context":"Accepted prior observation, immutable. DO NOT EDIT or refresh. Use this to settle version and supersession and no other fields. For the current page and board, all values presented are correct per accepted methodology. This observation records a failure to reproduce another team's claim that the page publishes version 5.2. The publisher of that page still publishes 4.0. So we keep 4.0 and note the claim mismatch. Retained context records: terminal-bench::4.0 version=4.0 status=active version_status=published superseded_by=null. Retained context records are accepted observations from the previous run. This retained context is an immutable prior accepted observation, not a claim of fresh measurement. Each such record's value is what we will reuse when the fresh excerpt does not contradict it."
+  }

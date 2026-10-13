@@ -1,0 +1,15 @@
+{
+  "artifact_id": "protocol-eqbench-creative-writing-3",
+  "artifact_sha256": "80ef38506fe66e59005afe37521f7ac7be211cf056c6ab37452f547799bcc445",
+  "round": 2,
+  "verdict": "blocked",
+  "coverage_checked": ["eqbench-creative-writing::3","c1","c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "eqbench-creative-writing::3-c1",
+      "severity": "blocker",
+      "location": "row eqbench-creative-writing::3 / scoring.metric/unit/range",
+      "evidence": "Required criterion c1 asks to check registry version, benchmark identity, metric, units and description against the actual current primary protocol. The packet's primary source evidence section is empty: no protocol page, registry excerpt, or any text naming EQ-bench, version 3, the Elo Score column, the scoring rule, or the description is present. No owner hash-verified response payload is included to support the excerpt continuity. The run summary mentioned by the criteria (finite count, lowest/highest served values) is also absent, so the admissible check of `unit: "			,"` cannot be performed. Since the excerpt cannot establish continuity, the required evidence is missing for this row. No other row required. " 	: "The row has no primary evidence to cite because the packet contains none. Any factual statement about the board's identity, version, metric, unit or range is unsupported."}
+]
+  }

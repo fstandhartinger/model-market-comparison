@@ -1,0 +1,19 @@
+{
+  "artifact_id": "protocol-arc-agi-2",
+  "artifact_sha256": "4def015e2ee7af9204caf82a96e34ed82c8f210c181e369fb11fb2e504cc1d29",
+  "round": 3,
+  "verdict": "blocked",
+  "coverage_checked": ["arc-agi::2","c1","c2"],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "arc-agi::2",
+      "severity": "blocker",
+      "location": "row arc-agi::2 / status / superseded_by",
+      "evidence": "Packet contains candidate rows and acceptance criteria but no protocol excerpt, no captured payload, and no maintainer-served summary. The row claims status=active and superseded_by=arc-agi::3; the acceptance criteria require checking these against the protocol text, and there is no protocol text at all in the supplied material.",
+      "repair": "Supply the actual current primary protocol text (or a sufficient excerpt) for ARC Prize Verified Leaderboard covering registry version, identity, metric/units, and lifecycle, plus the run's generated summary values if the unit/range/status judgement relies on them; without it the row cannot be verified."
+    },
+    {"id":"arc-agi::2","version":"2","version_guard":"Verify the published version 2 before reading results.","status":"active","version_status":"published","superseded_by":"arc-agi::3","scoring":{"metric":"Semi-Private Evaluation Set accuracy on the ARC Prize Verified Leaderboard","metric_old":"Semi-Private Evaluation Set accuracy","unit":"percent","range":[0,100],"higher_better":true,"notes":"A single run is used; scores are not averaged across runs, and tasks for which a model could not produce full test outputs are marked incorrect. Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."},"description":"The second-generation ARC-AGI benchmark of fluid intelligence tasks. Models are given a single demonstration of a task and asked to complete the output grid of one or more test pairs from a small set of training pairs; the result must match exactly the expected output grid. On this generation of ARC-AGI, a dedicated judge and harness implement the official scoring rule: a single model run is used, and a task counts as solved only if the model's output matches the expected output exactly. A model that does not produce full test outputs is marked incorrect. This description is an editorial statement about the benchmark and this registry row, and may include summary content for which the evidence here is limited."},{"id":"arc-agi::3","version":"3","version_guard":"Verify the published version 3 before reading results.","status":"active","version_status":"published","superseded_by":"arc-agi::4","scoring":{"metric":"ARC Prize Semi-Private Evaluation Set accuracy on the ARC Prize Verified Leaderboard","metric_alt":null,"unit":"percent","range":[0,100],"higher_better":true,"notes":"A single run is used; scores are not averaged across runs, and tasks for which a model could not produce full test outputs are marked incorrect."},"description":"The third-generation ARC-AGI benchmark is the final official version. It includes 70 public training tasks and a hidden 50-task subset. The hidden subset is unpublished until April 1, 2027, with the ARC Prize Semi-Private Evaluation Set (ES) system granting access to it. The private test set remains a separate secret and does not enter the leaderboard score. It is possible to train on any number of public tasks for both semi-private and public evaluations, with no restrictions placed on the training data for either the Semi-Private Evaluation Set (SPE) or Public Leaderboard (PLB). No official model ranking is published; only task-level results are published as an aggregated "  }]
+
+
+			}

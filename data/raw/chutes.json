@@ -14,16 +14,6 @@
       "tee_model_id": "google/gemma-4-31B-turbo-TEE"
     },
     {
-      "model_name": "DeepSeek-V3.2",
-      "provider_org": "DeepSeek",
-      "input_per_1m_usd": 1,
-      "output_per_1m_usd": 1,
-      "cache_read_per_1m_usd": 0.1,
-      "context_length": 131072,
-      "confidential_compute": true,
-      "tee_model_id": "deepseek-ai/DeepSeek-V3.2-TEE"
-    },
-    {
       "model_name": "Qwen3.8 27B",
       "provider_org": "Alibaba",
       "input_per_1m_usd": 0.039,
@@ -33,6 +23,16 @@
       "context_length": 262144,
       "tee_model_id": "Qwen/Qwen3.8-27B-TEE",
       "notes": "Added 2026-08-26 from llm.chutes.ai | 2026-09-08: price cut 0.35/2.75->0.32/2.50, cache-read 0.032 (live llm.chutes.ai)"
+    },
+    {
+      "model_name": "DeepSeek-V3.2",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 1,
+      "output_per_1m_usd": 1,
+      "cache_read_per_1m_usd": 0.1,
+      "context_length": 131072,
+      "confidential_compute": true,
+      "tee_model_id": "deepseek-ai/DeepSeek-V3.2-TEE"
     },
     {
       "model_name": "Qwen3.6-27B",
@@ -45,16 +45,6 @@
       "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
     },
     {
-      "model_name": "GLM-5.1",
-      "provider_org": "Z.ai",
-      "input_per_1m_usd": 0.98,
-      "output_per_1m_usd": 3.08,
-      "cache_read_per_1m_usd": 0.098,
-      "context_length": 202752,
-      "confidential_compute": true,
-      "tee_model_id": "zai-org/GLM-5.1-TEE"
-    },
-    {
       "model_name": "Kimi-K2.6",
       "provider_org": "Moonshot AI",
       "input_per_1m_usd": 0.45,
@@ -64,6 +54,16 @@
       "confidential_compute": true,
       "tee_model_id": "moonshotai/Kimi-K2.6-TEE",
       "notes": "2026-08-26: price cut 0.66/3.5->0.58/3.4 (live llm.chutes.ai)."
+    },
+    {
+      "model_name": "GLM-5.1",
+      "provider_org": "Z.ai",
+      "input_per_1m_usd": 0.98,
+      "output_per_1m_usd": 3.08,
+      "cache_read_per_1m_usd": 0.098,
+      "context_length": 202752,
+      "confidential_compute": true,
+      "tee_model_id": "zai-org/GLM-5.1-TEE"
     },
     {
       "model_name": "Qwen3.5-397B-A17B",
@@ -150,15 +150,10 @@
       "notes": "Added 2026-08-26 from llm.chutes.ai (root nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16)"
     }
   ],
-  "response_sha256": "292fdc421f29767d9b7937cfed04e4c6157b51287f59d10856e210b9d1719d2c",
+  "response_sha256": "560df02808e58e4565c047cd555645a67d1617b280edd8229b22eff9bb93c221",
   "diff": {
     "added": [],
     "removed": [],
-    "price_changed": [
-      "Qwen/Qwen3.8-27B-TEE",
-      "Qwen/Qwen3.6-27B-TEE",
-      "moonshotai/Kimi-K2.6-TEE",
-      "moonshotai/Kimi-K3-TEE"
-    ]
+    "price_changed": []
   }
 }
