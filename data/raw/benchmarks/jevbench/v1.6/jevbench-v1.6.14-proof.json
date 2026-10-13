@@ -1,0 +1,339 @@
+{
+ "G_med": 9.839526770355711,
+ "G_med_flag_gt10": false,
+ "a2_supplement": {
+  "answered_ok": 593,
+  "canonical_system_key": "microsoft-decision-1",
+  "http_422_wrong": 7,
+  "key": "microsoft-decision-1-a2-20261012",
+  "original_presentation": {
+   "display": "Microsoft-Decision-1 (submitted by Microsoft)",
+   "key": "microsoft-decision-1",
+   "listing": "ranked",
+   "rank": 1,
+   "ranked": true,
+   "ranks": {
+    "A": 1,
+    "B": 1,
+    "C": 1,
+    "capability": 3
+   }
+  },
+  "pool_size": 4,
+  "pool_target": 6,
+  "raw_sha256": "c71e7876f88b752e23c4d74f328fcac663a713d071d0dab74cfcb5d7ae425ddb",
+  "registry_sha256": "1bf438e031f19495690b9caef5ad78aa19c86480d555f8b5c4f84242534aa42b",
+  "row_for_site_sha256": "4ca48c35779dc0771e48da22ecf380ea8012ea846baef0499597ccf4bf2e771b",
+  "rows": 600,
+  "scored_row_sha256": "ee0eae99e10f9c9863c44ca3b24bf732fb2eb34391ca985c5b3755ce0d9d4d82",
+  "scorer_sha256": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "wrapper_sha256": "8f4bc20a98df4d93348f26c2b1739534e045498186ab8bada53054e4e29eba54"
+ },
+ "abandoned_draw_note": null,
+ "authority": "Same-draw addition authorized by the release lead: distinct Microsoft A2 measurement key, preliminary and unranked, equating pool four of six; seven inherited rows/ranks/category cells unchanged. Independent review remains PENDING.",
+ "baseline_sha256": "aaf60b31eb7957781afdaebb7b27473dac2a674c1d6bb0182dfba2f6f9e3b8f4",
+ "bootstrap": {
+  "B": 1000,
+  "seed": 16
+ },
+ "cost_basis_sha256": "0976523dc55a9df96422815b814f9020400894a9cdf4884395d27d90ad999e52",
+ "draw_counts": {
+  "A": 300,
+  "P": 300,
+  "S": 1200,
+  "api_input": 600,
+  "api_smoke_public": 5,
+  "core": 900,
+  "selfhosted_input": 1500
+ },
+ "draw_digests": {
+  "A": "359c92f63d3616a4a0aaa11b0fd87dbb57fd948173356d3f4a1c2299b6521b14",
+  "P": "7fa9e2592fcfaf24a959bf56eb247bda8adf60e7b2a1bf7c0a46156189820f68",
+  "S": "79195f3ef1e58a3d2a94426c9017234850a1bd7851f2e0e393b0ea643df83cbd",
+  "core": "2611ce472a502da9a50ff971b9c663b35798e580b5aa2c3373b361b02791bbdd"
+ },
+ "draw_release": "v1.6-regular-20261012",
+ "drawn_at": "2026-10-12T01:32:59Z",
+ "field_median": {
+  "G_med": 9.839526770355711,
+  "g_med_fixed": true,
+  "members": [
+   {
+    "gap": 8.75401966680952,
+    "key": "krino-2b"
+   },
+   {
+    "gap": 10.925033873901903,
+    "key": "metask_jev_rain_12b_trained"
+   },
+   {
+    "gap": 3.66598490518426,
+    "key": "metask_jev_rain_31b_trained"
+   },
+   {
+    "gap": 15.12391756649378,
+    "key": "standard_one_3b_sh"
+   }
+  ],
+  "rule": "frozen v1.6.10 value: the median Intelligence gap over the four ranked complete full-coverage self-hosted v1.6.10 systems of this draw; later same-draw rows are scored against it (g_med_fixed)"
+ },
+ "freeze_manifest_sha256": "6a357ce4f7655b48d3d19890d4342e6c337575e319d9602941d794c14db6702c",
+ "g_med_fixed_from": {
+  "G_med": 9.839526770355711,
+  "baseline_sha256": "aaf60b31eb7957781afdaebb7b27473dac2a674c1d6bb0182dfba2f6f9e3b8f4",
+  "revision": "v1.6.10"
+ },
+ "gap_penalty_threshold": 17.839527,
+ "input_sha256": {
+  "api": "f55bb940c2a905de4c294c3f540624eaa882069b1537f86c9b40e388ab8f6b41",
+  "selfhosted": "dfd36720077ef7c41ace367524896507c7f44ce71306fb3e659e8b85069d995b"
+ },
+ "method": "jevbench::v1.6",
+ "noul_method": {
+  "applied": "O1S",
+  "native_method_source_sha256": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0"
+ },
+ "raw_sha256": {
+  "attest-31b-v1.0": "900b411ab91c6961574dc647875ceffaf2c1b780aded25951643a022e33b42d5",
+  "krino-2b": "fd2bc95717d359c101743ab6a3369884b415ce40d5a2829c399e1304fd67f8f3",
+  "metask_jev_rain_12b_trained": "9bd816fd308ea8719c977c1a5dcc659a42d5cf9cc3bad9a67969dd66adb8b018",
+  "metask_jev_rain_31b_trained": "89dc88765db2187e2db8baf27fcea03f00f7e17a6cc636b82b22065c7daa3d4a",
+  "standard_one_3b_sh": "39203a7a3bd7ccb0f73d8e96ec70c20897ccea78c42d8cb071a5249f8754c54d",
+  "torchcast-decision-4b-v1.1": "89e6b22e66ae3e706404a3fb4b274de82fe98a9bb83612c865f45805d036ca93",
+  "uniphore-4b-decider": "4a175484c796fda013a4e8dff5d1b1c5040fc160f556fec0de7a3ed63ad9f285"
+ },
+ "registry_sha256": "cc8eed2a234978134a4c17bb4ad4ae2e5e5dabb5eb0e18d48fe7cc0d5f4863e3",
+ "revision": "v1.6.14",
+ "schema_version": 1,
+ "scorer_sources_sha256": {
+  "noul_method_v16.py": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "score_v15.py": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA.py": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16.py": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9"
+ },
+ "seed_commitment": "ad1ed4858269bda0cbbe7ad0752b573982ed2afc5c2382dad9d33e380ede4c16",
+ "set_manifest_sha256": {
+  "A": "8bfc6d99122b2b8a9fd5c2691117aa910f6adf6f40cef1922981eea43515c5a2",
+  "P": "6b2321f8359d87769a95c8e52135542d95ccdc353197e1e5c96abb9b616ce5ba",
+  "S": "e0a11ed2f870c179b7fc67a9a83a03f6cf26eeb6231cfadc253abf2211a3e66e"
+ },
+ "systems": [
+  {
+   "answered_ok": 1485,
+   "axes": {
+    "calibration": 73.84793106824938,
+    "cost": 50.86035455384382,
+    "intelligence": 65.23849472031306,
+    "speed": 97.10993413996468
+   },
+   "capability": 69.54321289428123,
+   "composite_A": 67.9936749770638,
+   "cost_kind": "estimate",
+   "display": "attest-31B-v1.0",
+   "key": "attest-31b-v1.0",
+   "measured_by": "fastlane-apikey-orders-20261012 (paid API lane, order 07d13315)",
+   "model_pin": "google/gemma-4-31B-it@842da3794eaa0b77d5f08bae87a17459d91ff475",
+   "noul_decisive": {
+    "acc_among_decisive": 0.8787878787878788,
+    "decisive": 363,
+    "decisive_rate": 0.9731903485254692,
+    "n": 375,
+    "supported": true,
+    "valid": 373
+   },
+   "rank": 2,
+   "raw_sha256": "900b411ab91c6961574dc647875ceffaf2c1b780aded25951643a022e33b42d5",
+   "rows": 1500,
+   "source_review_note": "Vendor-hosted API: public dated model/pricing documents archived and hash-verified by the order operator. No customer implementation code ran locally; deployed weights/method are vendor declarations, not independently inspected.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.043449839999999997
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 62.82741496733333,
+    "cost": 54.45313889836773,
+    "intelligence": 21.99889248592056,
+    "speed": 91.85485240061512
+   },
+   "capability": 42.413153726626945,
+   "composite_A": 8.54428010154306,
+   "cost_kind": "estimate",
+   "display": "Krino-2B",
+   "key": "krino-2b",
+   "measured_by": "fastlane-backlog-today-20261012 (paid fast lane, order 8c7dbe11)",
+   "model_pin": "Guru0381/krino-2b@ff185abf129206174c67ebbe6058cab4cc9ccaed",
+   "noul_decisive": {
+    "acc_among_decisive": 0.7124600638977636,
+    "decisive": 313,
+    "decisive_rate": 0.8346666666666667,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 7,
+   "raw_sha256": "fd2bc95717d359c101743ab6a3369884b415ce40d5a2829c399e1304fd67f8f3",
+   "rows": 1500,
+   "source_review_note": "Source review PASS and pod smoke PASS by the measuring operator; the author's `python3 -m krino.serve` on the Kev serve path ran from the reviewed order-scoped offline Kev runtime supplement (PR #335, wheels SHA-256-pinned), with the documented per-type temperatures and KEV_TRUNCATE_STATES=1 from the submitted serve command.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.03297833333333333
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 87.91805023499681,
+    "cost": 51.488678556745086,
+    "intelligence": 67.8255189476327,
+    "speed": 73.37579625429389
+   },
+   "capability": 77.87178459131476,
+   "composite_A": 67.60392832716802,
+   "cost_kind": "estimate",
+   "display": "metask-jev-rain-12B-trained",
+   "key": "metask_jev_rain_12b_trained",
+   "measured_by": "fastlane-metask-rain-native-20261012 (paid fast lane, order 66c7b6d2)",
+   "model_pin": "MeTask-Rain/metask-jev-rain-12B-trained@cf3706fdd57e23025a8c97fbde86bd5b4a547010",
+   "noul_decisive": {
+    "acc_among_decisive": 0.856,
+    "decisive": 375,
+    "decisive_rate": 1.0,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 3,
+   "raw_sha256": "9bd816fd308ea8719c977c1a5dcc659a42d5cf9cc3bad9a67969dd66adb8b018",
+   "rows": 1500,
+   "source_review_note": "Pipeline source review PASS (review/GATE.json of order 66c7b6d2) and offline pod smoke PASS by the measuring operator; the author's own service (serve.sh -> launch.py -> server.py on vLLM 0.31.0, pinned image digest) ran with unchanged defaults.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.041404166666666666
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 87.09471194592824,
+    "cost": 49.238192537895735,
+    "intelligence": 70.71905450578407,
+    "speed": 83.17884674032656
+   },
+   "capability": 78.90688322585615,
+   "composite_A": 66.93314450921662,
+   "cost_kind": "estimate",
+   "display": "metask-jev-rain-31B-trained",
+   "key": "metask_jev_rain_31b_trained",
+   "measured_by": "fastlane-metask-rain-native-20261012 (paid fast lane, order 147c5e18)",
+   "model_pin": "MeTask-Rain/metask-jev-rain-31B-trained@da56acc0bb607cc214c184ad9f1e9231a0d63dee",
+   "noul_decisive": {
+    "acc_among_decisive": 0.8773333333333333,
+    "decisive": 375,
+    "decisive_rate": 1.0,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 4,
+   "raw_sha256": "89dc88765db2187e2db8baf27fcea03f00f7e17a6cc636b82b22065c7daa3d4a",
+   "rows": 1500,
+   "source_review_note": "Pipeline source review PASS (review/GATE.json of order 147c5e18) and offline pod smoke PASS by the measuring operator; the author's own service (service/serve.sh -> launch.py -> server.py on vLLM 0.31.0, pinned image digest) ran with unchanged defaults.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.04921078
+  },
+  {
+   "answered_ok": 1485,
+   "axes": {
+    "calibration": 78.35523487828182,
+    "cost": 48.773133155429846,
+    "intelligence": 32.78619016656576,
+    "speed": 86.56241878672063
+   },
+   "capability": 55.57071252242379,
+   "composite_A": 21.728093384452006,
+   "cost_kind": "estimate",
+   "display": "Standard One 3B SH (Standard Thinking)",
+   "key": "standard_one_3b_sh",
+   "measured_by": "fastlane-backlog-today-20261012 (paid fast lane, order 3a081599)",
+   "model_pin": "StandardThinking/StandardOne-3B-SH@bead20e94b7c96045a19dc4d43af48a66c8911ea",
+   "noul_decisive": {
+    "acc_among_decisive": 0.8418803418803419,
+    "decisive": 234,
+    "decisive_rate": 0.6273458445040214,
+    "n": 375,
+    "supported": true,
+    "valid": 373
+   },
+   "rank": 6,
+   "raw_sha256": "39203a7a3bd7ccb0f73d8e96ec70c20897ccea78c42d8cb071a5249f8754c54d",
+   "rows": 1500,
+   "source_review_note": "Same customer and reviewed route as standard_one_8b_sh: the author's own reference server code/serve_head.py with its Quick-start argv and unchanged defaults, in the official pytorch 2.11.0 CUDA 12.8 image plus the documented requirements installed offline from SHA-256-pinned wheels; PR #332 security review PASS, recipe critic PASS and pod smoke PASS by the measuring operator (board #17927).",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.05099906666666666
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 83.11679203980711,
+    "cost": 61.19396588940246,
+    "intelligence": 54.20841827353793,
+    "speed": 93.62765623388151
+   },
+   "capability": 68.66260515667253,
+   "composite_A": 69.56440944647237,
+   "cost_kind": "estimate",
+   "display": "Torchcast Decision 4B (v1.1)",
+   "key": "torchcast-decision-4b-v1.1",
+   "measured_by": "fastlane-torchcast4b-native-20261012 (paid fast lane, order 529be5d5)",
+   "model_pin": "torchcast-ai/torchcast-decision-4b@f4a34e7aedbf22917f6c85b8c4e03a3da49c1baf",
+   "noul_decisive": {
+    "acc_among_decisive": 0.784,
+    "decisive": 375,
+    "decisive_rate": 1.0,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 1,
+   "raw_sha256": "89e6b22e66ae3e706404a3fb4b274de82fe98a9bb83612c865f45805d036ca93",
+   "rows": 1500,
+   "source_review_note": "Operator's NATIVE-SOURCE-REVIEW.md with resolved-blocker addendum and independent COMMITTED-BUNDLE-REVIEW.md PASS verify the exact runtime bundle; the author's torchcast_decision server at tag v1.1.0 ran unchanged. Isolation is container-level (--network none); no separate host-level netcut probe was taken (CUSTODY-RECEIPT.json).",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.01965778
+  },
+  {
+   "answered_ok": 1485,
+   "axes": {
+    "calibration": 79.97905975708014,
+    "cost": 64.67144663671615,
+    "intelligence": 34.15161183674326,
+    "speed": 87.70990379280212
+   },
+   "capability": 57.0653357969117,
+   "composite_A": 27.18388815636665,
+   "cost_kind": "estimate",
+   "display": "Uniphore-4B-Decider",
+   "key": "uniphore-4b-decider",
+   "measured_by": "fastlane-uniphore-native-20261012 (paid fast lane, order 4b3cb7b8)",
+   "model_pin": "Uniphore/uniphore-4b-decider@2e22ed63ae0f9de590bbd368f3bfa7c678f78e9d",
+   "noul_decisive": {
+    "acc_among_decisive": 0.8246268656716418,
+    "decisive": 268,
+    "decisive_rate": 0.7184986595174263,
+    "n": 375,
+    "supported": true,
+    "valid": 373
+   },
+   "rank": 5,
+   "raw_sha256": "4a175484c796fda013a4e8dff5d1b1c5040fc160f556fec0de7a3ed63ad9f285",
+   "rows": 1500,
+   "source_review_note": "Independent source review PASS of the author's inference code, shim and pricing by the measuring operator (review/NATIVE-SOURCE-REVIEW.md of order 4b3cb7b8) and offline pod smoke PASS; the author's own DecisionModel.predict_jev_task ran unchanged behind a first-party loopback shim.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.015052840000000001
+  }
+ ]
+}

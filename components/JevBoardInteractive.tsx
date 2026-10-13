@@ -19,7 +19,7 @@ import { JevLatencyValue, JevLatencyLegend } from './JevLatency';
 import { BaseModelDisplay, BaseModelFootnotes, type BaseModelBenchmark } from './BaseModelDisplay';
 import { baseModelFootnotes } from '../lib/jev-base-model.mjs';
 import { useJevV15VisibleKeys } from './useJevV15VisibleKeys';
-import { JEV_INTERLEAVED_LISTINGS } from '../lib/jevbench-scope.mjs';
+import { JEV_INTERLEAVED_LISTINGS, jevPartialLabel } from '../lib/jevbench-scope.mjs';
 
 // CR-151 (Florian 25 Sep 2026): the score chart and the axes table become readable in more than one way. Axis cells are
 // shaded by their standing within the column, both views sort and filter, and a "View by" switch above the chart says
@@ -418,8 +418,8 @@ function SystemName({ row, benchmark = 'jevbench' }: { row: JevBoardViewRow; ben
   const name = shortName(row.display);
   const rawVariant = row.display.startsWith(name) ? row.display.slice(name.length).replace(/^[ ,]*\(?|\)$/g, '') : '';
   const variant = rawVariant && !row.author.includes(rawVariant) ? rawVariant : '';
-  const page = benchmark === 'imagejevbench' ? imageJevSystemPath(row.key) : jevSystemPath(row.key);
-  const source = benchmark === 'imagejevbench' ? imageJevSourceUrl(row.key, row.repo) : jevSourceUrl(row.key, row.repo);
+  const page = benchmark === 'imagejevbench' ? imageJevSystemPath(row.key) : jevSystemPath(row.canonical_system_key ?? row.key);
+  const source = benchmark === 'imagejevbench' ? imageJevSourceUrl(row.key, row.repo) : jevSourceUrl(row.canonical_system_key ?? row.key, row.repo);
   // Florian 25 Sep 2026: the name opens the model's best source; the system page stays one click away ("details").
   const href = source ?? page;
   const NameLink = ({ children }: { children: ReactNode }) => source
@@ -442,7 +442,7 @@ function SystemName({ row, benchmark = 'jevbench' }: { row: JevBoardViewRow; ben
     <span className="bh-muted block text-[11px] leading-tight">by {row.author}{variant ? ` · ${variant}` : ''}{href !== page && <> · <Link href={page} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-details={row.key}>details</Link></>}</span>
     {/* CR-254 (2026-10-01): the cited base-model overlay, presentation only; every row keeps it, ranked or not. */}
     <JevArchitectureBadge row={row} benchmark={benchmark} />
-    <BaseModelDisplay benchmark={benchmark} systemKey={row.key} className="block text-[11px] leading-tight" />
+    <BaseModelDisplay benchmark={benchmark} systemKey={row.canonical_system_key ?? row.key} className="block text-[11px] leading-tight" />
   </div>;
 }
 
@@ -463,8 +463,7 @@ function HeatTd({ heat, column, row, children, className = '' }: { heat: HeatSca
 }
 
 // v1.7.5: preliminary public-set rows and pending rows on the API board carry their own label.
-export const partialLabel = (listing: string) => listing === 'preliminary' ? 'preliminary · public set (300 items) · full sealed run pending'
-  : listing === 'pending' ? 'pending · no v1.6 figure yet' : `${listing.replace(/_/g, ' ')} · not ranked`;
+export const partialLabel = jevPartialLabel;
 
 const endpointLabel = (kind: string | undefined) => kind === 'api' ? 'API' : kind === 'gpu' ? 'RunPod GPU' : kind === 'demo' ? 'author demo' : kind === 'cpu' ? 'CPU' : kind ?? '—';
 
@@ -472,7 +471,7 @@ function Row({ row, heat, benchmark = 'jevbench' }: { row: JevBoardViewRow; heat
   return <tr id={`jev14-row-${row.key}`} data-bh-jev14-row={row.key} data-bh-jev14-ranked={row.ranked ? '1' : '0'} className={row.ranked ? '' : 'bh-jev11-partial'}>
     <td className="bh-muted tabular">{row.rank ?? '—'}</td>
     <th scope="row" className="bh-jev-sticky text-left font-normal"><SystemName row={row} benchmark={benchmark} />
-      {!row.ranked && <span className="bh-thin-tag bh-partial-tag mt-1 inline-block" title={row.not_ranked_because ?? undefined} data-bh-jev14-partial={row.key}>{partialLabel(row.listing)}</span>}
+      {!row.ranked && <span className="bh-thin-tag bh-partial-tag mt-1 inline-block" title={row.not_ranked_because ?? undefined} data-bh-jev14-partial={row.key}>{partialLabel(row.listing, row.preliminary)}</span>}
     </th>
     <HeatTd heat={heat} column="score" row={row}><b className="text-lg" data-bh-jev14-score>{one(row.jevbench_score)}</b></HeatTd>
     <HeatTd heat={heat} column="intelligence" row={row}>{one(row.axes?.intelligence)}</HeatTd>

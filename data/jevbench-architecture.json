@@ -5322,6 +5322,22 @@
           "params": "31B",
           "quant": null
         }
+      },
+      "microsoft-decision-1-a2-20261012": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "kind": "provider-docs",
+            "url": "https://commandline.microsoft.com/microsoft-decision-1-model-foundry/",
+            "fact": "Microsoft-Decision-1 is evaluated through Microsoft Azure Foundry as a hosted API; the A2 entry is a separate measurement of the same Microsoft offering, not a new model."
+          }
+        ],
+        "note": "Canonical system microsoft-decision-1. Unranked A2 measurement, equating pool four of six; no underlying architecture or parameter count is inferred."
       }
     },
     "imagejevbench": {

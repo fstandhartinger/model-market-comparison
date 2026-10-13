@@ -23,6 +23,8 @@ export type JevBoardRow = {
   public_accuracy: number | null; sealed_accuracy: number | null; public_minus_sealed_gap_pp: number | null;
   cost: { kind: string; usd_per_1000: number | null; basis: string };
   speed: { p50_s_raw: number | null; p50_s_adjusted?: number | null; adjustment?: string };
+  canonical_system_key?: string;
+  preliminary?: { label?: string };
   endpoint_kind?: string; endpoint_condition?: string;
   // F-223: the headline option's paired-bootstrap 95% interval, when the release publishes one (v1.5 onwards).
   ci?: [number, number] | null;
@@ -124,8 +126,8 @@ export function gateSentence(gate: JevGatePenalty, score: number | null | undefi
 }
 
 export function JevScoreBar({ row, viewRank, reference = false, metric = 'score', heat, isNew = false, name, ci = null, alternative = null, pageHref, benchmark = 'jevbench', gate = null, baseNote }: { row: JevBoardRow; viewRank?: number; reference?: boolean; metric?: BarMetric; heat?: HeatScales; isNew?: boolean; name?: string; ci?: [number, number] | null; alternative?: JevBoardAlternative | null; pageHref?: string; benchmark?: BaseModelBenchmark; gate?: JevGatePenalty | null; baseNote?: number }) {
-  const source = benchmark === 'imagejevbench' ? imageJevSourceUrl(row.key, row.repo) : jevSourceUrl(row.key, row.repo);
-  const page = benchmark === 'imagejevbench' ? imageJevSystemPath(row.key) : jevSystemPath(row.key);
+  const source = benchmark === 'imagejevbench' ? imageJevSourceUrl(row.key, row.repo) : jevSourceUrl(row.canonical_system_key ?? row.key, row.repo);
+  const page = benchmark === 'imagejevbench' ? imageJevSystemPath(row.key) : jevSystemPath(row.canonical_system_key ?? row.key);
   const s = row.jevbench_score;
   const value = metricValue(row, metric);
   // F-223 (Fable pass 42): the official score's 95% interval is drawn on the bar's own 0-100 scale, so the figure
@@ -154,6 +156,7 @@ export function JevScoreBar({ row, viewRank, reference = false, metric = 'score'
         {isNew && <span className="bh-new-tag ml-1.5 shrink-0 align-middle" data-bh-jev14-new={row.key}>new</span>}
         {!reference && <UseModelEntry row={row} name={name ?? shortName(row.display)} benchmark={benchmark} />}
       </span>
+      {row.listing === 'preliminary' && row.preliminary?.label && <span className="bh-thin-tag bh-partial-tag mt-1 block whitespace-normal text-[10.5px] sm:text-right" data-bh-jev-preliminary-label={row.key}>{row.preliminary.label}</span>}
       {row.listing === 'pending' && row.not_ranked_because && <span className="bh-muted mt-0.5 block whitespace-normal text-[10.5px] sm:text-right" data-bh-jev-pending-note={row.key}>{row.not_ranked_because}</span>}
       {viewRank != null && <span className="bh-muted mt-0.5 block text-[10.5px] sm:text-right" data-bh-jev-view-rank={viewRank} data-bh-jev-official-rank={row.rank ?? undefined}>view #{viewRank} · {row.rank != null ? `official #${row.rank}` : 'not officially ranked'}</span>}
       {/* CR-256: outside the truncated name so a long name never hides the gate. */}
@@ -161,7 +164,7 @@ export function JevScoreBar({ row, viewRank, reference = false, metric = 'score'
       {benchmark === 'imagejevbench' && source && <Link href={page} className="block text-[10.5px] text-accent underline" data-bh-mm-system-details={row.key}>details</Link>}
       {/* CR-254 (2026-10-01): the cited base-model overlay, presentation only. Every row shows it, ranked, unranked or wrapper. */}
       <JevArchitectureBadge row={row} benchmark={benchmark} />
-      <BaseModelDisplay benchmark={benchmark} systemKey={row.key} footnote={baseNote} className="mt-0.5 block text-[10.5px] leading-tight sm:text-right" />
+      <BaseModelDisplay benchmark={benchmark} systemKey={row.canonical_system_key ?? row.key} footnote={baseNote} className="mt-0.5 block text-[10.5px] leading-tight sm:text-right" />
     </span>
     <span className="bh-jevc-grid relative col-start-2 row-start-2 mt-1 flex h-4 sm:col-start-3 sm:row-start-1 sm:mt-0 sm:h-6" aria-hidden="true">
       {value != null && <span className={`bh-jevc-bar ${row.ranked ? '' : 'is-partial'} ${reference ? 'is-reference' : ''}`} style={{ width: `${Math.max(0, Math.min(100, value)).toFixed(4)}%` }} />}

@@ -10,8 +10,8 @@ test('every cohort system joins once, from its latest release, with its draw', a
   const { rows } = await readCohortRows();
   const keys = rows.map((r) => r.row.key);
   assert.equal(new Set(keys).size, keys.length);
-  assert.equal(rows.length, 29);
-  assert.deepEqual([...new Set(rows.map((r) => r.draw.release))].sort(), ['v1.6.13', 'v1.6.4', 'v1.6.9']);
+  assert.equal(rows.length, 30);
+  assert.deepEqual([...new Set(rows.map((r) => r.draw.release))].sort(), ['v1.6.14', 'v1.6.4', 'v1.6.9']);
   assert.ok(rows.every((r) => r.draw.id && r.draw.measured_on));
 });
 
@@ -41,7 +41,7 @@ test('pending draws show the published numbers unchanged; an offset moves the ax
 test('merged board slots ranked cohort rows by score and keeps published rows in order', async () => {
   const { artifact } = await readCurrentJevbench();
   const merged = jevWithCohortRows(artifact, await readCohortRows());
-  assert.equal(merged.systems.length, artifact.systems.length + 29);
+  assert.equal(merged.systems.length, artifact.systems.length + 30);
   for (const o of Object.keys(artifact.board)) {
     const kept = merged.board[o].order.filter((k) => artifact.board[o].order.includes(k));
     assert.deepEqual(kept, artifact.board[o].order);
@@ -50,7 +50,7 @@ test('merged board slots ranked cohort rows by score and keeps published rows in
     for (let i = 1; i < order.length; i++) if (!artifact.board[o].order.includes(order[i])) assert.ok(score.get(order[i - 1]) >= score.get(order[i]), `${o}: ${order[i]}`);
   }
   const wrappers = merged.systems.filter((s) => s.draw && !s.ranked).map((s) => s.key).sort();
-  assert.deepEqual(wrappers, ['metask_jev_rain_12b']);
+  assert.deepEqual(wrappers, ['metask_jev_rain_12b', 'microsoft-decision-1-a2-20261012']);
   // 12 Oct 2026 listing correction: RYOTIDE-Qwen9 is a ranked native system; its stored v1.6.4 numbers are untouched.
   const ryotide = merged.systems.find((s) => s.key === 'ryotide_qwen9');
   const stored = (await readCohortRows()).rows.find((r) => r.row.key === 'ryotide_qwen9');

@@ -237,13 +237,13 @@ export function JevV15AllDataGrid({
 
   const renderBodyCell = (row: JevV15AllDataRow, column: JevV15AllDataColumn, stickyLeft: 'left-0' | 'left-12' | null) => {
     const value = row.values[column.id];
-    const sys = row.system as { repo?: string | null; addendum?: { id?: string } | null };
+    const sys = row.system as { canonical_system_key?: string; repo?: string | null; addendum?: { id?: string } | null };
     let content: ReactNode = formatCell(column, value);
     if (column.id === 'system') {
-      const url = row.notMeasured ? null : jevSourceUrl(row.key, sys.repo ?? null);
+      const url = row.notMeasured ? null : jevSourceUrl(sys.canonical_system_key ?? row.key, sys.repo ?? null);
       content = url
         ? <a href={url} target="_blank" rel="noopener noreferrer" className="block max-w-[11.5rem] truncate underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent sm:max-w-[15rem]" title={String(value ?? row.key)}>{value}</a>
-        : <Link href={jevSystemPath(row.key)} className="block max-w-[11.5rem] truncate underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent sm:max-w-[15rem]" title={String(value ?? row.key)}>{value}</Link>;
+        : <Link href={jevSystemPath(sys.canonical_system_key ?? row.key)} className="block max-w-[11.5rem] truncate underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent sm:max-w-[15rem]" title={String(value ?? row.key)}>{value}</Link>;
       content = <>{content}<JevArchitectureBadge row={{ ...row.system, key: row.key }} />{categoryView?.spokeExceptions?.[row.key] && <span className="bh-muted block whitespace-normal text-xs" data-bh-radar-spoke-exception={row.key}>{categoryView.spokeExceptions[row.key]}</span>}</>;
     } else if (column.id === 'rank' && value == null) {
       content = <span className="bh-muted" title={String(row.values.notRankedBecause ?? 'Not ranked')}>—</span>;

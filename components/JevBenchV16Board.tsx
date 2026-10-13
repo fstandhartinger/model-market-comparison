@@ -60,7 +60,7 @@ const A4_EXCEPTION = `Exception since v1.7.7: the ${A4_RANKED} API rows re-run o
 // v1.7: rows a board lists — its ranked systems plus, on the open-weights board, the Jev reference and the API offerings
 // (unranked there). API rows of server-rendered tables carry data-bh-jev-api-row and start hidden; the toggle reveals them.
 type ScopedRow = { ranked?: boolean; listing?: string; rank?: number | null; jevbench_score?: number | null };
-const listedRow = (s: ScopedRow) => !!s.ranked || s.listing === JEV_SCOPE_LISTING.reference || s.listing === JEV_SCOPE_LISTING.api;
+const listedRow = (s: ScopedRow) => !!s.ranked || s.listing === JEV_SCOPE_LISTING.reference || s.listing === JEV_SCOPE_LISTING.api || s.listing === JEV_PRELIMINARY_LISTING;
 const byBoard = (x: ScopedRow, y: ScopedRow) => (x.rank ?? 999) - (y.rank ?? 999) || (y.jevbench_score ?? 0) - (x.jevbench_score ?? 0);
 function apiRowProps(key: string, hiddenApi: ReadonlySet<string>) {
   return hiddenApi.has(key) ? { 'data-bh-jev-api-row': key, hidden: true } : {};
@@ -593,7 +593,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
   const measuredKeys = new Set(a.systems.map((s) => s.key));
   const extra = scope === 'api' ? apiChartExtras(carry, measuredKeys) : [];
   const preliminary = apiChartExtras(carry, measuredKeys).length > 0;
-  const ranked = scope === 'all' ? a.systems.filter((s) => s.ranked).sort(byBoard) : jevScopeDisplayOrder([...a.systems.filter(listedRow), ...(extra as typeof a.systems)]);
+  const ranked = scope === 'all' ? jevScopeDisplayOrder(a.systems.filter((s) => s.ranked || s.listing === JEV_PRELIMINARY_LISTING)) : jevScopeDisplayOrder([...a.systems.filter(listedRow), ...(extra as typeof a.systems)]);
   const hiddenApi: ReadonlySet<string> = new Set(scope === 'open' ? apiKeys : []);
   const chartSystems = ranked.map((s) => jevV15BoardSystem(s) as JevV14System);
   const allChartSystems = [...a.systems, ...(extra as typeof a.systems)].map((s) => jevV15BoardSystem(s) as JevV14System);
@@ -636,7 +636,7 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
       {(scope === 'open' || live) && <JevApiOfferingsToggle scope={scope} measured={a.systems.filter((s) => (s as { scope?: string; listing?: string }).scope === 'api' && (s as { listing?: string }).listing !== 'listed').length} />}
       {scope !== 'api' && capabilityCharts}
       {scope !== 'api' && <JevV15FilterPanel />}
-      {scope === 'api' && extra.length > 0 && <p className="mt-6 max-w-4xl text-sm" data-bh-jev-api-preliminary-note><span className="bh-thin-tag bh-partial-tag mr-1.5 align-middle">preliminary</span><b>Hatched rows are preliminary:</b> API offerings scored on the 300 public v1.6 items only (no sealed items, so no gap penalty; Calibration reads a few points lower on 300 items than on 1,500). They are not ranked and compare strictly only with the anchor rows in the public-set table; each row is replaced by its full result once it has been run on a fresh sealed set. <span className="bh-thin-tag bh-partial-tag mx-1 align-middle">pending</span>Greyed rows have no v1.6 figure yet; their v1.5 score is in the tooltip and in the <a className="text-accent underline" href="#jev-api-public-set">public-set table</a>.</p>}
+      {scope === 'api' && extra.length > 0 && <p className="mt-6 max-w-4xl text-sm" data-bh-jev-api-preliminary-note><span className="bh-thin-tag bh-partial-tag mr-1.5 align-middle">preliminary</span><b>Public-set hatched rows are preliminary:</b> API offerings scored on the 300 public v1.6 items only (no sealed items, so no gap penalty; Calibration reads a few points lower on 300 items than on 1,500). They are not ranked and compare strictly only with the anchor rows in the public-set table; each row is replaced by its full result once it has been run on a fresh sealed set. <span className="bh-thin-tag bh-partial-tag mx-1 align-middle">pending</span>Greyed rows have no v1.6 figure yet; their v1.5 score is in the tooltip and in the <a className="text-accent underline" href="#jev-api-public-set">public-set table</a>.</p>}
       <JevScoreChart revision={live ? 'board' : a.revision} rows={viewRows} rankedCount={a.n_ranked} newLabel={null} fairness={null} approvedNote={leader} tieNote={null} capabilityHref="#jev-capability" presets={jevV15SliderPresets(v15)} compactMobile scoreKind="v15" methodLink={{ href: '#jev16-method', label: 'Method notes ↓' }}
         scoreLabel={scopeLabel ? `JevBench Composite Score (${scopeLabel})` : undefined} headline={scope === 'api'} capabilityLabel={scope === 'api' ? 'Capability ↓' : undefined} />
       {scope === 'api' && capabilityCharts}
