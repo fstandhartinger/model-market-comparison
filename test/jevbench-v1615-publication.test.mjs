@@ -85,9 +85,9 @@ for (const [name, edit, error] of [
   ['the reason for not ranking removed', b => { delete b.artifact.systems.find(x => x.key === unranked).not_ranked_because; }, /stated reason/],
   ['a null rank filled in', b => { b.artifact.systems.find(x => x.key === unranked).ranks.A = 8; }, /null ranks/],
   ['an inherited point score moved', b => { b.artifact.systems.find(x => x.key === 'krino-2b').scores.A += 0.001; }, /earlier row point score|headline score/],
-  ['an inherited axis moved', b => { b.artifact.systems.find(x => x.key === 'krino-2b').axes.speed += 0.001; }, /earlier row axis/],
-  ['an inherited cost object rewritten', b => { b.artifact.systems.find(x => x.key === 'krino-2b').cost.usd_per_1000 *= 0.5; }, /earlier row cost object/],
-  ['an inherited rank moved', b => { b.artifact.systems.find(x => x.key === 'krino-2b').rank = 9; }, /earlier row rank|board/],
+  ['an inherited axis moved', b => { b.artifact.systems.find(x => x.key === 'krino-2b').axes.speed += 0.001; }, /earlier row axis|carried row differs/],
+  ['an inherited cost object rewritten', b => { b.artifact.systems.find(x => x.key === 'krino-2b').cost.usd_per_1000 *= 0.5; }, /earlier row cost object|carried row differs/],
+  ['an inherited rank moved', b => { b.artifact.systems.find(x => x.key === 'krino-2b').rank = 9; }, /earlier row rank|board|carried row differs/],
   ['the carried A2 row edited', b => { b.artifact.systems.find(x => x.key === 'microsoft-decision-1-a2-20261012').axes.intelligence += 0.01; }, /carried preliminary row unchanged/],
   ['a new row above the cost ceiling', b => { b.artifact.systems.find(x => x.key === ranked).cost.usd_per_1000 = 0.1; }, /cost above the published ceiling|provenance/],
   ['a new row priced as a tariff rather than an estimate', b => { b.artifact.systems.find(x => x.key === ranked).cost.kind = 'tariff'; }, /labelled cost estimate/],
@@ -109,6 +109,17 @@ for (const [name, edit, error] of [
   ['a predecessor other than v1.6.14', b => { b.previous.manifest.revision = 'v1.6.13'; }, /predecessor/],
   ['the predecessor manifest hash rewritten', b => { b.manifest.predecessor.publication_sha256 = 'b'.repeat(64); }, /predecessor binding/],
   ['an item-level field in the artifact', b => { b.artifact.systems.find(x => x.key === ranked).item_text = 'private'; }, /private\/item-level/],
+  // the mutations the v1.6.15 critic round found this loader accepting (finding F8)
+  ['an invented Capability on the unranked row', b => { b.artifact.systems.find(x => x.key === unranked).capability = 99; }, /capability is the mean/],
+  ['an invented Intelligence on the unranked row', b => { b.artifact.systems.find(x => x.key === unranked).axes.intelligence = 99; }, /capability is the mean|axis/],
+  ['a deleted Speed axis', b => { delete b.artifact.systems.find(x => x.key === ranked).axes.speed; }, /axis speed|does not reproduce from the axes/],
+  ['a deleted Cost axis', b => { delete b.artifact.systems.find(x => x.key === ranked).axes.cost; }, /axis cost|does not reproduce from the axes/],
+  ['the truncation disclosure removed from the unranked row', b => { const s = b.artifact.systems.find(x => x.key === unranked); s.endpoint_condition = s.endpoint_condition.replace(/truncat\w*/g, 'handles'); b.artifact.measurement_notes = b.artifact.measurement_notes.map(n => n.startsWith(`${unranked}: `) ? n.replace(/truncat\w*/g, 'handles') : n); }, /required disclosure/],
+  ['the shim disclosure removed from the phocinae row', b => { const s = b.artifact.systems.find(x => x.key === ranked); s.endpoint_condition = s.endpoint_condition.replace(/shim/g, 'server'); b.artifact.measurement_notes = b.artifact.measurement_notes.map(n => n.startsWith(`${ranked}: `) ? n.replace(/shim/g, 'server') : n); }, /required disclosure/],
+  ['a one-word reason for not ranking', b => { b.artifact.systems.find(x => x.key === unranked).not_ranked_because = '#18761'; }, /stated reason/],
+  ['a row note replaced by a stub', b => { b.artifact.measurement_notes = b.artifact.measurement_notes.map(n => n.startsWith(`${ranked}: `) ? `${ranked}: fine.` : n); }, /row note is too thin/],
+  ['a carried row changed outside its intervals', b => { b.artifact.systems.find(x => x.key === 'krino-2b').display = 'Krino 2B (renamed)'; }, /carried row differs|earlier row identity/],
+  ['the moved API-basis diagnostic left undisclosed', b => { b.artifact.measurement_notes = b.artifact.measurement_notes.map(n => n.replace('API-basis median diagnostic', 'api basis thing')); }, /API-basis diagnostic must be disclosed/],
 ]) test(`v1.6.15 rejects ${name}`, async () => {
   const b = await fixture();
   edit(b);
