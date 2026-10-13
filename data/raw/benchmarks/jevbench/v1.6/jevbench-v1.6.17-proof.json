@@ -30,7 +30,7 @@
   "wrapper_sha256": "8f4bc20a98df4d93348f26c2b1739534e045498186ab8bada53054e4e29eba54"
  },
  "abandoned_draw_note": null,
- "authority": "v1.6.10 through v1.6.14 authority unchanged; the v1.6.14 A2 measurement is carried through byte for byte and not rescored (its a2_supplement block is retained). NEW in v1.6.15: three self-hosted CPU rows measured at USD 0 on the evaluator's own machine under CoS deputy decisions #18209/#18211, which admit one re-measurement each of free CPU rows on this frozen draw at the existing per-1,000 cost cap with the frozen G_med, require an independent review and a cost binding before scoring, and attached an extra source-review and synthetic-smoke condition to julia-1 (both met, in that order, before the first sealed item). #18761: reflex-instinct-0.6b is accepted on Intelligence, Calibration and Cost only, its Speed figure is non-official, and it is therefore listed but not ranked here; and the scoped pricing correction behind julia-1's price line (adding its unlisted declared base to the frozen module's reviewed unlisted-base set) was authorised there, then re-frozen, hashed, proved behaviour-identical over every registry entry on this machine and independently reviewed before scoring. The release-level top five is identical in order on all four boards. NEW in v1.6.16: vllm-sr-d3, measured on the official v1.6 path (frozen draw input, pinned pod_driver_v16 and score_v16, frozen G_med) on one rented RTX PRO 6000 Blackwell 96 GB GPU because no single H100 was available, priced at the frozen Qwen/Qwen3.8-27B reference above the Jev-class cost cap. Its row changes a public top five (the Capability view with no cost cap and a 2x latency cap: d3 #1), which needs Florian's GO under rule 7; he gave it explicitly on 13 Oct 2026 at 15:12Z (card 17392). Carried rows keep every point estimate; nine carried Capability ranks and two carried composite ranks move by one place and are disclosed. NEW in v1.6.17 (amos-1-medium, metask_jev_rain_31b_trained_v3, pjev-2b, subq-snap-preview): the regular-queue rows were admitted by CoS deputy decisions #18209/#18211 (free CPU rows), #18975 (hosted-API exposure of this already-retired draw; subq-snap-preview measured without a cost axis and listed but NOT ranked, custodian #18951) and, for purplemist-mini-1.0 when present, #18974 (offline token count); the paid public fast-lane row metask_jev_rain_31b_trained_v3 (order 4d9fef10, draw use admitted by custodian #18945, one pod admitted by deputy #18972) publishes under the paid fast-lane exception and is disclosed as a re-submission of the weights of order 147c5e18. Hosted rows above the cost ceiling are ranked and disclosed, as vllm-sr-d3 was in v1.6.16 (Florian GO of 13 Oct 2026, card 17392, for that row). Carried rows keep every point estimate; carried ranks and intervals move and are disclosed. Manifest review stays PENDING in this build.",
+ "authority": "v1.6.10 through v1.6.14 authority unchanged; the v1.6.14 A2 measurement is carried through byte for byte and not rescored (its a2_supplement block is retained). NEW in v1.6.15: three self-hosted CPU rows measured at USD 0 on the evaluator's own machine under CoS deputy decisions #18209/#18211, which admit one re-measurement each of free CPU rows on this frozen draw at the existing per-1,000 cost cap with the frozen G_med, require an independent review and a cost binding before scoring, and attached an extra source-review and synthetic-smoke condition to julia-1 (both met, in that order, before the first sealed item). #18761: reflex-instinct-0.6b is accepted on Intelligence, Calibration and Cost only, its Speed figure is non-official, and it is therefore listed but not ranked here; and the scoped pricing correction behind julia-1's price line (adding its unlisted declared base to the frozen module's reviewed unlisted-base set) was authorised there, then re-frozen, hashed, proved behaviour-identical over every registry entry on this machine and independently reviewed before scoring. The release-level top five is identical in order on all four boards. NEW in v1.6.16: vllm-sr-d3, measured on the official v1.6 path (frozen draw input, pinned pod_driver_v16 and score_v16, frozen G_med) on one rented RTX PRO 6000 Blackwell 96 GB GPU because no single H100 was available, priced at the frozen Qwen/Qwen3.8-27B reference above the Jev-class cost cap. Its row changes a public top five (the Capability view with no cost cap and a 2x latency cap: d3 #1), which needs Florian's GO under rule 7; he gave it explicitly on 13 Oct 2026 at 15:12Z (card 17392). Carried rows keep every point estimate; nine carried Capability ranks and two carried composite ranks move by one place and are disclosed. NEW in v1.6.17 (amos-1-medium, metask_jev_rain_31b_trained_v3, pjev-2b, sage-1.4.0, subq-snap-preview): the regular-queue rows were admitted by CoS deputy decisions #18209/#18211 (free CPU rows), #18975 (hosted-API exposure of this already-retired draw; subq-snap-preview measured without a cost axis and listed but NOT ranked, custodian #18951) and, for purplemist-mini-1.0 when present, #18974 (offline token count); the paid public fast-lane row metask_jev_rain_31b_trained_v3 (order 4d9fef10, draw use admitted by custodian #18945, one pod admitted by deputy #18972) publishes under the paid fast-lane exception and is disclosed as a re-submission of the weights of order 147c5e18. Hosted rows above the cost ceiling are ranked and disclosed, as vllm-sr-d3 was in v1.6.16 (Florian GO of 13 Oct 2026, card 17392, for that row). Carried rows keep every point estimate; carried ranks and intervals move and are disclosed. Manifest review stays PENDING in this build.",
  "baseline_sha256": "aaf60b31eb7957781afdaebb7b27473dac2a674c1d6bb0182dfba2f6f9e3b8f4",
  "bootstrap": {
   "B": 1000,
@@ -148,6 +148,27 @@
    "under_cost_cap": true,
    "usd_per_1000": 0.01627352
   },
+  "sage-1.4.0": {
+   "answered_ok": 1483,
+   "cost_cap_ratio": null,
+   "endpoint_kind": "api",
+   "input_tokens": 665989,
+   "original_raw_sha256": "a28622b4f3a6129648d4430a888a6f58bfdecdce4bd8a0107f64f94f997bcadc",
+   "output_tokens": 0,
+   "paid_fast_lane": false,
+   "ranked": false,
+   "raw_sha256": "e7a2733a8f6b41729be92076dd5f067c442ef5f917330a2941263d095821763c",
+   "rows": 1500,
+   "status_counts": {
+    "200": 1483,
+    "400": 15,
+    "504": 2
+   },
+   "token_source": "provider usage",
+   "treatment": "listed_unpriced",
+   "under_cost_cap": null,
+   "usd_per_1000": null
+  },
   "subq-snap-preview": {
    "answered_ok": 1500,
    "cost_cap_ratio": null,
@@ -184,13 +205,14 @@
   "phocinae-largha-150m-v1": "cf24b4c0b9b2e117334d03931eb292b64f5b58a8476b7ed4e1651a049f3cc8ef",
   "pjev-2b": "963d0e0274a8423a8e7b42777636de6de7ba07354e5547f7bc1680a640fe12cb",
   "reflex-instinct-0.6b": "64e81d752a550a3d36f44f5596368c810b2e29f37e73c1df0820f669cdef0478",
+  "sage-1.4.0": "e7a2733a8f6b41729be92076dd5f067c442ef5f917330a2941263d095821763c",
   "standard_one_3b_sh": "39203a7a3bd7ccb0f73d8e96ec70c20897ccea78c42d8cb071a5249f8754c54d",
   "subq-snap-preview": "c701361496e6d374bac4bffddec697c686a3b505e42b5dcd74d20bf788d31952",
   "torchcast-decision-4b-v1.1": "89e6b22e66ae3e706404a3fb4b274de82fe98a9bb83612c865f45805d036ca93",
   "uniphore-4b-decider": "4a175484c796fda013a4e8dff5d1b1c5040fc160f556fec0de7a3ed63ad9f285",
   "vllm-sr-d3": "460ba4d8d52ae5eb404836416add5623f862e6b811bf24e978770da6ab3a924e"
  },
- "registry_sha256": "68bbce43aecbf2e7c5522a4c5fe360b759a612877d9eb30c1b5661b7ddde21d9",
+ "registry_sha256": "e55f995141bc3eac1a5be00a452b4adf28b89576d3126d7eba3f1f6838774a60",
  "revision": "v1.6.17",
  "schema_version": 1,
  "scorer_sources_sha256": {
@@ -515,6 +537,37 @@
    "source_review_sha256": null,
    "status": "complete",
    "usd_per_1000": 0.006301273333333334
+  },
+  {
+   "answered_ok": 1483,
+   "axes": {
+    "calibration": 83.66470689834914,
+    "cost": null,
+    "intelligence": 65.88206323551285,
+    "speed": 68.80003106294234
+   },
+   "capability": 74.77338506693098,
+   "composite_A": null,
+   "cost_kind": "unpriced",
+   "display": "Sage 1.4 (Levanto Labs)",
+   "key": "sage-1.4.0",
+   "measured_by": "jevbench-add-requests-20260919 (release lane; hosted API run, regular-queue request 5181ADBA, CoS deputy decision #18975, item custodian #18951)",
+   "model_pin": "hosted-api:sage.levanto.ai/v1/systemone#levanto-sage-v1.4",
+   "noul_decisive": {
+    "acc_among_decisive": 0.9058823529411765,
+    "decisive": 340,
+    "decisive_rate": 0.9115281501340483,
+    "n": 375,
+    "supported": true,
+    "valid": 373
+   },
+   "rank": null,
+   "raw_sha256": "e7a2733a8f6b41729be92076dd5f067c442ef5f917330a2941263d095821763c",
+   "rows": 1500,
+   "source_review_note": "Vendor-hosted API: no vendor code ran locally; model id read from the vendor's own /v1/models; full-set exposure gate logged all 1,200 sealed items to provider levanto first",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": null
   },
   {
    "answered_ok": 1485,

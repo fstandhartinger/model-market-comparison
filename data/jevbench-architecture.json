@@ -5497,6 +5497,21 @@
             "fact": "Submission declares base Qwen/Qwen3.5-9B and open weights at mukaddamzaid/amos-1-medium (Apache-2.0); the measured row is the vendor-hosted api.amos.scira.ai endpoint, whose deployed weights were not independently inspected."
           }
         ]
+      },
+      "sage-1.4.0": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.17-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key sage-1.4.0 records a hosted API with no public evaluated weights."
+          }
+        ]
       }
     },
     "imagejevbench": {

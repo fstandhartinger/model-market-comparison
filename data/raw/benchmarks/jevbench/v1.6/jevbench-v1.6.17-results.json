@@ -82,7 +82,7 @@
   "g_med_fixed": true
  },
  "headline": "A",
- "label": "JevBench v1.6.17 · 4 systems join the eleven full-draw rows of v1.6.16 (3 ranked, 1 listed but not ranked); the earlier listed-not-ranked row and the unranked A2 measurement are carried",
+ "label": "JevBench v1.6.17 · 5 systems join the eleven full-draw rows of v1.6.16 (3 ranked, 2 listed but not ranked); the earlier listed-not-ranked row and the unranked A2 measurement are carried",
  "measurement_notes": [
   "Refusals, errors and context-bound failures stay in the full 1,500 denominator. Every row kept its own package, model, runtime and context settings; nothing was re-run for presentation.",
   "NOT DIRECTLY COMPARABLE WITH THE LIVE v1.6.1 BOARD OR WITH THE EARLIER FRESH DRAWS. This release is a different draw with its own small-field median: G_med = 9.839526770355711, frozen from the four v1.6.10 members (attest-31B-v1.0 does not move it), against 2.573387642438244 on the live field. G_med_flag_gt10 is false. The gap penalty is max(0, 1 - max(0, (gap - G_med) - 8)/100), so this field's threshold is G_med + 8 = 17.84. On the merged live board this draw is placed with offset 0 while its anchor runs are pending, exactly like the earlier fresh draws. Measured, not estimated: Applying the same penalty formula to the stored base and gap at the live field's median 2.573387642438244, attest-31B-v1.0 Intelligence 65.238 would be 65.238 (gap -0.628); the original four rows are as stated in the v1.6.10 notes: standard_one_3b_sh Intelligence 32.786 would be 31.294 and metask_jev_rain_12b_trained 67.826 would be 67.587; krino-2b and metask_jev_rain_31b_trained are unchanged.",
@@ -107,12 +107,13 @@
   "Cost on vllm-sr-d3, and the scope of the cost note above: that note's \"every row is under the published v1.6 cost ceiling of USD 0.0646 per 1,000 decisions\" is true of the ten rows of v1.6.15 and is NOT true of vllm-sr-d3. d3 is priced as an ESTIMATE at the frozen Qwen/Qwen3.8-27B list reference of the published v1.6 field (USD 0.42 per 1M input and USD 3.00 per 1M output, the same pair the published Perplexity Decider v1.1 27B and Torchcast-Decision-27B rows carry) times its own measured tokens on the full 1,500-row basis: 1,951,205 input tokens and 0 output tokens, USD 0.5463374 per 1,000 decisions, about 8.46x that ceiling. It is not a bill and not a quote from the author or any host. Consequences: its Cost axis is 17.876, below 50, so the squared cost gate of the composite applies and its composite A is only 5.570 (rank 8 of 10 here) despite the highest Capability of this draw; and on the merged live board it is far above the official Jev-class cost cap, so it is NOT on the default (cost-capped) Capability ranking.",
   "Board effect, and why this release needed an explicit GO. On the merged live board, with the default caps, the top five of composites A, B and C and of the cost-capped Capability ranking are unchanged on the mixed board, on the open-weights board and on the API board (vllm-sr-d3 is outside the cost cap and its composite is far down). The views that change are Capability views with the cost cap switched off: with the latency cap at 2x and open-weights and API models mixed, vllm-sr-d3 becomes #1 on Capability, 82.966 against Perplexity Decider v1.1 27B at 82.792; on the open-weights board it is #1 with the cost cap off whether the latency cap is 2x or off; on the mixed board with both caps off it is #6 and that top five is unchanged. The #1 is not a resolved order: d3's 95% interval here is [78.93, 84.44] and Perplexity Decider's is [79.18, 84.71], they were measured on different draws (this draw sits on the merged board with offset 0 while its anchor runs are pending), and d3's Speed was timed on different hardware (see its note). A change to a public top five needs Florian's GO; he gave it on 13 Oct 2026 at 15:12Z (card 17392).",
   "vllm-sr-d3: Model vllm-sr/d3 at revision 5ce995dfb7ff07da00fec4211eb7f0560f52eaf8 (vLLM Semantic Router team), a fine-tune of the base Qwen/Qwen3.8-27B; its model card states 26.09B parameters including a 0.46B vision encoder. Weights Apache-2.0. The training data is not disclosed by the author, so the weight licence alone says nothing about the provenance of the training data. 1,500 attempted, 1,500 answered (all HTTP 200), 0 errors, 0 missing; the author's server sets no input-length cap, so it also answered the draw's 15 longest items that several rows of this draw refuse. Determinism check: 50 items re-asked, 50/50 bit-identical probabilities, 0 argmax flips. HARDWARE DIFFERS FROM THIS DRAW'S OTHER GPU ROWS AND FROM PERPLEXITY DECIDER AND TORCHCAST-27B: measured offline on one rented NVIDIA RTX PRO 6000 Blackwell Server Edition 96 GB GPU (Verda), while this draw's other GPU rows, Perplexity Decider and Torchcast-Decision-27B were timed on a single H100 80 GB, because no single H100 was available; the Speed axis (87.369; p50 0.1087 s raw, 0.3675 s adjusted, over the scorer's 124 open standard and judge items) therefore rests on different hardware, and the larger 96 GB memory may also matter for the longest inputs. The plain CUDA/PyTorch path of the author's unmodified d3_server.py was measured; the author's AMD ROCm fast path does not apply on CUDA. The own-server adjustment x2 + 0.15 s is an assumption, not a measurement. Cost is an ESTIMATE, not a bill: the frozen Qwen3.8-27B list reference (the same basis as Perplexity Decider and Torchcast-Decision-27B) times d3's own measured tokens, USD 0.5463374 per 1,000 decisions, far above the official Jev-class cost cap, so d3 is NOT on the default (capped) Capability ranking and its composite is small because of the squared cost gate. Source review of the pinned code before the run: PASS (no network on the text path, no benchmark-specific branches, no secret reads).",
-  "v1.6.17 ADDS 4 ROWS (Amos 1 medium (Scira) (amos-1-medium), metask-jev-rain-31B-trained service v3 (metask_jev_rain_31b_trained_v3), pjev-2b, SubQ Snap (preview, SubQ) (subq-snap-preview)) to the eleven full-draw rows of v1.6.16 on the same draw, under the same rule as the earlier same-draw additions: the field median stays the frozen v1.6.10 value, so every carried row keeps identical point scores, axes, capability, cost and speed objects, and the listed-not-ranked reflex-instinct-0.6b and the unranked A2 measurement keep their wording. What moved on carried rows, counted exactly. RANKS: rows ranked in this release - amos-1-medium, metask_jev_rain_31b_trained_v3, pjev-2b - sit above some carried rows, so ranks recompute over the new roster and each carried rank moves only by the number of newly ranked rows above it: attest-31b-v1.0 capability 4 -> 5, julia-1 A 10 -> 13; B 10 -> 13; C 10 -> 13; capability 10 -> 13, krino-2b A 7 -> 10; B 7 -> 10; C 7 -> 10; capability 8 -> 11, metask_jev_rain_12b_trained capability 3 -> 4, metask_jev_rain_31b_trained capability 2 -> 3, phocinae-largha-150m-v1 A 9 -> 12; B 9 -> 12; C 9 -> 12; capability 9 -> 12, standard_one_3b_sh A 6 -> 7; B 6 -> 7; C 6 -> 7; capability 7 -> 10, torchcast-decision-4b-v1.1 C 4 -> 5; capability 5 -> 6, uniphore-4b-decider A 5 -> 6; B 5 -> 6; C 5 -> 6; capability 6 -> 9, vllm-sr-d3 A 8 -> 11; B 8 -> 11; C 8 -> 11. Rows listed but not ranked take no place in any order. CONFIDENCE INTERVALS: unlike v1.6.16, new keys sort into the middle of the key-sorted roster, and the scorer seeds each row's bootstrap with the shared seed 16 plus the row's position in that roster (each row has its own resample; the v1.6.15 note above that says the scorer draws one paired resample is corrected by the v1.6.16 note), so a carried row whose position changed gets a different interval while no point estimate moves. Carried rows whose intervals moved: attest-31b-v1.0, julia-1, krino-2b, metask_jev_rain_12b_trained, metask_jev_rain_31b_trained, phocinae-largha-150m-v1, reflex-instinct-0.6b, standard_one_3b_sh, torchcast-decision-4b-v1.1, uniphore-4b-decider, vllm-sr-d3. DIAGNOSTICS: the API-basis median diagnostic is computed over the ranked field, so it moved from 9.40342052601045 to 8.913905145687458; that moves the stored A-basis diagnostic (the row field v16.raw_on_A) of exactly the carried rows named here: standard_one_3b_sh: intelligence 29.2660 -> 29.1183, capability 53.1199 -> 53.0461; and the release-level equating-offset diagnostic moved from I 0.2288 / C 1.2340 to I 0.2288 / C 1.4616. Neither is part of any score, rank or axis on this release: the hosted-API rows scored in this invocation are full-set rows and are not equated, and the carried A2 measurement keeps its own A2 equating and is not rescored. reflex-instinct-0.6b stays LISTED BUT NOT RANKED under #18761 and the unranked A2 measurement of v1.6.14 is carried; neither is changed.",
+  "v1.6.17 ADDS 5 ROWS (Amos 1 medium (Scira) (amos-1-medium), metask-jev-rain-31B-trained service v3 (metask_jev_rain_31b_trained_v3), pjev-2b, Sage 1.4 (Levanto Labs) (sage-1.4.0), SubQ Snap (preview, SubQ) (subq-snap-preview)) to the eleven full-draw rows of v1.6.16 on the same draw, under the same rule as the earlier same-draw additions: the field median stays the frozen v1.6.10 value, so every carried row keeps identical point scores, axes, capability, cost and speed objects, and the listed-not-ranked reflex-instinct-0.6b and the unranked A2 measurement keep their wording. What moved on carried rows, counted exactly. RANKS: rows ranked in this release - amos-1-medium, metask_jev_rain_31b_trained_v3, pjev-2b - sit above some carried rows, so ranks recompute over the new roster and each carried rank moves only by the number of newly ranked rows above it: attest-31b-v1.0 capability 4 -> 5, julia-1 A 10 -> 13; B 10 -> 13; C 10 -> 13; capability 10 -> 13, krino-2b A 7 -> 10; B 7 -> 10; C 7 -> 10; capability 8 -> 11, metask_jev_rain_12b_trained capability 3 -> 4, metask_jev_rain_31b_trained capability 2 -> 3, phocinae-largha-150m-v1 A 9 -> 12; B 9 -> 12; C 9 -> 12; capability 9 -> 12, standard_one_3b_sh A 6 -> 7; B 6 -> 7; C 6 -> 7; capability 7 -> 10, torchcast-decision-4b-v1.1 C 4 -> 5; capability 5 -> 6, uniphore-4b-decider A 5 -> 6; B 5 -> 6; C 5 -> 6; capability 6 -> 9, vllm-sr-d3 A 8 -> 11; B 8 -> 11; C 8 -> 11. Rows listed but not ranked take no place in any order. CONFIDENCE INTERVALS: unlike v1.6.16, new keys sort into the middle of the key-sorted roster, and the scorer seeds each row's bootstrap with the shared seed 16 plus the row's position in that roster (each row has its own resample; the v1.6.15 note above that says the scorer draws one paired resample is corrected by the v1.6.16 note), so a carried row whose position changed gets a different interval while no point estimate moves. Carried rows whose intervals moved: attest-31b-v1.0, julia-1, krino-2b, metask_jev_rain_12b_trained, metask_jev_rain_31b_trained, phocinae-largha-150m-v1, reflex-instinct-0.6b, standard_one_3b_sh, torchcast-decision-4b-v1.1, uniphore-4b-decider, vllm-sr-d3. DIAGNOSTICS: the API-basis median diagnostic is computed over the ranked field, so it moved from 9.40342052601045 to 8.913905145687458; that moves the stored A-basis diagnostic (the row field v16.raw_on_A) of exactly the carried rows named here: standard_one_3b_sh: intelligence 29.2660 -> 29.1183, capability 53.1199 -> 53.0461; and the release-level equating-offset diagnostic moved from I 0.2288 / C 1.2340 to I 0.2288 / C 1.4616. Neither is part of any score, rank or axis on this release: the hosted-API rows scored in this invocation are full-set rows and are not equated, and the carried A2 measurement keeps its own A2 equating and is not rescored. reflex-instinct-0.6b stays LISTED BUT NOT RANKED under #18761 and the unranked A2 measurement of v1.6.14 is carried; neither is changed.",
   "Cost on amos-1-medium, and the scope of the cost notes above: the inherited note's \"every row is under the published v1.6 cost ceiling of USD 0.0646 per 1,000 decisions\" is NOT true of amos-1-medium (cost ceiling exceeded, as it was not true of vllm-sr-d3 in v1.6.16). Amos 1 medium (Scira) is priced as an ESTIMATE at its frozen base-model market reference times the provider-reported tokens on the full 1,500-row basis: 1,938,726 input tokens and 0 output tokens, USD 0.1292484 per 1,000 decisions, 2.00x that ceiling. It is not a bill: the endpoint is free and keyless. Its Cost axis is 36.657, below 50, so the squared cost gate of the composite applies (composite A 16.594, rank 8 of 13), and on the merged live board it is above the official Jev-class cost cap, so it is NOT on the default (cost-capped) Capability ranking.",
-  "Board effect, and the basis for publishing it. Compared on the merged live board (the v1.6.1 feed plus the published fresh-draw cohort rows) before and after this release, over the mixed, open-weights and API boards: the top five of composites A, B and C is unchanged on all three boards; unchanged top fives also: Capability with no cost and no latency cap; Capability with the cost cap off and latency 2x (Florian's settings). The top five changes in: the mixed board (open-weights and API together): Capability with the official cost and latency caps (the default ranking) - before quyet-1-0-large, jeff_1_0_large, decisio-gemma-4-31b-v080, metask-jev-rain-31B-trained, sage-1.3.0; after quyet-1-0-large, jeff_1_0_large, metask-jev-rain-31B-trained service v3, decisio-gemma-4-31b-v080, metask-jev-rain-31B-trained (metask-jev-rain-31B-trained service v3 enters at #3) | the mixed board (open-weights and API together): Capability with the official cost cap and no latency cap - before quyet-1-0-large, jeff_1_0_large, decisio-gemma-4-31b-v080, wity-1, metask-jev-rain-31B-trained; after quyet-1-0-large, jeff_1_0_large, metask-jev-rain-31B-trained service v3, decisio-gemma-4-31b-v080, wity-1 (metask-jev-rain-31B-trained service v3 enters at #3) | the open-weights board: Capability with the official cost and latency caps (the default ranking); the open-weights board: Capability with the official cost cap and no latency cap - before quyet-1-0-large, jeff_1_0_large, decisio-gemma-4-31b-v080, metask-jev-rain-31B-trained, metask-jev-rain-12B-trained; after quyet-1-0-large, jeff_1_0_large, metask-jev-rain-31B-trained service v3, decisio-gemma-4-31b-v080, metask-jev-rain-31B-trained (metask-jev-rain-31B-trained service v3 enters at #3). The only added row that enters any top five is metask-jev-rain-31B-trained service v3 - a paid fast-lane row (order 4d9fef10). The other added rows (Amos 1 medium (Scira), pjev-2b, SubQ Snap (preview, SubQ)) appear in no top five. The cause is the paid fast-lane order 4d9fef10 (a re-submission of the weights of order 147c5e18, disclosed in its row note): a paid public fast-lane row publishes automatically under the paid exception even when it changes a top five, exactly as the two paid metask rows did in v1.6.10 (whose release authority records the same top-five change); the change is disclosed here and in the proof authority.",
+  "Board effect, and the basis for publishing it. Compared on the merged live board (the v1.6.1 feed plus the published fresh-draw cohort rows) before and after this release, over the mixed, open-weights and API boards: the top five of composites A, B and C is unchanged on all three boards; unchanged top fives also: Capability with no cost and no latency cap; Capability with the cost cap off and latency 2x (Florian's settings). The top five changes in: the mixed board (open-weights and API together): Capability with the official cost and latency caps (the default ranking) - before quyet-1-0-large, jeff_1_0_large, decisio-gemma-4-31b-v080, metask-jev-rain-31B-trained, sage-1.3.0; after quyet-1-0-large, jeff_1_0_large, metask-jev-rain-31B-trained service v3, decisio-gemma-4-31b-v080, metask-jev-rain-31B-trained (metask-jev-rain-31B-trained service v3 enters at #3) | the mixed board (open-weights and API together): Capability with the official cost cap and no latency cap - before quyet-1-0-large, jeff_1_0_large, decisio-gemma-4-31b-v080, wity-1, metask-jev-rain-31B-trained; after quyet-1-0-large, jeff_1_0_large, metask-jev-rain-31B-trained service v3, decisio-gemma-4-31b-v080, wity-1 (metask-jev-rain-31B-trained service v3 enters at #3) | the open-weights board: Capability with the official cost and latency caps (the default ranking); the open-weights board: Capability with the official cost cap and no latency cap - before quyet-1-0-large, jeff_1_0_large, decisio-gemma-4-31b-v080, metask-jev-rain-31B-trained, metask-jev-rain-12B-trained; after quyet-1-0-large, jeff_1_0_large, metask-jev-rain-31B-trained service v3, decisio-gemma-4-31b-v080, metask-jev-rain-31B-trained (metask-jev-rain-31B-trained service v3 enters at #3). The only added row that enters any top five is metask-jev-rain-31B-trained service v3 - a paid fast-lane row (order 4d9fef10). The other added rows (Amos 1 medium (Scira), pjev-2b, Sage 1.4 (Levanto Labs), SubQ Snap (preview, SubQ)) appear in no top five. The cause is the paid fast-lane order 4d9fef10 (a re-submission of the weights of order 147c5e18, disclosed in its row note): a paid public fast-lane row publishes automatically under the paid exception even when it changes a top five, exactly as the two paid metask rows did in v1.6.10 (whose release authority records the same top-five change); the change is disclosed here and in the proof authority.",
   "amos-1-medium: 1,500 of 1,500 attempted answered (HTTP 200: 1,500); 0 not answered. Hosted API: the row is the vendor-hosted api.amos.scira.ai endpoint, not self-hosted weights - open weights exist (mukaddamzaid/amos-1-*), but this measurement is of the endpoint, whose deployed weights were not independently inspected, and the vendor reports its token usage. Free, keyless, one request per second for the documented 60 requests/minute; latency measured from Sandy (Germany) on the official per-item latency subset without API adjustment: p50 0.4435 s, p95 0.5068 s. All 1,200 sealed items were logged to provider scira before the first request. CUSTODY CONDITION: after this hosted exposure, no self-hosted measurement of Amos weights on this draw may be shown as a clean measurement. Cost is an ESTIMATE: the exact frozen base-model market reference times the provider-reported 1,938,726 input tokens (output 0), USD 0.129248 per 1,000 decisions, 2.00x the official cost cap, disclosed in the cost notes above; it is not a bill. Speed figures are the published method's percentiles over this draw's open standard and judge items: p50 raw 0.4435 s, p95 raw 0.5068 s.",
   "metask_jev_rain_31b_trained_v3: 1,500 of 1,500 attempted answered (HTTP 200: 1,500); 0 not answered. PAID PUBLIC FAST-LANE ORDER 4d9fef10, published under the paid exception. RE-SUBMISSION, DISCLOSED: the same LoRA weights as the published metask_jev_rain_31b_trained row (order 147c5e18, v1.6.10) with a changed service/ layer (for example its yes/no constant); those changes may have been tuned on that row's published v1.6.10 aggregates (custodian #18945). Both rows are shown, each with its own numbers; the earlier row is carried unchanged, and no third same-weights row is admitted on this draw. HARDWARE DIFFERS FROM THE EARLIER ROW: this service v3 was measured on an evaluator-owned Lium RTX PRO 6000 96 GB pod (its reviewed recipe needs 96 GB), in an offline read-only container (--network none, verified by docker inspect before the input upload), while the earlier metask rows of this draw were timed on an H100 80GB, so the Speed axis (84.666; p50 raw 0.1808 s, adjusted 0.5116 s under the x2 + 0.15 s assumption) rests on different hardware. The service reports generated output tokens (840,049 input / 17,397 output). Cost is the v1.5-M2 base-model reference for the exact base google/gemma-4-31B-it (OpenRouter list price USD 0.09/M input, 0.34/M output, snapshot 2026-10-13T12:10:25Z) times the service's own measured usage: USD 0.054346 per 1,000 decisions, under the cost ceiling, estimated and not charged. Weights file shas: model 1b9b1d62..., adapter 2b956899..., code tree 6a1234ee...",
   "pjev-2b: 1,485 of 1,500 attempted answered (HTTP 200: 1,485; HTTP 422: 15); 15 not answered. The 15 misses are HTTP 422 refusals by the author's own letter_adapter.py, which raises rather than truncating a prompt above its 16,000-token contract; they are EXACTLY the same 15 items (106,804-122,936 characters) that uniphore-4b-decider (HTTP 422), attest-31b-v1.0 (HTTP 500) and standard_one_3b_sh (HTTP 422) failed on in the published v1.6.16 runs, verified set-equal, and julia-1's 17 refusals are a strict superset. Correction of an earlier entry text: torchcast-decision-4b-v1.1 and both metask_jev_rain rows answered all 1,500 and are NOT among the rows that refused them. The totals (1,485 answered, 15 HTTP 422, 0 other failures) were pre-registered before the run and came back exact; all answered items native. SPLIT WINDOW, DISCLOSED: the row was measured across four sittings under different host load on the evaluator's shared CPU (09:07-13:16Z until a pressure guard stopped it at load 57; two short attempts stopped by swap another job had left on the host; and 18:36-19:41Z to the end; one-minute load 6.96-54.44, mean 15.09 over 323 samples), resumed by task id so no item was answered twice. Its Speed is therefore a loaded-shared-CPU figure with the same kind of interference as reflex-instinct-0.6b, and a declared lower bound against the author's own H100 reference of 20-62 ms; the standard self-hosted x2 + 0.15 s adjustment (an assumption) is applied on top and the raw p50 10.06 s / p95 30.19 s are kept. Weights run in float32 (a strict upcast of the stored bfloat16, via the pre-registered PJEV_DTYPE one-line change that defaults to the author's bfloat16); serve.py and decision_core.py are byte-identical to the author's. Cost is a size-class ESTIMATE on the frozen DeepInfra 2-4B line (USD 0.03/M input, 0.0/M output; the same treatment the board gives decision-2b on the same MiniCPM5-2B base), 813,676 input tokens, USD 0.016274 per 1,000 decisions, not a bill. Speed figures are the published method's percentiles over this draw's open standard and judge items: p50 raw 10.0633 s, p95 raw 30.1948 s.",
+  "sage-1.4.0: 1,483 of 1,500 attempted answered (HTTP 200: 1,483; HTTP 400: 15; HTTP 504: 2); 17 not answered. Hosted API (Levanto Labs), measured from Sandy (Germany) without API adjustment; native probabilities on all three question types; all 1,200 sealed items were logged to provider levanto before the first request; 665,989 input tokens and 0 output tokens. Treatment of its cost axis: UNPRICED under the frozen pricing_v15 path (sha256 dae86740...): proprietary hosted model with no base-model reference, and levanto-sage-v1.4 is in neither AGE_QUALIFIED_API nor LAUNCH_LIST_PRICE_API. sage-1.3.0's published row carries Levanto's list tariff (USD 0.05/M input, USD 10/M output), set before these sets bound new rows; it is not carried over here. Speed figures are the published method's percentiles over this draw's open standard and judge items: p50 raw 1.7411 s, p95 raw 7.5714 s.",
   "subq-snap-preview: 1,500 of 1,500 attempted answered (HTTP 200: 1,500); 0 not answered. NOT RANKED, and here is exactly why: CoS deputy decision #18975 accepts the measurement but gives the row no cost axis until a frozen-pricing change for its preview tariff (USD 0.05/M input, output free) passes re-freeze, unchanged-row proof and independent review; its model is proprietary with no base-model reference and the days-old preview tariff is in neither frozen tariff set, so under the frozen pricing path the cost is unpriced. Without a cost axis there is no composite, so the row shows Intelligence 72.250, Calibration 90.697 and Capability 81.474 (and Speed 86.405) and carries no rank, no composite and no place in the Capability ranking (the same conservative reading applied to reflex-instinct-0.6b under #18761). Where to look: it appears in the \"All data\" table and its detail view only. Hosted API, measured from Sandy (Germany) without API adjustment; 1,943,705 input tokens and 0 output tokens (nothing generated). SubQ retains API inputs indefinitely by default; acceptable only because every sealed item of this draw was already retired, and all 1,200 sealed items were logged to the provider before the first request. Hosting implementation and deployed weights were not independently inspected. Speed figures are the published method's percentiles over this draw's open standard and judge items: p50 raw 0.4656 s, p95 raw 0.4915 s."
  ],
  "n_ranked": 13,
@@ -153,7 +154,7 @@
  "protocol": "jevbench::v1.6",
  "provisional": false,
  "revision": "v1.6.17",
- "roster_count": 16,
+ "roster_count": 17,
  "run_kind": "regular-queue",
  "sample": {
   "open": 300,
@@ -162,8 +163,8 @@
   "total": 1500
  },
  "sealed_share_of_intelligence": 0.5,
- "source_note": "16 rows on the fresh regular draw v1.6-regular-20261012 (seeded rotation-ledger draw of 1,200 sealed items + the 300-item epoch public set, drawn 2026-10-12T01:32:59Z): the eleven full-draw rows of v1.6.16 (ten ranked, reflex-instinct-0.6b listed but not ranked under #18761), 4 rows added in v1.6.17 (amos-1-medium, metask_jev_rain_31b_trained_v3, pjev-2b, subq-snap-preview), and the unranked A2 measurement carried from v1.6.14 unchanged. ONE score_v16.py invocation over the 15 full-draw rows, unmodified frozen path (sha256 02132271...), JEV_NOUL_METHOD=O1S, B=1000, seed 16, --g-med-fixed 9.839526770355711, the median frozen at v1.6.10, so every carried row keeps every point score. The A2 row is not rescored here. Hosted-API rows were run through the unchanged run_api_full_v161.py after a full-set exposure gate; self-hosted rows through the official v1.6 self-hosted path on the frozen input (sha256 dfd36720...). The paid metask service-v3 row is published under the paid fast-lane exception (order 4d9fef10).",
- "source_sha256": "d70b2b94d1952f60c0d26f644d16300795c246d5d5b98330df4d82be8163b4cf",
+ "source_note": "17 rows on the fresh regular draw v1.6-regular-20261012 (seeded rotation-ledger draw of 1,200 sealed items + the 300-item epoch public set, drawn 2026-10-12T01:32:59Z): the eleven full-draw rows of v1.6.16 (ten ranked, reflex-instinct-0.6b listed but not ranked under #18761), 5 rows added in v1.6.17 (amos-1-medium, metask_jev_rain_31b_trained_v3, pjev-2b, sage-1.4.0, subq-snap-preview), and the unranked A2 measurement carried from v1.6.14 unchanged. ONE score_v16.py invocation over the 16 full-draw rows, unmodified frozen path (sha256 02132271...), JEV_NOUL_METHOD=O1S, B=1000, seed 16, --g-med-fixed 9.839526770355711, the median frozen at v1.6.10, so every carried row keeps every point score. The A2 row is not rescored here. Hosted-API rows were run through the unchanged run_api_full_v161.py after a full-set exposure gate; self-hosted rows through the official v1.6 self-hosted path on the frozen input (sha256 dfd36720...). The paid metask service-v3 row is published under the paid fast-lane exception (order 4d9fef10).",
+ "source_sha256": "6684c497d8030e2ccd316232b1f6735d00a305eb1b4ffd28484d1cfa547f4fae",
  "status": "published",
  "systems": [
   {
@@ -12124,7 +12125,7 @@
     "usd_per_1000": 0.01627352
    },
    "display": "pjev-2b (Kailune AI, frozen MiniCPM5-2B + merged LoRA r64, letter-logit readout, T=1 stub)",
-   "endpoint_condition": "Sandy, the evaluator's own shared CPU host (AMD Zen 2, 12 threads, AVX2, no AVX-512 and no AMX), NOT a dedicated machine: the 1-minute load average was logged every 60 s into logs/CONDITIONS-pjev-2b.jsonl and is reported with the row. This is the evaluator-controlled local deployment the submission asks for ('please run it on your own machine, one request at a time. We do not operate an endpoint for it and do not want held-out or sealed items sent to us'). The author's own serve.py / decision_core.py / letter_adapter.py, source-reviewed at the pinned revision in run 36 before anything was executed, run as `python serve.py --model <pinned snapshot> --device cpu --host 127.0.0.1 --port 11474` at their own defaults (--max-tokens 16000), OMP_NUM_THREADS=10, inside a loopback-only network namespace with an outbound probe that failed as required, offline (HF_HUB_OFFLINE=1, TRANSFORMERS_OFFLINE=1) and credential-free. DEVIATION, DISCLOSED, AND THE ONLY ONE: letter_adapter.load() hard-codes dtype=torch.bfloat16; run 36's pre-registered one-line change reads the dtype from PJEV_DTYPE and DEFAULTS TO THE AUTHOR'S bfloat16, so without that variable the file behaves exactly as published (diff r36/receipts/PJEV-DTYPE-PATCH-R36.diff, patched sha256 6d15788caef5457cfd4690c3fe576d291217276416ed2bbf3bc0312db5e44390). float32 is a strict UPCAST of the stored bfloat16 weights - exactly representable, never lossy - so it cannot flatter accuracy or calibration; it can only cost Speed. serve.py and decision_core.py are byte-identical to the author's. letter_adapter.dist() RAISES rather than truncating when a prompt exceeds the author's own 16,000-token contract, and serve.py maps that to HTTP 422, so the draw's 15 items of 106,804-122,936 characters are honest refusals, not silent truncations - the same 15 items that the Uniphore-4B-Decider (HTTP 422), Attest-31B (HTTP 500) and Standard One 3B SH (HTTP 422) rows of this draw also failed on - verified this run against the published v1.6.16 raw runs, where the three failure sets are identical and julia-1's 17 refusals are a strict superset of them. Torchcast-Decision-4B-v1.1 and both MeTask-Rain rows of this draw answered all 1,500, so run 107's entry text naming them as peers was wrong and is corrected here. Speed is a loaded-shared-CPU float32-on-AVX2 figure and a declared lower bound against the author's own H100 reference of 20-62 ms per decision; the standard self-hosted x2 + 0.15 s adjustment is applied on top and the raw p50/p95 are kept. SPLIT WINDOW, DISCLOSED: this row was measured across three sittings under different host load - 2026-10-13 09:07:45-13:16:14Z (996 answers, stopped by the pressure guard at load 57), 18:15:34-18:21:41Z and 18:27:04-18:29:07Z (two short attempts stopped by the same guard for swap left behind by another job) and from 18:36:35Z to the end. The driver resumes by task id, so no item was answered twice. Its Speed therefore carries the same kind of interference disclosure as reflex-instinct-0.6b under #18761; the per-minute 1-minute-load trace of every sitting is in r107/logs/CONDITIONS-pjev-2b.jsonl and the guard decisions in r107/logs/PRESSURE-r107-pjev*.jsonl.",
+   "endpoint_condition": "Sandy, the evaluator's own shared CPU host (AMD Zen 2, 12 threads, AVX2, no AVX-512 and no AMX), NOT a dedicated machine: the 1-minute load average was logged every 60 s into logs/CONDITIONS-pjev-2b.jsonl and is reported with the row. This is the evaluator-controlled local deployment the submission asks for ('please run it on your own machine, one request at a time. We do not operate an endpoint for it and do not want held-out or sealed items sent to us'). The author's own serve.py / decision_core.py / letter_adapter.py, source-reviewed at the pinned revision in run 36 before anything was executed, run as `python serve.py --model <pinned snapshot> --device cpu --host 127.0.0.1 --port 11474` at their own defaults (--max-tokens 16000), OMP_NUM_THREADS=10, inside a loopback-only network namespace with an outbound probe that failed as required, offline (HF_HUB_OFFLINE=1, TRANSFORMERS_OFFLINE=1) and credential-free. DEVIATION, DISCLOSED, AND THE ONLY ONE: letter_adapter.load() hard-codes dtype=torch.bfloat16; run 36's pre-registered one-line change reads the dtype from PJEV_DTYPE and DEFAULTS TO THE AUTHOR'S bfloat16, so without that variable the file behaves exactly as published (diff r36/receipts/PJEV-DTYPE-PATCH-R36.diff, patched sha256 6d15788caef5457cfd4690c3fe576d291217276416ed2bbf3bc0312db5e44390). float32 is a strict UPCAST of the stored bfloat16 weights - exactly representable, never lossy - so it cannot flatter accuracy or calibration; it can only cost Speed. serve.py and decision_core.py are byte-identical to the author's. letter_adapter.dist() RAISES rather than truncating when a prompt exceeds the author's own 16,000-token contract, and serve.py maps that to HTTP 422, so the draw's 15 items of 106,804-122,936 characters are honest refusals, not silent truncations - the same 15 items that the Uniphore-4B-Decider (HTTP 422), Attest-31B (HTTP 500) and Standard One 3B SH (HTTP 422) rows of this draw also failed on - verified this run against the published v1.6.16 raw runs, where the three failure sets are identical and julia-1's 17 refusals are a strict superset of them. Torchcast-Decision-4B-v1.1 and both MeTask-Rain rows of this draw answered all 1,500, so run 107's entry text naming them as peers was wrong and is corrected here. Speed is a loaded-shared-CPU float32-on-AVX2 figure and a declared lower bound against the author's own H100 reference of 20-62 ms per decision; the standard self-hosted x2 + 0.15 s adjustment is applied on top and the raw p50/p95 are kept. SPLIT WINDOW, DISCLOSED: this row was measured across four sittings under different host load - 2026-10-13 09:07:45-13:16:14Z (996 answers, stopped by the pressure guard at load 57), 18:15:34-18:21:41Z and 18:27:04-18:29:07Z (two short attempts stopped by the same guard for swap left behind by another job) and from 18:36:35Z to the end. The driver resumes by task id, so no item was answered twice. Its Speed therefore carries the same kind of interference disclosure as reflex-instinct-0.6b under #18761; the per-minute 1-minute-load trace of every sitting is in r107/logs/CONDITIONS-pjev-2b.jsonl and the guard decisions in r107/logs/PRESSURE-r107-pjev*.jsonl.",
    "endpoint_kind": "cpu",
    "full_coverage": true,
    "intelligence": {
@@ -14710,6 +14711,1308 @@
   },
   {
    "addendum": null,
+   "api_flag": true,
+   "api_subset": false,
+   "author": "Levanto Labs (marco@levanto.ai)",
+   "axes": {
+    "calibration": 83.66470689834914,
+    "cost": null,
+    "intelligence": 65.88206323551285,
+    "speed": 68.80003106294234
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.06843028052805278,
+      "ece_score": 86.31394389438944,
+      "mean_tvd": null,
+      "n": 738,
+      "n_ece_hard": 303,
+      "n_tvd": 0,
+      "score": 86.31394389438944
+     },
+     "noul": {
+      "abstention_rate": 0.08847184986595169,
+      "brier": 0.10158675861102966,
+      "ece": 0.08940390415549597,
+      "n": 373,
+      "score": 82.1192191689008
+     },
+     "score": {
+      "interval90_coverage": 0.8897849462365591,
+      "interval90_width": 0.2163978494623655,
+      "n": 372,
+      "nrps": 0.07738047774120042,
+      "score": 82.56095763175719,
+      "top_ece": 0.13570018481182797
+     }
+    },
+    "score": 83.66470689834914
+   },
+   "capability": 74.77338506693098,
+   "composite_ci95": {
+    "A": null,
+    "B": null,
+    "C": null
+   },
+   "cost": {
+    "basis": "UNPRICED under the frozen pricing_v15 path (sha256 dae86740...): proprietary hosted model with no base-model reference, and levanto-sage-v1.4 is in neither AGE_QUALIFIED_API nor LAUNCH_LIST_PRICE_API. sage-1.3.0's published row carries Levanto's list tariff (USD 0.05/M input, USD 10/M output), set before these sets bound new rows; it is not carried over here.",
+    "common_basis": null,
+    "kind": "unpriced",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": null
+   },
+   "display": "Sage 1.4 (Levanto Labs)",
+   "endpoint_condition": "Vendor-hosted sage.levanto.ai /v1/systemone API, model `levanto-sage-v1.4`; latency measured from Sandy (Germany) on the official per-item latency subset without API adjustment. Full S1200+P300 draw of v1.6-regular-20261012 through the unchanged run_api_full_v161.py; the full-set exposure gate logged all 1,200 sealed items to provider `levanto` before the first request (CoS deputy #18975; every sealed item of this draw was already retired). Native probabilities on all three question types, no generated tokens. Hosting implementation and deployed weights were not independently inspected. Regular-queue request 5181ADBA; model id read from the vendor's own /v1/models. 15 of 1,500 requests returned HTTP 400 'Extended context is not available on your plan' with the submitter's own key; they are the draw's 15 longest items (the same 15 that Uniphore-4B-Decider, Attest-31B and Standard One 3B SH failed on). 2 more returned HTTP 504 gateway timeouts. The runner never re-sends a failed item, so all 17 are scored as wrong in the full denominator.",
+   "endpoint_kind": "api",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 70.01700816796121,
+    "I_sealed": 61.7471183030645,
+    "base": 65.88206323551285,
+    "excess": -1.5696369054589994,
+    "gap": 8.269889864896712,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 82.79433733831542,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 96.10810810810811,
+       "hard": 81.12614029569046,
+       "judge": 84.17930125247199,
+       "standard": 77.39640016743407
+      }
+     },
+     "open|noul": {
+      "cc": 70.4265010351967,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 85.71428571428572,
+       "hard": 91.30434782608697,
+       "judge": 39.99999999999999,
+       "standard": 66.66666666666667
+      }
+     },
+     "open|score": {
+      "cc": 56.830186130371516,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 69.2471590909091,
+       "hard": 63.693576388888886,
+       "judge": 56.137447033898304,
+       "standard": 37.93402777777778
+      }
+     },
+     "sealed|choice": {
+      "cc": 74.9268518063478,
+      "n": {
+       "easy": 70,
+       "hard": 247,
+       "judge": 146,
+       "standard": 137
+      },
+      "tiers": {
+       "easy": 94.28208386277001,
+       "hard": 71.37735630854631,
+       "judge": 69.14789422135163,
+       "standard": 81.01666315123391
+      }
+     },
+     "sealed|noul": {
+      "cc": 60.84555280026201,
+      "n": {
+       "easy": 58,
+       "hard": 110,
+       "judge": 65,
+       "standard": 67
+      },
+      "tiers": {
+       "easy": 79.3103448275862,
+       "hard": 58.18181818181818,
+       "judge": 60.00000000000001,
+       "standard": 58.20895522388059
+      }
+     },
+     "sealed|score": {
+      "cc": 49.46895030258368,
+      "n": {
+       "easy": 35,
+       "hard": 123,
+       "judge": 67,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 70.73396381578947,
+       "hard": 41.1355633802817,
+       "judge": 47.42635091145833,
+       "standard": 58.56711647727272
+      }
+     }
+    }
+   },
+   "jevbench_score": null,
+   "key": "sage-1.4.0",
+   "last_measured_on": "2026-10-13",
+   "licence": "Proprietary hosted API",
+   "listing": "listed",
+   "measured_in": "v1.6.17",
+   "measurement_date_status": "measured",
+   "model_pin": "hosted-api:sage.levanto.ai/v1/systemone#levanto-sage-v1.4",
+   "not_ranked_because": "Measured, but the frozen pricing path gives it no eligible price: Levanto's tariff for v1.4 is in neither frozen tariff set and there is no base-model reference (the same outcome as SubQ Snap under CoS deputy decision #18975). Without a cost axis there is no composite, so the row shows Intelligence, Calibration and Capability and is not ranked. The pricing question is open on board #18983 and can be re-decided in a later release. Successor of sage-1.3.0, which stays on the board as the older version.",
+   "noul_decisive": {
+    "acc_among_decisive": 0.9058823529411765,
+    "decisive": 340,
+    "decisive_rate": 0.9115281501340483,
+    "n": 375,
+    "supported": true,
+    "valid": 373
+   },
+   "planned_weight_denominator": 1.0,
+   "rank": null,
+   "ranked": false,
+   "ranks": {
+    "A": null,
+    "B": null,
+    "C": null,
+    "capability": null
+   },
+   "repo": "https://levanto.ai/",
+   "scores": {
+    "A": null,
+    "B": null,
+    "C": null
+   },
+   "speed": {
+    "adjustment": "none (API)",
+    "n": 124,
+    "p50_s_adjusted": 1.7410984199959785,
+    "p50_s_raw": 1.7410984199959785,
+    "p95_s_adjusted": 7.571354350852194,
+    "p95_s_raw": 7.571354350852194
+   },
+   "status": {
+    "answered_ok": 1483,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "api_subset_tag": null,
+    "breakdowns": {
+     "family": {
+      "calibration": {
+       "accuracy": 0.8636363636363636,
+       "cc": 77.47395833333333,
+       "cc_by_type": {
+        "choice": 75.0,
+        "noul": 100.0,
+        "score": 57.421875
+       },
+       "low_n": true,
+       "n": 22,
+       "n_by_type": {
+        "choice": 16,
+        "noul": 4,
+        "score": 2
+       },
+       "score": 77.47395833333333
+      },
+      "calibration_gen": {
+       "accuracy": 0.6138613861386139,
+       "cc": 50.85168124779074,
+       "cc_by_type": {
+        "choice": 55.461293743372224,
+        "noul": 76.0,
+        "score": 21.09375
+       },
+       "low_n": false,
+       "n": 101,
+       "n_by_type": {
+        "choice": 41,
+        "noul": 25,
+        "score": 35
+       },
+       "score": 50.85168124779074
+      },
+      "composite_gen": {
+       "accuracy": 0.8415841584158416,
+       "cc": 71.30379248170152,
+       "cc_by_type": {
+        "choice": 93.4959349593496,
+        "noul": 70.37037037037037,
+        "score": 50.04507211538461
+       },
+       "low_n": false,
+       "n": 101,
+       "n_by_type": {
+        "choice": 41,
+        "noul": 27,
+        "score": 33
+       },
+       "score": 71.30379248170152
+      },
+      "fairness": {
+       "accuracy": 0.9375,
+       "cc": 86.10966435185185,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 60.00000000000001,
+        "score": 98.32899305555556
+       },
+       "low_n": false,
+       "n": 48,
+       "n_by_type": {
+        "choice": 15,
+        "noul": 15,
+        "score": 18
+       },
+       "score": 86.10966435185185
+      },
+      "jaggedness": {
+       "accuracy": 0.6722222222222223,
+       "cc": 44.68650078063118,
+       "cc_by_type": {
+        "choice": 66.79499518768047,
+        "noul": 18.918918918918926,
+        "score": 48.34558823529412
+       },
+       "low_n": false,
+       "n": 180,
+       "n_by_type": {
+        "choice": 94,
+        "noul": 37,
+        "score": 49
+       },
+       "score": 44.68650078063118
+      },
+      "llm_router": {
+       "accuracy": 0.9265175718849841,
+       "cc": 85.29470138180972,
+       "cc_by_type": {
+        "choice": 92.86783481553225,
+        "noul": 97.93814432989691,
+        "score": 65.07812500000001
+       },
+       "low_n": false,
+       "n": 313,
+       "n_by_type": {
+        "choice": 152,
+        "noul": 97,
+        "score": 64
+       },
+       "score": 85.29470138180972
+      },
+      "long_state": {
+       "accuracy": 0.0,
+       "cc": -143.01075268817203,
+       "cc_by_type": {
+        "choice": -29.032258064516128,
+        "noul": -100.0,
+        "score": -300.0
+       },
+       "low_n": true,
+       "n": 15,
+       "n_by_type": {
+        "choice": 10,
+        "noul": 2,
+        "score": 3
+       },
+       "score": 0.0
+      },
+      "ml_usecase": {
+       "accuracy": 0.48148148148148145,
+       "cc": 15.876531561937488,
+       "cc_by_type": {
+        "choice": 25.773195876288657,
+        "noul": -25.0,
+        "score": 46.8563988095238
+       },
+       "low_n": true,
+       "n": 27,
+       "n_by_type": {
+        "choice": 11,
+        "noul": 8,
+        "score": 8
+       },
+       "score": 15.876531561937488
+      },
+      "multilingual": {
+       "accuracy": 0.730909090909091,
+       "cc": 58.38257637920472,
+       "cc_by_type": {
+        "choice": 68.6990544506032,
+        "noul": 47.22222222222223,
+        "score": 59.22645246478873
+       },
+       "low_n": false,
+       "n": 275,
+       "n_by_type": {
+        "choice": 134,
+        "noul": 72,
+        "score": 69
+       },
+       "score": 58.38257637920472
+      },
+      "negation_pair_gen": {
+       "accuracy": 0.8604651162790697,
+       "cc": 63.684895833333336,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 60.00000000000001,
+        "score": 31.0546875
+       },
+       "low_n": false,
+       "n": 86,
+       "n_by_type": {
+        "choice": 40,
+        "noul": 30,
+        "score": 16
+       },
+       "score": 63.684895833333336
+      },
+      "option_order": {
+       "accuracy": 0.9166666666666666,
+       "cc": 89.34753661784286,
+       "cc_by_type": {
+        "choice": 89.34753661784286
+       },
+       "low_n": false,
+       "n": 48,
+       "n_by_type": {
+        "choice": 48
+       },
+       "score": 89.34753661784286
+      },
+      "perturb_pair": {
+       "accuracy": 0.859375,
+       "cc": 73.48017187860938,
+       "cc_by_type": {
+        "choice": 81.98198198198199,
+        "noul": 80.0,
+        "score": 58.45853365384615
+       },
+       "low_n": false,
+       "n": 64,
+       "n_by_type": {
+        "choice": 44,
+        "noul": 10,
+        "score": 10
+       },
+       "score": 73.48017187860938
+      },
+      "usecase": {
+       "accuracy": 0.740909090909091,
+       "cc": 63.79154411764706,
+       "cc_by_type": {
+        "choice": 73.03921568627452,
+        "noul": 66.66666666666667,
+        "score": 51.668749999999996
+       },
+       "low_n": false,
+       "n": 220,
+       "n_by_type": {
+        "choice": 104,
+        "noul": 48,
+        "score": 68
+       },
+       "score": 63.79154411764706
+      }
+     },
+     "lang": {
+      "ar": {
+       "accuracy": 0.75,
+       "cc": 52.014175061050054,
+       "cc_by_type": {
+        "choice": 80.95238095238095,
+        "noul": 50.0,
+        "score": 25.09014423076922
+       },
+       "low_n": true,
+       "n": 16,
+       "n_by_type": {
+        "choice": 7,
+        "noul": 4,
+        "score": 5
+       },
+       "score": 52.014175061050054
+      },
+      "cs": {
+       "accuracy": 0.7142857142857143,
+       "cc": 78.94736842105263,
+       "cc_by_type": {
+        "choice": 57.89473684210526,
+        "noul": 100.0
+       },
+       "low_n": true,
+       "n": 7,
+       "n_by_type": {
+        "choice": 6,
+        "noul": 1
+       },
+       "score": 78.94736842105263
+      },
+      "da": {
+       "accuracy": 0.6923076923076923,
+       "cc": 48.91221038146441,
+       "cc_by_type": {
+        "choice": 79.26267281105991,
+        "noul": 33.33333333333333,
+        "score": 34.14062499999999
+       },
+       "low_n": true,
+       "n": 13,
+       "n_by_type": {
+        "choice": 6,
+        "noul": 3,
+        "score": 4
+       },
+       "score": 48.91221038146441
+      },
+      "de": {
+       "accuracy": 0.84375,
+       "cc": 83.19280452417597,
+       "cc_by_type": {
+        "choice": 68.14159292035399,
+        "noul": 100.0,
+        "score": 81.4368206521739
+       },
+       "low_n": false,
+       "n": 32,
+       "n_by_type": {
+        "choice": 16,
+        "noul": 8,
+        "score": 8
+       },
+       "score": 83.19280452417597
+      },
+      "el": {
+       "accuracy": 0.6666666666666666,
+       "cc": 61.01800124146493,
+       "cc_by_type": {
+        "choice": 49.720670391061454,
+        "noul": 33.33333333333333,
+        "score": 100.0
+       },
+       "low_n": true,
+       "n": 15,
+       "n_by_type": {
+        "choice": 8,
+        "noul": 6,
+        "score": 1
+       },
+       "score": 61.01800124146493
+      },
+      "en": {
+       "accuracy": 0.7958297132927888,
+       "cc": 66.8113959555539,
+       "cc_by_type": {
+        "choice": 79.79033694975652,
+        "noul": 69.06474820143885,
+        "score": 51.57910271546634
+       },
+       "low_n": false,
+       "n": 1151,
+       "n_by_type": {
+        "choice": 588,
+        "noul": 278,
+        "score": 285
+       },
+       "score": 66.8113959555539
+      },
+      "es": {
+       "accuracy": 0.8064516129032258,
+       "cc": 64.7293101069955,
+       "cc_by_type": {
+        "choice": 80.42414355628058,
+        "noul": 100.0,
+        "score": 13.763786764705888
+       },
+       "low_n": false,
+       "n": 31,
+       "n_by_type": {
+        "choice": 13,
+        "noul": 8,
+        "score": 10
+       },
+       "score": 64.7293101069955
+      },
+      "fi": {
+       "accuracy": 0.75,
+       "cc": 78.14207650273225,
+       "cc_by_type": {
+        "choice": 34.42622950819673,
+        "noul": 100.0,
+        "score": 100.0
+       },
+       "low_n": true,
+       "n": 8,
+       "n_by_type": {
+        "choice": 4,
+        "noul": 3,
+        "score": 1
+       },
+       "score": 78.14207650273225
+      },
+      "fr": {
+       "accuracy": 0.9285714285714286,
+       "cc": 97.08059210526316,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 100.0,
+        "score": 91.24177631578947
+       },
+       "low_n": true,
+       "n": 14,
+       "n_by_type": {
+        "choice": 6,
+        "noul": 2,
+        "score": 6
+       },
+       "score": 97.08059210526316
+      },
+      "hi": {
+       "accuracy": 0.5714285714285714,
+       "cc": 34.37563649324954,
+       "cc_by_type": {
+        "choice": 32.960893854748605,
+        "noul": 25.0,
+        "score": 45.166015625
+       },
+       "low_n": true,
+       "n": 21,
+       "n_by_type": {
+        "choice": 8,
+        "noul": 8,
+        "score": 5
+       },
+       "score": 34.37563649324954
+      },
+      "id": {
+       "accuracy": 0.75,
+       "cc": 0.0,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": -100.0
+       },
+       "low_n": true,
+       "n": 4,
+       "n_by_type": {
+        "choice": 3,
+        "noul": 1
+       },
+       "score": 0.0
+      },
+      "it": {
+       "accuracy": 0.8666666666666667,
+       "cc": 67.14265706769847,
+       "cc_by_type": {
+        "choice": 85.97038191738113,
+        "noul": 100.0,
+        "score": 15.457589285714269
+       },
+       "low_n": true,
+       "n": 15,
+       "n_by_type": {
+        "choice": 9,
+        "noul": 3,
+        "score": 3
+       },
+       "score": 67.14265706769847
+      },
+      "ja": {
+       "accuracy": 0.64,
+       "cc": 38.88002217368282,
+       "cc_by_type": {
+        "choice": 57.108816521048446,
+        "noul": 39.99999999999999,
+        "score": 19.53125000000001
+       },
+       "low_n": true,
+       "n": 25,
+       "n_by_type": {
+        "choice": 9,
+        "noul": 10,
+        "score": 6
+       },
+       "score": 38.88002217368282
+      },
+      "ko": {
+       "accuracy": 0.3,
+       "cc": -14.609168320105821,
+       "cc_by_type": {
+        "choice": 11.111111111111109,
+        "noul": -100.0,
+        "score": 45.06138392857143
+       },
+       "low_n": true,
+       "n": 10,
+       "n_by_type": {
+        "choice": 3,
+        "noul": 2,
+        "score": 5
+       },
+       "score": 0.0
+      },
+      "mixed": {
+       "accuracy": 0.9285714285714286,
+       "cc": 77.7560763888889,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 33.33333333333333,
+        "score": 99.93489583333334
+       },
+       "low_n": true,
+       "n": 14,
+       "n_by_type": {
+        "choice": 8,
+        "noul": 3,
+        "score": 3
+       },
+       "score": 77.7560763888889
+      },
+      "nl": {
+       "accuracy": 0.6,
+       "cc": 14.163171897546896,
+       "cc_by_type": {
+        "choice": 74.02597402597404,
+        "noul": -33.333333333333336,
+        "score": 1.7968749999999867
+       },
+       "low_n": true,
+       "n": 10,
+       "n_by_type": {
+        "choice": 5,
+        "noul": 3,
+        "score": 2
+       },
+       "score": 14.163171897546896
+      },
+      "no": {
+       "accuracy": 0.6666666666666666,
+       "cc": 50.0,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 0.0
+       },
+       "low_n": true,
+       "n": 6,
+       "n_by_type": {
+        "choice": 2,
+        "noul": 4
+       },
+       "score": 50.0
+      },
+      "pl": {
+       "accuracy": 0.7692307692307693,
+       "cc": 65.27742887769128,
+       "cc_by_type": {
+        "choice": 77.14769360981802,
+        "noul": 60.00000000000001,
+        "score": 58.684593023255815
+       },
+       "low_n": false,
+       "n": 39,
+       "n_by_type": {
+        "choice": 17,
+        "noul": 10,
+        "score": 12
+       },
+       "score": 65.27742887769128
+      },
+      "pt": {
+       "accuracy": 0.75,
+       "cc": 72.55934432838468,
+       "cc_by_type": {
+        "choice": 57.57218621096051,
+        "noul": 100.0,
+        "score": 60.10584677419355
+       },
+       "low_n": true,
+       "n": 28,
+       "n_by_type": {
+        "choice": 12,
+        "noul": 5,
+        "score": 11
+       },
+       "score": 72.55934432838468
+      },
+      "sv": {
+       "accuracy": 0.45454545454545453,
+       "cc": 33.99933510638298,
+       "cc_by_type": {
+        "choice": 23.404255319148945,
+        "noul": 19.999999999999996,
+        "score": 58.59375
+       },
+       "low_n": true,
+       "n": 11,
+       "n_by_type": {
+        "choice": 5,
+        "noul": 5,
+        "score": 1
+       },
+       "score": 33.99933510638298
+      },
+      "tr": {
+       "accuracy": 0.7692307692307693,
+       "cc": 59.23771512681159,
+       "cc_by_type": {
+        "choice": 56.52173913043478,
+        "noul": 100.0,
+        "score": 21.19140624999999
+       },
+       "low_n": true,
+       "n": 13,
+       "n_by_type": {
+        "choice": 6,
+        "noul": 4,
+        "score": 3
+       },
+       "score": 59.23771512681159
+      },
+      "uk": {
+       "accuracy": 0.8571428571428571,
+       "cc": 80.91397849462366,
+       "cc_by_type": {
+        "choice": 67.74193548387096,
+        "noul": 100.0,
+        "score": 75.0
+       },
+       "low_n": true,
+       "n": 7,
+       "n_by_type": {
+        "choice": 4,
+        "noul": 1,
+        "score": 2
+       },
+       "score": 80.91397849462366
+      },
+      "zh": {
+       "accuracy": 0.7,
+       "cc": 26.649305555555554,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": -33.333333333333336,
+        "score": 13.28125
+       },
+       "low_n": true,
+       "n": 10,
+       "n_by_type": {
+        "choice": 5,
+        "noul": 3,
+        "score": 2
+       },
+       "score": 26.649305555555554
+      }
+     },
+     "type": {
+      "choice": {
+       "accuracy": 0.8253333333333334,
+       "cc": 77.43929275340133,
+       "cc_by_type": {
+        "choice": 77.43929275340133
+       },
+       "low_n": false,
+       "n": 750,
+       "n_by_type": {
+        "choice": 750
+       },
+       "score": 77.43929275340133
+      },
+      "noul": {
+       "accuracy": 0.8213333333333334,
+       "cc": 64.26666666666667,
+       "cc_by_type": {
+        "noul": 64.26666666666667
+       },
+       "low_n": false,
+       "n": 375,
+       "n_by_type": {
+        "noul": 375
+       },
+       "score": 64.26666666666667
+      },
+      "score": {
+       "accuracy": 0.6533333333333333,
+       "cc": 52.48900045126358,
+       "cc_by_type": {
+        "score": 52.48900045126358
+       },
+       "low_n": false,
+       "n": 375,
+       "n_by_type": {
+        "score": 375
+       },
+       "score": 52.48900045126358
+      }
+     },
+     "usecase": {
+      "advertising": {
+       "accuracy": 0.4090909090909091,
+       "cc": -0.9800857843137294,
+       "cc_by_type": {
+        "choice": 52.0,
+        "noul": -50.0,
+        "score": -4.940257352941191
+       },
+       "low_n": true,
+       "n": 22,
+       "n_by_type": {
+        "choice": 8,
+        "noul": 8,
+        "score": 6
+       },
+       "score": 0.0
+      },
+      "code_linting": {
+       "accuracy": 0.8333333333333334,
+       "cc": 65.81281603360408,
+       "cc_by_type": {
+        "choice": 62.73291925465839,
+        "noul": 100.0,
+        "score": 34.705528846153854
+       },
+       "low_n": true,
+       "n": 24,
+       "n_by_type": {
+        "choice": 7,
+        "noul": 9,
+        "score": 8
+       },
+       "score": 65.81281603360408
+      },
+      "customer_support": {
+       "accuracy": 0.7857142857142857,
+       "cc": 53.69452913279133,
+       "cc_by_type": {
+        "choice": 83.73983739837398,
+        "noul": 100.0,
+        "score": -22.65625
+       },
+       "low_n": true,
+       "n": 14,
+       "n_by_type": {
+        "choice": 8,
+        "noul": 4,
+        "score": 2
+       },
+       "score": 53.69452913279133
+      },
+      "demand_forecasting": {
+       "accuracy": 0.4117647058823529,
+       "cc": 9.276391934697855,
+       "cc_by_type": {
+        "choice": 18.128654970760234,
+        "noul": 33.33333333333333,
+        "score": -23.6328125
+       },
+       "low_n": true,
+       "n": 17,
+       "n_by_type": {
+        "choice": 11,
+        "noul": 3,
+        "score": 3
+       },
+       "score": 9.276391934697855
+      },
+      "ecommerce_marketplaces": {
+       "accuracy": 0.6470588235294118,
+       "cc": 32.395809744867144,
+       "cc_by_type": {
+        "choice": 56.52173913043478,
+        "noul": -33.333333333333336,
+        "score": 73.9990234375
+       },
+       "low_n": true,
+       "n": 17,
+       "n_by_type": {
+        "choice": 9,
+        "noul": 3,
+        "score": 5
+       },
+       "score": 32.395809744867144
+      },
+      "feature_extraction": {
+       "accuracy": 0.7894736842105263,
+       "cc": 2.590654481132058,
+       "cc_by_type": {
+        "choice": 62.264150943396224,
+        "noul": 100.0,
+        "score": -154.49218750000006
+       },
+       "low_n": true,
+       "n": 19,
+       "n_by_type": {
+        "choice": 10,
+        "noul": 6,
+        "score": 3
+       },
+       "score": 2.590654481132058
+      },
+      "financial_crime": {
+       "accuracy": 0.7333333333333333,
+       "cc": 59.81640653056095,
+       "cc_by_type": {
+        "choice": 80.3921568627451,
+        "noul": 42.85714285714286,
+        "score": 56.19991987179487
+       },
+       "low_n": false,
+       "n": 30,
+       "n_by_type": {
+        "choice": 13,
+        "noul": 7,
+        "score": 10
+       },
+       "score": 59.81640653056095
+      },
+      "gaming": {
+       "accuracy": 0.6818181818181818,
+       "cc": 47.58298931980003,
+       "cc_by_type": {
+        "choice": 79.09407665505228,
+        "noul": 0.0,
+        "score": 63.65489130434783
+       },
+       "low_n": true,
+       "n": 22,
+       "n_by_type": {
+        "choice": 12,
+        "noul": 4,
+        "score": 6
+       },
+       "score": 47.58298931980003
+      },
+      "insurance_claims": {
+       "accuracy": 0.4666666666666667,
+       "cc": 18.998842592592585,
+       "cc_by_type": {
+        "choice": 58.33333333333333,
+        "noul": -19.999999999999996,
+        "score": 18.663194444444432
+       },
+       "low_n": true,
+       "n": 15,
+       "n_by_type": {
+        "choice": 6,
+        "noul": 5,
+        "score": 4
+       },
+       "score": 18.998842592592585
+      },
+      "knowledge_graphs": {
+       "accuracy": 0.7272727272727273,
+       "cc": 61.5794969569896,
+       "cc_by_type": {
+        "choice": 74.30406852248395,
+        "noul": 66.66666666666667,
+        "score": 43.76775568181819
+       },
+       "low_n": true,
+       "n": 22,
+       "n_by_type": {
+        "choice": 10,
+        "noul": 6,
+        "score": 6
+       },
+       "score": 61.5794969569896
+      },
+      "lead_generation": {
+       "accuracy": 0.68,
+       "cc": 51.23372166431759,
+       "cc_by_type": {
+        "choice": 88.3720930232558,
+        "noul": 33.33333333333333,
+        "score": 31.995738636363637
+       },
+       "low_n": true,
+       "n": 25,
+       "n_by_type": {
+        "choice": 11,
+        "noul": 9,
+        "score": 5
+       },
+       "score": 51.23372166431759
+      },
+      "legal_compliance": {
+       "accuracy": 0.2,
+       "cc": -20.121212757616487,
+       "cc_by_type": {
+        "choice": -29.032258064516128,
+        "noul": -33.333333333333336,
+        "score": 2.001953125
+       },
+       "low_n": true,
+       "n": 10,
+       "n_by_type": {
+        "choice": 4,
+        "noul": 3,
+        "score": 3
+       },
+       "score": 0.0
+      },
+      "llm_guardrails": {
+       "accuracy": 0.8518518518518519,
+       "cc": 71.39363736937514,
+       "cc_by_type": {
+        "choice": 76.96737044145875,
+        "noul": 60.00000000000001,
+        "score": 77.21354166666666
+       },
+       "low_n": true,
+       "n": 27,
+       "n_by_type": {
+        "choice": 11,
+        "noul": 5,
+        "score": 11
+       },
+       "score": 71.39363736937514
+      },
+      "model_routing": {
+       "accuracy": 0.9170506912442397,
+       "cc": 82.95185303791261,
+       "cc_by_type": {
+        "choice": 95.32467532467533,
+        "noul": 100.0,
+        "score": 53.5308837890625
+       },
+       "low_n": false,
+       "n": 217,
+       "n_by_type": {
+        "choice": 101,
+        "noul": 66,
+        "score": 50
+       },
+       "score": 82.95185303791261
+      },
+      "moderation_trust_safety": {
+       "accuracy": 0.7777777777777778,
+       "cc": 50.763020539309785,
+       "cc_by_type": {
+        "choice": 76.96737044145875,
+        "noul": 0.0,
+        "score": 75.32169117647058
+       },
+       "low_n": true,
+       "n": 18,
+       "n_by_type": {
+        "choice": 11,
+        "noul": 2,
+        "score": 5
+       },
+       "score": 50.763020539309785
+      },
+      "recruiting": {
+       "accuracy": 0.7777777777777778,
+       "cc": 57.781549829774065,
+       "cc_by_type": {
+        "choice": 66.57381615598885,
+        "noul": 33.33333333333333,
+        "score": 73.4375
+       },
+       "low_n": true,
+       "n": 18,
+       "n_by_type": {
+        "choice": 8,
+        "noul": 3,
+        "score": 7
+       },
+       "score": 57.781549829774065
+      },
+      "risk_assessment": {
+       "accuracy": 0.6111111111111112,
+       "cc": 48.64196217280016,
+       "cc_by_type": {
+        "choice": 70.44334975369459,
+        "noul": 50.0,
+        "score": 25.482536764705888
+       },
+       "low_n": true,
+       "n": 18,
+       "n_by_type": {
+        "choice": 9,
+        "noul": 4,
+        "score": 5
+       },
+       "score": 48.64196217280016
+      },
+      "scientific_discovery": {
+       "accuracy": 0.5652173913043478,
+       "cc": 40.69802989130435,
+       "cc_by_type": {
+        "choice": 42.02898550724638,
+        "noul": 33.33333333333333,
+        "score": 46.73177083333333
+       },
+       "low_n": true,
+       "n": 23,
+       "n_by_type": {
+        "choice": 9,
+        "noul": 6,
+        "score": 8
+       },
+       "score": 40.69802989130435
+      },
+      "search_retrieval": {
+       "accuracy": 0.9583333333333334,
+       "cc": 97.50205592105264,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 100.0,
+        "score": 92.5061677631579
+       },
+       "low_n": true,
+       "n": 24,
+       "n_by_type": {
+        "choice": 12,
+        "noul": 4,
+        "score": 8
+       },
+       "score": 97.50205592105264
+      }
+     }
+    },
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      79.36979007503284,
+      85.78503630501943
+     ],
+     "I": [
+      60.66580176648791,
+      69.70887662113697
+     ],
+     "capability": [
+      70.56958325503426,
+      77.0138982957861
+     ],
+     "composite": {
+      "A": null,
+      "B": null,
+      "C": null
+     },
+     "seed": 26
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "full_set_api": true,
+    "g_med_used": 9.839526770355711,
+    "lane": "api",
+    "metric_basis": "S u P (full set, API lane, v1.6.1 amendment; not equated)",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 83.66470689834914,
+     "capability": 74.77338506693098,
+     "intelligence": 65.88206323551285
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.8253333333333334,
+      "calibration": 86.31394389438944,
+      "cc": 77.43929275340133,
+      "cc_by_type": {
+       "choice": 77.43929275340133
+      },
+      "cc_tiered": 78.8605945723316,
+      "cc_tiered_open": 82.79433733831542,
+      "cc_tiered_sealed": 74.9268518063478,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 77.43929275340133
+     },
+     "noul": {
+      "accuracy": 0.8213333333333334,
+      "calibration": 82.1192191689008,
+      "cc": 64.26666666666667,
+      "cc_by_type": {
+       "noul": 64.26666666666667
+      },
+      "cc_tiered": 65.63602691772935,
+      "cc_tiered_open": 70.4265010351967,
+      "cc_tiered_sealed": 60.84555280026201,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 64.26666666666667
+     },
+     "score": {
+      "accuracy": 0.6533333333333333,
+      "calibration": 82.56095763175719,
+      "cc": 52.48900045126358,
+      "cc_by_type": {
+       "score": 52.48900045126358
+      },
+      "cc_tiered": 53.1495682164776,
+      "cc_tiered_open": 56.830186130371516,
+      "cc_tiered_sealed": 49.46895030258368,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 52.48900045126358
+     }
+    },
+    "raw_on_A": null,
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.016000000000000014,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.005333333333333301,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.008000000000000007,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": null,
+    "Emphasis on Accuracy 60:20:20": null,
+    "Emphasis on Cost 20:20:60": null,
+    "Emphasis on Speed 20:60:20": null,
+    "Intelligence only": 65.88206323551285
+   }
+  },
+  {
+   "addendum": null,
    "api_flag": false,
    "api_subset": false,
    "author": "Standard Thinking",
@@ -14751,16 +16054,16 @@
    "capability": 55.57071252242379,
    "composite_ci95": {
     "A": [
-     13.369991728625648,
-     27.96967701068356
+     12.937347770110936,
+     27.495132456665935
     ],
     "B": [
-     11.537443214031105,
-     25.337971589352325
+     11.182114799051536,
+     24.91706386054432
     ],
     "C": [
-     9.284716478212259,
-     19.423386812974698
+     8.98426928479926,
+     19.093841983795784
     ]
    },
    "cost": {
@@ -15905,32 +17208,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      72.52873367984617,
-      81.51166029559518
+      72.67003136056756,
+      81.13987068844101
      ],
      "I": [
-      26.89865430364449,
-      36.43377408848008
+      26.625661156248736,
+      36.214959536615204
      ],
      "capability": [
-      50.78580676148392,
-      58.18510119744845
+      50.707164807270004,
+      57.7470226645769
      ],
      "composite": {
       "A": [
-       13.369991728625648,
-       27.96967701068356
+       12.937347770110936,
+       27.495132456665935
       ],
       "B": [
-       11.537443214031105,
-       25.337971589352325
+       11.182114799051536,
+       24.91706386054432
       ],
       "C": [
-       9.284716478212259,
-       19.423386812974698
+       8.98426928479926,
+       19.093841983795784
       ]
      },
-     "seed": 26
+     "seed": 27
     },
     "ci95_n": 1200,
     "complete": true,
@@ -17220,23 +18523,23 @@
     "ci95": {
      "B": 1000,
      "C": [
-      86.40971261933912,
-      91.22383432288771
+      86.16008918336016,
+      91.4894188687202
      ],
      "I": [
-      67.678643082142,
-      76.04360606377196
+      67.5021257603754,
+      75.98733381538955
      ],
      "capability": [
-      77.8345576040722,
-      83.16830187830021
+      77.76552765502416,
+      83.14127397348815
      ],
      "composite": {
       "A": null,
       "B": null,
       "C": null
      },
-     "seed": 27
+     "seed": 28
     },
     "ci95_n": 1200,
     "complete": true,
@@ -17376,16 +18679,16 @@
    "capability": 68.66260515667253,
    "composite_ci95": {
     "A": [
-     64.7690107435183,
-     71.38898624019909
+     65.11372937731679,
+     71.29220271274237
     ],
     "B": [
-     60.3389532334241,
-     68.34003636449465
+     60.79979945322803,
+     68.1547479279605
     ],
     "C": [
-     44.97847968299882,
-     67.70579771531062
+     45.21786762313667,
+     67.22917392198413
     ]
    },
    "cost": {
@@ -18530,32 +19833,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      77.54391713512813,
-      85.1722440386724
+      77.48620686186426,
+      85.02710405705199
      ],
      "I": [
-      49.113445904708,
-      58.431563639866425
+      49.34572303578395,
+      58.263998093307585
      ],
      "capability": [
-      64.21570854662431,
-      71.37670563660008
+      63.85638502149055,
+      71.24424299125529
      ],
      "composite": {
       "A": [
-       64.7690107435183,
-       71.38898624019909
+       65.11372937731679,
+       71.29220271274237
       ],
       "B": [
-       60.3389532334241,
-       68.34003636449465
+       60.79979945322803,
+       68.1547479279605
       ],
       "C": [
-       44.97847968299882,
-       67.70579771531062
+       45.21786762313667,
+       67.22917392198413
       ]
      },
-     "seed": 28
+     "seed": 29
     },
     "ci95_n": 1200,
     "complete": true,
@@ -18699,16 +20002,16 @@
    "capability": 57.0653357969117,
    "composite_ci95": {
     "A": [
-     16.33721961761525,
-     36.15444633158924
+     16.848006317924682,
+     36.96534238013679
     ],
     "B": [
-     13.818153237889964,
-     32.28059451064199
+     14.316781625012254,
+     33.04810264699326
     ],
     "C": [
-     11.345291401121699,
-     25.10725439693697
+     11.700004387447695,
+     25.67037665287277
     ]
    },
    "cost": {
@@ -19853,32 +21156,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      74.76475945983537,
-      82.40183108920829
+      74.80585089603882,
+      82.41528290303906
      ],
      "I": [
-      27.7464136886383,
-      38.36996796851998
+      28.171617664260683,
+      38.76823145004421
      ],
      "capability": [
-      52.213044321559906,
-      59.71615817373235
+      52.385533490726075,
+      59.649068597910556
      ],
      "composite": {
       "A": [
-       16.33721961761525,
-       36.15444633158924
+       16.848006317924682,
+       36.96534238013679
       ],
       "B": [
-       13.818153237889964,
-       32.28059451064199
+       14.316781625012254,
+       33.04810264699326
       ],
       "C": [
-       11.345291401121699,
-       25.10725439693697
+       11.700004387447695,
+       25.67037665287277
       ]
      },
-     "seed": 29
+     "seed": 30
     },
     "ci95_n": 1200,
     "complete": true,
@@ -20022,16 +21325,16 @@
    "capability": 82.96592796157353,
    "composite_ci95": {
     "A": [
-     5.494220183596867,
-     5.603023773702307
+     5.49485718527582,
+     5.602992972803621
     ],
     "B": [
-     5.945307037727937,
-     6.131054476849985
+     5.945694726388269,
+     6.136744764860001
     ],
     "C": [
-     5.494220183596867,
-     5.603023773702307
+     5.49485718527582,
+     5.602992972803621
     ]
    },
    "cost": {
@@ -21176,32 +22479,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      87.97332135339462,
-      92.6626044249334
+      87.87062205214318,
+      92.76091528429383
      ],
      "I": [
-      69.20378567211058,
-      77.17450566047175
+      69.1394771823299,
+      77.6229764588109
      ],
      "capability": [
-      79.05990424049419,
-      84.40338909135295
+      79.12765918179254,
+      84.4470596111394
      ],
      "composite": {
       "A": [
-       5.494220183596867,
-       5.603023773702307
+       5.49485718527582,
+       5.602992972803621
       ],
       "B": [
-       5.945307037727937,
-       6.131054476849985
+       5.945694726388269,
+       6.136744764860001
       ],
       "C": [
-       5.494220183596867,
-       5.603023773702307
+       5.49485718527582,
+       5.602992972803621
       ]
      },
-     "seed": 30
+     "seed": 31
     },
     "ci95_n": 1200,
     "complete": true,
