@@ -5405,6 +5405,27 @@
           }
         ],
         "note": "Listed but not ranked in v1.6.15: CoS deputy decision #18761 declares its Speed figure non-official, and the composite weights Speed."
+      },
+      "vllm-sr-d3": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "26B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/vllm-sr/d3/blob/5ce995dfb7ff07da00fec4211eb7f0560f52eaf8/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card of the evaluated revision: \"base_model: Qwen/Qwen3.8-27B\", license apache-2.0; \"Parameters: 26.09B, including the 0.46B vision encoder\"; returns a probability for every answer without generating text. The training data is not disclosed."
+          },
+          {
+            "url": "https://huggingface.co/vllm-sr/d3/blob/5ce995dfb7ff07da00fec4211eb7f0560f52eaf8/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config: architectures [\"Qwen3_5Model\"], model_type \"qwen3_5\", text_config.model_type \"qwen3_5_text\", 64 layers, hidden size 5120, dtype bfloat16."
+          }
+        ],
+        "note": "Timed on one RTX PRO 6000 Blackwell 96 GB GPU, while this draw's other GPU rows, Perplexity Decider and Torchcast-Decision-27B were timed on an H100."
       }
     },
     "imagejevbench": {

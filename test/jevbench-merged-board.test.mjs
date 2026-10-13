@@ -10,8 +10,8 @@ test('every cohort system joins once, from its latest release, with its draw', a
   const { rows } = await readCohortRows();
   const keys = rows.map((r) => r.row.key);
   assert.equal(new Set(keys).size, keys.length);
-  assert.equal(rows.length, 33);
-  assert.deepEqual([...new Set(rows.map((r) => r.draw.release))].sort(), ['v1.6.15', 'v1.6.4', 'v1.6.9']);
+  assert.equal(rows.length, 34);
+  assert.deepEqual([...new Set(rows.map((r) => r.draw.release))].sort(), ['v1.6.16', 'v1.6.4', 'v1.6.9']);
   assert.ok(rows.every((r) => r.draw.id && r.draw.measured_on));
 });
 
@@ -41,7 +41,7 @@ test('pending draws show the published numbers unchanged; an offset moves the ax
 test('merged board slots ranked cohort rows by score and keeps published rows in order', async () => {
   const { artifact } = await readCurrentJevbench();
   const merged = jevWithCohortRows(artifact, await readCohortRows());
-  assert.equal(merged.systems.length, artifact.systems.length + 33);
+  assert.equal(merged.systems.length, artifact.systems.length + 34);
   for (const o of Object.keys(artifact.board)) {
     const kept = merged.board[o].order.filter((k) => artifact.board[o].order.includes(k));
     assert.deepEqual(kept, artifact.board[o].order);
@@ -57,6 +57,12 @@ test('merged board slots ranked cohort rows by score and keeps published rows in
   assert.equal(reflex.rank, null);
   assert.match(reflex.not_ranked_because, /#18761/);
   for (const o of Object.keys(merged.board)) assert.ok(!merged.board[o].order.includes('reflex-instinct-0.6b'));
+  // v1.6.16: vLLM-SR d3 joins the merged board as a ranked row of the regular draw, with its published numbers.
+  const d3 = merged.systems.find((s) => s.key === 'vllm-sr-d3');
+  assert.equal(d3.ranked, true); assert.equal(d3.draw.release, 'v1.6.16');
+  assert.equal(d3.capability, 82.96592796157353); assert.equal(d3.scores.A, 5.569947529283843);
+  assert.equal(d3.cost.usd_per_1000, 0.5463374);
+  for (const o of ['A', 'B', 'C']) assert.ok(merged.board[o].order.includes('vllm-sr-d3'));
   // 12 Oct 2026 listing correction: RYOTIDE-Qwen9 is a ranked native system; its stored v1.6.4 numbers are untouched.
   const ryotide = merged.systems.find((s) => s.key === 'ryotide_qwen9');
   const stored = (await readCohortRows()).rows.find((r) => r.row.key === 'ryotide_qwen9');
