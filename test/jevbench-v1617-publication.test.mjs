@@ -12,7 +12,7 @@ const root = 'data/raw/benchmarks/jevbench/v1.6/';
 const read = async k => JSON.parse(await readFile(`${root}jevbench-v1.6.17-${k}.json`, 'utf8'));
 const unranked = V1617_UNRANKED_CARRIED_KEYS[0];
 const [paid] = V1617_PAID_KEYS;
-const SUBQ = 'subq-snap-preview', AMOS = 'amos-1-medium', PJEV = 'pjev-2b', AMOSL = 'amos-1-large', SAGE = 'sage-1.4.0';
+const SUBQ = 'subq-snap-preview', AMOS = 'amos-1-medium', PJEV = 'pjev-2b', AMOSL = 'amos-1-large', SAGE = 'sage-1.4.0', PURPLE = 'purplemist-mini-1.0';
 const releaseNote = n => n.startsWith('v1.6.17 ADDS ');
 
 async function fixture() {
@@ -147,6 +147,18 @@ test('pjev-2b carries its split-window and refusal-set disclosures', async () =>
   assert.match(note, /torchcast-decision-4b-v1\.1/);
 });
 
+test('purplemist-mini-1.0 carries its refusal, split-window and offline-count disclosures', async () => {
+  const b = await fixture();
+  validateJevbenchV1617Bundle(b);
+  const s = row(b, PURPLE);
+  assert.equal(s.status.answered_ok, 1485);
+  assert.equal(s.endpoint_kind, 'cpu');
+  assert.match(noteOf(b, PURPLE), /predicted 0 refusals/);
+  assert.match(s.endpoint_condition, /SPLIT WINDOW/);
+  assert.equal(b.proof.new_rows[PURPLE].input_tokens, 700492);
+  assert.match(s.cost.basis, /700,492 input tokens over the/);
+});
+
 test('v1.6.17 keeps the non-official-Speed row unranked and the A2 alias untouched', async () => {
   const b = await fixture();
   validateJevbenchV1617Bundle(b);
@@ -187,6 +199,20 @@ for (const [name, edit, error] of [
   ['the paid row on the same display as the old row', b => { row(b, paid).display = 'metask-jev-rain-31B-trained'; }, /display/],
   ['pjev note without the split-window disclosure', b => editNote(b, PJEV, n => n.replaceAll('SPLIT WINDOW', 'window')), /required disclosure "SPLIT WINDOW"/],
   ['pjev note naming the wrong peers', b => editNote(b, PJEV, n => n.replaceAll('torchcast-decision-4b-v1.1', 'a row')), /required disclosure "torchcast-decision-4b-v1.1"/],
+  ['purplemist note without the predicted-0-refusals disclosure', b => editNote(b, PURPLE, n => n.replaceAll('predicted 0 refusals', 'predicted some')), /required disclosure "predicted 0 refusals"/],
+  ['purplemist note with another token total', b => editNote(b, PURPLE, n => n.replaceAll('700,492', '700,000')), /required disclosure "700,492"/],
+  ['purplemist note without the 15 not answered', b => editNote(b, PURPLE, n => n.replaceAll('15 not answered', 'a few')), /required disclosure "15 not answered"/],
+  ['purplemist without the split-window disclosure', b => { row(b, PURPLE).endpoint_condition = row(b, PURPLE).endpoint_condition.replaceAll('SPLIT WINDOW', 'window'); }, /required condition disclosure "SPLIT WINDOW"/],
+  ['purplemist endpoint condition without the predicted-0-refusals sentence', b => { row(b, PURPLE).endpoint_condition = row(b, PURPLE).endpoint_condition.replaceAll('predicted 0 refusals', 'predicted some'); }, /required condition disclosure "predicted 0 refusals"/],
+  ['purplemist endpoint condition without the manual stop time', b => { row(b, PURPLE).endpoint_condition = row(b, PURPLE).endpoint_condition.replaceAll('21:19:35Z', 'some time'); }, /required condition disclosure "21:19:35Z"/],
+  ['purplemist cost basis with another base model', b => { row(b, PURPLE).cost.basis = row(b, PURPLE).cost.basis.replaceAll('Qwen3.5-2B-Base', 'Qwen3.5-9B'); }, /required cost-basis statement "Qwen3.5-2B-Base"/],
+  ['purplemist cost basis without the offline-count decision', b => { row(b, PURPLE).cost.basis = row(b, PURPLE).cost.basis.replaceAll('#18974', '#0'); }, /required cost-basis statement "#18974"/],
+  ['purplemist proof input tokens differing from the cost basis', b => { b.proof.new_rows[PURPLE].input_tokens += 1; }, /offline token count in the proof/],
+  ['purplemist cost basis quoting another token total', b => { row(b, PURPLE).cost.basis = row(b, PURPLE).cost.basis.replaceAll('700,492 input tokens', '700,493 input tokens'); }, /required cost-basis statement "700,492"/],
+  ['card 17487 moved onto amos-1-medium', b => { b.artifact.measurement_notes = b.artifact.measurement_notes.map(n => n.startsWith('Board effect')
+      ? n.replaceAll("Amos 1 large's entry is not", "Amos 1 medium (Scira)'s entry is not").replaceAll('Amos 1 large (Scira) enters', 'Amos 1 medium (Scira) enters') : n); }, /card 17487 must be tied to Amos 1 large/],
+  ['card 17487 sentence also naming another new row', b => { b.proof.authority += ' pjev-2b is covered by card 17487 as well.'; }, /card 17487 must not be attached|card 17487 must be tied/],
+  ['a cost_cap_ratio that is not usd over the cap', b => { b.proof.new_rows[AMOSL].cost_cap_ratio = 1.0; }, /cost_cap_ratio must equal usd\/cap/],
   ['a new row without a note', b => { b.artifact.measurement_notes = b.artifact.measurement_notes.filter(n => !n.startsWith(`${PJEV}: `)); }, /too thin/],
   ['a new row interval excluding its point', b => { row(b, PJEV).composite_ci95.A = [0, 0.1]; }, /new row interval does not contain/],
   ['a new row priced as a tariff', b => { row(b, PJEV).cost.kind = 'tariff'; }, /labelled cost estimate/],
