@@ -12,12 +12,13 @@ import { hasPublishedJevbenchV1611Release } from '../lib/jevbench-v1611-release.
 import { hasPublishedJevbenchV1612Release } from '../lib/jevbench-v1612-release.mjs';
 import { hasPublishedJevbenchV1613Release } from '../lib/jevbench-v1613-release.mjs';
 import { hasPublishedJevbenchV1614Release } from '../lib/jevbench-v1614-release.mjs';
+import { hasPublishedJevbenchV1615Release } from '../lib/jevbench-v1615-release.mjs';
 
 /** Dated release history of the live board (Florian 10 Oct 2026: versions move here from the tabs on top). Fresh-draw
  *  releases are listed only for a validated publication; a failed validation omits the entry and keeps the rest. */
 export async function JevReleaseHistory() {
-  const [v162, v163, v164, v165, v166, v167, v168, v169, v1610, v1611, v1612, v1613, v1614] = await Promise.all([hasPublishedJevbenchV162Release(), hasPublishedJevbenchV163Release(), hasPublishedJevbenchV164Release(), hasPublishedJevbenchV165Release(), hasPublishedJevbenchV166Release(), hasPublishedJevbenchV167Release(), hasPublishedJevbenchV168Release(), hasPublishedJevbenchV169Release(), hasPublishedJevbenchV1610Release(), hasPublishedJevbenchV1611Release(), hasPublishedJevbenchV1612Release(), hasPublishedJevbenchV1613Release(), hasPublishedJevbenchV1614Release()]);
-  const hidden = new Set([!v162 && 'v1.6.2', !v163 && 'v1.6.3', !v164 && 'v1.6.4', !v165 && 'v1.6.5', !v166 && 'v1.6.6', !v167 && 'v1.6.7', !v168 && 'v1.6.8', !v169 && 'v1.6.9', !v1610 && 'v1.6.10', !v1611 && 'v1.6.11', !v1612 && 'v1.6.12', !v1613 && 'v1.6.13', !v1614 && 'v1.6.14'].filter(Boolean));
+  const [v162, v163, v164, v165, v166, v167, v168, v169, v1610, v1611, v1612, v1613, v1614, v1615] = await Promise.all([hasPublishedJevbenchV162Release(), hasPublishedJevbenchV163Release(), hasPublishedJevbenchV164Release(), hasPublishedJevbenchV165Release(), hasPublishedJevbenchV166Release(), hasPublishedJevbenchV167Release(), hasPublishedJevbenchV168Release(), hasPublishedJevbenchV169Release(), hasPublishedJevbenchV1610Release(), hasPublishedJevbenchV1611Release(), hasPublishedJevbenchV1612Release(), hasPublishedJevbenchV1613Release(), hasPublishedJevbenchV1614Release(), hasPublishedJevbenchV1615Release()]);
+  const hidden = new Set([!v162 && 'v1.6.2', !v163 && 'v1.6.3', !v164 && 'v1.6.4', !v165 && 'v1.6.5', !v166 && 'v1.6.6', !v167 && 'v1.6.7', !v168 && 'v1.6.8', !v169 && 'v1.6.9', !v1610 && 'v1.6.10', !v1611 && 'v1.6.11', !v1612 && 'v1.6.12', !v1613 && 'v1.6.13', !v1614 && 'v1.6.14', !v1615 && 'v1.6.15'].filter(Boolean));
   const releases = JEVBENCH_RELEASES.filter((r) => !hidden.has(r.version));
   return <section className="mt-10 max-w-4xl" id="jev-release-history" aria-labelledby="jev-release-history-title" data-bh-jev-release-history>
     <h2 id="jev-release-history-title" className="text-2xl font-bold">Release history</h2>

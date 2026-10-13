@@ -5338,6 +5338,73 @@
           }
         ],
         "note": "Canonical system microsoft-decision-1. Unranked A2 measurement, equating pool four of six; no underlying architecture or parameter count is inferred."
+      },
+      "phocinae-largha-150m-v1": {
+        "arch": "open-encoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "144M",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Phocinae/Phocinae-Largha-150M-v1/blob/7070e070fec3407061e76de42d7d87240ff5b74b/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config of the evaluated revision: architectures [\"ModernBertForMaskedLM\"], model_type \"modernbert\", 22 layers, hidden size 384, max_position_embeddings 8192, dtype float32 - an encoder with a decision head, no free-form generation."
+          },
+          {
+            "url": "https://huggingface.co/Phocinae/Phocinae-Largha-150M-v1/blob/7070e070fec3407061e76de42d7d87240ff5b74b/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: a 144.3M-parameter ModernBERT-family typed-decision model, Apache-2.0, shipped with its own phocinae-server; native probabilities over a fixed option contract."
+          }
+        ]
+      },
+      "julia-1": {
+        "arch": "open-encoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "144M",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/SupersonicLabs/Julia-1/blob/a85b127321d580d65176c89ced8273f305745d85/encoder/config.json",
+            "kind": "config.json",
+            "fact": "Pinned encoder config of the evaluated revision: architectures [\"ModernBertForMaskedLM\"], model_type \"modernbert\", 22 layers, hidden size 384, max_position_embeddings 8192 - the jhu-clsp/mmBERT-small lineage the card declares."
+          },
+          {
+            "url": "https://huggingface.co/SupersonicLabs/Julia-1/blob/a85b127321d580d65176c89ced8273f305745d85/julia_config.json",
+            "kind": "config.json",
+            "fact": "Pinned head config: architecture \"JuliaDecisionModel\", two head layers, weight_dtype float32 - one encoder forward pass read at marker positions, nothing generated."
+          },
+          {
+            "url": "https://huggingface.co/SupersonicLabs/Julia-1/blob/a85b127321d580d65176c89ced8273f305745d85/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: 144.3M parameters, declared base jhu-clsp/mmBERT-small, Apache-2.0 (cardData.license; the pinned tree contains no LICENSE file), native typed-decision probabilities."
+          }
+        ],
+        "note": "The declared base jhu-clsp/mmBERT-small has no market listing, so the published cost is a labelled size-class estimate rather than a tariff."
+      },
+      "reflex-instinct-0.6b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "adapter",
+          "params": "0.6B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Atlas-AI-research/reflex-instinct-0.6b/blob/ae04b843e7840d07776c3dc554b4cd064f66cbe5/adapter_config.json",
+            "kind": "config.json",
+            "fact": "Pinned PEFT adapter config of the evaluated revision: base_model_name_or_path \"Qwen/Qwen3-0.6B\", peft_type LORA, r 64, lora_alpha 128, inference_mode true, auto_mapping base_model_class Qwen3Model."
+          },
+          {
+            "url": "https://huggingface.co/Atlas-AI-research/reflex-instinct-0.6b/blob/ae04b843e7840d07776c3dc554b4cd064f66cbe5/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card: a LoRA adapter plus a pointer head on Qwen/Qwen3-0.6B, Apache-2.0, served by the author own serve.py with native probabilities and no free-form generation."
+          }
+        ],
+        "note": "Listed but not ranked in v1.6.15: CoS deputy decision #18761 declares its Speed figure non-official, and the composite weights Speed."
       }
     },
     "imagejevbench": {
