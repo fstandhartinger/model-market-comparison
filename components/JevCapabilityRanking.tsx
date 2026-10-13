@@ -141,11 +141,12 @@ function RankingRow({ item, rank, reference, costFactor, latencyFactor, referenc
 }
 
 // v1.7.1 (Florian 6 Oct 2026): the Jev row on the open-weights board says plainly that it is a comparison reference.
-export function unrankedNote(listing: string, benchName: string) {
+export function unrankedNote(listing: string, benchName: string, preliminary?: { label?: string | null } | null) {
   if (listing === JEV_SCOPE_LISTING.reference) return 'Not ranked, only shown as a reference to compare with';
   if (listing === JEV_SCOPE_LISTING.api) return 'Not ranked here: API offering, ranked on the API leaderboard';
   // v1.7.5 (Florian 6 Oct 2026): public-set figures shown before the full sealed re-run.
-  if (listing === 'preliminary') return 'Preliminary · public set (300 items) · full sealed run pending';
+  // v1.6.14: a measurement that discloses its own preliminary scope shows that label; legacy P300 rows keep the exact text.
+  if (listing === 'preliminary') return preliminary?.label ?? 'Preliminary · public set (300 items) · full sealed run pending';
   if (listing === 'pending') return 'Pending · no v1.6 figure yet';
   return `Not ranked in the official ${benchName} Score (${listing.replace(/_/g, ' ')})`;
 }
@@ -226,7 +227,7 @@ export function JevCapabilityRanking({ systems, eligibilitySystems = systems, re
   const numbered = inside.map((r) => ({ r, label: r.row.ranked ? String(++n) : '–' }));
   const lead = numbered.find((x) => x.r.row.ranked) ?? numbered[0];
   const bar = ({ r, label }: { r: JevClassRow; label: string }) => <RankingRow key={r.row.key} item={r} rank={label} reference={reference} costFactor={costFactor} latencyFactor={latencyFactor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark}
-    note={r.isReference ? `Reference system for the ${classLabel} limits` : !r.row.ranked ? unrankedNote(r.row.listing, benchName) : undefined} />;
+    note={r.isReference ? `Reference system for the ${classLabel} limits` : !r.row.ranked ? unrankedNote(r.row.listing, benchName, (r.row as { preliminary?: { label?: string | null } | null }).preliminary) : undefined} />;
   const outsideBar = (r: JevClassRow) => <RankingRow key={r.row.key} item={r} rank="" reference={reference} costFactor={costFactor} latencyFactor={latencyFactor} referenceLabel={referenceLabel} classLabel={classLabel} costCap={limits.cost} benchmark={benchmark} note={`Outside: ${r.reasons.join(', ')}`} />;
   const types = jevLegendTypes(filteredRows.map((r) => jevRowArch(r.row)));
 
