@@ -1685,6 +1685,32 @@ class FinalizeTests(DatabaseTestCase):
         with self.assertRaises(ap.PickupError):
             ap.trusted_recompute(rid, job)
 
+    def test_rejected_existing_result_holds_once_instead_of_restarting(self):
+        # Order 4d9fef10 (13 Oct 2026): a v1.5 measurement labelled v1.6.x failed trusted_recompute and the
+        # cycle restarted the evaluation unit 62 times. A rejected RESULT.json must hold and escalate once.
+        rid, fx, job = self.prepare(visibility="private")
+        result = json.loads((job / "release/RESULT.json").read_text())
+        result["results"][0]["version"] = "v1.6.15"
+        (job / "release/RESULT.json").write_text(json.dumps(result))
+        ap.sql(f"UPDATE {ap.TABLE} SET evaluation_status='starting' WHERE id='{rid}'")
+        output = {"system_key": "evil_model", "score": 71.23456,
+                  "aggregate": {"axes": dict.fromkeys(("intelligence", "calibration", "speed", "cost"), 71.23456),
+                                "scores": dict.fromkeys(("A", "B", "C"), 71.23456)}}
+        with mock.patch.object(ap.official_scoring, "run", return_value=output):
+            self.assertEqual(ap.evaluate(rid), 1)
+        self.assertEqual(row(rid)["evaluation_status"], "failed")
+        hold = ap.load_state(rid)["operational_hold"]
+        self.assertEqual(hold["reason"], "release_result_rejected")
+        self.assertIs(hold["transient"], False)
+        self.assertIn("version", hold["detail"])
+        starts, urgent = len(fx.started), len([n for n in fx.notes if n[0] == "urgent"])
+        for _ in range(3):
+            ap.manage_evaluation(row(rid), ap.load_state(rid), fx, datetime.now(timezone.utc))
+        self.assertEqual(len(fx.started), starts)
+        cards = [n for n in fx.notes[urgent:] if n[0] == "urgent"]
+        self.assertEqual(len(cards), 1)
+        self.assertIn("independent recomputation", cards[0][2])
+
     def test_host_binds_raw_receipts_the_sandboxed_agent_cannot_see(self):
         # Order a35a4546 (2 Oct 2026): results/raw is masked in the agent sandbox, so the release agent
         # cited only OFFICIAL-SCORES.json and trusted_recompute refused the delivered result.
