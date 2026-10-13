@@ -377,9 +377,13 @@ test('CR-205: fail-closed v1.6.15 three-row same-draw addition uses the shared b
   assert.match(route, /if \(!release\) notFound\(\)/);
   ordered(route, ['<JevBenchV16Board', 'data-bh-jev1615-method', 'data-bh-jev1615-measurement-notes', '<JevHistoryLazy'], 'v1.6.15 page');
   assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
-  // the row that is deliberately not ranked must be named on the page, with the reason
+  // the row that is deliberately not ranked must be named on the page, with the reason, and the page must
+  // say what its composite in the full data table does NOT mean
   assert.match(route, /listed but not ranked/);
   assert.match(route, /reflex-instinct-0\.6b/);
+  assert.match(route, /#18761/);
+  assert.match(route, /full data table/);
+  assert.match(route, /non-official/);
 });
 
 test('CR-205: every versioned JevBench route is covered by this test', async () => {
