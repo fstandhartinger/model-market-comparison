@@ -30,7 +30,7 @@
   "wrapper_sha256": "8f4bc20a98df4d93348f26c2b1739534e045498186ab8bada53054e4e29eba54"
  },
  "abandoned_draw_note": null,
- "authority": "v1.6.10 through v1.6.14 authority unchanged; the v1.6.14 A2 measurement is carried through byte for byte and not rescored (its a2_supplement block is retained). NEW in v1.6.15: three self-hosted CPU rows measured at USD 0 on the evaluator's own machine under CoS deputy decisions #18209/#18211, which admit one re-measurement each of free CPU rows on this frozen draw at the existing per-1,000 cost cap with the frozen G_med, require an independent review and a cost binding before scoring, and attached an extra source-review and synthetic-smoke condition to julia-1 (both met, in that order, before the first sealed item). #18761: reflex-instinct-0.6b is accepted on Intelligence, Calibration and Cost only, its Speed figure is non-official, and it is therefore listed but not ranked here; and the scoped pricing correction behind julia-1's price line (adding its unlisted declared base to the frozen module's reviewed unlisted-base set) was authorised there, then re-frozen, hashed, proved behaviour-identical over every registry entry on this machine and independently reviewed before scoring. The release-level top five is identical in order on all four boards. NEW in v1.6.16: vllm-sr-d3, measured on the official v1.6 path (frozen draw input, pinned pod_driver_v16 and score_v16, frozen G_med) on one rented RTX PRO 6000 Blackwell 96 GB GPU because no single H100 was available, priced at the frozen Qwen/Qwen3.8-27B reference above the Jev-class cost cap. Its row changes a public top five (the Capability view with no cost cap and a 2x latency cap: d3 #1), which needs Florian's GO under rule 7; he gave it explicitly on 13 Oct 2026 at 15:12Z (card 17392). Carried rows keep every point estimate; nine carried Capability ranks and two carried composite ranks move by one place and are disclosed. NEW in v1.6.17 (amos-1-medium, metask_jev_rain_31b_trained_v3, pjev-2b, sage-1.4.0, subq-snap-preview): the regular-queue rows were admitted by CoS deputy decisions #18209/#18211 (free CPU rows), #18975 (hosted-API exposure of this already-retired draw; subq-snap-preview measured without a cost axis and listed but NOT ranked, custodian #18951) and, for purplemist-mini-1.0 when present, #18974 (offline token count); the paid public fast-lane row metask_jev_rain_31b_trained_v3 (order 4d9fef10, draw use admitted by custodian #18945, one pod admitted by deputy #18972) publishes under the paid fast-lane exception and is disclosed as a re-submission of the weights of order 147c5e18. Hosted rows above the cost ceiling are ranked and disclosed, as vllm-sr-d3 was in v1.6.16 (Florian GO of 13 Oct 2026, card 17392, for that row). Carried rows keep every point estimate; carried ranks and intervals move and are disclosed. Manifest review stays PENDING in this build.",
+ "authority": "v1.6.10 through v1.6.14 authority unchanged; the v1.6.14 A2 measurement is carried through byte for byte and not rescored (its a2_supplement block is retained). NEW in v1.6.15: three self-hosted CPU rows measured at USD 0 on the evaluator's own machine under CoS deputy decisions #18209/#18211, which admit one re-measurement each of free CPU rows on this frozen draw at the existing per-1,000 cost cap with the frozen G_med, require an independent review and a cost binding before scoring, and attached an extra source-review and synthetic-smoke condition to julia-1 (both met, in that order, before the first sealed item). #18761: reflex-instinct-0.6b is accepted on Intelligence, Calibration and Cost only, its Speed figure is non-official, and it is therefore listed but not ranked here; and the scoped pricing correction behind julia-1's price line (adding its unlisted declared base to the frozen module's reviewed unlisted-base set) was authorised there, then re-frozen, hashed, proved behaviour-identical over every registry entry on this machine and independently reviewed before scoring. The release-level top five is identical in order on all four boards. NEW in v1.6.16: vllm-sr-d3, measured on the official v1.6 path (frozen draw input, pinned pod_driver_v16 and score_v16, frozen G_med) on one rented RTX PRO 6000 Blackwell 96 GB GPU because no single H100 was available, priced at the frozen Qwen/Qwen3.8-27B reference above the Jev-class cost cap. Its row changes a public top five (the Capability view with no cost cap and a 2x latency cap: d3 #1), which needs Florian's GO under rule 7; he gave it explicitly on 13 Oct 2026 at 15:12Z (card 17392). Carried rows keep every point estimate; nine carried Capability ranks and two carried composite ranks move by one place and are disclosed. NEW in v1.6.17 (amos-1-large, amos-1-medium, metask_jev_rain_31b_trained_v3, pjev-2b, sage-1.4.0, subq-snap-preview): the regular-queue rows were admitted by CoS deputy decisions #18209/#18211 (free CPU rows), #18975 (hosted-API exposure of this already-retired draw; subq-snap-preview measured without a cost axis and listed but NOT ranked, custodian #18951; sage-1.4.0 listed but NOT ranked, unpriced under the frozen path, question open on #18983) and, for purplemist-mini-1.0 when present, #18974 (offline token count); the paid public fast-lane row metask_jev_rain_31b_trained_v3 (order 4d9fef10, draw use admitted by custodian #18945, one pod admitted by deputy #18972) publishes under the paid fast-lane exception, enters four Capability top fives (the official-caps and official-cost-cap/no-latency-cap rankings on the mixed and open-weights boards) and is disclosed as a re-submission of the weights of order 147c5e18. Hosted rows above the cost ceiling are ranked and disclosed, as vllm-sr-d3 was in v1.6.16 (Florian GO of 13 Oct 2026, card 17392, for that row only). amos-1-medium is ranked above the cost ceiling on the release lane's reading of that vllm-sr-d3 precedent (board #18984, no objection recorded); it enters no top five. amos-1-large is ranked above the cost ceiling (8.40x) and enters the API-board Capability top five with the cost cap off and latency 2x at #1 on Florian's explicit GO of 13 Oct 2026 (Telegram card #17487, Publish), which covers that row and that view and is distinct from card 17392. Carried rows keep every point estimate; carried ranks and intervals move and are disclosed.",
  "baseline_sha256": "aaf60b31eb7957781afdaebb7b27473dac2a674c1d6bb0182dfba2f6f9e3b8f4",
  "bootstrap": {
   "B": 1000,
@@ -90,6 +90,25 @@
  },
  "method": "jevbench::v1.6",
  "new_rows": {
+  "amos-1-large": {
+   "answered_ok": 1500,
+   "cost_cap_ratio": 8.403842060168316,
+   "endpoint_kind": "api",
+   "input_tokens": 1938726,
+   "original_raw_sha256": "87df108ea89e7f42a5cbd5983623f813c321c0f6719078dc14c3731bc0ff4b6f",
+   "output_tokens": 0,
+   "paid_fast_lane": false,
+   "ranked": true,
+   "raw_sha256": "e0df00f9b25e01e62430b40d79c3eb0286ae21a2b2c633edb1fbbbd2e3ebf410",
+   "rows": 1500,
+   "status_counts": {
+    "200": 1500
+   },
+   "token_source": "provider usage",
+   "treatment": "ranked_over_cap",
+   "under_cost_cap": false,
+   "usd_per_1000": 0.5428432799999999
+  },
   "amos-1-medium": {
    "answered_ok": 1500,
    "cost_cap_ratio": 2.0009147762305517,
@@ -195,6 +214,7 @@
  },
  "pricing_module_sha256": "dae867403e278492cf861cb6b8a3c19cb50bdccf9333821e0bf00ddda99690fe",
  "raw_sha256": {
+  "amos-1-large": "e0df00f9b25e01e62430b40d79c3eb0286ae21a2b2c633edb1fbbbd2e3ebf410",
   "amos-1-medium": "ede828c8a56c439b776a8b0bfb4a86940e586c2ea50832c1d3ec4e6b8c83bc0f",
   "attest-31b-v1.0": "900b411ab91c6961574dc647875ceffaf2c1b780aded25951643a022e33b42d5",
   "julia-1": "ab7f3eae43c230e757539b513d21c9df7c6309bd40d7f79d8706f614919421d0",
@@ -212,7 +232,7 @@
   "uniphore-4b-decider": "4a175484c796fda013a4e8dff5d1b1c5040fc160f556fec0de7a3ed63ad9f285",
   "vllm-sr-d3": "460ba4d8d52ae5eb404836416add5623f862e6b811bf24e978770da6ab3a924e"
  },
- "registry_sha256": "e55f995141bc3eac1a5be00a452b4adf28b89576d3126d7eba3f1f6838774a60",
+ "registry_sha256": "1b3a73d9f4113ab17b941aa4e57699084f77f5fc97dc53735f96c2fb85b83e27",
  "revision": "v1.6.17",
  "schema_version": 1,
  "scorer_sources_sha256": {
@@ -231,6 +251,37 @@
   {
    "answered_ok": 1500,
    "axes": {
+    "calibration": 88.99486051802106,
+    "cost": 17.95976602146007,
+    "intelligence": 69.72341288828827,
+    "speed": 83.61644312651299
+   },
+   "capability": 79.35913670315466,
+   "composite_A": 5.5363026097715755,
+   "cost_kind": "estimate",
+   "display": "Amos 1 large (Scira)",
+   "key": "amos-1-large",
+   "measured_by": "jevbench-add-requests-20260919 (release lane; hosted API run, regular-queue request 5ec7e405, CoS deputy decision #18975, item custodian #18951)",
+   "model_pin": "hosted-api:api.amos.scira.ai/v1/systemone#amos-1-large",
+   "noul_decisive": {
+    "acc_among_decisive": 0.9654088050314465,
+    "decisive": 318,
+    "decisive_rate": 0.848,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 12,
+   "raw_sha256": "e0df00f9b25e01e62430b40d79c3eb0286ae21a2b2c633edb1fbbbd2e3ebf410",
+   "rows": 1500,
+   "source_review_note": "Vendor-hosted API: no vendor code ran locally; free keyless endpoint, shape verified against the pinned API adapter and a synthetic smoke before dispatch; full-set exposure gate logged all 1,200 sealed items to provider scira first",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.5428432799999999
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
     "calibration": 87.98659582926916,
     "cost": 36.657244733397086,
     "intelligence": 38.36362733252365,
@@ -242,7 +293,7 @@
    "display": "Amos 1 medium (Scira)",
    "key": "amos-1-medium",
    "measured_by": "jevbench-add-requests-20260919 (release lane; hosted API run, regular-queue request a4ec7eb2, CoS deputy decision #18975, item custodian #18951)",
-   "model_pin": "mukaddamzaid/amos-1-medium@6b48a91e",
+   "model_pin": "hosted-api:api.amos.scira.ai/v1/systemone#amos-1-medium",
    "noul_decisive": {
     "acc_among_decisive": 0.9714285714285714,
     "decisive": 210,
@@ -313,7 +364,7 @@
     "supported": true,
     "valid": 372
    },
-   "rank": 13,
+   "rank": 14,
    "raw_sha256": "ab7f3eae43c230e757539b513d21c9df7c6309bd40d7f79d8706f614919421d0",
    "rows": 1500,
    "source_review_note": "Three independent review passes on this row specifically: receipts REVIEW-JULIA-R107.json (FAIL, seven findings), -R2.json (REVISE) and -R3.json (PASS, sealed dispatch unreachable after a failed smoke) in jevbench-add-requests-20260919/r107/receipts, plus the synthetic-only smoke receipt SMOKE-julia-1-R107.json. The reviewer re-derived the refusal precount from a clean re-implementation that never imported the contributor code and found zero difference. The price line and the one authorised pricing-module correction behind it were independently reviewed again in r108/receipts/REVIEW-PRICING-R108.json.",
@@ -468,7 +519,7 @@
     "supported": true,
     "valid": 375
    },
-   "rank": 12,
+   "rank": 13,
    "raw_sha256": "cf24b4c0b9b2e117334d03931eb292b64f5b58a8476b7ed4e1651a049f3cc8ef",
    "rows": 1500,
    "source_review_note": "Independent source/profile review of this run's measurement path: receipts REVIEW-R107.json (FAIL on nine findings) and REVIEW-R107-DELTA.json (REVISE, phocinae_scoreable true) in jevbench-add-requests-20260919/r107/receipts; every finding was fixed before this row was scored, and the reviewer recomputed each of this row's numbers independently. The author's own phocinae-server 0.1.5 is unmodified; the HTTP shim and the pre-registered type mapping are the evaluator's and were fixed in writing before the run.",

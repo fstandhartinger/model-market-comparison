@@ -18,6 +18,7 @@
     "pjev-2b",
     "krino-2b",
     "vllm-sr-d3",
+    "amos-1-large",
     "phocinae-largha-150m-v1",
     "julia-1"
    ]
@@ -36,6 +37,7 @@
     "pjev-2b",
     "krino-2b",
     "vllm-sr-d3",
+    "amos-1-large",
     "phocinae-largha-150m-v1",
     "julia-1"
    ]
@@ -54,6 +56,7 @@
     "pjev-2b",
     "krino-2b",
     "vllm-sr-d3",
+    "amos-1-large",
     "phocinae-largha-150m-v1",
     "julia-1"
    ]
@@ -62,6 +65,7 @@
    "order": [
     "vllm-sr-d3",
     "metask_jev_rain_31b_trained_v3",
+    "amos-1-large",
     "metask_jev_rain_31b_trained",
     "metask_jev_rain_12b_trained",
     "attest-31b-v1.0",
@@ -82,7 +86,7 @@
   "g_med_fixed": true
  },
  "headline": "A",
- "label": "JevBench v1.6.17 · 5 systems join the eleven full-draw rows of v1.6.16 (3 ranked, 2 listed but not ranked); the earlier listed-not-ranked row and the unranked A2 measurement are carried",
+ "label": "JevBench v1.6.17 · 6 systems join the eleven full-draw rows of v1.6.16 (4 ranked, 2 listed but not ranked); the earlier listed-not-ranked row and the unranked A2 measurement are carried",
  "measurement_notes": [
   "Refusals, errors and context-bound failures stay in the full 1,500 denominator. Every row kept its own package, model, runtime and context settings; nothing was re-run for presentation.",
   "NOT DIRECTLY COMPARABLE WITH THE LIVE v1.6.1 BOARD OR WITH THE EARLIER FRESH DRAWS. This release is a different draw with its own small-field median: G_med = 9.839526770355711, frozen from the four v1.6.10 members (attest-31B-v1.0 does not move it), against 2.573387642438244 on the live field. G_med_flag_gt10 is false. The gap penalty is max(0, 1 - max(0, (gap - G_med) - 8)/100), so this field's threshold is G_med + 8 = 17.84. On the merged live board this draw is placed with offset 0 while its anchor runs are pending, exactly like the earlier fresh draws. Measured, not estimated: Applying the same penalty formula to the stored base and gap at the live field's median 2.573387642438244, attest-31B-v1.0 Intelligence 65.238 would be 65.238 (gap -0.628); the original four rows are as stated in the v1.6.10 notes: standard_one_3b_sh Intelligence 32.786 would be 31.294 and metask_jev_rain_12b_trained 67.826 would be 67.587; krino-2b and metask_jev_rain_31b_trained are unchanged.",
@@ -107,16 +111,18 @@
   "Cost on vllm-sr-d3, and the scope of the cost note above: that note's \"every row is under the published v1.6 cost ceiling of USD 0.0646 per 1,000 decisions\" is true of the ten rows of v1.6.15 and is NOT true of vllm-sr-d3. d3 is priced as an ESTIMATE at the frozen Qwen/Qwen3.8-27B list reference of the published v1.6 field (USD 0.42 per 1M input and USD 3.00 per 1M output, the same pair the published Perplexity Decider v1.1 27B and Torchcast-Decision-27B rows carry) times its own measured tokens on the full 1,500-row basis: 1,951,205 input tokens and 0 output tokens, USD 0.5463374 per 1,000 decisions, about 8.46x that ceiling. It is not a bill and not a quote from the author or any host. Consequences: its Cost axis is 17.876, below 50, so the squared cost gate of the composite applies and its composite A is only 5.570 (rank 8 of 10 here) despite the highest Capability of this draw; and on the merged live board it is far above the official Jev-class cost cap, so it is NOT on the default (cost-capped) Capability ranking.",
   "Board effect, and why this release needed an explicit GO. On the merged live board, with the default caps, the top five of composites A, B and C and of the cost-capped Capability ranking are unchanged on the mixed board, on the open-weights board and on the API board (vllm-sr-d3 is outside the cost cap and its composite is far down). The views that change are Capability views with the cost cap switched off: with the latency cap at 2x and open-weights and API models mixed, vllm-sr-d3 becomes #1 on Capability, 82.966 against Perplexity Decider v1.1 27B at 82.792; on the open-weights board it is #1 with the cost cap off whether the latency cap is 2x or off; on the mixed board with both caps off it is #6 and that top five is unchanged. The #1 is not a resolved order: d3's 95% interval here is [78.93, 84.44] and Perplexity Decider's is [79.18, 84.71], they were measured on different draws (this draw sits on the merged board with offset 0 while its anchor runs are pending), and d3's Speed was timed on different hardware (see its note). A change to a public top five needs Florian's GO; he gave it on 13 Oct 2026 at 15:12Z (card 17392).",
   "vllm-sr-d3: Model vllm-sr/d3 at revision 5ce995dfb7ff07da00fec4211eb7f0560f52eaf8 (vLLM Semantic Router team), a fine-tune of the base Qwen/Qwen3.8-27B; its model card states 26.09B parameters including a 0.46B vision encoder. Weights Apache-2.0. The training data is not disclosed by the author, so the weight licence alone says nothing about the provenance of the training data. 1,500 attempted, 1,500 answered (all HTTP 200), 0 errors, 0 missing; the author's server sets no input-length cap, so it also answered the draw's 15 longest items that several rows of this draw refuse. Determinism check: 50 items re-asked, 50/50 bit-identical probabilities, 0 argmax flips. HARDWARE DIFFERS FROM THIS DRAW'S OTHER GPU ROWS AND FROM PERPLEXITY DECIDER AND TORCHCAST-27B: measured offline on one rented NVIDIA RTX PRO 6000 Blackwell Server Edition 96 GB GPU (Verda), while this draw's other GPU rows, Perplexity Decider and Torchcast-Decision-27B were timed on a single H100 80 GB, because no single H100 was available; the Speed axis (87.369; p50 0.1087 s raw, 0.3675 s adjusted, over the scorer's 124 open standard and judge items) therefore rests on different hardware, and the larger 96 GB memory may also matter for the longest inputs. The plain CUDA/PyTorch path of the author's unmodified d3_server.py was measured; the author's AMD ROCm fast path does not apply on CUDA. The own-server adjustment x2 + 0.15 s is an assumption, not a measurement. Cost is an ESTIMATE, not a bill: the frozen Qwen3.8-27B list reference (the same basis as Perplexity Decider and Torchcast-Decision-27B) times d3's own measured tokens, USD 0.5463374 per 1,000 decisions, far above the official Jev-class cost cap, so d3 is NOT on the default (capped) Capability ranking and its composite is small because of the squared cost gate. Source review of the pinned code before the run: PASS (no network on the text path, no benchmark-specific branches, no secret reads).",
-  "v1.6.17 ADDS 5 ROWS (Amos 1 medium (Scira) (amos-1-medium), metask-jev-rain-31B-trained service v3 (metask_jev_rain_31b_trained_v3), pjev-2b, Sage 1.4 (Levanto Labs) (sage-1.4.0), SubQ Snap (preview, SubQ) (subq-snap-preview)) to the eleven full-draw rows of v1.6.16 on the same draw, under the same rule as the earlier same-draw additions: the field median stays the frozen v1.6.10 value, so every carried row keeps identical point scores, axes, capability, cost and speed objects, and the listed-not-ranked reflex-instinct-0.6b and the unranked A2 measurement keep their wording. What moved on carried rows, counted exactly. RANKS: rows ranked in this release - amos-1-medium, metask_jev_rain_31b_trained_v3, pjev-2b - sit above some carried rows, so ranks recompute over the new roster and each carried rank moves only by the number of newly ranked rows above it: attest-31b-v1.0 capability 4 -> 5, julia-1 A 10 -> 13; B 10 -> 13; C 10 -> 13; capability 10 -> 13, krino-2b A 7 -> 10; B 7 -> 10; C 7 -> 10; capability 8 -> 11, metask_jev_rain_12b_trained capability 3 -> 4, metask_jev_rain_31b_trained capability 2 -> 3, phocinae-largha-150m-v1 A 9 -> 12; B 9 -> 12; C 9 -> 12; capability 9 -> 12, standard_one_3b_sh A 6 -> 7; B 6 -> 7; C 6 -> 7; capability 7 -> 10, torchcast-decision-4b-v1.1 C 4 -> 5; capability 5 -> 6, uniphore-4b-decider A 5 -> 6; B 5 -> 6; C 5 -> 6; capability 6 -> 9, vllm-sr-d3 A 8 -> 11; B 8 -> 11; C 8 -> 11. Rows listed but not ranked take no place in any order. CONFIDENCE INTERVALS: unlike v1.6.16, new keys sort into the middle of the key-sorted roster, and the scorer seeds each row's bootstrap with the shared seed 16 plus the row's position in that roster (each row has its own resample; the v1.6.15 note above that says the scorer draws one paired resample is corrected by the v1.6.16 note), so a carried row whose position changed gets a different interval while no point estimate moves. Carried rows whose intervals moved: attest-31b-v1.0, julia-1, krino-2b, metask_jev_rain_12b_trained, metask_jev_rain_31b_trained, phocinae-largha-150m-v1, reflex-instinct-0.6b, standard_one_3b_sh, torchcast-decision-4b-v1.1, uniphore-4b-decider, vllm-sr-d3. DIAGNOSTICS: the API-basis median diagnostic is computed over the ranked field, so it moved from 9.40342052601045 to 8.913905145687458; that moves the stored A-basis diagnostic (the row field v16.raw_on_A) of exactly the carried rows named here: standard_one_3b_sh: intelligence 29.2660 -> 29.1183, capability 53.1199 -> 53.0461; and the release-level equating-offset diagnostic moved from I 0.2288 / C 1.2340 to I 0.2288 / C 1.4616. Neither is part of any score, rank or axis on this release: the hosted-API rows scored in this invocation are full-set rows and are not equated, and the carried A2 measurement keeps its own A2 equating and is not rescored. reflex-instinct-0.6b stays LISTED BUT NOT RANKED under #18761 and the unranked A2 measurement of v1.6.14 is carried; neither is changed.",
-  "Cost on amos-1-medium, and the scope of the cost notes above: the inherited note's \"every row is under the published v1.6 cost ceiling of USD 0.0646 per 1,000 decisions\" is NOT true of amos-1-medium (cost ceiling exceeded, as it was not true of vllm-sr-d3 in v1.6.16). Amos 1 medium (Scira) is priced as an ESTIMATE at its frozen base-model market reference times the provider-reported tokens on the full 1,500-row basis: 1,938,726 input tokens and 0 output tokens, USD 0.1292484 per 1,000 decisions, 2.00x that ceiling. It is not a bill: the endpoint is free and keyless. Its Cost axis is 36.657, below 50, so the squared cost gate of the composite applies (composite A 16.594, rank 8 of 13), and on the merged live board it is above the official Jev-class cost cap, so it is NOT on the default (cost-capped) Capability ranking.",
-  "Board effect, and the basis for publishing it. Compared on the merged live board (the v1.6.1 feed plus the published fresh-draw cohort rows) before and after this release, over the mixed, open-weights and API boards: the top five of composites A, B and C is unchanged on all three boards; unchanged top fives also: Capability with no cost and no latency cap; Capability with the cost cap off and latency 2x (Florian's settings). The top five changes in: the mixed board (open-weights and API together): Capability with the official cost and latency caps (the default ranking) - before quyet-1-0-large, jeff_1_0_large, decisio-gemma-4-31b-v080, metask-jev-rain-31B-trained, sage-1.3.0; after quyet-1-0-large, jeff_1_0_large, metask-jev-rain-31B-trained service v3, decisio-gemma-4-31b-v080, metask-jev-rain-31B-trained (metask-jev-rain-31B-trained service v3 enters at #3) | the mixed board (open-weights and API together): Capability with the official cost cap and no latency cap - before quyet-1-0-large, jeff_1_0_large, decisio-gemma-4-31b-v080, wity-1, metask-jev-rain-31B-trained; after quyet-1-0-large, jeff_1_0_large, metask-jev-rain-31B-trained service v3, decisio-gemma-4-31b-v080, wity-1 (metask-jev-rain-31B-trained service v3 enters at #3) | the open-weights board: Capability with the official cost and latency caps (the default ranking); the open-weights board: Capability with the official cost cap and no latency cap - before quyet-1-0-large, jeff_1_0_large, decisio-gemma-4-31b-v080, metask-jev-rain-31B-trained, metask-jev-rain-12B-trained; after quyet-1-0-large, jeff_1_0_large, metask-jev-rain-31B-trained service v3, decisio-gemma-4-31b-v080, metask-jev-rain-31B-trained (metask-jev-rain-31B-trained service v3 enters at #3). The only added row that enters any top five is metask-jev-rain-31B-trained service v3 - a paid fast-lane row (order 4d9fef10). The other added rows (Amos 1 medium (Scira), pjev-2b, Sage 1.4 (Levanto Labs), SubQ Snap (preview, SubQ)) appear in no top five. The cause is the paid fast-lane order 4d9fef10 (a re-submission of the weights of order 147c5e18, disclosed in its row note): a paid public fast-lane row publishes automatically under the paid exception even when it changes a top five, exactly as the two paid metask rows did in v1.6.10 (whose release authority records the same top-five change); the change is disclosed here and in the proof authority.",
-  "amos-1-medium: 1,500 of 1,500 attempted answered (HTTP 200: 1,500); 0 not answered. Hosted API: the row is the vendor-hosted api.amos.scira.ai endpoint, not self-hosted weights - open weights exist (mukaddamzaid/amos-1-*), but this measurement is of the endpoint, whose deployed weights were not independently inspected, and the vendor reports its token usage. Free, keyless, one request per second for the documented 60 requests/minute; latency measured from Sandy (Germany) on the official per-item latency subset without API adjustment: p50 0.4435 s, p95 0.5068 s. All 1,200 sealed items were logged to provider scira before the first request. CUSTODY CONDITION: after this hosted exposure, no self-hosted measurement of Amos weights on this draw may be shown as a clean measurement. Cost is an ESTIMATE: the exact frozen base-model market reference times the provider-reported 1,938,726 input tokens (output 0), USD 0.129248 per 1,000 decisions, 2.00x the official cost cap, disclosed in the cost notes above; it is not a bill. Speed figures are the published method's percentiles over this draw's open standard and judge items: p50 raw 0.4435 s, p95 raw 0.5068 s.",
-  "metask_jev_rain_31b_trained_v3: 1,500 of 1,500 attempted answered (HTTP 200: 1,500); 0 not answered. PAID PUBLIC FAST-LANE ORDER 4d9fef10, published under the paid exception. RE-SUBMISSION, DISCLOSED: the same LoRA weights as the published metask_jev_rain_31b_trained row (order 147c5e18, v1.6.10) with a changed service/ layer (for example its yes/no constant); those changes may have been tuned on that row's published v1.6.10 aggregates (custodian #18945). Both rows are shown, each with its own numbers; the earlier row is carried unchanged, and no third same-weights row is admitted on this draw. HARDWARE DIFFERS FROM THE EARLIER ROW: this service v3 was measured on an evaluator-owned Lium RTX PRO 6000 96 GB pod (its reviewed recipe needs 96 GB), in an offline read-only container (--network none, verified by docker inspect before the input upload), while the earlier metask rows of this draw were timed on an H100 80GB, so the Speed axis (84.666; p50 raw 0.1808 s, adjusted 0.5116 s under the x2 + 0.15 s assumption) rests on different hardware. The service reports generated output tokens (840,049 input / 17,397 output). Cost is the v1.5-M2 base-model reference for the exact base google/gemma-4-31B-it (OpenRouter list price USD 0.09/M input, 0.34/M output, snapshot 2026-10-13T12:10:25Z) times the service's own measured usage: USD 0.054346 per 1,000 decisions, under the cost ceiling, estimated and not charged. Weights file shas: model 1b9b1d62..., adapter 2b956899..., code tree 6a1234ee...",
+  "v1.6.17 ADDS 6 ROWS (Amos 1 large (Scira) (amos-1-large), Amos 1 medium (Scira) (amos-1-medium), metask-jev-rain-31B-trained service v3 (metask_jev_rain_31b_trained_v3), pjev-2b, Sage 1.4 (Levanto Labs) (sage-1.4.0), SubQ Snap (preview, SubQ) (subq-snap-preview)) to the eleven full-draw rows of v1.6.16 on the same draw, under the same rule as the earlier same-draw additions: the field median stays the frozen v1.6.10 value, so every carried row keeps identical point scores, axes, capability, cost and speed objects, and the listed-not-ranked reflex-instinct-0.6b and the unranked A2 measurement keep their wording. What moved on carried rows, counted exactly. RANKS: rows ranked in this release - amos-1-large, amos-1-medium, metask_jev_rain_31b_trained_v3, pjev-2b - sit above some carried rows, so ranks recompute over the new roster and each carried rank moves only by the number of newly ranked rows above it: attest-31b-v1.0 capability 4 -> 6, julia-1 A 10 -> 14; B 10 -> 14; C 10 -> 14; capability 10 -> 14, krino-2b A 7 -> 10; B 7 -> 10; C 7 -> 10; capability 8 -> 12, metask_jev_rain_12b_trained capability 3 -> 5, metask_jev_rain_31b_trained capability 2 -> 4, phocinae-largha-150m-v1 A 9 -> 13; B 9 -> 13; C 9 -> 13; capability 9 -> 13, standard_one_3b_sh A 6 -> 7; B 6 -> 7; C 6 -> 7; capability 7 -> 11, torchcast-decision-4b-v1.1 C 4 -> 5; capability 5 -> 7, uniphore-4b-decider A 5 -> 6; B 5 -> 6; C 5 -> 6; capability 6 -> 10, vllm-sr-d3 A 8 -> 11; B 8 -> 11; C 8 -> 11. Rows listed but not ranked take no place in any order. CONFIDENCE INTERVALS: unlike v1.6.16, new keys sort into the middle of the key-sorted roster, and the scorer seeds each row's bootstrap with the shared seed 16 plus the row's position in that roster (each row has its own resample; the v1.6.15 note above that says the scorer draws one paired resample is corrected by the v1.6.16 note), so a carried row whose position changed gets a different interval while no point estimate moves. Carried rows whose intervals moved: attest-31b-v1.0, julia-1, krino-2b, metask_jev_rain_12b_trained, metask_jev_rain_31b_trained, phocinae-largha-150m-v1, reflex-instinct-0.6b, standard_one_3b_sh, torchcast-decision-4b-v1.1, uniphore-4b-decider, vllm-sr-d3. DIAGNOSTICS: the API-basis median diagnostic is computed over the ranked field, so it moved from 9.40342052601045 to 8.913905145687458; that moves the stored A-basis diagnostic (the row field v16.raw_on_A) of exactly the carried rows named here: standard_one_3b_sh: intelligence 29.2660 -> 29.1183, capability 53.1199 -> 53.0461; and the equating pool gains metask_jev_rain_31b_trained_v3 and pjev-2b (10 -> 12 members; the self-hosted ranked field changes with it) and the release-level equating-offset diagnostic moved from I 0.2288 / C 1.2340 to I 0.2288 / C 1.4616. Neither is part of any score, rank or axis on this release: the hosted-API rows scored in this invocation are full-set rows and are not equated, and the carried A2 measurement keeps its own A2 equating and is not rescored. reflex-instinct-0.6b stays LISTED BUT NOT RANKED under #18761 and the unranked A2 measurement of v1.6.14 is carried; neither is changed.",
+  "Cost on amos-1-large, and the scope of the cost notes above: the inherited note's \"every row is under the published v1.6 cost ceiling of USD 0.0646 per 1,000 decisions\" is NOT true of amos-1-large (cost ceiling exceeded, as it was not true of vllm-sr-d3 in v1.6.16). Amos 1 large (Scira) is priced as an ESTIMATE at its frozen base-model market reference times the provider-reported tokens on the full 1,500-row basis: 1,938,726 input tokens and 0 output tokens, USD 0.5428433 per 1,000 decisions, 8.40x that ceiling. It is not a bill: the endpoint is free and keyless. Its Cost axis is 17.960, below 50, so the squared cost gate of the composite applies (composite A 5.536, rank 12 of 14), and on the merged live board it is above the official Jev-class cost cap, so it is NOT on the default (cost-capped) Capability ranking.",
+  "Cost on amos-1-medium, and the scope of the cost notes above: the inherited note's \"every row is under the published v1.6 cost ceiling of USD 0.0646 per 1,000 decisions\" is NOT true of amos-1-medium (cost ceiling exceeded, as it was not true of vllm-sr-d3 in v1.6.16). Amos 1 medium (Scira) is priced as an ESTIMATE at its frozen base-model market reference times the provider-reported tokens on the full 1,500-row basis: 1,938,726 input tokens and 0 output tokens, USD 0.1292484 per 1,000 decisions, 2.00x that ceiling. It is not a bill: the endpoint is free and keyless. Its Cost axis is 36.657, below 50, so the squared cost gate of the composite applies (composite A 16.594, rank 8 of 14), and on the merged live board it is above the official Jev-class cost cap, so it is NOT on the default (cost-capped) Capability ranking.",
+  "Board effect, and the basis for publishing it. Compared on the merged live board (the v1.6.1 feed plus the published fresh-draw cohort rows) before and after this release, over the mixed, open-weights and API boards: the top five of composites A, B and C is unchanged on all three boards; unchanged top fives also: Capability with no cost and no latency cap. The top five changes in: the mixed board (open-weights and API together): Capability with the official cost and latency caps (the default ranking) - before quyet-1-0-large, jeff_1_0_large, decisio-gemma-4-31b-v080, metask-jev-rain-31B-trained, sage-1.3.0; after quyet-1-0-large, jeff_1_0_large, metask-jev-rain-31B-trained service v3, decisio-gemma-4-31b-v080, metask-jev-rain-31B-trained (metask-jev-rain-31B-trained service v3 enters at #3) | the mixed board (open-weights and API together): Capability with the official cost cap and no latency cap - before quyet-1-0-large, jeff_1_0_large, decisio-gemma-4-31b-v080, wity-1, metask-jev-rain-31B-trained; after quyet-1-0-large, jeff_1_0_large, metask-jev-rain-31B-trained service v3, decisio-gemma-4-31b-v080, wity-1 (metask-jev-rain-31B-trained service v3 enters at #3) | the open-weights board: Capability with the official cost and latency caps (the default ranking); the open-weights board: Capability with the official cost cap and no latency cap - before quyet-1-0-large, jeff_1_0_large, decisio-gemma-4-31b-v080, metask-jev-rain-31B-trained, metask-jev-rain-12B-trained; after quyet-1-0-large, jeff_1_0_large, metask-jev-rain-31B-trained service v3, decisio-gemma-4-31b-v080, metask-jev-rain-31B-trained (metask-jev-rain-31B-trained service v3 enters at #3) | the API board: Capability with the cost cap off and latency 2x (Florian's settings) - before spx-cd-pro, sage-1.3.0, jev-1.13.0, fastino-glide, liquid-d1; after Amos 1 large (Scira), spx-cd-pro, sage-1.3.0, jev-1.13.0, fastino-glide (Amos 1 large (Scira) enters at #1). Added rows that enter a top five: Amos 1 large (Scira), metask-jev-rain-31B-trained service v3 (metask-jev-rain-31B-trained service v3 - a paid fast-lane row, order 4d9fef10); Amos 1 large (Scira) enters on Florian's explicit GO of 13 Oct 2026 (Telegram card #17487, Publish), for this row and this view, distinct from card 17392 (vllm-sr-d3). The other added rows (Amos 1 medium (Scira), pjev-2b, Sage 1.4 (Levanto Labs), SubQ Snap (preview, SubQ)) appear in no top five. Amos 1 large's entry is not a paid order: it is a hosted row ranked above the cost ceiling and published on Florian's explicit GO of 13 Oct 2026 (Telegram card #17487, Publish), for this row and this view, distinct from card 17392 (vllm-sr-d3). The cause of the paid row's entry is the paid fast-lane order 4d9fef10 (a re-submission of the weights of order 147c5e18, disclosed in its row note): a paid public fast-lane row publishes automatically under the paid exception even when it changes a top five, exactly as the two paid metask rows did in v1.6.10 (whose release authority records the same top-five change); the change is disclosed here and in the proof authority.",
+  "amos-1-large: 1,500 of 1,500 attempted answered (HTTP 200: 1,500); 0 not answered. Hosted API: the row is the vendor-hosted api.amos.scira.ai endpoint, not self-hosted weights - open weights are declared at mukaddamzaid/amos-1-large (Apache-2.0, revision declared by the submitter, not verified), but this measurement is of the endpoint, whose deployed weights were not independently inspected, and the vendor reports its token usage. Free, keyless, one request per second for the documented 60 requests/minute; latency measured from Sandy (Germany) on the official per-item latency subset without API adjustment: p50 0.5090 s, p95 0.8543 s. All 1,200 sealed items were logged to provider scira before the first request. CUSTODY CONDITION: after this hosted exposure, no self-hosted measurement of Amos weights on this draw may be shown as a clean measurement. Cost is an ESTIMATE: the exact frozen base-model market reference times the provider-reported 1,938,726 input tokens (output 0), USD 0.542843 per 1,000 decisions, 8.40x the official cost cap, disclosed in the cost notes above; it is not a bill. Speed figures are the published method's percentiles over this draw's open standard and judge items: p50 raw 0.5090 s, p95 raw 0.8543 s.",
+  "amos-1-medium: 1,500 of 1,500 attempted answered (HTTP 200: 1,500); 0 not answered. Hosted API: the row is the vendor-hosted api.amos.scira.ai endpoint, not self-hosted weights - open weights are declared at mukaddamzaid/amos-1-medium (Apache-2.0, revision declared by the submitter, not verified), but this measurement is of the endpoint, whose deployed weights were not independently inspected, and the vendor reports its token usage. Free, keyless, one request per second for the documented 60 requests/minute; latency measured from Sandy (Germany) on the official per-item latency subset without API adjustment: p50 0.4435 s, p95 0.5068 s. All 1,200 sealed items were logged to provider scira before the first request. CUSTODY CONDITION: after this hosted exposure, no self-hosted measurement of Amos weights on this draw may be shown as a clean measurement. Cost is an ESTIMATE: the exact frozen base-model market reference times the provider-reported 1,938,726 input tokens (output 0), USD 0.129248 per 1,000 decisions, 2.00x the official cost cap, disclosed in the cost notes above; it is not a bill. Speed figures are the published method's percentiles over this draw's open standard and judge items: p50 raw 0.4435 s, p95 raw 0.5068 s.",
+  "metask_jev_rain_31b_trained_v3: 1,500 of 1,500 attempted answered (HTTP 200: 1,500); 0 not answered. PAID PUBLIC FAST-LANE ORDER 4d9fef10, published under the paid exception. RE-SUBMISSION, DISCLOSED: the same LoRA weights as the published metask_jev_rain_31b_trained row (order 147c5e18, v1.6.10) with a changed service/ layer (for example its yes/no constant); those changes may have been tuned on that row's published v1.6.10 aggregates (custodian #18945). Both rows are shown, each with its own numbers; the earlier row is carried unchanged, and no third same-weights row is admitted on this draw. HARDWARE DIFFERS FROM THE EARLIER ROW: this service v3 was measured on an evaluator-owned Lium RTX PRO 6000 96 GB pod (its reviewed recipe needs 96 GB), in an offline read-only container (--network none, verified by docker inspect before the input upload), while the earlier metask rows of this draw were timed on an H100 80GB, so the Speed axis (84.666; p50 raw 0.1808 s, adjusted 0.5116 s under the x2 + 0.15 s assumption) rests on different hardware; vllm-sr-d3 (v1.6.16) was also timed on an RTX PRO 6000 96 GB class GPU (Verda), so two rows of this draw share that class while the other self-hosted GPU rows are H100. The service reports generated output tokens (840,049 input / 17,397 output). Cost is the v1.5-M2 base-model reference for the exact base google/gemma-4-31B-it (OpenRouter list price USD 0.09/M input, 0.34/M output, snapshot 2026-10-13T12:10:25Z) times the service's own measured usage: USD 0.054346 per 1,000 decisions, under the cost ceiling, estimated and not charged. Weights file shas: model 1b9b1d62..., adapter 2b956899..., code tree 6a1234ee...",
   "pjev-2b: 1,485 of 1,500 attempted answered (HTTP 200: 1,485; HTTP 422: 15); 15 not answered. The 15 misses are HTTP 422 refusals by the author's own letter_adapter.py, which raises rather than truncating a prompt above its 16,000-token contract; they are EXACTLY the same 15 items (106,804-122,936 characters) that uniphore-4b-decider (HTTP 422), attest-31b-v1.0 (HTTP 500) and standard_one_3b_sh (HTTP 422) failed on in the published v1.6.16 runs, verified set-equal, and julia-1's 17 refusals are a strict superset. Correction of an earlier entry text: torchcast-decision-4b-v1.1 and both metask_jev_rain rows answered all 1,500 and are NOT among the rows that refused them. The totals (1,485 answered, 15 HTTP 422, 0 other failures) were pre-registered before the run and came back exact; all answered items native. SPLIT WINDOW, DISCLOSED: the row was measured across four sittings under different host load on the evaluator's shared CPU (09:07-13:16Z until a pressure guard stopped it at load 57; two short attempts stopped by swap another job had left on the host; and 18:36-19:41Z to the end; one-minute load 6.96-54.44, mean 15.09 over 323 samples), resumed by task id so no item was answered twice. Its Speed is therefore a loaded-shared-CPU figure with the same kind of interference as reflex-instinct-0.6b, and a declared lower bound against the author's own H100 reference of 20-62 ms; the standard self-hosted x2 + 0.15 s adjustment (an assumption) is applied on top and the raw p50 10.06 s / p95 30.19 s are kept. Weights run in float32 (a strict upcast of the stored bfloat16, via the pre-registered PJEV_DTYPE one-line change that defaults to the author's bfloat16); serve.py and decision_core.py are byte-identical to the author's. Cost is a size-class ESTIMATE on the frozen DeepInfra 2-4B line (USD 0.03/M input, 0.0/M output; the same treatment the board gives decision-2b on the same MiniCPM5-2B base), 813,676 input tokens, USD 0.016274 per 1,000 decisions, not a bill. Speed figures are the published method's percentiles over this draw's open standard and judge items: p50 raw 10.0633 s, p95 raw 30.1948 s.",
-  "sage-1.4.0: 1,483 of 1,500 attempted answered (HTTP 200: 1,483; HTTP 400: 15; HTTP 504: 2); 17 not answered. Hosted API (Levanto Labs), measured from Sandy (Germany) without API adjustment; native probabilities on all three question types; all 1,200 sealed items were logged to provider levanto before the first request; 665,989 input tokens and 0 output tokens. Treatment of its cost axis: UNPRICED under the frozen pricing_v15 path (sha256 dae86740...): proprietary hosted model with no base-model reference, and levanto-sage-v1.4 is in neither AGE_QUALIFIED_API nor LAUNCH_LIST_PRICE_API. sage-1.3.0's published row carries Levanto's list tariff (USD 0.05/M input, USD 10/M output), set before these sets bound new rows; it is not carried over here. Speed figures are the published method's percentiles over this draw's open standard and judge items: p50 raw 1.7411 s, p95 raw 7.5714 s.",
-  "subq-snap-preview: 1,500 of 1,500 attempted answered (HTTP 200: 1,500); 0 not answered. NOT RANKED, and here is exactly why: CoS deputy decision #18975 accepts the measurement but gives the row no cost axis until a frozen-pricing change for its preview tariff (USD 0.05/M input, output free) passes re-freeze, unchanged-row proof and independent review; its model is proprietary with no base-model reference and the days-old preview tariff is in neither frozen tariff set, so under the frozen pricing path the cost is unpriced. Without a cost axis there is no composite, so the row shows Intelligence 72.250, Calibration 90.697 and Capability 81.474 (and Speed 86.405) and carries no rank, no composite and no place in the Capability ranking (the same conservative reading applied to reflex-instinct-0.6b under #18761). Where to look: it appears in the \"All data\" table and its detail view only. Hosted API, measured from Sandy (Germany) without API adjustment; 1,943,705 input tokens and 0 output tokens (nothing generated). SubQ retains API inputs indefinitely by default; acceptable only because every sealed item of this draw was already retired, and all 1,200 sealed items were logged to the provider before the first request. Hosting implementation and deployed weights were not independently inspected. Speed figures are the published method's percentiles over this draw's open standard and judge items: p50 raw 0.4656 s, p95 raw 0.4915 s."
+  "sage-1.4.0: 1,483 of 1,500 attempted answered (HTTP 200: 1,483; HTTP 400: 15; HTTP 504: 2); 17 not answered. Hosted API (Levanto Labs), measured from Sandy (Germany) without API adjustment; native probabilities on all three question types; all 1,200 sealed items were logged to provider levanto before the first request; 665,989 input tokens and 0 output tokens. Treatment of its cost axis: UNPRICED under the frozen pricing_v15 path (sha256 dae86740...): proprietary hosted model with no base-model reference, and levanto-sage-v1.4 is in neither AGE_QUALIFIED_API nor LAUNCH_LIST_PRICE_API. sage-1.3.0's published row carries Levanto's list tariff (USD 0.05/M input, USD 10/M output), set before these sets bound new rows; it is not carried over here. Its Capability 74.773 is higher than that of 9 of the 14 ranked rows of this draw (it would sit at #6 of 15 in the draw's Capability order); it is withheld from every ranking, not rated lower. Ranking it would put it into every public Capability ranking, which needs Florian's review. Speed figures are the published method's percentiles over this draw's open standard and judge items: p50 raw 1.7411 s, p95 raw 7.5714 s.",
+  "subq-snap-preview: 1,500 of 1,500 attempted answered (HTTP 200: 1,500); 0 not answered. NOT RANKED, and here is exactly why: CoS deputy decision #18975 accepts the measurement but gives the row no cost axis until a frozen-pricing change for its preview tariff (USD 0.05/M input, output free) passes re-freeze, unchanged-row proof and independent review; its model is proprietary with no base-model reference and the days-old preview tariff is in neither frozen tariff set, so under the frozen pricing path the cost is unpriced. Without a cost axis there is no composite, so the row shows Intelligence 72.250, Calibration 90.697 and Capability 81.474 (and Speed 86.405) and carries no rank, no composite and no place in the Capability ranking (the same conservative reading applied to reflex-instinct-0.6b under #18761). Its Capability 81.474 is higher than that of 13 of the 14 ranked rows of this draw (it would sit at #2 of 15 in the draw's Capability order); it is withheld from every ranking, not rated lower. Ranking it would put it into every public Capability ranking, which needs Florian's review. Where to look: it appears in the \"All data\" table and its detail view only. Hosted API, measured from Sandy (Germany) without API adjustment; 1,943,705 input tokens and 0 output tokens (nothing generated). SubQ retains API inputs indefinitely by default; acceptable only because every sealed item of this draw was already retired, and all 1,200 sealed items were logged to the provider before the first request. Hosting implementation and deployed weights were not independently inspected. Speed figures are the published method's percentiles over this draw's open standard and judge items: p50 raw 0.4656 s, p95 raw 0.4915 s."
  ],
- "n_ranked": 13,
+ "n_ranked": 14,
  "not_measured": [],
  "noul_method": {
   "applied": "O1S",
@@ -154,7 +160,7 @@
  "protocol": "jevbench::v1.6",
  "provisional": false,
  "revision": "v1.6.17",
- "roster_count": 17,
+ "roster_count": 18,
  "run_kind": "regular-queue",
  "sample": {
   "open": 300,
@@ -163,10 +169,1329 @@
   "total": 1500
  },
  "sealed_share_of_intelligence": 0.5,
- "source_note": "17 rows on the fresh regular draw v1.6-regular-20261012 (seeded rotation-ledger draw of 1,200 sealed items + the 300-item epoch public set, drawn 2026-10-12T01:32:59Z): the eleven full-draw rows of v1.6.16 (ten ranked, reflex-instinct-0.6b listed but not ranked under #18761), 5 rows added in v1.6.17 (amos-1-medium, metask_jev_rain_31b_trained_v3, pjev-2b, sage-1.4.0, subq-snap-preview), and the unranked A2 measurement carried from v1.6.14 unchanged. ONE score_v16.py invocation over the 16 full-draw rows, unmodified frozen path (sha256 02132271...), JEV_NOUL_METHOD=O1S, B=1000, seed 16, --g-med-fixed 9.839526770355711, the median frozen at v1.6.10, so every carried row keeps every point score. The A2 row is not rescored here. Hosted-API rows were run through the unchanged run_api_full_v161.py after a full-set exposure gate; self-hosted rows through the official v1.6 self-hosted path on the frozen input (sha256 dfd36720...). The paid metask service-v3 row is published under the paid fast-lane exception (order 4d9fef10).",
- "source_sha256": "6684c497d8030e2ccd316232b1f6735d00a305eb1b4ffd28484d1cfa547f4fae",
+ "source_note": "18 rows on the fresh regular draw v1.6-regular-20261012 (seeded rotation-ledger draw of 1,200 sealed items + the 300-item epoch public set, drawn 2026-10-12T01:32:59Z): the eleven full-draw rows of v1.6.16 (ten ranked, reflex-instinct-0.6b listed but not ranked under #18761), 6 rows added in v1.6.17 (amos-1-large, amos-1-medium, metask_jev_rain_31b_trained_v3, pjev-2b, sage-1.4.0, subq-snap-preview), and the unranked A2 measurement carried from v1.6.14 unchanged. ONE score_v16.py invocation over the 17 full-draw rows, unmodified frozen path (sha256 02132271...), JEV_NOUL_METHOD=O1S, B=1000, seed 16, --g-med-fixed 9.839526770355711, the median frozen at v1.6.10, so every carried row keeps every point score. The A2 row is not rescored here. Hosted-API rows were run through the unchanged run_api_full_v161.py after a full-set exposure gate; self-hosted rows through the official v1.6 self-hosted path on the frozen input (sha256 dfd36720...). The paid metask service-v3 row is published under the paid fast-lane exception (order 4d9fef10).",
+ "source_sha256": "54e3227e21621691c1ed7b9f44abb7b264d859548770a5500734404f1df8488e",
  "status": "published",
  "systems": [
+  {
+   "addendum": null,
+   "api_flag": true,
+   "api_subset": false,
+   "author": "Scira (zaid@scira.ai)",
+   "axes": {
+    "calibration": 88.99486051802106,
+    "cost": 17.95976602146007,
+    "intelligence": 69.72341288828827,
+    "speed": 83.61644312651299
+   },
+   "calibration": {
+    "parts": {
+     "choice": {
+      "ece_hard": 0.056815051399762694,
+      "ece_score": 88.63698972004747,
+      "mean_tvd": null,
+      "n": 750,
+      "n_ece_hard": 315,
+      "n_tvd": 0,
+      "score": 88.63698972004747
+     },
+     "noul": {
+      "abstention_rate": 0.15200000000000002,
+      "brier": 0.06134542488590291,
+      "ece": 0.061674600501855234,
+      "n": 375,
+      "score": 87.66507989962895
+     },
+     "score": {
+      "interval90_coverage": 0.9866666666666667,
+      "interval90_width": 0.30288888888888893,
+      "n": 375,
+      "nrps": 0.054088924234169763,
+      "score": 90.6825119343868,
+      "top_ece": 0.06613041853904722
+     }
+    },
+    "score": 88.99486051802106
+   },
+   "capability": 79.35913670315466,
+   "composite_ci95": {
+    "A": [
+     5.45311287887791,
+     5.5715312549082645
+    ],
+    "B": [
+     5.86549219636293,
+     6.072075535488968
+    ],
+    "C": [
+     5.45311287887791,
+     5.5715312549082645
+    ]
+   },
+   "cost": {
+    "basis": "ESTIMATE (*est.), exact base-model market reference from the frozen 25 Sep 2026 snapshot (pricing_v15 sha256 dae86740...): qwen/qwen3.8-27b USD 0.42/M input, USD 3.0/M output, x the provider-reported input tokens; free keyless endpoint, nothing generated (output 0). Full 1,500 basis. OVER THE OFFICIAL COST CAP, DISCLOSED: USD 0.542843 per 1,000 decisions is 8.40x the official cap USD 0.064595; the row is ranked (v1.6.16 vllm-sr-d3 precedent) and falls outside the official-caps board views by construction.",
+    "common_basis": null,
+    "kind": "estimate",
+    "usage_estimated_rows": 0,
+    "usd_per_1000": 0.5428432799999999
+   },
+   "display": "Amos 1 large (Scira)",
+   "endpoint_condition": "Vendor-hosted api.amos.scira.ai /v1/systemone API, model `amos-1-large`; latency measured from Sandy (Germany) on the official per-item latency subset without API adjustment. Full S1200+P300 draw of v1.6-regular-20261012 through the unchanged run_api_full_v161.py; the full-set exposure gate logged all 1,200 sealed items to provider `scira` before the first request (CoS deputy #18975; every sealed item of this draw was already retired). Native probabilities on all three question types, no generated tokens. Hosting implementation and deployed weights were not independently inspected. Free, keyless; 1 s spacing for the documented 60 requests/minute.",
+   "endpoint_kind": "api",
+   "full_coverage": true,
+   "intelligence": {
+    "I_open": 72.08563541362035,
+    "I_sealed": 67.3611903629562,
+    "base": 69.72341288828827,
+    "excess": -5.115081719691553,
+    "gap": 4.724445050664158,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 86.63494209808633,
+      "n": {
+       "easy": 33,
+       "hard": 68,
+       "judge": 32,
+       "standard": 17
+      },
+      "tiers": {
+       "easy": 100.00000000000001,
+       "hard": 86.78829820698331,
+       "judge": 88.13447593935399,
+       "standard": 77.39640016743407
+      }
+     },
+     "open|noul": {
+      "cc": 70.59903381642512,
+      "n": {
+       "easy": 14,
+       "hard": 23,
+       "judge": 20,
+       "standard": 18
+      },
+      "tiers": {
+       "easy": 100.0,
+       "hard": 82.6086956521739,
+       "judge": 39.99999999999999,
+       "standard": 77.77777777777777
+      }
+     },
+     "open|score": {
+      "cc": 59.02293032634961,
+      "n": {
+       "easy": 9,
+       "hard": 29,
+       "judge": 21,
+       "standard": 16
+      },
+      "tiers": {
+       "easy": 69.3524417552081,
+       "hard": 68.76756728678528,
+       "judge": 55.49798398673283,
+       "standard": 39.65632020047416
+      }
+     },
+     "sealed|choice": {
+      "cc": 84.15652609682918,
+      "n": {
+       "easy": 70,
+       "hard": 247,
+       "judge": 146,
+       "standard": 137
+      },
+      "tiers": {
+       "easy": 94.28208386277001,
+       "hard": 79.70394356424192,
+       "judge": 85.01469147894223,
+       "standard": 86.71166420586374
+      }
+     },
+     "sealed|noul": {
+      "cc": 58.34810994461021,
+      "n": {
+       "easy": 58,
+       "hard": 110,
+       "judge": 65,
+       "standard": 67
+      },
+      "tiers": {
+       "easy": 79.3103448275862,
+       "hard": 49.09090909090909,
+       "judge": 53.846153846153854,
+       "standard": 73.13432835820895
+      }
+     },
+     "sealed|score": {
+      "cc": 59.578935047429226,
+      "n": {
+       "easy": 35,
+       "hard": 123,
+       "judge": 67,
+       "standard": 75
+      },
+      "tiers": {
+       "easy": 79.12768431971863,
+       "hard": 59.81698505291848,
+       "judge": 55.43196057988098,
+       "standard": 55.548922101628364
+      }
+     }
+    }
+   },
+   "jevbench_score": 5.5363026097715755,
+   "key": "amos-1-large",
+   "last_measured_on": "2026-10-13",
+   "licence": "Apache-2.0 open weights declared by the submitter (mukaddamzaid/amos-1-large); the measured object is Scira's hosted endpoint, whose deployed weights were not inspected",
+   "listing": "ranked",
+   "measured_in": "v1.6.17",
+   "measurement_date_status": "measured",
+   "model_pin": "hosted-api:api.amos.scira.ai/v1/systemone#amos-1-large",
+   "noul_decisive": {
+    "acc_among_decisive": 0.9654088050314465,
+    "decisive": 318,
+    "decisive_rate": 0.848,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "planned_weight_denominator": 1.0,
+   "rank": 12,
+   "ranked": true,
+   "ranks": {
+    "A": 12,
+    "B": 12,
+    "C": 12,
+    "capability": 3
+   },
+   "repo": "https://huggingface.co/mukaddamzaid/amos-1-large",
+   "scores": {
+    "A": 5.5363026097715755,
+    "B": 5.99760001090754,
+    "C": 5.5363026097715755
+   },
+   "speed": {
+    "adjustment": "none (API)",
+    "n": 124,
+    "p50_s_adjusted": 0.5090118609950878,
+    "p50_s_raw": 0.5090118609950878,
+    "p95_s_adjusted": 0.8543341861019143,
+    "p95_s_raw": 0.8543341861019143
+   },
+   "status": {
+    "answered_ok": 1500,
+    "missing": 0,
+    "rows": 1500,
+    "status": "complete"
+   },
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "v16": {
+    "api_subset": false,
+    "api_subset_tag": null,
+    "breakdowns": {
+     "family": {
+      "calibration": {
+       "accuracy": 0.9090909090909091,
+       "cc": 85.70884085363811,
+       "cc_by_type": {
+        "choice": 83.33333333333333,
+        "noul": 100.0,
+        "score": 73.79318922758102
+       },
+       "low_n": true,
+       "n": 22,
+       "n_by_type": {
+        "choice": 16,
+        "noul": 4,
+        "score": 2
+       },
+       "score": 85.70884085363811
+      },
+      "calibration_gen": {
+       "accuracy": 0.693069306930693,
+       "cc": 53.4932926677426,
+       "cc_by_type": {
+        "choice": 74.54931071049842,
+        "noul": 43.99999999999999,
+        "score": 41.93056729272939
+       },
+       "low_n": false,
+       "n": 101,
+       "n_by_type": {
+        "choice": 41,
+        "noul": 25,
+        "score": 35
+       },
+       "score": 53.4932926677426
+      },
+      "composite_gen": {
+       "accuracy": 0.9207920792079208,
+       "cc": 86.67411659317217,
+       "cc_by_type": {
+        "choice": 96.7479674796748,
+        "noul": 92.59259259259258,
+        "score": 70.68178970724917
+       },
+       "low_n": false,
+       "n": 101,
+       "n_by_type": {
+        "choice": 41,
+        "noul": 27,
+        "score": 33
+       },
+       "score": 86.67411659317217
+      },
+      "fairness": {
+       "accuracy": 0.9375,
+       "cc": 83.2317845951076,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 60.00000000000001,
+        "score": 89.69535378532278
+       },
+       "low_n": false,
+       "n": 48,
+       "n_by_type": {
+        "choice": 15,
+        "noul": 15,
+        "score": 18
+       },
+       "score": 83.2317845951076
+      },
+      "jaggedness": {
+       "accuracy": 0.7222222222222222,
+       "cc": 52.46040101820392,
+       "cc_by_type": {
+        "choice": 66.79499518768047,
+        "noul": 29.729729729729737,
+        "score": 60.85647813720154
+       },
+       "low_n": false,
+       "n": 180,
+       "n_by_type": {
+        "choice": 94,
+        "noul": 37,
+        "score": 49
+       },
+       "score": 52.46040101820392
+      },
+      "llm_router": {
+       "accuracy": 0.9329073482428115,
+       "cc": 84.01158887400364,
+       "cc_by_type": {
+        "choice": 95.24522321035484,
+        "noul": 97.93814432989691,
+        "score": 58.85139908175916
+       },
+       "low_n": false,
+       "n": 313,
+       "n_by_type": {
+        "choice": 152,
+        "noul": 97,
+        "score": 64
+       },
+       "score": 84.01158887400364
+      },
+      "long_state": {
+       "accuracy": 0.6,
+       "cc": 13.94993894062535,
+       "cc_by_type": {
+        "choice": 48.387096774193544,
+        "noul": 0.0,
+        "score": -6.5372799523174985
+       },
+       "low_n": true,
+       "n": 15,
+       "n_by_type": {
+        "choice": 10,
+        "noul": 2,
+        "score": 3
+       },
+       "score": 13.94993894062535
+      },
+      "ml_usecase": {
+       "accuracy": 0.7037037037037037,
+       "cc": 43.067969834272596,
+       "cc_by_type": {
+        "choice": 50.51546391752578,
+        "noul": 25.0,
+        "score": 53.68844558529201
+       },
+       "low_n": true,
+       "n": 27,
+       "n_by_type": {
+        "choice": 11,
+        "noul": 8,
+        "score": 8
+       },
+       "score": 43.067969834272596
+      },
+      "multilingual": {
+       "accuracy": 0.7818181818181819,
+       "cc": 62.019117736598936,
+       "cc_by_type": {
+        "choice": 81.41506358004565,
+        "noul": 44.44444444444444,
+        "score": 60.19784518530671
+       },
+       "low_n": false,
+       "n": 275,
+       "n_by_type": {
+        "choice": 134,
+        "noul": 72,
+        "score": 69
+       },
+       "score": 62.019117736598936
+      },
+      "negation_pair_gen": {
+       "accuracy": 0.8953488372093024,
+       "cc": 75.73214123542938,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 66.66666666666667,
+        "score": 60.529757039621465
+       },
+       "low_n": false,
+       "n": 86,
+       "n_by_type": {
+        "choice": 40,
+        "noul": 30,
+        "score": 16
+       },
+       "score": 75.73214123542938
+      },
+      "option_order": {
+       "accuracy": 1.0,
+       "cc": 100.0,
+       "cc_by_type": {
+        "choice": 100.0
+       },
+       "low_n": false,
+       "n": 48,
+       "n_by_type": {
+        "choice": 48
+       },
+       "score": 100.0
+      },
+      "perturb_pair": {
+       "accuracy": 0.890625,
+       "cc": 81.14468880284434,
+       "cc_by_type": {
+        "choice": 87.98798798798799,
+        "noul": 100.0,
+        "score": 55.44607842054504
+       },
+       "low_n": false,
+       "n": 64,
+       "n_by_type": {
+        "choice": 44,
+        "noul": 10,
+        "score": 10
+       },
+       "score": 81.14468880284434
+      },
+      "usecase": {
+       "accuracy": 0.7863636363636364,
+       "cc": 61.1838712254527,
+       "cc_by_type": {
+        "choice": 81.61764705882352,
+        "noul": 41.66666666666667,
+        "score": 60.267299950867894
+       },
+       "low_n": false,
+       "n": 220,
+       "n_by_type": {
+        "choice": 104,
+        "noul": 48,
+        "score": 68
+       },
+       "score": 61.1838712254527
+      }
+     },
+     "lang": {
+      "ar": {
+       "accuracy": 0.75,
+       "cc": 61.882864079814546,
+       "cc_by_type": {
+        "choice": 61.904761904761905,
+        "noul": 100.0,
+        "score": 23.743830334681725
+       },
+       "low_n": true,
+       "n": 16,
+       "n_by_type": {
+        "choice": 7,
+        "noul": 4,
+        "score": 5
+       },
+       "score": 61.882864079814546
+      },
+      "cs": {
+       "accuracy": 0.5714285714285714,
+       "cc": 68.42105263157895,
+       "cc_by_type": {
+        "choice": 36.84210526315789,
+        "noul": 100.0
+       },
+       "low_n": true,
+       "n": 7,
+       "n_by_type": {
+        "choice": 6,
+        "noul": 1
+       },
+       "score": 68.42105263157895
+      },
+      "da": {
+       "accuracy": 0.7692307692307693,
+       "cc": 52.73782751626438,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 33.33333333333333,
+        "score": 24.880149215459824
+       },
+       "low_n": true,
+       "n": 13,
+       "n_by_type": {
+        "choice": 6,
+        "noul": 3,
+        "score": 4
+       },
+       "score": 52.73782751626438
+      },
+      "de": {
+       "accuracy": 0.875,
+       "cc": 83.90096934595631,
+       "cc_by_type": {
+        "choice": 76.10619469026548,
+        "noul": 100.0,
+        "score": 75.59671334760345
+       },
+       "low_n": false,
+       "n": 32,
+       "n_by_type": {
+        "choice": 16,
+        "noul": 8,
+        "score": 8
+       },
+       "score": 83.90096934595631
+      },
+      "el": {
+       "accuracy": 0.6666666666666666,
+       "cc": 53.05558601212194,
+       "cc_by_type": {
+        "choice": 66.4804469273743,
+        "noul": 0.0,
+        "score": 92.6863111089915
+       },
+       "low_n": true,
+       "n": 15,
+       "n_by_type": {
+        "choice": 8,
+        "noul": 6,
+        "score": 1
+       },
+       "score": 53.05558601212194
+      },
+      "en": {
+       "accuracy": 0.8444830582102519,
+       "cc": 71.92616617433795,
+       "cc_by_type": {
+        "choice": 86.38044446614026,
+        "noul": 67.62589928057554,
+        "score": 61.77215477629807
+       },
+       "low_n": false,
+       "n": 1151,
+       "n_by_type": {
+        "choice": 588,
+        "noul": 278,
+        "score": 285
+       },
+       "score": 71.92616617433795
+      },
+      "es": {
+       "accuracy": 0.8387096774193549,
+       "cc": 70.72155656154153,
+       "cc_by_type": {
+        "choice": 90.2120717781403,
+        "noul": 100.0,
+        "score": 21.952597906484318
+       },
+       "low_n": false,
+       "n": 31,
+       "n_by_type": {
+        "choice": 13,
+        "noul": 8,
+        "score": 10
+       },
+       "score": 70.72155656154153
+      },
+      "fi": {
+       "accuracy": 0.875,
+       "cc": 74.873681863149,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 33.33333333333333,
+        "score": 91.28771225611368
+       },
+       "low_n": true,
+       "n": 8,
+       "n_by_type": {
+        "choice": 4,
+        "noul": 3,
+        "score": 1
+       },
+       "score": 74.873681863149
+      },
+      "fr": {
+       "accuracy": 0.8571428571428571,
+       "cc": 81.05883440654436,
+       "cc_by_type": {
+        "choice": 57.64705882352941,
+        "noul": 100.0,
+        "score": 85.52944439610368
+       },
+       "low_n": true,
+       "n": 14,
+       "n_by_type": {
+        "choice": 6,
+        "noul": 2,
+        "score": 6
+       },
+       "score": 81.05883440654436
+      },
+      "hi": {
+       "accuracy": 0.8095238095238095,
+       "cc": 61.66610015218894,
+       "cc_by_type": {
+        "choice": 66.4804469273743,
+        "noul": 50.0,
+        "score": 68.51785352919251
+       },
+       "low_n": true,
+       "n": 21,
+       "n_by_type": {
+        "choice": 8,
+        "noul": 8,
+        "score": 5
+       },
+       "score": 61.66610015218894
+      },
+      "id": {
+       "accuracy": 0.75,
+       "cc": 0.0,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": -100.0
+       },
+       "low_n": true,
+       "n": 4,
+       "n_by_type": {
+        "choice": 3,
+        "noul": 1
+       },
+       "score": 0.0
+      },
+      "it": {
+       "accuracy": 0.8666666666666667,
+       "cc": 67.97700324005393,
+       "cc_by_type": {
+        "choice": 85.97038191738113,
+        "noul": 100.0,
+        "score": 17.96062780278067
+       },
+       "low_n": true,
+       "n": 15,
+       "n_by_type": {
+        "choice": 9,
+        "noul": 3,
+        "score": 3
+       },
+       "score": 67.97700324005393
+      },
+      "ja": {
+       "accuracy": 0.68,
+       "cc": 43.73893493579494,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 19.999999999999996,
+        "score": 11.216804807384817
+       },
+       "low_n": true,
+       "n": 25,
+       "n_by_type": {
+        "choice": 9,
+        "noul": 10,
+        "score": 6
+       },
+       "score": 43.73893493579494
+      },
+      "ko": {
+       "accuracy": 0.6,
+       "cc": 20.773298386484385,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": -100.0,
+        "score": 62.319895159453154
+       },
+       "low_n": true,
+       "n": 10,
+       "n_by_type": {
+        "choice": 3,
+        "noul": 2,
+        "score": 5
+       },
+       "score": 20.773298386484385
+      },
+      "mixed": {
+       "accuracy": 1.0,
+       "cc": 97.24507216985027,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 100.0,
+        "score": 91.73521650955081
+       },
+       "low_n": true,
+       "n": 14,
+       "n_by_type": {
+        "choice": 8,
+        "noul": 3,
+        "score": 3
+       },
+       "score": 97.24507216985027
+      },
+      "nl": {
+       "accuracy": 0.5,
+       "cc": -17.41688895535159,
+       "cc_by_type": {
+        "choice": 74.02597402597404,
+        "noul": -100.0,
+        "score": -26.276640892028812
+       },
+       "low_n": true,
+       "n": 10,
+       "n_by_type": {
+        "choice": 5,
+        "noul": 3,
+        "score": 2
+       },
+       "score": 0.0
+      },
+      "no": {
+       "accuracy": 0.8333333333333334,
+       "cc": 75.0,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 50.0
+       },
+       "low_n": true,
+       "n": 6,
+       "n_by_type": {
+        "choice": 2,
+        "noul": 4
+       },
+       "score": 75.0
+      },
+      "pl": {
+       "accuracy": 0.8461538461538461,
+       "cc": 77.465615091364,
+       "cc_by_type": {
+        "choice": 92.382564536606,
+        "noul": 80.0,
+        "score": 60.01428073748598
+       },
+       "low_n": false,
+       "n": 39,
+       "n_by_type": {
+        "choice": 17,
+        "noul": 10,
+        "score": 12
+       },
+       "score": 77.465615091364
+      },
+      "pt": {
+       "accuracy": 0.7857142857142857,
+       "cc": 63.573232278872894,
+       "cc_by_type": {
+        "choice": 68.1791396582204,
+        "noul": 60.00000000000001,
+        "score": 62.54055717839828
+       },
+       "low_n": true,
+       "n": 28,
+       "n_by_type": {
+        "choice": 12,
+        "noul": 5,
+        "score": 11
+       },
+       "score": 63.573232278872894
+      },
+      "sv": {
+       "accuracy": 0.6363636363636364,
+       "cc": 56.68991453443647,
+       "cc_by_type": {
+        "choice": 48.93617021276595,
+        "noul": 60.00000000000001,
+        "score": 61.13357339054346
+       },
+       "low_n": true,
+       "n": 11,
+       "n_by_type": {
+        "choice": 5,
+        "noul": 5,
+        "score": 1
+       },
+       "score": 56.68991453443647
+      },
+      "tr": {
+       "accuracy": 0.7692307692307693,
+       "cc": 67.58806742727757,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 50.0,
+        "score": 52.764202281832695
+       },
+       "low_n": true,
+       "n": 13,
+       "n_by_type": {
+        "choice": 6,
+        "noul": 4,
+        "score": 3
+       },
+       "score": 67.58806742727757
+      },
+      "uk": {
+       "accuracy": 0.8571428571428571,
+       "cc": 80.91469064595238,
+       "cc_by_type": {
+        "choice": 67.74193548387096,
+        "noul": 100.0,
+        "score": 75.00213645398617
+       },
+       "low_n": true,
+       "n": 7,
+       "n_by_type": {
+        "choice": 4,
+        "noul": 1,
+        "score": 2
+       },
+       "score": 80.91469064595238
+      },
+      "zh": {
+       "accuracy": 0.9,
+       "cc": 70.9322772713171,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 33.33333333333333,
+        "score": 79.463498480618
+       },
+       "low_n": true,
+       "n": 10,
+       "n_by_type": {
+        "choice": 5,
+        "noul": 3,
+        "score": 2
+       },
+       "score": 70.9322772713171
+      }
+     },
+     "type": {
+      "choice": {
+       "accuracy": 0.8853333333333333,
+       "cc": 85.1891540213169,
+       "cc_by_type": {
+        "choice": 85.1891540213169
+       },
+       "low_n": false,
+       "n": 750,
+       "n_by_type": {
+        "choice": 750
+       },
+       "score": 85.1891540213169
+      },
+      "noul": {
+       "accuracy": 0.8186666666666667,
+       "cc": 63.733333333333334,
+       "cc_by_type": {
+        "noul": 63.733333333333334
+       },
+       "low_n": false,
+       "n": 375,
+       "n_by_type": {
+        "noul": 375
+       },
+       "score": 63.733333333333334
+      },
+      "score": {
+       "accuracy": 0.7386666666666667,
+       "cc": 60.63169182802718,
+       "cc_by_type": {
+        "score": 60.63169182802718
+       },
+       "low_n": false,
+       "n": 375,
+       "n_by_type": {
+        "score": 375
+       },
+       "score": 60.63169182802718
+      }
+     },
+     "usecase": {
+      "advertising": {
+       "accuracy": 0.45454545454545453,
+       "cc": 12.801234460928859,
+       "cc_by_type": {
+        "choice": 52.0,
+        "noul": -50.0,
+        "score": 36.40370338278658
+       },
+       "low_n": true,
+       "n": 22,
+       "n_by_type": {
+        "choice": 8,
+        "noul": 8,
+        "score": 6
+       },
+       "score": 12.801234460928859
+      },
+      "code_linting": {
+       "accuracy": 0.9166666666666666,
+       "cc": 83.81931093174488,
+       "cc_by_type": {
+        "choice": 81.36645962732919,
+        "noul": 100.0,
+        "score": 70.09147316790545
+       },
+       "low_n": true,
+       "n": 24,
+       "n_by_type": {
+        "choice": 7,
+        "noul": 9,
+        "score": 8
+       },
+       "score": 83.81931093174488
+      },
+      "customer_support": {
+       "accuracy": 0.6428571428571429,
+       "cc": 25.116387537117735,
+       "cc_by_type": {
+        "choice": 67.47967479674797,
+        "noul": 0.0,
+        "score": 7.869487814605236
+       },
+       "low_n": true,
+       "n": 14,
+       "n_by_type": {
+        "choice": 8,
+        "noul": 4,
+        "score": 2
+       },
+       "score": 25.116387537117735
+      },
+      "demand_forecasting": {
+       "accuracy": 0.4117647058823529,
+       "cc": -0.49442484717067475,
+       "cc_by_type": {
+        "choice": 18.128654970760234,
+        "noul": 33.33333333333333,
+        "score": -52.94526284560559
+       },
+       "low_n": true,
+       "n": 17,
+       "n_by_type": {
+        "choice": 11,
+        "noul": 3,
+        "score": 3
+       },
+       "score": 0.0
+      },
+      "ecommerce_marketplaces": {
+       "accuracy": 0.7647058823529411,
+       "cc": 40.641138161384106,
+       "cc_by_type": {
+        "choice": 85.50724637681158,
+        "noul": -33.333333333333336,
+        "score": 69.74950144067407
+       },
+       "low_n": true,
+       "n": 17,
+       "n_by_type": {
+        "choice": 9,
+        "noul": 3,
+        "score": 5
+       },
+       "score": 40.641138161384106
+      },
+      "feature_extraction": {
+       "accuracy": 0.6842105263157895,
+       "cc": -4.760219093872943,
+       "cc_by_type": {
+        "choice": 74.84276729559748,
+        "noul": 33.33333333333333,
+        "score": -122.45675791054964
+       },
+       "low_n": true,
+       "n": 19,
+       "n_by_type": {
+        "choice": 10,
+        "noul": 6,
+        "score": 3
+       },
+       "score": 0.0
+      },
+      "financial_crime": {
+       "accuracy": 0.8333333333333334,
+       "cc": 57.85491369773835,
+       "cc_by_type": {
+        "choice": 100.00000000000001,
+        "noul": 14.28571428571428,
+        "score": 59.27902680750074
+       },
+       "low_n": false,
+       "n": 30,
+       "n_by_type": {
+        "choice": 13,
+        "noul": 7,
+        "score": 10
+       },
+       "score": 57.85491369773835
+      },
+      "gaming": {
+       "accuracy": 0.9090909090909091,
+       "cc": 71.2806493361724,
+       "cc_by_type": {
+        "choice": 89.54703832752612,
+        "noul": 50.0,
+        "score": 74.29490968099105
+       },
+       "low_n": true,
+       "n": 22,
+       "n_by_type": {
+        "choice": 12,
+        "noul": 4,
+        "score": 6
+       },
+       "score": 71.2806493361724
+      },
+      "insurance_claims": {
+       "accuracy": 0.5333333333333333,
+       "cc": 16.02023316616262,
+       "cc_by_type": {
+        "choice": 37.5,
+        "noul": -19.999999999999996,
+        "score": 30.560699498487853
+       },
+       "low_n": true,
+       "n": 15,
+       "n_by_type": {
+        "choice": 6,
+        "noul": 5,
+        "score": 4
+       },
+       "score": 16.02023316616262
+      },
+      "knowledge_graphs": {
+       "accuracy": 0.7272727272727273,
+       "cc": 67.5820202385729,
+       "cc_by_type": {
+        "choice": 74.30406852248395,
+        "noul": 66.66666666666667,
+        "score": 61.77532552656804
+       },
+       "low_n": true,
+       "n": 22,
+       "n_by_type": {
+        "choice": 10,
+        "noul": 6,
+        "score": 6
+       },
+       "score": 67.5820202385729
+      },
+      "lead_generation": {
+       "accuracy": 0.76,
+       "cc": 62.07152141651769,
+       "cc_by_type": {
+        "choice": 88.3720930232558,
+        "noul": 55.55555555555556,
+        "score": 42.2869156707417
+       },
+       "low_n": true,
+       "n": 25,
+       "n_by_type": {
+        "choice": 11,
+        "noul": 9,
+        "score": 5
+       },
+       "score": 62.07152141651769
+      },
+      "legal_compliance": {
+       "accuracy": 0.2,
+       "cc": 0.9993600672424611,
+       "cc_by_type": {
+        "choice": -29.032258064516128,
+        "noul": 33.33333333333333,
+        "score": -1.3029950670898183
+       },
+       "low_n": true,
+       "n": 10,
+       "n_by_type": {
+        "choice": 4,
+        "noul": 3,
+        "score": 3
+       },
+       "score": 0.9993600672424611
+      },
+      "llm_guardrails": {
+       "accuracy": 0.8518518518518519,
+       "cc": 73.86169788565626,
+       "cc_by_type": {
+        "choice": 100.00000000000001,
+        "noul": 60.00000000000001,
+        "score": 61.58509365696874
+       },
+       "low_n": true,
+       "n": 27,
+       "n_by_type": {
+        "choice": 11,
+        "noul": 5,
+        "score": 11
+       },
+       "score": 73.86169788565626
+      },
+      "model_routing": {
+       "accuracy": 0.9170506912442397,
+       "cc": 81.67870057339692,
+       "cc_by_type": {
+        "choice": 95.32467532467533,
+        "noul": 100.0,
+        "score": 49.711426395515446
+       },
+       "low_n": false,
+       "n": 217,
+       "n_by_type": {
+        "choice": 101,
+        "noul": 66,
+        "score": 50
+       },
+       "score": 81.67870057339692
+      },
+      "moderation_trust_safety": {
+       "accuracy": 0.7777777777777778,
+       "cc": 19.51262058240074,
+       "cc_by_type": {
+        "choice": 88.48368522072937,
+        "noul": -100.0,
+        "score": 70.05417652647284
+       },
+       "low_n": true,
+       "n": 18,
+       "n_by_type": {
+        "choice": 11,
+        "noul": 2,
+        "score": 5
+       },
+       "score": 19.51262058240074
+      },
+      "recruiting": {
+       "accuracy": 0.7777777777777778,
+       "cc": 57.303088588281206,
+       "cc_by_type": {
+        "choice": 66.57381615598885,
+        "noul": 33.33333333333333,
+        "score": 72.00211627552143
+       },
+       "low_n": true,
+       "n": 18,
+       "n_by_type": {
+        "choice": 8,
+        "noul": 3,
+        "score": 7
+       },
+       "score": 57.303088588281206
+      },
+      "risk_assessment": {
+       "accuracy": 0.6666666666666666,
+       "cc": 26.574834589572514,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": -50.0,
+        "score": 29.724503768717547
+       },
+       "low_n": true,
+       "n": 18,
+       "n_by_type": {
+        "choice": 9,
+        "noul": 4,
+        "score": 5
+       },
+       "score": 26.574834589572514
+      },
+      "scientific_discovery": {
+       "accuracy": 0.7391304347826086,
+       "cc": 48.40292921906184,
+       "cc_by_type": {
+        "choice": 85.5072463768116,
+        "noul": 0.0,
+        "score": 59.701541280373924
+       },
+       "low_n": true,
+       "n": 23,
+       "n_by_type": {
+        "choice": 9,
+        "noul": 6,
+        "score": 8
+       },
+       "score": 48.40292921906184
+      },
+      "search_retrieval": {
+       "accuracy": 1.0,
+       "cc": 97.1544132796688,
+       "cc_by_type": {
+        "choice": 100.0,
+        "noul": 100.0,
+        "score": 91.46323983900642
+       },
+       "low_n": true,
+       "n": 24,
+       "n_by_type": {
+        "choice": 12,
+        "noul": 4,
+        "score": 8
+       },
+       "score": 97.1544132796688
+      }
+     }
+    },
+    "breakdowns_equated": false,
+    "ci95": {
+     "B": 1000,
+     "C": [
+      84.70410190085266,
+      89.27499648007384
+     ],
+     "I": [
+      64.83012939104476,
+      73.50027376113194
+     ],
+     "capability": [
+      75.526957020295,
+      80.7067065083684
+     ],
+     "composite": {
+      "A": [
+       5.45311287887791,
+       5.5715312549082645
+      ],
+      "B": [
+       5.86549219636293,
+       6.072075535488968
+      ],
+      "C": [
+       5.45311287887791,
+       5.5715312549082645
+      ]
+     },
+     "seed": 16
+    },
+    "ci95_n": 1200,
+    "complete": true,
+    "equated": null,
+    "equating_flag": null,
+    "equating_offset": null,
+    "full_set_api": true,
+    "g_med_used": 9.839526770355711,
+    "lane": "api",
+    "metric_basis": "S u P (full set, API lane, v1.6.1 amendment; not equated)",
+    "n_items": 1500,
+    "n_public": 300,
+    "n_sealed_side": 1200,
+    "on_S": {
+     "calibration": 88.99486051802106,
+     "capability": 79.35913670315466,
+     "intelligence": 69.72341288828827
+    },
+    "per_type": {
+     "choice": {
+      "accuracy": 0.8853333333333333,
+      "calibration": 88.63698972004747,
+      "cc": 85.1891540213169,
+      "cc_by_type": {
+       "choice": 85.1891540213169
+      },
+      "cc_tiered": 85.39573409745776,
+      "cc_tiered_open": 86.63494209808633,
+      "cc_tiered_sealed": 84.15652609682918,
+      "low_n": false,
+      "n": 750,
+      "n_by_type": {
+       "choice": 750
+      },
+      "score": 85.1891540213169
+     },
+     "noul": {
+      "accuracy": 0.8186666666666667,
+      "calibration": 87.66507989962895,
+      "cc": 63.733333333333334,
+      "cc_by_type": {
+       "noul": 63.733333333333334
+      },
+      "cc_tiered": 64.47357188051767,
+      "cc_tiered_open": 70.59903381642512,
+      "cc_tiered_sealed": 58.34810994461021,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "noul": 375
+      },
+      "score": 63.733333333333334
+     },
+     "score": {
+      "accuracy": 0.7386666666666667,
+      "calibration": 90.6825119343868,
+      "cc": 60.63169182802718,
+      "cc_by_type": {
+       "score": 60.63169182802718
+      },
+      "cc_tiered": 59.30093268688942,
+      "cc_tiered_open": 59.02293032634961,
+      "cc_tiered_sealed": 59.578935047429226,
+      "low_n": false,
+      "n": 375,
+      "n_by_type": {
+       "score": 375
+      },
+      "score": 60.63169182802718
+     }
+    },
+    "raw_on_A": null,
+    "set": "S+P"
+   },
+   "validity": {
+    "choice": {
+     "invalid_rate": 0.0,
+     "n": 750
+    },
+    "noul": {
+     "invalid_rate": 0.0,
+     "n": 375
+    },
+    "score": {
+     "invalid_rate": 0.0,
+     "n": 375
+    }
+   },
+   "views": {
+    "Balanced 33:33:33": 4.721340447009444,
+    "Emphasis on Accuracy 60:20:20": 5.829281470915487,
+    "Emphasis on Cost 20:20:60": 3.3366111981752655,
+    "Emphasis on Speed 20:60:20": 6.091626979152469,
+    "Intelligence only": 8.995803852584828
+   }
+  },
   {
    "addendum": null,
    "api_flag": true,
@@ -210,16 +1535,16 @@
    "capability": 63.175111580896406,
    "composite_ci95": {
     "A": [
-     11.585427979349753,
-     21.631628576056833
+     11.456107363335107,
+     21.7606419869365
     ],
     "B": [
-     10.5395882424664,
-     20.576645669300127
+     10.40605460041017,
+     20.67120879171385
     ],
     "C": [
-     8.045436096770663,
-     15.021964288928359
+     7.955630113427155,
+     15.111556935372572
     ]
    },
    "cost": {
@@ -336,11 +1661,11 @@
    "jevbench_score": 16.594331365489452,
    "key": "amos-1-medium",
    "last_measured_on": "2026-10-13",
-   "licence": "Apache-2.0 open weights (mukaddamzaid/amos-1-medium); measured on the vendor-hosted endpoint",
+   "licence": "Apache-2.0 open weights declared by the submitter (mukaddamzaid/amos-1-medium); the measured object is Scira's hosted endpoint, whose deployed weights were not inspected",
    "listing": "ranked",
    "measured_in": "v1.6.17",
    "measurement_date_status": "measured",
-   "model_pin": "mukaddamzaid/amos-1-medium@6b48a91e",
+   "model_pin": "hosted-api:api.amos.scira.ai/v1/systemone#amos-1-medium",
    "noul_decisive": {
     "acc_among_decisive": 0.9714285714285714,
     "decisive": 210,
@@ -356,7 +1681,7 @@
     "A": 8,
     "B": 8,
     "C": 8,
-    "capability": 7
+    "capability": 8
    },
    "repo": "https://huggingface.co/mukaddamzaid/amos-1-medium",
    "scores": {
@@ -1364,32 +2689,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      82.10504936887014,
-      88.45385616144951
+      82.14451225239841,
+      88.63865202401091
      ],
      "I": [
-      33.024220794134585,
-      43.076511453725765
+      32.87771623313232,
+      43.16183347366633
      ],
      "capability": [
-      58.94989358682765,
-      64.69683880260912
+      58.690357425326795,
+      64.77827562501643
      ],
      "composite": {
       "A": [
-       11.585427979349753,
-       21.631628576056833
+       11.456107363335107,
+       21.7606419869365
       ],
       "B": [
-       10.5395882424664,
-       20.576645669300127
+       10.40605460041017,
+       20.67120879171385
       ],
       "C": [
-       8.045436096770663,
-       15.021964288928359
+       7.955630113427155,
+       15.111556935372572
       ]
      },
-     "seed": 16
+     "seed": 17
     },
     "ci95_n": 1200,
     "complete": true,
@@ -1529,16 +2854,16 @@
    "capability": 69.54321289428123,
    "composite_ci95": {
     "A": [
-     65.58169579477865,
-     69.73903601947237
+     65.73071055576793,
+     69.6952296814163
     ],
     "B": [
-     64.26634746057982,
-     69.74281776715287
+     64.4213564130459,
+     69.67699847943443
     ],
     "C": [
-     64.1938614798755,
-     69.73903601947237
+     64.41605022386179,
+     69.6952296814163
     ]
    },
    "cost": {
@@ -1675,7 +3000,7 @@
     "A": 2,
     "B": 2,
     "C": 1,
-    "capability": 5
+    "capability": 6
    },
    "repo": "https://attest.engineering/model",
    "scores": {
@@ -2683,32 +4008,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      69.69659406091671,
-      77.21859044566098
+      69.6953408905713,
+      77.12119154645599
      ],
      "I": [
-      59.37987711757625,
-      70.0271390047424
+      59.43300211610299,
+      69.95007210479837
      ],
      "capability": [
-      64.90005341390437,
-      73.15769798688086
+      65.36489163841703,
+      73.05723050319955
      ],
      "composite": {
       "A": [
-       65.58169579477865,
-       69.73903601947237
+       65.73071055576793,
+       69.6952296814163
       ],
       "B": [
-       64.26634746057982,
-       69.74281776715287
+       64.4213564130459,
+       69.67699847943443
       ],
       "C": [
-       64.1938614798755,
-       69.73903601947237
+       64.41605022386179,
+       69.6952296814163
       ]
      },
-     "seed": 17
+     "seed": 18
     },
     "ci95_n": 1200,
     "complete": true,
@@ -2848,16 +4173,16 @@
    "capability": 9.854654871580568,
    "composite_ci95": {
     "A": [
-     0.000581179501502227,
-     0.13565967691049244
+     0.0007991331063202137,
+     0.13507217295781881
     ],
     "B": [
-     0.0003747960015867425,
-     0.09921803805291032
+     0.0005151462903741629,
+     0.09859501709900961
     ],
     "C": [
-     0.0004035968760432131,
-     0.09420810896561975
+     0.000554953546055704,
+     0.09380012010959642
     ]
    },
    "cost": {
@@ -2988,13 +4313,13 @@
     "valid": 372
    },
    "planned_weight_denominator": 1.0,
-   "rank": 13,
+   "rank": 14,
    "ranked": true,
    "ranks": {
-    "A": 13,
-    "B": 13,
-    "C": 13,
-    "capability": 13
+    "A": 14,
+    "B": 14,
+    "C": 14,
+    "capability": 14
    },
    "repo": "https://huggingface.co/SupersonicLabs/Julia-1",
    "scores": {
@@ -4002,32 +5327,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      13.387245435922019,
-      21.703546127908908
+      13.537940645516176,
+      22.07664535816296
      ],
      "I": [
-      0.7288080947417384,
-      4.906512246544629
+      0.8102048472877913,
+      4.891580248729555
      ],
      "capability": [
-      7.671718086091808,
-      12.746303608535655
+      7.646258012087856,
+      12.858247710257576
      ],
      "composite": {
       "A": [
-       0.000581179501502227,
-       0.13565967691049244
+       0.0007991331063202137,
+       0.13507217295781881
       ],
       "B": [
-       0.0003747960015867425,
-       0.09921803805291032
+       0.0005151462903741629,
+       0.09859501709900961
       ],
       "C": [
-       0.0004035968760432131,
-       0.09420810896561975
+       0.000554953546055704,
+       0.09380012010959642
       ]
      },
-     "seed": 18
+     "seed": 19
     },
     "ci95_n": 1200,
     "complete": true,
@@ -4171,16 +5496,16 @@
    "capability": 42.413153726626945,
    "composite_ci95": {
     "A": [
-     3.9630331656461557,
-     13.859460068714533
+     4.159038280285125,
+     14.50657591477482
     ],
     "B": [
-     3.155725628504995,
-     11.919253507346484
+     3.3148096275832133,
+     12.525166417506526
     ],
     "C": [
-     2.752106365032052,
-     9.624625047718425
+     2.888221027975781,
+     10.07401105192696
     ]
    },
    "cost": {
@@ -4317,7 +5642,7 @@
     "A": 10,
     "B": 10,
     "C": 10,
-    "capability": 11
+    "capability": 12
    },
    "repo": "https://huggingface.co/Guru0381/krino-2b",
    "scores": {
@@ -5325,32 +6650,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      56.54029796589537,
-      64.99110118851826
+      56.41672316217448,
+      64.80223510018135
      ],
      "I": [
-      16.320513071112295,
-      26.79109880406068
+      16.576296614458364,
+      27.218790919118323
      ],
      "capability": [
-      37.39634118144095,
-      44.80555409327994
+      37.668891101780076,
+      45.33019940571372
      ],
      "composite": {
       "A": [
-       3.9630331656461557,
-       13.859460068714533
+       4.159038280285125,
+       14.50657591477482
       ],
       "B": [
-       3.155725628504995,
-       11.919253507346484
+       3.3148096275832133,
+       12.525166417506526
       ],
       "C": [
-       2.752106365032052,
-       9.624625047718425
+       2.888221027975781,
+       10.07401105192696
       ]
      },
-     "seed": 19
+     "seed": 20
     },
     "ci95_n": 1200,
     "complete": true,
@@ -5494,16 +6819,16 @@
    "capability": 77.87178459131476,
    "composite_ci95": {
     "A": [
-     66.05769174049294,
-     68.47156750761478
+     65.8600183973683,
+     68.53131573301098
     ],
     "B": [
-     65.49750445437137,
-     69.09567139371549
+     65.3455623526965,
+     69.07920408577831
     ],
     "C": [
-     66.05769174049294,
-     68.47156750761478
+     65.8600183973683,
+     68.53131573301098
     ]
    },
    "cost": {
@@ -5640,7 +6965,7 @@
     "A": 3,
     "B": 1,
     "C": 2,
-    "capability": 4
+    "capability": 5
    },
    "repo": "https://huggingface.co/MeTask-Rain/metask-jev-rain-12B-trained",
    "scores": {
@@ -6648,32 +7973,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      82.91551289034591,
-      89.29155233371738
+      83.04152142632016,
+      89.5529896859822
      ],
      "I": [
-      63.3466811032438,
-      71.6575396345899
+      63.103725393225304,
+      71.82119986534833
      ],
      "capability": [
-      74.08669225686177,
-      79.79004305370589
+      73.80732902190083,
+      79.93263632420808
      ],
      "composite": {
       "A": [
-       66.05769174049294,
-       68.47156750761478
+       65.8600183973683,
+       68.53131573301098
       ],
       "B": [
-       65.49750445437137,
-       69.09567139371549
+       65.3455623526965,
+       69.07920408577831
       ],
       "C": [
-       66.05769174049294,
-       68.47156750761478
+       65.8600183973683,
+       68.53131573301098
       ]
      },
-     "seed": 20
+     "seed": 21
     },
     "ci95_n": 1200,
     "complete": true,
@@ -6817,16 +8142,16 @@
    "capability": 78.90688322585615,
    "composite_ci95": {
     "A": [
-     65.21053857692552,
-     67.85605762848327
+     65.335247953767,
+     67.82249807039508
     ],
     "B": [
-     64.97189440909945,
-     68.68542122810005
+     65.04397247801792,
+     68.6560915836382
     ],
     "C": [
-     65.21053857692552,
-     67.85605762848327
+     65.335247953767,
+     67.82249807039508
     ]
    },
    "cost": {
@@ -6963,7 +8288,7 @@
     "A": 4,
     "B": 3,
     "C": 3,
-    "capability": 3
+    "capability": 4
    },
    "repo": "https://huggingface.co/MeTask-Rain/metask-jev-rain-31B-trained",
    "scores": {
@@ -7971,32 +9296,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      82.85999871147678,
-      88.6062379523628
+      82.98706563248788,
+      88.70725822875039
      ],
      "I": [
-      65.8809745933253,
-      74.9243425541369
+      65.75400292000863,
+      74.52561562365423
      ],
      "capability": [
-      74.71065110537586,
-      81.1856485176028
+      75.1137343689641,
+      81.10999118506668
      ],
      "composite": {
       "A": [
-       65.21053857692552,
-       67.85605762848327
+       65.335247953767,
+       67.82249807039508
       ],
       "B": [
-       64.97189440909945,
-       68.68542122810005
+       65.04397247801792,
+       68.6560915836382
       ],
       "C": [
-       65.21053857692552,
-       67.85605762848327
+       65.335247953767,
+       67.82249807039508
       ]
      },
-     "seed": 21
+     "seed": 22
     },
     "ci95_n": 1200,
     "complete": true,
@@ -8140,16 +9465,16 @@
    "capability": 79.59723052502656,
    "composite_ci95": {
     "A": [
-     62.081115546007204,
-     64.37133453809703
+     61.973233611866085,
+     64.38973108320982
     ],
     "B": [
-     62.006622649856624,
-     65.40854001454157
+     62.05073773545211,
+     65.48195609068318
     ],
     "C": [
-     62.081115546007204,
-     64.37133453809703
+     61.973233611866085,
+     64.38973108320982
     ]
    },
    "cost": {
@@ -9294,32 +10619,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      82.98849783684885,
-      88.95253016008809
+      83.00964324976019,
+      88.9003002172596
      ],
      "I": [
-      67.60602510302347,
-      76.42315489992076
+      67.45295141399382,
+      76.67855514242999
      ],
      "capability": [
-      76.02716442363791,
-      82.10223672997085
+      75.79445564179584,
+      82.29273331350271
      ],
      "composite": {
       "A": [
-       62.081115546007204,
-       64.37133453809703
+       61.973233611866085,
+       64.38973108320982
       ],
       "B": [
-       62.006622649856624,
-       65.40854001454157
+       62.05073773545211,
+       65.48195609068318
       ],
       "C": [
-       62.081115546007204,
-       64.37133453809703
+       61.973233611866085,
+       64.38973108320982
       ]
      },
-     "seed": 22
+     "seed": 23
     },
     "ci95_n": 1200,
     "complete": true,
@@ -10782,16 +12107,16 @@
    "capability": 30.240174277642033,
    "composite_ci95": {
     "A": [
-     0.009683739281338883,
-     0.21714423944642153
+     0.009747232682278941,
+     0.2184565137042225
     ],
     "B": [
-     0.006280039975342739,
-     0.1495715647108644
+     0.006318396295409183,
+     0.15061600087851765
     ],
     "C": [
-     0.0067248189453742255,
-     0.15079461072668157
+     0.006768911584915933,
+     0.15170591229459895
     ]
    },
    "cost": {
@@ -10922,13 +12247,13 @@
     "valid": 375
    },
    "planned_weight_denominator": 1.0,
-   "rank": 12,
+   "rank": 13,
    "ranked": true,
    "ranks": {
-    "A": 12,
-    "B": 12,
-    "C": 12,
-    "capability": 12
+    "A": 13,
+    "B": 13,
+    "C": 13,
+    "capability": 13
    },
    "repo": "https://huggingface.co/Phocinae/Phocinae-Largha-150M-v1",
    "scores": {
@@ -11936,32 +13261,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      51.18847420105819,
-      59.20862554497353
+      51.42488171428569,
+      59.004644910052896
      ],
      "I": [
-      1.8686833532902958,
-      5.496389079759613
+      1.8721937249253089,
+      5.517134671191667
      ],
      "capability": [
-      27.02313969163464,
-      31.772863941136567
+      27.217594720769235,
+      31.804637858125044
      ],
      "composite": {
       "A": [
-       0.009683739281338883,
-       0.21714423944642153
+       0.009747232682278941,
+       0.2184565137042225
       ],
       "B": [
-       0.006280039975342739,
-       0.1495715647108644
+       0.006318396295409183,
+       0.15061600087851765
       ],
       "C": [
-       0.0067248189453742255,
-       0.15079461072668157
+       0.006768911584915933,
+       0.15170591229459895
       ]
      },
-     "seed": 23
+     "seed": 24
     },
     "ci95_n": 1200,
     "complete": true,
@@ -12105,16 +13430,16 @@
    "capability": 57.71754900661349,
    "composite_ci95": {
     "A": [
-     10.293959076276183,
-     23.36262428048774
+     10.058565580120225,
+     23.77557980438831
     ],
     "B": [
-     8.814718988622495,
-     21.181711777375053
+     8.5992147479773,
+     21.588196856270905
     ],
     "C": [
-     7.14858269185846,
-     16.2240446392276
+     6.9851149861946,
+     16.510819308602997
     ]
    },
    "cost": {
@@ -12251,7 +13576,7 @@
     "A": 9,
     "B": 9,
     "C": 9,
-    "capability": 8
+    "capability": 9
    },
    "repo": "https://huggingface.co/Kailune-AI/pjev-2b",
    "scores": {
@@ -13259,32 +14584,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      79.58030544452075,
-      86.96929101044712
+      79.19993101700317,
+      86.80806332319997
      ],
      "I": [
-      24.381442374276364,
-      34.24297099120469
+      24.143830202093664,
+      34.44680394323552
      ],
      "capability": [
-      52.89767855373718,
-      59.772775527788305
+      52.70979593097466,
+      59.642467828385364
      ],
      "composite": {
       "A": [
-       10.293959076276183,
-       23.36262428048774
+       10.058565580120225,
+       23.77557980438831
       ],
       "B": [
-       8.814718988622495,
-       21.181711777375053
+       8.5992147479773,
+       21.588196856270905
       ],
       "C": [
-       7.14858269185846,
-       16.2240446392276
+       6.9851149861946,
+       16.510819308602997
       ]
      },
-     "seed": 24
+     "seed": 25
     },
     "ci95_n": 1200,
     "complete": true,
@@ -13428,16 +14753,16 @@
    "capability": 38.556357456910156,
    "composite_ci95": {
     "A": [
-     0.011410927911967551,
-     0.27923482979378805
+     0.012789781107282605,
+     0.2793359506037684
     ],
     "B": [
-     0.007428840878575869,
-     0.1950789643570147
+     0.008340354405837875,
+     0.1950343969782767
     ],
     "C": [
-     0.007924255494421911,
-     0.1939130762456861
+     0.008881792435612918,
+     0.19398329903039474
     ]
    },
    "cost": {
@@ -14583,32 +15908,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      67.65846347801018,
-      76.98105648638452
+      67.8777474182131,
+      76.72769800376031
      ],
      "I": [
-      1.9790865122798633,
-      6.047089651458423
+      2.0581667121452596,
+      6.045122181473084
      ],
      "capability": [
-      35.49275524665666,
-      40.9476508164974
+      35.504550366819544,
+      40.82091264167704
      ],
      "composite": {
       "A": [
-       0.011410927911967551,
-       0.27923482979378805
+       0.012789781107282605,
+       0.2793359506037684
       ],
       "B": [
-       0.007428840878575869,
-       0.1950789643570147
+       0.008340354405837875,
+       0.1950343969782767
       ],
       "C": [
-       0.007924255494421911,
-       0.1939130762456861
+       0.008881792435612918,
+       0.19398329903039474
       ]
      },
-     "seed": 25
+     "seed": 26
     },
     "ci95_n": 1200,
     "complete": true,
@@ -15898,23 +17223,23 @@
     "ci95": {
      "B": 1000,
      "C": [
-      79.36979007503284,
-      85.78503630501943
+      79.51853675853839,
+      85.64075451839516
      ],
      "I": [
-      60.66580176648791,
-      69.70887662113697
+      60.7304444752857,
+      70.27982651740999
      ],
      "capability": [
-      70.56958325503426,
-      77.0138982957861
+      70.73467055326,
+      77.34007137986458
      ],
      "composite": {
       "A": null,
       "B": null,
       "C": null
      },
-     "seed": 26
+     "seed": 27
     },
     "ci95_n": 1200,
     "complete": true,
@@ -16054,16 +17379,16 @@
    "capability": 55.57071252242379,
    "composite_ci95": {
     "A": [
-     12.937347770110936,
-     27.495132456665935
+     13.645608041252107,
+     27.858154790246555
     ],
     "B": [
-     11.182114799051536,
-     24.91706386054432
+     11.775725177608466,
+     25.211596033493493
     ],
     "C": [
-     8.98426928479926,
-     19.093841983795784
+     9.476116695313966,
+     19.3459408265601
     ]
    },
    "cost": {
@@ -16200,7 +17525,7 @@
     "A": 7,
     "B": 7,
     "C": 7,
-    "capability": 10
+    "capability": 11
    },
    "repo": "https://huggingface.co/StandardThinking/StandardOne-3B-SH",
    "scores": {
@@ -17208,32 +18533,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      72.67003136056756,
-      81.13987068844101
+      72.64099438361812,
+      81.34415206077068
      ],
      "I": [
-      26.625661156248736,
-      36.214959536615204
+      27.13801632047071,
+      36.340784133930086
      ],
      "capability": [
-      50.707164807270004,
-      57.7470226645769
+      50.722193426804786,
+      58.112224979793915
      ],
      "composite": {
       "A": [
-       12.937347770110936,
-       27.495132456665935
+       13.645608041252107,
+       27.858154790246555
       ],
       "B": [
-       11.182114799051536,
-       24.91706386054432
+       11.775725177608466,
+       25.211596033493493
       ],
       "C": [
-       8.98426928479926,
-       19.093841983795784
+       9.476116695313966,
+       19.3459408265601
       ]
      },
-     "seed": 27
+     "seed": 28
     },
     "ci95_n": 1200,
     "complete": true,
@@ -18523,23 +19848,23 @@
     "ci95": {
      "B": 1000,
      "C": [
-      86.16008918336016,
-      91.4894188687202
+      86.35580861209979,
+      91.399631396546
      ],
      "I": [
-      67.5021257603754,
-      75.98733381538955
+      67.14758097704983,
+      76.21816150182619
      ],
      "capability": [
-      77.76552765502416,
-      83.14127397348815
+      77.4471816584262,
+      83.19863513774214
      ],
      "composite": {
       "A": null,
       "B": null,
       "C": null
      },
-     "seed": 28
+     "seed": 29
     },
     "ci95_n": 1200,
     "complete": true,
@@ -18679,16 +20004,16 @@
    "capability": 68.66260515667253,
    "composite_ci95": {
     "A": [
-     65.11372937731679,
-     71.29220271274237
+     64.32117073956951,
+     71.24252863258063
     ],
     "B": [
-     60.79979945322803,
-     68.1547479279605
+     59.97908809292802,
+     68.18350164241163
     ],
     "C": [
-     45.21786762313667,
-     67.22917392198413
+     44.6674796802566,
+     67.18771203717006
     ]
    },
    "cost": {
@@ -18825,7 +20150,7 @@
     "A": 1,
     "B": 4,
     "C": 5,
-    "capability": 6
+    "capability": 7
    },
    "repo": "https://huggingface.co/torchcast-ai/torchcast-decision-4b",
    "scores": {
@@ -19833,32 +21158,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      77.48620686186426,
-      85.02710405705199
+      77.22059856902563,
+      85.02958358210273
      ],
      "I": [
-      49.34572303578395,
-      58.263998093307585
+      49.14427946186876,
+      58.35714894493921
      ],
      "capability": [
-      63.85638502149055,
-      71.24424299125529
+      64.0053327391018,
+      71.13324962243068
      ],
      "composite": {
       "A": [
-       65.11372937731679,
-       71.29220271274237
+       64.32117073956951,
+       71.24252863258063
       ],
       "B": [
-       60.79979945322803,
-       68.1547479279605
+       59.97908809292802,
+       68.18350164241163
       ],
       "C": [
-       45.21786762313667,
-       67.22917392198413
+       44.6674796802566,
+       67.18771203717006
       ]
      },
-     "seed": 29
+     "seed": 30
     },
     "ci95_n": 1200,
     "complete": true,
@@ -20002,16 +21327,16 @@
    "capability": 57.0653357969117,
    "composite_ci95": {
     "A": [
-     16.848006317924682,
-     36.96534238013679
+     16.066476569505593,
+     37.791263059107706
     ],
     "B": [
-     14.316781625012254,
-     33.04810264699326
+     13.631891832106657,
+     33.88168731266431
     ],
     "C": [
-     11.700004387447695,
-     25.67037665287277
+     11.157275395489998,
+     26.24393267993591
     ]
    },
    "cost": {
@@ -20148,7 +21473,7 @@
     "A": 6,
     "B": 6,
     "C": 6,
-    "capability": 9
+    "capability": 10
    },
    "repo": "https://huggingface.co/Uniphore/uniphore-4b-decider",
    "scores": {
@@ -21156,32 +22481,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      74.80585089603882,
-      82.41528290303906
+      74.61279404903199,
+      82.6457921600398
      ],
      "I": [
-      28.171617664260683,
-      38.76823145004421
+      27.68460757527427,
+      39.172331696666305
      ],
      "capability": [
-      52.385533490726075,
-      59.649068597910556
+      52.17501580386645,
+      60.028383967600284
      ],
      "composite": {
       "A": [
-       16.848006317924682,
-       36.96534238013679
+       16.066476569505593,
+       37.791263059107706
       ],
       "B": [
-       14.316781625012254,
-       33.04810264699326
+       13.631891832106657,
+       33.88168731266431
       ],
       "C": [
-       11.700004387447695,
-       25.67037665287277
+       11.157275395489998,
+       26.24393267993591
       ]
      },
-     "seed": 30
+     "seed": 31
     },
     "ci95_n": 1200,
     "complete": true,
@@ -21325,16 +22650,16 @@
    "capability": 82.96592796157353,
    "composite_ci95": {
     "A": [
-     5.49485718527582,
-     5.602992972803621
+     5.5001823063935,
+     5.600716035456654
     ],
     "B": [
-     5.945694726388269,
-     6.136744764860001
+     5.9564667632512975,
+     6.127371589361873
     ],
     "C": [
-     5.49485718527582,
-     5.602992972803621
+     5.5001823063935,
+     5.600716035456654
     ]
    },
    "cost": {
@@ -22479,32 +23804,32 @@
     "ci95": {
      "B": 1000,
      "C": [
-      87.87062205214318,
-      92.76091528429383
+      87.85221321702367,
+      92.64551485084033
      ],
      "I": [
-      69.1394771823299,
-      77.6229764588109
+      69.47092711933267,
+      77.03207770594776
      ],
      "capability": [
-      79.12765918179254,
-      84.4470596111394
+      79.36725617474396,
+      84.32558434134451
      ],
      "composite": {
       "A": [
-       5.49485718527582,
-       5.602992972803621
+       5.5001823063935,
+       5.600716035456654
       ],
       "B": [
-       5.945694726388269,
-       6.136744764860001
+       5.9564667632512975,
+       6.127371589361873
       ],
       "C": [
-       5.49485718527582,
-       5.602992972803621
+       5.5001823063935,
+       5.600716035456654
       ]
      },
-     "seed": 31
+     "seed": 32
     },
     "ci95_n": 1200,
     "complete": true,
@@ -22693,7 +24018,7 @@
    "only": null,
    "seed": 16,
    "test_allow_partial": false,
-   "workers": 2
+   "workers": 1
   },
   "seed_commitment": "ad1ed4858269bda0cbbe7ad0752b573982ed2afc5c2382dad9d33e380ede4c16",
   "set_manifest_sha256": {

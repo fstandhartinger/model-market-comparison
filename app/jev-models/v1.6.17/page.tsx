@@ -8,7 +8,7 @@ import { withPublicAdapterIds } from '../../../lib/jevbench-v15-release.mjs';
 
 export const metadata = { title: 'JevBench v1.6.17 · pjev-2b, metask service v3, Amos 1 and SubQ Snap added', alternates: { canonical: '/jev-models/v1.6.17' } };
 
-type Row = { key: string; display: string; ranked: boolean; measured_in?: string };
+type Row = { key: string; display: string; ranked: boolean; measured_in?: string; capability?: number };
 const short = (d: string) => (d.length <= 45 ? d : d.split(' (')[0]);
 
 export default async function JevModelsV1617Page() {
@@ -24,6 +24,9 @@ export default async function JevModelsV1617Page() {
   const added = artifact.systems.filter(row => row.measured_in === 'v1.6.17');
   const addedKeys = new Set(added.map(row => row.key));
   const unrankedAdded = added.filter(row => !row.ranked);
+  const ranked = artifact.systems.filter(row => row.ranked) as Array<Row & { capability: number }>;
+  const rowOf = (key: string) => artifact.systems.find(row => row.key === key) as (Row & { capability: number }) | undefined;
+  const capOf = (key: string) => (rowOf(key)?.capability ?? 0).toFixed(3);
   return <>
     <JevBenchReleaseVersionNav active="v1.6.17" />
     <header className="bh-page-head" data-bh-jev16-release-header>
@@ -42,7 +45,8 @@ export default async function JevModelsV1617Page() {
       {artifact.G_med_flag_gt10 ? <p className="mt-2">The field median here is above 10.</p> : null}
       <p className="mt-2"><strong>pjev-2b</strong> (Kailune AI; MiniCPM5-2B with a merged adapter, Apache-2.0) was measured on the evaluator&rsquo;s own shared CPU across four sittings under different host load, so its Speed is a loaded-shared-host figure; 1,485 of 1,500 items were answered and the 15 longest are HTTP 422 refusals by the author&rsquo;s own code, the same 15 that Uniphore-4B-Decider, Attest-31B and Standard One 3B SH could not answer.</p>
       <p className="mt-2"><strong>metask-jev-rain-31B-trained service v3</strong> is a paid fast-lane row and a <strong>re-submission</strong> of the weights behind the published metask-jev-rain-31B-trained row, with a changed service layer that may have been tuned on that row&rsquo;s published aggregates; both rows are shown. It was timed on an RTX PRO 6000 rather than the H100 of the earlier metask rows, so its Speed rests on different hardware.</p>
-      <p className="mt-2"><strong>SubQ Snap (preview)</strong> is <strong>listed but not ranked</strong>: its cost is unpriced until its preview tariff passes the pricing re-freeze (CoS deputy decision #18975), and without a cost axis there is no composite. It shows Intelligence, Calibration and Capability in the collapsed &ldquo;All data&rdquo; table only.</p>
+      <p className="mt-2"><strong>SubQ Snap (preview)</strong> is <strong>listed but not ranked</strong>: its cost is unpriced until its preview tariff passes the pricing re-freeze (CoS deputy decision #18975), and without a cost axis there is no composite. It shows Intelligence, Calibration and Capability in the collapsed &ldquo;All data&rdquo; table only. Its Capability {capOf('subq-snap-preview')} is higher than that of every ranked row except {ranked.filter(row => row.capability > (rowOf('subq-snap-preview')?.capability ?? Infinity)).map(row => short(row.display)).join(', ')}: it is withheld from every ranking, not rated lower, and ranking it would change the public Capability rankings, which needs Florian&rsquo;s review.</p>
+      {addedKeys.has('sage-1.4.0') ? <p className="mt-2"><strong>Sage 1.4 (Levanto Labs)</strong> is <strong>listed but not ranked</strong>: the frozen pricing path has no reference price for it (its tariff is in neither frozen set), so its cost is unpriced and it has no composite; the question of how to price it is still open (CoS deputy question #18983, not yet answered). Its Capability {capOf('sage-1.4.0')} is withheld from every ranking, not rated lower. The earlier Sage 1.3.0 row is a separate published row and stays unchanged.</p> : null}
       <p className="mt-2"><strong>Hosted-API rows</strong> ({added.filter(row => ['amos-1-medium', 'amos-1-large', 'sage-1.4.0', 'subq-snap-preview'].includes(row.key)).map(row => short(row.display)).join(', ')}) are measurements of the vendor&rsquo;s endpoint, not of independently inspected weights. A hosted row whose estimated cost is above the official Jev-class cost cap (Amos 1 medium{addedKeys.has('amos-1-large') ? ' and Amos 1 large' : ''}) is ranked and disclosed, and is therefore not on the default (cost-capped) Capability ranking; its composite is held down by the squared cost gate.</p>
       {addedKeys.has('purplemist-mini-1.0') ? <p className="mt-2"><strong>PurpleMIST-Mini-1.0</strong> was measured on the evaluator&rsquo;s own shared CPU; its server reports no token usage, so its cost uses an offline count of input tokens with the author&rsquo;s own tokenizer (CoS deputy decision #18974).</p> : null}
       {unrankedAdded.length > 1 ? <p className="mt-2">Rows listed but not ranked in this release: {unrankedAdded.map(row => short(row.display)).join(', ')}.</p> : null}

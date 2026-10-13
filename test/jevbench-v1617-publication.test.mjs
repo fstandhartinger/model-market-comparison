@@ -12,7 +12,7 @@ const root = 'data/raw/benchmarks/jevbench/v1.6/';
 const read = async k => JSON.parse(await readFile(`${root}jevbench-v1.6.17-${k}.json`, 'utf8'));
 const unranked = V1617_UNRANKED_CARRIED_KEYS[0];
 const [paid] = V1617_PAID_KEYS;
-const SUBQ = 'subq-snap-preview', AMOS = 'amos-1-medium', PJEV = 'pjev-2b';
+const SUBQ = 'subq-snap-preview', AMOS = 'amos-1-medium', PJEV = 'pjev-2b', AMOSL = 'amos-1-large', SAGE = 'sage-1.4.0';
 const releaseNote = n => n.startsWith('v1.6.17 ADDS ');
 
 async function fixture() {
@@ -111,6 +111,31 @@ test('amos-1-medium is a ranked hosted row above the cost ceiling, with its disc
   assert.equal(b.proof.new_rows[AMOS].under_cost_cap, false);
 });
 
+test('amos-1-large is published on Florian\'s GO #17487: ranked above the ceiling, hosted pin, disclosed', async () => {
+  const b = await fixture();
+  validateJevbenchV1617Bundle(b);
+  const s = row(b, AMOSL);
+  assert.equal(s.ranked, true); assert.equal(s.endpoint_kind, 'api');
+  assert.equal(s.model_pin, 'hosted-api:api.amos.scira.ai/v1/systemone#amos-1-large');
+  assert.equal(row(b, AMOS).model_pin, 'hosted-api:api.amos.scira.ai/v1/systemone#amos-1-medium');
+  assert.ok(s.cost.usd_per_1000 > V1617_COST_CAP && s.axes.cost < 50);
+  assert.match(s.cost.basis, /OVER THE OFFICIAL COST CAP/);
+  assert.ok(b.artifact.measurement_notes.some(n => n.includes(AMOSL) && n.includes('NOT true of') && n.includes('cost ceiling')));
+  assert.match(b.proof.authority, /#17487/);
+  assert.ok(b.artifact.measurement_notes.some(n => n.startsWith('Board effect') && n.includes('#17487')));
+  assert.ok(!noteOf(b, AMOS).includes('amos-1-*'), 'no wildcard hint of a sibling');
+  assert.doesNotMatch(b.proof.authority, /amos-1-medium[^.]*card 17392/);
+});
+
+test('sage-1.4.0 is listed, unpriced and unranked with its ruling question named', async () => {
+  const b = await fixture();
+  validateJevbenchV1617Bundle(b);
+  const s = row(b, SAGE);
+  assert.equal(s.ranked, false); assert.equal(s.rank, null); assert.equal(s.cost.kind, 'unpriced');
+  assert.match(s.not_ranked_because, /#18983/);
+  assert.equal(row(b, 'sage-1.3.0')?.key ?? 'sage-1.3.0', 'sage-1.3.0');
+});
+
 test('pjev-2b carries its split-window and refusal-set disclosures', async () => {
   const b = await fixture();
   validateJevbenchV1617Bundle(b);
@@ -185,6 +210,23 @@ for (const [name, edit, error] of [
   ['the predecessor manifest hash rewritten', b => { b.manifest.predecessor.publication_sha256 = 'b'.repeat(64); }, /predecessor binding/],
   ['an item-level field in the artifact', b => { row(b, PJEV).item_text = 'private'; }, /private\/item-level/],
   ['an invented Capability on a new row', b => { row(b, PJEV).capability = 99; }, /capability: |capability is the mean/],
+  ['subq inserted into the capability order', b => { b.artifact.board.capability.order = [SUBQ, ...b.artifact.board.capability.order]; }, /board membership capability/],
+  ['sage promoted to a rank', b => { const s = row(b, SAGE); s.ranked = true; s.listing = 'ranked'; s.rank = 14; }, /n_ranked|treatment of .* is fixed|ranked row count|board|unpriced row/],
+  ['sage given a price', b => { row(b, SAGE).cost.usd_per_1000 = 0.02; }, /unpriced row has no cost axis|cost figure/],
+  ['sage note claiming a full answer set', b => editNote(b, SAGE, n => n.replaceAll('1,483 of 1,500', '1,500 of 1,500')), /required disclosure "1,483 of 1,500"/],
+  ['sage note without its carry-over statement', b => editNote(b, SAGE, n => n.replaceAll('not carried over', 'carried over')), /required disclosure "not carried over"/],
+  ['sage losing the open question', b => { row(b, SAGE).not_ranked_because = 'x'.repeat(100); }, /ruling behind the missing rank/],
+  ['amos-1-large without Florian\'s GO in the authority', b => { b.proof.authority = b.proof.authority.replaceAll('#17487', '#0'); }, /needs Florian's GO #17487/],
+  ['amos-1-large without Florian\'s GO in the board-effect note', b => { b.artifact.measurement_notes = b.artifact.measurement_notes.map(n => n.startsWith('Board effect') ? n.replaceAll('#17487', '#0') : n); }, /board-effect note must carry Florian's GO/],
+  ['amos-1-large losing its over-cap cost note', b => { b.artifact.measurement_notes = b.artifact.measurement_notes.filter(n => !(n.startsWith('Cost on amos-1-large'))); }, /must correct the inherited/],
+  ['amos-1-large losing its custody condition', b => editNote(b, AMOSL, n => n.replaceAll('CUSTODY CONDITION', 'condition')), /required disclosure "CUSTODY CONDITION"/],
+  ['a moved interval named only outside its clause', b => {
+    b.artifact.measurement_notes = b.artifact.measurement_notes.map(n => {
+      if (!releaseNote(n)) return n;
+      const i = n.indexOf('Carried rows whose intervals moved:'), j = n.indexOf('DIAGNOSTICS', i);
+      return n.slice(0, i) + n.slice(i, j).replace(' krino-2b,', '') + n.slice(j);
+    });
+  }, /must name its row/],
   ['a swapped rank between a new and a carried row', b => { const p = row(b, 'phocinae-largha-150m-v1'), j = row(b, PJEV); [p.rank, j.rank] = [j.rank, p.rank]; [p.ranks, j.ranks] = [j.ranks, p.ranks]; }, /rank .* is not the board position|rank is not the|capability rank|moved by more than/],
 ]) test(`v1.6.17 rejects ${name}`, async () => {
   const b = await fixture();

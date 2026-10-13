@@ -5512,6 +5512,21 @@
             "fact": "Artifact key sage-1.4.0 records a hosted API with no public evaluated weights."
           }
         ]
+      },
+      "amos-1-large": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": null,
+          "params": "27B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/mukaddamzaid/amos-1-large",
+            "kind": "provider-docs",
+            "fact": "Submission declares base Qwen/Qwen3.8-27B and open weights at mukaddamzaid/amos-1-large (Apache-2.0); the measured row is the vendor-hosted api.amos.scira.ai endpoint, whose deployed weights were not independently inspected."
+          }
+        ]
       }
     },
     "imagejevbench": {
