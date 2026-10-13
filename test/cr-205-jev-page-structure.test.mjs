@@ -382,7 +382,8 @@ test('CR-205: fail-closed v1.6.15 three-row same-draw addition uses the shared b
   assert.match(route, /listed but not ranked/);
   assert.match(route, /reflex-instinct-0\.6b/);
   assert.match(route, /#18761/);
-  assert.match(route, /full data table/);
+  assert.match(route, /All data/);
+  assert.match(route, /Noul table/);
   assert.match(route, /non-official/);
 });
 
