@@ -101,6 +101,8 @@ for (const [name, edit, error] of [
   ['an inherited interval moved silently', b => { const s = b.artifact.systems.find(x => x.key === 'krino-2b'); s.composite_ci95 = { ...s.composite_ci95, A: [s.scores.A - 1, s.scores.A + 1] }; }, /carried interval moved although/],
   ['the carried A2 row edited', b => { b.artifact.systems.find(x => x.key === 'microsoft-decision-1-a2-20261012').axes.intelligence += 0.01; }, /carried preliminary row unchanged/],
   ['a carried row above the cost ceiling', b => { b.artifact.systems.find(x => x.key === 'julia-1').cost.usd_per_1000 = 0.1; }, /cost above the published ceiling|earlier row cost/],
+  ['a d3 interval excluding its own point', b => { d3row(b).composite_ci95.A = [10, 11]; }, /new row interval A does not contain/],
+  ['a d3 capability interval excluding its own point', b => { d3row(b).v16.ci95.capability = [1, 2]; }, /capability interval does not contain/],
   ['d3 priced as a tariff', b => { d3row(b).cost.kind = 'tariff'; }, /labelled cost estimate/],
   ['d3 with an incomplete run', b => { d3row(b).status.rows = 1499; }, /complete 1500 rows|item count/],
   ['d3 hardware disclosure dropped', b => { d3row(b).endpoint_condition = 'evaluator-owned GPU'; }, /hardware disclosure/],
