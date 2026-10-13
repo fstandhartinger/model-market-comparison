@@ -47,7 +47,8 @@ scores the result on the host. Your job is to describe how to start the model. W
      (Python executed implicitly from `/models`) are not supported. For those, write a blocker. Serving
      code the author ships in the model repository (for example a documented `python -m pkg.server`) is
      supported: run it from `/code` with `code.source` `"model"` (`http_typesafe` or `python_inprocess`);
-     source review reads it before any run. Its presence alone is not a blocker.
+     source review reads it before any run. Its presence alone is not a blocker. Serving code must not
+     enable `trust_remote_code` or import Python from `/models`; if it does, write a blocker.
    - `code`: `{"commit":"<40 hex>","tree":"<40 hex>"}`, equal to the host's code fetch receipt.
      When executable source is in the model repository, add `"source":"model"` and bind exactly
      to the real model fetch receipt. Never invent a code receipt or change the optional code link.
