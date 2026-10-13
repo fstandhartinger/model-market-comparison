@@ -1656,6 +1656,7 @@ HOLD_REASON_LABELS = {
     "customer_changes": ("the customer needs to correct the submitted model source", "der Kunde muss die eingereichten Modellquellen korrigieren"),
     "api_key_needs_private_intake": ("the API endpoint needs a key and the order text seems to contain one; an agent must move it into private intake", "der API-Endpunkt braucht einen Schlüssel und der Auftragstext scheint einen zu enthalten; ein Agent muss ihn in die private Ablage übernehmen"),
     "evaluation_exhausted": ("the automatic evaluation attempts failed and an agent must investigate", "die automatischen Messversuche sind fehlgeschlagen und ein Agent muss die Ursache prüfen"),
+    "release_result_rejected": ("the prepared result failed the independent recomputation and an agent must fix it", "das vorbereitete Ergebnis hat die unabhängige Nachrechnung nicht bestanden und ein Agent muss es korrigieren"),
 }
 
 
@@ -4555,7 +4556,12 @@ def evaluate(rid: str) -> int:
                        "AND customer_hold_started_at IS NULL AND paid_at + COALESCE(sla_paused_seconds,0) * interval '1 second' "
                        "+ interval '48 hours' > now()")
             return 0
-        except PickupError:
+        except PickupError as exc:
+            # A rejected RESULT.json is deterministic: restarting the unit every cycle cannot fix it
+            # (4d9fef10, 13 Oct 2026: 62 restarts on a v1.6.x-labelled v1.5 result). Hold it once so the
+            # cycle escalates to an owner instead of looping.
+            state = load_state(rid)
+            set_operational_hold(state, "release_result_rejected", transient=False, detail=str(exc)[:200])
             update_row(rid, "evaluation_status='failed'",
                        "status IN ('paid','review_passed') AND customer_hold_started_at IS NULL")
             return 1
