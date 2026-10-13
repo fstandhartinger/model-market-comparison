@@ -87,7 +87,7 @@ for (const [name, edit, error] of [
   ['an inherited point score moved', b => { b.artifact.systems.find(x => x.key === 'krino-2b').scores.A += 0.001; }, /earlier row point score|headline score/],
   ['an inherited axis moved', b => { b.artifact.systems.find(x => x.key === 'krino-2b').axes.speed += 0.001; }, /earlier row axis|carried row differs/],
   ['an inherited cost object rewritten', b => { b.artifact.systems.find(x => x.key === 'krino-2b').cost.usd_per_1000 *= 0.5; }, /earlier row cost object|carried row differs/],
-  ['an inherited rank moved', b => { b.artifact.systems.find(x => x.key === 'krino-2b').rank = 9; }, /earlier row rank|board|carried row differs/],
+  ['an inherited rank moved', b => { b.artifact.systems.find(x => x.key === 'krino-2b').rank = 9; }, /earlier row rank|board|carried row differs|rank is not the/],
   ['the carried A2 row edited', b => { b.artifact.systems.find(x => x.key === 'microsoft-decision-1-a2-20261012').axes.intelligence += 0.01; }, /carried preliminary row unchanged/],
   ['a new row above the cost ceiling', b => { b.artifact.systems.find(x => x.key === ranked).cost.usd_per_1000 = 0.1; }, /cost above the published ceiling|provenance/],
   ['a new row priced as a tariff rather than an estimate', b => { b.artifact.systems.find(x => x.key === ranked).cost.kind = 'tariff'; }, /labelled cost estimate/],
@@ -95,8 +95,8 @@ for (const [name, edit, error] of [
   ['a new row claiming no shared-host disclosure', b => { b.artifact.systems.find(x => x.key === ranked).endpoint_condition = 'a dedicated machine'; }, /shared-host disclosure/],
   ['a new row with API latency semantics', b => { const s = b.artifact.systems.find(x => x.key === ranked); s.speed.adjustment = 'none (API)'; }, /self-hosted latency adjustment/],
   ['a new row without its measurement note', b => { b.artifact.measurement_notes = b.artifact.measurement_notes.filter(n => !n.startsWith(`${ranked}: `)); }, /row note/],
-  ['the shared-resample disclosure dropped', b => { b.artifact.measurement_notes = b.artifact.measurement_notes.filter(n => !(n.includes('confidence interval') && n.includes('paired resample'))); }, /shared-resample disclosure/],
-  ['the non-official Speed disclosure dropped', b => { b.artifact.measurement_notes = b.artifact.measurement_notes.filter(n => !(n.includes('#18761') && n.includes('LISTED BUT NOT RANKED'))); }, /non-official Speed disclosure|shared-resample disclosure/],
+  ['the shared-resample disclosure dropped', b => { b.artifact.measurement_notes = b.artifact.measurement_notes.filter(n => !(n.includes('confidence interval') && n.includes('paired resample'))); }, /shared-resample disclosure|must name its row in the notes/],
+  ['the non-official Speed disclosure dropped', b => { b.artifact.measurement_notes = b.artifact.measurement_notes.filter(n => !(n.includes('#18761') && n.includes('LISTED BUT NOT RANKED'))); }, /non-official Speed disclosure|shared-resample disclosure|must name its row in the notes/],
   ['inherited measurement notes rewritten', b => { b.artifact.measurement_notes[0] = 'rewritten'; }, /inherited measurement notes/],
   ['category cells invented for the carried A2 row', b => { b.categories.systems['microsoft-decision-1-a2-20261012'] = b.categories.systems[ranked]; }, /category cohort|no category cells/],
   ['an inherited category cell changed', b => { b.categories.systems['krino-2b'].languages.en.competence += 1; }, /inherited category cells/],
@@ -119,6 +119,12 @@ for (const [name, edit, error] of [
   ['a one-word reason for not ranking', b => { b.artifact.systems.find(x => x.key === unranked).not_ranked_because = '#18761'; }, /stated reason/],
   ['a row note replaced by a stub', b => { b.artifact.measurement_notes = b.artifact.measurement_notes.map(n => n.startsWith(`${ranked}: `) ? `${ranked}: fine.` : n); }, /row note is too thin/],
   ['a carried row changed outside its intervals', b => { b.artifact.systems.find(x => x.key === 'krino-2b').display = 'Krino 2B (renamed)'; }, /carried row differs|earlier row identity/],
+  // the mutations the delta review found this loader accepting (findings D4 and D5)
+  ['a swapped rank between two new rows', b => { const p = b.artifact.systems.find(x => x.key === ranked), j = b.artifact.systems.find(x => x.key === 'julia-1'); [p.rank, j.rank] = [j.rank, p.rank]; [p.ranks, j.ranks] = [j.ranks, p.ranks]; }, /rank .* is not the board position|rank is not the/],
+  ['an all-ones ranks object on a new row', b => { b.artifact.systems.find(x => x.key === ranked).ranks = { A: 1, B: 1, C: 1, capability: 1 }; }, /rank .* is not the board position|rank is not the/],
+  ['an invented raw_on_A on a carried row', b => { b.artifact.systems.find(x => x.key === 'krino-2b').v16.raw_on_A = { intelligence: 99, calibration: 99, capability: 99 }; }, /raw_on_A|carried row differs/],
+  ['a nonsense interval on a carried row', b => { b.artifact.systems.find(x => x.key === 'krino-2b').composite_ci95.A = [99, 100]; }, /interval A does not contain/],
+  ['the diagnostic disclosure stripped of its numbers', b => { b.artifact.measurement_notes = b.artifact.measurement_notes.map(n => n.includes('API-basis median diagnostic') ? n.replace(/9\.\d+/g, 'some value') : n); }, /must state both values|must name its row/],
   ['the moved API-basis diagnostic left undisclosed', b => { b.artifact.measurement_notes = b.artifact.measurement_notes.map(n => n.replace('API-basis median diagnostic', 'api basis thing')); }, /API-basis diagnostic must be disclosed/],
 ]) test(`v1.6.15 rejects ${name}`, async () => {
   const b = await fixture();
