@@ -1,0 +1,24 @@
+{
+  "artifact_id": "protocol-mazur-creative-story-writing-snapshot-2026-09-10",
+  "artifact_sha256": "d0bedc67f03020a1918d640a6c576ae6937e5130eb4cf9579a6d457ab8fc7a3e",
+  "round": 2,
+  "verdict": "blocked",
+  "coverage_checked": ["mazur-creative-story-writing::snapshot-2026-09-10","c1","c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "c1",
+      "severity": "blocker",
+      "location": "ROW mazur-creative-story-writing::snapshot-2026-09-10 / c1 continuity",
+      "evidence": "Packet contains no primary protocol text for this board. The candidate row is given with id, version snapshot-2026-09-10, version_guard, status, version_status and superseded_by, but no registry version, benchmark identity, metric, units, range, description, or current primary protocol excerpt appears anywhere in the supplied reference material. The criteria require checking the registry version, benchmark identity, metric, units and description against the actual current primary protocol, and require the packet's own generated summary of served finite values to judge unit/range. No such excerpt or summary is supplied.",
+      "repair": "Supply the current primary protocol excerpt (or the run's captured payload summary) that establishes registry version, benchmark identity, metric, units/range and description for the row, so c1 can be verified; otherwise c1 is uncheckable and the artifact must not be accepted as verified."
+    },
+    {
+      "id": "c2-missing-evidence",
+      "severity": "blocker",
+      "location": "row mazur-creative-story-writing::snapshot-2026-09-10 (lifecycle fields status/version_status/superseded_by)",
+      "evidence": "The packet contains no protocol text at all and no generated summary of added or changed model rows; nothing establishes whether the board is still reported, whether a successor is named, or whether the page publishes a release identifier, so `status:"  , "active" : "retained" , "version_status":"snapshot" , "superseded_by":null, "version_guard":"...` cannot be checked against evidence. An exact-row-json missing from packet also means no payload to confirm the served range supports `range` for this artifact at all.",
+      "repair": "Supply the actual protocol excerpt (with the page's own release-identifier statement) and the run's own generated summary of served values for this board, then re-check c1/c2 fields against that evidence."
+    }
+  ]
+}

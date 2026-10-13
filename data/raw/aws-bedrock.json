@@ -1,7 +1,7 @@
 {
   "source": "AWS Bedrock",
   "region": "eu-central-1 (Frankfurt) unless noted per-model",
-  "collected_at": "2026-10-12",
+  "collected_at": "2026-10-13",
   "method": "AWS Price List bulk API EU region index (current version 20260901205051) for standard on-demand text-token meters; official Bedrock pricing page (Anthropic 'Geo and In-region Cross-region Inference' table resolved via the awsstatic meteredUnitMaps feed for EU (Frankfurt)), model cards, and regional-availability pages for current models absent from the EU bulk feed. Flex, priority, batch, cache, legacy/EOL, gated non-GA models (Claude Mythos 5 / Mythos Preview, OpenAI Daybreak Red/Blue) and non-text modalities are excluded. EU rows use the actual regional or EU Geo cross-region price, not a lower unrelated US or Global route: for Claude, Geo/in-region profiles (eu.anthropic.*) are billed 1.1x the Global profile (global.anthropic.*), which matches Anthropic's direct-API list price. Sonnet 5 remains $2/$10 Global and $2.20/$11 EU Geo; the announced September increase was cancelled. Sources: https://aws.amazon.com/bedrock/pricing/ , https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html , https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards.html , https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrock/current/eu-central-1/index.json 2026-09-08: rechecked eight EU bulk indexes plus us-east-1 and official pricing markup resolved through https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrockfoundationmodels/USD/current/bedrockfoundationmodels.json (publication 2026-09-01). No change to matched standard bulk rates. Added Fable 5.1 Global only ($10/$50), consistent with model card exposing US Geo/Global but no EU Geo profile. GPT-6 Astra has no public Bedrock pricing/model card in the checked sources; no inferred offer.",
   "models": [
     {
@@ -1161,18 +1161,18 @@
     }
   ],
   "unmetered_checked_at": "2026-09-08",
-  "meters_checked_at": "2026-10-12",
+  "meters_checked_at": "2026-10-13",
   "price_list_versions": {
     "AmazonBedrock/eu-central-1": "20261010182242",
     "AmazonBedrock/eu-west-2": "20261010182242",
     "AmazonBedrock/eu-west-3": "20261010182242",
     "AmazonBedrock/us-east-1": "20261010182242",
     "AmazonBedrock/us-west-2": "20261010182242",
-    "AmazonBedrockFoundationModels/eu-central-1": "20261008235637",
-    "AmazonBedrockFoundationModels/us-east-1": "20261008235637"
+    "AmazonBedrockFoundationModels/eu-central-1": "20261012084008",
+    "AmazonBedrockFoundationModels/us-east-1": "20261012084008"
   },
-  "price_list_collection": "scripts/fetch-aws-bedrock-catalog.mjs (2026-10-12): 7 AWS Price List bulk indexes; each row's named standard on-demand input/output meters re-read (1K-token meters x 1000). Rows are never added by the script; rows without a public Price List meter (5) keep their prices and unmetered_checked_at.",
-  "response_sha256": "99b3dd643fecaf52590ab7b7950a216f01b62b5dc956ce39f13b0180c7238bd2",
+  "price_list_collection": "scripts/fetch-aws-bedrock-catalog.mjs (2026-10-13): 7 AWS Price List bulk indexes; each row's named standard on-demand input/output meters re-read (1K-token meters x 1000). Rows are never added by the script; rows without a public Price List meter (5) keep their prices and unmetered_checked_at.",
+  "response_sha256": "22b8fba0bd175c5e853903f8c3744b30cfa18fad32f98efc71769eba40df2e51",
   "diff": {
     "removed": [],
     "price_changed": [],

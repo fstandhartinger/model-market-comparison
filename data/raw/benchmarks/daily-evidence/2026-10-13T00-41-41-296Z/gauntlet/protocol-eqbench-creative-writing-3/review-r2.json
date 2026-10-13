@@ -1,0 +1,21 @@
+{
+  "artifact_id": "protocol-eqbench-creative-writing-3",
+  "artifact_sha256": "80ef38506fe66e59005afe37521f7ac7be211cf056c6ab37452f547799bcc445",
+  "round": 2,
+  "verdict": "blocked",
+  "coverage_checked": ["eqbench-creative-writing::3", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "eqbench-creative-writing::3-c1",
+      "severity": "blocker",
+      "location": "row eqbench-creative-writing::3; criteria c1",
+      "evidence": "The packet contains no primary source evidence at all: the 'Primary source evidence' section is empty (no protocol excerpt, no captured payload, no generated summary of served values). The row claims version '3', version_status 'published', status 'active', metric 'Elo Score column in the leaderboard', unit 'Elo', range [null,null], higher_better true, description, and maintainer. None of these can be checked against any actual current primary protocol or payload transcription. No continuity, identity, metric, units, range, or description can be verified, so criterion c1 cannot be settled from the supplied evidence.",
+"severity":"blocker",
+"location":"artifact/row eqbench-creative-writing::3 + CRITERION c1",
+"evidence":"Packet's Primary source evidence section contains no protocol excerpt, no captured payload, and no owner hash-verified complete response; the only row-binder given is the owner-computed sha256, which I cannot recompute or expand. There are no strings that transcribe the current protocol for version 3, its metric, units, range, task set, harness, judges or configuration.",
+"repair":"Attach the primary protocol excerpt (registry page) for board eqbench-creative-writing version 3 and, if used, this run's served-values summary (finite count, low, high), so c1 continuity (identity/version/metric/unit/description) and c2 lifecycle fields can be verified against primary evidence."
+}
+]
+ 
+  }

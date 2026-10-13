@@ -312871,6 +312871,822 @@
       ]
     },
     {
+      "id": "public:60c19aafb1ecdee9f7b978d6",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "7b805dbb-e77a-4d0a-892e-165f922f786c",
+        "name": "Opus 5.5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 64.85,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
+        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
+        "locator": "terminalbench; source row 0; 7b805dbb-e77a-4d0a-892e-165f922f786c; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-22\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Sep 22, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/claude-opus-5-5\",\"label\":\"Opus 5.5\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:63bead97805961e34fa66d6c",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "723c6609-fe18-46d9-a1a3-dd4b6b0e0d00",
+        "name": "Sonnet 5.5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 61.82,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
+        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
+        "locator": "terminalbench; source row 1; 723c6609-fe18-46d9-a1a3-dd4b6b0e0d00; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-28\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Sep 28, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/claude-sonnet-5-5\",\"label\":\"Sonnet 5.5\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:17d19fe6c42544cd1fd34e9d",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "5c537be4-7fc3-449b-8bfc-ceb9061c2535",
+        "name": "GPT-6 Astra",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 58.18,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-09-10T21:49:10Z",
+        "published_at": null,
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
+        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
+        "locator": "terminalbench; source row 0; 5c537be4-7fc3-449b-8bfc-ceb9061c2535; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-03\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Sep 3, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-6-astra\",\"label\":\"GPT-6 Astra\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:80126fff4fab5512fcc77009",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "79aafc20-6776-4411-a5a5-0640562496d0",
+        "name": "GPT-6.1 Sol",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 58.18,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
+        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
+        "locator": "terminalbench; source row 3; 79aafc20-6776-4411-a5a5-0640562496d0; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-29\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Sep 29, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-6.1-sol\",\"label\":\"GPT-6.1 Sol\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:91fda1cb6d110cc822300b52",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "c741608e-c94e-417d-b7a8-e67111a0c887",
+        "name": "Fable 5.1",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 57.88,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-09-10T21:49:10Z",
+        "published_at": null,
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
+        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
+        "locator": "terminalbench; source row 1; c741608e-c94e-417d-b7a8-e67111a0c887; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-01\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Sep 1, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://docs.anthropic.com/en/docs/about-claude/models/all-models\",\"label\":\"Fable 5.1\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:905721ac48b551e1f4dc6af4",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "16db8ad5-84aa-4588-b660-1ce68c0d45e2",
+        "name": "GPT-6 Astra",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 57.88,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-09-10T21:49:10Z",
+        "published_at": null,
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
+        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
+        "locator": "terminalbench; source row 2; 16db8ad5-84aa-4588-b660-1ce68c0d45e2; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-03\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Sep 3, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-6-astra\",\"label\":\"GPT-6 Astra\"},\"reasoning_effort\":\"xhigh\"}; effort=xhigh; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5b9aca0a741138426195312e",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "3475050c-bf5e-4261-a3f6-0af5350af13f",
+        "name": "GPT-6 Astra",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 57.88,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-09-10T21:49:10Z",
+        "published_at": null,
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
+        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
+        "locator": "terminalbench; source row 3; 3475050c-bf5e-4261-a3f6-0af5350af13f; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-03\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Sep 3, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-6-astra\",\"label\":\"GPT-6 Astra\"},\"reasoning_effort\":\"high\"}; effort=high; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:1d0dfbc2c6d265ffdde4df01",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "9e1c5e11-748f-4f2e-911a-070a396d5bf8",
+        "name": "Fable 5.1",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 57.88,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
+        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
+        "locator": "terminalbench; source row 7; 9e1c5e11-748f-4f2e-911a-070a396d5bf8; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-01\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Sep 1, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://docs.anthropic.com/en/docs/about-claude/models/all-models\",\"label\":\"Fable 5.1\"},\"reasoning_effort\":\"xhigh\"}; effort=xhigh; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:defbb81c50face9fdf12f71a",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "4643b23c-53e8-47ae-a3bd-9abc900e9588",
+        "name": "Fable 5.1",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 54.55,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
+        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
+        "locator": "terminalbench; source row 8; 4643b23c-53e8-47ae-a3bd-9abc900e9588; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-01\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Sep 1, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://docs.anthropic.com/en/docs/about-claude/models/all-models\",\"label\":\"Fable 5.1\"},\"reasoning_effort\":\"high\"}; effort=high; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:e16594eea6828beb660ee5da",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "f3c3d5a6-6424-4acb-bfcc-615c3f79f6dd",
+        "name": "GPT-6 Astra",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 54.24,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-09-10T21:49:10Z",
+        "published_at": null,
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
+        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
+        "locator": "terminalbench; source row 4; f3c3d5a6-6424-4acb-bfcc-615c3f79f6dd; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-03\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Sep 3, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-6-astra\",\"label\":\"GPT-6 Astra\"},\"reasoning_effort\":\"medium\"}; effort=medium; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:b4d6a9006eddf510ae3622f5",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "83e6bf7e-aeb4-4116-9f30-ca8de96603fb",
+        "name": "Fable 5.1",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 53.94,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
+        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
+        "locator": "terminalbench; source row 10; 83e6bf7e-aeb4-4116-9f30-ca8de96603fb; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-01\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Sep 1, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://docs.anthropic.com/en/docs/about-claude/models/all-models\",\"label\":\"Fable 5.1\"},\"reasoning_effort\":\"medium\"}; effort=medium; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:320879fe0916ea2fb8f9cd48",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "f7844abc-3109-4d5f-91ad-481df7b9fac2",
+        "name": "Opus 5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 53.94,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
+        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
+        "locator": "terminalbench; source row 11; f7844abc-3109-4d5f-91ad-481df7b9fac2; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-07-24\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Jul 24, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/news/claude-opus-5\",\"label\":\"Opus 5\"},\"reasoning_effort\":\"xhigh\"}; effort=xhigh; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:fffa7feb1e197b3f45a1214d",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "d71ac3d0-da36-49cb-89d9-323136e77111",
+        "name": "Opus 5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 51.82,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-09-10T21:49:10Z",
+        "published_at": null,
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
+        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
+        "locator": "terminalbench; source row 5; d71ac3d0-da36-49cb-89d9-323136e77111; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-07-24\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Jul 24, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/news/claude-opus-5\",\"label\":\"Opus 5\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:6f2c424fe481cbd929360367",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "b3ad58f3-b311-4d4d-875b-3158cf0309d6",
+        "name": "GPT-6 Astra",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 50.61,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-09-10T21:49:10Z",
+        "published_at": null,
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
+        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
+        "locator": "terminalbench; source row 6; b3ad58f3-b311-4d4d-875b-3158cf0309d6; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-03\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Sep 3, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-6-astra\",\"label\":\"GPT-6 Astra\"},\"reasoning_effort\":\"low\"}; effort=low; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:db533a9ed9003f6a4307f114",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "0b2908ee-3035-447c-9876-e68fecb3f413",
+        "name": "Opus 5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 50.3,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
+        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
+        "locator": "terminalbench; source row 14; 0b2908ee-3035-447c-9876-e68fecb3f413; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-07-24\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Jul 24, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/news/claude-opus-5\",\"label\":\"Opus 5\"},\"reasoning_effort\":\"high\"}; effort=high; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:34e6bd4a69938d513afd4298",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "a29d2361-9d5b-4a95-a56d-707070bd6c88",
+        "name": "GPT-6 Sol",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 49.39,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
+        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
+        "locator": "terminalbench; source row 15; a29d2361-9d5b-4a95-a56d-707070bd6c88; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-22\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Sep 22, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-6-sol\",\"label\":\"GPT-6 Sol\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:3e9a1283906e76da9774c6b5",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "8c102a88-0789-4ce7-b503-bd39e84e157b",
+        "name": "Opus 5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 44.85,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
+        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
+        "locator": "terminalbench; source row 16; 8c102a88-0789-4ce7-b503-bd39e84e157b; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-07-24\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Jul 24, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/news/claude-opus-5\",\"label\":\"Opus 5\"},\"reasoning_effort\":\"medium\"}; effort=medium; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:9369743d7d7e3fc19db694ee",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "36c077e0-4879-4444-b315-8532d66401d6",
+        "name": "Fable 5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 44.55,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-09-10T21:49:10Z",
+        "published_at": null,
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
+        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
+        "locator": "terminalbench; source row 7; 36c077e0-4879-4444-b315-8532d66401d6; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-06-09\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Jun 9, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/news/claude-fable-5-mythos-5\",\"label\":\"Fable 5\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:9b7c3b43619608e665be2af7",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "e18d02ab-0973-4d86-872f-a353c8a7f344",
+        "name": "Fable 5.1",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 43.33,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
+        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
+        "locator": "terminalbench; source row 18; e18d02ab-0973-4d86-872f-a353c8a7f344; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-01\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Sep 1, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://docs.anthropic.com/en/docs/about-claude/models/all-models\",\"label\":\"Fable 5.1\"},\"reasoning_effort\":\"low\"}; effort=low; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:1f3329b83b4d3d7a8da2cd6d",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "d72e8775-f4f1-4313-99e7-35b1cb499f24",
+        "name": "GLM-5.3",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 41.82,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-09-10T21:49:10Z",
+        "published_at": null,
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
+        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
+        "locator": "terminalbench; source row 8; d72e8775-f4f1-4313-99e7-35b1cb499f24; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-08-14\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://z.ai\",\"label\":\"Z.ai\"},\"display_date\":\"Aug 14, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://docs.z.ai/guides/llm/glm-5.3\",\"label\":\"GLM-5.3\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:79ee139387973ed74d4d2019",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "84b39f56-fe3c-46c3-919f-3b67b73f9b49",
+        "name": "Grok 4.7",
+        "model_id": null,
+        "variant": null,
+        "harness": "Grok Build"
+      },
+      "value": 37.58,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
+        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
+        "locator": "terminalbench; source row 20; 84b39f56-fe3c-46c3-919f-3b67b73f9b49; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-21\",\"agent_org\":{\"url\":\"https://x.ai\",\"label\":\"xAI\"},\"model_org\":{\"url\":\"https://x.ai\",\"label\":\"xAI\"},\"display_date\":\"Sep 21, 2026\",\"agent_display\":{\"url\":\"https://x.ai/build\",\"label\":\"Grok Build\"},\"model_display\":{\"url\":\"https://docs.x.ai/developers/models/grok-4.7\",\"label\":\"Grok 4.7\"},\"reasoning_effort\":\"xhigh\"}; effort=xhigh; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a172dd43b58c22321706f094",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "0e349bde-b264-494d-a853-fada9c696192",
+        "name": "GPT-5.6 Sol",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 37.27,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-09-10T21:49:10Z",
+        "published_at": null,
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
+        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
+        "locator": "terminalbench; source row 9; 0e349bde-b264-494d-a853-fada9c696192; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-06-26\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Jun 26, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-5.6-sol\",\"label\":\"GPT-5.6 Sol\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a436e9c2b8a5a0d3dd7a0332",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "03fe4f10-b683-427b-a820-61e38145d28b",
+        "name": "Opus 5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 34.85,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
+        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
+        "locator": "terminalbench; source row 23; 03fe4f10-b683-427b-a820-61e38145d28b; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-07-24\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Jul 24, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/news/claude-opus-5\",\"label\":\"Opus 5\"},\"reasoning_effort\":\"low\"}; effort=low; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:2c624b84c2c7b0a941c6e4a0",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "1f7ed2b4-3a4e-41d9-a1e1-0d9dcdc3667a",
+        "name": "Qwen3.8-Max-0902",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 26.97,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
+        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
+        "locator": "terminalbench; source row 24; 1f7ed2b4-3a4e-41d9-a1e1-0d9dcdc3667a; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-02\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.alibabacloud.com\",\"label\":\"Alibaba\"},\"display_date\":\"Sep 2, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.alibabacloud.com/en/notice/model_studio_update_notice_for_qwen38max_models_863\",\"label\":\"Qwen3.8-Max-0902\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:05477251fe19f0fcde93e817",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "952b4217-421f-4d14-849b-9968fcb2063b",
+        "name": "Opus 4.8",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 23.64,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-09-10T21:49:10Z",
+        "published_at": null,
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
+        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
+        "locator": "terminalbench; source row 10; 952b4217-421f-4d14-849b-9968fcb2063b; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-05-28\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"May 28, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/news/claude-opus-4-8\",\"label\":\"Opus 4.8\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:57fbf6f4f5ee2e08058cea6c",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "e53da412-5e92-408c-b369-c767924c7c1c",
+        "name": "GPT-5.6 Terra",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 21.52,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-09-10T21:49:10Z",
+        "published_at": null,
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
+        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
+        "locator": "terminalbench; source row 11; e53da412-5e92-408c-b369-c767924c7c1c; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-06-26\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Jun 26, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-5.6-terra\",\"label\":\"GPT-5.6 Terra\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:25b7b272792c0017b5149363",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "26354542-edc0-40cd-8f8d-9fe6fbe92ac3",
+        "name": "Grok 4.6",
+        "model_id": null,
+        "variant": null,
+        "harness": "Grok Build"
+      },
+      "value": 20.3,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-09-10T21:49:10Z",
+        "published_at": null,
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
+        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
+        "locator": "terminalbench; source row 12; 26354542-edc0-40cd-8f8d-9fe6fbe92ac3; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-08-12\",\"agent_org\":{\"url\":\"https://x.ai\",\"label\":\"xAI\"},\"model_org\":{\"url\":\"https://x.ai\",\"label\":\"xAI\"},\"display_date\":\"Aug 12, 2026\",\"agent_display\":{\"url\":\"https://x.ai/build\",\"label\":\"Grok Build\"},\"model_display\":{\"url\":\"https://docs.x.ai/developers/models/grok-4.6\",\"label\":\"Grok 4.6\"},\"reasoning_effort\":\"high\"}; effort=high; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:6e0c5c913e4f64a69ff0872e",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "06850434-507d-4dbd-b74a-09d52519ee35",
+        "name": "Gemini 3.8 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 19.09,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-09-10T21:49:10Z",
+        "published_at": null,
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
+        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
+        "locator": "terminalbench; source row 13; 06850434-507d-4dbd-b74a-09d52519ee35; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-02\",\"agent_org\":{\"url\":\"https://github.com/SWE-agent\",\"label\":\"SWE-agent\"},\"model_org\":{\"url\":\"https://google.com\",\"label\":\"Google\"},\"display_date\":\"Sep 2, 2026\",\"agent_display\":{\"url\":\"https://github.com/SWE-agent/mini-swe-agent\",\"label\":\"mini-SWE-agent\"},\"model_display\":{\"url\":\"https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash\",\"label\":\"Gemini 3.8 Flash\"},\"reasoning_effort\":\"high\"}; effort=high; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:78df54137076f127c39e208c",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "51c6d76e-5baa-48c1-97b3-88656c620eef",
+        "name": "GPT-5.6 Luna",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 17.27,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-09-10T21:49:10Z",
+        "published_at": null,
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
+        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
+        "locator": "terminalbench; source row 14; 51c6d76e-5baa-48c1-97b3-88656c620eef; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-06-26\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Jun 26, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-5.6-luna\",\"label\":\"GPT-5.6 Luna\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:e16223a39efe1381c77e4103",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "5bd8ac99-7353-4210-bdc5-153029e660d5",
+        "name": "GPT-6 Luna",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 16.36,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
+        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
+        "locator": "terminalbench; source row 30; 5bd8ac99-7353-4210-bdc5-153029e660d5; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-22\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Sep 22, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-6-luna\",\"label\":\"GPT-6 Luna\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:323ffa5b3e341a9268090ca7",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "c76c9ec8-b770-41ad-b0d2-e64db28bd478",
+        "name": "Muse Spark 1.3",
+        "model_id": null,
+        "variant": null,
+        "harness": "Muse Code"
+      },
+      "value": 14.55,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
+        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
+        "locator": "terminalbench; source row 31; c76c9ec8-b770-41ad-b0d2-e64db28bd478; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-02\",\"agent_org\":{\"url\":\"https://ai.meta.com\",\"label\":\"Meta\"},\"model_org\":{\"url\":\"https://ai.meta.com\",\"label\":\"Meta\"},\"display_date\":\"Sep 2, 2026\",\"agent_display\":{\"url\":\"https://dev.meta.ai/docs/muse-code\",\"label\":\"Muse Code\"},\"model_display\":{\"url\":\"https://ai.meta.com/tools/muse/\",\"label\":\"Muse Spark 1.3\"},\"reasoning_effort\":\"xhigh\"}; effort=xhigh; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:20a595c9dbea2fc2886fef59",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "0eed5a0d-96b6-491b-aeb7-cd5e4700c2d7",
+        "name": "Grok 4.5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Grok Build"
+      },
+      "value": 12.42,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-09-10T21:49:10Z",
+        "published_at": null,
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
+        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
+        "locator": "terminalbench; source row 15; 0eed5a0d-96b6-491b-aeb7-cd5e4700c2d7; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-07-16\",\"agent_org\":{\"url\":\"https://x.ai\",\"label\":\"xAI\"},\"model_org\":{\"url\":\"https://x.ai\",\"label\":\"xAI\"},\"display_date\":\"Jul 16, 2026\",\"agent_display\":{\"url\":\"https://x.ai/build\",\"label\":\"Grok Build\"},\"model_display\":{\"url\":\"https://docs.x.ai/developers/models/grok-4.5\",\"label\":\"Grok 4.5\"},\"reasoning_effort\":\"high\"}; effort=high; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a96d9a233a5eb4cf9cccb9d2",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "8180b9e4-4990-43d0-b906-cd8b43adaaa2",
+        "name": "Sonnet 5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 12.42,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-09-10T21:49:10Z",
+        "published_at": null,
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
+        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
+        "locator": "terminalbench; source row 16; 8180b9e4-4990-43d0-b906-cd8b43adaaa2; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-06-30\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Jun 30, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/news/claude-sonnet-5\",\"label\":\"Sonnet 5\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
+      "comparison_key": null
+    },
+    {
+      "id": "public:af94d5262bc6986d11b9b566",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "14f4da14-b86a-4dca-92d7-11178d4fe064",
+        "name": "Gemini 3.7 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 11.21,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "retrieved_at": "2026-09-10T21:49:10Z",
+        "published_at": null,
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
+        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
+        "locator": "terminalbench; source row 17; 14f4da14-b86a-4dca-92d7-11178d4fe064; field value"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-08-13\",\"agent_org\":{\"url\":\"https://github.com/SWE-agent\",\"label\":\"SWE-agent\"},\"model_org\":{\"url\":\"https://google.com\",\"label\":\"Google\"},\"display_date\":\"Aug 13, 2026\",\"agent_display\":{\"url\":\"https://github.com/SWE-agent/mini-swe-agent\",\"label\":\"mini-SWE-agent\"},\"model_display\":{\"url\":\"https://ai.google.dev/gemini-api/docs/models/gemini-3.7-flash\",\"label\":\"Gemini 3.7 Flash\"},\"reasoning_effort\":\"high\"}; effort=high; trials=330",
+      "comparison_key": null
+    },
+    {
       "id": "public:bd9659ad7edfd6cdbf83bf98",
       "benchmark_id": "arc-agi::2",
       "subject": {
@@ -321482,822 +322298,6 @@
         "locator": "arc_verified_results_page; source row 4; DeepSeek V4 Pro 0813|None; field value"
       },
       "protocol": "Official ARC Prize DeepSeek V4 Pro 0813 results page (DeepSeek), carrying an ARC Prize Verified badge; the date on the page, 2026-08-13, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"At max effort, DeepSeek V4 Pro 0813 scores 90.0% on ARC-AGI-1 Semi-Private at $0.30 per task and 61.3% on ARC-AGI-2 Semi-Private at $0.60 per task.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.; source row: {\"page_model\":\"DeepSeek V4 Pro 0813\",\"page_vendor\":\"DeepSeek\",\"source_variant\":\"None\",\"reasoning_effort\":\"none\",\"benchmark_column\":\"ARC-AGI-2\",\"cells\":[\"None\",\"13.0%\",\"0.8%\",\"—\"],\"model_release_date\":\"2026-08-13\"}",
-      "comparison_key": null
-    },
-    {
-      "id": "public:60c19aafb1ecdee9f7b978d6",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "7b805dbb-e77a-4d0a-892e-165f922f786c",
-        "name": "Opus 5.5",
-        "model_id": null,
-        "variant": null,
-        "harness": "Claude Code"
-      },
-      "value": 64.85,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
-        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
-        "locator": "terminalbench; source row 0; 7b805dbb-e77a-4d0a-892e-165f922f786c; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-22\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Sep 22, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/claude-opus-5-5\",\"label\":\"Opus 5.5\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:63bead97805961e34fa66d6c",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "723c6609-fe18-46d9-a1a3-dd4b6b0e0d00",
-        "name": "Sonnet 5.5",
-        "model_id": null,
-        "variant": null,
-        "harness": "Claude Code"
-      },
-      "value": 61.82,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
-        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
-        "locator": "terminalbench; source row 1; 723c6609-fe18-46d9-a1a3-dd4b6b0e0d00; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-28\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Sep 28, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/claude-sonnet-5-5\",\"label\":\"Sonnet 5.5\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:17d19fe6c42544cd1fd34e9d",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "5c537be4-7fc3-449b-8bfc-ceb9061c2535",
-        "name": "GPT-6 Astra",
-        "model_id": null,
-        "variant": null,
-        "harness": "Codex"
-      },
-      "value": 58.18,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-09-10T21:49:10Z",
-        "published_at": null,
-        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
-        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
-        "locator": "terminalbench; source row 0; 5c537be4-7fc3-449b-8bfc-ceb9061c2535; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-03\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Sep 3, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-6-astra\",\"label\":\"GPT-6 Astra\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:80126fff4fab5512fcc77009",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "79aafc20-6776-4411-a5a5-0640562496d0",
-        "name": "GPT-6.1 Sol",
-        "model_id": null,
-        "variant": null,
-        "harness": "Codex"
-      },
-      "value": 58.18,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
-        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
-        "locator": "terminalbench; source row 3; 79aafc20-6776-4411-a5a5-0640562496d0; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-29\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Sep 29, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-6.1-sol\",\"label\":\"GPT-6.1 Sol\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:91fda1cb6d110cc822300b52",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "c741608e-c94e-417d-b7a8-e67111a0c887",
-        "name": "Fable 5.1",
-        "model_id": null,
-        "variant": null,
-        "harness": "Claude Code"
-      },
-      "value": 57.88,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-09-10T21:49:10Z",
-        "published_at": null,
-        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
-        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
-        "locator": "terminalbench; source row 1; c741608e-c94e-417d-b7a8-e67111a0c887; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-01\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Sep 1, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://docs.anthropic.com/en/docs/about-claude/models/all-models\",\"label\":\"Fable 5.1\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:905721ac48b551e1f4dc6af4",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "16db8ad5-84aa-4588-b660-1ce68c0d45e2",
-        "name": "GPT-6 Astra",
-        "model_id": null,
-        "variant": null,
-        "harness": "Codex"
-      },
-      "value": 57.88,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-09-10T21:49:10Z",
-        "published_at": null,
-        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
-        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
-        "locator": "terminalbench; source row 2; 16db8ad5-84aa-4588-b660-1ce68c0d45e2; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-03\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Sep 3, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-6-astra\",\"label\":\"GPT-6 Astra\"},\"reasoning_effort\":\"xhigh\"}; effort=xhigh; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:5b9aca0a741138426195312e",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "3475050c-bf5e-4261-a3f6-0af5350af13f",
-        "name": "GPT-6 Astra",
-        "model_id": null,
-        "variant": null,
-        "harness": "Codex"
-      },
-      "value": 57.88,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-09-10T21:49:10Z",
-        "published_at": null,
-        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
-        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
-        "locator": "terminalbench; source row 3; 3475050c-bf5e-4261-a3f6-0af5350af13f; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-03\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Sep 3, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-6-astra\",\"label\":\"GPT-6 Astra\"},\"reasoning_effort\":\"high\"}; effort=high; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:1d0dfbc2c6d265ffdde4df01",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "9e1c5e11-748f-4f2e-911a-070a396d5bf8",
-        "name": "Fable 5.1",
-        "model_id": null,
-        "variant": null,
-        "harness": "Claude Code"
-      },
-      "value": 57.88,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
-        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
-        "locator": "terminalbench; source row 7; 9e1c5e11-748f-4f2e-911a-070a396d5bf8; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-01\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Sep 1, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://docs.anthropic.com/en/docs/about-claude/models/all-models\",\"label\":\"Fable 5.1\"},\"reasoning_effort\":\"xhigh\"}; effort=xhigh; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:defbb81c50face9fdf12f71a",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "4643b23c-53e8-47ae-a3bd-9abc900e9588",
-        "name": "Fable 5.1",
-        "model_id": null,
-        "variant": null,
-        "harness": "Claude Code"
-      },
-      "value": 54.55,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
-        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
-        "locator": "terminalbench; source row 8; 4643b23c-53e8-47ae-a3bd-9abc900e9588; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-01\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Sep 1, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://docs.anthropic.com/en/docs/about-claude/models/all-models\",\"label\":\"Fable 5.1\"},\"reasoning_effort\":\"high\"}; effort=high; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:e16594eea6828beb660ee5da",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "f3c3d5a6-6424-4acb-bfcc-615c3f79f6dd",
-        "name": "GPT-6 Astra",
-        "model_id": null,
-        "variant": null,
-        "harness": "Codex"
-      },
-      "value": 54.24,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-09-10T21:49:10Z",
-        "published_at": null,
-        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
-        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
-        "locator": "terminalbench; source row 4; f3c3d5a6-6424-4acb-bfcc-615c3f79f6dd; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-03\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Sep 3, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-6-astra\",\"label\":\"GPT-6 Astra\"},\"reasoning_effort\":\"medium\"}; effort=medium; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:b4d6a9006eddf510ae3622f5",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "83e6bf7e-aeb4-4116-9f30-ca8de96603fb",
-        "name": "Fable 5.1",
-        "model_id": null,
-        "variant": null,
-        "harness": "Claude Code"
-      },
-      "value": 53.94,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
-        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
-        "locator": "terminalbench; source row 10; 83e6bf7e-aeb4-4116-9f30-ca8de96603fb; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-01\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Sep 1, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://docs.anthropic.com/en/docs/about-claude/models/all-models\",\"label\":\"Fable 5.1\"},\"reasoning_effort\":\"medium\"}; effort=medium; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:320879fe0916ea2fb8f9cd48",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "f7844abc-3109-4d5f-91ad-481df7b9fac2",
-        "name": "Opus 5",
-        "model_id": null,
-        "variant": null,
-        "harness": "Claude Code"
-      },
-      "value": 53.94,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
-        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
-        "locator": "terminalbench; source row 11; f7844abc-3109-4d5f-91ad-481df7b9fac2; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-07-24\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Jul 24, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/news/claude-opus-5\",\"label\":\"Opus 5\"},\"reasoning_effort\":\"xhigh\"}; effort=xhigh; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:fffa7feb1e197b3f45a1214d",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "d71ac3d0-da36-49cb-89d9-323136e77111",
-        "name": "Opus 5",
-        "model_id": null,
-        "variant": null,
-        "harness": "Claude Code"
-      },
-      "value": 51.82,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-09-10T21:49:10Z",
-        "published_at": null,
-        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
-        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
-        "locator": "terminalbench; source row 5; d71ac3d0-da36-49cb-89d9-323136e77111; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-07-24\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Jul 24, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/news/claude-opus-5\",\"label\":\"Opus 5\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:6f2c424fe481cbd929360367",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "b3ad58f3-b311-4d4d-875b-3158cf0309d6",
-        "name": "GPT-6 Astra",
-        "model_id": null,
-        "variant": null,
-        "harness": "Codex"
-      },
-      "value": 50.61,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-09-10T21:49:10Z",
-        "published_at": null,
-        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
-        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
-        "locator": "terminalbench; source row 6; b3ad58f3-b311-4d4d-875b-3158cf0309d6; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-03\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Sep 3, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-6-astra\",\"label\":\"GPT-6 Astra\"},\"reasoning_effort\":\"low\"}; effort=low; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:db533a9ed9003f6a4307f114",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "0b2908ee-3035-447c-9876-e68fecb3f413",
-        "name": "Opus 5",
-        "model_id": null,
-        "variant": null,
-        "harness": "Claude Code"
-      },
-      "value": 50.3,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
-        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
-        "locator": "terminalbench; source row 14; 0b2908ee-3035-447c-9876-e68fecb3f413; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-07-24\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Jul 24, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/news/claude-opus-5\",\"label\":\"Opus 5\"},\"reasoning_effort\":\"high\"}; effort=high; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:34e6bd4a69938d513afd4298",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "a29d2361-9d5b-4a95-a56d-707070bd6c88",
-        "name": "GPT-6 Sol",
-        "model_id": null,
-        "variant": null,
-        "harness": "Codex"
-      },
-      "value": 49.39,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
-        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
-        "locator": "terminalbench; source row 15; a29d2361-9d5b-4a95-a56d-707070bd6c88; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-22\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Sep 22, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-6-sol\",\"label\":\"GPT-6 Sol\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:3e9a1283906e76da9774c6b5",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "8c102a88-0789-4ce7-b503-bd39e84e157b",
-        "name": "Opus 5",
-        "model_id": null,
-        "variant": null,
-        "harness": "Claude Code"
-      },
-      "value": 44.85,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
-        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
-        "locator": "terminalbench; source row 16; 8c102a88-0789-4ce7-b503-bd39e84e157b; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-07-24\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Jul 24, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/news/claude-opus-5\",\"label\":\"Opus 5\"},\"reasoning_effort\":\"medium\"}; effort=medium; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:9369743d7d7e3fc19db694ee",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "36c077e0-4879-4444-b315-8532d66401d6",
-        "name": "Fable 5",
-        "model_id": null,
-        "variant": null,
-        "harness": "Claude Code"
-      },
-      "value": 44.55,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-09-10T21:49:10Z",
-        "published_at": null,
-        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
-        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
-        "locator": "terminalbench; source row 7; 36c077e0-4879-4444-b315-8532d66401d6; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-06-09\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Jun 9, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/news/claude-fable-5-mythos-5\",\"label\":\"Fable 5\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:9b7c3b43619608e665be2af7",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "e18d02ab-0973-4d86-872f-a353c8a7f344",
-        "name": "Fable 5.1",
-        "model_id": null,
-        "variant": null,
-        "harness": "Claude Code"
-      },
-      "value": 43.33,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
-        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
-        "locator": "terminalbench; source row 18; e18d02ab-0973-4d86-872f-a353c8a7f344; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-01\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Sep 1, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://docs.anthropic.com/en/docs/about-claude/models/all-models\",\"label\":\"Fable 5.1\"},\"reasoning_effort\":\"low\"}; effort=low; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:1f3329b83b4d3d7a8da2cd6d",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "d72e8775-f4f1-4313-99e7-35b1cb499f24",
-        "name": "GLM-5.3",
-        "model_id": null,
-        "variant": null,
-        "harness": "Claude Code"
-      },
-      "value": 41.82,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-09-10T21:49:10Z",
-        "published_at": null,
-        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
-        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
-        "locator": "terminalbench; source row 8; d72e8775-f4f1-4313-99e7-35b1cb499f24; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-08-14\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://z.ai\",\"label\":\"Z.ai\"},\"display_date\":\"Aug 14, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://docs.z.ai/guides/llm/glm-5.3\",\"label\":\"GLM-5.3\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:79ee139387973ed74d4d2019",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "84b39f56-fe3c-46c3-919f-3b67b73f9b49",
-        "name": "Grok 4.7",
-        "model_id": null,
-        "variant": null,
-        "harness": "Grok Build"
-      },
-      "value": 37.58,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
-        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
-        "locator": "terminalbench; source row 20; 84b39f56-fe3c-46c3-919f-3b67b73f9b49; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-21\",\"agent_org\":{\"url\":\"https://x.ai\",\"label\":\"xAI\"},\"model_org\":{\"url\":\"https://x.ai\",\"label\":\"xAI\"},\"display_date\":\"Sep 21, 2026\",\"agent_display\":{\"url\":\"https://x.ai/build\",\"label\":\"Grok Build\"},\"model_display\":{\"url\":\"https://docs.x.ai/developers/models/grok-4.7\",\"label\":\"Grok 4.7\"},\"reasoning_effort\":\"xhigh\"}; effort=xhigh; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:a172dd43b58c22321706f094",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "0e349bde-b264-494d-a853-fada9c696192",
-        "name": "GPT-5.6 Sol",
-        "model_id": null,
-        "variant": null,
-        "harness": "Codex"
-      },
-      "value": 37.27,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-09-10T21:49:10Z",
-        "published_at": null,
-        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
-        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
-        "locator": "terminalbench; source row 9; 0e349bde-b264-494d-a853-fada9c696192; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-06-26\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Jun 26, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-5.6-sol\",\"label\":\"GPT-5.6 Sol\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:a436e9c2b8a5a0d3dd7a0332",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "03fe4f10-b683-427b-a820-61e38145d28b",
-        "name": "Opus 5",
-        "model_id": null,
-        "variant": null,
-        "harness": "Claude Code"
-      },
-      "value": 34.85,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
-        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
-        "locator": "terminalbench; source row 23; 03fe4f10-b683-427b-a820-61e38145d28b; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-07-24\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Jul 24, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/news/claude-opus-5\",\"label\":\"Opus 5\"},\"reasoning_effort\":\"low\"}; effort=low; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:2c624b84c2c7b0a941c6e4a0",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "1f7ed2b4-3a4e-41d9-a1e1-0d9dcdc3667a",
-        "name": "Qwen3.8-Max-0902",
-        "model_id": null,
-        "variant": null,
-        "harness": "Claude Code"
-      },
-      "value": 26.97,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
-        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
-        "locator": "terminalbench; source row 24; 1f7ed2b4-3a4e-41d9-a1e1-0d9dcdc3667a; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-02\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.alibabacloud.com\",\"label\":\"Alibaba\"},\"display_date\":\"Sep 2, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.alibabacloud.com/en/notice/model_studio_update_notice_for_qwen38max_models_863\",\"label\":\"Qwen3.8-Max-0902\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:05477251fe19f0fcde93e817",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "952b4217-421f-4d14-849b-9968fcb2063b",
-        "name": "Opus 4.8",
-        "model_id": null,
-        "variant": null,
-        "harness": "Claude Code"
-      },
-      "value": 23.64,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-09-10T21:49:10Z",
-        "published_at": null,
-        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
-        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
-        "locator": "terminalbench; source row 10; 952b4217-421f-4d14-849b-9968fcb2063b; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-05-28\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"May 28, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/news/claude-opus-4-8\",\"label\":\"Opus 4.8\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:57fbf6f4f5ee2e08058cea6c",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "e53da412-5e92-408c-b369-c767924c7c1c",
-        "name": "GPT-5.6 Terra",
-        "model_id": null,
-        "variant": null,
-        "harness": "Codex"
-      },
-      "value": 21.52,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-09-10T21:49:10Z",
-        "published_at": null,
-        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
-        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
-        "locator": "terminalbench; source row 11; e53da412-5e92-408c-b369-c767924c7c1c; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-06-26\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Jun 26, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-5.6-terra\",\"label\":\"GPT-5.6 Terra\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:25b7b272792c0017b5149363",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "26354542-edc0-40cd-8f8d-9fe6fbe92ac3",
-        "name": "Grok 4.6",
-        "model_id": null,
-        "variant": null,
-        "harness": "Grok Build"
-      },
-      "value": 20.3,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-09-10T21:49:10Z",
-        "published_at": null,
-        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
-        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
-        "locator": "terminalbench; source row 12; 26354542-edc0-40cd-8f8d-9fe6fbe92ac3; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-08-12\",\"agent_org\":{\"url\":\"https://x.ai\",\"label\":\"xAI\"},\"model_org\":{\"url\":\"https://x.ai\",\"label\":\"xAI\"},\"display_date\":\"Aug 12, 2026\",\"agent_display\":{\"url\":\"https://x.ai/build\",\"label\":\"Grok Build\"},\"model_display\":{\"url\":\"https://docs.x.ai/developers/models/grok-4.6\",\"label\":\"Grok 4.6\"},\"reasoning_effort\":\"high\"}; effort=high; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:6e0c5c913e4f64a69ff0872e",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "06850434-507d-4dbd-b74a-09d52519ee35",
-        "name": "Gemini 3.8 Flash",
-        "model_id": null,
-        "variant": null,
-        "harness": "mini-SWE-agent"
-      },
-      "value": 19.09,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-09-10T21:49:10Z",
-        "published_at": null,
-        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
-        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
-        "locator": "terminalbench; source row 13; 06850434-507d-4dbd-b74a-09d52519ee35; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-02\",\"agent_org\":{\"url\":\"https://github.com/SWE-agent\",\"label\":\"SWE-agent\"},\"model_org\":{\"url\":\"https://google.com\",\"label\":\"Google\"},\"display_date\":\"Sep 2, 2026\",\"agent_display\":{\"url\":\"https://github.com/SWE-agent/mini-swe-agent\",\"label\":\"mini-SWE-agent\"},\"model_display\":{\"url\":\"https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash\",\"label\":\"Gemini 3.8 Flash\"},\"reasoning_effort\":\"high\"}; effort=high; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:78df54137076f127c39e208c",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "51c6d76e-5baa-48c1-97b3-88656c620eef",
-        "name": "GPT-5.6 Luna",
-        "model_id": null,
-        "variant": null,
-        "harness": "Codex"
-      },
-      "value": 17.27,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-09-10T21:49:10Z",
-        "published_at": null,
-        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
-        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
-        "locator": "terminalbench; source row 14; 51c6d76e-5baa-48c1-97b3-88656c620eef; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-06-26\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Jun 26, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-5.6-luna\",\"label\":\"GPT-5.6 Luna\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:e16223a39efe1381c77e4103",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "5bd8ac99-7353-4210-bdc5-153029e660d5",
-        "name": "GPT-6 Luna",
-        "model_id": null,
-        "variant": null,
-        "harness": "Codex"
-      },
-      "value": 16.36,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
-        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
-        "locator": "terminalbench; source row 30; 5bd8ac99-7353-4210-bdc5-153029e660d5; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-22\",\"agent_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"model_org\":{\"url\":\"https://openai.com\",\"label\":\"OpenAI\"},\"display_date\":\"Sep 22, 2026\",\"agent_display\":{\"url\":\"https://openai.com/codex/\",\"label\":\"Codex\"},\"model_display\":{\"url\":\"https://developers.openai.com/api/docs/models/gpt-6-luna\",\"label\":\"GPT-6 Luna\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:323ffa5b3e341a9268090ca7",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "c76c9ec8-b770-41ad-b0d2-e64db28bd478",
-        "name": "Muse Spark 1.3",
-        "model_id": null,
-        "variant": null,
-        "harness": "Muse Code"
-      },
-      "value": 14.55,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-10-11T18:49:29.638789+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-10-11T18-43-00-902Z/4682550973977d5dc98b.gz",
-        "sha256": "4682550973977d5dc98b2d5b0bff30ac4761570bc312b379c4abd68cb60ceaf8",
-        "locator": "terminalbench; source row 31; c76c9ec8-b770-41ad-b0d2-e64db28bd478; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-09-02\",\"agent_org\":{\"url\":\"https://ai.meta.com\",\"label\":\"Meta\"},\"model_org\":{\"url\":\"https://ai.meta.com\",\"label\":\"Meta\"},\"display_date\":\"Sep 2, 2026\",\"agent_display\":{\"url\":\"https://dev.meta.ai/docs/muse-code\",\"label\":\"Muse Code\"},\"model_display\":{\"url\":\"https://ai.meta.com/tools/muse/\",\"label\":\"Muse Spark 1.3\"},\"reasoning_effort\":\"xhigh\"}; effort=xhigh; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:20a595c9dbea2fc2886fef59",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "0eed5a0d-96b6-491b-aeb7-cd5e4700c2d7",
-        "name": "Grok 4.5",
-        "model_id": null,
-        "variant": null,
-        "harness": "Grok Build"
-      },
-      "value": 12.42,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-09-10T21:49:10Z",
-        "published_at": null,
-        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
-        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
-        "locator": "terminalbench; source row 15; 0eed5a0d-96b6-491b-aeb7-cd5e4700c2d7; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-07-16\",\"agent_org\":{\"url\":\"https://x.ai\",\"label\":\"xAI\"},\"model_org\":{\"url\":\"https://x.ai\",\"label\":\"xAI\"},\"display_date\":\"Jul 16, 2026\",\"agent_display\":{\"url\":\"https://x.ai/build\",\"label\":\"Grok Build\"},\"model_display\":{\"url\":\"https://docs.x.ai/developers/models/grok-4.5\",\"label\":\"Grok 4.5\"},\"reasoning_effort\":\"high\"}; effort=high; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:a96d9a233a5eb4cf9cccb9d2",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "8180b9e4-4990-43d0-b906-cd8b43adaaa2",
-        "name": "Sonnet 5",
-        "model_id": null,
-        "variant": null,
-        "harness": "Claude Code"
-      },
-      "value": 12.42,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-09-10T21:49:10Z",
-        "published_at": null,
-        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
-        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
-        "locator": "terminalbench; source row 16; 8180b9e4-4990-43d0-b906-cd8b43adaaa2; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-06-30\",\"agent_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"model_org\":{\"url\":\"https://www.anthropic.com\",\"label\":\"Anthropic\"},\"display_date\":\"Jun 30, 2026\",\"agent_display\":{\"url\":\"https://claude.com/product/claude-code\",\"label\":\"Claude Code\"},\"model_display\":{\"url\":\"https://www.anthropic.com/news/claude-sonnet-5\",\"label\":\"Sonnet 5\"},\"reasoning_effort\":\"max\"}; effort=max; trials=330",
-      "comparison_key": null
-    },
-    {
-      "id": "public:af94d5262bc6986d11b9b566",
-      "benchmark_id": "terminal-bench::4.0",
-      "subject": {
-        "source_id": "14f4da14-b86a-4dca-92d7-11178d4fe064",
-        "name": "Gemini 3.7 Flash",
-        "model_id": null,
-        "variant": null,
-        "harness": "mini-SWE-agent"
-      },
-      "value": 11.21,
-      "unit": "percent",
-      "basis": "self_reported",
-      "source": {
-        "url": "https://www.tbench.ai/",
-        "retrieved_at": "2026-09-10T21:49:10Z",
-        "published_at": null,
-        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
-        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
-        "locator": "terminalbench; source row 17; 14f4da14-b86a-4dca-92d7-11178d4fe064; field value"
-      },
-      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; source row: {\"date\":\"2026-08-13\",\"agent_org\":{\"url\":\"https://github.com/SWE-agent\",\"label\":\"SWE-agent\"},\"model_org\":{\"url\":\"https://google.com\",\"label\":\"Google\"},\"display_date\":\"Aug 13, 2026\",\"agent_display\":{\"url\":\"https://github.com/SWE-agent/mini-swe-agent\",\"label\":\"mini-SWE-agent\"},\"model_display\":{\"url\":\"https://ai.google.dev/gemini-api/docs/models/gemini-3.7-flash\",\"label\":\"Gemini 3.7 Flash\"},\"reasoning_effort\":\"high\"}; effort=high; trials=330",
       "comparison_key": null
     }
   ],

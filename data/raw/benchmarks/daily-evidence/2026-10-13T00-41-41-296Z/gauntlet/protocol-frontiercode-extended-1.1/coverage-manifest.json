@@ -1,0 +1,158 @@
+{
+  "artifact_id": "protocol-frontiercode-extended-1.1",
+  "rounds_used": 3,
+  "rows": {
+    "total": 1,
+    "accepted": [],
+    "quarantined": [
+      "frontiercode-extended::1.1"
+    ]
+  },
+  "producer_flagged": [],
+  "second_opinion": null,
+  "criteria": [
+    "c1",
+    "c2"
+  ],
+  "coverage": {
+    "producer": null,
+    "critic": [],
+    "final": {
+      "rows_covered": 0,
+      "criteria_covered": 0,
+      "complete": false
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.000492422733,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-13T00-41-41-296Z/gauntlet/protocol-frontiercode-extended-1.1/producer-r1.json",
+      "output_sha256": "d6a67b61e3db031241bac3bf57101109b887b4ec1f0ec5a60c47d39b86725b68",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.026099999999999998,
+        "output_per_1m": 0.8999999999999999,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 11730,
+        "completion_tokens": 382,
+        "total_tokens": 12112,
+        "cost": 0.000492422733,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 9971,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0004973967,
+          "upstream_inference_prompt_cost": 0.0001535967,
+          "upstream_inference_completions_cost": 0.0003438
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 161,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 2,
+      "role": "producer",
+      "reused_from_round": 1,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-13T00-41-41-296Z/gauntlet/protocol-frontiercode-extended-1.1/producer-r1.json",
+      "output_sha256": "d6a67b61e3db031241bac3bf57101109b887b4ec1f0ec5a60c47d39b86725b68",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.026099999999999998,
+        "output_per_1m": 0.8999999999999999,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": null,
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 3,
+      "role": "producer",
+      "reused_from_round": 1,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-13T00-41-41-296Z/gauntlet/protocol-frontiercode-extended-1.1/producer-r1.json",
+      "output_sha256": "d6a67b61e3db031241bac3bf57101109b887b4ec1f0ec5a60c47d39b86725b68",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.026099999999999998,
+        "output_per_1m": 0.8999999999999999,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": null,
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

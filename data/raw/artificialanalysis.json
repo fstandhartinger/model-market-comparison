@@ -2,11 +2,11 @@
   "source": "ArtificialAnalysis API v2",
   "endpoint": "https://artificialanalysis.ai/api/v2/data/llms/models",
   "metadata_endpoint": "https://artificialanalysis.ai/leaderboards/models",
-  "collected_at": "2026-10-12",
-  "count": 697,
+  "collected_at": "2026-10-13",
+  "count": 699,
   "metadata_sync": {
-    "api_count": 697,
-    "leaderboard_count": 697,
+    "api_count": 699,
+    "leaderboard_count": 699,
     "missing_model_ids": [],
     "max_allowed_rollout_lag": 4,
     "note": "Missing leaderboard metadata is explicit and remains null; only a bounded publication lag is tolerated."
@@ -47,9 +47,9 @@
         "price_1m_input_tokens": 4,
         "price_1m_output_tokens": 20
       },
-      "median_output_tokens_per_second": 97.281,
-      "median_time_to_first_token_seconds": 577.579,
-      "median_time_to_first_answer_token": 577.579,
+      "median_output_tokens_per_second": 96.594,
+      "median_time_to_first_token_seconds": 490.784,
+      "median_time_to_first_answer_token": 490.784,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -97,9 +97,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 135.304,
-      "median_time_to_first_token_seconds": 310,
-      "median_time_to_first_answer_token": 310,
+      "median_output_tokens_per_second": 132.999,
+      "median_time_to_first_token_seconds": 248.699,
+      "median_time_to_first_answer_token": 248.699,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -147,9 +147,59 @@
         "price_1m_input_tokens": 4,
         "price_1m_output_tokens": 20
       },
-      "median_output_tokens_per_second": 78.853,
-      "median_time_to_first_token_seconds": 79.116,
-      "median_time_to_first_answer_token": 79.116,
+      "median_output_tokens_per_second": 75.395,
+      "median_time_to_first_token_seconds": 54.833,
+      "median_time_to_first_answer_token": 54.833,
+      "metadata": {
+        "deprecated": false,
+        "is_reasoning": true,
+        "is_open_weights": false,
+        "commercial_allowed": null,
+        "license_name": null,
+        "license_url": null,
+        "huggingface_url": null,
+        "openrouter_api_id": null,
+        "context_window_tokens": 1000000
+      }
+    },
+    {
+      "id": "e994a6e0-d36b-4dab-8ae1-c1b469e4d9e2",
+      "name": "Muse Wonder Full (Max)",
+      "slug": "muse-wonder-full",
+      "release_date": "2026-10-12",
+      "model_creator": {
+        "id": "e1694725-0192-4e54-b1b8-c97e816c6cbe",
+        "name": "Meta",
+        "slug": "meta"
+      },
+      "evaluations": {
+        "artificial_analysis_intelligence_index": 55.8,
+        "artificial_analysis_coding_index": null,
+        "artificial_analysis_math_index": null,
+        "mmlu_pro": null,
+        "gpqa": null,
+        "hle": 0.536,
+        "livecodebench": null,
+        "scicode": 0.626,
+        "math_500": null,
+        "aime": null,
+        "aime_25": null,
+        "ifbench": null,
+        "lcr": 0.836666666666667,
+        "terminalbench_hard": null,
+        "terminalbench_v2_1": null,
+        "terminalbench_v4_0": 0.570707070707071,
+        "tau2": null,
+        "tau_banking": null
+      },
+      "pricing": {
+        "price_1m_blended_3_to_1": 0,
+        "price_1m_input_tokens": 0,
+        "price_1m_output_tokens": 0
+      },
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -197,9 +247,9 @@
         "price_1m_input_tokens": 4,
         "price_1m_output_tokens": 20
       },
-      "median_output_tokens_per_second": 75.326,
-      "median_time_to_first_token_seconds": 19.983,
-      "median_time_to_first_answer_token": 19.983,
+      "median_output_tokens_per_second": 73.412,
+      "median_time_to_first_token_seconds": 18.016,
+      "median_time_to_first_answer_token": 18.016,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -247,9 +297,9 @@
         "price_1m_input_tokens": 10,
         "price_1m_output_tokens": 50
       },
-      "median_output_tokens_per_second": 71.759,
-      "median_time_to_first_token_seconds": 163.814,
-      "median_time_to_first_answer_token": 163.814,
+      "median_output_tokens_per_second": 67.201,
+      "median_time_to_first_token_seconds": 137.019,
+      "median_time_to_first_answer_token": 137.019,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -304,9 +354,9 @@
         "price_1m_input_tokens": 10,
         "price_1m_output_tokens": 50
       },
-      "median_output_tokens_per_second": 56.509,
-      "median_time_to_first_token_seconds": 42.748,
-      "median_time_to_first_answer_token": 42.748,
+      "median_output_tokens_per_second": 55.317,
+      "median_time_to_first_token_seconds": 36.998,
+      "median_time_to_first_answer_token": 36.998,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -354,9 +404,9 @@
         "price_1m_input_tokens": 10,
         "price_1m_output_tokens": 50
       },
-      "median_output_tokens_per_second": 63.489,
-      "median_time_to_first_token_seconds": 205.733,
-      "median_time_to_first_answer_token": 205.733,
+      "median_output_tokens_per_second": 60.978,
+      "median_time_to_first_token_seconds": 177.285,
+      "median_time_to_first_answer_token": 177.285,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -420,6 +470,56 @@
       }
     },
     {
+      "id": "ff2f3f3d-783f-4e27-8a39-47237501a313",
+      "name": "Muse Wonder (Max)",
+      "slug": "muse-wonder",
+      "release_date": "2026-10-12",
+      "model_creator": {
+        "id": "e1694725-0192-4e54-b1b8-c97e816c6cbe",
+        "name": "Meta",
+        "slug": "meta"
+      },
+      "evaluations": {
+        "artificial_analysis_intelligence_index": 52.4,
+        "artificial_analysis_coding_index": null,
+        "artificial_analysis_math_index": null,
+        "mmlu_pro": null,
+        "gpqa": null,
+        "hle": 0.501,
+        "livecodebench": null,
+        "scicode": 0.603,
+        "math_500": null,
+        "aime": null,
+        "aime_25": null,
+        "ifbench": null,
+        "lcr": 0.806666666666667,
+        "terminalbench_hard": null,
+        "terminalbench_v2_1": null,
+        "terminalbench_v4_0": 0.52020202020202,
+        "tau2": null,
+        "tau_banking": null
+      },
+      "pricing": {
+        "price_1m_blended_3_to_1": 8,
+        "price_1m_input_tokens": 4,
+        "price_1m_output_tokens": 20
+      },
+      "median_output_tokens_per_second": 95.023,
+      "median_time_to_first_token_seconds": 26.338,
+      "median_time_to_first_answer_token": 47.385,
+      "metadata": {
+        "deprecated": false,
+        "is_reasoning": true,
+        "is_open_weights": false,
+        "commercial_allowed": null,
+        "license_name": null,
+        "license_url": null,
+        "huggingface_url": null,
+        "openrouter_api_id": null,
+        "context_window_tokens": 1048576
+      }
+    },
+    {
       "id": "1f541ef3-913f-4eb2-9d07-0e93c7a9a5e3",
       "name": "GPT-6 Astra (Xhigh)",
       "slug": "gpt-6-astra-xhigh",
@@ -454,9 +554,9 @@
         "price_1m_input_tokens": 10,
         "price_1m_output_tokens": 50
       },
-      "median_output_tokens_per_second": 57.561,
-      "median_time_to_first_token_seconds": 85.016,
-      "median_time_to_first_answer_token": 85.016,
+      "median_output_tokens_per_second": 56.105,
+      "median_time_to_first_token_seconds": 63.771,
+      "median_time_to_first_answer_token": 63.771,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -504,9 +604,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 100.565,
-      "median_time_to_first_token_seconds": 13.454,
-      "median_time_to_first_answer_token": 13.454,
+      "median_output_tokens_per_second": 99.981,
+      "median_time_to_first_token_seconds": 11.395,
+      "median_time_to_first_answer_token": 11.395,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -554,9 +654,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 64.496,
-      "median_time_to_first_token_seconds": 173.686,
-      "median_time_to_first_answer_token": 173.686,
+      "median_output_tokens_per_second": 60.816,
+      "median_time_to_first_token_seconds": 158.461,
+      "median_time_to_first_answer_token": 158.461,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -604,9 +704,9 @@
         "price_1m_input_tokens": 4,
         "price_1m_output_tokens": 20
       },
-      "median_output_tokens_per_second": 74.658,
-      "median_time_to_first_token_seconds": 7.934,
-      "median_time_to_first_answer_token": 7.934,
+      "median_output_tokens_per_second": 73.77,
+      "median_time_to_first_token_seconds": 7.04,
+      "median_time_to_first_answer_token": 7.04,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -654,9 +754,9 @@
         "price_1m_input_tokens": 10,
         "price_1m_output_tokens": 50
       },
-      "median_output_tokens_per_second": 52.856,
-      "median_time_to_first_token_seconds": 4.145,
-      "median_time_to_first_answer_token": 4.145,
+      "median_output_tokens_per_second": 50.642,
+      "median_time_to_first_token_seconds": 2.544,
+      "median_time_to_first_answer_token": 2.544,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -704,9 +804,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 61.37,
-      "median_time_to_first_token_seconds": 63.338,
-      "median_time_to_first_answer_token": 63.338,
+      "median_output_tokens_per_second": 57.5,
+      "median_time_to_first_token_seconds": 55.184,
+      "median_time_to_first_answer_token": 55.184,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -754,9 +854,9 @@
         "price_1m_input_tokens": 10,
         "price_1m_output_tokens": 50
       },
-      "median_output_tokens_per_second": 57.29,
-      "median_time_to_first_token_seconds": 20.648,
-      "median_time_to_first_answer_token": 20.648,
+      "median_output_tokens_per_second": 53.272,
+      "median_time_to_first_token_seconds": 18.547,
+      "median_time_to_first_answer_token": 18.547,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -861,9 +961,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 56.188,
-      "median_time_to_first_token_seconds": 22.856,
-      "median_time_to_first_answer_token": 22.856,
+      "median_output_tokens_per_second": 55.733,
+      "median_time_to_first_token_seconds": 16.263,
+      "median_time_to_first_answer_token": 16.263,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1018,9 +1118,9 @@
         "price_1m_input_tokens": 10,
         "price_1m_output_tokens": 50
       },
-      "median_output_tokens_per_second": 55.086,
-      "median_time_to_first_token_seconds": 5.434,
-      "median_time_to_first_answer_token": 5.434,
+      "median_output_tokens_per_second": 53.172,
+      "median_time_to_first_token_seconds": 2.883,
+      "median_time_to_first_answer_token": 2.883,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1068,9 +1168,9 @@
         "price_1m_input_tokens": 10,
         "price_1m_output_tokens": 50
       },
-      "median_output_tokens_per_second": 52.603,
-      "median_time_to_first_token_seconds": 1.996,
-      "median_time_to_first_answer_token": 1.996,
+      "median_output_tokens_per_second": 52.972,
+      "median_time_to_first_token_seconds": 1.669,
+      "median_time_to_first_answer_token": 1.669,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1168,9 +1268,9 @@
         "price_1m_input_tokens": 1.25,
         "price_1m_output_tokens": 4.25
       },
-      "median_output_tokens_per_second": 114.495,
-      "median_time_to_first_token_seconds": 39.016,
-      "median_time_to_first_answer_token": 56.484,
+      "median_output_tokens_per_second": 110.311,
+      "median_time_to_first_token_seconds": 33.729,
+      "median_time_to_first_answer_token": 51.859,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1219,8 +1319,8 @@
         "price_1m_output_tokens": 10
       },
       "median_output_tokens_per_second": 54.364,
-      "median_time_to_first_token_seconds": 5.417,
-      "median_time_to_first_answer_token": 5.417,
+      "median_time_to_first_token_seconds": 3.586,
+      "median_time_to_first_answer_token": 3.586,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1375,9 +1475,9 @@
         "price_1m_input_tokens": 10,
         "price_1m_output_tokens": 50
       },
-      "median_output_tokens_per_second": 52.285,
-      "median_time_to_first_token_seconds": 0.768,
-      "median_time_to_first_answer_token": 0.768,
+      "median_output_tokens_per_second": 49.3,
+      "median_time_to_first_token_seconds": 0.527,
+      "median_time_to_first_answer_token": 0.527,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1425,9 +1525,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 99.772,
-      "median_time_to_first_token_seconds": 6.491,
-      "median_time_to_first_answer_token": 6.491,
+      "median_output_tokens_per_second": 97.21,
+      "median_time_to_first_token_seconds": 4.647,
+      "median_time_to_first_answer_token": 4.647,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1475,9 +1575,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 6
       },
-      "median_output_tokens_per_second": 86.462,
-      "median_time_to_first_token_seconds": 11.753,
-      "median_time_to_first_answer_token": 11.753,
+      "median_output_tokens_per_second": 62.857,
+      "median_time_to_first_token_seconds": 8.273,
+      "median_time_to_first_answer_token": 8.273,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1525,9 +1625,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 6
       },
-      "median_output_tokens_per_second": 82.443,
-      "median_time_to_first_token_seconds": 6.743,
-      "median_time_to_first_answer_token": 6.743,
+      "median_output_tokens_per_second": 67.403,
+      "median_time_to_first_token_seconds": 7.968,
+      "median_time_to_first_answer_token": 7.968,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1575,9 +1675,9 @@
         "price_1m_input_tokens": 0.435,
         "price_1m_output_tokens": 0.87
       },
-      "median_output_tokens_per_second": 37.434,
-      "median_time_to_first_token_seconds": 2.583,
-      "median_time_to_first_answer_token": 56.01,
+      "median_output_tokens_per_second": 37.353,
+      "median_time_to_first_token_seconds": 2.653,
+      "median_time_to_first_answer_token": 56.197,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1625,9 +1725,9 @@
         "price_1m_input_tokens": 10,
         "price_1m_output_tokens": 50
       },
-      "median_output_tokens_per_second": 54.858,
-      "median_time_to_first_token_seconds": 1.794,
-      "median_time_to_first_answer_token": 1.794,
+      "median_output_tokens_per_second": 55.053,
+      "median_time_to_first_token_seconds": 1.623,
+      "median_time_to_first_answer_token": 1.623,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1675,9 +1775,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 6
       },
-      "median_output_tokens_per_second": 35.596,
-      "median_time_to_first_token_seconds": 2.008,
-      "median_time_to_first_answer_token": 58.194,
+      "median_output_tokens_per_second": 37.018,
+      "median_time_to_first_token_seconds": 1.901,
+      "median_time_to_first_answer_token": 55.929,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1726,8 +1826,8 @@
         "price_1m_output_tokens": 4.25
       },
       "median_output_tokens_per_second": 224.248,
-      "median_time_to_first_token_seconds": 18.133,
-      "median_time_to_first_answer_token": 27.052,
+      "median_time_to_first_token_seconds": 16.948,
+      "median_time_to_first_answer_token": 25.866,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -1832,9 +1932,9 @@
         "price_1m_input_tokens": 1.4,
         "price_1m_output_tokens": 4.4
       },
-      "median_output_tokens_per_second": 65.453,
-      "median_time_to_first_token_seconds": 3.05,
-      "median_time_to_first_answer_token": 33.606,
+      "median_output_tokens_per_second": 65.534,
+      "median_time_to_first_token_seconds": 3.005,
+      "median_time_to_first_answer_token": 33.524,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2118,9 +2218,9 @@
         "price_1m_input_tokens": 1,
         "price_1m_output_tokens": 2.7
       },
-      "median_output_tokens_per_second": 88.99,
-      "median_time_to_first_token_seconds": 1.822,
-      "median_time_to_first_answer_token": 24.296,
+      "median_output_tokens_per_second": 89.315,
+      "median_time_to_first_token_seconds": 1.872,
+      "median_time_to_first_answer_token": 24.265,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2168,9 +2268,9 @@
         "price_1m_input_tokens": 3,
         "price_1m_output_tokens": 15
       },
-      "median_output_tokens_per_second": 39.932,
-      "median_time_to_first_token_seconds": 2.471,
-      "median_time_to_first_answer_token": 52.556,
+      "median_output_tokens_per_second": 41.406,
+      "median_time_to_first_token_seconds": 2.437,
+      "median_time_to_first_answer_token": 50.739,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2240,9 +2340,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.5
       },
-      "median_output_tokens_per_second": 238.095,
-      "median_time_to_first_token_seconds": 260.431,
-      "median_time_to_first_answer_token": 260.431,
+      "median_output_tokens_per_second": 239.351,
+      "median_time_to_first_token_seconds": 234.735,
+      "median_time_to_first_answer_token": 234.735,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2447,9 +2547,9 @@
         "price_1m_input_tokens": 4,
         "price_1m_output_tokens": 20
       },
-      "median_output_tokens_per_second": 72.44,
-      "median_time_to_first_token_seconds": 4.721,
-      "median_time_to_first_answer_token": 4.721,
+      "median_output_tokens_per_second": 70.979,
+      "median_time_to_first_token_seconds": 2.127,
+      "median_time_to_first_answer_token": 2.127,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2497,9 +2597,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 6
       },
-      "median_output_tokens_per_second": 70.241,
-      "median_time_to_first_token_seconds": 3.24,
-      "median_time_to_first_answer_token": 3.24,
+      "median_output_tokens_per_second": 63.707,
+      "median_time_to_first_token_seconds": 3.731,
+      "median_time_to_first_answer_token": 3.731,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2547,9 +2647,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 56.17,
-      "median_time_to_first_token_seconds": 1.225,
-      "median_time_to_first_answer_token": 1.225,
+      "median_output_tokens_per_second": 53.587,
+      "median_time_to_first_token_seconds": 1.273,
+      "median_time_to_first_answer_token": 1.273,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2597,9 +2697,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 12
       },
-      "median_output_tokens_per_second": 122.083,
-      "median_time_to_first_token_seconds": 74.461,
-      "median_time_to_first_answer_token": 74.461,
+      "median_output_tokens_per_second": 119.969,
+      "median_time_to_first_token_seconds": 64.215,
+      "median_time_to_first_answer_token": 64.215,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2654,9 +2754,9 @@
         "price_1m_input_tokens": 0.15,
         "price_1m_output_tokens": 0.5
       },
-      "median_output_tokens_per_second": 58.825,
-      "median_time_to_first_token_seconds": 2.46,
-      "median_time_to_first_answer_token": 36.459,
+      "median_output_tokens_per_second": 61.378,
+      "median_time_to_first_token_seconds": 2.386,
+      "median_time_to_first_answer_token": 34.971,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2783,9 +2883,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.5
       },
-      "median_output_tokens_per_second": 179.478,
-      "median_time_to_first_token_seconds": 42.121,
-      "median_time_to_first_answer_token": 42.121,
+      "median_output_tokens_per_second": 178.718,
+      "median_time_to_first_token_seconds": 37.854,
+      "median_time_to_first_answer_token": 37.854,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2833,9 +2933,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 0.9
       },
-      "median_output_tokens_per_second": 216.084,
-      "median_time_to_first_token_seconds": 1.123,
-      "median_time_to_first_answer_token": 10.378,
+      "median_output_tokens_per_second": 216.025,
+      "median_time_to_first_token_seconds": 1.069,
+      "median_time_to_first_answer_token": 10.327,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2883,9 +2983,9 @@
         "price_1m_input_tokens": 0.75,
         "price_1m_output_tokens": 3.75
       },
-      "median_output_tokens_per_second": 137.937,
-      "median_time_to_first_token_seconds": 14.159,
-      "median_time_to_first_answer_token": 14.159,
+      "median_output_tokens_per_second": 149.564,
+      "median_time_to_first_token_seconds": 13.401,
+      "median_time_to_first_answer_token": 13.401,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2940,9 +3040,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 90.43,
-      "median_time_to_first_token_seconds": 0.632,
-      "median_time_to_first_answer_token": 0.632,
+      "median_output_tokens_per_second": 88.88,
+      "median_time_to_first_token_seconds": 0.575,
+      "median_time_to_first_answer_token": 0.575,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -3090,9 +3190,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 6
       },
-      "median_output_tokens_per_second": 35.137,
-      "median_time_to_first_token_seconds": 1.991,
-      "median_time_to_first_answer_token": 58.911,
+      "median_output_tokens_per_second": 36.649,
+      "median_time_to_first_token_seconds": 2.026,
+      "median_time_to_first_answer_token": 56.597,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -3157,9 +3257,9 @@
         "price_1m_input_tokens": 0.15,
         "price_1m_output_tokens": 0.47
       },
-      "median_output_tokens_per_second": 52.597,
-      "median_time_to_first_token_seconds": 1.134,
-      "median_time_to_first_answer_token": 39.159,
+      "median_output_tokens_per_second": 55.345,
+      "median_time_to_first_token_seconds": 1.139,
+      "median_time_to_first_answer_token": 37.276,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -3426,9 +3526,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 1.2
       },
-      "median_output_tokens_per_second": 214.771,
-      "median_time_to_first_token_seconds": 0.869,
-      "median_time_to_first_answer_token": 10.182,
+      "median_output_tokens_per_second": 206.167,
+      "median_time_to_first_token_seconds": 0.887,
+      "median_time_to_first_answer_token": 10.587,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -3911,9 +4011,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.5
       },
-      "median_output_tokens_per_second": 140.101,
-      "median_time_to_first_token_seconds": 86.841,
-      "median_time_to_first_answer_token": 86.841,
+      "median_output_tokens_per_second": 139.163,
+      "median_time_to_first_token_seconds": 82.534,
+      "median_time_to_first_answer_token": 82.534,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -3961,9 +4061,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 12
       },
-      "median_output_tokens_per_second": 103.708,
-      "median_time_to_first_token_seconds": 5.421,
-      "median_time_to_first_answer_token": 5.421,
+      "median_output_tokens_per_second": 102.189,
+      "median_time_to_first_token_seconds": 3.793,
+      "median_time_to_first_answer_token": 3.793,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -4011,9 +4111,9 @@
         "price_1m_input_tokens": 0.14,
         "price_1m_output_tokens": 0.28
       },
-      "median_output_tokens_per_second": 47.823,
-      "median_time_to_first_token_seconds": 2.921,
-      "median_time_to_first_answer_token": 44.742,
+      "median_output_tokens_per_second": 48.327,
+      "median_time_to_first_token_seconds": 2.876,
+      "median_time_to_first_answer_token": 44.261,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -4061,9 +4161,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.5
       },
-      "median_output_tokens_per_second": 162.019,
-      "median_time_to_first_token_seconds": 18.167,
-      "median_time_to_first_answer_token": 18.167,
+      "median_output_tokens_per_second": 161.828,
+      "median_time_to_first_token_seconds": 15.246,
+      "median_time_to_first_answer_token": 15.246,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -4268,9 +4368,9 @@
         "price_1m_input_tokens": 1.32,
         "price_1m_output_tokens": 3.96
       },
-      "median_output_tokens_per_second": 89.145,
+      "median_output_tokens_per_second": 88.638,
       "median_time_to_first_token_seconds": 1.127,
-      "median_time_to_first_answer_token": 23.563,
+      "median_time_to_first_answer_token": 23.691,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -4335,9 +4435,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 93.44,
-      "median_time_to_first_token_seconds": 0.61,
-      "median_time_to_first_answer_token": 0.61,
+      "median_output_tokens_per_second": 91.459,
+      "median_time_to_first_token_seconds": 0.624,
+      "median_time_to_first_answer_token": 0.624,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -4442,9 +4542,9 @@
         "price_1m_input_tokens": 0.44,
         "price_1m_output_tokens": 1.32
       },
-      "median_output_tokens_per_second": 212.557,
-      "median_time_to_first_token_seconds": 0.869,
-      "median_time_to_first_answer_token": 10.278,
+      "median_output_tokens_per_second": 198.167,
+      "median_time_to_first_token_seconds": 0.843,
+      "median_time_to_first_answer_token": 10.936,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -4492,9 +4592,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.5
       },
-      "median_output_tokens_per_second": 128.02,
-      "median_time_to_first_token_seconds": 27.422,
-      "median_time_to_first_answer_token": 27.422,
+      "median_output_tokens_per_second": 124.543,
+      "median_time_to_first_token_seconds": 19.953,
+      "median_time_to_first_answer_token": 19.953,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -4592,9 +4692,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.5
       },
-      "median_output_tokens_per_second": 149.328,
-      "median_time_to_first_token_seconds": 7.633,
-      "median_time_to_first_answer_token": 7.633,
+      "median_output_tokens_per_second": 143.737,
+      "median_time_to_first_token_seconds": 5.69,
+      "median_time_to_first_answer_token": 5.69,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -4764,9 +4864,9 @@
         "price_1m_input_tokens": 1.4,
         "price_1m_output_tokens": 4.4
       },
-      "median_output_tokens_per_second": 74.413,
-      "median_time_to_first_token_seconds": 2.888,
-      "median_time_to_first_answer_token": 29.765,
+      "median_output_tokens_per_second": 70.341,
+      "median_time_to_first_token_seconds": 3.257,
+      "median_time_to_first_answer_token": 31.69,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -4814,9 +4914,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 12
       },
-      "median_output_tokens_per_second": 102.424,
-      "median_time_to_first_token_seconds": 2.334,
-      "median_time_to_first_answer_token": 2.334,
+      "median_output_tokens_per_second": 94.815,
+      "median_time_to_first_token_seconds": 1.843,
+      "median_time_to_first_answer_token": 1.843,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -5200,9 +5300,9 @@
         "price_1m_input_tokens": 0.5,
         "price_1m_output_tokens": 3
       },
-      "median_output_tokens_per_second": 46.288,
-      "median_time_to_first_token_seconds": 1.235,
-      "median_time_to_first_answer_token": 44.443,
+      "median_output_tokens_per_second": 46.816,
+      "median_time_to_first_token_seconds": 1.195,
+      "median_time_to_first_answer_token": 43.915,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -5479,9 +5579,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.5
       },
-      "median_output_tokens_per_second": 128.452,
-      "median_time_to_first_token_seconds": 11.407,
-      "median_time_to_first_answer_token": 11.407,
+      "median_output_tokens_per_second": 129.949,
+      "median_time_to_first_token_seconds": 6.799,
+      "median_time_to_first_answer_token": 6.799,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -5586,9 +5686,9 @@
         "price_1m_input_tokens": 1.75,
         "price_1m_output_tokens": 14
       },
-      "median_output_tokens_per_second": 109.688,
-      "median_time_to_first_token_seconds": 29.56,
-      "median_time_to_first_answer_token": 29.56,
+      "median_output_tokens_per_second": 106.059,
+      "median_time_to_first_token_seconds": 25.357,
+      "median_time_to_first_answer_token": 25.357,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -6007,9 +6107,9 @@
         "price_1m_input_tokens": 0,
         "price_1m_output_tokens": 0
       },
-      "median_output_tokens_per_second": 108.641,
-      "median_time_to_first_token_seconds": 9.833,
-      "median_time_to_first_answer_token": 28.243,
+      "median_output_tokens_per_second": 107.996,
+      "median_time_to_first_token_seconds": 3.176,
+      "median_time_to_first_answer_token": 21.695,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -6275,9 +6375,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 12
       },
-      "median_output_tokens_per_second": 105.381,
-      "median_time_to_first_token_seconds": 1.666,
-      "median_time_to_first_answer_token": 1.666,
+      "median_output_tokens_per_second": 101.069,
+      "median_time_to_first_token_seconds": 1.51,
+      "median_time_to_first_answer_token": 1.51,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -6325,9 +6425,9 @@
         "price_1m_input_tokens": 3,
         "price_1m_output_tokens": 15
       },
-      "median_output_tokens_per_second": 38.821,
+      "median_output_tokens_per_second": 40.023,
       "median_time_to_first_token_seconds": 2.64,
-      "median_time_to_first_answer_token": 54.158,
+      "median_time_to_first_answer_token": 52.612,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -6504,7 +6604,7 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 12
       },
-      "median_output_tokens_per_second": 125.783,
+      "median_output_tokens_per_second": 137.133,
       "median_time_to_first_token_seconds": 14.652,
       "median_time_to_first_answer_token": 14.652,
       "metadata": {
@@ -6618,9 +6718,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.5
       },
-      "median_output_tokens_per_second": 144.022,
-      "median_time_to_first_token_seconds": 3.998,
-      "median_time_to_first_answer_token": 3.998,
+      "median_output_tokens_per_second": 144.425,
+      "median_time_to_first_token_seconds": 2.916,
+      "median_time_to_first_answer_token": 2.916,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -6669,8 +6769,8 @@
         "price_1m_output_tokens": 1.2
       },
       "median_output_tokens_per_second": 119.048,
-      "median_time_to_first_token_seconds": 0.72,
-      "median_time_to_first_answer_token": 17.52,
+      "median_time_to_first_token_seconds": 0.757,
+      "median_time_to_first_answer_token": 17.557,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -6957,9 +7057,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 2.925,
-        "price_1m_input_tokens": 1.3,
-        "price_1m_output_tokens": 7.8
+        "price_1m_blended_3_to_1": 0,
+        "price_1m_input_tokens": 0,
+        "price_1m_output_tokens": 0
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -7133,9 +7233,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 1.2
       },
-      "median_output_tokens_per_second": 93.919,
-      "median_time_to_first_token_seconds": 1.101,
-      "median_time_to_first_answer_token": 22.396,
+      "median_output_tokens_per_second": 91.713,
+      "median_time_to_first_token_seconds": 1.086,
+      "median_time_to_first_answer_token": 22.893,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -7412,9 +7512,9 @@
         "price_1m_input_tokens": 0.5,
         "price_1m_output_tokens": 3
       },
-      "median_output_tokens_per_second": 50.53,
-      "median_time_to_first_token_seconds": 1.195,
-      "median_time_to_first_answer_token": 40.775,
+      "median_output_tokens_per_second": 49.263,
+      "median_time_to_first_token_seconds": 1.186,
+      "median_time_to_first_answer_token": 41.785,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -7479,9 +7579,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 12
       },
-      "median_output_tokens_per_second": 100.912,
-      "median_time_to_first_token_seconds": 1.321,
-      "median_time_to_first_answer_token": 1.321,
+      "median_output_tokens_per_second": 97.789,
+      "median_time_to_first_token_seconds": 1.303,
+      "median_time_to_first_answer_token": 1.303,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -7765,9 +7865,9 @@
         "price_1m_input_tokens": 0.6,
         "price_1m_output_tokens": 1.8
       },
-      "median_output_tokens_per_second": 152.819,
-      "median_time_to_first_token_seconds": 0.533,
-      "median_time_to_first_answer_token": 13.62,
+      "median_output_tokens_per_second": 149.506,
+      "median_time_to_first_token_seconds": 0.531,
+      "median_time_to_first_answer_token": 13.909,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -8093,9 +8193,9 @@
         "price_1m_input_tokens": 0.5,
         "price_1m_output_tokens": 3
       },
-      "median_output_tokens_per_second": 51.043,
-      "median_time_to_first_token_seconds": 1.26,
-      "median_time_to_first_answer_token": 40.442,
+      "median_output_tokens_per_second": 49.037,
+      "median_time_to_first_token_seconds": 1.272,
+      "median_time_to_first_answer_token": 42.058,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -8355,8 +8455,8 @@
         "price_1m_output_tokens": 4
       },
       "median_output_tokens_per_second": 61.451,
-      "median_time_to_first_token_seconds": 1.204,
-      "median_time_to_first_answer_token": 37.477,
+      "median_time_to_first_token_seconds": 1.193,
+      "median_time_to_first_answer_token": 37.466,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -8426,9 +8526,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 1.2
       },
-      "median_output_tokens_per_second": 177.049,
-      "median_time_to_first_token_seconds": 2.583,
-      "median_time_to_first_answer_token": 13.879,
+      "median_output_tokens_per_second": 192.011,
+      "median_time_to_first_token_seconds": 2.676,
+      "median_time_to_first_answer_token": 13.092,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -8593,9 +8693,9 @@
         "price_1m_input_tokens": 0.136,
         "price_1m_output_tokens": 0.555
       },
-      "median_output_tokens_per_second": 91.183,
-      "median_time_to_first_token_seconds": 1.947,
-      "median_time_to_first_answer_token": 23.881,
+      "median_output_tokens_per_second": 91.329,
+      "median_time_to_first_token_seconds": 1.882,
+      "median_time_to_first_answer_token": 23.781,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -8794,9 +8894,9 @@
         "price_1m_input_tokens": 0.4,
         "price_1m_output_tokens": 1.6
       },
-      "median_output_tokens_per_second": 53.962,
-      "median_time_to_first_token_seconds": 1.736,
-      "median_time_to_first_answer_token": 38.799,
+      "median_output_tokens_per_second": 54.895,
+      "median_time_to_first_token_seconds": 1.708,
+      "median_time_to_first_answer_token": 38.141,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -8952,8 +9052,8 @@
         "price_1m_output_tokens": 4.05
       },
       "median_output_tokens_per_second": 202,
-      "median_time_to_first_token_seconds": 2.319,
-      "median_time_to_first_answer_token": 12.22,
+      "median_time_to_first_token_seconds": 2.337,
+      "median_time_to_first_answer_token": 12.237,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -9368,9 +9468,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 1.2
       },
-      "median_output_tokens_per_second": 216.616,
-      "median_time_to_first_token_seconds": 0.816,
-      "median_time_to_first_answer_token": 0.816,
+      "median_output_tokens_per_second": 209.983,
+      "median_time_to_first_token_seconds": 0.799,
+      "median_time_to_first_answer_token": 0.799,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -9414,13 +9514,13 @@
         "tau_banking": 0.344329896907216
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.111,
-        "price_1m_input_tokens": 0.075,
-        "price_1m_output_tokens": 0.22
+        "price_1m_blended_3_to_1": 0,
+        "price_1m_input_tokens": 0,
+        "price_1m_output_tokens": 0
       },
-      "median_output_tokens_per_second": 147.095,
-      "median_time_to_first_token_seconds": 1.33,
-      "median_time_to_first_answer_token": 14.927,
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -9464,9 +9564,9 @@
         "tau_banking": 0.261855670103093
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.168,
-        "price_1m_input_tokens": 0.13,
-        "price_1m_output_tokens": 0.28
+        "price_1m_blended_3_to_1": 0.142,
+        "price_1m_input_tokens": 0.112,
+        "price_1m_output_tokens": 0.234
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -9715,9 +9815,9 @@
         "tau_banking": 0.309278350515464
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.168,
-        "price_1m_input_tokens": 0.13,
-        "price_1m_output_tokens": 0.28
+        "price_1m_blended_3_to_1": 0.142,
+        "price_1m_input_tokens": 0.112,
+        "price_1m_output_tokens": 0.234
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -9848,9 +9948,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.4
       },
-      "median_output_tokens_per_second": 61.973,
-      "median_time_to_first_token_seconds": 1.348,
-      "median_time_to_first_answer_token": 33.62,
+      "median_output_tokens_per_second": 74.956,
+      "median_time_to_first_token_seconds": 1.111,
+      "median_time_to_first_answer_token": 27.793,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -10529,9 +10629,9 @@
         "price_1m_input_tokens": 0.6,
         "price_1m_output_tokens": 2.5
       },
-      "median_output_tokens_per_second": 157.143,
-      "median_time_to_first_token_seconds": 0.806,
-      "median_time_to_first_answer_token": 15.283,
+      "median_output_tokens_per_second": 158.121,
+      "median_time_to_first_token_seconds": 0.842,
+      "median_time_to_first_answer_token": 15.23,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -11048,9 +11148,9 @@
         "price_1m_input_tokens": 0.075,
         "price_1m_output_tokens": 0.22
       },
-      "median_output_tokens_per_second": 317.45,
-      "median_time_to_first_token_seconds": 1.037,
-      "median_time_to_first_answer_token": 7.337,
+      "median_output_tokens_per_second": 314.694,
+      "median_time_to_first_token_seconds": 1.045,
+      "median_time_to_first_answer_token": 7.4,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -11423,9 +11523,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 2.5
       },
-      "median_output_tokens_per_second": 371.718,
-      "median_time_to_first_token_seconds": 5.359,
-      "median_time_to_first_answer_token": 5.359,
+      "median_output_tokens_per_second": 371.463,
+      "median_time_to_first_token_seconds": 5.176,
+      "median_time_to_first_answer_token": 5.176,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -11805,9 +11905,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.5
       },
-      "median_output_tokens_per_second": 119.636,
-      "median_time_to_first_token_seconds": 3.046,
-      "median_time_to_first_answer_token": 3.046,
+      "median_output_tokens_per_second": 117.634,
+      "median_time_to_first_token_seconds": 2.682,
+      "median_time_to_first_answer_token": 2.682,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -11994,9 +12094,9 @@
         "price_1m_input_tokens": 0.6,
         "price_1m_output_tokens": 3.6
       },
-      "median_output_tokens_per_second": 83.538,
-      "median_time_to_first_token_seconds": 1.6,
-      "median_time_to_first_answer_token": 1.6,
+      "median_output_tokens_per_second": 81.962,
+      "median_time_to_first_token_seconds": 1.56,
+      "median_time_to_first_answer_token": 1.56,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -12514,8 +12614,8 @@
         "price_1m_output_tokens": 12
       },
       "median_output_tokens_per_second": 99.846,
-      "median_time_to_first_token_seconds": 0.727,
-      "median_time_to_first_answer_token": 0.727,
+      "median_time_to_first_token_seconds": 0.79,
+      "median_time_to_first_answer_token": 0.79,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -12841,9 +12941,9 @@
         "price_1m_input_tokens": 0.4,
         "price_1m_output_tokens": 4.8
       },
-      "median_output_tokens_per_second": 85.698,
-      "median_time_to_first_token_seconds": 1.161,
-      "median_time_to_first_answer_token": 1.161,
+      "median_output_tokens_per_second": 87.666,
+      "median_time_to_first_token_seconds": 1.17,
+      "median_time_to_first_answer_token": 1.17,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -13005,9 +13105,9 @@
         "price_1m_input_tokens": 1.32,
         "price_1m_output_tokens": 3.96
       },
-      "median_output_tokens_per_second": 96.956,
-      "median_time_to_first_token_seconds": 1.064,
-      "median_time_to_first_answer_token": 1.064,
+      "median_output_tokens_per_second": 84.313,
+      "median_time_to_first_token_seconds": 1.09,
+      "median_time_to_first_answer_token": 1.09,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -13055,9 +13155,9 @@
         "price_1m_input_tokens": 2,
         "price_1m_output_tokens": 8
       },
-      "median_output_tokens_per_second": 123.357,
-      "median_time_to_first_token_seconds": 5.271,
-      "median_time_to_first_answer_token": 5.271,
+      "median_output_tokens_per_second": 126.475,
+      "median_time_to_first_token_seconds": 4.074,
+      "median_time_to_first_answer_token": 4.074,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -13112,9 +13212,9 @@
         "price_1m_input_tokens": 0.5,
         "price_1m_output_tokens": 3
       },
-      "median_output_tokens_per_second": 52.36,
-      "median_time_to_first_token_seconds": 1.169,
-      "median_time_to_first_answer_token": 1.169,
+      "median_output_tokens_per_second": 51.804,
+      "median_time_to_first_token_seconds": 1.175,
+      "median_time_to_first_answer_token": 1.175,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -13817,9 +13917,9 @@
         "price_1m_input_tokens": 0.75,
         "price_1m_output_tokens": 2.95
       },
-      "median_output_tokens_per_second": 67.001,
-      "median_time_to_first_token_seconds": 1.734,
-      "median_time_to_first_answer_token": 31.585,
+      "median_output_tokens_per_second": 64.067,
+      "median_time_to_first_token_seconds": 1.779,
+      "median_time_to_first_answer_token": 32.996,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -14304,9 +14404,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.5
       },
-      "median_output_tokens_per_second": 129.26,
-      "median_time_to_first_token_seconds": 0.902,
-      "median_time_to_first_answer_token": 0.902,
+      "median_output_tokens_per_second": 127.711,
+      "median_time_to_first_token_seconds": 0.874,
+      "median_time_to_first_answer_token": 0.874,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -14354,9 +14454,9 @@
         "price_1m_input_tokens": 0.6,
         "price_1m_output_tokens": 3.6
       },
-      "median_output_tokens_per_second": 86.282,
-      "median_time_to_first_token_seconds": 1.579,
-      "median_time_to_first_answer_token": 38.505,
+      "median_output_tokens_per_second": 83.712,
+      "median_time_to_first_token_seconds": 1.562,
+      "median_time_to_first_answer_token": 39.622,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -14493,9 +14593,9 @@
         "price_1m_input_tokens": 0.375,
         "price_1m_output_tokens": 2.25
       },
-      "median_output_tokens_per_second": 128.798,
-      "median_time_to_first_token_seconds": 1.057,
-      "median_time_to_first_answer_token": 42.944,
+      "median_output_tokens_per_second": 135.993,
+      "median_time_to_first_token_seconds": 1.05,
+      "median_time_to_first_answer_token": 40.721,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -14731,9 +14831,9 @@
         "price_1m_input_tokens": 0.4,
         "price_1m_output_tokens": 3.2
       },
-      "median_output_tokens_per_second": 145.375,
-      "median_time_to_first_token_seconds": 1.01,
-      "median_time_to_first_answer_token": 1.01,
+      "median_output_tokens_per_second": 147.265,
+      "median_time_to_first_token_seconds": 1.011,
+      "median_time_to_first_answer_token": 1.011,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -14860,9 +14960,9 @@
         "price_1m_input_tokens": 0.325,
         "price_1m_output_tokens": 1.35
       },
-      "median_output_tokens_per_second": 142.534,
-      "median_time_to_first_token_seconds": 0.476,
-      "median_time_to_first_answer_token": 14.508,
+      "median_output_tokens_per_second": 143.892,
+      "median_time_to_first_token_seconds": 0.403,
+      "median_time_to_first_answer_token": 14.302,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -15409,9 +15509,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.4
       },
-      "median_output_tokens_per_second": 60.62,
-      "median_time_to_first_token_seconds": 0.646,
-      "median_time_to_first_answer_token": 33.638,
+      "median_output_tokens_per_second": 68.932,
+      "median_time_to_first_token_seconds": 0.662,
+      "median_time_to_first_answer_token": 29.676,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -15538,9 +15638,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 2.5
       },
-      "median_output_tokens_per_second": 119.674,
-      "median_time_to_first_token_seconds": 2.02,
-      "median_time_to_first_answer_token": 18.732,
+      "median_output_tokens_per_second": 121.877,
+      "median_time_to_first_token_seconds": 2.221,
+      "median_time_to_first_answer_token": 18.631,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -15864,9 +15964,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 2.4,
-        "price_1m_input_tokens": 1.2,
-        "price_1m_output_tokens": 6
+        "price_1m_blended_3_to_1": 0,
+        "price_1m_input_tokens": 0,
+        "price_1m_output_tokens": 0
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -16165,9 +16265,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 2.4,
-        "price_1m_input_tokens": 1.2,
-        "price_1m_output_tokens": 6
+        "price_1m_blended_3_to_1": 0,
+        "price_1m_input_tokens": 0,
+        "price_1m_output_tokens": 0
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -16226,9 +16326,9 @@
         "price_1m_input_tokens": 0.4,
         "price_1m_output_tokens": 3.2
       },
-      "median_output_tokens_per_second": 133.154,
-      "median_time_to_first_token_seconds": 1.016,
-      "median_time_to_first_answer_token": 16.036,
+      "median_output_tokens_per_second": 133.079,
+      "median_time_to_first_token_seconds": 1.024,
+      "median_time_to_first_answer_token": 16.053,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -16641,9 +16741,9 @@
         "price_1m_input_tokens": 0.375,
         "price_1m_output_tokens": 2.25
       },
-      "median_output_tokens_per_second": 136.86,
-      "median_time_to_first_token_seconds": 1.078,
-      "median_time_to_first_answer_token": 1.078,
+      "median_output_tokens_per_second": 140.279,
+      "median_time_to_first_token_seconds": 1.077,
+      "median_time_to_first_answer_token": 1.077,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -17103,9 +17203,9 @@
         "price_1m_input_tokens": 0,
         "price_1m_output_tokens": 0
       },
-      "median_output_tokens_per_second": 35.021,
-      "median_time_to_first_token_seconds": 1.001,
-      "median_time_to_first_answer_token": 50.572,
+      "median_output_tokens_per_second": 35.05,
+      "median_time_to_first_token_seconds": 0.99,
+      "median_time_to_first_answer_token": 50.52,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -17578,9 +17678,9 @@
         "price_1m_input_tokens": 1.5,
         "price_1m_output_tokens": 7.5
       },
-      "median_output_tokens_per_second": 161.945,
-      "median_time_to_first_token_seconds": 0.609,
-      "median_time_to_first_answer_token": 12.959,
+      "median_output_tokens_per_second": 163.464,
+      "median_time_to_first_token_seconds": 0.653,
+      "median_time_to_first_answer_token": 12.888,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -17650,9 +17750,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.3
       },
-      "median_output_tokens_per_second": 145.084,
-      "median_time_to_first_token_seconds": 1.44,
-      "median_time_to_first_answer_token": 15.225,
+      "median_output_tokens_per_second": 143.831,
+      "median_time_to_first_token_seconds": 1.409,
+      "median_time_to_first_answer_token": 15.314,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -17713,13 +17813,13 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 3.438,
-        "price_1m_input_tokens": 1.25,
-        "price_1m_output_tokens": 10
+        "price_1m_blended_3_to_1": 3.781,
+        "price_1m_input_tokens": 1.375,
+        "price_1m_output_tokens": 11
       },
-      "median_output_tokens_per_second": 130.009,
-      "median_time_to_first_token_seconds": 15.218,
-      "median_time_to_first_answer_token": 30.602,
+      "median_output_tokens_per_second": 131.477,
+      "median_time_to_first_token_seconds": 11.947,
+      "median_time_to_first_answer_token": 27.159,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -17947,8 +18047,8 @@
         "price_1m_output_tokens": 0.4
       },
       "median_output_tokens_per_second": 46.831,
-      "median_time_to_first_token_seconds": 0.899,
-      "median_time_to_first_answer_token": 0.899,
+      "median_time_to_first_token_seconds": 1.006,
+      "median_time_to_first_answer_token": 1.006,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -18404,9 +18504,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 1.3,
-        "price_1m_input_tokens": 0.4,
-        "price_1m_output_tokens": 4
+        "price_1m_blended_3_to_1": 0,
+        "price_1m_input_tokens": 0,
+        "price_1m_output_tokens": 0
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -18543,13 +18643,13 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.85,
-        "price_1m_input_tokens": 0.3,
-        "price_1m_output_tokens": 2.5
+        "price_1m_blended_3_to_1": 0.935,
+        "price_1m_input_tokens": 0.33,
+        "price_1m_output_tokens": 2.75
       },
-      "median_output_tokens_per_second": 211.349,
-      "median_time_to_first_token_seconds": 12.571,
-      "median_time_to_first_answer_token": 22.034,
+      "median_output_tokens_per_second": 217.699,
+      "median_time_to_first_token_seconds": 9.966,
+      "median_time_to_first_answer_token": 19.153,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -18654,7 +18754,7 @@
         "price_1m_input_tokens": 0.17,
         "price_1m_output_tokens": 0.25
       },
-      "median_output_tokens_per_second": 98.742,
+      "median_output_tokens_per_second": 90.478,
       "median_time_to_first_token_seconds": 0.36,
       "median_time_to_first_answer_token": 0.36,
       "metadata": {
@@ -18788,9 +18888,9 @@
         "price_1m_input_tokens": 0,
         "price_1m_output_tokens": 0
       },
-      "median_output_tokens_per_second": 231.714,
-      "median_time_to_first_token_seconds": 0.188,
-      "median_time_to_first_answer_token": 8.82,
+      "median_output_tokens_per_second": 218.626,
+      "median_time_to_first_token_seconds": 0.235,
+      "median_time_to_first_answer_token": 9.383,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -18855,9 +18955,9 @@
         "price_1m_input_tokens": 0.13,
         "price_1m_output_tokens": 0.4
       },
-      "median_output_tokens_per_second": 101.066,
-      "median_time_to_first_token_seconds": 0.607,
-      "median_time_to_first_answer_token": 0.607,
+      "median_output_tokens_per_second": 101.864,
+      "median_time_to_first_token_seconds": 0.629,
+      "median_time_to_first_answer_token": 0.629,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -18927,9 +19027,9 @@
         "price_1m_input_tokens": 0.03,
         "price_1m_output_tokens": 0.15
       },
-      "median_output_tokens_per_second": 23.5,
-      "median_time_to_first_token_seconds": 0.612,
-      "median_time_to_first_answer_token": 85.72,
+      "median_output_tokens_per_second": 28.538,
+      "median_time_to_first_token_seconds": 0.491,
+      "median_time_to_first_answer_token": 70.572,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -19180,9 +19280,9 @@
         "price_1m_input_tokens": 0.06,
         "price_1m_output_tokens": 0.2
       },
-      "median_output_tokens_per_second": 290.147,
-      "median_time_to_first_token_seconds": 0.437,
-      "median_time_to_first_answer_token": 7.33,
+      "median_output_tokens_per_second": 295.255,
+      "median_time_to_first_token_seconds": 0.429,
+      "median_time_to_first_answer_token": 7.203,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -19242,9 +19342,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 0.9
       },
-      "median_output_tokens_per_second": 153.49,
-      "median_time_to_first_token_seconds": 0.842,
-      "median_time_to_first_answer_token": 13.872,
+      "median_output_tokens_per_second": 159.904,
+      "median_time_to_first_token_seconds": 0.826,
+      "median_time_to_first_answer_token": 13.334,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -19305,13 +19405,13 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 3.438,
-        "price_1m_input_tokens": 1.25,
-        "price_1m_output_tokens": 10
+        "price_1m_blended_3_to_1": 3.781,
+        "price_1m_input_tokens": 1.375,
+        "price_1m_output_tokens": 11
       },
       "median_output_tokens_per_second": 140.819,
-      "median_time_to_first_token_seconds": 2.817,
-      "median_time_to_first_answer_token": 17.02,
+      "median_time_to_first_token_seconds": 2.811,
+      "median_time_to_first_answer_token": 17.014,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -19632,9 +19732,9 @@
         "price_1m_input_tokens": 0.16,
         "price_1m_output_tokens": 0.65
       },
-      "median_output_tokens_per_second": 78.081,
-      "median_time_to_first_token_seconds": 0.277,
-      "median_time_to_first_answer_token": 25.892,
+      "median_output_tokens_per_second": 78.686,
+      "median_time_to_first_token_seconds": 0.279,
+      "median_time_to_first_answer_token": 25.697,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -19695,9 +19795,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 2.4,
-        "price_1m_input_tokens": 1.2,
-        "price_1m_output_tokens": 6
+        "price_1m_blended_3_to_1": 0,
+        "price_1m_input_tokens": 0,
+        "price_1m_output_tokens": 0
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -19752,13 +19852,13 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.85,
-        "price_1m_input_tokens": 0.3,
-        "price_1m_output_tokens": 2.5
+        "price_1m_blended_3_to_1": 0.935,
+        "price_1m_input_tokens": 0.33,
+        "price_1m_output_tokens": 2.75
       },
-      "median_output_tokens_per_second": 218.768,
-      "median_time_to_first_token_seconds": 11.971,
-      "median_time_to_first_answer_token": 21.113,
+      "median_output_tokens_per_second": 195.833,
+      "median_time_to_first_token_seconds": 9.735,
+      "median_time_to_first_answer_token": 19.948,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -19870,7 +19970,7 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.8
       },
-      "median_output_tokens_per_second": 237.796,
+      "median_output_tokens_per_second": 232.675,
       "median_time_to_first_token_seconds": 0.939,
       "median_time_to_first_answer_token": 0.939,
       "metadata": {
@@ -20151,7 +20251,7 @@
         "price_1m_input_tokens": 0.25,
         "price_1m_output_tokens": 0.75
       },
-      "median_output_tokens_per_second": 832.691,
+      "median_output_tokens_per_second": 822.67,
       "median_time_to_first_token_seconds": 2.748,
       "median_time_to_first_answer_token": 2.748,
       "metadata": {
@@ -20371,9 +20471,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.403,
-        "price_1m_input_tokens": 0.23,
-        "price_1m_output_tokens": 0.92
+        "price_1m_blended_3_to_1": 0.385,
+        "price_1m_input_tokens": 0.22,
+        "price_1m_output_tokens": 0.88
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -20443,9 +20543,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 3,
-        "price_1m_input_tokens": 1.5,
-        "price_1m_output_tokens": 7.5
+        "price_1m_blended_3_to_1": 0.675,
+        "price_1m_input_tokens": 0.3,
+        "price_1m_output_tokens": 1.8
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -20515,9 +20615,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.28,
-        "price_1m_input_tokens": 0.16,
-        "price_1m_output_tokens": 0.64
+        "price_1m_blended_3_to_1": 0,
+        "price_1m_input_tokens": 0,
+        "price_1m_output_tokens": 0
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -20694,13 +20794,13 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.85,
-        "price_1m_input_tokens": 0.3,
-        "price_1m_output_tokens": 2.5
+        "price_1m_blended_3_to_1": 0.935,
+        "price_1m_input_tokens": 0.33,
+        "price_1m_output_tokens": 2.75
       },
-      "median_output_tokens_per_second": 199.376,
-      "median_time_to_first_token_seconds": 4.086,
-      "median_time_to_first_answer_token": 14.117,
+      "median_output_tokens_per_second": 201.397,
+      "median_time_to_first_token_seconds": 4.474,
+      "median_time_to_first_answer_token": 14.405,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -21070,9 +21170,9 @@
         "price_1m_input_tokens": 0.15,
         "price_1m_output_tokens": 0.59
       },
-      "median_output_tokens_per_second": 225.861,
-      "median_time_to_first_token_seconds": 0.514,
-      "median_time_to_first_answer_token": 9.369,
+      "median_output_tokens_per_second": 226.925,
+      "median_time_to_first_token_seconds": 0.504,
+      "median_time_to_first_answer_token": 9.317,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -21579,9 +21679,9 @@
         "price_1m_input_tokens": 0.15,
         "price_1m_output_tokens": 0.6
       },
-      "median_output_tokens_per_second": 173.172,
-      "median_time_to_first_token_seconds": 0.656,
-      "median_time_to_first_answer_token": 12.205,
+      "median_output_tokens_per_second": 180.43,
+      "median_time_to_first_token_seconds": 0.678,
+      "median_time_to_first_answer_token": 11.763,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -21790,9 +21890,9 @@
         "price_1m_input_tokens": 0.15,
         "price_1m_output_tokens": 1.2
       },
-      "median_output_tokens_per_second": 148.889,
-      "median_time_to_first_token_seconds": 1.086,
-      "median_time_to_first_answer_token": 14.518,
+      "median_output_tokens_per_second": 165.83,
+      "median_time_to_first_token_seconds": 0.536,
+      "median_time_to_first_answer_token": 12.596,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -21862,9 +21962,9 @@
         "price_1m_input_tokens": 0.135,
         "price_1m_output_tokens": 0.2
       },
-      "median_output_tokens_per_second": 75.224,
-      "median_time_to_first_token_seconds": 0.918,
-      "median_time_to_first_answer_token": 27.506,
+      "median_output_tokens_per_second": 55.206,
+      "median_time_to_first_token_seconds": 1.02,
+      "median_time_to_first_answer_token": 37.248,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -22108,9 +22208,9 @@
         "price_1m_input_tokens": 0.06,
         "price_1m_output_tokens": 0.25
       },
-      "median_output_tokens_per_second": 62.405,
-      "median_time_to_first_token_seconds": 0.299,
-      "median_time_to_first_answer_token": 32.348,
+      "median_output_tokens_per_second": 62.107,
+      "median_time_to_first_token_seconds": 0.334,
+      "median_time_to_first_answer_token": 32.536,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -22232,9 +22332,9 @@
         "price_1m_input_tokens": 0,
         "price_1m_output_tokens": 0
       },
-      "median_output_tokens_per_second": 48.775,
-      "median_time_to_first_token_seconds": 2.011,
-      "median_time_to_first_answer_token": 43.015,
+      "median_output_tokens_per_second": 18.045,
+      "median_time_to_first_token_seconds": 2.788,
+      "median_time_to_first_answer_token": 113.621,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -22541,8 +22641,8 @@
         "price_1m_output_tokens": 0.8
       },
       "median_output_tokens_per_second": 366.234,
-      "median_time_to_first_token_seconds": 1.146,
-      "median_time_to_first_answer_token": 6.607,
+      "median_time_to_first_token_seconds": 1.121,
+      "median_time_to_first_answer_token": 6.582,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -22612,9 +22712,9 @@
         "price_1m_input_tokens": 0.03,
         "price_1m_output_tokens": 0.15
       },
-      "median_output_tokens_per_second": 20.25,
-      "median_time_to_first_token_seconds": 0.568,
-      "median_time_to_first_answer_token": 0.568,
+      "median_output_tokens_per_second": 21.25,
+      "median_time_to_first_token_seconds": 0.606,
+      "median_time_to_first_answer_token": 0.606,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -23054,9 +23154,9 @@
         "price_1m_input_tokens": 0.3,
         "price_1m_output_tokens": 0.9
       },
-      "median_output_tokens_per_second": 238.367,
-      "median_time_to_first_token_seconds": 0.414,
-      "median_time_to_first_answer_token": 8.805,
+      "median_output_tokens_per_second": 237.874,
+      "median_time_to_first_token_seconds": 0.419,
+      "median_time_to_first_answer_token": 8.827,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -23126,9 +23226,9 @@
         "price_1m_input_tokens": 0.15,
         "price_1m_output_tokens": 0.5
       },
-      "median_output_tokens_per_second": 235.613,
-      "median_time_to_first_token_seconds": 0.5,
-      "median_time_to_first_answer_token": 8.988,
+      "median_output_tokens_per_second": 238.689,
+      "median_time_to_first_token_seconds": 0.493,
+      "median_time_to_first_answer_token": 8.872,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -23255,9 +23355,9 @@
         "price_1m_input_tokens": 0.25,
         "price_1m_output_tokens": 0.87
       },
-      "median_output_tokens_per_second": 50.03,
-      "median_time_to_first_token_seconds": 0.618,
-      "median_time_to_first_answer_token": 0.618,
+      "median_output_tokens_per_second": 53.302,
+      "median_time_to_first_token_seconds": 0.628,
+      "median_time_to_first_answer_token": 0.628,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -23395,13 +23495,13 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 3.438,
-        "price_1m_input_tokens": 1.25,
-        "price_1m_output_tokens": 10
+        "price_1m_blended_3_to_1": 3.781,
+        "price_1m_input_tokens": 1.375,
+        "price_1m_output_tokens": 11
       },
-      "median_output_tokens_per_second": 126.105,
-      "median_time_to_first_token_seconds": 0.68,
-      "median_time_to_first_answer_token": 0.68,
+      "median_output_tokens_per_second": 136.134,
+      "median_time_to_first_token_seconds": 0.713,
+      "median_time_to_first_answer_token": 0.713,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -23449,9 +23549,9 @@
         "price_1m_input_tokens": 0.07,
         "price_1m_output_tokens": 0.215
       },
-      "median_output_tokens_per_second": 284.883,
-      "median_time_to_first_token_seconds": 0.409,
-      "median_time_to_first_answer_token": 7.429,
+      "median_output_tokens_per_second": 300.741,
+      "median_time_to_first_token_seconds": 0.425,
+      "median_time_to_first_answer_token": 7.075,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -23517,9 +23617,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.7,
-        "price_1m_input_tokens": 0.4,
-        "price_1m_output_tokens": 1.6
+        "price_1m_blended_3_to_1": 0.509,
+        "price_1m_input_tokens": 0.215,
+        "price_1m_output_tokens": 1.39
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -23593,9 +23693,9 @@
         "price_1m_input_tokens": 0,
         "price_1m_output_tokens": 0
       },
-      "median_output_tokens_per_second": 97.635,
-      "median_time_to_first_token_seconds": 0.271,
-      "median_time_to_first_answer_token": 20.755,
+      "median_output_tokens_per_second": 107.193,
+      "median_time_to_first_token_seconds": 0.238,
+      "median_time_to_first_answer_token": 18.896,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -23842,9 +23942,9 @@
         "tau_banking": 0.0536082474226804
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.75,
-        "price_1m_input_tokens": 0.2,
-        "price_1m_output_tokens": 2.4
+        "price_1m_blended_3_to_1": 0.595,
+        "price_1m_input_tokens": 0.36,
+        "price_1m_output_tokens": 1.3
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -24108,13 +24208,13 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.412,
+        "price_1m_blended_3_to_1": 0.388,
         "price_1m_input_tokens": 0.15,
-        "price_1m_output_tokens": 1.2
+        "price_1m_output_tokens": 1.1
       },
-      "median_output_tokens_per_second": 150.694,
-      "median_time_to_first_token_seconds": 1.004,
-      "median_time_to_first_answer_token": 1.004,
+      "median_output_tokens_per_second": 153.737,
+      "median_time_to_first_token_seconds": 0.564,
+      "median_time_to_first_answer_token": 0.564,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -24247,9 +24347,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.9,
-        "price_1m_input_tokens": 0.45,
-        "price_1m_output_tokens": 2.25
+        "price_1m_blended_3_to_1": 0.3,
+        "price_1m_input_tokens": 0.15,
+        "price_1m_output_tokens": 0.748
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -24436,9 +24536,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 2.625,
-        "price_1m_input_tokens": 0.7,
-        "price_1m_output_tokens": 8.4
+        "price_1m_blended_3_to_1": 0,
+        "price_1m_input_tokens": 0,
+        "price_1m_output_tokens": 0
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -24580,9 +24680,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.75,
-        "price_1m_input_tokens": 0.2,
-        "price_1m_output_tokens": 2.4
+        "price_1m_blended_3_to_1": 0.5,
+        "price_1m_input_tokens": 0.5,
+        "price_1m_output_tokens": 0.5
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -24706,9 +24806,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.3
       },
-      "median_output_tokens_per_second": 143.789,
-      "median_time_to_first_token_seconds": 1.445,
-      "median_time_to_first_answer_token": 1.445,
+      "median_output_tokens_per_second": 146.39,
+      "median_time_to_first_token_seconds": 1.413,
+      "median_time_to_first_answer_token": 1.413,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -24902,9 +25002,9 @@
         "price_1m_input_tokens": 0.5,
         "price_1m_output_tokens": 1.2
       },
-      "median_output_tokens_per_second": 80.124,
-      "median_time_to_first_token_seconds": 0.805,
-      "median_time_to_first_answer_token": 0.805,
+      "median_output_tokens_per_second": 86.495,
+      "median_time_to_first_token_seconds": 0.802,
+      "median_time_to_first_answer_token": 0.802,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -25255,9 +25355,9 @@
         "price_1m_input_tokens": 0.03,
         "price_1m_output_tokens": 0.12
       },
-      "median_output_tokens_per_second": 227.388,
-      "median_time_to_first_token_seconds": 0.258,
-      "median_time_to_first_answer_token": 9.054,
+      "median_output_tokens_per_second": 228.203,
+      "median_time_to_first_token_seconds": 0.26,
+      "median_time_to_first_answer_token": 9.024,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -25632,9 +25732,9 @@
         "price_1m_input_tokens": 0.15,
         "price_1m_output_tokens": 0.6
       },
-      "median_output_tokens_per_second": 170.685,
-      "median_time_to_first_token_seconds": 0.621,
-      "median_time_to_first_answer_token": 0.621,
+      "median_output_tokens_per_second": 169.241,
+      "median_time_to_first_token_seconds": 0.612,
+      "median_time_to_first_answer_token": 0.612,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -25771,9 +25871,9 @@
         "price_1m_input_tokens": 0.07,
         "price_1m_output_tokens": 0.18
       },
-      "median_output_tokens_per_second": 256.181,
-      "median_time_to_first_token_seconds": 0.42,
-      "median_time_to_first_answer_token": 8.227,
+      "median_output_tokens_per_second": 274.225,
+      "median_time_to_first_token_seconds": 0.426,
+      "median_time_to_first_answer_token": 7.719,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -26067,9 +26167,9 @@
         "price_1m_input_tokens": 0.02,
         "price_1m_output_tokens": 0.1
       },
-      "median_output_tokens_per_second": 32.589,
-      "median_time_to_first_token_seconds": 0.59,
-      "median_time_to_first_answer_token": 61.96,
+      "median_output_tokens_per_second": 28.394,
+      "median_time_to_first_token_seconds": 0.591,
+      "median_time_to_first_answer_token": 71.028,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -26134,9 +26234,9 @@
         "price_1m_input_tokens": 0.05,
         "price_1m_output_tokens": 0.2
       },
-      "median_output_tokens_per_second": 225.507,
+      "median_output_tokens_per_second": 227.444,
       "median_time_to_first_token_seconds": 0.49,
-      "median_time_to_first_answer_token": 9.359,
+      "median_time_to_first_answer_token": 9.284,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -26453,13 +26553,13 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.85,
-        "price_1m_input_tokens": 0.3,
-        "price_1m_output_tokens": 2.5
+        "price_1m_blended_3_to_1": 0.935,
+        "price_1m_input_tokens": 0.33,
+        "price_1m_output_tokens": 2.75
       },
       "median_output_tokens_per_second": 224.771,
-      "median_time_to_first_token_seconds": 0.774,
-      "median_time_to_first_answer_token": 0.774,
+      "median_time_to_first_token_seconds": 0.763,
+      "median_time_to_first_answer_token": 0.763,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -26870,9 +26970,9 @@
         "price_1m_input_tokens": 0.5,
         "price_1m_output_tokens": 1.5
       },
-      "median_output_tokens_per_second": 78.308,
-      "median_time_to_first_token_seconds": 0.82,
-      "median_time_to_first_answer_token": 26.361,
+      "median_output_tokens_per_second": 79.154,
+      "median_time_to_first_token_seconds": 0.824,
+      "median_time_to_first_answer_token": 26.091,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -26933,9 +27033,9 @@
         "tau_banking": 0.0536082474226804
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.28,
-        "price_1m_input_tokens": 0.16,
-        "price_1m_output_tokens": 0.64
+        "price_1m_blended_3_to_1": 0.315,
+        "price_1m_input_tokens": 0.24,
+        "price_1m_output_tokens": 0.54
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -27318,9 +27418,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.28,
-        "price_1m_input_tokens": 0.16,
-        "price_1m_output_tokens": 0.64
+        "price_1m_blended_3_to_1": 0,
+        "price_1m_input_tokens": 0,
+        "price_1m_output_tokens": 0
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -27534,9 +27634,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 1.225,
-        "price_1m_input_tokens": 0.7,
-        "price_1m_output_tokens": 2.8
+        "price_1m_blended_3_to_1": 0,
+        "price_1m_input_tokens": 0,
+        "price_1m_output_tokens": 0
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -27867,9 +27967,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.66,
-        "price_1m_input_tokens": 0.18,
-        "price_1m_output_tokens": 2.1
+        "price_1m_blended_3_to_1": 0,
+        "price_1m_input_tokens": 0,
+        "price_1m_output_tokens": 0
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -27939,9 +28039,9 @@
         "tau_banking": 0.0556701030927835
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 1.313,
-        "price_1m_input_tokens": 0.35,
-        "price_1m_output_tokens": 4.2
+        "price_1m_blended_3_to_1": 0.15,
+        "price_1m_input_tokens": 0.12,
+        "price_1m_output_tokens": 0.24
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -28137,9 +28237,9 @@
         "price_1m_input_tokens": 0.18,
         "price_1m_output_tokens": 0.66
       },
-      "median_output_tokens_per_second": 81.038,
-      "median_time_to_first_token_seconds": 0.643,
-      "median_time_to_first_answer_token": 0.643,
+      "median_output_tokens_per_second": 84.556,
+      "median_time_to_first_token_seconds": 0.706,
+      "median_time_to_first_answer_token": 0.706,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -28255,9 +28355,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.35,
-        "price_1m_input_tokens": 0.2,
-        "price_1m_output_tokens": 0.8
+        "price_1m_blended_3_to_1": 0.412,
+        "price_1m_input_tokens": 0.35,
+        "price_1m_output_tokens": 0.6
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -29003,8 +29103,8 @@
         "price_1m_output_tokens": 0.97
       },
       "median_output_tokens_per_second": 111.645,
-      "median_time_to_first_token_seconds": 0.924,
-      "median_time_to_first_answer_token": 18.837,
+      "median_time_to_first_token_seconds": 0.937,
+      "median_time_to_first_answer_token": 18.851,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -29322,9 +29422,9 @@
         "price_1m_input_tokens": 0.71,
         "price_1m_output_tokens": 0.72
       },
-      "median_output_tokens_per_second": 95.905,
-      "median_time_to_first_token_seconds": 0.692,
-      "median_time_to_first_answer_token": 0.692,
+      "median_output_tokens_per_second": 95.755,
+      "median_time_to_first_token_seconds": 0.667,
+      "median_time_to_first_answer_token": 0.667,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -29390,9 +29490,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.75,
-        "price_1m_input_tokens": 0.2,
-        "price_1m_output_tokens": 2.4
+        "price_1m_blended_3_to_1": 0.239,
+        "price_1m_input_tokens": 0.135,
+        "price_1m_output_tokens": 0.55
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -29936,9 +30036,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.35,
+        "price_1m_blended_3_to_1": 0.25,
         "price_1m_input_tokens": 0.2,
-        "price_1m_output_tokens": 0.8
+        "price_1m_output_tokens": 0.4
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -30084,9 +30184,9 @@
         "price_1m_input_tokens": 1,
         "price_1m_output_tokens": 3
       },
-      "median_output_tokens_per_second": 39.84,
-      "median_time_to_first_token_seconds": 0.737,
-      "median_time_to_first_answer_token": 50.938,
+      "median_output_tokens_per_second": 40.615,
+      "median_time_to_first_token_seconds": 0.711,
+      "median_time_to_first_answer_token": 49.954,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -30273,9 +30373,9 @@
         "price_1m_input_tokens": 0.02,
         "price_1m_output_tokens": 0.1
       },
-      "median_output_tokens_per_second": 32.688,
-      "median_time_to_first_token_seconds": 0.426,
-      "median_time_to_first_answer_token": 0.426,
+      "median_output_tokens_per_second": 34.361,
+      "median_time_to_first_token_seconds": 0.383,
+      "median_time_to_first_answer_token": 0.383,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -30408,8 +30508,8 @@
         "price_1m_output_tokens": 0.16
       },
       "median_output_tokens_per_second": 189.189,
-      "median_time_to_first_token_seconds": 0.338,
-      "median_time_to_first_answer_token": 10.909,
+      "median_time_to_first_token_seconds": 0.347,
+      "median_time_to_first_answer_token": 10.919,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -30479,9 +30579,9 @@
         "price_1m_input_tokens": 1,
         "price_1m_output_tokens": 3
       },
-      "median_output_tokens_per_second": 40.441,
-      "median_time_to_first_token_seconds": 0.657,
-      "median_time_to_first_answer_token": 0.657,
+      "median_output_tokens_per_second": 41.672,
+      "median_time_to_first_token_seconds": 0.639,
+      "median_time_to_first_answer_token": 0.639,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -30664,9 +30764,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.28,
-        "price_1m_input_tokens": 0.16,
-        "price_1m_output_tokens": 0.64
+        "price_1m_blended_3_to_1": 0.262,
+        "price_1m_input_tokens": 0.15,
+        "price_1m_output_tokens": 0.6
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -31116,9 +31216,9 @@
         "tau_banking": 0.0474226804123711
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.66,
-        "price_1m_input_tokens": 0.18,
-        "price_1m_output_tokens": 2.1
+        "price_1m_blended_3_to_1": 0,
+        "price_1m_input_tokens": 0,
+        "price_1m_output_tokens": 0
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -31255,9 +31355,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.31,
-        "price_1m_input_tokens": 0.18,
-        "price_1m_output_tokens": 0.7
+        "price_1m_blended_3_to_1": 0,
+        "price_1m_input_tokens": 0,
+        "price_1m_output_tokens": 0
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -32332,9 +32432,9 @@
         "price_1m_input_tokens": 2.5,
         "price_1m_output_tokens": 10
       },
-      "median_output_tokens_per_second": 60.836,
-      "median_time_to_first_token_seconds": 0.41,
-      "median_time_to_first_answer_token": 0.41,
+      "median_output_tokens_per_second": 65.636,
+      "median_time_to_first_token_seconds": 0.361,
+      "median_time_to_first_answer_token": 0.361,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -32732,9 +32832,9 @@
         "price_1m_input_tokens": 0.05,
         "price_1m_output_tokens": 0.2
       },
-      "median_output_tokens_per_second": 253.671,
-      "median_time_to_first_token_seconds": 0.39,
-      "median_time_to_first_answer_token": 0.39,
+      "median_output_tokens_per_second": 246.242,
+      "median_time_to_first_token_seconds": 0.371,
+      "median_time_to_first_answer_token": 0.371,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -32804,9 +32904,9 @@
         "price_1m_input_tokens": 0.05,
         "price_1m_output_tokens": 0.195
       },
-      "median_output_tokens_per_second": 169.422,
-      "median_time_to_first_token_seconds": 0.763,
-      "median_time_to_first_answer_token": 0.763,
+      "median_output_tokens_per_second": 169.459,
+      "median_time_to_first_token_seconds": 0.753,
+      "median_time_to_first_answer_token": 0.753,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -33083,9 +33183,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.612,
-        "price_1m_input_tokens": 0.35,
-        "price_1m_output_tokens": 1.4
+        "price_1m_blended_3_to_1": 0.15,
+        "price_1m_input_tokens": 0.12,
+        "price_1m_output_tokens": 0.24
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -33587,9 +33687,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.35,
-        "price_1m_input_tokens": 0.2,
-        "price_1m_output_tokens": 0.8
+        "price_1m_blended_3_to_1": 0.215,
+        "price_1m_input_tokens": 0.12,
+        "price_1m_output_tokens": 0.5
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -34809,9 +34909,9 @@
         "price_1m_input_tokens": 0.2,
         "price_1m_output_tokens": 0.7
       },
-      "median_output_tokens_per_second": 1789.848,
-      "median_time_to_first_token_seconds": 0.407,
-      "median_time_to_first_answer_token": 0.407,
+      "median_output_tokens_per_second": 1786.208,
+      "median_time_to_first_token_seconds": 0.412,
+      "median_time_to_first_answer_token": 0.412,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -34989,11 +35089,11 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0,
-        "price_1m_input_tokens": 0,
-        "price_1m_output_tokens": 0
+        "price_1m_blended_3_to_1": 0.131,
+        "price_1m_input_tokens": 0.075,
+        "price_1m_output_tokens": 0.3
       },
-      "median_output_tokens_per_second": 47.518,
+      "median_output_tokens_per_second": 47.776,
       "median_time_to_first_token_seconds": 0.34,
       "median_time_to_first_answer_token": 0.34,
       "metadata": {
@@ -35512,9 +35612,9 @@
         "price_1m_input_tokens": 0.2,
         "price_1m_output_tokens": 0.2
       },
-      "median_output_tokens_per_second": 70.482,
-      "median_time_to_first_token_seconds": 0.619,
-      "median_time_to_first_answer_token": 0.619,
+      "median_output_tokens_per_second": 61.682,
+      "median_time_to_first_token_seconds": 0.728,
+      "median_time_to_first_answer_token": 0.728,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -35652,8 +35752,8 @@
         "price_1m_output_tokens": 0.97
       },
       "median_output_tokens_per_second": 108.002,
-      "median_time_to_first_token_seconds": 0.877,
-      "median_time_to_first_answer_token": 0.877,
+      "median_time_to_first_token_seconds": 0.865,
+      "median_time_to_first_answer_token": 0.865,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -35781,9 +35881,9 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0.31,
-        "price_1m_input_tokens": 0.18,
-        "price_1m_output_tokens": 0.7
+        "price_1m_blended_3_to_1": 0.2,
+        "price_1m_input_tokens": 0.2,
+        "price_1m_output_tokens": 0.2
       },
       "median_output_tokens_per_second": 0,
       "median_time_to_first_token_seconds": 0,
@@ -36185,9 +36285,9 @@
         "price_1m_input_tokens": 0.125,
         "price_1m_output_tokens": 0.5
       },
-      "median_output_tokens_per_second": 44.29,
-      "median_time_to_first_token_seconds": 0.923,
-      "median_time_to_first_answer_token": 0.923,
+      "median_output_tokens_per_second": 44.892,
+      "median_time_to_first_token_seconds": 0.975,
+      "median_time_to_first_answer_token": 0.975,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -36307,9 +36407,9 @@
         "price_1m_input_tokens": 0.035,
         "price_1m_output_tokens": 0.14
       },
-      "median_output_tokens_per_second": 269.5,
-      "median_time_to_first_token_seconds": 0.65,
-      "median_time_to_first_answer_token": 0.65,
+      "median_output_tokens_per_second": 266.381,
+      "median_time_to_first_token_seconds": 0.647,
+      "median_time_to_first_answer_token": 0.647,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -36615,9 +36715,9 @@
         "price_1m_input_tokens": 0.2,
         "price_1m_output_tokens": 0.6
       },
-      "median_output_tokens_per_second": 208.457,
-      "median_time_to_first_token_seconds": 0.817,
-      "median_time_to_first_answer_token": 0.817,
+      "median_output_tokens_per_second": 209.475,
+      "median_time_to_first_token_seconds": 0.804,
+      "median_time_to_first_answer_token": 0.804,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -36755,13 +36855,13 @@
         "tau_banking": null
       },
       "pricing": {
-        "price_1m_blended_3_to_1": 0,
-        "price_1m_input_tokens": 0,
-        "price_1m_output_tokens": 0
+        "price_1m_blended_3_to_1": 0.14,
+        "price_1m_input_tokens": 0.08,
+        "price_1m_output_tokens": 0.32
       },
-      "median_output_tokens_per_second": 18.381,
-      "median_time_to_first_token_seconds": 0.579,
-      "median_time_to_first_answer_token": 0.579,
+      "median_output_tokens_per_second": 16.601,
+      "median_time_to_first_token_seconds": 0.699,
+      "median_time_to_first_answer_token": 0.699,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -37429,9 +37529,9 @@
         "price_1m_input_tokens": 0.2,
         "price_1m_output_tokens": 0.8
       },
-      "median_output_tokens_per_second": 94.891,
-      "median_time_to_first_token_seconds": 0.81,
-      "median_time_to_first_answer_token": 21.886,
+      "median_output_tokens_per_second": 95.156,
+      "median_time_to_first_token_seconds": 0.76,
+      "median_time_to_first_answer_token": 21.778,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -38217,9 +38317,9 @@
         "price_1m_input_tokens": 0.15,
         "price_1m_output_tokens": 0.15
       },
-      "median_output_tokens_per_second": 106.483,
-      "median_time_to_first_token_seconds": 0.462,
-      "median_time_to_first_answer_token": 0.462,
+      "median_output_tokens_per_second": 101.24,
+      "median_time_to_first_token_seconds": 0.479,
+      "median_time_to_first_answer_token": 0.479,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -38550,9 +38650,9 @@
         "price_1m_input_tokens": 0.345,
         "price_1m_output_tokens": 0.345
       },
-      "median_output_tokens_per_second": 20.485,
-      "median_time_to_first_token_seconds": 0.72,
-      "median_time_to_first_answer_token": 0.72,
+      "median_output_tokens_per_second": 20.34,
+      "median_time_to_first_token_seconds": 0.908,
+      "median_time_to_first_answer_token": 0.908,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -41172,9 +41272,9 @@
         "price_1m_input_tokens": 0.1,
         "price_1m_output_tokens": 0.1
       },
-      "median_output_tokens_per_second": 242.441,
-      "median_time_to_first_token_seconds": 0.457,
-      "median_time_to_first_answer_token": 0.457,
+      "median_output_tokens_per_second": 223.541,
+      "median_time_to_first_token_seconds": 0.422,
+      "median_time_to_first_answer_token": 0.422,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,
@@ -42135,9 +42235,9 @@
         "price_1m_input_tokens": 0,
         "price_1m_output_tokens": 0
       },
-      "median_output_tokens_per_second": 131.547,
-      "median_time_to_first_token_seconds": 0.205,
-      "median_time_to_first_answer_token": 0.205,
+      "median_output_tokens_per_second": 131.131,
+      "median_time_to_first_token_seconds": 0.209,
+      "median_time_to_first_answer_token": 0.209,
       "metadata": {
         "deprecated": false,
         "is_reasoning": false,

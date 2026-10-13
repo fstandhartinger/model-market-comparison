@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-eqbench-creative-writing-3",
+  "artifact_sha256": "80ef38506fe66e59005afe37521f7ac7be211cf056c6ab37452f547799bcc445",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["eqbench-creative-writing::3", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "eqbench-creative-writing::3-c1",
+      "severity": "blocker",
+      "location": "row eqbench-creative-writing::3, scoring.metric/unit/range, description",
+      "evidence": "Primary source evidence section of the packet contains no protocol excerpt, registry page, or served-values summary for this board. There is no text establishing the registry version, benchmark identity, metric (Elo Score column), units (Elo), range bounds, or description ('A LLM-judged creative writing benchmark with vocabulary and GPT-slop controls.') against an actual current primary protocol. The packet's only evidence is the row itself and row/board SHA references. The acceptance criterion c1 requires checking the registry version, benchmark identity, metric, units and description against the actual current primary protocol, and says 'If the excerpt cannot establish continuity, report missing evidence.'",
+"repair":"Attach the current primary protocol page (or an exact projection) that names the benchmark/registry version and states the metric, units, range and description for eqbench-creative-writing, and re-run the review."},
+{"id":"c2","severity":"blocker","location":"lifecycle fields: status=active, version_status=published, superseded_by=null for row eqbench-creative-writing::3","evidence":"Packet provides no protocol text for the EQ-bench creative writing board. The lifecycle fields therefore have no primary evidence to check them against: cannot confirm that the maintainer still reports results, that a published release identifier '3' exists for this board, or that no successor is named. The only evidence in the packet is the candidate row itself.","repair":"Supply the current primary protocol excerpt (the page the maintainer serves for this board) so that status, version_status and superseded_by can be checked against it."}]
+
+
+
+
+  }

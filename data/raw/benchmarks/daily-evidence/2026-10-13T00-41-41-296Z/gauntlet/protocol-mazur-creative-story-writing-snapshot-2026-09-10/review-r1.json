@@ -1,0 +1,22 @@
+{
+  "artifact_id": "protocol-mazur-creative-story-writing-snapshot-2026-09-10",
+  "artifact_sha256": "d0bedc67f03020a1918d640a6c576ae6937e5130eb4cf9579a6d457ab8fc7a3e",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["mazur-creative-story-writing::snapshot-2026-09-10","c1","c2"],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "location": "row mazur-creative-story-writing::snapshot-2026-09-10, criterion c1",
+      "evidence": "Candidate row provides only id, version, version_guard, status, version_status and superseded_by. There are no `metric`, `unit`, `range`, `description` or `registry_version` fields in the row, and the packet contains no protocol excerpt or run-generated summary of served source-field values. REQUIRED_CRITERION_IDS c1 requires checking registry version, benchmark identity, metric, units and description against the actual current primary protocol; the packet contains no primary protocol text and no summary, so continuity cannot be established and c1 cannot be checked.",
+      "repair": "Supply the actual current primary protocol text for the mazur creative story-writing board (identity, metric, units, description) and, if relying on it, this run's generated summary of the served source-field values; otherwise mark c1 evidence missing."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute the owner's hash verification, transport checks, or the canonical SHA-256 per row (6342b1a865f4bdbe27585afa1fb1ba37804a3c2a81c647dd9d4aacf45eec2c07); I treat these as owner-binding values and did not verify them."
+  ],
+  "missing_evidence": []
+}

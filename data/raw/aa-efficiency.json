@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-10-12T05:28:32.534Z",
+  "collected_at": "2026-10-13T00:52:37.534Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-10-12T05:28:32.336Z",
+      "fetched_at": "2026-10-13T00:52:37.328Z",
       "http_status": 200,
-      "bytes": 4180611,
-      "sha256": "fe41d775bc4cf8d1b6de7754f26c2017a2aa340114dd274e99963d7cf395afb0"
+      "bytes": 4181285,
+      "sha256": "271fdb705d1b01785afd219615446a43b12ed32e412dcce68f014aab74ef19fc"
     }
   ],
   "coverage": {
-    "published_rows": 203,
-    "scored_denominator": 687,
+    "published_rows": 205,
+    "scored_denominator": 689,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 203,
+  "count": 205,
   "rows": [
     {
       "source_id": "8215372b-66ff-457b-855e-e8abeafc9571",
@@ -3808,6 +3808,50 @@
         "basis": "derived",
         "input_output_ratio": 33.30099251401625,
         "reasoning_output_share": 0.596803890859412
+      }
+    },
+    {
+      "source_id": "ff2f3f3d-783f-4e27-8a39-47237501a313",
+      "slug": "muse-wonder",
+      "name": "Muse Wonder (Max)",
+      "variant": "max",
+      "tokens_per_task": {
+        "reasoning": 28680.54555966468,
+        "answer": 25551.128682268547,
+        "output": 54231.67424193323
+      },
+      "canonical_token_counts": {
+        "input": 6480640728,
+        "output": 134220930,
+        "answer": 32417726,
+        "reasoning": 101803204
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 48.28338417860761,
+        "reasoning_output_share": 0.5288522982292181
+      }
+    },
+    {
+      "source_id": "e994a6e0-d36b-4dab-8ae1-c1b469e4d9e2",
+      "slug": "muse-wonder-full",
+      "name": "Muse Wonder Full (Max)",
+      "variant": "max",
+      "tokens_per_task": {
+        "reasoning": 29163.320673386737,
+        "answer": 24590.817407422208,
+        "output": 53754.138080808945
+      },
+      "canonical_token_counts": {
+        "input": 5892791110,
+        "output": 135359456,
+        "answer": 33285820,
+        "reasoning": 102073636
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 43.53438824399531,
+        "reasoning_output_share": 0.5425316396952609
       }
     },
     {
