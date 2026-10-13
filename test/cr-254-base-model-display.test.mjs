@@ -168,11 +168,11 @@ test('CR-254 every Image detail route renders published rank, axes, cost, latenc
 
 test('CR-254 every text detail branch and shared leaderboard surface includes the display', async () => {
   for (const path of ['../components/JevV141SystemDetail.tsx', '../components/JevV15SystemDetail.tsx', '../app/jev-models/[system]/page.tsx']) {
-    assert.match(await readFile(file(path), 'utf8'), /<BaseModelDisplay systemKey=\{row\.key\}/);
+    assert.match(await readFile(file(path), 'utf8'), /<BaseModelDisplay systemKey=\{(?:row\.canonical_system_key \?\? )?row\.key\}/);
   }
   for (const path of ['../components/JevBoardShared.tsx', '../components/JevBoardInteractive.tsx', '../components/JevCapabilityRanking.tsx']) {
     const content = await readFile(file(path), 'utf8');
-    assert.match(content, /<BaseModelDisplay benchmark=\{benchmark\} systemKey=\{row\.key\}/);
+    assert.match(content, /<BaseModelDisplay benchmark=\{benchmark\} systemKey=\{(?:row\.canonical_system_key \?\? )?row\.key\}/);
     assert.match(content, /imageJevSourceUrl\(row\.key, row\.repo\)/);
   }
   const imagePage = await readFile(file('../app/jev-models/multimodal-preview/page.tsx'), 'utf8');

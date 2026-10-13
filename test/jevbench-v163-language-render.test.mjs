@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createRequire} from 'node:module';
 import {runInNewContext} from 'node:vm';
-import {JEV_SCOPE_LISTING} from '../lib/jevbench-scope.mjs';
+import {JEV_SCOPE_LISTING, JEV_PRELIMINARY_LISTING} from '../lib/jevbench-scope.mjs';
 import {freshJevbenchCategoryRows} from '../lib/jevbench-categories.mjs';
 const require=createRequire(import.meta.url);
 const ts=require('typescript'), React=require('react');
@@ -23,7 +23,7 @@ if (/\blanguageNoteOf\b/.test(functionSource)) assert.ok(/^function languageNote
 const code=ts.transpileModule(actualRowHelpers+actualNoteHelper+functionSource+'\nexport {LanguageView};', {compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022}}).outputText;
 const module={exports:{}};
 runInNewContext(code,{module,exports:module.exports,require,Fragment:React.Fragment,freshJevbenchCategoryRows,
- JEV_SCOPE_LISTING,
+ JEV_SCOPE_LISTING, JEV_PRELIMINARY_LISTING,
  apiRowProps:()=>({}),nameLabel:s=>s,laneTag:()=> 'self-hosted',coverageOf:()=> 'S+P',spokeReason:key=>key==='compact-test'?'Some radar categories still need more observations.':null,
  exposureNote:key=>key==='compact-test'?'L3 items were reviewed by an OpenAI model; headline scores do not use L3.':null,
  completedLanguageN:c=>c.coverage_n??c.n,heat:()=>({}),languagePoolNote:()=>'',
