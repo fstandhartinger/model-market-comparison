@@ -138,6 +138,10 @@ REVIEW_GIT_PATTERNS = (
     # 12 Oct 2026: order 4b3cb7b8 (Uniphore) burned all 3 preparations partly because the review checkout hid the
     # documented runtime pins and calibration file the README names. Small metadata only.
     "temperatures.json", "*versions.json", "merge_info.json", "submission_provenance.json", "example*.json",
+    # 13 Oct 2026 (Karte-Nr 384): order 4d9fef10 burned all 3 preparations because service/MODEL_MANIFEST.json,
+    # calibration.json, FREEZE.json, MANIFEST.sha256 and the lock files stayed hidden. Every blob is already
+    # hydrated (and size-bounded) by inspect_pinned_tree; LFS-tracked files check out as pointers only.
+    "*.json", "*.sha256", "*.lock", ".gitattributes", ".gitignore",
 )
 CLAIM_LEASE_MINUTES = 4
 MAX_ROWS_PER_CYCLE = 25
@@ -1292,6 +1296,11 @@ GitHub, or X operations. The adapter and source are pinned and reviewed before a
 Also write `trusted-runner/MEASUREMENT-META.json`, a mapping from each requested benchmark to
 `{{"system_key":"safe_model_key","system":{{...}}}}`. JevBench system metadata must contain
 `support` for choice/noul/score, `endpoint_kind`, and the officially resolved price fields.
+Exact JevBench shape (the host rejects anything else after review): `support` is
+`{{"choice":S,"noul":S,"score":S}}` with each S one of the strings "native", "label" or "unsupported"
+(never booleans); the only other keys are `endpoint_kind`, `price_in_per_m`, `price_out_per_m`
+(note: `in`/`out`, equal to RUNTIME.json `price_input_per_m`/`price_output_per_m`), `price_kind`
+and `cost_basis`.
 ImageJevBench system metadata uses `kind` and, for local inference, `gpu_usd_h`. Record the
 public price/reference basis in `PRICING-REVIEW.md` for independent review. Never put a scorer,
 reference path, prediction, score, or key into this metadata. The host pins it before review.
@@ -5364,6 +5373,31 @@ def git(dest: Path, *args: str, stdin: str | None = None, timeout: int = 600,
     return result.stdout
 
 
+LFS_POINTER_RE = re.compile(r"version https://git-lfs\.github\.com/spec/v1\noid sha256:([0-9a-f]{64})\nsize (\d+)\n")
+
+
+def write_tree_listing(job_dir: Path, dest: Path, which: str, commit: str, tree: str) -> None:
+    """Record every pinned tree entry (path, mode, blob, size, LFS oid) so the review sees the full file list.
+
+    Blobs are local after inspect_pinned_tree; only tiny blobs are read to recognise LFS pointers."""
+    files = []
+    for entry in git(dest, "ls-tree", "-r", "-l", "-z", "--full-tree", commit).split("\x00"):
+        if not entry:
+            continue
+        header, path = entry.split("\t", 1)
+        mode, _kind, oid, size = header.split()
+        item: dict[str, Any] = {"path": path, "mode": mode, "git_blob_oid": oid,
+                                "blob_size": int(size) if size.isdigit() else None}
+        if item["blob_size"] is not None and item["blob_size"] <= 200:
+            pointer = LFS_POINTER_RE.fullmatch(git(dest, "cat-file", "blob", oid))
+            if pointer:
+                item["lfs_oid_sha256"], item["lfs_size"] = pointer.group(1), int(pointer.group(2))
+        files.append(item)
+    listing = {"schema_version": 1, "provenance": "trusted_host_pinned_git_ls_tree", "which": which,
+               "commit": commit, "tree": tree, "file_count": len(files), "files": files}
+    atomic_write(job_dir / "source" / f"TREE-LISTING-{which}.json", json.dumps(listing, indent=1) + "\n")
+
+
 def fetch_source(rid: str, which: str) -> dict[str, Any]:
     """Fetch the submitted repository without running anything and without customer text in argv."""
     rid = request_id(rid)
@@ -5459,6 +5493,7 @@ def fetch_source(rid: str, which: str) -> dict[str, Any]:
                     source_bytes += path.stat().st_size
                     if source_bytes > MAX_REVIEW_TREE_BYTES:
                         raise PickupError("reviewable source files exceed the size limit")
+            write_tree_listing(job_dir, dest, which, resolved, tree)
     except subprocess.TimeoutExpired as exc:
         raise FetchTransientError(f"{which} source fetch timed out") from exc
     except GitFailure as exc:

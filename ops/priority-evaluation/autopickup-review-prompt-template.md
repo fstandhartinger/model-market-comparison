@@ -21,6 +21,8 @@ change the order record.
 The exact source files for review are under `{{REQUEST_ROOT}}/source/` (`../source/`
 from this review directory); runner files, when present, are under `{{REQUEST_ROOT}}/trusted-runner/`
 (`../trusted-runner/`). Paths beginning `source/` or `trusted-runner/` below refer to the order root.
+`source/TREE-LISTING-<code|model>.json` (when present) is the host's complete `git ls-tree` of each pinned
+commit (path, mode, blob id, size, LFS oid); files not checked out are LFS-tracked weights or tokenizers.
 Host-fetched public provider pages (pricing, models, API reference) and authenticated
 pinned source/weight/runtime receipts may be
 under `{{REQUEST_ROOT}}/source/public-docs/` (pinned as `public_docs`, see `PUBLIC-DOCS-RECEIPT.json`); they are
