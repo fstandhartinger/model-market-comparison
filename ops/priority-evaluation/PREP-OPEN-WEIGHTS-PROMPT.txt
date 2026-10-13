@@ -43,8 +43,12 @@ scores the result on the host. Your job is to describe how to start the model. W
      "sha256":{"<file>":"<64 hex>"}}`. The revision must equal the host's model fetch receipt. List the
      sha256 of every weight file (`*.safetensors`). These hashes are the LFS oids in the fetched model
      repository (`git show HEAD:<file>`), or the hashes the author published. Pickle weights
-     (`.bin`/`.pt`/`.pkl`) and repositories that need `trust_remote_code` or contain `.py` files that the
-     runtime would load are not supported. For those, write a blocker.
+     (`.bin`/`.pt`/`.pkl`) and weight directories whose loading needs `trust_remote_code`/`auto_map`
+     (Python executed implicitly from `/models`) are not supported. For those, write a blocker. Serving
+     code the author ships in the model repository (for example a documented `python -m pkg.server`) is
+     supported: run it from `/code` with `code.source` `"model"` (`http_typesafe` or `python_inprocess`);
+     source review reads it before any run. Its presence alone is not a blocker. Serving code must not
+     enable `trust_remote_code` or import Python from `/models`; if it does, write a blocker.
    - `code`: `{"commit":"<40 hex>","tree":"<40 hex>"}`, equal to the host's code fetch receipt.
      When executable source is in the model repository, add `"source":"model"` and bind exactly
      to the real model fetch receipt. Never invent a code receipt or change the optional code link.
