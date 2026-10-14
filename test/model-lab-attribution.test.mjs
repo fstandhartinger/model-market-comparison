@@ -49,7 +49,11 @@ test("D172.2: the labs these rows name have a documented home country, so the la
   }
   // The filter itself: a US-only lab selection keeps all three, an EU-only selection drops them.
   const us = labFilter([], ["US"]), eu = labFilter([], ["EU"]);
-  for (const id of ["pareto::default", "swe-1.7-lightning-max::default", "muse-spark-1.3-max::default"]) {
+  // CR-475 (2026-10-14): OpenRouter re-keyed unbiased/pareto to dated versions (pareto-26.9, pareto-26.10-preview),
+  // so the Pareto rows are whatever rows Unbiased's OpenRouter Pareto offers land on, not one pinned id.
+  const paretoIds = ds.models.filter((m) => (m.offers ?? []).some((o) => /^unbiased\/pareto(?:-|$)/.test(String(o.or_model_id ?? "")))).map((m) => m.id);
+  assert.ok(paretoIds.length, "no Unbiased Pareto row reaches the dataset; re-check this attribution");
+  for (const id of [...paretoIds, "swe-1.7-lightning-max::default", "muse-spark-1.3-max::default"]) {
     const org = row(id)?.org;
     assert.ok(us(org), `${id} (${org}) is not in the US lab bucket`);
     assert.ok(!eu(org), `${id} (${org}) must not pass an EU-only lab filter`);

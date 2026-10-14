@@ -16,7 +16,11 @@ const buildSource = await readFile(new URL("../scripts/build-dataset.mjs", impor
 
 const curated = providerMeta.providers?.Unbiased;
 const row = ds.providers.find((p) => p.provider === "Unbiased");
-const pareto = ds.models.find((m) => m.id === "pareto::default");
+// CR-475 (2026-10-14): OpenRouter re-keyed unbiased/pareto to dated versions (unbiased/pareto-26.9,
+// unbiased/pareto-26.10-preview, plus the ~unbiased/pareto-latest alias), so Pareto is every row an Unbiased
+// Pareto offer lands on rather than the single pareto::default id.
+const isParetoId = (id) => /^unbiased\/pareto(?:-|$)/.test(String(id ?? ""));
+const paretoRows = ds.models.filter((m) => (m.offers ?? []).some((o) => isParetoId(o.or_model_id)));
 
 test("D172.1: Unbiased is curated from its own terms, not guessed", () => {
   assert.ok(curated, "data/raw/provider-meta.json has no Unbiased entry");
@@ -51,12 +55,18 @@ test("D172.1: the published provider row is verified and stays out of the EU and
 });
 
 test("D172.1: Pareto is attributed to the lab that publishes it, and the composite is disclosed", () => {
-  assert.ok(pareto, "pareto::default is gone; re-check this attribution");
-  assert.equal(pareto.org, "Unbiased", "without the author alias this row reads 'Other'");
-  // Non-vacuous: OpenRouter prints no "Vendor: " prefix for this model, so only the alias can name the lab.
-  const catalogRow = (openRouter.models ?? []).find((m) => m.id === "unbiased/pareto");
-  assert.ok(catalogRow, "unbiased/pareto is no longer in the OpenRouter catalog");
-  assert.ok(!/^[^:]+:\s/.test(String(catalogRow.name ?? "")), `OpenRouter now names the vendor ("${catalogRow.name}"); the alias may be redundant`);
+  assert.ok(paretoRows.length, "no Pareto row reaches the dataset; re-check this attribution");
+  for (const pareto of paretoRows) assert.equal(pareto.org, "Unbiased", `without the author alias ${pareto.id} reads 'Other'`);
+  // Non-vacuous: OpenRouter prints no "Vendor: " prefix for these models, so only the alias can name the lab.
+  const catalogRows = (openRouter.models ?? []).filter((m) => isParetoId(m.id));
+  assert.ok(catalogRows.length, "no unbiased/pareto* model is left in the OpenRouter catalog");
+  for (const pareto of paretoRows) {
+    const ids = pareto.offers.filter((o) => isParetoId(o.or_model_id)).map((o) => o.or_model_id);
+    assert.ok(ids.every((id) => catalogRows.some((m) => m.id === id)), `${pareto.id} cites ${ids} that the catalog does not list`);
+  }
+  for (const catalogRow of catalogRows) {
+    assert.ok(!/^[^:]+:\s/.test(String(catalogRow.name ?? "")), `OpenRouter now names the vendor ("${catalogRow.name}"); the alias may be redundant`);
+  }
   assert.match(buildSource, /unbiased:\s*"Unbiased"/, "the author alias is what carries the attribution");
   // A model sold as one string that runs several models must say so where the price is explained.
   assert.match(row.note, /composite/, "the provider note must disclose that Pareto is not a single model");
