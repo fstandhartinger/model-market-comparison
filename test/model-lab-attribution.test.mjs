@@ -14,6 +14,7 @@ const codingAgents = JSON.parse(await readFile(new URL("../data/raw/aa-coding-ag
 const designArena = JSON.parse(await readFile(new URL("../data/raw/designarena.json", import.meta.url), "utf8"));
 const openRouter = JSON.parse(await readFile(new URL("../data/raw/openrouter.json", import.meta.url), "utf8"));
 const row = (id) => ds.models.find((m) => m.id === id);
+const paretoModels = ds.models.filter((m) => /^pareto(?:-\d{2}\.\d+(?:-[a-z]+)?)?::default$/.test(m.id));
 
 test("D172.2: SWE-1.7 Lightning Max is Cognition's, scored under Cognition's own harness", () => {
   const model = row("swe-1.7-lightning-max::default");
@@ -47,12 +48,15 @@ test("D172.2: the labs these rows name have a documented home country, so the la
     assert.equal(LAB_COUNTRIES[org], "US", `${org} has no documented home country`);
     assert.equal(labBucket(org), "US", org);
   }
+  assert.ok(paretoModels.length, "no published Pareto model rows remain");
+  for (const model of paretoModels) assert.equal(model.org, "Unbiased", `${model.id} lost the lab attribution`);
   // The filter itself: a US-only lab selection keeps all three, an EU-only selection drops them.
   const us = labFilter([], ["US"]), eu = labFilter([], ["EU"]);
-  for (const id of ["pareto::default", "swe-1.7-lightning-max::default", "muse-spark-1.3-max::default"]) {
-    const org = row(id)?.org;
-    assert.ok(us(org), `${id} (${org}) is not in the US lab bucket`);
-    assert.ok(!eu(org), `${id} (${org}) must not pass an EU-only lab filter`);
+  const fixedModels = [row("swe-1.7-lightning-max::default"), row("muse-spark-1.3-max::default")];
+  for (const model of [...paretoModels, ...fixedModels]) {
+    assert.ok(model, "a fixed attribution model row is missing");
+    assert.ok(us(model.org), `${model.id} (${model.org}) is not in the US lab bucket`);
+    assert.ok(!eu(model.org), `${model.id} (${model.org}) must not pass an EU-only lab filter`);
   }
   // "Other" stays the guess-free bucket it was: nothing may be read into it.
   assert.equal(LAB_COUNTRIES.Other, undefined);
