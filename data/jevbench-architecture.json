@@ -5577,6 +5577,21 @@
             "fact": "Artifact key nimble-v4-max records a Bespoke Labs vendor-hosted proprietary API with no public evaluated weights; listed but not ranked and unpriced under CoS deputy #19084. Hosting implementation and deployed weights were not independently inspected."
           }
         ]
+      },
+      "respan-span-02": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/lihe07/span-02/blob/3f0fbdb9c03950f335e80845f51be39985d63fc0/README.md",
+            "kind": "model-card",
+            "fact": "Self-hosted Gemma 4 26B-A4B derivative; author Rust/CUDA Blackwell-only engine, pinned revision 3f0fbdb9c03950f335e80845f51be39985d63fc0; measured on RTX 5090. Repo https://huggingface.co/lihe07/span-02."
+          }
+        ]
       }
     },
     "imagejevbench": {
