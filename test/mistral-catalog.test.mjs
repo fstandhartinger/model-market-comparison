@@ -141,6 +141,8 @@ test("a USD/EUR currency toggle is accepted only with USD pressed", () => {
   assert.equal(models.length, 3);
   assert.deepEqual(diff.price_changed, []);
   assert.throws(() => parseMistralPricing(page(flagship, withCurrency(chat(row("Z.ai GLM 5.2", 1.3, 0.13, 4.1)), "EUR")), previous), /not in USD \(pressed: \["EUR","Standard"\]\)/);
+  const noCurrencySelected = withCurrency(chat(row("Z.ai GLM 5.2", 1.4, 0.14, 4.4))).replace('aria-pressed="true">USD', 'aria-pressed="false">USD');
+  assert.throws(() => parseMistralPricing(page(flagship, noCurrencySelected), previous), /not in USD \(pressed: \["Standard"\]\)/);
   const batchUsd = withCurrency(chat(row("Z.ai GLM 5.2", 0.7, 0.07, 2.2))).replace('aria-pressed="true">Standard', 'aria-pressed="false">Standard').replace('aria-pressed="false">Batch', 'aria-pressed="true">Batch');
   assert.throws(() => parseMistralPricing(page(flagship, batchUsd), previous), /not on the Standard pricing mode \(pressed: \["USD","Batch"\]\)/);
   const unknown = glm.replace('<button class="b"', '<button aria-pressed="true">Promo</button><button class="b"');
