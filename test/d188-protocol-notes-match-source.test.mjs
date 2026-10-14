@@ -38,8 +38,9 @@ const capturePool = await acceptedCaptures({
 // claiming that the daily collector has already published from these bytes.
 const vulcanReview = JSON.parse(await readFile('test/fixtures/vulcanbench-frontier-2026-10-07/manifest.json', 'utf8'));
 const vulcanReview323 = JSON.parse(await readFile('test/fixtures/vulcanbench-frontier-2026-10-10/manifest.json', 'utf8'));
+const vulcanReview324 = JSON.parse(await readFile('test/fixtures/vulcanbench-frontier-2026-10-14/manifest.json', 'utf8'));
 const captures = capturePool.accepted;
-const reviewPool = { ...capturePool, accepted: [...capturePool.accepted, ...vulcanReview, ...vulcanReview323]
+const reviewPool = { ...capturePool, accepted: [...capturePool.accepted, ...vulcanReview, ...vulcanReview323, ...vulcanReview324]
   .sort((a, b) => a.retrieved_at.localeCompare(b.retrieved_at)) };
 const newestCapture = (url) => newestAccepted(reviewPool, url);
 const bytesOf = async (receipt) => {
@@ -146,15 +147,36 @@ test('D223: every reviewed VulcanBench revision really is the same protocol, jud
     const amends = Object.keys(bundles.get(revision).amends ?? {}).map((key) => key.replace(/^v/, ''));
     assert.ok(amends.includes(reference), `v${revision} does not amend v${reference}`);
   }
-  // Same task set: the two per-run exports the D223 review retained, compared id by id.
+  // Same task set: the v3.15/v3.4 historical pair, plus the newly reviewed v3.24 Haiku population.
+  const runExport = async (slug) => csv((await bytesOf(newestCapture(
+    `https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/${slug}/runs.csv`))).toString());
   const taskSet = async (slug) => {
-    const rows = csv((await bytesOf(newestCapture(
-      `https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/${slug}/runs.csv`))).toString());
+    const rows = await runExport(slug);
     return [...new Set(rows.map((row) => row.task))].sort();
   };
-  const [newest, oldest] = [await taskSet('swe-v4-opus55-v315'), await taskSet('swe-v4-astra-fable51-v34')];
+  const [newest, oldest, haiku] = await Promise.all([
+    taskSet('swe-v4-opus55-v315'),
+    taskSet('swe-v4-astra-fable51-v34'),
+    taskSet('swe-v4-haiku55-v324'),
+  ]);
   assert.equal(oldest.length, 23, "the reference export covers the board's 23 tasks");
   assert.deepEqual(newest, oldest, 'the v3.15 population ran a different task set');
+  assert.deepEqual(haiku, oldest, 'the v3.24 population ran a different task set');
+
+  const haikuRows = await runExport('swe-v4-haiku55-v324');
+  assert.equal(haikuRows.length, 115, 'the v3.24 export has 23 runs at each of five effort levels');
+  assert.deepEqual(Object.fromEntries([...new Set(haikuRows.map((row) => row.effort))]
+    .sort().map((effort) => [effort, haikuRows.filter((row) => row.effort === effort).length])),
+  { 'extra-high': 23, high: 23, low: 23, max: 23, medium: 23 });
+
+  const boardHeader = (await bytesOf(newestCapture(VULCAN_BOARD))).toString().split(/\r?\n/, 1)[0].split(',');
+  const haikuHeader = (await bytesOf(newestCapture(
+    'https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-haiku55-v324/runs.csv')))
+    .toString().split(/\r?\n/, 1)[0].split(',');
+  assert.equal(boardHeader.length, 20, 'the main board still has the guarded 20-column header');
+  assert.equal(haikuHeader.length, 38, 'the separate v3.24 per-run export has its own 38-column header');
+  assert.ok(haikuHeader.includes('task_hash'), 'the per-run export carries its task identity hash');
+  assert.ok(!boardHeader.includes('task_hash'), 'the per-run export header is not the board CSV header');
 });
 
 // D256 (2026-09-29): this read only the *newest* capture of the page, and the dates the guard annotates
