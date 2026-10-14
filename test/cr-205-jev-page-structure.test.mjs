@@ -443,6 +443,15 @@ test('CR-205: fail-closed v1.6.18 same-draw addition uses the shared board, its 
   assert.match(route, /Noul table/);
 });
 
+test('CR-205: fail-closed v1.6.19 uses the shared board, method notes, full history and visible Ventus attribution', async () => {
+  const route = await read('../app/jev-models/v1.6.19/page.tsx');
+  assert.match(route, /readOptionalJevbenchV1619Release\(\)/);
+  assert.match(route, /if \(!release\) notFound\(\)/);
+  ordered(route, ['<JevBenchV16Board', 'data-bh-jev1619-method', 'data-bh-jev1619-measurement-notes', '<JevHistoryLazy'], 'v1.6.19 page');
+  assert.match(route, /historicalCatalogue\(historical.artifact, historical.carry\)/);
+  for (const phrase of ['Ventus-2B by Ethan Xie', '15 HTTP 422', '2,048-token cap', 'mappings are ours', 'lower bound', 'custom Ventus', 'No SubQ re-price', 'No top five changes', '#18761', 'All data', 'Noul table']) assert.ok(route.includes(phrase), phrase);
+});
+
 test('CR-205: every versioned JevBench route is covered by this test', async () => {
   const entries = await readdir(new URL('../app/jev-models', import.meta.url), { withFileTypes: true });
   const versionDirs = entries.filter((e) => e.isDirectory() && /^v[\d.]+$/.test(e.name)).map((e) => e.name).sort();
@@ -451,7 +460,7 @@ test('CR-205: every versioned JevBench route is covered by this test', async () 
   assert.match(alias, /import \{ permanentRedirect \} from 'next\/navigation'/);
   assert.match(alias, /permanentRedirect\('\/jev-models\/v1\.6\.0'\)/);
   // A new versioned page must be added to the structure assertions above — not silently reduced.
-  assert.deepEqual(versionDirs, ['v1', 'v1.4', 'v1.4.1', 'v1.4.2', 'v1.4.2.1', 'v1.4.2.2', 'v1.5.0', 'v1.5.1', 'v1.5.2', 'v1.5.3', 'v1.5.4', 'v1.5.5', 'v1.5.6', 'v1.5.7', 'v1.6', 'v1.6.0', 'v1.6.1', 'v1.6.2', 'v1.6.3', 'v1.6.4', 'v1.6.5', 'v1.6.6', 'v1.6.7', 'v1.6.8', 'v1.6.9', 'v1.6.10', 'v1.6.11', 'v1.6.12', 'v1.6.13', 'v1.6.14', 'v1.6.15', 'v1.6.16', 'v1.6.17', 'v1.6.18'].sort());
+  assert.deepEqual(versionDirs, ['v1', 'v1.4', 'v1.4.1', 'v1.4.2', 'v1.4.2.1', 'v1.4.2.2', 'v1.5.0', 'v1.5.1', 'v1.5.2', 'v1.5.3', 'v1.5.4', 'v1.5.5', 'v1.5.6', 'v1.5.7', 'v1.6', 'v1.6.0', 'v1.6.1', 'v1.6.2', 'v1.6.3', 'v1.6.4', 'v1.6.5', 'v1.6.6', 'v1.6.7', 'v1.6.8', 'v1.6.9', 'v1.6.10', 'v1.6.11', 'v1.6.12', 'v1.6.13', 'v1.6.14', 'v1.6.15', 'v1.6.16', 'v1.6.17', 'v1.6.18', 'v1.6.19'].sort());
 });
 
 test('CR-205: the board sections are fed by the pinned v1.5 release artifact', async () => {
