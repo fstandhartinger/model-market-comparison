@@ -60,7 +60,8 @@ test('PENDING v1.6.19 is hidden until independent review',async()=>{
 const ATTR='Ventus-2B by Ethan Xie (https://github.com/XieShaocong33Ethan/Ventus-2B)';
 test('Ventus attribution is visible in the release page and retained in row metadata',async()=>{
  const b=await fixture();validateJevbenchV1619Bundle(b);
- const page=await readFile('app/jev-models/v1.6.19/page.tsx','utf8');assert.ok(page.includes(ATTR));
+ for(const file of ['app/jev-models/v1.6.19/page.tsx','app/jev-models/ventus-2b/page.tsx']) { const page=await readFile(file,'utf8'); assert.ok(page.includes(ATTR)); assert.match(page,/readOptionalJevbenchV1619Release/); }
+ assert.match(await readFile('app/jev-models/ventus-2b/page.tsx','utf8'),/row\.licence/);
  assert.ok(row(b,'ventus-2b').licence.includes(ATTR));assert.ok(row(b,'ventus-2b')._artifact_note.includes('no longer resolves'));
  for(const key of ['nimble-v4','nimble-v4-max'])assert.ok(Object.values(row(b,key).views).every(v=>v===null));
  assert.equal(row(b,'subq-snap-preview').ranked,false);
