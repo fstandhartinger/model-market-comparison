@@ -1,5 +1,5 @@
 import { jevbenchRelease } from '../lib/jevbench-releases.mjs';
-type JevRelease = 'v1.6.18' | 'v1.6.17' | 'v1.6.16' | 'v1.6.15' | 'v1.6.14' | 'v1.6.13' | 'v1.6.12' | 'v1.6.11' | 'v1.6.10' | 'v1.6.9' | 'v1.6.8' | 'v1.6.7' | 'v1.6.6' | 'v1.6.5' | 'v1.6.4' | 'v1.6.3' | 'v1.6.2' | 'v1.6.1' | 'v1.6.0' | 'v1.5.7' | 'v1.5.6' | 'v1.5.5';
+type JevRelease = 'v1.6.19' | 'v1.6.18' | 'v1.6.17' | 'v1.6.16' | 'v1.6.15' | 'v1.6.14' | 'v1.6.13' | 'v1.6.12' | 'v1.6.11' | 'v1.6.10' | 'v1.6.9' | 'v1.6.8' | 'v1.6.7' | 'v1.6.6' | 'v1.6.5' | 'v1.6.4' | 'v1.6.3' | 'v1.6.2' | 'v1.6.1' | 'v1.6.0' | 'v1.5.7' | 'v1.5.6' | 'v1.5.5';
 
 /** Florian 10 Oct 2026: archived release pages keep their URL; the version tabs became this one-line bar. The live
  *  board (/jev-models) is always the merged board with every system's latest measurement; releases are listed in

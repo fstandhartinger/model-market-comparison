@@ -5592,6 +5592,21 @@
             "fact": "Self-hosted Gemma 4 26B-A4B derivative; author Rust/CUDA Blackwell-only engine, pinned revision 3f0fbdb9c03950f335e80845f51be39985d63fc0; measured on RTX 5090. Repo https://huggingface.co/lihe07/span-02."
           }
         ]
+      },
+      "ventus-2b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Ethan33X/Ventus-2B/blob/d9d4e599749433fcbe7273b23717f8427c36fed4/README.md",
+            "kind": "model-card",
+            "fact": "Qwen3.5-2B-Base derivative; single-pass option-letter logit readout; evaluator CPU shim and noul/score mappings disclosed; pinned revision d9d4e599749433fcbe7273b23717f8427c36fed4."
+          }
+        ]
       }
     },
     "imagejevbench": {
