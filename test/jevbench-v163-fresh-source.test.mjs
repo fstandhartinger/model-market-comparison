@@ -26,10 +26,10 @@ function freshCategories(revision, competence) {
 }
 const cat = (view, dim, key) => view.dims.find((d) => d.key === dim).cats.find((x) => x.key === key);
 
-test('fresh-v16 helper covers exactly v1.6.2 to v1.6.16', () => {
-  assert.deepEqual(JEVBENCH_FRESH_V16_REVISIONS, ['v1.6.2', 'v1.6.3', 'v1.6.4', 'v1.6.5', 'v1.6.6', 'v1.6.7', 'v1.6.8', 'v1.6.9', 'v1.6.10', 'v1.6.11', 'v1.6.12', 'v1.6.13', 'v1.6.14', 'v1.6.15', 'v1.6.16']);
-  for (const r of ['v1.6.2', 'v1.6.3', 'v1.6.4', 'v1.6.5', 'v1.6.6', 'v1.6.7', 'v1.6.8', 'v1.6.9', 'v1.6.10', 'v1.6.11', 'v1.6.12', 'v1.6.13', 'v1.6.14', 'v1.6.15', 'v1.6.16']) assert.equal(isFreshJevbenchV16Revision(r), true, r);
-  for (const r of ['v1.6.1', 'v1.6.0', 'v1.5.7', 'v1.5.6', 'v1.5.5', 'v1.5.0', 'v1.6.17', 'v1.6', '', undefined, null]) assert.equal(isFreshJevbenchV16Revision(r), false, String(r));
+test('fresh-v16 helper covers exactly v1.6.2 to v1.6.17', () => {
+  assert.deepEqual(JEVBENCH_FRESH_V16_REVISIONS, ['v1.6.2', 'v1.6.3', 'v1.6.4', 'v1.6.5', 'v1.6.6', 'v1.6.7', 'v1.6.8', 'v1.6.9', 'v1.6.10', 'v1.6.11', 'v1.6.12', 'v1.6.13', 'v1.6.14', 'v1.6.15', 'v1.6.16', 'v1.6.17']);
+  for (const r of ['v1.6.2', 'v1.6.3', 'v1.6.4', 'v1.6.5', 'v1.6.6', 'v1.6.7', 'v1.6.8', 'v1.6.9', 'v1.6.10', 'v1.6.11', 'v1.6.12', 'v1.6.13', 'v1.6.14', 'v1.6.15', 'v1.6.16', 'v1.6.17']) assert.equal(isFreshJevbenchV16Revision(r), true, r);
+  for (const r of ['v1.6.1', 'v1.6.0', 'v1.5.7', 'v1.5.6', 'v1.5.5', 'v1.5.0', 'v1.6.18', 'v1.6', '', undefined, null]) assert.equal(isFreshJevbenchV16Revision(r), false, String(r));
   assert.ok(JEVBENCH_CATEGORY_REVISIONS.includes('v1.6.3'));
 });
 

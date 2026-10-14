@@ -5426,6 +5426,127 @@
           }
         ],
         "note": "Timed on one RTX PRO 6000 Blackwell 96 GB GPU, while this draw's other GPU rows, Perplexity Decider and Torchcast-Decision-27B were timed on an H100."
+      },
+      "pjev-2b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "2.5B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Kailune-AI/pjev-2b/blob/ad60e59c7aa1f6a545c563bc404853f9a8067908/README.md",
+            "kind": "model-card",
+            "fact": "Pinned model card of the evaluated revision: base_model openbmb/MiniCPM5-2B, license apache-2.0; \"the merged standalone model: base weights with the adapter folded in\"; the readout is the base model's own output layer restricted to the option letters, no decision head added; 2.5B parameters."
+          },
+          {
+            "url": "https://huggingface.co/Kailune-AI/pjev-2b/blob/ad60e59c7aa1f6a545c563bc404853f9a8067908/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config: architectures [\"LlamaForCausalLM\"], model_type \"llama\", 42 hidden layers, hidden size 2048, dtype bfloat16."
+          }
+        ]
+      },
+      "metask_jev_rain_31b_trained_v3": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "adapter",
+          "params": "31B",
+          "quant": "W4A16 INT4"
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/MeTask-Rain/metask-jev-rain-31B-trained/blob/da56acc0bb607cc214c184ad9f1e9231a0d63dee/README.md",
+            "kind": "model-card",
+            "fact": "Model card of the sibling revision da56acc0 whose weights this service-v3 row shares (same LoRA weights, changed service/ layer; the evaluated revision is 2feff076): base google/gemma-4-31B-it; the repository root is Google's official compressed-tensors W4A16 checkpoint and adapter/ holds the authors' own LoRA (PEFT, rank 16, alpha 32) loaded with it, not merged."
+          },
+          {
+            "url": "https://huggingface.co/MeTask-Rain/metask-jev-rain-31B-trained/blob/da56acc0bb607cc214c184ad9f1e9231a0d63dee/config.json",
+            "kind": "config.json",
+            "fact": "Config of the sibling revision da56acc0: architectures [\"Gemma4ForConditionalGeneration\"]; model_type \"gemma4\", 60 hidden layers; quantization_config format pack-quantized, 4-bit weights."
+          }
+        ],
+        "note": "Re-submission of the weights of metask_jev_rain_31b_trained with a changed service/ layer (paid fast-lane order 4d9fef10); timed on an RTX PRO 6000 96 GB, not the H100 of the earlier row."
+      },
+      "subq-snap-preview": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.17-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key subq-snap-preview records a vendor-hosted API with no public evaluated weights; listed but not ranked (cost unpriced, CoS deputy decision #18975)."
+          }
+        ]
+      },
+      "amos-1-medium": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": null,
+          "params": "9B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/mukaddamzaid/amos-1-medium",
+            "kind": "provider-docs",
+            "fact": "Submission declares base Qwen/Qwen3.5-9B and open weights at mukaddamzaid/amos-1-medium (Apache-2.0); the measured row is the vendor-hosted api.amos.scira.ai endpoint, whose deployed weights were not independently inspected."
+          }
+        ]
+      },
+      "sage-1.4.0": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.17-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key sage-1.4.0 records a hosted API with no public evaluated weights."
+          }
+        ]
+      },
+      "amos-1-large": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": null,
+          "params": "27B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/mukaddamzaid/amos-1-large",
+            "kind": "provider-docs",
+            "fact": "Submission declares base Qwen/Qwen3.8-27B and open weights at mukaddamzaid/amos-1-large (Apache-2.0); the measured row is the vendor-hosted api.amos.scira.ai endpoint, whose deployed weights were not independently inspected."
+          }
+        ]
+      },
+      "purplemist-mini-1.0": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "2B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/olaverse/PurpleMIST-Mini-1.0/blob/8072361ec4b632b3b8a73899022281d5de3c639b/purplemist_config.json",
+            "kind": "config.json",
+            "fact": "Pinned author config: base_model \"Qwen/Qwen3.5-2B-Base\", backbone \"full\", lora_r null (a fully fine-tuned backbone with a projection head), inference_dtype float32."
+          },
+          {
+            "url": "https://huggingface.co/olaverse/PurpleMIST-Mini-1.0/blob/8072361ec4b632b3b8a73899022281d5de3c639b/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config: architectures [\"Qwen3_5TextModel\"], model_type \"qwen3_5_text\", 24 hidden layers, hidden size 2048."
+          }
+        ]
       }
     },
     "imagejevbench": {
