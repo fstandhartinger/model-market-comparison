@@ -156,3 +156,68 @@ test("cache-hit exceptions are a list the page may extend, and each still has to
   assert.equal(Object.keys(parseClaudeApiCatalog(pricing(fullRows, fullBatch), deprecations, previous, { enterpriseHtml: enterprise, today: "2026-09-23" })
     .pricing_modifiers.prompt_cache_read_multiplier_exceptions).includes("claude-opus-5"), false);
 });
+
+// 14 Oct 2026: Claude Haiku 5.5 is priced by prompt length. Its input cell reads "$0.10 / MTok for
+// prompts up to 100,000 tokens" and a following row without a name cell holds the prices for longer
+// prompts; the strict price regex froze the collector for a week. The lower tier is the headline price,
+// the higher one is kept in long_context; a half-stated tier still fails closed.
+test("prompt-length tiers: the lower tier is the headline price, the higher one is kept in long_context", () => {
+  const modelCell = (name, slug) => `<a href="/docs/en/models/${slug}/overview">${name}</a><span>For high-volume tasks</span>`;
+  const up = (v) => `$${v} / MTok<span>for prompts up to 100,000 tokens</span>`;
+  const over = (v) => `$${v} / MTok<span>for prompts over 100,000 tokens</span>`;
+  const mainRows = [
+    `<tr><td>${modelCell("Claude Opus 5.5", "opus-5-5")}</td><td>${$(4)}</td><td>${$(20)}</td><td>${$(5)}</td><td>${$(8)}</td><td>${$(0.2)}</td></tr>`,
+    `<tr><td rowspan="2">${modelCell("Claude Haiku 5.5", "haiku-5-5")}</td><td>${up(0.1)}</td><td>${$(0.5)}</td><td>${$(0.125)}</td><td>${$(0.2)}</td><td>${$(0.01)}</td></tr>`,
+    `<tr><td>${over(0.5)}</td><td>${$(2.5)}</td><td>${$(0.625)}</td><td>${$(1)}</td><td>${$(0.05)}</td></tr>`,
+  ];
+  const batchRows = [
+    `<tr><td>${modelCell("Claude Opus 5.5", "opus-5-5")}</td><td>${$(2)}</td><td>${$(10)}</td></tr>`,
+    `<tr><td rowspan="2">${modelCell("Claude Haiku 5.5", "haiku-5-5")}</td><td>${up(0.05)}</td><td>${$(0.25)}</td></tr>`,
+    `<tr><td>${over(0.25)}</td><td>${$(1.25)}</td></tr>`,
+  ];
+  const grouped = (groups, header, rows) => `<table><thead><tr>${groups.map((h) => `<th>${h}</th>`).join("")}</tr><tr>${header.map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table>`;
+  const doc = (main, batch) => `<html>${grouped(["Model", "Base tokens", "Prompt caching"], ["Name", "Input", "Output", "5m writes", "1h writes", "Hits and refreshes"], main)}
+    ${grouped(["Model", "Batch tokens"], ["Name", "Input", "Output"], batch)}
+    <p>The Batch API allows asynchronous processing of large volumes of requests with a 50% discount on both input and output tokens.</p>
+    <p>On Claude Opus 5.5, a cache hit costs 5% of the standard input price.</p>
+    <p>All other models use the standard 0.1x multiplier.</p>
+    <p>For Claude 4.6 and later models, using inference_geo: "us" applies a 1.1x pricing multiplier.</p></html>`;
+  const html = doc(mainRows, batchRows);
+  const rows = readPriceTables(html);
+  assert.deepEqual(rows.map((r) => r.name), ["Claude Opus 5.5", "Claude Haiku 5.5"]);
+  assert.equal(rows[0].long_context, undefined);
+  assert.deepEqual(rows[1], {
+    name: "Claude Haiku 5.5", label: "", retired: false, limited: false,
+    input: 0.1, write5m: 0.125, write1h: 0.2, read: 0.01, output: 0.5, batch: { input: 0.05, output: 0.25 },
+    long_context: { threshold_input_tokens_gt: 100000, input: 0.5, write5m: 0.625, write1h: 1, read: 0.05, output: 2.5, batch: { input: 0.25, output: 1.25 } },
+  });
+
+  const prev = { models: [{ model_name: "Claude Opus 5.5", model_id: "claude-opus-5-5", provider_org: "Anthropic", lifecycle_status: "active" }] };
+  const r = parseClaudeApiCatalog(html, deprecations, prev, { today: "2026-10-14" });
+  const haiku = r.models.find((m) => m.model_name === "Claude Haiku 5.5");
+  assert.equal(haiku.model_id, "claude-haiku-5-5");
+  assert.equal(haiku.input_per_1m_usd, 0.1);
+  assert.equal(haiku.batch_input_per_1m_usd, 0.05);
+  assert.deepEqual(haiku.long_context, {
+    threshold_input_tokens_gt: 100000, input_per_1m_usd: 0.5, output_per_1m_usd: 2.5,
+    cache_write_per_1m_usd: 0.625, cache_write_1h_per_1m_usd: 1, cache_read_per_1m_usd: 0.05,
+    batch_input_per_1m_usd: 0.25, batch_output_per_1m_usd: 1.25,
+  });
+  assert.equal(r.models.find((m) => m.model_name === "Claude Opus 5.5").long_context, undefined);
+  // A tier dropped from the page is dropped from the row too, and counts as a price change.
+  const stale = { models: r.models };
+  const flat = doc([mainRows[0], `<tr><td>${modelCell("Claude Haiku 5.5", "haiku-5-5")}</td><td>${$(0.1)}</td><td>${$(0.5)}</td><td>${$(0.125)}</td><td>${$(0.2)}</td><td>${$(0.01)}</td></tr>`],
+    [batchRows[0], `<tr><td>${modelCell("Claude Haiku 5.5", "haiku-5-5")}</td><td>${$(0.05)}</td><td>${$(0.25)}</td></tr>`]);
+  const r2 = parseClaudeApiCatalog(flat, deprecations, stale, { today: "2026-10-15" });
+  assert.equal(r2.models.find((m) => m.model_name === "Claude Haiku 5.5").long_context, undefined);
+  assert.deepEqual(r2.diff.price_changed, ["Claude Haiku 5.5"]);
+
+  // Fail closed: a lower tier without its continuation row, a continuation row without a lower tier,
+  // mismatched thresholds, and tiers that differ between the standard and batch tables.
+  assert.throws(() => readPriceTables(doc(mainRows.slice(0, 2), batchRows)), /stops at 100000 tokens without a row for longer prompts/);
+  assert.throws(() => readPriceTables(doc([mainRows[0], mainRows[2]], batchRows)), /does not continue a prompt-length tier/);
+  assert.throws(() => readPriceTables(doc([mainRows[0], mainRows[1], mainRows[2].replace("100,000", "200,000")], batchRows)), /does not continue a prompt-length tier/);
+  assert.throws(() => readPriceTables(doc(mainRows, [batchRows[0], `<tr><td>${modelCell("Claude Haiku 5.5", "haiku-5-5")}</td><td>${$(0.05)}</td><td>${$(0.25)}</td></tr>`])), /tiers differ between the standard and batch tables/);
+  assert.throws(() => readPriceTables(doc([mainRows[0], mainRows[1].replace("up to", "beyond"), mainRows[2]], batchRows)), /does not continue a prompt-length tier/);
+  assert.throws(() => readPriceTables(doc([mainRows[0], mainRows[1].replace("up to", "beyond")], batchRows)), /unreadable price/);
+});
