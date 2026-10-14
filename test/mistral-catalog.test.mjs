@@ -128,3 +128,21 @@ test("fails closed on layout changes, missing units, conflicting duplicates, uni
   assert.throws(() => parseMistralPricing(unknown, previous), /no API id for "New Model".*docs page was not resolved/s);
   assert.throws(() => parseMistralPricing(page(chat(row("Mistral Large 3", 0.5, 0.05, 1.5))), previous), /refusing/);
 });
+
+// 14 Oct 2026: every section gained a USD/EUR currency toggle beside the Standard/Batch/Priority mode,
+// so two controls are pressed (["USD","Standard"]) and the mode check froze the collector for a week.
+// USD + Standard is the global standard list; EUR, or any unknown pressed control, still fails closed.
+test("a USD/EUR currency toggle is accepted only with USD pressed", () => {
+  const withCurrency = (s, pressed = "USD") => s.replace('<button class="b" aria-pressed="true">Standard</button>',
+    `<button aria-pressed="${pressed === "USD"}">USD</button><button aria-pressed="${pressed === "EUR"}">EUR</button><button class="b" aria-pressed="true">Standard</button>`);
+  const flagship = withCurrency(chat(row("Mistral Large 3", 0.5, 0.05, 1.5), row("Ministral 3 (3B)", 0.1, 0.01, 0.1)));
+  const glm = withCurrency(chat(row("Z.ai GLM 5.2", 1.4, 0.14, 4.4)));
+  const { models, diff } = parseMistralPricing(page(flagship, glm), previous);
+  assert.equal(models.length, 3);
+  assert.deepEqual(diff.price_changed, []);
+  assert.throws(() => parseMistralPricing(page(flagship, withCurrency(chat(row("Z.ai GLM 5.2", 1.3, 0.13, 4.1)), "EUR")), previous), /not in USD \(pressed: \["EUR","Standard"\]\)/);
+  const batchUsd = withCurrency(chat(row("Z.ai GLM 5.2", 0.7, 0.07, 2.2))).replace('aria-pressed="true">Standard', 'aria-pressed="false">Standard').replace('aria-pressed="false">Batch', 'aria-pressed="true">Batch');
+  assert.throws(() => parseMistralPricing(page(flagship, batchUsd), previous), /not on the Standard pricing mode \(pressed: \["USD","Batch"\]\)/);
+  const unknown = glm.replace('<button class="b"', '<button aria-pressed="true">Promo</button><button class="b"');
+  assert.throws(() => parseMistralPricing(page(flagship, unknown), previous), /not on the Standard pricing mode/);
+});

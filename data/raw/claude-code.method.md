@@ -170,5 +170,11 @@ The 2026-09-24 refresh captured all four response bodies before parsing.
   Both check dates were updated to 2026-09-24 after successful validation.
 - Fails closed: missing price or batch table, unreadable price, a callable row without a batch price,
   inconsistent write multipliers, or fewer than 50 % of previous rows still listed.
+- Prompt-length tiers (since 14 Oct 2026, Claude Haiku 5.5): the input cell reads
+  "$X / MTok for prompts up to N tokens" and the next row, without a name cell, gives the prices for
+  prompts over N tokens. The lower tier is the row's headline price; the higher tier is kept in
+  `long_context` (`threshold_input_tokens_gt`, the same price keys, batch included). A lower tier
+  without its continuation row, a continuation row without a lower tier, a threshold mismatch, or tiers
+  that differ between the standard and batch tables fail closed.
 - First run 2026-09-14: all 13 callable rows and every modifier reproduced the 2026-09-08 snapshot exactly;
   four retired rows excluded (Opus 4.1, Opus 4, Sonnet 4, Haiku 3.5); tentative retirement dates added.

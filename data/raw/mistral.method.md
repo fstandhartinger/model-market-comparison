@@ -17,6 +17,9 @@ changed?)`. `https://mistral.ai/pricing/api` now answers **301** to
   A table without either heading fails the refresh closed, as does any other header row.
 - The served default is the **Standard** pricing mode (`aria-pressed="true"`), i.e. not batch or
   priority and not the regional-inference surcharge; the refresh fails closed if that changes.
+- Since 14 Oct 2026 each section also carries a **USD/EUR** currency toggle, so the served HTML
+  presses two controls (`["USD","Standard"]`). The currency press is checked separately: USD is
+  required when the toggle is present; EUR, or any other pressed control, fails closed.
 - A chat/text model is a row whose input **and** output are bare USD amounts (embeddings have no
   output). Cached input is back in the served HTML and is read from the table.
 - **Sale prices:** a struck-through list price beside a sale price (Mistral Large 4 on 7 Oct:
