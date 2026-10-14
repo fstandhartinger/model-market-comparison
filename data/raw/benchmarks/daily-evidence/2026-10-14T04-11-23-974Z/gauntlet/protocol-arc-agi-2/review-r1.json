@@ -1,0 +1,24 @@
+{
+  "artifact_id": "protocol-arc-agi-2",
+  "artifact_sha256": "4def015e2ee7af9204caf82a96e34ed82c8f210c181e369fb11fb2e504cc1d29",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["arc-agi::2","c1","c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "arc-agi::2-identity-version",
+      "severity": "blocker",
+      "location": "row arc-agi::2: version/version_status/version_guard; criterion c1",
+      "evidence": "Packet contains no protocol text for this board. The only protocol content provided is the acceptance-criteria text; there is no primary page, excerpt, or source transcription naming ARC Prize ARC-AGI-2, its release identifier ",
+      "repair": "Provide the actual current primary protocol excerpt for ARC-AGI-2 that names the board and any release identifier, so that identity continuity, version (2), version_status, metric, unit, range and description can be verified against source."
+    }
+  ]
+  ,
+  "uncertainties": [],
+  "missing_evidence": [
+    "protocol text establishing the current registry version and release identifier for arc-agi::2",
+    "protocol text for lifecycle fields of arc-agi::2",
+    "served summary values (finite count, lowest, highest) for arc-agi::2"
+  ]
+}

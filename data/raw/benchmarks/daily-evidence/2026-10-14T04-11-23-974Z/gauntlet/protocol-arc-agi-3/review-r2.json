@@ -1,0 +1,12 @@
+{
+  "row_id": "arc-agi::3",
+  "row_sha256": "c77722bf683c125fe160393c71ef74f48c404efe196bfd1e4f090ea6576b4f02",
+  "c1": "missing_evidence",
+  "c2": "missing_evidence",
+  "verdict": "fail",
+  "missing_evidence": [
+    "no ARC-AGI protocol excerpt or maintainer text in the review packet to verify published version 3, the scoring metric 'Semi-private interactive game action efficiency relative to the human baseline', unit 'percent', range [0,null], higher_better=true, the 'median human actions' / '115% per-level cap' notes, or the benchmark description",
+    "no protocol text to verify status 'active', version_status 'published', or superseded_by null"
+  ],
+  "notes": "The frozen review packet contains only review metadata (artifact id/hash, producers, required row/criteria identifiers, criteria text) and no primary ARC-AGI protocol excerpt, no captured payload summary, and no added/changed result count. With no protocol text, neither c1 (version/scoring continuity) nor c2 (status/version_status/superseded_by) can be settled; per the criteria, missing evidence fails the row."
+}

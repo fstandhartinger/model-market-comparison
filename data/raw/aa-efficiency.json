@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-10-13T00:52:37.534Z",
+  "collected_at": "2026-10-14T04:22:25.015Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,15 +13,15 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-10-13T00:52:37.328Z",
+      "fetched_at": "2026-10-14T04:22:24.298Z",
       "http_status": 200,
-      "bytes": 4181285,
-      "sha256": "271fdb705d1b01785afd219615446a43b12ed32e412dcce68f014aab74ef19fc"
+      "bytes": 4182427,
+      "sha256": "310804ebd5dfd40c6b3ae32d6e038c7f33bbea3d0888c54485928e700963c2db"
     }
   ],
   "coverage": {
     "published_rows": 205,
-    "scored_denominator": 689,
+    "scored_denominator": 690,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
   "count": 205,
@@ -3596,20 +3596,20 @@
       "name": "Mistral Large 4 Preview",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 52010.59481503627,
-        "answer": 17319.36825509927,
-        "output": 69329.96307013553
+        "reasoning": 52093.59436049082,
+        "answer": 17370.43825509927,
+        "output": 69464.03261559008
       },
       "canonical_token_counts": {
-        "input": 3633283330,
-        "output": 199803890,
-        "answer": 22184199,
-        "reasoning": 177619691
+        "input": 3654196987,
+        "output": 200098843,
+        "answer": 22296553,
+        "reasoning": 177802290
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 18.1842472136053,
-        "reasoning_output_share": 0.7501892762069027
+        "input_output_ratio": 18.261959600635972,
+        "reasoning_output_share": 0.7499362245318197
       }
     },
     {
@@ -4256,20 +4256,20 @@
       "name": "Qwen3.8 27B (Xhigh)",
       "variant": "xhigh",
       "tokens_per_task": {
-        "reasoning": 47710.90773287412,
-        "answer": 19086.56378506237,
-        "output": 66797.47151793649
+        "reasoning": 47691.613732874124,
+        "answer": 19091.61678506237,
+        "output": 66783.23051793649
       },
       "canonical_token_counts": {
-        "input": 4131964256,
-        "output": 198290659,
-        "answer": 27504059,
-        "reasoning": 170786600
+        "input": 4132399183,
+        "output": 198276418,
+        "answer": 27509112,
+        "reasoning": 170767306
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 20.837916807770558,
-        "reasoning_output_share": 0.7142621816166015
+        "input_output_ratio": 20.84160700845423,
+        "reasoning_output_share": 0.7141255875614645
       }
     },
     {

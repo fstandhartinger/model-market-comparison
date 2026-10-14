@@ -1,0 +1,29 @@
+{
+  "verdict": "blocked",
+  "coverage_checked": [
+    "mazur-creative-story-writing::snapshot-2026-09-10",
+    "c1",
+    "c2"
+  ],
+  "findings": [
+    {
+      "row_id": "mazur-creative-story-writing::snapshot-2026-09-10",
+      "criterion_id": "c1",
+      "severity": "blocker",
+      "message": "No primary protocol evidence is present in the packet. The packet carries only the criteria text, the artifact metadata, and the candidate row. There is no protocol page, no served-value summary, and no added/changed count, so the registry version, benchmark identity, metric, units and description cannot be verified against the actual current primary protocol. Identity continuity cannot be established."
+    },
+    {
+      "row_id": "mazur-creative-story-writing::snapshot-2026-09-10",
+      "criterion_id": "c2",
+      "severity": "blocker",
+      "message": "No protocol text is present to check status, version_status, and superseded_by. There is no way to determine whether the maintainer still reports results, whether a release identifier is published, or whether a successor board is named. The lifecycle fields cannot be verified."
+    }
+  ],
+  "missing_evidence": [
+    "actual current primary protocol page for the board (its text on the task set, harness, judges, version and lifecycle)",
+    "this run's generated summary of the finite values served today for the board's source field (count, lowest, highest)",
+    "this run's generated summary of how many model rows' values were added or changed in today's captured payload compared with the previously published snapshot"
+  ],
+  "row_hash_mismatches": [],
+  "notes": "The frozen artifact content is the JSON of the single candidate row. The row's own identity hash (6342b1a865f4bdbe27585afa1fb1ba37804a3c2a81c647dd9d4aacf45eec2c07) is taken as binding; no hash recomputation was attempted. No primary evidence was supplied in the packet, so neither criterion can be settled."
+}

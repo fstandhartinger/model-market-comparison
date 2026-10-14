@@ -1,0 +1,15 @@
+{
+  "artifact_id": "protocol-mazur-creative-story-writing-snapshot-2026-09-10",
+  "artifact_sha256": "d0bedc67f03020a1918d640a6c576ae6937e5130eb4cf9579a6d457ab8fc7a3e",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["mazur-creative-story-writing::snapshot-2026-09-10","c1","c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "mazur-creative-story-writing::snapshot-2026-09-10::c1",
+      "severity": "blocker",
+      "location": "row mazur-creative-story-writing::snapshot-2026-09-10, field version/version_guard against criterion c1",
+      "evidence": "The packet supplies no actual primary protocol text for this board. REQUIRED_ROW_IDS names only the one row; REQUIRED_CRITERION_IDS are c1 and c2; the supplied reference material contains the acceptance criteria, producer line and row JSON but no protocol page text, no served-values summary, and no registry excerpt. The row's version field `snapshot-2026-09-10`, version_guard, metric/unit/range and description therefore cannot be checked against any "  }]
+  ,"actual current primary protocol" : {"example":"the packet has no protocol text at all"} ,
+  "addendum":"I cannot verify the SHA bindings because I have no execution tools."}
