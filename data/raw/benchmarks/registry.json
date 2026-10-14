@@ -14454,70 +14454,70 @@
         {
           "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
           "file": "test/fixtures/vulcanbench-frontier-2026-10-14/board.csv.gz",
-          "sha256": "3872147a919af7821098f7e74cb4846255587ed5ffe04207e71fb5467ac46520",
+          "sha256": "3e7ed3540a2fd01372c842000bfc65e767d8f239822b9a44210b95db0901a26d",
           "fetched_at": "2026-10-14T00:48:47.399580+00:00",
           "excerpt": "rank,model,lab,harness,effort,best_effort,n,combined_33,combined_33_se,code_quality,passed,mean_minutes,mean_usd,mean_raw_tokens,median_output_tokens,mean_output_tokens,report,protocol,passed_of,combined_timeouts_zero"
         },
         {
           "url": "https://vulcanbench.com/leaderboard.html",
           "file": "test/fixtures/vulcanbench-frontier-2026-10-14/leaderboard.html.gz",
-          "sha256": "02cf4dfbd1881e6460e5f2851bbf0b9e99b201f2295b9664011a8215af7ebc48",
+          "sha256": "43e2423dae526679883146bfb35d8c872db57882cc1fb0c2922f8ec4446770ef",
           "fetched_at": "2026-10-14T00:48:39.316992+00:00",
           "excerpt": "v3.24 apply the same rubric, controls and gates to each population"
         },
         {
           "url": "https://vulcanbench.com/benchmarks/swe-v4-haiku55-v324.html",
           "file": "test/fixtures/vulcanbench-frontier-2026-10-14/haiku55-v324-report.html.gz",
-          "sha256": "10716b03fe0b8119a4033a45a267bd383267319f98ae985aba04de7e372b94fc",
+          "sha256": "96427255121b451d8834563bb4895b2438ebb847e9dcaf1670aabad16909ac8a",
           "fetched_at": "2026-10-14T02:05:00.620675+00:00",
           "excerpt": "Protocol v3.24 changes nothing in the rubric, controls, quirk keys, gates, repeats, seed, weights or judge settings from v3.23"
         },
         {
           "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-haiku55-v324/judge-protocols.json",
           "file": "test/fixtures/vulcanbench-frontier-2026-10-14/haiku55-v324-judge-protocols.json.gz",
-          "sha256": "a6721b8d46c231fb67adb5270c8355f542210f22ce56d725c988f3e85fe0937e",
+          "sha256": "576d08a80049a9d0826ac86a5ca2340a058a563e9050727743dd1767c52bce2e",
           "fetched_at": "2026-10-14T02:05:00.664675+00:00",
           "excerpt": "\"protocol_ids\": {\"muse\": \"code-quality-maintenance-v3.24\", \"grok\": \"code-quality-maintenance-v3.24\"}"
         },
         {
           "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-haiku55-v324/runs.csv",
           "file": "test/fixtures/vulcanbench-frontier-2026-10-14/haiku55-v324-runs.csv.gz",
-          "sha256": "eab9738bb3bbc9c035e7a46be599531bc048e79553533bd23ed889794030f21d",
+          "sha256": "ea5b79f371a895f43a5506e2f0e9eb68b5b991c7cbc11d28f19d723279a773c8",
           "fetched_at": "2026-10-14T02:05:00.716674+00:00",
           "excerpt": "model,effort,task,run_id,judged_under,judged,combined_33,combined_20_profile"
         },
         {
           "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-haiku55-v324/calibration.json",
           "file": "test/fixtures/vulcanbench-frontier-2026-10-14/haiku55-v324-calibration.json.gz",
-          "sha256": "05b75a35820f6473b794b270127660ee1c504a70735be1e1df8898f6e891b814",
+          "sha256": "e5b6c8a8d70f5edd970432497152582afe2f45cc036628460107dc2462bac13c",
           "fetched_at": "2026-10-14T02:05:00.656675+00:00",
           "excerpt": "\"muse\": {\"passed\": true, \"failing_gates\": [], \"call_count\": 80"
         },
         {
           "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-haiku55-v324/provenance.json",
           "file": "test/fixtures/vulcanbench-frontier-2026-10-14/haiku55-v324-provenance.json.gz",
-          "sha256": "d949fcb4795bf3cd99dde02a2b0ce28167990c52eb896231fb200595069183f2",
+          "sha256": "c41d385d17218262b2731fa581279f84b6ffad1472d0aec8e3b67c657d8e7cdf",
           "fetched_at": "2026-10-14T02:05:00.688674+00:00",
           "excerpt": "\"v3.24/protocol.json\": \"15c04683b3056999bec21cd99b148fc40c2289953360fb1106da05a5d1b800ed\""
         },
         {
           "url": "https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/swe-v4-haiku55-v324/REPRODUCING.md",
           "file": "test/fixtures/vulcanbench-frontier-2026-10-14/haiku55-v324-REPRODUCING.md.gz",
-          "sha256": "c52377d511d2d7aba7340f01a7438eeb9343a766a26353180c04f582398cf361",
+          "sha256": "44ed14fd21e5487e5097ea187fef25efaf83782ffd0d4493355ef1270b39bf91",
           "fetched_at": "2026-10-14T02:10:51.602456+00:00",
           "excerpt": "The export script recomputes every row from the frozen summary and refuses to write if any value differs."
         },
         {
           "url": "https://raw.githubusercontent.com/morganlinton/VulcanBench/main/harness/maintenance_review_v3_resume.py",
           "file": "test/fixtures/vulcanbench-frontier-2026-10-14/maintenance_review_v3_resume.py.gz",
-          "sha256": "9e7877c7ea81866fffa495d40c87bf9f85ac57942989cf6cc6009cd835b9bad2",
+          "sha256": "0bd3117bc41088b694c1896aff7c743cef44e0b9a1a8c39c0c21d3e918fa674e",
           "fetched_at": "2026-10-14T02:10:51.042466+00:00",
           "excerpt": "Scores and text are untouched; the original excerpt is recorded."
         },
         {
           "url": "https://raw.githubusercontent.com/morganlinton/VulcanBench/main/harness/maintenance_review_v324.py",
           "file": "test/fixtures/vulcanbench-frontier-2026-10-14/maintenance_review_v324.py.gz",
-          "sha256": "77b6fd4ebbd2f4a2ef3a86673ca4553348e33f20def963f92cbe9f2858ed310e",
+          "sha256": "b62bfef38d638bd79095467175f3b016b20edfaa5275fb1cafa9c6fb506dc184",
           "fetched_at": "2026-10-14T02:10:51.010466+00:00",
           "excerpt": "line-level excerpt rule with elision markers; both judges retake the exam under this protocol"
         }
