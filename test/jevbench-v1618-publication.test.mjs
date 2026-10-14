@@ -16,19 +16,19 @@ async function fixture() {
 }
 const row = (b,k) => b.artifact.systems.find(s => s.key === k);
 const noteEdit = (b,k,edit) => { b.artifact.measurement_notes = b.artifact.measurement_notes.map(n => n.startsWith(`${k}: `) ? edit(n) : n); };
-test('v1.6.18 adds exactly two unranked rows and preserves all 18 carried points, ranks and category cells', async () => {
+test('v1.6.18 adds two unranked Nimble rows and ranked Span-02; preserves all 18 carried points and category cells', async () => {
   const b = await fixture(); validateJevbenchV1618Bundle(b);
   assert.deepEqual(b.artifact.systems.filter(s => s.measured_in === 'v1.6.18').map(s => s.key), V1618_CORE_NEW_KEYS);
-  assert.equal(b.artifact.roster_count, 21); assert.equal(b.artifact.n_ranked, 15);
+  assert.equal(b.artifact.roster_count, 22); assert.equal(b.artifact.n_ranked, 16);
   assert.equal(b.artifact.G_med, 9.839526770355711);
   for (const p of b.previous.artifact.systems) {
-    for (const f of ['scores','axes','capability','cost','speed','rank','ranks','noul_decisive','display','model_pin','endpoint_condition','not_ranked_because']) assert.deepEqual(row(b,p.key)[f],p[f], `${p.key}.${f}`);
+    for (const f of ['scores','axes','capability','cost','speed','noul_decisive','display','model_pin','endpoint_condition','not_ranked_because']) assert.deepEqual(row(b,p.key)[f],p[f], `${p.key}.${f}`);
     if (b.previous.categories.systems[p.key]) assert.deepEqual(b.categories.systems[p.key], b.previous.categories.systems[p.key]);
   }
   assert.ok(b.proof.authority.startsWith(b.previous.proof.authority + ' NEW in v1.6.18:'));
   assert.deepEqual(row(b, 'microsoft-decision-1-a2-20261012'), b.previous.artifact.systems.find(s => s.key === 'microsoft-decision-1-a2-20261012'));
 });
-for (const key of V1618_CORE_NEW_KEYS) {
+for (const key of ['nimble-v4','nimble-v4-max']) {
   test(`${key}: only measured I, Calibration, Capability and Speed; no cost/composite/rank in any scope`, async () => {
     const b=await fixture(); validateJevbenchV1618Bundle(b); const s=row(b,key);
     assert.equal(s.ranked,false); assert.equal(s.listing,'listed'); assert.equal(s.rank,null);
@@ -99,3 +99,29 @@ test('PENDING v1.6.18 is hidden until independent review',async()=>{
   await assert.rejects(readOptionalJevbenchV1618Release(),/independent release review/);
   assert.equal(await hasPublishedJevbenchV1618Release(process.cwd(),()=>{}),false);
 });
+
+test('Span-02 is ranked with disclosure, outside official-cost-cap views in all scopes', async () => {
+  const b=await fixture(); validateJevbenchV1618Bundle(b);
+  const s=row(b,'respan-span-02'); assert.equal(s.ranked,true); assert.equal(s.cost.usd_per_1000,0.0670592);
+  for (const scope of ['all','open','api']) {
+    const a=jevbenchScopeArtifact(b.artifact,scope);
+    for (const opt of [{},{latencyFactor:Infinity}]) assert.ok(!jevClassRows(a.systems.filter(r=>r.ranked),{...JEV_V16_CLASS_OPTIONS,...opt}).rows.some(r=>r.row.key===s.key&&r.inClass));
+  }
+});
+test('Span-02 mutation into official-caps view is rejected', async()=> {
+  const b=await fixture(); row(b,'respan-span-02').cost.usd_per_1000=0.06;
+  assert.ok(jevClassRows(b.artifact.systems.filter(r=>r.ranked),JEV_V16_CLASS_OPTIONS).rows.some(r=>r.row.key==='respan-span-02'&&r.inClass));
+  assert.throws(()=>validateJevbenchV1618Bundle(b),/Span-02 measured frozen cost/);
+});
+for (const [name,edit] of [
+ ['over-cap cost disclosure removed',b=>{row(b,'respan-span-02').cost.basis=row(b,'respan-span-02').cost.basis.replace('OVER THE OFFICIAL COST CAP','');}],
+ ['over-cap note removed',b=>noteEdit(b,'respan-span-02',n=>n.replace('OVER THE OFFICIAL COST CAP',''))],
+ ['hardware disclosure removed',b=>noteEdit(b,'respan-span-02',n=>n.replaceAll('RTX 5090','H100'))],
+ ['invocation disclosure removed',b=>noteEdit(b,'respan-span-02',n=>n.replaceAll('launch.sh','launcher'))],
+ ['wrong completeness',b=>{row(b,'respan-span-02').status.answered_ok=1500;}],
+ ['wrong pre-registered tokens',b=>{b.proof.new_rows['respan-span-02'].input_tokens++;}],
+ ['wrong refusals',b=>{b.proof.new_rows['respan-span-02'].status_counts={'200':1485,'422':15};}],
+ ['wrong revision',b=>{row(b,'respan-span-02').model_pin='lihe07/span-02@'+'0'.repeat(40);}],
+ ['custody authority removed',b=>{b.proof.authority=b.proof.authority.replaceAll('#19055','#0');}],
+ ['moved carried rank absent from rank clause',b=>{b.artifact.measurement_notes=b.artifact.measurement_notes.map(n=>n.startsWith('v1.6.18 ADDS')?n.replace('uniphore-4b-decider A','unknown A'):n);}],
+]) test(`v1.6.18 rejects Span-02 ${name}`,async()=>{const b=await fixture();edit(b);assert.throws(()=>validateJevbenchV1618Bundle(b));});
