@@ -5547,6 +5547,36 @@
             "fact": "Pinned config: architectures [\"Qwen3_5TextModel\"], model_type \"qwen3_5_text\", 24 hidden layers, hidden size 2048."
           }
         ]
+      },
+      "nimble-v4": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.18-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key nimble-v4 records a Bespoke Labs vendor-hosted proprietary API with no public evaluated weights; listed but not ranked and unpriced under CoS deputy #19084. Hosting implementation and deployed weights were not independently inspected."
+          }
+        ]
+      },
+      "nimble-v4-max": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.18-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key nimble-v4-max records a Bespoke Labs vendor-hosted proprietary API with no public evaluated weights; listed but not ranked and unpriced under CoS deputy #19084. Hosting implementation and deployed weights were not independently inspected."
+          }
+        ]
       }
     },
     "imagejevbench": {

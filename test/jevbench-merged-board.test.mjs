@@ -8,16 +8,17 @@ import { isJevApiOffering } from '../lib/jevbench-scope.mjs';
 
 // Cohort rows = the 34 rows of v1.6.4/v1.6.9/v1.6.16 + every row v1.6.17 adds to the regular draw (read from its own artifact).
 const V1617_ADDED = JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.17-results.json', 'utf8')).systems.filter((s) => s.measured_in === 'v1.6.17').length;
-const COHORT_ROWS = 34 + V1617_ADDED;
+const V1618_ADDED = JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.18-results.json', 'utf8')).systems.filter(s => s.measured_in === 'v1.6.18').length;
+const COHORT_ROWS = 34 + V1617_ADDED + V1618_ADDED;
 // v1.6.17 rows listed without a rank (subq-snap-preview: unpriced, CoS deputy #18975; plus any later one the artifact itself lists so).
-const V1617_UNRANKED = JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.17-results.json', 'utf8')).systems.filter((s) => s.measured_in === 'v1.6.17' && !s.ranked).map((s) => s.key);
+const V1617_UNRANKED = JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.18-results.json', 'utf8')).systems.filter(s => ['v1.6.17', 'v1.6.18'].includes(s.measured_in) && !s.ranked).map(s => s.key);
 
 test('every cohort system joins once, from its latest release, with its draw', async () => {
   const { rows } = await readCohortRows();
   const keys = rows.map((r) => r.row.key);
   assert.equal(new Set(keys).size, keys.length);
   assert.equal(rows.length, COHORT_ROWS);
-  assert.deepEqual([...new Set(rows.map((r) => r.draw.release))].sort(), ['v1.6.17', 'v1.6.4', 'v1.6.9']);
+  assert.deepEqual([...new Set(rows.map((r) => r.draw.release))].sort(), ['v1.6.18', 'v1.6.4', 'v1.6.9']);
   assert.ok(rows.every((r) => r.draw.id && r.draw.measured_on));
 });
 
@@ -66,13 +67,13 @@ test('merged board slots ranked cohort rows by score and keeps published rows in
   for (const o of Object.keys(merged.board)) assert.ok(!merged.board[o].order.includes('reflex-instinct-0.6b'));
   // v1.6.16: vLLM-SR d3 joins the merged board as a ranked row of the regular draw, with its published numbers.
   const d3 = merged.systems.find((s) => s.key === 'vllm-sr-d3');
-  assert.equal(d3.ranked, true); assert.equal(d3.draw.release, 'v1.6.17');
+  assert.equal(d3.ranked, true); assert.equal(d3.draw.release, 'v1.6.18');
   assert.equal(d3.capability, 82.96592796157353); assert.equal(d3.scores.A, 5.569947529283843);
   assert.equal(d3.cost.usd_per_1000, 0.5463374);
   for (const o of ['A', 'B', 'C']) assert.ok(merged.board[o].order.includes('vllm-sr-d3'));
   // v1.6.17: the paid metask service-v3 row and the over-cap hosted Amos row are ranked cohort rows; SubQ Snap is listed without a rank.
   const v3 = merged.systems.find((s) => s.key === 'metask_jev_rain_31b_trained_v3');
-  assert.equal(v3.ranked, true); assert.equal(v3.draw.release, 'v1.6.17');
+  assert.equal(v3.ranked, true); assert.equal(v3.draw.release, 'v1.6.18');
   for (const o of ['A', 'B', 'C']) assert.ok(merged.board[o].order.includes('metask_jev_rain_31b_trained_v3'));
   const subq = merged.systems.find((s) => s.key === 'subq-snap-preview');
   assert.equal(subq.ranked, false); assert.equal(subq.rank, null); assert.match(subq.not_ranked_because, /#18975/);
