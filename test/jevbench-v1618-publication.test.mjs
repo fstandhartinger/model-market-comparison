@@ -35,6 +35,7 @@ for (const key of ['nimble-v4','nimble-v4-max']) {
     assert.deepEqual(s.ranks,{A:null,B:null,C:null,capability:null});
     assert.equal(s.cost.kind,'unpriced'); assert.equal(s.cost.usd_per_1000,null); assert.equal(s.axes.cost,null);
     for (const o of ['A','B','C']) assert.equal(s.scores[o],null);
+    assert.ok(Object.values(s.views).every(value=>value===null));
     for (const axis of ['intelligence','calibration','speed']) assert.ok(Number.isFinite(s.axes[axis]));
     assert.equal(s.status.answered_ok,1500); assert.match(s.not_ranked_because,/#19084/);
     for (const scope of ['all','open','api']) {
@@ -47,6 +48,8 @@ for (const key of ['nimble-v4','nimble-v4-max']) {
     }
   });
   for (const [name,edit] of [
+    ...['Intelligence only','Balanced 33:33:33','injected preset'].map(view=>[`preset ${view}`,b=>{row(b,key).views[view]=50;}]),
+    ['raw latency altered',b=>{row(b,key).speed.p50_s_raw+=1;}],
     ['ranked', b=>{row(b,key).ranked=true;}],
     ['headline rank', b=>{row(b,key).rank=1;}],
     ['secondary rank', b=>{row(b,key).ranks.capability=1;}],
@@ -114,6 +117,10 @@ test('Span-02 mutation into official-caps view is rejected', async()=> {
   assert.throws(()=>validateJevbenchV1618Bundle(b),/Span-02 measured frozen cost/);
 });
 for (const [name,edit] of [
+ ['adjusted p50 altered',b=>{row(b,'respan-span-02').speed.p50_s_adjusted+=1;}],
+ ['adjusted p95 altered',b=>{row(b,'respan-span-02').speed.p95_s_adjusted+=1;}],
+ ['pricing hash altered',b=>{b.proof.pricing_module_sha256='0'.repeat(64);}],
+ ['speed note removed',b=>noteEdit(b,'respan-span-02',n=>n.replaceAll('x2 + 0.15 s','adjustment'))],
  ['over-cap cost disclosure removed',b=>{row(b,'respan-span-02').cost.basis=row(b,'respan-span-02').cost.basis.replace('OVER THE OFFICIAL COST CAP','');}],
  ['over-cap note removed',b=>noteEdit(b,'respan-span-02',n=>n.replace('OVER THE OFFICIAL COST CAP',''))],
  ['hardware disclosure removed',b=>noteEdit(b,'respan-span-02',n=>n.replaceAll('RTX 5090','H100'))],
