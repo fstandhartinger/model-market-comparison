@@ -370,13 +370,26 @@ test("Claude first-party snapshot contains every currently callable model", () =
   // 2026-09-23: Claude Opus 5.5 joined the pricing table (13 -> 14 callable models).
   // 2026-09-29: Claude Sonnet 5.5 joined it (14 -> 15), taking Sonnet 5's headline row; Sonnet 5 moved
   // to "Additional models" at the same $2/$10 and kept its own retirement date, so nothing retired.
-  assert.equal(claude.models.length, 15);
-  // 2026-09-29 pricing page: Sonnet 5.5 at $2/$10, cache write $2.50 / 1h $4, cache read $0.20, batch $1/$5.
+  // Haiku 5.5 launched on 2026-10-07. The published snapshot may still be the
+  // preserved pre-refresh version, but every collection from 2026-10-14 onward
+  // must include its newly callable API model and pricing.
+  const expectsHaiku55 = claude.collected_at >= "2026-10-14";
+  assert.equal(claude.models.length, expectsHaiku55 ? 16 : 15);
+  const haiku55 = claude.models.find((model) => model.model_id === "claude-haiku-5-5");
+  assert.equal(Boolean(haiku55), expectsHaiku55, "Haiku 5.5 must match the snapshot's refresh date");
+  if (haiku55) {
+    assert.deepEqual(
+      [haiku55.model_name, haiku55.lifecycle_status, haiku55.input_per_1m_usd, haiku55.output_per_1m_usd],
+      ["Claude Haiku 5.5", "active", 0.1, 0.5],
+    );
+  }
+  // 2026-10-07: Anthropic halved Sonnet 5.5 cache-read pricing ($0.20 -> $0.10).
   const sonnet55 = claude.models.find((model) => model.model_name === "Claude Sonnet 5.5");
+  const expectedSonnetCacheRead = expectsHaiku55 ? 0.1 : 0.2;
   assert.deepEqual(
     [sonnet55?.model_id, sonnet55?.input_per_1m_usd, sonnet55?.output_per_1m_usd,
       sonnet55?.cache_write_per_1m_usd, sonnet55?.cache_read_per_1m_usd, sonnet55?.batch_output_per_1m_usd],
-    ["claude-sonnet-5-5", 2, 10, 2.5, 0.2, 5],
+    ["claude-sonnet-5-5", 2, 10, 2.5, expectedSonnetCacheRead, 5],
   );
   // The model it displaced is still callable, at its own terms — a new headline row is not a retirement.
   assert.ok(claude.models.some((model) => model.model_name === "Claude Sonnet 5" && model.lifecycle_status === "active"));
