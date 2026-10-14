@@ -1,0 +1,585 @@
+{
+ "benchmark": "ImageJevBench",
+ "track": "box",
+ "revision": "box-v0.1.0",
+ "status": "preview",
+ "built_utc": "2026-10-14T22:17:50+00:00",
+ "measured_utc_date": "2026-10-14",
+ "headline": "Box Capability = mean of Box Intelligence (100 x mean IoU) and Calibration (100 x (1 - ECE/0.5), event IoU >= 0.5)",
+ "ranking_floor": {
+  "box_intelligence": 23.5002470847808,
+  "rule": "ranked only with Box Intelligence >= 2x the better baseline and >= 90 % valid answers"
+ },
+ "items": {
+  "public": 271,
+  "sealed": 600,
+  "families": {
+   "coco": 171,
+   "doc": 50,
+   "ui": 50
+  },
+  "kinds": {
+   "single": 75,
+   "ref": 52,
+   "small": 44,
+   "doc": 50,
+   "ui": 50
+  },
+  "sizes": {
+   "small": 112,
+   "medium": 88,
+   "large": 71
+  },
+  "items_sha256": "197a7b6a534ca489f1d42ef959df20cc6eeb05d456535b7af87c4233273e75ce"
+ },
+ "systems": [
+  {
+   "key": "jev_1_14",
+   "name": "Jev 1.14.0",
+   "author": "TypeSafe",
+   "licence": "Proprietary API",
+   "params": null,
+   "access": "TypeSafe API, native box question",
+   "url": "https://docs.typesafe.ai/primitives/box",
+   "kind": "api",
+   "prompt": "native",
+   "model_id": "jev-1.14.0",
+   "weights": null,
+   "n": 271,
+   "valid_share": 1.0,
+   "box_intelligence": 63.42723001093115,
+   "ci95": [
+    59.87891746480939,
+    66.59225587069616
+   ],
+   "acc50": 0.7047970479704797,
+   "acc75": 0.46494464944649444,
+   "ece": 0.06062730627306273,
+   "calibration": 87.87453874538745,
+   "confidence_coverage": 1.0,
+   "auroc": 0.7096858638743455,
+   "capability": 75.6508843781593,
+   "p50_s": 0.3322305899928324,
+   "p95_s": 0.7027551619976293,
+   "cost_per_1000": 0.05836465682656826,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 53.964062889724254,
+     "acc_at_0_5": 0.58
+    },
+    "ref": {
+     "n": 52,
+     "box_intelligence": 59.37274061252741,
+     "acc_at_0_5": 0.6346153846153846
+    },
+    "single": {
+     "n": 75,
+     "box_intelligence": 86.24998700057937,
+     "acc_at_0_5": 0.9866666666666667
+    },
+    "small": {
+     "n": 44,
+     "box_intelligence": 46.46453306971282,
+     "acc_at_0_5": 0.5
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 57.80010393027766,
+     "acc_at_0_5": 0.66
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 71,
+     "box_intelligence": 86.71826799337428,
+     "acc_at_0_5": 0.9859154929577465
+    },
+    "medium": {
+     "n": 88,
+     "box_intelligence": 69.99096429292989,
+     "acc_at_0_5": 0.8068181818181818
+    },
+    "small": {
+     "n": 112,
+     "box_intelligence": 43.50515578263329,
+     "acc_at_0_5": 0.44642857142857145
+    }
+   },
+   "ranked": true,
+   "rank": 1
+  },
+  {
+   "key": "qwen3_vl_8b",
+   "name": "Qwen3-VL-8B Instruct",
+   "author": "Qwen (Alibaba)",
+   "licence": "Apache-2.0",
+   "params": "8B",
+   "access": "OpenRouter",
+   "url": "https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct",
+   "kind": "api",
+   "prompt": "native",
+   "model_id": "qwen/qwen3-vl-8b-instruct",
+   "weights": null,
+   "n": 271,
+   "valid_share": 1.0,
+   "box_intelligence": 73.94021539958355,
+   "ci95": [
+    70.47137619135498,
+    77.1650140163468
+   ],
+   "acc50": 0.8007380073800738,
+   "acc75": 0.6383763837638377,
+   "ece": 0.18413284132841468,
+   "calibration": 63.17343173431706,
+   "confidence_coverage": 1.0,
+   "auroc": 0.6520310633213859,
+   "capability": 68.5568235669503,
+   "p50_s": 1.2592037929862272,
+   "p95_s": 2.63128936800058,
+   "cost_per_1000": 0.1488159963099631,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 51.85310141236321,
+     "acc_at_0_5": 0.54
+    },
+    "ref": {
+     "n": 52,
+     "box_intelligence": 77.7842743952797,
+     "acc_at_0_5": 0.8461538461538461
+    },
+    "single": {
+     "n": 75,
+     "box_intelligence": 89.5154107906541,
+     "acc_at_0_5": 0.96
+    },
+    "small": {
+     "n": 44,
+     "box_intelligence": 69.33479893124398,
+     "acc_at_0_5": 0.8181818181818182
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 72.7194814368127,
+     "acc_at_0_5": 0.76
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 71,
+     "box_intelligence": 92.6361350482752,
+     "acc_at_0_5": 0.9859154929577465
+    },
+    "medium": {
+     "n": 88,
+     "box_intelligence": 76.7048370787623,
+     "acc_at_0_5": 0.8181818181818182
+    },
+    "small": {
+     "n": 112,
+     "box_intelligence": 59.91613501721889,
+     "acc_at_0_5": 0.6696428571428571
+    }
+   },
+   "ranked": true,
+   "rank": 2
+  },
+  {
+   "key": "qwen3_vl_235b",
+   "name": "Qwen3-VL-235B-A22B Instruct",
+   "author": "Qwen (Alibaba)",
+   "licence": "Apache-2.0",
+   "params": "235B (22B active)",
+   "access": "OpenRouter",
+   "url": "https://huggingface.co/Qwen/Qwen3-VL-235B-A22B-Instruct",
+   "kind": "api",
+   "prompt": "native",
+   "model_id": "qwen/qwen3-vl-235b-a22b-instruct",
+   "weights": null,
+   "n": 271,
+   "valid_share": 1.0,
+   "box_intelligence": 75.92790015118206,
+   "ci95": [
+    72.52548051722268,
+    78.87099848245427
+   ],
+   "acc50": 0.8339483394833949,
+   "acc75": 0.6974169741697417,
+   "ece": 0.4867302583025827,
+   "calibration": 2.6539483394834584,
+   "confidence_coverage": 1.0,
+   "auroc": 0.6794001966568338,
+   "capability": 39.29092424533276,
+   "p50_s": 1.858840266999323,
+   "p95_s": 6.964629665977554,
+   "cost_per_1000": 0.16313954280442805,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 54.39294152613425,
+     "acc_at_0_5": 0.6
+    },
+    "ref": {
+     "n": 52,
+     "box_intelligence": 81.68567822992676,
+     "acc_at_0_5": 0.9230769230769231
+    },
+    "single": {
+     "n": 75,
+     "box_intelligence": 90.63152557246606,
+     "acc_at_0_5": 0.9866666666666667
+    },
+    "small": {
+     "n": 44,
+     "box_intelligence": 73.65152377785635,
+     "acc_at_0_5": 0.8409090909090909
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 71.42254265093592,
+     "acc_at_0_5": 0.74
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 71,
+     "box_intelligence": 93.05057331567683,
+     "acc_at_0_5": 1.0
+    },
+    "medium": {
+     "n": 88,
+     "box_intelligence": 76.55987074753965,
+     "acc_at_0_5": 0.8409090909090909
+    },
+    "small": {
+     "n": 112,
+     "box_intelligence": 64.57680008726602,
+     "acc_at_0_5": 0.7232142857142857
+    }
+   },
+   "ranked": true,
+   "rank": 3
+  },
+  {
+   "key": "qwen3_6_35b",
+   "name": "Qwen3.6-35B-A3B",
+   "author": "Qwen (Alibaba)",
+   "licence": "Apache-2.0",
+   "params": "35B (3B active)",
+   "access": "OpenRouter",
+   "url": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B",
+   "kind": "api",
+   "prompt": "native",
+   "model_id": "qwen/qwen3.6-35b-a3b",
+   "weights": null,
+   "n": 271,
+   "valid_share": 0.7933579335793358,
+   "box_intelligence": 56.29218691697062,
+   "ci95": [
+    51.43614606829153,
+    60.96706392674202
+   ],
+   "acc50": 0.6236162361623616,
+   "acc75": 0.4944649446494465,
+   "ece": 0.25428044280442663,
+   "calibration": 37.35662640759271,
+   "confidence_coverage": 0.7601476014760148,
+   "auroc": 0.8294755772131338,
+   "capability": 46.82440666228166,
+   "p50_s": 2.687334575020941,
+   "p95_s": 7.703746175015112,
+   "cost_per_1000": 0.2007932578767124,
+   "cost_coverage": 0.8081180811808119,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 32.700486178460785,
+     "acc_at_0_5": 0.34
+    },
+    "ref": {
+     "n": 52,
+     "box_intelligence": 78.32541931558627,
+     "acc_at_0_5": 0.8653846153846154
+    },
+    "single": {
+     "n": 75,
+     "box_intelligence": 88.64863911665667,
+     "acc_at_0_5": 0.9466666666666667
+    },
+    "small": {
+     "n": 44,
+     "box_intelligence": 65.87701380491518,
+     "acc_at_0_5": 0.8181818181818182
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 0.0,
+     "acc_at_0_5": 0.0
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 71,
+     "box_intelligence": 73.05147066875494,
+     "acc_at_0_5": 0.7887323943661971
+    },
+    "medium": {
+     "n": 88,
+     "box_intelligence": 60.232656693126394,
+     "acc_at_0_5": 0.6590909090909091
+    },
+    "small": {
+     "n": 112,
+     "box_intelligence": 42.57191471448499,
+     "acc_at_0_5": 0.49107142857142855
+    }
+   },
+   "ranked": false,
+   "not_ranked_because": "only 79% valid answers"
+  },
+  {
+   "key": "glm_4_6v",
+   "name": "GLM-4.6V",
+   "author": "Z.ai",
+   "licence": "MIT",
+   "params": "108B (MoE)",
+   "access": "OpenRouter",
+   "url": "https://huggingface.co/zai-org/GLM-4.6V",
+   "kind": "api",
+   "prompt": "native",
+   "model_id": "z-ai/glm-4.6v",
+   "weights": null,
+   "n": 271,
+   "valid_share": 0.4797047970479705,
+   "box_intelligence": 39.787423559152984,
+   "ci95": [
+    34.439149784728805,
+    44.9703079754286
+   ],
+   "acc50": 0.44649446494464945,
+   "acc75": 0.36531365313653136,
+   "ece": 0.3895202952029517,
+   "calibration": 10.599528873517546,
+   "confidence_coverage": 0.4797047970479705,
+   "auroc": 0.731404958677686,
+   "capability": 25.193476216335263,
+   "p50_s": 4.725350465989322,
+   "p95_s": 7.776685460994486,
+   "cost_per_1000": 0.26477797500000005,
+   "cost_coverage": 0.4797047970479705,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 0.0,
+     "acc_at_0_5": 0.0
+    },
+    "ref": {
+     "n": 52,
+     "box_intelligence": 59.15012515354455,
+     "acc_at_0_5": 0.6730769230769231
+    },
+    "single": {
+     "n": 75,
+     "box_intelligence": 71.2647561249613,
+     "acc_at_0_5": 0.7733333333333333
+    },
+    "small": {
+     "n": 44,
+     "box_intelligence": 53.67564925395552,
+     "acc_at_0_5": 0.6363636363636364
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 0.0,
+     "acc_at_0_5": 0.0
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 71,
+     "box_intelligence": 56.46365450578402,
+     "acc_at_0_5": 0.6056338028169014
+    },
+    "medium": {
+     "n": 88,
+     "box_intelligence": 42.11659194181401,
+     "acc_at_0_5": 0.4659090909090909
+    },
+    "small": {
+     "n": 112,
+     "box_intelligence": 27.38582342625142,
+     "acc_at_0_5": 0.33035714285714285
+    }
+   },
+   "ranked": false,
+   "not_ranked_because": "only 48% valid answers"
+  }
+ ],
+ "baselines": [
+  {
+   "key": "baseline_centre",
+   "name": "Baseline: average box",
+   "author": "ImageJevBench",
+   "licence": "\u2014",
+   "params": null,
+   "access": "no model",
+   "url": null,
+   "kind": "baseline",
+   "prompt": "native",
+   "model_id": null,
+   "weights": null,
+   "n": 271,
+   "valid_share": 1.0,
+   "box_intelligence": 8.78179282011589,
+   "ci95": [
+    7.286266565642357,
+    10.194254685580427
+   ],
+   "acc50": 0.01107011070110701,
+   "acc75": 0.0,
+   "ece": 0.022263222632226246,
+   "calibration": 95.54735547355475,
+   "confidence_coverage": 1.0,
+   "auroc": 0.5,
+   "capability": 52.16457414683532,
+   "p50_s": 0.0,
+   "p95_s": 0.0,
+   "cost_per_1000": 0.0,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 5.062759760327297,
+     "acc_at_0_5": 0.0
+    },
+    "ref": {
+     "n": 52,
+     "box_intelligence": 11.428410317206836,
+     "acc_at_0_5": 0.038461538461538464
+    },
+    "single": {
+     "n": 75,
+     "box_intelligence": 15.254805732604133,
+     "acc_at_0_5": 0.013333333333333334
+    },
+    "small": {
+     "n": 44,
+     "box_intelligence": 1.3527137254993509,
+     "acc_at_0_5": 0.0
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 6.57641391746011,
+     "acc_at_0_5": 0.0
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 71,
+     "box_intelligence": 19.94293445308188,
+     "acc_at_0_5": 0.014084507042253521
+    },
+    "medium": {
+     "n": 88,
+     "box_intelligence": 9.299756548491821,
+     "acc_at_0_5": 0.022727272727272728
+    },
+    "small": {
+     "n": 112,
+     "box_intelligence": 1.2994547483510137,
+     "acc_at_0_5": 0.0
+    }
+   }
+  },
+  {
+   "key": "baseline_full",
+   "name": "Baseline: whole image",
+   "author": "ImageJevBench",
+   "licence": "\u2014",
+   "params": null,
+   "access": "no model",
+   "url": null,
+   "kind": "baseline",
+   "prompt": "native",
+   "model_id": null,
+   "weights": null,
+   "n": 271,
+   "valid_share": 1.0,
+   "box_intelligence": 11.7501235423904,
+   "ci95": [
+    9.786974698750189,
+    14.101913808812558
+   ],
+   "acc50": 0.04797047970479705,
+   "acc75": 0.01845018450184502,
+   "ece": 0.018696186961869463,
+   "calibration": 96.2607626076261,
+   "confidence_coverage": 1.0,
+   "auroc": 0.5,
+   "capability": 54.00544307500825,
+   "p50_s": 0.0,
+   "p95_s": 0.0,
+   "cost_per_1000": 0.0,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 3.5894713017860003,
+     "acc_at_0_5": 0.0
+    },
+    "ref": {
+     "n": 52,
+     "box_intelligence": 14.69465866704039,
+     "acc_at_0_5": 0.07692307692307693
+    },
+    "single": {
+     "n": 75,
+     "box_intelligence": 22.734944549949333,
+     "acc_at_0_5": 0.12
+    },
+    "small": {
+     "n": 44,
+     "box_intelligence": 0.7177460596022728,
+     "acc_at_0_5": 0.0
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 10.079719926873999,
+     "acc_at_0_5": 0.0
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 71,
+     "box_intelligence": 35.5226947464986,
+     "acc_at_0_5": 0.18309859154929578
+    },
+    "medium": {
+     "n": 88,
+     "box_intelligence": 6.612419411471592,
+     "acc_at_0_5": 0.0
+    },
+    "small": {
+     "n": 112,
+     "box_intelligence": 0.7167789712223213,
+     "acc_at_0_5": 0.0
+    }
+   }
+  }
+ ],
+ "not_measured": {
+  "kimi_k2_6": "reasoning model: 4096 output tokens of thinking per box at minimal effort, mostly no answer on dev (14 Oct)",
+  "mistral_small_2603": "OpenRouter returned HTTP 429 for 55 of 60 dev requests even at concurrency 1 (14 Oct 22:30Z)"
+ },
+ "notes": [
+  "Separate track: it does not change the ImageJevBench core Capability Score or ranking.",
+  "Public set only in this preview; the 600 sealed items are held back for official runs.",
+  "Open-weight models via OpenRouter are measured end to end through the provider; latency includes the provider.",
+  "Self-hosted models: one request at a time on one RTX PRO 6000 class GPU; cost = GPU seconds x $1.19/GPU-hour.",
+  "Chat models state their own confidence in the answer JSON; Jev returns a native confidence."
+ ]
+}
