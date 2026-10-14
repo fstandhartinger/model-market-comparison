@@ -5547,6 +5547,51 @@
             "fact": "Pinned config: architectures [\"Qwen3_5TextModel\"], model_type \"qwen3_5_text\", 24 hidden layers, hidden size 2048."
           }
         ]
+      },
+      "nimble-v4": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.18-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key nimble-v4 records a Bespoke Labs vendor-hosted proprietary API with no public evaluated weights; listed but not ranked and unpriced under CoS deputy #19084. Hosting implementation and deployed weights were not independently inspected."
+          }
+        ]
+      },
+      "nimble-v4-max": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://raw.githubusercontent.com/fstandhartinger/model-market-comparison/main/data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.18-results.json",
+            "kind": "artifact",
+            "fact": "Artifact key nimble-v4-max records a Bespoke Labs vendor-hosted proprietary API with no public evaluated weights; listed but not ranked and unpriced under CoS deputy #19084. Hosting implementation and deployed weights were not independently inspected."
+          }
+        ]
+      },
+      "respan-span-02": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/lihe07/span-02/blob/3f0fbdb9c03950f335e80845f51be39985d63fc0/README.md",
+            "kind": "model-card",
+            "fact": "Self-hosted Gemma 4 26B-A4B derivative; author Rust/CUDA Blackwell-only engine, pinned revision 3f0fbdb9c03950f335e80845f51be39985d63fc0; measured on RTX 5090. Repo https://huggingface.co/lihe07/span-02."
+          }
+        ]
       }
     },
     "imagejevbench": {

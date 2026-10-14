@@ -1,0 +1,854 @@
+{
+ "G_med": 9.839526770355711,
+ "G_med_flag_gt10": false,
+ "a2_supplement": {
+  "answered_ok": 593,
+  "canonical_system_key": "microsoft-decision-1",
+  "http_422_wrong": 7,
+  "key": "microsoft-decision-1-a2-20261012",
+  "original_presentation": {
+   "display": "Microsoft-Decision-1 (submitted by Microsoft)",
+   "key": "microsoft-decision-1",
+   "listing": "ranked",
+   "rank": 1,
+   "ranked": true,
+   "ranks": {
+    "A": 1,
+    "B": 1,
+    "C": 1,
+    "capability": 3
+   }
+  },
+  "pool_size": 4,
+  "pool_target": 6,
+  "raw_sha256": "c71e7876f88b752e23c4d74f328fcac663a713d071d0dab74cfcb5d7ae425ddb",
+  "registry_sha256": "1bf438e031f19495690b9caef5ad78aa19c86480d555f8b5c4f84242534aa42b",
+  "row_for_site_sha256": "4ca48c35779dc0771e48da22ecf380ea8012ea846baef0499597ccf4bf2e771b",
+  "rows": 600,
+  "scored_row_sha256": "ee0eae99e10f9c9863c44ca3b24bf732fb2eb34391ca985c5b3755ce0d9d4d82",
+  "scorer_sha256": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
+  "wrapper_sha256": "8f4bc20a98df4d93348f26c2b1739534e045498186ab8bada53054e4e29eba54"
+ },
+ "abandoned_draw_note": null,
+ "authority": "v1.6.10 through v1.6.14 authority unchanged; the v1.6.14 A2 measurement is carried through byte for byte and not rescored (its a2_supplement block is retained). NEW in v1.6.15: three self-hosted CPU rows measured at USD 0 on the evaluator's own machine under CoS deputy decisions #18209/#18211, which admit one re-measurement each of free CPU rows on this frozen draw at the existing per-1,000 cost cap with the frozen G_med, require an independent review and a cost binding before scoring, and attached an extra source-review and synthetic-smoke condition to julia-1 (both met, in that order, before the first sealed item). #18761: reflex-instinct-0.6b is accepted on Intelligence, Calibration and Cost only, its Speed figure is non-official, and it is therefore listed but not ranked here; and the scoped pricing correction behind julia-1's price line (adding its unlisted declared base to the frozen module's reviewed unlisted-base set) was authorised there, then re-frozen, hashed, proved behaviour-identical over every registry entry on this machine and independently reviewed before scoring. The release-level top five is identical in order on all four boards. NEW in v1.6.16: vllm-sr-d3, measured on the official v1.6 path (frozen draw input, pinned pod_driver_v16 and score_v16, frozen G_med) on one rented RTX PRO 6000 Blackwell 96 GB GPU because no single H100 was available, priced at the frozen Qwen/Qwen3.8-27B reference above the Jev-class cost cap. Its row changes a public top five (the Capability view with no cost cap and a 2x latency cap: d3 #1), which needs Florian's GO under rule 7; he gave it explicitly on 13 Oct 2026 at 15:12Z (card 17392). Carried rows keep every point estimate; nine carried Capability ranks and two carried composite ranks move by one place and are disclosed. NEW in v1.6.17 (amos-1-large, amos-1-medium, metask_jev_rain_31b_trained_v3, pjev-2b, purplemist-mini-1.0, sage-1.4.0, subq-snap-preview): the regular-queue rows were admitted by CoS deputy decisions #18209/#18211 (free CPU rows), #18975 (hosted-API exposure of this already-retired draw; subq-snap-preview measured without a cost axis and listed but NOT ranked, custodian #18951; sage-1.4.0 listed but NOT ranked, unpriced under the frozen path, question open on #18983) and, for purplemist-mini-1.0, #18974 (offline input-token count, independent recount PASS); the paid public fast-lane row metask_jev_rain_31b_trained_v3 (order 4d9fef10, draw use admitted by custodian #18945, one pod admitted by deputy #18972) publishes under the paid fast-lane exception, enters four Capability top fives (the official-caps and official-cost-cap/no-latency-cap rankings on the mixed and open-weights boards) and is disclosed as a re-submission of the weights of order 147c5e18. Hosted rows above the cost ceiling are ranked and disclosed, as vllm-sr-d3 was in v1.6.16 (Florian GO of 13 Oct 2026, card 17392, for that row only). amos-1-medium is ranked above the cost ceiling on the release lane's reading of that vllm-sr-d3 precedent (board #18984, no objection recorded); it enters no top five. amos-1-large is ranked above the cost ceiling (8.40x) and enters the API-board Capability top five with the cost cap off and latency 2x at #1 on Florian's explicit GO of 13 Oct 2026 (Telegram card #17487, Publish), which covers that row and that view and is distinct from card 17392. Carried rows keep every point estimate; carried ranks and intervals move and are disclosed. NEW in v1.6.18: nimble-v4 and nimble-v4-max (Bespoke Labs), measured as our own add after the public announcement, no paid order; CoS deputy #19084 (one-time SubQ precedent #18975/#19046), admission #18998, custody #18999; the full-set exposure gate logged all 1,200 sealed items to provider `bespoke` before dispatch. Both rows are listed but NOT ranked and unpriced: measured Intelligence, Calibration, Capability and Speed only, no Cost, no Composite, no rank in any view. Respan Span-02 (respan-span-02; regular queue GitHub issue #215, no paid order) is ranked above the official cost cap with disclosure, outside official-caps views; custodian #19055 admitted one frozen-draw use, container isolation was proven at 05:45:26Z (pod clock); the sealed file reached the pod host at 05:45:48Z (evaluator clock); the measuring container was re-created and re-proven at 05:45:50Z (pod clock), with the first sealed item entering at 05:45:55Z (pod clock). The host kept its network for ssh; cross-clock skew cannot be excluded; CoS deputy #19087/#19088 admitted one EU RTX 5090 with USD 2.00 hard cap (actual approximately USD 0.20); that spend approval granted no publication authority, so this row is published on Florian's explicit GO of 14 Oct 2026 (Telegram card #17494, Publish). Blackwell-only engine, different Speed hardware from the H100 most GPU rows used; launch.sh shebang interpreter invocation disclosed. Pre-registration r111/PREREG-R111.md sha256 9aa388b0… matched exactly: 1,485/1,500 answered, 15 HTTP 400 refusals exactly the pre-registered over-length task ids, 776,560 input tokens. No top five changes; all carried point estimates remain unchanged; moved ranks are counted in the release notes.",
+ "baseline_sha256": "aaf60b31eb7957781afdaebb7b27473dac2a674c1d6bb0182dfba2f6f9e3b8f4",
+ "bootstrap": {
+  "B": 1000,
+  "seed": 16
+ },
+ "cost_basis_sha256": "0976523dc55a9df96422815b814f9020400894a9cdf4884395d27d90ad999e52",
+ "draw_counts": {
+  "A": 300,
+  "P": 300,
+  "S": 1200,
+  "api_input": 600,
+  "api_smoke_public": 5,
+  "core": 900,
+  "selfhosted_input": 1500
+ },
+ "draw_digests": {
+  "A": "359c92f63d3616a4a0aaa11b0fd87dbb57fd948173356d3f4a1c2299b6521b14",
+  "P": "7fa9e2592fcfaf24a959bf56eb247bda8adf60e7b2a1bf7c0a46156189820f68",
+  "S": "79195f3ef1e58a3d2a94426c9017234850a1bd7851f2e0e393b0ea643df83cbd",
+  "core": "2611ce472a502da9a50ff971b9c663b35798e580b5aa2c3373b361b02791bbdd"
+ },
+ "draw_release": "v1.6-regular-20261012",
+ "drawn_at": "2026-10-12T01:32:59Z",
+ "field_median": {
+  "G_med": 9.839526770355711,
+  "g_med_fixed": true,
+  "members": [
+   {
+    "gap": 8.75401966680952,
+    "key": "krino-2b"
+   },
+   {
+    "gap": 10.925033873901903,
+    "key": "metask_jev_rain_12b_trained"
+   },
+   {
+    "gap": 3.66598490518426,
+    "key": "metask_jev_rain_31b_trained"
+   },
+   {
+    "gap": 15.12391756649378,
+    "key": "standard_one_3b_sh"
+   }
+  ],
+  "rule": "frozen v1.6.10 value: the median Intelligence gap over the four ranked complete full-coverage self-hosted v1.6.10 systems of this draw; later same-draw rows are scored against it (g_med_fixed)"
+ },
+ "freeze_manifest_sha256": "6a357ce4f7655b48d3d19890d4342e6c337575e319d9602941d794c14db6702c",
+ "g_med_fixed_from": {
+  "G_med": 9.839526770355711,
+  "baseline_sha256": "aaf60b31eb7957781afdaebb7b27473dac2a674c1d6bb0182dfba2f6f9e3b8f4",
+  "revision": "v1.6.10"
+ },
+ "gap_penalty_threshold": 17.839527,
+ "input_sha256": {
+  "api": "f55bb940c2a905de4c294c3f540624eaa882069b1537f86c9b40e388ab8f6b41",
+  "selfhosted": "dfd36720077ef7c41ace367524896507c7f44ce71306fb3e659e8b85069d995b"
+ },
+ "method": "jevbench::v1.6",
+ "new_rows": {
+  "nimble-v4": {
+   "answered_ok": 1500,
+   "cost_cap_ratio": null,
+   "endpoint_kind": "api",
+   "input_tokens": 1935351,
+   "original_raw_sha256": "17848427c0f45c91d030ec59e1c29aed0c60907075ff9fa6ee7787ee6adbeec5",
+   "output_tokens": 3000,
+   "p50_s_raw": 0.23237984799197875,
+   "p95_s_raw": 0.6222212287582807,
+   "paid_fast_lane": false,
+   "ranked": false,
+   "raw_sha256": "9df0f0e4919deccb8448004ece256f7ba76f9160308b37378405add632f0f978",
+   "rows": 1500,
+   "status_counts": {
+    "200": 1500
+   },
+   "token_source": "provider usage",
+   "treatment": "listed_unpriced",
+   "under_cost_cap": null,
+   "usd_per_1000": null
+  },
+  "nimble-v4-max": {
+   "answered_ok": 1500,
+   "cost_cap_ratio": null,
+   "endpoint_kind": "api",
+   "input_tokens": 1935351,
+   "original_raw_sha256": "3683f3853d8126173d85a930cc11defa822b8d964435ce739b93ff8a1e99f2d6",
+   "output_tokens": 3000,
+   "p50_s_raw": 0.254514531508903,
+   "p95_s_raw": 0.28131694759504167,
+   "paid_fast_lane": false,
+   "ranked": false,
+   "raw_sha256": "dddfc639b98a07599170850f3b71702c976891f3a67a1b52ba2101a0e30a1505",
+   "rows": 1500,
+   "status_counts": {
+    "200": 1500
+   },
+   "token_source": "provider usage",
+   "treatment": "listed_unpriced",
+   "under_cost_cap": null,
+   "usd_per_1000": null
+  },
+  "respan-span-02": {
+   "answered_ok": 1485,
+   "cost_cap_ratio": 1.038154005482465,
+   "endpoint_kind": "gpu",
+   "input_tokens": 776560,
+   "original_raw_sha256": "38a0e1b8760bc86fc3465f9661a7f08d69be66cbafae6b720372c08a00e2a3b6",
+   "output_tokens": 102328,
+   "p50_s_raw": 0.02698076250089798,
+   "p95_s_raw": 0.6446137614584584,
+   "paid_fast_lane": false,
+   "ranked": true,
+   "raw_sha256": "195ae84a9bc4070a553423d3df466e324e1dc9b88baf4c7d21a3a3497170d769",
+   "rows": 1500,
+   "status_counts": {
+    "200": 1485,
+    "400": 15
+   },
+   "token_source": "provider usage",
+   "treatment": "ranked_over_cap",
+   "under_cost_cap": false,
+   "usd_per_1000": 0.0670592
+  }
+ },
+ "noul_method": {
+  "applied": "O1S",
+  "native_method_source_sha256": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0"
+ },
+ "pricing_module_sha256": "dae867403e278492cf861cb6b8a3c19cb50bdccf9333821e0bf00ddda99690fe",
+ "raw_sha256": {
+  "amos-1-large": "e0df00f9b25e01e62430b40d79c3eb0286ae21a2b2c633edb1fbbbd2e3ebf410",
+  "amos-1-medium": "ede828c8a56c439b776a8b0bfb4a86940e586c2ea50832c1d3ec4e6b8c83bc0f",
+  "attest-31b-v1.0": "900b411ab91c6961574dc647875ceffaf2c1b780aded25951643a022e33b42d5",
+  "julia-1": "ab7f3eae43c230e757539b513d21c9df7c6309bd40d7f79d8706f614919421d0",
+  "krino-2b": "fd2bc95717d359c101743ab6a3369884b415ce40d5a2829c399e1304fd67f8f3",
+  "metask_jev_rain_12b_trained": "9bd816fd308ea8719c977c1a5dcc659a42d5cf9cc3bad9a67969dd66adb8b018",
+  "metask_jev_rain_31b_trained": "89dc88765db2187e2db8baf27fcea03f00f7e17a6cc636b82b22065c7daa3d4a",
+  "metask_jev_rain_31b_trained_v3": "bda80d47f81fabe349214bde71816725f8d6efa032120ac6590f2d2b0fe2b708",
+  "nimble-v4": "9df0f0e4919deccb8448004ece256f7ba76f9160308b37378405add632f0f978",
+  "nimble-v4-max": "dddfc639b98a07599170850f3b71702c976891f3a67a1b52ba2101a0e30a1505",
+  "phocinae-largha-150m-v1": "cf24b4c0b9b2e117334d03931eb292b64f5b58a8476b7ed4e1651a049f3cc8ef",
+  "pjev-2b": "963d0e0274a8423a8e7b42777636de6de7ba07354e5547f7bc1680a640fe12cb",
+  "purplemist-mini-1.0": "88999b4d567867ca466e89f062d197cbeeca7ff06ed11f99c1e8eba63ef46409",
+  "reflex-instinct-0.6b": "64e81d752a550a3d36f44f5596368c810b2e29f37e73c1df0820f669cdef0478",
+  "respan-span-02": "195ae84a9bc4070a553423d3df466e324e1dc9b88baf4c7d21a3a3497170d769",
+  "sage-1.4.0": "e7a2733a8f6b41729be92076dd5f067c442ef5f917330a2941263d095821763c",
+  "standard_one_3b_sh": "39203a7a3bd7ccb0f73d8e96ec70c20897ccea78c42d8cb071a5249f8754c54d",
+  "subq-snap-preview": "c701361496e6d374bac4bffddec697c686a3b505e42b5dcd74d20bf788d31952",
+  "torchcast-decision-4b-v1.1": "89e6b22e66ae3e706404a3fb4b274de82fe98a9bb83612c865f45805d036ca93",
+  "uniphore-4b-decider": "4a175484c796fda013a4e8dff5d1b1c5040fc160f556fec0de7a3ed63ad9f285",
+  "vllm-sr-d3": "460ba4d8d52ae5eb404836416add5623f862e6b811bf24e978770da6ab3a924e"
+ },
+ "registry_sha256": "75ff86e51f637a0cec57ddb0ddc6abdffd76db6cab5d613a7c187ae19c665b4d",
+ "revision": "v1.6.18",
+ "schema_version": 1,
+ "scorer_sources_sha256": {
+  "noul_method_v16.py": "119e59486ab3300b972fbcbadb0fe1dceceb124287607375aa61c66063c607d0",
+  "score_v15.py": "0931e05c6410b1b971201834397cb609cdb25f942723c50375632952f6dcc447",
+  "score_v15_headlineA.py": "826f2cbcb57007ec8a161e6eb0111182b8a656c0638027c6c78022a858fd8e2c",
+  "score_v16.py": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9"
+ },
+ "seed_commitment": "ad1ed4858269bda0cbbe7ad0752b573982ed2afc5c2382dad9d33e380ede4c16",
+ "set_manifest_sha256": {
+  "A": "8bfc6d99122b2b8a9fd5c2691117aa910f6adf6f40cef1922981eea43515c5a2",
+  "P": "6b2321f8359d87769a95c8e52135542d95ccdc353197e1e5c96abb9b616ce5ba",
+  "S": "e0a11ed2f870c179b7fc67a9a83a03f6cf26eeb6231cfadc253abf2211a3e66e"
+ },
+ "systems": [
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 88.99486051802106,
+    "cost": 17.95976602146007,
+    "intelligence": 69.72341288828827,
+    "speed": 83.61644312651299
+   },
+   "capability": 79.35913670315466,
+   "composite_A": 5.5363026097715755,
+   "cost_kind": "estimate",
+   "display": "Amos 1 large (Scira)",
+   "key": "amos-1-large",
+   "measured_by": "jevbench-add-requests-20260919 (release lane; hosted API run, regular-queue request 5ec7e405, CoS deputy decision #18975, item custodian #18951)",
+   "model_pin": "hosted-api:api.amos.scira.ai/v1/systemone#amos-1-large",
+   "noul_decisive": {
+    "acc_among_decisive": 0.9654088050314465,
+    "decisive": 318,
+    "decisive_rate": 0.848,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 13,
+   "raw_sha256": "e0df00f9b25e01e62430b40d79c3eb0286ae21a2b2c633edb1fbbbd2e3ebf410",
+   "rows": 1500,
+   "source_review_note": "Vendor-hosted API: no vendor code ran locally; free keyless endpoint, shape verified against the pinned API adapter and a synthetic smoke before dispatch; full-set exposure gate logged all 1,200 sealed items to provider scira first",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.5428432799999999
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 87.98659582926916,
+    "cost": 36.657244733397086,
+    "intelligence": 38.36362733252365,
+    "speed": 86.48270625779318
+   },
+   "capability": 63.175111580896406,
+   "composite_A": 16.594331365489452,
+   "cost_kind": "estimate",
+   "display": "Amos 1 medium (Scira)",
+   "key": "amos-1-medium",
+   "measured_by": "jevbench-add-requests-20260919 (release lane; hosted API run, regular-queue request a4ec7eb2, CoS deputy decision #18975, item custodian #18951)",
+   "model_pin": "hosted-api:api.amos.scira.ai/v1/systemone#amos-1-medium",
+   "noul_decisive": {
+    "acc_among_decisive": 0.9714285714285714,
+    "decisive": 210,
+    "decisive_rate": 0.56,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 9,
+   "raw_sha256": "ede828c8a56c439b776a8b0bfb4a86940e586c2ea50832c1d3ec4e6b8c83bc0f",
+   "rows": 1500,
+   "source_review_note": "Vendor-hosted API: no vendor code ran locally; free keyless endpoint, shape verified against the pinned API adapter and a synthetic smoke before dispatch; full-set exposure gate logged all 1,200 sealed items to provider scira first (receipt ROW-AMOS-1-MEDIUM-R110.json in jevbench-add-requests-20260919/r109/receipts)",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.12924839999999999
+  },
+  {
+   "answered_ok": 1485,
+   "axes": {
+    "calibration": 73.84793106824938,
+    "cost": 50.86035455384382,
+    "intelligence": 65.23849472031306,
+    "speed": 97.10993413996468
+   },
+   "capability": 69.54321289428123,
+   "composite_A": 67.9936749770638,
+   "cost_kind": "estimate",
+   "display": "attest-31B-v1.0",
+   "key": "attest-31b-v1.0",
+   "measured_by": "fastlane-apikey-orders-20261012 (paid API lane, order 07d13315)",
+   "model_pin": "google/gemma-4-31B-it@842da3794eaa0b77d5f08bae87a17459d91ff475",
+   "noul_decisive": {
+    "acc_among_decisive": 0.8787878787878788,
+    "decisive": 363,
+    "decisive_rate": 0.9731903485254692,
+    "n": 375,
+    "supported": true,
+    "valid": 373
+   },
+   "rank": 2,
+   "raw_sha256": "900b411ab91c6961574dc647875ceffaf2c1b780aded25951643a022e33b42d5",
+   "rows": 1500,
+   "source_review_note": "Vendor-hosted API: public dated model/pricing documents archived and hash-verified by the order operator. No customer implementation code ran locally; deployed weights/method are vendor declarations, not independently inspected.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.043449839999999997
+  },
+  {
+   "answered_ok": 1483,
+   "axes": {
+    "calibration": 17.26803648238681,
+    "cost": 89.8795371983372,
+    "intelligence": 2.4412732607743255,
+    "speed": 79.42119248319958
+   },
+   "capability": 9.854654871580568,
+   "composite_A": 0.019411107562972558,
+   "cost_kind": "estimate",
+   "display": "Julia-1 (Supersonic Labs)",
+   "key": "julia-1",
+   "measured_by": "jevbench-add-requests-20260919 (release lane; measured 13 Oct 2026 under CoS deputy decision #18209/#18211 at USD 0 on the evaluator's own CPU, with the extra source-review and synthetic-smoke conditions that decision attached to this row)",
+   "model_pin": "SupersonicLabs/Julia-1@a85b127321d580d65176c89ced8273f305745d85",
+   "noul_decisive": {
+    "acc_among_decisive": 0.45555555555555555,
+    "decisive": 270,
+    "decisive_rate": 0.7258064516129032,
+    "n": 375,
+    "supported": true,
+    "valid": 372
+   },
+   "rank": 16,
+   "raw_sha256": "ab7f3eae43c230e757539b513d21c9df7c6309bd40d7f79d8706f614919421d0",
+   "rows": 1500,
+   "source_review_note": "Three independent review passes on this row specifically: receipts REVIEW-JULIA-R107.json (FAIL, seven findings), -R2.json (REVISE) and -R3.json (PASS, sealed dispatch unreachable after a failed smoke) in jevbench-add-requests-20260919/r107/receipts, plus the synthetic-only smoke receipt SMOKE-julia-1-R107.json. The reviewer re-derived the refusal precount from a clean re-implementation that never imported the contributor code and found zero difference. The price line and the one authorised pricing-module correction behind it were independently reviewed again in r108/receipts/REVIEW-PRICING-R108.json.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.0021744466666666668
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 62.82741496733333,
+    "cost": 54.45313889836773,
+    "intelligence": 21.99889248592056,
+    "speed": 91.85485240061512
+   },
+   "capability": 42.413153726626945,
+   "composite_A": 8.54428010154306,
+   "cost_kind": "estimate",
+   "display": "Krino-2B",
+   "key": "krino-2b",
+   "measured_by": "fastlane-backlog-today-20261012 (paid fast lane, order 8c7dbe11)",
+   "model_pin": "Guru0381/krino-2b@ff185abf129206174c67ebbe6058cab4cc9ccaed",
+   "noul_decisive": {
+    "acc_among_decisive": 0.7124600638977636,
+    "decisive": 313,
+    "decisive_rate": 0.8346666666666667,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 11,
+   "raw_sha256": "fd2bc95717d359c101743ab6a3369884b415ce40d5a2829c399e1304fd67f8f3",
+   "rows": 1500,
+   "source_review_note": "Source review PASS and pod smoke PASS by the measuring operator; the author's `python3 -m krino.serve` on the Kev serve path ran from the reviewed order-scoped offline Kev runtime supplement (PR #335, wheels SHA-256-pinned), with the documented per-type temperatures and KEV_TRUNCATE_STATES=1 from the submitted serve command.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.03297833333333333
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 87.91805023499681,
+    "cost": 51.488678556745086,
+    "intelligence": 67.8255189476327,
+    "speed": 73.37579625429389
+   },
+   "capability": 77.87178459131476,
+   "composite_A": 67.60392832716802,
+   "cost_kind": "estimate",
+   "display": "metask-jev-rain-12B-trained",
+   "key": "metask_jev_rain_12b_trained",
+   "measured_by": "fastlane-metask-rain-native-20261012 (paid fast lane, order 66c7b6d2)",
+   "model_pin": "MeTask-Rain/metask-jev-rain-12B-trained@cf3706fdd57e23025a8c97fbde86bd5b4a547010",
+   "noul_decisive": {
+    "acc_among_decisive": 0.856,
+    "decisive": 375,
+    "decisive_rate": 1.0,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 3,
+   "raw_sha256": "9bd816fd308ea8719c977c1a5dcc659a42d5cf9cc3bad9a67969dd66adb8b018",
+   "rows": 1500,
+   "source_review_note": "Pipeline source review PASS (review/GATE.json of order 66c7b6d2) and offline pod smoke PASS by the measuring operator; the author's own service (serve.sh -> launch.py -> server.py on vLLM 0.31.0, pinned image digest) ran with unchanged defaults.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.041404166666666666
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 87.09471194592824,
+    "cost": 49.238192537895735,
+    "intelligence": 70.71905450578407,
+    "speed": 83.17884674032656
+   },
+   "capability": 78.90688322585615,
+   "composite_A": 66.93314450921662,
+   "cost_kind": "estimate",
+   "display": "metask-jev-rain-31B-trained",
+   "key": "metask_jev_rain_31b_trained",
+   "measured_by": "fastlane-metask-rain-native-20261012 (paid fast lane, order 147c5e18)",
+   "model_pin": "MeTask-Rain/metask-jev-rain-31B-trained@da56acc0bb607cc214c184ad9f1e9231a0d63dee",
+   "noul_decisive": {
+    "acc_among_decisive": 0.8773333333333333,
+    "decisive": 375,
+    "decisive_rate": 1.0,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 4,
+   "raw_sha256": "89dc88765db2187e2db8baf27fcea03f00f7e17a6cc636b82b22065c7daa3d4a",
+   "rows": 1500,
+   "source_review_note": "Pipeline source review PASS (review/GATE.json of order 147c5e18) and offline pod smoke PASS by the measuring operator; the author's own service (service/serve.sh -> launch.py -> server.py on vLLM 0.31.0, pinned image digest) ran with unchanged defaults.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.04921078
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 86.60202339920977,
+    "cost": 47.944910134589236,
+    "intelligence": 72.59243765084337,
+    "speed": 84.66561996644248
+   },
+   "capability": 79.59723052502656,
+   "composite_A": 63.422592654952346,
+   "cost_kind": "estimate",
+   "display": "metask-jev-rain-31B-trained service v3",
+   "key": "metask_jev_rain_31b_trained_v3",
+   "measured_by": "fastlane-metask31b-v3-4d9fef10-20261013 (paid public fast lane, order 4d9fef10; one pod run admitted by CoS deputy #18972, draw use admitted by the item custodian #18945)",
+   "model_pin": "MeTask-Rain/metask-jev-rain-31B-trained@2feff076f07711fe2fefe7a6fdcedfe4132b773e",
+   "noul_decisive": {
+    "acc_among_decisive": 0.8853333333333333,
+    "decisive": 375,
+    "decisive_rate": 1.0,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 5,
+   "raw_sha256": "bda80d47f81fabe349214bde71816725f8d6efa032120ac6590f2d2b0fe2b708",
+   "rows": 1500,
+   "source_review_note": "Paid fast-lane order: author service/ read for network endpoints before the run (only 127.0.0.1), offline read-only container with --network none verified by docker inspect before the input upload, weights verified by file sha; receipts HOST-RECEIPT and pod-runner receipt in fastlane-metask31b-v3-4d9fef10-20261013/handoff",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.05434626
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 86.63426567315432,
+    "cost": null,
+    "intelligence": 41.405096245385266,
+    "speed": 88.39856712562789
+   },
+   "capability": 64.01968095926979,
+   "composite_A": null,
+   "cost_kind": "unpriced",
+   "display": "Bespoke Nimble-v4 (Bespoke Labs)",
+   "key": "nimble-v4",
+   "measured_by": "jevbench-add-requests-20260919 (own add after Bespoke Labs' public announcement; no paid order; deputy #19084, admission #18998, custody #18999)",
+   "model_pin": "hosted-api:api.bespokelabs.ai/v1/systemone#nimble-v4",
+   "noul_decisive": {
+    "acc_among_decisive": 0.9627906976744186,
+    "decisive": 215,
+    "decisive_rate": 0.5733333333333334,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": null,
+   "raw_sha256": "9df0f0e4919deccb8448004ece256f7ba76f9160308b37378405add632f0f978",
+   "rows": 1500,
+   "source_review_note": "Vendor-hosted API; no vendor code ran locally. The unchanged full-set runner logged all 1,200 sealed items to provider bespoke before dispatch; row receipts ROW-NIMBLE-V4-R112.json and ROW-NIMBLE-V4-MAX-R112.json.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": null
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 91.24998737212707,
+    "cost": null,
+    "intelligence": 68.18491883484498,
+    "speed": 91.45091520080334
+   },
+   "capability": 79.71745310348602,
+   "composite_A": null,
+   "cost_kind": "unpriced",
+   "display": "Bespoke Nimble-v4-max (Bespoke Labs)",
+   "key": "nimble-v4-max",
+   "measured_by": "jevbench-add-requests-20260919 (own add after Bespoke Labs' public announcement; no paid order; deputy #19084, admission #18998, custody #18999)",
+   "model_pin": "hosted-api:api.bespokelabs.ai/v1/systemone#nimble-v4-max",
+   "noul_decisive": {
+    "acc_among_decisive": 0.9795918367346939,
+    "decisive": 294,
+    "decisive_rate": 0.784,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": null,
+   "raw_sha256": "dddfc639b98a07599170850f3b71702c976891f3a67a1b52ba2101a0e30a1505",
+   "rows": 1500,
+   "source_review_note": "Vendor-hosted API; no vendor code ran locally. The unchanged full-set runner logged all 1,200 sealed items to provider bespoke before dispatch; row receipts ROW-NIMBLE-V4-R112.json and ROW-NIMBLE-V4-MAX-R112.json.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": null
+  },
+  {
+   "answered_ok": 1125,
+   "axes": {
+    "calibration": 56.87058116402116,
+    "cost": 95.25096508672264,
+    "intelligence": 3.609767391262904,
+    "speed": 77.11764018052709
+   },
+   "capability": 30.240174277642033,
+   "composite_A": 0.06554625585762494,
+   "cost_kind": "estimate",
+   "display": "Phocinae-Largha-150M-v1",
+   "key": "phocinae-largha-150m-v1",
+   "measured_by": "jevbench-add-requests-20260919 (release lane; measured 13 Oct 2026 under CoS deputy decision #18209/#18211 at USD 0 on the evaluator's own CPU)",
+   "model_pin": "Phocinae/Phocinae-Largha-150M-v1@7070e070fec3407061e76de42d7d87240ff5b74b",
+   "noul_decisive": {
+    "acc_among_decisive": 0.5454545454545454,
+    "decisive": 11,
+    "decisive_rate": 0.029333333333333333,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 15,
+   "raw_sha256": "cf24b4c0b9b2e117334d03931eb292b64f5b58a8476b7ed4e1651a049f3cc8ef",
+   "rows": 1500,
+   "source_review_note": "Independent source/profile review of this run's measurement path: receipts REVIEW-R107.json (FAIL on nine findings) and REVIEW-R107-DELTA.json (REVISE, phocinae_scoreable true) in jevbench-add-requests-20260919/r107/receipts; every finding was fixed before this row was scored, and the reviewer recomputed each of this row's numbers independently. The author's own phocinae-server 0.1.5 is unmodified; the HTTP shim and the pre-registered type mapping are the evaluator's and were fixed in writing before the run.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.0014397966666666667
+  },
+  {
+   "answered_ok": 1485,
+   "axes": {
+    "calibration": 86.466579728622,
+    "cost": 63.65555494004683,
+    "intelligence": 28.96851828460498,
+    "speed": 49.10963929819891
+   },
+   "capability": 57.71754900661349,
+   "composite_A": 15.765893095486472,
+   "cost_kind": "estimate",
+   "display": "pjev-2b (Kailune AI, frozen MiniCPM5-2B + merged LoRA r64, letter-logit readout, T=1 stub)",
+   "key": "pjev-2b",
+   "measured_by": "jevbench-add-requests-20260919 (release lane; measured 13 Oct 2026 under CoS deputy decision #18209/#18211 at USD 0 on the evaluator's own CPU, resumed across four sittings; custodian admission #18247)",
+   "model_pin": "Kailune-AI/pjev-2b@ad60e59c7aa1f6a545c563bc404853f9a8067908",
+   "noul_decisive": {
+    "acc_among_decisive": 0.8794642857142857,
+    "decisive": 224,
+    "decisive_rate": 0.6005361930294906,
+    "n": 375,
+    "supported": true,
+    "valid": 373
+   },
+   "rank": 10,
+   "raw_sha256": "963d0e0274a8423a8e7b42777636de6de7ba07354e5547f7bc1680a640fe12cb",
+   "rows": 1500,
+   "source_review_note": "Author code (serve.py, decision_core.py, letter_adapter.py) source-reviewed at the pinned revision in run 36 before anything was executed; the one patch (bfloat16 default kept, float32 selectable) is receipt PJEV-DTYPE-PATCH-R36.diff (jevbench-add-requests-20260919/r36/receipts); no independent review receipt hash is bound for this row",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.01627352
+  },
+  {
+   "answered_ok": 1485,
+   "axes": {
+    "calibration": 77.68645539289165,
+    "cost": 70.88974250863016,
+    "intelligence": 8.37974071175967,
+    "speed": 58.74735259439709
+   },
+   "capability": 43.033098052325656,
+   "composite_A": 0.6878580659626383,
+   "cost_kind": "estimate",
+   "display": "PurpleMIST-Mini-1.0 (Olaverse)",
+   "key": "purplemist-mini-1.0",
+   "measured_by": "jevbench-add-requests-20260919 (release lane; measured 13 Oct 2026 under CoS deputy decision #18209's blanket extension at USD 0 on the evaluator's own CPU; token counting #18974)",
+   "model_pin": "olaverse/PurpleMIST-Mini-1.0@8072361ec4b632b3b8a73899022281d5de3c639b",
+   "noul_decisive": {
+    "acc_among_decisive": 0.875,
+    "decisive": 32,
+    "decisive_rate": 0.08579088471849866,
+    "n": 375,
+    "supported": true,
+    "valid": 373
+   },
+   "rank": 14,
+   "raw_sha256": "88999b4d567867ca466e89f062d197cbeeca7ff06ed11f99c1e8eba63ef46409",
+   "rows": 1500,
+   "source_review_note": "Author serve.py/purplemist.py source/profile-reviewed and pinned (r109/receipts/PINS-PURPLEMIST-R109.json); synthetic smoke gate r109/receipts/SMOKE-GATE-purplemist-mini-1.0.json; offline token count independently recounted PASS (r109/review-tokcount/REVIEW.json)",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.009339893333333333
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 73.15265267444973,
+    "cost": 76.01715044133317,
+    "intelligence": 3.96006223937058,
+    "speed": 58.9717141639196
+   },
+   "capability": 38.556357456910156,
+   "composite_A": 0.08468123269475833,
+   "cost_kind": "estimate",
+   "display": "Reflex Instinct 0.6B (Atlas AI)",
+   "key": "reflex-instinct-0.6b",
+   "measured_by": "jevbench-add-requests-20260919 (release lane; measured 13 Oct 2026 under CoS deputy decision #18209/#18211 at USD 0 on the evaluator's own CPU)",
+   "model_pin": "Atlas-AI-research/reflex-instinct-0.6b@ae04b843e7840d07776c3dc554b4cd064f66cbe5",
+   "noul_decisive": {
+    "acc_among_decisive": 0.8571428571428571,
+    "decisive": 7,
+    "decisive_rate": 0.018666666666666668,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": null,
+   "raw_sha256": "64e81d752a550a3d36f44f5596368c810b2e29f37e73c1df0820f669cdef0478",
+   "rows": 1500,
+   "source_review_note": "Independent source/profile review receipts REVIEW-R107.json and REVIEW-R107-DELTA.json (jevbench-add-requests-20260919/r107/receipts); all findings fixed before scoring. The author's own serve.py and the unchanged stock typesafe adapter were used - no shim and no mapping decision of the evaluator's enters this row.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.006301273333333334
+  },
+  {
+   "answered_ok": 1485,
+   "axes": {
+    "calibration": 77.78014902808363,
+    "cost": 45.20624895712556,
+    "intelligence": 60.897967232257315,
+    "speed": 85.32322293910049
+   },
+   "capability": 69.33905813017047,
+   "composite_A": 51.80352745328776,
+   "cost_kind": "estimate",
+   "display": "Respan Span-02",
+   "key": "respan-span-02",
+   "measured_by": "jevbench-add-requests-20260919 (regular queue GitHub issue #215; custodian #19055; CoS deputy #19087/#19088)",
+   "model_pin": "lihe07/span-02@3f0fbdb9c03950f335e80845f51be39985d63fc0",
+   "noul_decisive": {
+    "acc_among_decisive": 0.8682634730538922,
+    "decisive": 334,
+    "decisive_rate": 0.8954423592493298,
+    "n": 375,
+    "supported": true,
+    "valid": 373
+   },
+   "rank": 6,
+   "raw_sha256": "195ae84a9bc4070a553423d3df466e324e1dc9b88baf4c7d21a3a3497170d769",
+   "rows": 1500,
+   "source_review_note": "Author Rust/CUDA engine built unchanged from the pinned Dockerfile; container isolation was proven at 05:45:26Z (pod clock); the sealed file reached the pod host at 05:45:48Z (evaluator clock); the measuring container was re-created and re-proven at 05:45:50Z (pod clock), with the first sealed item entering at 05:45:55Z (pod clock). The host kept its network for ssh; cross-clock skew cannot be excluded. Source review and invocation disclosure in r111/PREREG-R111.md; row receipt r112/receipts/ROW-RESPAN-SPAN-02-R112.json. No independent review receipt hash is bound here.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.0670592
+  },
+  {
+   "answered_ok": 1483,
+   "axes": {
+    "calibration": 83.66470689834914,
+    "cost": null,
+    "intelligence": 65.88206323551285,
+    "speed": 68.80003106294234
+   },
+   "capability": 74.77338506693098,
+   "composite_A": null,
+   "cost_kind": "unpriced",
+   "display": "Sage 1.4 (Levanto Labs)",
+   "key": "sage-1.4.0",
+   "measured_by": "jevbench-add-requests-20260919 (release lane; hosted API run, regular-queue request 5181ADBA, CoS deputy decision #18975, item custodian #18951)",
+   "model_pin": "hosted-api:sage.levanto.ai/v1/systemone#levanto-sage-v1.4",
+   "noul_decisive": {
+    "acc_among_decisive": 0.9058823529411765,
+    "decisive": 340,
+    "decisive_rate": 0.9115281501340483,
+    "n": 375,
+    "supported": true,
+    "valid": 373
+   },
+   "rank": null,
+   "raw_sha256": "e7a2733a8f6b41729be92076dd5f067c442ef5f917330a2941263d095821763c",
+   "rows": 1500,
+   "source_review_note": "Vendor-hosted API: no vendor code ran locally; model id read from the vendor's own /v1/models; full-set exposure gate logged all 1,200 sealed items to provider levanto first",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": null
+  },
+  {
+   "answered_ok": 1485,
+   "axes": {
+    "calibration": 78.35523487828182,
+    "cost": 48.773133155429846,
+    "intelligence": 32.78619016656576,
+    "speed": 86.56241878672063
+   },
+   "capability": 55.57071252242379,
+   "composite_A": 21.728093384452006,
+   "cost_kind": "estimate",
+   "display": "Standard One 3B SH (Standard Thinking)",
+   "key": "standard_one_3b_sh",
+   "measured_by": "fastlane-backlog-today-20261012 (paid fast lane, order 3a081599)",
+   "model_pin": "StandardThinking/StandardOne-3B-SH@bead20e94b7c96045a19dc4d43af48a66c8911ea",
+   "noul_decisive": {
+    "acc_among_decisive": 0.8418803418803419,
+    "decisive": 234,
+    "decisive_rate": 0.6273458445040214,
+    "n": 375,
+    "supported": true,
+    "valid": 373
+   },
+   "rank": 8,
+   "raw_sha256": "39203a7a3bd7ccb0f73d8e96ec70c20897ccea78c42d8cb071a5249f8754c54d",
+   "rows": 1500,
+   "source_review_note": "Same customer and reviewed route as standard_one_8b_sh: the author's own reference server code/serve_head.py with its Quick-start argv and unchanged defaults, in the official pytorch 2.11.0 CUDA 12.8 image plus the documented requirements installed offline from SHA-256-pinned wheels; PR #332 security review PASS, recipe critic PASS and pod smoke PASS by the measuring operator (board #17927).",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.05099906666666666
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 90.69740052356492,
+    "cost": null,
+    "intelligence": 72.25005247787018,
+    "speed": 86.40460211903752
+   },
+   "capability": 81.47372650071756,
+   "composite_A": null,
+   "cost_kind": "unpriced",
+   "display": "SubQ Snap (preview, SubQ)",
+   "key": "subq-snap-preview",
+   "measured_by": "jevbench-add-requests-20260919 (release lane; hosted API run on Florian's work order of 12 Oct 2026, CoS deputy decision #18975, item custodian #18951)",
+   "model_pin": "hosted-api:api.subq.ai/v1/systemone#subq-snap-preview",
+   "noul_decisive": {
+    "acc_among_decisive": 0.9532710280373832,
+    "decisive": 321,
+    "decisive_rate": 0.856,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": null,
+   "raw_sha256": "c701361496e6d374bac4bffddec697c686a3b505e42b5dcd74d20bf788d31952",
+   "rows": 1500,
+   "source_review_note": "Vendor-hosted API: no vendor code ran locally; shape verified against the pinned API adapter and a synthetic smoke before dispatch; full-set exposure gate logged all 1,200 sealed items to provider subq first (receipt ROW-SUBQ-SNAP-R110.json in jevbench-add-requests-20260919/r109/receipts)",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": null
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 83.11679203980711,
+    "cost": 61.19396588940246,
+    "intelligence": 54.20841827353793,
+    "speed": 93.62765623388151
+   },
+   "capability": 68.66260515667253,
+   "composite_A": 69.56440944647237,
+   "cost_kind": "estimate",
+   "display": "Torchcast Decision 4B (v1.1)",
+   "key": "torchcast-decision-4b-v1.1",
+   "measured_by": "fastlane-torchcast4b-native-20261012 (paid fast lane, order 529be5d5)",
+   "model_pin": "torchcast-ai/torchcast-decision-4b@f4a34e7aedbf22917f6c85b8c4e03a3da49c1baf",
+   "noul_decisive": {
+    "acc_among_decisive": 0.784,
+    "decisive": 375,
+    "decisive_rate": 1.0,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 1,
+   "raw_sha256": "89e6b22e66ae3e706404a3fb4b274de82fe98a9bb83612c865f45805d036ca93",
+   "rows": 1500,
+   "source_review_note": "Operator's NATIVE-SOURCE-REVIEW.md with resolved-blocker addendum and independent COMMITTED-BUNDLE-REVIEW.md PASS verify the exact runtime bundle; the author's torchcast_decision server at tag v1.1.0 ran unchanged. Isolation is container-level (--network none); no separate host-level netcut probe was taken (CUSTODY-RECEIPT.json).",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.01965778
+  },
+  {
+   "answered_ok": 1485,
+   "axes": {
+    "calibration": 79.97905975708014,
+    "cost": 64.67144663671615,
+    "intelligence": 34.15161183674326,
+    "speed": 87.70990379280212
+   },
+   "capability": 57.0653357969117,
+   "composite_A": 27.18388815636665,
+   "cost_kind": "estimate",
+   "display": "Uniphore-4B-Decider",
+   "key": "uniphore-4b-decider",
+   "measured_by": "fastlane-uniphore-native-20261012 (paid fast lane, order 4b3cb7b8)",
+   "model_pin": "Uniphore/uniphore-4b-decider@2e22ed63ae0f9de590bbd368f3bfa7c678f78e9d",
+   "noul_decisive": {
+    "acc_among_decisive": 0.8246268656716418,
+    "decisive": 268,
+    "decisive_rate": 0.7184986595174263,
+    "n": 375,
+    "supported": true,
+    "valid": 373
+   },
+   "rank": 7,
+   "raw_sha256": "4a175484c796fda013a4e8dff5d1b1c5040fc160f556fec0de7a3ed63ad9f285",
+   "rows": 1500,
+   "source_review_note": "Independent source review PASS of the author's inference code, shim and pricing by the measuring operator (review/NATIVE-SOURCE-REVIEW.md of order 4b3cb7b8) and offline pod smoke PASS; the author's own DecisionModel.predict_jev_task ran unchanged behind a first-party loopback shim.",
+   "source_review_sha256": null,
+   "status": "complete",
+   "usd_per_1000": 0.015052840000000001
+  },
+  {
+   "answered_ok": 1500,
+   "axes": {
+    "calibration": 92.20028306358832,
+    "cost": 17.876172053883806,
+    "intelligence": 73.73157285955872,
+    "speed": 87.36893361347018
+   },
+   "capability": 82.96592796157353,
+   "composite_A": 5.569947529283843,
+   "cost_kind": "estimate",
+   "display": "vLLM-SR d3",
+   "key": "vllm-sr-d3",
+   "measured_by": "di-update-response-20261012 eval-d3-codex worker (official v1.6 path, 12 Oct 2026, rented Verda RTX PRO 6000 96 GB VM, destroyed afterwards); published by jevbench-d3-publish-20261012",
+   "model_pin": "vllm-sr/d3@5ce995dfb7ff07da00fec4211eb7f0560f52eaf8",
+   "noul_decisive": {
+    "acc_among_decisive": 0.9625,
+    "decisive": 320,
+    "decisive_rate": 0.8533333333333334,
+    "n": 375,
+    "supported": true,
+    "valid": 375
+   },
+   "rank": 12,
+   "raw_sha256": "460ba4d8d52ae5eb404836416add5623f862e6b811bf24e978770da6ab3a924e",
+   "rows": 1500,
+   "source_review_note": "Pre-run source review of the pinned revision by reading only (d3_server.py, d3_runtime.py, d3_fast.py, d3_kernels.py, d3_format.py, modeling_d3.py and configs): PASS - the only network code is an optional media-URL download unreachable for text items, no subprocess/eval/pickle, no item- or benchmark-keyed branches, no secret reads; weights verified by sha256 against the author's MODEL_MANIFEST on the pod; di-update-response-20261012/workers/eval-d3-codex/SOURCE-REVIEW.md",
+   "source_review_sha256": "4234f0508980353508b0f7470b246d9edbcae39ec5361959e5803de9176f61ff",
+   "status": "complete",
+   "usd_per_1000": 0.5463374
+  }
+ ]
+}
