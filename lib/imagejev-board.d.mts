@@ -15,7 +15,13 @@ export type ImageJevCapabilityLimits = {
   cost: number;
   latency: number;
   factor: number;
-  referenceLabel: 'Jev 1.13.0 (JevBench)';
+  /** 'Jev reference' once the cost reference is Jev with images (v0.3.0 from CR-482); the v0.1.x artifacts keep 'Jev 1.13.0 (JevBench)'. */
+  referenceLabel: 'Jev 1.13.0 (JevBench)' | 'Jev reference';
+  /** USD per 1,000 decisions of the cost reference, when the artifact names one separate from the latency anchor. */
+  costReference?: number;
+  costReferenceName?: string;
+  /** Adjusted median latency of the latency reference in seconds. */
+  latencyReference?: number;
 };
 
 /** Convert ImageJev v0.1.x (`all`) or v0.2 (`headline_track`) rows to Jev V1.4 capability/bubble rows. */

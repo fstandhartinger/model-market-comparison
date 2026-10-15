@@ -14,8 +14,8 @@ test('CR-482 Jev + images rows: official pass 1, TypeSafe API, preview feature d
     assert.equal(r.api_flag, true);
     assert.equal(r.author, 'TypeSafe');
     assert.equal(r.preview_feature, true);
-    assert.match(r.name, /\+ images/);
-    assert.match(r.name, /preview/);
+    // the chart labels cut a name at " (", so the preview marker must sit before the author in parentheses
+    assert.match(r.name, /^Jev 1\.1[34]\.0 \+ images, preview \(TypeSafe\)$/);
     // the preview note leads the measurement note shown on the board and the detail page
     assert.match(r.measurement_source, /^Preview feature: TypeSafe documents image input as "Dreamer-ready"/);
     assert.match(r.measurement_source, /179 of the 600 images/);

@@ -2,7 +2,7 @@
   "benchmark": "ImageJevBench",
   "revision": "v0.3.0",
   "release_version": "v0.3.0",
-  "built_utc": "2026-10-15T16:59:14.962640+00:00",
+  "built_utc": "2026-10-15T17:12:26.052531+00:00",
   "status": "released",
   "headline_track": "core",
   "capability_eligibility": {
@@ -10597,7 +10597,7 @@
     },
     {
       "key": "jev_1_13_images",
-      "name": "Jev 1.13.0 + images (TypeSafe), preview",
+      "name": "Jev 1.13.0 + images, preview (TypeSafe)",
       "kind": "api",
       "api_flag": true,
       "last_measured_utc": "2026-10-14T22:29:11+00:00",
@@ -10611,7 +10611,7 @@
       "author": "TypeSafe",
       "repo": "https://docs.typesafe.ai/images",
       "inference_setting": "TypeSafe System One API (api.typesafe.ai/v1/systemone), model jev-1.13.0, image input via the TypeSafe-Danger-Zone-Images header, one choice question per item",
-      "measurement_source": "Preview feature: TypeSafe documents image input as \"Dreamer-ready\", not yet production; the request format, limits and accuracy can change between releases. Official ImageJev v0.3 A300+P300 pass 1 on 14 Oct 2026 (22:19-22:29 UTC), Jev 1.13.0 (TypeSafe's stable release, alias jev-latest) with images. 599 of 600 answered; 1 invalid decision counts wrong. Request: the item question and image as state, one choice question with the options as criteria (TypeSafe-native; not the lettered v0.2 prompt), native option probabilities, no retries; failed requests count wrong at cost 0. Images outside TypeSafe's limits were rescaled (Lanczos, aspect ratio kept) or, for 7 BMP files, re-encoded as PNG: 179 of the 600 images (99 public, 80 sealed); all others were sent unchanged. Other systems received images under their own limits (s1-vision 4 MiB / 2 MP, Wity 12 MB body), so image treatment differs between rows. The API rejects any image side below 280 px although the per-side minimum in TypeSafe's docs read 256 px when we tested (the docs now also state a 78,400-pixel minimum). An earlier Jev 1.14.0 attempt was invalidated for that reason (our adapter had scaled small images to 256 px; 27 requests failed with HTTP 400) and is excluded; no result of it is used. Exposure was logged before dispatch.",
+      "measurement_source": "Preview feature: TypeSafe documents image input as \"Dreamer-ready\", not yet production; the request format, limits and accuracy can change between releases. Official ImageJev v0.3 A300+P300 pass 1 on 14 Oct 2026 (22:19-22:29 UTC), Jev 1.13.0 (TypeSafe's stable release, alias jev-latest) with images. 599 of 600 answered; 1 invalid decision counts wrong. Request: the item question and image as state, one choice question with the options as criteria (TypeSafe-native; not the lettered v0.2 prompt), native option probabilities, no retries; failed requests count wrong at cost 0. Images outside TypeSafe's limits were rescaled (Lanczos, aspect ratio kept; 172 images) or, for 7 BMP files, re-encoded as PNG: 179 of the 600 images (99 public, 80 sealed); all others were sent unchanged. Other systems received images under their own limits (s1-vision 4 MiB / 2 MP, Wity 12 MB body), so image treatment differs between rows. The API rejects any image side below 280 px although the per-side minimum in TypeSafe's docs read 256 px when we tested (the docs now also state a 78,400-pixel minimum). An earlier Jev 1.14.0 attempt was invalidated for that reason (our adapter had scaled small images to 256 px; 27 requests failed with HTTP 400) and is excluded; no result of it is used. Exposure was logged before dispatch. Before dispatch the adapter author read the sealed images' pixel dimensions only (no content) outside the runner to count limit violations.",
       "prior_exposure": "First ImageJevBench measurement of Jev with images. Jev 1.13.0 was admitted by the rotation check as image input being newly enabled on 14 Oct 2026 (docs.typesafe.ai/images: \"Jev 1.13 and Jev 1.14 both accept images\"), not as a new model version; v0.3 API subset A exposed to TypeSafe under rotation-imagejev-v0.3.",
       "pricing_note": "Cost uses TypeSafe's published API price: USD 0.042 per 1M input tokens, output free; images are billed as input tokens (about 3,800 per item here).",
       "preview_feature": true,
@@ -10671,7 +10671,7 @@
           "p50_s": 0.3775520230119582,
           "p95_s": 0.9285963269940112,
           "cost_per_1000": 0.15918519402985076,
-          "cost_basis": "OpenRouter usage.cost receipts",
+          "cost_basis": "TypeSafe list price USD 0.042 per 1M input tokens x usage.input_tokens (images billed as input tokens)",
           "speed": {
             "score": 84.55196236830125,
             "raw_p50_s": 0.3775520230119582,
@@ -10686,7 +10686,7 @@
             "usd_per_1000": 0.15918519402985076,
             "total_usd": 0.07465785600000001,
             "coverage": 1.0,
-            "source": "OpenRouter usage.cost receipts"
+            "source": "TypeSafe list price USD 0.042 per 1M input tokens x usage.input_tokens (images billed as input tokens)"
           },
           "intelligence_before_penalty": 61.70692228354778,
           "gap_pp": -8.889870201802959,
@@ -10937,7 +10937,7 @@
           "p50_s": 0.3623241019959096,
           "p95_s": 0.7175518150033895,
           "cost_per_1000": 0.15457346564885496,
-          "cost_basis": "OpenRouter usage.cost receipts",
+          "cost_basis": "TypeSafe list price USD 0.042 per 1M input tokens x usage.input_tokens (images billed as input tokens)",
           "speed": {
             "score": 85.85049508201816,
             "raw_p50_s": 0.3623241019959096,
@@ -10952,7 +10952,7 @@
             "usd_per_1000": 0.15457346564885496,
             "total_usd": 0.020249124,
             "coverage": 1.0,
-            "source": "OpenRouter usage.cost receipts"
+            "source": "TypeSafe list price USD 0.042 per 1M input tokens x usage.input_tokens (images billed as input tokens)"
           },
           "intelligence_before_penalty": 94.10430839002268,
           "gap_pp": 6.391533915676422,
@@ -11174,7 +11174,7 @@
           "p50_s": 0.3775520230119582,
           "p95_s": 0.9285963269940112,
           "cost_per_1000": 0.15918519402985076,
-          "cost_basis": "OpenRouter usage.cost receipts",
+          "cost_basis": "TypeSafe list price USD 0.042 per 1M input tokens x usage.input_tokens (images billed as input tokens)",
           "speed": {
             "score": 84.55196236830125,
             "raw_p50_s": 0.3775520230119582,
@@ -11189,7 +11189,7 @@
             "usd_per_1000": 0.15918519402985076,
             "total_usd": 0.07465785600000001,
             "coverage": 1.0,
-            "source": "OpenRouter usage.cost receipts"
+            "source": "TypeSafe list price USD 0.042 per 1M input tokens x usage.input_tokens (images billed as input tokens)"
           },
           "intelligence_before_penalty": 61.70692228354778,
           "gap_pp": -8.889870201802959,
@@ -12212,7 +12212,7 @@
     },
     {
       "key": "jev_1_14_images",
-      "name": "Jev 1.14.0 + images (TypeSafe), preview",
+      "name": "Jev 1.14.0 + images, preview (TypeSafe)",
       "kind": "api",
       "api_flag": true,
       "last_measured_utc": "2026-10-14T22:13:29+00:00",
@@ -12226,7 +12226,7 @@
       "author": "TypeSafe",
       "repo": "https://docs.typesafe.ai/images",
       "inference_setting": "TypeSafe System One API (api.typesafe.ai/v1/systemone), model jev-1.14.0, image input via the TypeSafe-Danger-Zone-Images header, one choice question per item",
-      "measurement_source": "Preview feature: TypeSafe documents image input as \"Dreamer-ready\", not yet production; the request format, limits and accuracy can change between releases. Official ImageJev v0.3 A300+P300 pass 1 on 14 Oct 2026 (22:05-22:13 UTC), Jev 1.14.0 (TypeSafe's newest release, available since 14 Oct 2026, alias jev-preview) with images. 598 of 600 answered; 2 invalid decisions count wrong. Request: the item question and image as state, one choice question with the options as criteria (TypeSafe-native; not the lettered v0.2 prompt), native option probabilities, no retries; failed requests count wrong at cost 0. Images outside TypeSafe's limits were rescaled (Lanczos, aspect ratio kept) or, for 7 BMP files, re-encoded as PNG: 179 of the 600 images (99 public, 80 sealed); all others were sent unchanged. Other systems received images under their own limits (s1-vision 4 MiB / 2 MP, Wity 12 MB body), so image treatment differs between rows. The API rejects any image side below 280 px although the per-side minimum in TypeSafe's docs read 256 px when we tested (the docs now also state a 78,400-pixel minimum). An earlier Jev 1.14.0 attempt was invalidated for that reason (our adapter had scaled small images to 256 px; 27 requests failed with HTTP 400) and is excluded; no result of it is used. Exposure was logged before dispatch.",
+      "measurement_source": "Preview feature: TypeSafe documents image input as \"Dreamer-ready\", not yet production; the request format, limits and accuracy can change between releases. Official ImageJev v0.3 A300+P300 pass 1 on 14 Oct 2026 (22:05-22:13 UTC), Jev 1.14.0 (TypeSafe's newest release, available since 14 Oct 2026, alias jev-preview) with images. 598 of 600 answered; 2 invalid decisions count wrong. Request: the item question and image as state, one choice question with the options as criteria (TypeSafe-native; not the lettered v0.2 prompt), native option probabilities, no retries; failed requests count wrong at cost 0. Images outside TypeSafe's limits were rescaled (Lanczos, aspect ratio kept; 172 images) or, for 7 BMP files, re-encoded as PNG: 179 of the 600 images (99 public, 80 sealed); all others were sent unchanged. Other systems received images under their own limits (s1-vision 4 MiB / 2 MP, Wity 12 MB body), so image treatment differs between rows. The API rejects any image side below 280 px although the per-side minimum in TypeSafe's docs read 256 px when we tested (the docs now also state a 78,400-pixel minimum). An earlier Jev 1.14.0 attempt was invalidated for that reason (our adapter had scaled small images to 256 px; 27 requests failed with HTTP 400) and is excluded; no result of it is used. Exposure was logged before dispatch. Before dispatch the adapter author read the sealed images' pixel dimensions only (no content) outside the runner to count limit violations.",
       "prior_exposure": "First ImageJevBench measurement of Jev with images; Jev 1.14.0 is a new model version (released 14 Oct 2026). v0.3 API subset A exposed to TypeSafe under rotation-imagejev-v0.3.",
       "pricing_note": "Cost uses TypeSafe's published API price: USD 0.042 per 1M input tokens, output free; images are billed as input tokens (about 3,800 per item here).",
       "preview_feature": true,
@@ -12286,7 +12286,7 @@
           "p50_s": 0.39314723800634965,
           "p95_s": 0.8746849469898734,
           "cost_per_1000": 0.15918519402985076,
-          "cost_basis": "OpenRouter usage.cost receipts",
+          "cost_basis": "TypeSafe list price USD 0.042 per 1M input tokens x usage.input_tokens (images billed as input tokens)",
           "speed": {
             "score": 84.63593118514646,
             "raw_p50_s": 0.39314723800634965,
@@ -12301,7 +12301,7 @@
             "usd_per_1000": 0.15918519402985076,
             "total_usd": 0.07465785600000001,
             "coverage": 1.0,
-            "source": "OpenRouter usage.cost receipts"
+            "source": "TypeSafe list price USD 0.042 per 1M input tokens x usage.input_tokens (images billed as input tokens)"
           },
           "intelligence_before_penalty": 51.686368548802704,
           "gap_pp": -6.820316786690513,
@@ -12552,7 +12552,7 @@
           "p50_s": 0.34156978302053176,
           "p95_s": 0.7248626189830247,
           "cost_per_1000": 0.15457346564885496,
-          "cost_basis": "OpenRouter usage.cost receipts",
+          "cost_basis": "TypeSafe list price USD 0.042 per 1M input tokens x usage.input_tokens (images billed as input tokens)",
           "speed": {
             "score": 86.062648523039,
             "raw_p50_s": 0.34156978302053176,
@@ -12567,7 +12567,7 @@
             "usd_per_1000": 0.15457346564885496,
             "total_usd": 0.020249124,
             "coverage": 1.0,
-            "source": "OpenRouter usage.cost receipts"
+            "source": "TypeSafe list price USD 0.042 per 1M input tokens x usage.input_tokens (images billed as input tokens)"
           },
           "intelligence_before_penalty": 95.57823129251702,
           "gap_pp": 4.793650436757315,
@@ -12789,7 +12789,7 @@
           "p50_s": 0.39314723800634965,
           "p95_s": 0.8746849469898734,
           "cost_per_1000": 0.15918519402985076,
-          "cost_basis": "OpenRouter usage.cost receipts",
+          "cost_basis": "TypeSafe list price USD 0.042 per 1M input tokens x usage.input_tokens (images billed as input tokens)",
           "speed": {
             "score": 84.63593118514646,
             "raw_p50_s": 0.39314723800634965,
@@ -12804,7 +12804,7 @@
             "usd_per_1000": 0.15918519402985076,
             "total_usd": 0.07465785600000001,
             "coverage": 1.0,
-            "source": "OpenRouter usage.cost receipts"
+            "source": "TypeSafe list price USD 0.042 per 1M input tokens x usage.input_tokens (images billed as input tokens)"
           },
           "intelligence_before_penalty": 51.686368548802704,
           "gap_pp": -6.820316786690513,
