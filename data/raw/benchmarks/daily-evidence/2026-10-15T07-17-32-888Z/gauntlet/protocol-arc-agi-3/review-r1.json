@@ -1,0 +1,17 @@
+{
+  "artifact_id": "protocol-arc-agi-3",
+  "artifact_sha256": "95716ef98d721e5a0c3f9c69bd5024d97b8aa40916a61e38fdf901ea9069d450",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["arc-agi::3", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "c1",
+      "severity": "blocker",
+      "location": "row arc-agi::3: version, version_guard, scoring",
+      "evidence": "Criterion c1 requires verifying registry version, benchmark identity, metric, units and description against the actual current primary protocol. The packet supplies no primary protocol excerpt or owner hash-verified response for this board, and no run-generated summary of served finite values (count, lowest, highest) is present. The row asserts version ",
+      "repair": "Obtain the actual current primary protocol text (or an owner hash-verified complete response projecting the relevant fields) for arc-agi::3 so c1 can be verified: version, identity, metric, units, range, higher_better, description. Add the run-generated served-values summary if the unit/range judgement is to be made from it. Re-run review when supplied."
+}
+]
+		}

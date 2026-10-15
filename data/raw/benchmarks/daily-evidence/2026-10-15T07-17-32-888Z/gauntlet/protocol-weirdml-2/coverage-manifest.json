@@ -1,0 +1,202 @@
+{
+  "artifact_id": "protocol-weirdml-2",
+  "rounds_used": 3,
+  "rows": {
+    "total": 1,
+    "accepted": [],
+    "quarantined": [
+      "weirdml::2"
+    ]
+  },
+  "producer_flagged": [],
+  "second_opinion": null,
+  "criteria": [
+    "c1",
+    "c2"
+  ],
+  "coverage": {
+    "producer": null,
+    "critic": [],
+    "final": {
+      "rows_covered": 0,
+      "criteria_covered": 0,
+      "complete": false
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.000603728235,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-15T07-17-32-888Z/gauntlet/protocol-weirdml-2/producer-r1.json",
+      "output_sha256": "5901190bd1a85a37acee0e1c29a051a897c99929d1ebeba47251e059285145ec",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.036,
+        "output_per_1m": 0.8999999999999999,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 3119,
+        "completion_tokens": 3270,
+        "total_tokens": 6389,
+        "cost": 0.000603728235,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0006098265,
+          "upstream_inference_prompt_cost": 0.0001356765,
+          "upstream_inference_completions_cost": 0.00047415
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 3014,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 2,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 2,
+      "cost_usd": 0.000202821795,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-15T07-17-32-888Z/gauntlet/protocol-weirdml-2/producer-r2.json",
+      "output_sha256": "8503f9f5156fff3b12f1804e5e8a89c7e8246e90f34127a354e42ad766b8a2f4",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.036,
+        "output_per_1m": 0.8999999999999999,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 3123,
+        "completion_tokens": 476,
+        "total_tokens": 3599,
+        "cost": 0.000202821795,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0002048705,
+          "upstream_inference_prompt_cost": 0.0001358505,
+          "upstream_inference_completions_cost": 0.00006902
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 308,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 3,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 3,
+      "cost_usd": 0.0013637801925,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-15T07-17-32-888Z/gauntlet/protocol-weirdml-2/producer-r3.json",
+      "output_sha256": "0a9962c2e2be0bb6527180928495f355970ee6c33ee48ddf13f56e5f7980d592",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.036,
+        "output_per_1m": 0.8999999999999999,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 3123,
+        "completion_tokens": 1483,
+        "total_tokens": 4606,
+        "cost": 0.0013637801925,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 2811,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.00137755575,
+          "upstream_inference_prompt_cost": 0.00004285575,
+          "upstream_inference_completions_cost": 0.0013347
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1245,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

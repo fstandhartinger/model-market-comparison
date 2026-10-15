@@ -1,0 +1,15 @@
+{
+  "artifact_id": "protocol-arc-agi-2",
+  "artifact_sha256": "4def015e2ee7af9204caf82a96e34ed82c8f210c181e369fb11fb2e504cc1d29",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["arc-agi::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "The packet does not include the primary protocol excerpt text itself, so I cannot directly verify the protocol's exact wording for registry version, metric, units, range, successor naming, or the absence/presence of a published release identifier. I reviewed only the candidate row fields and the acceptance criteria's supplied summaries; where the excerpt is absent, the criteria's own rules (e.g., null bounds never contradicted, absent successor never contradicts superseded_by:null) are applied."
+  ],
+  "missing_evidence": [],
+  "coverage_checked": ["arc-agi::2","c1","c2"]
+}

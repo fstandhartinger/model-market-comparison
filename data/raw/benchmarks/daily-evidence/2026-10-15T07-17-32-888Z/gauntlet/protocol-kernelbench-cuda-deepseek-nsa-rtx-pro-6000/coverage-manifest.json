@@ -1,0 +1,86 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000",
+  "rounds_used": 3,
+  "rows": {
+    "total": 1,
+    "accepted": [],
+    "quarantined": [
+      "kernelbench-cuda-deepseek-nsa::rtx-pro-6000"
+    ]
+  },
+  "producer_flagged": [],
+  "second_opinion": null,
+  "criteria": [
+    "c1",
+    "c2"
+  ],
+  "coverage": {
+    "producer": null,
+    "critic": [],
+    "final": {
+      "rows_covered": 0,
+      "criteria_covered": 0,
+      "complete": false
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.00152756604,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-15T07-17-32-888Z/gauntlet/protocol-kernelbench-cuda-deepseek-nsa-rtx-pro-6000/producer-r1.json",
+      "output_sha256": "da081a476848e5016a801f0802bb4ad51e0a0cdc482f1b2e7f15aae947b29abc",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.036,
+        "output_per_1m": 0.8999999999999999,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 23127,
+        "completion_tokens": 1419,
+        "total_tokens": 24546,
+        "cost": 0.00152756604,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 22896,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.001542996,
+          "upstream_inference_prompt_cost": 0.000265896,
+          "upstream_inference_completions_cost": 0.0012771
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1231,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

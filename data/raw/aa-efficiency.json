@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-10-14T04:22:25.015Z",
+  "collected_at": "2026-10-15T07:28:51.690Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-10-14T04:22:24.298Z",
+      "fetched_at": "2026-10-15T07:28:50.724Z",
       "http_status": 200,
-      "bytes": 4182427,
-      "sha256": "310804ebd5dfd40c6b3ae32d6e038c7f33bbea3d0888c54485928e700963c2db"
+      "bytes": 4207355,
+      "sha256": "5d238b3a89e41ea5dd03d7fc12cb136706559bb9479eddcfa627758aa0ebf67d"
     }
   ],
   "coverage": {
-    "published_rows": 205,
+    "published_rows": 211,
     "scored_denominator": 690,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 205,
+  "count": 211,
   "rows": [
     {
       "source_id": "8215372b-66ff-457b-855e-e8abeafc9571",
@@ -1479,6 +1479,28 @@
       }
     },
     {
+      "source_id": "d80eb0f1-f62e-4d31-99d2-7a925eb126b0",
+      "slug": "gemma-4-e4b",
+      "name": "Gemma 4 E4B (Reasoning)",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 3399.0764105962685,
+        "answer": 5597.225544279264,
+        "output": 8996.301954875533
+      },
+      "canonical_token_counts": {
+        "input": 632584365,
+        "output": 20269259,
+        "answer": 8431900,
+        "reasoning": 11837359
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 31.209052338815148,
+        "reasoning_output_share": 0.3778304049425713
+      }
+    },
+    {
       "source_id": "5aa1c578-af76-4b91-8699-cdd43582b3af",
       "slug": "glm-5-1",
       "name": "GLM-5.1 (Reasoning)",
@@ -2672,20 +2694,20 @@
       "name": "Granite 4.2 3B",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 11209.258357044097,
-        "answer": 7431.842649095959,
-        "output": 18641.101006140056
+        "reasoning": 11211.272447953186,
+        "answer": 7436.713103641413,
+        "output": 18647.9855515946
       },
       "canonical_token_counts": {
-        "input": 392253757,
-        "output": 92062317,
-        "answer": 12867888,
-        "reasoning": 79194429
+        "input": 392525057,
+        "output": 92077463,
+        "answer": 12878603,
+        "reasoning": 79198860
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 4.260741743008706,
-        "reasoning_output_share": 0.6013195440200642
+        "input_output_ratio": 4.262987317537191,
+        "reasoning_output_share": 0.601205552038542
       }
     },
     {
@@ -3310,20 +3332,64 @@
       "name": "Ling 3.1 Flash",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 67054.38788056168,
-        "answer": 35085.868096260834,
-        "output": 102140.25597682252
+        "reasoning": 66992.4896987435,
+        "answer": 34994.746732624466,
+        "output": 101987.23643136797
       },
       "canonical_token_counts": {
-        "input": 9047462562,
-        "output": 220846020,
-        "answer": 51044008,
-        "reasoning": 169802012
+        "input": 9000777943,
+        "output": 220509377,
+        "answer": 50843541,
+        "reasoning": 169665836
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 40.967288258126636,
-        "reasoning_output_share": 0.656493242936238
+        "input_output_ratio": 40.81811878231373,
+        "reasoning_output_share": 0.6568713109882717
+      }
+    },
+    {
+      "source_id": "922c69c7-9037-43c6-8bcf-a1c555e7f3eb",
+      "slug": "llama-4-maverick",
+      "name": "Llama 4 Maverick",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 0,
+        "answer": 2047.2595761136122,
+        "output": 2047.2595761136122
+      },
+      "canonical_token_counts": {
+        "input": 157038687,
+        "output": 5130370,
+        "answer": 5130370,
+        "reasoning": 0
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 30.609622113024987,
+        "reasoning_output_share": 0
+      }
+    },
+    {
+      "source_id": "adf9a85e-abc3-4f28-937b-db6655cc5238",
+      "slug": "llama-4-scout",
+      "name": "Llama 4 Scout",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 0,
+        "answer": 1918.1080615755395,
+        "output": 1918.1080615755395
+      },
+      "canonical_token_counts": {
+        "input": 394365542,
+        "output": 3901118,
+        "answer": 3901118,
+        "reasoning": 0
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 101.09039049831355,
+        "reasoning_output_share": 0
       }
     },
     {
@@ -3349,6 +3415,28 @@
       }
     },
     {
+      "source_id": "016d330a-2141-4afa-b2fc-62b314423dc1",
+      "slug": "mercury-2",
+      "name": "Mercury 2",
+      "variant": "high",
+      "tokens_per_task": {
+        "reasoning": 21638.208348551725,
+        "answer": 4517.518628698067,
+        "output": 26155.726977249793
+      },
+      "canonical_token_counts": {
+        "input": 682464132,
+        "output": 101026962,
+        "answer": 6694301,
+        "reasoning": 94332661
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 6.755267291913618,
+        "reasoning_output_share": 0.827283767236621
+      }
+    },
+    {
       "source_id": "765c9f31-95ec-4f14-900a-80614c3b0777",
       "slug": "mercury-2-5",
       "name": "Mercury 2.5",
@@ -3368,6 +3456,28 @@
         "basis": "derived",
         "input_output_ratio": 31.171760020303463,
         "reasoning_output_share": 0.9274428620200573
+      }
+    },
+    {
+      "source_id": "22d09131-343b-4adf-8760-533e20a2155f",
+      "slug": "mimo-v2-5-0424",
+      "name": "MiMo-V2.5",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 20004.277476841482,
+        "answer": 10922.655836241394,
+        "output": 30926.933313082875
+      },
+      "canonical_token_counts": {
+        "input": 1387638898,
+        "output": 94845810,
+        "answer": 18821617,
+        "reasoning": 76024193
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 14.630471266996402,
+        "reasoning_output_share": 0.6468238306828555
       }
     },
     {
@@ -3675,6 +3785,28 @@
       "derived": {
         "basis": "derived",
         "input_output_ratio": 44.36573968294336,
+        "reasoning_output_share": 0
+      }
+    },
+    {
+      "source_id": "43da3718-3d6e-40dd-901a-05664179ff7f",
+      "slug": "mistral-small-3-2",
+      "name": "Mistral Small 3.2",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 0,
+        "answer": 7146.8895730909935,
+        "output": 7146.8895730909935
+      },
+      "canonical_token_counts": {
+        "input": 1599490699,
+        "output": 9088359,
+        "answer": 9088359,
+        "reasoning": 0
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 175.99334478314512,
         "reasoning_output_share": 0
       }
     },
@@ -4234,20 +4366,20 @@
       "name": "Qwen3.8 2.4T A95B",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 46717.933652372056,
-        "answer": 21884.31863254913,
-        "output": 68602.25228492118
+        "reasoning": 46637.003652372056,
+        "answer": 21878.01163254913,
+        "output": 68515.01528492119
       },
       "canonical_token_counts": {
-        "input": 4532623659,
-        "output": 172217257,
-        "answer": 29374057,
-        "reasoning": 142843200
+        "input": 4532507817,
+        "output": 172130020,
+        "answer": 29367750,
+        "reasoning": 142762270
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 26.319218747050417,
-        "reasoning_output_share": 0.6809970824039648
+        "input_output_ratio": 26.331884566097187,
+        "reasoning_output_share": 0.6806829635581494
       }
     },
     {

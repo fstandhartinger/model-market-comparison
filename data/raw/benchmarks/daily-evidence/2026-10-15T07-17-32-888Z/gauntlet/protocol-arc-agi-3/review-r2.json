@@ -1,0 +1,18 @@
+{
+  "artifact_id": "protocol-arc-agi-3",
+  "artifact_sha256": "95716ef98d721e5a0c3f9c69bd5024d97b8aa40916a61e38fdf901ea9069d450",
+  "round": 2,
+  "verdict": "blocked",
+  "coverage_checked": ["arc-agi::3","c1","c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "arc-agi::3",
+      "severity": "blocker",
+      "location": "row arc-agi::3, fields version, version_guard, status, version_status, superseded_by, scoring, description",
+      "evidence": "The packet contains the candidate row and the acceptance criteria, but no primary protocol text for ARC-AGI (no registry version page, no maintainer protocol excerpt, and no owner hash-verified complete response). Criterion c1 requires checking registry version, benchmark identity, metric, units and description against the actual current primary protocol, and criterion c2 requires checking status/version_status/superseded_by against the same protocol text. The row claims version \"3\", version_status \"published\", status ",
+      "repair": "Supply the primary protocol excerpt (owner hash-verified) that names the board, its release identifier/version, metric, units, range and lifecycle/supersession so every field in row arc-agi::3 can be compared; otherwise the row cannot be verified against c1 and c2."
+}
+]
+    ,"missing_evidence":["primary protocol excerpt for ARC-AGI version 3 identity/version/metric/units and lifecycle fields"]
+}

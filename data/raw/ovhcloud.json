@@ -1,14 +1,14 @@
 {
   "source": "OVHcloud AI Endpoints",
   "region": "eu",
-  "collected_at": "2026-10-14",
+  "collected_at": "2026-10-15",
   "listing_url": "https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/",
-  "method": "scripts/fetch-ovhcloud-catalog.mjs (2026-10-14): one GET of the server-rendered AI Endpoints catalog; every card with both a '/Mtoken(input)' and a '/Mtoken(output)' EUR price is a text-generating LLM/VLM (embeddings, guards, speech, TTS and image generation have other units and are listed in skipped); curated rows kept by model_id or normalized name, new cards mapping=derived; USD = EUR × ECB daily reference rate, rounded to cents. EU-hosted, zero data retention apart from billing. See ovhcloud.method.md.",
-  "currency_note": "Original prices are EUR per 1 million tokens. USD = EUR * 1.1188, rounded to the nearest USD cent consistently across all rows. The official ECB reference-rate date is 2026-10-13, the latest rate published at collection time on 2026-10-14.",
+  "method": "scripts/fetch-ovhcloud-catalog.mjs (2026-10-15): one GET of the server-rendered AI Endpoints catalog; every card with both a '/Mtoken(input)' and a '/Mtoken(output)' EUR price is a text-generating LLM/VLM (embeddings, guards, speech, TTS and image generation have other units and are listed in skipped); curated rows kept by model_id or normalized name, new cards mapping=derived; USD = EUR × ECB daily reference rate, rounded to cents. EU-hosted, zero data retention apart from billing. See ovhcloud.method.md.",
+  "currency_note": "Original prices are EUR per 1 million tokens. USD = EUR * 1.1195, rounded to the nearest USD cent consistently across all rows. The official ECB reference-rate date is 2026-10-14, the latest rate published at collection time on 2026-10-15.",
   "usd_normalization": {
     "status": "applied",
-    "eur_to_usd": 1.1188,
-    "fx_rate_date": "2026-10-13",
+    "eur_to_usd": 1.1195,
+    "fx_rate_date": "2026-10-14",
     "source": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
     "rounding": "nearest USD cent"
   },
@@ -126,7 +126,7 @@
       "catalog_slug": "qwen-2-5-vl-72b-instruct"
     }
   ],
-  "response_sha256": "b009493d8219ce6d521d1a0dc5f692bf1d29b367821d9f90f1934232d9ced659",
+  "response_sha256": "4970dcaf4afad787bb34bfe0cd11e2e81acd1bbc8df921b01c9a4c79a5be862f",
   "skipped": [
     "Qwen3-Embedding-8B",
     "Qwen3Guard-Gen-8B",

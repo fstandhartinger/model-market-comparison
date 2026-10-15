@@ -1,0 +1,86 @@
+{
+  "started_at": "2026-10-15T08:10:29.720Z",
+  "mode": "oneshot",
+  "requested_model": "z-ai/glm-5.3-flash",
+  "producers": [],
+  "qualification": {
+    "id": "z-ai/glm-5.3-flash",
+    "family": "z-ai",
+    "free": false,
+    "input_per_1m": 0.036,
+    "output_per_1m": 0.8999999999999999,
+    "context": 1048576,
+    "aa_intelligence_index": 41.8,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "glm-5.3-flash::default"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "glm-5.3-flash::default",
+        "index": 41.8
+      }
+    ]
+  },
+  "input_sha256": "8c26e1c5a743a456bb45b1248e0400429a23776e8bb243d9953ef970c491ae50",
+  "route": "openrouter",
+  "attempt": 2,
+  "free_route_role": "critic",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [
+    "deepseek/deepseek-v4-flash-0731",
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "hard_excluded_models": [],
+  "catalog": {
+    "source": "run-cache",
+    "fetched_at": "2026-10-15T07:30:52.849Z"
+  },
+  "request_limits": {
+    "max_tokens": 16384,
+    "timeout_seconds": 600,
+    "input_bytes": 27834
+  },
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "ignored_providers": [
+    "Wafer"
+  ],
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "z-ai/glm-5.3-flash",
+  "usage": {
+    "prompt_tokens": 7376,
+    "completion_tokens": 334,
+    "total_tokens": 7710,
+    "cost": 0.000403217595,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 6418,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0004072905,
+      "upstream_inference_prompt_cost": 0.0001066905,
+      "upstream_inference_completions_cost": 0.0003006
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 186,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "provider": "OpenInference",
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "session_id": null,
+  "finished_at": "2026-10-15T08:10:55.167Z",
+  "output_sha256": "61fc8e6b5c6694b7f9f36123e3c488f118a8f75b262af77f5ad7149119c9514c"
+}
