@@ -11,6 +11,7 @@ import { writeFile, rename, rm } from 'node:fs/promises';
 import { imageEvidence } from './worker-images.mjs';
 import { loadExclusions, ignoredProvidersFor } from './worker-endpoint-exclusions.mjs';
 import { exportSession } from './worker-export.mjs';
+import { completionDispatcher } from './worker-http.mjs';
 const exec = promisify(execFile);
 const REPO = fileURLToPath(new URL('../../../', import.meta.url));
 const HELP = `worker.sh [options] "task"
@@ -264,7 +265,7 @@ try {
     result = await agentCall(task, options.timeout);
   } else if (chosen.transport === 'router') {
     const response = await fetch(`${(process.env.BH_LLM_ROUTER_URL || 'http://127.0.0.1:4010').replace(/\/$/, '')}/v1/chat/completions`, {
-      method: 'POST', signal: AbortSignal.timeout(options.timeout * 1000),
+      method: 'POST', signal: AbortSignal.timeout(options.timeout * 1000), dispatcher: completionDispatcher(options.timeout),
       headers: { Authorization: `Bearer ${process.env.LLM_ROUTER_MASTER_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ model: chosen.router_model, max_tokens: options.maxTokens, ...(reasoning ? { reasoning_effort: reasoning.effort } : {}), ...(responseFormat ? { response_format: responseFormat } : {}),
         messages: [{ role: 'system', content: system }, { role: 'user', content: task }] }),
@@ -282,7 +283,7 @@ try {
     const key = process.env.OPEN_ROUTER_API_KEY || process.env.OPENROUTER_API_KEY;
     if (!key) throw new Error('OPEN_ROUTER_API_KEY is missing');
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST', signal: AbortSignal.timeout(options.timeout * 1000),
+      method: 'POST', signal: AbortSignal.timeout(options.timeout * 1000), dispatcher: completionDispatcher(options.timeout),
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', 'HTTP-Referer': 'https://benchmarkheaven.com', 'X-Title': 'Benchmark Heaven QA' },
       body: JSON.stringify({ model: chosen.id, max_tokens: options.maxTokens, ...(reasoning ? { reasoning } : {}), ...(responseFormat ? { response_format: responseFormat } : {}), provider: { sort: 'price', ...(ignoredProviders.length ? { ignore: ignoredProviders } : {}), ...(responseFormat ? { require_parameters: true } : {}), ...(Number.isFinite(options.maxPricePer1M) ? { max_price: { prompt: options.maxPricePer1M, completion: options.maxPricePer1M } } : {}) }, messages: [{ role: 'system', content: system }, { role: 'user', content: screenshots.parts.length ? [{ type: 'text', text: task }, ...screenshots.parts] : task }] }),
     });
