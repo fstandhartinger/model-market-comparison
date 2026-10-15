@@ -30,6 +30,7 @@ function scriptedRunner(producers, calls, critics = []) {
       const p = producers[producerCall++];
       model = p.model;
       object = { rows: [{ id: 'or', status: p.flag ? 'mismatch' : 'match', note: p.flag ? 'staged pricing omits discount:0 (false claim)' : 'every compared field matches the primary' }] };
+      if (p.noNote) delete object.rows[0].note;
     }
     const body = JSON.stringify(object) + '\n';
     await writeFile(out, body);
@@ -136,5 +137,25 @@ test('regression (review of #203): only round 1 can start a second opinion', asy
     const result = await reviewArtifact({ runDir: dir, artifactId: 'late', rows, sources, criteria: ['c1'], runner, secondOpinion: true });
     assert.equal(result.accepted, false);
     assert.equal(result.second_opinion, null);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
+test('regression (2026-10-15 01:32 run, da): a second-opinion match without a note is a pass; a flag without a note stays malformed', async () => {
+  // Measured: z-ai/glm-5.3-flash answered both second-opinion rounds of the core `da` contract with exactly
+  // {"rows":{"da":{"status":"match"}}} and the run failed on "Malformed producer audit row".
+  const dir = await mkdtemp(join(tmpdir(), 'bh-second-opinion-nonote-'));
+  try {
+    const calls = [];
+    const runner = scriptedRunner([{ model: 'deepseek/fixture', flag: true }, { model: 'z-ai/glm-fixture', flag: false, noNote: true }], calls);
+    const result = await reviewArtifact({ runDir: dir, artifactId: 'live-contract-da', rows, sources, criteria: ['c1'], runner, secondOpinion: true });
+    assert.equal(result.accepted, true, result.errors.join(' | '));
+    assert.equal(calls.length, 4);
+    assert.match(result.second_opinion.outcome, /^accepted/);
+
+    const flagCalls = [];
+    const flagRunner = scriptedRunner([{ model: 'deepseek/fixture', flag: true, noNote: true }, { model: 'deepseek/fixture', flag: true, noNote: true }, { model: 'deepseek/fixture', flag: true, noNote: true }], flagCalls);
+    const flagged = await reviewArtifact({ runDir: dir, artifactId: 'flag-without-note', rows, sources, criteria: ['c1'], runner: flagRunner, secondOpinion: true });
+    assert.equal(flagged.accepted, false);
+    assert.match(flagged.errors.join(' '), /Malformed producer audit row/);
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
