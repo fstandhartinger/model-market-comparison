@@ -1,0 +1,1224 @@
+{
+ "benchmark": "ImageJevBench",
+ "track": "box",
+ "revision": "box-v0.1.0",
+ "status": "preview",
+ "built_utc": "2026-10-14T23:07:34+00:00",
+ "measured_utc_date": "2026-10-14",
+ "headline": "Box Capability = mean of Box Intelligence (100 x mean IoU) and Calibration (100 x (1 - ECE/0.5), event IoU >= 0.5)",
+ "ranking_floor": {
+  "box_intelligence": 24.162541016510666,
+  "rule": "ranked only with Box Intelligence >= 2x the better baseline and >= 90 % valid answers"
+ },
+ "items": {
+  "public": 300,
+  "sealed": 546,
+  "families": {
+   "coco": 200,
+   "doc": 50,
+   "ui": 50
+  },
+  "kinds": {
+   "single": 80,
+   "ref": 70,
+   "small": 50,
+   "doc": 50,
+   "ui": 50
+  },
+  "sizes": {
+   "small": 122,
+   "medium": 97,
+   "large": 81
+  },
+  "items_sha256": "883f53c86c80962ca4f09d5efabc2d41f46259c3069a4c6a3753fc892374bcfc"
+ },
+ "systems": [
+  {
+   "key": "glm_4_6v",
+   "name": "GLM-4.6V",
+   "author": "Z.ai",
+   "licence": "MIT",
+   "params": "108B (MoE)",
+   "access": "OpenRouter",
+   "url": "https://huggingface.co/zai-org/GLM-4.6V",
+   "kind": "api",
+   "prompt": "native",
+   "model_id": "z-ai/glm-4.6v",
+   "weights": null,
+   "n": 300,
+   "valid_share": 1.0,
+   "box_intelligence": 81.28549887372604,
+   "ci95": [
+    78.83532622012997,
+    83.47178327784476
+   ],
+   "acc50": 0.92,
+   "acc75": 0.7333333333333333,
+   "ece": 0.011766666666669517,
+   "calibration": 97.64666666666609,
+   "confidence_coverage": 1.0,
+   "auroc": 0.6666666666666666,
+   "capability": 89.46608277019607,
+   "p50_s": 5.808364709489979,
+   "p95_s": 8.899528580979677,
+   "cost_per_1000": 0.3161614995000001,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 73.43762307762117,
+     "acc_at_0_5": 0.82
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 82.78633453476442,
+     "acc_at_0_5": 0.9428571428571428
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 90.89885608800128,
+     "acc_at_0_5": 0.9875
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 72.0204480041792,
+     "acc_at_0_5": 0.86
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 80.91588407108378,
+     "acc_at_0_5": 0.94
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 93.8366579335635,
+     "acc_at_0_5": 1.0
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 82.13412856665082,
+     "acc_at_0_5": 0.8969072164948454
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 72.2776221191315,
+     "acc_at_0_5": 0.8852459016393442
+    }
+   },
+   "ranked": true,
+   "rank": 1
+  },
+  {
+   "key": "qwen3_vl_32b",
+   "name": "Qwen3-VL-32B Instruct",
+   "author": "Qwen (Alibaba)",
+   "licence": "Apache-2.0",
+   "params": "32B",
+   "access": "self-hosted vLLM",
+   "url": "https://huggingface.co/Qwen/Qwen3-VL-32B-Instruct",
+   "kind": "gpu",
+   "prompt": "native",
+   "model_id": "qwen3_vl_32b",
+   "weights": {
+    "repo": "Qwen/Qwen3-VL-32B-Instruct",
+    "revision": "0cfaf48183f594c314753d30a4c4974bc75f3ccb"
+   },
+   "n": 300,
+   "valid_share": 1.0,
+   "box_intelligence": 80.11615024843671,
+   "ci95": [
+    77.4803422738047,
+    82.59509899966024
+   ],
+   "acc50": 0.8966666666666666,
+   "acc75": 0.7466666666666667,
+   "ece": 0.04789999999999842,
+   "calibration": 90.42000000000031,
+   "confidence_coverage": 1.0,
+   "auroc": 0.5957548866770596,
+   "capability": 85.26807512421851,
+   "p50_s": 1.8014028519392014,
+   "p95_s": 1.9475307618267834,
+   "cost_per_1000": 0.5989338702802565,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 65.68848834293206,
+     "acc_at_0_5": 0.8
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 84.22650772750951,
+     "acc_at_0_5": 0.9428571428571428
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 91.66561374787038,
+     "acc_at_0_5": 0.9875
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 67.36448906680025,
+     "acc_at_0_5": 0.76
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 83.06183126578136,
+     "acc_at_0_5": 0.92
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 93.79393250444066,
+     "acc_at_0_5": 1.0
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 84.5970938432679,
+     "acc_at_0_5": 0.9381443298969072
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 67.47228228585492,
+     "acc_at_0_5": 0.7950819672131147
+    }
+   },
+   "ranked": true,
+   "rank": 2
+  },
+  {
+   "key": "gemma_4_31b",
+   "name": "Gemma 4 31B IT",
+   "author": "Google",
+   "licence": "Apache-2.0",
+   "params": "31B",
+   "access": "OpenRouter",
+   "url": "https://huggingface.co/google/gemma-4-31B-it",
+   "kind": "api",
+   "prompt": "native",
+   "model_id": "google/gemma-4-31b-it",
+   "weights": null,
+   "n": 300,
+   "valid_share": 0.9933333333333333,
+   "box_intelligence": 76.32259882919408,
+   "ci95": [
+    73.54539863974522,
+    78.80264468742375
+   ],
+   "acc50": 0.8766666666666667,
+   "acc75": 0.6633333333333333,
+   "ece": 0.1146666666666668,
+   "calibration": 76.55288888888886,
+   "confidence_coverage": 0.9933333333333333,
+   "auroc": 0.6450005138218066,
+   "capability": 76.43774385904146,
+   "p50_s": 6.433462661501835,
+   "p95_s": 20.73641475199838,
+   "cost_per_1000": 0.11708046900000002,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 66.9703947837003,
+     "acc_at_0_5": 0.8
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 80.98771892234701,
+     "acc_at_0_5": 0.9285714285714286
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 89.15030301816772,
+     "acc_at_0_5": 0.975
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 61.58262090504059,
+     "acc_at_0_5": 0.76
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 73.35928596606925,
+     "acc_at_0_5": 0.84
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 92.60025219318769,
+     "acc_at_0_5": 1.0
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 78.70315527023776,
+     "acc_at_0_5": 0.8865979381443299
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 63.622566884401245,
+     "acc_at_0_5": 0.7868852459016393
+    }
+   },
+   "ranked": true,
+   "rank": 3
+  },
+  {
+   "key": "qwen3_vl_235b",
+   "name": "Qwen3-VL-235B-A22B Instruct",
+   "author": "Qwen (Alibaba)",
+   "licence": "Apache-2.0",
+   "params": "235B (22B active)",
+   "access": "OpenRouter",
+   "url": "https://huggingface.co/Qwen/Qwen3-VL-235B-A22B-Instruct",
+   "kind": "api",
+   "prompt": "native",
+   "model_id": "qwen/qwen3-vl-235b-a22b-instruct",
+   "weights": null,
+   "n": 300,
+   "valid_share": 1.0,
+   "box_intelligence": 77.2817813832348,
+   "ci95": [
+    74.31474376421272,
+    80.17349698289999
+   ],
+   "acc50": 0.84,
+   "acc75": 0.71,
+   "ece": 0.12653333333333253,
+   "calibration": 74.6933333333335,
+   "confidence_coverage": 1.0,
+   "auroc": 0.580191798941799,
+   "capability": 75.98755735828415,
+   "p50_s": 1.7170967895071954,
+   "p95_s": 3.4287054130109027,
+   "cost_per_1000": 0.16639916699999988,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 49.42188320921633,
+     "acc_at_0_5": 0.46
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 82.43082211362972,
+     "acc_at_0_5": 0.9142857142857143
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 90.9948944290644,
+     "acc_at_0_5": 0.9875
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 74.95104212085506,
+     "acc_at_0_5": 0.88
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 78.32278092375292,
+     "acc_at_0_5": 0.84
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 93.27343218968669,
+     "acc_at_0_5": 1.0
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 79.04739122734254,
+     "acc_at_0_5": 0.845360824742268
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 65.26056933240652,
+     "acc_at_0_5": 0.7295081967213115
+    }
+   },
+   "ranked": true,
+   "rank": 4
+  },
+  {
+   "key": "qwen3_vl_30b",
+   "name": "Qwen3-VL-30B-A3B Instruct",
+   "author": "Qwen (Alibaba)",
+   "licence": "Apache-2.0",
+   "params": "30B (3B active)",
+   "access": "OpenRouter",
+   "url": "https://huggingface.co/Qwen/Qwen3-VL-30B-A3B-Instruct",
+   "kind": "api",
+   "prompt": "native",
+   "model_id": "qwen/qwen3-vl-30b-a3b-instruct",
+   "weights": null,
+   "n": 300,
+   "valid_share": 1.0,
+   "box_intelligence": 74.92836171522477,
+   "ci95": [
+    71.92340575622389,
+    77.72316119471775
+   ],
+   "acc50": 0.8433333333333334,
+   "acc75": 0.66,
+   "ece": 0.1160666666666653,
+   "calibration": 76.78666666666693,
+   "confidence_coverage": 1.0,
+   "auroc": 0.5410814902026743,
+   "capability": 75.85751419094585,
+   "p50_s": 3.2780412480060477,
+   "p95_s": 7.499613147985656,
+   "cost_per_1000": 0.12026226300000002,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 59.57013998496218,
+     "acc_at_0_5": 0.62
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 79.33793556202227,
+     "acc_at_0_5": 0.9285714285714286
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 88.95378129699951,
+     "acc_at_0_5": 0.9875
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 64.3103195254,
+     "acc_at_0_5": 0.78
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 72.29055091895604,
+     "acc_at_0_5": 0.78
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 90.83873609895527,
+     "acc_at_0_5": 1.0
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 79.77840778939664,
+     "acc_at_0_5": 0.8865979381443299
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 60.5087322539392,
+     "acc_at_0_5": 0.7049180327868853
+    }
+   },
+   "ranked": true,
+   "rank": 5
+  },
+  {
+   "key": "jev_1_14",
+   "name": "Jev 1.14.0",
+   "author": "TypeSafe",
+   "licence": "Proprietary API",
+   "params": null,
+   "access": "TypeSafe API, native box question",
+   "url": "https://docs.typesafe.ai/primitives/box",
+   "kind": "api",
+   "prompt": "native",
+   "model_id": "jev-1.14.0",
+   "weights": null,
+   "n": 300,
+   "valid_share": 0.9966666666666667,
+   "box_intelligence": 62.82427847960023,
+   "ci95": [
+    59.32137088004486,
+    66.20925072356194
+   ],
+   "acc50": 0.6966666666666667,
+   "acc75": 0.47,
+   "ece": 0.05556666666666666,
+   "calibration": 88.59037777777779,
+   "confidence_coverage": 0.9966666666666667,
+   "auroc": 0.7198065092801935,
+   "capability": 75.70732812868901,
+   "p50_s": 0.33168782548455056,
+   "p95_s": 0.6919217179820407,
+   "cost_per_1000": 0.05684159197324409,
+   "cost_coverage": 0.9966666666666667,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 53.964062889724254,
+     "acc_at_0_5": 0.58
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 56.73236665326683,
+     "acc_at_0_5": 0.6142857142857143
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 86.62632935189366,
+     "acc_at_0_5": 0.9875
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 47.15406377999627,
+     "acc_at_0_5": 0.5
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 57.80010393027766,
+     "acc_at_0_5": 0.66
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 85.21239400218174,
+     "acc_at_0_5": 0.9629629629629629
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 69.62222623808888,
+     "acc_at_0_5": 0.8041237113402062
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 42.55511216892401,
+     "acc_at_0_5": 0.4344262295081967
+    }
+   },
+   "ranked": true,
+   "rank": 6
+  },
+  {
+   "key": "qwen3_5_397b",
+   "name": "Qwen3.5-397B-A17B",
+   "author": "Qwen (Alibaba)",
+   "licence": "Apache-2.0",
+   "params": "397B (17B active)",
+   "access": "OpenRouter",
+   "url": "https://huggingface.co/Qwen/Qwen3.5-397B-A17B",
+   "kind": "api",
+   "prompt": "native",
+   "model_id": "qwen/qwen3.5-397b-a17b",
+   "weights": null,
+   "n": 300,
+   "valid_share": 0.9866666666666667,
+   "box_intelligence": 74.33170662258547,
+   "ci95": [
+    71.30685482712566,
+    77.35269612798686
+   ],
+   "acc50": 0.84,
+   "acc75": 0.6566666666666666,
+   "ece": 0.1170666666666647,
+   "calibration": 75.05493333333371,
+   "confidence_coverage": 0.98,
+   "auroc": 0.593667328042328,
+   "capability": 74.69331997795959,
+   "p50_s": 4.676380914504989,
+   "p95_s": 18.390767933015013,
+   "cost_per_1000": 0.8348301389999999,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 55.54315357116288,
+     "acc_at_0_5": 0.62
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 79.89615330970892,
+     "acc_at_0_5": 0.9285714285714286
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 86.93769038596044,
+     "acc_at_0_5": 0.95
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 61.980013241429305,
+     "acc_at_0_5": 0.72
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 77.51215367179157,
+     "acc_at_0_5": 0.88
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 88.39906448859074,
+     "acc_at_0_5": 0.9753086419753086
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 75.4106729361947,
+     "acc_at_0_5": 0.8247422680412371
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 64.13403679007301,
+     "acc_at_0_5": 0.7622950819672131
+    }
+   },
+   "ranked": true,
+   "rank": 7
+  },
+  {
+   "key": "qwen3_vl_8b",
+   "name": "Qwen3-VL-8B Instruct",
+   "author": "Qwen (Alibaba)",
+   "licence": "Apache-2.0",
+   "params": "8B",
+   "access": "OpenRouter",
+   "url": "https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct",
+   "kind": "api",
+   "prompt": "native",
+   "model_id": "qwen/qwen3-vl-8b-instruct",
+   "weights": null,
+   "n": 300,
+   "valid_share": 1.0,
+   "box_intelligence": 75.80702525680674,
+   "ci95": [
+    72.5829451788161,
+    78.81529485365284
+   ],
+   "acc50": 0.8266666666666667,
+   "acc75": 0.6833333333333333,
+   "ece": 0.15123333333333255,
+   "calibration": 69.75333333333349,
+   "confidence_coverage": 1.0,
+   "auroc": 0.5462934243176178,
+   "capability": 72.78017929507011,
+   "p50_s": 1.2423333774931962,
+   "p95_s": 2.6726775180140976,
+   "cost_per_1000": 0.1536191249999999,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 51.17918791480532,
+     "acc_at_0_5": 0.5
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 79.59348863180588,
+     "acc_at_0_5": 0.8714285714285714
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 90.49494278359671,
+     "acc_at_0_5": 0.975
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 71.90701791796143,
+     "acc_at_0_5": 0.84
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 75.53315316979051,
+     "acc_at_0_5": 0.84
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 92.83745693474938,
+     "acc_at_0_5": 0.9876543209876543
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 80.09171920031011,
+     "acc_at_0_5": 0.865979381443299
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 61.09325248276415,
+     "acc_at_0_5": 0.6885245901639344
+    }
+   },
+   "ranked": true,
+   "rank": 8
+  },
+  {
+   "key": "qwen3_6_35b",
+   "name": "Qwen3.6-35B-A3B",
+   "author": "Qwen (Alibaba)",
+   "licence": "Apache-2.0",
+   "params": "35B (3B active)",
+   "access": "OpenRouter",
+   "url": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B",
+   "kind": "api",
+   "prompt": "native",
+   "model_id": "qwen/qwen3.6-35b-a3b",
+   "weights": null,
+   "n": 300,
+   "valid_share": 0.9733333333333334,
+   "box_intelligence": 67.55582672201157,
+   "ci95": [
+    63.78836857978121,
+    71.1866280236559
+   ],
+   "acc50": 0.7466666666666667,
+   "acc75": 0.59,
+   "ece": 0.1354666666666635,
+   "calibration": 59.297422222222735,
+   "confidence_coverage": 0.8133333333333334,
+   "auroc": 0.7258576127819549,
+   "capability": 63.426624472117155,
+   "p50_s": 3.122138021499268,
+   "p95_s": 15.526060158008477,
+   "cost_per_1000": 0.2088686259,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 35.93278454221598,
+     "acc_at_0_5": 0.38
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 79.8152719405627,
+     "acc_at_0_5": 0.8857142857142857
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 88.29302176131692,
+     "acc_at_0_5": 0.9625
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 59.87216968325684,
+     "acc_at_0_5": 0.72
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 56.51979057170187,
+     "acc_at_0_5": 0.6
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 89.52683759211878,
+     "acc_at_0_5": 0.9753086419753086
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 68.71482361698466,
+     "acc_at_0_5": 0.7628865979381443
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 52.047018695035696,
+     "acc_at_0_5": 0.5819672131147541
+    }
+   },
+   "ranked": true,
+   "rank": 9
+  },
+  {
+   "key": "h2o_lightning_4b_image",
+   "name": "H2O Lightning 4B (image)",
+   "author": "H2O.ai",
+   "licence": "Apache-2.0",
+   "params": "4B",
+   "access": "self-hosted vLLM",
+   "url": "https://huggingface.co/h2oai/h2o-lightning-4b/tree/image",
+   "kind": "gpu",
+   "prompt": "native",
+   "model_id": "h2o_lightning_4b_image",
+   "weights": {
+    "repo": "h2oai/h2o-lightning-4b",
+    "revision": "32f5e30528b319e71690a902fafcb7baf5c68ffb"
+   },
+   "n": 300,
+   "valid_share": 1.0,
+   "box_intelligence": 70.17402744040032,
+   "ci95": [
+    66.42204892598754,
+    73.45394260894344
+   ],
+   "acc50": 0.76,
+   "acc75": 0.63,
+   "ece": 0.20646666666666877,
+   "calibration": 54.98857777777737,
+   "confidence_coverage": 0.9366666666666666,
+   "auroc": 0.3534356725146199,
+   "capability": 62.58130260908885,
+   "p50_s": 0.351589122088626,
+   "p95_s": 0.42995201516896486,
+   "cost_per_1000": 0.12096860111279294,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 26.3792829152545,
+     "acc_at_0_5": 0.18
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 80.47969061477588,
+     "acc_at_0_5": 0.9
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 90.26304738270224,
+     "acc_at_0_5": 0.975
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 68.975705118301,
+     "acc_at_0_5": 0.8
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 68.59673393583633,
+     "acc_at_0_5": 0.76
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 89.78622171915451,
+     "acc_at_0_5": 0.9629629629629629
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 70.39464503387985,
+     "acc_at_0_5": 0.7319587628865979
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 56.977407414608344,
+     "acc_at_0_5": 0.6475409836065574
+    }
+   },
+   "ranked": true,
+   "rank": 10
+  },
+  {
+   "key": "imajev_4b",
+   "name": "Imajev-4B",
+   "author": "mohit67890",
+   "licence": "Apache-2.0",
+   "params": "4B",
+   "access": "self-hosted vLLM (adapter merged)",
+   "url": "https://huggingface.co/mohit67890/imajev-4b",
+   "kind": "gpu",
+   "prompt": "native",
+   "model_id": "imajev_4b",
+   "weights": {
+    "repo": "mohit67890/imajev-4b",
+    "revision": "c9e5f132465da85d31735ec502d5557982671a7d",
+    "base_repo": "Qwen/Qwen3.5-4B",
+    "base_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+    "merge_dtype": "float32",
+    "served_dtype": "bfloat16"
+   },
+   "n": 300,
+   "valid_share": 1.0,
+   "box_intelligence": 60.1903439523553,
+   "ci95": [
+    56.353408182033235,
+    63.687734440718366
+   ],
+   "acc50": 0.6666666666666666,
+   "acc75": 0.4633333333333333,
+   "ece": 0.19030000000000005,
+   "calibration": 34.067,
+   "confidence_coverage": 0.55,
+   "auroc": 0.595925,
+   "capability": 47.12867197617765,
+   "p50_s": 0.358127772109583,
+   "p95_s": 0.43346981378272176,
+   "cost_per_1000": 0.11785780416213032,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 22.320637096157874,
+     "acc_at_0_5": 0.14
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 72.09658326752741,
+     "acc_at_0_5": 0.8428571428571429
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 84.44870909132197,
+     "acc_at_0_5": 0.9875
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 51.43639171111253,
+     "acc_at_0_5": 0.6
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 51.33188378620819,
+     "acc_at_0_5": 0.5
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 86.7917382668487,
+     "acc_at_0_5": 0.9753086419753086
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 64.22579494272993,
+     "acc_at_0_5": 0.7319587628865979
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 39.32024816923818,
+     "acc_at_0_5": 0.4098360655737705
+    }
+   },
+   "ranked": true,
+   "rank": 11
+  },
+  {
+   "key": "qwen3_5_4b",
+   "name": "Qwen3.5-4B (base of Imajev-4B)",
+   "author": "Qwen (Alibaba)",
+   "licence": "Apache-2.0",
+   "params": "4B",
+   "access": "self-hosted vLLM",
+   "url": "https://huggingface.co/Qwen/Qwen3.5-4B",
+   "kind": "gpu",
+   "prompt": "native",
+   "model_id": "qwen3_5_4b",
+   "weights": {
+    "repo": "Qwen/Qwen3.5-4B",
+    "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+   },
+   "n": 300,
+   "valid_share": 1.0,
+   "box_intelligence": 70.00092596888695,
+   "ci95": [
+    66.65488332908642,
+    73.3773831334507
+   ],
+   "acc50": 0.7633333333333333,
+   "acc75": 0.63,
+   "ece": 0.37063299501661406,
+   "calibration": 6.727084259136069,
+   "confidence_coverage": 0.26,
+   "auroc": 0.33999630973614614,
+   "capability": 38.364005114011505,
+   "p50_s": 0.44525727606378496,
+   "p95_s": 0.6082969191484153,
+   "cost_per_1000": 0.15674731410734993,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 29.6878227239012,
+     "acc_at_0_5": 0.24
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 74.83849400464916,
+     "acc_at_0_5": 0.8428571428571429
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 90.30216521142727,
+     "acc_at_0_5": 0.975
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 67.24385147788287,
+     "acc_at_0_5": 0.78
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 73.81652566674533,
+     "acc_at_0_5": 0.82
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 89.24697846484226,
+     "acc_at_0_5": 0.9753086419753086
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 70.52330073756363,
+     "acc_at_0_5": 0.7628865979381443
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 56.80747838909998,
+     "acc_at_0_5": 0.6229508196721312
+    }
+   },
+   "ranked": true,
+   "rank": 12
+  },
+  {
+   "key": "imajev_9b",
+   "name": "Imajev-9B",
+   "author": "mohit67890",
+   "licence": "Apache-2.0",
+   "params": "9B",
+   "access": "self-hosted vLLM (adapter merged)",
+   "url": "https://huggingface.co/mohit67890/imajev-9b",
+   "kind": "gpu",
+   "prompt": "native",
+   "model_id": "imajev_9b",
+   "weights": {
+    "repo": "mohit67890/imajev-9b",
+    "revision": "1f209705e30009d32a6ff027ac56425d1ebd14e4",
+    "base_repo": "Qwen/Qwen3.5-9B",
+    "base_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+    "merge_dtype": "float32",
+    "served_dtype": "bfloat16"
+   },
+   "n": 300,
+   "valid_share": 1.0,
+   "box_intelligence": 52.659308408201,
+   "ci95": [
+    48.766212343477434,
+    56.24322893371466
+   ],
+   "acc50": 0.57,
+   "acc75": 0.37,
+   "ece": 0.26879523809523764,
+   "calibration": 22.65806666666671,
+   "confidence_coverage": 0.49,
+   "auroc": 0.49879867627725644,
+   "capability": 37.658687537433856,
+   "p50_s": 0.5128869679756463,
+   "p95_s": 0.5966248917393386,
+   "cost_per_1000": 0.15665230223590826,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 17.151668284143053,
+     "acc_at_0_5": 0.06
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 65.08755196802487,
+     "acc_at_0_5": 0.7571428571428571
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 74.78351568404747,
+     "acc_at_0_5": 0.8875
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 34.359748932955576,
+     "acc_at_0_5": 0.32
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 53.668235382396716,
+     "acc_at_0_5": 0.56
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 83.69945084576203,
+     "acc_at_0_5": 0.9753086419753086
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 54.71283731352572,
+     "acc_at_0_5": 0.6185567010309279
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 30.41796544706218,
+     "acc_at_0_5": 0.26229508196721313
+    }
+   },
+   "ranked": true,
+   "rank": 13
+  }
+ ],
+ "baselines": [
+  {
+   "key": "baseline_centre",
+   "name": "Baseline: average box",
+   "author": "ImageJevBench",
+   "licence": "\u2014",
+   "params": null,
+   "access": "no model",
+   "url": null,
+   "kind": "baseline",
+   "prompt": "native",
+   "model_id": null,
+   "weights": null,
+   "n": 300,
+   "valid_share": 1.0,
+   "box_intelligence": 9.162371093972178,
+   "ci95": [
+    7.75051404791676,
+    10.564921381496125
+   ],
+   "acc50": 0.0,
+   "acc75": 0.0,
+   "ece": 0.05000000000000026,
+   "calibration": 89.99999999999994,
+   "confidence_coverage": 1.0,
+   "auroc": null,
+   "capability": 49.58118554698606,
+   "p50_s": 0.0,
+   "p95_s": 0.0,
+   "cost_per_1000": 0.0,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 5.206432251866131,
+     "acc_at_0_5": 0.0
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 11.863145288548182,
+     "acc_at_0_5": 0.0
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 15.724218230672259,
+     "acc_at_0_5": 0.0
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 1.263257785845074,
+     "acc_at_0_5": 0.0
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 6.7373839530788056,
+     "acc_at_0_5": 0.0
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 20.6792373506899,
+     "acc_at_0_5": 0.0
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 9.471303181392326,
+     "acc_at_0_5": 0.0
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 1.2703007720550483,
+     "acc_at_0_5": 0.0
+    }
+   }
+  },
+  {
+   "key": "baseline_full",
+   "name": "Baseline: whole image",
+   "author": "ImageJevBench",
+   "licence": "\u2014",
+   "params": null,
+   "access": "no model",
+   "url": null,
+   "kind": "baseline",
+   "prompt": "native",
+   "model_id": null,
+   "weights": null,
+   "n": 300,
+   "valid_share": 1.0,
+   "box_intelligence": 12.081270508255333,
+   "ci95": [
+    10.068344521249992,
+    14.239737271272315
+   ],
+   "acc50": 0.05333333333333334,
+   "acc75": 0.016666666666666666,
+   "ece": 0.013333333333333162,
+   "calibration": 97.33333333333337,
+   "confidence_coverage": 1.0,
+   "auroc": 0.5,
+   "capability": 54.70730192079435,
+   "p50_s": 0.0,
+   "p95_s": 0.0,
+   "cost_per_1000": 0.0,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 3.5894713017860003,
+     "acc_at_0_5": 0.0
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 14.253013050075719,
+     "acc_at_0_5": 0.05714285714285714
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 23.7866043325725,
+     "acc_at_0_5": 0.15
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 0.8056466186500001,
+     "acc_at_0_5": 0.0
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 10.079719926873999,
+     "acc_at_0_5": 0.0
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 35.61351641313705,
+     "acc_at_0_5": 0.19753086419753085
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 6.636756061438145,
+     "acc_at_0_5": 0.0
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 0.786237582401639,
+     "acc_at_0_5": 0.0
+    }
+   }
+  }
+ ],
+ "not_measured": {
+  "kimi_k2_6": "reasoning model: 4096 output tokens of thinking per box at minimal effort, mostly no answer on dev (14 Oct)",
+  "mistral_small_2603": "OpenRouter returned HTTP 429 for 55 of 60 dev requests even at concurrency 1 (14 Oct 22:30Z)"
+ },
+ "notes": [
+  "Separate track: it does not change the ImageJevBench core Capability Score or ranking.",
+  "Public set only in this preview; the 546 sealed items (after quality control) are held back for official runs.",
+  "Open-weight models via OpenRouter are measured end to end through the provider; latency includes the provider.",
+  "Self-hosted models: one request at a time on one RTX PRO 6000 class GPU; cost = GPU seconds x $1.19/GPU-hour.",
+  "Chat models state their own confidence in the answer JSON; Jev returns a native confidence."
+ ]
+}
