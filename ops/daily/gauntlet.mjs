@@ -494,7 +494,12 @@ function parseProducerAudit(text, rowIds) {
   const seen = new Set();
   const flagged = new Map();
   for (const entry of rows) {
-    if (!entry || typeof entry.id !== 'string' || typeof entry.note !== 'string' || !['match', 'mismatch', 'missing_evidence'].includes(entry.status)) {
+    // 2026-10-15 (self-heal): a `match` verdict is complete without its note — the note explains a flag and is never
+    // read for a match. Both 01:32 second-opinion audits of `da` were exactly {"status":"match"} from z-ai/glm-5.3-flash
+    // and were filed as malformed, so a core source was rejected although the different-family producer had passed it.
+    // A flag (mismatch / missing_evidence) still needs its note, and a present note must still be a string.
+    const noteOk = typeof entry?.note === 'string' || (entry?.status === 'match' && entry.note === undefined);
+    if (!entry || typeof entry.id !== 'string' || !noteOk || !['match', 'mismatch', 'missing_evidence'].includes(entry.status)) {
       throw new Error('Malformed producer audit row');
     }
     if (!rowIds.has(entry.id)) throw new Error(`Producer invented row id ${entry.id}`);
