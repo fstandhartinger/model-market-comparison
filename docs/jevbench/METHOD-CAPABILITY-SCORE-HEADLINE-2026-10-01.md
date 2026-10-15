@@ -45,7 +45,8 @@ Jev 1.14.0 with images are measured rows. Excluding Jev from the image headline 
 (Jev 1.13.0 + images costs the same; TypeSafe list price USD 0.042 per 1M input tokens, images billed as input tokens), so the cost
 cap is **USD 0.31837**. The latency reference is unchanged (Jev 1.13.0 text, cap 1.233 s). Both values are frozen in the v0.3.0
 artifact (`capability_eligibility`: `cost_reference_usd_per_1000`, `cost_usd_per_1000_cap`, `latency_p50_s_cap`). The text JevBench caps are
-unchanged. Effect on v0.3.0: 48 of 59 rows qualify (30 before); the composite is unaffected because its cost axis is an absolute scale.
+unchanged. Effect on v0.3.0: 47 of 58 rows qualify (30 before); the composite is unaffected because its cost axis is an absolute scale.
+In the same release System1’s own s1-vision row was removed from ImageJevBench (own offering, Florian 15 Oct 2026).
 
 ## 3. Traffic-light bars
 

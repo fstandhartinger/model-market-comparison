@@ -26,12 +26,12 @@ test('CR-310 author label never names a base-model owner; hosted API rows say so
   const byKey = Object.fromEntries(release.ranking.map((r) => [r.key, r]));
   for (const key of ['glance_qwen3vl_4b', 'jevision', 'visual_jev_generic_baseline']) assert.equal(imageJevAuthorLabel(byKey[key]), 'Author not reported', key);
   assert.equal(imageJevAuthorLabel(byKey.jpt_4b), 'kirp (model repository owner)');
-  assert.equal(imageJevAuthorLabel(byKey['s1-vision']), 'Hosted API provider');
+  assert.equal(imageJevAuthorLabel(byKey.gemini31_flash_lite), 'Hosted API provider');
 });
 
-test('CR-310 s1-vision cost from usage receipts is measured, not announced', () => {
-  const s1 = imageJevBoardSystems(release).find((r) => r.key === 's1-vision');
-  assert.equal(s1.cost.kind, 'measured');
+test('CR-310 an OpenRouter row cost from usage receipts is measured, not announced (s1-vision left the board in CR-482)', () => {
+  const row = imageJevBoardSystems(release).find((r) => r.key === 'gemini31_flash_lite');
+  assert.equal(row.cost.kind, 'measured');
 });
 
 test('CR-310 metadata and JSON-LD derive version and count from the data', async () => {

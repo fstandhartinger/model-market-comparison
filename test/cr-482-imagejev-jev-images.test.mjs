@@ -48,7 +48,7 @@ test('CR-482 cost reference is Jev with images; composite top five is unchanged,
   const capped = release.ranking.filter(inCap).sort((a, b) => b.tracks.core.capability - a.tracks.core.capability);
   assert.deepEqual(capped.slice(0, 5).map((r) => r.key),
     ['jev_1_13_images', 'kushal_gemma4_31b_it_autoloops', 'imajev_4b', 'imajev_9b', 'surogate_rune_26b_v3']);
-  assert.equal(capped.length, 48);
+  assert.equal(capped.length, 47);
   // Wity-1 and the GPT Lunas stay out on latency, not cost
   for (const key of ['wity_1', 'gpt6_luna', 'gpt56_luna']) assert.ok(row(key).tracks.core.speed.adjusted_p50_s > e.latency_p50_s_cap, key);
   assert.match(e.rationale, /Jev would otherwise be excluded from its own headline/);
@@ -72,4 +72,16 @@ test('CR-482 every Jev + images row has aggregate-only category cells for all im
     const total = Object.values(cells.usecases).reduce((n, c) => n + c[1], 0);
     assert.equal(total, 600);
   }
+});
+
+test('CR-482 System1 s1-vision is no longer an ImageJevBench row anywhere in the published data (own offering, Florian 15 Oct 2026)', async () => {
+  assert.equal(row('s1-vision'), undefined);
+  assert.equal(release.categories.systems['s1-vision'], undefined);
+  const coverage = JSON.parse(await read('../data/raw/benchmarks/jevbench/multimodal-preview/answered-coverage-v0.3.json'));
+  assert.equal(coverage.systems['s1-vision'], undefined);
+  const ts20 = JSON.parse(await read('../data/imagejev-ts20-categories.json'));
+  assert.equal(ts20.systems['s1-vision'], undefined);
+  assert.equal(ts20.summary['s1-vision'], undefined);
+  assert.ok(!/s1-vision|System1 s1|Blink/.test(JSON.stringify(release)), 'no mention of the removed row in the published data');
+  assert.equal(release.ranking.length, 58);
 });
