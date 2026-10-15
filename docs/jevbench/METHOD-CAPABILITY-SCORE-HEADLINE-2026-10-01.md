@@ -39,6 +39,14 @@ identical to JevBench. Loosening to 3× would add 7 Jev-compatible fine-tunes th
 (2.1–2.9× cost); the general-purpose hosted LLMs (GPT-6 Luna, GPT-5.6 Luna, Gemini 3.1 Flash Lite, Gemini 3.8 Flash)
 stay outside even at 3× (6.7–64× cost).
 
+**ImageJevBench update (15 Oct 2026, CR-482, Florian):** Jev now accepts images (a documented “Dreamer-ready” preview feature), so Jev 1.13.0 and
+Jev 1.14.0 with images are measured rows. Excluding Jev from the image headline for costing more than Jev made no sense, so the
+**cost reference of ImageJevBench is Jev with images**: Jev 1.14.0 + images costs USD 0.159185 per 1,000 decisions on the core track
+(Jev 1.13.0 + images costs the same; TypeSafe list price USD 0.042 per 1M input tokens, images billed as input tokens), so the cost
+cap is **USD 0.31837**. The latency reference is unchanged (Jev 1.13.0 text, cap 1.233 s). Both values are frozen in the v0.3.0
+artifact (`capability_eligibility`: `cost_reference_usd_per_1000`, `cost_usd_per_1000_cap`, `latency_p50_s_cap`). The text JevBench caps are
+unchanged. Effect on v0.3.0: 48 of 59 rows qualify (30 before); the composite is unaffected because its cost axis is an absolute scale.
+
 ## 3. Traffic-light bars
 
 Every Capability row shows two thin bars on a shared log scale of the ratio to the anchor (0.25× … 64×):

@@ -30,18 +30,28 @@ test('CR-482 Jev + images rows: official pass 1, TypeSafe API, preview feature d
   assert.doesNotMatch(JSON.stringify(release.ranking.map((r) => r.measurement_source)), /jev114-img-1/);
 });
 
-test('CR-482 Jev + images rows sit outside the capped Capability headline and leave the top five unchanged', () => {
-  const cap = release.capability_eligibility;
-  for (const key of KEYS) {
-    const core = row(key).tracks.core;
-    assert.ok(core.cost.usd_per_1000 > cap.cost_usd_per_1000_cap, `${key} is above the frozen cost cap`);
-    assert.ok(row(key).rank > 5, `${key} is not in the composite top five`);
-  }
-  const top = release.ranking.filter((r) => r.ranked).sort((a, b) => a.rank - b.rank).slice(0, 5).map((r) => r.key);
-  assert.deepEqual(top, ['wity_1', 'imajev_4b', 'surogate_rune_26b_v3', 'kushal_gemma4_31b_it_autoloops', 'imajev_9b']);
-  const capped = release.ranking.filter((r) => r.ranked && r.tracks.core.cost.usd_per_1000 <= cap.cost_usd_per_1000_cap && r.tracks.core.speed.adjusted_p50_s <= cap.latency_p50_s_cap)
-    .sort((a, b) => b.tracks.core.capability - a.tracks.core.capability).slice(0, 5).map((r) => r.key);
-  assert.ok(!capped.some((k) => KEYS.includes(k)));
+test('CR-482 cost reference is Jev with images; composite top five is unchanged, the Capability headline top five is the reviewed one', () => {
+  const e = release.capability_eligibility;
+  const jev14 = row('jev_1_14_images').tracks.core.cost.usd_per_1000;
+  assert.equal(row('jev_1_13_images').tracks.core.cost.usd_per_1000, jev14, 'both Jev + images rows share one price');
+  assert.equal(e.cost_reference, 'jev-1.14.0 + images');
+  assert.equal(e.cost_reference_usd_per_1000, jev14);
+  assert.equal(e.cost_usd_per_1000_cap, 2 * jev14, 'cost cap = 2x the Jev-with-images price (Florian, 15 Oct 2026)');
+  // the latency reference stays Jev 1.13.0 text (v1.5.4): unchanged cap, so Wity-1 and the GPT Lunas still miss it
+  assert.equal(e.latency_p50_s_cap, 1.2329566404223442);
+  assert.equal(e.anchor, 'jev-1.13.0');
+  for (const key of KEYS) assert.ok(row(key).tracks.core.cost.usd_per_1000 <= e.cost_usd_per_1000_cap, `${key} is inside the cost cap it defines`);
+  const composite = release.ranking.filter((r) => r.ranked).sort((a, b) => a.rank - b.rank).slice(0, 5).map((r) => r.key);
+  assert.deepEqual(composite, ['wity_1', 'imajev_4b', 'surogate_rune_26b_v3', 'kushal_gemma4_31b_it_autoloops', 'imajev_9b']);
+  const inCap = (r) => r.ranked && r.tracks.core.cost.usd_per_1000 != null && r.tracks.core.cost.usd_per_1000 <= e.cost_usd_per_1000_cap
+    && r.tracks.core.speed.adjusted_p50_s <= e.latency_p50_s_cap;
+  const capped = release.ranking.filter(inCap).sort((a, b) => b.tracks.core.capability - a.tracks.core.capability);
+  assert.deepEqual(capped.slice(0, 5).map((r) => r.key),
+    ['jev_1_13_images', 'kushal_gemma4_31b_it_autoloops', 'imajev_4b', 'imajev_9b', 'surogate_rune_26b_v3']);
+  assert.equal(capped.length, 48);
+  // Wity-1 and the GPT Lunas stay out on latency, not cost
+  for (const key of ['wity_1', 'gpt6_luna', 'gpt56_luna']) assert.ok(row(key).tracks.core.speed.adjusted_p50_s > e.latency_p50_s_cap, key);
+  assert.match(e.rationale, /Jev would otherwise be excluded from its own headline/);
 });
 
 test('CR-482 the page tags the preview rows and keeps the Jev reference wording honest', async () => {
@@ -51,6 +61,7 @@ test('CR-482 the page tags the preview rows and keeps the Jev reference wording 
   assert.match(page, /Dreamer-ready/);
   assert.match(page, /15 Oct 2026 addendum/);
   assert.doesNotMatch(page, /native API accepts text only/);
+  assert.match(page, /Jev reference.{0,40}has two frozen parts/);
 });
 
 test('CR-482 every Jev + images row has aggregate-only category cells for all image types and use cases', () => {

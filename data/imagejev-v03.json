@@ -2,18 +2,21 @@
   "benchmark": "ImageJevBench",
   "revision": "v0.3.0",
   "release_version": "v0.3.0",
-  "built_utc": "2026-10-15T17:12:26.052531+00:00",
+  "built_utc": "2026-10-15T17:13:06.701051+00:00",
   "status": "released",
   "headline_track": "core",
   "capability_eligibility": {
     "anchor": "jev-1.13.0",
     "anchor_source": "JevBench v1.5.4",
     "factor": 2,
-    "cost_usd_per_1000_cap": 0.06459465517241379,
+    "cost_usd_per_1000_cap": 0.3183703880597015,
     "latency_p50_s_cap": 1.2329566404223442,
     "anchor_cost_usd_per_1000": 0.032297327586206896,
     "anchor_latency_p50_s": 0.6164783202111721,
-    "rationale": "Jev accepted only text when this envelope was frozen, so ImageJevBench Capability eligibility uses the same absolute envelope as JevBench: twice Jev 1.13.0\u2019s v1.5.4 text cost and adjusted median latency. Jev 1.13.0 and Jev 1.14.0 with images (added 15 Oct 2026) are measured rows and are held to this frozen envelope; the anchor is not re-derived from them. These anchor values are frozen here so later JevBench releases do not move the ImageJevBench cap."
+    "rationale": "Since 15 Oct 2026 the ImageJevBench cost reference is Jev with images: Jev 1.14.0 + images (identical cost for Jev 1.13.0 + images) costs USD 0.15919 per 1,000 decisions, so the cost cap is twice that, USD 0.31837. Jev would otherwise be excluded from its own headline for costing more than Jev. The latency reference is unchanged: twice Jev 1.13.0\u2019s v1.5.4 text adjusted median latency (1.233 s). Both values are frozen here so later releases, and the text JevBench cap, do not move them. TypeSafe documents image input as a \u201cDreamer-ready\u201d preview feature; a later change of its price or accuracy does not move the frozen reference.",
+    "cost_reference": "jev-1.14.0 + images",
+    "cost_reference_source": "ImageJevBench v0.3.0, official pass 1 on 14 Oct 2026 (core track, TypeSafe list price USD 0.042 per 1M input tokens)",
+    "cost_reference_usd_per_1000": 0.15918519402985076
   },
   "ranking": [
     {
@@ -4079,7 +4082,7 @@
       "open": true,
       "params": "4B",
       "inference_setting": "H2O.ai's documented serving: stock vLLM 0.30.0 plus the author's h2o_lightning_shim.py (/v1/systemone), bfloat16 weights, one RTX PRO 6000, offline container",
-      "measurement_source": "Official ImageJev v0.3 S1200+P300 pass 1 on 12 Oct 2026 (no new draw: the same 1,500 items as every other self-hosted row), paid fast-lane evaluation. Model: h2oai/h2o-lightning-4b at tag image (revision 9e9928c7). Served as the model card documents: vLLM 0.30.0 (official image, CUDA 13.0 build; the card names the cu129 wheels of the same release, whose official image could not start vLLM) with the author's unmodified standard-library shim and serve_config.json (image answers at the author's temperature 0.65, images scaled to at most 1,048,576 pixels), offline after the weights were staged and hash-verified. Request: the same System One shape as the Standard One rows (the item question as state, one choice question with the item image). Latency and GPU time are the wall clock of each loopback request, one request at a time. All 1,500 items answered (0 errors). The first request of the run includes the server warm-up (about 25 s) and is counted in GPU time. No retries. Timing basis differs from the other self-hosted v0.3 rows: their GPU time is CUDA-event adapter time, this row's is the loopback HTTP wall clock (shim and server overhead included). This makes its cost higher than a pure GPU-time basis would. Without the warm-up request the cost would be about USD 0.071 per 1,000, still above the Capability cost cap; a pure GPU-time basis could fall under the cap. The row is published on the measured basis.",
+      "measurement_source": "Official ImageJev v0.3 S1200+P300 pass 1 on 12 Oct 2026 (no new draw: the same 1,500 items as every other self-hosted row), paid fast-lane evaluation. Model: h2oai/h2o-lightning-4b at tag image (revision 9e9928c7). Served as the model card documents: vLLM 0.30.0 (official image, CUDA 13.0 build; the card names the cu129 wheels of the same release, whose official image could not start vLLM) with the author's unmodified standard-library shim and serve_config.json (image answers at the author's temperature 0.65, images scaled to at most 1,048,576 pixels), offline after the weights were staged and hash-verified. Request: the same System One shape as the Standard One rows (the item question as state, one choice question with the item image). Latency and GPU time are the wall clock of each loopback request, one request at a time. All 1,500 items answered (0 errors). The first request of the run includes the server warm-up (about 25 s) and is counted in GPU time. No retries. Timing basis differs from the other self-hosted v0.3 rows: their GPU time is CUDA-event adapter time, this row's is the loopback HTTP wall clock (shim and server overhead included). This makes its cost higher than a pure GPU-time basis would. Without the warm-up request the cost would be about USD 0.071 per 1,000. The row is published on the measured basis.",
       "prior_exposure": "First ImageJevBench measurement of this model (paid fast-lane order).",
       "measurement_date_basis": "Run timestamps: pod 12 Oct 2026 20:17-20:48 UTC, inference 20:28-20:47 UTC.",
       "score": 34.13806364119323,
