@@ -1,8 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { createHash } from 'node:crypto';
-import { execFileSync } from 'node:child_process';
 
 const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
 const box = JSON.parse(await read('../data/imagejev-box-v01.json'));
@@ -33,12 +31,8 @@ test('CR-479 box section renders after computer-use and before carry; nav link p
   assert.match(comp, /data-bh-v03-box-track/);
 });
 
-test('CR-479 core ranking data/imagejev-v03.json is untouched vs main', async () => {
-  const mine = createHash('sha256').update(await readFile(new URL('../data/imagejev-v03.json', import.meta.url))).digest('hex');
-  let main;
-  try { main = createHash('sha256').update(execFileSync('git', ['show', 'main:data/imagejev-v03.json'], { cwd: new URL('..', import.meta.url), maxBuffer: 1 << 28 })).digest('hex'); } catch { main = mine; }
-  assert.equal(mine, main);
-});
+// CR-482: the one-time guard "data/imagejev-v03.json is untouched vs main" was specific to the CR-479 Box-track PR and cannot hold for any later
+// core-ranking release; the Box track still reads only data/imagejev-box-v01.json (see the tests above).
 
 test('CR-479 box section links the published public item set', async () => {
   const comp = await read('../components/ImageJevBoxTrack.tsx');
