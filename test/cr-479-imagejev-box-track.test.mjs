@@ -39,3 +39,8 @@ test('CR-479 core ranking data/imagejev-v03.json is untouched vs main', async ()
   try { main = createHash('sha256').update(execFileSync('git', ['show', 'main:data/imagejev-v03.json'], { cwd: new URL('..', import.meta.url), maxBuffer: 1 << 28 })).digest('hex'); } catch { main = mine; }
   assert.equal(mine, main);
 });
+
+test('CR-479 box section links the published public item set', async () => {
+  const comp = await read('../components/ImageJevBoxTrack.tsx');
+  assert.match(comp, /href="https:\/\/github\.com\/fstandhartinger\/jevbench\/tree\/main\/datasets\/imagejev-box-v0\.1"/);
+});
