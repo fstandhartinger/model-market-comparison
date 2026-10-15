@@ -9,10 +9,10 @@ test('ImageJevBench v0.3.0 release data keeps the reviewed roster and top five',
   const a = JSON.parse(await read('../data/imagejev-v03.json'));
   assert.equal(a.revision, 'v0.3.0');
   assert.equal(a.status, 'released');
-  assert.equal(a.ranking.length, 57); // CR-459: + H2O-Lightning-4B (image); CR-414: + Liquid d1-3B, d1-omni-600M; CR-313: + GPT-6 Luna via OpenAI Decisions; CR-325: + Wity-1; CR-333: +6 re-measured carries, + Wity-1 reasoning off
+  assert.equal(a.ranking.length, 58); // CR-482: + Jev 1.13.0 + images, Jev 1.14.0 + images (TypeSafe, preview), - s1-vision; CR-459: + H2O-Lightning-4B (image); CR-414: + Liquid d1-3B, d1-omni-600M; CR-313: + GPT-6 Luna via OpenAI Decisions; CR-325: + Wity-1; CR-333: +6 re-measured carries, + Wity-1 reasoning off
   assert.equal(a.carried.length, 2); // CR-333 dated-carry re-run: only the two JevAny rows remain (source unavailable)
   const ranked = a.ranking.filter((row) => row.ranked).sort((x, y) => x.rank - y.rank);
-  assert.equal(ranked.length, 55);
+  assert.equal(ranked.length, 56);
   assert.deepEqual(ranked.slice(0, 5).map((row) => row.key),
     ['wity_1', 'imajev_4b', 'surogate_rune_26b_v3', 'kushal_gemma4_31b_it_autoloops', 'imajev_9b']);
   assert.ok(a.ranking.every((row) => !('predictions' in row) && !('gold' in row)), 'aggregate-only rows');
