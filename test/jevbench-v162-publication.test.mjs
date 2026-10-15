@@ -159,7 +159,8 @@ test('release history uses one isolated availability path; archived pages point 
  assert.match(renderToStaticMarkup(await hist.JevReleaseHistory()),/href="\/jev-models\/v1.6.2"/);
  await writeFile(paths.proof,'{broken');
  const html=renderToStaticMarkup(await hist.JevReleaseHistory());
- assert.ok(!html.includes('/jev-models/v1.6.2'));assert.match(html,/JevBench v1.5.7/);
+ // v1.6.20's href contains '/jev-models/v1.6.2' as a substring, so this must match the exact link
+ assert.ok(!html.includes('href="/jev-models/v1.6.2"'));assert.match(html,/JevBench v1.5.7/);
  const nav=await compiled('../components/JevBenchReleaseVersionNav.tsx',{});
  for(const active of ['v1.6.1','v1.6.0','v1.5.7','v1.5.6','v1.5.5'])assert.match(renderToStaticMarkup(await nav.JevBenchReleaseVersionNav({active})),new RegExp(`Archived release JevBench ${active.replace(/\./g,'\\.')}[^<]*</span>.*href="/jev-models"`));
 });
