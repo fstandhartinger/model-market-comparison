@@ -38,7 +38,7 @@ export function ImageJevBoxTrack() {
   <p className="mt-3">A Box question shows one image and a short description such as “the signature field” or “the rightmost truck”. The model answers with a bounding box (four edges as fractions of the image) and a confidence. This is the new <code>box</code> question type of Jev 1.14. The Box track is separate: it does not change the core ranking or Capability Score above.</p>
   <p className="bh-muted mt-2 text-sm">{it.public ?? '—'} public items{it.sealed ? <> (the {it.sealed} sealed items are held back for official runs)</> : null}
    {Object.keys(fam).length > 0 && <>: {Object.entries(fam).map(([k, v]) => `${({ coco: 'photos', doc: 'documents', ui: 'UI screenshots' } as any)[k] ?? k} ${v}`).join(', ')}</>}.
-   Measured {String(b.measured_utc_date ?? b.built_utc ?? '').slice(0, 10)} on the public set.</p>
+   Measured {String(b.measured_utc_date ?? b.built_utc ?? '').slice(0, 10)} on the public set.{' '}<a className="text-accent underline" href="https://github.com/fstandhartinger/jevbench/tree/main/datasets/imagejev-box-v0.1" target="_blank" rel="noopener noreferrer">Public item set, method and prompts</a>.</p>
   {ranked.length > 0 && <div className="bh-panel mt-4 p-4" data-bh-box-chart>
    <h3 className="font-semibold">Box Capability (ranked systems)</h3>
    <ul className="mt-3 grid gap-2">{ranked.map(s => <li key={s.key} className="grid grid-cols-[minmax(0,9rem)_1fr_3rem] items-center gap-2 text-sm sm:grid-cols-[14rem_1fr_3rem]">
