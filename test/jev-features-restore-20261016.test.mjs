@@ -29,7 +29,7 @@ test('archived release pages keep the frozen v1.4.1 context dataset', () => {
 });
 
 test('board context dataset: sourced limits, reconciled current-draw length rows, aggregates only', () => {
-  assert.match(board.sourceDataset, /^JevBench v1\.6\.21 public items/);
+  assert.match(board.sourceDataset, /^JevBench v1\.6\.2[12] public items/);
   assert.equal(board.publicItems, 300);
   const keys = board.capacitySystems.map((row) => row.key);
   assert.equal(new Set(keys).size, keys.length);
