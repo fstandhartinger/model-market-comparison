@@ -13,17 +13,19 @@ const V1618_ADDED = JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.6/j
 const V1620_ADDED = JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.20-results.json', 'utf8')).systems.filter(s => s.measured_in === 'v1.6.20').length;
 // v1.6.21 adds one measured row to the same draw (d1-ultra, priced and ranked).
 const V1621_ADDED = JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.21-results.json', 'utf8')).systems.filter(s => s.measured_in === 'v1.6.21').length;
-const COHORT_ROWS = 34 + V1617_ADDED + V1618_ADDED + V1620_ADDED + V1621_ADDED;
-// Rows the LATEST release of this draw still lists without a rank. v1.6.21 is what the cohort reader now takes;
-// subq-snap-preview stopped being one of them in v1.6.20 (its published tariff gives it a cost axis).
-const V1617_UNRANKED = JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.21-results.json', 'utf8')).systems.filter(s => ['v1.6.17', 'v1.6.18', 'v1.6.20', 'v1.6.21'].includes(s.measured_in) && !s.ranked).map(s => s.key);
+// v1.6.22 adds four measured rows to the same draw (two ranked, two listed without a rank: unpriced).
+const V1622_ADDED = JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.22-results.json', 'utf8')).systems.filter(s => s.measured_in === 'v1.6.22').length;
+const COHORT_ROWS = 34 + V1617_ADDED + V1618_ADDED + V1620_ADDED + V1621_ADDED + V1622_ADDED;
+// Rows the LATEST release of this draw still lists without a rank. v1.6.22 is what the cohort reader now takes;
+// subq-snap-preview stopped being one of them in v1.6.20 (its published tariff gives it a cost axis); v1.6.22 adds two.
+const V1617_UNRANKED = JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.22-results.json', 'utf8')).systems.filter(s => ['v1.6.17', 'v1.6.18', 'v1.6.20', 'v1.6.21', 'v1.6.22'].includes(s.measured_in) && !s.ranked).map(s => s.key);
 
 test('every cohort system joins once, from its latest release, with its draw', async () => {
   const { rows } = await readCohortRows();
   const keys = rows.map((r) => r.row.key);
   assert.equal(new Set(keys).size, keys.length);
   assert.equal(rows.length, COHORT_ROWS);
-  assert.deepEqual([...new Set(rows.map((r) => r.draw.release))].sort(), ['v1.6.21', 'v1.6.4', 'v1.6.9']);
+  assert.deepEqual([...new Set(rows.map((r) => r.draw.release))].sort(), ['v1.6.22', 'v1.6.4', 'v1.6.9']);
   assert.ok(rows.every((r) => r.draw.id && r.draw.measured_on));
 });
 
@@ -73,13 +75,13 @@ test('merged board slots ranked cohort rows by score and keeps published rows in
   for (const o of Object.keys(merged.board)) assert.ok(!merged.board[o].order.includes('reflex-instinct-0.6b'));
   // v1.6.16: vLLM-SR d3 joins the merged board as a ranked row of the regular draw, with its published numbers.
   const d3 = merged.systems.find((s) => s.key === 'vllm-sr-d3');
-  assert.equal(d3.ranked, true); assert.equal(d3.draw.release, 'v1.6.21');
+  assert.equal(d3.ranked, true); assert.equal(d3.draw.release, 'v1.6.22');
   assert.equal(d3.capability, 82.96592796157353); assert.equal(d3.scores.A, 5.569947529283843);
   assert.equal(d3.cost.usd_per_1000, 0.5463374);
   for (const o of ['A', 'B', 'C']) assert.ok(merged.board[o].order.includes('vllm-sr-d3'));
   // v1.6.17: the paid metask service-v3 row and the over-cap hosted Amos row are ranked cohort rows; SubQ Snap is listed without a rank.
   const v3 = merged.systems.find((s) => s.key === 'metask_jev_rain_31b_trained_v3');
-  assert.equal(v3.ranked, true); assert.equal(v3.draw.release, 'v1.6.21');
+  assert.equal(v3.ranked, true); assert.equal(v3.draw.release, 'v1.6.22');
   for (const o of ['A', 'B', 'C']) assert.ok(merged.board[o].order.includes('metask_jev_rain_31b_trained_v3'));
   // v1.6.20 (price-only, Florian's GO on card #17515): SubQ Snap is RANKED from its published USD 0.05/M input
   // tariff, 1.003x the official cap, so it carries a rank and a cost axis and is outside the cost-capped views.
@@ -88,15 +90,31 @@ test('merged board slots ranked cohort rows by score and keeps published rows in
   // what changes with v1.6.20 is that the row is ranked, has a cost axis and carries no not-ranked reason.
   assert.equal(subq.ranked, true); assert.equal(subq.not_ranked_because ?? null, null);
   assert.equal(subq.cost.usd_per_1000, 0.06479016666666666);
-  assert.equal(subq.draw.release, 'v1.6.21');
+  assert.equal(subq.draw.release, 'v1.6.22');
   for (const o of ['A', 'B', 'C']) assert.ok(merged.board[o].order.includes('subq-snap-preview'));
   // v1.6.21: d1-ultra joins the regular draw RANKED, priced from Liquid's public list price (USD 0.042/M input,
   // output free) over its own 638,436 input tokens, inside the official cost cap; it sits in all three board orders.
   const d1u = merged.systems.find((s) => s.key === 'liquid-d1-ultra');
-  assert.equal(d1u.ranked, true); assert.equal(d1u.not_ranked_because ?? null, null); assert.equal(d1u.draw.release, 'v1.6.21');
+  assert.equal(d1u.ranked, true); assert.equal(d1u.not_ranked_because ?? null, null); assert.equal(d1u.draw.release, 'v1.6.22');
   assert.equal(d1u.cost.usd_per_1000, 638436 * 0.042 / 1_000_000 / 1500 * 1000);
   assert.equal(d1u.capability, 80.47704277896817);
   for (const o of ['A', 'B', 'C']) assert.ok(merged.board[o].order.includes('liquid-d1-ultra'));
+  // v1.6.22: Messier One v0.4 and Nev-2B join RANKED, priced from their frozen base-model references over their own
+  // offline-counted tokens; Nemotron Deciffusion 8B v2 and Trio-Spark v1.3 join LISTED, unpriced, in no board order.
+  const ms = merged.systems.find((s) => s.key === 'messier-one-v0.4');
+  assert.equal(ms.ranked, true); assert.equal(ms.draw.release, 'v1.6.22');
+  assert.equal(ms.cost.usd_per_1000, 1000 * (1105885 * 0.030000000000000002) / 1e6 / 1500);
+  assert.equal(ms.capability, 62.443616494634156);
+  const nev = merged.systems.find((s) => s.key === 'nev-2b');
+  assert.equal(nev.ranked, true); assert.equal(nev.draw.release, 'v1.6.22');
+  assert.equal(nev.cost.usd_per_1000, 1000 * (685652 * 0.02) / 1e6 / 1500);
+  for (const o of ['A', 'B', 'C']) { assert.ok(merged.board[o].order.includes('messier-one-v0.4')); assert.ok(merged.board[o].order.includes('nev-2b')); }
+  for (const key of ['nemotron-deciffusion-8b-v2', 'trio-spark-v1.3']) {
+    const s = merged.systems.find((x) => x.key === key);
+    assert.equal(s.ranked, false); assert.equal(s.draw.release, 'v1.6.22'); assert.equal(s.cost.usd_per_1000, null);
+    assert.ok(s.not_ranked_because.length > 60);
+    for (const o of ['A', 'B', 'C']) assert.ok(!merged.board[o].order.includes(key));
+  }
   // 12 Oct 2026 listing correction: RYOTIDE-Qwen9 is a ranked native system; its stored v1.6.4 numbers are untouched.
   const ryotide = merged.systems.find((s) => s.key === 'ryotide_qwen9');
   const stored = (await readCohortRows()).rows.find((r) => r.row.key === 'ryotide_qwen9');
