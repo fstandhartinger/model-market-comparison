@@ -26,11 +26,12 @@ export function ImageJevBoxTrack() {
  const it = b.items ?? {};
  const fam = it.families ?? {};
  const notMeasured = Object.entries(b.not_measured ?? {});
+ const points: any[] = b.points_only ?? [];
  const row = (s: any, showRank: boolean) => <tr key={s.key} data-bh-box-row>
   <td>{showRank ? '#' + s.rank : '—'}</td><Name s={s} />
   <td>{num(s.capability, 2)}</td>
   <td>{num(s.box_intelligence)}{ci(s.ci95) && <span className="bh-muted block text-xs">{ci(s.ci95)}</span>}</td>
-  <td>{pct(s.acc50)}</td><td>{num(s.calibration)}</td><td>{sec(s.p50_s)}</td><td>{usd(s.cost_per_1000)}</td>
+  <td>{pct(s.acc50)}</td><td>{num(s.calibration)}{s.no_confidence ? <span className="bh-muted block text-xs" title="The model returns no confidence, so Calibration is 0 by the track rule">no confidence</span> : null}</td><td>{sec(s.p50_s)}</td><td>{usd(s.cost_per_1000)}</td>
  </tr>;
  const head = <thead><tr><th>Rank</th><th>System</th><th>Box Capability</th><th>Box Intelligence</th><th>Acc@0.5</th><th>Calibration</th><th>p50 latency</th><th>$ / 1,000 boxes</th></tr></thead>;
  return <section id="box-track" className="mt-10 max-w-5xl scroll-mt-20" data-bh-v03-box-track>
@@ -38,7 +39,7 @@ export function ImageJevBoxTrack() {
   <p className="mt-3">A Box question shows one image and a short description such as “the signature field” or “the rightmost truck”. The model answers with a bounding box (four edges as fractions of the image) and a confidence. This is the new <code>box</code> question type of Jev 1.14. The Box track is separate: it does not change the core ranking or Capability Score above.</p>
   <p className="bh-muted mt-2 text-sm">{it.public ?? '—'} public items{it.sealed ? <> (the {it.sealed} sealed items are held back for official runs)</> : null}
    {Object.keys(fam).length > 0 && <>: {Object.entries(fam).map(([k, v]) => `${({ coco: 'photos', doc: 'documents', ui: 'UI screenshots' } as any)[k] ?? k} ${v}`).join(', ')}</>}.
-   Measured {String(b.measured_utc_date ?? b.built_utc ?? '').slice(0, 10)} on the public set.{' '}<a className="text-accent underline" href="https://github.com/fstandhartinger/jevbench/tree/main/datasets/imagejev-box-v0.1" target="_blank" rel="noopener noreferrer">Public item set, method and prompts</a>.</p>
+   {' '}{b.measured_note ? <>{b.measured_note}</> : <>Measured {String(b.measured_utc_date ?? b.built_utc ?? '').slice(0, 10)} on the public set.</>}{' '}<a className="text-accent underline" href="https://github.com/fstandhartinger/jevbench/tree/main/datasets/imagejev-box-v0.1" target="_blank" rel="noopener noreferrer">Public item set, method and prompts</a>.</p>
   {ranked.length > 0 && <div className="bh-panel mt-4 p-4" data-bh-box-chart>
    <h3 className="font-semibold">Box Capability (ranked systems)</h3>
    <ul className="mt-3 grid gap-2">{ranked.map(s => <li key={s.key} className="grid grid-cols-[minmax(0,9rem)_1fr_3rem] items-center gap-2 text-sm sm:grid-cols-[14rem_1fr_3rem]">
@@ -51,6 +52,9 @@ export function ImageJevBoxTrack() {
    {unranked.length > 0 && <tr><td colSpan={8} className="bh-muted pt-4 text-xs font-semibold uppercase tracking-wide">Measured, not ranked</td></tr>}
    {unranked.map(s => <tr key={s.key} data-bh-box-row data-bh-box-unranked><td>—</td><Name s={s} /><td>{num(s.capability, 2)}</td><td>{num(s.box_intelligence)}{ci(s.ci95) && <span className="bh-muted block text-xs">{ci(s.ci95)}</span>}</td><td>{pct(s.acc50)}</td><td>{num(s.calibration)}</td><td>{sec(s.p50_s)}</td><td>{usd(s.cost_per_1000)}<span className="bh-muted mt-1 block text-xs">Not ranked: {s.not_ranked_because ?? 'did not meet the ranking rule'}</span></td></tr>)}
   </tbody></table></div>
+  {points.length > 0 && <div className="mt-6" data-bh-box-points><h3 className="font-semibold">Points only (not ranked)</h3>
+   <p className="bh-muted mt-1 text-sm">These models answer with a point, not a box, so they cannot be scored on IoU. Shown: how often the first point lands inside the correct box. This is a much easier test than a box with IoU ≥ 0.5 and must not be compared with Box Capability or Acc@0.5.{b.points_only_baseline ? <> Reference: {b.points_only_baseline.name} {pct(b.points_only_baseline.first_point_in_box)}.</> : null}</p>
+   <div className="mt-2 overflow-x-auto"><table className="bh-table"><thead><tr><th>System</th><th>First point in box</th><th>Any point in box</th><th>p50 latency</th><th>$ / 1,000 answers</th></tr></thead><tbody>{points.map(s => <tr key={s.key} data-bh-box-point-row><Name s={s} /><td>{pct(s.first_point_in_box)}</td><td>{pct(s.any_point_in_box)}</td><td>{sec(s.p50_s)}</td><td>{usd(s.cost_per_1000)}</td></tr>)}</tbody></table></div></div>}
   <p className="bh-muted mt-2 text-xs">Box Intelligence is the mean IoU × 100. Acc@0.5 is the share of boxes with IoU ≥ 0.5. Calibration is how well the stated confidence predicts IoU ≥ 0.5. Cost is per 1,000 boxes.</p>
   {baselines.length > 0 && <div className="mt-6" data-bh-box-baselines><h3 className="font-semibold">Reference baselines (not ranked)</h3>
    <div className="mt-2 overflow-x-auto"><table className="bh-table"><thead><tr><th>Baseline</th><th>Box Intelligence</th><th>Acc@0.5</th><th>Box Capability</th></tr></thead><tbody>{baselines.map(s => <tr key={s.key}><th className="text-left font-normal">{s.name}</th><td>{num(s.box_intelligence)}</td><td>{pct(s.acc50)}</td><td>{num(s.capability, 2)}</td></tr>)}</tbody></table></div></div>}

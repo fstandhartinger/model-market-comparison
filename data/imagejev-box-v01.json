@@ -1,9 +1,9 @@
 {
  "benchmark": "ImageJevBench",
  "track": "box",
- "revision": "box-v0.1.0",
+ "revision": "box-v0.1.1",
  "status": "preview",
- "built_utc": "2026-10-14T23:07:34+00:00",
+ "built_utc": "2026-10-16T07:40:31+00:00",
  "measured_utc_date": "2026-10-14",
  "headline": "Box Capability = mean of Box Intelligence (100 x mean IoU) and Calibration (100 x (1 - ECE/0.5), event IoU >= 0.5)",
  "ranking_floor": {
@@ -191,6 +191,84 @@
    "rank": 2
   },
   {
+   "key": "claude_haiku_5_5",
+   "name": "Claude Haiku 5.5",
+   "author": "Anthropic",
+   "licence": "Proprietary API",
+   "params": null,
+   "access": "OpenRouter, reasoning off",
+   "url": "https://www.anthropic.com/claude/haiku",
+   "kind": "api",
+   "prompt": "generic",
+   "model_id": "anthropic/claude-haiku-5.5",
+   "weights": null,
+   "n": 300,
+   "valid_share": 1.0,
+   "box_intelligence": 68.57090235529186,
+   "ci95": [
+    65.25694682639181,
+    71.7497550063735
+   ],
+   "acc50": 0.7666666666666667,
+   "acc75": 0.5566666666666666,
+   "ece": 0.054766666666667595,
+   "calibration": 89.04666666666648,
+   "confidence_coverage": 1.0,
+   "auroc": 0.7364596273291926,
+   "capability": 78.80878451097917,
+   "p50_s": 1.7343874995131046,
+   "p95_s": 2.401127004995942,
+   "cost_per_1000": 0.10205613000000001,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 67.41471714735624,
+     "acc_at_0_5": 0.76
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 65.59350210782142,
+     "acc_at_0_5": 0.7714285714285715
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 79.66506277963398,
+     "acc_at_0_5": 0.9
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 39.60077291479354,
+     "acc_at_0_5": 0.4
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 85.11492067123709,
+     "acc_at_0_5": 0.92
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 87.10565967741155,
+     "acc_at_0_5": 0.9753086419753086
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 74.21735783097564,
+     "acc_at_0_5": 0.8247422680412371
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 51.77564395993925,
+     "acc_at_0_5": 0.5819672131147541
+    }
+   },
+   "added": "2026-10-15",
+   "ranked": true,
+   "rank": 3
+  },
+  {
    "key": "gemma_4_31b",
    "name": "Gemma 4 31B IT",
    "author": "Google",
@@ -265,7 +343,7 @@
     }
    },
    "ranked": true,
-   "rank": 3
+   "rank": 4
   },
   {
    "key": "qwen3_vl_235b",
@@ -342,7 +420,7 @@
     }
    },
    "ranked": true,
-   "rank": 4
+   "rank": 5
   },
   {
    "key": "qwen3_vl_30b",
@@ -419,7 +497,7 @@
     }
    },
    "ranked": true,
-   "rank": 5
+   "rank": 6
   },
   {
    "key": "jev_1_14",
@@ -496,7 +574,7 @@
     }
    },
    "ranked": true,
-   "rank": 6
+   "rank": 7
   },
   {
    "key": "qwen3_5_397b",
@@ -573,7 +651,7 @@
     }
    },
    "ranked": true,
-   "rank": 7
+   "rank": 8
   },
   {
    "key": "qwen3_vl_8b",
@@ -650,7 +728,85 @@
     }
    },
    "ranked": true,
-   "rank": 8
+   "rank": 9
+  },
+  {
+   "key": "gpt_6_luna",
+   "name": "GPT-6 Luna",
+   "author": "OpenAI",
+   "licence": "Proprietary API",
+   "params": null,
+   "access": "OpenRouter, reasoning off; cost = list price x tokens",
+   "url": "https://openrouter.ai/openai/gpt-6-luna",
+   "kind": "api",
+   "prompt": "generic",
+   "model_id": "openai/gpt-6-luna",
+   "weights": null,
+   "n": 300,
+   "valid_share": 0.9966666666666667,
+   "box_intelligence": 71.83726562302242,
+   "ci95": [
+    68.52987278413528,
+    74.9732081040646
+   ],
+   "acc50": 0.7766666666666666,
+   "acc75": 0.6,
+   "ece": 0.15099999999999958,
+   "calibration": 69.56733333333342,
+   "confidence_coverage": 0.9966666666666667,
+   "auroc": 0.6921401575811927,
+   "capability": 70.70229947817792,
+   "p50_s": 1.508115214499412,
+   "p95_s": 4.877171580999857,
+   "cost_per_1000": 0.07946966666666665,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 67.67161718441015,
+     "acc_at_0_5": 0.7
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 68.80449472027931,
+     "acc_at_0_5": 0.7571428571428571
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 78.82925880338689,
+     "acc_at_0_5": 0.85
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 56.791101455353534,
+     "acc_at_0_5": 0.62
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 84.10776840456042,
+     "acc_at_0_5": 0.92
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 87.24474167077958,
+     "acc_at_0_5": 0.9629629629629629
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 70.95111280251861,
+     "acc_at_0_5": 0.7525773195876289
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 62.31227598138742,
+     "acc_at_0_5": 0.6721311475409836
+    }
+   },
+   "added": "2026-10-15",
+   "ranked": true,
+   "rank": 10
   },
   {
    "key": "qwen3_6_35b",
@@ -727,7 +883,7 @@
     }
    },
    "ranked": true,
-   "rank": 9
+   "rank": 11
   },
   {
    "key": "h2o_lightning_4b_image",
@@ -807,7 +963,7 @@
     }
    },
    "ranked": true,
-   "rank": 10
+   "rank": 12
   },
   {
    "key": "imajev_4b",
@@ -891,7 +1047,7 @@
     }
    },
    "ranked": true,
-   "rank": 11
+   "rank": 13
   },
   {
    "key": "qwen3_5_4b",
@@ -971,7 +1127,7 @@
     }
    },
    "ranked": true,
-   "rank": 12
+   "rank": 14
   },
   {
    "key": "imajev_9b",
@@ -1055,7 +1211,254 @@
     }
    },
    "ranked": true,
-   "rank": 13
+   "rank": 15
+  },
+  {
+   "key": "moondream3",
+   "name": "Moondream 3 (preview)",
+   "author": "M87 Labs",
+   "licence": "BSL 1.1",
+   "params": "9B (2B active)",
+   "access": "self-hosted, Hugging Face transformers (detect)",
+   "url": "https://huggingface.co/moondream/moondream3-preview",
+   "kind": "gpu",
+   "prompt": "moondream3",
+   "model_id": null,
+   "weights": {
+    "repo": "moondream/moondream3-preview",
+    "revision": "5112966d1a723413b1c9a1e8bea272b72e647b35",
+    "tokenizer": "moondream/starmie-v1@35192e10a54e36eabe0a7cc57a2c1aab371cafc5"
+   },
+   "n": 300,
+   "valid_share": 0.98,
+   "box_intelligence": 71.44352785088208,
+   "ci95": [
+    67.81418277461066,
+    75.05550878526107
+   ],
+   "acc50": 0.7733333333333333,
+   "acc75": 0.6633333333333333,
+   "ece": 0.2733333333333333,
+   "calibration": 0.0,
+   "confidence_coverage": 0.0,
+   "auroc": 0.5,
+   "capability": 35.72176392544104,
+   "p50_s": 0.7393567245162558,
+   "p95_s": 0.7873112639645115,
+   "cost_per_1000": 0.24533218030898765,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 42.06047329896755,
+     "acc_at_0_5": 0.42
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 79.38489171250959,
+     "acc_at_0_5": 0.8714285714285714
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 89.8013605083189,
+     "acc_at_0_5": 0.9875
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 74.19458008204828,
+     "acc_at_0_5": 0.9
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 57.58508851345322,
+     "acc_at_0_5": 0.52
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 84.53739670306607,
+     "acc_at_0_5": 0.9012345679012346
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 72.52075797926771,
+     "acc_at_0_5": 0.7628865979381443
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 61.893571297764865,
+     "acc_at_0_5": 0.6967213114754098
+    }
+   },
+   "added": "2026-10-15",
+   "no_confidence": true,
+   "ranked": true,
+   "rank": 16
+  },
+  {
+   "key": "florence2_large",
+   "name": "Florence-2-large",
+   "author": "Microsoft",
+   "licence": "MIT",
+   "params": "0.77B",
+   "access": "self-hosted, transformers, open-vocabulary detection",
+   "url": "https://huggingface.co/florence-community/Florence-2-large",
+   "kind": "gpu",
+   "prompt": "<OPEN_VOCABULARY_DETECTION>",
+   "model_id": null,
+   "weights": {
+    "repo": "florence-community/Florence-2-large",
+    "revision": "4271c66b88cdbc05735372ec13b2360108de5317"
+   },
+   "n": 300,
+   "valid_share": 1.0,
+   "box_intelligence": 57.89667585286267,
+   "ci95": [
+    53.01053354565996,
+    62.864545191531214
+   ],
+   "acc50": 0.6466666666666666,
+   "acc75": 0.57,
+   "ece": 0.1466666666666666,
+   "calibration": 0.0,
+   "confidence_coverage": 0.0,
+   "auroc": 0.5,
+   "capability": 28.948337926431336,
+   "p50_s": 0.13092308398336172,
+   "p95_s": 0.19193882803665474,
+   "cost_per_1000": 0.04520983118931137,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 20.484349120859523,
+     "acc_at_0_5": 0.18
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 60.997504291764564,
+     "acc_at_0_5": 0.6857142857142857
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 91.1621650029413,
+     "acc_at_0_5": 1.0
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 69.572377832058,
+     "acc_at_0_5": 0.86
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 26.067358151082225,
+     "acc_at_0_5": 0.28
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 85.27100198739129,
+     "acc_at_0_5": 0.9135802469135802
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 55.392654228803096,
+     "acc_at_0_5": 0.6082474226804123
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 41.71282077611652,
+     "acc_at_0_5": 0.5
+    }
+   },
+   "added": "2026-10-15",
+   "no_confidence": true,
+   "ranked": true,
+   "rank": 17
+  },
+  {
+   "key": "florence2_large_ft",
+   "name": "Florence-2-large-ft",
+   "author": "Microsoft",
+   "licence": "MIT",
+   "params": "0.77B",
+   "access": "self-hosted, transformers, phrase grounding",
+   "url": "https://huggingface.co/florence-community/Florence-2-large-ft",
+   "kind": "gpu",
+   "prompt": "florence2",
+   "model_id": null,
+   "weights": {
+    "repo": "florence-community/Florence-2-large-ft",
+    "revision": "26b734a54fdfbf9c398351eedfabb7f27fc470b7"
+   },
+   "n": 300,
+   "valid_share": 1.0,
+   "box_intelligence": 55.693999961881296,
+   "ci95": [
+    50.715846729353686,
+    60.284486952140554
+   ],
+   "acc50": 0.5866666666666667,
+   "acc75": 0.5466666666666666,
+   "ece": 0.08666666666666667,
+   "calibration": 0.0,
+   "confidence_coverage": 0.0,
+   "auroc": 0.5,
+   "capability": 27.846999980940648,
+   "p50_s": 0.12461597999208607,
+   "p95_s": 0.24035766499582678,
+   "cost_per_1000": 0.047067042080446736,
+   "cost_coverage": 1.0,
+   "by_kind": {
+    "doc": {
+     "n": 50,
+     "box_intelligence": 8.520777305222756,
+     "acc_at_0_5": 0.04
+    },
+    "ref": {
+     "n": 70,
+     "box_intelligence": 63.23755925276695,
+     "acc_at_0_5": 0.6857142857142857
+    },
+    "single": {
+     "n": 80,
+     "box_intelligence": 91.93890369885176,
+     "acc_at_0_5": 0.9875
+    },
+    "small": {
+     "n": 50,
+     "box_intelligence": 74.31298196431422,
+     "acc_at_0_5": 0.86
+    },
+    "ui": {
+     "n": 50,
+     "box_intelligence": 15.695411629714364,
+     "acc_at_0_5": 0.08
+    }
+   },
+   "by_size": {
+    "large": {
+     "n": 81,
+     "box_intelligence": 81.07799346277719,
+     "acc_at_0_5": 0.8148148148148148
+    },
+    "medium": {
+     "n": 97,
+     "box_intelligence": 55.94605407913594,
+     "acc_at_0_5": 0.5773195876288659
+    },
+    "small": {
+     "n": 122,
+     "box_intelligence": 38.64028911805947,
+     "acc_at_0_5": 0.4426229508196721
+    }
+   },
+   "added": "2026-10-15",
+   "no_confidence": true,
+   "ranked": true,
+   "rank": 18
   }
  ],
  "baselines": [
@@ -1219,6 +1622,45 @@
   "Public set only in this preview; the 546 sealed items (after quality control) are held back for official runs.",
   "Open-weight models via OpenRouter are measured end to end through the provider; latency includes the provider.",
   "Self-hosted models: one request at a time on one RTX PRO 6000 class GPU; cost = GPU seconds x $1.19/GPU-hour.",
-  "Chat models state their own confidence in the answer JSON; Jev returns a native confidence."
- ]
+  "Chat models state their own confidence in the answer JSON; Jev returns a native confidence.",
+  "Moondream 3 and Florence-2 return a box but no confidence, so their Calibration is 0 by the track rule and their Box Capability is low; their Box Intelligence (pure box quality) is shown separately. On Box Intelligence, Moondream 3 is level with the best sub-second systems (71.4, against 70.2 for H2O Lightning 4B; the difference is within noise).",
+  "Claude Haiku 5.5 and GPT-6 Luna were run with reasoning off at temperature 0; both are not fully deterministic at temperature 0. One GPT-6 Luna answer failed with a provider error and Moondream 3 returned no box for 6 items; these count as invalid.",
+  "Moondream 3 (preview) is released under the Business Source License 1.1; we ran it only to measure it and do not offer it as a service.",
+  "Molmo 2 (Ai2) answers with points, not boxes, so it cannot be scored on IoU and is not ranked; its point-in-box rate is shown below the table as a side metric."
+ ],
+ "points_only": [
+  {
+   "key": "molmo2_8b",
+   "name": "Molmo2-8B",
+   "author": "Ai2",
+   "licence": "Apache-2.0",
+   "url": "https://huggingface.co/allenai/Molmo2-8B",
+   "n": 300,
+   "answers_with_point": 0.9933333333333333,
+   "first_point_in_box": 0.9733333333333334,
+   "any_point_in_box": 0.98,
+   "p50_s": 0.3531962219858542,
+   "p95_s": 0.41096351604210213,
+   "cost_per_1000": 0.12122977382336479
+  },
+  {
+   "key": "molmo2_4b",
+   "name": "Molmo2-4B",
+   "author": "Ai2",
+   "licence": "Apache-2.0",
+   "url": "https://huggingface.co/allenai/Molmo2-4B",
+   "n": 300,
+   "answers_with_point": 0.9933333333333333,
+   "first_point_in_box": 0.96,
+   "any_point_in_box": 0.96,
+   "p50_s": 0.249292444990715,
+   "p95_s": 0.28466376900905743,
+   "cost_per_1000": 0.08507190863758161
+  }
+ ],
+ "points_only_baseline": {
+  "name": "Image-centre point",
+  "first_point_in_box": 0.25333333333333335
+ },
+ "measured_note": "First 13 systems measured 14 Oct 2026; Claude Haiku 5.5, GPT-6 Luna, Moondream 3, Florence-2 and Molmo 2 on 15 Oct 2026 with the same harness and scorer (re-scoring the 14 Oct systems reproduces their numbers exactly)."
 }
