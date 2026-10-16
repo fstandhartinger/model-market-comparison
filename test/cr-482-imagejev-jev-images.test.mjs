@@ -30,7 +30,7 @@ test('CR-482 Jev + images rows: official pass 1, TypeSafe API, preview feature d
   assert.doesNotMatch(JSON.stringify(release.ranking.map((r) => r.measurement_source)), /jev114-img-1/);
 });
 
-test('CR-482 cost reference is Jev with images; composite top five is unchanged, the Capability headline top five is the reviewed one', () => {
+test('CR-482 cost reference is Jev with images; both top fives are the reviewed ones (CR-XXX: + Sage 1.4 + images)', () => {
   const e = release.capability_eligibility;
   const jev14 = row('jev_1_14_images').tracks.core.cost.usd_per_1000;
   assert.equal(row('jev_1_13_images').tracks.core.cost.usd_per_1000, jev14, 'both Jev + images rows share one price');
@@ -42,13 +42,13 @@ test('CR-482 cost reference is Jev with images; composite top five is unchanged,
   assert.equal(e.anchor, 'jev-1.13.0');
   for (const key of KEYS) assert.ok(row(key).tracks.core.cost.usd_per_1000 <= e.cost_usd_per_1000_cap, `${key} is inside the cost cap it defines`);
   const composite = release.ranking.filter((r) => r.ranked).sort((a, b) => a.rank - b.rank).slice(0, 5).map((r) => r.key);
-  assert.deepEqual(composite, ['wity_1', 'imajev_4b', 'surogate_rune_26b_v3', 'kushal_gemma4_31b_it_autoloops', 'imajev_9b']);
+  assert.deepEqual(composite, ['wity_1', 'imajev_4b', 'sage_1_4_images', 'surogate_rune_26b_v3', 'kushal_gemma4_31b_it_autoloops']); // CR-XXX
   const inCap = (r) => r.ranked && r.tracks.core.cost.usd_per_1000 != null && r.tracks.core.cost.usd_per_1000 <= e.cost_usd_per_1000_cap
     && r.tracks.core.speed.adjusted_p50_s <= e.latency_p50_s_cap;
   const capped = release.ranking.filter(inCap).sort((a, b) => b.tracks.core.capability - a.tracks.core.capability);
   assert.deepEqual(capped.slice(0, 5).map((r) => r.key),
-    ['jev_1_13_images', 'kushal_gemma4_31b_it_autoloops', 'imajev_4b', 'imajev_9b', 'surogate_rune_26b_v3']);
-  assert.equal(capped.length, 47);
+    ['sage_1_4_images', 'jev_1_13_images', 'kushal_gemma4_31b_it_autoloops', 'imajev_4b', 'imajev_9b']); // CR-XXX: Sage 1.4 + images enters at #1
+  assert.equal(capped.length, 48);
   // Wity-1 and the GPT Lunas stay out on latency, not cost
   for (const key of ['wity_1', 'gpt6_luna', 'gpt56_luna']) assert.ok(row(key).tracks.core.speed.adjusted_p50_s > e.latency_p50_s_cap, key);
   assert.match(e.rationale, /Jev would otherwise be excluded from its own headline/);
@@ -83,5 +83,5 @@ test('CR-482 System1 s1-vision is no longer an ImageJevBench row anywhere in the
   assert.equal(ts20.systems['s1-vision'], undefined);
   assert.equal(ts20.summary['s1-vision'], undefined);
   assert.ok(!/s1-vision|System1 s1|Blink/.test(JSON.stringify(release)), 'no mention of the removed row in the published data');
-  assert.equal(release.ranking.length, 58);
+  assert.equal(release.ranking.length, 59); // CR-XXX: + Sage 1.4 + images
 });
