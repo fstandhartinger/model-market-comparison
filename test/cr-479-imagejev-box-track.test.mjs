@@ -38,3 +38,14 @@ test('CR-479 box section links the published public item set', async () => {
   const comp = await read('../components/ImageJevBoxTrack.tsx');
   assert.match(comp, /href="https:\/\/github\.com\/fstandhartinger\/jevbench\/tree\/main\/datasets\/imagejev-box-v0\.1"/);
 });
+
+test('Box v0.1.1 extra systems: points-only models never ranked, no-confidence rows disclosed', () => {
+  const keys = new Set(box.systems.map((s) => s.key));
+  for (const k of ['claude_haiku_5_5', 'gpt_6_luna', 'moondream3', 'florence2_large', 'florence2_large_ft']) assert.ok(keys.has(k), k);
+  for (const p of box.points_only ?? []) {
+    assert.ok(!keys.has(p.key), `${p.key} is points-only and must not be a ranked box system`);
+    assert.equal(p.rank, undefined);
+  }
+  for (const s of box.systems.filter((x) => x.no_confidence)) assert.equal(s.calibration, 0, `${s.key} no confidence -> calibration 0`);
+  assert.ok(box.notes.some((n) => /Business Source License/.test(n)), 'Moondream licence note');
+});
