@@ -247,5 +247,6 @@ test('score correction: archived release pages and published files never read it
   assert.match(archived, /"jevbench_score": 33\.51963655001747/);
   assert.doesNotMatch(archived, /score_correction|Cost re-estimated/);
   // the route reads the corrected cohort only for the live boards
-  assert.match(readFileSync(path.join(root, 'components/JevBenchV16ReleaseRoute.tsx'), 'utf8'), /live && release_\.revision === 'v1\.6\.1' \? await readCohortRows\(\)/);
+  const board = readFileSync(path.join(root, 'lib/jevbench-live-board.mjs'), 'utf8');
+  assert.ok(board.indexOf("if (!live || release_.revision !== 'v1.6.1') return") < board.indexOf('await readCohortRows(root)'));
 });
