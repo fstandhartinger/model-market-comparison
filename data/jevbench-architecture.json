@@ -5607,6 +5607,66 @@
             "fact": "Liquid AI lists d1-ultra as a hosted decision model (Liquid Console, OpenRouter, Vercel AI Gateway) at USD 0.042/M input, output free; no evaluated weights are published."
           }
         ]
+      },
+      "messier-one-v0.4": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/agentmessier/messier-one/tree/14c84de57b71bf48608e2d886d86ebc5c6f8897e",
+            "kind": "model-card",
+            "fact": "Pinned revision 14c84de57b71bf48608e2d886d86ebc5c6f8897e of agentmessier/messier-one (tag v0.4); base Qwen/Qwen3.5-4B; v0.4 serves with bidirectional attention (the author's serve_vllm.sh turns prefix caching off for it); weights CC BY-NC 4.0."
+          }
+        ]
+      },
+      "nev-2b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "distilled",
+          "params": "2B",
+          "quant": "GGUF Q8_0"
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/EryriLabs/Nev-2B-GGUF/tree/65d329f676d75cc538346e2687bed71187ae76b2",
+            "kind": "model-card",
+            "fact": "Pinned revision 65d329f676d75cc538346e2687bed71187ae76b2, nev-Q8_0.gguf; base Qwen/Qwen3.5-2B-Base; distilled from the option distributions of Mapika/decider-4b v2 and crh225/Plumb-4B; Apache-2.0."
+          }
+        ]
+      },
+      "nemotron-deciffusion-8b-v2": {
+        "arch": "open-diffusion-lm",
+        "badges": {
+          "derivation": null,
+          "params": "8B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/nemotron-deciffusion/Nemotron-Deciffusion-8B-v2/tree/1dea38015e86e101eb978a33fa493818fc71e366",
+            "kind": "model-card",
+            "fact": "Pinned revision 1dea38015e86e101eb978a33fa493818fc71e366; declared base nvidia/Nemotron-Labs-Diffusion-8B; served from the author's published container with non-causal attention; NVIDIA Nemotron Open Model License."
+          }
+        ]
+      },
+      "trio-spark-v1.3": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://github.com/machinefi/trio-spark",
+            "kind": "provider-docs",
+            "fact": "MachineFi documents Trio-Spark as a hosted decision API (platform.machinefi.com/v1/systemone); no weights or training code are published and no base model is declared."
+          }
+        ]
       }
     },
     "imagejevbench": {
