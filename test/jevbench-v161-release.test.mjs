@@ -126,7 +126,7 @@ test('category view, agent feed and the v1.6.1 board describe the release', asyn
   assert.equal(view.revision, 'v1.6.1');
   for (const k of keys) assert.ok(view.systems[k], `${k} has a radar record`);
   const { feed } = await readJevbenchAgentFeed();
-  assert.equal(feed.revision, 'v1.6.1');
+  assert.equal(feed.base_release, 'v1.6.1'); // feed.revision is the newest release on the merged live board
   assert.equal(feed.source.artifact, '/api/jevbench/v1.6.1');
   assert.equal(feed.source.version_page, '/jev-models/v1.6.1');
   assert.equal(feed.source.frozen_page, '/jev-models/v1.6.1');

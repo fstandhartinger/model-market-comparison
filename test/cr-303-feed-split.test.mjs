@@ -15,12 +15,12 @@ test('feed carries board and open-board rank next to the unchanged combined rank
   assert.equal(get(feed, 'jev-1.13.0').board, 'reference');
   assert.equal(get(feed, 'jev-1.13.0').capability.open_board_rank, null);
   assert.equal(get(feed, 'quyet-1-0-large').capability.open_board_rank, 1);
-  // CR-338 adds decisio and René to the open board, shifting these older rows below the new entrants.
-  assert.equal(get(feed, 'h2o-lightning-4b').capability.open_board_rank, 5);
-  assert.equal(get(feed, 'surogate-rune-26b-a4b-v3-v16').capability.open_board_rank, 7);
-  assert.equal(get(feed, 'xor-26b-a4b').capability.open_board_rank, 9);
-  assert.equal(get(feed, 'torchcast-decision-12b').capability.open_board_rank, 11);
-  assert.equal(get(feed, 'torchcast-decision-12b').capability.rank, 15);
+  // CR-338 adds decisio and René to the open board, and the merged live board adds the cohort rows (16 Oct 2026), shifting these older rows below the new entrants.
+  assert.equal(get(feed, 'h2o-lightning-4b').capability.open_board_rank, 9);
+  assert.equal(get(feed, 'surogate-rune-26b-a4b-v3-v16').capability.open_board_rank, 11);
+  assert.equal(get(feed, 'xor-26b-a4b').capability.open_board_rank, 13);
+  assert.equal(get(feed, 'torchcast-decision-12b').capability.open_board_rank, 15);
+  assert.equal(get(feed, 'torchcast-decision-12b').capability.rank, 22);
   const ranks = feed.systems.map((s) => s.capability.open_board_rank).filter((r) => r != null).sort((a, b) => a - b);
   assert.deepEqual(ranks, ranks.map((_, i) => i + 1));
   for (const s of feed.systems) if (s.board !== 'open') assert.equal(s.capability.open_board_rank, null);
