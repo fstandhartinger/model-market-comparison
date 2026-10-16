@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { withFieldNames } from './jevFieldNames';
 
 type Capacity = {
@@ -57,6 +57,8 @@ type LongPolicy = {
 };
 type ContextData = {
   checkedAt: string;
+  /** Board dataset only: what the long-input family is called on this draw (v1.4.1 used "long-policy"). */
+  longPolicyLabel?: string;
   sourceDataset: string;
   publicItems: number;
   topRankedSystemsConsidered: number;
@@ -83,6 +85,11 @@ function day(value: string | null) {
 
 function tokens(value: number | null) {
   return value == null ? 'Unknown' : `${value.toLocaleString('en-US')} tokens`;
+}
+
+/** Board rows that are listed but not ranked carry no rank (the board dataset stores them as 999). */
+function rankText(rank: number | null) {
+  return rank == null || rank >= 999 ? 'unranked' : `#${rank}`;
 }
 
 function percent(value: number | null) {
@@ -189,7 +196,7 @@ function usePlotWidth(minimum: number) {
   return { ref, width };
 }
 
-function AccuracyChart({ systems, labels, excluded, topRanked }: { systems: LengthSystem[]; labels: string[]; excluded: { system: string; reason: string }[]; topRanked: number }) {
+function AccuracyChart({ systems, labels, excluded, topRanked, coverage, topFiveByRank = false }: { systems: LengthSystem[]; labels: string[]; excluded: { system: string; reason: string }[]; topRanked: number; coverage?: ReactNode; topFiveByRank?: boolean }) {
   const [hoveredPoint, setHoveredPoint] = useState<string | null>(null);
   const [focusedPoint, setFocusedPoint] = useState<string | null>(null);
   const [pinnedPoint, setPinnedPoint] = useState<string | null>(null);
@@ -222,7 +229,7 @@ function AccuracyChart({ systems, labels, excluded, topRanked }: { systems: Leng
 
   return <figure className="bh-panel mt-4 min-w-0 p-3 sm:p-5" data-bh-jev-context-chart aria-labelledby="jev-context-chart-heading">
     <h3 id="jev-context-chart-heading" className="text-lg font-semibold">Public accuracy by actual input length</h3>
-    <p className="bh-muted mt-1 text-sm" data-bh-jev-context-coverage>{systems.length} of the top {topRanked} systems are plotted; {joinLabels(excluded.map((row) => `${row.system.replace(/\s*\([^)]*\)\s*$/, '')} (${row.reason.replace(/^excluded:\s*/, '')})`))} {excluded.length === 1 ? 'is' : 'are'} not.</p>
+    <p className="bh-muted mt-1 text-sm" data-bh-jev-context-coverage>{coverage ?? <>{systems.length} of the top {topRanked} systems are plotted; {joinLabels(excluded.map((row) => `${row.system.replace(/\s*\([^)]*\)\s*$/, '')} (${row.reason.replace(/^excluded:\s*/, '')})`))} {excluded.length === 1 ? 'is' : 'are'} not.</>}</p>
     <p className="bh-muted mt-1 text-xs" data-bh-jev-context-bin-edges>Input-token bins (inclusive): {labels.map((label) => INPUT_BUCKET_RANGES[label] ?? label).join('; ')}.</p>
     <p className="bh-muted mt-2 text-xs sm:hidden">Scroll the chart sideways to see every input range.</p>
     <div ref={plotRef} className="mt-3 max-w-full overflow-x-auto" data-bh-jev-context-chart-scroll>
@@ -247,11 +254,11 @@ function AccuracyChart({ systems, labels, excluded, topRanked }: { systems: Leng
             if (point.thin || previous.thin) return null;
             return <line key={`${system.key}-${point.label}`} x1={x(previous.position)} y1={y(previous.bucket.accuracy as number)} x2={x(point.position)} y2={y(point.bucket.accuracy as number)} stroke={palette[systemIndex % palette.length]} strokeWidth="2" strokeLinecap="round" data-bh-jev-context-line={system.key} />;
           })}
-          {points.map(({ label, bucket, position, thin }) => <circle key={`${system.key}-${label}`} cx={x(position)} cy={y(bucket.accuracy as number)} r="5" fill={thin ? 'var(--surface)' : palette[systemIndex % palette.length]} stroke={thin ? palette[systemIndex % palette.length] : 'var(--surface)'} strokeWidth={thin ? 2 : 1.5} tabIndex={0} role="button" aria-label={`#${system.rank} ${system.system}, ${INPUT_BUCKET_RANGES[label] ?? label} input tokens, accuracy ${percent(bucket.accuracy)}, ${bucket.correct} correct of ${bucket.n} decisions. Tap for details.`}
+          {points.map(({ label, bucket, position, thin }) => <circle key={`${system.key}-${label}`} cx={x(position)} cy={y(bucket.accuracy as number)} r="5" fill={thin ? 'var(--surface)' : palette[systemIndex % palette.length]} stroke={thin ? palette[systemIndex % palette.length] : 'var(--surface)'} strokeWidth={thin ? 2 : 1.5} tabIndex={0} role="button" aria-label={`${rankText(system.rank)} ${system.system}, ${INPUT_BUCKET_RANGES[label] ?? label} input tokens, accuracy ${percent(bucket.accuracy)}, ${bucket.correct} correct of ${bucket.n} decisions. Tap for details.`}
             className="cursor-pointer" onMouseEnter={() => setHoveredPoint(`${system.key}:${label}`)} onMouseLeave={() => setHoveredPoint(null)} onFocus={() => setFocusedPoint(`${system.key}:${label}`)} onBlur={() => setFocusedPoint(null)}
             onClick={() => setPinnedPoint((current) => current === `${system.key}:${label}` ? null : `${system.key}:${label}`)} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setPinnedPoint((current) => current === `${system.key}:${label}` ? null : `${system.key}:${label}`); } }}
             {...(thin ? { 'data-bh-thin': String(bucket.n) } : {})} data-bh-jev-context-point={`${system.key}:${label}`}>
-            <title>{`#${system.rank} ${system.system} · ${INPUT_BUCKET_RANGES[label] ?? label} input tokens: ${percent(bucket.accuracy)} (${bucket.correct}/${bucket.n})${thin ? ` · n = ${bucket.n}` : ''}`}</title>
+            <title>{`${rankText(system.rank)} ${system.system} · ${INPUT_BUCKET_RANGES[label] ?? label} input tokens: ${percent(bucket.accuracy)} (${bucket.correct}/${bucket.n})${thin ? ` · n = ${bucket.n}` : ''}`}</title>
           </circle>)}
         </g>;
       })}
@@ -259,12 +266,12 @@ function AccuracyChart({ systems, labels, excluded, topRanked }: { systems: Leng
     </div>
     <p className="bh-muted mt-1 text-[11px] sm:hidden">Horizontal axis: actual input tokens per decision.</p>
     <p className="bh-muted mt-2 min-h-5 text-xs" data-bh-jev-context-point-tooltip>{pointDetails
-      ? <><b className="text-[var(--text)]">#{pointDetails.system.rank} {pointDetails.system.system}</b> · {INPUT_BUCKET_RANGES[pointDetails.bucket.label] ?? pointDetails.bucket.label} input tokens · {percent(pointDetails.bucket.accuracy)} accuracy · {pointDetails.bucket.correct}/{pointDetails.bucket.n} correct{pointDetails.bucket.n < THIN_BUCKET ? ' · small sample' : ''}</>
+      ? <><b className="text-[var(--text)]">{rankText(pointDetails.system.rank)} {pointDetails.system.system}</b> · {INPUT_BUCKET_RANGES[pointDetails.bucket.label] ?? pointDetails.bucket.label} input tokens · {percent(pointDetails.bucket.accuracy)} accuracy · {pointDetails.bucket.correct}/{pointDetails.bucket.n} correct{pointDetails.bucket.n < THIN_BUCKET ? ' · small sample' : ''}</>
       : 'Hover, focus, or tap a point for its system, input range, accuracy, and sample size.'}</p>
     <ul className="mt-3 grid gap-x-4 gap-y-1.5 text-xs sm:grid-cols-2 lg:grid-cols-3" aria-label="Chart systems, with the top five shown first" data-bh-jev-context-top-five>
       {systems.map((system, index) => <li key={system.key} className="flex min-w-0 items-baseline gap-2" data-bh-jev-context-system={system.key}>
         <span className="inline-block h-0.5 w-4 shrink-0" style={{ backgroundColor: palette[index % palette.length] }} aria-hidden="true" />
-        <span className="min-w-0 break-words" title={`#${system.rank} ${system.system}`}>{index < 5 && <b>Top five · </b>}#{system.rank} {system.system}</span>
+        <span className="min-w-0 break-words" title={`${rankText(system.rank)} ${system.system}`}>{(topFiveByRank ? system.rank <= 5 : index < 5) && <b>Top five · </b>}{rankText(system.rank)} {system.system}</span>
       </li>)}
     </ul>
     {empty.length > 0 && lastDrawn && <p className="bh-muted mt-3 text-xs" data-bh-jev-context-empty-buckets>No public item exceeds {upperBound(lastDrawn)} input tokens; the {joinLabels(empty)} {empty.length === 1 ? 'bucket is' : 'buckets are'} empty. A hollow point comes from fewer than {THIN_BUCKET} decisions and is not joined to the line.</p>}
@@ -287,7 +294,7 @@ function contextTickLabel(value: number) {
   return String(value);
 }
 
-function CapacityChart({ rows }: { rows: Capacity[] }) {
+function CapacityChart({ rows, onBoard = false }: { rows: Capacity[]; onBoard?: boolean }) {
   const [hoveredCapacity, setHoveredCapacity] = useState<string | null>(null);
   const [focusedCapacity, setFocusedCapacity] = useState<string | null>(null);
   const [pinnedCapacity, setPinnedCapacity] = useState<string | null>(null);
@@ -302,7 +309,7 @@ function CapacityChart({ rows }: { rows: Capacity[] }) {
 
   return <figure className="bh-panel mt-4 min-w-0 p-3 sm:p-5" data-bh-jev-context-capacity-chart aria-labelledby="jev-context-capacity-chart-title">
     <h3 id="jev-context-capacity-chart-title" className="text-lg font-semibold">Published context limits · logarithmic scale</h3>
-    <p className="bh-muted mt-1 text-sm">{rows.filter((row) => row.rank != null).length} ranked systems and {rows.filter((row) => row.rank == null).length} unranked additions, each with its exact published maximum input context. API/serving caps, hard limits and trained lengths use different bar colors; training configuration limits appear as separate markers and values where published.</p>
+    <p className="bh-muted mt-1 text-sm">{rows.filter((row) => row.rank != null).length} ranked systems and {rows.filter((row) => row.rank == null).length} {onBoard ? `unranked ${rows.filter((row) => row.rank == null).length === 1 ? 'row' : 'rows'}, each with its exact published maximum input context where one exists` : 'unranked additions, each with its exact published maximum input context'}. API/serving caps, hard limits and trained lengths use different bar colors; training configuration limits appear as separate markers and values where published.</p>
     <div className="mt-4">
       <div className="relative h-6" aria-hidden="true">
         {CONTEXT_TICKS.filter((tick) => tick <= maximum).map((tick, index, ticks) => <span key={tick} className={`absolute top-0 whitespace-nowrap font-mono text-[10px] text-[var(--muted)] ${index === 0 ? '' : index === ticks.length - 1 ? '-translate-x-full' : '-translate-x-1/2'} ${tick === 524288 ? 'hidden sm:block' : ''}`} style={{ left: `${contextPosition(tick, maximum)}%` }}>{contextTickLabel(tick)}</span>)}
@@ -362,7 +369,7 @@ function BucketCounts({ systems }: { systems: LengthSystem[] }) {
           {systems[0]?.buckets.map((bucket) => <th key={bucket.label} className="p-2">{bucket.label}</th>)}
         </tr></thead>
         <tbody>{systems.map((system) => <tr key={system.key} className="border-b border-[rgb(var(--line))] last:border-0">
-          <th scope="row" className="p-2 font-medium">#{system.rank} {system.system}</th>
+          <th scope="row" className="p-2 font-medium">{rankText(system.rank)} {system.system}</th>
           <td className="tabular whitespace-nowrap p-2">{system.meanInputTokens.toLocaleString('en-US', { maximumFractionDigits: 1 })}</td>
           <td className="tabular whitespace-nowrap p-2">{system.lengthCoverage}/{system.outcomes}</td>
           {system.buckets.map((bucket) => <td key={bucket.label} className="tabular whitespace-nowrap p-2">{bucket.accuracy == null ? 'No data' : `${bucket.correct}/${bucket.n} · ${percent(bucket.accuracy)}`}</td>)}
@@ -439,26 +446,28 @@ function CapacityTable({ rows, checkedAt }: { rows: Capacity[]; checkedAt: strin
   </div>;
 }
 
-function LongPolicySummary({ rows, itemCount }: { rows: LongPolicy[]; itemCount: number }) {
+function LongPolicySummary({ rows, itemCount, label = 'long-policy' }: { rows: LongPolicy[]; itemCount: number; label?: string }) {
   const ordered = [...rows].sort((a, b) => a.deltaPercentagePoints - b.deltaPercentagePoints);
   const mostAffected = ordered.slice(0, 3);
   const leastAffected = [...ordered].sort((a, b) => b.deltaPercentagePoints - a.deltaPercentagePoints).slice(0, 2);
   const examples = [...new Map([...mostAffected, ...leastAffected].map((row) => [row.key, row])).values()];
   return <div className="bh-panel mt-4 p-4 sm:p-5" data-bh-jev-context-long-policy>
-    <h3 className="text-lg font-semibold">Long-policy tasks show a separate stress point</h3>
-    <p className="bh-muted mt-1 text-sm">Across {itemCount} public items in the long-policy family, several systems scored well below their full public-set accuracy. The comparison uses the family label, not only the token buckets.</p>
+    <h3 className="text-lg font-semibold">{label === 'long-policy' ? 'Long-policy tasks show a separate stress point' : `${label[0].toUpperCase()}${label.slice(1)} items: a separate stress point`}</h3>
+    <p className="bh-muted mt-1 text-sm">{label === 'long-policy'
+      ? <>Across {itemCount} public items in the long-policy family, several systems scored well below their full public-set accuracy. The comparison uses the family label, not only the token buckets.</>
+      : <>Across {itemCount} public {label} items, each system&apos;s accuracy compared with its full public-set accuracy.</>}</p>
     <ul className="mt-3 grid gap-2 sm:grid-cols-2">
       {examples.map((row) => <li key={row.key} className="rounded border border-[rgb(var(--line))] p-3 text-sm">
         <b>{row.system}</b><br />
-        <span className="bh-muted">Long policy {row.longPolicyCorrect}/{row.longPolicyN} ({percent(row.longPolicyAccuracy)}) vs {row.overallCorrect}/{row.overallN} overall ({percent(row.overallAccuracy)}): <b>{pp(row.deltaPercentagePoints)}</b>.</span>
+        <span className="bh-muted">{label === 'long-policy' ? 'Long policy' : `${label[0].toUpperCase()}${label.slice(1)}`} {row.longPolicyCorrect}/{row.longPolicyN} ({percent(row.longPolicyAccuracy)}) vs {row.overallCorrect}/{row.overallN} overall ({percent(row.overallAccuracy)}): <b>{pp(row.deltaPercentagePoints)}</b>.</span>
       </li>)}
     </ul>
     <details className="mt-3">
-      <summary className="cursor-pointer text-sm font-semibold text-accent">All {rows.length} matched systems on long-policy tasks</summary>
+      <summary className="cursor-pointer text-sm font-semibold text-accent">All {rows.length} matched systems on {label} {label === 'long-policy' ? 'tasks' : 'items'}</summary>
       <div className="mt-3 overflow-x-auto">
         <table className="min-w-[650px] w-full text-left text-xs">
-          <thead><tr className="bh-muted border-b border-[rgb(var(--line))]"><th className="p-2">System</th><th className="p-2">Overall</th><th className="p-2">Long policy ({itemCount} items)</th><th className="p-2">Change</th></tr></thead>
-          <tbody>{ordered.map((row) => <tr key={row.key} className="border-b border-[rgb(var(--line))] last:border-0"><th scope="row" className="p-2 font-medium">#{row.rank} {row.system}</th><td className="tabular whitespace-nowrap p-2">{row.overallCorrect}/{row.overallN} · {percent(row.overallAccuracy)}</td><td className="tabular whitespace-nowrap p-2">{row.longPolicyCorrect}/{row.longPolicyN} · {percent(row.longPolicyAccuracy)}</td><td className="tabular whitespace-nowrap p-2">{pp(row.deltaPercentagePoints)}</td></tr>)}</tbody>
+          <thead><tr className="bh-muted border-b border-[rgb(var(--line))]"><th className="p-2">System</th><th className="p-2">Overall</th><th className="p-2">{label === 'long-policy' ? 'Long policy' : `${label[0].toUpperCase()}${label.slice(1)}`} ({itemCount} items)</th><th className="p-2">Change</th></tr></thead>
+          <tbody>{ordered.map((row) => <tr key={row.key} className="border-b border-[rgb(var(--line))] last:border-0"><th scope="row" className="p-2 font-medium">{rankText(row.rank)} {row.system}</th><td className="tabular whitespace-nowrap p-2">{row.overallCorrect}/{row.overallN} · {percent(row.overallAccuracy)}</td><td className="tabular whitespace-nowrap p-2">{row.longPolicyCorrect}/{row.longPolicyN} · {percent(row.longPolicyAccuracy)}</td><td className="tabular whitespace-nowrap p-2">{pp(row.deltaPercentagePoints)}</td></tr>)}</tbody>
         </table>
       </div>
     </details>
@@ -467,27 +476,61 @@ function LongPolicySummary({ rows, itemCount }: { rows: LongPolicy[]; itemCount:
 
 export type { ContextData };
 
-export function JevContextLength({ data }: { data: ContextData }) {
+/** A live board row: the context view follows the board's own roster and ranks (Florian 16 Oct 2026). */
+export type JevContextBoardRow = { key: string; system: string; rank: number | null };
+export type JevContextBoard = { scope: 'open' | 'api' | 'all'; label: string; rows: JevContextBoardRow[] };
+
+// Live boards: keep the dataset's sourced rows for systems on this board, take rank and name from the board, and list
+// any board system without a sourced limit as Unknown rather than dropping it.
+function boardView(data: ContextData, board: JevContextBoard): ContextData {
+  const byKey = new Map(board.rows.map((row) => [row.key, row]));
+  const sourced = new Map(data.capacitySystems.map((row) => [row.key, row]));
+  const capacitySystems: Capacity[] = board.rows.map((b) => {
+    const row = sourced.get(b.key);
+    if (row) return { ...row, rank: b.rank, system: b.system, status: b.rank == null ? 'listed' : 'ranked' };
+    return { rank: b.rank, key: b.key, system: b.system, status: b.rank == null ? 'listed' : 'ranked', baseModel: null, maxContextTokens: null,
+      maxContext: 'Unknown', type: 'Unknown', sourceUrl: null, sourceDate: null, sourceChecked: data.checkedAt, sourceSha256: null,
+      baseSourceUrl: null, baseSourceDate: null, baseSourceSha256: null, systemRepoUrl: null, systemRepoDate: null,
+      basis: 'No published limit sourced yet for this board row.', notes: '', trainingMaxSeqLen: null, trainingStateMaxTokens: null,
+      trainingBatchTokens: null, validatedLength: null, trainingSourceUrl: null, trainingSourceDate: null, trainingSourceSha256: null };
+  });
+  const onBoard = <T extends { key: string; rank: number }>(rows: T[]) => rows.flatMap((row) => {
+    const b = byKey.get(row.key);
+    return b ? [{ ...row, rank: b.rank ?? 999, system: b.system }] : [];
+  }).sort((x, y) => x.rank - y.rank);
+  return { ...data, capacitySystems, lengthSystems: onBoard(data.lengthSystems), longPolicySystems: onBoard(data.longPolicySystems),
+    excludedLengthSystems: onBoard(data.excludedLengthSystems) };
+}
+
+export function JevContextLength({ data: source, board }: { data: ContextData; board?: JevContextBoard }) {
+  const data = board ? boardView(source, board) : source;
+  const label = data.longPolicyLabel ?? 'long-policy';
   const worst = [...data.longPolicySystems].sort((a, b) => a.deltaPercentagePoints - b.deltaPercentagePoints)[0];
   const leastAffected = [...data.longPolicySystems].sort((a, b) => b.deltaPercentagePoints - a.deltaPercentagePoints)[0];
   const knownCapacity = data.capacitySystems.flatMap((row) => row.maxContextTokens == null ? [] : [row.maxContextTokens]);
   const maxKnown = Math.max(...knownCapacity);
   const minKnown = Math.min(...knownCapacity);
   const unknownCapacityCount = data.capacitySystems.filter((row) => row.maxContextTokens == null).length;
+  const noun = board?.scope === 'open' ? 'open-weights systems' : board?.scope === 'api' ? 'API offerings' : 'systems';
+  const coverage = board ? <>Plotted: the {data.lengthSystems.length} {noun} on this board that were measured on the current draw ({data.sourceDataset.replace(/^JevBench /, '')}; all {source.lengthSystems.length} published rows of that draw reproduce their published results). The other rows carry scores from earlier draws with different items, so their input lengths are not comparable.{data.excludedLengthSystems.length > 0 && <> Not plotted: {joinLabels(data.excludedLengthSystems.map((row) => `${row.system} (${row.reason.replace(/^excluded:\s*/, '')})`))}.</>}</> : undefined;
 
-  return <section id="jev-context-length" className="mt-12 scroll-mt-6" data-bh-jev-context-section aria-labelledby="jev-context-title">
-    <p className="bh-eyebrow">JevBench {data.sourceDataset.replace('JevBench ', '')} · input capacity and long inputs</p>
-    <h2 id="jev-context-title" className="mt-1 text-2xl font-bold leading-snug sm:text-3xl">Context length</h2>
+  return <section id="jev-context-length" className="mt-12 scroll-mt-6" data-bh-jev-context-section data-bh-jev-context-board={board?.scope} aria-labelledby="jev-context-title">
+    <p className="bh-eyebrow">{board ? `JevBench board · ${board.label} · input capacity and long inputs` : `JevBench ${data.sourceDataset.replace('JevBench ', '')} · input capacity and long inputs`}</p>
+    <h2 id="jev-context-title" className="mt-1 text-2xl font-bold leading-snug sm:text-3xl">Context length{board ? ` (${board.label})` : ''}</h2>
     <p className="bh-muted mt-2 max-w-5xl text-sm">Context length is how much input a system accepts in one request; a smaller window forces truncation or chunking.</p>
     <p className="bh-muted mt-1 text-xs" data-bh-jev-context-meta>{data.capacitySystems.length} rows · published limits {minKnown.toLocaleString('en-US')} to {tokens(maxKnown)} · {unknownCapacityCount} without a published maximum · sources checked {day(data.checkedAt)}</p>
 
-    <AccuracyChart systems={data.lengthSystems} labels={data.bucketLabels} excluded={data.excludedLengthSystems} topRanked={data.topRankedSystemsConsidered} />
-    <BucketCounts systems={data.lengthSystems} />
+    {data.lengthSystems.length > 0 && <>
+      <AccuracyChart systems={data.lengthSystems} labels={data.bucketLabels} excluded={data.excludedLengthSystems} topRanked={data.topRankedSystemsConsidered} coverage={coverage} topFiveByRank={board != null} />
+      <BucketCounts systems={data.lengthSystems} />
+    </>}
 
-    <LongPolicySummary rows={data.longPolicySystems} itemCount={data.longPolicyItems} />
-    <p className="bh-muted mt-3 max-w-5xl text-xs">For example, {worst.system} scored {percent(worst.longPolicyAccuracy)} on long-policy tasks versus {percent(worst.overallAccuracy)} overall (change {pp(worst.deltaPercentagePoints)}), while {leastAffected.system} scored {percent(leastAffected.longPolicyAccuracy)} versus {percent(leastAffected.overallAccuracy)} (change {pp(leastAffected.deltaPercentagePoints)}). These are descriptive public-set comparisons. Prompt wrappers and tokenizers differ by system, and the 19-item family is small, so the results do not isolate context length as the cause. Only public item results were used; sealed-set item rows were not used.</p>
+    {worst && leastAffected && <>
+      <LongPolicySummary rows={data.longPolicySystems} itemCount={data.longPolicyItems} label={label} />
+      <p className="bh-muted mt-3 max-w-5xl text-xs">For example, {worst.system} scored {percent(worst.longPolicyAccuracy)} on {label} {label === 'long-policy' ? 'tasks' : 'items'} versus {percent(worst.overallAccuracy)} overall (change {pp(worst.deltaPercentagePoints)}), while {leastAffected.system} scored {percent(leastAffected.longPolicyAccuracy)} versus {percent(leastAffected.overallAccuracy)} (change {pp(leastAffected.deltaPercentagePoints)}). These are descriptive public-set comparisons. Prompt wrappers and tokenizers differ by system, and the {data.longPolicyItems}-item {label === 'long-policy' ? 'family' : 'group'} is small, so the results do not isolate context length as the cause. Only public item results were used; sealed-set item rows were not used.</p>
+    </>}
 
-    <CapacityChart rows={data.capacitySystems} />
+    <CapacityChart rows={data.capacitySystems} onBoard={board != null} />
     <CapacityTable rows={data.capacitySystems} checkedAt={data.checkedAt} />
   </section>;
 }

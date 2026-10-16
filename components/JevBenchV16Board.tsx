@@ -26,6 +26,8 @@ import { JevLanguageTableControls } from './JevLanguageTableControls';
 import { JevLatencyValue, JevLatencyLegend, JevLatencyMethodNote } from './JevLatency';
 import { isSelfHostedAdjustment } from '../lib/jev-latency.mjs';
 import { JevGpuCostCalculator } from './JevGpuCostCalculator';
+import { JevContextLazy } from './JevContextLazy';
+import { JevCostsDisclosure } from './JevCostsDisclosure';
 import { jevScopeClassifier, JEV_PENDING_LISTING, JEV_PRELIMINARY_LISTING, JEV_REFERENCE_KEY, JEV_SCOPE_LISTING, jevApiPreliminaryRows, jevApiRoster, jevScopeDisplayOrder, type JevApiListedRow, type JevScope } from '../lib/jevbench-scope.mjs';
 import { NOT_RANKED } from './JevBoardShared';
 import { apiRerunCells } from '../lib/jevbench-api-rerun-cells.mjs';
@@ -82,6 +84,35 @@ function coverageOf(categories: JevV16Categories, key: string) {
 // A row-scoped disclosure published with the row's language cells (how its coverage was completed).
 function languageNoteOf(categories: JevV16Categories, key: string) {
   return (categories.systems[key] as unknown as { language_coverage_note?: string } | undefined)?.language_coverage_note;
+}
+
+/** Florian 16 Oct 2026: "What a decision costs" (v1.5 page, lost with v1.6.0) returns on the live boards: the cost unit,
+ *  the price rules this board applies, and every estimated row's own documented basis (shortened; full text in the cell tooltip). */
+const ESTIMATE_KINDS = new Set(['estimate', 'estimated', 'mixed']);
+const shortBasis = (basis: string) => {
+  const plain = basis.replace(/\s*\((?:https?:[^)]*|[^)]*#\d{4,}[^)]*)\)/g, '').replace(/\s+/g, ' ').trim();
+  const first = plain.match(/^.{40,}?[.;](?=\s|$)/)?.[0] ?? plain;
+  return first.length > 220 ? `${first.slice(0, 217).trimEnd()}…` : first.replace(/[;,]$/, '.');
+};
+function DecisionCosts({ scope, rows }: { scope: JevScope; rows: Array<{ key: string; display: string; cost?: { kind?: string | null; basis?: string | null; usd_per_1000?: number | null } | null }> }) {
+  const estimated = rows.filter((r) => ESTIMATE_KINDS.has(r.cost?.kind ?? '') && r.cost?.basis);
+  const tariffs = rows.filter((r) => r.cost?.kind === 'tariff').length;
+  const unpriced = rows.filter((r) => r.cost?.kind === 'unpriced').length;
+  return <section id="jev-costs-section" className="mt-10 max-w-4xl scroll-mt-6 text-sm" data-bh-jev-costs>
+    <h2 className="mb-3 text-2xl font-bold">What a decision costs</h2>
+    <p className="bh-panel mb-3 p-3 text-[15px]" data-bh-jev15-cost-unit-panel>
+      <b>Every price here is US dollars per 1,000 decisions, not per 1,000 tokens.</b>{' '}
+      One decision is a whole typed request (state, rubric and options), not a single token.
+    </p>
+    <JevCostsDisclosure>
+      <p className="bh-muted mt-2">Rows with a public tariff (per token or per request) are priced at that tariff times the tokens they used; {tariffs} {tariffs === 1 ? 'row on this board carries' : 'rows on this board carry'} one.{scope !== 'api' && <> Open-weights rows have no tariff of their own: they carry the market reference price of their base model (the list price of the same weights at a large inference provider) times their tokens, marked &ldquo;est.&rdquo;.</>} Most rows keep their documented v1.5 cost per 1,000 decisions; each row&apos;s basis below and in its cost cell says how it was priced. We do not use per-minute GPU rental or our own CPU time{scope === 'open' ? '; the What-If calculator above shows that view separately' : '; the GPU cost calculator on the main board shows that view separately'}.{unpriced > 0 && <> {unpriced} {unpriced === 1 ? 'row has' : 'rows have'} no eligible price and {unpriced === 1 ? 'is' : 'are'} listed as unpriced.</>}</p>
+      <p className="bh-muted mt-2" data-bh-jev-price-rules><b className="text-gray-200">Price rules.</b> Only public, bookable list prices that have been in effect for at least 30 days count; a manufacturer&apos;s standard, non-promotional launch list price counts from day one, and promotions, subsidies, credits and free tiers never do. A self-hosted open-weights row is never priced below its base model&apos;s market reference price; API offerings are ranked at their own list price. A system without any eligible price is listed as unpriced. A later price change triggers a re-score with a visible note on the row.</p>
+      {scope === 'all' && <p className="bh-muted mt-2" data-bh-jev-api-price-rule><b className="text-gray-200">API models with a known base model.</b> On this board they also show a striped second bar: the score and rank they would have at the base-model reference price.</p>}
+      {estimated.length > 0 && <ul className="mt-3 space-y-1.5" data-bh-jev-cost-rows>
+        {estimated.map((r) => <li key={r.key} data-bh-jev-cost-row={r.key}><b>{short(r.display)}</b>: <span className="whitespace-nowrap">~{r.cost?.usd_per_1000 == null ? 'n/a' : `$${r.cost.usd_per_1000.toFixed(4)}`} <span className="bh-thin-tag">est.</span></span> per 1,000 decisions. <span className="bh-muted">{shortBasis(r.cost?.basis ?? '')}</span></li>)}
+      </ul>}
+    </JevCostsDisclosure>
+  </section>;
 }
 
 // CR-320: a low-n cell's shade is dimmed in CSS ([data-bh-heat-low-n]); opacity here also faded the number below 4.5:1.
@@ -359,7 +390,7 @@ function MethodBody({ categories, a, sha256, categoriesSha256, carrySha256, scop
     <p className="bh-muted mt-1 text-sm">Capability = mean(Intelligence, Calibration) for systems within twice the Jev 1.13.0 cost and median latency (the official caps; the sliders change only your view). {scope === 'all' ? `The Composite (option ${a.headline}) is the equal-weight harmonic mean of Intelligence, Calibration, Speed and Cost with the v1.5 low-axis gates; it remains secondary.` : `Composite (option ${a.headline}): ${COMPOSITE_DEFINITION} It leads the API board and is secondary on open weights.`} Request types Choice, Noul and Score weigh equally; tiers weigh easy {a.tier_weights.easy}, standard {a.tier_weights.standard}, hard {a.tier_weights.hard}, judge {a.tier_weights.judge}.</p>
     <JevLatencyMethodNote />
     <p className="bh-muted mt-1 text-sm" data-bh-jev16-class-reference>Jev-class caps use a fixed reference: Jev 1.13.0 as measured in v1.5 (p50 0.62 s, USD 0.0323 per 1,000 decisions); caps = 2x (1.23 s, USD 0.0646). Jev&apos;s own v1.6 p50 is 0.24 s.</p>
-    <p id="jev-costs" className="bh-muted mt-1 text-sm">Costs of v1.6-measured systems carry each system&apos;s published v1.5.4 cost per 1,000 decisions (pricing rules unchanged; v1.6 item lengths differ) unless the row says otherwise; Fastino&apos;s is an estimate from its published tariff and measured tokens.</p>
+    <p id={live ? 'jev16-costs-note' : 'jev-costs'} className="bh-muted mt-1 text-sm">Costs of v1.6-measured systems carry each system&apos;s published v1.5.4 cost per 1,000 decisions (pricing rules unchanged; v1.6 item lengths differ) unless the row says otherwise; Fastino&apos;s is an estimate from its published tariff and measured tokens.</p>
     {a.noul_method?.applied === 'O1S' && <>
     <h3 className="mt-4 text-lg font-semibold">Noul decisiveness and Score baseline (addendum B)</h3>
     <p className="bh-muted mt-1 text-sm" data-bh-jev16-noul-method>Scored with method option B (scorer setting {a.noul_method?.applied ?? 'O0'}), selected on 3 Oct 2026 after the v1.6 scores were known and disclosed as a post-results change. Each split × type competence is clipped at 0 before the type weighting, so a type answered no better than chance counts as chance instead of negative. The Score chance baseline is the error of always predicting the mid-scale level, so a flat know-nothing distribution earns about 0. A Score cell whose golds all sit at mid-scale keeps the v1.5 random-level baseline; this only occurs in small breakdown and bootstrap cells. Calibration is unchanged. This run: G_med = {a.G_med == null ? "—" : a.G_med.toFixed(2)} points{v161 ? '.' : <>; hosted-API offsets Intelligence {off.I >= 0 ? '+' : ''}{off.I.toFixed(2)}, Calibration {off.C >= 0 ? '+' : ''}{off.C.toFixed(2)}.</>}</p>
@@ -653,11 +684,16 @@ export function JevBenchV16Board({ artifact: a, sha256, categories, categoriesSh
         previousKeys={previousKeys}
         eligibility={allClass}
         metadata={{ families: baseModelFamilies('jevbench', a.systems) }}
-        links={{ method: '#jev16-method', pricing: '#jev16-method', revisionNotes: '#jev16-method', addenda: {} }}
+        links={{ method: '#jev16-method', pricing: live ? '#jev-costs' : '#jev16-method', revisionNotes: '#jev16-method', addenda: {} }}
       />
       {scope === 'open' && <div className="mt-10"><JevGpuCostCalculator systems={ranked.filter((s) => s.v16.lane !== 'api').map((s) => ({
         key: s.key, display: short(s.display), gpu: (s as { gpu?: string | null }).gpu ?? null, p50_s_raw: s.speed?.p50_s_raw ?? null,
         officialUsdPer1000: s.cost?.usd_per_1000 ?? null, ranked: !!s.ranked }))} /></div>}
+      {live && <DecisionCosts scope={scope} rows={ranked.filter((s) => s.listing !== JEV_PRELIMINARY_LISTING && s.listing !== JEV_PENDING_LISTING && !hiddenApi.has(s.key))} />}
+      {/* Florian 16 Oct 2026: the context-length views (lost with v1.6.0) return on the live boards, on this board's roster and ranks. */}
+      {live && <JevContextLazy board={{ scope, label: scopeLabel ?? 'all groups', rows: ranked
+        .filter((s) => s.listing !== JEV_PRELIMINARY_LISTING && s.listing !== JEV_PENDING_LISTING && !hiddenApi.has(s.key))
+        .map((s) => ({ key: s.key, system: s.display, rank: s.ranked ? s.rank ?? null : null })) }} />}
       {(!fresh || carry.rows.length > 0) && <DatedCarry carry={carry} hiddenApi={hiddenApi} showExceptions={Boolean(categories.supplement)} />}
       <Method categories={categories} a={a} sha256={sha256} categoriesSha256={categoriesSha256} carrySha256={carrySha256} scope={scope} hiddenApi={hiddenApi} preliminary={preliminary} live={live} />
     </section>
