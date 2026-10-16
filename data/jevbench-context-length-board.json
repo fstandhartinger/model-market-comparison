@@ -1,8 +1,8 @@
 {
  "checkedAt": "2026-10-16",
- "sourceDataset": "JevBench v1.6.21 public items (draw v1.6-regular-20261012)",
+ "sourceDataset": "JevBench v1.6.22 public items (draw v1.6-regular-20261012)",
  "publicItems": 300,
- "topRankedSystemsConsidered": 22,
+ "topRankedSystemsConsidered": 26,
  "bucketLabels": [
   "<500",
   "500–999",
@@ -14,7 +14,7 @@
   "256k–1M",
   "≥1M"
  ],
- "method": "Outcomes come from public (open) items only of the v1.6-regular-20261012 draw (300 of 1,500). Per-item correctness is the official score_v16 per-item outcome (sha256 021322711176…, JEV_NOUL_METHOD=O1S): Choice and Noul use the scorer’s binary “top answer correct” flag; Score items count as correct when the scored error is within half a step (err × (labels − 1) ≤ 0.5), the same rule as the published category accuracy. Each system’s raw run was re-scored and must reproduce the published v1.6.21 full-draw per-type accuracy and the published open-set Intelligence and per-type open competence exactly before it is included. Input length is each system’s recorded usage.input_tokens per request. Bin edges: 0–499, 500–999, 1,000–1,999, 2,000–7,999, 8,000–15,999, 16,000–63,999, 64,000–255,999, 256,000–999,999, and 1,000,000 or more. Only aggregate counts per system and bin are published. Published context limits: rows sourced for v1.4.1 (checked 23 Sep 2026) are kept with their original sources; the 132 systems added to the boards since then (incl. the four v1.6.22 rows) were sourced on 16 Oct 2026 from each system’s own model card, repository or API documentation, else its base model’s configuration. A long-input family view is not shown for this draw: only 3 public items exceed 2,000 input tokens.",
+ "method": "Outcomes come from public (open) items only of the v1.6-regular-20261012 draw (300 of 1,500). Per-item correctness is the official score_v16 per-item outcome (sha256 021322711176…, JEV_NOUL_METHOD=O1S): Choice and Noul use the scorer’s binary “top answer correct” flag; Score items count as correct when the scored error is within half a step (err × (labels − 1) ≤ 0.5), the same rule as the published category accuracy. Each system’s raw run was re-scored and must reproduce the published v1.6.22 full-draw per-type accuracy and the published open-set Intelligence and per-type open competence exactly before it is included. Input length is each system’s recorded usage.input_tokens per request. Bin edges: 0–499, 500–999, 1,000–1,999, 2,000–7,999, 8,000–15,999, 16,000–63,999, 64,000–255,999, 256,000–999,999, and 1,000,000 or more. Only aggregate counts per system and bin are published. Published context limits: rows sourced for v1.4.1 (checked 23 Sep 2026) are kept with their original sources; the 132 systems added to the boards since then (incl. the four v1.6.22 rows) were sourced on 16 Oct 2026 from each system’s own model card, repository or API documentation, else its base model’s configuration. A long-input family view is not shown for this draw: only 3 public items exceed 2,000 input tokens.",
  "caveat": "Token counts use each system's own rendered request/tokenizer; prompt wrappers can differ. Bucket denominators are shown because token-count coverage is incomplete for some systems.",
  "capacitySystems": [
   {
@@ -6338,6 +6338,71 @@
   },
   {
    "rank": 6,
+   "key": "messier-one-v0.4",
+   "system": "Messier One v0.4 (Qwen3.5-4B fine-tune, self-hosted)",
+   "meanInputTokens": 749.3233333333334,
+   "outcomes": 300,
+   "lengthCoverage": 300,
+   "overallAccuracy": 0.7333333333333333,
+   "buckets": [
+    {
+     "label": "<500",
+     "n": 85,
+     "correct": 61,
+     "accuracy": 0.7176470588235294
+    },
+    {
+     "label": "500–999",
+     "n": 167,
+     "correct": 134,
+     "accuracy": 0.8023952095808383
+    },
+    {
+     "label": "1,000–1,999",
+     "n": 44,
+     "correct": 24,
+     "accuracy": 0.5454545454545454
+    },
+    {
+     "label": "2–8k",
+     "n": 1,
+     "correct": 0,
+     "accuracy": 0.0
+    },
+    {
+     "label": "8–16k",
+     "n": 3,
+     "correct": 1,
+     "accuracy": 0.3333333333333333
+    },
+    {
+     "label": "16–64k",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    },
+    {
+     "label": "64–256k",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    },
+    {
+     "label": "256k–1M",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    },
+    {
+     "label": "≥1M",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    }
+   ]
+  },
+  {
+   "rank": 7,
    "key": "metask_jev_rain_31b_trained_v3",
    "system": "metask-jev-rain-31B-trained service v3",
    "meanInputTokens": 546.7166666666667,
@@ -6402,7 +6467,7 @@
    ]
   },
   {
-   "rank": 7,
+   "rank": 8,
    "key": "subq-snap-preview",
    "system": "SubQ Snap (preview, SubQ)",
    "meanInputTokens": 1291.5466666666666,
@@ -6467,7 +6532,7 @@
    ]
   },
   {
-   "rank": 8,
+   "rank": 9,
    "key": "respan-span-02",
    "system": "Respan Span-02",
    "meanInputTokens": 526.8047138047139,
@@ -6532,7 +6597,7 @@
    ]
   },
   {
-   "rank": 9,
+   "rank": 10,
    "key": "uniphore-4b-decider",
    "system": "Uniphore-4B-Decider",
    "meanInputTokens": 510.19191919191917,
@@ -6597,7 +6662,7 @@
    ]
   },
   {
-   "rank": 10,
+   "rank": 11,
    "key": "standard_one_3b_sh",
    "system": "Standard One 3B SH (Standard Thinking)",
    "meanInputTokens": 520.6835016835017,
@@ -6662,7 +6727,7 @@
    ]
   },
   {
-   "rank": 11,
+   "rank": 12,
    "key": "amos-1-medium",
    "system": "Amos 1 medium (Scira)",
    "meanInputTokens": 1288.2266666666667,
@@ -6727,7 +6792,7 @@
    ]
   },
   {
-   "rank": 12,
+   "rank": 13,
    "key": "pjev-2b",
    "system": "pjev-2b (Kailune AI, frozen MiniCPM5-2B + merged LoRA r64, letter-logit readout, T=1 stub)",
    "meanInputTokens": 563.3973063973064,
@@ -6792,7 +6857,7 @@
    ]
   },
   {
-   "rank": 13,
+   "rank": 14,
    "key": "krino-2b",
    "system": "Krino-2B",
    "meanInputTokens": 1101.0133333333333,
@@ -6857,7 +6922,72 @@
    ]
   },
   {
-   "rank": 14,
+   "rank": 15,
+   "key": "nev-2b",
+   "system": "Nev-2B (EryriLabs)",
+   "meanInputTokens": 464.8686868686869,
+   "outcomes": 300,
+   "lengthCoverage": 297,
+   "overallAccuracy": 0.5166666666666667,
+   "buckets": [
+    {
+     "label": "<500",
+     "n": 185,
+     "correct": 97,
+     "accuracy": 0.5243243243243243
+    },
+    {
+     "label": "500–999",
+     "n": 106,
+     "correct": 57,
+     "accuracy": 0.5377358490566038
+    },
+    {
+     "label": "1,000–1,999",
+     "n": 6,
+     "correct": 1,
+     "accuracy": 0.16666666666666666
+    },
+    {
+     "label": "2–8k",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    },
+    {
+     "label": "8–16k",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    },
+    {
+     "label": "16–64k",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    },
+    {
+     "label": "64–256k",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    },
+    {
+     "label": "256k–1M",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    },
+    {
+     "label": "≥1M",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    }
+   ]
+  },
+  {
+   "rank": 16,
    "key": "vllm-sr-d3",
    "system": "vLLM-SR d3",
    "meanInputTokens": 1296.5466666666666,
@@ -6922,7 +7052,7 @@
    ]
   },
   {
-   "rank": 15,
+   "rank": 17,
    "key": "amos-1-large",
    "system": "Amos 1 large (Scira)",
    "meanInputTokens": 1288.2266666666667,
@@ -6987,7 +7117,7 @@
    ]
   },
   {
-   "rank": 16,
+   "rank": 18,
    "key": "purplemist-mini-1.0",
    "system": "PurpleMIST-Mini-1.0 (Olaverse)",
    "meanInputTokens": 474.6026936026936,
@@ -7052,7 +7182,7 @@
    ]
   },
   {
-   "rank": 17,
+   "rank": 19,
    "key": "phocinae-largha-150m-v1",
    "system": "Phocinae-Largha-150M-v1",
    "meanInputTokens": 389.1333333333333,
@@ -7117,7 +7247,7 @@
    ]
   },
   {
-   "rank": 18,
+   "rank": 20,
    "key": "julia-1",
    "system": "Julia-1 (Supersonic Labs)",
    "meanInputTokens": 442.16161616161617,
@@ -7154,6 +7284,71 @@
      "n": 0,
      "correct": 0,
      "accuracy": null
+    },
+    {
+     "label": "16–64k",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    },
+    {
+     "label": "64–256k",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    },
+    {
+     "label": "256k–1M",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    },
+    {
+     "label": "≥1M",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    }
+   ]
+  },
+  {
+   "rank": 999,
+   "key": "nemotron-deciffusion-8b-v2",
+   "system": "Nemotron Deciffusion 8B v2 (pst2154)",
+   "meanInputTokens": 667.65,
+   "outcomes": 300,
+   "lengthCoverage": 300,
+   "overallAccuracy": 0.7733333333333333,
+   "buckets": [
+    {
+     "label": "<500",
+     "n": 123,
+     "correct": 89,
+     "accuracy": 0.7235772357723578
+    },
+    {
+     "label": "500–999",
+     "n": 150,
+     "correct": 123,
+     "accuracy": 0.82
+    },
+    {
+     "label": "1,000–1,999",
+     "n": 24,
+     "correct": 17,
+     "accuracy": 0.7083333333333334
+    },
+    {
+     "label": "2–8k",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    },
+    {
+     "label": "8–16k",
+     "n": 3,
+     "correct": 3,
+     "accuracy": 1.0
     },
     {
      "label": "16–64k",
@@ -7402,6 +7597,71 @@
      "n": 5,
      "correct": 4,
      "accuracy": 0.8
+    },
+    {
+     "label": "2–8k",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    },
+    {
+     "label": "8–16k",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    },
+    {
+     "label": "16–64k",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    },
+    {
+     "label": "64–256k",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    },
+    {
+     "label": "256k–1M",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    },
+    {
+     "label": "≥1M",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
+    }
+   ]
+  },
+  {
+   "rank": 999,
+   "key": "trio-spark-v1.3",
+   "system": "Trio-Spark v1.3 (MachineFi)",
+   "meanInputTokens": 422.48339483394835,
+   "outcomes": 300,
+   "lengthCoverage": 271,
+   "overallAccuracy": 0.59,
+   "buckets": [
+    {
+     "label": "<500",
+     "n": 176,
+     "correct": 123,
+     "accuracy": 0.6988636363636364
+    },
+    {
+     "label": "500–999",
+     "n": 95,
+     "correct": 54,
+     "accuracy": 0.5684210526315789
+    },
+    {
+     "label": "1,000–1,999",
+     "n": 0,
+     "correct": 0,
+     "accuracy": null
     },
     {
      "label": "2–8k",
