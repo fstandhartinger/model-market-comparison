@@ -1,13 +1,13 @@
 {
   "source": "ArtificialAnalysis Coding Agent Index",
   "version": "1.5",
-  "collected_at": "2026-10-15",
+  "collected_at": "2026-10-16",
   "endpoint": "https://artificialanalysis.ai/agents/coding-agents",
   "methodology_url": "https://artificialanalysis.ai/methodology/coding-agents-benchmarking",
   "method": "Decode Flight JSON and resolve benchmarkRows references on the full coding-agents page; validate version, row count, identities, components and index arithmetic before atomic replacement.",
   "score_scale": "0-1",
   "basis": "measured",
-  "count": 40,
+  "count": 41,
   "completeness_note": "Complete v1.5 benchmarkRows only. v1.4 remains a separate dated snapshot for the unchanged Composite; versions must never be combined.",
   "rows": [
     {
@@ -474,6 +474,32 @@
         {
           "id": "terminal-bench-v4",
           "score": 0.166666666666667,
+          "weight": 0.333333333333333
+        }
+      ]
+    },
+    {
+      "source_id": "2f37603a93bf2cdddfdb7fa9ccce4803",
+      "model_name": "Muse Spark Open (xhigh)",
+      "harness": "Muse Code",
+      "score": 0.41176081876909754,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true,
+      "components": [
+        {
+          "id": "deep-swe-v1.1",
+          "score": 0.601769911504425,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "swe-atlas-qna",
+          "score": 0.577956989247312,
+          "weight": 0.333333333333333
+        },
+        {
+          "id": "terminal-bench-v4",
+          "score": 0.0555555555555556,
           "weight": 0.333333333333333
         }
       ]

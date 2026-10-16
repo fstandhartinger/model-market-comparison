@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-10-15T07:28:51.690Z",
+  "collected_at": "2026-10-16T00:53:04.988Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-10-15T07:28:50.724Z",
+      "fetched_at": "2026-10-16T00:53:04.245Z",
       "http_status": 200,
-      "bytes": 4207355,
-      "sha256": "5d238b3a89e41ea5dd03d7fc12cb136706559bb9479eddcfa627758aa0ebf67d"
+      "bytes": 4228548,
+      "sha256": "e3357dd2ca67af967d0f3e3f7444c7b8af70b5d265bb133b22c4549611444f59"
     }
   ],
   "coverage": {
-    "published_rows": 211,
-    "scored_denominator": 690,
+    "published_rows": 214,
+    "scored_denominator": 693,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 211,
+  "count": 214,
   "rows": [
     {
       "source_id": "8215372b-66ff-457b-855e-e8abeafc9571",
@@ -3943,6 +3943,28 @@
       }
     },
     {
+      "source_id": "3661c8fb-caf7-4118-aa18-65b84fea8e44",
+      "slug": "muse-spark-open",
+      "name": "Muse Spark Open (Xhigh)",
+      "variant": "xhigh",
+      "tokens_per_task": {
+        "reasoning": 18397.715383937586,
+        "answer": 21937.346590321253,
+        "output": 40335.06197425884
+      },
+      "canonical_token_counts": {
+        "input": 2957750729,
+        "output": 106041181,
+        "answer": 32180422,
+        "reasoning": 73860759
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 27.89247253856971,
+        "reasoning_output_share": 0.4561221548557109
+      }
+    },
+    {
       "source_id": "ff2f3f3d-783f-4e27-8a39-47237501a313",
       "slug": "muse-wonder",
       "name": "Muse Wonder (Max)",
@@ -3987,6 +4009,28 @@
       }
     },
     {
+      "source_id": "7d2aa050-888e-4c27-a92d-10337a4dfb3a",
+      "slug": "nemotron-3-5-bolt-74b-a9b",
+      "name": "Nemotron 3.5 Bolt 74B-A9B",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 65120.70097346896,
+        "answer": 17041.64944738524,
+        "output": 82162.3504208542
+      },
+      "canonical_token_counts": {
+        "input": 2670356142,
+        "output": 228562965,
+        "answer": 23368773,
+        "reasoning": 205194192
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 11.683240729748146,
+        "reasoning_output_share": 0.7925856628967641
+      }
+    },
+    {
       "source_id": "29976311-665a-4b2f-ac72-557c33e0758e",
       "slug": "nemotron-3-5-lightning",
       "name": "Nemotron 3.5 Lightning",
@@ -4006,6 +4050,28 @@
         "basis": "derived",
         "input_output_ratio": 11.203415273391736,
         "reasoning_output_share": 0.4614234193485181
+      }
+    },
+    {
+      "source_id": "e2c0623e-c855-4a61-bb66-be1f1ed43234",
+      "slug": "nemotron-3-5-super-vl",
+      "name": "Nemotron 3.5 Super VL",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 35598.2665103271,
+        "answer": 13575.566435840135,
+        "output": 49173.83294616723
+      },
+      "canonical_token_counts": {
+        "input": 1970419384,
+        "output": 172316619,
+        "answer": 19013124,
+        "reasoning": 153303495
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 11.434877236072047,
+        "reasoning_output_share": 0.7239270233275916
       }
     },
     {

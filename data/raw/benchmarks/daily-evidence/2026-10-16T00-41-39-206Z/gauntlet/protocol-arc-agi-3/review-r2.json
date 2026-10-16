@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-arc-agi-3",
+  "artifact_sha256": "95716ef98d721e5a0c3f9c69bd5024d97b8aa40916a61e38fdf901ea9069d450",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": ["arc-agi::3", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute hash verification or transport/qualification checks; row binding relies on the owner-provided per-row SHA-256 (c77722bf683c125fe160393c71ef74f48c404efe196bfd1e4f090ea6576b4f02).",
+    "No maintainer page excerpt is present for the row, so continuity of the protocol page (registry version/identity/metric description) is not directly verifiable from the packet; the excerpt cannot be compared against the primary protocol text."
+    ],
+  "missing_evidence": [],
+  "coverage_checked": ["arc-agi::3","c1","c2"]
+  }

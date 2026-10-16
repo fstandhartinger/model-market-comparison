@@ -1,7 +1,7 @@
 {
   "source": "Nebius Token Factory — tokenfactory.nebius.com/api/public/models_info (first-party, public catalog)",
   "region": "mixed (eu-north1 / eu-west2 / us-central1 / uk-south1)",
-  "collected_at": "2026-10-15",
+  "collected_at": "2026-10-16",
   "listing_url": "https://tokenfactory.nebius.com/models",
   "method": "scripts/fetch-nebius-catalog.mjs: one GET of the public catalog (allowed by robots.txt); prices are flavors[].input/output_price_per_million_tokens in native USD; region from flavors[].regions[].country_code (EU member state → eu, US → us, UK → uk); non-chat types and zero-output-price rows (embeddings) omitted; curated model_name/provider_org carried over by exact model_id; new ids marked mapping=derived; catalog status kept per row. See nebius.method.md.",
   "models": [
@@ -61,6 +61,18 @@
       "notes": "flavor: cheap; served region: eu-north1 (FI); id google/gemma-3-27b-it"
     },
     {
+      "model_name": "Muse Spark Open",
+      "provider_org": "Meta",
+      "input_per_1m_usd": 1.25,
+      "output_per_1m_usd": 4.25,
+      "region": "us",
+      "model_id": "meta-models/muse-spark-open",
+      "context_length": 1048576,
+      "status": "active",
+      "notes": "flavor: cheap; served region: us-north1 (US); id meta-models/muse-spark-open",
+      "mapping": "derived"
+    },
+    {
       "model_name": "MiniMax M3",
       "provider_org": "MiniMax",
       "input_per_1m_usd": 0.3,
@@ -114,6 +126,18 @@
       "context_length": 131072,
       "status": "active",
       "notes": "flavor: cheap; served region: eu-north1 (FI); id NousResearch/Hermes-4-405B"
+    },
+    {
+      "model_name": "Nemotron 3.5 Super VL",
+      "provider_org": "NVIDIA",
+      "input_per_1m_usd": 0.3,
+      "output_per_1m_usd": 0.9,
+      "region": "us",
+      "model_id": "nvidia/Nemotron-3.5-Super-VL",
+      "context_length": 1048576,
+      "status": "active",
+      "notes": "flavor: cheap; served region: us-north1 (US); id nvidia/Nemotron-3.5-Super-VL",
+      "mapping": "derived"
     },
     {
       "model_name": "Nemotron 3 Nano 30B",
@@ -270,12 +294,15 @@
       "notes": "flavor: cheap; served region: us-north1 (US); id zai-org/GLM-5.3-Flash"
     }
   ],
-  "response_sha256": "6ae551f7efe72ee47c6220c08b6e3ec9399b16ae7670199cf2956890d372b22a",
+  "response_sha256": "bafbb89638e6023118ed1e135c5b6de852cd53c088a0263fb1c67db4f1fa3f94",
   "skipped": [
     "Qwen/Qwen3-Embedding-8B"
   ],
   "diff": {
-    "added": [],
+    "added": [
+      "meta-models/muse-spark-open",
+      "nvidia/Nemotron-3.5-Super-VL"
+    ],
     "removed": [],
     "price_changed": [],
     "region_changed": []

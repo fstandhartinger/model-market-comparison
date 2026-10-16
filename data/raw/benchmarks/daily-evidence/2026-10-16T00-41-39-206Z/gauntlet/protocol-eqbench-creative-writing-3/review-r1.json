@@ -1,0 +1,15 @@
+{
+  "artifact_id": "protocol-eqbench-creative-writing-3",
+  "artifact_sha256": "80ef38506fe66e59005afe37521f7ac7be211cf056c6ab37452f547799bcc445",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["eqbench-creative-writing::3","c1","c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "eqbench-creative-writing::3",
+      "severity": "blocker",
+      "location": "row eqbench-creative-writing::3 (scoring, status, version_status)",
+      "evidence": "The primary source evidence section of the packet contains no actual source excerpt for row eqbench-creative-writing::3: no protocol text or captured payload is supplied, and no run-generated summary of served values or added/changed model values is included. Without any primary evidence, the row's claimed metric ('Elo Score column in the leaderboard'), unit 'Elo', range [null,null], higher_better=true, description, status:'active', version_status:'published', version:'3', superseded_by:null and maintainer cannot be compared against the actual current primary protocol. REQUIRED_ROW_IDS asks to check eqbench-creative-writing::3, and REQUIRED_COVERAGE_IDS includes c1 and c2; both criteria need the protocol excerpt or an owner hash-verified response projection, neither of which is present.",
+"repair":"Supply the primary source evidence (protocol excerpt and, if carried, this run's generated summary of served values and added/changed model rows) for row eqbench-creative-writing::3 so that c1 and c2 can be verified."}]
+  }

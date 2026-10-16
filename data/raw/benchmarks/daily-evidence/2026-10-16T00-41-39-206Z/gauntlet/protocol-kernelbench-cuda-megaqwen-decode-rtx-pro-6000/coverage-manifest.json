@@ -1,0 +1,202 @@
+{
+  "artifact_id": "protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000",
+  "rounds_used": 3,
+  "rows": {
+    "total": 1,
+    "accepted": [],
+    "quarantined": [
+      "kernelbench-cuda-megaqwen-decode::rtx-pro-6000"
+    ]
+  },
+  "producer_flagged": [],
+  "second_opinion": null,
+  "criteria": [
+    "c1",
+    "c2"
+  ],
+  "coverage": {
+    "producer": null,
+    "critic": [],
+    "final": {
+      "rows_covered": 0,
+      "criteria_covered": 0,
+      "complete": false
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.0020844077166,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-16T00-41-39-206Z/gauntlet/protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000/producer-r1.json",
+      "output_sha256": "4e37eaf8ced98c43244cc09be78c30ad703eb298d32417dbe2eb43f885fb4359",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.5,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 23110,
+        "completion_tokens": 2046,
+        "total_tokens": 25156,
+        "cost": 0.0020844077166,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 22648,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.00210546234,
+          "upstream_inference_prompt_cost": 0.00026406234,
+          "upstream_inference_completions_cost": 0.0018414
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1715,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 2,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 2,
+      "cost_usd": 0.0018916332732,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-16T00-41-39-206Z/gauntlet/protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000/producer-r2.json",
+      "output_sha256": "e98df7c3e6e1e7c6045158910eaa6a0230b27f0c674a2765022a8c4554fc1990",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.5,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 23114,
+        "completion_tokens": 1816,
+        "total_tokens": 24930,
+        "cost": 0.0018916332732,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 21265,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.00191074068,
+          "upstream_inference_prompt_cost": 0.00027634068,
+          "upstream_inference_completions_cost": 0.0016344
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1577,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 3,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 3,
+      "cost_usd": 0.0049360818177,
+      "out": "data/raw/benchmarks/daily-evidence/2026-10-16T00-41-39-206Z/gauntlet/protocol-kernelbench-cuda-megaqwen-decode-rtx-pro-6000/producer-r3.json",
+      "output_sha256": "7e2f5c8b3a1203f4ef616982809214d0cd1189f8e12be2170497ebc1d5754494",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.5,
+        "context": 1048576,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 23114,
+        "completion_tokens": 5249,
+        "total_tokens": 28363,
+        "cost": 0.0049360818177,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 22883,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.00498594123,
+          "upstream_inference_prompt_cost": 0.00026184123,
+          "upstream_inference_completions_cost": 0.0047241
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 5039,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}
