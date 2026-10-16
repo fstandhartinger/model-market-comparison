@@ -47,7 +47,7 @@ test('CR-482 cost reference is Jev with images; both top fives are the reviewed 
     && r.tracks.core.speed.adjusted_p50_s <= e.latency_p50_s_cap;
   const capped = release.ranking.filter(inCap).sort((a, b) => b.tracks.core.capability - a.tracks.core.capability);
   assert.deepEqual(capped.slice(0, 5).map((r) => r.key),
-    ['sage_1_4_images', 'jev_1_13_images', 'kushal_gemma4_31b_it_autoloops', 'imajev_4b', 'imajev_9b']); // CR-XXX: Sage 1.4 + images enters at #1
+    ['sage_1_4_images', 'jev_1_13_images', 'kushal_gemma4_31b_it_autoloops', 'imajev_4b', 'imajev_9b']); // CR-XXX: Sage 1.4 + images enters at #1 under the argmax ruling for its 80 abstentions (#5 if they were scored wrong; disclosed in the row note and addendum)
   assert.equal(capped.length, 48);
   // Wity-1 and the GPT Lunas stay out on latency, not cost
   for (const key of ['wity_1', 'gpt6_luna', 'gpt56_luna']) assert.ok(row(key).tracks.core.speed.adjusted_p50_s > e.latency_p50_s_cap, key);
