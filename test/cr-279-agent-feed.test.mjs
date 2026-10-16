@@ -3,9 +3,10 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { readCurrentJevbench, CURRENT_JEVBENCH_PAGE } from '../lib/jevbench-current.mjs';
-import { readJevbenchAgentFeed, projectJevbenchFeed } from '../lib/jevbench-agent-feed.mjs';
+import { readJevbenchReleaseFeed as readJevbenchAgentFeed, projectJevbenchFeed } from '../lib/jevbench-agent-feed.mjs';
 import { jevClassRows, JEV_V16_CLASS_OPTIONS } from '../lib/jevbench-jev-class.mjs';
 import { jevV15BoardSystem } from '../lib/jevbench-v15-board.mjs';
+// The v1.6.1 release projection; the merged live feed is covered by jevbench-feed-live-board.test.mjs.
 const { artifact, sha256 } = await readCurrentJevbench();
 const { feed, bytes, sha256: feedHash } = await readJevbenchAgentFeed();
 

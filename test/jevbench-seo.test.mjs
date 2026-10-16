@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readCurrentJevbench} from '../lib/jevbench-current.mjs';
-import {readJevbenchAgentFeed} from '../lib/jevbench-agent-feed.mjs';
+import {readJevbenchReleaseFeed} from '../lib/jevbench-agent-feed.mjs';
 import {readJevbenchSeoData,currentComparisonPairs,JEV_LEGACY_COMPARISONS,isOpenWeightJevRow} from '../lib/jevbench-seo.mjs';
 import {jevbenchLlmsFull} from '../lib/jevbench-llms-full.mjs';
 import {isJevbenchV16ExcludedKey} from '../lib/jevbench-v16-public-scope.mjs';
@@ -9,7 +9,7 @@ import {importSeoModule,renderSeo,parseJsonLd} from './jevbench-seo-render.mjs';
 
 const data = await readJevbenchSeoData();
 test('SEO headline ranks match the open-weights board in the current public feed, not artifact-wide ranks',async()=>{
- const {feed}=await readJevbenchAgentFeed();const {artifact}=await readCurrentJevbench();
+ const {feed}=await readJevbenchReleaseFeed();const {artifact}=await readCurrentJevbench();
  assert.equal(data.artifact.revision,artifact.revision);
  assert.deepEqual(data.ranked.map(r=>[r.key,r.rank,r.capability]),feed.systems.filter(r=>r.capability.open_board_rank!=null).sort((a,b)=>a.capability.open_board_rank-b.capability.open_board_rank).map(r=>[r.key,r.capability.open_board_rank,r.capability.score]));
  assert.ok(data.systems.some(r=>r.key==='jev-1.13.0'));
