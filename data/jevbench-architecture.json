@@ -4280,7 +4280,7 @@
           "params": null,
           "quant": null
         },
-        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+        "note": "Same pinned revision as the historical v1.5 measurement; re-measured on the v1.6 regular draw in v1.6.24 (RTX 5090). Unverified display badges are omitted."
       },
       "noma": {
         "arch": "open-llm-decoder",
@@ -4296,7 +4296,7 @@
           "params": null,
           "quant": null
         },
-        "note": "Historical measured revision; pinned source and hardware are disclosed in the historical supplement. Unverified display badges are omitted."
+        "note": "Same pinned revision as the historical v1.5 measurement; re-measured on the v1.6 regular draw in v1.6.24 (RTX 5090). Unverified display badges are omitted."
       },
       "fastsem-jev-l16r25": {
         "arch": "open-llm-decoder",
@@ -5665,6 +5665,96 @@
             "url": "https://github.com/machinefi/trio-spark",
             "kind": "provider-docs",
             "fact": "MachineFi documents Trio-Spark as a hosted decision API (platform.machinefi.com/v1/systemone); no weights or training code are published and no base model is declared."
+          }
+        ]
+      },
+      "imajev-9b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "adapter",
+          "params": "9B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/mohit67890/imajev-9b/tree/7301600591665b941d324b1a297e097b56724f9b",
+            "kind": "model-card",
+            "fact": "Pinned revision 7301600591665b941d324b1a297e097b56724f9b of mohit67890/imajev-9b: a LoRA adapter on Qwen/Qwen3.5-9B, served by the author's own torch server with four option orders per question; Apache-2.0."
+          }
+        ]
+      },
+      "imajev-2b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "adapter",
+          "params": "2B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/mohit67890/imajev-2b/tree/66e4b8c808bae45ca98bed5edd2de6323bdb0576",
+            "kind": "model-card",
+            "fact": "Pinned revision 66e4b8c808bae45ca98bed5edd2de6323bdb0576 of mohit67890/imajev-2b: a LoRA adapter on Qwen/Qwen3.5-2B, served by the author's own torch server with four option orders per question; Apache-2.0."
+          }
+        ]
+      },
+      "arsenelupin-v1.1": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/IBOU-SEARCH/ArseneLupin-v1.1/tree/411a6aefab87a4c155372c2a0a20777c2f5e1317",
+            "kind": "model-card",
+            "fact": "Pinned revision 411a6aefab87a4c155372c2a0a20777c2f5e1317; LoRA on Qwen/Qwen3.5-4B served by the author's own shared-prefix System One server; Apache-2.0."
+          }
+        ]
+      },
+      "bongard-mini": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "7.5B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/AgentBull/bongard-mini/tree/c81c5b883a5983669be84be98658eac940489613",
+            "kind": "model-card",
+            "fact": "Pinned revision c81c5b883a5983669be84be98658eac940489613: a full post-train of the encoder-decoder google/t5gemma-2-4b-4b plus a judgment head (7.5B parameters); Gemma terms of use."
+          }
+        ]
+      },
+      "kettei-fat": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://docs.sqwish.ai/guides/models-and-fallback",
+            "kind": "provider-docs",
+            "fact": "Sqwish documents kettei-fat v1.0 (released 14 Oct 2026) as the largest of three hosted kettei decision models, up to 65,536 input tokens a request; no weights are published."
+          }
+        ]
+      },
+      "kettei-chub": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://docs.sqwish.ai/guides/models-and-fallback",
+            "kind": "provider-docs",
+            "fact": "Sqwish documents kettei-chub v1.0 (released 14 Oct 2026) as the middle of three hosted kettei decision models, up to 65,536 input tokens a request; no weights are published."
           }
         ]
       }
