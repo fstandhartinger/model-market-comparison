@@ -7,7 +7,7 @@ const release = JSON.parse(await read('../data/imagejev-v03.json'));
 const KEY = 'celeris_1_decision';
 const row = release.ranking.find((r) => r.key === KEY);
 
-test('CR-XXX Celeris-1 Decision: official pass 1 via Celeris /v1/systemone, paid fast-lane order, resolution, transforms and latency disclosed', () => {
+test('CR-500 Celeris-1 Decision: official pass 1 via Celeris /v1/systemone, paid fast-lane order, resolution, transforms and latency disclosed', () => {
   assert.ok(row, `${KEY} present`);
   assert.equal(row.api_flag, true);
   assert.equal(row.author, 'Celeris');
@@ -37,7 +37,7 @@ test('CR-XXX Celeris-1 Decision: official pass 1 via Celeris /v1/systemone, paid
   assert.equal(row.rank, 8);
 });
 
-test('CR-XXX Celeris-1 Decision has aggregate-only category, answered-coverage and TypeSafe-20 cells', async () => {
+test('CR-500 Celeris-1 Decision has aggregate-only category, answered-coverage and TypeSafe-20 cells', async () => {
   const cells = release.categories.systems[KEY];
   assert.equal(Object.keys(cells.capabilities).length, 14);
   assert.equal(Object.keys(cells.usecases).length, 5);
@@ -49,7 +49,7 @@ test('CR-XXX Celeris-1 Decision has aggregate-only category, answered-coverage a
   assert.deepEqual(ts20.summary[KEY], { rows: 600, errors: 0 });
 });
 
-test('CR-XXX revision history records the Celeris addendum with no top-five change', async () => {
+test('CR-500 revision history records the Celeris addendum with no top-five change', async () => {
   const page = await read('../components/ImageJevV03Page.tsx');
   assert.match(page, /16 Oct 2026 addendum, new row:<\/b> adds Celeris-1 Decision/);
   assert.match(page, /paid fast-lane evaluation order, published under the order’s public-visibility setting/);

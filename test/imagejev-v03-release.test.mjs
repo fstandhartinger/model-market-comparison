@@ -9,10 +9,10 @@ test('ImageJevBench v0.3.0 release data keeps the reviewed roster and top five',
   const a = JSON.parse(await read('../data/imagejev-v03.json'));
   assert.equal(a.revision, 'v0.3.0');
   assert.equal(a.status, 'released');
-  assert.equal(a.ranking.length, 62); // CR-XXX (celeris): + Celeris-1 Decision (Celeris); CR-497 (kettei): + kettei-fat, kettei-chub (Sqwish); CR-496: + Sage 1.4 + images (Levanto Labs); CR-482: + Jev 1.13.0 + images, Jev 1.14.0 + images (TypeSafe, preview), - s1-vision; CR-459: + H2O-Lightning-4B (image); CR-414: + Liquid d1-3B, d1-omni-600M; CR-313: + GPT-6 Luna via OpenAI Decisions; CR-325: + Wity-1; CR-333: +6 re-measured carries, + Wity-1 reasoning off
+  assert.equal(a.ranking.length, 62); // CR-500 (celeris): + Celeris-1 Decision (Celeris); CR-497 (kettei): + kettei-fat, kettei-chub (Sqwish); CR-496: + Sage 1.4 + images (Levanto Labs); CR-482: + Jev 1.13.0 + images, Jev 1.14.0 + images (TypeSafe, preview), - s1-vision; CR-459: + H2O-Lightning-4B (image); CR-414: + Liquid d1-3B, d1-omni-600M; CR-313: + GPT-6 Luna via OpenAI Decisions; CR-325: + Wity-1; CR-333: +6 re-measured carries, + Wity-1 reasoning off
   assert.equal(a.carried.length, 2); // CR-333 dated-carry re-run: only the two JevAny rows remain (source unavailable)
   const ranked = a.ranking.filter((row) => row.ranked).sort((x, y) => x.rank - y.rank);
-  assert.equal(ranked.length, 60); // CR-XXX (celeris)
+  assert.equal(ranked.length, 60); // CR-500 (celeris)
   assert.deepEqual(ranked.slice(0, 5).map((row) => row.key),
     ['kettei_fat', 'wity_1', 'imajev_4b', 'kettei_chub', 'sage_1_4_images']); // CR-497 (kettei): kettei-fat enters at #1, kettei-chub at #4 (billed cost basis)
   assert.ok(a.ranking.every((row) => !('predictions' in row) && !('gold' in row)), 'aggregate-only rows');
