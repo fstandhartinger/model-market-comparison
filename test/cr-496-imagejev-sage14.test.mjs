@@ -7,7 +7,7 @@ const release = JSON.parse(await read('../data/imagejev-v03.json'));
 const row = (key) => release.ranking.find((r) => r.key === key);
 const KEY = 'sage_1_4_images';
 
-test('CR-XXX Sage 1.4 + images: official pass 1 via Levanto /decide, beta image input disclosed in the note', () => {
+test('CR-496 Sage 1.4 + images: official pass 1 via Levanto /decide, beta image input disclosed in the note', () => {
   const r = row(KEY);
   assert.ok(r, 'Sage 1.4 + images present');
   assert.equal(r.api_flag, true);
@@ -32,7 +32,7 @@ test('CR-XXX Sage 1.4 + images: official pass 1 via Levanto /decide, beta image 
   assert.equal(r.rank, 3);
 });
 
-test('CR-XXX Sage 1.4 + images has aggregate-only category, answered-coverage and TypeSafe-20 cells', async () => {
+test('CR-496 Sage 1.4 + images has aggregate-only category, answered-coverage and TypeSafe-20 cells', async () => {
   const cells = release.categories.systems[KEY];
   assert.equal(Object.keys(cells.capabilities).length, 14);
   assert.equal(Object.keys(cells.usecases).length, 5);
@@ -44,7 +44,7 @@ test('CR-XXX Sage 1.4 + images has aggregate-only category, answered-coverage an
   assert.deepEqual(ts20.summary[KEY], { rows: 600, errors: 0 });
 });
 
-test('CR-XXX revision history records the Sage 1.4 addendum and both top-five changes', async () => {
+test('CR-496 revision history records the Sage 1.4 addendum and both top-five changes', async () => {
   const page = await read('../components/ImageJevV03Page.tsx');
   assert.match(page, /16 Oct 2026 addendum, new row:<\/b> adds Sage 1\.4 \+ images/);
   assert.match(page, /Both top fives change/);

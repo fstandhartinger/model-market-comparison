@@ -143,8 +143,8 @@ test('CR-254 every Image detail route renders published rank, axes, cost, latenc
   const v03Keys = new Set(v03.map((row) => row.key));
   const sources = [...v03.map((row) => ({ row, artifact: current, rows: v03 })),
     ...imageJevBoardSystems(archive).filter((row) => !v03Keys.has(row.key)).map((row, _, rows) => ({ row, artifact: archive, rows: imageJevBoardSystems(archive) }))];
-  assert.equal(v03.length, 59); // CR-XXX: + Sage 1.4 + images; CR-482: + Jev 1.13.0 + images, Jev 1.14.0 + images, - s1-vision; CR-333: +6 carries, + Wity-1 reasoning off; CR-414: + Liquid d1-3B, d1-omni-600M; CR-459: + H2O-Lightning-4B (image)
-  assert.equal(sources.length, 61); // CR-XXX: + Sage 1.4 + images; CR-482: + 2 Jev + images rows, - s1-vision; CR-459: + H2O-Lightning-4B (image)
+  assert.equal(v03.length, 59); // CR-496: + Sage 1.4 + images; CR-482: + Jev 1.13.0 + images, Jev 1.14.0 + images, - s1-vision; CR-333: +6 carries, + Wity-1 reasoning off; CR-414: + Liquid d1-3B, d1-omni-600M; CR-459: + H2O-Lightning-4B (image)
+  assert.equal(sources.length, 61); // CR-496: + Sage 1.4 + images; CR-482: + 2 Jev + images rows, - s1-vision; CR-459: + H2O-Lightning-4B (image)
   assert.deepEqual(await detail.generateStaticParams(), sources.map(({ row }) => ({ system: row.key })));
   for (const { row, artifact, rows } of sources) {
     const rankedCount = rows.filter((candidate) => candidate.ranked).length;
