@@ -5757,6 +5757,81 @@
             "fact": "Sqwish documents kettei-chub v1.0 (released 14 Oct 2026) as the middle of three hosted kettei decision models, up to 65,536 input tokens a request; no weights are published."
           }
         ]
+      },
+      "jebadiah-9b-v2-1": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "merge",
+          "params": "9B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/frontier-infra/jebadiah-9b-v2-1/blob/c5e49fab7ec8e9923e1f907d85911a53fb8e9c32/README.md",
+            "kind": "model-card",
+            "fact": "Pinned revision c5e49fab7ec8e9923e1f907d85911a53fb8e9c32: \"the merged bf16 weights\" of a LoRA (rank 16, alpha 32) on Qwen/Qwen3.5-9B; reads label-token logits with thinking off; weights and base Apache-2.0."
+          },
+          {
+            "url": "https://huggingface.co/frontier-infra/jebadiah-9b-v2-1/blob/c5e49fab7ec8e9923e1f907d85911a53fb8e9c32/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\""
+          }
+        ]
+      },
+      "celeris-1-decision": {
+        "arch": "closed-api",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://docs.celeris.ai/models",
+            "kind": "provider-docs",
+            "fact": "Celeris documents celeris-1-decision as its hosted decision model (yes/no, multiple-choice and scoring decisions as probabilities), 131,072-token context window, text and image input; no weights are published."
+          }
+        ]
+      },
+      "startlux-decision-v1.1-27b-instant": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "27B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/startlux-models/StartLux-Decision-v1.1-27B-Instant/blob/32e7d35d74db615c4a059181efbf21c5421f3561/README.md",
+            "kind": "model-card",
+            "fact": "Pinned revision 32e7d35d74db615c4a059181efbf21c5421f3561: a 27B decision model that reads option-letter logits in one pass; weights CC BY-NC 4.0 (non-commercial), inference package Apache-2.0; the NOTICE says the weights are a modified version of an Apache-2.0 model."
+          },
+          {
+            "url": "https://huggingface.co/startlux-models/StartLux-Decision-v1.1-27B-Instant/blob/32e7d35d74db615c4a059181efbf21c5421f3561/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\"; 64 layers, hidden_size 5120 (the Qwen3.8-27B shape)"
+          }
+        ]
+      },
+      "startlux-decision-v1.1-27b-autothink": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "27B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/startlux-models/StartLux-Decision-v1.1-27B-AutoThink/blob/dd62d5cd84a483d75bdd548880bbf08bdd3f67a4/README.md",
+            "kind": "model-card",
+            "fact": "Pinned revision dd62d5cd84a483d75bdd548880bbf08bdd3f67a4: a 27B decision model that reads option-letter logits and writes a short thought when the top probability is below the gate (0.6 by default); weights CC BY-NC 4.0 (non-commercial), inference package Apache-2.0; the NOTICE says the weights are a modified version of an Apache-2.0 model."
+          },
+          {
+            "url": "https://huggingface.co/startlux-models/StartLux-Decision-v1.1-27B-AutoThink/blob/dd62d5cd84a483d75bdd548880bbf08bdd3f67a4/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\"; 64 layers, hidden_size 5120 (the Qwen3.8-27B shape)"
+          }
+        ]
       }
     },
     "imagejevbench": {
