@@ -540,6 +540,16 @@ export function JevCapability3D({ points, costBounds, benchmarkName = 'JevBench'
             el.style.opacity = behind ? '0' : '1';
           };
           for (const item of fixedRefs) { const at = projectTo(item); put(item.el, at.px, at.py, at.behind); }
+          // Phone widths (16 Oct 2026): the Speed and Cost axis names can project onto the same spot; lift Speed clear of Cost.
+          const axisEl = (name: string) => fixedRefs.find((item) => item.el.getAttribute('data-bh-jev14-3d-axis-label') === name);
+          const speedAxis = axisEl('speed'), costAxis = axisEl('cost');
+          if (speedAxis && costAxis && speedAxis.el.style.opacity !== '0' && costAxis.el.style.opacity !== '0') {
+            const sr = speedAxis.el.getBoundingClientRect(), cr = costAxis.el.getBoundingClientRect();
+            if (sr.left < cr.right && cr.left < sr.right && sr.top < cr.bottom && cr.top < sr.bottom) {
+              const at = projectTo(speedAxis);
+              put(speedAxis.el, at.px, Math.max(inset + sr.height, at.py - (sr.bottom - cr.top) - 2), false);
+            }
+          }
           // D216: the top five spheres can project within a few pixels of each other, and five labels
           // on one anchor are unreadable. Place each by its own projection, then push a label that
           // would land on an already-placed one clear of it — downward first, upward if the box is
