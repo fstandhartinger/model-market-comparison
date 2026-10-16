@@ -52,7 +52,9 @@ test('4: measured rows leave the preliminary set; the route skips archived pages
   const { prelim, pending } = jevApiPreliminaryRows(read('data/jevbench-api-public-set.json'), new Map(carry.map((r) => [r.key, r])));
   const left = [...prelim, ...pending].filter((r) => !measured.has(r.key)).map((r) => r.key);
   assert.deepEqual(left, []); // v1.7.10: OpenAI Decisions now has its A5 u P result (v1.7.9 showed it as preliminary)
-  const route = readFileSync(new URL('../components/JevBenchV16ReleaseRoute.tsx', import.meta.url), 'utf8');
-  assert.match(route, /!live \|\| release_\.revision !== 'v1\.6\.1' \? release_ : jevWithApiA4Rows/);
+  // 16 Oct 2026: the route's board data path lives in lib/jevbench-live-board.mjs (shared with the breakdown gate).
+  const board = readFileSync(new URL('../lib/jevbench-live-board.mjs', import.meta.url), 'utf8');
+  assert.match(board, /if \(!live \|\| release_\.revision !== 'v1\.6\.1'\) return \{ merged: release_,[^\n]*\n[\s\S]*jevWithApiA4Rows\(release_/);
+  assert.match(readFileSync(new URL('../components/JevBenchV16ReleaseRoute.tsx', import.meta.url), 'utf8'), /assembleJevBoard\(/);
   assert.match(readFileSync(new URL('../components/JevBenchV16Board.tsx', import.meta.url), 'utf8'), /version: 'v1\.7\.7'/);
 });

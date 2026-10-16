@@ -1,19 +1,17 @@
 import { isJevbenchV16ExcludedKey } from '../lib/jevbench-v16-public-scope.mjs';
 import { readJevbenchV161Release } from '../lib/jevbench-v16-release.mjs';
 import { readJevbenchV157Release, withPublicAdapterIds } from '../lib/jevbench-v15-release.mjs';
-import { jevApiOfferingKeys, jevApiRoster, jevbenchScopeArtifact, jevbenchScopeCarry, jevScopeClassifier, jevWithApiA4Rows, type JevScope } from '../lib/jevbench-scope.mjs';
+import { jevApiOfferingKeys, jevApiRoster, jevbenchScopeArtifact, jevbenchScopeCarry, jevScopeClassifier, type JevScope } from '../lib/jevbench-scope.mjs';
 import apiA4 from '../data/jevbench-api-a4-equated.json';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { withLiveCategoryCells, JEVBENCH_S_CATEGORY_CELLS_ARTIFACT } from '../lib/jevbench-categories.mjs';
-import { withApiRerunSplits } from '../lib/jevbench-api-rerun-cells.mjs';
+import { JEVBENCH_S_CATEGORY_CELLS_ARTIFACT } from '../lib/jevbench-categories.mjs';
 import { JevBenchV16Board, JEV_BOARD_REVISIONS } from './JevBenchV16Board';
 import { JevBenchReleaseVersionNav } from './JevBenchReleaseVersionNav';
-import { readApiFullAddenda, withApiFullAddenda, withApiFullAddendumCategories } from '../lib/jevbench-api-full-addenda.mjs';
 import { JevBenchApiAddendumCoverage } from './JevBenchApiAddendumCoverage';
-import { readCohortRows, jevWithCohortRows, jevLiveAllArtifact } from '../lib/jevbench-cohort-merge.mjs';
-import { readCarryAdditions, withCarryAdditions } from '../lib/jevbench-carry-additions.mjs';
+import { jevLiveAllArtifact } from '../lib/jevbench-cohort-merge.mjs';
+import { assembleJevBoard } from '../lib/jevbench-live-board.mjs';
 import { JevReleaseHistory } from './JevReleaseHistory';
 
 type ReleaseData = Awaited<ReturnType<typeof readJevbenchV161Release>>;
@@ -26,30 +24,19 @@ export async function JevBenchV16ReleaseRoute({ live = false, release, versionPa
   const [{ artifact: release_, sha256, categories: releaseCategories, categoriesSha256, carry: releaseCarry, carrySha256 }, previous] = await Promise.all([
     release ? Promise.resolve(release) : readJevbenchV161Release(), readJevbenchV157Release(),
   ]);
-  // v1.7.7 (Florian 6 Oct 2026, Part 12b): on the live boards the API lane's full A4 u P re-run rows (equated) join the
-  // release as measured API offerings and leave the dated carry; archived release pages show the release as published.
-  const a4Meta = new Map<string, unknown>([...previous.artifact.systems, ...releaseCarry.rows].map((r) => [r.key, r]));
-  const addenda = live ? await readApiFullAddenda() : { schema_version: 1, kind: 'jevbench-api-full-addenda', entries: [] };
-  const historicalMerged = !live || release_.revision !== 'v1.6.1' ? release_ : jevWithApiA4Rows(release_, withApiRerunSplits(apiA4), a4Meta) as typeof release_;
-  const withAddenda = addenda.entries.length ? withApiFullAddenda(historicalMerged, addenda) as typeof release_ : historicalMerged;
-  // Florian 10 Oct 2026: one merged board. Systems measured on a fresh draw after v1.6.1 join the live boards from their
-  // own validated cohort publication, tagged with their draw and put on this scale by the draw's anchor offset.
-  const cohort = live && release_.revision === 'v1.6.1' ? await readCohortRows() : null;
-  const merged = cohort ? jevWithCohortRows(withAddenda, cohort) as typeof release_ : withAddenda;
-  // v1.7.12 (Part B): the live boards show language/use-case cells with the sealed L1/L2 supplements; archived pages stay as published.
-  const historicalCategories = merged === release_ ? releaseCategories : withLiveCategoryCells(releaseCategories);
-  const categories = withApiFullAddendumCategories(historicalCategories, addenda);
-  const cellSupplementSha256 = merged === release_ ? undefined : createHash('sha256').update(await readFile(path.join(process.cwd(), JEVBENCH_S_CATEGORY_CELLS_ARTIFACT))).digest('hex');
-  const a4Keys = new Set(merged.systems.map((s) => s.key));
-  const published = merged === release_ ? release_ : { ...merged, not_measured: merged.not_measured.filter((r) => !a4Keys.has(r.key)) };
-  // 12 Oct 2026: dated v1.5-method rows listed after the frozen carry (live boards only; archived pages show it as published).
-  const carryBase = merged === release_ ? releaseCarry : withCarryAdditions(releaseCarry, await readCarryAdditions(), a4Keys) as typeof releaseCarry;
-  const publishedCarry = merged === release_ ? releaseCarry : { ...carryBase, rows: carryBase.rows.filter((r) => !a4Keys.has(r.key)) };
+  const board = await assembleJevBoard({ release: { artifact: release_, categories: releaseCategories, carry: releaseCarry }, previous, live, apiA4 });
+  const merged = board.merged as typeof release_;
+  const categories = board.categories as typeof releaseCategories;
+  const published = board.published as typeof release_;
+  const publishedCarry = board.publishedCarry as typeof releaseCarry;
+  const addenda = board.addenda;
+  // v1.7.12: the method footer also hashes the live cell supplement.
+  const cellSupplementSha256 = board.live ? createHash('sha256').update(await readFile(path.join(process.cwd(), JEVBENCH_S_CATEGORY_CELLS_ARTIFACT))).digest('hex') : undefined;
   const revision = published.revision as 'v1.6.0' | 'v1.6.1';
   const previousRelease = revision === 'v1.6.1' ? 'v1.6.0' : 'v1.5.7';
   const previousHref = revision === 'v1.6.1' ? '/jev-models/v1.6.0' : '/jev-models/v1.5.7';
   const allApiFull = release_.systems.filter((system) => system.v16.lane === 'api').every((system) => system.v16.full_set_api === true);
-  const a4Count = merged === release_ ? 0 : merged.systems.filter((s) => (s as { a4?: unknown }).a4).length;
+  const a4Count = !board.live ? 0 : merged.systems.filter((s) => (s as { a4?: unknown }).a4).length;
   const publishedKeys = new Set([...published.systems, ...published.not_measured, ...publishedCarry.rows].map((row) => row.key));
   const missingPrevious = [...previous.artifact.systems, ...previous.artifact.not_measured]
     .filter((row) => !isJevbenchV16ExcludedKey(row.key, revision) && !publishedKeys.has(row.key));
