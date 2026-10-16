@@ -52,6 +52,16 @@ test('v1.6.22 keeps the two unpriced rows listed, unranked and without a cost or
   rejects(b => { row(b, DECIFF).not_ranked_because = row(b, DECIFF).not_ranked_because.replaceAll('#19427', '#1942'); }, /ruling behind the missing rank|ranking reason verbatim/);
 });
 
+test('v1.6.22 publishes no personal e-mail or internal path for the four new rows', () => {
+  for (const key of [MESSIER, NEV, DECIFF, TRIO]) {
+    rejects(b => { row(b, key).author += ' (someone@example.com)'; }, /author verbatim|personal e-mail/);
+    rejects(b => { const i = noteIndex(b, `${key}: `); b.artifact.measurement_notes[i] += ' Contact: someone@example.com.'; }, /personal e-mail or internal path/);
+    rejects(b => { const i = noteIndex(b, `${key}: `); b.artifact.measurement_notes[i] += ' Receipt /home/flori/jobs/x/r122/receipts/y.json.'; }, /personal e-mail or internal path/);
+    rejects(b => { const i = noteIndex(b, `${key}: `); b.artifact.measurement_notes[i] += ' Pod id 8daf2225.'; }, /personal e-mail or internal path/);
+  }
+  assert.equal(row(approvedBundle(), DECIFF).author, 'pst2154');
+});
+
 test('v1.6.22 refuses a priced row without its cost basis, tariff or own tokens', () => {
   for (const key of [MESSIER, NEV]) {
     rejects(b => { delete row(b, key).cost.basis; }, /cost_basis verbatim|documented cost basis/);
