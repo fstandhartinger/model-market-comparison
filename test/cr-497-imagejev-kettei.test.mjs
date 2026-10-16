@@ -11,7 +11,7 @@ const ROWS = [
 ];
 
 for (const R of ROWS) {
-  test(`CR-XXX ${R.name}: official pass 1 via Sqwish /v1/systemone, paid fast-lane order, served model and transforms disclosed`, () => {
+  test(`CR-497 ${R.name}: official pass 1 via Sqwish /v1/systemone, paid fast-lane order, served model and transforms disclosed`, () => {
     const r = row(R.key);
     assert.ok(r, `${R.key} present`);
     assert.equal(r.api_flag, true);
@@ -43,7 +43,7 @@ for (const R of ROWS) {
     assert.equal(r.rank, R.rank);
   });
 
-  test(`CR-XXX ${R.name} has aggregate-only category, answered-coverage and TypeSafe-20 cells`, async () => {
+  test(`CR-497 ${R.name} has aggregate-only category, answered-coverage and TypeSafe-20 cells`, async () => {
     const cells = release.categories.systems[R.key];
     assert.equal(Object.keys(cells.capabilities).length, 14);
     assert.equal(Object.keys(cells.usecases).length, 5);
@@ -56,7 +56,7 @@ for (const R of ROWS) {
   });
 }
 
-test('CR-XXX revision history records the kettei addendum and both top-five changes', async () => {
+test('CR-497 revision history records the kettei addendum and both top-five changes', async () => {
   const page = await read('../components/ImageJevV03Page.tsx');
   assert.match(page, /16 Oct 2026 addendum, two new rows:<\/b> adds kettei-fat and kettei-chub/);
   assert.match(page, /paid fast-lane evaluation orders, published under the orders’ public-visibility setting/);
