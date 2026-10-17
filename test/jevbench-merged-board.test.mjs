@@ -27,19 +27,21 @@ const V1625_ADDED = JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.6/j
 const V1626_ADDED = JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.26-results.json', 'utf8')).systems.filter(s => s.measured_in === 'v1.6.26').length;
 // v1.6.27 adds two measured rows (jev-1.14.0, hosted API; verdin-4b, self-hosted on CPU), both ranked.
 const V1627_ADDED = JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.27-results.json', 'utf8')).systems.filter(s => s.measured_in === 'v1.6.27').length;
-const COHORT_ROWS = 34 + V1617_ADDED + V1618_ADDED + V1620_ADDED + V1621_ADDED + V1622_ADDED + V1623_ADDED + V1624_ADDED + V1625_ADDED + V1626_ADDED + V1627_ADDED;
-// Rows the LATEST release of this draw still lists without a rank. v1.6.27 is what the cohort reader now takes;
+// v1.6.28 adds two measured self-hosted rows (basal-omni-1.0-ultra, ranked; purplemist-flash-1.0, listed unpriced).
+const V1628_ADDED = JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.28-results.json', 'utf8')).systems.filter(s => s.measured_in === 'v1.6.28').length;
+const COHORT_ROWS = 34 + V1617_ADDED + V1618_ADDED + V1620_ADDED + V1621_ADDED + V1622_ADDED + V1623_ADDED + V1624_ADDED + V1625_ADDED + V1626_ADDED + V1627_ADDED + V1628_ADDED;
+// Rows the LATEST release of this draw still lists without a rank. v1.6.28 is what the cohort reader now takes;
 // subq-snap-preview stopped being one of them in v1.6.20 (its published tariff gives it a cost axis); v1.6.22 adds two;
 // sage-1.4.0, nimble-v4 and nimble-v4-max stop being among them in v1.6.23 (their public list prices give them a cost axis);
-// v1.6.24 adds bongard-mini (unpriced); v1.6.25 adds none; v1.6.26 adds five unpriced re-measures; v1.6.27 adds none.
-const V1617_UNRANKED = JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.27-results.json', 'utf8')).systems.filter(s => ['v1.6.17', 'v1.6.18', 'v1.6.20', 'v1.6.21', 'v1.6.22', 'v1.6.24', 'v1.6.25', 'v1.6.26', 'v1.6.27'].includes(s.measured_in) && !s.ranked).map(s => s.key);
+// v1.6.24 adds bongard-mini (unpriced); v1.6.25 adds none; v1.6.26 adds five unpriced re-measures; v1.6.27 adds none; v1.6.28 adds purplemist-flash-1.0 (unpriced).
+const V1617_UNRANKED = JSON.parse(readFileSync('data/raw/benchmarks/jevbench/v1.6/jevbench-v1.6.28-results.json', 'utf8')).systems.filter(s => ['v1.6.17', 'v1.6.18', 'v1.6.20', 'v1.6.21', 'v1.6.22', 'v1.6.24', 'v1.6.25', 'v1.6.26', 'v1.6.27', 'v1.6.28'].includes(s.measured_in) && !s.ranked).map(s => s.key);
 
 test('every cohort system joins once, from its latest release, with its draw', async () => {
   const { rows } = await readCohortRows();
   const keys = rows.map((r) => r.row.key);
   assert.equal(new Set(keys).size, keys.length);
   assert.equal(rows.length, COHORT_ROWS);
-  assert.deepEqual([...new Set(rows.map((r) => r.draw.release))].sort(), ['v1.6.27', 'v1.6.4', 'v1.6.9']);
+  assert.deepEqual([...new Set(rows.map((r) => r.draw.release))].sort(), ['v1.6.28', 'v1.6.4', 'v1.6.9']);
   assert.ok(rows.every((r) => r.draw.id && r.draw.measured_on));
 });
 
@@ -90,13 +92,13 @@ test('merged board slots ranked cohort rows by score and keeps published rows in
   for (const o of Object.keys(merged.board)) assert.ok(!merged.board[o].order.includes('reflex-instinct-0.6b'));
   // v1.6.16: vLLM-SR d3 joins the merged board as a ranked row of the regular draw, with its published numbers.
   const d3 = merged.systems.find((s) => s.key === 'vllm-sr-d3');
-  assert.equal(d3.ranked, true); assert.equal(d3.draw.release, 'v1.6.27');
+  assert.equal(d3.ranked, true); assert.equal(d3.draw.release, 'v1.6.28');
   assert.equal(d3.capability, 82.96592796157353); assert.equal(d3.scores.A, 5.569947529283843);
   assert.equal(d3.cost.usd_per_1000, 0.5463374);
   for (const o of ['A', 'B', 'C']) assert.ok(merged.board[o].order.includes('vllm-sr-d3'));
   // v1.6.17: the paid metask service-v3 row and the over-cap hosted Amos row are ranked cohort rows; SubQ Snap is listed without a rank.
   const v3 = merged.systems.find((s) => s.key === 'metask_jev_rain_31b_trained_v3');
-  assert.equal(v3.ranked, true); assert.equal(v3.draw.release, 'v1.6.27');
+  assert.equal(v3.ranked, true); assert.equal(v3.draw.release, 'v1.6.28');
   for (const o of ['A', 'B', 'C']) assert.ok(merged.board[o].order.includes('metask_jev_rain_31b_trained_v3'));
   // v1.6.20 (price-only, Florian's GO on card #17515): SubQ Snap is RANKED from its published USD 0.05/M input
   // tariff, 1.003x the official cap, so it carries a rank and a cost axis and is outside the cost-capped views.
@@ -105,28 +107,28 @@ test('merged board slots ranked cohort rows by score and keeps published rows in
   // what changes with v1.6.20 is that the row is ranked, has a cost axis and carries no not-ranked reason.
   assert.equal(subq.ranked, true); assert.equal(subq.not_ranked_because ?? null, null);
   assert.equal(subq.cost.usd_per_1000, 0.06479016666666666);
-  assert.equal(subq.draw.release, 'v1.6.27');
+  assert.equal(subq.draw.release, 'v1.6.28');
   for (const o of ['A', 'B', 'C']) assert.ok(merged.board[o].order.includes('subq-snap-preview'));
   // v1.6.21: d1-ultra joins the regular draw RANKED, priced from Liquid's public list price (USD 0.042/M input,
   // output free) over its own 638,436 input tokens, inside the official cost cap; it sits in all three board orders.
   const d1u = merged.systems.find((s) => s.key === 'liquid-d1-ultra');
-  assert.equal(d1u.ranked, true); assert.equal(d1u.not_ranked_because ?? null, null); assert.equal(d1u.draw.release, 'v1.6.27');
+  assert.equal(d1u.ranked, true); assert.equal(d1u.not_ranked_because ?? null, null); assert.equal(d1u.draw.release, 'v1.6.28');
   assert.equal(d1u.cost.usd_per_1000, 638436 * 0.042 / 1_000_000 / 1500 * 1000);
   assert.equal(d1u.capability, 80.47704277896817);
   for (const o of ['A', 'B', 'C']) assert.ok(merged.board[o].order.includes('liquid-d1-ultra'));
   // v1.6.22: Messier One v0.4 and Nev-2B join RANKED, priced from their frozen base-model references over their own
   // offline-counted tokens; Nemotron Deciffusion 8B v2 and Trio-Spark v1.3 join LISTED, unpriced, in no board order.
   const ms = merged.systems.find((s) => s.key === 'messier-one-v0.4');
-  assert.equal(ms.ranked, true); assert.equal(ms.draw.release, 'v1.6.27');
+  assert.equal(ms.ranked, true); assert.equal(ms.draw.release, 'v1.6.28');
   assert.equal(ms.cost.usd_per_1000, 1000 * (1105885 * 0.030000000000000002) / 1e6 / 1500);
   assert.equal(ms.capability, 62.443616494634156);
   const nev = merged.systems.find((s) => s.key === 'nev-2b');
-  assert.equal(nev.ranked, true); assert.equal(nev.draw.release, 'v1.6.27');
+  assert.equal(nev.ranked, true); assert.equal(nev.draw.release, 'v1.6.28');
   assert.equal(nev.cost.usd_per_1000, 1000 * (685652 * 0.02) / 1e6 / 1500);
   for (const o of ['A', 'B', 'C']) { assert.ok(merged.board[o].order.includes('messier-one-v0.4')); assert.ok(merged.board[o].order.includes('nev-2b')); }
   for (const key of ['nemotron-deciffusion-8b-v2', 'trio-spark-v1.3']) {
     const s = merged.systems.find((x) => x.key === key);
-    assert.equal(s.ranked, false); assert.equal(s.draw.release, 'v1.6.27'); assert.equal(s.cost.usd_per_1000, null);
+    assert.equal(s.ranked, false); assert.equal(s.draw.release, 'v1.6.28'); assert.equal(s.cost.usd_per_1000, null);
     assert.ok(s.not_ranked_because.length > 60);
     for (const o of ['A', 'B', 'C']) assert.ok(!merged.board[o].order.includes(key));
   }
@@ -136,7 +138,7 @@ test('merged board slots ranked cohort rows by score and keeps published rows in
   const priced = { 'sage-1.4.0': 665989 * 0.05, 'nimble-v4': 1935351 * 0.04, 'nimble-v4-max': 1935351 * 0.04 };
   for (const [key, num] of Object.entries(priced)) {
     const s = merged.systems.find((x) => x.key === key);
-    assert.equal(s.ranked, true, key); assert.equal(s.draw.release, 'v1.6.27'); assert.equal(s.not_ranked_because ?? null, null);
+    assert.equal(s.ranked, true, key); assert.equal(s.draw.release, 'v1.6.28'); assert.equal(s.not_ranked_because ?? null, null);
     assert.equal(s.cost.usd_per_1000, 1000 * num / 1e6 / 1500, key);
     for (const o of ['A', 'B', 'C']) assert.ok(merged.board[o].order.includes(key), `${key} in ${o}`);
   }
@@ -153,7 +155,7 @@ test('merged board slots ranked cohort rows by score and keeps published rows in
     'arsenelupin-v1.1': 1011369 * 0.030000000000000002, 'noma': 980756 * 0.030000000000000002, 'kettei-fat': 650605 * 0.06, 'kettei-chub': 650605 * 0.04 };
   for (const [key, num] of Object.entries(added)) {
     const s = merged.systems.find((x) => x.key === key);
-    assert.equal(s.ranked, true, key); assert.equal(s.draw.release, 'v1.6.27'); assert.equal(s.not_ranked_because ?? null, null);
+    assert.equal(s.ranked, true, key); assert.equal(s.draw.release, 'v1.6.28'); assert.equal(s.not_ranked_because ?? null, null);
     assert.equal(s.cost.usd_per_1000, 1000 * num / 1e6 / 1500, key);
     for (const o of ['A', 'B', 'C']) assert.ok(merged.board[o].order.includes(key), `${key} in ${o}`);
   }
@@ -168,7 +170,7 @@ test('merged board slots ranked cohort rows by score and keeps published rows in
     'startlux-decision-v1.1-27b-instant': 737990 * 0.42, 'startlux-decision-v1.1-27b-autothink': 737990 * 0.42 + 72063 * 3.0 };
   for (const [key, num] of Object.entries(added25)) {
     const s = merged.systems.find((x) => x.key === key);
-    assert.equal(s.ranked, true, key); assert.equal(s.draw.release, 'v1.6.27'); assert.equal(s.not_ranked_because ?? null, null);
+    assert.equal(s.ranked, true, key); assert.equal(s.draw.release, 'v1.6.28'); assert.equal(s.not_ranked_because ?? null, null);
     assert.equal(s.cost.usd_per_1000, 1000 * num / 1e6 / 1500, key);
     for (const o of ['A', 'B', 'C']) assert.ok(merged.board[o].order.includes(key), `${key} in ${o}`);
   }
@@ -179,7 +181,7 @@ test('merged board slots ranked cohort rows by score and keeps published rows in
     'jeb-35b-a3b': 781043 * 0.15 + 1485 * 1.0, 'nagi-enormous': 762436 * 0.42 };
   for (const [key, num] of Object.entries(added26)) {
     const s = merged.systems.find((x) => x.key === key);
-    assert.equal(s.ranked, true, key); assert.equal(s.draw.release, 'v1.6.27'); assert.equal(s.not_ranked_because ?? null, null);
+    assert.equal(s.ranked, true, key); assert.equal(s.draw.release, 'v1.6.28'); assert.equal(s.not_ranked_because ?? null, null);
     assert.ok(Math.abs(s.cost.usd_per_1000 - 1000 * num / 1e6 / 1500) < 1e-15, key);
     for (const o of ['A', 'B', 'C']) assert.ok(merged.board[o].order.includes(key), `${key} in ${o}`);
   }
@@ -194,12 +196,26 @@ test('merged board slots ranked cohort rows by score and keeps published rows in
   const added27 = { 'jev-1.14.0': 1134053 * 0.042, 'verdin-4b': 902188 * 0.030000000000000002 };
   for (const [key, num] of Object.entries(added27)) {
     const s = merged.systems.find((x) => x.key === key);
-    assert.equal(s.ranked, true, key); assert.equal(s.draw.release, 'v1.6.27'); assert.equal(s.not_ranked_because ?? null, null);
+    assert.equal(s.ranked, true, key); assert.equal(s.draw.release, 'v1.6.28'); assert.equal(s.not_ranked_because ?? null, null);
     assert.ok(Math.abs(s.cost.usd_per_1000 - 1000 * num / 1e6 / 1500) < 1e-15, key);
     assert.ok(s.cost.usd_per_1000 < 0.06459465517241379, key);
     for (const o of ['A', 'B', 'C']) assert.ok(merged.board[o].order.includes(key), `${key} in ${o}`);
   }
   assert.ok(merged.systems.some((x) => x.key === 'jev-1.13.0'), 'the Jev reference row stays on the board');
+  // v1.6.28: basal-omni-1.0-ultra (Remek Kinas, self-hosted on an H200) joins RANKED from its frozen base-model reference
+  // google/gemma-4-31b-it (USD 0.09/M input) over its own 744,183 input tokens, inside the cost cap (0 output tokens);
+  // purplemist-flash-1.0 (Olaverse) joins LISTED, unpriced, in no board order (no listing decision for Qwen/Qwen3.5-9B-Base).
+  const bas = merged.systems.find((x) => x.key === 'basal-omni-1.0-ultra');
+  assert.equal(bas.ranked, true); assert.equal(bas.draw.release, 'v1.6.28'); assert.equal(bas.not_ranked_because ?? null, null);
+  assert.ok(Math.abs(bas.cost.usd_per_1000 - 1000 * (744183 * 0.09) / 1e6 / 1500) < 1e-15);
+  assert.ok(bas.cost.usd_per_1000 < 0.06459465517241379);
+  assert.equal(bas.capability, 82.53799311737751);
+  for (const o of ['A', 'B', 'C']) assert.ok(merged.board[o].order.includes('basal-omni-1.0-ultra'));
+  const pmf = merged.systems.find((x) => x.key === 'purplemist-flash-1.0');
+  assert.equal(pmf.ranked, false); assert.equal(pmf.draw.release, 'v1.6.28'); assert.equal(pmf.cost.usd_per_1000, null);
+  assert.ok(pmf.not_ranked_because.length > 60 && pmf.not_ranked_because.includes('Qwen/Qwen3.5-9B-Base'));
+  for (const o of ['A', 'B', 'C']) assert.ok(!merged.board[o].order.includes('purplemist-flash-1.0'));
+  assert.ok(merged.systems.some((x) => x.key === 'jev-1.14.0' && x.ranked), 'Jev 1.14.0 stays ranked');
   // 12 Oct 2026 listing correction: RYOTIDE-Qwen9 is a ranked native system; its stored v1.6.4 numbers are untouched.
   const ryotide = merged.systems.find((s) => s.key === 'ryotide_qwen9');
   const stored = (await readCohortRows()).rows.find((r) => r.row.key === 'ryotide_qwen9');

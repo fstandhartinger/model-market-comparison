@@ -6092,6 +6092,41 @@
             "fact": "Pinned revision f35e9c184864a2fd6f286166783b0321d95f23b0: base_model Qwen/Qwen3.5-4B (revision 851bf6e8) + a LoRA fine-tune (r = 16, merged) + a pointer head that reads the option-boundary tokens; 4.21B parameters served; it returns a probability for every option and generates no text; weights CC-BY-NC-4.0, the Verdin engine Apache-2.0."
           }
         ]
+      },
+      "basal-omni-1.0-ultra": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "merge",
+          "params": "31B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/Remek/basal-omni-1.0-ultra/blob/b8e214cb42d0a7a4cb2c3a93b0ba02c65d7590e4/README.md",
+            "kind": "model-card",
+            "fact": "Pinned revision b8e214cb42d0a7a4cb2c3a93b0ba02c65d7590e4: base_model google/gemma-4-31B-it, fine-tuned with LoRA and then merged into the weights (float64 merge, rounded once to bf16); 31B parameters (about 62 GB in bf16); reads the option-code logits at one answer position in one forward pass and generates no text; Apache-2.0 (base Apache-2.0); experimental release."
+          }
+        ]
+      },
+      "purplemist-flash-1.0": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "merge",
+          "params": "9B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/olaverse/PurpleMIST-Flash-1.0/blob/a48fe0206ee0d8a3f4458a3581468c24a7365ac5/purplemist_config.json",
+            "kind": "config.json",
+            "fact": "Pinned author config: base_model \"Qwen/Qwen3.5-9B-Base\", backbone \"merged\" (merged_from_adapter true, lora_r 32: the LoRA is folded into the weights), proj_dim 1024, per-type temperatures; the model returns option probabilities through a pointer head and generates no text."
+          },
+          {
+            "url": "https://huggingface.co/olaverse/PurpleMIST-Flash-1.0/blob/a48fe0206ee0d8a3f4458a3581468c24a7365ac5/config.json",
+            "kind": "config.json",
+            "fact": "Pinned config: architectures [\"Qwen3_5TextModel\"], model_type \"qwen3_5_text\", 32 hidden layers, hidden size 4096, bfloat16."
+          }
+        ]
       }
     },
     "imagejevbench": {
