@@ -114,8 +114,8 @@
    },
    "labelling": "Subject topics and use cases: each of this draw's 1,500 items was labelled after its release with one subject topic (v1.2 list) and one TypeSafe use case by Winnow-12B Q8 on our own GPU pod, with the same model, questions, taxonomy and T1-T3/U1/U2 item-group rules as the v1.6.4 and v1.6.9 draws; where a uc1 item was written for a use case, that authoring use case is used. Sealed items stayed on our own infrastructure. On 75 public items checked by hand afterwards, topic agreement is 71/75 = 94.7 % (68/75 = 90.7 % counting three borderline items as misses); policy-style routing items are filed under the subject of the request, as in the earlier draws, and no rule was added.",
    "labels_sha256": "be5a5209ad63c1f6a2ad39c4f71ea44d2dd4cc647489cc020e54a57ccfd9f99a",
-   "release": "v1.6.26",
-   "results_sha256": "881b4b6e560381712e0a8d38bb70fcafafcfd59a2c31223251c69bd6843e86d8",
+   "release": "v1.6.27",
+   "results_sha256": "0553adf1cc9e1c18228ad9600d5ea80636515c85b577136c0917f27d5547ab88",
    "row_note": "Subject topics and use cases come from this draw's own item labels, added after its release with the same labelling recipe as the earlier draws (hand check 71/75).",
    "scorer_sha256": "02132271117653e6302c509232a581d0094f0e78eac8b1bfc67596fd5d5097e9",
    "systems": {
@@ -1711,6 +1711,120 @@
       },
       "search_retrieval": {
        "competence": 76.22,
+       "n": 24
+      }
+     }
+    },
+    "jev-1.14.0": {
+     "topics": {
+      "coding": {
+       "competence": 68.32,
+       "n": 198
+      },
+      "everyday_language": {
+       "competence": 27.38,
+       "n": 66
+      },
+      "finance_commerce": {
+       "competence": 51.65,
+       "n": 76
+      },
+      "law_policy": {
+       "competence": 60.12,
+       "n": 718
+      },
+      "math": {
+       "competence": 54.35,
+       "n": 289
+      },
+      "safety_security": {
+       "competence": 60.73,
+       "n": 48
+      },
+      "support_ops": {
+       "competence": 43.18,
+       "n": 105
+      }
+     },
+     "usecases": {
+      "advertising": {
+       "competence": 6.1,
+       "n": 22
+      },
+      "code_linting": {
+       "competence": 31.67,
+       "n": 24
+      },
+      "customer_support": {
+       "competence": 50.93,
+       "n": 157
+      },
+      "demand_forecasting": {
+       "competence": 0.0,
+       "n": 17
+      },
+      "ecommerce_marketplaces": {
+       "competence": 48.52,
+       "n": 55
+      },
+      "feature_extraction": {
+       "competence": 13.06,
+       "n": 19
+      },
+      "financial_crime": {
+       "competence": 48.86,
+       "n": 55
+      },
+      "gaming": {
+       "competence": 30.47,
+       "n": 23
+      },
+      "insurance_claims": {
+       "competence": 39.78,
+       "n": 27
+      },
+      "knowledge_graphs": {
+       "competence": 38.48,
+       "n": 22
+      },
+      "lead_generation": {
+       "competence": 45.79,
+       "n": 30
+      },
+      "legal_compliance": {
+       "competence": 71.58,
+       "n": 327
+      },
+      "llm_guardrails": {
+       "competence": 71.51,
+       "n": 27
+      },
+      "model_routing": {
+       "competence": 67.52,
+       "n": 325
+      },
+      "moderation_trust_safety": {
+       "competence": 51.16,
+       "n": 32
+      },
+      "other": {
+       "competence": 49.18,
+       "n": 216
+      },
+      "recruiting": {
+       "competence": 33.13,
+       "n": 19
+      },
+      "risk_assessment": {
+       "competence": 61.94,
+       "n": 56
+      },
+      "scientific_discovery": {
+       "competence": 9.09,
+       "n": 23
+      },
+      "search_retrieval": {
+       "competence": 83.06,
        "n": 24
       }
      }
@@ -5815,6 +5929,120 @@
       },
       "search_retrieval": {
        "competence": 73.53,
+       "n": 24
+      }
+     }
+    },
+    "verdin-4b": {
+     "topics": {
+      "coding": {
+       "competence": 52.65,
+       "n": 198
+      },
+      "everyday_language": {
+       "competence": 1.72,
+       "n": 66
+      },
+      "finance_commerce": {
+       "competence": 51.86,
+       "n": 76
+      },
+      "law_policy": {
+       "competence": 32.96,
+       "n": 718
+      },
+      "math": {
+       "competence": 17.05,
+       "n": 289
+      },
+      "safety_security": {
+       "competence": 36.15,
+       "n": 48
+      },
+      "support_ops": {
+       "competence": 34.07,
+       "n": 105
+      }
+     },
+     "usecases": {
+      "advertising": {
+       "competence": 0.0,
+       "n": 22
+      },
+      "code_linting": {
+       "competence": 1.6,
+       "n": 24
+      },
+      "customer_support": {
+       "competence": 24.93,
+       "n": 157
+      },
+      "demand_forecasting": {
+       "competence": 0.0,
+       "n": 17
+      },
+      "ecommerce_marketplaces": {
+       "competence": 5.22,
+       "n": 55
+      },
+      "feature_extraction": {
+       "competence": 0.0,
+       "n": 19
+      },
+      "financial_crime": {
+       "competence": 15.26,
+       "n": 55
+      },
+      "gaming": {
+       "competence": 0.0,
+       "n": 23
+      },
+      "insurance_claims": {
+       "competence": 32.03,
+       "n": 27
+      },
+      "knowledge_graphs": {
+       "competence": 41.55,
+       "n": 22
+      },
+      "lead_generation": {
+       "competence": 38.52,
+       "n": 30
+      },
+      "legal_compliance": {
+       "competence": 31.0,
+       "n": 327
+      },
+      "llm_guardrails": {
+       "competence": 28.08,
+       "n": 27
+      },
+      "model_routing": {
+       "competence": 57.98,
+       "n": 325
+      },
+      "moderation_trust_safety": {
+       "competence": 52.07,
+       "n": 32
+      },
+      "other": {
+       "competence": 17.58,
+       "n": 216
+      },
+      "recruiting": {
+       "competence": 63.8,
+       "n": 19
+      },
+      "risk_assessment": {
+       "competence": 14.96,
+       "n": 56
+      },
+      "scientific_discovery": {
+       "competence": 15.52,
+       "n": 23
+      },
+      "search_retrieval": {
+       "competence": 73.79,
        "n": 24
       }
      }

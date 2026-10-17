@@ -24,8 +24,9 @@ test('feed carries board and open-board rank next to the unchanged combined rank
   // they are API rows, so its open-board rank (15) does not move. v1.6.25: the paid hosted Celeris-1 Decision (Capability 73.6)
   // joins above it as well (24 -> 25); the StartLux rows are over the cost cap and take no capped Capability rank.
   // v1.6.26: the hosted Nimble-v4-max (Capability 79.7) is re-priced inside the cost cap and joins above it (25 -> 26); the
-  // Batch BCD rows above it by Capability (nagi-enormous) are over the cap.
-  assert.equal(get(feed, 'torchcast-decision-12b').capability.rank, 26);
+  // Batch BCD rows above it by Capability (nagi-enormous) are over the cap. v1.6.27: the hosted Jev 1.14.0 (Capability 75.0,
+  // inside both caps) joins above it (26 -> 27); Verdin-4B (59.5) sits below it.
+  assert.equal(get(feed, 'torchcast-decision-12b').capability.rank, 27);
   const ranks = feed.systems.map((s) => s.capability.open_board_rank).filter((r) => r != null).sort((a, b) => a - b);
   assert.deepEqual(ranks, ranks.map((_, i) => i + 1));
   for (const s of feed.systems) if (s.board !== 'open') assert.equal(s.capability.open_board_rank, null);
