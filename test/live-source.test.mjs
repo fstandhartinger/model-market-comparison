@@ -81,6 +81,24 @@ test('committed collection-wide approvals are exact, bounded and evidenced', asy
   }
 });
 
+// CR-504: the 2026-10-17 Solar Pro 4 re-key approval replays against the retained primary capture.
+test('committed 2026-10-17 AA re-key approval replays against its captured primary response and nothing else', async () => {
+  const dir = new URL('../ops/daily-repair-2026-10-17/aa-models/', import.meta.url);
+  const a = JSON.parse(await readFile(new URL('../data/raw/source-change-approvals.json', import.meta.url), 'utf8')).aa_models;
+  if (a?.evidence_file !== `ops/daily-repair-2026-10-17/aa-models/evidence/${a?.primary_capture_sha256}.gz`) return;
+  const bytes = gunzipSync(await readFile(new URL(`evidence/${a.primary_capture_sha256}.gz`, dir)));
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), a.primary_capture_sha256);
+  const current = JSON.parse(bytes).data;
+  const previous = JSON.parse(await readFile(new URL('prior-identities.json', dir), 'utf8')).identities.map((id) => ({ id }));
+  const id = (m) => m.id, now = Date.parse(a.reviewed_at);
+  assert.equal(identityDigest(previous, id), a.previous_identity_sha256);
+  assert.equal(identityDigest(current, id), a.current_identity_sha256);
+  assert.deepEqual(a.removed, ['1b64aa81-c223-4b8f-909b-82185a234765']);
+  assert.doesNotThrow(() => assertApprovedIdentityCoverage(previous, current, id, 'AA', { approval: a, now }));
+  assert.throws(() => assertApprovedIdentityCoverage(previous, current.filter((m) => m.id !== current[0].id), id, 'AA', { approval: a, now }), /partial response or removal/);
+  assert.throws(() => assertApprovedIdentityCoverage(previous, current, id, 'AA', { approval: a, now: Date.parse(a.expires_at) }), /partial response or removal/);
+});
+
 test('committed 2026-09-15 endpoint approvals replay against their captured primary responses and nothing else', async () => {
   const dir = new URL('../ops/daily-repair-2026-09-15/endpoints/', import.meta.url);
   const reviewBytes = await readFile(new URL('endpoint-withdrawal-review.json', dir));
