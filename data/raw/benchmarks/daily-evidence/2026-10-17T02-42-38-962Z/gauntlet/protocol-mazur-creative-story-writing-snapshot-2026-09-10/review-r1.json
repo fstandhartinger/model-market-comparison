@@ -1,0 +1,19 @@
+{
+  "artifact_id": "protocol-mazur-creative-story-writing-snapshot-2026-09-10",
+  "artifact_sha256": "d0bedc67f03020a1918d640a6c576ae6937e5130eb4cf9579a6d457ab8fc7a3e",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "mazur-creative-story-writing::snapshot-2026-09-10",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Snapshot date 2026-09-10 predates capture 2026-10-17 and the source lists later model additions; protocol text nevertheless establishes continuity of the Thurstone pairwise comparison metric and method, so identity is accepted.",
+    "Hash and transport verification are owner-executed and not independently reproducible in this read-only review."
+  ],
+  "missing_evidence": []
+}

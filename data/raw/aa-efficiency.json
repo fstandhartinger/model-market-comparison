@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-10-16T00:53:04.988Z",
+  "collected_at": "2026-10-17T02:53:56.588Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-10-16T00:53:04.245Z",
+      "fetched_at": "2026-10-17T02:53:56.372Z",
       "http_status": 200,
-      "bytes": 4228548,
-      "sha256": "e3357dd2ca67af967d0f3e3f7444c7b8af70b5d265bb133b22c4549611444f59"
+      "bytes": 4239465,
+      "sha256": "357f8593975e028de6d9226af18014bfabbb71c4be27bf21dfcfda1d007b1303"
     }
   ],
   "coverage": {
-    "published_rows": 214,
-    "scored_denominator": 693,
+    "published_rows": 216,
+    "scored_denominator": 694,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 214,
+  "count": 216,
   "rows": [
     {
       "source_id": "8215372b-66ff-457b-855e-e8abeafc9571",
@@ -4625,6 +4625,28 @@
       }
     },
     {
+      "source_id": "69468cce-7b5c-414a-b498-41df4c34df85",
+      "slug": "reflection-beam",
+      "name": "Beam 1.0",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 19477.9622514087,
+        "answer": 6837.074829935174,
+        "output": 26315.03708134387
+      },
+      "canonical_token_counts": {
+        "input": 1983648536,
+        "output": 79217687,
+        "answer": 11747918,
+        "reasoning": 67469769
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 25.040475317084177,
+        "reasoning_output_share": 0.7401837280790937
+      }
+    },
+    {
       "source_id": "eb4ba465-3fcd-4065-9fe2-e8225e7b2c6c",
       "slug": "ring-2-6-1t",
       "name": "Ring-2.6-1T",
@@ -4688,6 +4710,28 @@
         "basis": "derived",
         "input_output_ratio": 6.6395814796578225,
         "reasoning_output_share": 0.6815118344088846
+      }
+    },
+    {
+      "source_id": "15c4cbd7-b9aa-42c8-9ce5-5abbde0e6963",
+      "slug": "solar-pro4",
+      "name": "Solar Pro 4",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 252140.5524237703,
+        "answer": 35330.81040305349,
+        "output": 287471.3628268238
+      },
+      "canonical_token_counts": {
+        "input": 4327918765,
+        "output": 336926539,
+        "answer": 37060129,
+        "reasoning": 299866410
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 12.845288999332878,
+        "reasoning_output_share": 0.877097982715109
       }
     },
     {

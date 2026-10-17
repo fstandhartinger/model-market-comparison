@@ -1,0 +1,21 @@
+{
+  "artifact_id": "protocol-matharena-arxivmath-2026-08",
+  "artifact_sha256": "8233ce3906321b4665fc21479e364cfa1672bbd075101baf71ff57993a3cbc61",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "matharena-arxivmath::2026-08",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute hashes or execute transport/qualification checks; those are owner-side and outside this read-only review.",
+    "version_status 'published' is inferred from the page's published edition label '08/2026'; the page does not use the word 'version', but it does publish a release identifier for this board.",
+    "The served-value scale summary (24.56–96.49) is used only to confirm unit/range; it does not establish metric meaning, computation, or task set.",
+    "The presence of an 'Overall' ArXivMath entry was not treated as a successor or as contradicting the row's statement that editions are never averaged, since no explicit successor or averaging claim is made for this edition."
+  ],
+  "missing_evidence": []
+}

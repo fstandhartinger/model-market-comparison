@@ -1,0 +1,23 @@
+{
+  "artifact_id": "protocol-arc-agi-3",
+  "artifact_sha256": "95716ef98d721e5a0c3f9c69bd5024d97b8aa40916a61e38fdf901ea9069d450",
+  "round": 2,
+  "verdict": "revise",
+  "coverage_checked": ["arc-agi::3", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "arc-agi::3-metric-semi-private",
+      "severity": "major",
+      "location": "row arc-agi::3 scoring.metric",
+      "evidence": "Primary source 1 describes ARC-AGI-3 efficiency as 'how many actions it took relative to the human baseline' and repeatedly refers to 'Public Demo environments' and 'Public Demo dataset'; source 2 describes ARC-AGI-3 as interactive environments and cost-per-task. Neither source contains 'semi-private'. The metric field adds 'Semi-private' without primary-source support and it conflicts with the 'Public Demo' wording.",
+      "repair": "Remove 'Semi-private' from the metric string, or add primary-source evidence that supports it; align the metric with the source's 'action efficiency relative to the human baseline' and 'Public Demo' terminology."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Interpretation of 'ARC-AGI-3' as a published release identifier for version_status 'published' relies on the benchmark name; no separate explicit version string '3' appears in the excerpts.",
+    "Owner hash/transport and qualification checks are not independently executable in this read-only review; relied on provided hashes and receipt."
+  ],
+  "missing_evidence": []
+}

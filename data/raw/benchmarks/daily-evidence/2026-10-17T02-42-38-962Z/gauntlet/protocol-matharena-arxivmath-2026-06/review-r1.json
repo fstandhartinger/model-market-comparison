@@ -1,0 +1,17 @@
+{
+  "artifact_id": "protocol-matharena-arxivmath-2026-06",
+  "artifact_sha256": "653cc34734e8044952544da6af3e4c2a92a1ed3a6f8ab7bff19e27c82d8137d5",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["matharena-arxivmath::2026-06", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot execute hash or transport checks; owner-side verification assumed.",
+    "Version '2026-06' is a normalized form of the page's edition label '06/2026'; no mismatch.",
+    "Served value scale summary (lowest 4.17, highest 94.44) supports range [0,100] and unit percent.",
+    "Per-problem grid count (48) is taken from the competitions card; the actual grid table was not separately supplied."
+  ],
+  "missing_evidence": []
+}

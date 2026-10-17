@@ -1,0 +1,24 @@
+{
+  "artifact_id": "protocol-ugi-snapshot-2026-09-10",
+  "artifact_sha256": "cb5f335a12b0dc44746d36113a8843c9e3b8fc406c7b3d0f88a9a4a17abb19b9",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["ugi::snapshot-2026-09-10", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "version-date-mismatch",
+      "severity": "blocker",
+      "location": "row ugi::snapshot-2026-09-10, field version (and version_guard context)",
+      "evidence": "Row version is 'snapshot-2026-09-10', but all primary evidence (SOURCES 1-4) has retrieved_at=2026-10-17. Criterion c1 requires the snapshot date to be the day the methodology was observed; the observed day is 2026-10-17, not 2026-09-10.",
+      "repair": "Update the version field (and any dependent identity fields) to 'snapshot-2026-10-17', or provide evidence that 2026-09-10 is the actual observation date. The artifact_id is fixed for this review, so the row version must match the observed capture date."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot execute SHA-256 hash verification or transport/qualification checks; owner separately executes them.",
+    "Generated summaries (SOURCES 3 and 4) are admissible only for status-activity and unit/range scale judgements, not for methodology or version.",
+    "Exact served values beyond the summary are not independently verified; only the summary bounds 0.64 and 70 are used."
+  ],
+  "missing_evidence": []
+}
