@@ -30,7 +30,7 @@ test('CR-482 Jev + images rows: official pass 1, TypeSafe API, preview feature d
   assert.doesNotMatch(JSON.stringify(release.ranking.map((r) => r.measurement_source)), /jev114-img-1/);
 });
 
-test('CR-482 cost reference is Jev with images; both top fives are the reviewed ones (CR-496: + Sage 1.4 + images; CR-497: + kettei-fat, kettei-chub; CR-500: + Celeris-1 Decision, no top-five change)', () => {
+test('CR-482 cost reference is Jev with images; both top fives are the reviewed ones (CR-496: + Sage 1.4 + images; CR-497: + kettei-fat, kettei-chub; CR-500: + Celeris-1 Decision; CR-506: + basal-omni-1.0-ultra, no top-five change)', () => {
   const e = release.capability_eligibility;
   const jev14 = row('jev_1_14_images').tracks.core.cost.usd_per_1000;
   assert.equal(row('jev_1_13_images').tracks.core.cost.usd_per_1000, jev14, 'both Jev + images rows share one price');
@@ -48,7 +48,7 @@ test('CR-482 cost reference is Jev with images; both top fives are the reviewed 
   const capped = release.ranking.filter(inCap).sort((a, b) => b.tracks.core.capability - a.tracks.core.capability);
   assert.deepEqual(capped.slice(0, 5).map((r) => r.key),
     ['kettei_fat', 'sage_1_4_images', 'jev_1_13_images', 'kushal_gemma4_31b_it_autoloops', 'imajev_4b']); // CR-497 (kettei): kettei-fat enters at #1, 0.1 pp ahead of Sage 1.4 + images (Sage would be #7 if its 80 abstentions were scored wrong; disclosed in the row note)
-  assert.equal(capped.length, 51); // CR-497 (kettei): + kettei-fat, kettei-chub; CR-500 (celeris): + Celeris-1 Decision (#15)
+  assert.equal(capped.length, 52); // CR-497 (kettei): + kettei-fat, kettei-chub; CR-500 (celeris): + Celeris-1 Decision (#15); CR-506 (basal): + basal-omni-1.0-ultra (#11)
   // Wity-1 and the GPT Lunas stay out on latency, not cost
   for (const key of ['wity_1', 'gpt6_luna', 'gpt56_luna']) assert.ok(row(key).tracks.core.speed.adjusted_p50_s > e.latency_p50_s_cap, key);
   assert.match(e.rationale, /Jev would otherwise be excluded from its own headline/);
@@ -83,5 +83,5 @@ test('CR-482 System1 s1-vision is no longer an ImageJevBench row anywhere in the
   assert.equal(ts20.systems['s1-vision'], undefined);
   assert.equal(ts20.summary['s1-vision'], undefined);
   assert.ok(!/s1-vision|System1 s1|Blink/.test(JSON.stringify(release)), 'no mention of the removed row in the published data');
-  assert.equal(release.ranking.length, 62); // CR-500 (celeris): + Celeris-1 Decision; CR-497 (kettei): + kettei-fat, kettei-chub; CR-496: + Sage 1.4 + images
+  assert.equal(release.ranking.length, 63); // CR-506 (basal): + basal-omni-1.0-ultra; CR-500 (celeris): + Celeris-1 Decision; CR-497 (kettei): + kettei-fat, kettei-chub; CR-496: + Sage 1.4 + images
 });
