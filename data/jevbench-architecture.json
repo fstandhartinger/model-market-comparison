@@ -6062,6 +6062,36 @@
             "fact": "training config: backbone answerdotai/ModernBERT-large, finetune full, hidden 1024, total_params 396,898,305"
           }
         ]
+      },
+      "jev-1.14.0": {
+        "arch": "jev-reference",
+        "badges": {
+          "derivation": null,
+          "params": null,
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://docs.typesafe.ai/models",
+            "kind": "provider-docs",
+            "fact": "TypeSafe lists Jev 1.14 (model id jev-1.14.0) as the newest Jev release, available from 14 Oct 2026, served by the same POST /v1/systemone endpoint as Jev 1.13; 64k per-request / 32k per-question context; text input; no weights are published."
+          }
+        ]
+      },
+      "verdin-4b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "merge",
+          "params": "4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/victorbennett/Verdin-4B/blob/f35e9c184864a2fd6f286166783b0321d95f23b0/README.md",
+            "kind": "model-card",
+            "fact": "Pinned revision f35e9c184864a2fd6f286166783b0321d95f23b0: base_model Qwen/Qwen3.5-4B (revision 851bf6e8) + a LoRA fine-tune (r = 16, merged) + a pointer head that reads the option-boundary tokens; 4.21B parameters served; it returns a probability for every option and generates no text; weights CC-BY-NC-4.0, the Verdin engine Apache-2.0."
+          }
+        ]
       }
     },
     "imagejevbench": {
