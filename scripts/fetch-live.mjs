@@ -107,10 +107,11 @@ async function fetchArtificialAnalysis() {
     assertMeasuredFields(old?.evaluations, model.evaluations, [...new Set([...Object.keys(old?.evaluations || {}), ...Object.keys(model.evaluations)])], `AA ${model.id}`, { approvals: approvals.aa_measurements, modelId: model.id });
     assertMeasuredFields(old?.pricing, model.pricing, ['price_1m_input_tokens', 'price_1m_output_tokens'], `AA ${model.id}`);
   }
-  const { models, missing, extraCount } = enrichArtificialAnalysis(apiModels, metadata, previous);
+  const { models, missing, retiredCount, extraCount } = enrichArtificialAnalysis(apiModels, metadata, previous);
   if (missing.length) {
     console.log(`  warn: ${missing.length} API model(s) lack leaderboard metadata (mid-rollout), shipping with null metadata: ${missing.map((m) => m.name).join(", ")}`);
   }
+  if (retiredCount) console.log(`  note: ${retiredCount} deprecated model(s) no longer on the leaderboard page keep their last published metadata`);
   if (extraCount) console.log(`  note: leaderboard carries ${extraCount} extra metadata row(s) not in the v2 API yet`);
   console.log(`  ${models.length} models`);
   const target = join(RAW, "artificialanalysis.json");
@@ -124,6 +125,7 @@ async function fetchArtificialAnalysis() {
       api_count: apiModels.length,
       leaderboard_count: metadata.size,
       missing_model_ids: missing.map((model) => model.id),
+      retained_deprecated_count: retiredCount,
       max_allowed_rollout_lag: MAX_METADATA_ROLLOUT_LAG,
       note: "Missing leaderboard metadata is explicit and remains null; only a bounded publication lag is tolerated.",
     },

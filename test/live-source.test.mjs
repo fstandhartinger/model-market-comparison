@@ -81,7 +81,7 @@ test('committed collection-wide approvals are exact, bounded and evidenced', asy
   }
 });
 
-// CR-504: the 2026-10-17 Solar Pro 4 re-key approval replays against the retained primary capture.
+// CR-505: the 2026-10-17 Solar Pro 4 re-key approval replays against the retained primary capture.
 test('committed 2026-10-17 AA re-key approval replays against its captured primary response and nothing else', async () => {
   const dir = new URL('../ops/daily-repair-2026-10-17/aa-models/', import.meta.url);
   const a = JSON.parse(await readFile(new URL('../data/raw/source-change-approvals.json', import.meta.url), 'utf8')).aa_models;
