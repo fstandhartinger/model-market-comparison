@@ -23,7 +23,9 @@ test('feed carries board and open-board rank next to the unchanged combined rank
   // v1.6.24 (16 Oct 2026): the paid hosted kettei-fat (#1) and kettei-chub join the combined Capability ranking above it (22 -> 24);
   // they are API rows, so its open-board rank (15) does not move. v1.6.25: the paid hosted Celeris-1 Decision (Capability 73.6)
   // joins above it as well (24 -> 25); the StartLux rows are over the cost cap and take no capped Capability rank.
-  assert.equal(get(feed, 'torchcast-decision-12b').capability.rank, 25);
+  // v1.6.26: the hosted Nimble-v4-max (Capability 79.7) is re-priced inside the cost cap and joins above it (25 -> 26); the
+  // Batch BCD rows above it by Capability (nagi-enormous) are over the cap.
+  assert.equal(get(feed, 'torchcast-decision-12b').capability.rank, 26);
   const ranks = feed.systems.map((s) => s.capability.open_board_rank).filter((r) => r != null).sort((a, b) => a - b);
   assert.deepEqual(ranks, ranks.map((_, i) => i + 1));
   for (const s of feed.systems) if (s.board !== 'open') assert.equal(s.capability.open_board_rank, null);

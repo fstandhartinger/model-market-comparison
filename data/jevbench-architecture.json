@@ -5832,6 +5832,236 @@
             "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\"; 64 layers, hidden_size 5120 (the Qwen3.8-27B shape)"
           }
         ]
+      },
+      "blink-4b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "merge",
+          "params": "4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/thegovind/blink-4b/blob/c243abdd2d79478db510dcdc60a88087c18547c0/README.md",
+            "kind": "model-card",
+            "fact": "Pinned revision c243abdd2d79478db510dcdc60a88087c18547c0: base_model Qwen/Qwen3.5-4B; a rank-16 LoRA (32.5M parameters) merged into the Qwen3.5-4B text model (32 decoder layers, hidden 2560); weights licensed for non-commercial research."
+          },
+          {
+            "url": "https://huggingface.co/thegovind/blink-4b/blob/c243abdd2d79478db510dcdc60a88087c18547c0/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForCausalLM\"]; model_type: \"qwen3_5_text\"; dtype bfloat16; 32 layers, hidden_size 2560"
+          }
+        ]
+      },
+      "compass-0.2.0": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "adapter",
+          "params": "4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/adimyth/compass-lora-v2/blob/bfa8af07916df491fde171d1da0d6d761304f2f3/README.md",
+            "kind": "model-card",
+            "fact": "Pinned revision bfa8af07916df491fde171d1da0d6d761304f2f3: base_model Qwen/Qwen3.5-4B; a LoRA adapter (tags lora, base_model:adapter:Qwen/Qwen3.5-4B)."
+          },
+          {
+            "url": "https://huggingface.co/adimyth/compass-lora-v2/blob/bfa8af07916df491fde171d1da0d6d761304f2f3/adapter_config.json",
+            "kind": "config.json",
+            "fact": "peft_type LORA, r 16, lora_alpha 32, base_model_name_or_path Qwen/Qwen3.5-4B"
+          }
+        ]
+      },
+      "jeb-35b-a3b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "35B-A3B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/szybkie-ai/jeb-35b-a3b/blob/dfac7afaed21ffff638ae4588402db560376aeac/README.md",
+            "kind": "model-card",
+            "fact": "Pinned revision dfac7afaed21ffff638ae4588402db560376aeac: fine-tuned from Qwen/Qwen3.6-35B-A3B by szybkie.ai with a decision objective (LoRA on attention, gated-delta and per-expert weights); weights Apache-2.0, code MIT."
+          },
+          {
+            "url": "https://huggingface.co/szybkie-ai/jeb-35b-a3b/blob/dfac7afaed21ffff638ae4588402db560376aeac/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5MoeForConditionalGeneration\"]; model_type: \"qwen3_5_moe\"; text_config: 40 layers, hidden_size 2048, 256 experts"
+          }
+        ]
+      },
+      "jebadiah-9b-v2": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "merge",
+          "params": "9B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/frontier-infra/jebadiah-9b-v2/blob/bc63609af6434fdf18ed8b89e19df96db5a24944/README.md",
+            "kind": "model-card",
+            "fact": "Pinned revision bc63609af6434fdf18ed8b89e19df96db5a24944: v2 9B as full bf16 weights: the v2 LoRA (rank 16, alpha 32) merged into Qwen/Qwen3.5-9B; base_model_relation finetune; Apache-2.0."
+          },
+          {
+            "url": "https://huggingface.co/frontier-infra/jebadiah-9b-v2/blob/bc63609af6434fdf18ed8b89e19df96db5a24944/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config.model_type: \"qwen3_5_text\"; 32 layers, hidden_size 4096"
+          }
+        ]
+      },
+      "jevora-9b-v1": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": null,
+          "params": "9B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/kadirbekovvv/jevora-9b-v1/blob/c644b9c7a3b67b7acc3279523e3bee69a4be473d/README.md",
+            "kind": "model-card",
+            "fact": "Pinned revision c644b9c7a3b67b7acc3279523e3bee69a4be473d: an open-weight research decision model (Apache-2.0) that, given a context and 2-255 ordered options, returns a zero-based choice and a probabilities array; code and documentation in doxanocap/jevora-9b-v1."
+          },
+          {
+            "url": "https://github.com/doxanocap/jevora-9b-v1",
+            "kind": "repo-readme",
+            "fact": "Package and loader for the model; the evaluated row declares base Qwen/Qwen3.5-9B-Base."
+          }
+        ]
+      },
+      "jpt-4b": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "merge",
+          "params": "4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/kirp/jpt-4b/blob/05285d2d4f0cd954666ed88095f511c80665bc4c/README.md",
+            "kind": "model-card",
+            "fact": "Pinned revision 05285d2d4f0cd954666ed88095f511c80665bc4c: built on Qwen/Qwen3.5-4B: a LoRA fine-tune merged into full weights; the vision tower is unchanged; licence CC BY-NC 4.0."
+          },
+          {
+            "url": "https://huggingface.co/kirp/jpt-4b/blob/05285d2d4f0cd954666ed88095f511c80665bc4c/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Qwen3_5ForConditionalGeneration\"]; model_type: \"qwen3_5\"; text_config: 32 layers, hidden_size 2560; dtype bfloat16"
+          }
+        ]
+      },
+      "nagi-enormous": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "adapter",
+          "params": "27B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/nagisanzeninz/Nagi-ENORMOUS/blob/0d8e052d698461ecd49c4f39a09f6bd0179a1d5c/README.md",
+            "kind": "model-card",
+            "fact": "Pinned revision 0d8e052d698461ecd49c4f39a09f6bd0179a1d5c: the rank-8 LoRA adapter for the Apache-2.0 Qwen3.8-27B base; validated path unmerged LoRA, CUDA BF16, option-letter projection."
+          },
+          {
+            "url": "https://huggingface.co/nagisanzeninz/Nagi-ENORMOUS/blob/0d8e052d698461ecd49c4f39a09f6bd0179a1d5c/adapter_config.json",
+            "kind": "config.json",
+            "fact": "peft_type LORA, r 8, lora_alpha 16, base_model_name_or_path Qwen/Qwen3.8-27B"
+          }
+        ]
+      },
+      "nagi-huge": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "adapter",
+          "params": "12B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/nagisanzeninz/Nagi-HUGE/blob/3e0a58b19116afca7abf7f854d82ba85f5de5c4b/README.md",
+            "kind": "model-card",
+            "fact": "Pinned revision 3e0a58b19116afca7abf7f854d82ba85f5de5c4b: the rank-8 LoRA adapter for the Apache-2.0 Gemma 4 12B instruction base; validated path unmerged LoRA, CUDA BF16, option-letter projection."
+          },
+          {
+            "url": "https://huggingface.co/nagisanzeninz/Nagi-HUGE/blob/3e0a58b19116afca7abf7f854d82ba85f5de5c4b/adapter_config.json",
+            "kind": "config.json",
+            "fact": "peft_type LORA, r 8, lora_alpha 16, base_model_name_or_path google/gemma-4-12B-it"
+          }
+        ]
+      },
+      "ryotide-gemma": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "pipeline",
+          "params": "4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://github.com/csabag/ryotide/blob/6bbb615a170dc16b83ca62373aa7ada7bf3ea27e/README.md",
+            "kind": "repo-readme",
+            "fact": "Pinned commit 6bbb615a170dc16b83ca62373aa7ada7bf3ea27e: the RYOTIDE-Gemma preset runs a typed-decision readout over stock google/gemma-4-E4B-it weights (revision ee0ef602, Apache-2.0) with a fitted temperature; no training."
+          }
+        ]
+      },
+      "ryotide-qwen": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "pipeline",
+          "params": "4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://github.com/csabag/ryotide/blob/6bbb615a170dc16b83ca62373aa7ada7bf3ea27e/README.md",
+            "kind": "repo-readme",
+            "fact": "Pinned commit 6bbb615a170dc16b83ca62373aa7ada7bf3ea27e: the RYOTIDE-Qwen preset runs a typed-decision readout over stock Qwen/Qwen3.5-4B weights (revision 851bf6e8, Apache-2.0); no training."
+          }
+        ]
+      },
+      "shisa-de-1": {
+        "arch": "open-llm-decoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "26B-A4B",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/shisa-ai/shisa-de-1/blob/9111f4746a96d6cdf9f1a23a88afd5b57244508b/README.md",
+            "kind": "model-card",
+            "fact": "Pinned revision 9111f4746a96d6cdf9f1a23a88afd5b57244508b: trained from google/gemma-4-26B-A4B-it with softmax cross-entropy over the restricted option-letter distribution; causal language model, no task head; Apache-2.0."
+          },
+          {
+            "url": "https://huggingface.co/shisa-ai/shisa-de-1/blob/9111f4746a96d6cdf9f1a23a88afd5b57244508b/config.json",
+            "kind": "config.json",
+            "fact": "architectures: [\"Gemma4ForConditionalGeneration\"]; model_type: \"gemma4\"; text_config.model_type: \"gemma4_text\"; 30 layers, 128 experts; dtype bfloat16"
+          }
+        ]
+      },
+      "tde-general-large": {
+        "arch": "open-encoder",
+        "badges": {
+          "derivation": "fine-tune",
+          "params": "395M",
+          "quant": null
+        },
+        "evidence": [
+          {
+            "url": "https://huggingface.co/tdelab/tde-general-large-v0.1/blob/2d697981fc217d50c27d042079549c555bc08e27/README.md",
+            "kind": "model-card",
+            "fact": "Pinned revision 2d697981fc217d50c27d042079549c555bc08e27: a 395M encoder decision model (state + question + options in, one forward pass, probabilities out; no text generated); ModernBERT-large architecture initialised from the GLiClass-large encoder, fully fine-tuned; Apache-2.0."
+          },
+          {
+            "url": "https://huggingface.co/tdelab/tde-general-large-v0.1/blob/2d697981fc217d50c27d042079549c555bc08e27/config.json",
+            "kind": "config.json",
+            "fact": "training config: backbone answerdotai/ModernBERT-large, finetune full, hidden 1024, total_params 396,898,305"
+          }
+        ]
       }
     },
     "imagejevbench": {
