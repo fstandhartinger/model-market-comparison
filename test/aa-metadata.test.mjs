@@ -39,3 +39,28 @@ test("slug metadata joins UUID API rows; retained fields keep their original pro
   const changed = enrichArtificialAnalysis([{ ...api[0], slug: "different-product" }], new Map([["different-product", { isOpenWeights: false }]]), previous);
   assert.equal(changed.models[0].metadata.openrouter_api_id, null, "no metadata carryover between identities");
 });
+
+test("CR-505: a row already published as deprecated may leave the leaderboard page; other absences still count", () => {
+  const prior = (id, deprecated) => ({ id, slug: id, name: id, metadata: { deprecated, is_open_weights: true, license_name: "MIT" } });
+  const previous = { collected_at: "2026-10-16", metadata_endpoint: "https://artificialanalysis.ai/leaderboards/models",
+    models: [prior("live", false), ...["r1", "r2", "r3", "r4", "r5", "r6"].map((id) => prior(id, true)), prior("quiet", false)] };
+  const api = previous.models.map(({ metadata, ...row }) => row);
+  const page = new Map([["live", { isOpenWeights: true, deprecated: false }], ["quiet", { isOpenWeights: true, deprecated: false }]]);
+  const result = enrichArtificialAnalysis(api, page, previous);
+  assert.equal(result.missing.length, 0);
+  assert.equal(result.retiredCount, 6);
+  const r1 = result.models.find((m) => m.id === "r1").metadata;
+  assert.equal(r1.deprecated, true);
+  assert.equal(r1.license_name, "MIT");
+  assert.equal(r1.retained_fields.license_name.collected_at, "2026-10-16");
+  // Not previously deprecated: still a rollout lag, and five of them fail closed.
+  const fresh = ["n1", "n2", "n3", "n4", "n5"].map((id) => ({ id, slug: id, name: id }));
+  assert.throws(() => enrichArtificialAnalysis([...api, ...fresh], page, previous), /missing=5/);
+  const notDeprecated = { ...previous, models: previous.models.map((m) => ({ ...m, metadata: { ...m.metadata, deprecated: false } })) };
+  assert.throws(() => enrichArtificialAnalysis(api, page, notDeprecated), /missing=6/);
+  // A different slug under the same id is a different product: no carryover, no exemption.
+  const reslugged = api.map((m) => (m.id === "r1" ? { ...m, slug: "other" } : m));
+  assert.deepEqual(enrichArtificialAnalysis(reslugged, page, previous).missing.map((m) => m.id), ["r1"]);
+  // An empty page is still fatal.
+  assert.throws(() => enrichArtificialAnalysis(api, new Map(), previous), /metadata mismatch/);
+});
